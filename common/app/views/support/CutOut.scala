@@ -1,28 +1,25 @@
 package views.support
 
-import model.{FaciaImageElement, Trail}
+import com.gu.facia.api.models.{FaciaContent, Cutout}
+import common.Logging
+import implicits.FaciaContentImplicits._
 
-object CutOut {
-  def fromTrail(trail: Trail): Option[CutOut] = {
-    if (trail.imageCutoutReplace) {
-      trail.customImageCutout map {
-        case FaciaImageElement(src, width, height) => CutOut(src, Orientation.fromDimensions(width, height))
-      } orElse {
-        /** We're assuming here that standard contributor images from CAPI are in landscape, as unfortunately they
-          * do not come with dimensions attached.
-          */
-        if (trail.contributors.length == 1) {
-          for {
-            contributor <- trail.contributors.find(_.contributorLargeImagePath.isDefined)
-            imagePath <- contributor.contributorLargeImagePath
-          } yield CutOut(imagePath, Landscape)
-        } else {
-          None
-        }
-      }
-    } else {
-      None
-    }
+import scala.util.{Failure, Success, Try}
+
+object CutOut extends Logging {
+  /* If a CutOut comes with width and height, it's proabably coming from facia-tool
+     Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
+   */
+  def fromTrail(faciaContent: FaciaContent): Option[CutOut] = {
+    faciaContent.image match {
+      case Some(Cutout(src, Some(width), Some(height))) =>
+        Try((width.toInt, height.toInt)) match {
+          case Success((w, h)) => Option(CutOut(src, Orientation.fromDimensions(w, h)))
+          case Failure(t) =>
+            log.warn(s"Could not convert width and height to INT: $t")
+            None}
+      case Some(Cutout(src, _, _)) => Option(CutOut(src, Landscape))
+      case _ => None}
   }
 }
 

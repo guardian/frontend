@@ -1,6 +1,5 @@
 //Client-side routing module
 //Heavily inspired by https://github.com/PaulKinlan/leviroutes/blob/master/routes.js
-/*jshint boss:true, curly:false */
 define(function () {
 
     function Router() {
@@ -9,7 +8,9 @@ define(function () {
             matchRoute = function (url) {
                 var i, routeExec, routeMatch, params, g, group,
                     route = null;
+                /*eslint-disable no-cond-assign*/
                 for (i = 0; route = routes[i]; i++) {
+                    /*eslint-enable no-cond-assign*/
 
                     routeExec  = route.regex.regexp.exec(url);
                     routeMatch = (routeExec) ? true : false;
@@ -39,7 +40,9 @@ define(function () {
                     i = 0;
 
                 // Find the places to edit.
+                /*eslint-disable no-cond-assign*/
                 while (matches = nameRegexp.exec(loc)) {
+                    /*eslint-enable no-cond-assign*/
                     groups[matches[1]] = i++;
                     newRegexp = newRegexp.replace(matches[0], '([^/.\\\\]+)');
                 }

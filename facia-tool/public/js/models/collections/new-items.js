@@ -24,6 +24,10 @@ define([
     removeById
 ) {
     alert = alert.default;
+    removeById = removeById.default;
+    cleanClone = cleanClone.default;
+    deepGet = deepGet.default;
+    mediator = mediator.default;
 
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
         restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],
@@ -46,13 +50,8 @@ define([
     }
 
     function newItemsValidator(newItems, context) {
-        var defer = $.Deferred();
-
-        contentApi.validateItem(newItems[0])
-        .fail(function(err) {
-            defer.reject(err);
-        })
-        .done(function(item) {
+        return contentApi.validateItem(newItems[0])
+        .then(function(item) {
             var front = context ? context.front() : '',
                 err;
 
@@ -69,13 +68,11 @@ define([
             }
 
             if (err) {
-                defer.reject(err);
+                throw new Error(err);
             } else {
-                defer.resolve(item);
+                return item;
             }
         });
-
-        return defer.promise();
     }
 
     function newItemsPersister(newItems, sourceContext, sourceGroup, targetContext, targetGroup, position, isAfter) {

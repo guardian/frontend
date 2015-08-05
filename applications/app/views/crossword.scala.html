@@ -1,9 +1,13 @@
 @(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
 
 @import common.LinkTo
+
+
+@import views.support.AuFriendlyFormat
+@import common.LinkTo
 @import play.api.libs.json._
 @import views.html.fragments.crosswordEntries
-@import com.gu.crosswords.api.client.models.{Across, Down}
+@import conf.Switches._
 
 @main(crosswordPage) { } {
     <div class="l-side-margins">
@@ -13,10 +17,36 @@
                     <div class="content__main-column">
                         <div class="content__labels">
                             <div class="content__section-label">
-                                <a class="tone-colour" data-link-name="article section" href="@LinkTo("type/crossword")">Crosswords</a>
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo("/crosswords")">Crosswords</a>
                             </div>
                         </div>
+
                         <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
+                        <p class="content__dateline">
+                        @crosswordPage.crossword.creator.map { creator =>
+                           Set by: <a class="tone-colour" data-link-name="crossword-creator" href="@creator.webUrl">@creator.name</a>
+                        }
+                        <time itemprop="datePublished" datetime="@crosswordPage.crossword.date.toString("yyyy-MM-dd'T'HH:mm:ssZ"))"
+                        data-timestamp="@crosswordPage.crossword.date.getMillis" class="content__dateline-wpd js-wpd">
+                            @crosswordPage.crossword.date.toString("EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(crosswordPage.crossword.date)</span>
+                        </time>
+
+                        </p>
+
+                        <div class="meta__extras meta__extras--crossword">
+                            <div class="meta__social" data-component="share">
+                                @fragments.social(crosswordPage, "top")
+                            </div>
+                            @if(SaveForLaterSwitch.isSwitchedOn) {
+                                <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+                            }
+                            <div class="meta__numbers modern-visible">
+                                <div class="u-h meta__number" data-discussion-id="@crosswordPage.discussionId" data-commentcount-format="content" data-discussion-closed="@{crosswordPage.isCommentable}">
+                                </div>
+                                <div class="u-h meta__number js-sharecount">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -32,25 +62,37 @@
 
                                 @* The following is a fallback for when JavaScript is not enabled *@
                                 <div class="crossword__grid-wrapper">
-                                    @svg
+                                    <noscript>@svg</noscript>
                                 </div>
-
+                                <noscript>
                                 <div class="crossword__clues">
                                     <div class="crossword__clues--across">
                                         <h3 class="crossword__clues-header">Across</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
+                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
                                     </div>
 
                                     <div class="crossword__clues--down">
                                         <h3 class="crossword__clues-header">Down</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
                                     </div>
                                 </div>
+                                </noscript>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </article>
+
+        <div class="content-footer">
+
+            @fragments.discussionFooter(crosswordPage.isCommentable, crosswordPage.isClosedForComments, crosswordPage.shortUrlId)
+
+            @if(crosswordPage.isCommentable) {
+                <div class="js-repositioned-comments content__repositioned-comments"></div>
+            }
+
+            @fragments.onwardPlaceholder()
+        </div>
     </div>
 }

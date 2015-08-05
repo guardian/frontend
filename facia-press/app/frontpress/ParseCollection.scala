@@ -1,5 +1,6 @@
 package services
 
+import com.gu.facia.api.models.CollectionConfig
 import com.gu.facia.client.models.{Trail, _}
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import common._
@@ -11,10 +12,13 @@ import model.{Collection, _}
 import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
-import services.ParseCollectionJsonImplicits._
+import model.facia.FapiJsonFormats._
+import play.api.libs.json.Json
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Try
+
+
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -38,6 +42,7 @@ case class Result(
 
 object Result {
   val empty: Result = Result(Nil, Nil, Nil, Nil)
+  implicit val resultFormats = Json.format[Result]
 }
 
 case class TrailId(get: String) extends AnyVal
@@ -66,7 +71,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
-  def getCollection(id: String, config: CollectionConfigJson, edition: Edition): Future[Collection] = {
+  def getCollection(id: String, config: CollectionConfig, edition: Edition): Future[Collection] = {
     val collection: Future[Option[com.gu.facia.client.models.CollectionJson]] =
       FrontsApi.amazonClient.collection(id)
         .recover { case t: Throwable =>
@@ -200,7 +205,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       getContentApiItemFromCollectionItem(collectionItems, edition) map { items =>
           items.map { item =>
             item.fields.flatMap(_.get("internalContentCode")).map { internalContentCode =>
-              TrailId(InternalContentCode.toFormattedInternalContentCode(internalContentCode)) -> item}
+              TrailId(InternalCode.toFormattedInternalContentCode(internalContentCode)) -> item}
+            .orElse{ item.fields.flatMap(_.get("internalPageCode")).map { internalPageCode =>
+              TrailId(InternalCode.toFormattedInternalPageCode(internalPageCode)) -> item} }
           }.flatten
         }
     }).map(_.flatten.toMap)
@@ -248,6 +255,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     collectionItem.meta.flatMap(_.supporting).getOrElse(Nil)
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
+
     lazy val contentApiQuery = executeContentApiQuery(queryString, edition)
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
       MemcachedFallback.withMemcachedFallBack(
@@ -287,7 +295,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         case Path(id) =>
           val search = client.item(id, edition)
             .showElements("all")
-            .showEditorsPicks(true)
             .pageSize(20)
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)

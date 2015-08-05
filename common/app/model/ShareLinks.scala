@@ -51,7 +51,7 @@ trait ShareLinks { self: Content =>
   }
 
   protected lazy val elementShareOrder = List("facebook", "twitter", "pinterestBlock")
-  protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")
+  protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "linkedin", "gplus", "whatsapp")
 
   def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String = shortUrl, webLinkUrl: String = webUrl, title: String = webTitle): Seq[ShareLink] = elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, shortLinkUrl, webLinkUrl, title))
 

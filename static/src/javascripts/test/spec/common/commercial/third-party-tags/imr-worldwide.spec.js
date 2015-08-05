@@ -1,8 +1,8 @@
-import imrWorldwide from 'common/modules/commercial/third-party-tags/imr-worldwide'
+import imrWorldwide from 'common/modules/commercial/third-party-tags/imr-worldwide';
 
-describe('IMR Worldwide', function() {
+describe('IMR Worldwide', function () {
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(imrWorldwide).toBeDefined();
     });
 

@@ -1,8 +1,10 @@
 define([
+    'common/modules/user-prefs',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies'
 ], function (
+    prefs,
     ajax,
     config,
     cookies
@@ -12,12 +14,14 @@ define([
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
-    var Api = {
-        root: (document.location.protocol === 'https:')
-                ? config.page.secureDiscussionApiRoot
-                : config.page.discussionApiRoot,
-        clientHeader: config.page.discussionApiClientHeader
-    };
+    var root = (document.location.protocol === 'https:')
+            ? config.page.secureDiscussionApiRoot
+            : config.page.discussionApiRoot,
+        Api = {
+            root: root,
+            proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
+            clientHeader: config.page.discussionApiClientHeader
+        };
 
     /**
      * @param {string} endpoint
@@ -26,13 +30,14 @@ define([
      * @return {Reqwest} a promise
      */
     Api.send = function (endpoint, method, data) {
+        var root = (method === 'post') ? Api.proxyRoot : Api.root;
         data = data || {};
         if (cookies.get('GU_U')) {
             data.GU_U = cookies.get('GU_U');
         }
 
         var request = ajax({
-            url: Api.root + endpoint,
+            url: root + endpoint,
             type: (method === 'get') ? 'jsonp' : 'json',
             method: method,
             crossOrigin: true,
@@ -64,7 +69,7 @@ define([
      */
     Api.previewComment = function (comment) {
         var endpoint = '/comment/preview';
-        return Api.send(endpoint, 'post', comment);
+        return Api.send(endpoint, 'post', comment, true);
     };
 
     /**
@@ -102,7 +107,7 @@ define([
      */
     Api.reportComment = function (id, report) {
         var endpoint = '/comment/' + id + '/reportAbuse';
-        return Api.send(endpoint, 'post', report);
+        return Api.send(endpoint, 'post', report, true);
     };
 
     /**

@@ -1,10 +1,9 @@
 package model.commercial.books
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.Json
-import test.ConfiguredTestSuite
 
-@DoNotDiscover class BookTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+class BookTest extends FlatSpec with Matchers {
 
   private val json = Json.parse(
     """{"sku":"9780001712768",
@@ -25,7 +24,7 @@ import test.ConfiguredTestSuite
       |"product_url":"http:\/\/guardianbookshop.staging.lab.co.uk\/index.php\/in-a-people-house.html",
       |"regular_price_with_tax":"5.0915",
       |"regular_price_without_tax":"5.0915",
-      |"final_price_with_tax":5.0914,
+      |"final_price_with_tax":"5.0914",
       |"final_price_without_tax":5.0914}""".stripMargin)
 
   "Book" should "create a Book from json" in {

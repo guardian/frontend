@@ -1,33 +1,40 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
 
-@import conf.Switches._
 @import common.{Edition, Navigation}
-@import views.support.RenderClasses
+@import conf.Switches._
+@import views.support.Commercial.topBelowNavSlot
+@import views.support.{Commercial, RenderClasses}
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+<!--
+
+##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::
+##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:
+##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::
+##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####
+##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:
+##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:
+ ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::
+
+Ever thought about joining us?
+http://developers.theguardian.com/join-the-team.html
+
+-->
+
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining(
-    metaData match {
-        case c: model.Content if c.shouldHideAdverts => { false }
-        case p: model.Page if p.section == "identity" => { false }
-        case _ => { true }
-    },
-    Edition(request)
-) { case (showAdverts, edition) =>
-    @defining(
-        showAdverts &&
-            ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
-                (AppleAdAuNetworkFrontSwitch.isSwitchedOn && edition.id == "AU" && metaData.id == "au") ||
-                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology"))
-    ) { adBelowNav =>
+@defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
+    @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
+        @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
     <body
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
+            ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
+            ("wide-localnav", navigation.map(_.repelCutout).getOrElse(false)),
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
@@ -38,22 +45,18 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        <div class="sticky-nav-mt-test">
-            @if(showAdverts) {
-                @fragments.commercial.topBanner()
-            }
+        @if(showAdverts) {
+            @fragments.commercial.topBanner(metaData, edition)
+        }
 
-            @fragments.header(metaData)
-        </div>
+        @fragments.header(metaData)
 
         @if(adBelowNav) {
             @fragments.commercial.topBannerBelowNav()
         }
 
-        <div class="top-banner-below-nav-mt-test"></div>
-
         @if(showAdverts) {
-            @fragments.commercial.topBannerMobile()
+            @fragments.commercial.topBannerMobile(metaData, edition)
         }
 
         <div id="maincontent" tabindex="0"></div>
@@ -76,5 +79,6 @@
 
     </body>
     </html>
+}
 }
 }

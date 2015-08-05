@@ -1,7 +1,7 @@
 package tools
 
 import com.gu.facia.client.models.{CollectionJson, Trail}
-import com.gu.googleauth.UserIdentity
+import com.gu.pandomainauth.model.User
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
 import test.ConfiguredTestSuite
@@ -10,7 +10,7 @@ import test.ConfiguredTestSuite
 
   "update the published date only for a new article and retain existing article date" - {
 
-    val (identity: UserIdentity, collectionJson: CollectionJson) = scenarioOneLiveAnotherDraft
+    val (identity: User, collectionJson: CollectionJson) = scenarioOneLiveAnotherDraft
 
     val newCollectionJson = FaciaApi.preparePublishCollectionJson(identity)(collectionJson).get
 
@@ -34,7 +34,7 @@ import test.ConfiguredTestSuite
 
   "discard the drafts without changing live" - {
 
-    val (identity: UserIdentity, collectionJson: CollectionJson) = scenarioOneLiveAnotherDraft
+    val (identity: User, collectionJson: CollectionJson) = scenarioOneLiveAnotherDraft
 
     val newCollectionJson = FaciaApi.prepareDiscardCollectionJson(identity)(collectionJson).get
 
@@ -53,8 +53,8 @@ import test.ConfiguredTestSuite
 
   }
 
-  private def scenarioOneLiveAnotherDraft: (UserIdentity, CollectionJson) = {
-    val identity = UserIdentity("", "email@email.com", "John", "Duffell", 0, None)
+  private def scenarioOneLiveAnotherDraft: (User, CollectionJson) = {
+    val identity = User("John", "Duffell", "email@email.com", None)
     val live = List(Trail("existingId", 0, None))
     val draft = Trail("newId", 0, None) :: live
     val collectionJson = CollectionJson(live, Some(draft), None, new DateTime(0), "oldUpdatedBy", "oldUpdatedEmail", None, None, None)

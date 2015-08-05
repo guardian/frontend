@@ -19,7 +19,7 @@ describe('Create Ad Slot', function () {
         createAdSlot, config;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function (){
+        injector.test(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function () {
             createAdSlot = arguments[0];
             config = arguments[1];
 
@@ -27,7 +27,7 @@ describe('Create Ad Slot', function () {
                 edition: 'UK'
             };
             done();
-        });        
+        });
     });
 
     it('should exist', function () {
@@ -92,6 +92,12 @@ describe('Create Ad Slot', function () {
             expect(adSlot.outerHTML).toBe(expectation.html.replace(/\n/g, '').replace(/\s+/g, ' '));
         });
     });
+
+    it('should create "inline1" ad slot for inline-extra slots', function () {
+            var adSlot = createAdSlot('inline-extra', 'inline');
+
+            expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
+        });
 
     it('should accept multiple types', function () {
         var types  = ['paid-for-badge', 'paid-for-badge--container'],

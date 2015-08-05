@@ -14,6 +14,7 @@ define([
                 '&rnd=', (new Date()).getTime()
             ].join('');
             return img;
+
         }
     }
 

@@ -37,7 +37,6 @@ object Uk extends Edition(
   )
 
   val ukLocalNav = Seq(
-    politics,
     education,
     media,
     society,
@@ -68,18 +67,30 @@ object Uk extends Edition(
   )
 
   val environmentLocalNav = Seq(
-    climatechange,
+    climateChange,
     wildlife,
     energy,
     pollution
   )
 
+  val crosswordsLocalNav = Seq(
+    crosswordBlog,
+    crosswordEditorUpdate,
+    quick,
+    cryptic,
+    prize,
+    quiptic,
+    genius,
+    speedy,
+    everyman,
+    azed
+  )
 
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(uk, ukLocalNav),
-      NavItem(election2015),
+      NavItem(politics),
       NavItem(world, worldLocalNav),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
@@ -97,7 +108,7 @@ object Uk extends Edition(
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
       NavItem(membership),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }
@@ -105,8 +116,8 @@ object Uk extends Edition(
   override val briefNav: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(uk, ukLocalNav),
-    NavItem(election2015),
     NavItem(world, worldLocalNav),
+    NavItem(politics),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),
     NavItem(opinion, Seq(columnists)),

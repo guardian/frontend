@@ -31,11 +31,6 @@ import services.ConfigAgent
     Switches.InternationalEditionSwitch.switchOff()
   }
 
-  "FaciaController" should "200 when content type is front" in {
-    val result = FaciaController.renderFront("uk")(TestRequest())
-    status(result) should be(200)
-  }
-
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
     val result = FaciaController.renderFront("film")(TestRequest()) //Film is actually a facia front ON PROD
     status(result) should be(200)
@@ -157,5 +152,11 @@ import services.ConfigAgent
     val international = FakeRequest("GET", "/commentisfree").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToInternational = FaciaController.editionRedirect("commentisfree")(international)
     header("Location", redirectToInternational).head should endWith ("/uk/commentisfree")
+  }
+
+  it should "list the alterative options for a path by section and edition" in {
+    FaciaController.alternativeEndpoints("uk/lifeandstyle") should be (List("lifeandstyle", "uk"))
+    FaciaController.alternativeEndpoints("uk") should be (List("uk"))
+    FaciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
   }
 }

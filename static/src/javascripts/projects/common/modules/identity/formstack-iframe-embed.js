@@ -88,7 +88,7 @@ define([
             self.sendHeight();
         };
 
-        self.dom = function (user) {
+        self.dom = function (user) {
             var selector, $userId, $email, html;
 
             // Formstack generates some awful HTML, so we'll remove the CSS links,
@@ -116,7 +116,7 @@ define([
 
             // Listen for message from top window,
             // only message we are listening for is the iframe position..
-            window.addEventListener('message', function (event) {
+            window.addEventListener('message', function (event) {
                 var message = JSON.parse(event.data);
                 if (message.iframeTop) { self.scrollToTopOfIframe(message.iframeTop); }
             }, false);

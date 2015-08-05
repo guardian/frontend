@@ -1,28 +1,24 @@
 package integration
 
-import java.net.URL
 import java.util.concurrent.TimeUnit
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
+
 import akka.agent.Agent
-import org.openqa.selenium.{WebDriver, WebElement, By}
-import org.openqa.selenium.remote.{RemoteWebDriver, DesiredCapabilities}
+import driver.SauceLabsWebDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest._
 import org.scalatestplus.play.BrowserFactory.UninitializedDriver
+
 import scala.collection.JavaConversions._
+import scala.concurrent.Await
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 
 trait SingleWebDriver extends SuiteMixin { this: Suite =>
 
-  private lazy val url: String = s"http://${Config.stack.userName}:${Config.stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
-
   private lazy val webDriver = {
-    val capabilities = DesiredCapabilities.firefox()
-
-    // this makes the test name appear in the Saucelabs UI
-    val buildNumber = System.getProperty("build.number", "")
-    capabilities.setCapability("name", s"Integrated Tests Suite $buildNumber")
-    new RemoteWebDriver(new URL(url), capabilities)
+    def localWebDriver = new ChromeDriver()
+    if (Config.remoteMode) SauceLabsWebDriver() else localWebDriver
   }
 
   abstract override def run(testName: Option[String], args: Args): Status = {
@@ -63,7 +59,7 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
   }
 
   protected def implicitlyWait(seconds: Int) = {
-    webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+    webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS)
   }
 
   protected def $(selector: String): List[WebElement] = webDriver.findElements(By.cssSelector(selector)).toList
@@ -72,9 +68,7 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
 }
 
 class IntegratedTestsSuite extends Suites (
-  new AdsTest,
   new MostPopularTest,
   new SslCertTest,
-  new ShowMoreTest,
   new ProfileCommentsTest) with SingleWebDriver {
 }

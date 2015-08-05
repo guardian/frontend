@@ -198,7 +198,7 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
         val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
 
         val html = views.html.fragments.contentImage(container, image, widths, figureClasses).toString()
-        figure.replaceWith(Jsoup.parse(html).body())
+        figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))
     }
 
     body
@@ -279,7 +279,7 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
         el.select(".block-time.published-time time").foreach { time =>
           val datetime = DateTime.parse(time.attr("datetime"))
           val hhmm = Format(datetime, "HH:mm")
-          time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+          time.wrap(s"""<a href="#$id" itemprop="url" class="block-time__link"></a>""")
           time.attr("data-relativeformat", "med")
           time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
           if (datetime.isAfter(DateTime.now().minusDays(5))) {
@@ -292,9 +292,29 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val id = el.id()
+        el.attr("itemprop", "liveBlogUpdate")
+        el.attr("itemscope", "")
+        el.attr("itemtype", "http://schema.org/BlogPosting")
+        el.select(".block-time.published-time time").foreach { time =>
+          time.attr("itemprop", "datePublished")
+        }
+        el.select(".block-elements").foreach { body =>
+          body.attr("itemprop", "articleBody")
+        }
+      }
+    }
+    body
+  }
+}
+
 case class BloggerBylineImage(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
   def clean(body: Document): Document = {
-    if (article.isLiveBlog && LiveBlogContributorImagesSwitch.isSwitchedOn) {
+    if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val contributorId = el.attributes().get("data-block-contributor")
         if (contributorId.nonEmpty) {

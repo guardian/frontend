@@ -36,11 +36,13 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
       Some(page.section)
     ).flatten.contains(name.href.stripPrefix("/")) || page.url == name.href
   }
+
+  // arbitrary cutoff, feel free to tweak - https://github.com/guardian/frontend/pull/9487
+  val repelCutout: Boolean = links.size > 5
+
 }
 
 trait Navigation {
-  val election2015 = SectionLink("politics/general-election-2015", "election", "Election", "/politics/general-election-2015")
-
   //News
   val home = SectionLink("news", "home", "Home", "/")
   val news = SectionLink("news", "news", "News", "/")
@@ -141,6 +143,8 @@ trait Navigation {
   val economics = SectionLink("business", "economics", "Economics", "/business/economics")
   val markets = SectionLink("business", "markets", "Markets", "/business/stock-markets")
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
+  val ussustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/us/sustainable-business")
+  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/us-small-business")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
   val investing = SectionLink("business", "investing", "Investing", "/business/investing")
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
@@ -148,6 +152,8 @@ trait Navigation {
   val businessblog = SectionLink("business", "business blog", "Business blog", "/business/blog")
   val retail = SectionLink("business", "retail", "Retail", "/business/retail")
   val eurozone = SectionLink("business", "eurozone", "Eurozone", "/business/eurozone")
+  val diversityequality = SectionLink("business", "diversity & equality in business", "Diversity & equality in business", "/business/diversity-and-equality")
+
 
   //Money
   val money = SectionLink("money", "money", "Money", "/money")
@@ -186,7 +192,7 @@ trait Navigation {
   val asiaTravel = SectionLink("asia", "asia", "Asia", "/travel/asia")
 
   //Environment
-  val climatechange = SectionLink("environment", "climate change", "Climate change", "/environment/climate-change")
+  val climateChange = SectionLink("environment", "climate change", "Climate change", "/environment/climate-change")
   val wildlife = SectionLink("environment", "wildlife", "Wildlife", "/environment/wildlife")
   val energy = SectionLink("environment", "energy", "Energy", "/environment/energy")
   val conservation = SectionLink("environment", "conservation", "Conservation", "/environment/conservation")
@@ -197,6 +203,16 @@ trait Navigation {
 
   //Games
   val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
+  val crosswordBlog = SectionLink("crosswords", "blog", "Blog", "/crosswords/crossword-blog")
+  val crosswordEditorUpdate = SectionLink("crosswords", "editor", "Editor", "/crosswords/series/crossword-editor-update")
+  val quick = SectionLink("crosswords", "quick", "Quick", "/crosswords/series/quick")
+  val cryptic = SectionLink("crosswords", "cryptic", "Cryptic", "/crosswords/series/cryptic")
+  val prize = SectionLink("crosswords", "prize", "Prize", "/crosswords/series/prize")
+  val quiptic = SectionLink("crosswords", "quiptic", "Quiptic", "/crosswords/series/quiptic")
+  val genius = SectionLink("crosswords", "genius", "Genius", "/crosswords/series/genius")
+  val speedy = SectionLink("crosswords", "speedy", "Speedy", "/crosswords/series/speedy")
+  val everyman = SectionLink("crosswords", "everyman", "Everyman", "/crosswords/series/everyman")
+  val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")
 
   // Today's paper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")

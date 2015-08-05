@@ -51,17 +51,17 @@ define([
         var adHeight, inViewB, inViewT, topCusp, bottomCusp, bottomScroll, topScroll;
         fastdom.read(function () {
             adHeight = (this.isClosed) ?
-                this.closedHeight : this.openedHeight,
-            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top),
-            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20),
+                this.closedHeight : this.openedHeight;
+            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top);
+            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20);
             topCusp = (inViewT &&
                 ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
-                'true' : 'false',
+                'true' : 'false';
             bottomCusp = (inViewB &&
                 (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
-                'true' : 'false',
+                'true' : 'false';
             bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50,
+                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50;
             topScroll = (topCusp === 'true') ?
                 ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
         }.bind(this));
@@ -135,20 +135,24 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
+            $expandablev2 = $.create(template(expandableV2Tpl, { data: _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
-        fastdom.write(function () {
+        var domPromise = new Promise(function (resolve) {
+            fastdom.write(function () {
 
-            this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
-            this.$button = $('.ad-exp__open', $expandablev2);
+                this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
+                this.$button = $('.ad-exp__open', $expandablev2);
 
-            $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
+                $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
-            if (this.params.trackingPixel) {
-                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-            }
+                if (this.params.trackingPixel) {
+                    this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                }
 
-            $expandablev2.appendTo(this.$adSlot);
+                $expandablev2.appendTo(this.$adSlot);
+
+                resolve();
+            }.bind(this));
         }.bind(this));
 
         if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
@@ -172,6 +176,8 @@ define([
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
+
+        return domPromise;
     };
 
     return ExpandableV2;

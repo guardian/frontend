@@ -1,6 +1,7 @@
+
 @(model: ArticlePage)(implicit request: RequestHeader)
 
-@import conf.Switches._
+@import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.articleToneClass
 
@@ -11,6 +12,8 @@
         @if(article.isAdvertisementFeature){content--advertisement-feature}
         @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
         itemscope itemtype="@article.schemaType" role="main">
+
+        <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
 
         @fragments.headTonal(article)
 
@@ -32,7 +35,7 @@
 
                     @fragments.contentMeta(article)
 
-                    @if(article.visualTone == "news" && !article.hasMainEmbed && article.elements("main").isEmpty) {
+                    @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
                         <hr class="content__hr hide-until-leftcol" />
                     }
 
@@ -41,13 +44,15 @@
                         @BodyCleaner(article, article.body)
                     </div>
 
+                    @fragments.witnessCallToAction(article)
+
                     @fragments.submeta(article)
 
                     <div class="after-article js-after-article"></div>
                 </div>
 
                 <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                    <div class="mpu-container js-mpu-ad-slot"></div>
+                    <div class="ad-slot-container js-ad-slot-container"></div>
                     <div class="js-components-container"></div>
                 </div>
             </div>

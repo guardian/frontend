@@ -1,7 +1,8 @@
 package views.support
 
-import ab_headlines.ABTestHeadlines
+import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
+import conf.Switches.SaveForLaterSwitch
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob) = {
@@ -13,8 +14,6 @@ object GetClasses {
   }
 
   def forItem(item: ContentCard, isFirstContainer: Boolean) = {
-    val abHeadlineClass = item.id.flatMap(ABTestHeadlines.abTestId).map(n => s"js-a-b-headline-$n")
-
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -26,10 +25,12 @@ object GetClasses {
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
-      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
+      ("fc-item--has-metadata",
+        item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable || SaveForLaterSwitch.isSwitchedOn),
+      ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
+      ("fc-item--is-commentable", item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
-      ++ abHeadlineClass.map(_ -> true)
     )
   }
 
@@ -40,15 +41,15 @@ object GetClasses {
   ).flatten: _*)
 
   def mediaTypeClass(faciaCard: ContentCard) = faciaCard.mediaType map {
-    case layout.Gallery => "fc-item--gallery"
-    case layout.Video => "fc-item--video"
-    case layout.Audio => "fc-item--audio"
+    case Gallery => "fc-item--gallery"
+    case Video => "fc-item--video"
+    case Audio => "fc-item--audio"
   }
 
   def sublinkMediaTypeClass(sublink: Sublink) = sublink.mediaType map {
-    case layout.Gallery => "fc-sublink--gallery"
-    case layout.Video => "fc-sublink--video"
-    case layout.Audio => "fc-sublink--audio"
+    case Gallery => "fc-sublink--gallery"
+    case Video => "fc-sublink--video"
+    case Audio => "fc-sublink--audio"
   }
 
   def forContainerDefinition(containerDefinition: FaciaContainer) =
@@ -56,6 +57,7 @@ object GetClasses {
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
+      containerDefinition.displayName == Some("headlines"),
       containerDefinition.commercialOptions,
       containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),
@@ -70,6 +72,7 @@ object GetClasses {
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
+    false,
     ContainerCommercialOptions.empty,
     false,
     None,
@@ -82,6 +85,7 @@ object GetClasses {
     showLatestUpdate: Boolean,
     isFirst: Boolean,
     hasTitle: Boolean,
+    isHeadlines: Boolean,
     commercialOptions: ContainerCommercialOptions,
     hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
@@ -101,7 +105,8 @@ object GetClasses {
       ("js-container--lazy-load", lazyLoad),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
-        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
+        // no toggle for Headlines container as it will be hosting the weather widget instead
+        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines && !commercialOptions.isPaidFor)
     ) collect {
       case (kls, true) => kls
     }) ++ extraClasses: _*)

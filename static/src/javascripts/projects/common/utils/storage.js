@@ -1,3 +1,4 @@
+/*eslint-disable consistent-return*/
 /*
  Module: storage.js
  Description: Wrapper around localStorage functionality

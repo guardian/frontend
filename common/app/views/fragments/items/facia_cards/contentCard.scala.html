@@ -1,6 +1,5 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
-@import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
 @import model.{InlineVideo, InlineSlideshow, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
@@ -8,8 +7,9 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
+@import layout.{FrontendLatestSnap, FaciaWidths}
 @import views.support.ImgSrc
-@import layout.{LatestSnap, FaciaWidths}
+@import layout.WidthsByBreakpoint
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -19,25 +19,20 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
-        @if(item.cutOut.isDefined || item.showTimestamp) {
-            data-discussion-hide-label="true"
-        }
     }
 
-    @for(id <- item.id; headlines <- headlinesJsonString(id)) {
-        data-headline-variants="@headlines"
-    }
-
-data-link-name="@item.cardStyle.toneString | @{index + 1}"
+data-link-name="@item.analyticsPrefix | card-@{index + 1}"
     @item.id.map { id =>
     data-id="@id"
     }
 data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
-    @item.snapStuff.map(_.dataAttributes)>
+    @item.snapStuff.map(_.dataAttributes)
+
+@item.shortUrl.map{ shortUrl => data-loyalty-short-url="@shortUrl"}>
 
     <div class="fc-item__container">
-        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
+        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -129,7 +124,7 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
+        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(
@@ -138,8 +133,8 @@ data-test-id="facia-card"
         ))">
             @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
 
-            @item.byline.map { byline =>
-                <div class="fc-item__byline">@byline.htmlWithLinks(request)</div>
+            @item.bylineText.map { byline =>
+                <div class="fc-item__byline">@byline</div>
             }
 
             @item.starRating.map { rating =>
@@ -147,25 +142,19 @@ data-test-id="facia-card"
             }
         </div>
 
-        @if(item.isLive) {
-            <div class="js-liveblog-blocks" data-article-id="@item.id">
-                @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
-                }
-            </div>
-        } else {
-            @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                <div class="fc-item__standfirst">@Html(text)</div>
-            }
+        @item.trailText.filter(const(item.showStandfirst)).map { text =>
+            <div class="fc-item__standfirst">@Html(text)</div>
+        }
+
+        @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
+            <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
         }
 
         @if(item.sublinks.nonEmpty) {
             <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
         }
 
-        @if(item.showMeta) {
-            @meta(item)
-        }
+        @meta(item)
     </div>
 
         @if(item.cardTypes.showCutOut) {

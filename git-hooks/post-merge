@@ -1,0 +1,8 @@
+#/usr/bin/env bash
+
+# Modified version of [Sindre Sorhus's gist](https://gist.github.com/sindresorhus/7996717),
+# to run the Guardian installation procedures after a `git pull`, if necessary.
+
+changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+echo $changed_files | grep 'package.json\|static/src/systemjs-config.js\|facia-tool/public/js/jspm-config.js' --quiet && node git-hooks/update-message.js

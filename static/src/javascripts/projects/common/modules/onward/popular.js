@@ -38,7 +38,7 @@ define([
     MostPopular.prototype.prerender = function () {
         if (!config.page.shouldHideAdverts) {
             this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
-                .append(createAdSlot('inline3', 'container-inline'));
+                .append(createAdSlot('mostpop', 'container-inline'));
         } else {
             this.$mpu = undefined;
         }
@@ -50,6 +50,7 @@ define([
             this.$mpu.removeClass('fc-slice__item--no-mpu');
         }
         mediator.emit('modules:popular:loaded', this.elem);
+        mediator.emit('page:new-content', this.elem);
         mediator.emit('register:end', 'popular-in-section');
     };
 

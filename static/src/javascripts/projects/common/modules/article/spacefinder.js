@@ -7,8 +7,8 @@ define([
     'bean',
     'Promise',
     'common/utils/_',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/config',
+    'common/utils/mediator'
 ], function (
     $,
     fastdom,
@@ -17,8 +17,8 @@ define([
     bean,
     Promise,
     _,
-    mediator,
-    ab
+    config,
+    mediator
 ) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',
@@ -113,7 +113,7 @@ define([
             return !img.complete;
         });
 
-        return Promise.all(notLoaded.map(function (img) {
+        return Promise.all(_.map(notLoaded, function (img) {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, 5000);
                 bean.on(img, 'load', resolve);
@@ -138,10 +138,7 @@ define([
     }
 
     function getReady() {
-        var group = ab.getParticipations().DeferSpacefinder,
-            eligible = group && group.variant === 'A';
-
-        if (ab.testCanBeRun('DeferSpacefinder') && eligible) {
+        if (config.switches.viewability) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 

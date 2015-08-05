@@ -6,26 +6,13 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-sport-front-updates',
+    'common/modules/experiments/tests/truncation-with-facebook',
+    'common/modules/experiments/tests/truncation-with-relevant',
+    'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/mt-main',
-    'common/modules/experiments/tests/mt-top-below-nav',
-    'common/modules/experiments/tests/heatmap',
-    'common/modules/experiments/tests/mt-top-below-first-container',
-    'common/modules/experiments/tests/mt-depth',
-    'common/modules/experiments/tests/mt-sticky-bottom',
-    'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/tests/history-without-whitelist',
-    'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/mt-lz-ads-depth',
-    'common/modules/experiments/tests/mt-sticky-nav-all',
-    'common/modules/experiments/tests/facia-slideshow',
-    'common/modules/experiments/tests/mt-sticky-burger',
-    'common/modules/experiments/tests/mt-sticky-all-ux',
-    'common/modules/experiments/tests/mt-sticky-all-nt-ux',
-    'common/modules/experiments/tests/mt-sticky-burger-ux',
-    'common/modules/experiments/tests/mt-sticky-burger-nt-ux',
-    'common/modules/experiments/tests/defer-spacefinder'
+    'common/modules/experiments/tests/signed-out-save-for-later',
+    'common/modules/experiments/tests/cookie-refresh',
+    'common/modules/experiments/tests/membership-message'
 ], function (
     raven,
     _,
@@ -34,54 +21,26 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogSportFrontUpdates,
+    TruncationWithFacebook,
+    TruncationWithRelevant,
+    LiveblogNotifications,
     HighCommercialComponent,
-    MtMain,
-    MtTopBelowNav,
-    HeatMap,
-    MtTopBelowFirstContainer,
-    MtDepth,
-    MtStickyBottom,
-    SaveForLater,
-    HistoryWithoutWhitelist,
-    Headline,
-    MtLzAdsDepth,
-    MtStickyNavAll,
-    FaciaSlideshow,
-    MtStickyBurger,
-    MtStickyAllUx,
-    MtStickyAllNtUx,
-    MtStickyBurgerUx,
-    MtStickyBurgerNtUx,
-    DeferSpacefinder
-    ) {
+    SignedOutSaveForLater,
+    CookieRefresh,
+    MembershipMessage
+) {
 
-    var ab,
-        TESTS = _.flatten([
-            new LiveblogSportFrontUpdates(),
-            new HighCommercialComponent(),
-            new MtMain(),
-            new MtTopBelowNav(),
-            new HeatMap(),
-            new MtTopBelowFirstContainer(),
-            new MtDepth(),
-            new MtStickyBottom(),
-            new SaveForLater(),
-            new HistoryWithoutWhitelist(),
-            new MtLzAdsDepth(),
-            new MtStickyNavAll(),
-            new MtStickyBurger(),
-            new MtStickyAllUx(),
-            new MtStickyAllNtUx(),
-            new MtStickyBurgerUx(),
-            new MtStickyBurgerNtUx(),
-            new DeferSpacefinder(),
-            _.map(_.range(1, 10), function (n) {
-                return new Headline(n);
-            }),
-            new FaciaSlideshow()
-        ]),
-        participationsKey = 'gu.ab.participations';
+    var TESTS = _.flatten([
+        new TruncationWithFacebook(),
+        new TruncationWithRelevant(),
+        new LiveblogNotifications(),
+        new HighCommercialComponent(),
+        new SignedOutSaveForLater(),
+        new CookieRefresh(),
+        new MembershipMessage()
+    ]);
+
+    var participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
@@ -166,6 +125,12 @@ define([
             }
         });
 
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
+            }
+        });
+
         if (config.tests.internationalEditionVariant) {
             tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
 
@@ -178,6 +143,10 @@ define([
             }
         }
 
+        _.forEach(getServerSideTests(), function (testName) {
+            tag.push('AB | ' + testName + ' | inTest');
+        });
+
         return tag.join(',');
     }
 
@@ -186,13 +155,10 @@ define([
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            _.some(test.variants, function (variant) {
-                if (variant.id === variantId) {
-                    variant.test();
-                    return true;
-                }
-            });
-            if (variantId === 'notintest' && test.notInTest) {
+            var variant = getVariant(test, variantId);
+            if (variant) {
+                variant.test();
+            } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
         }
@@ -231,7 +197,7 @@ define([
         return config.switches['ab' + test.id];
     }
 
-    function getTestVariant(testId) {
+    function getTestVariantId(testId) {
         var participation = getParticipations()[testId];
         return participation && participation.variant;
     }
@@ -245,7 +211,28 @@ define([
         }
     }
 
-    ab = {
+    function shouldRunTest(id, variant) {
+        var test = getTest(id);
+        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
+    }
+
+    function getVariant(test, variantId) {
+        return _.find(test.variants, function (variant) {
+            return variant.id === variantId;
+        });
+    }
+
+    // These kinds of tests are both server and client side.
+    function getServerSideTests() {
+        // International Edition is not really a test.
+        return _(config.tests)
+            .omit('internationalEditionVariant')
+            .pick(function (participating) { return !!participating; })
+            .keys()
+            .value();
+    }
+
+    var ab = {
 
         addTest: function (test) {
             TESTS.push(test);
@@ -277,7 +264,7 @@ define([
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
                 tokens = window.location.hash.replace('#ab-', '').split(',');
-                tokens.forEach(function (token) {
+                _.forEach(tokens, function (token) {
                     var abParam, test, variant;
                     abParam = token.split('=');
                     test = abParam[0];
@@ -333,11 +320,14 @@ define([
             try {
                 _.forEach(getActiveTests(), function (test) {
                     if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariant(test.id);
+                        var variant = getTestVariantId(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }
+                });
+                _.forEach(getServerSideTests(), function (testName) {
+                    abLogObject['ab' + testName] = 'inTest';
                 });
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
@@ -354,8 +344,9 @@ define([
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
-        getTestVariant: getTestVariant,
+        getTestVariantId: getTestVariantId,
         setTestVariant: setTestVariant,
+        getVariant: getVariant,
 
         /**
          * check if a test can be run (i.e. is not expired and switched on)
@@ -372,6 +363,8 @@ define([
 
             return test.id && test.expiry && testCanBeRun(test);
         },
+
+        shouldRunTest: shouldRunTest,
 
         // testing
         reset: function () {

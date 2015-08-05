@@ -3,7 +3,6 @@
     Description: Used to detect various characteristics of the current browsing environment.
                  layout mode, connection speed, battery level, etc...
 */
-/*jshint strict: false */
 /*global DocumentTouch: true */
 
 define([
@@ -110,6 +109,15 @@ define([
         return totalTime;
     }
 
+    function getTimeOfDomComplete(performance) {
+        var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        if (perf && perf.timing) {
+            return perf.timing.domComplete;
+        } else {
+            return new Date().getTime();
+        }
+    }
+
     function isReload() {
         var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
         if (!!perf && !!perf.navigation) {
@@ -131,6 +139,41 @@ define([
 
     function isFireFoxOSApp() {
         return navigator.mozApps && !window.locationbar.visible;
+    }
+
+    function isFacebookApp() {
+        return navigator.userAgent.indexOf('FBAN/') > -1;
+    }
+
+    function isTwitterApp() {
+        // NB Android app is indistinguishable from Chrome: http://mobiforge.com/research-analysis/webviews-and-user-agent-strings
+        return navigator.userAgent.indexOf('Twitter for iPhone') > -1;
+    }
+
+    function isTwitterReferral() {
+        return /\.t\.co/.test(document.referrer);
+    }
+
+    function isFacebookReferral() {
+        return /\.facebook\.com/.test(document.referrer);
+    }
+
+    function isGuardianReferral() {
+        return /\.theguardian\.com/.test(document.referrer);
+    }
+
+    function socialContext() {
+        var override = /socialContext=(facebook|twitter)/.exec(window.location.hash);
+
+        if (override !== null) {
+            return override[1];
+        } else if (isFacebookApp() || isFacebookReferral()) {
+            return 'facebook';
+        } else if (isTwitterApp() || isTwitterReferral()) {
+            return 'twitter';
+        } else {
+            return null;
+        }
     }
 
     getUserAgent = (function () {
@@ -238,12 +281,12 @@ define([
             types = {};
 
         try {
-            if (!!elem.canPlayType) {
+            if (elem.canPlayType) {
                 types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/, '');
                 types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, '');
                 types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/, '');
             }
-        } catch (e) {}
+        } catch (e) {/**/}
 
         return types;
     }
@@ -337,7 +380,7 @@ define([
                     pageshow: v,
                     blur: h,
                     focusout: h,
-                    pagehide:h
+                    pagehide: h
                 };
 
             evt = evt || window.event;
@@ -403,13 +446,22 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '';
+        var displayed = '',
+            isAdblock = false,
+            mozBinding = '',
+            mozBindingHidden = -1;
 
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
+        mozBinding = $('.ad_unit').css('-moz-binding');
+        if (typeof mozBinding !== 'undefined') {
+            mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+        }
         $('.ad_unit').remove();
-
-        return displayed === 'none' ? true : false;
+        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
+            isAdblock = true;
+        }
+        return isAdblock;
     }
 
     detect = {
@@ -426,16 +478,23 @@ define([
         isIOS: isIOS,
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
+        isFacebookApp: isFacebookApp,
+        isTwitterApp: isTwitterApp,
+        isFacebookReferral: isFacebookReferral,
+        isTwitterReferral: isTwitterReferral,
+        isGuardianReferral: isGuardianReferral,
+        socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
+        getTimeOfDomComplete: getTimeOfDomComplete,
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse
+        adblockInUse: adblockInUse()
     };
     return detect;
 });

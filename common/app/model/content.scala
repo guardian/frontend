@@ -3,13 +3,13 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
+import com.gu.util.liveblogs.{Parser => LiveBlogParser}
+import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
-import dfp.DfpAgent
-import fronts.MetadataDefaults
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ImgSrc, Naked, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support.{ImgSrc, Item700, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -37,10 +37,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
-  lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
+  lazy val internalPageCode: String = delegate.safeFields("internalPageCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
-  lazy val webUrl: String = delegate.webUrl
+  override lazy val webUrl: String = delegate.webUrl
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val contributorBio: Option[String] = fields.get("contributorBio")
   lazy val starRating: Option[Int] = fields.get("starRating").flatMap(s => Try(s.toInt).toOption)
@@ -60,25 +60,28 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
-  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").contains("true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {
       case (Some(t), Some(b)) => contributors.length == 1 && t.name == b
       case _ => false
     }
   }
+
   lazy val hasTonalHeaderByline: Boolean = {
-    visualTone == Tags.VisualTone.Comment && hasSingleContributor && contentType != GuardianContentTypes.ImageContent
+    (cardStyle == Comment || cardStyle == Editorial) &&
+      hasSingleContributor &&
+      contentType != GuardianContentTypes.ImageContent
   }
+
   lazy val hasBeenModified: Boolean = {
     new Duration(webPublicationDate, lastModified).isLongerThan(Duration.standardSeconds(60))
   }
+
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
-  lazy val showBylinePic: Boolean = {
-    visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live &&
-      contentType != GuardianContentTypes.ImageContent &&
-      hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
-  }
+
+  lazy val showCircularBylinePicAtSide: Boolean =
+    cardStyle == Feature && hasLargeContributorImage && contributors.length == 1
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
 
@@ -102,11 +105,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
   override lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
 
-  lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
-    .map(_.id).map(Reference(_)).map(_._2)
+  lazy val references = delegate.references.map(ref => (ref.`type`, Reference(ref.id)._2)).toMap
 
-  lazy val isbn: Option[String] = delegate.references.find(_.`type` == "isbn")
-    .map(_.id).map(Reference(_)).map(_._2)
+  lazy val witnessAssignment = references.get("witness-assignment")
+  lazy val isbn: Option[String] = references.get("isbn")
+  lazy val imdb: Option[String] = references.get("imdb")
 
   lazy val seriesMeta = {
     series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
@@ -164,8 +167,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields.getOrDefault("headline", ""))
 
   override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
-  override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline"))
-  override val showByline = apiContent.metaData.flatMap(_.showByline).getOrElse(metaDataDefault("showByline"))
+  // old bylines can have html http://content.guardianapis.com/commentisfree/2012/nov/10/cocoa-chocolate-fix-under-threat?show-fields=byline
+  override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline").map(stripHtml))
+  override val showByline = resolvedMetaData.showByline
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
@@ -225,8 +229,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
     .getOrElse(Nil)
 
-  private lazy val metaDataDefaults = MetadataDefaults(this)
-  private def metaDataDefault(key: String) = metaDataDefaults.getOrElse(key, false)
+  private lazy val resolvedMetaData: ResolvedMetaData = {
+    val trailMetaData = apiContent.metaData.getOrElse(TrailMetaData.empty)
+    val cardStyle = CardStyle(delegate, trailMetaData)
+    ResolvedMetaData.fromContentAndTrailMetaData(delegate, trailMetaData, cardStyle)
+  }
 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
@@ -240,13 +247,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val contributorTwitterHandle: Option[String] = contributors.headOption.flatMap(_.twitterHandle)
 
-  override lazy val showQuotedHeadline: Boolean =
-    apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(metaDataDefault("showQuotedHeadline"))
+  override lazy val showQuotedHeadline: Boolean = resolvedMetaData.showQuotedHeadline
 
   override lazy val imageReplace: Boolean = apiContent.metaData.flatMap(_.imageReplace).getOrElse(false)
 
-  override lazy val showKickerTag: Boolean =
-    apiContent.metaData.flatMap(_.showKickerTag).getOrElse(metaDataDefault("showKickerTag"))
+  override lazy val showKickerTag: Boolean = resolvedMetaData.showKickerTag
 
   override lazy val showKickerSection: Boolean = apiContent.metaData.flatMap(_.showKickerSection).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
@@ -258,11 +263,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
-  override lazy val showMainVideo: Boolean =
-    apiContent.metaData.flatMap(_.showMainVideo).getOrElse(metaDataDefault("showMainVideo"))
+  override lazy val showMainVideo: Boolean = resolvedMetaData.showMainVideo
 
-  override lazy val imageCutoutReplace: Boolean =
-    apiContent.metaData.flatMap(_.imageCutoutReplace).getOrElse(metaDataDefault("imageCutoutReplace"))
+  override lazy val imageCutoutReplace: Boolean = resolvedMetaData.imageCutoutReplace
 
   override lazy val customImageCutout: Option[FaciaImageElement] = for {
     src <- apiContent.metaData.flatMap(_.imageCutoutSrc)
@@ -315,6 +318,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val seriesTag: Option[Tag] = {
     blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(series.headOption)
   }
+
+  def showFooterContainers = false
 }
 
 object Content {
@@ -427,6 +432,8 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
+    else if (article.isLiveBlog)
+      "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"
   }
@@ -564,6 +571,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   )
+
+  override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
@@ -744,27 +753,29 @@ trait Lightboxable extends Content {
   lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
 
   lazy val lightbox: JsObject = {
-    val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
-    val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
-        JsObject(Seq(
-          "caption" -> JsString(img.caption.getOrElse("")),
-          "credit" -> JsString(img.credit.getOrElse("")),
-          "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
-          "srcsets" -> JsString(ImgSrc.normalSrcset(imgContainer, GalleryMedia.Lightbox)),
-          "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
-          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-          "role" -> JsString(img.role.toString)
-        ))
-      }
+
+    val imageJson = for {
+      container <- lightboxImages
+      img <- container.largestEditorialCrop
+    } yield {
+      JsObject(Seq(
+        "caption" -> JsString(img.caption.getOrElse("")),
+        "credit" -> JsString(img.credit.getOrElse("")),
+        "displayCredit" -> JsBoolean(img.displayCredit),
+        "src" -> JsString(Item700.bestFor(container).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.Lightbox)),
+        "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
+        "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+        "role" -> JsString(img.role.toString)
+      ))
     }
+
     JsObject(Seq(
       "id" -> JsString(id),
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray((imageJson).toSeq.flatten)
+      "images" -> JsArray(imageJson)
     ))
   }
 

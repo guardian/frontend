@@ -1,10 +1,11 @@
-@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfigJson)
+@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, config: com.gu.facia.api.models.CollectionConfig)
 
 @import model.Collection
 @import views.html.fragments.containers.facia_cards.{slice, date}
 @import views.support.{GetClasses, PreviousAndNext}
 @import common.LinkTo
 @import dfp.DfpAgent
+@import services.FaciaContentConvert
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
@@ -38,6 +39,6 @@
                 }
             </div>
         </div>
-        @fragments.trendingTopics(collection.items, page.id)
+        @fragments.trendingTopics(collection.items.map(FaciaContentConvert.frontentContentToFaciaContent), page.id)
     </section>
 }

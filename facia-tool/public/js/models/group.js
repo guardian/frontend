@@ -9,6 +9,9 @@ define([
     copiedArticle,
     mediator
 ) {
+    mediator = mediator.default;
+    copiedArticle = copiedArticle.default;
+
     function Group(opts) {
         var self = this;
 
@@ -34,7 +37,7 @@ define([
             targetItem = _.last(this.items());
 
             mediator.emit('collection:updates', {
-                sourceItem: sourceItem,
+                sourceItem: sourceItem.article.get(),
                 sourceGroup: sourceItem.group,
                 targetItem: targetItem,
                 targetGroup: this,

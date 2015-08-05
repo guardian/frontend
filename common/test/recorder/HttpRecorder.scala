@@ -1,12 +1,14 @@
 package recorder
 
 import java.io._
-import contentapi.Response
-import org.apache.commons.codec.digest.DigestUtils
-import io.Source
-import scala.concurrent.Future
+
 import common.ExecutionContexts
 import conf.Configuration
+import contentapi.Response
+import org.apache.commons.codec.digest.DigestUtils
+
+import scala.concurrent.Future
+import scala.io.Source
 
 
 trait HttpRecorder[A] extends ExecutionContexts {

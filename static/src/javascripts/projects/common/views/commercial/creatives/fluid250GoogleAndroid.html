@@ -23,7 +23,7 @@
         width: 75%;
     }
     .creative--fluid250.hide-until-tablet {
-        background-image: url({{backgroundImageOffset}});
+        background-image: url(<%=backgroundImageOffset%>);
     }
 }
 
@@ -42,7 +42,7 @@
 
 @media (min-width: 1140px){
     .creative--fluid250.hide-until-tablet {
-        background-image: url({{backgroundImage}});
+        background-image: url(<%=backgroundImage%>);
     }
 }
 </style>
@@ -54,17 +54,17 @@
         background-position: 50% 0;
         background-repeat: no-repeat;
     ">
-    <a href="{{clickMacro}}{{link}}" target="_blank">
+    <a href="<%=clickMacro%><%=link%>" target="_blank">
         <div class="gs-container">
             <div class="fluid250_layer fluid250_layer1" style="
-                background-image: url({{textImage}});
+                background-image: url(<%=textImage%>);
                 background-position: 50% 0;
                 top: 40px;
                 height: 52px;
                 margin-left: 0;
             "></div>
             <div class="fluid250_layer fluid250_layer2" style="
-                background-image: url({{logoImage}});
+                background-image: url(<%=logoImage%>);
                 background-position: 100% 100%;
                 background-size: contain;
                 bottom: 0;
@@ -73,7 +73,7 @@
                 top: inherit;
             "></div>
             <div class="fluid250_layer fluid250_layer3" style="
-                background-image: url({{peopleImage}});
+                background-image: url(<%=peopleImage%>);
                 background-position: 100% 100%;
             "></div>
         </div>
@@ -82,17 +82,17 @@
 <div class="creative--fluid250 l-side-margins mobile-only" style="
         background-color: #ffffff;
     ">
-    <a href="{{link}}" target="_blank">
+    <a href="<%=link%>" target="_blank">
         <div class="gs-container">
             <div class="fluid250_layer fluid250_layer1" style="
-                background-image: url({{textImage}});
+                background-image: url(<%=textImage%>);
                 background-position: 50% 0;
                 height: 48px;
                 margin-left: 5%;
                 z-index: 1;
             "></div>
             <div class="fluid250_layer fluid250_layer2" style="
-                background-image: url({{logoImage}});
+                background-image: url(<%=logoImage%>);
                 background-position: 100% 100%;
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -105,7 +105,7 @@
                 bottom: 0;
             "></div>
             <div class="fluid250_layer fluid250_layer3" style="
-                background-image: url({{peopleImage}});
+                background-image: url(<%=peopleImage%>);
                 background-position: 100% 100%;
                 background-repeat: no-repeat;
                 background-size: 115%;

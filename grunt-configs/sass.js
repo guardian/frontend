@@ -3,11 +3,9 @@ module.exports = function(grunt, options) {
 
     return {
         options: {
-            style: 'compressed',
-            sourcemap: options.isDev,
-            noCache: true,
-            quiet: options.isDev ? false : true,
-            bundleExec: true
+            outputStyle: 'compressed',
+            sourceMap: options.isDev,
+            precision: 5
         },
         compileStyleguide: {
             files: [{
@@ -47,6 +45,17 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: sassDir,
                 src: ['*.scss', '!{_*,ie9.*,old-ie.*}'],
+                dest: options.staticTargetDir + 'stylesheets/',
+                rename: function(dest, src) {
+                    return dest + src.replace('scss', 'css');
+                }
+            }]
+        },
+        inline: {
+            files: [{
+                expand: true,
+                cwd: sassDir,
+                src: ['inline/*.scss'],
                 dest: options.staticTargetDir + 'stylesheets/',
                 rename: function(dest, src) {
                     return dest + src.replace('scss', 'css');

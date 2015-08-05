@@ -1,3 +1,8 @@
+We're hiring!
+--------
+Ever thought about joining us?<br/>
+http://developers.theguardian.com/join-the-team.html
+
 Frontend
 ========
 The Guardian website frontend.
@@ -47,6 +52,8 @@ You need A Mac or Linux PC (ubuntu).
 
 2. Run ```./setup.sh``` to install dependencies and compile assets
 3. All being well, you should be able to [run the app](#run-the-app)
+
+Before checking out the repository you may need to add an SSH key to your GitHub account, information on how to do so is here - https://help.github.com/articles/generating-ssh-keys/
 
 ### Manual
 Install each of the things listed:
@@ -121,6 +128,7 @@ jspm registry config github
 It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
 Now create a registry instance.
 ```
+npm -g install jspm-bower-endpoint # jspm >= 0.15.0
 jspm registry create bower jspm-bower-endpoint
 ```
 
@@ -177,14 +185,14 @@ npm install
 Install additional dependencies:
 ```
 bundle
-./node_modules/.bin/jspm install
+grunt install
 ```
 
 npm, bundle, and jspm are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```
-grunt prepare compile
+grunt compile
 ```
 
 ### Run the app
@@ -245,6 +253,11 @@ Check that you own your own .npm directory `ls -ld ~/.npm`
 If it is owned by root, then take ownership of it
 `sudo chown -R username:username ~/.npm`
 
+#### Global install permissions errors
+The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
+
+###phantomjs permissions errors (OSX)
+If you get an error about not having permissions to execute phantomjs during `grunt compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
 
 ###File handles - "Too many files open"
 

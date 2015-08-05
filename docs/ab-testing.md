@@ -122,7 +122,7 @@ define([
 ### Detecting a user's bucket
 You can use this code to check anywhere in your JS whether you're in a test bucket.
 ```
-if (ab.getTestVariant('FaciaSlideshow') === 'slideshow') {
+if (ab.getTestVariantId('FaciaSlideshow') === 'slideshow') {
     ///...
 }
 ```

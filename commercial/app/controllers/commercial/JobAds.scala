@@ -23,5 +23,4 @@ object JobAds extends Controller with implicits.Requests {
       }
     }
   }
-
 }

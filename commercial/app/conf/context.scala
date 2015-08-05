@@ -7,5 +7,5 @@ object HealthCheck extends AnyGoodHealthcheckController(
   "/commercial/travel/offers.json",
   "/commercial/jobs.json",
   "/commercial/money/bestbuys.json",
-  "/commercial/books/bestsellers.json"
+  "/commercial/books/books.json"
 )

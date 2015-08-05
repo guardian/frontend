@@ -4,7 +4,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec}
 import javax.net.ssl._
 import java.security.{cert, SecureRandom}
 import java.net.{ProtocolException, MalformedURLException, URL}
-import org.joda.time.{Days, DateTime}
+import org.joda.time.{LocalDate, Days, DateTime}
 import java.io.IOException
 import sun.security.x509.X509CertImpl
 

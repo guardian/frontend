@@ -1,4 +1,4 @@
-/* global guardian */
+/* global guardian, s */
 define([
     'common/utils/_',
     'common/utils/config',
@@ -71,7 +71,7 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9';
+            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9,channel';
             s.linkTrackEvents = _.values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
@@ -172,9 +172,9 @@ define([
             player.one('video:content:play', this.onContentPlay.bind(this));
             player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));
 
-            player.one('video:play:25', this.sendNamedEvent.bind(this, 'video:25'));
-            player.one('video:play:50', this.sendNamedEvent.bind(this, 'video:50'));
-            player.one('video:play:75', this.sendNamedEvent.bind(this, 'video:75'));
+            player.one('video:content:25', this.sendNamedEvent.bind(this, 'video:25'));
+            player.one('video:content:50', this.sendNamedEvent.bind(this, 'video:50'));
+            player.one('video:content:75', this.sendNamedEvent.bind(this, 'video:75'));
             player.one('video:content:end', this.sendNamedEvent.bind(this, 'video:end'));
             player.one('audio:content:end', this.sendNamedEvent.bind(this, 'audio:end'));
             player.on('player:fullscreen', this.sendNamedEvent.bind(this, 'video:fullscreen'));

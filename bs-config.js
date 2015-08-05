@@ -24,7 +24,8 @@ module.exports = {
         }
     },
     "files": [
-        "static/src/javascripts/es6/**"
+        "static/src/javascripts/**",
+        "static/hash/stylesheets/**/*.css"
     ],
     "server": false,
     "proxy": "localhost:9000",

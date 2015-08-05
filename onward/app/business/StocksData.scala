@@ -17,7 +17,7 @@ object StocksData extends AutoRefresh[Stocks](0 seconds, 1 minute) with Logging 
       Json.fromJson[Indices](response.json) match {
         case JsSuccess(rawStocksData, _) => Stocks.fromFingerpost(rawStocksData)
         case error @ JsError(_) =>
-          log.error(s"Could not read raw stocks data ${Json.stringify(JsError.toFlatJson(error))}")
+          log.error(s"Could not read raw stocks data ${Json.stringify(JsError.toJson(error))}")
           throw new RuntimeException("Could not read raw stocks data")
       }
     }

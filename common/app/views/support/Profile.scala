@@ -1,15 +1,13 @@
 package views.support
 
+import java.net.{URI, URISyntaxException}
 import common.Logging
-import layout.WidthsByBreakpoint
-import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch, ImgixSwitch}
-import java.net.{URISyntaxException, URI}
+import conf.{Configuration, Switches}
+import layout.WidthsByBreakpoint
+import model.{Content, ImageAsset, ImageContainer, MetaData}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
-import conf.Configuration
-import implicits.Requests._
-import play.api.mvc.RequestHeader
 
 sealed trait ElementProfile {
 
@@ -82,29 +80,32 @@ object ImgSrc extends Logging {
 
   private val imageHost = Configuration.images.path
 
-  private val hostPrefixMapping = Map(
-    "static.guim.co.uk" -> "static",
-    "media.guim.co.uk" -> "media"
+  private case class HostMapping(prefix: String, token: String)
+
+  private lazy val hostPrefixMapping: Map[String, HostMapping] = Map(
+    "static.guim.co.uk" -> HostMapping("static", Configuration.images.backends.staticToken),
+    "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 
-  def apply(url: String, imageType: ElementProfile, imgix: Boolean = false): String = {
+  def apply(url: String, imageType: ElementProfile): String = {
     try {
       val uri = new URI(url.trim)
 
-      val supportedImages = if(PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
+      val supportedImages = if (PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
 
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
         .filter(_ => isSupportedImage)
         .filter(_ => ImageServerSwitch.isSwitchedOn)
-        .map( pathPrefix =>
-          if(imgix) {
-            s"http://$pathPrefix-guim.imgix.net${uri.getPath}${imageType.imgixResizeString}"
+        .map { host =>
+          if (ImgixSwitch.isSwitchedOn) {
+            val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.imgixResizeString}", host.token)
+            s"$imageHost/img/${host.prefix}$signedPath"
           } else {
-            s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
+            s"$imageHost/${host.prefix}${imageType.resizeString}${uri.getPath}"
           }
-        ).getOrElse(url)
+        }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>
         log.error("Unable to decode image url", error)
@@ -112,46 +113,39 @@ object ImgSrc extends Logging {
     }
   }
 
-  // always, and I mean ALWAYS think carefully about the size image you use
-  def findSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  private def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
   }
 
-  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
+  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.largestFor(imageContainer).flatMap(_.url).map{ largestImage =>
-      ImgSrc(largestImage, profile,(request.isInImgixTest && ImgixSwitch.isSwitchedOn))
+      ImgSrc(largestImage, profile)
     }
   }
 
-  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
-      if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) {
-        widths.profiles.map { profile =>
-          s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
-        } mkString ", "
-      } else {
-        normalSrcset(imageContainer, widths)
-      }
-  }
-
-  def normalSrcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
+  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile =>
-      s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
+      if(ImgixSwitch.isSwitchedOn) {
+        s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      } else {
+        s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      }
     } mkString ", "
   }
 
-  def srcset(path: String, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
+  def srcset(path: String, widths: WidthsByBreakpoint): String = {
     widths.profiles map { profile =>
-      s"${ImgSrc(path, profile, (request.isInImgixTest && ImgixSwitch.isSwitchedOn))} ${profile.width.get}w"
+      s"${ImgSrc(path, profile)} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def getFallbackUrl(imageContainer: ImageContainer)(implicit request: RequestHeader): Option[String] = {
-    if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) {
+  def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
+    if(ImgixSwitch.isSwitchedOn) {
       findLargestSrc(imageContainer, Item300)
     } else {
-      findSrc(imageContainer, Item300)
+      findNearestSrc(imageContainer, Item300)
     }
   }
 

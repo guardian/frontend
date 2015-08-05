@@ -19,6 +19,10 @@
         }
     }
 
+    .inline-quote {
+        fill: $c-headline;
+    }
+
     .fc-item__container:before,
     .rich-link__container:before, {
         background-color: colour(live-mute);
@@ -27,8 +31,13 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(live-mute);
+    }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(live-default), 20%);
     }
 
     .rich-link__arrow-icon {
@@ -57,6 +66,16 @@
 
     .fc-sublink__title:before {
         border-color: mix($c-headline, colour(live-default), 20%);
+    }
+
+    .fc-item__meta {
+        .inline-icon {
+            fill: colour(live-mute);
+        }
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(live-mute);
     }
 }
 

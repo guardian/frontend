@@ -2,6 +2,7 @@ package test
 
 import conf.Configuration
 import conf.Switches._
+import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
 import collection.JavaConversions._
@@ -125,7 +126,7 @@ import collection.JavaConversions._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='contentUrl representativeOfPage']").getAttribute("src") should
+        findFirst("[itemprop='contentUrl']").getAttribute("src") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
@@ -150,6 +151,21 @@ import collection.JavaConversions._
         Then("I should see the publication date of the article")
         findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
+      }
+    }
+
+    scenario("Live blogs should have a coverage start and end date", ArticleComponents) {
+
+      Given("I am on a dead live blog")
+      goTo("/books/live/2015/jul/13/go-set-a-watchman-launch-follow-it-live") { browser =>
+        import browser._
+
+        Then("I should see the start and end date of coverage")
+        val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
+        val woo = liveBlogPosting.findElements(By.xpath(".//*"))
+        println(s"text is $woo ${woo.length}");
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:27+0100")
       }
     }
 
@@ -224,16 +240,21 @@ import collection.JavaConversions._
 
     scenario("Review stars", ArticleComponents) {
 
-      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
+      Given("I am on a review entitled 'Slow West review – a lyrical ode to love on the wild frontier'")
+      goTo("/film/2015/jun/28/slow-west-review-mark-kermode") { browser =>
         import browser._
 
         Then("I should see the star rating of the festival")
         And("The review is marked up with the correct schema")
         val review = findFirst("article[itemtype='http://schema.org/Review']")
 
-        review.findFirst("[itemprop=reviewRating]").getText should be("3 / 5 stars")
-        review.findFirst("[itemprop=ratingValue]").getText should be("3")
+        review.findFirst("[itemprop=reviewRating]").getText should be("4 / 5 stars")
+        review.findFirst("[itemprop=ratingValue]").getText should be("4")
+
+        val reviewed = review.findFirst("[itemprop=itemReviewed]")
+
+        reviewed.getAttribute("itemtype") should be("http://schema.org/Movie")
+        reviewed.findFirst("[itemprop=sameAs]").getAttribute("href") should be("http://www.imdb.com/title/tt3205376/")
       }
     }
 
@@ -349,7 +370,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am:Vince Cable, the business secretary")
+        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
       }
     }
 
@@ -389,7 +410,7 @@ import collection.JavaConversions._
 //        import browser._
 //
 //        Then("the main picture should be shown")
-//        $("[itemprop='contentURL representativeOfPage']") should have size 1
+//        $("[itemprop='contentURL']") should have size 1
 //
 //        And("the embedded video should not have a poster when there are no images in the video element")
 //        findFirst("video").getAttribute("poster") should be("")
@@ -402,14 +423,6 @@ import collection.JavaConversions._
         import browser._
         Then("I should see the embedded video")
         $(".element-video").size should be(4)
-      }
-    }
-
-    scenario("Do not show 'classic' link on Football live blogs") {
-      goTo("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live") { browser =>
-        withClue("There should be no 'classic version' link") {
-          browser.find(".js-main-site-link") should be(empty)
-        }
       }
     }
 
@@ -428,7 +441,7 @@ import collection.JavaConversions._
       goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { browser =>
         import browser._
         Then("The main picture should be show")
-        $("[itemprop='contentUrl representativeOfPage']") should have size 1
+        $("[itemprop='contentUrl']") should have size 1
       }
     }
 
@@ -617,10 +630,8 @@ import collection.JavaConversions._
         browser =>
           import browser._
           Then("Then the Outbrain placeholder should be rendered")
-          var outbrainPlaceholder = $(".OUTBRAIN")
+          var outbrainPlaceholder = $(".js-outbrain")
           outbrainPlaceholder.length should be(1)
-          outbrainPlaceholder.getAttribute("data-src") should be("DROP_PERMALINK_HERE")
-          outbrainPlaceholder.getAttribute("data-ob-template") should be("guardian")
       }
 
       Given("I am on a live blog")
@@ -628,7 +639,7 @@ import collection.JavaConversions._
         browser =>
           import browser._
           Then("Then the Outbrain placeholder should not be rendered")
-          $(".OUTBRAIN").isEmpty should be(true)
+          $(".js-outbrain").isEmpty should be(true)
 
       }
 

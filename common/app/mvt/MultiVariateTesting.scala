@@ -21,11 +21,25 @@ object JspmTest extends TestDefinition(
   List(Variant0),
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
-  new LocalDate(2015, 5, 30)
+  new LocalDate(2015, 9, 30)
+)
+
+object JspmControlTest extends TestDefinition(
+  List(Variant7),
+  "jspm-control",
+  "A control test/variant to compare with the JspmTest",
+  new LocalDate(2015, 9, 30)
+)
+
+object MobileTopBannerRemoveTest extends TestDefinition(
+  List(Variant1),
+  "mobile-top-banner-remove",
+  "To test the effect of top banner removal on mobile",
+  new LocalDate(2015, 8, 30)
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, MobileTopBannerRemoveTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
@@ -45,7 +59,9 @@ case class TestDefinition (
     name,
     description,
     conf.Off,
-    sellByDate)
+    sellByDate,
+    exposeClientSide = true
+  )
 
   def isParticipating(implicit request: RequestHeader): Boolean = {
     ActiveTests.getParticipatingTest(request).contains(this)

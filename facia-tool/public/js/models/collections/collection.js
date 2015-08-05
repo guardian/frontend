@@ -1,5 +1,4 @@
 define([
-    'config',
     'knockout',
     'underscore',
     'jquery',
@@ -15,7 +14,6 @@ define([
     'models/collections/article',
     'modules/content-api'
 ], function(
-    config,
     ko,
     _,
     $,
@@ -32,6 +30,11 @@ define([
     contentApi
 ) {
     modalDialog = modalDialog.default;
+    asObservableProps = asObservableProps.default;
+    populateObservables = populateObservables.default;
+    mediator = mediator.default;
+    humanTime = humanTime.default;
+    fetchVisibleStories = fetchVisibleStories.default;
 
     function Collection(opts) {
 
@@ -224,7 +227,7 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: vars.CONST.apiBase + '/collection/'+ (goLive ? 'publish' : 'discard') + '/' + this.id
+            url: vars.CONST.apiBase + '/collection/' + (goLive ? 'publish' : 'discard') + '/' + this.id
         })
         .then(function() {
             self.load()
@@ -256,40 +259,34 @@ define([
     };
 
     Collection.prototype.load = function(opts) {
-        var self = this,
-            deferred = new $.Deferred();
+        var self = this;
 
         opts = opts || {};
 
-        authedAjax.request({
+        return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
-        .done(function(raw) {
+        .then(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
+            if (!raw) { return; }
 
-            if (!raw) {
-                self.loaded.resolve();
-                return;
-            }
+            // We need to wait for the populate
+            return new Promise(function (resolve) {
+                self.state.hasConcurrentEdits(false);
 
-            self.state.hasConcurrentEdits(false);
+                self.populate(raw, resolve);
 
-            self.populate(raw);
+                populateObservables(self.collectionMeta, raw);
 
-            populateObservables(self.collectionMeta, raw);
+                self.collectionMeta.updatedBy(raw.updatedEmail === vars.identity.email ? 'you' : raw.updatedBy);
 
-            self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
-
-            self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+                self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+            });
         })
-        .fail(function () {
-            self.loaded.resolve();
-        })
-        .always(function() {
+        .catch(function () {})
+        .then(function() {
             self.setPending(false);
         });
-
-        return deferred;
     };
 
     Collection.prototype.registerElement = function (element) {
@@ -307,7 +304,8 @@ define([
     };
 
 
-    Collection.prototype.populate = function(rawCollection) {
+    Collection.prototype.populate = function(rawCollection, callback) {
+        callback = callback || function () {};
         var self = this,
             list,
             loading = [];
@@ -318,7 +316,7 @@ define([
             this.state.hasDraft(_.isArray(this.raw.draft));
 
             if (this.hasOpenArticles()) {
-                this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
+                this.state.hasConcurrentEdits(this.raw.updatedEmail !== vars.identity.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
                 list = this.front.getCollectionList(this.raw);
@@ -348,10 +346,11 @@ define([
 
         this.refreshVisibleStories();
         this.setPending(false);
-        $.when.apply($, loading).always(function () {
+        Promise.all(loading).then(function () {
             mediator.emit('collection:populate', self);
-            self.loaded.resolve();
-        });
+            callback();
+        })
+        .catch(callback);
     };
 
     Collection.prototype.populateHistory = function(list) {

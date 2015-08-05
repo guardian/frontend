@@ -1,39 +1,42 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
+@import conf.Switches
+
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
     @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
-
         @if(!content.shouldHideAdverts) {
             <div class="fc-container fc-container--commercial-high">
-                @fragments.commercial.commercialComponentHigh()
+            @fragments.commercial.commercialComponentHigh()
             </div>
         }
 
         @fragments.storyPackagePlaceholder(content, related)
-        @fragments.onwardPlaceholder(content.visualTone)
+        @if(content.showFooterContainers && Switches.NewOutbrainSwitch.isSwitchedOn) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
+            @fragments.outbrainPlaceholder()
+            </div>
+        }
+        @fragments.onwardPlaceholder()
 
         @if(content.isCommentable) {
             <div class="js-repositioned-comments content__repositioned-comments"></div>
         }
 
-        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+        @fragments.mostPopularPlaceholder(content.section)
 
-        @content match {
-            case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
-                <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                    @fragments.outbrainPlaceholder()
-                </div>
-            }
-            case _ => { }
+        @if(content.showFooterContainers && !Switches.NewOutbrainSwitch.isSwitchedOn) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
+            @fragments.outbrainPlaceholder()
+            </div>
         }
 
         @if(!content.shouldHideAdverts) {
             <div class="fc-container fc-container--commercial">
-                @fragments.commercial.commercialComponent()
+            @fragments.commercial.commercialComponent()
             </div>
         }
     } else {
