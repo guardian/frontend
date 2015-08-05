@@ -333,14 +333,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val OphanViewIdSwitch = Switch("Commercial",
-    "ophan-view-id",
-    "Depending on ophan to pass view ID to the gpt targeting",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
-    exposeClientSide = true
-  )
-
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
