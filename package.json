@@ -5,6 +5,7 @@
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
     "babel": "^5.5.8",
+    "browser-sync": "^2.8.2",
     "btoa": "1.1.2",
     "del": "^1.2.0",
     "eslint-plugin-react": "^2.7.0",
