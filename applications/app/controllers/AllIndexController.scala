@@ -67,11 +67,11 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         val prevPage = {
           olderDate match {
             case Some(older) => Some(s"/$path/${urlFormat(older)}/all")
-            case _ => Some(s"/$path/${urlFormat(reqDate.minusDays(1))}/altDate")
+            case _ => Some(s"/$path/${urlFormat(reqDate.minusDays(1))}/altdate")
           }
         }
         val today = DateTime.now
-        val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altDate")
+        val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
         val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
         Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage)))
