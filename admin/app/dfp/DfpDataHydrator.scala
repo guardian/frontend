@@ -103,7 +103,7 @@ class DfpDataHydrator extends Logging {
             sponsor = sponsor,
             creativeSizes = dfpLineItem.getCreativePlaceholders.map { placeholder =>
               AdSize(placeholder.getSize.getWidth.toInt, placeholder.getSize.getHeight.toInt)
-            }.toSeq,
+            }.toList.sortBy(size => (size.width, size.height)),
             targeting = GuTargeting(adUnits,
               geoTargetsIncluded,
               geoTargetsExcluded,
