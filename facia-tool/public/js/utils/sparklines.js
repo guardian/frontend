@@ -1,10 +1,10 @@
-import * as vars from 'modules/vars';
 import ko from 'knockout';
 import _ from 'underscore';
 import $ from 'jquery';
 import Promise from 'Promise';
 import numeral from 'numeral';
 import {request} from 'modules/authed-ajax';
+import * as vars from 'modules/vars';
 import Highcharts from 'utils/highcharts';
 import mediator from 'utils/mediator';
 import parseQueryParams from 'utils/parse-query-params';
@@ -139,6 +139,10 @@ function reduceRequest (memo, front, articles, options) {
         });
 
         return memo;
+    })
+    .catch(function () {
+        // Ignore errors from Ophan
+        return {};
     });
 }
 
@@ -165,7 +169,7 @@ function differential (collection) {
     var front = collection.front,
         data, newArticles = [];
 
-    if (!front || !front.sparklines || front.sparklines.promise.state() !== 'resolved') {
+    if (!front || !front.sparklines || !front.sparklines.resolved) {
         return;
     }
 
@@ -178,26 +182,27 @@ function differential (collection) {
     });
 
     if (newArticles.length) {
-        var deferred = new $.Deferred(),
-            referrerFront = front.front();
+        var referrerFront = front.front();
 
-        getHistogram(
+        front.sparklines.resolved = false;
+        front.sparklines.promise = getHistogram(
             front.front(),
             newArticles,
             front.sparklinesOptions()
         ).then(function (newData) {
             if (referrerFront !== front.front()) {
-                deferred.reject();
+                throw new Error('Front changed since last request.');
             } else {
                 _.each(newArticles, function (webUrl) {
                     data[webUrl] = newData[webUrl];
                 });
                 front.sparklines.data(data);
-                deferred.resolve(data);
+                front.sparklines.resolved = true;
+                return data;
             }
         });
 
-        front.sparklines.promise = deferred.promise();
+        return front.sparklines.promise;
     }
 }
 
@@ -206,37 +211,36 @@ function loadSparklinesForFront (front) {
         return;
     }
 
-    var deferred = new $.Deferred(),
-        referrerFront = front.front();
+    var referrerFront = front.front();
 
-    $.when.apply($, _.map(front.collections(), function (collection) {
-        return collection.loaded;
-    })).then(function () {
+    if (!front.sparklines) {
+        front.sparklines = {
+            data: ko.observable({}),
+            resolved: false
+        };
+    }
+
+    front.sparklines.resolved = false;
+    front.sparklines.promise = Promise.all(_.map(front.collections(), collection => collection.loaded))
+    .then(() => {
         if (referrerFront !== front.front()) {
-            deferred.reject();
-            return;
+            throw new Error('Front changed since last request.');
         }
 
-        getHistogram(
+        return getHistogram(
             front.front(),
             allWebUrls(front),
             front.sparklinesOptions()
         ).then(function (data) {
             if (referrerFront !== front.front()) {
-                deferred.reject();
+                throw new Error('Front changed since last request.');
             } else {
                 front.sparklines.data(data);
-                deferred.resolve(data);
+                front.sparklines.resolved = true;
+                return data;
             }
         });
     });
-
-    if (!front.sparklines) {
-        front.sparklines = {
-            data: ko.observable({})
-        };
-    }
-    front.sparklines.promise = deferred.promise();
 }
 
 function startPolling () {

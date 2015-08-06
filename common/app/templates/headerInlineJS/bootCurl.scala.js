@@ -25,7 +25,9 @@ var curl = {
         'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
         'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
         'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
-        'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+        @if(item.isFront) {
+            'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+        }
         'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
         'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
         'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
@@ -86,8 +88,14 @@ require([
         }
     );
 
-    // Uncaught exceptions
+    // Report uncaught exceptions
     raven.install();
+
+    // Report unhandled promise rejections
+    // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+    window.addEventListener('unhandledRejection', function (event) {
+        raven.captureException(event.detail.reason);
+    });
 
     require([
         'common/utils/config',

@@ -87,6 +87,12 @@
         max-width: none;
     }
 
+    .site-message--adblock & {
+        @include mq($from: tablet, $until: desktop) {
+            max-width: gs-span(6);
+        }
+    }
+
     @include mq(desktop) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter/2;

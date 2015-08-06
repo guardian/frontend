@@ -24,6 +24,7 @@ object GuardianContentTypes {
   val Audio = "Audio"
   val LiveBlog = "LiveBlog"
   val TagIndex = "Index"
+  val Crossword = "Crossword"
 }
 
 // Eventually, replace list above with one of these

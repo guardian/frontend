@@ -171,7 +171,7 @@ import collection.JavaConversions._
 
     scenario("Articles should have the correct timezone for when they were published") {
 
-      Given("I am on an article published on '2012-11-10'")
+      Given("I am on an article published on '2012-11-08'")
       And("I am on the 'UK' edition")
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
@@ -179,7 +179,7 @@ import collection.JavaConversions._
         findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
       }
 
-      Given("I am on an article published on '2012-11-10'")
+      Given("I am on an article published on '2012-11-08'")
       And("I am on the 'US' edition")
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
@@ -630,10 +630,8 @@ import collection.JavaConversions._
         browser =>
           import browser._
           Then("Then the Outbrain placeholder should be rendered")
-          var outbrainPlaceholder = $(".OUTBRAIN")
+          var outbrainPlaceholder = $(".js-outbrain")
           outbrainPlaceholder.length should be(1)
-          outbrainPlaceholder.getAttribute("data-src") should be("DROP_PERMALINK_HERE")
-          outbrainPlaceholder.getAttribute("data-ob-template") should be("guardian")
       }
 
       Given("I am on a live blog")
@@ -641,7 +639,7 @@ import collection.JavaConversions._
         browser =>
           import browser._
           Then("Then the Outbrain placeholder should not be rendered")
-          $(".OUTBRAIN").isEmpty should be(true)
+          $(".js-outbrain").isEmpty should be(true)
 
       }
 

@@ -1,5 +1,5 @@
 import Injector from 'helpers/injector';
-import ophan from 'ophan/ng';
+import storage from 'common/utils/storage';
 
 describe('Build Page Targeting', function () {
 
@@ -43,6 +43,9 @@ describe('Build Page Targeting', function () {
                 config.switches = {
                     audienceScienceGateway: true
                 };
+
+                config.ophan.pageViewId = 'presetOphanPageViewId';
+
                 cookies.get = function () {
                     return 'ng101';
                 };
@@ -77,7 +80,7 @@ describe('Build Page Targeting', function () {
     });
 
     it('should build correct page targeting', function () {
-        var pageTargeting = buildPageTargeting(ophan);
+        var pageTargeting = buildPageTargeting();
 
         expect(pageTargeting.edition).toBe('us');
         expect(pageTargeting.ct).toBe('video');
@@ -87,11 +90,11 @@ describe('Build Page Targeting', function () {
         expect(pageTargeting.at).toBe('ng101');
         expect(pageTargeting.gdncrm).toEqual(['seg1', 'seg2']);
         expect(pageTargeting.co).toEqual(['gabrielle-chan']);
-        expect(pageTargeting.pv).toEqual('123456');
         expect(pageTargeting.bl).toEqual(['blog']);
         expect(pageTargeting.ms).toBe('itn');
         expect(pageTargeting.tn).toEqual(['advertisement-features', 'news']);
         expect(pageTargeting.vl).toEqual('90');
+        expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
     });
 
     it('should set correct edition param', function () {
@@ -135,6 +138,7 @@ describe('Build Page Targeting', function () {
 
     it('should remove empty values', function () {
         config.page = {};
+        config.ophan.pageViewId = '123456';
         userAdTargeting.getUserSegments = function () {
             return [];
         };
@@ -158,7 +162,23 @@ describe('Build Page Targeting', function () {
             p: 'ng',
             bp: 'mobile',
             at: 'ng101',
-            ab: ['MtMaster-v']
+            ab: ['MtMaster-v'],
+            pv: '123456',
+            fr: '0'
+        });
+    });
+
+    describe('Already visited frequency', function () {
+        it('should set 3 frequency param', function () {
+            storage.local.set('alreadyVisited', 3);
+
+            expect(buildPageTargeting().fr).toEqual('3');
+        });
+
+        it('should set 5+ frequency param', function () {
+            storage.local.set('alreadyVisited', 67);
+
+            expect(buildPageTargeting().fr).toEqual('5plus');
         });
     });
 });

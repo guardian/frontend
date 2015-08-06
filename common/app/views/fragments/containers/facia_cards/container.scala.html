@@ -30,9 +30,11 @@
              aria-expanded="true">
 
              @if(containerDefinition.isStoryPackage){
-                 <style scoped>
-                    @Html(conf.Static.css.head(Some("story-package")))
-                 </style>
+                @conf.Static.css.inline("story-package").map { css =>
+                    <style>
+                        @Html(css)
+                    </style>
+                }
              }
 
         <div class="fc-container__inner">

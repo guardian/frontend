@@ -253,25 +253,20 @@ GET         /admin/football/fronts/match/:matchId                               
 
 GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
+
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.renderTravel
-
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.renderJobs
-
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
-
 GET         /commercial/soulmates/$subgroup<\w+>.json                                                                controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 GET         /commercial/soulmates-test/$subgroup<\w+>.json            												 controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
-
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
 GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffersController.renderBooks
-
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.renderBestBuys
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
-
 GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffersController.itemsJson
 GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffersController.itemsHtml
 GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffersController.itemJson
@@ -279,6 +274,8 @@ GET         /commercial/capi-single                                             
 GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffersController.itemJson
 GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffersController.itemHtml
 
+# Commercial Admin
+GET         /admin/commercial                                                                                        controllers.admin.CommercialController.renderCommercialMenu()
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
@@ -286,12 +283,11 @@ GET         /commercial/multi.json                                              
 GET         /admin/commercial/dfp/flush/view                                                                         controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /admin/commercial/dfp/flush                                                                              controllers.admin.commercial.DfpDataController.flushCache()
 GET         /admin/commercial/radiator                                                                               controllers.admin.CommercialController.renderCommercialRadiator()
-
+GET         /admin/commercial/slot/:slotName                                                                         controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /admin/commercial/adops/takeovers-empty-mpus                                                             controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /admin/commercial/adops/takeovers-empty-mpus/create                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST        /admin/commercial/adops/takeovers-empty-mpus/create                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST        /admin/commercial/adops/takeovers-empty-mpus/remove                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
-
 
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
@@ -304,8 +300,8 @@ GET         /series/*path.json                                                  
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                                                controllers.AllIndexController.newer(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                                              controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
 
@@ -315,6 +311,7 @@ GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world
 GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
+GET         /most-relevant-container/*path.json                                                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
 
 # Editionalised pages

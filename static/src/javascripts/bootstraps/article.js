@@ -10,10 +10,8 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
-    'common/modules/article/truncation',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
-    'common/modules/onward/social-most-popular',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -27,10 +25,8 @@ define([
     richLinks,
     membershipEvents,
     openModule,
-    truncation,
     ab,
     geoMostPopular,
-    SocialMostPopular,
     articleLiveblogCommon,
     trail
 ) {
@@ -53,32 +49,10 @@ define([
                 }
             },
 
-            initSocialMostPopular: function () {
-                var el = qwery('.js-social-most-popular');
-
-                if (el) {
-                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
-                        new SocialMostPopular(el, detect.socialContext());
-                    } else {
-                        ['Twitter', 'Facebook'].forEach(function (socialContext) {
-                            if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
-                                new SocialMostPopular(el, socialContext.toLowerCase());
-                            }
-                        });
-                    }
-                }
-            },
-
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
-            },
-
-            initTruncation: function () {
-                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
-                    truncation();
-                }
             }
         },
 
@@ -87,9 +61,7 @@ define([
             articleLiveblogCommon();
             modules.initRightHandComponent();
             modules.initCmpParam();
-            modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
