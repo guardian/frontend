@@ -83,7 +83,7 @@ define([
                 visitedValue;
 
             if (alreadyVisited > 4) {
-                visitedValue = '5+';
+                visitedValue = '5plus';
             } else {
                 visitedValue = alreadyVisited.toString();
             }

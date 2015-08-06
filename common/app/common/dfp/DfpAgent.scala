@@ -56,13 +56,6 @@ object DfpAgent
 
   private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
-  private def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
-    val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
-      Json.parse(jsonString).as[LineItemReport].lineItems
-    }
-    maybeLineItems getOrElse Nil
-  }
-
   private def update[T](agent: Agent[Seq[T]])(freshData: => Seq[T]) {
     if (freshData.nonEmpty) {
       agent send freshData
@@ -130,6 +123,14 @@ object DfpAgent
   def refreshFaciaSpecificData(): Unit = {
 
     def updateLineItems(slot:AdSlot,key: String): Unit = {
+
+      def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
+        val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
+          Json.parse(jsonString).as[LineItemReport].lineItems
+        }
+        maybeLineItems getOrElse Nil
+      }
+
       lineItemAgent sendOff { oldData =>
         val takeovers = grabCurrentLineItemsFromStore(key)
         if (takeovers.nonEmpty) oldData + (slot -> takeovers)
