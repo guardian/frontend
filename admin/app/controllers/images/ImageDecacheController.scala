@@ -27,10 +27,6 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
   private val iGuim = """i.guim.co.uk/img/(static|media)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
-  // accept image url
-  // convert it to root image
-
-  // check that root is clear (cachebust)..
   def renderImageDecacheForm() = AuthActions.AuthActionTest { request =>
     NoCache(Ok(views.html.images.imageDecacheForm()))
   }
