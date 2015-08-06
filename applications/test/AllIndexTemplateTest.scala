@@ -8,7 +8,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     import browser._
 
     url() should endWith("/world/2014/oct/02/all")
-    $("[rel=next]").first.getAttribute("href") should endWith ("/world/2014/oct/03/newer")
+    $("[rel=next]").first.getAttribute("href") should endWith ("/world/2014/oct/03/altdate")
     $("[rel=next]").first.click()
     url() should endWith("/world/2014/oct/03/all")
 

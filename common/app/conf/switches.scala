@@ -540,15 +540,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val LazyLoadAds = Switch(
-    "Commercial",
-    "lz-ads",
-    "If switched on then all ads are lazy loaded",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
@@ -563,7 +554,7 @@ object Switches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 12),
+    sellByDate = new LocalDate(2015, 9, 9),
     exposeClientSide = false
   )
 
@@ -788,16 +779,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val IdentityUseAvatarApi = Switch(
-    "Identity",
-    "id-use-avatar-api",
-    "If switched on, avatars will be uploaded using the new Avatar API",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 1),
-    exposeClientSide = true
-  )
-
+  
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",

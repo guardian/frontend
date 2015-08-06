@@ -4,7 +4,8 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 window.guardian = {
     config: {
         switches: { },
-        page: { }
+        page: { },
+        tests: { }
     }
 };
 /*eslint-disable camelcase*/

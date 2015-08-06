@@ -439,11 +439,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
   }
 
-  object avatars {
-    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
-    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
-  }
-
   object standalone {
     lazy val oauthCredentials: Option[OAuthCredentials] = for {
       oauthClientId <- configuration.getStringProperty("standalone.oauth.clientid")

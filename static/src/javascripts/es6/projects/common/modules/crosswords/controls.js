@@ -5,7 +5,6 @@ const buttonCurrentClassName = 'button--crossword--current';
 const buttonGenericClassName = 'button--secondary';
 
 export default class Controls extends React.Component {
-
     render () {
         const hasSolutions = this.props.hasSolutions;
         const hasFocus = this.props.clueInFocus;
