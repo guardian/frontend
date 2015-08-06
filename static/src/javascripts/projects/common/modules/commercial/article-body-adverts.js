@@ -65,7 +65,7 @@ define([
     }
 
     function inMobileAdsTest() {
-        return !config.tests.mobileTopBannerRemove || detect.getBreakpoint() !== 'mobile';
+        return config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile';
     }
 
     var ads = [],
