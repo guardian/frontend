@@ -18,6 +18,8 @@ define([
     svgs
 ) {
 
+    var messageId = 'membership-message-usa';
+
     return function () {
 
         this.id = 'MembershipMessageUsa';
@@ -51,13 +53,27 @@ define([
         this.variants = [{
             id: 'A',
             test: function () {
-                new Message('membership-message-usa', {
+                new Message(messageId, {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_USA',
+                    supporterLink: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_A',
                     messageText: 'Support open, independent journalism. Become a Supporter from just £5/$8 per month',
+                    linkText: 'Find out more',
+                    arrowWhiteRight: svgs('arrowWhiteRight')
+                }));
+            }
+        }, {
+            id: 'B',
+            test: function () {
+                new Message(messageId, {
+                    pinOnHide: false,
+                    siteMessageLinkName: 'membership message',
+                    siteMessageCloseBtn: 'hide'
+                }).show(template(messageTemplate, {
+                    supporterLink: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_B',
+                    messageText: '“The Guardian enjoys rare freedom and independence. Support our journalism” – Ewen MacAskill',
                     linkText: 'Find out more',
                     arrowWhiteRight: svgs('arrowWhiteRight')
                 }));
