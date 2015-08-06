@@ -935,6 +935,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABMembershipMessageUsa = Switch(
+    "A/B Tests",
+    "ab-membership-message-usa",
+    "Switch for the USA Supporter message test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 21),
+    exposeClientSide = true
+  )
+
   val ABSignedOutSaveForLaterAug = Switch(
     "A/B Tests",
     "ab-signed-out-save-for-later-aug",
