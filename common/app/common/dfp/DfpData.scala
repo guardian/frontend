@@ -265,9 +265,54 @@ object GuLineItem {
 }
 
 
-case class GuCreativeTemplateParameter(parameterType: String, label: String, isRequired: Boolean, description: String)
+case class GuCreativeTemplateParameter(parameterType: String,
+                                       label: String,
+                                       isRequired: Boolean,
+                                       description: Option[String])
 
-case class GuCreative(id: Long, name: String, args: Map[String, String])
+object GuCreativeTemplateParameter {
+
+  implicit val writes = new Writes[GuCreativeTemplateParameter] {
+    def writes(param: GuCreativeTemplateParameter): JsValue = {
+      Json.obj(
+        "type" -> param.parameterType,
+        "label" -> param.label,
+        "isRequired" -> param.isRequired,
+        "description" -> param.description
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreativeTemplateParameter] = (
+    (JsPath \ "type").read[String] and
+      (JsPath \ "label").read[String] and
+      (JsPath \ "isRequired").read[Boolean] and
+      (JsPath \ "description").readNullable[String]
+    )(GuCreativeTemplateParameter.apply _)
+}
+
+case class GuCreative(id: Long, name: String, lastModified: DateTime, args: Map[String, String])
+
+object GuCreative {
+
+  implicit val writes = new Writes[GuCreative] {
+    def writes(creative: GuCreative): JsValue = {
+      Json.obj(
+        "id" -> creative.id,
+        "name" -> creative.name,
+        "lastModified" -> creative.lastModified,
+        "args" -> creative.args
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreative] = (
+    (JsPath \ "id").read[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "lastModified").read[DateTime] and
+      (JsPath \ "args").read[Map[String, String]]
+    )(GuCreative.apply _)
+}
 
 case class GuCreativeTemplate(id: Long,
                               name: String,
@@ -293,6 +338,39 @@ case class GuCreativeTemplate(id: Long,
 
 }
 
+object GuCreativeTemplate {
+
+  def lastModified(templates: Seq[GuCreativeTemplate]): Option[DateTime] = {
+    val cachedLastModified = for {
+      template <- templates
+      creative <- template.creatives
+    } yield creative.lastModified
+    if (cachedLastModified.isEmpty) None
+    else Some(cachedLastModified maxBy (_.getMillis))
+  }
+
+  implicit val writes = new Writes[GuCreativeTemplate] {
+    def writes(template: GuCreativeTemplate): JsValue = {
+      Json.obj(
+        "id" -> template.id,
+        "name" -> template.name,
+        "description" -> template.description,
+        "parameters" -> template.parameters,
+        "snippet" -> template.snippet,
+        "creatives" -> template.creatives
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreativeTemplate] = (
+    (JsPath \ "id").read[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "description").read[String] and
+      (JsPath \ "parameters").read[Seq[GuCreativeTemplateParameter]] and
+      (JsPath \ "snippet").read[String] and
+      (JsPath \ "creatives").read[Seq[GuCreative]]
+    )(GuCreativeTemplate.apply _)
+}
 
 case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
 

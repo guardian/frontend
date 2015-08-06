@@ -72,6 +72,15 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       Store.putTopBelowNavSlotTakeovers(stringify(toJson(LineItemReport(now,
         data.topBelowNavSlotTakeovers))))
       Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
+
+      val cachedCreativeTemplates = Store.getDfpCreativeTemplates
+      val creativeTemplateThreshold = GuCreativeTemplate.lastModified(cachedCreativeTemplates)
+      val recentCreativeTemplates =
+        DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
+      if (recentCreativeTemplates.nonEmpty) {
+        val creativeTemplatesToCache = cachedCreativeTemplates ++ recentCreativeTemplates
+        Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
+      }
     }
   }
 }
