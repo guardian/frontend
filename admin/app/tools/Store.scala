@@ -69,7 +69,14 @@ trait Store extends Logging with Dates {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
   } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet())
 
-  def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
+  def getDfpLineItemsReport(): Option[String] = S3.get(dfpLineItemsKey)
+
+  def getSlotTakeoversReport(slotName: String): Option[String] = slotName match {
+    case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
+    case "top-below-nav" => S3.get(topBelowNavSlotTakeoversKey)
+    case "top" => S3.get(topSlotTakeoversKey)
+    case _ => None
+  }
 
   object commercial {
 
