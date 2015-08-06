@@ -67,8 +67,10 @@
         }
 
         // Send AWS beacons for Windows7 Chrome & Opera users (user agent is almost identical). This is so we have a indicator of loss on something which we are confident is stable
-        if (/.*Windows NT 6.1; WOW64*/.test(navigator.userAgent)) {
-            logDevice('chrome', 'windows7');
+        if (navigator.platform === 'Win32') {
+            if ((/Windows NT 6.1; WOW64/.test(navigator.userAgent)) && (/Chrome/.test(navigator.userAgent))) {
+                logDevice('chrome', 'windows7');
+            }
         }
 
 
