@@ -9,6 +9,27 @@
     }
 }
 
+.site-message--crosswords {
+    margin-top: $gs-baseline;
+    background: colour(news-default);
+    display: block;
+    color: #ffffff;
+
+    @include fs-headline(2);
+
+    @include mq($until: desktop) {
+        @include fs-headline(1, true);
+    }
+}
+
+.site-message--crosswords {
+    padding: $gs-baseline $gs-gutter;
+
+    a {
+        color: white;
+    }
+}
+
 .site-message--banner {
     position: fixed;
     bottom: 0;
