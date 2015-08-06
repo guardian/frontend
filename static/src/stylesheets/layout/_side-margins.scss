@@ -20,7 +20,6 @@
 .l-side-margins {
     position: relative;
     height: 100%;
-    overflow: auto;
 
     @include mq(tablet) {
         &:after,

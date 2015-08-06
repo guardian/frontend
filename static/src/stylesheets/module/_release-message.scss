@@ -9,8 +9,11 @@
     }
 }
 
+.crossword-optout {
+    padding-top: $gs-baseline;
+}
+
 .site-message--crosswords {
-    margin-top: $gs-baseline;
     background: colour(news-default);
     display: block;
     color: #ffffff;
