@@ -45,6 +45,9 @@ describe('Article Body Adverts', function () {
                     standardAdverts: true,
                     viewability: true
                 };
+                config.tests = {
+                    mobileTopBannerRemove: false
+                };
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
