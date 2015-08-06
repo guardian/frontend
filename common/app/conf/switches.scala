@@ -789,7 +789,7 @@ object Switches {
     exposeClientSide = true
   )
 
-  val IdentityCookieRefresh = Switch(
+  val IdentityCookieRefreshSwitch = Switch(
     "Identity",
     "id-cookie-refresh",
     "If switched on, users cookies will be refreshed." ,

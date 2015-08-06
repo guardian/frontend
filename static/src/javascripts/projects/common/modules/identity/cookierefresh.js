@@ -7,7 +7,6 @@ function (
     storage
 ) {
     function CookieRefresh() {
-
         this.init = function () {
             if (Id.isUserLoggedIn()) {
                 var lastRefresh = storage.local.get(Id.lastRefreshKey),
