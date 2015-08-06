@@ -294,7 +294,12 @@ case class GuCreativeTemplate(id: Long,
 }
 
 
-case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem])
+case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
+
+  lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
+    _.targeting.hasAdTestTargetting
+  }
+}
 
 object LineItemReport {
 
