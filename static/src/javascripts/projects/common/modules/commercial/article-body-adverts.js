@@ -64,7 +64,7 @@ define([
         });
     }
 
-    function outsideMobileAdsTest() {
+    function inMobileAdsTest() {
         return !config.tests.mobileTopBannerRemove || detect.getBreakpoint() !== 'mobile';
     }
 
@@ -111,7 +111,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (config.switches.viewability && outsideMobileAdsTest()) {
+            if (config.switches.viewability && !inMobileAdsTest()) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);
