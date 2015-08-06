@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support._
+import views.support.{ImgSrc, Item700, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -96,12 +96,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    val imageUrl = bestOpenGraphImage
+    bestOpenGraphImage
       .orElse(mainPicture.flatMap(largestImageUrl))
       .orElse(trailPicture.flatMap(largestImageUrl))
       .getOrElse(facebook.imageFallback)
-
-    ImgSrc(imageUrl, FacebookOpenGraphImage)
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
@@ -703,14 +701,12 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
   )
 
   override lazy val openGraphImage: String = {
-    val imageUrl = bestOpenGraphImage
+    bestOpenGraphImage
       .orElse(galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
       .getOrElse(conf.Configuration.facebook.imageFallback)
-
-    ImgSrc(imageUrl, FacebookOpenGraphImage)
   }
 
-  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
+  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
 
   override def schemaType = Some("http://schema.org/ImageGallery")
 
