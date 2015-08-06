@@ -30,7 +30,9 @@ object DevAssetsController extends Controller with ExecutionContexts {
     )
   }
 
-  def humans(): Action[AnyContent] = controllers.Assets.at(path = "/public", file = "humans.txt")
+  def humans(): Action[AnyContent] = at(s"/public/humans.txt")
+
+  def rockaboxBuster(): Action[AnyContent] = at(s"/public/rockabox_buster.html")
 
   def surveys(file: String): Action[AnyContent] =
     controllers.Assets.at(path = "/public/surveys", file, aggressiveCaching = false)
