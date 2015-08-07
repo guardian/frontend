@@ -37,7 +37,7 @@ $c-navigation-toggle-background: colour(neutral-1);
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
-$navigation-h-space-between-items: $gs-gutter;
+$navigation-h-space-between-items: $gs-gutter/2;
 
 $c-navigation-expandable-background: colour(neutral-1);
 
@@ -192,7 +192,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     padding-right: $navigation-h-space-between-items;
 
     @include mq(mobileLandscape) {
-        padding-left: $navigation-h-space-between-items/2;
+        padding-left: $navigation-h-space-between-items;
     }
 
     .navigation-container--expanded .navigation--has-local-navigation & {
@@ -249,7 +249,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     padding-right: $gs-gutter/4;
     padding-left: $gs-gutter/4;
     &:first-child {
-        padding-left: $navigation-h-space-between-items/2;
+        padding-left: $navigation-h-space-between-items;
     }
 }
 
@@ -261,8 +261,8 @@ $c-navigation-expandable-background: colour(neutral-1);
 .local-navigation__action,
 .top-navigation__action,
 .global-navigation__action {
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+    padding-left: $navigation-h-space-between-items;
+    padding-right: $navigation-h-space-between-items;
     height: 100%;
 
     @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
@@ -294,7 +294,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     white-space: nowrap;
 }
 .top-navigation__item--current {
-    margin-right: $gs-gutter/2;
+    margin-right: $navigation-h-space-between-items;
 }
 .local-navigation__item,
 .top-navigation__item {
@@ -303,14 +303,14 @@ $c-navigation-expandable-background: colour(neutral-1);
 .navigation-container--collapsed .navigation--has-signposting {
     .local-navigation,
     .top-navigation {
-        padding-left: $navigation-h-space-between-items/2;
+        padding-left: $navigation-h-space-between-items;
     }
 }
 @include mq(mobileLandscape) {
     .navigation-container--collapsed {
         .local-navigation,
         .top-navigation {
-            padding-left: $navigation-h-space-between-items/2;
+            padding-left: $navigation-h-space-between-items;
         }
     }
 }
@@ -394,8 +394,8 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include mq($until: tablet) {
         line-height: $gs-baseline*2;
         padding-bottom: $gs-baseline;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        padding-left: $navigation-h-space-between-items;
+        padding-right: $navigation-h-space-between-items;
     }
     @include mq(mobileLandscape, tablet) {
         padding-left: $gs-gutter;
@@ -429,10 +429,10 @@ $c-navigation-expandable-background: colour(neutral-1);
     overflow: hidden;
 
     @include mq($until: tablet) {
-        margin-left: -$gs-gutter/2;
-        margin-right: -$gs-gutter/2;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        margin-left: -$navigation-h-space-between-items;
+        margin-right: -$navigation-h-space-between-items;
+        padding-left: $navigation-h-space-between-items;
+        padding-right: $navigation-h-space-between-items;
         padding-bottom: $gs-baseline*.75;
         font-size: 14px;
         line-height: 2;
@@ -443,7 +443,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
     @include mq(tablet) {
         padding-bottom: $gs-baseline/4;
-        padding-left: $gs-gutter/2;
+        padding-left: $navigation-h-space-between-items;
     }
 
     &.global-navigation__children--history {
@@ -477,8 +477,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     .global-navigation__action {
         float: left;
         line-height: $navigation-height - $gs-baseline/2;
-        margin-left: $navigation-h-space-between-items/2;
-        margin-right: $navigation-h-space-between-items/2;
         white-space: nowrap;
     }
 }
@@ -556,8 +554,8 @@ $c-navigation-expandable-background: colour(neutral-1);
         background: $c-local-navigation-background;
 
         @include mq(mobileLandscape) {
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
+            padding-left: $navigation-h-space-between-items;
+            padding-right: $navigation-h-space-between-items;
         }
     }
     .local-navigation__item {
@@ -586,8 +584,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         width: 50%;
         padding-right: 0;
         box-sizing: border-box;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
 
         &:nth-child(2n+1) {
             clear: both;
