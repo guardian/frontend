@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/tests/membership-message'
+    'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/membership-message-usa'
 ], function (
     raven,
     _,
@@ -27,7 +28,8 @@ define([
     HighCommercialComponent,
     SignedOutSaveForLater,
     CookieRefresh,
-    MembershipMessage
+    MembershipMessage,
+    MembershipMessageUSA
 ) {
 
     var TESTS = _.flatten([
@@ -37,7 +39,8 @@ define([
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
         new CookieRefresh(),
-        new MembershipMessage()
+        new MembershipMessage(),
+        new MembershipMessageUSA()
     ]);
 
     var participationsKey = 'gu.ab.participations';
