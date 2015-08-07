@@ -95,7 +95,7 @@
 }
 
 @item.openGraphImages.map{ case (imageUrl) =>
-    <meta property="og:image" content="@{imageUrl}" />
+    <meta property="og:image" content="@Html(imageUrl)" />
 }
 
 @item.pagination.map{ pagination =>
