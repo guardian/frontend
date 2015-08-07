@@ -43,9 +43,9 @@ define([
 
     StickyHeader.prototype.init = function () {
         this.$els.header           = $('.js-header');
-        this.$els.bannerDesktop    = $('.top-banner-ad-container--above-nav');
-        this.$els.bannerMobile     = $('.top-banner-ad-container--mobile');
-        this.$els.bannerBelowNav   = $('.top-banner-ad-container--below-nav');
+        this.$els.bannerDesktop    = $('.js-top-banner-above-nav');
+        this.$els.bannerMobile     = $('.js-top-banner-mobile');
+        this.$els.bannerBelowNav   = $('.js-top-banner-below-nav');
         this.$els.main             = $('.js-maincontent');
         this.$els.navHeader        = $('.js-navigation-header');
         this.$els.burgerIcon       = $('.js-navigation-toggle', this.$els.navHeader);
