@@ -74,8 +74,6 @@ define([
 
                 widgetCodeImage = widgetConfig[breakpoint].image[getSection()];
                 widgetCode = widgetCodeImage;
-
-                console.log('Which section: ', getSection());
             }
 
             fastdom.write(function () {
