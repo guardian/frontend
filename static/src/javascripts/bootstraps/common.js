@@ -3,7 +3,6 @@
 define([
     'bean',
     'bonzo',
-    'fastclick',
     'qwery',
     'common/utils/$',
     'common/utils/background',
@@ -55,7 +54,6 @@ define([
 ], function (
     bean,
     bonzo,
-    FastClick,
     qwery,
     $,
     background,
@@ -106,13 +104,6 @@ define([
     identity
 ) {
     var modules = {
-            initFastClick: function () {
-                // Unfortunately FastClick’s UMD exports are not consistent for
-                // all types. AMD exports FastClick, CJS exports FastClick.attach
-                // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
-                (config.tests.jspmTest ? FastClick : FastClick.attach)(document.body);
-            },
-
             initialiseTopNavItems: function () {
                 var profile,
                     search = new Search(),

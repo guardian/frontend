@@ -11,7 +11,6 @@ module.exports = function(grunt, options) {
                 bonzo:                'components/bonzo/bonzo',
                 enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
-                fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
                 lodash:               'components/lodash',
