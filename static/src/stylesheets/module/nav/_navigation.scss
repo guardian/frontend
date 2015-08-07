@@ -246,8 +246,8 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* Actions and items
    ========================================================================== */
 @mixin navigation-items-shrink-spacing {
-    padding-right: $gs-gutter/4;
-    padding-left: $gs-gutter/4;
+    padding-right: $navigation-h-space-between-items/2;
+    padding-left: $navigation-h-space-between-items/2;
     &:first-child {
         padding-left: $navigation-h-space-between-items;
     }
