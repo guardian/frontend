@@ -28,7 +28,7 @@ define([
             }
         },
 
-        jsEnableFooterNav: function() {
+        jsEnableFooterNav: function () {
             $('.navigation-container--default').removeClass('navigation-container--default').addClass('navigation-container--collapsed');
         },
 
