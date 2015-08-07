@@ -1,5 +1,6 @@
 package dfp
 
+import common.dfp.GuCreativeTemplate.{lastModified, merge}
 import common.dfp._
 import common.{ExecutionContexts, Logging}
 import conf.Switches.DfpCachingSwitch
@@ -74,11 +75,11 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
 
       val cachedCreativeTemplates = Store.getDfpCreativeTemplates
-      val creativeTemplateThreshold = GuCreativeTemplate.lastModified(cachedCreativeTemplates)
+      val creativeTemplateThreshold = lastModified(cachedCreativeTemplates)
       val recentCreativeTemplates =
         DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
-      if (recentCreativeTemplates.nonEmpty) {
-        val creativeTemplatesToCache = cachedCreativeTemplates ++ recentCreativeTemplates
+      val creativeTemplatesToCache = merge(cachedCreativeTemplates, recentCreativeTemplates)
+      if (creativeTemplatesToCache != cachedCreativeTemplates) {
         Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
       }
     }

@@ -338,7 +338,7 @@ case class GuCreativeTemplate(id: Long,
 
 }
 
-object GuCreativeTemplate {
+object GuCreativeTemplate extends implicits.Collections {
 
   def lastModified(templates: Seq[GuCreativeTemplate]): Option[DateTime] = {
     val cachedLastModified = for {
@@ -347,6 +347,26 @@ object GuCreativeTemplate {
     } yield creative.lastModified
     if (cachedLastModified.isEmpty) None
     else Some(cachedLastModified maxBy (_.getMillis))
+  }
+
+  def merge(oldTemplates: Seq[GuCreativeTemplate],
+            newTemplates: Seq[GuCreativeTemplate]): Seq[GuCreativeTemplate] = {
+
+    def toMap(templates: Seq[GuCreativeTemplate]): Map[Long, GuCreativeTemplate] =
+      templates.groupBy(_.id).mapValues(_.head)
+
+    val oldMap = toMap(oldTemplates)
+
+    def dedup(creatives: Seq[GuCreative]): Seq[GuCreative] =
+      creatives.sortBy(_.lastModified.getMillis).reverse.distinctBy(_.id)
+
+    for (template <- newTemplates) yield {
+      val modifiedTemplate = for (oldTemplate <- oldMap.get(template.id)) yield {
+        val creatives = dedup(oldTemplate.creatives ++ template.creatives) sortBy (_.name)
+        template.copy(creatives = creatives)
+      }
+      modifiedTemplate getOrElse template
+    }
   }
 
   implicit val writes = new Writes[GuCreativeTemplate] {
