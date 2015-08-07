@@ -792,7 +792,7 @@ object Switches {
   val IdentityCookieRefreshSwitch = Switch(
     "Identity",
     "id-cookie-refresh",
-    "If switched on, users cookies will be refreshed." ,
+    "If switched on, users cookies will be refreshed.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -941,6 +941,15 @@ object Switches {
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
+    exposeClientSide = true
+  )
+
+  val ABMembershipMessageUsa = Switch(
+    "A/B Tests",
+    "ab-membership-message-usa",
+    "Switch for the USA Supporter message test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 21),
     exposeClientSide = true
   )
 

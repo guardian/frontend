@@ -224,7 +224,7 @@ define([
             },
 
             idCookieRefresh: function () {
-                if (config.switches.identityCookieRefresh) {
+                if (config.switches.idCookieRefresh) {
                     new CookieRefresh().init();
                 }
             },
