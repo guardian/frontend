@@ -13,7 +13,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 9999999;
+    z-index: $zindex-popover;
 }
 
 .site-message__inner {
@@ -85,6 +85,12 @@
         display: table-cell;
         vertical-align: middle;
         max-width: none;
+    }
+
+    .site-message--adblock & {
+        @include mq($from: tablet, $until: desktop) {
+            max-width: gs-span(6);
+        }
     }
 
     @include mq(desktop) {
@@ -401,4 +407,16 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             width: 28%;
         }
     }
+}
+
+.site-message--adblock {
+    background: colour(news-support-2);
+}
+/**
+ * Membership message A/B test
+ */
+.site-message--membership-message,
+.site-message--membership-message-variants,
+.site-message--membership-message-usa {
+    background: colour(news-main-2);
 }

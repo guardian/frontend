@@ -1,11 +1,11 @@
+/*eslint-disable no-new*/
 import $ from 'common/utils/$';
 import Expandable from 'common/modules/ui/expandable';
-import bonzo from 'bonzo';
 import fixtures from 'helpers/fixtures';
 
-describe("Expandable", function() {
+describe('Expandable', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
         fixtures.render({
             id: 'expanadble-fixture',
             fixtures: [
@@ -60,30 +60,30 @@ describe("Expandable", function() {
                     '</ul>' +
                 '</div>'
             ]
-        })
+        });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         fixtures.clean('expanadble-fixture');
     });
 
-    it("should be able to operate multiple exapandables on a single page", function(){
+    it('should be able to operate multiple exapandables on a single page', function () {
 
-        var a = new Expandable({ dom: document.querySelector('#trail-a') }).init();
-        var b = new Expandable({ dom: document.querySelector('#trail-b') }).init();
+        new Expandable({ dom: document.querySelector('#trail-a') }).init();
+        new Expandable({ dom: document.querySelector('#trail-b') }).init();
 
         expect($('#trail-a .cta')[0].innerHTML).toContain('5');
         expect($('#trail-b .cta')[0].innerHTML).toContain('3');
     });
 
-    it("should correctly render the default shut state", function(){
-        var a = new Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
+    it('should correctly render the default shut state', function () {
+        new Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
 
         expect($('#trail-c')[0].className).toContain('shut');
         expect($('#trail-c .cta').text()).toBe('Show 3 more');
     });
 
-    it("should expand and contract a panel", function(){
+    it('should expand and contract a panel', function () {
         var x = new Expandable({ dom: document.querySelector('#trail-d') });
         x.init();
 
@@ -97,18 +97,18 @@ describe("Expandable", function() {
 
     });
 
-    it("should visually represent the number of items in the panel", function(){
-        var x = new Expandable({ dom: document.querySelector('#trail-e') }).init();
+    it('should visually represent the number of items in the panel', function () {
+        new Expandable({ dom: document.querySelector('#trail-e') }).init();
         expect($('#trail-e .cta')[0].innerHTML).toContain('3');
     });
 
-    it("should not enable expandables where there are less than three hidden trails", function(){
-        var x = new Expandable({ dom: document.querySelector('#trail-g') }).init();
+    it('should not enable expandables where there are less than three hidden trails', function () {
+        new Expandable({ dom: document.querySelector('#trail-g') }).init();
         expect($('#trail-g .cta').length).toBe(0);
     });
 
-    it("should be able to turn off the trail count", function(){
-        var x = new Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
+    it('should be able to turn off the trail count', function () {
+        new Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
         expect($('#trail-h .cta')[0].innerHTML).not.toContain('3');
     });
 

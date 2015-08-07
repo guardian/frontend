@@ -1,6 +1,6 @@
-import bean from 'bean';
-import bonzo from 'bonzo';
+/*eslint-disable no-multi-str*/
 import fastdom from 'fastdom';
+import sinon from 'sinonjs';
 import qwery from 'qwery';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
@@ -13,37 +13,38 @@ describe('DFP', function () {
         fixturesConfig = {
             id: 'article',
             fixtures: [
+                // jscs:disable disallowMultipleLineStrings
                 '<div id="dfp-ad-html-slot" class="js-ad-slot" data-name="html-slot" data-mobile="300,50"></div>\
                 <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
                 <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
                 <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>'
+                // jscs:enable disallowMultipleLineStrings
             ]
         },
-        makeFakeEvent = function(id, isEmpty) {
+        makeFakeEvent = function (id, isEmpty) {
             return {
                 isEmpty: isEmpty,
                 slot: {
-                    getSlotId: function() {
+                    getSlotId: function () {
                         return {
-                            getDomId: function() {
+                            getDomId: function () {
                                 return id;
                             }
-                        }
+                        };
                     }
                 },
                 size: ['300', '250']
-            }
+            };
         },
         injector = new Injector(),
-        dfp, config, mediator;
+        dfp, config;
 
-    beforeEach(function (done) {
+    beforeEach(function (done) {
 
-        injector.test(['common/modules/commercial/dfp', 'common/utils/config', 'common/utils/mediator'], function () {
+        injector.test(['common/modules/commercial/dfp', 'common/utils/config'], function () {
             dfp = arguments[0];
             config = arguments[1];
-            mediator = arguments[2];
-            
+
             config.switches = {
                 commercialComponents: true,
                 standardAdverts:      true
@@ -68,7 +69,7 @@ describe('DFP', function () {
                 .appendTo('head');
             var pubAds = {
                 listener: undefined,
-                addEventListener: sinon.spy(function(eventName, callback) { this.listener = callback; }),
+                addEventListener: sinon.spy(function (eventName, callback) { this.listener = callback; }),
                 setTargeting: sinon.spy(),
                 enableSingleRequest: sinon.spy(),
                 collapseEmptyDivs: sinon.spy(),
@@ -76,10 +77,10 @@ describe('DFP', function () {
             },
             sizeMapping = {
                 sizes: [],
-                addSize: sinon.spy(function(width, sizes) {
+                addSize: sinon.spy(function (width, sizes) {
                     this.sizes.unshift([width, sizes]);
                 }),
-                build: sinon.spy(function() {
+                build: sinon.spy(function () {
                     var tmp = this.sizes;
                     this.sizes = [];
                     return tmp;
@@ -87,23 +88,23 @@ describe('DFP', function () {
             };
             window.googletag = {
                 cmd: [],
-                pubads: function() {
+                pubads: function () {
                     return pubAds;
                 },
-                sizeMapping: function() {
+                sizeMapping: function () {
                     return sizeMapping;
                 },
-                defineSlot: sinon.spy(function() { return window.googletag; }),
-                defineOutOfPageSlot: sinon.spy(function() { return window.googletag; }),
-                addService: sinon.spy(function() { return window.googletag; }),
-                defineSizeMapping: sinon.spy(function() { return window.googletag; }),
-                setTargeting: sinon.spy(function() { return window.googletag; }),
+                defineSlot: sinon.spy(function () { return window.googletag; }),
+                defineOutOfPageSlot: sinon.spy(function () { return window.googletag; }),
+                addService: sinon.spy(function () { return window.googletag; }),
+                defineSizeMapping: sinon.spy(function () { return window.googletag; }),
+                setTargeting: sinon.spy(function () { return window.googletag; }),
                 enableServices: sinon.spy(),
                 display: sinon.spy()
             };
             done();
         });
-    });    
+    });
 
     afterEach(function () {
         dfp.reset();
@@ -121,7 +122,7 @@ describe('DFP', function () {
     });
 
     it('should get the slots', function () {
-        var slots = dfp.init();
+        dfp.init();
         window.googletag.cmd.forEach(function (func) { func(); });
         expect(Object.keys(dfp.getSlots()).length).toBe(4);
     });
@@ -140,7 +141,7 @@ describe('DFP', function () {
     it('should set listeners', function () {
         dfp.init();
         window.googletag.cmd.forEach(function (func) { func(); });
-        expect(googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
+        expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
     });
 
     it('should define slots', function () {
@@ -148,14 +149,14 @@ describe('DFP', function () {
         window.googletag.cmd.forEach(function (func) { func(); });
 
         [
-            ['dfp-ad-html-slot', [[300, 50]], [ [[0, 0], [[300, 50]]] ], 'html-slot'],
-            ['dfp-ad-script-slot', [[300, 50], [320, 50]], [ [[0, 0], [[300, 50], [320, 50]]] ], 'script-slot'],
-            ['dfp-ad-already-labelled', [[728, 90], [300, 50], [320, 50]], [ [[740, 0], [[728, 90]]], [[0, 0], [[300, 50], [320, 50]]] ], 'already-labelled'],
-            ['dfp-ad-dont-label', [[728, 90], [900, 250], [970, 250], [300, 50], [320, 50]], [ [[980, 0], [[728, 90], [900, 250], [970, 250]]], [[740, 0], [[728, 90]]], [[0, 0], [[300, 50], [320, 50]]] ], 'dont-label']
-        ].forEach(function(data) {
+            ['dfp-ad-html-slot', [[300, 50]], [[[0, 0], [[300, 50]]]], 'html-slot'],
+            ['dfp-ad-script-slot', [[300, 50], [320, 50]], [[[0, 0], [[300, 50], [320, 50]]]], 'script-slot'],
+            ['dfp-ad-already-labelled', [[728, 90], [300, 50], [320, 50]], [[[740, 0], [[728, 90]]], [[0, 0], [[300, 50], [320, 50]]]], 'already-labelled'],
+            ['dfp-ad-dont-label', [[728, 90], [900, 250], [970, 250], [300, 50], [320, 50]], [[[980, 0], [[728, 90], [900, 250], [970, 250]]], [[740, 0], [[728, 90]]], [[0, 0], [[300, 50], [320, 50]]]], 'dont-label']
+        ].forEach(function (data) {
                 expect(window.googletag.defineSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', data[1], data[0]);
-                expect(window.googletag.addService).toHaveBeenCalledWith(googletag.pubads());
-                data[2].forEach(function(size) {
+                expect(window.googletag.addService).toHaveBeenCalledWith(window.googletag.pubads());
+                data[2].forEach(function (size) {
                     expect(window.googletag.sizeMapping().addSize).toHaveBeenCalledWith(size[0], size[1]);
                 });
                 expect(window.googletag.defineSizeMapping).toHaveBeenCalledWith(data[2]);
@@ -240,14 +241,16 @@ describe('DFP', function () {
         });
     });
 
-    describe('breakout', function() {
+    describe('breakout', function () {
 
         var slotId = 'dfp-ad-html-slot',
             createTestIframe = function (id, html) {
                 var $frame = $.create('<iframe></iframe>')
                     .attr({
                         id: 'mock_frame',
+                        /*eslint-disable no-script-url*/
                         src: 'javascript:"<html><body style="background:transparent"></body></html>"'
+                        /*eslint-enable no-script-url*/
                     });
                 $frame[0].onload = function () {
                     this.contentDocument.body.innerHTML = html;
@@ -256,8 +259,8 @@ describe('DFP', function () {
             };
 
         it('should insert html', function (done) {
-            var html = '<div class="dfp-iframe-content">Some content</div>',
-                $slot = $('#' + slotId).attr('data-label', false);
+            var html = '<div class="dfp-iframe-content">Some content</div>';
+            $('#' + slotId).attr('data-label', false);
             createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
             dfp.init();
 
@@ -274,9 +277,9 @@ describe('DFP', function () {
 
         it('should run javascript', function () {
             var str = 'This came from an iframe';
-            createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>');
+            createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "' + str + '"</script>');
             dfp.init();
-            window.googletag.cmd.forEach(function(func) { func(); });
+            window.googletag.cmd.forEach(function (func) { func(); });
             window.googletag.pubads().listener(makeFakeEvent(slotId));
             expect(window.dfpModuleTestVar).toBe(str);
         });

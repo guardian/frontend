@@ -37,6 +37,37 @@ define([
         return lenientRules;
     }
 
+    function getLongArticleRules() {
+        var newRules = _.cloneDeep(getRules());
+
+        newRules.selectors[' .ad-slot'] = {
+            minAbove: 1300,
+            minBelow: 1300
+        };
+
+        return newRules;
+    }
+
+    // Add new ads while there is still space
+    function getAdSpace() {
+        return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
+            // check if spacefinder found another space
+            if (typeof nextSpace === 'undefined') {
+                return Promise.resolve(null);
+            }
+
+            // if yes add another ad and try another run
+            adNames.push(['inline' + (ads.length + 1), 'inline']);
+            return insertAdAtP(nextSpace).then(function () {
+                return getAdSpace();
+            });
+        });
+    }
+
+    function inMobileAdsTest() {
+        return config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile';
+    }
+
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
@@ -80,19 +111,33 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            return inlineMercPromise.then(function () {
-                return spacefinder.getParaWithSpace(rules).then(function (space) {
-                    return insertAdAtP(space);
-                }).then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
+            if (config.switches.viewability && !inMobileAdsTest()) {
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
                             return insertAdAtP(nextSpace);
+                        }).then(function () {
+                            return getAdSpace();
                         });
-                    } else {
-                        return Promise.resolve(null);
-                    }
+                    });
                 });
-            });
+            } else {
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
+                        if (detect.isBreakpoint({max: 'tablet'})) {
+                            return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                                return insertAdAtP(nextSpace);
+                            });
+                        } else {
+                            return Promise.resolve(null);
+                        }
+                    });
+                });
+            }
         };
 
     return {

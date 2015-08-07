@@ -2,7 +2,7 @@ import qwery from 'qwery';
 import _ from 'common/utils/_';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
 
 xdescribe('Commercial component loader', function () {
 
@@ -16,7 +16,7 @@ xdescribe('Commercial component loader', function () {
         injector = new Injector(),
         CommercialComponent, config, mediator;
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         injector.test([
             'common/modules/commercial/creatives/commercial-component',
             'common/utils/config',
@@ -48,7 +48,7 @@ xdescribe('Commercial component loader', function () {
                 adSlot = qwery('.ad-slot', $fixturesContainer)[0];
 
                 done();
-        });
+            });
     });
 
     afterEach(function () {
@@ -154,7 +154,7 @@ xdescribe('Commercial component loader', function () {
                 capiLinkUrl:      'http://theguardian.com/music/ledzeppelin',
                 capiAboutLinkUrl: 'http://theguardian.com/about',
                 capiKeywords:     'music/ledzeppelin',
-                t:                ['p/43b2q','p/43945'],
+                t:                ['p/43b2q', 'p/43945'],
                 k:                'music/ledzeppelin',
                 af:               'sponsored'
             }
@@ -168,7 +168,7 @@ xdescribe('Commercial component loader', function () {
 
             var params = _.merge({ type: testConfig.type }, testConfig.options);
             new CommercialComponent(adSlot, params).create();
-        })
+        });
     });
 
 });

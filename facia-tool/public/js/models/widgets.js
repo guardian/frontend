@@ -22,6 +22,9 @@ var register = _.once(() => {
 
             System.import('./' + templateConfig.jspm).then(function (Component) {
                 callback(function (params, componentInfo) {
+                    if (Component.default) {
+                        Component = Component.default;
+                    }
                     return new Component(params, componentInfo.element);
                 });
             });
@@ -74,6 +77,10 @@ var register = _.once(() => {
             createViewModel: (params) => params
         },
         template: { text: 'widgets/select_snap_type.html' }
+    });
+    ko.components.register('autocomplete', {
+        viewModel: { jspm: 'widgets/autocomplete' },
+        template: { text: 'widgets/autocomplete.html' }
     });
     ko.bindingHandlers.ownerClass = {
         init: function (element, valueAccessor) {

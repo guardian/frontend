@@ -44,6 +44,37 @@ $c-navigation-expandable-background: colour(neutral-1);
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
+@mixin animate-height-up($height) {
+    @keyframes animate-height-up {
+        from {
+            height: 0px;
+        }
+
+        to {
+            height: $height;
+        }
+    }
+
+    animation: animate-height-up ease-in .2s;
+    animation-fill-mode: forwards;
+    overflow: visible;
+}
+
+@mixin animate-height-down($height) {
+    @keyframes animate-height-down {
+        from {
+            height: $height;
+        }
+
+        to {
+            height: 0px;
+        }
+    }
+
+    animation: animate-height-down ease-in .2s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
 
 /* Styles common to all states
    ========================================================================== */
@@ -59,6 +90,22 @@ $c-navigation-expandable-background: colour(neutral-1);
     background: $c-navigation-background;
     height: $navigation-height;
 
+    &.animate-up-desktop {
+        @include animate-height-up('72px');
+    }
+
+    &.animate-down-desktop {
+        @include animate-height-down('72px');
+    }
+
+    &.animate-up-mobile {
+        @include animate-height-up('0px');
+    }
+
+    &.animate-down-mobile {
+        @include animate-height-down('0px');
+    }
+
     &:before,
     &:after {
         content: '';
@@ -72,16 +119,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     &:before {
         background: $c-navigation-background-side-bar;
-        border-bottom: 1px solid $c-global-navigation-border;
         background-clip: padding-box;
-
-        .l-header--is-slim & {
-            display: none;
-        }
-
-        .l-header--is-slim-ab & {
-            display: block;
-        }
     }
 
     &:after {
@@ -130,6 +168,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 .navigation__expandable {
     background: $c-navigation-expandable-background;
     overflow: hidden;
+}
+.navigation__expandable--sticky {
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 .signposting,
 .local-navigation,
@@ -479,10 +521,6 @@ $c-navigation-expandable-background: colour(neutral-1);
             white-space: nowrap;
         }
 
-        .l-header--is-slim & {
-            display: none;
-        }
-
         &::-webkit-scrollbar {
             display: none;
         }
@@ -494,10 +532,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     .signposting,
     .local-navigation {
         height: $navigation-height;
-
-        .l-header--is-slim & {
-            height: auto;
-        }
     }
     .signposting,
     .local-navigation {
@@ -647,10 +681,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         .navigation__container--first {
             background: $c-local-navigation-background;
             border-top: $navigation-height solid $c-top-header-background;
-
-            .l-header--is-slim & {
-                border-top: 0;
-            }
         }
         .navigation__container--second {
             position: absolute;
@@ -698,19 +728,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     outline: none;
     min-width: $navigation-toggler-width;
 
-    // Remove redundant min-width and override breakpoint
-    .l-header--is-slim & {
-        min-width: 0;
-    }
-
-    .l-header--is-slim & {
-        float: left;
-        line-height: 48px;
-        position: static;
-        border-left: 0;
-    }
-
-
     &,
     &:hover,
     &:focus,
@@ -757,7 +774,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    .l-header--is-slim & {
+    .l-header--slim-all & {
         display: none;
     }
 
@@ -775,13 +792,56 @@ $c-navigation-expandable-background: colour(neutral-1);
     display: inline;
 }
 
-// This must appear last in the cascade
-.navigation-toggle-label {
-    .l-header--is-slim & {
+// Remove redundant min-width and override breakpoint
+.l-header--no-navigation {
+    &:before {
+        display: none;
+    }
+
+    .navigation-container--collapsed {
+        .navigation__scroll {
+            display: none;
+        }
+
+        .navigation,
+        .signposting,
+        .local-navigation {
+            height: auto;
+        }
+    }
+
+    .navigation-toggle-label {
         @include mq($until: mobileLandscape) {
             display: none;
         }
     }
+
+    @include mq(navigationBreakOnTwoLevels) {
+        .navigation--has-signposting .navigation__container--first {
+            border-top: 0;
+        }
+    }
+
+    .navigation-toggle {
+        float: left;
+        min-width: 0;
+        line-height: 48px;
+        position: static;
+        border-left: 0;
+    }
+
+    .navigation-toggle-label__extra {
+        display: none;
+    }
+
+    .burger-icon {
+        margin-top: $gs-baseline * 1.5;
+        
+        @include mq($until: mobileLandscape) {
+            margin: $gs-baseline * 1.5 0 0;
+        }
+    }
+
 }
 
 /**
@@ -808,7 +868,8 @@ $burger-width: 16px;
     margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
     position: relative;
 
-    .l-header--is-slim & {
+
+    .l-header--slim-all & {
         @include mq($until: mobileLandscape) {
             margin-right: 0;
         }
@@ -862,7 +923,7 @@ $burger-width: 16px;
         display: none;
     }
 
-    .l-header--is-slim & {
+    .l-header--slim-all & {
         margin-top: $gs-baseline * 1.5;
     }
 }

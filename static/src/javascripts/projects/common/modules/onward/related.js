@@ -31,7 +31,7 @@ define([
         if (!config.page.keywordIds) {
             return false;
         }
-        var whitelistedTags = [ // order matters here (first match wins)
+        var whitelistedTags = [// order matters here (first match wins)
                 // sport tags
                 'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',
                 'sport/tennis', 'sport/cycling', 'sport/motorsports', 'sport/golf', 'sport/horse-racing',
@@ -90,6 +90,7 @@ define([
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
                         mediator.emit('modules:related:loaded', container);
+                        mediator.emit('page:new-content', container);
                         register.end(componentName);
                     },
                     error: function () {

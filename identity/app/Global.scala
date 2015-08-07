@@ -1,37 +1,23 @@
 import com.google.inject.Guice
 import common.CloudWatchApplicationMetrics
 import conf._
-import filters.HeaderLoggingFilter
+import filters.{StrictTransportSecurityHeaderFilter, HeaderLoggingFilter}
 import play.api.Play.current
 import play.api._
 import play.api.mvc._
 import play.api.mvc.Results._
+import play.api.inject._
+import play.api.inject.guice._
 import scala.concurrent.Future
 import utils.SafeLogging
-import conf.{Configuration, Filters}
 
-object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) with SafeLogging
-                                                                                    with CloudWatchApplicationMetrics {
+object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: conf.Filters.common: _*)
+  with SafeLogging
+  with CloudWatchApplicationMetrics
+  with IdentityLifecycle
+  with SwitchboardLifecycle {
 
   override lazy val applicationName = "frontend-identity"
-
-  private lazy val injector = {
-    val module =
-      Play.mode match {
-        case Mode.Prod => {
-          if (Configuration.environment.isNonProd) new PreProdModule
-          else new ProdModule
-        }
-        case Mode.Dev => new DevModule
-        case Mode.Test => new TestModule
-      }
-
-    Guice.createInjector(module)
-  }
-
-  override def getControllerInstance[A](clazz: Class[A]) = {
-    injector.getInstance(clazz)
-  }
 
   override def onError(request: RequestHeader, ex: Throwable) = {
     logger.error("Serving error page", ex)
@@ -58,5 +44,23 @@ object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) wit
     } else {
       super.onBadRequest(request, error)
     }
+  }
+}
+
+class IdentityApplicationLoader extends GuiceApplicationLoader() {
+
+  override def builder(context: ApplicationLoader.Context): GuiceApplicationBuilder = {
+    val module = context.environment.mode match {
+      case Mode.Prod => {
+        if (conf.Configuration.environment.isNonProd) new PreProdModule
+        else new ProdModule
+      }
+      case Mode.Dev => new DevModule
+      case Mode.Test => new TestModule
+    }
+    new GuiceApplicationBuilder()
+      .in(context.environment)
+      .loadConfig(context.initialConfiguration)
+      .bindings(module)
   }
 }

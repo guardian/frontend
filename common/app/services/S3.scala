@@ -1,7 +1,8 @@
 package services
 
 import com.gu.googleauth.UserIdentity
-import conf.Configuration
+import com.gu.pandomainauth.model.User
+import conf.{Switches, Configuration}
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
@@ -10,7 +11,7 @@ import com.amazonaws.util.StringInputStream
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
-import play.api.libs.ws.{WSRequestHolder, WS}
+import play.api.libs.ws.{WSRequest, WS}
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
@@ -150,15 +151,25 @@ object S3FrontsApi extends S3 {
   def getDraftPressedKeyForPath(path: String): String =
     s"$location/pressed/draft/$path/pressed.json"
 
+  def getLiveFapiPressedKeyForPath(path: String): String =
+    s"$location/pressed/live/$path/fapi/pressed.json"
+
+  def getDraftFapiPressedKeyForPath(path: String): String =
+    s"$location/pressed/draft/$path/fapi/pressed.json"
+
   def getSchema = get(s"$location/schema.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
-  def putCollectionJson(id: String, json: String) =
-    putPublic(s"$location/collection/$id/collection.json", json, "application/json")
+  def putCollectionJson(id: String, json: String) = {
+    val putLocation: String = s"$location/collection/$id/collection.json"
+    if (Switches.FaciaToolPutPrivate.isSwitchedOn) {
+      putPrivate(putLocation, json, "application/json")}
+    else {
+      putPublic(putLocation, json, "application/json")}}
 
-  def archive(id: String, json: String, identity: UserIdentity) = {
+  def archive(id: String, json: String, identity: User) = {
     val now = DateTime.now
     putPrivate(s"$location/history/collection/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$id/${now}.${identity.email}.json", json, "application/json")
   }
@@ -166,7 +177,7 @@ object S3FrontsApi extends S3 {
   def putMasterConfig(json: String) =
     putPublic(s"$location/config/config.json", json, "application/json")
 
-  def archiveMasterConfig(json: String, identity: UserIdentity) = {
+  def archiveMasterConfig(json: String, identity: User) = {
     val now = DateTime.now
     putPublic(s"$location/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
@@ -191,8 +202,14 @@ object S3FrontsApi extends S3 {
   def putDraftPressedJson(path: String, json: String) =
     putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
 
+  def putLiveFapiPressedJson(path: String, json: String) =
+    putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
+
+  def putDraftFapiPressedJson(path: String, json: String) =
+    putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
+
   def getPressedLastModified(path: String): Option[String] =
-    getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
+    getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
@@ -201,9 +218,9 @@ trait SecureS3Request extends implicits.Dates with Logging {
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  def urlGet(id: String): WSRequestHolder = url("GET", id)
+  def urlGet(id: String): WSRequest = url("GET", id)
 
-  private def url(httpVerb: String, id: String): WSRequestHolder = {
+  private def url(httpVerb: String, id: String): WSRequest = {
 
     val headers = Configuration.aws.credentials.map(_.getCredentials).map{ credentials =>
       val sessionTokenHeaders: Seq[(String, String)] = credentials match {
@@ -262,5 +279,3 @@ object S3Infosec extends S3 {
   val key = "blocked-email-domains.txt"
   def getBlockedEmailDomains = get(key)
 }
-
-

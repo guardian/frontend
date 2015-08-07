@@ -5,7 +5,7 @@ module.exports = function(grunt, options) {
             files: [{
                 expand: true,
                 cwd: dir,
-                src: ['*.css', '!{_*,ie9.*,old-ie.*}'],
+                src: ['*.css', '!{_*,ie9.*,old-ie.*,webfonts*}'],
                 dest: dir
             }],
             options: {

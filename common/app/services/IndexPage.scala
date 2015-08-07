@@ -1,20 +1,22 @@
 package services
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
-import common.Edition
+import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.utils.{CartoonKicker, ReviewKicker, TagKicker}
+import common.{Edition, LinkTo}
 import conf.Switches
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
-import org.joda.time.DateTime
+import model.meta.{ItemList, ListItem}
+import org.joda.time.{DateTimeZone, DateTime}
+import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
-import views.support.{CartoonKicker, ReviewKicker, TagKicker}
 
 import scala.Function.const
-import scalaz.syntax.traverse._
 import scalaz.std.list._
 import scalaz.syntax.std.boolean._
+import scalaz.syntax.traverse._
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -58,8 +60,8 @@ object IndexPage {
 
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
-        val collection = CollectionEssentials.fromTrails(
-          grouping.items
+        val collection = CollectionEssentials.fromFaciaContent(
+          grouping.items.map(FaciaContentConvert.frontentContentToFaciaContent)
         )
 
         val mpuContainer = (if (isSlow)
@@ -80,7 +82,7 @@ object IndexPage {
         }
 
         val containerConfig = ContainerDisplayConfig(
-          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.empty.copy(
             displayName = Some(grouping.dateHeadline.displayString)
           )),
           showSeriesAndBlogKickers = true
@@ -114,8 +116,9 @@ object IndexPage {
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
-        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
+        case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
+        case DescriptionMetaHeader(_) => None
       }
 
       container.copy(
@@ -132,8 +135,9 @@ object IndexPage {
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
-          timeStampDisplay = Some(timeStampDisplay),
-          byline = if (indexPage.page.isContributorPage) None else card.byline
+          timeStampDisplay = timeStampDisplay,
+          byline = if (indexPage.page.isContributorPage) None else card.byline,
+          useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
@@ -143,10 +147,22 @@ object IndexPage {
       })
     }))
   }
+
+  def makeLinkedData(indexPage: IndexPage)(implicit request: RequestHeader): ItemList = {
+    ItemList(
+      LinkTo(indexPage.page.url),
+      indexPage.trails.zipWithIndex.map {
+        case (trail, index) =>
+          ListItem(position = index, url = Some(LinkTo(trail.url)))
+      }
+    )
+  }
+
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now) {
+                     date: DateTime = DateTime.now,
+                     tzOverride: Option[DateTimeZone] = None) {
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),
     Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
@@ -170,7 +186,8 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def forcesDayView = page match {
-    case tag: Tag => Set("series", "blog") contains tag.tagType
+    case tag: Tag if tag.section == "crosswords" => false
+    case tag: Tag => Set("series", "blog").contains(tag.tagType)
     case _ => false
   }
 
@@ -180,4 +197,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def allPath = s"/$idWithoutEdition"
+
 }

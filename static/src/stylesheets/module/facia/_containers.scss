@@ -39,6 +39,7 @@
 
 .fc-container--outbrain {
     background-color: colour(neutral-8);
+    display: none;
 }
 
 .fc-container--thrasher {
@@ -70,7 +71,6 @@
         width: 100%;
         overflow: initial;
     }
-
     .fc-slice-wrapper {
         margin-left: 0;
         margin-right: 0;
@@ -93,7 +93,10 @@
 
     .fc-item {
         margin: 0;
-        overflow: auto;
         width: 100%;
+    }
+
+    .ipad-no-thrashers & {
+        display: none;
     }
 }

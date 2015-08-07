@@ -6,6 +6,7 @@ import mediator from 'common/utils/mediator';
 import slideshowState from 'facia/modules/ui/slideshow/state';
 import slideshowController from 'facia/modules/ui/slideshow/controller';
 import slideshowDOM from 'facia/modules/ui/slideshow/dom';
+import accessibility from 'common/modules/accessibility/main';
 
 var mockDOM = {
     insert: function (image) {
@@ -19,13 +20,10 @@ var mockDOM = {
     }
 },
 originalSetTimeout = setTimeout;
-function imagePath (name) {
-    return '/base/javascripts/test/fixtures/slideshow/' + name;
-}
-function opacity (element) {
+function opacity(element) {
     return parseInt(element.css('opacity'), 10);
 }
-function tick (ms) {
+function tick(ms) {
     jasmine.clock().tick(ms);
     return new Promise(function (resolve) {
         originalSetTimeout(resolve, 46);
@@ -78,7 +76,6 @@ describe('Slideshow component', function () {
 
         it('loads an image correctly', function (done) {
             var container = qwery('.TEST_CONTAINER_SLIDESHOW_LOADER'),
-                loadedImage,
                 eventCalled = jasmine.createSpy('eventCalled');
 
             mediator.on('ui:images:lazyLoaded', eventCalled);
@@ -455,6 +452,44 @@ describe('Slideshow component', function () {
                 container.remove();
             })
             .then(done);
+        });
+
+        it('doesn\'t play when accessibility is off', function (done) {
+            accessibility.saveState({
+                'flashing-elements': false
+            });
+
+            var testDOM = bonzo.create([
+                '<div class="TEST_CONTAINER_SLIDESHOW_PLAY_INLINE js-slideshow">',
+                    '<img class="test-image-1" src="/base/javascripts/test/fixtures/slideshow/one.svg">',
+                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/two.svg">',
+                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/three.svg">',
+                '</div>'
+            ].join('')),
+                container = bonzo(testDOM).appendTo(document.body),
+                opacityOf = function (selector) {
+                    return opacity(bonzo(qwery(selector)));
+                },
+                nextImage = function () {
+                    return tick(slideshowState.interval)
+                    .then(function () {
+                        return tick(slideshowDOM.loadTime);
+                    })
+                    .then(function () {
+                        return tick(slideshowDOM.duration);
+                    });
+                };
+
+            slideshowController.init();
+
+            nextImage()
+            .then(function () {
+                // Nothing should happen
+                expect(opacityOf('.test-image-1', container[0])).toBe(1);
+
+                window.localStorage.clear();
+                done();
+            });
         });
     });
 });

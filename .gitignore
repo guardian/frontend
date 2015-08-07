@@ -23,10 +23,14 @@ frontend-applications.properties
 .tm_properties
 .vagrant
 .node-version
+.sbt
+.sbt.*
 
 log
 logs
+ivy-sbt
 
+ivy-sbt
 tmp
 old
 target
@@ -60,8 +64,6 @@ static/target
 static/src/bundles
 static/src/systemjs-bundle-config.js
 static/src/stylesheets/icons/*
-
-ivy-sbt
 
 # Eclipse #
 .project

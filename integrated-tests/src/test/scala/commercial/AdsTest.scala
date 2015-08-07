@@ -1,31 +1,78 @@
 package integration
 
-import Config.baseUrl
-import org.scalatest.tags.Retryable
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import driver.SauceLabsWebDriver
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.scalatest._
+import org.scalatest.selenium.{Driver, WebBrowser}
+import org.scalatest.time.{Seconds, Span}
 
-@DoNotDiscover @Retryable class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
+class AdsTest
+  extends FlatSpec
+  with Matchers
+  with OptionValues
+  with BeforeAndAfterAll
+  with WebBrowser
+  with Driver {
+
+  override implicit val webDriver: WebDriver = {
+    lazy val localWebDriver = new ChromeDriver()
+    if (Config.remoteMode) SauceLabsWebDriver() else localWebDriver
+  }
+
+  implicitlyWait(Span(20, Seconds))
+
+  private def url(path: String): String = {
+    s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts"
+  }
+
+  private def findComponent(path: String, selector: String): Option[Element] = {
+    go to url(path)
+    find(cssSelector(selector))
+  }
+
+  private def findLogo(path: String, domSlotId: String): Option[Element] = {
+    findComponent(path, s"#$domSlotId > div > a > img")
+  }
+
+  private def shouldBeVisible(maybeComponent: => Option[Element]): Unit = {
+    withClue(s"Page source: $pageSource") {
+      maybeComponent.value shouldBe 'displayed
+    }
+  }
+
+  override protected def afterAll(): Unit = quit()
 
   "Ads" should "display on the sport front" in {
 
-    webDriver.get(theguardianWithAds("/uk/sport"))
-    webDriver.navigate().refresh()
-
-    // This is an essential sleep, because the implicitlyWait isn't sufficient to ensure that
-    // the js application has completed, since the dfp-ad classes exist on page load.
-    Thread.sleep(10000)
-    implicitlyWait(10)
+    go to url("uk/sport")
 
     withClue("Should display top banner ad") {
-      $("#dfp-ad--top-above-nav > *").size should be > 0
-    }
+      shouldBeVisible(find(cssSelector("#dfp-ad--top-above-nav > *")))
+      }
 
     withClue("Should display two MPUs") {
-      $("#dfp-ad--inline1 > *").size should be > 0
-      $("#dfp-ad--inline2 > *").size should be > 0
+      shouldBeVisible(find(cssSelector("#dfp-ad--inline1 > *")))
+      shouldBeVisible(find(cssSelector("#dfp-ad--inline2 > *")))
     }
-
   }
 
-  protected def theguardianWithAds(path: String) = s"$baseUrl$path?test=test#gu.prefs.switchOn=adverts"
+  "A logo" should "appear on a sponsored front" in {
+    shouldBeVisible {
+      findLogo(
+        path = "voluntary-sector-network/series/the-not-for-profit-debates",
+        domSlotId = "dfp-ad--spbadge1"
+      )
+    }
+  }
+
+  it should "appear on a sponsored article" in {
+    shouldBeVisible {
+      findLogo(
+        path = "voluntary-sector-network/2015/apr/28/help-your-organisation-embrace-and-nurture" +
+          "-change-in-a-fast-moving-world",
+        domSlotId = "dfp-ad--spbadge"
+      )
+    }
+  }
 }

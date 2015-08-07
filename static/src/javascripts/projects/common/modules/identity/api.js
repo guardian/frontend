@@ -28,6 +28,7 @@ define([
     Id.cookieName = 'GU_U';
     Id.signOutCookieName = 'GU_SO';
     Id.fbCheckKey = 'gu.id.nextFbCheck';
+    Id.lastRefreshKey = 'identity.lastRefresh';
     Id.idApiRoot = null;
     Id.idUrl = null;
 
@@ -137,7 +138,7 @@ define([
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
                 data: {
-                    refreshCookie:true
+                    refreshCookie: true
                 }
             });
 
@@ -183,6 +184,21 @@ define([
             return ((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
         }
         return false;
+    };
+
+    Id.refreshCookie = function () {
+        if (Id.isUserLoggedIn()) {
+            var lastRefresh = storage.local.get(Id.lastRefreshKey),
+                currentTime = new Date().getTime();
+            if (Id.shouldRefreshCookie(lastRefresh, currentTime)) {
+                Id.getUserFromApiWithRefreshedCookie();
+                storage.local.set(Id.lastRefreshKey, currentTime);
+            }
+        }
+    };
+
+    Id.shouldRefreshCookie = function (lastRefresh, currentTime) {
+        return (!lastRefresh) || (currentTime > (parseInt(lastRefresh, 10) + (1000 * 86400 * 30)));
     };
 
     /**
@@ -241,14 +257,17 @@ define([
     };
 
     Id.saveToArticles = function (data) {
-        var endpoint = '/syncedPrefs/me/savedArticles',
+        var endpoint = '/syncedPrefs/cors/me/savedArticles',
             request = ajax({
                 url: Id.idApiRoot + endpoint,
-                type: 'jsonp',
+                type: 'json',
                 crossOrigin: true,
-                data: {
-                    body: JSON.stringify(data),
-                    method: 'post'
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                withCredentials: true,
+                headers: {
+                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
                 }
             });
 

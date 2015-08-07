@@ -1,8 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.{ Section => ApiSection }
-import common.{Edition, Pagination}
-import dfp.DfpAgent
+import com.gu.contentapi.client.model.{Section => ApiSection}
+import common.Pagination
 import play.api.libs.json.{JsString, JsValue}
 
 case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None)
@@ -13,7 +12,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   lazy val section: String = id
 
   lazy val id: String = delegate.id
-  lazy val webUrl: String = delegate.webUrl
+  override lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
   lazy val keywordIds: Seq[String] = frontKeywordIds(id)
@@ -31,4 +30,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "keywordIds" -> JsString(keywordIds.mkString(",")),
     "contentType" -> JsString("Section")
   )
+
+  override def iosType = "front"
+
 }

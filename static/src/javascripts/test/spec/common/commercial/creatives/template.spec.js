@@ -1,8 +1,8 @@
-import Template from 'common/modules/commercial/creatives/template'
+import Template from 'common/modules/commercial/creatives/template';
 
-describe('Template', function() {
+describe('Template', function () {
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(Template).toBeDefined();
     });
 

@@ -1,19 +1,22 @@
 import Injector from 'helpers/injector';
+import sinon from 'sinonjs';
 
 describe('AJAX', function () {
 
     var reqwestSpy = {
+        /*jscs:disable disallowDanglingUnderscores*/
         __useDefault: true,
+        /*jscs:enable disallowDanglingUnderscores*/
         default: sinon.spy(function () {
             return {
                 then: function () {}
             };
         })
     },
-        injector = new Injector,
+        injector = new Injector(),
         ajax;
 
-    beforeEach(function(done){
+    beforeEach(function (done) {
         injector.mock({
             reqwest:  reqwestSpy,
             'common/utils/config': {

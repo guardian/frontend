@@ -1,9 +1,11 @@
 package controllers
 
+import com.gu.facia.api.models.FaciaContent
 import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import services.FaciaContentConvert
 import scala.concurrent.Future
 import com.gu.contentapi.client.GuardianContentApiError
 import LiveContentApi.getResponse
@@ -13,7 +15,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
-      topStories map { renderTopStoriesPage(_) }
+      topStories map { stories => renderTopStoriesPage(stories.map(FaciaContentConvert.frontentContentToFaciaContent)) }
     }
 
     response map { _ getOrElse NotFound }
@@ -21,7 +23,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   def renderTrails() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
-      topStories map { renderTopStoriesTrails(_) }
+      topStories map { stories => renderTopStoriesTrails(stories.map(FaciaContentConvert.frontentContentToFaciaContent)) }
     }
 
     response map { _ getOrElse NotFound }
@@ -42,7 +44,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
       }
   }
 
-  private def renderTopStoriesPage(trails: Seq[Trail])(implicit request: RequestHeader) = {
+  private def renderTopStoriesPage(trails: Seq[FaciaContent])(implicit request: RequestHeader) = {
     val page = new Page(
       "top-stories",
       "top-stories",
@@ -63,7 +65,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     }
   }
 
-  private def renderTopStoriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
+  private def renderTopStoriesTrails(trails: Seq[FaciaContent])(implicit request: RequestHeader) = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
     val response = if (request.getQueryString("view") == Some("link"))
       () => views.html.fragments.trailblocks.link(trails, trailsLength)

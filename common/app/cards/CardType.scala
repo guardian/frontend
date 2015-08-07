@@ -6,9 +6,9 @@ sealed trait CardType {
   case class VideoPlayerMode(show: Boolean, showEndSlate: Boolean)
 
   def videoPlayer = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 =>
+    case FullMedia50 | FullMedia75 | FullMedia100 =>
       VideoPlayerMode(show = true, showEndSlate = true)
-    case Third | Standard =>
+    case ThreeQuarters | ThreeQuartersRight | Half | Third | Standard =>
       VideoPlayerMode(show = true, showEndSlate = false)
     case _ =>
       VideoPlayerMode(show = false, showEndSlate = false)
@@ -30,7 +30,17 @@ sealed trait CardType {
   }
 
   def showStandfirst = this match {
-    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
+    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard | SavedForLater => true
+    case _ => false
+  }
+
+  def canShowSlideshow = this match {
+    case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
+    case _ => false
+  }
+
+  def savedForLater = this match {
+    case SavedForLater => true
     case _ => false
   }
 }
@@ -82,4 +92,8 @@ case object Fluid extends CardType {
 
 case object Third extends CardType {
   override val cssClassName: String = "third"
+}
+
+case object SavedForLater extends CardType {
+  override val cssClassName: String = "saved-for-later"
 }

@@ -1,4 +1,4 @@
-/* jshint newcap: false */
+/* eslint-disable new-cap */
 define([
     'bonzo',
     'react',
@@ -38,7 +38,7 @@ define([
                     });
                 });
 
-                React.renderComponent(Grid({
+                React.render(Grid({
                     cells: cells
                 }), element);
             }

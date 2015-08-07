@@ -1,21 +1,24 @@
 import mediator from 'common/utils/mediator';
+import sinon from 'sinonjs';
 import storage from 'common/utils/storage';
 
-describe('Storage', function() {
+describe('Storage', function () {
 
     var date;
 
-    Date.prototype.addHours = function(h){
-        this.setHours(this.getHours()+h);
+    /*eslint-disable no-extend-native*/
+    Date.prototype.addHours = function (h) {
+        this.setHours(this.getHours() + h);
         return this;
     };
+    /*eslint-enable no-extend-native*/
 
-    beforeEach(function() {
+    beforeEach(function () {
         sinon.spy(mediator, 'emit');
-        date = new Date;
+        date = new Date();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // restore stubbed local storage methods
         for (var prop in window.localStorage) {
             if (window.localStorage[prop].restore) {
@@ -24,11 +27,11 @@ describe('Storage', function() {
         }
         storage.local.setWindow(window);
         mediator.emit.restore();
-        storage.local.isStorageAvailable = function() { return true; };
+        storage.local.isStorageAvailable = function () { return true; };
     });
 
     function setWindowLocalStorage(winLocalStorage) {
-        storage.local.setWindow({localStorage: winLocalStorage})
+        storage.local.setWindow({localStorage: winLocalStorage});
     }
 
     function testSetAndGet(key, data, dataAsString) {
@@ -41,7 +44,7 @@ describe('Storage', function() {
         expect(storage.local.get(key)).toEqual(data);
     }
 
-    it('shouldn\'t be available if can\'t set data', function() {
+    it('shouldn\'t be available if can\'t set data', function () {
         setWindowLocalStorage({
             setItem: sinon.stub().throws()
         });
@@ -49,17 +52,17 @@ describe('Storage', function() {
         expect(storage.local.isStorageAvailable(true)).toBeFalsy();
     });
 
-    it('should save and retrieve data', function() {
+    it('should save and retrieve data', function () {
         testSetAndGet('foo', 'bar', '{"value": "bar"}');
     });
 
-    it('should not save if local storage unavailavble', function() {
+    it('should not save if local storage unavailavble', function () {
         sinon.stub(storage.local, 'isAvailable').returns(false);
         expect(storage.local.set('foo', 'bar')).toBeFalsy();
         storage.local.isAvailable.restore();
     });
 
-    it('should be able to remove item', function() {
+    it('should be able to remove item', function () {
         var key = 'foo';
         setWindowLocalStorage({
             removeItem: sinon.stub().withArgs(key).returns(true)
@@ -67,35 +70,35 @@ describe('Storage', function() {
         expect(storage.local.remove(key)).toBeTruthy();
     });
 
-    it('should be able to clear data', function() {
+    it('should be able to clear data', function () {
         setWindowLocalStorage({
             clear: sinon.stub().returns(true)
         });
         expect(storage.local.removeAll()).toBeTruthy();
     });
 
-    it('should return if key not set', function() {
+    it('should return if key not set', function () {
         setWindowLocalStorage({
             getItem: sinon.stub().returns(null)
         });
         expect(storage.local.get('foo')).toBe(null);
     });
 
-    it('should return number of items in storage', function() {
+    it('should return number of items in storage', function () {
         storage.local.removeAll();
-        storage.local.set('foo',' bar');
+        storage.local.set('foo', ' bar');
         expect(storage.local.length()).toBe(1);
-        storage.local.set('foo2',' bar2');
+        storage.local.set('foo2', ' bar2');
         expect(storage.local.length()).toBe(2);
     });
 
-    it('should return item by index', function() {
+    it('should return item by index', function () {
         storage.local.removeAll();
-        storage.local.set('foo',' bar');
+        storage.local.set('foo', ' bar');
         expect(storage.local.getKey(0)).toBe('foo');
     });
 
-    it('should handle migrating non-stringified data', function() {
+    it('should handle migrating non-stringified data', function () {
         setWindowLocalStorage({
             getItem: sinon.stub().withArgs('foo').returns('bar|string'),
             removeItem: sinon.stub().withArgs('foo')
@@ -103,9 +106,9 @@ describe('Storage', function() {
         expect(storage.local.get('foo')).toBeNull();
     });
 
-    describe('Expiration', function() {
+    describe('Expiration', function () {
 
-        it('should delete if expired', function() {
+        it('should delete if expired', function () {
             var expires = date.addHours(-1),
                 key = 'foo',
                 value = 'bar',
@@ -126,7 +129,7 @@ describe('Storage', function() {
             expect(removeItemSpy).toHaveBeenCalledWith(key);
         });
 
-        it('should not delete if not expired', function() {
+        it('should not delete if not expired', function () {
             var expires = date.addHours(+1),
                 key = 'foo',
                 value = 'bar',
@@ -145,25 +148,25 @@ describe('Storage', function() {
         });
     });
 
-    describe('Saving and retriving different data types', function() {
+    describe('Saving and retriving different data types', function () {
 
-        it('Object data', function() {
+        it('Object data', function () {
             testSetAndGet('foo', { bar: 'baz' }, '{"value": {"bar":"baz"}}');
         });
 
-        it('Array data', function() {
+        it('Array data', function () {
             testSetAndGet('foo', ['bar', 'baz'], '{"value": ["bar","baz"]}');
         });
 
-        it('Boolean data', function() {
+        it('Boolean data', function () {
             testSetAndGet('foo', false, '{"value": false}');
         });
 
-        it('Number data', function() {
+        it('Number data', function () {
             testSetAndGet('foo', 1234, '{"value": 1234}');
         });
 
-        it('String data', function() {
+        it('String data', function () {
             testSetAndGet('foo', 'bar', '{"value": "bar"}');
         });
     });

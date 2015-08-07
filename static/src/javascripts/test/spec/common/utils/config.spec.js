@@ -35,6 +35,8 @@ describe('Config', function () {
         expect(config.webPublicationDateAsUrlPart()).toBe('2013/03/20');
     });
 
+
+
 });
 
 

@@ -74,10 +74,10 @@ define([
                     label = config.text.label + ': ' + config.labels[score];
 
                 if (dom.element.value.length < config.minLength) {
-                    label = config.text['short'];
+                    label = config.text.short;
                     score = null;
                 } else if (dom.element.value.length > config.maxLength) {
-                    label = config.text['long'];
+                    label = config.text.long;
                     score = null;
                 }
 

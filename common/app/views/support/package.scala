@@ -1,10 +1,11 @@
 package views.support
 
+import com.gu.facia.api.models.{LinkSnap, FaciaContent}
 import common._
 import model._
 
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.{LocalDate, DateTime}
+import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -16,6 +17,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
+import implicits.FaciaContentImplicits._
 
 /**
  * Encapsulates previous and next urls
@@ -122,13 +124,16 @@ object AuFriendlyFormat {
 }
 
 object Format {
-  def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    apply(date, Edition(request), pattern)
+  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
+    apply(date, Edition(request), pattern, tzOverride)
   }
 
-  def apply(date: DateTime, edition: Edition, pattern: String): String = {
-    val timezone = edition.timezone
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
+  def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[DateTimeZone]): String = {
+    val timeZone = tzOverride match {
+      case Some(tz) => tz
+      case _ => edition.timezone
+    }
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
   }
 
   def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTimeAtStartOfDay, pattern)(request)
@@ -188,12 +193,9 @@ object RenderClasses {
 }
 
 object SnapData {
-  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
+  def apply(faciaContent: FaciaContent): String = generateDataAttributes(faciaContent).mkString(" ")
 
-  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
-    case content: Content =>
-        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-        content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
-    case _  => Nil
-  }
+  private def generateDataAttributes(faciaContent: FaciaContent): Iterable[String] =
+    faciaContent.embedType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+    faciaContent.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
 }

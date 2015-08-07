@@ -1,3 +1,4 @@
+/*global guFont*/
 guFont(
-    {"name": "guardian-font2", "css": "@font-face{"}
-)
+    {'name': 'guardian-font2', 'css': '@font-face{'}
+);

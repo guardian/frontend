@@ -7,7 +7,6 @@ class CommercialTestSuite extends Suites (
   new services.CommercialHealthcheckTest,
   new controllers.commercial.TravelOffersTest,
   new books.BestsellersApiTest,
-  new books.BookTest,
   new books.MagentoExceptionTest,
   new jobs.JobTest,
   new masterclasses.EventbriteMasterClassFeedParsingTest,

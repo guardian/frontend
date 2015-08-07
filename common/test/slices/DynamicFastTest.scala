@@ -32,7 +32,7 @@ import test.ConfiguredTestSuite
     }
   }
 
-  it should "for three big unboosted items and m standard return Daimaijin" in {
+  it should "for three big unboosted items and m standard return QuarterQuarterQuarterQl" in {
     forAll(Gen.choose(0, 20)) { m: Int =>
       slicesFor((Seq.fill(3)(1) ++ Seq.fill(m)(0)).map(Story.unboosted)).value shouldEqual Seq(
         QuarterQuarterQuarterQl
@@ -62,6 +62,33 @@ import test.ConfiguredTestSuite
         Story(1, isBoosted = true) +:
           (Seq.fill(m)(Story.unboosted(1)) ++
             Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(HalfQuarterQl2Ql4)
+    }
+  }
+
+  it should "for two very bigs, one big boosted, n >= 1 big, and m standards, return HalfHalf, HalfQuarterQl2Ql4B" in {
+    forAll(Gen.choose(1, 20), Gen.choose(1, 20)) { (m: Int, n: Int) =>
+      slicesFor(
+        Seq.fill(2)(Story.unboosted(2)) ++
+        Seq(Story(1, isBoosted = true)) ++
+          (Seq.fill(m)(Story.unboosted(1)) ++
+            Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(
+        HalfHalf,
+        HalfQuarterQl2Ql4
+      )
+    }
+  }
+
+  it should "for one very big boosted, one very big unboosted, one big boosted, n >= 1 big, and m standards, " +
+    "return ThreeQuarterQuarter, HalfQuarterQl2Ql4B" in {
+    forAll(Gen.choose(1, 20), Gen.choose(1, 20)) { (m: Int, n: Int) =>
+      slicesFor(
+        Seq(
+          Story(2, isBoosted = true),
+          Story(2, isBoosted = false),
+          Story(1, isBoosted = true)
+        ) ++
+        (Seq.fill(m)(Story.unboosted(1)) ++
+          Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(ThreeQuarterQuarter, HalfQuarterQl2Ql4B)
     }
   }
 }

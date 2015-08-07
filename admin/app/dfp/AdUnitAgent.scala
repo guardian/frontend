@@ -2,10 +2,10 @@ package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411.InventoryStatus
+import common.dfp.GuAdUnit
 import conf.Configuration
 
 import scala.util.Try
-import scala.util.control.Exception._
 
 object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 

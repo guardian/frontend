@@ -29,12 +29,17 @@ define([
 
     function isToday(date) {
         var today = adjustedNow();
-        return (date.toDateString() === today.toDateString());
+        return date && (date.toDateString() === today.toDateString());
     }
 
     function isWithin24Hours(date) {
         var today = adjustedNow();
-        return (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+        return date && (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+    }
+
+    function isWithinSeconds(date, seconds) {
+        var today = adjustedNow();
+        return date && (date.valueOf() > today.valueOf() - ((seconds || 0) * 1000));
     }
 
     function isYesterday(relative) {
@@ -167,7 +172,7 @@ define([
     function replaceValidTimestamps(opts) {
         opts = opts || {};
 
-        findValidTimestamps().each(function (el) {
+        findValidTimestamps().each(function (el) {
             var targetEl,
                 $el = bonzo(el),
                 // Epoch dates are more reliable, fallback to datetime for liveblog blocks
@@ -193,7 +198,7 @@ define([
         });
     }
 
-     // DEPRECATED: Bindings
+    // DEPRECATED: Bindings
     ['related', 'autoupdate'].forEach(function (module) {
         mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
@@ -205,6 +210,7 @@ define([
 
     return {
         makeRelativeDate: makeRelativeDate,
+        isWithinSeconds: isWithinSeconds,
         init: init
     };
 

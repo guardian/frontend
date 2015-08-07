@@ -4,12 +4,15 @@ define([
     // Common libraries
     'common/utils/_',
     'common/utils/$',
+    'common/utils/background',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/to-array',
     // Modules
+    'common/modules/accessibility/helpers',
     'common/modules/experiments/ab',
     'common/modules/business/stocks',
     'facia/modules/onwards/geo-most-popular-front',
@@ -19,17 +22,21 @@ define([
     'facia/modules/ui/live-blog-updates',
     'facia/modules/ui/slideshow/controller',
     'facia/modules/ui/snaps',
+    'facia/modules/ui/sponsorship',
     'facia/modules/onwards/weather'
 ], function (
     bonzo,
     qwery,
     _,
     $,
+    background,
     config,
     detect,
     mediator,
+    robust,
     storage,
     toArray,
+    accessibility,
     ab,
     stocks,
     GeoMostPopularFront,
@@ -39,6 +46,7 @@ define([
     liveblogUpdates,
     slideshow,
     snaps,
+    sponsorship,
     weather
 ) {
 
@@ -82,15 +90,7 @@ define([
             },
 
             showLiveblogUpdates: function () {
-                var pageId = config.page.pageId,
-                    isNetFront = _.contains(['uk', 'us', 'au'], pageId),
-                    isSport = _.contains(['sport', 'football'], config.page.section);
-
-                if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
-                    config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
-                    config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
-                    config.switches.liveblogFrontUpdatesAu && pageId === 'au' ||
-                    config.switches.abLiveblogSportFrontUpdates && isSport && ab.getTestVariant('LiveblogSportFrontUpdates') === 'updates') {
+                if (detect.isBreakpoint({ min: 'desktop' })) {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
                     });
@@ -98,32 +98,37 @@ define([
             },
 
             startSlideshow: function () {
-                if (detect.isBreakpoint({ min: 'tablet' }) && ab.getTestVariant('FaciaSlideshow') !== 'disabled') {
+                if (detect.isBreakpoint({ min: 'tablet' })) {
                     mediator.on('page:front:ready', function () {
                         slideshow.init();
                     });
                 }
+            },
+
+            finished: function () {
+                mediator.emit('page:front:ready');
             }
+
         },
 
         ready = function () {
-            if (!this.initialised) {
-                this.initialised = true;
-                modules.showSnaps();
-                modules.showContainerShowMore();
-                modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo();
-                lazyLoadContainers();
-                stocks();
-                modules.showWeather();
-                modules.showLiveblogUpdates();
-                modules.startSlideshow();
-            }
-            mediator.emit('page:front:ready');
+            background(robust.makeBlocks([
+                ['f-accessibility', accessibility.shouldHideFlashingElements],
+                ['f-snaps', modules.showSnaps],
+                ['f-show-more', modules.showContainerShowMore],
+                ['f-container-toggle', modules.showContainerToggle],
+                ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
+                ['f-lazy-load-containers', lazyLoadContainers],
+                ['f-stocks', stocks],
+                ['f-sponsorship', sponsorship],
+                ['f-weather', modules.showWeather],
+                ['f-live-blog-updates', modules.showLiveblogUpdates],
+                ['f-slideshow', modules.startSlideshow],
+                ['f-finished', modules.finished]
+            ]));
         };
 
     return {
         init: ready
     };
-
 });

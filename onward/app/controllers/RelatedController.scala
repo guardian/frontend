@@ -1,5 +1,6 @@
 package controllers
 
+
 import common._
 import containers.Containers
 import model._
@@ -28,8 +29,7 @@ object RelatedController extends Controller with Related with Containers with Lo
   }
 
   private def renderRelated(trails: Seq[Content])(implicit request: RequestHeader) = Cached(30.minutes) {
-
-    val relatedTrails = trails take 8
+    val relatedTrails = trails map FaciaContentConvert.frontentContentToFaciaContent take 8
 
     if (request.isJson) {
       val html = views.html.fragments.containers.facia_cards.container(

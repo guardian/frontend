@@ -1,62 +1,46 @@
-define([
-    'jquery',
-    'underscore',
-    'modules/vars',
-    'utils/array',
-    'utils/internal-content-code',
-    'utils/parse-query-params',
-    'utils/query-params',
-    'utils/url-abs-path',
-    'models/collections/article',
-    'modules/auto-complete',
-    'modules/cache',
-    'modules/content-api',
-    'knockout'
-], function (
-    $,
-    _,
-    vars,
-    array,
-    internalContentCode,
-    parseQueryParams,
-    queryParams,
-    urlAbsPath,
-    Article,
-    autoComplete,
-    cache,
-    contentApi,
-    ko
-) {
+import ko from 'knockout';
+import _ from 'underscore';
+import * as vars from 'modules/vars';
+import {combine} from 'utils/array';
+import internalPageCode from 'utils/internal-page-code';
+import parseQueryParams from 'utils/parse-query-params';
+import urlAbsPath from 'utils/url-abs-path';
+import Article from 'models/collections/article';
+import * as cache from 'modules/cache';
+import * as capi from 'modules/content-api';
+import debounce from 'utils/debounce';
+import AutoComplete from 'widgets/autocomplete';
+import BaseClass from 'modules/class';
 
-    return function(options) {
+var pollerSym = Symbol();
+var debounceSym = Symbol();
+var fetchSym = Symbol();
 
-        var self = this,
-            deBounced,
-            poller,
-            opts = options || {},
-            counter = 0,
-            scrollable = options.container.querySelector('.scrollable'),
-            pageSize = vars.CONST.searchPageSize || 25,
+class Latest extends BaseClass {
+    constructor(options) {
+        super();
+        var opts = this.opts = options || {};
+
+        var pageSize = vars.CONST.searchPageSize || 25,
             showingDrafts = opts.showingDrafts;
 
         this.articles = ko.observableArray();
         this.message = ko.observable();
 
-        this.term = ko.observable(queryParams().q || '');
-        this.term.subscribe(function() { self.search(); });
-        this.isTermAnItem = function() { return (self.term() || '').match(/\//); };
+        this.term = ko.observable(parseQueryParams().q || '');
+        this.term.subscribe(() => this.search());
+        this.autocompleteValue = ko.observable({
+            query: '',
+            param: 'section'
+        });
+        this.autocompleteValue.subscribe(() => this.search());
 
-        this.filter     = ko.observable();
-        this.filterType = ko.observable();
-        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
-
-        this.suggestions = ko.observableArray();
-        this.lastSearch = ko.observable();
+        this.lastSearch = ko.observable({});
 
         this.page = ko.observable(1);
         this.totalPages = ko.observable(1);
 
-        this.title = ko.computed(function () {
+        this.title = ko.computed(() => {
             var lastSearch = this.lastSearch(),
                 title = 'latest';
             if (lastSearch && lastSearch.filter) {
@@ -65,155 +49,32 @@ define([
             return title;
         }, this);
 
-        this.setFilter = function(item) {
-            self.filter(item && item.id ? item.id : item);
-            self.suggestions.removeAll();
-            self.filterChange();
-            self.search();
-        };
-
-        this.clearFilter = function() {
-            self.filter('');
-            self.suggestions.removeAll();
-        };
-
-        this.clearTerm = function() {
-            self.term('');
-        };
-
-        this.autoComplete = function() {
-            autoComplete({
-                query:    self.filter(),
-                path:    (self.filterType() || {}).path
-            })
-            .progress(self.suggestions)
-            .then(self.suggestions);
-        };
-
-        this.filterChange = function () {
-            if (!this.filter()) {
-                var lastSearch = this.lastSearch();
-                if (lastSearch && lastSearch.filter) {
-                    // The filter has been cleared
-                    this.search();
-                }
+        this[debounceSym] = debounce((opts = {}) => {
+            if (!opts.noFlushFirst) {
+                this.flush('searching...');
             }
-        };
 
-        function fetch (opts) {
-            var count = counter += 1;
+            var request = {
+                isDraft: showingDrafts(),
+                page: this.page(),
+                pageSize: pageSize,
+                filter: this.autocompleteValue().query,
+                filterType: this.autocompleteValue().param,
+                isPoll: opts.isPoll
+            };
 
-            opts = opts || {};
+            var term = this.term();
+            // If term contains slashes, assume it's an article id (and first convert it to a path)
+            if (this.isTermAnItem()) {
+                term = urlAbsPath(term);
+                this.term(term);
+                request.article = term;
+            } else {
+                request.term = term;
+            }
 
-            clearTimeout(deBounced);
-            deBounced = setTimeout(function() {
-                if (self.suggestions().length) {
-                    // The auto complete is open, if we ask the API most likely we won't get any result
-                    // which will lead to displaying the alert
-                    return;
-                }
-                if (!opts.noFlushFirst) {
-                    self.flush('searching...');
-                }
-
-                var request = {
-                    isDraft: showingDrafts(),
-                    page: self.page(),
-                    pageSize: pageSize,
-                    filter: self.filter(),
-                    filterType: self.filterType().param,
-                    isPoll: opts.isPoll
-                };
-
-                var term = self.term();
-                // If term contains slashes, assume it's an article id (and first convert it to a path)
-                if (self.isTermAnItem()) {
-                    term = urlAbsPath(term);
-                    self.term(term);
-                    request.article = term;
-                } else {
-                    request.term = term;
-                }
-
-                contentApi.fetchLatest(request)
-                .then(
-                    function(response) {
-                        if (count !== counter) { return; }
-                        var rawArticles = response.results,
-                            newArticles,
-                            initialScroll = scrollable.scrollTop;
-
-                        self.lastSearch(request);
-                        self.totalPages(response.pages);
-                        self.page(response.currentPage);
-
-                        if (rawArticles.length) {
-                            newArticles = array.combine(rawArticles, self.articles(), function (one, two) {
-                                var oneId = one instanceof Article ? one.id() : internalContentCode(one);
-                                var twoId = two instanceof Article ? two.id() : internalContentCode(two);
-                                return oneId === twoId;
-                            }, function (opts) {
-                                var icc = internalContentCode(opts);
-
-                                opts.id = icc;
-                                cache.put('contentApi', icc, opts);
-
-                                opts.uneditable = true;
-                                return new Article(opts, true);
-                            }, function (oldArticle, newArticle) {
-                                oldArticle.props.webPublicationDate(newArticle.webPublicationDate);
-                                return oldArticle;
-                            });
-                            self.articles(newArticles);
-                            self.message(null);
-                        } else {
-                            self.flush('...sorry, no articles were found.');
-                        }
-
-                        scrollable.scrollTop = initialScroll;
-                    },
-                    function(error) {
-                        var errMsg = error.message;
-                        vars.model.alert(errMsg);
-                        self.flush(errMsg);
-                    }
-                );
-            }, 300);
-        }
-
-        // Grab articles from Content Api
-        this.search = function(opts) {
-            self.page(1);
-            fetch(opts);
-
-            return true; // ensure default click happens on all the bindings
-        };
-
-        this.flush = function(message) {
-            self.articles.removeAll();
-            self.message(message);
-        };
-
-        this.refresh = function() {
-            self.page(1);
-            fetch();
-        };
-
-        this.reset = function() {
-            self.page(1);
-            this.clearTerm();
-            this.clearFilter();
-        };
-
-        this.pageNext = function() {
-            self.page(self.page() + 1);
-            fetch();
-        };
-
-        this.pagePrev = function() {
-            self.page(_.max([1, self.page() - 1]));
-            fetch();
-        };
+            return capi.fetchLatest(request);
+        }, vars.CONST.searchDebounceMs);
 
         this.showNext = ko.pureComputed(function () {
             return this.totalPages() > this.page();
@@ -226,24 +87,135 @@ define([
         this.showTop = ko.pureComputed(function () {
             return this.page() > 2;
         }, this);
+    }
 
-        this.startPoller = function() {
-            poller = setInterval(function(){
-                if (self.page() === 1) {
-                    self.search({
-                        noFlushFirst: true,
-                        isPoll: true
-                    });
-                }
-            }, vars.CONST.latestArticlesPollMs || 60000);
+    [fetchSym](request) {
+        var loadCallback = this.opts.callback || function () {};
 
-            this.startPoller = function() {}; // make idempotent
-        };
+        this[debounceSym](request)
+        .then(({
+            results,
+            pages,
+            currentPage
+        }) => {
+            var scrollable = this.opts.container.querySelector('.scrollable'),
+                initialScroll = scrollable.scrollTop;
 
-        this.dispose = function () {
-            clearTimeout(deBounced);
-            clearInterval(poller);
-        };
+            this.lastSearch(request);
+            this.totalPages(pages);
+            this.page(currentPage);
 
-    };
-});
+            if (results.length) {
+                let newArticles = combine(results, this.articles(), compareArticles, createNewArticle, reuseOldArticle);
+                this.articles(newArticles);
+                this.message(null);
+            } else {
+                this.flush('...sorry, no articles were found.');
+            }
+
+            scrollable.scrollTop = initialScroll;
+            loadCallback();
+            this.emit('search:update');
+        })
+        .catch((error = {
+            message: 'Invalid CAPI result. Please try again'
+        }) => {
+            var errMsg = error.message;
+            vars.model.alert(errMsg);
+            this.flush(errMsg);
+            loadCallback();
+            this.emit('search:update');
+        });
+    }
+
+    isTermAnItem() {
+        return (this.term() || '').match(/\//);
+    }
+
+    registerChild(child) {
+        if (child instanceof AutoComplete) {
+            this.listenOn(child, 'change', value => {
+                this.autocompleteValue(value);
+            });
+        }
+    }
+
+    clearTerm() {
+        this.term('');
+    }
+
+    startPoller() {
+        this[pollerSym] = setInterval(() => {
+            if (this.page() === 1) {
+                this.search({
+                    noFlushFirst: true,
+                    isPoll: true
+                });
+            }
+        }, vars.CONST.latestArticlesPollMs || 60000);
+
+        this.startPoller = function() {}; // make idempotent
+    }
+
+    search(opts) {
+        this.page(1);
+        this[fetchSym](opts);
+
+        return true; // ensure default click happens on all the bindings
+    }
+
+    flush(message) {
+        this.articles.removeAll();
+        this.message(message);
+    }
+
+    refresh() {
+        this.page(1);
+        this[fetchSym]();
+    }
+
+    reset() {
+        this.page(1);
+        this.clearTerm();
+        this.emit('clear');
+    }
+
+    pageNext() {
+        this.page(this.page() + 1);
+        this[fetchSym]();
+    }
+
+    pagePrev() {
+        this.page(_.max([1, this.page() - 1]));
+        this[fetchSym]();
+    }
+
+    dispose() {
+        super.dispose();
+        this[debounceSym].dispose();
+        clearInterval(this[pollerSym]);
+    }
+}
+
+function compareArticles (one, two) {
+    var oneId = one instanceof Article ? one.id() : internalPageCode(one);
+    var twoId = two instanceof Article ? two.id() : internalPageCode(two);
+    return oneId === twoId;
+}
+
+function createNewArticle (opts) {
+    var icc = internalPageCode(opts);
+
+    opts.id = icc;
+    cache.put('contentApi', icc, opts);
+
+    opts.uneditable = true;
+    return new Article(opts, true);
+}
+
+function reuseOldArticle (oldArticle, newArticle) {
+    oldArticle.props.webPublicationDate(newArticle.webPublicationDate);
+    return oldArticle;
+}
+
+export default Latest;

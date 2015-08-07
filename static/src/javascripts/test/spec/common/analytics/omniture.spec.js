@@ -1,6 +1,8 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
+/*eslint-disable no-unused-vars*/
 import jasmineSinon from 'jasmine-sinon';
+/*eslint-enable no-unused-vars*/
 
 describe('omniture', function () {
 
@@ -12,17 +14,17 @@ describe('omniture', function () {
     var s, omniture, mediator,
         injector = new Injector();
 
-    injector.mock('common/utils/config', config);    
+    injector.mock('common/utils/config', config);
 
     beforeEach(function (done) {
         injector.test([
             'common/modules/analytics/omniture',
             'common/utils/mediator'], function () {
 
-            omniture = arguments[0];
-            mediator = arguments[1];
+                omniture = arguments[0];
+                mediator = arguments[1];
 
-            config.page = {
+                config.page = {
                 analyticsName:   'the_page_name',
                 beaconUrl:       '',
                 contentType:     'Article',
@@ -31,26 +33,32 @@ describe('omniture', function () {
                 omnitureAccount: 'the_account'
             };
 
-            s = {
+                s = {
                 t: function () {},
                 tl: function () {},
-                apl: function () {},
+                apl: function (x, y, z) {
+                    return [x, y]
+                        .filter(function (a) {
+                            return a;
+                        })
+                        .join(z);
+                },
                 Util: { getQueryParam: function () { return 'test'; } },
                 getValOnce: function () { return 'test'; },
                 getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
-                getParamValue: function() { return ''; }
+                getParamValue: function () { return ''; }
             };
-            sinon.spy(s, 't');
-            sinon.spy(s, 'tl');
-            sinon.spy(s, 'apl');
+                sinon.spy(s, 't');
+                sinon.spy(s, 'tl');
+                sinon.spy(s, 'apl');
 
-            omniture.s = s;
-            omniture.addHandlers();
-            done();
-        });
+                omniture.s = s;
+                omniture.addHandlers();
+                done();
+            });
     });
 
-    afterEach(function(){
+    afterEach(function () {
         sessionStorage.removeItem('gu.analytics.referrerVars');
         mediator.removeEvent('module:clickstream:interaction');
         mediator.removeEvent('module:clickstream:click');
@@ -67,12 +75,24 @@ describe('omniture', function () {
         expect(s.eVar7).toBe('D=pageName');
     });
 
+    it('should remove custom event properties after tracking', function () {
+        s.pageType = 'article';
+        omniture.go();
+        omniture.trackLink('link object', 'outer:link', { prop74: 'foo' });
+
+        expect(s.eVar37).toBe('Article:outer:link');
+        expect(s.prop37).toBe('D=v37');
+        expect(s.eVar7).toBe('D=pageName');
+
+        expect(s.prop74).toBe(undefined);
+    });
+
     it('should track clicks with a standardised set of variables', function () {
         s.pageType = 'article';
         omniture.go();
         omniture.trackLink('link object', 'outer:link');
 
-        expect(s.linkTrackVars).toBe('channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,prop51,prop61,prop64,prop65,eVar7,eVar37,eVar38,eVar39,eVar50,events');
+        expect(s.linkTrackVars).toBe('channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events');
         expect(s.linkTrackEvents).toBe('event37');
         expect(s.events).toBe('event37');
     });
@@ -127,7 +147,7 @@ describe('omniture', function () {
         s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
         omniture.go();
 
-        expect(s.cookieDomainPeriods).toBe('2')
+        expect(s.cookieDomainPeriods).toBe('2');
     });
 
     it('should log a page view event', function () {
@@ -148,7 +168,7 @@ describe('omniture', function () {
                 target: document.documentElement,
                 samePage: true,
                 sameHost: true,
-                tag: 'something'
+                validTarget: true
             };
 
         omniture.go();
@@ -157,12 +177,25 @@ describe('omniture', function () {
         expect(s.tl).toHaveBeenCalledOnce();
     });
 
+    it('should not log clickstream events with an invalidTarget', function () {
+        var clickSpec = {
+            target: document.documentElement,
+            validTarget: false
+        };
+
+        omniture.go();
+        mediator.emit('module:clickstream:click', clickSpec);
+
+        expect(s.tl.callCount).toBe(0);
+    });
+
     it('should make a non-delayed s.tl call for same-page links', function () {
         var el                = document.createElement('a'),
             clickSpecSamePage = {
                 target: el,
                 samePage: true,
                 sameHost: true,
+                validTarget: true,
                 tag: 'tag'
             };
         omniture.go();
@@ -178,13 +211,14 @@ describe('omniture', function () {
                 target: el,
                 samePage: false,
                 sameHost: true,
+                validTarget: true,
                 tag: 'tag in localstorage'
             };
 
         omniture.go();
         mediator.emit('module:clickstream:click', clickSpec);
 
-        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage');
     });
 
     it('should make a delayed s.tl call for other-host links', function () {
@@ -193,6 +227,7 @@ describe('omniture', function () {
                 target: el,
                 samePage: false,
                 sameHost: false,
+                validTarget: true,
                 tag: 'tag'
             };
 
@@ -200,5 +235,5 @@ describe('omniture', function () {
         mediator.emit('module:clickstream:click', clickSpec);
 
         expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
-    });    
- });
+    });
+});

@@ -8,7 +8,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
   "Content pages" should "have functioning most popular components" in {
 
     get("/books/2014/oct/15/dylan-thomas-in-fitzrovia-griff-rhys-jones")
-    implicitlyWait(5)
+    implicitlyWait(20)
 
     withClue("Should show the 'most popular' component") {
       first("[data-test-id='popular-in']").isDisplayed should be (true)

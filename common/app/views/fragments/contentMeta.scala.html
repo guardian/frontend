@@ -21,7 +21,7 @@
     }
 
     @if(!content.shouldHidePublicationDate) {
-        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, secondary = true)
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, content.isLiveBlog, content.isLive)
     }
 
     <div class="meta__extras">
@@ -34,8 +34,9 @@
             <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
             </div>
         </div>
-        <div class="meta__save-for-later" data-link-name="meta-save-for-later" data-component="meta-save-for-later">
-        </div>
+        @if(SaveForLaterSwitch.isSwitchedOn) {
+            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+        }
     </div>
 }
 
@@ -52,7 +53,7 @@
         @fragments.commercial.badge(content)
     }
 
-    @if(content.showBylinePic) {
+    @if(content.showCircularBylinePicAtSide) {
         <div class="media__body meta__body">
             <div class="media__img meta__image">
                 @fragments.meta.bylineImage(content)

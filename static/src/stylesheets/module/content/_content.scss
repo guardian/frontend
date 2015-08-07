@@ -275,7 +275,7 @@
         }
 
         @include mq(phablet) {
-            height: gs-span(2.5) + ($gs-gutter*2);
+            height: gs-span(2.5);
         }
 
         @include mq(desktop) {
@@ -678,6 +678,38 @@
     border-top: 1px dotted colour(neutral-5);
     padding: 0;
     box-sizing: border-box;
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+}
+
+.meta__social--sticky {
+    position: fixed;
+    bottom: $gs-baseline;
+    border: 0;
+    z-index: 4;
+    transform: translate3d(0, $gs-baseline * 4, 0);
+
+    @include mq(leftCol, $until: wide) {
+        margin-left: $gs-gutter * -8;
+        .social__item--gplus {
+            display: none;
+        }
+    }
+    @include mq(wide) {
+        margin-left: $gs-gutter * -12;
+    }
+}
+
+.meta__social--sticky--revealable {
+    transition: transform 100ms linear;
+}
+
+.meta__social--sticky--reveal {
+    transform: translate3d(0, 0, 0);
 }
 
 .meta__twitter,
@@ -699,6 +731,8 @@
     .button {
         padding-top: 1px;
         margin-right: 0;
+        // Force content to fit inside button
+        white-space: nowrap;
 
         .tonal--tone-media & {
             border: 0;

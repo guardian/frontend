@@ -1,4 +1,5 @@
 import ABTest from 'fixtures/ab-test';
+import sinon from 'sinonjs';
 import Injector from 'helpers/injector';
 
 describe('AB Testing', function () {
@@ -12,7 +13,7 @@ describe('AB Testing', function () {
         injector = new Injector(),
         ab, config, mvtCookie;
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         injector.test(['common/modules/experiments/ab', 'common/utils/config', 'common/modules/analytics/mvt-cookie'], function () {
             ab = arguments[0];
             config = arguments[1];
@@ -38,7 +39,7 @@ describe('AB Testing', function () {
         });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         ab.reset();
         localStorage.removeItem(participationsKey);
         document.body.removeAttribute('data-link-test');
@@ -81,15 +82,15 @@ describe('AB Testing', function () {
             expect(getItem('DummyTest').variant).toBe('notintest');
         });
 
-        it("should not segment user if test can't be run", function () {
-            test.one.canRun = function() { return false; };
+        it('should not segment user if test can\'t be run', function () {
+            test.one.canRun = function () { return false; };
             ab.addTest(test.one);
             ab.segment();
 
             expect(ab.getParticipations()).toEqual({});
         });
 
-        it("should not segment user if the test has expired", function () {
+        it('should not segment user if the test has expired', function () {
             test.one.expiry = '2012-01-01';
             ab.addTest(test.one);
             ab.segment();
@@ -97,7 +98,7 @@ describe('AB Testing', function () {
             expect(ab.getParticipations()).toEqual({});
         });
 
-        it("should not segment user if the test is switched off", function () {
+        it('should not segment user if the test is switched off', function () {
             config.switches.abDummyTest = false;
 
             ab.addTest(test.one);
@@ -106,20 +107,20 @@ describe('AB Testing', function () {
             expect(ab.getParticipations()).toEqual({});
         });
 
-        it("should not segment user if they already belong to the test", function () {
+        it('should not segment user if they already belong to the test', function () {
             mvtCookie.overwriteMvtCookie(1);
 
             ab.addTest(test.one);
             ab.segment();
 
-            expect(ab.getParticipations()['DummyTest'].variant).toEqual('hide');
+            expect(ab.getParticipations().DummyTest.variant).toEqual('hide');
         });
 
         it('should retrieve all the tests user is in', function () {
             ab.addTest(test.one);
             ab.addTest(test.two);
             ab.segment();
-            var tests = Object.keys(ab.getParticipations()).map(function (k){ return k; }).toString();
+            var tests = Object.keys(ab.getParticipations()).map(function (k) { return k; }).toString();
 
             expect(tests).toBe('DummyTest,DummyTest2');
         });
@@ -129,7 +130,7 @@ describe('AB Testing', function () {
                 participationsKey,
                 '{ "value": { "DummyTest2": { "variant": "foo" }, "DummyTest": { "variant": "bar" } } }'
             );
-            test.one.expiry = "2012-01-01";
+            test.one.expiry = '2012-01-01';
             ab.addTest(test.one);
             ab.segment();
 
@@ -160,7 +161,7 @@ describe('AB Testing', function () {
 
     });
 
-    describe("Running tests", function () {
+    describe('Running tests', function () {
 
         it('should be able to start test', function () {
             ab.addTest(test.one);
@@ -171,7 +172,7 @@ describe('AB Testing', function () {
         });
 
         it('should not to run the after the expiry date', function () {
-            test.one.expiry = "2012-01-01";
+            test.one.expiry = '2012-01-01';
             ab.addTest(test.one);
             ab.segment();
             ab.run();
@@ -181,13 +182,13 @@ describe('AB Testing', function () {
 
     });
 
-    describe("Analytics", function () {
+    describe('Analytics', function () {
 
         it('should tell me if an event is applicable to a test that I belong to', function () {
             ab.addTest(test.one);
             ab.segment();
 
-            expect(ab.isEventApplicableToAnActiveTest('most popular | The Guardian | trail | 1 | text')).toBeTruthy()
+            expect(ab.isEventApplicableToAnActiveTest('most popular | The Guardian | trail | 1 | text')).toBeTruthy();
 
         });
 
@@ -195,7 +196,7 @@ describe('AB Testing', function () {
             ab.addTest(test.one);
             ab.segment();
 
-            expect(ab.isEventApplicableToAnActiveTest('most popular | Section | trail | 1 | text')).toBeTruthy()
+            expect(ab.isEventApplicableToAnActiveTest('most popular | Section | trail | 1 | text')).toBeTruthy();
         });
 
         it('should return a list of test names that are relevant to the event', function () {
@@ -205,7 +206,7 @@ describe('AB Testing', function () {
             var event = {};
             event.tag = 'most popular | The Guardian | trail | 1 | text';
 
-            expect(ab.getActiveTestsEventIsApplicableTo(event)).toEqual(['DummyTest', 'DummyTest2'])
+            expect(ab.getActiveTestsEventIsApplicableTo(event)).toEqual(['DummyTest', 'DummyTest2']);
         });
 
         it('should return the variant of a test that current user is participating in', function () {
@@ -217,7 +218,7 @@ describe('AB Testing', function () {
             var event = {};
             event.tag = 'most popular | The Guardian | trail | 1 | text';
 
-            expect(ab.getTestVariant('DummyTest')).toEqual('control')
+            expect(ab.getTestVariantId('DummyTest')).toEqual('control');
         });
 
         it('should generate a string for Omniture to tag the test(s) the user is in', function () {
@@ -229,32 +230,32 @@ describe('AB Testing', function () {
             ab.segment();
             ab.run();
 
-            expect(ab.makeOmnitureTag()).toBe("AB | DummyTest | control,AB | DummyTest2 | control");
+            expect(ab.makeOmnitureTag()).toBe('AB | DummyTest | control,AB | DummyTest2 | control');
 
         });
 
         it('should generate Omniture tags when there is two tests, but one cannot run', function () {
             mvtCookie.overwriteMvtCookie(2);
-            test.one.canRun = function() { return false; };
+            test.one.canRun = function () { return false; };
             ab.addTest(test.one);
             test.two.audience = 1;
             ab.addTest(test.two);
             ab.segment();
             ab.run();
 
-            expect(ab.makeOmnitureTag()).toBe("AB | DummyTest2 | control");
+            expect(ab.makeOmnitureTag()).toBe('AB | DummyTest2 | control');
         });
 
         it('should not generate Omniture tags when a test can not be run', function () {
             mvtCookie.overwriteMvtCookie(2);
 
             ab.addTest(test.one);
-            test.two.canRun = function() { return false; };
+            test.two.canRun = function () { return false; };
             ab.addTest(test.two);
             ab.segment();
             ab.run();
 
-            expect(ab.makeOmnitureTag()).toBe("AB | DummyTest | control");
+            expect(ab.makeOmnitureTag()).toBe('AB | DummyTest | control');
         });
 
     });
