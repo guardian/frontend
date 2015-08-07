@@ -9,7 +9,8 @@
                     ("navigation--has-signposting", !Edition.isEditionFront),
                     ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
-            <div class="navigation__inner gs-container">
+        <div class="gs-container">
+            <div class="navigation__inner">
                 <div class="navigation__scroll">
                     <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
                         @if(!Edition.isEditionFront){
@@ -37,5 +38,6 @@
                 }
             </div>
             <div id="all-sections-popup" class="navigation__expandable js-mega-nav-placeholder" data-component="all-nav"></div>
+        </div>
     </div>
 }
