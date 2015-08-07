@@ -244,6 +244,47 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withDimensions(stage)))
   } yield new AwsLineChart("User 50x", Seq("Time", "50x/min"), ChartFormat.SingleLineRed, metric)
 
+
+  object headlineTests {
+
+    private def get(metricName: String) = euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(6).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withStatistics("Sum")
+      .withNamespace("Diagnostics")
+      .withMetricName(metricName)
+      .withDimensions(stage)
+    )
+
+    def control = withErrorLogging(
+      for {
+        viewed <- get("headlines-control-seen")
+        clicked <- get("headlines-control-clicked")
+      } yield new AwsLineChart(
+        "Control Group",
+        Seq("", "Saw the headline", "Clicked the headline"),
+        ChartFormat.DoubleLineBlueRed,
+        viewed,
+        clicked
+      )
+    )
+
+    def variant = withErrorLogging(
+      for {
+        viewed <- get("headlines-variant-seen")
+        clicked <- get("headlines-variant-clicked")
+      } yield new AwsLineChart(
+        "Test Group",
+        Seq("cccc", "Saw the headline", "Clicked the headline"),
+        ChartFormat.DoubleLineBlueRed,
+        viewed,
+        clicked
+      )
+    )
+  }
+
+
   def ratioConfidence = for {
     metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)

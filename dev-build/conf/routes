@@ -5,6 +5,7 @@
 GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
 GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
 GET         /commercial/test-page                                     												 controllers.commercial.CreativeTestPage.allComponents(k: List[String])
+GET         /rockabox/rockabox_buster.html                                                                           dev.DevAssetsController.rockaboxBuster()
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
@@ -58,7 +59,7 @@ GET         /analytics/commercial/im-sponsorships                               
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 GET         /analytics/commercial/sponsored-containers                                                               controllers.admin.CommercialController.sponsoredContainers()
 GET         /analytics/commercial/adtests                                                                            controllers.admin.CommercialController.renderAdTests()
-
+GET         /analytics/headlines-test                                                                                controllers.admin.MetricsController.renderHeadlinesTest()
 
 # Discussion
 GET         /discussion/comment-counts                                                                               controllers.CommentCountController.commentCount(shortUrls: String)
