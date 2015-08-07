@@ -200,6 +200,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     }
   }
 
+  object headlines {
+    lazy val spreadsheet = configuration.getMandatoryStringProperty("headlines.spreadsheet")
+  }
+
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
