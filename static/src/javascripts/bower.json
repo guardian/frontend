@@ -19,7 +19,6 @@
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
-    "fastclick": "1.0.6",
     "requirejs-text": "~2.0.12",
     "when": "3.7.3",
     "videojs-embed": "~0.3.1",
