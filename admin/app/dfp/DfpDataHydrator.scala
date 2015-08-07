@@ -235,7 +235,7 @@ class DfpDataHydrator extends Logging {
       val creativesQuery = threshold.foldLeft(new StatementBuilder()) { (stmtBuilder,
                                                                          lastModified) =>
         stmtBuilder.where("lastModifiedDateTime > :lastModified")
-          .withBindVariableValue("lastModified", lastModified.getMillis)
+          .withBindVariableValue("lastModified", lastModified.toString)
       }
 
       val creatives = DfpApiWrapper.fetchTemplateCreatives(serviceRegistry, creativesQuery)
