@@ -200,6 +200,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     }
   }
 
+  object headlines {
+    lazy val spreadsheet = configuration.getMandatoryStringProperty("headlines.spreadsheet")
+  }
+
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
@@ -437,11 +441,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object formstack {
     lazy val url = configuration.getMandatoryStringProperty("formstack.url")
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
-  }
-
-  object avatars {
-    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
-    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
   object standalone {

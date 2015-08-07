@@ -3,7 +3,6 @@
 define([
     'bean',
     'bonzo',
-    'fastclick',
     'qwery',
     'common/utils/$',
     'common/utils/background',
@@ -17,6 +16,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
@@ -55,7 +55,6 @@ define([
 ], function (
     bean,
     bonzo,
-    FastClick,
     qwery,
     $,
     background,
@@ -69,6 +68,7 @@ define([
     storage,
     Foresee,
     liveStats,
+    HeadlinesTestAnalytics,
     mediaListener,
     omniture,
     register,
@@ -106,13 +106,6 @@ define([
     identity
 ) {
     var modules = {
-            initFastClick: function () {
-                // Unfortunately FastClick’s UMD exports are not consistent for
-                // all types. AMD exports FastClick, CJS exports FastClick.attach
-                // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
-                (config.tests.jspmTest ? FastClick : FastClick.attach)(document.body);
-            },
-
             initialiseTopNavItems: function () {
                 var profile,
                     search = new Search(),
@@ -360,6 +353,10 @@ define([
                     var saveForLater = new SaveForLater();
                     saveForLater.init(false);
                 }
+            },
+
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.go();
             }
         };
 
@@ -374,7 +371,6 @@ define([
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
-                ['c-fast-click', modules.initFastClick],
                 ['c-test-cookie', modules.testCookie],
                 ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
@@ -408,7 +404,8 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
-                ['c-save-for-later', modules.saveForLater]
+                ['c-save-for-later', modules.saveForLater],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]));
 
             if (window.console && window.console.log && !config.page.isDev) {

@@ -6,6 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
+    'common/modules/identity/api',
     'text!common/views/commercial/outbrain.html'
 ], function (
     fastdom,
@@ -15,6 +16,7 @@ define([
     detect,
     mediator,
     template,
+    identity,
     outbrainTpl
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
@@ -37,7 +39,7 @@ define([
 
             widgetCode = widgetIds[detect.getBreakpoint()];
 
-            if (config.switches.newOutbrain) {
+            if (config.switches.newOutbrain && !identity.isUserLoggedIn()) {
                 widgetConfig = {
                     desktop: {
                         image: {
@@ -85,7 +87,7 @@ define([
                 ));
             });
 
-            if (config.switches.newOutbrain && breakpoint !== 'mobile') {
+            if (config.switches.newOutbrain && breakpoint !== 'mobile' && !identity.isUserLoggedIn()) {
                 widgetCodeText  = widgetConfig[breakpoint].text[getSection()];
 
                 fastdom.write(function () {
