@@ -72,9 +72,14 @@ define([
         // Get the name of the method to run after scroll
         this.updateMethod = this.getUpdateMethod();
 
-        mediator.on('window:scroll', _.throttle(function () {
-            this[this.updateMethod]();
-        }.bind(this), 10));
+        // Profile page doesn't need scroll event as it has only slim sticky nav from the beginning
+        if (this.isProfilePage) {
+            this.updatePositionProfile();
+        } else {
+            mediator.on('window:scroll', _.throttle(function () {
+                this[this.updateMethod]();
+            }.bind(this), 10));
+        }
 
         // Make sure header is locked when meganav is open
         mediator.on('modules:nav:open', function () {
@@ -102,8 +107,6 @@ define([
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';
-        } else if (this.isProfilePage) {
-            return 'updatePositionProfile';
         } else {
             return 'updatePosition';
         }
