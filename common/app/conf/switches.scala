@@ -278,15 +278,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val PngResizingSwitch = Switch(
-    "Performance",
-    "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val Viewability = Switch(
     "Performance",
     "viewability",
@@ -652,15 +643,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ImgixSwitch = Switch(
-    "Feature",
-    "imgix",
-    "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 20),
-    exposeClientSide = true
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch(
     "Feature",
     "html-5-media-compatibility-check",
@@ -779,7 +761,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",

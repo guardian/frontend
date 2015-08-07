@@ -2,12 +2,13 @@ package views.support
 
 import java.net.{URI, URISyntaxException}
 import common.Logging
-import conf.Switches.{ImageServerSwitch, PngResizingSwitch, ImgixSwitch}
-import conf.{Configuration, Switches}
+import conf.Switches.ImageServerSwitch
+import conf.Configuration
 import layout.WidthsByBreakpoint
 import model.{Content, ImageAsset, ImageContainer, MetaData}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
+import Function.const
 
 sealed trait ElementProfile {
 
@@ -33,7 +34,6 @@ sealed trait ElementProfile {
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
   def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
 
 
@@ -88,24 +88,20 @@ object ImgSrc extends Logging {
     "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 
+  private val supportedImages = Set(".jpg", ".jpeg", ".png")
+
   def apply(url: String, imageType: ElementProfile): String = {
     try {
       val uri = new URI(url.trim)
 
-      val supportedImages = if (PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
-
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
-        .filter(_ => isSupportedImage)
-        .filter(_ => ImageServerSwitch.isSwitchedOn)
+        .filter(const(ImageServerSwitch.isSwitchedOn))
+        .filter(const(isSupportedImage))
         .map { host =>
-          if (ImgixSwitch.isSwitchedOn) {
-            val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.imgixResizeString}", host.token)
-            s"$imageHost/img/${host.prefix}$signedPath"
-          } else {
-            s"$imageHost/${host.prefix}${imageType.resizeString}${uri.getPath}"
-          }
+          val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.imgixResizeString}", host.token)
+          s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>
@@ -128,7 +124,7 @@ object ImgSrc extends Logging {
 
   def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile =>
-      if(ImgixSwitch.isSwitchedOn) {
+      if(ImageServerSwitch.isSwitchedOn) {
         s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
       } else {
         s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
@@ -143,7 +139,7 @@ object ImgSrc extends Logging {
   }
 
   def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
-    if(ImgixSwitch.isSwitchedOn) {
+    if(ImageServerSwitch.isSwitchedOn) {
       findLargestSrc(imageContainer, Item300)
     } else {
       findNearestSrc(imageContainer, Item300)
