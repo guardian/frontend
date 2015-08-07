@@ -17,6 +17,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
+    'common/modules/analytics/headlines-test-analytics',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
@@ -69,6 +70,7 @@ define([
     storage,
     Foresee,
     liveStats,
+    HeadlinesTestAnalytics,
     mediaListener,
     omniture,
     register,
@@ -341,6 +343,10 @@ define([
                     var saveForLater = new SaveForLater();
                     saveForLater.init(false);
                 }
+            },
+
+            headlinesTestAnalytics: function () {
+                HeadlinesTestAnalytics.go();
             }
         };
 
@@ -388,7 +394,8 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
-                ['c-save-for-later', modules.saveForLater]
+                ['c-save-for-later', modules.saveForLater],
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]));
 
             if (window.console && window.console.log && !config.page.isDev) {
