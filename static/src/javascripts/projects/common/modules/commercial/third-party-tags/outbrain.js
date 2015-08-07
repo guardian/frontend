@@ -74,6 +74,8 @@ define([
 
                 widgetCodeImage = widgetConfig[breakpoint].image[getSection()];
                 widgetCode = widgetCodeImage;
+
+                console.log('Which section: ', getSection());
             }
 
             fastdom.write(function () {
@@ -106,7 +108,7 @@ define([
     }
 
     function getSection() {
-        return _.contains(['uk'], config.page.pageId.toLowerCase())
+        return config.page.section.toLowerCase().match('news')
             || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
     }
 
