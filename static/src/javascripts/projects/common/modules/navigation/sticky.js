@@ -112,9 +112,11 @@ define([
 
     StickyHeader.prototype.showAdblockBanner = function () {
         new AdblockBanner({
-            supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mban',
-            messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
-            linkText: 'Become a supporter today'
+            supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
+            quoteText: 'Become a Guardian Member and support independent journalism.',
+            quoteAuthor: 'George Monbiot',
+            messageText: 'We noticed you\'re using an ad-blocker. Become a supporter from just 5£ per month to ensure quality journalism is available to all.',
+            linkText: 'Find out more'
         }).show();
     };
 

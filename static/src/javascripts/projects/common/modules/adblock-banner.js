@@ -23,12 +23,16 @@ define([
         this.supporterLink = opts.supporterLink || '';
         this.messageText = opts.messageText || '';
         this.linkText = opts.linkText || '';
+        this.quoteText = opts.quoteText || '';
+        this.quoteAuthor = opts.quoteAuthor || '';
     };
 
     AdblockBanner.prototype.show = function () {
         var bannerTmpl = template(adblockStickyMessage,
             {
                 supporterLink: this.supporterLink,
+                quoteText: this.quoteText,
+                quoteAuthor: this.quoteAuthor,
                 messageText: this.messageText,
                 linkText: this.linkText,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
