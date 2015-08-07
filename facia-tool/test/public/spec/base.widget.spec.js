@@ -3,6 +3,7 @@ import ko from 'knockout';
 
 class Widget extends BaseWidget {
     constructor() {
+        super();
         this.one = ko.observable('one');
         this.two = ko.observable('two');
     }

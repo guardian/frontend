@@ -91,7 +91,8 @@ object DisplaySettings {
     faciaContent.isBoosted,
     faciaContent.showBoostedHeadline,
     faciaContent.showQuotedHeadline,
-    faciaContent.imageHide
+    faciaContent.imageHide,
+    faciaContent.showLivePlayable
   )
 }
 
@@ -100,7 +101,8 @@ case class DisplaySettings(
   isBoosted: Boolean,
   showBoostedHeadline: Boolean,
   showQuotedHeadline: Boolean,
-  imageHide: Boolean
+  imageHide: Boolean,
+  showLivePlayable: Boolean
 )
 
 sealed trait SnapType
@@ -206,7 +208,6 @@ object FaciaCard {
 
     ContentCard(
       faciaContent.maybeContentId.orElse(Option(faciaContent.id)),
-      faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
@@ -215,7 +216,6 @@ object FaciaCard {
       cardTypes,
       Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
       faciaContent.starRating,
-      EditionalisedLink.fromFaciaContent(faciaContent),
       DiscussionSettings.fromTrail(faciaContent),
       SnapStuff.fromTrail(faciaContent),
       faciaContent.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
@@ -235,7 +235,6 @@ sealed trait FaciaCard
 
 case class ContentCard(
   id: Option[String],
-  headline: String,
   header: FaciaCardHeader,
   byline: Option[Byline],
   displayElement: Option[FaciaDisplayElement],
@@ -244,7 +243,6 @@ case class ContentCard(
   cardTypes: ItemClasses,
   sublinks: Seq[Sublink],
   starRating: Option[Int],
-  url: EditionalisedLink,
   discussionSettings: DiscussionSettings,
   snapStuff: Option[SnapStuff],
   webPublicationDate: Option[DateTime],

@@ -87,6 +87,12 @@
         max-width: none;
     }
 
+    .site-message--adblock & {
+        @include mq($from: tablet, $until: desktop) {
+            max-width: gs-span(6);
+        }
+    }
+
     @include mq(desktop) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter/2;
@@ -410,6 +416,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
  * Membership message A/B test
  */
 .site-message--membership-message,
-.site-message--membership-message-variants {
+.site-message--membership-message-variants,
+.site-message--membership-message-usa {
     background: colour(news-main-2);
 }

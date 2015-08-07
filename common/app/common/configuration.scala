@@ -26,10 +26,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
   }
 
-  object crosswords {
-    lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
-  }
-
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
   }
@@ -204,6 +200,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     }
   }
 
+  object headlines {
+    lazy val spreadsheet = configuration.getMandatoryStringProperty("headlines.spreadsheet")
+  }
+
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
@@ -253,13 +253,20 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
     lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
 
-    private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
+    private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
+
+    private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v3.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v2.json"
-    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v2.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers.json"
+    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers.json"
+    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers.json"
+
+    lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
@@ -322,8 +329,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object facia {
-    lazy val spreadsheetKey = configuration.getStringProperty("ab_headlines.spreadsheet_key")
-
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
     lazy val collectionCap: Int = 35
   }
@@ -436,11 +441,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object formstack {
     lazy val url = configuration.getMandatoryStringProperty("formstack.url")
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
-  }
-
-  object avatars {
-    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
-    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
   object standalone {

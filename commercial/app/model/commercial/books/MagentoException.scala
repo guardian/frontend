@@ -19,7 +19,7 @@ object MagentoException extends Logging {
 
     parseResult match {
       case JsError(e) =>
-        log.error(s"MagentoException failed to parse $json: ${JsError.toFlatJson(e).toString()}")
+        log.error(s"MagentoException failed to parse $json: ${JsError.toJson(e).toString()}")
         None
       case JsSuccess(magentoException, _) => Some(magentoException)
     }

@@ -53,8 +53,9 @@ export default {
     latestArticlesPollMs:  30000,
     configSettingsPollMs:  30000,
     cacheExpiryMs:         60000,
-    sparksRefreshMs:       300000,
+    sparksRefreshMs:      300000,
     pubTimeRefreshMs:      30000,
+    searchDebounceMs:        300,
 
     highFrequencyPaths:    ['uk', 'us', 'au', 'uk/sport', 'us/sport', 'au/sport'],
 

@@ -45,6 +45,9 @@ describe('Article Body Adverts', function () {
                     standardAdverts: true,
                     viewability: true
                 };
+                config.tests = {
+                    mobileTopBannerRemove: false
+                };
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
@@ -94,7 +97,6 @@ describe('Article Body Adverts', function () {
     });
 
     it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
-        config.switches.commercialExtraAds = true;
         config.switches.viewability = true;
 
         articleBodyAdverts.init()

@@ -2,8 +2,8 @@ package layout
 
 import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
 import common.LinkTo
+import common.dfp.{DfpAgent, SponsorshipTag}
 import conf.Switches
-import dfp.{DfpAgent, SponsorshipTag}
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
 import model.PressedPage
@@ -78,7 +78,7 @@ object CollectionEssentials {
   )
 
   def fromPressedCollection(collection: PressedCollection) = CollectionEssentials(
-    collection.all,
+    collection.curatedPlusBackfillDeduplicated,
     collection.treats,
     Option(collection.displayName),
     collection.href,
@@ -396,11 +396,11 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.filterNot(_.all.isEmpty).zipWithIndex.mapAccumL(
+      pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
-        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.all)
+        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 

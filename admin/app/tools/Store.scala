@@ -1,14 +1,14 @@
 package tools
 
 import common.Logging
-import conf.AdminConfiguration
+import common.dfp._
 import conf.Configuration.commercial._
-import dfp._
+import conf.{AdminConfiguration, Configuration}
 import implicits.Dates
 import org.joda.time.DateTime
 import play.api.libs.json.Json
+import play.api.libs.json.Json.toJson
 import services.S3
-import conf.Configuration
 
 trait Store extends Logging with Dates {
   lazy val switchesKey = Configuration.switches.key
@@ -42,6 +42,15 @@ trait Store extends Logging with Dates {
   def putDfpActiveAdUnitList(adUnits: String) {
     S3.putPublic(dfpActiveAdUnitListKey, adUnits, "text/plain")
   }
+  def putTopAboveNavSlotTakeovers(takeovers: String) {
+    S3.putPublic(topAboveNavSlotTakeoversKey, takeovers, defaultJsonEncoding)
+  }
+  def putTopBelowNavSlotTakeovers(takeovers: String) {
+    S3.putPublic(topBelowNavSlotTakeoversKey, takeovers, defaultJsonEncoding)
+  }
+  def putTopSlotTakeovers(takeovers: String) {
+    S3.putPublic(topSlotTakeoversKey, takeovers, defaultJsonEncoding)
+  }
   def putCachedTravelOffersFeed(everything: String) {
     S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
@@ -60,7 +69,28 @@ trait Store extends Logging with Dates {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
   } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet())
 
-  def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
+  def getDfpLineItemsReport(): Option[String] = S3.get(dfpLineItemsKey)
+
+  def getSlotTakeoversReport(slotName: String): Option[String] = slotName match {
+    case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
+    case "top-below-nav" => S3.get(topBelowNavSlotTakeoversKey)
+    case "top" => S3.get(topSlotTakeoversKey)
+    case _ => None
+  }
+
+  object commercial {
+
+    def getTakeoversWithEmptyMPUs(): Seq[TakeoverWithEmptyMPUs] = {
+      S3.get(takeoversWithEmptyMPUsKey) map {
+        Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
+      } getOrElse Nil
+    }
+
+    def putTakeoversWithEmptyMPUs(takeovers: Seq[TakeoverWithEmptyMPUs]): Unit = {
+      val content = Json.stringify(toJson(takeovers))
+      S3.putPrivate(takeoversWithEmptyMPUsKey, content, "application/json")
+    }
+  }
 }
 
 object Store extends Store

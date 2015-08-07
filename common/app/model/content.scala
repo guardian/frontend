@@ -5,11 +5,11 @@ import java.net.URL
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
+import com.gu.util.liveblogs.{Parser => LiveBlogParser}
+import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
-import dfp.DfpAgent
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ImgSrc, Naked, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support._
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -96,10 +96,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    bestOpenGraphImage
+    val imageUrl = bestOpenGraphImage
       .orElse(mainPicture.flatMap(largestImageUrl))
       .orElse(trailPicture.flatMap(largestImageUrl))
       .getOrElse(facebook.imageFallback)
+
+    ImgSrc(imageUrl, FacebookOpenGraphImage)
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
@@ -701,12 +703,14 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
   )
 
   override lazy val openGraphImage: String = {
-    bestOpenGraphImage
+    val imageUrl = bestOpenGraphImage
       .orElse(galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
       .getOrElse(conf.Configuration.facebook.imageFallback)
+
+    ImgSrc(imageUrl, FacebookOpenGraphImage)
   }
 
-  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
+  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
 
   override def schemaType = Some("http://schema.org/ImageGallery")
 

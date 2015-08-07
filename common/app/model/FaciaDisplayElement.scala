@@ -18,7 +18,7 @@ object FaciaDisplayElement {
           InlineImage.fromFaciaContent(faciaContent)
         ))
       case _ if faciaContent.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
-        Some(CrosswordSvg(faciaContent.id))
+        faciaContent.maybeContentId map CrosswordSvg
       case _ if faciaContent.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
       case _ => InlineImage.fromFaciaContent(faciaContent)
