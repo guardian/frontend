@@ -140,12 +140,12 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def archiveUpdateBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: User): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "update", "update" -> updateJson)))
-    archiveBlock(collectionId, collectionJson, Json.obj("action" -> "delete", "update" -> updateJson), identity)
+    archiveBlock(collectionId, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
   }
 
   def archiveDeleteBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: User): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "delete", "update" -> updateJson)))
-    archiveBlock(collectionId, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
+    archiveBlock(collectionId, collectionJson, Json.obj("action" -> "delete", "update" -> updateJson), identity)
   }
 
   private def archiveBlock(id: String, collectionJson: CollectionJson, action: String, identity: User): CollectionJson =
@@ -294,7 +294,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
     FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
       maybeCollectionJson
         .map(removeFromTreatsList(update, _))
-        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(archiveDeleteBlock(collectionId, _, updateJson, identity))
         .map(FaciaApi.updateIdentity(_, identity))
         .map(putCollectionJson(collectionId, _))}}
 

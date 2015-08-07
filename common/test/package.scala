@@ -1,17 +1,17 @@
 package test
 
-import common.ExecutionContexts
-import conf.{LiveContentApi, Configuration}
-import java.net.URLEncoder
-import contentapi.Http
-import org.scalatestplus.play._
-import play.api.test._
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
-import recorder.ContentApiHttpRecorder
-import play.api.GlobalSettings
-import org.apache.commons.codec.digest.DigestUtils
+
 import com.gargoylesoftware.htmlunit.BrowserVersion
+import common.ExecutionContexts
+import conf.{Configuration, LiveContentApi}
+import contentapi.Http
+import org.apache.commons.codec.digest.DigestUtils
+import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.scalatestplus.play._
+import play.api.GlobalSettings
+import play.api.test._
+import recorder.ContentApiHttpRecorder
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
@@ -63,7 +63,7 @@ trait TestSettings {
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
-  lazy val host = s"http://localhost:${port}"
+  lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
 
@@ -74,6 +74,11 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
   def US[T](path: String)(block: TestBrowser => T): T = {
       val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
       goTo(editionPath)(block)
+  }
+
+  def AU[T](path: String)(block: TestBrowser => T): T = {
+    val editionPath = if (path.contains("?")) s"$path&_edition=AU" else s"$path?_edition=AU"
+    goTo(editionPath)(block)
   }
 
   protected def goTo[T](path: String)(block: TestBrowser => T): T = {
