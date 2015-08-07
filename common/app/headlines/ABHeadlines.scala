@@ -10,6 +10,7 @@ import play.api.mvc.RequestHeader
 import scala.collection.JavaConversions._
 import scala.concurrent.{Future, blocking}
 import conf.Configuration
+import Function.const
 
 object ABHeadlines extends ExecutionContexts with Logging {
 
@@ -54,8 +55,8 @@ object ABHeadlines extends ExecutionContexts with Logging {
 
   private def inControlGroup(item: ContentCard)(implicit request: RequestHeader): Option[ContentCard] = {
     item.id
-      .filter(id => ABHeadlinesTestControl.isParticipating)
-      .filter(id => isUsFront(request))
+      .filter(const(ABHeadlinesTestControl.isParticipating))
+      .filter(const(isUsFront(request)))
       .flatMap { id =>
       getHeadline(id).map { newHeadline =>
         val newUrl = EditionalisedLink(s"${item.header.url.baseUrl}#headline-control")
@@ -68,8 +69,8 @@ object ABHeadlines extends ExecutionContexts with Logging {
 
   private def inHeadlineChangedVariant(item: ContentCard)(implicit request: RequestHeader): Option[ContentCard] = {
     item.id
-      .filter(id => ABHeadlinesTestVariant.isParticipating)
-      .filter(id => isUsFront(request))
+      .filter(const(ABHeadlinesTestVariant.isParticipating))
+      .filter(const(isUsFront(request)))
       .flatMap { id =>
       getHeadline(id).map { newHeadline =>
         val newUrl = EditionalisedLink(s"${item.header.url.baseUrl}#headline-variant")
