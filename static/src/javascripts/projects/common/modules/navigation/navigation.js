@@ -15,6 +15,7 @@ define([
 ) {
     var Navigation = {
         init: function () {
+            this.jsEnableFooterNav();
             this.copyMegaNavMenu();
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
@@ -25,6 +26,10 @@ define([
                     $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
                 });
             }
+        },
+
+        jsEnableFooterNav: function() {
+            $('.navigation-container--default').removeClass('navigation-container--default').addClass('navigation-container--collapsed');
         },
 
         copyMegaNavMenu: function () {
