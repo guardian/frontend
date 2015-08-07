@@ -60,29 +60,19 @@
         // This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
         if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')) {
             var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
-            var isNexus7 = /.*Nexus 7 */.test(navigator.userAgent);
-
-            // There is a very large variety in model id's for Samsung devices, different id's for different carriers.
-            // so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
-            var isSGS4 = ((/.*GT-I9500 */.test(navigator.userAgent)) || (/.*GT-I9505 */.test(navigator.userAgent)));
-            var isSGS3 = /.*GT-I9300 */.test(navigator.userAgent);
 
             if (isNexus5) {
                 logDevice('nexus5', 'android');
             }
+        }
 
-            if (isNexus7) {
-                logDevice('nexus7', 'android');
-            }
-
-            if (isSGS4) {
-                logDevice('sgs4', 'android');
-            }
-
-            if (isSGS3) {
-                logDevice('sgs3', 'android');
+        // Send AWS beacons for Windows7 Chrome & Opera users (user agent is almost identical). This is so we have a indicator of loss on something which we are confident is stable
+        if (navigator.platform === 'Win32') {
+            if ((/Windows NT 6.1; WOW64/.test(navigator.userAgent)) && (/Chrome/.test(navigator.userAgent))) {
+                logDevice('chrome', 'windows7');
             }
         }
+
 
         // Send beacon for unique visitors in JspmTest and JspmControl server-side test variants
         // Requires localStorage, so modern browsers only
