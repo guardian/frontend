@@ -76,6 +76,11 @@ object Metric extends Logging {
     ("jspm-test", CountMetric(s"jspm-test")),
     ("jspm-control", CountMetric(s"jspm-control")),
 
+    ("headlines-variant-seen", CountMetric(s"headlines-variant-seen")),
+    ("headlines-control-seen", CountMetric(s"headlines-control-seen")),
+    ("headlines-variant-clicked", CountMetric(s"headlines-variant-clicked")),
+    ("headlines-control-clicked", CountMetric(s"headlines-control-clicked")),
+
     ("tech-feedback", CountMetric("tech-feedback")),
 
     //counts http proxy errors when submitting comments
