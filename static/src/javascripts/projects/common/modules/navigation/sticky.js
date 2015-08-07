@@ -362,7 +362,7 @@ define([
                     '-ms-transform': 'translateY(0%)',
                     'transform': 'translateY(0%)'
                 });
-                    this.$els.main.css('margin-top', this.headerBigHeight);
+                this.$els.main.css('margin-top', this.headerBigHeight);
             }.bind(this));
             this.showNavigation(scrollY);
         } else {
@@ -378,7 +378,7 @@ define([
                     'transform': 'translateY(0%)',
                     'z-index': '998'
                 });
-                    this.$els.main.css('margin-top', 0);
+                this.$els.main.css('margin-top', 0);
             }.bind(this));
 
             // Put navigation to its default state
