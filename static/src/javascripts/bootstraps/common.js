@@ -352,7 +352,6 @@ define([
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
-                ['c-fast-click', modules.initFastClick],
                 ['c-test-cookie', modules.testCookie],
                 ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
