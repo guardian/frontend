@@ -26,9 +26,8 @@ Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
 From: London, UK
 
-Developer Manager (Commercial): Ken Lim
+Engineer (Tech lead): Ken Lim
 Twitter: @kenlim
-From: Kuala Lumpur, Malaysia
 Location: London, UK
 
 Developer: Stephan Fowler

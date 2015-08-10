@@ -52,20 +52,9 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(environment.stage, report)))
   }
 
-  def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
-    val templates = DfpDataHydrator().loadActiveUserDefinedCreativeTemplates()
-    // get some example trails
-    lazy val trailsFuture = getResponse(
-      LiveContentApi.search(Edition(request))
-        .pageSize(2)
-    ).map { response  =>
-        response.results.map {
-          Content(_)
-        }
-    }
-    trailsFuture map { trails =>
-      NoCache(Ok(views.html.commercial.templates(environment.stage, templates, trails)))
-    }
+  def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
+    val templates = Store.getDfpCreativeTemplates
+    NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
   def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
