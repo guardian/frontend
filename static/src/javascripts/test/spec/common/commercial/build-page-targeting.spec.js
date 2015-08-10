@@ -1,4 +1,5 @@
 import Injector from 'helpers/injector';
+import storage from 'common/utils/storage';
 
 describe('Build Page Targeting', function () {
 
@@ -162,7 +163,22 @@ describe('Build Page Targeting', function () {
             bp: 'mobile',
             at: 'ng101',
             ab: ['MtMaster-v'],
-            pv: '123456'
+            pv: '123456',
+            fr: '0'
+        });
+    });
+
+    describe('Already visited frequency', function () {
+        it('should set 3 frequency param', function () {
+            storage.local.set('alreadyVisited', 3);
+
+            expect(buildPageTargeting().fr).toEqual('3');
+        });
+
+        it('should set 5+ frequency param', function () {
+            storage.local.set('alreadyVisited', 67);
+
+            expect(buildPageTargeting().fr).toEqual('5plus');
         });
     });
 });

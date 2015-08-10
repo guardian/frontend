@@ -558,9 +558,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 
 
-/* State: expanded
+/* State: default (nojs) / expanded
    ========================================================================== */
 
+.navigation-container--default,
 .navigation-container--expanded {
     .navigation {
         z-index: 2;
@@ -785,9 +786,11 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 .navigation-toggle-label--close,
+.navigation-container--default .navigation-toggle-label--open,
 .navigation-container--expanded .navigation-toggle-label--open {
     display: none;
 }
+
 .navigation-container--expanded .navigation-toggle-label--close {
     display: inline;
 }
@@ -836,7 +839,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     .burger-icon {
         margin-top: $gs-baseline * 1.5;
-        
+
         @include mq($until: mobileLandscape) {
             margin: $gs-baseline * 1.5 0 0;
         }
