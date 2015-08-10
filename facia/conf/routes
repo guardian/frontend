@@ -12,6 +12,7 @@ GET        /_fronts_cdn_healthcheck                                    conf.Heal
 GET        /_agentcontents                                             controllers.FaciaController.renderAgentContents
 
 GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")
+GET        /rockabox/rockabox_buster.html                              controllers.Assets.at(path="/public", file="rockabox_buster.html")
 
 # Editionalised redirects
 # TODO we should get rid of these. we should not have to add these manually here as routes

@@ -13,15 +13,20 @@ define([
         hoverStateClassName = 'u-faux-block-link--hover';
 
     return function () {
-        bean.on(document.body, 'mouseenter', overlaySelector, function (e) {
+        var showIntentToClick = function (e) {
             fastdom.write(function () {
                 $(e.currentTarget).parent().addClass(hoverStateClassName);
             });
-        });
-        bean.on(document.body, 'mouseleave', overlaySelector, function (e) {
+        };
+        var removeIntentToClick = function (e) {
             fastdom.write(function () {
                 $(e.currentTarget).parent().removeClass(hoverStateClassName);
             });
-        });
+        };
+
+        bean.on(document.body, 'touchstart', overlaySelector, showIntentToClick);
+        bean.on(document.body, 'touchend', overlaySelector, removeIntentToClick);
+        bean.on(document.body, 'mouseenter', overlaySelector, showIntentToClick);
+        bean.on(document.body, 'mouseleave', overlaySelector, removeIntentToClick);
     };
 });

@@ -54,6 +54,9 @@ GET         /analytics/content/video                                            
 GET         /analytics/omniture/segments/:rsid                                                      controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                         controllers.admin.OmnitureReportController.getReport(reportName)
 
+GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
+
+
 # Commercial
 GET         /admin/commercial                                                                       controllers.admin.CommercialController.renderCommercialMenu()
 GET         /analytics/commercial                                                                   controllers.admin.CommercialController.renderCommercial()
