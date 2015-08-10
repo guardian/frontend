@@ -150,29 +150,7 @@ define([
         },
 
         setPageTargeting = function () {
-            if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'],
-                    function (ophan) {
-                        var viewId = (ophan || {}).viewId;
-                        setTarget({viewId: viewId});
-                    },
-                    function (err) {
-                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
-                            tags: {
-                                feature: 'DFP'
-                            }
-                        });
-
-                        setTarget();
-                    }
-                );
-            } else {
-                setTarget();
-            }
-        },
-
-        setTarget = function (opts) {
-            _.forOwn(buildPageTargeting(opts), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -268,9 +246,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the main test or if there is a switch on
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if ((config.switches.viewability || config.switches.lzAds) && !(config.page.hasPageSkin)) {
+            if (config.switches.viewability && !config.page.hasPageSkin) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);

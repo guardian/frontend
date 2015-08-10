@@ -333,14 +333,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val OphanViewIdSwitch = Switch("Commercial",
-    "ophan-view-id",
-    "Depending on ophan to pass view ID to the gpt targeting",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
-    exposeClientSide = true
-  )
-
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -356,15 +348,6 @@ object Switches {
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val CommercialExtraAdsSwitch = Switch(
-    "Commercial",
-    "commercial-extra-ads",
-    "If this switch is ON, extra ads are served on article pages",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -557,15 +540,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val LazyLoadAds = Switch(
-    "Commercial",
-    "lz-ads",
-    "If switched on then all ads are lazy loaded",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
@@ -580,7 +554,16 @@ object Switches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 12),
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = false
+  )
+
+  val CreativeTemplatesInS3 = Switch(
+    "Commercial",
+    "creative-templates-in-s3",
+    "Stores DFP creative template data in S3.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
     exposeClientSide = false
   )
 
@@ -805,16 +788,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val IdentityUseAvatarApi = Switch(
-    "Identity",
-    "id-use-avatar-api",
-    "If switched on, avatars will be uploaded using the new Avatar API",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 1),
-    exposeClientSide = true
-  )
-
+  
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -967,6 +941,15 @@ object Switches {
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
+    exposeClientSide = true
+  )
+
+  val ABMembershipMessageUsa = Switch(
+    "A/B Tests",
+    "ab-membership-message-usa",
+    "Switch for the USA Supporter message test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 21),
     exposeClientSide = true
   )
 

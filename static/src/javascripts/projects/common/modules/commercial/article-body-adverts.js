@@ -64,6 +64,10 @@ define([
         });
     }
 
+    function inMobileAdsTest() {
+        return config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile';
+    }
+
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
@@ -107,7 +111,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (config.switches.viewability && config.switches.commercialExtraAds) {
+            if (config.switches.viewability && !inMobileAdsTest()) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);

@@ -4,7 +4,11 @@
 install:
 	npm prune && npm install
 	cd node_modules/.bin; ./jspm install && ./jspm dl-loader && ./jspm clean
-	grunt copy
+	grunt uglify:conf
 
 test:
 	grunt test --dev
+
+watch:
+	grunt compile --dev
+	./node_modules/foreman/nf.js start

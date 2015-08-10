@@ -62,4 +62,35 @@ object MetricsController extends Controller with Logging with AuthLogging with E
       NoCache(Ok(views.html.afg(stage, response.body)))
     }
   }
+
+  private def toPercentage(graph: AwsLineChart) = graph.dataset.map(_.values)
+    .collect { case Seq(saw, clicked) => if (saw == 0) 0.0 else clicked / saw * 100 }
+
+  def renderHeadlinesTest() = AuthActions.AuthActionTest.async { request =>
+    for {
+      controlGraph <- CloudWatch.headlineTests.control
+      variantGraph <- CloudWatch.headlineTests.variant
+    } yield {
+
+      val controlPercentages = toPercentage(controlGraph)
+      val variantPercentages = toPercentage(variantGraph)
+
+      val change = controlPercentages.zip(variantPercentages)
+        .map{ case (control,variant) => variant - control}
+        .map(percentage => ChartRow("%1.2f" format percentage, Seq(percentage)))
+        .zip(controlGraph.dataset)
+        .map{ case (p,c) => p.copy(rowKey = c.rowKey)}
+
+      val percentageChangeChart = new tools.Chart {
+        override def name: String = "Percentage change in click through rate"
+        override def labels: Seq[String] = Seq("", "Test headline")
+        override def dataset: Seq[ChartRow] = change
+        override def format: ChartFormat = ChartFormat.SingleLineGreen
+      }
+
+      NoCache(Ok(views.html.lineCharts(stage, Seq(controlGraph, variantGraph, percentageChangeChart), title = Some("Headlines AB test"))))
+    }
+  }
+
+
 }

@@ -200,6 +200,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     }
   }
 
+  object headlines {
+    lazy val spreadsheet = configuration.getMandatoryStringProperty("headlines.spreadsheet")
+  }
+
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
@@ -258,6 +262,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
     lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
+    lazy val dfpCreativeTemplatesKey = s"$dfpRoot/creative-templates.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers.json"
     lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers.json"
     lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers.json"
@@ -437,11 +442,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object formstack {
     lazy val url = configuration.getMandatoryStringProperty("formstack.url")
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
-  }
-
-  object avatars {
-    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
-    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
   object standalone {
