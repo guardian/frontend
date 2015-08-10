@@ -35,8 +35,8 @@ define([
                 quoteAuthor: this.quoteAuthor,
                 messageText: this.messageText,
                 linkText: this.linkText,
-                arrowWhiteRight: svgs('arrowWhiteRight'),
-                marque36: svgs('marque36icon')
+                cursor: svgs('cursor'),
+                marque54icon: svgs('marque54icon')
             });
 
         $('.top-banner-ad-container--desktop').after(bannerTmpl);
