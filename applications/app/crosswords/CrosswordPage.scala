@@ -2,7 +2,7 @@ package crosswords
 
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import model.{GuardianContentTypes, ApiContentWithMeta, Content}
-import play.api.libs.json.{JsValue, JsString}
+import play.api.libs.json.{JsBoolean, JsValue, JsString}
 
 case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
@@ -20,8 +20,12 @@ class CrosswordPage(val crossword: CrosswordData, content: ApiContentWithMeta) e
 
   override lazy val contentType = GuardianContentTypes.Crossword
 
-  override lazy val metaData: Map[String, JsValue] =
-    super.metaData ++ Map("contentType" -> JsString(contentType))
+  override def metaData: Map[String, JsValue] = {
+    super.metaData ++ Map(
+      ("isBlind", JsBoolean(false)),
+      ("contentType", JsString(contentType))
+    )
+  }
 
   import CrosswordSvg.{BorderSize, CellSize}
 
@@ -29,4 +33,12 @@ class CrosswordPage(val crossword: CrosswordData, content: ApiContentWithMeta) e
     crossword.dimensions.cols * (CellSize + BorderSize) + BorderSize,
     crossword.dimensions.rows * (CellSize + BorderSize) + BorderSize
   )
+}
+
+class BlindCrosswordPage(override val crossword: CrosswordData, content: ApiContentWithMeta) extends CrosswordPage(crossword,content) {
+  override def metaData: Map[String, JsValue] = {
+    super.metaData ++ Map(
+      ("isBlind", JsBoolean(true))
+    )
+  }
 }

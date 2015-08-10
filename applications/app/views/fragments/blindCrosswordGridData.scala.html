@@ -1,0 +1,6 @@
+@(blanks: List[crosswords.BlindCrosswordRow])
+<ol class="crossword__blind-blank-data">
+    @for( row <- blanks) {
+        <li class="crossword__blind-row-data"> Line @row.rowIndex: @row.blankColumns.mkString(" ")</li>
+    }
+</ol>

@@ -12,6 +12,13 @@
     }
 }
 
+.crossword__blind-data-wrapper {
+    @include mq(tablet) {
+        float: left;
+        margin-left: -19.625rem;
+    }
+}
+
 .crossword__grid {
     width: 100%;
     height: auto;
