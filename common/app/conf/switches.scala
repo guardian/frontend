@@ -575,7 +575,7 @@ object Switches {
     "enable-omniture-confidence-no-js",
     "Enables Omniture confidence tracking for no-JS devices",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
