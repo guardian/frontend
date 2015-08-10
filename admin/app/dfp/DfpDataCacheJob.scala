@@ -3,6 +3,7 @@ package dfp
 import common.dfp.GuCreativeTemplate.{lastModified, merge}
 import common.dfp._
 import common.{ExecutionContexts, Logging}
+import conf.Switches
 import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
@@ -74,13 +75,19 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         data.topBelowNavSlotTakeovers))))
       Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
 
-      val cachedCreativeTemplates = Store.getDfpCreativeTemplates
-      val creativeTemplateThreshold = lastModified(cachedCreativeTemplates)
-      val recentCreativeTemplates =
-        DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
-      val creativeTemplatesToCache = merge(cachedCreativeTemplates, recentCreativeTemplates)
-      if (creativeTemplatesToCache != cachedCreativeTemplates) {
-        Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
+      if (Switches.CreativeTemplatesInS3.isSwitchedOn) {
+        log.info("Storing creative template data...")
+        val cachedCreativeTemplates = Store.getDfpCreativeTemplates
+        val creativeTemplateThreshold = lastModified(cachedCreativeTemplates)
+        val recentCreativeTemplates =
+          DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
+        val creativeTemplatesToCache = merge(cachedCreativeTemplates, recentCreativeTemplates)
+        if (creativeTemplatesToCache != cachedCreativeTemplates) {
+          Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
+          log.info("Stored creative template data")
+        } else {
+          log.info("No change in creative template data")
+        }
       }
     }
   }
