@@ -1,6 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
 @import conf.Switches.SaveForLaterSwitch
+@import conf.Switches.SyndicationReprintEnabledSwitch
 
 @toneLink = {
     @if(content.isArticle && !content.isLiveBlog) {
@@ -39,9 +40,11 @@
             <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
         }
     }
-    @if(content.isSyndicatable) {
-        <div class="submeta__syndication">
-            @fragments.syndication(content)
-        </div>
+    @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
+        @if(content.isSyndicatable) {
+            <div class="submeta__syndication">
+                @fragments.syndication(content)
+            </div>
+        }
     }
 </div>

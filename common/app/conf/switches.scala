@@ -788,7 +788,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -886,6 +886,15 @@ object Switches {
     safeState = On,
     sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
+  )
+
+  val SyndicationReprintEnabledSwitch = Switch (
+    "Feature",
+    "syndication-reprint-enabled",
+    "Toggle on/off the syndication button on articles with appropriate rights (for desktop or above only)",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 16),
+    exposeClientSide = true
   )
 
   // A/B Tests
