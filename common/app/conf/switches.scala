@@ -560,7 +560,7 @@ object Switches {
 
   val CreativeTemplatesInS3 = Switch(
     "Commercial",
-    "creative-templates-in-S3",
+    "creative-templates-in-s3",
     "Stores DFP creative template data in S3.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 9),
