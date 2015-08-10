@@ -75,6 +75,10 @@
 }
 
 .crossword__links {
+    @include mq(leftCol) {
+        top: $gs-baseline * -3;
+    }
+
     position: relative;
     top: $gs-baseline * -2;
     font-family: $f-sans-serif-text;
