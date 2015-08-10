@@ -275,8 +275,7 @@ define([
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth
-                            && !mobileMaximumSlotsReached(slot)) {
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
                             loadSlot(slot);
                         }
                     });
@@ -287,12 +286,14 @@ define([
             return (slot === 'dfp-ad--mostpop'
                 && detect.getBreakpoint() === 'mobile'
                 && config.tests.mobileTopBannerRemove
-                && $('ad-slot--inline').length <= 2) ? true : false;
+                && $('.ad-slot--inline').length > 1) ? true : false;
         },
         loadSlot = function (slot) {
-            googletag.display(slot);
-            slots = _(slots).omit(slot).value();
-            displayed = true;
+            if (!mobileMaximumSlotsReached(slot)) {
+                googletag.display(slot);
+                slots = _(slots).omit(slot).value();
+                displayed = true;
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id');
