@@ -26,11 +26,6 @@ describe('Sticky Header', function () {
             expect(sut.getUpdateMethod()).toEqual('updatePositionApple');
         });
 
-        it('should return updatePositionProfile for identity pages', function () {
-            sut.isProfilePage = true;
-            expect(sut.getUpdateMethod()).toEqual('updatePositionProfile');
-        });
-
         it('should return updatePosition for all other pages', function () {
             expect(sut.getUpdateMethod()).toEqual('updatePosition');
         });
