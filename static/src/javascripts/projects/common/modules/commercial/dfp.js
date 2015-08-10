@@ -289,11 +289,9 @@ define([
                 && $('.ad-slot--inline').length > 1) ? true : false;
         },
         loadSlot = function (slot) {
-            if (!mobileMaximumSlotsReached(slot)) {
-                googletag.display(slot);
-                slots = _(slots).omit(slot).value();
-                displayed = true;
-            }
+            googletag.display(slot);
+            slots = _(slots).omit(slot).value();
+            displayed = true;
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id');
