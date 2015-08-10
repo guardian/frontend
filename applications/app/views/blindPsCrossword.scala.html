@@ -57,9 +57,9 @@
                         <div class="js-crossword"
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
-                            <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
+                            <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase() crossword__container--blind">
 
-                                <div class=crossword__blind-data-wrapper">
+                                <div class="crossword__blind-data-wrapper">
                                     <div class="crossword__blind-data">
                                         <h3 class="crossword__blind-data--header">Blanks</h3>
                                             @fragments.blindCrosswordGridData(blankSquares)
