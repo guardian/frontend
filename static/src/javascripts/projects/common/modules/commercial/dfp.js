@@ -119,7 +119,6 @@ define([
         setListeners = function () {
             var start = detect.getTimeOfDomComplete();
 
-
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 require(['ophan/ng'], function (ophan) {
                     var lineItemIdOrEmpty = function (event) {
@@ -296,24 +295,13 @@ define([
             displayed = true;
         },
         addSlot = function ($adSlot) {
-            var slotId = $adSlot.attr('id'),
-                displayAd = function ($adSlot) {
-                    slots[slotId] = {
-                        isRendered: false,
-                        slot: defineSlot($adSlot)
-                    };
-                    googletag.display(slotId);
-                };
-            if (displayed && !slots[slotId]) { // dynamically add ad slot
-                // this is horrible, but if we do this before the initial ads have loaded things go awry
-                if (rendered) {
-                    displayAd($adSlot);
-                } else {
-                    mediator.once('modules:commercial:dfp:rendered', function () {
-                        displayAd($adSlot);
-                    });
-                }
-            }
+            var slotId = $adSlot.attr('id');
+            slots[slotId] = {
+                isRendered: false,
+                slot: defineSlot($adSlot)
+            };
+
+            loadSlot(slotId);
         },
         refreshSlot = function ($adSlot) {
             var slot = slots[$adSlot.attr('id')].slot;
