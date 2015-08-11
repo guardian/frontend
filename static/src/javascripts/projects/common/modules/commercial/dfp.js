@@ -282,12 +282,6 @@ define([
                 });
             }
         },
-        mobileMaximumSlotsReached = function (slot) {
-            return (slot === 'dfp-ad--mostpop'
-                && detect.getBreakpoint() === 'mobile'
-                && config.tests.mobileTopBannerRemove
-                && $('.ad-slot--inline').length > 1) ? true : false;
-        },
         loadSlot = function (slot) {
             googletag.display(slot);
             slots = _(slots).omit(slot).value();
