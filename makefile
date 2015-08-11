@@ -25,5 +25,5 @@ validate:
 	grunt validate
 
 watch:
-	grunt compile:css --dev
+	grunt compile --dev
 	cd dev && make watch
