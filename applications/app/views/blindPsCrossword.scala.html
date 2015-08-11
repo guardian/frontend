@@ -1,4 +1,4 @@
-@(crosswordPage: crosswords.CrosswordPage, blankSquares: List[crosswords.BlindCrosswordRow])(implicit request: RequestHeader)
+@(crosswordPage: crosswords.CrosswordPage, blankSquares: crosswords.BlindPsCrosswordRows)(implicit request: RequestHeader)
 @import common.LinkTo
 
 
@@ -53,28 +53,22 @@
             <div class="content__main tonal__main tonal__main--tone-news">
                 <div class="gs-container">
                     <div class="js-content-main-column">
-
-                        <div class="js-crossword"
-                             data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
-
-                            <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase() crossword__container--blind">
-
-                                <div class="crossword__blind-data-wrapper">
-                                    <div class="crossword__blind-data">
-                                        <h3 class="crossword__blind-data--header">Blanks</h3>
-                                            @fragments.blindCrosswordGridData(blankSquares)
-                                    </div>
+                        <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase() crossword__container--blind">
+                            <div class="crossword__blind-row-data-wrapper">
+                                <div class="crossword__blind-data">
+                                    <h3 class="crossword__blind-data--header">Blanks</h3>
+                                        @fragments.blindCrosswordGridData(blankSquares.rows)
                                 </div>
-                                <div class="crossword__clues">
-                                    <div class="crossword__clues--across">
-                                        <h3 class="crossword__clues-header">Across</h3>
-                                        @fragments.blindCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
-                                    </div>
+                            </div>
+                            <div class="crossword__clues">
+                                <div class="crossword__clues--across">
+                                    <h3 class="crossword__clues-header">Across</h3>
+                                    @fragments.blindCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                </div>
 
-                                    <div class="crossword__clues--down">
-                                        <h3 class="crossword__clues-header">Down</h3>
-                                        @fragments.blindCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
-                                    </div>
+                                <div class="crossword__clues--down">
+                                    <h3 class="crossword__clues-header">Down</h3>
+                                    @fragments.blindCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
                                 </div>
                             </div>
                         </div>

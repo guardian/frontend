@@ -2,6 +2,15 @@
     list-style-type: none;
 }
 
+.crossword__blind-blank-data {
+    margin: 0;
+    margin-bottom: $gs-baseline;
+}
+
+.crossword__blind-row-data--row-number {
+    font-weight: bold;
+}
+
 .crossword__blind-row-data {
     position: relative;
     cursor: pointer;
