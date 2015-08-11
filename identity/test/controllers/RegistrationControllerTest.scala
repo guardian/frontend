@@ -75,7 +75,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val fakeRequest = FakeRequest(POST, "/register")
         .withFormUrlEncodedBody("user.firstName" -> firstName, "user.secondName" -> secondName, "user.primaryEmailAddress" -> email, "user.publicFields.username" -> username, "user.password" -> password )
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
-      when(api.register(Matchers.same(user), Matchers.same(trackingData))).thenReturn(Future.successful(Right(createdUser)))
+      when(api.register(Matchers.same(user), Matchers.same(trackingData), None)).thenReturn(Future.successful(Right(createdUser)))
       when(api.authBrowser(EmailPassword(email, password, identityRequest.clientIp), trackingData)).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
       when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
