@@ -39,6 +39,10 @@ Developer: Josh Holder
 Twitter: @Josh_H
 Location: London, UK
 
+Developer: Jenny Sivapalan
+Twitter: @jenny_sivapalan
+From: London, UK
+
 Developer: Natalia Baltazar
 Twitter: @NataliaLKB
 From: Halifax, Canada
@@ -137,10 +141,6 @@ From: London, UK
 
 Software Architect/Hacker: Phil Wills
 Twitter: @philwills
-
-Developer (Tech Lead): Jenny Sivapalan
-Twitter: @jenny_sivapalan
-From: London, UK
 
 Developer: Mariot Chauvin
 Twitter: @mchv
