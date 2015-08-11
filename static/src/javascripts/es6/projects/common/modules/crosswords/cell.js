@@ -49,6 +49,48 @@ export default class Cell extends React.Component {
             );
         }
 
+        const createHyphenSeparator = ({ shouldRotate } = { shouldRotate: false }) => {
+            const width = constants.cellSize / 3;
+            const height = 1;
+            const borderWidth = 1;
+            const xOffset = (borderWidth / 2) + (width / 2);
+            const yOffset = ((constants.cellSize / 2) - (height / 2));
+
+            return (
+                <rect
+                    x={left + (shouldRotate ? yOffset : (xOffset * -1))}
+                    y={top + (shouldRotate ? (xOffset * -1) : yOffset)}
+                    width={shouldRotate ? height : width}
+                    height={shouldRotate ? width : height}></rect>
+            );
+        };
+
+        const createWordSeparator = ({ shouldRotate } = { shouldRotate: false }) => {
+            const width = 1;
+            const height = constants.cellSize;
+            const xOffset = constants.cellSize - width;
+
+            return (
+                <rect
+                    x={left + (shouldRotate ? 0 : xOffset)}
+                    y={top + (shouldRotate ? xOffset : 0)}
+                    width={shouldRotate ? height : width}
+                    height={shouldRotate ? width : height}></rect>
+            );
+        };
+
+        const separators = [];
+        if (this.props.isHorizontalHyphenSeparator) {
+            separators.push(createHyphenSeparator());
+        } else if (this.props.isHorizontalWordSeparator) {
+            separators.push(createWordSeparator());
+        }
+        if (this.props.isVerticalHyphenSeparator) {
+            separators.push(createHyphenSeparator({ shouldRotate: true }));
+        } else if (this.props.isVerticalWordSeparator) {
+            separators.push(createWordSeparator({ shouldRotate: true }));
+        }
+
         return (
             <g onClick={this.onClick}>
                 <rect
@@ -59,10 +101,10 @@ export default class Cell extends React.Component {
                     className={classNames({
                         'crossword__cell': true,
                         'crossword__cell--focussed': this.props.isFocussed,
-                        'crossword__cell--highlighted': this.props.isHighlighted,
-                        'crossword__cell--intersecting': this.props.intersectsFocussedEntry
+                        'crossword__cell--highlighted': this.props.isHighlighted
                     })}>
                 </rect>
+                {separators}
                 {cellNumber}
                 {cellValue}
             </g>

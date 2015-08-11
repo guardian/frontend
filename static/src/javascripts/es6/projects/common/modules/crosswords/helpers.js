@@ -25,6 +25,12 @@ const buildGrid = (rows, columns, entries, savedState) => {
         isEditable: false,
         isError: false,
         isAnimating: false,
+        isVerticalWordSeparator: false,
+        isHorizontalWordSeparator: false,
+        isVerticalHyphenSeparator: false,
+        isHorizontalHyphenSeparator: false,
+        x: x,
+        y: y,
         value: (savedState && savedState[x] && savedState[x][y]) ? savedState[x][y] : ''
     })));
 
@@ -34,7 +40,34 @@ const buildGrid = (rows, columns, entries, savedState) => {
 
         grid[x][y].number = entry.number;
 
-        _.forEach(cellsForEntry(entry), (cell) => {
+        const entryCells = cellsForEntry(entry);
+        const lastEntryCell = _.last(entryCells);
+        const isLastEntryCell = cell => cell.x === lastEntryCell.x && cell.y === lastEntryCell.y;
+
+        // Grouped clues have word separators, but we handle them separately
+        const wordSeparatorLocations = entry.separatorLocations[','] || [];
+        wordSeparatorLocations.forEach(wordSeparatorLocation => {
+            if (entry.direction === 'down') {
+                const cell = grid[x][y + (wordSeparatorLocation - 1)];
+                cell.isVerticalWordSeparator = !isLastEntryCell(cell);
+            } else if (entry.direction === 'across') {
+                const cell = grid[x + (wordSeparatorLocation - 1)][y];
+                cell.isHorizontalWordSeparator = !isLastEntryCell(cell);
+            }
+        });
+
+        const hyphenSeparatorLocations = entry.separatorLocations['-'] || [];
+        hyphenSeparatorLocations.forEach(hyphenSeparatorLocation => {
+            if (entry.direction === 'down') {
+                const cell = grid[x][y + hyphenSeparatorLocation];
+                cell.isVerticalHyphenSeparator = true;
+            } else if (entry.direction === 'across') {
+                const cell = grid[x + hyphenSeparatorLocation][y];
+                cell.isHorizontalHyphenSeparator = true;
+            }
+        });
+
+        _.forEach(entryCells, (cell) => {
             grid[cell.x][cell.y].isEditable = true;
         });
     });
