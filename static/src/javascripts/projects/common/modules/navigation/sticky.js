@@ -74,7 +74,7 @@ define([
         // Get the name of the method to run after scroll
         this.updateMethod = this.getUpdateMethod();
 
-        // Profile page doesn't need scroll event as it has only slim sticky nav from the beginning        
+        // Profile page doesn't need scroll event as it has only slim sticky nav from the beginning
         if (this.isProfilePage) {
             this.updatePositionProfile();
         } else {
