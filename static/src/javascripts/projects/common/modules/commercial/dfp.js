@@ -120,6 +120,7 @@ define([
                 parseAd(event);
             }));
         },
+
         setPageTargeting = function () {
             if (config.switches.ophan && config.switches.ophanViewId) {
                 require(['ophan/ng'],
@@ -381,17 +382,6 @@ define([
                         $slot.addClass('ad-slot__fluid250');
                     });
                 }
-
-                // hide and reflow if 1px MPUs displayed
-                if ($slot.parent().hasClass('fc-slice__item--no-mpu')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'none');
-                        $('.tabs__pane', $slot.parent().parent()).removeClass('tabs__pane');
-                        $('.headline-list li:last-child', $slot.parent().parent()).css('display', 'none');
-                        $('.l-list--columns-2', $slot.parent().parent()).removeClass('l-list--columns-2').addClass('l-list--columns-3');
-                    });
-                }
-
             }
         },
         allAdsRendered = function (slotId) {
