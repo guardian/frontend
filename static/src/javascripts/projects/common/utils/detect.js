@@ -452,22 +452,43 @@ define([
             mozBindingHidden = -1,
             containerHeight = 1;
         $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>').appendTo(document.body);
-        setTimeout(function () {
-            displayed = $('.ad_unit').css('display');
-            mozBinding = $('.ad_unit').css('-moz-binding');
-            if (typeof mozBinding !== 'undefined') {
-                mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+
+        displayed = $('.ad_unit').css('display');
+        mozBinding = $('.ad_unit').css('-moz-binding');
+        containerHeight = $('.ad_unit').dim().height;
+        if (displayed === 'none' || containerHeight < 1) {
+            isAdblock = true;
+        }
+
+        if (typeof mozBinding !== 'undefined') {
+            setTimeout(function () {
+
+                var laterMozBinding = $('.ad_unit').css('-moz-binding');
+                var laterMozBindingExists = (laterMozBinding !== undefined && laterMozBinding !== null && laterMozBinding !== '');
+
+                if (laterMozBindingExists && laterMozBinding.indexOf("elemhidehit") !== -1 && containerHeight < 1) {
+                    alert ('Emit event that ad blocker was detected');
+                } else {
+                    alert ('Emit Event that no ad blockers detected');
+                }
+            }, 5000);
+        } else {
+            if (isAdblock) {
+                alert ('Emit event that ad blocker was detected');
+            } else {
+                alert ('Emit Event that no ad blockers detected');
             }
-            containerHeight = $('.ad_unit').dim().height;
+        }
 
-            $('.ad_unit').remove();
-            if (displayed === 'none' || containerHeight < 1 || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1 && containerHeight < 1)) {
-                isAdblock = true;
-            }
-            return isAdblock;
+        if (isAdblock) {
+            alert ('Ad Blocker detected');
+        } else {
+            alert ('No Ad Blocker detected');
+        }
 
-        }, 2000);
+        $('.ad_unit').remove();
 
+        return isAdblock;
     }
 
     detect = {
