@@ -82,6 +82,13 @@ describe('Most popular', function () {
         new Popular().init();
     });
 
+    it('should render MPU', function () {
+        var popular = new Popular();
+
+        popular.prerender();
+        expect(typeof popular.$mpu).toEqual('object');
+    });
+
     it('should not render MPU when on mobile and 2+ MPUs are already on the page', function () {
         var popular = new Popular();
 
