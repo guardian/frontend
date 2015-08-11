@@ -62,7 +62,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       when(returnUrlVerifier.getVerifiedReturnUrl(badFakeRequest)).thenReturn(Some("http://example.com/return"))
       "so the api is not called" in Fake {
         registrationController.processForm()(badFakeRequest)
-        verify(api, never).register(Matchers.any[User], Matchers.same(trackingData), None)
+        verify(api, never).register(Matchers.any[User], Matchers.same(trackingData))
       }
    }
 
