@@ -25,5 +25,4 @@ validate:
 	grunt validate
 
 watch:
-	grunt compile --dev
-	./dev/node_modules/foreman/nf.js start
+	cd dev && make watch
