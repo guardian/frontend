@@ -19,7 +19,6 @@ gulp.task('watch:css', (done) => {
             `!${SRC}/old-ie.*.css`,
             `!${SRC}/webfonts-*.css`
         ], (event) => {
-            gutil.log(`post-processing ${event.path}`);
             gulp.src(event.path)
                 .pipe(sourcemaps.init({loadMaps: true}))
                 .pipe(postcss([
