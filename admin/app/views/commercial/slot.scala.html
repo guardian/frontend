@@ -39,7 +39,7 @@
 
 @admin_main(s"Ad Slot $slotName", env, isAuthed = true) {
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h2>Takeovers in <em>@slotName</em> Ad Slot</h2>
     <p>Last updated: @slotReport.timestamp</p>
