@@ -461,8 +461,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         bottom: 0;
         right: 20%;
 
-        @include mq(wide) {
-            right: 30%;
+        @include mq(leftCol) {
+            right: 5%;
+            bottom: -5px;
+            z-index: 1;
         }
 
         .byline-img__img {

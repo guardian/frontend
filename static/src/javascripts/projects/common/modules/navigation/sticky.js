@@ -7,7 +7,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/adblock-banner',
+    'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner'
 ], function (
     bean,
@@ -18,7 +18,7 @@ define([
     config,
     detect,
     mediator,
-    AdblockBanner,
+    ab,
     smartAppBanner
 ) {
     function StickyHeader() {
@@ -41,6 +41,8 @@ define([
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
+        this.isAdblockABTest = ab.getParticipations().AdblockStickyBanner && ab.testCanBeRun('AdblockStickyBanner')
+            && ab.getParticipations().AdblockStickyBanner.variant === 'variant';
     }
 
     StickyHeader.prototype.init = function () {
@@ -70,14 +72,18 @@ define([
             }
         }
 
-        if (this.isAdblockInUse && !this.isMobile) {
-            this.showAdblockBanner();
+        //todo only in test
+        if (this.isAdblockInUse && !this.isMobile && this.isAdblockABTest) {
             this.$els.bannerDesktop = $('.js-adblock-sticky');
         }
 
         if (this.isMobile) {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionMobile();
+            }.bind(this), 10));
+        } else if (this.isAdblockInUse && !this.isAdblockABTest) {
+            mediator.on('window:scroll', _.throttle(function () {
+                this.updatePositionAdblock();
             }.bind(this), 10));
         } else if (this.isAppleCampaign) {
             mediator.on('window:scroll', _.throttle(function () {
@@ -108,16 +114,6 @@ define([
                 this.lockStickyNavigation();
             }
         }.bind(this));
-    };
-
-    StickyHeader.prototype.showAdblockBanner = function () {
-        new AdblockBanner({
-            supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
-            quoteText: 'Become a Guardian Member and support independent journalism.',
-            quoteAuthor: 'George Monbiot',
-            messageText: 'We noticed you\'re using an ad-blocker. Become a supporter from just 5£ per month to ensure quality journalism is available to all.',
-            linkText: 'Find out more'
-        }).show();
     };
 
     // Make sure meganav is always in the default state
