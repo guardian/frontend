@@ -68,12 +68,12 @@
                                 <div class="crossword__clues">
                                     <div class="crossword__clues--across">
                                         <h3 class="crossword__clues-header">Across</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                        @fragments.blindCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
                                     </div>
 
                                     <div class="crossword__clues--down">
                                         <h3 class="crossword__clues-header">Down</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                        @fragments.blindCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
                                     </div>
                                 </div>
                             </div>

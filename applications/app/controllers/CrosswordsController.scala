@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
 import common.{Edition, ExecutionContexts}
 import conf.{Configuration, LiveContentApi, Static}
@@ -11,13 +12,18 @@ import scala.concurrent.Future
 
 object CrosswordsController extends Controller with ExecutionContexts {
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
+
+    println("T: %s id %d".format(crosswordType, id))
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all")).map { response =>
        val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
        yield f(crossword, content)
        maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
-    } recover { case _ => InternalServerError("Content API query returned an error.") }
+    } recover { case GuardianContentApiError(_, message) =>
+      println(s"Got a 404 calling content api: $message" )
+      InternalServerError("Content API query returned an error.")
+    }
   }
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>

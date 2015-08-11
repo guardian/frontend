@@ -29,6 +29,8 @@
                         <div class="crossword__links">
                             <a class="crossword__link js-print-crossword">Print</a>
 
+                            <a class="crossword__link" href="@LinkTo(s"/crosswords/blind/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")"> | Blind PS Version </a>
+
                             @crosswordPage.crossword.pdf.map { pdf =>
                                 | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
                             }
