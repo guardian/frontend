@@ -29,11 +29,11 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
-  def blindCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+  def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(60)(Ok(views.html.blindPsCrossword(
+      Cached(60)(Ok(views.html.accessibleCrossword(
         new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
-        BlindPsCrosswordRows(crossword)
+        AccessibleCrosswordRows(crossword)
       )))
     }
   }

@@ -1,17 +1,17 @@
-.crossword__blind-blank-data {
+.crossword__accessible-blank-data {
     list-style-type: none;
 }
 
-.crossword__blind-blank-data {
+.crossword__accessible-blank-data {
     margin: 0;
     margin-bottom: $gs-baseline;
 }
 
-.crossword__blind-row-data--row-number {
+.crossword__accessible-row-data--row-number {
     font-weight: bold;
 }
 
-.crossword__blind-row-data {
+.crossword__accessible-row-data {
     position: relative;
     cursor: pointer;
     @include fs-textSans(4);
@@ -28,7 +28,7 @@
     }
 }
 
-.crossword__blind-data--header {
+.crossword__accessible-data--header {
     @include fs-header(1);
     border-top: 1px solid colour(crosswordAccent2);
     border-bottom: 1px dotted colour(neutral-3);

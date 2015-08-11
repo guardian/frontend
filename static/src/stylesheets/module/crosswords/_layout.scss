@@ -9,7 +9,7 @@
         @include mq(tablet) {
             padding-left: $size;
 
-            &.crossword__container--blind {
+            &.crossword__container--accessible {
                 padding-left: 0;
             }
         }
@@ -62,13 +62,13 @@
             width: 85%;
         }
 
-        .crossword__container--blind & {
+        .crossword__container--accessible & {
             width: initial;
         }
     }
 }
 
-.crossword__blind-row-data-wrapper {
+.crossword__accessible-row-data-wrapper {
     float: left;
 }
 
