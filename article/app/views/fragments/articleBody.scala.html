@@ -14,6 +14,10 @@
         itemscope itemtype="@article.schemaType" role="main">
 
         <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="The Guardian">
+            <link itemprop="sameAs" content="http://www.theguardian.com">
+        </div>
 
         @fragments.headTonal(article)
 
