@@ -23,6 +23,16 @@
         color: colour(neutral-2-contrasted);
     }
 
+    .tone-media--item {
+        .linkslist__action:visited,
+        .fc-item__link:visited,
+        .fc-item__standfirst,
+        .item__link:visited,
+        .item__link:visited .item__title {
+            color: #ffffff;
+        }
+    }
+
     .fc-item__header,
     .fc-item__title,
     .fc-item__standfirst,
