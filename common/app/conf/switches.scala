@@ -857,7 +857,7 @@ object Switches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 16),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = false
   )
 
