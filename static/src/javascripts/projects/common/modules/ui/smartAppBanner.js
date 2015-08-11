@@ -1,4 +1,5 @@
 define([
+    'common/utils/$',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/storage',
@@ -6,6 +7,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/ui/message'
 ], function (
+    $,
     cookies,
     detect,
     storage,
@@ -13,7 +15,6 @@ define([
     userPrefs,
     Message
 ) {
-
     /**
      * Rules:
      *
@@ -21,7 +22,6 @@ define([
      * 3 impressions
      * Persist close state
      */
-
     var COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER',
         DATA = {
             IOS: {
@@ -33,7 +33,7 @@ define([
             ANDROID: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/android-logo-2x.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-                LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df5992e76b',
+                LINK: 'https://app.adjust.com/642i3r?deep_link=x-gu://www.theguardian.com/?source=adjust',
                 STORE: 'in Google Play'
             }
         },
@@ -67,8 +67,17 @@ define([
         }
     }
 
-    return {
-        init: init
-    };
+    function isMessageShown() {
+        return ($('.site-message--android').css('display') === 'block' || $('.site-message--ios').css('display') === 'block');
+    }
 
+    function getMessageHeight() {
+        return ($('.site-message--android').dim().height || $('.site-message--ios').dim().height);
+    }
+
+    return {
+        init: init,
+        isMessageShown: isMessageShown,
+        getMessageHeight: getMessageHeight
+    };
 });

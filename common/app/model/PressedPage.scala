@@ -1,49 +1,16 @@
 package model
 
 import com.gu.facia.api.models._
+import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
-import dfp.DfpAgent
-import layout.Front
 import model.facia.PressedCollection
-import org.joda.time.DateTime
-import play.api.libs.json.{Json, JsString, JsValue}
-import services.FaciaContentConvert
+import play.api.libs.json.{JsString, JsValue, Json}
 
 import scala.language.postfixOps
 
 object PressedPage {
-  def fromFaciaPage(faciaPage: FaciaPage): PressedPage =
-    PressedPage(
-      faciaPage.id,
-      faciaPage.seoData,
-      faciaPage.frontProperties,
-      faciaPage.collections.map{ case (collectionConfigWithId, collection) =>
-        PressedCollection(
-          collectionConfigWithId.id,
-          collectionConfigWithId.config.displayName.getOrElse(""),
-          collection.curated.map(FaciaContentConvert.frontentContentToFaciaContent(_, Option(collectionConfigWithId.config))).toList,
-          (collection.editorsPicks ++ collection.mostViewed ++ collection.results).map(FaciaContentConvert.frontentContentToFaciaContent(_, Option(collectionConfigWithId.config))).toList,
-          collection.treats.map(FaciaContentConvert.frontentContentToFaciaContent(_, Option(collectionConfigWithId.config))).toList,
-          collection.lastUpdated.map(new DateTime(_)),
-          collection.updatedBy,
-          collection.updatedEmail,
-          collection.href,
-          collectionConfigWithId.config.apiQuery,
-          collectionConfigWithId.config.collectionType,
-          collectionConfigWithId.config.groups.map(Group.fromGroups),
-          collectionConfigWithId.config.uneditable,
-          collectionConfigWithId.config.showTags,
-          collectionConfigWithId.config.showSections,
-          collectionConfigWithId.config.hideKickers,
-          collectionConfigWithId.config.showDateHeader,
-          collectionConfigWithId.config.showLatestUpdate,
-          collectionConfigWithId.config
-        )
-      }
-    )
-
   implicit val pressedPageFormat = Json.format[PressedPage]
 }
 
@@ -60,7 +27,7 @@ case class PressedPage(id: String,
   def allPath: Option[String] = {
     val tagAndSectionIds = for {
       pressedCollection <- collections
-      item <- pressedCollection.all
+      item <- pressedCollection.curatedPlusBackfillDeduplicated
       id <- {item match {
               case curatedContent: CuratedContent =>
                 curatedContent.content.sectionId ++ curatedContent.content.tags.map(_.id)
@@ -119,7 +86,19 @@ case class PressedPage(id: String,
   override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
-  def allItems = collections.flatMap(_.all).distinct
+  override def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = {
+    if (isNetworkFront) DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
+    else Nil
+  }
+
+  override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
+    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
+  }
+  override def omitMPUsFromContainers(edition: Edition): Boolean = {
+    DfpAgent.omitMPUsFromContainers(id, edition)
+  }
+
+  def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:image" -> Configuration.facebook.imageFallback) ++
@@ -134,4 +113,7 @@ case class PressedPage(id: String,
 
   private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
     o.map(value => Map(key -> value)).getOrElse(Map())
+
+  override def iosType = "front"
+
 }

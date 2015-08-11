@@ -4,7 +4,7 @@ import _ from 'underscore';
 import BaseWidget from 'widgets/base-widget';
 import Article from 'models/collections/article';
 import Group from 'models/group';
-import contentApi from 'modules/content-api';
+import * as contentApi from 'modules/content-api';
 import copiedArticle from 'modules/copied-article';
 import * as globalListeners from 'utils/global-listeners';
 import * as storage from 'utils/local-storage';
@@ -44,7 +44,8 @@ class Clipboard extends BaseWidget {
         this.listeners = listeners;
 
         listeners.on('ui:open', this.onUIOpen.bind(this));
-        listeners.on('copied-article:change', this.onCopiedChange.bind(this));
+        this.onCopiedChangeCallback = this.onCopiedChange.bind(this);
+        copiedArticle.on('change', this.onCopiedChangeCallback);
         this.pollArticlesChange(this.saveInStorage.bind(this));
 
         this.hasCopiedArticle = ko.observable(false).extend({ notify: 'always' });
@@ -130,6 +131,7 @@ class Clipboard extends BaseWidget {
 
     dispose() {
         globalListeners.off('paste', null, this);
+        copiedArticle.off('change', this.onCopiedChangeCallback);
         clearInterval(this.pollID);
         this.listeners.dispose();
         super.dispose();

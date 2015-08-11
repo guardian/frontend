@@ -7,10 +7,8 @@ define([
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
-    'common/modules/commercial/comment-adverts',
     'common/modules/commercial/dfp',
     'common/modules/commercial/front-commercial-components',
-    'common/modules/commercial/msie-audit',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/user-prefs'
@@ -23,27 +21,23 @@ define([
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
-    commentAdverts,
     dfp,
     frontCommercialComponents,
-    msieAudit,
     sliceAdverts,
     thirdPartyTags,
     userPrefs
 ) {
     var modules = [
-        ['cm-articleAsideAdverts', articleAsideAdverts],
-        ['cm-articleBodyAdverts', articleBodyAdverts],
-        ['cm-sliceAdverts', sliceAdverts],
-        ['cm-frontCommercialComponents', frontCommercialComponents],
-        ['cm-commentAdverts', commentAdverts],
-        ['cm-thirdPartyTags', thirdPartyTags],
-        ['cm-badges', badges]
+        ['cm-articleAsideAdverts', articleAsideAdverts.init],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-sliceAdverts', sliceAdverts.init],
+        ['cm-frontCommercialComponents', frontCommercialComponents.init],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
+        ['cm-badges', badges.init]
     ];
 
     return {
         init: function () {
-            msieAudit.init();
             var modulePromises = [];
 
             if (
@@ -51,20 +45,20 @@ define([
                 (!config.page.isSSL || config.page.section === 'admin') && !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
                 _.forEach(modules, function (pair) {
-                    robust(pair[0], function () {
-                        modulePromises.push(pair[1].init());
+                    robust.catchErrorsAndLog(pair[0], function () {
+                        modulePromises.push(pair[1]());
                     });
                 });
 
                 Promise.all(modulePromises).then(function () {
                     if (config.switches.commercial) {
-                        robust('cm-dfp', function () {
-                            dfp.init();
-                        });
-                        // TODO does dfp return a promise?
-                        robust('cm-ready', function () {
-                            mediator.emit('page:commercial:ready');
-                        });
+                        robust.catchErrorsAndLogAll([
+                            ['cm-dfp', dfp.init],
+                            // TODO does dfp return a promise?
+                            ['cm-ready', function () {
+                                mediator.emit('page:commercial:ready');
+                            }]
+                        ]);
                     }
                 });
 

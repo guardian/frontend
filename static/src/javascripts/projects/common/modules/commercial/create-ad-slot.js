@@ -2,16 +2,17 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/template',
     'text!common/views/commercial/ad-slot.html'
 ], function (
     _,
     $,
     config,
+    detect,
     template,
     adSlotTpl
 ) {
-
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -44,14 +45,14 @@ define([
                 tablet:             '1,1|300,250'
             }
         },
-        inline2: {
+        inline: {
             sizeMappings: {
                 mobile:             '1,1|300,50',
                 'mobile-landscape': '1,1|300,50|320,50',
                 tablet:             '1,1|300,250'
             }
         },
-        inline3: {
+        mostpop: {
             sizeMappings: {
                 mobile:             '1,1|300,50',
                 'mobile-landscape': '1,1|300,50|320,50',
@@ -93,6 +94,18 @@ define([
         }
     };
 
+    if (config.tests && !!config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile') {
+        adSlotDefinitions.inline1.sizeMappings = {
+            mobile: '1,1|300,250'
+        };
+        adSlotDefinitions.inline.sizeMappings = {
+            mobile: '1,1|300,250'
+        };
+        adSlotDefinitions.mostpop.sizeMappings = {
+            mobile: '1,1|300,250'
+        };
+    }
+
     return function (name, types, series, keywords, slotTarget) {
         var attrName,
             slotName = slotTarget ? slotTarget : name,
@@ -100,7 +113,7 @@ define([
             dataAttrs,
             $adSlot;
 
-        definition = (slotName.match(/^inline-extra/)) ? adSlotDefinitions.inline1 : adSlotDefinitions[slotName];
+        definition = (slotName.match(/^inline/) && slotName !== 'inline1') ? adSlotDefinitions.inline : adSlotDefinitions[slotName];
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
             definition.sizeMappings.wide = '1,1';
         }

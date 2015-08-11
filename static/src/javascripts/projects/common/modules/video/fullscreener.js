@@ -10,12 +10,20 @@ define([
             clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
             events = {
                 click: function (e) {
-                    this.paused() ? this.play() : this.pause();
+                    if (this.paused()) {
+                        this.play();
+                    } else {
+                        this.pause();
+                    }
                     e.stop();
                 },
                 dblclick: function (e) {
                     e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
+                    if (this.isFullScreen()) {
+                        this.exitFullscreen();
+                    } else {
+                        this.requestFullscreen();
+                    }
                 }
             };
 
@@ -27,7 +35,9 @@ define([
 
         //initialise omniture tracking for fullscreen event
         player.on('fullscreenchange', function () {
-            if (this.isFullScreen()) { player.trigger('player:fullscreen'); }
+            if (this.isFullScreen()) {
+                player.trigger('player:fullscreen');
+            }
         });
     }
 

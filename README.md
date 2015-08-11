@@ -128,6 +128,7 @@ jspm registry config github
 It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
 Now create a registry instance.
 ```
+npm -g install jspm-bower-endpoint # jspm >= 0.15.0
 jspm registry create bower jspm-bower-endpoint
 ```
 
@@ -199,13 +200,16 @@ In another console, run the supplied bash script [sbt]. The dot and slash are im
 ```
 ./sbt
 ```
-
-Once SBT is running (it may take 15 mins or so to start the first time - you'll know
-when you get a prompt), switch project by typing
+Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
+it's done when you get a prompt. If it is your first time, compile the project.
+```
+compile
+```
+Switch project by typing
 ```
 project dev-build
 ```
-Then compile and run the project locally by typing
+Then run the project locally by typing
 ```
 run
 ```
@@ -213,7 +217,7 @@ This also can take a while the first time.
 
 Now check that you are up and running by hitting the following URLs:
 
-* [http://localhost:9000/books](http://localhost:9000/books)
+* [http://localhost:9000/film](http://localhost:9000/film)
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 
@@ -252,6 +256,11 @@ Check that you own your own .npm directory `ls -ld ~/.npm`
 If it is owned by root, then take ownership of it
 `sudo chown -R username:username ~/.npm`
 
+#### Global install permissions errors
+The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
+
+###phantomjs permissions errors (OSX)
+If you get an error about not having permissions to execute phantomjs during `grunt compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
 
 ###File handles - "Too many files open"
 

@@ -1,5 +1,6 @@
 package dfp
 
+import common.dfp.GuAdUnit
 import common.{AkkaAsync, ExecutionContexts, Jobs}
 import play.api.{Application, GlobalSettings}
 

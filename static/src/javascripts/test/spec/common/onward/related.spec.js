@@ -1,13 +1,15 @@
 import qwery from 'qwery';
+import sinon from 'sinonjs';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
 
 describe('Related', function () {
 
     var expandableSpy = {
+        /*jscs:disable disallowDanglingUnderscores*/
         __useDefault: true,
+        /*jscs:enable disallowDanglingUnderscores*/
         default: sinon.spy(function () {
             return {
                 init: function () {}

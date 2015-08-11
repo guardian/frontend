@@ -1,13 +1,15 @@
-/* jshint newcap: false */
 /* eslint new-cap: 0 */
 
 import React from 'react';
+import bonzo from 'bonzo';
+import bean from 'bean';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
 
+import AnagramHelper from './anagram-helper/main';
 import Clues from './clues';
 import Controls from './controls';
 import HiddenInput from './hidden-input';
@@ -15,7 +17,8 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
-import loadFont from './font';
+import loadComments from './comments';
+import renderSeries from './series';
 
 class Crossword extends React.Component {
 
@@ -34,6 +37,7 @@ class Crossword extends React.Component {
             'onCheck',
             'onCheckAll',
             'onClearAll',
+            'onToggleAnagramHelper',
             'onSelect',
             'onKeyDown',
             'onClickHiddenInput',
@@ -43,7 +47,8 @@ class Crossword extends React.Component {
             'goToReturnPosition'
         );
 
-        loadFont();
+        loadComments();
+        renderSeries();
 
         this.state = {
             grid: helpers.buildGrid(
@@ -53,14 +58,15 @@ class Crossword extends React.Component {
                 persistence.loadGridState(this.props.data.id)
             ),
             cellInFocus: null,
-            directionOfEntry: null
+            directionOfEntry: null,
+            showAnagramHelper: false
         };
     }
 
     componentDidMount () {
         // focus the first clue if we're above mobile
         if (detect.isBreakpoint({ min: 'tablet' })) {
-            const firstClue = _.reduceRight(_.sortBy(this.props.data.entries, 'direction'), function(prev, current) {
+            const firstClue = _.reduceRight(_.sortBy(this.props.data.entries, 'direction'), function (prev, current) {
                 return (helpers.isAcross(current) && (prev.number < current.number ? prev : current));
             });
             this.focusClue(
@@ -72,11 +78,16 @@ class Crossword extends React.Component {
     }
 
     setCellValue (x, y, value) {
-        const cell = this.state.grid[x][y];
+        this.setState({
+            grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                if (gridX === x && gridY === y) {
+                    cell.value = value;
+                    cell.isError = false;
+                }
 
-        cell.value = value;
-        cell.isError = false;
-        this.forceUpdate();
+                return cell;
+            })
+        });
     }
 
     getCellValue (x, y) {
@@ -215,7 +226,7 @@ class Crossword extends React.Component {
     }
 
     focusHiddenInput (x, y) {
-        const wrapper = this.refs.hiddenInputComponent.refs.wrapper.getDOMNode();
+        const wrapper = React.findDOMNode(this.refs.hiddenInputComponent.refs.wrapper);
         const left = helpers.gridSize(x);
         const top = helpers.gridSize(y);
         const position = this.asPercentage(left, top);
@@ -224,7 +235,7 @@ class Crossword extends React.Component {
         wrapper.style.left = position.x + '%';
         wrapper.style.top = position.y + '%';
 
-        const hiddenInputNode = this.refs.hiddenInputComponent.refs.input.getDOMNode();
+        const hiddenInputNode = React.findDOMNode(this.refs.hiddenInputComponent.refs.input);
 
         if (document.activeElement !== hiddenInputNode) {
             hiddenInputNode.focus();
@@ -258,7 +269,7 @@ class Crossword extends React.Component {
         } else {
             this.state.cellInFocus = {x: x, y: y};
 
-            const isStartOfClue = (clue) => clue && clue.position.x === x && clue.position.y === y;
+            const isStartOfClue = (sourceClue) => sourceClue && sourceClue.position.x === x && sourceClue.position.y === y;
 
             /**
              * If the user clicks on the start of a down clue midway through an across clue, we should
@@ -281,9 +292,11 @@ class Crossword extends React.Component {
 
         if (clues && clues[direction]) {
             this.focusHiddenInput(x, y);
-            this.state.cellInFocus = {x: x, y: y};
-            this.state.directionOfEntry = direction;
-            this.forceUpdate();
+
+            this.setState({
+                cellInFocus: { x: x, y: y },
+                directionOfEntry: direction
+            });
         }
     }
 
@@ -318,36 +331,56 @@ class Crossword extends React.Component {
         const cells = helpers.cellsForEntry(entry);
 
         if (entry.solution) {
-            _.forEach(cells, (cell, n) => {
-                this.state.grid[cell.x][cell.y].value = entry.solution[n];
-            });
+            this.setState({
+                grid: helpers.mapGrid(this.state.grid, (cell, x, y) => {
+                    if (_.some(cells, c => c.x === x && c.y === y)) {
+                        const n = entry.direction === 'across' ?
+                            x - entry.position.x :
+                            y - entry.position.y;
 
-            this.forceUpdate();
+                        cell.value = entry.solution[n];
+                    }
+
+                    return cell;
+                })
+            });
         }
     }
 
     check (entry) {
-        const cells = _.map(helpers.cellsForEntry(entry), (cell) => this.state.grid[cell.x][cell.y]);
+        const cells = helpers.cellsForEntry(entry);
 
         if (entry.solution) {
             const badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
-                const cell = cellAndSolution[0];
+                const coords = cellAndSolution[0];
+                const cell = this.state.grid[coords.x][coords.y];
                 const solution = cellAndSolution[1];
                 return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
-            }), (cellAndSolution) => cellAndSolution[0]);
-
-            _.forEach(badCells, (cell) => {
-                cell.isError = true;
+            }), cellAndSolution => {
+                return cellAndSolution[0];
             });
 
-            this.forceUpdate();
+            this.setState({
+                grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                    if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
+                        cell.isError = true;
+                    }
+
+                    return cell;
+                })
+            });
 
             setTimeout(() => {
-                _.forEach(badCells, (cell) => {
-                    cell.isError = false;
-                    cell.value = '';
+                this.setState({
+                    grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                        if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
+                            cell.isError = false;
+                            cell.value = '';
+                        }
+
+                        return cell;
+                    })
                 });
-                this.forceUpdate();
             }, 150);
         }
     }
@@ -377,13 +410,20 @@ class Crossword extends React.Component {
     }
 
     onClearAll () {
-        _.forEach(this.state.grid, function (row) {
-            _.forEach(row, function (cell) {
+        this.setState({
+            grid: helpers.mapGrid(this.state.grid, cell => {
                 cell.value = '';
-            });
+                return cell;
+            })
         });
-        this.forceUpdate();
+
         this.save();
+    }
+
+    onToggleAnagramHelper () {
+        this.setState({
+            showAnagramHelper: !this.state.showAnagramHelper
+        });
     }
 
     hiddenInputValue () {
@@ -412,6 +452,10 @@ class Crossword extends React.Component {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
+        const anagramHelper = this.state.showAnagramHelper && (
+            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+        );
+
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
                 <div className='crossword__grid-wrapper'>
@@ -433,7 +477,10 @@ class Crossword extends React.Component {
                         value={this.hiddenInputValue()}
                         ref='hiddenInputComponent'
                     />
+
+                    {anagramHelper}
                 </div>
+
                 <Controls
                     hasSolutions={this.hasSolutions()}
                     clueInFocus={focussed}
@@ -442,6 +489,7 @@ class Crossword extends React.Component {
                     onCheck={this.onCheck}
                     onCheckAll={this.onCheckAll}
                     onClearAll={this.onClearAll}
+                    onToggleAnagramHelper={this.onToggleAnagramHelper}
                 />
                 <Clues
                     clues={this.cluesData()}
@@ -454,13 +502,18 @@ class Crossword extends React.Component {
 }
 
 export default function () {
-    $('.js-crossword').each(function (element) {
+    $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
             React.render(<Crossword data={crosswordData} />, element);
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
+    });
+
+    $('.js-print-crossword').each(element => {
+        bean.on(element, 'click', window.print.bind(window));
+        bonzo(element).removeClass('js-print-crossword');
     });
 }
 

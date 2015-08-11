@@ -3,7 +3,6 @@
     Description: Used to detect various characteristics of the current browsing environment.
                  layout mode, connection speed, battery level, etc...
 */
-/*jshint strict: false */
 /*global DocumentTouch: true */
 
 define([
@@ -110,6 +109,15 @@ define([
         return totalTime;
     }
 
+    function getTimeOfDomComplete(performance) {
+        var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        if (perf && perf.timing) {
+            return perf.timing.domComplete;
+        } else {
+            return new Date().getTime();
+        }
+    }
+
     function isReload() {
         var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
         if (!!perf && !!perf.navigation) {
@@ -148,6 +156,10 @@ define([
 
     function isFacebookReferral() {
         return /\.facebook\.com/.test(document.referrer);
+    }
+
+    function isGuardianReferral() {
+        return /\.theguardian\.com/.test(document.referrer);
     }
 
     function socialContext() {
@@ -269,12 +281,12 @@ define([
             types = {};
 
         try {
-            if (!!elem.canPlayType) {
+            if (elem.canPlayType) {
                 types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/, '');
                 types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, '');
                 types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/, '');
             }
-        } catch (e) {}
+        } catch (e) {/**/}
 
         return types;
     }
@@ -368,7 +380,7 @@ define([
                     pageshow: v,
                     blur: h,
                     focusout: h,
-                    pagehide:h
+                    pagehide: h
                 };
 
             evt = evt || window.event;
@@ -476,6 +488,7 @@ define([
         isTwitterApp: isTwitterApp,
         isFacebookReferral: isFacebookReferral,
         isTwitterReferral: isTwitterReferral,
+        isGuardianReferral: isGuardianReferral,
         socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
@@ -483,6 +496,7 @@ define([
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
+        getTimeOfDomComplete: getTimeOfDomComplete,
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,

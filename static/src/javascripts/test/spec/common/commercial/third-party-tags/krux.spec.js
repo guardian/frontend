@@ -1,5 +1,5 @@
-import $ from 'common/utils/$'
-import Injector from 'helpers/injector'
+import Injector from 'helpers/injector';
+import sinon from 'sinonjs';
 
 describe('Krux', function () {
 
@@ -35,7 +35,7 @@ describe('Krux', function () {
         krux.load();
         var url = requireStub.args[0][0][0];
 
-        expect(url).toBe('js!http://cdn.krxd.net/controltag?confid=JVZiE3vn');
+        expect(url).toBe('js!//cdn.krxd.net/controltag?confid=JVZiE3vn');
     });
 
 });

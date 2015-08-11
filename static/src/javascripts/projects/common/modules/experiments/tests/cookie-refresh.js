@@ -19,15 +19,15 @@ define([
     return function () {
         this.id = 'CookieRefresh';
         this.start = '2015-05-14';
-        this.expiry = '2015-06-14';
+        this.expiry = '2015-08-07';
         this.author = 'Mark Butler';
         this.description = 'Measured roll out of Identity session refresh';
-        this.audience = 0.01;
+        this.audience = 0.75;
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = '1% of users.';
+        this.audienceCriteria = '75% of users.';
         this.dataLinkNames = '';
-        this.idealOutcome = '1% of users have their signed in session extended. If they are signed-in and their session is over one month old.';
+        this.idealOutcome = '75% of users have their signed in session extended. If they are signed-in and their session is over one month old.';
         this.showForSensitive = true;
 
         this.canRun = function () {

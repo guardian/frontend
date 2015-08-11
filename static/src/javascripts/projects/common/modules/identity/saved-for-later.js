@@ -8,10 +8,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/identity/api',
     'common/views/svgs',
-
-    'text!common/views/identity/saved-for-later-profile-link.html',
     'text!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
@@ -23,13 +20,10 @@ define([
     config,
     mediator,
     template,
-    identity,
     svgs,
-    profileLinkTmp,
     deleteButtonAllTmp
 ) {
-    function SavedForLater() {
-
+    return function SavedForLater() {
         this.init = function () {
             var self = this,
                 deleteAll = $('.js-save-for-later__delete-all')[0];
@@ -50,12 +44,14 @@ define([
                 fastdom.write(function () {
                     $button.html(template(deleteButtonAllTmp, {
                         icon: svgs('crossIcon'),
-                        state: state
+                        state: state,
+                        dataLinkName: 'saved | remove all' + (state === 'confirm' ? ' | confirm' : '')
                     }));
                 });
             });
+            if (state === 'confirm') {
+                setTimeout(this.init.bind(this), 2000);
+            }
         };
-    }
-
-    return SavedForLater;
+    };
 });

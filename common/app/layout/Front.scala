@@ -1,14 +1,16 @@
 package layout
 
-import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import common.LinkTo
+import common.dfp.{DfpAgent, SponsorshipTag}
 import conf.Switches
-import dfp.{DfpAgent, SponsorshipTag}
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
 import model.PressedPage
 import model.facia.PressedCollection
-import model.meta.{ListItem, ItemList}
+import model.meta.{ItemList, ListItem}
 import org.joda.time.DateTime
+import play.api.mvc.RequestHeader
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.{MostPopular, _}
 import views.support.CutOut
@@ -76,7 +78,7 @@ object CollectionEssentials {
   )
 
   def fromPressedCollection(collection: PressedCollection) = CollectionEssentials(
-    collection.all,
+    collection.curatedPlusBackfillDeduplicated,
     collection.treats,
     Option(collection.displayName),
     collection.href,
@@ -193,7 +195,7 @@ object FaciaContainer {
       case MostPopular => ContainerCommercialOptions.empty
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
-    None,
+    config.config.description.map(DescriptionMetaHeader.apply(_)),
     None,
     hideToggle = false,
     showTimestamps = false,
@@ -254,7 +256,7 @@ case class FaciaContainer(
     val maybeDateHeadline = customHeader flatMap  {
       case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
       case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
-      case SeriesDescriptionMetaHeader(_) => None
+      case DescriptionMetaHeader(_) => None
     }
 
     for {
@@ -318,7 +320,7 @@ object Front extends implicits.Collections {
           * matter what occurred further up the page.
           */
         dynamicContainer.containerDefinitionFor(
-          faciaContentList.collect({ case content: CuratedContent => content }).map(Story.fromFaciaContent)
+          faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
@@ -394,11 +396,11 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.filterNot(_.all.isEmpty).zipWithIndex.mapAccumL(
+      pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
-        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.all)
+        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
@@ -426,17 +428,17 @@ object Front extends implicits.Collections {
 
   }
 
-  def makeLinkedData(collections: Seq[FaciaContainer]): ItemList = {
+  def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(
-      "", // relative iri so just resolves to the base
+      LinkTo(url),
       collections.zipWithIndex.map {
         case (collection, index) =>
           ListItem(position = index, item = Some(
             ItemList(
-              "", // don't have a uri for each container
+              LinkTo(url), // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, index) =>
-                  ListItem(position = index, url = Some(item.url))
+                  ListItem(position = index, url = Some(LinkTo(item.url)))
               }
             )
           ))

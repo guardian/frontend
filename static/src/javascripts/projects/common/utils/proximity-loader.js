@@ -9,7 +9,7 @@ define([
 ) {
 
     var items = [],
-        scroll = {top:0, bottom: 0},
+        scroll = {top: 0, bottom: 0},
         doProximityLoadingThrottled, doProximityLoadingDebounced,
         doProximityLoading = function () {
             scroll.top = bonzo(document.body).scrollTop();

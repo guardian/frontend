@@ -53,8 +53,9 @@ export default {
     latestArticlesPollMs:  30000,
     configSettingsPollMs:  30000,
     cacheExpiryMs:         60000,
-    sparksRefreshMs:       300000,
+    sparksRefreshMs:      300000,
     pubTimeRefreshMs:      30000,
+    searchDebounceMs:        300,
 
     highFrequencyPaths:    ['uk', 'us', 'au', 'uk/sport', 'us/sport', 'au/sport'],
 
@@ -62,7 +63,25 @@ export default {
 
     apiBase:               '',
     apiSearchBase:         '/api/proxy',
-    apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow,membershipAccess',
+    apiSearchParams:       [
+        'show-elements=video',
+        'show-tags=all',
+        'show-fields=' + [
+            'internalContentCode',
+            'internalPageCode',
+            'isLive',
+            'firstPublicationDate',
+            'scheduledPublicationDate',
+            'headline',
+            'trailText',
+            'byline',
+            'thumbnail',
+            'secureThumbnail',
+            'liveBloggingNow',
+            'membershipAccess'
+        ].join(',')
+    ].join('&'),
+
 
     frontendApiBase:       '/frontend',
 
@@ -71,6 +90,7 @@ export default {
     reauthTimeout:         60000,
 
     imageCdnDomain:        '.guim.co.uk',
+    imgIXBasePath:         '/img/static/',
     previewBase:           'http://preview.gutools.co.uk',
 
     latestSnapPrefix:      'Latest from ',
@@ -79,6 +99,7 @@ export default {
     ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
     internalContentPrefix: 'internal-code/content/',
+    internalPagePrefix:    'internal-code/page/',
 
     sparksBatchQueue:      15
 };

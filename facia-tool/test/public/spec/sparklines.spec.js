@@ -6,6 +6,7 @@ import * as vars from 'modules/vars';
 import MockHistogram from 'mock/histogram';
 import mockFrontWidget from 'mock/front-widget';
 import * as sparklines from 'utils/sparklines';
+import tick from 'test/utils/tick';
 
 describe('Sparklines', function () {
     var originalsparksBatchQueue = vars.CONST.sparksBatchQueue;
@@ -30,6 +31,12 @@ describe('Sparklines', function () {
         switches['facia-tool-sparklines'] = false;
         vars.model.switches(switches);
     });
+    var originalSetTimeout = setTimeout;
+    function whenComplete (mock, cb) {
+        mock.once('complete', () => {
+            originalSetTimeout(cb, 10);
+        });
+    }
 
     it('loads sparklines for a front', function (done) {
         // Load an empty front
@@ -75,10 +82,11 @@ describe('Sparklines', function () {
         expect(onReject.called).toBe(false);
         front._resolveCollection('empty');
 
-        this.mockHistogram.once('complete', function () {
+        var resolvedObject;
+        whenComplete(this.mockHistogram, () => {
             expect(onResolve.called).toBe(true);
             expect(onReject.called).toBe(false);
-            var resolvedObject = onResolve.args[0][0];
+            resolvedObject = onResolve.args[0][0];
             expect(resolvedObject['/article/one/web/url'].series[0].data[0].count = 50);
             expect(resolvedObject['/article/two/web/url'].series[0].data[0].count = 5000);
             expectSparklinesOn(['_article_one_web_url', '_article_two_web_url']);
@@ -102,17 +110,17 @@ describe('Sparklines', function () {
 
             front._resolveCollection('onlyCollection');
 
-            this.mockHistogram.once('complete', function () {
+            whenComplete(this.mockHistogram, () => {
                 expect(onResolve.called).toBe(true);
                 expect(onReject.called).toBe(false);
-                var resolvedObject = onResolve.args[0][0];
+                resolvedObject = onResolve.args[0][0];
                 expect(resolvedObject['/article/one/web/url'].series[0].data[0].count = 100);
                 expect(resolvedObject['/article/one/web/url'].series[0].data[2].count = 2000);
                 expectSparklinesOn(['_article_one_web_url', '_fancy-url']);
 
                 finishTest();
             });
-        }.bind(this));
+        });
     });
 
     it('handles changing fronts while loading collections', function (done) {
@@ -160,7 +168,7 @@ describe('Sparklines', function () {
 
             finishTest();
         });
-        this.mockHistogram.once('complete', function () {
+        whenComplete(this.mockHistogram, () => {
             // After the first request, update the mock for the second
             this.mockHistogram.update({
                 '/long/front': [{
@@ -169,9 +177,9 @@ describe('Sparklines', function () {
                     totalHits: 10
                 }]
             });
-            this.mockHistogram.once('complete', continueTest);
+            whenComplete(this.mockHistogram, continueTest);
             continueTest();
-        }.bind(this));
+        });
     });
 
     it('handles changing fronts while loading sparklines', function (done) {
@@ -201,7 +209,7 @@ describe('Sparklines', function () {
         front.sparklines.promise.then(onResolveFirst, onRejectFirst);
         front._resolveCollection('two');
 
-        this.mockHistogram.once('complete', function () {
+        whenComplete(this.mockHistogram, () => {
             // After the first request, update the mock for the second, but change front
             this.mockHistogram.update({
                 '/long/front': [{
@@ -214,10 +222,10 @@ describe('Sparklines', function () {
                 one: [{ article: '/fancy-url' }]
             });
             front.sparklines.promise.then(onResolveSecond, onRejectSecond);
-            this.mockHistogram.once('complete', function () {
+            whenComplete(this.mockHistogram, () => {
                 front._resolveCollection('one');
 
-                this.mockHistogram.once('complete', function () {
+                whenComplete(this.mockHistogram, () => {
                     expect(onResolveFirst.called).toBe(false);
                     expect(onRejectFirst.called).toBe(true);
                     expect(onResolveSecond.called).toBe(true);
@@ -226,8 +234,8 @@ describe('Sparklines', function () {
 
                     finishTest();
                 });
-            }.bind(this));
-        }.bind(this));
+            });
+        });
     });
 
     it('loads sparklines on multiple fronts and polls', function (done) {
@@ -259,7 +267,7 @@ describe('Sparklines', function () {
         frontTwo.sparklines.promise.then(onResolveTwo);
         frontTwo._resolveCollection('two');
 
-        var continueTest = _.after(2, function () {
+        var continueTest = _.after(2, () => { originalSetTimeout(() => {
             this.mockHistogram.off('complete', continueTest);
             expect(onResolveOne.called).toBe(true);
             expect(onResolveTwo.called).toBe(true);
@@ -279,21 +287,21 @@ describe('Sparklines', function () {
                     totalHits: 12345
                 }]
             });
-            var afterInterval = _.after(2, function () {
+            var afterInterval = _.after(2, () => { originalSetTimeout(() => {
                 this.mockHistogram.off('complete', afterInterval);
                 expect(sparklinesTitle('_a')).toBe('500');
                 expect(sparklinesTitle('_b')).toBe('12,345');
 
                 finishTest();
-            }.bind(this));
+            }, 10); });
             this.mockHistogram.on('complete', afterInterval);
 
-            jasmine.clock().tick(3000);
-        }.bind(this));
+            tick(3000).then(() => tick(100));
+        }, 10); });
         this.mockHistogram.on('complete', continueTest);
 
         // Advance time to get the mocked response
-        jasmine.clock().tick(100);
+        tick(100).then(() => tick(100)).then(() => tick(100));
     });
 
     it('refreshes when the collection changes', function (done) {
@@ -313,7 +321,7 @@ describe('Sparklines', function () {
         sparklines.subscribe(front);
         front._resolveCollection('one');
 
-        this.mockHistogram.once('complete', function () {
+        whenComplete(this.mockHistogram, () => {
             expectSparklinesOn(['_a']);
             expect(sparklinesTitle('_a')).toBe('100');
 
@@ -333,24 +341,27 @@ describe('Sparklines', function () {
             // Inject a new article in the front (either dragging or collection update)
             front._addArticle('one', { article: '/b' });
             // Adding an article makes a new request for the added articles
-            jasmine.clock().tick(100);
+            tick(100)
+            .then(() => {
+                expectSparklinesOn(['_a', '_b']);
+                // Note that the old article doesn't change
+                expect(sparklinesTitle('_a')).toBe('100');
+                expect(sparklinesTitle('_b')).toBe('200');
 
-            expectSparklinesOn(['_a', '_b']);
-            // Note that the old article doesn't change
-            expect(sparklinesTitle('_a')).toBe('100');
-            expect(sparklinesTitle('_b')).toBe('200');
+                // wait a set interval and check that A is refreshed correctly
+                return tick(2000).then(() => tick(100));
+            })
+            .then(() => {
+                expectSparklinesOn(['_a', '_b']);
+                expect(sparklinesTitle('_a')).toBe('77');
+                expect(sparklinesTitle('_b')).toBe('200');
 
-            // wait a set interval and check that A is refreshed correctly
-            jasmine.clock().tick(2000);
-            expectSparklinesOn(['_a', '_b']);
-            expect(sparklinesTitle('_a')).toBe('77');
-            expect(sparklinesTitle('_b')).toBe('200');
-
-            finishTest();
-        }.bind(this));
+                finishTest();
+            });
+        });
 
         // Advance time to get the mocked response
-        jasmine.clock().tick(100);
+        tick(100).then(() => tick(100)).then(() => tick(100));
     });
 });
 

@@ -31,7 +31,8 @@ class ApplicationsTestSuite extends Suites (
   new SectionTemplateTest,
   new TagFeatureTest,
   new TagTemplateTest,
-  new ShareLinksTest ) with SingleServerSuite {
+  new ShareLinksTest
+) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
 }

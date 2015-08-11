@@ -55,6 +55,12 @@ define([
                 beacon.fire('/count/pva.gif');
             }
         }.bind(this));
+
+        mediator.on('module:analytics:omniture:pageview:sent', function () {
+            if (config.switches.noBounceIndicator) {
+                storage.session.remove('gu-bounce-test');
+            }
+        });
     };
 
     Omniture.prototype.logView = function () {
@@ -92,7 +98,7 @@ define([
                 tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
-            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
+            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {/**/}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
@@ -214,8 +220,10 @@ define([
 
         this.s.prop47    = config.page.edition || '';
 
-        this.s.prop51  = mvt;
+        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
+
         this.s.eVar51  = mvt;
+
         this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         // List of components on the page
@@ -224,7 +232,7 @@ define([
             .toString();
         this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
-        if (this.s.prop51) {
+        if (this.s.eVar51) {
             this.s.events = this.s.apl(this.s.events, 'event58', ',');
         }
 
@@ -258,6 +266,10 @@ define([
         this.s.prop63    = detect.getPageSpeed();
 
         this.s.prop65    = config.page.headline || '';
+        this.s.eVar70    = config.page.headline || '';
+
+        // Set Page View Event
+        this.s.events    = this.s.apl(this.s.events, 'event4', ',', 2);
 
         this.s.prop67    = 'nextgen-served';
 

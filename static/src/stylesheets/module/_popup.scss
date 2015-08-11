@@ -213,11 +213,37 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
+.brand-bar__item--profile .save-for-later__icon {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    display: none;
+    fill: colour(news-main-2);
+
+    &[data-saved-content-count] {
+        display: inline;
+    }
+}
+
+.brand-bar__item--saved-for-later-count {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    line-height: $gs-baseline;
+    font-size: 11px;
+    margin-left: $gs-gutter / 2;
+    padding: 0 $gs-gutter / 3;
+    border-radius: 30px;
+    text-align: center;
+    background: colour(news-main-2);
+    color: #ffffff;
+}
+
 /* Search Menu
    ========================================================================== */
 
 .popup--search {
-    z-index: 300;
+    z-index: $zindex-modal;
     padding: 0;
     right: 0;
     padding-top: 5px; // manual amount, determined by google, not guss-grid-system
@@ -243,38 +269,8 @@ $control-offset: 36 + $gs-gutter/2;
         margin-left: 0 - (gs-span(7) + $gs-gutter);
     }
 
-    @include mq(wide) {
-        margin-left: 0 - (gs-span(8) + $gs-gutter);
-    }
-
     // account for google search sizes.
     .search-box {
         margin-bottom: -1px;
-    }
-}
-
-/*
- *  Slim modification
- *
- *  Used for slim header ^l_header
- */
-.is-slim {
-    .popup {
-        .brand-bar__item--has-control & {
-            left: 0;
-        }
-    }
-
-    .popup__toggle {
-        &.is-active,
-        .is-active > & {
-            &:before {
-                margin-left: 0 - $popup-anchor-arrow-size;
-            }
-        }
-
-        &:after {
-            display: none;
-        }
     }
 }

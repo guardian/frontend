@@ -10,6 +10,9 @@ var config = {
     },
     page: {
         contentType: 'Article'
+    },
+    tests: {
+        mobileTopBannerRemove: false
     }
 };
 
@@ -18,7 +21,7 @@ var articleAsideAdverts,
 
 injector.mock({
     'common/utils/config': config
-})
+});
 
 describe('Article Aside Adverts', function () {
 
@@ -26,7 +29,7 @@ describe('Article Aside Adverts', function () {
             id: 'article-aside-adverts',
             fixtures: [
                 '<div class="content__secondary-column js-secondary-column">' +
-                '<div class="js-mpu-ad-slot"></div>' +
+                '<div class="js-ad-slot-container"></div>' +
                 '</div>'
             ]
         },
@@ -60,7 +63,7 @@ describe('Article Aside Adverts', function () {
         var adSlotPromise = articleAsideAdverts.init();
 
         adSlotPromise.then(function (adSlot) {
-            expect(adSlot[0]).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
+            expect(adSlot[0]).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
             done();
         });
     });
@@ -69,7 +72,7 @@ describe('Article Aside Adverts', function () {
         articleAsideAdverts.init();
 
         fastdom.defer(function () {
-            expect(qwery('.js-mpu-ad-slot > .ad-slot', $fixturesContainer).length).toBe(1);
+            expect(qwery('.js-ad-slot-container > .ad-slot', $fixturesContainer).length).toBe(1);
             done();
         });
     });

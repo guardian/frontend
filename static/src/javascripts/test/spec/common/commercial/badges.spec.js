@@ -1,3 +1,4 @@
+/*eslint-disable no-multi-str*/
 import fastdom from 'fastdom';
 import qwery from 'qwery';
 import $ from 'common/utils/$';
@@ -10,6 +11,7 @@ describe('Badges', function () {
     var fixturesConfig = {
             id: 'badges',
             fixtures: [
+                // jscs:disable disallowMultipleLineStrings
                 '<div class="facia-container">\
                     <div class="container">\
                         <div class="js-container__header"></div>\
@@ -18,6 +20,7 @@ describe('Badges', function () {
                         <div class="js-container__header"></div>\
                     </div>\
                 </div>'
+                // jscs:enable disallowMultipleLineStrings
             ]
         },
         preBadges = function (sponsorship, sponsor) {
@@ -46,7 +49,7 @@ describe('Badges', function () {
             );
         },
         $fixtureContainer, badges, config,
-        injector = new Injector;
+        injector = new Injector();
 
     beforeEach(function (done) {
         injector.test(['common/modules/commercial/badges', 'common/utils/config'], function () {
@@ -100,7 +103,7 @@ describe('Badges', function () {
             }
         ].forEach(function (badge) {
 
-                it('should add "' + badge.name + '" badge to first container if page is ' + badge.type,
+            it('should add "' + badge.name + '" badge to first container if page is ' + badge.type,
                     function (done) {
                         $('.facia-container', $fixtureContainer)
                             .addClass('js-sponsored-front')
@@ -117,7 +120,7 @@ describe('Badges', function () {
                     }
                 );
 
-                it('should add pre-badge if sponsor\'s name available', function (done) {
+            it('should add pre-badge if sponsor\'s name available', function (done) {
                     var sponsor = 'Unilever',
                         container = $('.facia-container', $fixtureContainer).first()
                             .addClass('js-sponsored-front')
@@ -130,7 +133,7 @@ describe('Badges', function () {
                         done();
                     });
                 });
-            });
+        });
     });
 
     describe('sponsored containers', function () {

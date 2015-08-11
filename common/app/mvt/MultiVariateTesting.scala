@@ -21,25 +21,47 @@ object JspmTest extends TestDefinition(
   List(Variant0),
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
-  new LocalDate(2015, 6, 30)
+  new LocalDate(2015, 9, 30)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    if (conf.Switches.JspmValidation.isSwitchedOff) {
+      super.isParticipating(request)
+    } else {
+      false
+    }
+  }
+}
+
+object JspmControlTest extends TestDefinition(
+  List(Variant7),
+  "jspm-control",
+  "A control test/variant to compare with the JspmTest",
+  new LocalDate(2015, 9, 30)
 )
 
-object CMHRTest extends TestDefinition(
-  List(Variant1, Variant2, Variant3),
-  "cm-hr-test",
-  "Test moving commercial high relevance component above most popular",
-  new LocalDate(2015, 6, 30)
+object MobileTopBannerRemoveTest extends TestDefinition(
+  List(Variant1),
+  "mobile-top-banner-remove",
+  "To test the effect of top banner removal on mobile",
+  new LocalDate(2015, 8, 30)
 )
 
-object CMOutbrainTest extends TestDefinition(
-  List(Variant4, Variant5, Variant6),
-  "cm-outbrain-test",
-  "Test moving outbrain component to the second position below the article",
-  new LocalDate(2015, 6, 30)
+object ABHeadlinesTestVariant extends TestDefinition(
+  List(Variant5),
+  "headlines-ab-variant",
+  "To test how much of a difference changing a headline makes (variant group)",
+  new LocalDate(2015, 9, 30)
+)
+
+object ABHeadlinesTestControl extends TestDefinition(
+  List(Variant6),
+  "headlines-ab-control",
+  "To test how much of a difference changing a headline makes (test group)",
+  new LocalDate(2015, 9, 30)
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, CMHRTest, CMOutbrainTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, MobileTopBannerRemoveTest, ABHeadlinesTestControl, ABHeadlinesTestVariant)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++

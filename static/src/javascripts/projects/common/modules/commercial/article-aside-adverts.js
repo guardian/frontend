@@ -21,7 +21,7 @@ define([
                 options || {},
                 {
                     columnSelector: '.js-secondary-column',
-                    adSlotContainerSelector: '.js-mpu-ad-slot'
+                    adSlotContainerSelector: '.js-ad-slot-container'
                 }
             ),
             $col        = $(opts.columnSelector),

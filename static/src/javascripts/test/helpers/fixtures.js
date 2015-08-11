@@ -6,7 +6,7 @@
  */
 define([
     'common/utils/$'
-], function(
+], function (
     $
 ) {
 
@@ -16,18 +16,18 @@ define([
 
     function add(id, fixtures) {
         var $fixtureContainer = $.create('<div id="' + id + '"></div>');
-        fixtures.forEach(function(fixture) {
+        fixtures.forEach(function (fixture) {
             $fixtureContainer.append(fixture);
         });
         return $fixtureContainer.appendTo(document.body);
-     }
+    }
 
     return {
-        render: function(conf) {
+        render: function (conf) {
             clean(conf.id);
             return add(conf.id, conf.fixtures);
         },
         clean: clean
-    }
+    };
 
 });

@@ -1,16 +1,13 @@
 package views.support
 
 import java.net.{URI, URISyntaxException}
-
 import common.Logging
-import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
+import conf.Switches.{ImageServerSwitch, PngResizingSwitch, ImgixSwitch}
 import conf.{Configuration, Switches}
-import implicits.Requests._
 import layout.WidthsByBreakpoint
 import model.{Content, ImageAsset, ImageContainer, MetaData}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
-import play.api.mvc.RequestHeader
 
 sealed trait ElementProfile {
 
@@ -72,6 +69,7 @@ object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
+object FacebookOpenGraphImage extends Profile(width = Some(1200))
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))
@@ -90,7 +88,7 @@ object ImgSrc extends Logging {
     "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 
-  def apply(url: String, imageType: ElementProfile, useImageService: Boolean = false): String = {
+  def apply(url: String, imageType: ElementProfile): String = {
     try {
       val uri = new URI(url.trim)
 
@@ -102,7 +100,7 @@ object ImgSrc extends Logging {
         .filter(_ => isSupportedImage)
         .filter(_ => ImageServerSwitch.isSwitchedOn)
         .map { host =>
-          if (useImageService && Switches.ImgixSwitch.isSwitchedOn) {
+          if (ImgixSwitch.isSwitchedOn) {
             val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.imgixResizeString}", host.token)
             s"$imageHost/img/${host.prefix}$signedPath"
           } else {
@@ -116,46 +114,39 @@ object ImgSrc extends Logging {
     }
   }
 
-  // always, and I mean ALWAYS think carefully about the size image you use
-  def findSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  private def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
   }
 
-  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
+  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.largestFor(imageContainer).flatMap(_.url).map{ largestImage =>
-      ImgSrc(largestImage, profile, request.isInImgixTest)
+      ImgSrc(largestImage, profile)
     }
   }
 
-  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
-    if(request.isInImgixTest) {
-        widths.profiles.map { profile =>
-          s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
-        } mkString ", "
-      } else {
-        normalSrcset(imageContainer, widths)
-      }
-  }
-
-  def normalSrcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
+  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile =>
-      s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
+      if(ImgixSwitch.isSwitchedOn) {
+        s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      } else {
+        s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      }
     } mkString ", "
   }
 
-  def srcset(path: String, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
+  def srcset(path: String, widths: WidthsByBreakpoint): String = {
     widths.profiles map { profile =>
-      s"${ImgSrc(path, profile, request.isInImgixTest)} ${profile.width.get}w"
+      s"${ImgSrc(path, profile)} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def getFallbackUrl(imageContainer: ImageContainer)(implicit request: RequestHeader): Option[String] = {
-    if(request.isInImgixTest) {
+  def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
+    if(ImgixSwitch.isSwitchedOn) {
       findLargestSrc(imageContainer, Item300)
     } else {
-      findSrc(imageContainer, Item300)
+      findNearestSrc(imageContainer, Item300)
     }
   }
 

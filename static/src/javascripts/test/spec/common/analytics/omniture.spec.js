@@ -1,6 +1,8 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
+/*eslint-disable no-unused-vars*/
 import jasmineSinon from 'jasmine-sinon';
+/*eslint-enable no-unused-vars*/
 
 describe('omniture', function () {
 
@@ -19,10 +21,10 @@ describe('omniture', function () {
             'common/modules/analytics/omniture',
             'common/utils/mediator'], function () {
 
-            omniture = arguments[0];
-            mediator = arguments[1];
+                omniture = arguments[0];
+                mediator = arguments[1];
 
-            config.page = {
+                config.page = {
                 analyticsName:   'the_page_name',
                 beaconUrl:       '',
                 contentType:     'Article',
@@ -31,26 +33,32 @@ describe('omniture', function () {
                 omnitureAccount: 'the_account'
             };
 
-            s = {
+                s = {
                 t: function () {},
                 tl: function () {},
-                apl: function () {},
+                apl: function (x, y, z) {
+                    return [x, y]
+                        .filter(function (a) {
+                            return a;
+                        })
+                        .join(z);
+                },
                 Util: { getQueryParam: function () { return 'test'; } },
                 getValOnce: function () { return 'test'; },
                 getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
-                getParamValue: function() { return ''; }
+                getParamValue: function () { return ''; }
             };
-            sinon.spy(s, 't');
-            sinon.spy(s, 'tl');
-            sinon.spy(s, 'apl');
+                sinon.spy(s, 't');
+                sinon.spy(s, 'tl');
+                sinon.spy(s, 'apl');
 
-            omniture.s = s;
-            omniture.addHandlers();
-            done();
-        });
+                omniture.s = s;
+                omniture.addHandlers();
+                done();
+            });
     });
 
-    afterEach(function(){
+    afterEach(function () {
         sessionStorage.removeItem('gu.analytics.referrerVars');
         mediator.removeEvent('module:clickstream:interaction');
         mediator.removeEvent('module:clickstream:click');
@@ -139,7 +147,7 @@ describe('omniture', function () {
         s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
         omniture.go();
 
-        expect(s.cookieDomainPeriods).toBe('2')
+        expect(s.cookieDomainPeriods).toBe('2');
     });
 
     it('should log a page view event', function () {
@@ -210,7 +218,7 @@ describe('omniture', function () {
         omniture.go();
         mediator.emit('module:clickstream:click', clickSpec);
 
-        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage');
     });
 
     it('should make a delayed s.tl call for other-host links', function () {
@@ -228,4 +236,4 @@ describe('omniture', function () {
 
         expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
     });
- });
+});

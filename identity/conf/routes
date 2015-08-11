@@ -3,6 +3,8 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                          conf.HealthCheck.healthcheck()
 
+GET         /google1ec7a89a27d60d47.html            controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
+
 GET         /reauthenticate                         @controllers.ReauthenticationController.renderForm(returnUrl : Option[String])
 POST        /reauthenticate                         @controllers.ReauthenticationController.processForm
 
@@ -43,5 +45,5 @@ GET         /form/embed/:formReference              @controllers.FormstackContro
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
 GET         /save-content                           @controllers.SaveContentController.saveContentItem
-GET         /saved-for-later-page                   @controllers.SaveContentController.listSavedContentPage
-POST        /saved-for-later-page                   @controllers.SaveContentController.deleteSavedContentItemFromPage
+GET         /saved-for-later                        @controllers.SaveContentController.listSavedContentPage
+POST        /saved-for-later                        @controllers.SaveContentController.deleteSavedContentItemFromPage

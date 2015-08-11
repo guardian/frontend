@@ -11,8 +11,8 @@ describe('Front Commercial Components', function () {
             id: 'front-commercial-component',
             fixtures: []
         },
-        appendContainer = function ($fixturesContainer) {
-            $fixturesContainer.append('<div class="fc-container"></div>');
+        appendContainer = function ($container) {
+            $container.append('<div class="fc-container"></div>');
         },
         $fixturesContainer,
         injector = new Injector(),
@@ -32,7 +32,7 @@ describe('Front Commercial Components', function () {
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             done();
-        });        
+        });
     });
 
     afterEach(function () {
@@ -44,7 +44,7 @@ describe('Front Commercial Components', function () {
     });
 
     it('should place ad between 3rd and 4th containers if there are 4 or more containers', function (done) {
-        for (var i = 0; i<4; i++) {
+        for (var i = 0; i < 4; i++) {
             appendContainer($fixturesContainer);
         }
         frontCommercialComponents.init();
@@ -72,7 +72,7 @@ describe('Front Commercial Components', function () {
     it('should place ad between between the 4th and 5th container if a network front', function (done) {
         config.page.contentType = 'Network Front';
 
-        for (var i = 0; i<5; i++) {
+        for (var i = 0; i < 5; i++) {
             appendContainer($fixturesContainer);
         }
         frontCommercialComponents.init();
@@ -87,7 +87,7 @@ describe('Front Commercial Components', function () {
     });
 
     it('should have 1,1 slot for wide breakpoint if there is a page skin', function (done) {
-        for (var i = 0; i<2; i++) {
+        for (var i = 0; i < 2; i++) {
             appendContainer($fixturesContainer);
         }
         config.page.hasPageSkin = true;

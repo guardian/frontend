@@ -3,7 +3,7 @@ define([
     'underscore',
     'utils/global-listeners',
     'utils/mediator'
-],function (
+], function (
     ko,
     _,
     globalListeners,

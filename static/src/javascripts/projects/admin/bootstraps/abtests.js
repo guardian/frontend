@@ -5,7 +5,7 @@ define([
     'admin/modules/abtests/abtest-report',
     'admin/modules/abtests/abtest-report-item',
     'admin/modules/abtests/audience'
-], function(
+], function (
     abTests,
     qwery,
     bean,
@@ -13,9 +13,9 @@ define([
     ReportItem,
     Audience
 ) {
-    function renderTests(tests, active, elem){
-        var items = tests.map(function(test){ return new ReportItem({test: test, active: active}); });
-        items.forEach(function(i) { i.render(elem); });
+    function renderTests(tests, active, elem) {
+        var items = tests.map(function(test) { return new ReportItem({test: test, active: active}); });
+        items.forEach(function (i) { i.render(elem); });
         return items;
     }
 
@@ -30,15 +30,15 @@ define([
 
         var $expired = qwery('.abtests-expired')[0];
 
-        bean.on(qwery('.abtests-expired-title a')[0], 'click', function(e) {
+        bean.on(qwery('.abtests-expired-title a')[0], 'click', function (e) {
             e.preventDefault();
-            if (e.currentTarget.textContent == "show") {
-                e.currentTarget.textContent = "hide";
-                $expired.style.display = "block";
-                expiredTestItems.forEach(function(t){t.renderChart();});
+            if (e.currentTarget.textContent === 'show') {
+                e.currentTarget.textContent = 'hide';
+                $expired.style.display = 'block';
+                expiredTestItems.forEach(function(t) {t.renderChart(); });
             } else {
-                e.currentTarget.textContent = "show";
-                $expired.style.display = "none";
+                e.currentTarget.textContent = 'show';
+                $expired.style.display = 'none';
             }
         });
 

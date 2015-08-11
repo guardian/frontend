@@ -38,25 +38,6 @@ import scala.concurrent.Future
         override def fromResponse(response: Option[String]): String = response.get // we don't need to test None yet
       }
     }
-
-    override val frontJson: front.FrontJson = new front.FrontJson {
-      override val bucketLocation: String = front.FrontJsonLive.bucketLocation
-
-      override def getRaw(path: String): Future[Option[String]] =
-      recorder.load(path, Map()) {
-        super.getRaw(path)
-      }
-
-      val recorder = new HttpRecorder[Option[String]] {
-        override lazy val baseDir = new File(System.getProperty("user.dir"), "data/faciaPage")
-
-        //No transformation for now as we only store content that's there.
-        override def toResponse(str: String): Option[String] = Some(str)
-
-        override def fromResponse(response: Option[String]): String = response.get // we don't need to test None yet
-      }
-    }
-
   }
 
   override def beforeAll() {
@@ -90,12 +71,12 @@ import scala.concurrent.Future
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(13)
+    containers.size should be(14)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (33)
+    topContainer.size should be (20)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/2015/feb/20/kim-gordon-lana-del-rey-doesnt-even-know-what-feminism-is")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/musicblog/2015/may/27/stone-roses-spike-island-the-reality")
 
   }
 

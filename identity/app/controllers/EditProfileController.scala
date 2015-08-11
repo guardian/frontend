@@ -4,12 +4,12 @@ import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.User
-import common.{ExecutionContexts, JsonComponent}
-import conf.Configuration
+import common.ExecutionContexts
 import form._
 import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
+import play.api.i18n.{ MessagesApi, I18nSupport }
 import play.api.mvc.{AnyContent, Controller, Request}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdentityRequest, _}
@@ -22,10 +22,9 @@ import scala.concurrent.Future
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
                                       authenticatedActions: AuthenticatedActions,
                                       identityApiClient: IdApiClient,
-                                      idRequestParser: IdRequestParser)
-  extends Controller
-  with ExecutionContexts
-  with SafeLogging{
+                                      idRequestParser: IdRequestParser,
+                                      val messagesApi: MessagesApi)
+  extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
 
   import authenticatedActions._
 
@@ -34,8 +33,6 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   protected val accountPage = IdentityPage("/account/edit", "Edit Account Details", "edit account details")
   protected val publicPage = IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
   protected val membershipPage = IdentityPage("/membership/edit", "Membership", "edit membership details")
-
-  lazy val AvatarSigningService = new AvatarSigningService(Configuration.avatars.signingKey)
 
   def displayPublicProfileForm = displayForm(publicPage)
   def displayAccountForm = displayForm(accountPage)
@@ -78,19 +75,10 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     val idRequest = idRequestParser(request)
     val user = request.user
 
-    val avatarUploadStatus = for {
-      responseData <- request.queryString get "signed_data"
-      signedString <- responseData.headOption
-    } yield AvatarSigningService wasUploadSuccessful signedString
-
     Future(NoCache(Ok(views.html.profileForms(
            pageWithTrackingParamsFor(idRequest),
-           user, forms, idRequest, idUrlBuilder,
-           Some(avatarUploadDataFor(user)),
-           avatarUploadStatus))))
+           user, forms, idRequest, idUrlBuilder))))
   }
-
-  private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))
 }
 
 case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], isPublicFormActive: Boolean)

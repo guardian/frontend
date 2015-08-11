@@ -1,3 +1,4 @@
+'use strict';
 /* global module: false, process: false */
 var megalog = require('megalog');
 
@@ -28,8 +29,10 @@ module.exports = function (grunt) {
                 scsslint: 'grunt-scss-lint',
                 cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
+                /*eslint-disable camelcase*/
                 px_to_rem: 'grunt-px-to-rem',
                 frequency_graph: 'grunt-frequency-graph'
+                /*eslint-enable camelcase*/
             }
         }
     });
@@ -43,7 +46,9 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', function () {
+        grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+    });
 
     /**
      * Validate tasks
@@ -52,8 +57,8 @@ module.exports = function (grunt) {
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
-        grunt.task.run(['jshint' + target, 'jscs' + target]);
-        grunt.task.run(['eslint']); // ES6 modules
+        grunt.task.run(['jscs' + target]);
+        grunt.task.run(['eslint' + target]);
     });
     grunt.registerTask('validate', function(app) {
         grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
@@ -71,9 +76,11 @@ module.exports = function (grunt) {
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
+        } else {
+            grunt.task.run(['shell:updateCanIUse']);
         }
 
-        grunt.task.run(['px_to_rem', 'shell:updateCanIUse', 'autoprefixer']);
+        grunt.task.run(['px_to_rem', 'autoprefixer']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -104,7 +111,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'compile:css',
         'compile:js',
@@ -115,8 +122,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
-    grunt.registerTask('install:npm', ['shell:npmInstall']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool', 'uglify:conf']);
+    grunt.registerTask('install:npm', ['shell:npmInstall', 'shell:npmInstallFaciaTool']);
 
     grunt.registerTask('prepare', function() {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');

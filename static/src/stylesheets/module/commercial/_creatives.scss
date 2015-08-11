@@ -26,6 +26,7 @@
 
         &.creative--scrollable-mpu-image-fixed {
             background-attachment: fixed;
+            /*TODO consider using solution from https://www.youtube.com/watch?v=QU1JAW5LRKU*/
             background-repeat: repeat;
             background-position: 50% 0;
         }
@@ -373,6 +374,7 @@
 
         &.ad-exp--expand-scrolling-bg-fixed {
             background-attachment: fixed;
+            /*TODO consider using solution from https://www.youtube.com/watch?v=QU1JAW5LRKU*/
         }
 
         &.ad-exp--expand-scrolling-bg-parallax {
@@ -493,7 +495,8 @@
         height: 500px;
         width: 100%;
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        /*background-attachment: fixed;*/
+        /*If you need the above style, please use the solution from https://www.youtube.com/watch?v=QU1JAW5LRKU*/
     }
 
     .ad-scrolling-bg-parallax {
@@ -609,6 +612,7 @@
     padding: $gs-baseline / 2 0;
     overflow: hidden;
     max-height: 250px;
+    position: relative;
 
     .creative__article {
         display: block;
@@ -686,15 +690,15 @@
 
 @keyframes textanimation {
     0% {
-        background-position: 0 -250px; 
+        background-position: 0 -250px;
     }
 
     75% {
-        background-position: 0 0; 
+        background-position: 0 0;
     }
 
     100% {
-        background-position: 0 0; 
+        background-position: 0 0;
     }
 }
 

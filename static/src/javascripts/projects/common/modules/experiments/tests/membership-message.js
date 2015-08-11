@@ -1,48 +1,76 @@
 define([
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/storage',
     'common/utils/template',
-    'common/modules/ui/message',
     'common/modules/identity/api',
-    'text!common/views/memebership-message.html'
+    'common/modules/ui/message',
+    'text!common/views/membership-message.html',
+    'common/views/svgs'
 ], function (
     config,
     detect,
+    storage,
     template,
-    Message,
     idApi,
-    messageTmpl
+    Message,
+    messageTemplate,
+    svgs
 ) {
 
     return function () {
 
-        this.id = 'MembershipMessage';
-        this.start = '2015-06-08';
-        this.expiry = '2015-06-19';
+        this.id = 'MembershipMessageVariants';
+        this.start = '2015-07-13';
+        this.expiry = '2015-08-20';
         this.author = 'David Rapson';
-        this.description = 'Test if logged in users are encouraged to join Membership';
+        this.description = 'Test if loyal users are encouraged to join Membership as a Supporter';
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Users will be interested in Membership';
-        this.audienceCriteria = '100% of logged in users, only on article pages';
+        this.successMeasure = 'Loyal users will be interested in becoming a Supporter';
+        this.audienceCriteria = 'Users who have seen 10 or more pages, message shown only on article pages';
         this.dataLinkNames = 'supporter message, hide, read more';
-        this.idealOutcome = 'Users will sign up as a Guardian Member';
+        this.idealOutcome = 'Users will sign up as a Supporter';
 
         this.canRun = function () {
-            return idApi.isUserLoggedIn() && config.page.contentType === 'Article';
+            /**
+             * Exclude adblock users to avoid conflicts with similar adblock Supporter message,
+             * only show to users who have viewed 10 or more pages.
+             */
+            var alreadyVisited = storage.local.get('alreadyVisited') || 0;
+            return !detect.adblockInUse &&
+                config.page.edition === 'UK' &&
+                config.page.contentType === 'Article' &&
+                alreadyVisited > 9;
         };
 
         this.variants = [{
             id: 'A',
             test: function () {
-                new Message('membership-message', {
+                new Message('membership-message-variants', {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
-                }).show(template(messageTmpl, {
-                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_BANNER_TEST_A',
+                }).show(template(messageTemplate, {
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_A',
                     messageText: 'Become a Guardian Member and support fearless investigative journalism',
-                    linkText: 'Become a supporter'
+                    linkText: 'Become a supporter',
+                    arrowWhiteRight: svgs('arrowWhiteRight')
+                }));
+            }
+        },
+        {
+            id: 'B',
+            test: function () {
+                new Message('membership-message-variants', {
+                    pinOnHide: false,
+                    siteMessageLinkName: 'membership message',
+                    siteMessageCloseBtn: 'hide'
+                }).show(template(messageTemplate, {
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_B',
+                    messageText: '"If you read the Guardian, join the Guardian" Polly Toynbee.',
+                    linkText: 'Find out more',
+                    arrowWhiteRight: svgs('arrowWhiteRight')
                 }));
             }
         }];

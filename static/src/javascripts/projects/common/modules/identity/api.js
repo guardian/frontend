@@ -138,7 +138,7 @@ define([
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
                 data: {
-                    refreshCookie:true
+                    refreshCookie: true
                 }
             });
 
@@ -257,14 +257,17 @@ define([
     };
 
     Id.saveToArticles = function (data) {
-        var endpoint = '/syncedPrefs/me/savedArticles',
+        var endpoint = '/syncedPrefs/cors/me/savedArticles',
             request = ajax({
                 url: Id.idApiRoot + endpoint,
-                type: 'jsonp',
+                type: 'json',
                 crossOrigin: true,
-                data: {
-                    body: JSON.stringify(data),
-                    method: 'post'
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                withCredentials: true,
+                headers: {
+                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
                 }
             });
 

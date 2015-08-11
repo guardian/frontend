@@ -103,21 +103,29 @@
 
 .witness-logo {
     display: inline-block;
-    color: #ffffff;
-    font-weight: 700; 
     letter-spacing: -.04em;
     text-transform: lowercase;
+
+    .witness__button & {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .element-witness--source & {
+        color: colour(news-support-2);
+        @include font($f-serif-text, 700, 16, 16);
+    }
+
 }
 .witness-logo__witness {
-    color: colour(news-support-1);
     margin-left: -3px;
-}
 
-.witness-cta__sponsor {
-    float: left;
-    margin: 3px 0 3px 10px;
-
-    .i {
-        display: block;
+    .witness__button & {
+        color: colour(news-support-1);
     }
+
+    .element-witness--source & {
+        color: colour(neutral-2);
+    }
+
 }

@@ -18,7 +18,7 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -32,7 +32,7 @@ define([
     raven,
     _,
     $,
-    ajax,
+    ajaxPromise,
     config,
     detect,
     mediator,
@@ -74,7 +74,7 @@ define([
         },
 
         getWeatherData: function (url) {
-            return ajax({
+            return ajaxPromise({
                 url: url,
                 type: 'json',
                 method: 'get',
@@ -101,10 +101,8 @@ define([
                 return this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
-                        omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
-                    }.bind(this))
-                    .fail(function (err, msg) {
-                        raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
+                    }.bind(this)).catch(function (err) {
+                        raven.captureException(err, {
                             tags: {
                                 feature: 'weather'
                             }
@@ -118,8 +116,8 @@ define([
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
-                }.bind(this)).fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
+                }.bind(this)).catch(function (err) {
+                    raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
@@ -136,9 +134,8 @@ define([
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
-                }.bind(this))
-                .fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
+                }.bind(this)).catch(function (err) {
+                    raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
@@ -198,11 +195,6 @@ define([
 
         attachToDOM: function (tmpl, city) {
             $holder = $('#headlines .js-container__header');
-
-            if (!!config.switches.attachWeatherToTopContainer) {
-                $holder = $($('.js-container__header')[0]);
-            }
-
             $('.js-weather', $holder).remove();
             $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
         },

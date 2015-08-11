@@ -1,6 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
-@import conf.Switches.ABSaveForLaterSwitch
+@import conf.Switches.SaveForLaterSwitch
 
 @toneLink = {
     @if(content.isArticle && !content.isLiveBlog) {
@@ -22,7 +22,7 @@
     }
     @if(content.showBottomSocialButtons) {
         <hr/>
-        @if(ABSaveForLaterSwitch.isSwitchedOn) {
+        @if(SaveForLaterSwitch.isSwitchedOn) {
             <div class="u-cf">
                 <div data-component="share" class="submeta__share">
                     @fragments.social(content)
@@ -33,6 +33,10 @@
             <div data-component="share" class="submeta__share">
                 @fragments.social(content)
             </div>
+        }
+    } else {
+        @if(SaveForLaterSwitch.isSwitchedOn) {
+            <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
         }
     }
 </div>

@@ -10,7 +10,7 @@ define([
     'modules/vars',
     'utils/layout-from-url',
     'utils/update-scrollables'
-],function (
+], function (
     ko,
     $,
     $effect,
@@ -23,6 +23,8 @@ define([
     layoutFromURL,
     updateScrollables
 ) {
+    copiedArticle = copiedArticle.default;
+
     function Layout () {
         this.initialState = {
             columns: ko.observableArray()

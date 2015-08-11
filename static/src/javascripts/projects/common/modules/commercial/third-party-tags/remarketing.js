@@ -9,7 +9,7 @@ define([
     function load() {
 
         if (config.switches.remarketing) {
-            return require(['js!' + remarketingUrl + '!exports=google_trackConversion'], function () {
+            return require(['js!' + remarketingUrl], function () {
                 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
                 window.google_trackConversion({
                     google_conversion_id: 971225648,

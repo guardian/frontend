@@ -11,12 +11,11 @@ module.exports = function(grunt, options) {
                 bonzo:                'components/bonzo/bonzo',
                 enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
-                fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
                 lodash:               'components/lodash',
                 picturefill:          'projects/common/utils/picturefill',
-                Promise:              'components/native-promise-only/npo.src',
+                Promise:              'components/when/Promise',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
@@ -74,6 +73,66 @@ module.exports = function(grunt, options) {
                             'inlineSvg'
                         ]
                     }
+                ]
+            }
+        },
+        article: {
+            options: {
+                name: 'bootstraps/article',
+                out: options.staticTargetDir + 'javascripts/bootstraps/article.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        liveblog: {
+            options: {
+                name: 'bootstraps/liveblog',
+                out: options.staticTargetDir + 'javascripts/bootstraps/liveblog.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        gallery: {
+            options: {
+                name: 'bootstraps/gallery',
+                out: options.staticTargetDir + 'javascripts/bootstraps/gallery.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        trail: {
+            options: {
+                name: 'bootstraps/trail',
+                out: options.staticTargetDir + 'javascripts/bootstraps/trail.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        profile: {
+            options: {
+                name: 'bootstraps/profile',
+                out: options.staticTargetDir + 'javascripts/bootstraps/profile.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -241,6 +300,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
+                    'bootstraps/facia',
                     'text',
                     'inlineSvg'
                 ]

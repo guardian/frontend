@@ -105,6 +105,10 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
+                <label>Description</label>
+                <input type="text" data-bind="
+                    value: meta.description"/>
+
                 <label>ContentApi <span class="linky" data-bind="
                     click: checkApiQueryStatus,
                     visible: meta.apiQuery()">check</span></label>
@@ -144,6 +148,9 @@
 
                 <label for="showLatestUpdate">Show latest update in header</label>
                 <input id="showLatestUpdate" type="checkbox" data-bind="checked: meta.showLatestUpdate" />
+
+                <label for="showTimestamps">Show timestamps</label>
+                <input id="showTimestamps" type="checkbox" data-bind="checked: meta.showTimestamps" />
 
                 <label for="excludeFromRss">Exclude from RSS</label>
                 <input id="excludeFromRss" type="checkbox" data-bind="checked: meta.excludeFromRss" />

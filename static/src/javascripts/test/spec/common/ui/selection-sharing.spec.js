@@ -47,13 +47,13 @@ describe('Selection sharing', function () {
         }
     });
 
-    it("should be initially hidden in the article body", function () {
+    it('should be initially hidden in the article body', function () {
         selectionSharing.init();
         expect(qwery('.selection-sharing').length).toBe(1);
         expect($('.selection-sharing').hasClass('selection-sharing--active')).toBe(false);
     });
 
-    it("should be visible when text is selected in the article body", function () {
+    it('should be visible when text is selected in the article body', function () {
         selectionSharing.init();
 
         var $jsArticleBody = $('.js-article__body');

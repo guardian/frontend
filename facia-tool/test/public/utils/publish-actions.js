@@ -14,10 +14,11 @@ export default function(action) {
             },
             onAfterComplete: function () {
                 mockjax.clear(publishInterceptor);
-                resolve(publishedCollection);
+                setTimeout(() => {
+                    resolve(publishedCollection);
+                }, 20);
             }
         });
         action();
-        jasmine.clock().tick(100);
     });
 }

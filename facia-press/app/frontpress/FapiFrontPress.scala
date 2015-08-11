@@ -84,7 +84,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[FaciaContent]]
 
-  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode"
+  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode,internalPageCode"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showFields(showFields)

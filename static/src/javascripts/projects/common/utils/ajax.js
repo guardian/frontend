@@ -21,7 +21,7 @@ define([
         }
 
         if (!!config && config.page.section === 'money' && config.switches.imgix) {
-            if (!!params.data) {
+            if (params.data) {
                 params.data.inImgixTest = true;
             } else {
                 params.data = { inImgixTest: true };

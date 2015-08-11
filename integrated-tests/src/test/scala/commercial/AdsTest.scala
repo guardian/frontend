@@ -1,59 +1,60 @@
 package integration
 
-import org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated
-import org.openqa.selenium.support.ui.WebDriverWait
-import org.openqa.selenium.{By, WebElement}
-import org.scalatest.OptionValues._
-import org.scalatest.tags.Retryable
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import driver.SauceLabsWebDriver
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.scalatest._
+import org.scalatest.selenium.{Driver, WebBrowser}
+import org.scalatest.time.{Seconds, Span}
 
-@DoNotDiscover
-@Retryable
-class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
+class AdsTest
+  extends FlatSpec
+  with Matchers
+  with OptionValues
+  with BeforeAndAfterAll
+  with WebBrowser
+  with Driver {
 
-  override protected def get(path: String): Unit = {
-    webDriver.get(s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts")
-    webDriver.navigate().refresh()
+  override implicit val webDriver: WebDriver = {
+    lazy val localWebDriver = new ChromeDriver()
+    if (Config.remoteMode) SauceLabsWebDriver() else localWebDriver
   }
 
-  private def waitForElement(selector: String): Unit = {
-    new WebDriverWait(webDriver, 20).until(presenceOfElementLocated(By.cssSelector(selector)))
+  implicitlyWait(Span(20, Seconds))
+
+  private def url(path: String): String = {
+    s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts"
   }
 
-  private def waitForAdLoad(domSlotId: String): Unit = waitForElement(s"#$domSlotId > div > iframe")
-
-  private def findComponent(path: String, selector: String): Option[WebElement] = {
-    get(path)
-    waitForElement(selector)
-    $(selector).headOption
+  private def findComponent(path: String, selector: String): Option[Element] = {
+    go to url(path)
+    find(cssSelector(selector))
   }
 
-  private def findLogo(path: String, domSlotId: String): Option[WebElement] = {
+  private def findLogo(path: String, domSlotId: String): Option[Element] = {
     findComponent(path, s"#$domSlotId > div > a > img")
   }
 
-  private def shouldBeVisible(maybeComponent: => Option[WebElement]): Unit = {
-    maybeComponent.value shouldBe 'displayed
+  private def shouldBeVisible(maybeComponent: => Option[Element]): Unit = {
+    withClue(s"Page source: $pageSource") {
+      maybeComponent.value shouldBe 'displayed
+    }
   }
+
+  override protected def afterAll(): Unit = quit()
 
   "Ads" should "display on the sport front" in {
 
-    get("uk/sport")
-
-    waitForAdLoad("dfp-ad--top-above-nav")
+    go to url("uk/sport")
 
     withClue("Should display top banner ad") {
-      $("#dfp-ad--top-above-nav > *").size should be > 0
-    }
-
-    waitForAdLoad("dfp-ad--inline1")
-    waitForAdLoad("dfp-ad--inline2")
+      shouldBeVisible(find(cssSelector("#dfp-ad--top-above-nav > *")))
+      }
 
     withClue("Should display two MPUs") {
-      $("#dfp-ad--inline1 > *").size should be > 0
-      $("#dfp-ad--inline2 > *").size should be > 0
+      shouldBeVisible(find(cssSelector("#dfp-ad--inline1 > *")))
+      shouldBeVisible(find(cssSelector("#dfp-ad--inline2 > *")))
     }
-
   }
 
   "A logo" should "appear on a sponsored front" in {

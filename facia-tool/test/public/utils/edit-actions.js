@@ -13,7 +13,9 @@ export default function(mockCollection, action) {
             },
             onAfterComplete: function () {
                 mockjax.clear(interceptor);
-                resolve(lastRequest);
+                setTimeout(() => {
+                    resolve(lastRequest);
+                }, 20);
             }
         });
         desiredAnswer = action();
@@ -23,9 +25,5 @@ export default function(mockCollection, action) {
             desiredAnswer[name].lastUpdated = (new Date()).toISOString();
         }
         mockCollection.set(desiredAnswer);
-
-        // This action triggers a network request, advance time
-        jasmine.clock().tick(100);
-
     });
 }

@@ -1,24 +1,27 @@
 define([
     'bean',
+    'fastdom',
     'qwery',
     'common/utils/$'
 ], function (
     bean,
+    fastdom,
     qwery,
     $
 ) {
-    function expand() {
-        $('.js-lm').toggleClass('u-h');
-    }
+    return function () {
+        var $jsLm = $('.js-lm');
 
-    function init() {
-        if ($('.js-lm').length) {
-            $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
-            bean.on(qwery('.js-wpd')[0], 'click', expand);
+        if ($jsLm) {
+            fastdom.write(function () {
+                $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
+            });
+
+            bean.on(qwery('.js-wpd')[0], 'click', function () {
+                fastdom.write(function () {
+                    $jsLm.toggleClass('u-h');
+                });
+            });
         }
-    }
-
-    return {
-        init: init
     };
 });

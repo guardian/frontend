@@ -1,4 +1,5 @@
 System.config({
+  "defaultJSExtensions": true,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -7,46 +8,39 @@ System.config({
     "blacklist": []
   },
   "paths": {
-    "*": "javascripts/*.js",
-    "admin/*": "javascripts/projects/admin/*.js",
-    "common/*": "javascripts/projects/common/*.js",
-    "facia/*": "javascripts/projects/facia/*.js",
-    "membership/*": "javascripts/projects/membership/*.js",
-    "bundles/*": "bundles/*.js",
-    "test/*": "javascripts/test/*.js",
-    "helpers/*": "javascripts/test/helpers/*.js",
-    "fixtures/*": "javascripts/test/fixtures/*.js",
-    "es6/*": "javascripts/es6/*.js",
-    "bootstraps/*": "javascripts/bootstraps/*.js",
-    "vendor/*": "javascripts/vendor/*.js",
+    "*": "javascripts/*",
+    "admin/*": "javascripts/projects/admin/*",
+    "common/*": "javascripts/projects/common/*",
+    "facia/*": "javascripts/projects/facia/*",
+    "membership/*": "javascripts/projects/membership/*",
+    "bundles/*": "bundles/*",
+    "test/*": "javascripts/test/*",
+    "helpers/*": "javascripts/test/helpers/*",
+    "fixtures/*": "javascripts/test/fixtures/*",
+    "es6/*": "javascripts/es6/*",
+    "bootstraps/*": "javascripts/bootstraps/*",
+    "vendor/*": "javascripts/vendor/*",
     "svgs/*": "inline-svgs/*.svg",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js",
-    "bower:*": "jspm_packages/bower/*.js",
-    "facebook": "//connect.facebook.net/en_US/all.js",
-    "http/*": "http://*",
-    "https/*": "https://*"
-  },
-  "shim": {
-    "omniture": {
-      "exports": "s"
-    }
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*",
+    "bower:*": "jspm_packages/bower/*",
+    "facebook.js": "//connect.facebook.net/en_US/all",
+    "foresee.js": "javascripts/vendor/foresee/20150703/foresee-trigger"
   }
 });
 
 System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
-    "Promise": "github:guardian/native-promise-only@0.7.6-e",
-    "babel": "npm:babel-core@5.5.8",
-    "babel-runtime": "npm:babel-runtime@5.5.8",
+    "Promise": "github:cujojs/when@3.7.3/es6-shim/Promise",
+    "babel": "npm:babel-core@5.8.21",
+    "babel-runtime": "npm:babel-runtime@5.8.20",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
-    "core-js": "npm:core-js@0.9.17",
+    "core-js": "npm:core-js@0.9.18",
     "domready": "npm:domready@1.0.8",
     "enhancer": "github:guardian/enhancer@0.1.3",
-    "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
     "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
@@ -61,7 +55,7 @@ System.config({
     "socketio": "github:Automattic/socket.io-client@1.1.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
-    "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
+    "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.10",
     "text": "github:systemjs/plugin-text@0.0.2",
     "videojs": "github:guardian/video.js@4.11.1.1",
     "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",
@@ -69,15 +63,17 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "when": "github:cujojs/when@3.7.3",
+    "zxcvbn": "github:dropbox/zxcvbn@v1.0",
     "bower:jasmine-sinon@0.4.0": {
       "jasmine": "bower:jasmine@2.0.4",
       "sinonjs": "bower:sinonjs@1.10.2"
     },
-    "bower:video.js@4.12.5": {
+    "bower:video.js@4.12.8": {
       "css": "github:systemjs/plugin-css@0.1.9"
     },
     "bower:videojs-persistvolume@0.1.2": {
-      "video.js": "bower:video.js@4.12.5"
+      "video.js": "bower:video.js@4.12.8"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -131,7 +127,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.5.8": {
+    "npm:babel-runtime@5.8.20": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:bean@1.0.15": {
@@ -168,7 +164,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:core-js@0.9.17": {
+    "npm:core-js@0.9.18": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
@@ -229,10 +225,8 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "isarray": "npm:isarray@0.0.1",
       "process": "github:jspm/nodelibs-process@0.1.1",
-      "stream": "github:jspm/nodelibs-stream@0.1.0",
       "stream-browserify": "npm:stream-browserify@1.0.0",
-      "string_decoder": "npm:string_decoder@0.10.31",
-      "util": "github:jspm/nodelibs-util@0.1.0"
+      "string_decoder": "npm:string_decoder@0.10.31"
     },
     "npm:source-map@0.1.31": {
       "amdefine": "npm:amdefine@0.1.0",

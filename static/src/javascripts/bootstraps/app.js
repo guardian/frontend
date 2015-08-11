@@ -5,12 +5,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/user-timing',
-    'bootstraps/article',
     'bootstraps/common',
-    'bootstraps/gallery',
-    'bootstraps/liveblog',
     'bootstraps/media',
-    'bootstraps/profile',
     'bootstraps/sport'
 ], function (
     qwery,
@@ -19,26 +15,21 @@ define([
     detect,
     mediator,
     userTiming,
-    article,
     common,
-    gallery,
-    liveBlog,
     media,
-    profile,
     sport
 ) {
 
-    var bootstrapContext = function (featureName, boostrap) {
+    var bootstrapContext = function (featureName, bootstrap) {
             raven.context(
                 { tags: { feature: featureName } },
-                boostrap.init,
+                bootstrap.init,
                 []
             );
         },
 
         routes = function () {
             userTiming.mark('App Begin');
-
             bootstrapContext('common', common);
 
             // Front
@@ -55,16 +46,24 @@ define([
             }
 
             if (config.page.contentType === 'Article') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/article', 'bootstraps/image-content'], function (article, imageContent) {
                     bootstrapContext('article', article);
                     bootstrapContext('article : image-content', imageContent);
                 });
             }
 
             if (config.page.contentType === 'LiveBlog') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/liveblog', 'bootstraps/image-content'], function (liveBlog, imageContent) {
                     bootstrapContext('liveBlog', liveBlog);
                     bootstrapContext('liveBlog : image-content', imageContent);
+                });
+            }
+
+            if (config.isMedia || config.page.contentType === 'Interactive') {
+                require(['bootstraps/trail'], function (trail) {
+                    bootstrapContext('media : trail', {
+                        init: trail
+                    });
                 });
             }
 
@@ -73,30 +72,36 @@ define([
             }
 
             if (config.page.contentType === 'Gallery') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/gallery', 'bootstraps/image-content'], function (gallery, imageContent) {
                     bootstrapContext('gallery', gallery);
                     bootstrapContext('gallery : image-content', imageContent);
                 });
             }
 
             if (config.page.contentType === 'ImageContent') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/image-content', 'bootstraps/trail'], function (imageContent, trail) {
                     bootstrapContext('image-content', imageContent);
+                    bootstrapContext('image-content : trail', {
+                        init: trail
+                    });
                 });
             }
 
             if (config.page.section === 'football') {
                 require(['bootstraps/football'], function (football) {
-                    bootstrapContext('footbal', football);
+                    bootstrapContext('football', football);
                 });
             }
 
             if (config.page.section === 'sport') {
+                // Leaving this here for now as it's a tiny bootstrap.
                 bootstrapContext('sport', sport);
             }
 
             if (config.page.section === 'identity') {
-                bootstrapContext('profile', profile);
+                require(['bootstraps/profile'], function (profile) {
+                    bootstrapContext('profile', profile);
+                });
             }
 
             if (config.page.isPreferencesPage) {
