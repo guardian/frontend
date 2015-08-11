@@ -68,8 +68,6 @@ define([
      */
     var resizeTimeout,
         adSlotSelector       = '.js-ad-slot',
-        displayed            = false,
-        rendered             = false,
         slots                = {},
         slotsToRefresh       = [],
         hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
@@ -140,8 +138,6 @@ define([
                     });
                 });
 
-
-                rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
@@ -202,7 +198,6 @@ define([
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
             googletag.display(_.keys(slots).shift());
-            displayed = true;
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
@@ -285,7 +280,6 @@ define([
         loadSlot = function (slot) {
             googletag.display(slot);
             slots = _(slots).omit(slot).value();
-            displayed = true;
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id');
@@ -595,8 +589,6 @@ define([
 
             // testing
             reset: function () {
-                displayed      = false;
-                rendered       = false;
                 slots          = {};
                 slotsToRefresh = [];
                 mediator.off('window:resize', windowResize);
