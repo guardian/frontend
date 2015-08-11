@@ -1,6 +1,5 @@
 import init from 'es6/projects/common/modules/crosswords/main';
 import thumbnails from 'es6/projects/common/modules/crosswords/thumbnails';
-import config from 'common/utils/config';
 import initComments from 'es6/projects/common/modules/crosswords/comments';
 import initSeries from 'es6/projects/common/modules/crosswords/series';
 

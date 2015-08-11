@@ -32,7 +32,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def blindCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.blindPsCrossword(
-        new BlindCrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
         BlindPsCrosswordRows(crossword)
       )))
     }
