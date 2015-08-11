@@ -55,7 +55,7 @@ trait LinkTo extends Logging {
   }
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
-    faciaCard.url.get(request)
+    faciaCard.header.url.get(request)
 
   private def urlFor(path: String, edition: Edition, isInternationalEdition: Boolean = false): String = {
     val editionalisedPath = Editionalise(clean(path), edition, isInternationalEdition)

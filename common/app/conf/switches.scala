@@ -554,7 +554,16 @@ object Switches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 12),
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = false
+  )
+
+  val CreativeTemplatesInS3 = Switch(
+    "Commercial",
+    "creative-templates-in-s3",
+    "Stores DFP creative template data in S3.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
     exposeClientSide = false
   )
 
@@ -779,16 +788,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val IdentityUseAvatarApi = Switch(
-    "Identity",
-    "id-use-avatar-api",
-    "If switched on, avatars will be uploaded using the new Avatar API",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 1),
-    exposeClientSide = true
-  )
-
+  
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -941,6 +941,15 @@ object Switches {
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
+    exposeClientSide = true
+  )
+
+  val ABMembershipMessageUsa = Switch(
+    "A/B Tests",
+    "ab-membership-message-usa",
+    "Switch for the USA Supporter message test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 21),
     exposeClientSide = true
   )
 

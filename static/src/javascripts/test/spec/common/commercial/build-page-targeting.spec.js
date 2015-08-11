@@ -178,7 +178,7 @@ describe('Build Page Targeting', function () {
         it('should set 5+ frequency param', function () {
             storage.local.set('alreadyVisited', 67);
 
-            expect(buildPageTargeting().fr).toEqual('5+');
+            expect(buildPageTargeting().fr).toEqual('5plus');
         });
     });
 });

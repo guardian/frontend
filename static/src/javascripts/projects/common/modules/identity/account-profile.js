@@ -46,7 +46,6 @@ define([
         };
 
         self.urls = {
-            avatarTokenUrl: 'https://gu-image-upload.appspot.com/upload-endpoint-generator',
             avatarApiUrl: config.page.avatarApiUrl + '/v1/avatars'
         };
 
@@ -105,26 +104,6 @@ define([
         }
     };
 
-    accountProfile.prototype.avatarUploadByGAE = function (avatarForm) {
-        var self = this;
-        var xhr = self.createCORSRequest('GET', self.urls.avatarTokenUrl);
-
-        if (!xhr) {
-            self.prependErrorMessage(self.messages.noCorsError, avatarForm);
-        }
-
-        xhr.onerror = function () {
-            self.prependErrorMessage(self.messages.noServerError, avatarForm);
-        };
-
-        xhr.onload = function () {
-            avatarForm.setAttribute('action', xhr.responseText);
-            avatarForm.submit();
-        };
-
-        xhr.send();
-    };
-
     accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
         var self = this;
         var formData = new FormData(document.querySelector('form' + self.classes.avatarUploadForm));
@@ -170,12 +149,7 @@ define([
         if (avatarForm) {
             bean.on(avatarForm, 'submit', function (event) {
                 event.preventDefault();
-
-                if (config.switches.idUseAvatarApi) {
-                    self.avatarUploadByApi(avatarForm);
-                } else {
-                    self.avatarUploadByGAE(avatarForm);
-                }
+                self.avatarUploadByApi(avatarForm);
             });
         }
 

@@ -11,6 +11,9 @@
 
 @main(crosswordPage) { } {
     <div class="l-side-margins">
+
+        @fragments.crosswordsOptOutBanner()
+
         <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
             <header class="content__head tonal__head tonal__head--tone-news">
                 <div class="gs-container">
@@ -22,6 +25,15 @@
                         </div>
 
                         <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
+
+                        <div class="crossword__links">
+                            <a class="crossword__link js-print-crossword">Print</a>
+
+                            @crosswordPage.crossword.pdf.map { pdf =>
+                                | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
+                            }
+                        </div>
+
                         <p class="content__dateline">
                         @crosswordPage.crossword.creator.map { creator =>
                            Set by: <a class="tone-colour" data-link-name="crossword-creator" href="@creator.webUrl">@creator.name</a>
@@ -59,23 +71,23 @@
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
                             <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
-
                                 @* The following is a fallback for when JavaScript is not enabled *@
                                 <div class="crossword__grid-wrapper">
                                     <noscript>@svg</noscript>
                                 </div>
-                                <noscript>
-                                <div class="crossword__clues">
-                                    <div class="crossword__clues--across">
-                                        <h3 class="crossword__clues-header">Across</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
-                                    </div>
 
-                                    <div class="crossword__clues--down">
-                                        <h3 class="crossword__clues-header">Down</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                <noscript>
+                                    <div class="crossword__clues">
+                                        <div class="crossword__clues--across">
+                                            <h3 class="crossword__clues-header">Across</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                        </div>
+
+                                        <div class="crossword__clues--down">
+                                            <h3 class="crossword__clues-header">Down</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                        </div>
                                     </div>
-                                </div>
                                 </noscript>
                             </div>
                         </div>
