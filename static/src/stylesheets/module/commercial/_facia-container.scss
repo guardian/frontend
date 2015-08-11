@@ -242,21 +242,19 @@
    ========================================================================== */
 @include mq(wide) {
     .has-page-skin {
-        .commercial__header__inner,
+        .commercial__header,
         .commercial__body {
             margin-left: auto;
             margin-right: auto;
         }
-        .commercial__header__inner {
-            box-sizing: content-box;
+        .commercial__header {
+            width: 100%;
+            height: auto;
+            position: relative;
             margin: 0;
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
-            height: auto;
-        }
-        .commercial__header {
-            width: 100%;
-            position: relative;
+            box-sizing: content-box;
         }
         .commercial__search {
             position: absolute;

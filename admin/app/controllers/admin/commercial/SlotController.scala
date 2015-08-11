@@ -13,7 +13,15 @@ object SlotController extends Controller {
     val maybeResult = for {
       jsonString <- Store.getSlotTakeoversReport(slotName)
       report = Json.parse(jsonString).as[LineItemReport]
-    } yield Ok(views.html.commercial.slot(environment.stage, slotName, report))
+    } yield slotName match {
+        case "top" =>
+          Ok(views.html.commercial.slotTop(environment.stage, report))
+        case "top-above-nav" =>
+          Ok(views.html.commercial.slotTopAboveNav(environment.stage, report))
+        case "top-below-nav" =>
+          Ok(views.html.commercial.slotTopBelowNav(environment.stage, report))
+        case _ => InternalServerError("Missing template")
+      }
     maybeResult getOrElse Ok("No data available.")
   }
 }

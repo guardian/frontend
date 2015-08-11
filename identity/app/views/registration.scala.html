@@ -26,6 +26,9 @@
         <fieldset class="fieldset">
             <div class="fieldset__heading">
                 <h2 class="form__heading">Use your social account</h2>
+                <div class="form__note">
+                    By proceeding, you agree to the Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
+                </div>
             </div>
             <div class="fieldset__fields">
                 @socialSignin(SocialErrorMapper.route(registrationErrorOpt, views.SocialSigninRoutes(Register)), idRequest, idUrlBuilder)
