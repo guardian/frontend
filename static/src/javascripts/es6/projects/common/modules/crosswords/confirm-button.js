@@ -13,7 +13,6 @@ export default class ConfirmButton extends React.Component {
             this.props.onClick();
         } else {
             this.setState({ confirming: true });
-            React.findDOMNode(this).blur();
             setTimeout(() => this.setState({ confirming: false }), this.timeout);
         }
     }
