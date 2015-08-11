@@ -19,7 +19,7 @@
             data-title="@player.title"
             data-auto-play="@player.autoPlay"
             data-show-end-slate="@(player.showEndSlate && showEndSlate)"
-            poster="@player.poster"
+            poster="@Html(player.poster)"
             data-duration="@player.video.duration.toString()"
             data-media-id="@player.video.id"
             data-end-slate="@player.endSlatePath"
@@ -37,7 +37,7 @@
                     <param name="allowFullScreen" value="true" />
                     <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />
                     <param name="flashvars" value="controls=true&file=@encoding.url&poster=@player.poster" />
-                    <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
+                    <img src="@Html(player.poster)" alt="" width="@player.width" height="@player.height" />
                     <div class="vjs-error-display">
                         <div>Sorry, your browser is unable to play this video.<br/>
                             Please install <a href="http://get.adobe.com/flashplayer/">Adobe Flash</a>™ and try again.

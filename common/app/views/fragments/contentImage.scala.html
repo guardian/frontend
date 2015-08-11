@@ -6,9 +6,9 @@
         class="element element-image @figureClasses"
         @image.mediaId.map{ id => data-media-id="@id" }>
 
-    <img srcset="@ImgSrc.srcset(imageContainer, widthsByBreakpoint)"
+    <img srcset="@Html(ImgSrc.srcset(imageContainer, widthsByBreakpoint))"
          sizes="@widthsByBreakpoint.sizes"
-         src="@ImgSrc.getFallbackUrl(imageContainer)"
+         @ImgSrc.getFallbackUrl(imageContainer).map{ url => src="@Html(url)" }
          alt="@image.altText.getOrElse("")"
          class="gu-image"
          itemprop="contentUrl">
