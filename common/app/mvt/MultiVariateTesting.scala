@@ -22,7 +22,15 @@ object JspmTest extends TestDefinition(
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
   new LocalDate(2015, 9, 30)
-)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    if (conf.Switches.JspmValidation.isSwitchedOff) {
+      super.isParticipating(request)
+    } else {
+      false
+    }
+  }
+}
 
 object JspmControlTest extends TestDefinition(
   List(Variant7),

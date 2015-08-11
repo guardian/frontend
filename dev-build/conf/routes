@@ -2,10 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
 GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
 GET         /commercial/test-page                                     												 controllers.commercial.CreativeTestPage.allComponents(k: List[String])
-GET         /rockabox/rockabox_buster.html                                                                           dev.DevAssetsController.rockaboxBuster()
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
