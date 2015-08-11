@@ -6,7 +6,6 @@
     "autoprefixer-core": "^5.2.1",
     "browser-sync": "^2.8.2",
     "del": "^1.2.0",
-    "foreman": "^1.4.1",
     "gulp": "^3.9.0",
     "gulp-filter": "^2.0.2",
     "gulp-load-plugins": "^0.10.0",
