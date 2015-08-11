@@ -458,17 +458,17 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .adblock-byline-img {
         position: absolute;
-        bottom: 0;
+        top: -10px;
         right: 20%;
 
-        @include mq(leftCol) {
+        @include mq(desktop) {
             right: 5%;
-            bottom: -5px;
+            top: 7px;
             z-index: 1;
         }
 
         .byline-img__img {
-            width: 160px;
+            width: 145px;
         }
     }
 
@@ -477,10 +477,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         margin-bottom: 0;
         color: colour(neutral-1);
         @include fs-headline(2);
-        @include mq($from: desktop) {
+        @include mq(desktop) {
             @include fs-headline(3);
         }
-        @include mq($from: wide) {
+        @include mq(wide) {
             @include fs-headline(4);
         }
     }
@@ -488,10 +488,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     .adblock-sticky__author {
         color: colour(guardian-brand);
         @include fs-headline(2);
-        @include mq($from: desktop) {
+        @include mq(desktop) {
             @include fs-headline(3);
         }
-        @include mq($from: wide) {
+        @include mq(wide) {
             @include fs-headline(4);
         }
     }
@@ -519,10 +519,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         vertical-align: middle;
         padding-left: $gs-gutter;
         max-width: $gs-column-width*9;
-        @include mq($from: desktop) {
-            max-width: $gs-column-width*12;
+        @include mq(desktop) {
+            max-width: $gs-column-width*10;
         }
-        @include mq($from: wide) {
+        @include mq(leftCol) {
+            max-width: $gs-column-width*13;
+        }
+        @include mq(wide) {
             max-width: none;
         }
     }

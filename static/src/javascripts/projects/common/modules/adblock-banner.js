@@ -25,6 +25,7 @@ define([
         this.linkText = opts.linkText || '';
         this.quoteText = opts.quoteText || '';
         this.quoteAuthor = opts.quoteAuthor || '';
+        this.imageAuthor = opts.imageAuthor || '';
     };
 
     AdblockBanner.prototype.show = function () {
@@ -35,6 +36,7 @@ define([
                 quoteAuthor: this.quoteAuthor,
                 messageText: 'We noticed you\'re using an ad-blocker. Become a supporter from just 5£ per month to ensure quality journalism is available to all.',
                 linkText: 'Find out more',
+                imageAuthor: this.imageAuthor,
                 cursor: svgs('cursor'),
                 marque54icon: svgs('marque54icon')
             });
