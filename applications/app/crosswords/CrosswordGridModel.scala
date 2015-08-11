@@ -10,7 +10,6 @@ import Function.const
 
 trait CrosswordGridDataOrdering {
   implicit val positionOrdering = Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
-  val columnsByLetters = (('A' to 'Z').toList.zip(Stream from 0) map { case(letter, number) => (number, letter)}).toMap
 }
 
 trait CrosswordGridColumnNotation {

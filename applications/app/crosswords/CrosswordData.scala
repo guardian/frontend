@@ -28,7 +28,7 @@ case class Entry(
   length: Int,
   position: CrosswordPosition,
   solution: Option[String]
-) extends CrosswordGridDataOrdering {
+) extends CrosswordGridColumnNotation {
   lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
 }
 

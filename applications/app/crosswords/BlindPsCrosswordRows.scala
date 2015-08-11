@@ -6,7 +6,7 @@ case class BlindPsCrosswordRow(rowNumber: Int, blankColumns: List[Char])
 
 case class BlindPsCrosswordRows(rows: List[BlindPsCrosswordRow])
 
-object BlindPsCrosswordRows extends CrosswordGridDataOrdering {
+object BlindPsCrosswordRows extends CrosswordGridDataOrdering with CrosswordGridColumnNotation {
 
   def getBlankSquaresForRow(positionsForRow: List[CrosswordPosition], rowIndex: Int, columns: Int) : BlindPsCrosswordRow = {
     val missingColumns = (for {
