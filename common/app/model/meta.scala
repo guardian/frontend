@@ -76,7 +76,7 @@ trait MetaData extends Tags {
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
     "og:url"       -> webUrl,
-    "al:ios:url" -> s"gnmguardian://${iosId("applinks")}",
+    "al:ios:url" -> s"gnmguardian://${id + iosSuffix("applinks")}",
     "al:ios:app_store_id" -> "409128287",
     "al:ios:app_name" -> "The Guardian"
   )
@@ -87,12 +87,13 @@ trait MetaData extends Tags {
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
-    "twitter:app:url:iphone" -> s"gnmguardian://${iosId("twitter")}",
+    "twitter:app:url:iphone" -> s"gnmguardian://${id + iosSuffix("twitter")}",
     "twitter:app:name:ipad" -> "The Guardian",
     "twitter:app:id:ipad" -> "409128287",
-    "twitter:app:url:ipad" -> s"gnmguardian://${iosId("twitter")}",
+    "twitter:app:url:ipad" -> s"gnmguardian://${id + iosSuffix("twitter")}",
     "twitter:app:name:googleplay" -> "The Guardian",
-    "twitter:app:id:googleplay" -> "com.guardian"
+    "twitter:app:id:googleplay" -> "com.guardian",
+    "apple-itunes-app" -> s"app-id=409128287, app-argument=${webUrl + iosSuffix("apple")}"
   )
 
   def linkedData: List[LinkedData] = List(
@@ -100,7 +101,7 @@ trait MetaData extends Tags {
     WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )
 
-  def iosId(referrer: String): String = s"$id?contenttype=$iosType&source=$referrer"
+  def iosSuffix(referrer: String): String = s"?contenttype=$iosType&source=$referrer"
 
   // this could be article/front/list, it's a hint to the ios app to start the right engine
   def iosType: String = "article"
