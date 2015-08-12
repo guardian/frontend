@@ -6,13 +6,13 @@
         "js-lazy-loaded-image" -> (!inlineImage && !slideshow)
     ), classes: _*)"
     @if(inlineImage) {
-        srcset="@Html(srcset)"
+        srcset="@srcset"
         sizes="@sizes"
         @fallbackSrc.map { src =>
-            src="@Html(src)"
+            src="@src"
         }
     } else {
-        data-srcset="@Html(srcset)"
+        data-srcset="@srcset"
         data-sizes="@sizes"
         @* A tiny transparent gif *@
         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="

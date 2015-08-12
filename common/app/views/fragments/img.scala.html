@@ -56,8 +56,8 @@
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
 
-    <img @ImgSrc.getFallbackUrl(picture).map{ url => src="@Html(url)" }
-        srcset="@Html(ImgSrc.srcset(picture, widths))"
+    <img src="@ImgSrc.getFallbackUrl(picture)"
+        srcset="@ImgSrc.srcset(picture, widths)"
         sizes="@widths.sizes"
         class="maxed responsive-img"
         itemprop="contentUrl"
