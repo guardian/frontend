@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+echo "1. Npm installation."
+npm prune --production
+npm install --production
+
+./grunt-tc clean shell:npmInstallFaciaTool shell:jspmInstallStatic
