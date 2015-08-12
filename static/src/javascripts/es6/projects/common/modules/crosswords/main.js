@@ -450,7 +450,12 @@ class Crossword extends React.Component {
 
     render () {
         const focussed = this.clueInFocus();
-        const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
+        const isHighlighted = (x, y) => focussed
+            ? focussed.group.some(id => {
+                const entry = _.find(this.props.data.entries, { id });
+                return helpers.entryHasCell(entry, x, y);
+            })
+            : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
             <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>

@@ -12,20 +12,24 @@ object Entry {
   implicit val jsonWrites = Json.writes[Entry]
 
   def fromCrosswordEntry(entry: CrosswordEntry): Entry = Entry(
+    entry.id,
     entry.number.getOrElse(0),
     entry.clue.getOrElse(""),
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
+    entry.group,
     entry.position.getOrElse(CrosswordPosition(0,0)),
     entry.solution
   )
 }
 
 case class Entry(
+  id: String,
   number: Int,
   clue: String,
   direction: String,
   length: Int,
+  group: Option[Seq[String]],
   position: CrosswordPosition,
   solution: Option[String]
 )
