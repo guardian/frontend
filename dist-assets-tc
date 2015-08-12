@@ -5,4 +5,4 @@ set -o nounset
 set -o errexit
 
 echo "2. Asset compilation."
-grunt --stack --no-color validate:sass validate:js test:unit compile emitAbTestInfo
+./grunt-tc validate:sass validate:js test:unit compile emitAbTestInfo
