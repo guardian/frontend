@@ -5,6 +5,8 @@ set -o nounset
 set -o errexit
 
 echo "3. Dist play jars."
+./sbt-tc "project root" compile test assets dist
+
 rm -rf "dist"
 
 configurations="admin applications archive article commercial diagnostics discussion "\
