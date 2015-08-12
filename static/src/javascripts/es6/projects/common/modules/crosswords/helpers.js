@@ -68,9 +68,10 @@ const buildClueMap = (clues) => {
     return map;
 };
 
+const mergeObjects = objects => _.merge.apply(_, objects);
 /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
 const buildSeparatorMap = (clues) =>
-    _.merge.apply(_,
+    mergeObjects(
         _(clues)
             .map((clue) =>
                 _.map(clue.separatorLocations, (locations, separator) =>
