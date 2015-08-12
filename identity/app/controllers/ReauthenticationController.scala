@@ -32,6 +32,12 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   val form = Form(
     Forms.single(
       "password" -> Forms.text
+    )
+  )
+
+  val formWithConstraints = Form(
+    Forms.single(
+      "password" -> Forms.text
         .verifying(Constraints.nonEmpty)
     )
   )
@@ -46,7 +52,7 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   def processForm = authenticatedActions.authActionWithUser.async { implicit request =>
     val idRequest = idRequestParser(request)
-    val boundForm = form.bindFromRequest
+    val boundForm = formWithConstraints.bindFromRequest
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
     def onError(formWithErrors: Form[String]): Future[Result] = {

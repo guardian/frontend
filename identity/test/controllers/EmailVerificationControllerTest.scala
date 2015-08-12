@@ -1,7 +1,7 @@
 package controllers
 
 import org.scalatest.{ShouldMatchers, path}
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, IdentityRequest}
+import services._
 import idapiclient.IdApiClient
 import org.scalatest.mock.MockitoSugar
 import test.{TestRequest, Fake}
@@ -22,14 +22,16 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val idRequest = mock[IdentityRequest]
   val trackingData = mock[TrackingData]
+  val returnUrlVerifier = mock[ReturnUrlVerifier]
 
   val EmailValidatedMessage = "Your email address has been validated."
 
   when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
   when(authenticationService.requestPresentsAuthenticationCredentials(Matchers.any[Request[_]])) thenReturn true
+  when(returnUrlVerifier.getVerifiedReturnUrl(Matchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
-  val controller = new EmailVerificationController(api, authenticatedActions, authenticationService, idRequestParser, idUrlBuilder)
+  val controller = new EmailVerificationController(api, authenticatedActions, authenticationService, idRequestParser, idUrlBuilder, returnUrlVerifier)
 
   "Given the verify method is called" - Fake {
     val testRequest = TestRequest()
