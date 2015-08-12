@@ -68,36 +68,34 @@ const buildClueMap = (clues) => {
     return map;
 };
 
-const mergeObjects = objects => _.merge.apply(_, objects);
 /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
 const buildSeparatorMap = (clues) =>
-    mergeObjects(
-        _(clues)
-            .map((clue) =>
-                _.map(clue.separatorLocations, (locations, separator) =>
-                    locations.map(location => {
-                        const map = {};
+    _(clues)
+        .map((clue) =>
+            _.map(clue.separatorLocations, (locations, separator) =>
+                locations.map(location => {
+                    const key = isAcross(clue)
+                        ? clueMapKey(clue.position.x + location, clue.position.y)
+                        : clueMapKey(clue.position.x, clue.position.y + location);
 
-                        const key = isAcross(clue)
-                            ? clueMapKey(clue.position.x + location, clue.position.y)
-                            : clueMapKey(clue.position.x, clue.position.y + location);
-
-                        if (map[key] === undefined) {
-                            map[key] = {};
-                        }
-
-                        if (isAcross(clue)) {
-                            map[key].across = separator;
-                        } else {
-                            map[key].down = separator;
-                        }
-
-                        return map;
-                    })
-                )
+                    return {
+                        key,
+                        direction: clue.direction,
+                        separator
+                    };
+                })
             )
-            .flatten()
-            .value());
+        )
+        .flatten()
+        .reduce((map, d) => {
+            if (map[d.key] === undefined) {
+                map[d.key] = {};
+            }
+
+            map[d.key][d.direction] = d.separator;
+
+            return map;
+        }, {});
 
 const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
 
