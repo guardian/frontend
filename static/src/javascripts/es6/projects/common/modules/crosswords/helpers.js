@@ -69,34 +69,32 @@ const buildClueMap = (clues) => {
 };
 
 /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
-const buildSeparatorMap = (clues) => {
-    const map = {};
+const buildSeparatorMap = (clues) =>
+    _.merge.apply(_,
+        _(clues)
+            .map((clue) =>
+                _.map(clue.separatorLocations, (locations, separator) =>
+                    locations.reduce((map, location) => {
+                        const key = isAcross(clue)
+                            ? clueMapKey(clue.position.x + location, clue.position.y)
+                            : clueMapKey(clue.position.x, clue.position.y + location);
 
-    _.forEach(clues, (clue) => {
-        _.forEach(clue.separatorLocations, (locations, separator) => {
-            _.forEach(locations, location => {
-                let key;
-                if (isAcross(clue)) {
-                    key = clueMapKey(clue.position.x + location, clue.position.y);
-                } else {
-                    key = clueMapKey(clue.position.x, clue.position.y + location);
-                }
+                        if (map[key] === undefined) {
+                            map[key] = {};
+                        }
 
-                if (map[key] === undefined) {
-                    map[key] = {};
-                }
+                        if (isAcross(clue)) {
+                            map[key].across = separator;
+                        } else {
+                            map[key].down = separator;
+                        }
 
-                if (isAcross(clue)) {
-                    map[key].across = separator;
-                } else {
-                    map[key].down = separator;
-                }
-            });
-        });
-    });
-
-    return map;
-};
+                        return map;
+                    }, {})
+                )
+            )
+            .flatten()
+            .value());
 
 const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
 
