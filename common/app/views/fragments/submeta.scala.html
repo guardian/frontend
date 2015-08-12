@@ -29,22 +29,48 @@
                     @fragments.social(content)
                 </div>
                 <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+                @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
+                    @if(content.isSyndicatable) {
+                        <div class="submeta__syndication">
+                            @fragments.syndication(content)
+                        </div>
+                    }
+                }
             </div>
         } else {
-            <div data-component="share" class="submeta__share">
-                @fragments.social(content)
+            <div class="u-cf">
+                <div data-component="share" class="submeta__share">
+                    @fragments.social(content)
+                </div>
+                @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
+                    @if(content.isSyndicatable) {
+                        <div class="submeta__syndication">
+                            @fragments.syndication(content)
+                        </div>
+                    }
+                }
             </div>
         }
     } else {
         @if(SaveForLaterSwitch.isSwitchedOn) {
-            <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
-        }
-    }
-    @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
-        @if(content.isSyndicatable) {
-            <div class="submeta__syndication">
-                @fragments.syndication(content)
+            <div class="u-cf">
+                <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+                @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
+                    @if(content.isSyndicatable) {
+                        <div class="submeta__syndication">
+                            @fragments.syndication(content)
+                        </div>
+                    }
+                }
             </div>
+        } else {
+            @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
+                @if(content.isSyndicatable) {
+                    <div class="submeta__syndication">
+                        @fragments.syndication(content)
+                    </div>
+                }
+            }
         }
     }
 </div>
