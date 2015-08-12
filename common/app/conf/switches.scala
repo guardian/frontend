@@ -333,6 +333,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val NoMobileTopAdSwitch = Switch(
+    "Commercial",
+    "no-mobile-top-ad",
+    "On mobile there is no top banner and we are showing only two MPUs",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
