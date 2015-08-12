@@ -115,7 +115,7 @@ export default {
     buildGrid: buildGrid,
     clueMapKey: clueMapKey,
     buildClueMap: buildClueMap,
-    buildSeparatorMap: buildSeparatorMap,
+    buildSeparatorMap,
     cellsForEntry: cellsForEntry,
     entryHasCell: entryHasCell,
     gridSize: gridSize,
