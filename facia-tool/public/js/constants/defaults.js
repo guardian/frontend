@@ -89,8 +89,9 @@ export default {
     reauthInterval:        60000 * 10, // 10 minutes
     reauthTimeout:         60000,
 
-    imageCdnDomain:        '.guim.co.uk',
-    imgIXBasePath:         '/img/static/',
+    imageCdnDomain:        /^https?:\/\/(static|media)\.guim\.co\.uk\//,
+    imgIXBaseDomain:       /^https?:\/\/i\.guim\.co\.uk\/img\/static\//,
+    staticImageCdnDomain:  'https://static.guim.co.uk/',
     previewBase:           'http://preview.gutools.co.uk',
 
     latestSnapPrefix:      'Latest from ',
