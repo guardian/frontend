@@ -71,7 +71,7 @@ case class VideoProfile(
 
 // Configuration of our different image profiles
 object Contributor extends Profile(width = Some(140), height = Some(140))
-object RichLinkContributor extends Profile(width = Some(720))
+object RichLinkContributor extends Profile(width = Some(173))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
 object Item300 extends Profile(width = Some(300))
