@@ -4,7 +4,10 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-./grunt-tc clean install validate:sass validate:js test:unit compile emitAbTestInfo
+npm prune
+npm install
+
+./grunt-tc clean shell:npmInstallFaciaTool shell:jspmInstallStatic validate:sass validate:js test:unit compile emitAbTestInfo
 ./sbt-tc "project root" compile test assets dist
 
 echo "Disting everything."
