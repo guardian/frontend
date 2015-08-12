@@ -29,6 +29,15 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
+  def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+    withCrossword(crosswordType, id) { (crossword, content) =>
+      Cached(60)(Ok(views.html.accessibleCrossword(
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        AccessibleCrosswordRows(crossword)
+      )))
+    }
+  }
+
   def thumbnail(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, _) =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)

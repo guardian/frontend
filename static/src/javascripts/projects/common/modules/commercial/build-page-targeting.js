@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/krux',
+    'common/modules/identity/api',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
@@ -16,6 +17,7 @@ define([
     storage,
     audienceScienceGateway,
     krux,
+    identity,
     userAdTargeting,
     ab
 ) {
@@ -38,7 +40,11 @@ define([
             if (!id) {
                 return null;
             }
-            return format(id.split('/').pop());
+            if (config.switches.ukNewsTarget && id === 'uk/uk') {
+                return id;
+            } else {
+                return format(id.split('/').pop());
+            }
         },
         parseIds = function (ids) {
             if (!ids) {
@@ -107,6 +113,7 @@ define([
                 pv:      config.ophan.pageViewId,
                 bp:      detect.getBreakpoint(),
                 at:      adtestParams(),
+                si:      identity.isUserLoggedIn() ? 't' : 'f',
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),

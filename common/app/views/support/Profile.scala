@@ -34,8 +34,18 @@ sealed trait ElementProfile {
     elementFor(image).flatMap(_.altText)
 
   def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
-  def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
 
+  // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
+  lazy val imgixResizeString = {
+    val qualityparam = "q=85"
+    val autoParam = "auto=format"
+    val sharpParam = "sharp=10"
+    val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
+    val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
+
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    s"?$params"
+  }
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
