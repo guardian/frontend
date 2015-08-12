@@ -74,7 +74,9 @@ define([
         }
 
         if (this.isAdblockInUse && !this.isMobile && this.isAdblockABTest) {
-            this.$els.bannerDesktop = $('.js-adblock-sticky');
+            fastdom.read(function () {
+                this.$els.bannerDesktop = $('.js-adblock-sticky');
+            }.bind(this));
         }
 
         // Get the name of the method to run after scroll

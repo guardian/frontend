@@ -1,10 +1,12 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/_',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/adblock-sticky-message.html'
 ], function (
+    fastdom,
     $,
     _,
     template,
@@ -41,7 +43,9 @@ define([
                 marque54icon: svgs('marque54icon')
             });
 
-        $('.top-banner-ad-container--desktop').after(bannerTmpl);
+        fastdom.write(function () {
+            $('.top-banner-ad-container--desktop').after(bannerTmpl);
+        }.bind(this));
     };
 
     return AdblockBanner;
