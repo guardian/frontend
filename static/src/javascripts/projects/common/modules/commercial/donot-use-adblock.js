@@ -45,8 +45,6 @@ define([
                     }
                 ));
         }
-
-        storage.local.set('alreadyVisited', alreadyVisted + 1);
     }
 
     return {

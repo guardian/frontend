@@ -1,0 +1,13 @@
+@()(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div class="crossword-optout gs-container">
+    <div class="site-message--crosswords" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
+        <div class="gs-container">
+            <div class="u-cf">
+                You're viewing a new beta version of the Guardian's crosswords. To return to the current version, <a href="@LinkTo("/crosswords/optout")">click here.</a>
+            </div>
+        </div>
+    </div>
+</div>

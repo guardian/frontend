@@ -11,8 +11,8 @@ define([
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
-    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
     raven,
@@ -27,8 +27,8 @@ define([
     LiveblogNotifications,
     HighCommercialComponent,
     SignedOutSaveForLater,
-    CookieRefresh,
     MembershipMessage,
+    MembershipMessageUSA,
     AdblockStickyBanner
 ) {
 
@@ -38,8 +38,8 @@ define([
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
-        new CookieRefresh(),
         new MembershipMessage(),
+        new MembershipMessageUSA(),
         new AdblockStickyBanner()
     ]);
 

@@ -1,5 +1,5 @@
 @import common.dfp.LineItemReport
-@(env: String, slotName: String, slotReport: LineItemReport)
+@(slotReport: LineItemReport)
 @import _root_.dfp.printUniversalTime
 @import common.dfp.GuLineItem
 @import tools.DfpLink
@@ -37,16 +37,16 @@
     </li>
 }
 
-@admin_main(s"Ad Slot $slotName", env, isAuthed = true) {
+<p>Last updated: @slotReport.timestamp</p>
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
-
-    <h2>Takeovers in <em>@slotName</em> Ad Slot</h2>
-    <p>Last updated: @slotReport.timestamp</p>
-
-    <h3>Production</h3>
+<h3>Live Site</h3>
+@if(slotReport.nonAdTestLineItems.isEmpty) {
+    Nothing applicable.
+} else {
     <ol>@for(lineItem <- slotReport.nonAdTestLineItems) {@lineItemTemplate(lineItem)}</ol>
+}
 
+@if(slotReport.adTestLineItems.nonEmpty) {
     <h3>Test</h3>
     <ol>@for(lineItem <- slotReport.adTestLineItems) {@lineItemTemplate(lineItem)}</ol>
 }

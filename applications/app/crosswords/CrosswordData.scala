@@ -48,7 +48,8 @@ object CrosswordData {
     dateFormatUTC.parseDateTime(crossword.date),
     crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
-    crossword.`type`
+    crossword.`type`,
+    crossword.pdf
   )
 }
 
@@ -60,5 +61,6 @@ case class CrosswordData(
   date: DateTime,
   entries: Seq[Entry],
   dimensions: CrosswordDimensions,
-  crosswordType: String
+  crosswordType: String,
+  pdf: Option[String]
 )

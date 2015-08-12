@@ -11,7 +11,7 @@
 
 @admin_main("A/B Tests", env, isAuthed = true, hasCharts = true) {
 
-    <link href="@routes.Assets.at("css/abtests.css")" rel="stylesheet">
+    <link href="@controllers.admin.routes.UncachedAssets.at("css/abtests.css")" rel="stylesheet">
 
     <h1>A/B Tests</h1>
 
