@@ -44,11 +44,11 @@ export default class Controls extends React.Component {
         // HIGHLIGHTED CLUE CONTROLS
         if (hasFocus && hasSolutions) {
             controls.clue.unshift(
-                <ConfirmButton className={`${buttonClassName} ${buttonCurrentClassName}`}
+                <button className={`${buttonClassName} ${buttonCurrentClassName}`}
                     onClick={this.props.onClearSingle}
-                    key='clear-single'
-                    text='Clear this'>
-                </ConfirmButton>
+                    key='clear-single'>
+                    Clear this
+                </button>
             );
 
             controls.clue.unshift(
