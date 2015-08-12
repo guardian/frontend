@@ -560,13 +560,12 @@ object Switches {
 
   val CreativeTemplatesInS3 = Switch(
     "Commercial",
-    "creative-templates-in-S3",
+    "creative-templates-in-s3",
     "Stores DFP creative template data in S3.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 9),
     exposeClientSide = false
   )
-
 
   // Monitoring
 
@@ -584,7 +583,7 @@ object Switches {
     "enable-omniture-confidence-no-js",
     "Enables Omniture confidence tracking for no-JS devices",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
@@ -788,7 +787,16 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
+  val IdentityCookieRefreshSwitch = Switch(
+    "Identity",
+    "id-cookie-refresh",
+    "If switched on, users cookies will be refreshed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -924,15 +932,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val ABIdentityCookieRefresh = Switch(
-    "A/B Tests",
-    "ab-cookie-refresh",
-    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val ABMembershipMessageVariants = Switch(
@@ -1150,6 +1149,16 @@ object Switches {
       exposeClientSide = false
     )
   }
+
+  // Server-side variant validation test
+  val JspmValidation = Switch(
+    "Feature",
+    "disable-jspm",
+    "A test switch that can be turned on to disable the JspmTest for bucketing validation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 15),
+    exposeClientSide = false
+  )
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 
