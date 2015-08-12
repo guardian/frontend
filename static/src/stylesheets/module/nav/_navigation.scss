@@ -497,6 +497,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
             white-space: nowrap;
+            backface-visibility: hidden;
         }
 
         &::-webkit-scrollbar {

@@ -33,6 +33,18 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   val registrationForm = Form(
     Forms.tuple(
+      "user.firstName" -> Forms.text,
+      "user.secondName" -> Forms.text,
+      emailKey -> Forms.text,
+      "user.publicFields.username" -> Forms.text,
+      passwordKey -> Forms.text,
+      "receive_gnm_marketing" -> Forms.boolean,
+      "receive_third_party_marketing" -> Forms.boolean
+    )
+  )
+
+  val registrationFormWithConstraints = Form(
+    Forms.tuple(
       "user.firstName" -> idFirstName,
       "user.secondName" -> idSecondName,
       emailKey -> idRegEmail,
@@ -60,7 +72,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   }
 
   def processForm = Action.async { implicit request =>
-    val boundForm = registrationForm.bindFromRequest
+    val boundForm = registrationFormWithConstraints.bindFromRequest
     val idRequest = idRequestParser(request, boundForm.data.getOrElse(emailKey,"unable to extract email from form data" ))
     val trackingData = idRequest.trackingData
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
@@ -83,7 +95,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     def onSuccess(form: (String, String, String, String, String, Boolean, Boolean)): Future[Result] = form match {
       case (firstName, secondName, email, username, password, gnmMarketing, thirdPartyMarketing) =>
         val user = userCreationService.createUser(firstName, secondName, email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
-        val registeredUser: Future[Response[User]] = api.register(user, trackingData)
+        val registeredUser: Future[Response[User]] = api.register(user, trackingData, verifiedReturnUrlAsOpt)
 
         val result: Future[Result] = registeredUser flatMap {
           case Left(errors) =>
