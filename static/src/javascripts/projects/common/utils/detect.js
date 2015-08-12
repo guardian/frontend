@@ -446,47 +446,23 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '',
-            isAdblock = false,
-            mozBinding = '',
-            mozBindingHidden = -1,
-            containerHeight = 1;
+        var isAdblock = false;
+
         $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>').appendTo(document.body);
 
-        displayed = $('.ad_unit').css('display');
-        mozBinding = $('.ad_unit').css('-moz-binding');
-        containerHeight = $('.ad_unit').dim().height;
-        if (displayed === 'none' || containerHeight < 1) {
+        var displayed = $('.ad_unit').css('display');
+        if (displayed === 'none') {
+            console.log('### Ad Blocker detected (using Display: none)');
+        }
+
+
+        var containerHeight = $('.ad_unit').dim().height;
+        if (containerHeight < 1) {
+            console.log('### Ad Blocker Detected (using Dim().height)');
             isAdblock = true;
         }
 
-        if (typeof mozBinding !== 'undefined') {
-            setTimeout(function () {
 
-                var laterMozBinding = $('.ad_unit').css('-moz-binding');
-                var laterMozBindingExists = (laterMozBinding !== undefined && laterMozBinding !== null && laterMozBinding !== '');
-
-                if (laterMozBindingExists && laterMozBinding.indexOf("elemhidehit") !== -1 && containerHeight < 1) {
-                    alert ('Emit event that ad blocker was detected');
-                } else {
-                    alert ('Emit Event that no ad blockers detected');
-                }
-            }, 5000);
-        } else {
-            if (isAdblock) {
-                alert ('Emit event that ad blocker was detected');
-            } else {
-                alert ('Emit Event that no ad blockers detected');
-            }
-        }
-
-        if (isAdblock) {
-            alert ('Ad Blocker detected');
-        } else {
-            alert ('No Ad Blocker detected');
-        }
-
-        $('.ad_unit').remove();
 
         return isAdblock;
     }
