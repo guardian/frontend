@@ -102,7 +102,7 @@
 
 @admin_main("Paid-for Tags", env, isAuthed = true) {
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h1>Paid-for Tags</h1>
     <p>Last updated: @report.updatedTimeStamp</p>
