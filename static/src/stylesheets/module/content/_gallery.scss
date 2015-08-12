@@ -154,15 +154,13 @@
 
     .i {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
+        top: 10px;
+        left: 10px;
     }
 
-    .i-expand-black {
+    .inline-expand-black {
         display: none;
+        fill: #000;
     }
 
     .element--thumbnail & {
@@ -171,8 +169,8 @@
         margin: $gs-baseline/3 $gs-gutter/5;
         display: none;
 
-        .i-expand-black,
-        .i-expand-white {
+        .inline-expand-black,
+        .inline-expand-white {
             width: 50%;
             height: 50%;
         }
@@ -187,10 +185,10 @@
         .article__img-container:hover & {
             background-color: colour(media-default);
 
-            .i-expand-black {
+            .inline-expand-black {
                 display: inline-block;
             }
-            .i-expand-white {
+            .inline-expand-white {
                 display: none;
             }
         }

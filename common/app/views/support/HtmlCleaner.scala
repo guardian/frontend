@@ -204,6 +204,9 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
     body
   }
 
+  private lazy val whiteExpandIconHtml = views.html.fragments.inlineSvg("expand-white", "icon", List("i")).toString()
+  private lazy val blackExpandIconHtml = views.html.fragments.inlineSvg("expand-black", "icon", List("i")).toString()
+
   def addSharesAndFullscreen(body: Document): Document = {
 
     for {
@@ -226,9 +229,10 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
       }
 
       val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+
       image.after(html.toString())
       image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-      image.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+      image.after("<span class='rounded-icon article__fullscreen'>" + whiteExpandIconHtml + blackExpandIconHtml + "</span>")
     }
 
     body
