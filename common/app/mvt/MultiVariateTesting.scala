@@ -22,7 +22,15 @@ object JspmTest extends TestDefinition(
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
   new LocalDate(2015, 9, 30)
-)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    if (conf.Switches.JspmValidation.isSwitchedOff) {
+      super.isParticipating(request)
+    } else {
+      false
+    }
+  }
+}
 
 object JspmControlTest extends TestDefinition(
   List(Variant7),
@@ -39,14 +47,14 @@ object MobileTopBannerRemoveTest extends TestDefinition(
 )
 
 object ABHeadlinesTestVariant extends TestDefinition(
-  List(Variant5),
+  List(Variant1, Variant2, Variant3, Variant4, Variant5),
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
   new LocalDate(2015, 9, 30)
 )
 
 object ABHeadlinesTestControl extends TestDefinition(
-  List(Variant6),
+  List(Variant6, Variant7, Variant8, Variant9, Variant0),
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (test group)",
   new LocalDate(2015, 9, 30)

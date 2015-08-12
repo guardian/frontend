@@ -42,16 +42,17 @@ define([
     }
 
     StickyHeader.prototype.init = function () {
-        this.$els.header         = $('#header');
-        this.$els.bannerDesktop  = $('.top-banner-ad-container--above-nav');
-        this.$els.bannerMobile   = $('.top-banner-ad-container--mobile');
-        this.$els.bannerBelowNav = $('.top-banner-ad-container--below-nav');
-        this.$els.main           = $('#maincontent');
-        this.$els.navHeader      = $('.js-navigation-header');
-        this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
-        this.$els.logoWrapper    = $('.logo-wrapper', this.$els.navHeader);
-        this.$els.navigation     = $('.navigation', this.$els.navHeader);
-        this.$els.window         = $(window);
+        this.$els.header           = $('.js-header');
+        this.$els.bannerDesktop    = $('.js-top-banner-above-nav');
+        this.$els.bannerMobile     = $('.js-top-banner-mobile');
+        this.$els.bannerBelowNav   = $('.js-top-banner-below-nav');
+        this.$els.main             = $('.js-maincontent');
+        this.$els.navHeader        = $('.js-navigation-header');
+        this.$els.burgerIcon       = $('.js-navigation-toggle', this.$els.navHeader);
+        this.$els.navigation       = $('.js-navigation', this.$els.navHeader);
+        this.$els.navigationGlobal = $('.js-global-navigation');
+        this.$els.popupSearch      = $('.js-popup--search');
+        this.$els.window           = $(window);
 
         fastdom.read(function () {
             this.headerBigHeight     = this.$els.navHeader.dim().height;
@@ -68,23 +69,15 @@ define([
             }
         }
 
-        if (this.isMobile) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionMobile();
-            }.bind(this), 10));
-        } else if (this.isAdblockInUse) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionAdblock();
-            }.bind(this), 10));
-        } else if (this.isAppleCampaign) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionApple();
-            }.bind(this), 10));
-        } else if (this.isProfilePage) {
+        // Get the name of the method to run after scroll
+        this.updateMethod = this.getUpdateMethod();
+
+        // Profile page doesn't need scroll event as it has only slim sticky nav from the beginning
+        if (this.isProfilePage) {
             this.updatePositionProfile();
         } else {
             mediator.on('window:scroll', _.throttle(function () {
-                this.updatePosition();
+                this[this.updateMethod]();
             }.bind(this), 10));
         }
 
@@ -99,7 +92,7 @@ define([
 
         // Make sure header is locked when search is open
         mediator.on('modules:search', function () {
-            if ($('.js-popup--search').hasClass('is-off')) {
+            if (this.$els.popupSearch.hasClass('is-off')) {
                 this.unlockStickyNavigation();
             } else {
                 this.lockStickyNavigation();
@@ -107,15 +100,27 @@ define([
         }.bind(this));
     };
 
+    StickyHeader.prototype.getUpdateMethod = function () {
+        if (this.isMobile) {
+            return 'updatePositionMobile';
+        } else if (this.isAdblockInUse) {
+            return 'updatePositionAdblock';
+        } else if (this.isAppleCampaign) {
+            return 'updatePositionApple';
+        } else {
+            return 'updatePosition';
+        }
+    };
+
     // Make sure meganav is always in the default state
     StickyHeader.prototype.unlockStickyNavigation = function () {
         this.config.isNavigationLocked = false;
 
         fastdom.write(function () {
-            $('.js-global-navigation')
+            this.$els.navigationGlobal
                 .removeClass('navigation__expandable--sticky')
                 .attr('height', 'auto');
-        });
+        }.bind(this));
     };
 
     StickyHeader.prototype.lockStickyNavigation = function () {
@@ -129,7 +134,7 @@ define([
                 var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
 
                 fastdom.write(function () {
-                    $('.js-global-navigation')
+                    this.$els.navigationGlobal
                         .addClass('navigation__expandable--sticky')
                         .css('height', height);
                 });
@@ -221,9 +226,6 @@ define([
                         width:     '100%',
                         'z-index': '1020',
                         'margin-top': 0,
-                        '-webkit-transform': 'translateY(-100%)',
-                        '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)',
                         'backface-visibility': 'hidden'
                     });
 

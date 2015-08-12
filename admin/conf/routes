@@ -12,7 +12,8 @@ GET         /oauth2callback                                                     
 GET         /logout                                                                                 controllers.admin.OAuthLoginController.logout
 
 # static files
-GET         /public/*file                                                                           controllers.Assets.at(path="/public", file)
+GET         /assets/admin/lib/*file                                                                 controllers.admin.UncachedWebAssets.at(file)
+GET         /assets/admin/*file                                                                     controllers.admin.UncachedAssets.at(file)
 GET         /assets/*path                                                                           dev.DevAssetsController.at(path)
 
 ##################### NOTE ############################

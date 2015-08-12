@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
-    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/tests/membership-message',
     'common/modules/experiments/tests/membership-message-usa'
 ], function (
@@ -27,7 +26,6 @@ define([
     LiveblogNotifications,
     HighCommercialComponent,
     SignedOutSaveForLater,
-    CookieRefresh,
     MembershipMessage,
     MembershipMessageUSA
 ) {
@@ -38,7 +36,6 @@ define([
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
-        new CookieRefresh(),
         new MembershipMessage(),
         new MembershipMessageUSA()
     ]);
