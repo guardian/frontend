@@ -8,6 +8,10 @@
     .crossword__container--#{$xword} {
         @include mq(tablet) {
             padding-left: $size;
+
+            &.crossword__container--accessible {
+                padding-left: 0;
+            }
         }
 
         .crossword__grid-wrapper {
@@ -57,7 +61,15 @@
         noscript & {
             width: 85%;
         }
+
+        .crossword__container--accessible & {
+            width: initial;
+        }
     }
+}
+
+.crossword__accessible-row-data-wrapper {
+    float: left;
 }
 
 .crossword__clues--across {
