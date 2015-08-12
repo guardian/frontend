@@ -23,8 +23,8 @@ object Commercial {
 
   object topAboveNavSlot {
 
-    private def isNetworkFront(metaData: MetaData) = {
-      metaData.id == "uk" || metaData.id == "us" || metaData.id == "au"
+    private def isBusinessFront(metaData: MetaData) = {
+      metaData.id == "uk/business" || metaData.id == "us/business" || metaData.id == "au/business"
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
@@ -42,7 +42,7 @@ object Commercial {
         "js-top-banner-above-nav")
 
       val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isNetworkFront(metaData)) {
+        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
           if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition)) {
             "top-banner-ad-container--small"
           } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition)) {

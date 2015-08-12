@@ -224,6 +224,15 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+
+  def targetsSectionFrontDirectly(sectionId: String): Boolean = {
+    targeting.adUnits.exists { adUnit =>
+      val path = adUnit.path
+      path.length == 3 &&
+        path(1) == sectionId &&
+        path(2) == "front"
+    }
+  }
 }
 
 object GuLineItem {
@@ -261,7 +270,6 @@ object GuLineItem {
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
-
 }
 
 
