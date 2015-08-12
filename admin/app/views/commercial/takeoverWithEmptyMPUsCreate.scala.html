@@ -3,7 +3,7 @@
 @import helper._
 
 @admin_main("Create takeover with Empty MPUs", env, isAuthed = true) {
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h1>New Takeover with Empty MPUs</h1>
     @form(action = controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.create()) {
         <p>Fill in the details of a front takeover in which MPUs should not appear on the page.</p>
