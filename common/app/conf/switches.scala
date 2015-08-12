@@ -567,6 +567,16 @@ object Switches {
     exposeClientSide = false
   )
 
+  val UkNewsTargeting = Switch(
+    "Commercial",
+    "uk-news-target",
+    "Uses full UK News keyword for DFP targeting.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = true
+  )
+
+
   // Monitoring
 
   val OphanSwitch = Switch(

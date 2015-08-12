@@ -38,7 +38,11 @@ define([
             if (!id) {
                 return null;
             }
-            return format(id.split('/').pop());
+            if (config.switches.ukNewsTarget && id === 'uk/uk') {
+                return id;
+            } else {
+                return format(id.split('/').pop());
+            }
         },
         parseIds = function (ids) {
             if (!ids) {
