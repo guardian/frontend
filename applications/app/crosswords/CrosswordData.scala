@@ -17,6 +17,7 @@ object Entry {
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
     entry.position.getOrElse(CrosswordPosition(0,0)),
+    entry.separatorLocations,
     entry.solution
   )
 }
@@ -27,6 +28,7 @@ case class Entry(
   direction: String,
   length: Int,
   position: CrosswordPosition,
+  separatorLocations: Option[Map[String, Seq[Int]]],
   solution: Option[String]
 )
 
