@@ -74,7 +74,9 @@ const buildSeparatorMap = (clues) =>
         _(clues)
             .map((clue) =>
                 _.map(clue.separatorLocations, (locations, separator) =>
-                    locations.reduce((map, location) => {
+                    locations.map(location => {
+                        const map = {};
+
                         const key = isAcross(clue)
                             ? clueMapKey(clue.position.x + location, clue.position.y)
                             : clueMapKey(clue.position.x, clue.position.y + location);
@@ -90,7 +92,7 @@ const buildSeparatorMap = (clues) =>
                         }
 
                         return map;
-                    }, {})
+                    })
                 )
             )
             .flatten()
