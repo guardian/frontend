@@ -29,6 +29,14 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val form = Form(
     Forms.tuple(
+      "email" -> Forms.text,
+      "password" -> Forms.text,
+      "keepMeSignedIn" -> Forms.boolean
+    )
+  )
+
+  val formWithConstraints = Form(
+    Forms.tuple(
       "email" -> idEmail
         .verifying(Constraints.nonEmpty),
       "password" -> Forms.text
@@ -48,7 +56,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   def processForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
-    val boundForm = form.bindFromRequest
+    val boundForm = formWithConstraints.bindFromRequest
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
     def onError(formWithErrors: Form[(String, String, Boolean)]): Future[Result] = {
