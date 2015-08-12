@@ -72,7 +72,6 @@ define([
             }
         }
 
-        //todo only in test
         if (this.isAdblockInUse && !this.isMobile && this.isAdblockABTest) {
             this.$els.bannerDesktop = $('.js-adblock-sticky');
         }
