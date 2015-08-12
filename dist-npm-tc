@@ -8,4 +8,4 @@ echo "1. Npm installation."
 npm prune --production
 npm install --production
 
-grunt --stack --no-color clean shell:npmInstallFaciaTool shell:jspmInstallStatic
+grunt --stack --no-color clean shell:npmInstallFaciaTool install:jspm
