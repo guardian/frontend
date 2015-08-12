@@ -18,14 +18,6 @@ export default class Controls extends React.Component {
         // GRID CONTROLS
         controls.grid.unshift(
             <ConfirmButton className={`${buttonClassName} ${buttonGenericClassName}`}
-                onClick={this.props.onClearSingle}
-                key='clear-single'
-                text='Clear'>
-            </ConfirmButton>
-        );
-
-        controls.grid.unshift(
-            <ConfirmButton className={`${buttonClassName} ${buttonGenericClassName}`}
                 onClick={this.props.onClearAll}
                 key='clear'
                 text='Clear all'>
@@ -51,6 +43,14 @@ export default class Controls extends React.Component {
 
         // HIGHLIGHTED CLUE CONTROLS
         if (hasFocus && hasSolutions) {
+            controls.clue.unshift(
+                <ConfirmButton className={`${buttonClassName} ${buttonCurrentClassName}`}
+                    onClick={this.props.onClearSingle}
+                    key='clear-single'
+                    text='Clear this'>
+                </ConfirmButton>
+            );
+
             controls.clue.unshift(
                 <button className={`${buttonClassName} ${buttonCurrentClassName}`}
                     onClick={this.props.onCheat}
