@@ -45,7 +45,7 @@ define([
 
         fastdom.write(function () {
             $('.top-banner-ad-container--desktop').after(bannerTmpl);
-        }.bind(this));
+        });
     };
 
     return AdblockBanner;
