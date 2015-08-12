@@ -72,8 +72,8 @@ import collection.JavaConversions._
         $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
-        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(withHost("/profile/phelimoneill"))
+        $("[itemprop=author] a[itemprop='url']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
+        $("[itemprop=author] a[itemprop='url']").last.getAttribute("href") should be(withHost("/profile/phelimoneill"))
       }
     }
 
