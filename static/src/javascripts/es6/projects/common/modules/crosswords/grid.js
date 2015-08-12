@@ -40,13 +40,17 @@ export default class Grid extends React.Component {
 
                 }
 
-                const cellSeparators = this.props.separators[helpers.clueMapKey(x, y)];
-                if (cellSeparators) {
+                const clues = this.props.clueMap[helpers.clueMapKey(x, y)];
+                if (clues) {
                     const top = helpers.gridSize(y);
                     const left = helpers.gridSize(x);
                     const borderWidth = 1;
-                    if (cellSeparators.across) {
-                        if (cellSeparators.across === ',') {
+                    if (clues.across) {
+                        const clue = clues.across;
+                        const relativeX = x - clue.position.x;
+                        const wordSeparators = clue.separatorLocations[','] || [];
+                        const hyphenSeparators = clue.separatorLocations['-'] || [];
+                        if (wordSeparators.some(x => x === relativeX)) {
                             const width = 1;
                             separators.push(
                                 <rect x={left - borderWidth - width}
@@ -54,7 +58,7 @@ export default class Grid extends React.Component {
                                       width={width}
                                       height={constants.cellSize}></rect>
                             );
-                        } else if (cellSeparators.across === '-') {
+                        } else if (hyphenSeparators.some(x => x === relativeX)) {
                             const width = constants.cellSize / 4;
                             const height = 1;
                             separators.push(
@@ -65,8 +69,13 @@ export default class Grid extends React.Component {
                             );
                         }
                     }
-                    if (cellSeparators.down) {
-                        if (cellSeparators.down === ',') {
+
+                    if (clues.down) {
+                        const clue = clues.down;
+                        const relativeY = y - clue.position.y;
+                        const wordSeparators = clue.separatorLocations[','] || [];
+                        const hyphenSeparators = clue.separatorLocations['-'] || [];
+                        if (wordSeparators.some(y => y === relativeY)) {
                             const height = 1;
                             separators.push(
                                 <rect x={left}
@@ -74,7 +83,7 @@ export default class Grid extends React.Component {
                                       width={constants.cellSize}
                                       height={height}></rect>
                             );
-                        } else if (cellSeparators.down === '-') {
+                        } else if (hyphenSeparators.some(y => y === relativeY)) {
                             const width = 1;
                             const height = constants.cellSize / 4;
                             separators.push(
