@@ -2,6 +2,36 @@ import _ from 'common/utils/_';
 
 import constants from 'es6/projects/common/modules/crosswords/constants';
 
+const getLastCellInClue = (clue) => {
+    const ax = { true: 'x', false: 'y' };
+    const axis = ax[isAcross(clue)];
+    const otherAxis = ax[!isAcross(clue)];
+    return {
+        [axis]: clue.position[axis] + (clue.length - 1),
+        [otherAxis]: clue.position[otherAxis]
+    };
+};
+
+const isFirstCellInClue = (cell, clue) => {
+    const axis = isAcross(clue) ? 'x' : 'y';
+    return cell[axis] === clue.position[axis];
+};
+
+const isLastCellInClue = (cell, clue) => {
+    const axis = isAcross(clue) ? 'x' : 'y';
+    return cell[axis] === clue.position[axis] + (clue.length - 1);
+};
+
+const getNextClueInGroup = (entries, clue) => {
+    const newClueId = clue.group[_.findIndex(clue.group, id => id === clue.id) + 1];
+    return _.find(entries, { id: newClueId });
+};
+
+const getPreviousClueInGroup = (entries, clue) => {
+    const newClueId = clue.group[_.findIndex(clue.group, id => id === clue.id) - 1];
+    return _.find(entries, { id: newClueId });
+};
+
 const isAcross = (clue) => clue.direction === 'across';
 
 const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
@@ -88,5 +118,10 @@ export default {
     cellsForEntry: cellsForEntry,
     entryHasCell: entryHasCell,
     gridSize: gridSize,
-    mapGrid: mapGrid
+    mapGrid: mapGrid,
+    getLastCellInClue,
+    isFirstCellInClue,
+    isLastCellInClue,
+    getNextClueInGroup,
+    getPreviousClueInGroup
 };

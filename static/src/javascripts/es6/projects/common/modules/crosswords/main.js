@@ -200,18 +200,39 @@ class Crossword extends React.Component {
     }
 
     focusPrevious () {
-        if (this.isAcross()) {
-            this.moveFocus(-1, 0);
+        const cell = this.state.cellInFocus;
+        const clue = this.clueInFocus();
+
+        if (helpers.isFirstCellInClue(cell, clue)) {
+            const newClue = helpers.getPreviousClueInGroup(this.props.data.entries, clue);
+            if (newClue) {
+                const newCell = helpers.getLastCellInClue(newClue);
+                this.focusClue(newCell.x, newCell.y, newClue.direction);
+            }
         } else {
-            this.moveFocus(0, -1);
+            if (this.isAcross()) {
+                this.moveFocus(-1, 0);
+            } else {
+                this.moveFocus(0, -1);
+            }
         }
     }
 
     focusNext () {
-        if (this.isAcross()) {
-            this.moveFocus(1, 0);
+        const cell = this.state.cellInFocus;
+        const clue = this.clueInFocus();
+
+        if (helpers.isLastCellInClue(cell, clue)) {
+            const newClue = helpers.getNextClueInGroup(this.props.data.entries, clue);
+            if (newClue) {
+                this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
+            }
         } else {
-            this.moveFocus(0, 1);
+            if (this.isAcross()) {
+                this.moveFocus(1, 0);
+            } else {
+                this.moveFocus(0, 1);
+            }
         }
     }
 
