@@ -89,9 +89,9 @@ export default class Grid extends React.Component {
                         />
                     );
 
+                    separators = separators.concat(this.getSeparators(x, y));
                 }
 
-                separators = separators.concat(this.getSeparators(x, y));
             });
         });
 
