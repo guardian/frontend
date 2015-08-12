@@ -270,8 +270,8 @@ define([
 
                 _(slots).keys().forEach(function (slot) {
                     // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
-                            loadSlot(slot);
+                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
+                        loadSlot(slot);
                     }
                 });
             }
@@ -282,10 +282,10 @@ define([
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id');
-                    slots[slotId] = {
-                        isRendered: false,
-                        slot: defineSlot($adSlot)
-                    };
+            slots[slotId] = {
+                isRendered: false,
+                slot: defineSlot($adSlot)
+            };
 
             loadSlot(slotId);
         },
