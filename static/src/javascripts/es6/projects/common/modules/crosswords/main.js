@@ -35,6 +35,7 @@ class Crossword extends React.Component {
             'onCheck',
             'onCheckAll',
             'onClearAll',
+            'onClearSingle',
             'onToggleAnagramHelper',
             'onSelect',
             'onKeyDown',
@@ -416,6 +417,21 @@ class Crossword extends React.Component {
         this.save();
     }
 
+    onClearSingle () {
+        const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
+
+        this.setState({
+          grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+              if (_.some(cellsInFocus, cell => cell.x === gridX && cell.y === gridY)) {
+                cell.value = '';
+              }
+              return cell;
+            })
+        });
+
+        this.save();
+    }
+
     onToggleAnagramHelper () {
         this.setState({
             showAnagramHelper: !this.state.showAnagramHelper
@@ -485,6 +501,7 @@ class Crossword extends React.Component {
                     onCheck={this.onCheck}
                     onCheckAll={this.onCheckAll}
                     onClearAll={this.onClearAll}
+                    onClearSingle={this.onClearSingle}
                     onToggleAnagramHelper={this.onToggleAnagramHelper}
                 />
                 <Clues
@@ -512,4 +529,3 @@ export default function () {
         bonzo(element).removeClass('js-print-crossword');
     });
 }
-

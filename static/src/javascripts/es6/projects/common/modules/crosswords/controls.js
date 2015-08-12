@@ -18,6 +18,14 @@ export default class Controls extends React.Component {
         // GRID CONTROLS
         controls.grid.unshift(
             <ConfirmButton className={`${buttonClassName} ${buttonGenericClassName}`}
+                onClick={this.props.onClearSingle}
+                key='clear-single'
+                text='Clear'>
+            </ConfirmButton>
+        );
+
+        controls.grid.unshift(
+            <ConfirmButton className={`${buttonClassName} ${buttonGenericClassName}`}
                 onClick={this.props.onClearAll}
                 key='clear'
                 text='Clear all'>
