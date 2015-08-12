@@ -23,9 +23,12 @@ module.exports = {
             "port": 8080
         }
     },
+    "watchOptions": {
+        "cwd": "../"
+    },
     "files": [
-        "static/src/javascripts/**",
-        "static/hash/stylesheets/**/*.css"
+        "static/src/javascripts/**/*.js",
+        "static/hash/stylesheets/*.css"
     ],
     "server": false,
     "proxy": "localhost:9000",
@@ -46,7 +49,7 @@ module.exports = {
     "logFileChanges": true,
     "logSnippet": true,
     "rewriteRules": false,
-    "open": "local",
+    "open": false,
     "browser": "default",
     "xip": false,
     "hostnameSuffix": false,
@@ -58,7 +61,7 @@ module.exports = {
     "plugins": [],
     "injectChanges": true,
     "startPath": null,
-    "minify": true,
+    "minify": false,
     "host": null,
     "codeSync": true,
     "timestamps": true,

@@ -52,6 +52,11 @@ describe('Badges', function () {
         injector = new Injector();
 
     beforeEach(function (done) {
+        injector.mock({
+            'common/modules/commercial/dfp': {
+                addSlot: function () {}
+            }
+        });
         injector.test(['common/modules/commercial/badges', 'common/utils/config'], function () {
             badges = arguments[0];
             config = arguments[1];
