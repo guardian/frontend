@@ -200,13 +200,16 @@ In another console, run the supplied bash script [sbt]. The dot and slash are im
 ```
 ./sbt
 ```
-
-Once SBT is running (it may take 15 mins or so to start the first time - you'll know
-when you get a prompt), switch project by typing
+Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
+it's done when you get a prompt. If it is your first time, compile the project.
+```
+compile
+```
+Switch project by typing
 ```
 project dev-build
 ```
-Then compile and run the project locally by typing
+Then run the project locally by typing
 ```
 run
 ```
@@ -214,7 +217,7 @@ This also can take a while the first time.
 
 Now check that you are up and running by hitting the following URLs:
 
-* [http://localhost:9000/books](http://localhost:9000/books)
+* [http://localhost:9000/film](http://localhost:9000/film)
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 

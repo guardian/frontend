@@ -101,13 +101,16 @@ require([
         'common/utils/config',
         'common/modules/experiments/ab',
         'common/modules/ui/images',
-        'common/modules/ui/lazy-load-images'
+        'common/modules/ui/lazy-load-images',
+        'common/utils/storage'
     ], function (
         config,
         ab,
         images,
-        lazyLoadImages
+        lazyLoadImages,
+        storage
     ) {
+        var alreadyVisted;
 
         if (guardian.isModernBrowser) {
             ab.segmentUser();
@@ -121,6 +124,11 @@ require([
         lazyLoadImages.init();
         images.upgradePictures();
         images.listen();
+
+        if (guardian.isModernBrowser) {
+            alreadyVisted = storage.local.get('alreadyVisited') || 0;
+            storage.local.set('alreadyVisited', alreadyVisted + 1);
+        }
 
         // Preference pages are served via HTTPS for service worker support.
         // These pages must not have mixed (HTTP/HTTPS) content, so

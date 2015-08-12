@@ -33,7 +33,11 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:cujojs/when@3.7.3/es6-shim/Promise",
+<<<<<<< HEAD
     "babel": "npm:babel-core@5.8.21",
+=======
+    "babel": "npm:babel-core@5.8.22",
+>>>>>>> master
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
@@ -41,7 +45,6 @@ System.config({
     "core-js": "npm:core-js@0.9.18",
     "domready": "npm:domready@1.0.8",
     "enhancer": "github:guardian/enhancer@0.1.3",
-    "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
     "jasmine-sinon": "bower:jasmine-sinon@0.4.0",

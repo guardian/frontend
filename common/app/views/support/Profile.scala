@@ -34,8 +34,18 @@ sealed trait ElementProfile {
     elementFor(image).flatMap(_.altText)
 
   def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
-  def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
 
+  // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
+  lazy val imgixResizeString = {
+    val qualityparam = "q=85"
+    val autoParam = "auto=format"
+    val sharpParam = "sharp=10"
+    val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
+    val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
+
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    s"?$params"
+  }
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
@@ -69,6 +79,7 @@ object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
+object FacebookOpenGraphImage extends Profile(width = Some(1200))
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))

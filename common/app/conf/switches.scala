@@ -558,6 +558,24 @@ object Switches {
     exposeClientSide = false
   )
 
+  val CreativeTemplatesInS3 = Switch(
+    "Commercial",
+    "creative-templates-in-s3",
+    "Stores DFP creative template data in S3.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = false
+  )
+
+  val UkNewsTargeting = Switch(
+    "Commercial",
+    "uk-news-target",
+    "Uses full UK News keyword for DFP targeting.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = true
+  )
+
 
   // Monitoring
 
@@ -575,7 +593,7 @@ object Switches {
     "enable-omniture-confidence-no-js",
     "Enables Omniture confidence tracking for no-JS devices",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
@@ -779,7 +797,16 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
+  val IdentityCookieRefreshSwitch = Switch(
+    "Identity",
+    "id-cookie-refresh",
+    "If switched on, users cookies will be refreshed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -848,7 +875,7 @@ object Switches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 16),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = false
   )
 
@@ -917,21 +944,21 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABIdentityCookieRefresh = Switch(
-    "A/B Tests",
-    "ab-cookie-refresh",
-    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ABMembershipMessageVariants = Switch(
     "A/B Tests",
     "ab-membership-message-variants",
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
+    exposeClientSide = true
+  )
+
+  val ABMembershipMessageUsa = Switch(
+    "A/B Tests",
+    "ab-membership-message-usa",
+    "Switch for the USA Supporter message test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 21),
     exposeClientSide = true
   )
 
@@ -1132,6 +1159,16 @@ object Switches {
       exposeClientSide = false
     )
   }
+
+  // Server-side variant validation test
+  val JspmValidation = Switch(
+    "Feature",
+    "disable-jspm",
+    "A test switch that can be turned on to disable the JspmTest for bucketing validation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 15),
+    exposeClientSide = false
+  )
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

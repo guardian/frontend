@@ -12,7 +12,8 @@ GET         /oauth2callback                                                     
 GET         /logout                                                                                 controllers.admin.OAuthLoginController.logout
 
 # static files
-GET         /public/*file                                                                           controllers.Assets.at(path="/public", file)
+GET         /assets/admin/lib/*file                                                                 controllers.admin.UncachedWebAssets.at(file)
+GET         /assets/admin/*file                                                                     controllers.admin.UncachedAssets.at(file)
 GET         /assets/*path                                                                           dev.DevAssetsController.at(path)
 
 ##################### NOTE ############################
@@ -53,6 +54,9 @@ GET         /analytics/content/liveblog                                         
 GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET         /analytics/omniture/segments/:rsid                                                      controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                         controllers.admin.OmnitureReportController.getReport(reportName)
+
+GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
+
 
 # Commercial
 GET         /admin/commercial                                                                       controllers.admin.CommercialController.renderCommercialMenu()
