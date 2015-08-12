@@ -1,0 +1,41 @@
+@(crosswordPage: crosswords.CrosswordPage, blankSquares: crosswords.AccessibleCrosswordRows)(implicit request: RequestHeader)
+
+@import views.html.fragments.crosswords._
+
+@main(crosswordPage) { } {
+    <div class="l-side-margins">
+
+        @fragments.crosswordsOptOutBanner()
+
+        <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
+            @crosswordMetaHeader(crosswordPage, false)
+
+            <div class="content__main tonal__main tonal__main--tone-news">
+                <div class="gs-container">
+                    <div class="js-content-main-column">
+                        <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase() crossword__container--accessible">
+                            <div class="crossword__accessible-row-data-wrapper">
+                                <div class="crossword__accessible-data">
+                                    <h3 class="crossword__accessible-data--header">Blanks</h3>
+                                        @accessibleCrosswordGridData(blankSquares.rows)
+                                </div>
+                            </div>
+                            <div class="crossword__clues">
+                                <div class="crossword__clues--across">
+                                    <h3 class="crossword__clues-header">Across</h3>
+                                    @accessibleCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                </div>
+
+                                <div class="crossword__clues--down">
+                                    <h3 class="crossword__clues-header">Down</h3>
+                                    @accessibleCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        @crosswordFooter(crosswordPage)
+    </div>
+}

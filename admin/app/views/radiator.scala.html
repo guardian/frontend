@@ -9,7 +9,7 @@
 
 @admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/radiator.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/radiator.css")">
 
     <header>
         <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
