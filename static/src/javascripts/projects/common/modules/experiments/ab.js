@@ -6,17 +6,13 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/facebook-most-viewed',
-    'common/modules/experiments/tests/twitter-most-viewed',
+    'common/modules/experiments/tests/truncation-with-facebook',
+    'common/modules/experiments/tests/truncation-with-relevant',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/tests/pintrest',
-    'common/modules/experiments/headlines',
+    'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/membership-message',
-    'common/modules/experiments/tests/viewability'
+    'common/modules/experiments/tests/membership-message-usa'
 ], function (
     raven,
     _,
@@ -25,33 +21,23 @@ define([
     mediator,
     store,
     mvtCookie,
-    ArticleTruncation,
-    FacebookMostViewed,
-    TwitterMostViewed,
+    TruncationWithFacebook,
+    TruncationWithRelevant,
     LiveblogNotifications,
     HighCommercialComponent,
-    SaveForLater,
-    CookieRefresh,
-    Pintrest,
-    Headline,
+    SignedOutSaveForLater,
     MembershipMessage,
-    Viewability
+    MembershipMessageUSA
 ) {
 
     var TESTS = _.flatten([
-        new ArticleTruncation(),
-        new FacebookMostViewed(),
-        new TwitterMostViewed(),
+        new TruncationWithFacebook(),
+        new TruncationWithRelevant(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new SaveForLater(),
-        new CookieRefresh(),
-        new Pintrest(),
+        new SignedOutSaveForLater(),
         new MembershipMessage(),
-        new Viewability(),
-        _.map(_.range(1, 10), function (n) {
-            return new Headline(n);
-        })
+        new MembershipMessageUSA()
     ]);
 
     var participationsKey = 'gu.ab.participations';

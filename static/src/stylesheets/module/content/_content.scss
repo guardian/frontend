@@ -275,7 +275,7 @@
         }
 
         @include mq(phablet) {
-            height: gs-span(2.5) + ($gs-gutter*2);
+            height: gs-span(2.5);
         }
 
         @include mq(desktop) {
@@ -678,6 +678,12 @@
     border-top: 1px dotted colour(neutral-5);
     padding: 0;
     box-sizing: border-box;
+
+    .meta__extras--crossword & {
+        @include mq(leftCol) {
+            float: left;
+        }
+    }
 }
 
 .meta__social--sticky {
@@ -689,12 +695,10 @@
 
     @include mq(leftCol, $until: wide) {
         margin-left: $gs-gutter * -8;
- 
         .social__item--gplus {
             display: none;
         }
     }
- 
     @include mq(wide) {
         margin-left: $gs-gutter * -12;
     }
@@ -727,6 +731,8 @@
     .button {
         padding-top: 1px;
         margin-right: 0;
+        // Force content to fit inside button
+        white-space: nowrap;
 
         .tonal--tone-media & {
             border: 0;

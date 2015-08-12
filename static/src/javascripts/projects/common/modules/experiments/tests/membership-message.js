@@ -5,7 +5,8 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/modules/ui/message',
-    'text!common/views/membership-message.html'
+    'text!common/views/membership-message.html',
+    'common/views/svgs'
 ], function (
     config,
     detect,
@@ -13,14 +14,15 @@ define([
     template,
     idApi,
     Message,
-    messageTemplate
+    messageTemplate,
+    svgs
 ) {
 
     return function () {
 
-        this.id = 'MembershipMessage';
-        this.start = '2015-06-17';
-        this.expiry = '2015-07-14';
+        this.id = 'MembershipMessageVariants';
+        this.start = '2015-07-13';
+        this.expiry = '2015-08-20';
         this.author = 'David Rapson';
         this.description = 'Test if loyal users are encouraged to join Membership as a Supporter';
         this.audience = 1;
@@ -45,14 +47,30 @@ define([
         this.variants = [{
             id: 'A',
             test: function () {
-                new Message('membership-message', {
+                new Message('membership-message-variants', {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER',
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_A',
                     messageText: 'Become a Guardian Member and support fearless investigative journalism',
-                    linkText: 'Become a supporter'
+                    linkText: 'Become a supporter',
+                    arrowWhiteRight: svgs('arrowWhiteRight')
+                }));
+            }
+        },
+        {
+            id: 'B',
+            test: function () {
+                new Message('membership-message-variants', {
+                    pinOnHide: false,
+                    siteMessageLinkName: 'membership message',
+                    siteMessageCloseBtn: 'hide'
+                }).show(template(messageTemplate, {
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_B',
+                    messageText: '"If you read the Guardian, join the Guardian" Polly Toynbee.',
+                    linkText: 'Find out more',
+                    arrowWhiteRight: svgs('arrowWhiteRight')
                 }));
             }
         }];

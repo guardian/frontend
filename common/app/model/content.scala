@@ -5,11 +5,11 @@ import java.net.URL
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
+import com.gu.util.liveblogs.{Parser => LiveBlogParser}
+import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
-import dfp.DfpAgent
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ImgSrc, Naked, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support._
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -96,20 +96,22 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    bestOpenGraphImage
+    val imageUrl = bestOpenGraphImage
       .orElse(mainPicture.flatMap(largestImageUrl))
       .orElse(trailPicture.flatMap(largestImageUrl))
       .getOrElse(facebook.imageFallback)
+
+    ImgSrc(imageUrl, FacebookOpenGraphImage)
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
   override lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
 
-  lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
-    .map(_.id).map(Reference(_)).map(_._2)
+  lazy val references = delegate.references.map(ref => (ref.`type`, Reference(ref.id)._2)).toMap
 
-  lazy val isbn: Option[String] = delegate.references.find(_.`type` == "isbn")
-    .map(_.id).map(Reference(_)).map(_._2)
+  lazy val witnessAssignment = references.get("witness-assignment")
+  lazy val isbn: Option[String] = references.get("isbn")
+  lazy val imdb: Option[String] = references.get("imdb")
 
   lazy val seriesMeta = {
     series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
@@ -432,7 +434,7 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
-    else if (article.isLive)
+    else if (article.isLiveBlog)
       "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"
@@ -701,12 +703,14 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
   )
 
   override lazy val openGraphImage: String = {
-    bestOpenGraphImage
+    val imageUrl = bestOpenGraphImage
       .orElse(galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
       .getOrElse(conf.Configuration.facebook.imageFallback)
+
+    ImgSrc(imageUrl, FacebookOpenGraphImage)
   }
 
-  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
+  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
 
   override def schemaType = Some("http://schema.org/ImageGallery")
 
@@ -753,27 +757,29 @@ trait Lightboxable extends Content {
   lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
 
   lazy val lightbox: JsObject = {
-    val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
-    val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
-        JsObject(Seq(
-          "caption" -> JsString(img.caption.getOrElse("")),
-          "credit" -> JsString(img.credit.getOrElse("")),
-          "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
-          "srcsets" -> JsString(ImgSrc.normalSrcset(imgContainer, GalleryMedia.Lightbox)),
-          "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
-          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-          "role" -> JsString(img.role.toString)
-        ))
-      }
+
+    val imageJson = for {
+      container <- lightboxImages
+      img <- container.largestEditorialCrop
+    } yield {
+      JsObject(Seq(
+        "caption" -> JsString(img.caption.getOrElse("")),
+        "credit" -> JsString(img.credit.getOrElse("")),
+        "displayCredit" -> JsBoolean(img.displayCredit),
+        "src" -> JsString(Item700.bestFor(container).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.Lightbox)),
+        "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
+        "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+        "role" -> JsString(img.role.toString)
+      ))
     }
+
     JsObject(Seq(
       "id" -> JsString(id),
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray((imageJson).toSeq.flatten)
+      "images" -> JsArray(imageJson)
     ))
   }
 

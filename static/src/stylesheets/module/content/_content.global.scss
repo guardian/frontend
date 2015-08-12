@@ -117,6 +117,12 @@
     @include mq(leftCol, wide) {
         padding-right: 6px;
     }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: right;
+        }
+    }
     &:last-child {
         padding-right: 0;
     }
@@ -140,11 +146,24 @@
     @include mq(mobileLandscape, leftCol) {
         position: absolute;
         top: 1px;
-        left: ($social-width * 6);
+    }
+
+    @include mq(mobileLandscape, tablet) {
+        left: $social-width * 7;
     }
 
     @include mq(tablet, leftCol) {
-        left: ($social-width * 5);
+        left: $social-width * 6;
+    }
+
+    .content--interactive & {
+        @include mq(leftCol) {
+            $social-width: 35px;
+
+            position: absolute;
+            top: 1px;
+            left: $social-width * 6;
+        }
     }
 
     .content--liveblog & {
@@ -153,6 +172,12 @@
             left: 0;
             top: 0;
             border-top: 1px dotted colour(neutral-5);
+        }
+    }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: left;
         }
     }
 }

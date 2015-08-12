@@ -5,8 +5,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/mediator'
 ], function (
     bean,
     fastdom,
@@ -14,13 +13,11 @@ define([
     $,
     config,
     detect,
-    mediator,
-    ab
+    mediator
 ) {
     var Search = function () {
 
         var searchLoader,
-            enabled,
             gcsUrl,
             resultSetSize,
             container,
@@ -29,7 +26,6 @@ define([
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
 
-            enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
@@ -47,7 +43,7 @@ define([
                 mediator.emit('modules:search');
             });
 
-            bean.on(document, 'keydown', '.gsc-input', function (e) {
+            bean.on(document, 'keydown', '.gsc-input', function () {
                 fastdom.read(function () {
                     var $autoCompleteObject = $('.gssb_c'),
                         searchFromTop       = $autoCompleteObject.css('top'),
@@ -56,7 +52,7 @@ define([
                     fastdom.write(function () {
                         $autoCompleteObject.css({
                             'top': parseInt(searchFromTop, 10) + windowOffset,
-                            'z-index': '1000'
+                            'z-index': '1030'
                         });
                     });
                 });
@@ -76,7 +72,7 @@ define([
             if ($input.length > 0) {
                 $input.focus();
 
-                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                if (config.switches.viewability && config.page.contentType !== 'Interactive') {
                     clearInterval(checkInterval);
                     checkInterval = setInterval(self.checkResults, 250);
                 }

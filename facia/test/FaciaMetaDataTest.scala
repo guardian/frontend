@@ -74,7 +74,7 @@ import scala.concurrent.Future
     containers.size should be(14)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (36)
+    topContainer.size should be (20)
 
     (topContainer(0) \ "url").as[JsString].value should be ("/music/musicblog/2015/may/27/stone-roses-spike-island-the-reality")
 

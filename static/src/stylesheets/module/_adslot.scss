@@ -1,4 +1,5 @@
 .ad-slot {
+    position: relative;
     z-index: $zindex-ads;
     overflow: hidden;
 
@@ -9,6 +10,9 @@
             display: block;
         }
     }
+}
+.ad-slot-container {
+    margin-bottom: $gs-baseline * 2;
 }
 .ad-slot--dark {
     background-color: lighten(colour(media-background), 2.5%);
@@ -50,6 +54,9 @@
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
+.top-banner-ad-container--ab-mobile {
+    display: none;
+}
 .top-banner-ad-container--desktop {
     background-color: colour(neutral-8);
     display: none;
@@ -79,10 +86,16 @@
         @include mq(wide) {
             margin: 0;
         }
-    } 
+    }
+}
+.top-banner-ad-container--small {
+    min-height: ($gs-row-height * 3) + 18;
 }
 .top-banner-ad-container--large {
     min-height: ($gs-row-height * 7) + 34;
+}
+.top-banner-ad-container--responsive {
+    min-height: ($gs-row-height * 7) + 16;
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
@@ -206,7 +219,7 @@
 }
 .ad-slot__content {
     > div {
-        margin: 0 auto;            
+        margin: 0 auto;
     }
 }
 .ad-slot--container-inline {

@@ -7,6 +7,7 @@ import org.scalatest.{DoNotDiscover, ShouldMatchers, FreeSpec}
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
+import play.twirl.api.{HtmlFormat, Formats}
 import test.ConfiguredTestSuite
 import scala.annotation.tailrec
 import football.services.GetPaClient
@@ -21,7 +22,7 @@ import scala.language.postfixOps
     PA.competitionNames
       .filter { case (seasonId, _) => PA.approvedCompetitions.contains(seasonId) }
       .values
-      .foreach(seasonName => content should include(seasonName))
+      .foreach(seasonName => content should include(HtmlFormat.escape(seasonName).body))
   }
 
   "submitting a choice of league redirects to the correct table page" in {

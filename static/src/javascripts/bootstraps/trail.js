@@ -9,8 +9,9 @@ define([
     'common/utils/config',
     'common/utils/contains',
     'common/utils/mediator',
-    'common/utils/robusts',
+    'common/utils/robust',
     'common/utils/proximity-loader',
+    'common/utils/detect',
     'common/modules/commercial/comment-adverts',
     'common/modules/discussion/loader',
     'common/modules/identity/api',
@@ -18,7 +19,9 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/social/share-count'
+    'common/modules/article/truncate-article',
+    'common/modules/social/share-count',
+    'common/modules/experiments/article-containers-test'
 ], function (
     enhancer,
     fastdom,
@@ -28,8 +31,9 @@ define([
     config,
     contains,
     mediator,
-    robusts,
+    robust,
     proximityLoader,
+    detect,
     commentAdverts,
     DiscussionLoader,
     identityApi,
@@ -37,7 +41,9 @@ define([
     Popular,
     Related,
     TonalComponent,
-    shareCount
+    truncate,
+    shareCount,
+    articleTests
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -60,10 +66,27 @@ define([
     }
 
     function initRelated() {
+        // Remove articleTest when the article containers tests are complete
+        var articleTest;
+
+        if (config.page.contentType === 'Article' && !detect.isGuardianReferral()) {
+            articleTest = articleTests.getTest();
+
+            if (articleTest) {
+                truncate();
+            }
+        }
+
         insertOrProximity('.js-related', function () {
             var opts = {
                 excludeTags: []
             };
+
+            // Remove this when the article containers tests are complete
+            if (articleTest) {
+                articleTests.applyTest(articleTest);
+                return;
+            }
 
             // exclude ad features from non-ad feature content
             if (config.page.sponsorshipType !== 'advertisement-features') {
@@ -118,7 +141,7 @@ define([
     }
 
     return function () {
-        robusts([
+        robust.catchErrorsAndLogAll([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
             ['c-enhance', augmentInteractive],

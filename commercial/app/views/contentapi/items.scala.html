@@ -44,7 +44,10 @@
                                             @fragments.items.elements.facia_cards.image(trailPictureContainer, true)
                                         }
                                         <div class="fc-item__content">
-                                            <h2 class="fc-item__header">@item.webTitle</h2>
+                                            <h2 class="fc-item__title">
+                                                @insertItemMediaIcon(item)
+                                                @item.webTitle
+                                            </h2>
                                             <div class="fc-item__meta">
                                                 <time
                                                     class="fc-item__timestamp js-item__timestamp"
@@ -70,4 +73,13 @@
             </div>
         </div>
     </section>
+}
+
+@insertItemMediaIcon(item : model.Content) = @{
+    item match {
+        case _: Video => fragments.inlineSvg("video-icon", "icon")
+        case _: Audio => fragments.inlineSvg("volume-high ", "icon")
+        case _: Gallery => fragments.inlineSvg("camera", "icon")
+        case _ => ""
+    }
 }

@@ -3,10 +3,8 @@
         user: com.gu.identity.model.User,
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
-        idUrlBuilder: services.IdentityUrlBuilder,
-        avatarUploadData: Option[model.AvatarUploadData],
-        avatarUploadStatus: Option[Either[String, Boolean]]
-)(implicit request: RequestHeader)
+        idUrlBuilder: services.IdentityUrlBuilder
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import tracking.TrackingParams
 @import views.html.fragments.form.{inputField, textareaField}
@@ -43,7 +41,7 @@
         </ol>
 
         <div class="tabs__content">
-            @content(1, "/public/edit")(fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus))
+            @content(1, "/public/edit")(fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
 
             @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
 

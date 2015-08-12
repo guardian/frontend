@@ -11,15 +11,15 @@
             baseUrl: '@{Configuration.assets.path}javascripts',
             apiName: 'require',
             paths: {
-                core: '@StaticSecure("javascripts/core.js")',
+                core: '@Static("javascripts/core.js")',
                 text: 'text', // noop
                 inlineSvg: 'inlineSvg', // noop
-                'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
+                'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
                 'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
             }
         };
 
-        @Html(StaticSecure.js.curl)
+        @Html(Static.js.curl)
 
         require(['bootstraps/video-embed'], function(bootstrap) {
             bootstrap.init();
@@ -48,7 +48,7 @@
             * { margin: 0; padding: 0; }
             figure { margin: 0 !important; }
         </style>
-        <link rel="stylesheet" href="@StaticSecure("stylesheets/media-player.css")"/>
+        <link rel="stylesheet" href="@Static("stylesheets/media-player.css")"/>
         <base target="_parent"/>
     </head>
     <body>
@@ -84,7 +84,7 @@
                         <meta itemprop="width" content="@mv.width" />
                     }
                     <meta itemprop="requiresSubscription" content="no" />
-                    <meta itemprop="image" content="@video.openGraphImage" />
+                    <meta itemprop="image" content="@Html(video.openGraphImage)" />
                     @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                     @video.mainVideo.map { videoElement =>
                         @fragments.media.video(VideoPlayer(

@@ -1,5 +1,4 @@
 import testConfig from 'test-config';
-import Promise from 'Promise';
 import ConfigEditor from 'models/config/main';
 import MockConfig from 'mock/config';
 import MockSwitches from 'mock/switches';
@@ -7,11 +6,14 @@ import MockCollection from 'mock/collection';
 import MockDefaults from 'mock/defaults';
 import templateConfig from 'views/config.scala.html!text';
 import Bootstrap from 'modules/bootstrap';
+import inject from 'test/utils/inject';
+import * as wait from 'test/utils/wait';
+import * as vars from 'modules/vars';
 
-export default function () {
-    var mockConfig, mockSwitches, mockCollection, mockDefaults;
+export default class Loader {
+    constructor() {
+        var mockConfig, mockSwitches, mockCollection, mockDefaults;
 
-    var loader = new Promise (function (resolve) {
         mockConfig = new MockConfig();
         mockConfig.set(testConfig.config);
         mockSwitches = new MockSwitches();
@@ -20,37 +22,33 @@ export default function () {
         mockDefaults = new MockDefaults();
         mockDefaults.set(testConfig.defaults);
 
-        document.body.innerHTML += templateConfig
-            .replace('@{priority}', 'test')
-            .replace('@urlBase(env)', '/')
-            .replace(/\@[^\n]+\n/g, '');
+        this.mockConfig = mockConfig;
+        this.mockSwitches = mockSwitches;
+        this.mockCollection = mockCollection;
+        this.mockDefaults = mockDefaults;
 
-        // Mock the time
-        var originalSetTimeout = window.setTimeout;
-        jasmine.clock().install();
-        new ConfigEditor().init(new Bootstrap(), testConfig);
-        // There's a network request in the init to get the config, advance time
-        jasmine.clock().tick(100);
+        this.ko = inject(
+            templateConfig
+                .replace('@{priority}', 'test')
+                .replace('@urlBase(env)', '/')
+                .replace(/\@[^\n]+\n/g, '')
+        );
 
-        // Wait for knockout to handle bindings
-        originalSetTimeout(function () {
-            resolve();
-        }, 50);
-    });
-
-    function unload () {
-        jasmine.clock().uninstall();
-        var container = document.querySelector('.toolbar').parentNode;
-        document.body.removeChild(container);
-        mockConfig.dispose();
-        mockSwitches.dispose();
-        mockCollection.dispose();
-        mockDefaults.dispose();
+        vars.priority = testConfig.defaults.priority;
     }
 
-    return {
-        loader,
-        unload,
-        mockConfig
-    };
+    load() {
+        new ConfigEditor().init(new Bootstrap(), testConfig);
+        vars.update(testConfig);
+        // Wait for knockout to handle bindings
+        return wait.ms(50);
+    }
+
+    dispose() {
+        this.ko.dispose();
+        this.mockConfig.dispose();
+        this.mockSwitches.dispose();
+        this.mockCollection.dispose();
+        this.mockDefaults.dispose();
+    }
 }

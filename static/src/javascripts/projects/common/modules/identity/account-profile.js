@@ -46,7 +46,6 @@ define([
         };
 
         self.urls = {
-            avatarTokenUrl: 'https://gu-image-upload.appspot.com/upload-endpoint-generator',
             avatarApiUrl: config.page.avatarApiUrl + '/v1/avatars'
         };
 
@@ -105,30 +104,13 @@ define([
         }
     };
 
-    accountProfile.prototype.avatarUploadByGAE = function (avatarForm) {
-        var self = this;
-        var xhr = self.createCORSRequest('GET', self.urls.avatarTokenUrl);
-
-        if (!xhr) {
-            self.prependErrorMessage(self.messages.noCorsError, avatarForm);
-        }
-
-        xhr.onerror = function () {
-            self.prependErrorMessage(self.messages.noServerError, avatarForm);
-        };
-
-        xhr.onload = function () {
-            avatarForm.setAttribute('action', xhr.responseText);
-            avatarForm.submit();
-        };
-
-        xhr.send();
-    };
-
     accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
         var self = this;
         var formData = new FormData(document.querySelector('form' + self.classes.avatarUploadForm));
         var xhr = self.createCORSRequest('POST', self.urls.avatarApiUrl);
+
+        // disable form while submitting to prevent overlapping submissions
+        document.querySelector(self.classes.avatarUploadButton).disabled = true;
 
         if (!xhr) {
             self.prependErrorMessage(self.messages.noCorsError, avatarForm);
@@ -138,7 +120,6 @@ define([
             var status = xhr.status;
             if (status >= 200 && status < 300) {
                 self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
-                document.querySelector(self.classes.avatarUploadButton).disabled = true;
             } else if (status >= 400 && status < 500) {
                 self.prependErrorMessage(
                     JSON.parse(xhr.responseText).message || self.messages.avatarUploadFailure,
@@ -150,6 +131,7 @@ define([
 
         xhr.onerror = function () {
             self.prependErrorMessage(self.messages.noServerError, avatarForm);
+            document.querySelector(self.classes.avatarUploadButton).disabled = false;
         };
 
         xhr.setRequestHeader('Authorization', 'Bearer cookie=' + cookies.get('GU_U'));
@@ -167,12 +149,7 @@ define([
         if (avatarForm) {
             bean.on(avatarForm, 'submit', function (event) {
                 event.preventDefault();
-
-                if (config.switches.idUseAvatarApi) {
-                    self.avatarUploadByApi(avatarForm);
-                } else {
-                    self.avatarUploadByGAE(avatarForm);
-                }
+                self.avatarUploadByApi(avatarForm);
             });
         }
 

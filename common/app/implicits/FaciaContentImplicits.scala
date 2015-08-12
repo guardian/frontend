@@ -72,6 +72,8 @@ object FaciaContentImplicits {
 
     def showMainVideo: Boolean = FaciaContentUtils.showMainVideo(fc)
 
+    def showLivePlayable: Boolean = FaciaContentUtils.showLivePlayable(fc)
+
     def sectionName: Option[String] = FaciaContentUtils.sectionName(fc)
 
     def maybeSection: Option[String] = FaciaContentUtils.maybeSection(fc)

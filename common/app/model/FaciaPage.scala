@@ -1,9 +1,9 @@
 package model
 
+import common.dfp.DfpAgent
 import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
-import dfp.DfpAgent
 import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
 import services.CollectionConfigWithId

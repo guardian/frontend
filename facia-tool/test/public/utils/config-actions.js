@@ -1,6 +1,6 @@
 import mockjax from 'test/utils/mockjax';
 import Promise from 'Promise';
-import tick from 'test/utils/tick';
+import persistence from 'models/config/persistence';
 
 export default function(mockConfig, action) {
 
@@ -17,8 +17,10 @@ export default function(mockConfig, action) {
             onAfterComplete: function () {
                 clearRequest();
                 // Every such action is also triggering an update of the config
-                tick(100).then(() => tick(100)).then(() => {
-                    resolve(lastRequest);
+                persistence.once('after update', () => {
+                    setTimeout(() => {
+                        resolve(lastRequest);
+                    }, 100);
                 });
             }
         });
@@ -35,8 +37,10 @@ export default function(mockConfig, action) {
             onAfterComplete: function () {
                 clearRequest();
                 // Every such action is also triggering an update of the config
-                tick(100).then(() => tick(100)).then(() => {
-                    resolve(lastRequest);
+                persistence.once('after update', () => {
+                    setTimeout(() => {
+                        resolve(lastRequest);
+                    }, 100);
                 });
             }
         });
@@ -48,8 +52,5 @@ export default function(mockConfig, action) {
 
         desiredAnswer = action();
         mockConfig.update(desiredAnswer);
-
-        // This action triggers a network request, advance time
-        tick(100).then(() => tick(100));
     });
 }

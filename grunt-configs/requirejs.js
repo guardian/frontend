@@ -11,12 +11,11 @@ module.exports = function(grunt, options) {
                 bonzo:                'components/bonzo/bonzo',
                 enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
-                fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
                 lodash:               'components/lodash',
                 picturefill:          'projects/common/utils/picturefill',
-                Promise:              'components/native-promise-only/npo.src',
+                Promise:              'components/when/Promise',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
@@ -301,6 +300,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
+                    'bootstraps/facia',
                     'text',
                     'inlineSvg'
                 ]

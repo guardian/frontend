@@ -29,8 +29,7 @@ define([
         refreshDecay = 1,
         refreshMaxTimes = 5,
 
-        selector = '.js-snappable .js-liveblog-blocks',
-        blocksClassName = 'fc-item__liveblog-blocks',
+        selector = '.js-liveblog-blocks',
         articleIdAttribute = 'data-article-id',
         sessionStorageKey = 'gu.liveblog.block-dates',
 
@@ -64,8 +63,7 @@ define([
     }
 
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
-        var self = this,
-            fakeUpdate = _.isUndefined(oldBlockDate);
+        var fakeUpdate = _.isUndefined(oldBlockDate);
 
         _.forEach(targets, function (element) {
             var hasNewBlock = false,
@@ -92,7 +90,7 @@ define([
                 $element = bonzo(element);
 
             fastdomPromise.write(function () {
-                $element.addClass(blocksClassName).append(el);
+                $element.append(el);
             })
             .then(function () {
                 if (hasNewBlock) {
@@ -125,7 +123,7 @@ define([
         return fastdomPromise.read(function () {
             return el.getBoundingClientRect().top;
         })
-        .then(function (vPosition, ID) {
+        .then(function (vPosition) {
             if (vPosition > 0 && vPosition < veiwportHeightPx) {
                 setTimeout(function () {
                     var $el = bonzo(el);
@@ -159,7 +157,7 @@ define([
             });
             return elementsById;
         })
-        .then(function (elementsById, ID) {
+        .then(function (elementsById) {
             var oldBlockDates;
 
             if (!_.isEmpty(elementsById)) {

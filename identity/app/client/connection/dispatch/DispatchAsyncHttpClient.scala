@@ -3,7 +3,7 @@ package client.connection.dispatch
 import scala.concurrent.{ExecutionContext, Future}
 import dispatch.{Req, FunctionHandler, EnrichedFuture, url}
 import com.ning.http.client.{AsyncHttpClient, AsyncHttpClientConfig, ProxyServer}
-import com.ning.http.client.providers.netty.{NettyAsyncHttpProvider, NettyConnectionsPool}
+import com.ning.http.client.providers.netty.NettyAsyncHttpProvider
 import client.{Error, Parameters, Response}
 import client.connection.{Http, Proxy, HttpResponse}
 import org.jboss.netty.util.HashedWheelTimer
@@ -20,19 +20,19 @@ trait DispatchAsyncHttpClient extends Http {
   lazy val allowPoolingConnection: Boolean = true
   val config = {
     val builder = new AsyncHttpClientConfig.Builder()
-      .setCompressionEnabled(compressionEnabled)
-      .setAllowPoolingConnection(allowPoolingConnection)
-      .setRequestTimeoutInMs(requestTimeoutInMs)
-      .setConnectionTimeoutInMs(connectionTimeoutInMs)
-      .setMaximumConnectionsPerHost(maxConnectionsPerHost)
-      .setMaximumConnectionsTotal(maxConnections)
+      .setCompressionEnforced(compressionEnabled)
+      .setAllowPoolingConnections(allowPoolingConnection)
+      .setRequestTimeout(requestTimeoutInMs)
+      .setConnectTimeout(connectionTimeoutInMs)
+      .setMaxConnectionsPerHost(maxConnectionsPerHost)
+      .setMaxConnections(maxConnections)
+      .setAcceptAnyCertificate(true) // This needs an SSL context with a trust manager. It has always needed one, and now the api is explicit about it.
     proxy.foreach(p => builder.setProxyServer(new ProxyServer(p.host, p.port)))
     builder.build
   }
   class Client(client: AsyncHttpClient) extends dispatch.Http(client)
   val asyncHttpClient = {
-    val connectionPool = new NettyConnectionsPool(new NettyAsyncHttpProvider(config), new HashedWheelTimer())
-    new AsyncHttpClient(new AsyncHttpClientConfig.Builder(config).setConnectionsPool(connectionPool).build)
+    new AsyncHttpClient(new AsyncHttpClientConfig.Builder(config).build)
   }
   val client = new Client(asyncHttpClient)
   implicit def executionContext: ExecutionContext

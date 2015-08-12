@@ -1,51 +1,75 @@
 package views.support
 
-import conf.Switches.{FixedTopAboveNavAdSlotSwitch, TopAboveNavAdSlot728x90Switch, TopAboveNavAdSlot88x70Switch}
+import common.Edition
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.dfp.{AdSize, AdSlot, TopAboveNavSlot, TopSlot}
+import conf.Switches._
 import model.MetaData
 
 object Commercial {
 
+  def shouldShowAds(metaData: MetaData): Boolean = metaData match {
+    case c: model.Content if c.shouldHideAdverts => false
+    case p: model.Page if p.section == "identity" => false
+    case _ => true
+  }
+
+  private def hasAdOfSize(slot: AdSlot,
+                          size: AdSize,
+                          metaData: MetaData,
+                          edition: Edition): Boolean = {
+    metaData.sizeOfTakeoverAdsInSlot(slot, edition) contains size
+  }
+
   object topAboveNavSlot {
 
-    private def isUKNetworkFront(metaData: MetaData) = metaData.id == "uk"
+    private def isNetworkFront(metaData: MetaData) = {
+      metaData.id == "uk" || metaData.id == "us" || metaData.id == "au"
+    }
 
-    def adSizes(metaData: MetaData): Map[String, Seq[String]] = {
+    def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> {
-          if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
-            if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
-              Seq("1,1", "728,90")
-            } else if (TopAboveNavAdSlot88x70Switch.isSwitchedOn) {
-              Seq("1,1", "88,70")
-            } else {
-              Seq("1,1", "900,250", "970,250")
-            }
-          } else {
-            Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
-          }
-        }
+        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
       )
     }
 
-    def cssClasses(metaData: MetaData): String = {
+    def cssClasses(metaData: MetaData, edition: Edition): String = {
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
-        "top-banner-ad-container--above-nav")
+        "top-banner-ad-container--above-nav",
+        "js-top-banner-above-nav")
 
       val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn &&
-          isUKNetworkFront(metaData) &&
-          TopAboveNavAdSlot728x90Switch.isSwitchedOff &&
-          TopAboveNavAdSlot88x70Switch.isSwitchedOff) {
-          "top-banner-ad-container--large"
+        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isNetworkFront(metaData)) {
+          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition)) {
+            "top-banner-ad-container--small"
+          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition)) {
+            "top-banner-ad-container--responsive"
+          } else {
+            "top-banner-ad-container--large"
+          }
         } else {
           "top-banner-ad-container--reveal"
         }
       }
 
       (classes :+ sizeSpecificClass) mkString " "
+    }
+  }
+
+  object topBelowNavSlot {
+
+    def hasAd(metaData: MetaData, edition: Edition): Boolean = {
+      metaData.hasAdInBelowTopNavSlot(edition)
+    }
+  }
+
+  object topSlot {
+
+    def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
+      hasAdOfSize(TopSlot, responsiveSize, metaData, edition)
     }
   }
 }

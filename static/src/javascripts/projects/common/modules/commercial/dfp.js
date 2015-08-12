@@ -13,11 +13,13 @@ define([
     'common/utils/mediator',
     'common/utils/url',
     'common/utils/user-timing',
+    'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'common/modules/identity/api'
 ], function (
     bean,
     bonzo,
@@ -32,11 +34,13 @@ define([
     mediator,
     urlUtils,
     userTiming,
+    sha1,
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
     ab,
-    beacon
+    beacon,
+    id
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -64,8 +68,6 @@ define([
      */
     var resizeTimeout,
         adSlotSelector       = '.js-ad-slot',
-        displayed            = false,
-        rendered             = false,
         slots                = {},
         slotsToRefresh       = [],
         hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
@@ -78,7 +80,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (ab.shouldRunTest('Viewability', 'variant') && $adSlot.hasClass('ad-slot--right')) {
+                if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                         new StickyMpu($adSlot, {top: 58}).create();
@@ -113,8 +115,29 @@ define([
          * Initial commands
          */
         setListeners = function () {
+            var start = detect.getTimeOfDomComplete();
+
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
-                rendered = true;
+                require(['ophan/ng'], function (ophan) {
+                    var lineItemIdOrEmpty = function (event) {
+                        if (event.isEmpty) {
+                            return '__empty__';
+                        } else {
+                            return event.lineItemId;
+                        }
+                    };
+
+                    ophan.record({
+                        ads: [{
+                            slot: event.slot.getSlotId().getDomId(),
+                            campaignId: lineItemIdOrEmpty(event),
+                            creativeId: event.creativeId,
+                            timeToRenderEnded: new Date().getTime() - start,
+                            adServer: 'DFP'
+                        }]
+                    });
+                });
+
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
@@ -122,31 +145,13 @@ define([
         },
 
         setPageTargeting = function () {
-            if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'],
-                    function (ophan) {
-                        var viewId = (ophan || {}).viewId;
-                        setTarget({viewId: viewId});
-                    },
-                    function (err) {
-                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
-                            tags: {
-                                feature: 'DFP'
-                            }
-                        });
-
-                        setTarget();
-                    }
-                );
-            } else {
-                setTarget();
-            }
-        },
-
-        setTarget = function (opts) {
-            _.forOwn(buildPageTargeting(opts), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
+        },
+
+        isMobileBannerTest = function () {
+            return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
         },
 
         /**
@@ -160,7 +165,7 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none') {
+                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
                         fastdom.write(function () {
                             $adSlot.remove();
                         });
@@ -178,19 +183,28 @@ define([
                 .zipObject()
                 .valueOf();
         },
+        setPublisherProvidedId = function () {
+            var user = id.getUserFromCookie();
+            if (user) {
+                var hashedId = sha1.hash(user.id);
+                googletag.pubads().setPublisherProvidedId(hashedId);
+            }
+        },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
             googletag.display(_.keys(slots).shift());
-            displayed = true;
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            instantLoad();
             lazyLoad();
         },
         windowResize = _.debounce(
@@ -227,9 +241,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the main test or if there is a switch on
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if ((ab.shouldRunTest('Viewability', 'variant') || config.switches.lzAds) && !(config.page.hasPageSkin)) {
+            if (config.switches.viewability && !config.page.hasPageSkin) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
@@ -238,6 +251,13 @@ define([
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
+        },
+        instantLoad = function () {
+            _(slots).keys().forEach(function (slot) {
+                if (_.contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                    loadSlot(slot);
+                }
+            });
         },
         lazyLoad = function () {
             if (slots.length === 0) {
@@ -250,36 +270,25 @@ define([
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        // Make sure page skin is loaded first
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth || slot === 'dfp-ad--pageskin-inread') {
-                            googletag.display(slot);
-
-                            slots = _(slots).omit(slot).value();
-                            displayed = true;
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                            loadSlot(slot);
                         }
                     });
                 });
             }
         },
+        loadSlot = function (slot) {
+            googletag.display(slot);
+            slots = _(slots).omit(slot).value();
+        },
         addSlot = function ($adSlot) {
-            var slotId = $adSlot.attr('id'),
-                displayAd = function ($adSlot) {
-                    slots[slotId] = {
-                        isRendered: false,
-                        slot: defineSlot($adSlot)
-                    };
-                    googletag.display(slotId);
-                };
-            if (displayed && !slots[slotId]) { // dynamically add ad slot
-                // this is horrible, but if we do this before the initial ads have loaded things go awry
-                if (rendered) {
-                    displayAd($adSlot);
-                } else {
-                    mediator.once('modules:commercial:dfp:rendered', function () {
-                        displayAd($adSlot);
-                    });
-                }
-            }
+            var slotId = $adSlot.attr('id');
+            slots[slotId] = {
+                isRendered: false,
+                slot: defineSlot($adSlot)
+            };
+
+            loadSlot(slotId);
         },
         refreshSlot = function ($adSlot) {
             var slot = slots[$adSlot.attr('id')].slot;
@@ -580,8 +589,6 @@ define([
 
             // testing
             reset: function () {
-                displayed      = false;
-                rendered       = false;
                 slots          = {};
                 slotsToRefresh = [];
                 mediator.off('window:resize', windowResize);

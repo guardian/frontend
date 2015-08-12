@@ -1,23 +1,19 @@
-import bean from 'bean';
 import bonzo from 'bonzo';
 import sinon from 'sinonjs';
 import $ from 'common/utils/$';
-import ajax from 'common/utils/ajax';
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
 
 describe('Weather component', function () {
     var container,
         $weather,
         injector = new Injector(),
-        sut, config, mediator;
+        sut, config;
 
     beforeEach(function (done) {
 
-        injector.test(['facia/modules/onwards/weather', 'common/utils/config', 'common/utils/mediator'], function () {
+        injector.test(['facia/modules/onwards/weather', 'common/utils/config'], function () {
             sut = arguments[0];
             config = arguments[1];
-            mediator = arguments[2];
 
             container = bonzo.create(
                 '<div id="headlines"><div class="js-container__header"></div></div>'
@@ -98,8 +94,7 @@ describe('Weather component', function () {
     });
 
     it('should get the default location', function (done) {
-        var server = sinon.fakeServer.create(),
-            data = {id: '1', city: 'London'};
+        var server = sinon.fakeServer.create();
         spyOn(sut, 'fetchWeatherData');
 
         server.autoRespond = true;
@@ -141,7 +136,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function (err, msg) {
+                    catch: function () {
                     }
                 };
             }
@@ -157,7 +152,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function (err, msg) {
+                    catch: function () {
                     }
                 };
             }
@@ -192,7 +187,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function (err, msg) {
+                    catch: function () {
                     }
                 };
             }
@@ -273,7 +268,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function (err, msg) {
+                    catch: function () {
                     }
                 };
             }

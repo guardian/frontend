@@ -26,27 +26,21 @@ System.config({
     "bower:*": "jspm_packages/bower/*",
     "facebook.js": "//connect.facebook.net/en_US/all",
     "foresee.js": "javascripts/vendor/foresee/20150703/foresee-trigger"
-  },
-  "shim": {
-    "omniture": {
-      "exports": "s"
-    }
   }
 });
 
 System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
-    "Promise": "github:guardian/native-promise-only@0.7.6-e",
-    "babel": "npm:babel-core@5.6.15",
-    "babel-runtime": "npm:babel-runtime@5.6.15",
+    "Promise": "github:cujojs/when@3.7.3/es6-shim/Promise",
+    "babel": "npm:babel-core@5.8.22",
+    "babel-runtime": "npm:babel-runtime@5.8.20",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
     "core-js": "npm:core-js@0.9.18",
     "domready": "npm:domready@1.0.8",
     "enhancer": "github:guardian/enhancer@0.1.3",
-    "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
     "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
@@ -69,6 +63,7 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "when": "github:cujojs/when@3.7.3",
     "zxcvbn": "github:dropbox/zxcvbn@v1.0",
     "bower:jasmine-sinon@0.4.0": {
       "jasmine": "bower:jasmine@2.0.4",
@@ -132,7 +127,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.6.15": {
+    "npm:babel-runtime@5.8.20": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:bean@1.0.15": {

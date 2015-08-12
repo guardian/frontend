@@ -33,29 +33,15 @@ trait Requests {
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck")
 
-
-    private val imgixTestSections = {
-      def editionalise(path: String) = Seq(s"/uk$path", s"/au$path", s"/us$path", path)
-
-      Seq("/books", "/football", "/uk", "/au", "/us") ++
-        editionalise("/money") ++
-        editionalise("/technology") ++
-        editionalise("/business") ++
-        editionalise("/sport") ++
-        editionalise("/culture") ++
-        editionalise("/commentisfree")
-    }
-
     private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
-
-    lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
-      (Switches.ImgixAllImagesSwitch.isSwitchedOn || imgixTestSections.exists(r.path.startsWith))
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
 
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
+
+    lazy val isCrosswordFront: Boolean = r.path.endsWith("/crosswords")
   }
 }
 

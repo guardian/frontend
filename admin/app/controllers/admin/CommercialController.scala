@@ -1,11 +1,12 @@
 package controllers.admin
 
+import common.dfp.LineItemReport
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.{DfpDataHydrator, LineItemReport}
+import dfp.DfpDataHydrator
 import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
@@ -13,6 +14,11 @@ import play.api.mvc.Controller
 import tools._
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
+
+  def renderCommercialMenu() = AuthActions.AuthActionTest { request =>
+    NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
+  }
+
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(environment.stage)))
   }
@@ -46,20 +52,9 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(environment.stage, report)))
   }
 
-  def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
-    val templates = DfpDataHydrator().loadActiveUserDefinedCreativeTemplates()
-    // get some example trails
-    lazy val trailsFuture = getResponse(
-      LiveContentApi.search(Edition(request))
-        .pageSize(2)
-    ).map { response  =>
-        response.results.map {
-          Content(_)
-        }
-    }
-    trailsFuture map { trails =>
-      NoCache(Ok(views.html.commercial.templates(environment.stage, templates, trails)))
-    }
+  def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
+    val templates = Store.getDfpCreativeTemplates
+    NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
   def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
