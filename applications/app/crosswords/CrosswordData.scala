@@ -51,7 +51,8 @@ object CrosswordData {
     crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
     crossword.`type`,
-    crossword.pdf
+    crossword.pdf,
+    crossword.instructions
   )
 }
 
@@ -64,5 +65,6 @@ case class CrosswordData(
   entries: Seq[Entry],
   dimensions: CrosswordDimensions,
   crosswordType: String,
-  pdf: Option[String]
+  pdf: Option[String],
+  instructions: Option[String]
 )
