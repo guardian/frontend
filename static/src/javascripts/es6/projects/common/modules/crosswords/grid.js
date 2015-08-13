@@ -17,54 +17,52 @@ export default class Grid extends React.Component {
     }
 
     getSeparators (x, y) {
-        const separators = [];
-        const cellSeparators = this.props.separators[helpers.clueMapKey(x, y)];
-        if (cellSeparators) {
-            const top = helpers.gridSize(y);
-            const left = helpers.gridSize(x);
-            const borderWidth = 1;
-            if (cellSeparators.across) {
-                if (cellSeparators.across === ',') {
-                    const width = 1;
-                    separators.push(
-                        <rect x={left - borderWidth - width}
-                              y={top}
-                              width={width}
-                              height={constants.cellSize}></rect>
-                    );
-                } else if (cellSeparators.across === '-') {
-                    const width = constants.cellSize / 4;
-                    const height = 1;
-                    separators.push(
-                        <rect x={left - (borderWidth / 2) - (width / 2)}
-                              y={top + (constants.cellSize / 2) + (height / 2)}
-                              width={width}
-                              height={height}></rect>
-                    );
-                }
+        return this.props.separators[helpers.clueMapKey(x, y)];
+    }
+
+    createSeparator (x, y, separator, direction) {
+        const top = helpers.gridSize(y);
+        const left = helpers.gridSize(x);
+        const borderWidth = 1;
+        if (direction === 'across') {
+            if (separator === ',') {
+                const width = 1;
+                return (
+                    <rect x={left - borderWidth - width}
+                          y={top}
+                          width={width}
+                          height={constants.cellSize}></rect>
+                );
+            } else if (separator === '-') {
+                const width = constants.cellSize / 4;
+                const height = 1;
+                return (
+                    <rect x={left - (borderWidth / 2) - (width / 2)}
+                          y={top + (constants.cellSize / 2) + (height / 2)}
+                          width={width}
+                          height={height}></rect>
+                );
             }
-            if (cellSeparators.down) {
-                if (cellSeparators.down === ',') {
-                    const height = 1;
-                    separators.push(
-                        <rect x={left}
-                              y={top - borderWidth - height}
-                              width={constants.cellSize}
-                              height={height}></rect>
-                    );
-                } else if (cellSeparators.down === '-') {
-                    const width = 1;
-                    const height = constants.cellSize / 4;
-                    separators.push(
-                        <rect x={left + (constants.cellSize / 2) + (width / 2)}
-                              y={top - (borderWidth / 2) - (height / 2)}
-                              width={width}
-                              height={height}></rect>
-                    );
-                }
+        } else if (direction === 'down') {
+            if (separator === ',') {
+                const height = 1;
+                return (
+                    <rect x={left}
+                          y={top - borderWidth - height}
+                          width={constants.cellSize}
+                          height={height}></rect>
+                );
+            } else if (separator === '-') {
+                const width = 1;
+                const height = constants.cellSize / 4;
+                return (
+                    <rect x={left + (constants.cellSize / 2) + (width / 2)}
+                          y={top - (borderWidth / 2) - (height / 2)}
+                          width={width}
+                          height={height}></rect>
+                );
             }
         }
-        return separators;
     }
 
     render () {
@@ -89,7 +87,9 @@ export default class Grid extends React.Component {
                         />
                     );
 
-                    separators = separators.concat(this.getSeparators(x, y));
+                    separators = separators.concat(
+                        _.map(this.getSeparators(x, y),
+                            (separator, direction) => this.createSeparator(x, y, separator, direction)));
                 }
 
             });
