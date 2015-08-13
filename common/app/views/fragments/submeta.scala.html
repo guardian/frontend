@@ -1,7 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
 @import conf.Switches.SaveForLaterSwitch
-@import conf.Switches.SyndicationReprintEnabledSwitch
 
 @toneLink = {
     @if(content.isArticle && !content.isLiveBlog) {
@@ -29,48 +28,24 @@
                     @fragments.social(content)
                 </div>
                 <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
-                @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
-                    @if(content.isSyndicatable) {
-                        <div class="submeta__syndication">
-                            @fragments.syndication(content)
-                        </div>
-                    }
-                }
+                @fragments.syndication(content)
             </div>
         } else {
             <div class="u-cf">
                 <div data-component="share" class="submeta__share">
                     @fragments.social(content)
                 </div>
-                @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
-                    @if(content.isSyndicatable) {
-                        <div class="submeta__syndication">
-                            @fragments.syndication(content)
-                        </div>
-                    }
-                }
+                @fragments.syndication(content)
             </div>
         }
     } else {
         @if(SaveForLaterSwitch.isSwitchedOn) {
             <div class="u-cf">
                 <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
-                @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
-                    @if(content.isSyndicatable) {
-                        <div class="submeta__syndication">
-                            @fragments.syndication(content)
-                        </div>
-                    }
-                }
+                @fragments.syndication(content)
             </div>
         } else {
-            @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
-                @if(content.isSyndicatable) {
-                    <div class="submeta__syndication">
-                        @fragments.syndication(content)
-                    </div>
-                }
-            }
+            @fragments.syndication(content)
         }
     }
 </div>
