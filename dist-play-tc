@@ -4,8 +4,13 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-echo "3. Dist play jars."
+echo "Dist play jars."
+
+echo "##teamcity[progressStart 'sbt test and dist']"
 ./sbt-tc "project root" compile test assets dist
+echo "##teamcity[progressFinish 'sbt test and dist']"
+
+echo "##teamcity[progressStart 'zipping and publishing']"
 
 rm -rf "dist"
 
@@ -37,5 +42,7 @@ do
     echo "##teamcity[publishArtifacts 'dist/$config.zip']"
     set -o xtrace
 done
+
+echo "##teamcity[progressFinish 'zipping and publishing']"
 
 echo "Done disting."

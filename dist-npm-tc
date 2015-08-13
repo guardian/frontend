@@ -4,7 +4,7 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-echo "1. Npm installation."
+echo "Npm installation."
 npm prune --production
 npm install --production
 

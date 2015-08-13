@@ -4,5 +4,12 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-echo "2. Asset compilation."
-./grunt-tc validate:sass validate:js test:unit compile emitAbTestInfo
+echo "Asset compilation"
+
+echo "##teamcity[progressStart 'asset validation and tests']"
+./grunt-tc validate:sass validate:js test:unit
+echo "##teamcity[progressFinish 'asset validation and tests']"
+
+echo "##teamcity[progressStart 'asset dist']"
+./grunt-tc compile emitAbTestInfo
+echo "##teamcity[progressFinish 'asset dist']"
