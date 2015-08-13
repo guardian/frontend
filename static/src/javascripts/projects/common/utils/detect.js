@@ -446,25 +446,20 @@ define([
     }
 
     function adblockInUse() {
-        var isAdblock = false;
+        var sacrificialAd = createSacrificalAd();
+        var contentBlocked = isHidden(sacrificialAd);
+        sacrificialAd.remove();
+        return contentBlocked;
 
-        $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>').appendTo(document.body);
-
-        var displayed = $('.ad_unit').css('display');
-        if (displayed === 'none') {
-            console.log('### Ad Blocker detected (using Display: none)');
+        function createSacrificalAd() {
+            var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+            sacrificialAd.appendTo(document.body);
+            return sacrificialAd;
         }
 
-
-        var containerHeight = $('.ad_unit').dim().height;
-        if (containerHeight < 1) {
-            console.log('### Ad Blocker Detected (using Dim().height)');
-            isAdblock = true;
+        function isHidden(bonzoElement) {
+            return bonzoElement.css('display') === 'none';
         }
-
-
-
-        return isAdblock;
     }
 
     detect = {
