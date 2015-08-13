@@ -30,9 +30,9 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     FixedTopAboveNavAdSlotSwitch.switchOn()
   }
 
-  "topAboveNavSlot ad sizes" should "be fixed for UK network front" in {
-    pageShouldRequestAdSizes("uk", Nil)(
-      Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
+  "topAboveNavSlot ad sizes" should "be fixed for UK business front" in {
+    pageShouldRequestAdSizes("uk/business", Nil)(
+      Seq("1,1", "900,250", "970,250")
     )
   }
 
@@ -47,18 +47,18 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   }
 
   "topAboveNavSlot css classes" should
-    "be large for 900x250 or 970x250 ad on UK network front" in {
-    topAboveNavSlot.cssClasses(metaDataFromId("uk", Seq(AdSize(900, 250))),
+    "be large for 900x250 or 970x250 ad on UK business front" in {
+    topAboveNavSlot.cssClasses(metaDataFromId("uk/business", Seq(AdSize(900, 250))),
       defaultEdition) should endWith("top-banner-ad-container--large")
   }
 
-  they should "be small for 728x90 ad on AU network front" in {
-    topAboveNavSlot.cssClasses(metaDataFromId("au", Seq(leaderboardSize)),
+  they should "be small for 728x90 ad on AU business front" in {
+    topAboveNavSlot.cssClasses(metaDataFromId("au/business", Seq(leaderboardSize)),
       defaultEdition) should endWith("top-banner-ad-container--small")
   }
 
-  they should "be responsive for 88x70 ad on US network front" in {
-    topAboveNavSlot.cssClasses(metaDataFromId("us", Seq(responsiveSize)), defaultEdition) should
+  they should "be responsive for 88x70 ad on US business front" in {
+    topAboveNavSlot.cssClasses(metaDataFromId("us/business", Seq(responsiveSize)), defaultEdition) should
       endWith("top-banner-ad-container--responsive")
   }
 
