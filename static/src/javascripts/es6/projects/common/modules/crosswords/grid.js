@@ -20,48 +20,63 @@ export default class Grid extends React.Component {
         return this.props.separators[helpers.clueMapKey(x, y)];
     }
 
-    createSeparator (x, y, separator, direction) {
+    // Position at end of previous cell
+    createWordSeparator (x, y, direction) {
         const top = helpers.gridSize(y);
         const left = helpers.gridSize(x);
         const borderWidth = 1;
+
         if (direction === 'across') {
-            if (separator === ',') {
-                const width = 1;
-                return (
-                    <rect x={left - borderWidth - width}
-                          y={top}
-                          width={width}
-                          height={constants.cellSize}></rect>
-                );
-            } else if (separator === '-') {
-                const width = constants.cellSize / 4;
-                const height = 1;
-                return (
-                    <rect x={left - (borderWidth / 2) - (width / 2)}
-                          y={top + (constants.cellSize / 2) + (height / 2)}
-                          width={width}
-                          height={height}></rect>
-                );
-            }
+            const width = 1;
+            return (
+                <rect x={left - borderWidth - width}
+                      y={top}
+                      width={width}
+                      height={constants.cellSize}></rect>
+            );
         } else if (direction === 'down') {
-            if (separator === ',') {
-                const height = 1;
-                return (
-                    <rect x={left}
-                          y={top - borderWidth - height}
-                          width={constants.cellSize}
-                          height={height}></rect>
-                );
-            } else if (separator === '-') {
-                const width = 1;
-                const height = constants.cellSize / 4;
-                return (
-                    <rect x={left + (constants.cellSize / 2) + (width / 2)}
-                          y={top - (borderWidth / 2) - (height / 2)}
-                          width={width}
-                          height={height}></rect>
-                );
-            }
+            const height = 1;
+            return (
+                <rect x={left}
+                      y={top - borderWidth - height}
+                      width={constants.cellSize}
+                      height={height}></rect>
+            );
+        }
+    }
+
+    // Position in-between this and previous cells
+    createHyphenSeparator (x, y, direction) {
+        const top = helpers.gridSize(y);
+        const left = helpers.gridSize(x);
+        const borderWidth = 1;
+
+        if (direction === 'across') {
+            const width = constants.cellSize / 4;
+            const height = 1;
+            return (
+                <rect x={left - (borderWidth / 2) - (width / 2)}
+                      y={top + (constants.cellSize / 2) + (height / 2)}
+                      width={width}
+                      height={height}></rect>
+            );
+        } else if (direction === 'down') {
+            const width = 1;
+            const height = constants.cellSize / 4;
+            return (
+                <rect x={left + (constants.cellSize / 2) + (width / 2)}
+                      y={top - (borderWidth / 2) - (height / 2)}
+                      width={width}
+                      height={height}></rect>
+            );
+        }
+    }
+
+    createSeparator (x, y, separator, direction) {
+        if (separator === ',') {
+            return this.createWordSeparator(x, y, direction);
+        } else if (separator === '-') {
+            return this.createHyphenSeparator(x, y, direction);
         }
     }
 
