@@ -120,10 +120,6 @@ trait MetaData extends Tags {
   def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
 }
 
-
-
-
-
 class Page(
   val id: String,
   val section: String,
@@ -224,13 +220,22 @@ trait Elements {
   def mainPicture: Option[ImageContainer] = images.find(_.isMain)
 
   lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
-  lazy val hasShowcaseMainPicture = {
-    val showcase = for {
+
+  // Currently, only Picture and Embed elements can be given the showcase role.
+  lazy val hasShowcaseMainElement = {
+    val showcasePicture = for {
       main  <- mainPicture
       image <- main.largestImage
       role  <- image.role
     } yield role == "showcase"
-    showcase.getOrElse(false)
+
+    val showcaseEmbed = for {
+      embed <- mainEmbed
+      asset <- embed.embedAssets.headOption
+      role <- asset.role
+    } yield role == "showcase"
+
+    showcasePicture.getOrElse(false) || showcaseEmbed.getOrElse(false)
   }
 
   def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption

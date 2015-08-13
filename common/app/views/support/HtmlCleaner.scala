@@ -552,6 +552,13 @@ object FigCaptionCleaner extends HtmlCleaner {
   }
 }
 
+object MainFigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img caption--main")}
+    document
+  }
+}
+
 object RichLinkCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     val richLinks = document.getElementsByClass("element-rich-link")
