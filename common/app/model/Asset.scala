@@ -88,4 +88,5 @@ case class EmbedAsset(private val delegate: Asset) {
   lazy val caption: Option[String] = fields.get("caption")
   lazy val html: Option[String] = fields.get("html")
   lazy val embedType: Option[String] = fields.get("embedType")
+  lazy val role: Option[String] = fields.get("role")
 }

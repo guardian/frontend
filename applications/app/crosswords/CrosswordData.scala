@@ -28,7 +28,9 @@ case class Entry(
   length: Int,
   position: CrosswordPosition,
   solution: Option[String]
-)
+) extends CrosswordGridColumnNotation {
+  lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
+}
 
 object CrosswordData {
 
@@ -49,7 +51,8 @@ object CrosswordData {
     crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
     crossword.`type`,
-    crossword.pdf
+    crossword.pdf,
+    crossword.instructions
   )
 }
 
@@ -62,5 +65,6 @@ case class CrosswordData(
   entries: Seq[Entry],
   dimensions: CrosswordDimensions,
   crosswordType: String,
-  pdf: Option[String]
+  pdf: Option[String],
+  instructions: Option[String]
 )

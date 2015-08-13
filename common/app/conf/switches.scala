@@ -567,6 +567,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val UkNewsTargeting = Switch(
+    "Commercial",
+    "uk-news-target",
+    "Uses full UK News keyword for DFP targeting.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = true
+  )
+
 
   // Monitoring
 
@@ -789,6 +798,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val IdentityCookieRefreshSwitch = Switch(
+    "Identity",
+    "id-cookie-refresh",
+    "If switched on, users cookies will be refreshed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -857,7 +875,7 @@ object Switches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 16),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = false
   )
 
@@ -924,15 +942,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val ABIdentityCookieRefresh = Switch(
-    "A/B Tests",
-    "ab-cookie-refresh",
-    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val ABMembershipMessageVariants = Switch(

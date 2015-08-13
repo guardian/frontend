@@ -3,7 +3,15 @@ import storage from 'common/utils/storage';
 
 describe('Build Page Targeting', function () {
 
-    var buildPageTargeting, config, cookies, detect, userAdTargeting, ab, krux, audienceScienceGateway,
+    var buildPageTargeting,
+        config,
+        cookies,
+        detect,
+        identity,
+        userAdTargeting,
+        ab,
+        krux,
+        audienceScienceGateway,
         injector = new Injector();
 
     beforeEach(function (done) {
@@ -12,6 +20,7 @@ describe('Build Page Targeting', function () {
                 'common/utils/config',
                 'common/utils/cookies',
                 'common/utils/detect',
+                'common/modules/identity/api',
                 'common/modules/commercial/user-ad-targeting',
                 'common/modules/experiments/ab',
                 'common/modules/commercial/third-party-tags/krux',
@@ -21,10 +30,11 @@ describe('Build Page Targeting', function () {
                 config = arguments[1];
                 cookies = arguments[2];
                 detect = arguments[3];
-                userAdTargeting = arguments[4];
-                ab = arguments[5];
-                krux = arguments[6];
-                audienceScienceGateway = arguments[7];
+                identity = arguments[4];
+                userAdTargeting = arguments[5];
+                ab = arguments[6];
+                krux = arguments[7];
+                audienceScienceGateway = arguments[8];
 
                 config.page = {
                     edition:     'US',
@@ -51,6 +61,9 @@ describe('Build Page Targeting', function () {
                 };
                 detect.getBreakpoint = function () {
                     return 'mobile';
+                };
+                identity.isUserLoggedIn = function () {
+                    return true;
                 };
                 userAdTargeting.getUserSegments = function () {
                     return ['seg1', 'seg2'];
@@ -88,6 +101,7 @@ describe('Build Page Targeting', function () {
         expect(pageTargeting.su).toBe(true);
         expect(pageTargeting.bp).toBe('mobile');
         expect(pageTargeting.at).toBe('ng101');
+        expect(pageTargeting.si).toEqual('t');
         expect(pageTargeting.gdncrm).toEqual(['seg1', 'seg2']);
         expect(pageTargeting.co).toEqual(['gabrielle-chan']);
         expect(pageTargeting.bl).toEqual(['blog']);
@@ -162,6 +176,7 @@ describe('Build Page Targeting', function () {
             p: 'ng',
             bp: 'mobile',
             at: 'ng101',
+            si: 't',
             ab: ['MtMaster-v'],
             pv: '123456',
             fr: '0'

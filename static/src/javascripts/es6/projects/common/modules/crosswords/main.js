@@ -17,8 +17,6 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
-import loadComments from './comments';
-import renderSeries from './series';
 
 class Crossword extends React.Component {
 
@@ -47,8 +45,6 @@ class Crossword extends React.Component {
             'goToReturnPosition'
         );
 
-        loadComments();
-        renderSeries();
 
         this.state = {
             grid: helpers.buildGrid(
@@ -74,6 +70,13 @@ class Crossword extends React.Component {
                 firstClue.position.y,
                 firstClue.direction
             );
+        }
+    }
+
+    componentDidUpdate (prevProps, prevState) {
+        // return focus to active cell after exiting anagram helper
+        if (!this.state.showAnagramHelper && (this.state.showAnagramHelper !== prevState.showAnagramHelper)) {
+            this.focusCurrentCell();
         }
     }
 
@@ -298,6 +301,10 @@ class Crossword extends React.Component {
                 directionOfEntry: direction
             });
         }
+    }
+
+    focusCurrentCell () {
+        this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
     }
 
     cluesFor (x, y) {
