@@ -34,7 +34,7 @@
     "grunt-sass": "1.0.0",
     "grunt-scss-lint": "0.3.3",
     "grunt-shell": "1.1.1",
-    "grunt-svgmin": "^2.0.0",
+    "grunt-svgmin": "oliverjash/grunt-svgmin#2dedd7f56f2fa43974f68b603c7ef4ffb1115b17",
     "grunt-text-replace": "0.3.12",
     "grunt-webfontjson": "0.0.4",
     "handlebars": "2.0.0",
