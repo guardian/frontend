@@ -4,10 +4,14 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-./grunt-tc clean install validate:sass validate:js test:unit compile emitAbTestInfo
-./sbt-tc "project root" compile test assets dist
+echo "Dist play jars."
 
-echo "Disting everything."
+echo "##teamcity[progressStart 'sbt test and dist']"
+./sbt-tc "project root" compile test assets dist
+echo "##teamcity[progressFinish 'sbt test and dist']"
+
+echo "##teamcity[progressStart 'zipping and publishing']"
+
 rm -rf "dist"
 
 configurations="admin applications archive article commercial diagnostics discussion "\
@@ -38,5 +42,7 @@ do
     echo "##teamcity[publishArtifacts 'dist/$config.zip']"
     set -o xtrace
 done
+
+echo "##teamcity[progressFinish 'zipping and publishing']"
 
 echo "Done disting."
