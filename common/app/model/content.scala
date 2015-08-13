@@ -322,6 +322,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   def showFooterContainers = false
+
+  override def iosType = Some("article")
 }
 
 object Content {
