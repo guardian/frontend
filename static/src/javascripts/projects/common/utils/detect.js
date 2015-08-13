@@ -241,7 +241,7 @@ define([
         var thisBrowserSupportsWoff2 = function (candidacy) {
             return _.some(browsersThatSupportWoff2, function (supportingVersion, supportingBrowser) {
                 return candidacy[1] === supportingBrowser && candidacy[2] >= supportingVersion;
-            })
+            });
         };
 
         var woff2Candidacy = /(chrome|firefox)\/([0-9]+)/.exec(ua);
