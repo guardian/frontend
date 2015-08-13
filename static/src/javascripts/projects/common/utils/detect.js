@@ -234,7 +234,8 @@ define([
         ua = ua.toLowerCase();
 
         var browsersThatSupportWoff2 = {
-            'chrome': 36
+            'chrome': 36,
+            'firefox': 39
         };
 
         var thisBrowserSupportsWoff2 = function (candidacy) {
@@ -243,7 +244,7 @@ define([
             })
         };
 
-        var woff2Candidacy = /(chrome)\/([0-9]+)/.exec(ua);
+        var woff2Candidacy = /(chrome|firefox)\/([0-9]+)/.exec(ua);
 
         if (!!woff2Candidacy && thisBrowserSupportsWoff2(woff2Candidacy)) {
             return 'woff2';
