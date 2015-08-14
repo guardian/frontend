@@ -40,10 +40,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   val topAboveNavSlotTakeovers: Seq[GuLineItem] = dateSort {
     lineItems filter { lineItem =>
       lineItem.costType == "CPD" &&
-        lineItem.targeting.adUnits.exists { adUnit =>
-          val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
-          prefix.endsWith("/uk") || prefix.endsWith("/us") || prefix.endsWith("/au")
-        } &&
+        lineItem.targetsSectionFrontDirectly("business") &&
         lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
           geoTarget.locationType == "COUNTRY" && (
             geoTarget.name == "United Kingdom" ||
