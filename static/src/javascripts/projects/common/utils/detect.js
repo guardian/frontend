@@ -240,7 +240,7 @@ define([
 
         var thisBrowserSupportsWoff2 = function (candidacy) {
             return _.some(browsersThatSupportWoff2, function (supportingVersion, supportingBrowser) {
-                return candidacy[1] === supportingBrowser && candidacy[2] >= supportingVersion;
+                return candidacy[1] === supportingBrowser && parseInt(candidacy[2], 10) >= supportingVersion;
             });
         };
 
