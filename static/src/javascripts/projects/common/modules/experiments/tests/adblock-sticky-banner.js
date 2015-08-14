@@ -18,7 +18,7 @@ define([
 
         this.id = 'AdblockStickyBanner';
         this.start = '2015-08-11';
-        this.expiry = '2015-08-21';
+        this.expiry = '2015-08-28';
         this.author = 'Zofia Korcz';
         this.description = 'Test if ad-block users are encouraged to support us by joining membership';
         this.audience = 0.1;
