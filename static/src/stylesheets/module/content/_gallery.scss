@@ -152,12 +152,6 @@
     position: absolute;
     margin: $gs-gutter/2;
 
-    .centered-icon {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-    }
-
     .element--thumbnail & {
         width: 33px;
         height: 33px;
@@ -179,7 +173,7 @@
         .article__img-container:hover & {
             background-color: colour(media-default);
 
-            .inline-expand-image {
+            &.inline-expand-image {
                 fill: #000000;
             }
         }
