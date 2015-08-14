@@ -232,21 +232,21 @@ define([
 
     function getFontFormatSupport(ua) {
         ua = ua.toLowerCase();
-        var browserSupportsWoff2 = false,
-            // for now only Chrome 36+ supports WOFF 2.0.
-            // Opera/Chromium also support it but their share on theguardian.com is around 0.5%
-            woff2browsers = /Chrome\/([0-9]+)/i,
-            chromeVersion;
 
-        if (woff2browsers.test(ua)) {
-            chromeVersion = parseInt(woff2browsers.exec(ua)[1], 10);
+        var browsersThatSupportWoff2 = {
+            'chrome': 36,
+            'firefox': 39
+        };
 
-            if (chromeVersion >= 36) {
-                browserSupportsWoff2 = true;
-            }
-        }
+        var thisBrowserSupportsWoff2 = function (candidacy) {
+            return _.some(browsersThatSupportWoff2, function (supportingVersion, supportingBrowser) {
+                return candidacy[1] === supportingBrowser && parseInt(candidacy[2], 10) >= supportingVersion;
+            });
+        };
 
-        if (browserSupportsWoff2) {
+        var woff2Candidacy = /(chrome|firefox)\/([0-9]+)/.exec(ua);
+
+        if (!!woff2Candidacy && thisBrowserSupportsWoff2(woff2Candidacy)) {
             return 'woff2';
         }
 
