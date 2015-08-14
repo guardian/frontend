@@ -59,8 +59,7 @@ export default class Cell extends React.Component {
                     className={classNames({
                         'crossword__cell': true,
                         'crossword__cell--focussed': this.props.isFocussed,
-                        'crossword__cell--highlighted': this.props.isHighlighted,
-                        'crossword__cell--intersecting': this.props.intersectsFocussedEntry
+                        'crossword__cell--highlighted': this.props.isHighlighted
                     })}>
                 </rect>
                 {cellNumber}

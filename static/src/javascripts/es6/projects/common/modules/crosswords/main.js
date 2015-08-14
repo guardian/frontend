@@ -73,6 +73,13 @@ class Crossword extends React.Component {
         }
     }
 
+    componentDidUpdate (prevProps, prevState) {
+        // return focus to active cell after exiting anagram helper
+        if (!this.state.showAnagramHelper && (this.state.showAnagramHelper !== prevState.showAnagramHelper)) {
+            this.focusCurrentCell();
+        }
+    }
+
     setCellValue (x, y, value) {
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
@@ -296,6 +303,10 @@ class Crossword extends React.Component {
         }
     }
 
+    focusCurrentCell () {
+        this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
+    }
+
     cluesFor (x, y) {
         return this.clueMap[helpers.clueMapKey(x, y)];
     }
@@ -459,6 +470,7 @@ class Crossword extends React.Component {
                         rows={this.rows}
                         columns={this.columns}
                         cells={this.state.grid}
+                        separators={helpers.buildSeparatorMap(this.props.data.entries)}
                         setCellValue={this.setCellValue}
                         onSelect={this.onSelect}
                         isHighlighted={isHighlighted}

@@ -17,6 +17,7 @@ object Entry {
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
     entry.position.getOrElse(CrosswordPosition(0,0)),
+    entry.separatorLocations,
     entry.solution
   )
 }
@@ -27,6 +28,7 @@ case class Entry(
   direction: String,
   length: Int,
   position: CrosswordPosition,
+  separatorLocations: Option[Map[String, Seq[Int]]],
   solution: Option[String]
 ) extends CrosswordGridColumnNotation {
   lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
@@ -51,7 +53,8 @@ object CrosswordData {
     crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
     crossword.`type`,
-    crossword.pdf
+    crossword.pdf,
+    crossword.instructions
   )
 }
 
@@ -64,5 +67,6 @@ case class CrosswordData(
   entries: Seq[Entry],
   dimensions: CrosswordDimensions,
   crosswordType: String,
-  pdf: Option[String]
+  pdf: Option[String],
+  instructions: Option[String]
 )
