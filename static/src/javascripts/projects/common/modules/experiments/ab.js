@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/membership-message',
-    'common/modules/experiments/tests/membership-message-usa'
+    'common/modules/experiments/tests/membership-message-usa',
+    'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
     raven,
     _,
@@ -27,7 +28,8 @@ define([
     HighCommercialComponent,
     SignedOutSaveForLater,
     MembershipMessage,
-    MembershipMessageUSA
+    MembershipMessageUSA,
+    AdblockStickyBanner
 ) {
 
     var TESTS = _.flatten([
@@ -37,7 +39,8 @@ define([
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
         new MembershipMessage(),
-        new MembershipMessageUSA()
+        new MembershipMessageUSA(),
+        new AdblockStickyBanner()
     ]);
 
     var participationsKey = 'gu.ab.participations';
