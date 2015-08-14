@@ -446,22 +446,20 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '',
-            isAdblock = false,
-            mozBinding = '',
-            mozBindingHidden = -1;
+        var sacrificialAd = createSacrificalAd();
+        var contentBlocked = isHidden(sacrificialAd);
+        sacrificialAd.remove();
+        return contentBlocked;
 
-        $.create('<div class="ad_unit"></div>').appendTo(document.body);
-        displayed = $('.ad_unit').css('display');
-        mozBinding = $('.ad_unit').css('-moz-binding');
-        if (typeof mozBinding !== 'undefined') {
-            mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+        function createSacrificalAd() {
+            var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+            sacrificialAd.appendTo(document.body);
+            return sacrificialAd;
         }
-        $('.ad_unit').remove();
-        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
-            isAdblock = true;
+
+        function isHidden(bonzoElement) {
+            return bonzoElement.css('display') === 'none';
         }
-        return isAdblock;
     }
 
     detect = {
