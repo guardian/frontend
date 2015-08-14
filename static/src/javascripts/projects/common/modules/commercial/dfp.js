@@ -119,7 +119,6 @@ define([
         setListeners = function () {
             var start = detect.getTimeOfDomComplete();
 
-
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 require(['ophan/ng'], function (ophan) {
                     var lineItemIdOrEmpty = function (event) {
@@ -140,7 +139,6 @@ define([
                         }]
                     });
                 });
-
 
                 rendered = true;
                 recordFirstAdRendered();
@@ -210,6 +208,7 @@ define([
             setPublisherProvidedId();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            instantLoad();
             lazyLoad();
         },
         windowResize = _.debounce(
@@ -257,6 +256,13 @@ define([
 
             return dfp;
         },
+        instantLoad = function () {
+            _(slots).keys().forEach(function (slot) {
+                if (_.contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                    loadSlot(slot);
+                }
+            });
+        },
         lazyLoad = function () {
             if (slots.length === 0) {
                 mediator.off('window:scroll');
@@ -268,18 +274,17 @@ define([
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        // Pageskin and Outbrain needs to be loaded at the page load - TODO: unit test
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth
-                            || slot === 'dfp-ad--pageskin-inread'
-                            || slot === 'dfp-ad--merchandising-high') {
-                            googletag.display(slot);
-
-                            slots = _(slots).omit(slot).value();
-                            displayed = true;
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                            loadSlot(slot);
                         }
                     });
                 });
             }
+        },
+        loadSlot = function (slot) {
+            googletag.display(slot);
+            slots = _(slots).omit(slot).value();
+            displayed = true;
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),

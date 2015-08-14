@@ -78,26 +78,14 @@ define([
 
             fastdom.write(function () {
                 $outbrain.css('display', 'block');
-                $container.append($.create(template(
-                    outbrainTpl,
-                    {
-                        className: 'outbrainImage',
-                        widgetCode: widgetCode
-                    })
-                ));
+                $container.append($.create(template(outbrainTpl, { widgetCode: widgetCode })));
             });
 
             if (config.switches.newOutbrain && breakpoint !== 'mobile' && !identity.isUserLoggedIn()) {
                 widgetCodeText  = widgetConfig[breakpoint].text[getSection()];
 
                 fastdom.write(function () {
-                    $container.append($.create(template(
-                        outbrainTpl,
-                        {
-                            className: 'outbrainText',
-                            widgetCode: widgetCodeText
-                        })
-                    ));
+                    $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
                 });
             }
 
@@ -106,7 +94,7 @@ define([
     }
 
     function getSection() {
-        return _.contains(['uk'], config.page.pageId.toLowerCase())
+        return config.page.section.toLowerCase().match('news')
             || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
     }
 

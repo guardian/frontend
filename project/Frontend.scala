@@ -17,7 +17,12 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       akkaAgent,
       apacheCommonsMath3,
-      awsSdk,
+      awsCore,
+      awsCloudwatch,
+      awsDynamodb,
+      awsS3,
+      awsSns,
+      awsSqs,
       contentApiClient,
       faciaScalaClient,
       filters,
@@ -107,7 +112,9 @@ object Frontend extends Build with Prototypes {
       jquery,
       jqueryui,
       lodash,
-      react
+      react,
+      awsElasticloadbalancing,
+      awsSes
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
@@ -115,7 +122,8 @@ object Frontend extends Build with Prototypes {
 
   val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      playJsonVariants
+      playJsonVariants,
+      awsKinesis
     )
   )
 

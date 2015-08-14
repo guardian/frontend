@@ -28,6 +28,7 @@ define([
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
+    'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
     'common/modules/navigation/profile',
@@ -80,6 +81,7 @@ define([
     CommentCount,
     ab,
     AutoSignin,
+    CookieRefresh,
     navigation,
     sticky,
     Profile,
@@ -211,6 +213,12 @@ define([
             initAutoSignin: function () {
                 if (config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
                     new AutoSignin().init();
+                }
+            },
+
+            idCookieRefresh: function () {
+                if (config.switches.idCookieRefresh) {
+                    new CookieRefresh().init();
                 }
             },
 
@@ -367,6 +375,7 @@ define([
                 ['c-clickstream', modules.initClickstream],
                 ['c-history', modules.updateHistory],
                 ['c-sign-in', modules.initAutoSignin],
+                ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],

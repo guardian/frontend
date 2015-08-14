@@ -8,6 +8,10 @@
     .crossword__container--#{$xword} {
         @include mq(tablet) {
             padding-left: $size;
+
+            &.crossword__container--accessible {
+                padding-left: 0;
+            }
         }
 
         .crossword__grid-wrapper {
@@ -57,7 +61,15 @@
         noscript & {
             width: 85%;
         }
+
+        .crossword__container--accessible & {
+            width: initial;
+        }
     }
+}
+
+.crossword__accessible-row-data-wrapper {
+    float: left;
 }
 
 .crossword__clues--across {
@@ -75,12 +87,20 @@
 }
 
 .crossword__links {
+    @include mq(leftCol) {
+        top: $gs-baseline * -3;
+    }
+
     position: relative;
-    top: $gs-baseline * -3;
+    top: $gs-baseline * -2;
     font-family: $f-sans-serif-text;
     font-size: 15px;
 }
 
 .js-crossword-link {
     display: none;
+}
+
+.crossword__instructions {
+    margin: $gs-baseline 0;
 }

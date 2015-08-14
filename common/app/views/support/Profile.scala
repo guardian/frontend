@@ -34,8 +34,17 @@ sealed trait ElementProfile {
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
+  // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
+  lazy val resizeString = {
+    val qualityparam = "q=85"
+    val autoParam = "auto=format"
+    val sharpParam = "sharp=10"
+    val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
+    val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    s"?$params"
+  }
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
@@ -61,6 +70,7 @@ case class VideoProfile(
 
 // Configuration of our different image profiles
 object Contributor extends Profile(width = Some(140), height = Some(140))
+object RichLinkContributor extends Profile(width = Some(173))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
 object Item300 extends Profile(width = Some(300))
@@ -100,7 +110,7 @@ object ImgSrc extends Logging {
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { host =>
-          val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.imgixResizeString}", host.token)
+          val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.resizeString}", host.token)
           s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {

@@ -7,11 +7,20 @@ object Dependencies {
   val identityLibVersion = "3.46"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
+  val awsVersion = "1.9.16"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.2"
-  val awsSdk = "com.amazonaws" % "aws-java-sdk" % "1.9.16"
+  val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
+  val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
+  val awsDynamodb = "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion
+  val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
+  val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
+  val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
+  val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
+  val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
+  val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val contentApiClient = "com.gu" %% "content-api-client" % "6.6"

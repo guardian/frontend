@@ -324,6 +324,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val NoMobileTopAdSwitch = Switch(
+    "Commercial",
+    "no-mobile-top-ad",
+    "On mobile there is no top banner and we are showing only two MPUs",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -549,6 +558,24 @@ object Switches {
     exposeClientSide = false
   )
 
+  val CreativeTemplatesInS3 = Switch(
+    "Commercial",
+    "creative-templates-in-s3",
+    "Stores DFP creative template data in S3.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = false
+  )
+
+  val UkNewsTargeting = Switch(
+    "Commercial",
+    "uk-news-target",
+    "Uses full UK News keyword for DFP targeting.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = true
+  )
+
 
   // Monitoring
 
@@ -566,7 +593,7 @@ object Switches {
     "enable-omniture-confidence-no-js",
     "Enables Omniture confidence tracking for no-JS devices",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
@@ -762,6 +789,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val IdentityCookieRefreshSwitch = Switch(
+    "Identity",
+    "id-cookie-refresh",
+    "If switched on, users cookies will be refreshed.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -830,7 +866,7 @@ object Switches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 16),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = false
   )
 
@@ -863,24 +899,6 @@ object Switches {
 
   // A/B Tests
 
-  val TruncationWithFacebook = Switch(
-    "A/B Tests",
-    "ab-truncation-with-facebook",
-    "Truncation, with facebook most-viewed container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TruncationWithRelevant = Switch(
-    "A/B Tests",
-    "ab-truncation-with-relevant",
-    "Truncation, with relevant section-front container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -897,15 +915,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val ABIdentityCookieRefresh = Switch(
-    "A/B Tests",
-    "ab-cookie-refresh",
-    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val ABMembershipMessageVariants = Switch(
@@ -932,6 +941,15 @@ object Switches {
     "Switch off the signed out save for later test",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val ABAdblockStickyBanner = Switch(
+    "A/B Tests",
+    "ab-adblock-sticky-banner",
+    "Switch for the Ad-block sticky banner A/B test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 28),
     exposeClientSide = true
   )
 
@@ -1123,6 +1141,16 @@ object Switches {
       exposeClientSide = false
     )
   }
+
+  // Server-side variant validation test
+  val JspmValidation = Switch(
+    "Feature",
+    "disable-jspm",
+    "A test switch that can be turned on to disable the JspmTest for bucketing validation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 15),
+    exposeClientSide = false
+  )
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

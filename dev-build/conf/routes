@@ -2,12 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
 GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
 GET         /commercial/test-page                                     												 controllers.commercial.CreativeTestPage.allComponents(k: List[String])
-GET         /rockabox/rockabox_buster.html                                                                           dev.DevAssetsController.rockaboxBuster()
 
 # For dev machines
+GET         /assets/admin/lib/*file                                                                                  controllers.admin.UncachedWebAssets.at(file)
+GET         /assets/admin/*file                                                                                      controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
 GET         /assets/*path                                                                                            dev.DevAssetsController.at(path)
 
@@ -25,6 +25,7 @@ OPTIONS     /accept-beacon                                                      
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: String, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id     controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Business data
 GET        /business-data/stocks.json                 controllers.StocksController.stocks
