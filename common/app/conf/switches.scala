@@ -917,24 +917,6 @@ object Switches {
 
   // A/B Tests
 
-  val TruncationWithFacebook = Switch(
-    "A/B Tests",
-    "ab-truncation-with-facebook",
-    "Truncation, with facebook most-viewed container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TruncationWithRelevant = Switch(
-    "A/B Tests",
-    "ab-truncation-with-relevant",
-    "Truncation, with relevant section-front container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
