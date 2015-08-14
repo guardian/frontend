@@ -332,7 +332,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-                reportError(error);
+                reportError(error, false);
             }
 
             return abLogObject;

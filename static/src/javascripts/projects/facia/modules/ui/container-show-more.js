@@ -137,7 +137,7 @@ define([
             });
 
             showErrorMessage(button);
-            reportError(new Error('Error retrieving show more (' + err + ')'));
+            reportError(new Error('Error retrieving show more (' + err + ')'), false);
         });
     }
 

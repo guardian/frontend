@@ -225,7 +225,7 @@ define([
             reportError(new Error(err.message), {
                 feature: 'player',
                 vjsCode: err.code
-            });
+            }, false);
         }
     }
 

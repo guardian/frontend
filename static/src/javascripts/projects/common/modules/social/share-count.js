@@ -100,7 +100,7 @@ define([
             } catch (e) {
                 reportError(new Error('Error retrieving share counts (' + e.message + ')'), {
                     feature: 'share-count'
-                });
+                }, false);
             }
         }
     };
