@@ -19,8 +19,7 @@ define([
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
     'inlineSvg!svgs/icon/bookmark',
-    'inlineSvg!svgs/icon/expand-white',
-    'inlineSvg!svgs/icon/expand-black',
+    'inlineSvg!svgs/icon/expand-image',
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/notifications-explainer-desktop'
 ], function (
@@ -40,8 +39,7 @@ define([
     arrowWhiteRight,
     arrowRight,
     bookmark,
-    expandWhite,
-    expandBlack,
+    expandImage,
     notificationsExplainerMobile,
     notificationsExplainerDesktop
 ) {
@@ -61,8 +59,7 @@ define([
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
         bookmark: bookmark,
-        expandWhite: expandWhite,
-        expandBlack: expandBlack,
+        expandImage: expandImage,
         notificationsExplainerMobile: notificationsExplainerMobile,
         notificationsExplainerDesktop: notificationsExplainerDesktop
     };

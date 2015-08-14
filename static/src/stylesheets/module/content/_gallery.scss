@@ -152,15 +152,10 @@
     position: absolute;
     margin: $gs-gutter/2;
 
-    .i {
+    .centered-icon {
         position: absolute;
         top: 10px;
         left: 10px;
-    }
-
-    .inline-expand-black {
-        display: none;
-        fill: #000000;
     }
 
     .element--thumbnail & {
@@ -169,8 +164,7 @@
         margin: $gs-baseline/3 $gs-gutter/5;
         display: none;
 
-        .inline-expand-black,
-        .inline-expand-white {
+        .inline-expand-image {
             width: 50%;
             height: 50%;
         }
@@ -185,11 +179,8 @@
         .article__img-container:hover & {
             background-color: colour(media-default);
 
-            .inline-expand-black {
-                display: inline-block;
-            }
-            .inline-expand-white {
-                display: none;
+            .inline-expand-image {
+                fill: #000000;
             }
         }
     }
