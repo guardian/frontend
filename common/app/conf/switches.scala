@@ -909,9 +909,9 @@ object Switches {
   val SyndicationReprintEnabledSwitch = Switch (
     "Feature",
     "syndication-reprint-enabled",
-    "Toggle on/off the syndication button on articles with appropriate rights (for desktop or above only)",
+    "Toggle on/off the syndication button on all pages (for desktop or above only)",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 16),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
