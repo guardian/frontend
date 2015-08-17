@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner'
 ], function (
     bean,
@@ -17,6 +18,7 @@ define([
     config,
     detect,
     mediator,
+    ab,
     smartAppBanner
 ) {
     function StickyHeader() {
@@ -39,6 +41,8 @@ define([
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
+        this.isAdblockABTest = ab.getParticipations().AdblockStickyBanner && ab.testCanBeRun('AdblockStickyBanner')
+            && ab.getParticipations().AdblockStickyBanner.variant === 'variant';
 
         _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
@@ -69,6 +73,12 @@ define([
             } else {
                 fastdom.read(this.updatePosition);
             }
+        }
+
+        if (this.isAdblockInUse && !this.isMobile && this.isAdblockABTest) {
+            fastdom.read(function () {
+                this.$els.bannerDesktop = $('.js-adblock-sticky');
+            }.bind(this));
         }
 
         // Get the name of the method to run after scroll
@@ -103,7 +113,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (this.isAdblockInUse) {
+        } else if (this.isAdblockInUse && !this.isAdblockABTest) {
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';

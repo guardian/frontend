@@ -2,6 +2,36 @@ import _ from 'common/utils/_';
 
 import constants from 'es6/projects/common/modules/crosswords/constants';
 
+const getLastCellInClue = (clue) => {
+    const ax = { true: 'x', false: 'y' };
+    const axis = ax[isAcross(clue)];
+    const otherAxis = ax[!isAcross(clue)];
+    return {
+        [axis]: clue.position[axis] + (clue.length - 1),
+        [otherAxis]: clue.position[otherAxis]
+    };
+};
+
+const isFirstCellInClue = (cell, clue) => {
+    const axis = isAcross(clue) ? 'x' : 'y';
+    return cell[axis] === clue.position[axis];
+};
+
+const isLastCellInClue = (cell, clue) => {
+    const axis = isAcross(clue) ? 'x' : 'y';
+    return cell[axis] === clue.position[axis] + (clue.length - 1);
+};
+
+const getNextClueInGroup = (entries, clue) => {
+    const newClueId = clue.group[_.findIndex(clue.group, id => id === clue.id) + 1];
+    return _.find(entries, { id: newClueId });
+};
+
+const getPreviousClueInGroup = (entries, clue) => {
+    const newClueId = clue.group[_.findIndex(clue.group, id => id === clue.id) - 1];
+    return _.find(entries, { id: newClueId });
+};
+
 const isAcross = (clue) => clue.direction === 'across';
 
 const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
@@ -68,6 +98,35 @@ const buildClueMap = (clues) => {
     return map;
 };
 
+/** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
+const buildSeparatorMap = (clues) =>
+    _(clues)
+        .map((clue) =>
+            _.map(clue.separatorLocations, (locations, separator) =>
+                locations.map(location => {
+                    const key = isAcross(clue)
+                        ? clueMapKey(clue.position.x + location, clue.position.y)
+                        : clueMapKey(clue.position.x, clue.position.y + location);
+
+                    return {
+                        key,
+                        direction: clue.direction,
+                        separator
+                    };
+                })
+            )
+        )
+        .flatten()
+        .reduce((map, d) => {
+            if (map[d.key] === undefined) {
+                map[d.key] = {};
+            }
+
+            map[d.key][d.direction] = d.separator;
+
+            return map;
+        }, {});
+
 const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
 
 /** Can be used for width or height, as the cell height == cell width */
@@ -85,8 +144,14 @@ export default {
     buildGrid: buildGrid,
     clueMapKey: clueMapKey,
     buildClueMap: buildClueMap,
+    buildSeparatorMap,
     cellsForEntry: cellsForEntry,
     entryHasCell: entryHasCell,
     gridSize: gridSize,
-    mapGrid: mapGrid
+    mapGrid: mapGrid,
+    getLastCellInClue,
+    isFirstCellInClue,
+    isLastCellInClue,
+    getNextClueInGroup,
+    getPreviousClueInGroup
 };

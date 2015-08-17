@@ -3,7 +3,17 @@ package views
 import common.Edition
 import model.Article
 import play.api.mvc.RequestHeader
-import support._
+import views.support._
+
+object MainCleaner {
+ def apply(article: Article, html: String)(implicit request: RequestHeader) = {
+      implicit val edition = Edition(request)
+      withJsoup(BulletCleaner(html))(
+        PictureCleaner(article),
+        MainFigCaptionCleaner
+      )
+  }
+}
 
 object BodyCleaner {
   def apply(article: Article, html: String)(implicit request: RequestHeader) = {

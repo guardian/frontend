@@ -333,6 +333,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val NoMobileTopAdSwitch = Switch(
+    "Commercial",
+    "no-mobile-top-ad",
+    "On mobile there is no top banner and we are showing only two MPUs",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -906,25 +915,16 @@ object Switches {
     exposeClientSide = false
   )
 
+  val SyndicationReprintEnabledSwitch = Switch (
+    "Feature",
+    "syndication-reprint-enabled",
+    "Toggle on/off the syndication button on all pages (for desktop or above only)",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
   // A/B Tests
-
-  val TruncationWithFacebook = Switch(
-    "A/B Tests",
-    "ab-truncation-with-facebook",
-    "Truncation, with facebook most-viewed container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TruncationWithRelevant = Switch(
-    "A/B Tests",
-    "ab-truncation-with-relevant",
-    "Truncation, with relevant section-front container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
 
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
@@ -962,12 +962,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABSignedOutSaveForLaterAug = Switch(
+  val ABAdblockStickyBanner = Switch(
     "A/B Tests",
-    "ab-signed-out-save-for-later-aug",
-    "Switch off the signed out save for later test",
+    "ab-adblock-sticky-banner",
+    "Switch for the Ad-block sticky banner A/B test",
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2015, 8, 28),
     exposeClientSide = true
   )
 
@@ -1159,16 +1159,6 @@ object Switches {
       exposeClientSide = false
     )
   }
-
-  // Server-side variant validation test
-  val JspmValidation = Switch(
-    "Feature",
-    "disable-jspm",
-    "A test switch that can be turned on to disable the JspmTest for bucketing validation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 15),
-    exposeClientSide = false
-  )
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

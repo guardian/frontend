@@ -19,8 +19,10 @@ define([
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
     'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/icon/expand-image',
     'inlineSvg!svgs/notifications-explainer-mobile',
-    'inlineSvg!svgs/notifications-explainer-desktop'
+    'inlineSvg!svgs/notifications-explainer-desktop',
+    'inlineSvg!svgs/icon/cursor'
 ], function (
     _,
     commentCount16icon,
@@ -38,8 +40,10 @@ define([
     arrowWhiteRight,
     arrowRight,
     bookmark,
+    expandImage,
     notificationsExplainerMobile,
-    notificationsExplainerDesktop
+    notificationsExplainerDesktop,
+    cursor
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -57,8 +61,10 @@ define([
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
         bookmark: bookmark,
+        expandImage: expandImage,
         notificationsExplainerMobile: notificationsExplainerMobile,
-        notificationsExplainerDesktop: notificationsExplainerDesktop
+        notificationsExplainerDesktop: notificationsExplainerDesktop,
+        cursor: cursor
     };
 
     return function (name, classes, title) {

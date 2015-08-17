@@ -37,6 +37,11 @@ define([
         }
 
         if (config.switches.thirdPartiesLater) {
+            if (config.switches.newOutbrain) {
+                outbrain.init();
+            } else {
+                outbrain.load();
+            }
             // Load third parties after first ad was rendered
             mediator.once('modules:commercial:dfp:rendered', function () {
                 loadOther();
@@ -51,11 +56,6 @@ define([
     function loadOther() {
         imrWorldwide.load();
         remarketing.load();
-        if (config.switches.newOutbrain) {
-            outbrain.init();
-        } else {
-            outbrain.load();
-        }
         krux.load();
     }
 

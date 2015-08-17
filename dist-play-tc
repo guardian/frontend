@@ -6,11 +6,17 @@ set -o errexit
 
 echo "Dist play jars."
 
+set +x
 echo "##teamcity[progressStart 'sbt test and dist']"
+set -x
+
 ./sbt-tc "project root" compile test assets dist
+
+set +x
 echo "##teamcity[progressFinish 'sbt test and dist']"
 
 echo "##teamcity[progressStart 'zipping and publishing']"
+set -x
 
 rm -rf "dist"
 
@@ -43,6 +49,8 @@ do
     set -o xtrace
 done
 
+set +x
 echo "##teamcity[progressFinish 'zipping and publishing']"
+set -x
 
 echo "Done disting."

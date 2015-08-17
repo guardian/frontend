@@ -119,6 +119,22 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) getOrElse Nil
   }
 
+  lazy val syndicationType = {
+    if(isBlog){
+      "blog"
+    } else if (isGallery){
+      "gallery"
+    } else if(isPodcast){
+      "podcast"
+    } else if (isAudio){
+      "audio"
+    } else if(isVideo){
+      "video"
+    } else {
+      "article"
+    }
+  }
+
   private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
@@ -189,7 +205,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("webPublicationDate", Json.toJson(webPublicationDate)),
       ("author", JsString(contributors.map(_.name).mkString(","))),
       ("authorIds", JsString(contributors.map(_.id).mkString(","))),
-      ("hasShowcaseMainPicture", JsBoolean(hasShowcaseMainPicture)),
+      ("hasShowcaseMainElement", JsBoolean(hasShowcaseMainElement)),
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),

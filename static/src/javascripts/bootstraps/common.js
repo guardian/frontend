@@ -357,9 +357,9 @@ define([
 
 
             saveForLater: function () {
-                if (config.switches.saveForLater) {
+                if (config.switches.saveForLater && !/Network Front|Section|Tag/.test(config.page.contentType)) {
                     var saveForLater = new SaveForLater();
-                    saveForLater.init(false);
+                    saveForLater.init();
                 }
             },
 
