@@ -35,6 +35,7 @@ define([
     mediator = mediator.default;
     humanTime = humanTime.default;
     fetchVisibleStories = fetchVisibleStories.default;
+    Group = Group.default;
 
     function Collection(opts) {
 
@@ -53,6 +54,14 @@ define([
         this.isDynamic = !!_.findWhere(vars.CONST.typesDynamic, {name: opts.type});
 
         this.dom = undefined;
+        var onDomLoadResolve;
+        var onDomLoad = new Promise(function (resolve) {
+            onDomLoadResolve = resolve;
+        });
+        this.registerElement = function (element) {
+            this.dom = element;
+            onDomLoadResolve();
+        };
 
         this.visibleStories = null;
         this.visibleCount = ko.observable({});
@@ -103,7 +112,7 @@ define([
         this.state.isHistoryOpen(this.front.confirmSendingAlert());
 
         this.setPending(true);
-        this.loaded = this.load();
+        this.loaded = this.load().then(function () { return onDomLoad; });
 
         var that = this;
         this.listeners.on('ui:open', function () {
@@ -208,7 +217,7 @@ define([
             })
             .then(function () {
                 that.processDraft(true);
-            });
+            }, function () {});
         } else {
             this.processDraft(true);
         }
@@ -278,7 +287,7 @@ define([
 
                 populateObservables(self.collectionMeta, raw);
 
-                self.collectionMeta.updatedBy(raw.updatedEmail === vars.identity.email ? 'you' : raw.updatedBy);
+                self.collectionMeta.updatedBy(raw.updatedEmail === vars.model.identity.email ? 'you' : raw.updatedBy);
 
                 self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
             });
@@ -287,10 +296,6 @@ define([
         .then(function() {
             self.setPending(false);
         });
-    };
-
-    Collection.prototype.registerElement = function (element) {
-        this.dom = element;
     };
 
     Collection.prototype.hasOpenArticles = function() {
@@ -316,7 +321,7 @@ define([
             this.state.hasDraft(_.isArray(this.raw.draft));
 
             if (this.hasOpenArticles()) {
-                this.state.hasConcurrentEdits(this.raw.updatedEmail !== vars.identity.email && this.state.lastUpdated());
+                this.state.hasConcurrentEdits(this.raw.updatedEmail !== vars.model.identity.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
                 list = this.front.getCollectionList(this.raw);
@@ -453,6 +458,9 @@ define([
 
     Collection.prototype.dispose = function () {
         this.listeners.dispose();
+        this.groups.forEach(function (group) {
+            group.dispose();
+        });
     };
 
     ko.bindingHandlers.indicatorHeight = {

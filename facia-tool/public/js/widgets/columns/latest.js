@@ -1,17 +1,15 @@
 import ko from 'knockout';
 import _ from 'underscore';
-import BaseWidget from 'widgets/base-widget';
 import LatestArticles from 'models/collections/latest-articles';
 import mediator from 'utils/mediator';
 import updateScrollables from 'utils/update-scrollables';
+import ColumnWidget from 'widgets/column-widget';
 
-class Latest extends BaseWidget {
+class Latest extends ColumnWidget {
     constructor(params, element) {
-        super();
-        this.column = params.column;
+        super(params, element);
 
         this.showingDrafts = ko.observable(false);
-
         this.latestArticles = new LatestArticles({
             container: element,
             showingDrafts: this.showingDrafts,
@@ -23,7 +21,7 @@ class Latest extends BaseWidget {
         this.latestArticles.search();
         this.latestArticles.startPoller();
 
-        this.listenOn(mediator, 'switches:change', switches => {
+        this.subscribeOn(this.baseModel.switches, switches => {
             if (this.showingDrafts() && !switches['facia-tool-draft-content']) {
                 this.showLive();
             }

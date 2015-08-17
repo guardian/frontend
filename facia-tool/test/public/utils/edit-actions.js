@@ -15,7 +15,7 @@ export default function(mockCollection, action) {
                 mockjax.clear(interceptor);
                 setTimeout(() => {
                     resolve(lastRequest);
-                }, 20);
+                }, 50);
             }
         });
         desiredAnswer = action();

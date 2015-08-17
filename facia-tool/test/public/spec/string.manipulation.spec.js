@@ -1,10 +1,9 @@
 import {CONST} from 'modules/vars';
 import params from 'utils/parse-query-params';
 import urlQuery from 'utils/url-query';
-import ammend from 'utils/ammended-query-str';
+import serialize from 'utils/serialize-query-params';
 import trim from 'utils/full-trim';
 import icc from 'utils/internal-content-code';
-import ipc from 'utils/internal-page-code';
 import isGuardian from 'utils/is-guardian-url';
 import urlAbsPath from 'utils/url-abs-path';
 import urlHost from 'utils/url-host';
@@ -77,16 +76,32 @@ describe('utils/url-query', function () {
     });
 });
 
-describe('utils/ammended-query-str', function () {
+describe('utils/serialize-query-params', function () {
     it('extract the search query', function () {
-        expect(ammend('test', 'this', '')).toBe('test=this');
-        expect(ammend('test', 'this', '?test=that')).toBe('test=this');
-        expect(ammend('test', 'this', '?test=that&fruit=apple')).toBe('test=this&fruit=apple');
-        expect(ammend('test', 'this', '?fruit=apple')).toBe('fruit=apple&test=this');
-        expect(ammend('test', undefined, '?test=that')).toBe('');
-        expect(ammend('test', undefined, '?test=that&empty=')).toBe('empty=');
-        expect(ammend('test', undefined, '?fruit=apple')).toBe('fruit=apple');
-        expect(ammend('test', undefined, '?test=that&fruit=apple')).toBe('fruit=apple');
+        expect(serialize({})).toBe('');
+        expect(serialize({ test: 'that' })).toBe('test=that');
+        expect(serialize({ test: 'that', fruit: 'apple' })).toBe('test=that&fruit=apple');
+        expect(serialize({ test: 'that', empty: undefined, string: '' })).toBe('test=that&string=');
+        expect(serialize({ test: 'encode:this' })).toBe('test=encode:this');
+        // overrides
+        expect(serialize(
+            { test: 'that' },
+            { test: 'this' }
+        )).toBe('test=this');
+        expect(serialize(
+            { test: 'that', another: 'string' },
+            { test: 'this', empty: undefined }
+        )).toBe('test=this&another=string');
+        expect(serialize(
+            { test: 'that' },
+            { test: undefined }
+        )).toBe('');
+        expect(serialize(
+            { test: 'that' },
+            { test: 'this', that: 'there' },
+            { that: 'here', test: 'what' },
+            { test: 'again' }
+        )).toBe('test=again&that=here');
     });
 });
 
@@ -111,21 +126,6 @@ describe('utils/internal-content-code', function () {
                 internalContentCode: 'banana'
             }
         })).toBe(CONST.internalContentPrefix + 'banana');
-    });
-});
-
-describe('utils/internal-page-code', function () {
-    it('generate internal page codes', function () {
-        expect(ipc()).toBeUndefined();
-        expect(ipc({})).toBeUndefined();
-        expect(ipc({
-            fields: {}
-        })).toBeUndefined();
-        expect(ipc({
-            fields: {
-                internalPageCode: 'banana'
-            }
-        })).toBe(CONST.internalPagePrefix + 'banana');
     });
 });
 
