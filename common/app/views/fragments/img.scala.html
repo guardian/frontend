@@ -45,7 +45,7 @@
         <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
             <div class="@if(isFeature && isShowcase){u-responsive-ratio u-responsive-ratio--letterbox}">
                 @image(picture, widths)
-                <span class="rounded-icon article__fullscreen"><i class="i i-expand-white"></i><i class="i i-expand-black"></i></span>
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen"))
             </div>
         </a>
     } else {

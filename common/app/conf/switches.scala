@@ -917,24 +917,6 @@ object Switches {
 
   // A/B Tests
 
-  val TruncationWithFacebook = Switch(
-    "A/B Tests",
-    "ab-truncation-with-facebook",
-    "Truncation, with facebook most-viewed container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TruncationWithRelevant = Switch(
-    "A/B Tests",
-    "ab-truncation-with-relevant",
-    "Truncation, with relevant section-front container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -1177,16 +1159,6 @@ object Switches {
       exposeClientSide = false
     )
   }
-
-  // Server-side variant validation test
-  val JspmValidation = Switch(
-    "Feature",
-    "disable-jspm",
-    "A test switch that can be turned on to disable the JspmTest for bucketing validation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 15),
-    exposeClientSide = false
-  )
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

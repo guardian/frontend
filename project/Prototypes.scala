@@ -116,13 +116,5 @@ trait Prototypes {
     )
     .settings(name in Universal := applicationName)
     .settings(topLevelDirectory in Universal := Some(applicationName))
-    .settings(mappings in Universal := {
-        val universalMappings: Seq[(File,String)] = (mappings in Universal).value
-
-        // Remove any jars that we don't need at runtime.
-        universalMappings filter {
-          case (file, name) =>  ! name.endsWith("scala-compiler-2.11.1.jar")
-        }
-    })
   }
 }
