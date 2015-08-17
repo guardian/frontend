@@ -953,15 +953,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABSignedOutSaveForLaterAug = Switch(
-    "A/B Tests",
-    "ab-signed-out-save-for-later-aug",
-    "Switch off the signed out save for later test",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ABAdblockStickyBanner = Switch(
     "A/B Tests",
     "ab-adblock-sticky-banner",
