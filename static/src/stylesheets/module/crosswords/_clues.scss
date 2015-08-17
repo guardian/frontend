@@ -28,6 +28,7 @@
 }
 
 .crossword__clue--selected {
+    font-weight: bold;
     color: darken(colour(crosswordAccent2), 20%);
 }
 
