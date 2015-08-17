@@ -1,5 +1,5 @@
 define([
-    'raven',
+    'common/utils/report-error',
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
@@ -12,7 +12,7 @@ define([
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
-    raven,
+    reportError,
     _,
     config,
     cookies,
@@ -326,7 +326,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-                raven.captureException(error);
+                reportError(error, false);
             }
 
             return abLogObject;
