@@ -157,8 +157,10 @@
         height: 33px;
         margin: $gs-baseline/3 $gs-gutter/5;
         display: none;
+    }
 
-        .inline-expand-image {
+    &.inline-expand-image {
+        svg {
             width: 50%;
             height: 50%;
         }
