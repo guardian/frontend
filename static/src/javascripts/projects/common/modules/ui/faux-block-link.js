@@ -24,8 +24,6 @@ define([
             });
         };
 
-        bean.on(document.body, 'touchstart', overlaySelector, showIntentToClick);
-        bean.on(document.body, 'touchend', overlaySelector, removeIntentToClick);
         bean.on(document.body, 'mouseenter', overlaySelector, showIntentToClick);
         bean.on(document.body, 'mouseleave', overlaySelector, removeIntentToClick);
     };
