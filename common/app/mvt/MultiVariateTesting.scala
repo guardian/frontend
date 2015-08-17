@@ -22,28 +22,13 @@ object JspmTest extends TestDefinition(
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
   new LocalDate(2015, 9, 30)
-) {
-  override def isParticipating(implicit request: RequestHeader): Boolean = {
-    if (conf.Switches.JspmValidation.isSwitchedOff) {
-      super.isParticipating(request)
-    } else {
-      false
-    }
-  }
-}
+)
 
 object JspmControlTest extends TestDefinition(
   List(Variant7),
   "jspm-control",
   "A control test/variant to compare with the JspmTest",
   new LocalDate(2015, 9, 30)
-)
-
-object MobileTopBannerRemoveTest extends TestDefinition(
-  List(Variant1),
-  "mobile-top-banner-remove",
-  "To test the effect of top banner removal on mobile",
-  new LocalDate(2015, 8, 30)
 )
 
 object ABHeadlinesTestVariant extends TestDefinition(
@@ -61,7 +46,7 @@ object ABHeadlinesTestControl extends TestDefinition(
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, MobileTopBannerRemoveTest, ABHeadlinesTestControl, ABHeadlinesTestVariant)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++

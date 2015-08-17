@@ -68,6 +68,35 @@ const buildClueMap = (clues) => {
     return map;
 };
 
+/** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
+const buildSeparatorMap = (clues) =>
+    _(clues)
+        .map((clue) =>
+            _.map(clue.separatorLocations, (locations, separator) =>
+                locations.map(location => {
+                    const key = isAcross(clue)
+                        ? clueMapKey(clue.position.x + location, clue.position.y)
+                        : clueMapKey(clue.position.x, clue.position.y + location);
+
+                    return {
+                        key,
+                        direction: clue.direction,
+                        separator
+                    };
+                })
+            )
+        )
+        .flatten()
+        .reduce((map, d) => {
+            if (map[d.key] === undefined) {
+                map[d.key] = {};
+            }
+
+            map[d.key][d.direction] = d.separator;
+
+            return map;
+        }, {});
+
 const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
 
 /** Can be used for width or height, as the cell height == cell width */
@@ -85,6 +114,7 @@ export default {
     buildGrid: buildGrid,
     clueMapKey: clueMapKey,
     buildClueMap: buildClueMap,
+    buildSeparatorMap,
     cellsForEntry: cellsForEntry,
     entryHasCell: entryHasCell,
     gridSize: gridSize,

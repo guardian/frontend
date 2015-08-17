@@ -3,7 +3,7 @@
 
 @import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{CardStyleForFrontend, Item460, RenderClasses}
+@import views.support.{ImgSrc, CardStyleForFrontend, RichLinkContributor, Item460, RenderClasses}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -52,7 +52,7 @@
                 @content.contributors.headOption.map { profile =>
                     @profile.contributorLargeImagePath.map{ image =>
                         <div class="rich-link__byline-img">
-                            <img class="rich-link__byline-img__img" src="@image" alt="@profile.name" />
+                            <img class="rich-link__byline-img__img" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
                         </div>
                     }
                 }

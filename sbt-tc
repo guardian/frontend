@@ -31,7 +31,7 @@ export JDK_HOME=/usr/lib/jvm/java-1.8.0/bin/java
 # NOTE this is not a REAL APP_SECRET it is just for DEV environments
 fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
-cat /dev/null | /usr/lib/jvm/java-1.8.0/bin/java -Xmx4096M \
+cat /dev/null | /usr/lib/jvm/java-1.8.0/bin/java -Xmx6144M \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.log.noformat=true \
   -XX:+UseConcMarkSweepGC \

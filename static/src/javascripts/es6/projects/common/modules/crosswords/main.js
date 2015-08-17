@@ -470,6 +470,7 @@ class Crossword extends React.Component {
                         rows={this.rows}
                         columns={this.columns}
                         cells={this.state.grid}
+                        separators={helpers.buildSeparatorMap(this.props.data.entries)}
                         setCellValue={this.setCellValue}
                         onSelect={this.onSelect}
                         isHighlighted={isHighlighted}

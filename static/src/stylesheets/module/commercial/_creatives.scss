@@ -509,8 +509,22 @@
             &.ad-scrolling-text-hide {
                 background-position: 0 -250px;
             }
+            &.ad-scrolling-text-hide-left {
+                background-position: left -250px;
+            }
+            &.ad-scrolling-text-hide-right {
+                background-position: right -250px;
+            }
             &.ad-scrolling-text-animate {
                 animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-left {
+                animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-right {
+                animation: textanimation-right 1.4s ease .4s;
                 animation-fill-mode: forwards;
             }
         }
@@ -585,6 +599,11 @@
 
     .fluid250_layer2 {
         z-index: 2;
+    }
+
+    .fluid250_layer2_right {
+        left: auto;
+        right: 0;
     }
 
     .fluid250_layer3 {
@@ -699,6 +718,20 @@
 
     100% {
         background-position: 0 0;
+    }
+}
+
+@keyframes textanimation-right {
+    0% {
+        background-position: right -250px;
+    }
+
+    75% {
+        background-position: right 0;
+    }
+
+    100% {
+        background-position: right 0;
     }
 }
 
