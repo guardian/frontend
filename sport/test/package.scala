@@ -16,6 +16,7 @@ import conf.{FootballClient, Configuration}
 import pa.Http
 import io.Source
 import org.joda.time.LocalDate
+import rugby.model.LiveScoreParserTest
 import scala.concurrent.Future
 
 class SportTestSuite extends Suites (
@@ -36,7 +37,9 @@ class SportTestSuite extends Suites (
   new LeagueTablesFeatureTest,
   new LiveMatchesFeatureTest,
   new MatchFeatureTest,
-  new ResultsFeatureTest ) with SingleServerSuite with FootballTestData {
+  new ResultsFeatureTest,
+  new LiveScoreParserTest
+) with SingleServerSuite with FootballTestData {
 
   override lazy val port: Int = conf.HealthCheck.testPort
 
