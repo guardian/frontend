@@ -147,7 +147,7 @@ define([
                     this.$els.navigationGlobal
                         .addClass('navigation__expandable--sticky')
                         .css('height', height);
-                });
+                }.bind(this));
             }
         }.bind(this));
     };
