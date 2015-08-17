@@ -72,14 +72,11 @@
                 logDevice('chrome', 'windows7');
             }
         }
-    })(window, navigator);
-}
 
-@if(JspmTestUniqueVisitorsBeacon.isSwitchedOn) {
-    (function () {
+
         // Send beacon for unique visitors in JspmTest and JspmControl server-side test variants
         // Requires localStorage, so modern browsers only
-        if (window.guardian.isModernBrowser) {
+        if (window.guardian.isModernBrowser && guardian.config.switches.jspmTestUniqueVisitorsBeacon) {
             var tests = guardian.config.tests;
             var inTest = tests.jspmTest || tests.jspmControl;
             var localStorageKey = 'gu.jspm-test.visited';
@@ -93,5 +90,5 @@
                 }
             } catch (e) {}
         }
-    })();
+    })(window, navigator);
 }
