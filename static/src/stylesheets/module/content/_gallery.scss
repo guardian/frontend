@@ -159,11 +159,9 @@
         display: none;
     }
 
-    &.inline-expand-image {
-        svg {
-            width: 50%;
-            height: 50%;
-        }
+    &.inline-expand-image svg {
+        width: 50%;
+        height: 50%;
     }
 
     .element--thumbnail:hover & {
