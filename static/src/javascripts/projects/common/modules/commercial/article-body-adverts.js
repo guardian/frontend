@@ -52,7 +52,7 @@ define([
     function getAdSpace() {
         return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
             // check if spacefinder found another space
-            if (typeof nextSpace === 'undefined') {
+            if (typeof nextSpace === 'undefined' || ads.length >= 10) {
                 return Promise.resolve(null);
             }
 
