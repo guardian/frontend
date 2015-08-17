@@ -39,11 +39,7 @@ define([
             case 'parallax':
                 fastdom.read(function () {
                     this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                    if (this.scrollAmount >= -80 && this.scrollAmount < 0) {
-                        this.scrollAmountP = this.scrollAmount + '%';
-                    } else {
-                        this.scrollAmountP = '20%';
-                    }
+                    this.scrollAmountP = this.scrollAmount + '%';
                 }.bind(this));
                 fastdom.write(function () {
                     $('.ad-scrolling-bg', $(this.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + this.scrollAmountP);
