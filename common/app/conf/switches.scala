@@ -915,6 +915,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val SyndicationReprintEnabledSwitch = Switch (
+    "Feature",
+    "syndication-reprint-enabled",
+    "Toggle on/off the syndication button on all pages (for desktop or above only)",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
@@ -950,15 +959,6 @@ object Switches {
     "Switch for the USA Supporter message test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 21),
-    exposeClientSide = true
-  )
-
-  val ABSignedOutSaveForLaterAug = Switch(
-    "A/B Tests",
-    "ab-signed-out-save-for-later-aug",
-    "Switch off the signed out save for later test",
-    safeState = Off,
-    sellByDate = never,
     exposeClientSide = true
   )
 
