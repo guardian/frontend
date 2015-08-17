@@ -232,21 +232,21 @@ define([
 
     function getFontFormatSupport(ua) {
         ua = ua.toLowerCase();
-        var browserSupportsWoff2 = false,
-            // for now only Chrome 36+ supports WOFF 2.0.
-            // Opera/Chromium also support it but their share on theguardian.com is around 0.5%
-            woff2browsers = /Chrome\/([0-9]+)/i,
-            chromeVersion;
 
-        if (woff2browsers.test(ua)) {
-            chromeVersion = parseInt(woff2browsers.exec(ua)[1], 10);
+        var browsersThatSupportWoff2 = {
+            'chrome': 36,
+            'firefox': 39
+        };
 
-            if (chromeVersion >= 36) {
-                browserSupportsWoff2 = true;
-            }
-        }
+        var thisBrowserSupportsWoff2 = function (candidacy) {
+            return _.some(browsersThatSupportWoff2, function (supportingVersion, supportingBrowser) {
+                return candidacy[1] === supportingBrowser && parseInt(candidacy[2], 10) >= supportingVersion;
+            });
+        };
 
-        if (browserSupportsWoff2) {
+        var woff2Candidacy = /(chrome|firefox)\/([0-9]+)/.exec(ua);
+
+        if (!!woff2Candidacy && thisBrowserSupportsWoff2(woff2Candidacy)) {
             return 'woff2';
         }
 
@@ -446,22 +446,20 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '',
-            isAdblock = false,
-            mozBinding = '',
-            mozBindingHidden = -1;
+        var sacrificialAd = createSacrificalAd();
+        var contentBlocked = isHidden(sacrificialAd);
+        sacrificialAd.remove();
+        return contentBlocked;
 
-        $.create('<div class="ad_unit"></div>').appendTo(document.body);
-        displayed = $('.ad_unit').css('display');
-        mozBinding = $('.ad_unit').css('-moz-binding');
-        if (typeof mozBinding !== 'undefined') {
-            mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+        function createSacrificalAd() {
+            var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+            sacrificialAd.appendTo(document.body);
+            return sacrificialAd;
         }
-        $('.ad_unit').remove();
-        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
-            isAdblock = true;
+
+        function isHidden(bonzoElement) {
+            return bonzoElement.css('display') === 'none';
         }
-        return isAdblock;
     }
 
     detect = {

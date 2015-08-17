@@ -6,12 +6,11 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/truncation-with-facebook',
-    'common/modules/experiments/tests/truncation-with-relevant',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message',
-    'common/modules/experiments/tests/membership-message-usa'
+    'common/modules/experiments/tests/membership-message-usa',
+    'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
     raven,
     _,
@@ -20,21 +19,19 @@ define([
     mediator,
     store,
     mvtCookie,
-    TruncationWithFacebook,
-    TruncationWithRelevant,
     LiveblogNotifications,
     HighCommercialComponent,
     MembershipMessage,
-    MembershipMessageUSA
+    MembershipMessageUSA,
+    AdblockStickyBanner
 ) {
 
     var TESTS = _.flatten([
-        new TruncationWithFacebook(),
-        new TruncationWithRelevant(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new MembershipMessage(),
-        new MembershipMessageUSA()
+        new MembershipMessageUSA(),
+        new AdblockStickyBanner()
     ]);
 
     var participationsKey = 'gu.ab.participations';

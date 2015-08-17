@@ -181,6 +181,8 @@ object PaMetrics {
     "pa-api-error",
     "AP api returned error"
   )
+
+  val all: Seq[FrontendMetric] = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
 }
 
 object DiscussionMetrics {
@@ -374,7 +376,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
-  def applicationMetrics: List[FrontendMetric] = List(FilterCacheHit, FilterCacheMiss)
+  def applicationMetrics: List[FrontendMetric] = List(FilterCacheHit, FilterCacheMiss) ++ PaMetrics.all
 
   def systemMetrics: List[FrontendMetric] = List(SystemMetrics.MaxHeapMemoryMetric,
     SystemMetrics.UsedHeapMemoryMetric, SystemMetrics.TotalPhysicalMemoryMetric, SystemMetrics.FreePhysicalMemoryMetric,
