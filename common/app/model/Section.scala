@@ -31,6 +31,6 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "contentType" -> JsString("Section")
   )
 
-  override def iosType = "front"
+  override def iosType = Some("front")
 
 }
