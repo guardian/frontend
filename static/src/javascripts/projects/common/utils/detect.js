@@ -457,7 +457,7 @@ define([
     }
 
     /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
-    function firefoxAdblockPlusInstalled() {
+    function getFirefoxAdblockPlusInstalled() {
         var sacrificialAd = createSacrificialAd();
         var adUnitMozBinding = sacrificialAd.css('-moz-binding');
         if (adUnitMozBinding) {
@@ -504,7 +504,7 @@ define([
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
         adblockInUse: adblockInUse(),
-        firefoxAdblockPlusInstalled: firefoxAdblockPlusInstalled()
+        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled
     };
     return detect;
 });
