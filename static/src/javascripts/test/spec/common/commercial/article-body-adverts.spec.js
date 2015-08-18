@@ -158,7 +158,7 @@ describe('Article Body Adverts', function () {
         config.switches.viewability = true;
 
         articleBodyAdverts.init()
-            .then(function() {
+            .then(function () {
                 expect(getParaWithSpaceStub.callCount).toEqual(10);
                 done();
             });
