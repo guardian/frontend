@@ -114,6 +114,6 @@ case class PressedPage(id: String,
   private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
     o.map(value => Map(key -> value)).getOrElse(Map())
 
-  override def iosType = "front"
+  override def iosType = Some("front")
 
 }

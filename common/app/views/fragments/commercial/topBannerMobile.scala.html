@@ -1,7 +1,8 @@
 @(metaData: model.MetaData, edition: common.Edition)(implicit request: RequestHeader)
 @import views.support.Commercial.topSlot
+@import conf.Switches._
 
-@if(mvt.MobileTopBannerRemoveTest.isParticipating) {
+@if(NoMobileTopAdSwitch.isSwitchedOn) {
     @if(topSlot.hasResponsiveAd(metaData, edition)) {
         <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile js-top-banner-mobile">
         @fragments.commercial.standardAd(

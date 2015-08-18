@@ -3,10 +3,10 @@
     For example "comments throwing an exception should not stop auto refresh"
  */
 define([
-    'raven',
+    'common/utils/report-error',
     'common/utils/_'
 ], function (
-    raven,
+    reportError,
     _
 ) {
     var catchErrors = function (fn) {
@@ -24,9 +24,9 @@ define([
             window.console.warn('Caught error.', error.stack);
         }
         if (!reporter) {
-            reporter = raven.captureException;
+            reporter = reportError;
         }
-        reporter(error, { tags: { module: name } });
+        reporter(error, { module: name }, false);
     };
 
     var catchErrorsAndLog = function (name, fn, reporter) {

@@ -119,6 +119,22 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) getOrElse Nil
   }
 
+  lazy val syndicationType = {
+    if(isBlog){
+      "blog"
+    } else if (isGallery){
+      "gallery"
+    } else if(isPodcast){
+      "podcast"
+    } else if (isAudio){
+      "audio"
+    } else if(isVideo){
+      "video"
+    } else {
+      "article"
+    }
+  }
+
   private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
@@ -322,6 +338,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   def showFooterContainers = false
+
+  override def iosType = Some("article")
 }
 
 object Content {

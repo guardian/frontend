@@ -28,15 +28,24 @@
                     @fragments.social(content)
                 </div>
                 <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+                @fragments.syndication(content)
             </div>
         } else {
-            <div data-component="share" class="submeta__share">
-                @fragments.social(content)
+            <div class="u-cf">
+                <div data-component="share" class="submeta__share">
+                    @fragments.social(content)
+                </div>
+                @fragments.syndication(content)
             </div>
         }
     } else {
         @if(SaveForLaterSwitch.isSwitchedOn) {
-            <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+            <div class="u-cf">
+                <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+                @fragments.syndication(content)
+            </div>
+        } else {
+            @fragments.syndication(content)
         }
     }
 </div>
