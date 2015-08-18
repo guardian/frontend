@@ -30,7 +30,7 @@ define([
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Loyal visitors will be interested in becoming a Supporter';
-        this.audienceCriteria = 'UK edition visitors who have seen at least 10 pages, message shown only on article pages';
+        this.audienceCriteria = 'UK edition visitors who have seen more than 10 pages, message shown only on article pages';
         this.dataLinkNames = 'membership message, hide, read more';
         this.idealOutcome = 'Users will sign up as a Supporter';
 
@@ -40,7 +40,7 @@ define([
              * - Exclude mobile/small-screen devices
              * - Only show for UK edition
              * - Only show on Article pages
-             * - Only show to visitors who have viewed at least 10 pages.
+             * - Only show to visitors who have viewed more than 10 pages.
              */
             var alreadyVisited = storage.local.get('alreadyVisited') || 0;
             return !detect.adblockInUse &&
