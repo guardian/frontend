@@ -388,6 +388,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
+  object optaRugby {
+    lazy val endpoint = configuration.getStringProperty("opta.rugby.api.endpoint")
+    lazy val apiKey = configuration.getStringProperty("opta.rugby.api.key")
+    lazy val apiUser = configuration.getStringProperty("opta.rugby.api.user")
+  }
+
   object memcached {
     lazy val host = configuration.getStringProperty("memcached.host")
   }
