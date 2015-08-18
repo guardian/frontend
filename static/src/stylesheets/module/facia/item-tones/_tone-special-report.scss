@@ -31,13 +31,8 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
+    .rich-link__read-more-text {
         color: colour(news-support-1);
-    }
-
-    .fc-save-for-later {
-        border-color: mix(#000000, colour(news-support-6), 10%);
     }
 
     .fc-item__kicker--dreamsnap {
@@ -68,10 +63,6 @@
 
     .fc-item__meta {
         color: colour(neutral-4);
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(news-support-1);
     }
 }
 
