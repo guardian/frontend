@@ -1,5 +1,4 @@
 define([
-    'bean',
     'fastdom',
     'common/utils/$',
     'common/utils/_',
@@ -7,7 +6,6 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/adblock-sticky-message.html'
 ], function (
-    bean,
     fastdom,
     $,
     _,
