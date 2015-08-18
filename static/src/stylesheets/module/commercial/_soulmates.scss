@@ -483,7 +483,6 @@ $c-soulmates-high: colour(neutral-1);
 
             @include mq(leftCol, $until: wide) {
                 width: 90px;
-                
             }
 
             @include mq(wide) {
