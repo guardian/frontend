@@ -55,6 +55,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   private val CrosswordOptIn = "crossword_opt_in"
   private val CrosswordOptInPath= "/crosswords"
   private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
+  private val CrosswordOptOutMaxAge = 60.days.toSeconds.toInt
 
   def crosswordsOptIn = Action { implicit request =>
     Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
@@ -66,10 +67,11 @@ object CrosswordsController extends Controller with ExecutionContexts {
   }
 
   def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=old").discardingCookies(
-      DiscardingCookie(
-        CrosswordOptIn,
+    Cached(60)(SeeOther("/crosswords?view=old").withCookies(
+      Cookie(
+        CrosswordOptIn, "false",
         path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptOutMaxAge),
         domain = Some(Configuration.id.domain))))
   }
 }
