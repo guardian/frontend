@@ -13,14 +13,14 @@ describe('Article Body Adverts', function () {
                 '<p class="first-para"></p>',
                 '<p class="second-para"></p>',
                 '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>',
-                '<p class="third-para"></p>'
+                '<p class="para"></p>',
+                '<p class="para"></p>',
+                '<p class="para"></p>',
+                '<p class="para"></p>',
+                '<p class="para"></p>',
+                '<p class="para"></p>',
+                '<p class="para"></p>',
+                '<p class="para"></p>'
             ]
         },
         injector = new Injector(),
