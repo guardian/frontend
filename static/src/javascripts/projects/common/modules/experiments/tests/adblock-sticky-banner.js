@@ -64,9 +64,9 @@ define([
             {
                 id: 'challenger',
                 test: function () {
-                    variations[0].supporterLink = 'https://membership.theguardian.com/join-challenger?INTCMP=ADBLOCK_BANNER_MONBIOT';
-                    variations[1].supporterLink = 'https://membership.theguardian.com/join-challenger?INTCMP=ADBLOCK_BANNER_MUIR';
-                    variations[2].supporterLink = 'https://membership.theguardian.com/join-challenger?INTCMP=ADBLOCK_BANNER_TOYNBEE';
+                    variations[0].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_MONBIOT';
+                    variations[1].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_MUIR';
+                    variations[2].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_TOYNBEE';
                     new AdblockBanner(variations[_.random(variations.length - 1)]).show();
                 }
             },

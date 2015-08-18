@@ -47,7 +47,6 @@ define([
 
         fastdom.write(function () {
             $('.top-banner-ad-container--desktop').after(bannerTmpl);
-            $('.js-adblock-link').addClass('adblock-sticky__link');
         });
     };
 
