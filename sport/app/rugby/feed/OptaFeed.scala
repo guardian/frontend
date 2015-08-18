@@ -3,20 +3,22 @@ package rugby.feed
 import common.{ExecutionContexts, Logging}
 import play.api.Play.current
 import play.api.libs.ws.{WSRequest, WS}
+import rugby.jobs.RugbyStatsJob
 import rugby.model.LiveScore
 
 import scala.concurrent.Future
 
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
 
-trait OptaFeed extends ExecutionContexts with Logging {
+object OptaFeed extends ExecutionContexts with Logging {
 
-  private val endpoint = conf.Configuration.optaRugby.endpoint
+
 
   private val xmlContentType = ("Accept", "application/xml")
 
   private def getLiveScoresResponse: Future[String] = {
 
+    val endpoint = conf.Configuration.optaRugby.endpoint
     endpoint.map { e =>
       WS.url(e)
         .withHeaders(xmlContentType)
@@ -25,10 +27,7 @@ trait OptaFeed extends ExecutionContexts with Logging {
         .get
         .map { response =>
         response.status match {
-          case 200 => {
-            println(response.body)
-            response.body
-          }
+          case 200 => response.body
           case _ => {
             val error = s"Opta endpoint returned: ${response.status}, $endpoint"
             log.warn(error)
@@ -41,6 +40,6 @@ trait OptaFeed extends ExecutionContexts with Logging {
 
   def getLiveScores: Future[Seq[LiveScore]] = getLiveScoresResponse.map(Parser.parseLiveScores)
 
-}
+  def getLiveScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = RugbyStatsJob.getLiveScore(s"$year/$month/$day/$homeTeamId/$awayTeamId")
 
-object OptaFeed extends OptaFeed
+}

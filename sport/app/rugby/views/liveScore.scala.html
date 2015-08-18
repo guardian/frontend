@@ -1,0 +1,7 @@
+@import model.MetaData
+
+@(page: MetaData, liveScore: rugby.model.LiveScore)(implicit request: RequestHeader)
+
+@main(page) { } {
+    @rugby.views.html.fragments.liveScore(page, liveScore)
+}

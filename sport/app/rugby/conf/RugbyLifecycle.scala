@@ -8,6 +8,7 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
+    Jobs.deschedule("MatchDayLiveScores")
     Jobs.schedule("MatchDayLiveScores", "0 * * * * ?") {
       RugbyStatsJob.run()
     }

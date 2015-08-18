@@ -1,10 +1,17 @@
 package rugby.feed
 
+import org.joda.time.format.DateTimeFormat
 import rugby.model.{Team, LiveScore}
 
 import scala.xml.{NodeSeq, XML}
 
 object Parser {
+
+  private object Date {
+    private val dateTimeParser = DateTimeFormat.forPattern("yyyyMMdd")
+
+    def apply(dateTime: String) = dateTimeParser.parseDateTime(dateTime)
+  }
 
   def parseLiveScores(body: String): Seq[LiveScore] = {
 
@@ -24,6 +31,7 @@ object Parser {
         awayTeam <- getTeamWithScore(teamsNodes, teams, "away")
       } yield {
         LiveScore(
+          date = Date((game \ "@game_date").text),
           id = (game \ "@id").text,
           homeTeam = homeTeam,
           awayTeam = awayTeam

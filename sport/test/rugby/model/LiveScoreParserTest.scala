@@ -19,6 +19,7 @@ import scala.io.Source
       firstResult.homeTeam.score should be(Some(41))
       firstResult.awayTeam.name should be("Australia")
       firstResult.awayTeam.score should be(Some(13))
+      firstResult.date should be(new org.joda.time.DateTime(2015, 8, 15, 0, 0))
 
       val futureResult = liveScores.find(_.id == "2873").get
       futureResult.homeTeam.name should be("Argentina")
