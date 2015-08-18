@@ -211,7 +211,6 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($until: tablet) {
             margin-top: $gs-baseline/2;
-            padding: $gs-baseline/2 0 0;
             clear: both;
         }
 
