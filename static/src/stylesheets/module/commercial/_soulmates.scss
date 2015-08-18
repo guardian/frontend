@@ -767,7 +767,7 @@ $c-soulmates-high: colour(neutral-1);
         white-space: pre;
 
         @include mq($from: wide) {
-           @include fs-data(2);
+            @include fs-data(2);
         }
     }
 
