@@ -12,6 +12,14 @@ describe('Article Body Adverts', function () {
             fixtures: [
                 '<p class="first-para"></p>',
                 '<p class="second-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
+                '<p class="third-para"></p>',
                 '<p class="third-para"></p>'
             ]
         },
@@ -57,7 +65,15 @@ describe('Article Body Adverts', function () {
                 getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
                 getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
                 getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
-                getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
+                getParaWithSpaceStub.onCall(3).returns(Promise.resolve(paras[3]));
+                getParaWithSpaceStub.onCall(4).returns(Promise.resolve(paras[4]));
+                getParaWithSpaceStub.onCall(5).returns(Promise.resolve(paras[5]));
+                getParaWithSpaceStub.onCall(6).returns(Promise.resolve(paras[6]));
+                getParaWithSpaceStub.onCall(7).returns(Promise.resolve(paras[7]));
+                getParaWithSpaceStub.onCall(8).returns(Promise.resolve(paras[8]));
+                getParaWithSpaceStub.onCall(9).returns(Promise.resolve(paras[9]));
+                getParaWithSpaceStub.onCall(10).returns(Promise.resolve(paras[10]));
+                getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
                 spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
                 done();
@@ -134,6 +150,16 @@ describe('Article Body Adverts', function () {
                         ' .ad-slot': {minAbove: 1300, minBelow: 1300}
                     }
                 });
+                done();
+            });
+    });
+
+    it('should call "getParaWithSpace" max 10 times', function (done) {
+        config.switches.viewability = true;
+
+        articleBodyAdverts.init()
+            .then(function() {
+                expect(getParaWithSpaceStub.callCount).toEqual(10);
                 done();
             });
     });
