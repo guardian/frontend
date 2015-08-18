@@ -109,18 +109,18 @@ define([
             scroll = function () {
                 if (!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
-                    mediator.off('window:scroll', _.debounce(scroll, 200));
+                    mediator.off('window:throttledScroll', _.debounce(scroll, 200));
                 }
             };
 
         if (!track.seen) {
-            mediator.on('window:scroll', _.debounce(scroll, 200));
+            mediator.on('window:throttledScroll', _.debounce(scroll, 200));
         }
     };
 
     track.areCommentsVisible = function () {
         var comments = $('#comments').offset(),
-            scrollTop = $('body').first().scrollTop(),
+            scrollTop = window.pageYOffset,
             viewport = bonzo.viewport().height;
 
         if ((comments.top - ((viewport  / 2)) < scrollTop) &&
