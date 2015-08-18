@@ -54,7 +54,7 @@ describe('Build Page Targeting', function () {
                     audienceScienceGateway: true
                 };
 
-                config.ophan.pageViewId = 'presetOphanPageViewId';
+                config.ophan.pageViewId = 'example of a very long ophan page view id that goes up to about 80 chars';
 
                 cookies.get = function () {
                     return 'ng101';
@@ -108,7 +108,10 @@ describe('Build Page Targeting', function () {
         expect(pageTargeting.ms).toBe('itn');
         expect(pageTargeting.tn).toEqual(['advertisement-features', 'news']);
         expect(pageTargeting.vl).toEqual('90');
-        expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
+        expect(pageTargeting.pv1).toEqual('example of a very lo');
+        expect(pageTargeting.pv2).toEqual('ng ophan page view i');
+        expect(pageTargeting.pv3).toEqual('d that goes up to ab');
+        expect(pageTargeting.pv4).toEqual('out 80 chars');
     });
 
     it('should set correct edition param', function () {
@@ -152,7 +155,7 @@ describe('Build Page Targeting', function () {
 
     it('should remove empty values', function () {
         config.page = {};
-        config.ophan.pageViewId = '123456';
+        config.ophan.pageViewId = '1234567890123456789012';
         userAdTargeting.getUserSegments = function () {
             return [];
         };
@@ -178,7 +181,8 @@ describe('Build Page Targeting', function () {
             at: 'ng101',
             si: 't',
             ab: ['MtMaster-v'],
-            pv: '123456',
+            pv1: '12345678901234567890',
+            pv2: '12',
             fr: '0'
         });
     });
