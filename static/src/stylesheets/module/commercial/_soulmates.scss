@@ -426,7 +426,7 @@ $c-soulmates-high: colour(neutral-1);
             border-left: 1px solid #666666;
             margin: $gs-baseline/2 0;
             padding-left: $gs-baseline;
-            widt: 50%;
+            width: 50%;
 
             @include mq(mobileLandscape) {
                 width: 33.33%;
@@ -756,7 +756,7 @@ $c-soulmates-high: colour(neutral-1);
         margin-bottom: 0;
 
         @include mq($from: wide) {
-             @include fs-data(2);
+            @include fs-data(2);
         }
     }
 
@@ -767,7 +767,7 @@ $c-soulmates-high: colour(neutral-1);
         white-space: pre;
 
         @include mq($from: wide) {
-             @include fs-data(2);
+           @include fs-data(2);
         }
     }
 
