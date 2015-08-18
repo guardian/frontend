@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 export function translate(load) {
-    const moduleId = load.metadata.loaderArgument.split('!')[0];
+    const moduleId = load.name.split('!')[0];
     const relativeModuleId = moduleId.match(new RegExp('^' + System.baseURL + '(.*).svg$'))[1];
     const prefix = 'inline-',
           data = _.rest(relativeModuleId.split('/')),
