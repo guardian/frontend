@@ -43,7 +43,7 @@
 <div class="content__meta-container js-content-meta js-football-meta u-cf
     @if(content.byline.isEmpty){ content__meta-container--no-byline}
     @if(content.isLiveBlog) { content__meta-container--liveblog}
-    @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
+    @if(content.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @content.contributorBio.map { bio => content__meta-container--bio}
     @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}

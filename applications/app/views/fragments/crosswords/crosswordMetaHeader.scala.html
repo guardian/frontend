@@ -16,13 +16,17 @@
             <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
             @if( gridVisable ) {
                 <div class="crossword__links">
-                    <a class="crossword__link js-print-crossword">Print</a>
+                    @crosswordPage.crossword.pdf match {
+                        case Some(pdf) => {
+                            <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
+                        }
 
-                    <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")"> | Accesible version </a>
+                        case None => {
+                            <a class="crossword__link js-print-crossword">Print</a>
+                        }
+                    }
 
-                @crosswordPage.crossword.pdf.map { pdf =>
-                    | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
-                }
+                    | <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Accessible version</a>
                 </div>
             }
 
@@ -50,6 +54,12 @@
                     </div>
                 </div>
             </div>
+
+            @crosswordPage.crossword.instructions.map { instructions =>
+                <div class="crossword__instructions">
+                    <strong>Special instructions:</strong> @instructions
+                </div>
+            }
         </div>
     </div>
 </header>

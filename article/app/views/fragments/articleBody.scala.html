@@ -10,14 +10,18 @@
     <article id="article" data-test-id="article-root"
         class="content content--article tonal tonal--@articleToneClass(article) section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
         @if(article.isAdvertisementFeature){content--advertisement-feature}
-        @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
+        @if(article.isFeature && article.hasShowcaseMainElement){has-feature-showcase-element}"
         itemscope itemtype="@article.schemaType" role="main">
 
         <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="The Guardian">
+            <link itemprop="sameAs" content="http://www.theguardian.com">
+        </div>
 
         @fragments.headTonal(article)
 
-        @if(article.isFeature && article.hasShowcaseMainPicture) {
+        @if(article.isFeature && article.hasShowcaseMainElement) {
             @fragments.mainMedia(article)
         }
 
@@ -27,7 +31,7 @@
 
                     <div class="js-football-tabs football-tabs content__mobile-full-width"></div>
 
-                    @if(!(article.isFeature && article.hasShowcaseMainPicture)) {
+                    @if(!(article.isFeature && article.hasShowcaseMainElement)) {
                         @fragments.mainMedia(article)
                     }
 

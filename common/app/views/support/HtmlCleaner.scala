@@ -204,6 +204,8 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
     body
   }
 
+  private lazy val expandImage = views.html.fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen")).toString()
+
   def addSharesAndFullscreen(body: Document): Document = {
 
     for {
@@ -226,9 +228,10 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
       }
 
       val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+
       image.after(html.toString())
       image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-      image.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+      image.after(expandImage)
     }
 
     body
@@ -548,6 +551,13 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
+object MainFigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img caption--main")}
     document
   }
 }

@@ -39,7 +39,7 @@ define([
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {
         return (detect.getBreakpoint() === 'mobile'
-            && config.tests.mobileTopBannerRemove
+            && config.switches.noMobileTopAd
             && $('.ad-slot--inline').length > 1) ? true : false;
     };
 

@@ -13,6 +13,7 @@ install:
 	npm prune && npm install
 	cd node_modules/.bin && ./jspm install && ./jspm dl-loader && ./jspm clean
 	grunt uglify:conf
+	cd dev && make install
 
 reinstall:
 	$(MAKE) clean

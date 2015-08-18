@@ -65,10 +65,7 @@
                     alt="@image.altText.getOrElse("")"
                     itemprop="contentUrl" />
 
-                <span class="rounded-icon gallery2__fullscreen">
-                    <i class="i i-expand-white"></i>
-                    <i class="i i-expand-black"></i>
-                </span>
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen"))
             </a>
 
             <div class="gallery2__figcaption">

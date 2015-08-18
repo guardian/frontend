@@ -74,6 +74,13 @@ class Crossword extends React.Component {
         }
     }
 
+    componentDidUpdate (prevProps, prevState) {
+        // return focus to active cell after exiting anagram helper
+        if (!this.state.showAnagramHelper && (this.state.showAnagramHelper !== prevState.showAnagramHelper)) {
+            this.focusCurrentCell();
+        }
+    }
+
     setCellValue (x, y, value) {
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
@@ -197,18 +204,39 @@ class Crossword extends React.Component {
     }
 
     focusPrevious () {
-        if (this.isAcross()) {
-            this.moveFocus(-1, 0);
+        const cell = this.state.cellInFocus;
+        const clue = this.clueInFocus();
+
+        if (helpers.isFirstCellInClue(cell, clue)) {
+            const newClue = helpers.getPreviousClueInGroup(this.props.data.entries, clue);
+            if (newClue) {
+                const newCell = helpers.getLastCellInClue(newClue);
+                this.focusClue(newCell.x, newCell.y, newClue.direction);
+            }
         } else {
-            this.moveFocus(0, -1);
+            if (this.isAcross()) {
+                this.moveFocus(-1, 0);
+            } else {
+                this.moveFocus(0, -1);
+            }
         }
     }
 
     focusNext () {
-        if (this.isAcross()) {
-            this.moveFocus(1, 0);
+        const cell = this.state.cellInFocus;
+        const clue = this.clueInFocus();
+
+        if (helpers.isLastCellInClue(cell, clue)) {
+            const newClue = helpers.getNextClueInGroup(this.props.data.entries, clue);
+            if (newClue) {
+                this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
+            }
         } else {
-            this.moveFocus(0, 1);
+            if (this.isAcross()) {
+                this.moveFocus(1, 0);
+            } else {
+                this.moveFocus(0, 1);
+            }
         }
     }
 
@@ -295,6 +323,10 @@ class Crossword extends React.Component {
                 directionOfEntry: direction
             });
         }
+    }
+
+    focusCurrentCell () {
+        this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
     }
 
     cluesFor (x, y) {
@@ -462,7 +494,12 @@ class Crossword extends React.Component {
 
     render () {
         const focussed = this.clueInFocus();
-        const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
+        const isHighlighted = (x, y) => focussed
+            ? focussed.group.some(id => {
+                const entry = _.find(this.props.data.entries, { id });
+                return helpers.entryHasCell(entry, x, y);
+            })
+            : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
             <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
@@ -475,6 +512,7 @@ class Crossword extends React.Component {
                         rows={this.rows}
                         columns={this.columns}
                         cells={this.state.grid}
+                        separators={helpers.buildSeparatorMap(this.props.data.entries)}
                         setCellValue={this.setCellValue}
                         onSelect={this.onSelect}
                         isHighlighted={isHighlighted}

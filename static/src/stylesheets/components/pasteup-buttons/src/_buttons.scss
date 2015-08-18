@@ -249,3 +249,14 @@ $show-more-icon-spacing: $base-size + 1;
         left: $show-more-icon-spacing;
     }
 }
+
+.button--syndication-reprint {
+    @include button-colour(
+        transparent,
+        guss-colour(news-main-2, $pasteup-palette),
+        transparent,
+        darken(guss-colour(news-main-2, $pasteup-palette), 10%),
+        guss-colour(news-main-2, $pasteup-palette)
+    );
+
+}

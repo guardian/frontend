@@ -4,6 +4,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
@@ -13,6 +14,7 @@ define([
     bean,
     bonzo,
     qwery,
+    fastdom,
     _,
     $,
     config,
@@ -22,7 +24,7 @@ define([
     var body = qwery('.js-liveblog-body');
 
     function bootstrap() {
-        mediator.on('window:scroll', _.debounce(enhanceTweets, 200));
+        mediator.on('window:throttledScroll', _.debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets() {
@@ -34,12 +36,16 @@ define([
             tweetElements       = qwery('blockquote.js-tweet'),
             widgetScript        = qwery('#twitter-widget'),
             viewportHeight      = bonzo.viewport().height,
-            nativeTweetElements = qwery('blockquote.twitter-tweet');
+            nativeTweetElements = qwery('blockquote.twitter-tweet'),
+            scrollTop           = window.pageYOffset;
 
         tweetElements.forEach(function (element) {
-            var $el = bonzo(element);
-            if (((bonzo(document.body).scrollTop() + (viewportHeight * 2.5)) > $el.offset().top) && (bonzo(document.body).scrollTop() < ($el.offset().top + $el.offset().height))) {
-                $(element).removeClass('js-tweet').addClass('twitter-tweet');
+            var $el = bonzo(element),
+                elOffset = $el.offset();
+            if (((scrollTop + (viewportHeight * 2.5)) > elOffset.top) && (scrollTop < (elOffset.top + elOffset.height))) {
+                fastdom.write(function () {
+                    $(element).removeClass('js-tweet').addClass('twitter-tweet');
+                });
             }
         });
 

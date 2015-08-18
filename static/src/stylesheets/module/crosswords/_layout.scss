@@ -39,6 +39,10 @@
 
 .crossword__container {
     position: relative;
+
+    @include mq($until: tablet) {
+        margin-top: $gs-baseline;
+    }
 }
 
 .crossword__controls {
@@ -99,4 +103,8 @@
 
 .js-crossword-link {
     display: none;
+}
+
+.crossword__instructions {
+    margin: $gs-baseline 0;
 }
