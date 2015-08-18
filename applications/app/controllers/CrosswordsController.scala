@@ -51,7 +51,9 @@ object CrosswordsController extends Controller with ExecutionContexts {
       }
     }
   }
+}
 
+object CrosswordPreferencesController extends Controller with PreferenceController {
   private val CrosswordOptIn = "crossword_opt_in"
   private val CrosswordOptInPath= "/crosswords"
   private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
@@ -63,7 +65,9 @@ object CrosswordsController extends Controller with ExecutionContexts {
         CrosswordOptIn, "true",
         path = CrosswordOptInPath,
         maxAge = Some(CrosswordOptInMaxAge),
-        domain = Some(Configuration.id.domain))))
+        domain = getShortenedDomain(request.domain)
+      )
+    ))
   }
 
   def crosswordsOptOut = Action { implicit request =>
@@ -72,6 +76,8 @@ object CrosswordsController extends Controller with ExecutionContexts {
         CrosswordOptIn, "false",
         path = CrosswordOptInPath,
         maxAge = Some(CrosswordOptOutMaxAge),
-        domain = Some(Configuration.id.domain))))
+        domain = getShortenedDomain(request.domain)
+      )
+    ))
   }
 }
