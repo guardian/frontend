@@ -207,10 +207,9 @@ $c-soulmates-high: colour(neutral-1);
         width: auto;
         float: none;
         border-top: 1px solid $c-soulmatesBorder;
-        padding: $gs-baseline/2 $gs-gutter*2 0;
-        margin-top: 0;
+        padding-top: $gs-baseline/2;
 
-        @include mq(phablet) {
+        @include mq($until: tablet) {
             margin-top: $gs-baseline/2;
             padding: $gs-baseline/2 0 0;
             clear: both;
