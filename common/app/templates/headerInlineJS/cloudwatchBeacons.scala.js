@@ -13,8 +13,10 @@
             *@
             var cssLoader = window.useRAFforCSS ? '-raf' : '';
 
-            // send immediate beacon
-            (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start' + cssLoader + '.gif';
+            // send immediate beacon - adding a 1 second delay to see if this resolves signal loss issues on Android and Windows7
+            window.setTimeout(function () {
+                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start' + cssLoader + '.gif';
+            }, 1000);
 
             // send second after 5 seconds, if we're still around
             window.setTimeout(function () {
