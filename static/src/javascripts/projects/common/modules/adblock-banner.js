@@ -1,4 +1,5 @@
 define([
+    'bean',
     'fastdom',
     'common/utils/$',
     'common/utils/_',
@@ -6,6 +7,7 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/adblock-sticky-message.html'
 ], function (
+    bean,
     fastdom,
     $,
     _,
@@ -36,7 +38,7 @@ define([
                 supporterLink: this.supporterLink,
                 quoteText: this.quoteText,
                 quoteAuthor: this.quoteAuthor,
-                messageText: 'We notice you\'re using an ad-blocker. Become a supporter from just £5 per month to ensure quality journalism is available to all.',
+                messageText: 'We noticed you\'re using an ad-blocker. Become a supporter from just £5 per month to ensure quality journalism is available to all.',
                 linkText: 'Find out more',
                 imageAuthor: this.imageAuthor,
                 cursor: svgs('cursor'),
@@ -45,6 +47,7 @@ define([
 
         fastdom.write(function () {
             $('.top-banner-ad-container--desktop').after(bannerTmpl);
+            $('.js-adblock-link').addClass('adblock-sticky__link');
         });
     };
 
