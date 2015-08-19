@@ -1,5 +1,6 @@
 define([
     'fastdom',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -7,6 +8,7 @@ define([
     'text!common/views/commercial/creatives/scrollable-mpu-v2.html'
 ], function (
     fastdom,
+    _,
     $,
     detect,
     mediator,
@@ -20,6 +22,8 @@ define([
     var ScrollableMpu = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
+
+        _.bindAll(this, 'updateBgPosition');
     };
 
     /**
@@ -29,26 +33,26 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
+        var that = this;
 
         switch (this.params.backgroundImagePType) {
             case 'fixed matching fluid250':
                 fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(this.$adSlot)).addClass('creative--scrollable-mpu-image-fixed');
-                }.bind(this));
+                    $('.creative--scrollable-mpu-image', $(that.$adSlot)).addClass('creative--scrollable-mpu-image-fixed');
+                });
                 break;
             case 'parallax':
-                fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                    this.scrollAmountP = this.scrollAmount + '%';
-                }.bind(this));
+                this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+                this.scrollAmountP = this.scrollAmount + '%';
                 fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(this.$adSlot)).addClass('creative--scrollable-mpu-image-parallax').css('background-position', '50%' + this.scrollAmountP);
-                }.bind(this));
+                    $('.creative--scrollable-mpu-image', $(that.$adSlot)).addClass('creative--scrollable-mpu-image-parallax').css('background-position', '50%' + that.scrollAmountP);
+                });
                 break;
             default:
+                var position = window.pageYOffset - this.$scrollableMpu.offset().top;
                 fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(this.$adSlot)).css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
-                }.bind(this));
+                    $('.creative--scrollable-mpu-image', $(that.$adSlot)).css('background-position', '100% ' + position + 'px');
+                });
         }
     };
 
@@ -66,11 +70,11 @@ define([
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
-            this.updateBgPosition();
+            fastdom.read(this.updateBgPosition);
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition);
             // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition.bind(this));
+            mediator.on('window:resize', this.updateBgPosition);
         }
     };
 
