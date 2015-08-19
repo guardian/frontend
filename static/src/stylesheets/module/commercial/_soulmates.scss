@@ -337,36 +337,20 @@ $c-soulmates-high: colour(neutral-1);
 
     .logo--soulmates_large {
 
-        .svg & {
+        svg {
+            width: 100px;
+            height: 21px;
+            padding-top: 4px;
 
-            svg {
-                width: 100px !important;
-                height: 21px !important;
-                padding-top: 4px;
-
-                @include mq(mobileLandscape) {
-                    width: 120px !important;
-                    height: 28px !important;
-                    padding: 0;
-                }
-
-                @include mq(leftCol, $until: wide) {
-                    width: 100px !important;
-                    height: 21px !important;
-                }
-
+            @include mq(mobileLandscape) {
+                width: 120px;
+                height: 28px;
+                padding: 0;
             }
-        }
-    }
 
-    .inline-logo-soulmates {
-
-        .svg & {
-            background-size: contain;
-
-            svg {
-                width: 86px;
-                height: 18px;
+            @include mq(leftCol, $until: wide) {
+                width: 100px;
+                height: 21px;
             }
 
         }
@@ -530,19 +514,21 @@ $c-soulmates-high: colour(neutral-1);
     .inline-soulmates-arrow {
         float: right;
         border-left: 1px solid #666666;
-        padding: $gs-baseline/3 $gs-baseline 0;
+        padding: $gs-baseline/3 $gs-baseline;
+
+        @include mq(wide) {
+            padding: $gs-baseline/3 $gs-baseline 0;
+        }
 
         svg {
 
-            @include mq(tablet, $until: wide) {
-                width: 16px !important;
-                height: 16px !important;
-                padding: 2px 0 0;
-            }
+            width: 16px;
+            height: 16px;
+            padding: 2px 0 0;
 
             @include mq(wide) {
-                width: 20px !important;
-                height: 20px !important;
+                width: 20px;
+                height: 20px;
                 padding: 0;
             }
 
