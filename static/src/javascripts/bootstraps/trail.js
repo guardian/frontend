@@ -19,9 +19,7 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/article/truncate-article',
-    'common/modules/social/share-count',
-    'common/modules/experiments/article-containers-test'
+    'common/modules/social/share-count'
 ], function (
     enhancer,
     fastdom,
@@ -41,9 +39,7 @@ define([
     Popular,
     Related,
     TonalComponent,
-    truncate,
-    shareCount,
-    articleTests
+    shareCount
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -66,27 +62,10 @@ define([
     }
 
     function initRelated() {
-        // Remove articleTest when the article containers tests are complete
-        var articleTest;
-
-        if (config.page.contentType === 'Article' && !detect.isGuardianReferral()) {
-            articleTest = articleTests.getTest();
-
-            if (articleTest) {
-                truncate();
-            }
-        }
-
         insertOrProximity('.js-related', function () {
             var opts = {
                 excludeTags: []
             };
-
-            // Remove this when the article containers tests are complete
-            if (articleTest) {
-                articleTests.applyTest(articleTest);
-                return;
-            }
 
             // exclude ad features from non-ad feature content
             if (config.page.sponsorshipType !== 'advertisement-features') {

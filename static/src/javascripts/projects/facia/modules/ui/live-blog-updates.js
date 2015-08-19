@@ -109,12 +109,12 @@ define([
                 animateOnScroll = _.debounce(function () {
                     maybeAnimateBlocks(el, true).then(function (didAnimate) {
                         if (didAnimate) {
-                            mediator.off('window:scroll', animateOnScroll);
+                            mediator.off('window:throttledScroll', animateOnScroll);
                         }
                     });
                 }, animateAfterScrollDelayMs);
 
-                mediator.on('window:scroll', animateOnScroll);
+                mediator.on('window:throttledScroll', animateOnScroll);
             }
         });
     }

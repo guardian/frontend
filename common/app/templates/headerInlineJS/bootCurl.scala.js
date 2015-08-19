@@ -91,10 +91,21 @@ require([
     // Report uncaught exceptions
     raven.install();
 
+    var oldOnError = window.onerror;
+    window.onerror = function (message, filename, lineno, colno, error) {
+        // Not all browsers pass the error object
+        if (!error || !error.reported) {
+            oldOnError.apply(window, arguments);
+        }
+    };
+
     // Report unhandled promise rejections
     // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
     window.addEventListener('unhandledRejection', function (event) {
-        raven.captureException(event.detail.reason);
+        var error = event.detail.reason;
+        if (error && !error.reported) {
+            raven.captureException(error);
+        }
     });
 
     require([

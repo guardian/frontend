@@ -19,6 +19,7 @@ define([
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
     'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/icon/expand-image',
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/icon/cursor'
@@ -39,6 +40,7 @@ define([
     arrowWhiteRight,
     arrowRight,
     bookmark,
+    expandImage,
     notificationsExplainerMobile,
     notificationsExplainerDesktop,
     cursor
@@ -59,6 +61,7 @@ define([
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
         bookmark: bookmark,
+        expandImage: expandImage,
         notificationsExplainerMobile: notificationsExplainerMobile,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         cursor: cursor

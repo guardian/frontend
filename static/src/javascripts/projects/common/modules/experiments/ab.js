@@ -1,44 +1,35 @@
 define([
-    'raven',
+    'common/utils/report-error',
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/truncation-with-facebook',
-    'common/modules/experiments/tests/truncation-with-relevant',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/signed-out-save-for-later',
-    'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
-    raven,
+    reportError,
     _,
     config,
     cookies,
     mediator,
     store,
     mvtCookie,
-    TruncationWithFacebook,
-    TruncationWithRelevant,
     LiveblogNotifications,
     HighCommercialComponent,
-    SignedOutSaveForLater,
-    MembershipMessage,
+    MembershipMessageUK,
     MembershipMessageUSA,
     AdblockStickyBanner
 ) {
 
     var TESTS = _.flatten([
-        new TruncationWithFacebook(),
-        new TruncationWithRelevant(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new SignedOutSaveForLater(),
-        new MembershipMessage(),
+        new MembershipMessageUK(),
         new MembershipMessageUSA(),
         new AdblockStickyBanner()
     ]);
@@ -335,7 +326,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-                raven.captureException(error);
+                reportError(error, false);
             }
 
             return abLogObject;
