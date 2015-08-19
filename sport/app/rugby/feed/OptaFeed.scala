@@ -11,9 +11,6 @@ import scala.concurrent.Future
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
 
 object OptaFeed extends ExecutionContexts with Logging {
-
-
-
   private val xmlContentType = ("Accept", "application/xml")
 
   private def getLiveScoresResponse: Future[String] = {
