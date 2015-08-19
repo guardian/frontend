@@ -11,7 +11,7 @@ import rugby.model.LiveScore
 case class LiveScorePage(liveScore: LiveScore) extends MetaData with ExecutionContexts {
   override lazy val id = s"/sport/rugby/api/live-score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
   override lazy val section = "rugby"
-  override lazy val webTitle = s"${liveScore.homeTeam} v ${liveScore.awayTeam}"
+  override lazy val webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} "
   override lazy val analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}"
 }
 
