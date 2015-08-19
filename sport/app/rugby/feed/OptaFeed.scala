@@ -15,18 +15,24 @@ object OptaFeed extends ExecutionContexts with Logging {
 
   private def getLiveScoresResponse: Future[String] = {
 
-    val endpoint = conf.Configuration.optaRugby.endpoint
-    endpoint.map { e =>
-      WS.url(e)
+    val endpointOpt = conf.Configuration.optaRugby.endpoint
+    endpointOpt.map { endpoint =>
+      val friendlyCompetition= "competition" -> "3"
+      val season = "season_id" -> "2016"
+      val apiKey = "psw" -> conf.Configuration.optaRugby.apiKey.getOrElse("")
+      val apiUser = "user" -> conf.Configuration.optaRugby.apiUser.getOrElse("")
+      val feedType = "feed_type" -> "ru5"
+
+      WS.url(endpoint)
         .withHeaders(xmlContentType)
-        .withQueryString("competition" -> "3", "season_id" -> "2016", "psw" -> conf.Configuration.optaRugby.apiKey.getOrElse(""),
-          "user" -> conf.Configuration.optaRugby.apiUser.getOrElse(""), "feed_type" -> "ru5")
+        .withQueryString(friendlyCompetition, season, apiKey,
+          apiUser, feedType)
         .get
         .map { response =>
         response.status match {
           case 200 => response.body
           case _ => {
-            val error = s"Opta endpoint returned: ${response.status}, $endpoint"
+            val error = s"Opta endpointOpt returned: ${response.status}, $endpoint"
             log.warn(error)
             throw RugbyOptaFeedException(error)
           }
