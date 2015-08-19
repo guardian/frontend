@@ -453,11 +453,11 @@ class Crossword extends React.Component {
         const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
 
         this.setState({
-          grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
-              if (_.some(cellsInFocus, cell => cell.x === gridX && cell.y === gridY)) {
-                cell.value = '';
-              }
-              return cell;
+            grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                if (_.some(cellsInFocus, c => c.x === gridX && c.y === gridY)) {
+                    cell.value = '';
+                }
+                return cell;
             })
         });
 
