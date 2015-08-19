@@ -216,7 +216,7 @@ define([
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
 
-        this.s.prop40    = detect.adblockInUse;
+        this.s.prop40    = detect.adblockInUse || detect.getFirefoxAdblockPlusInstalled();
 
         this.s.prop47    = config.page.edition || '';
 

@@ -2,7 +2,7 @@
 define([
     'bean',
     'qwery',
-    'raven',
+    'common/utils/report-error',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
@@ -14,7 +14,7 @@ define([
 ], function (
     bean,
     qwery,
-    raven,
+    reportError,
     $,
     _,
     config,
@@ -222,12 +222,10 @@ define([
 
     function beaconError(err) {
         if (err && 'message' in err && 'code' in err) {
-            raven.captureException(new Error(err.message), {
-                tags: {
-                    feature: 'player',
-                    vjsCode: err.code
-                }
-            });
+            reportError(new Error(err.message), {
+                feature: 'player',
+                vjsCode: err.code
+            }, false);
         }
     }
 

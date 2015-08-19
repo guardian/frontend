@@ -1,10 +1,9 @@
 package controllers
 
-import play.api.mvc.{Result, Results, Cookie, RequestHeader}
 import common.LinkTo
 import conf.Configuration.site
 import model.NoCache
-import scala.util.matching.Regex
+import play.api.mvc.{Cookie, RequestHeader, Result, Results}
 
 trait PreferenceController extends Results {
 
@@ -14,7 +13,7 @@ trait PreferenceController extends Results {
     case host => LinkTo(url) startsWith host
   }
 
-  private def getShortenedDomain(domain: String) = {
+  protected def getShortenedDomain(domain: String) = {
     val regex = "^(www|dev)\\.".r
     val shortDomain = regex.replaceFirstIn(domain, ".")
 

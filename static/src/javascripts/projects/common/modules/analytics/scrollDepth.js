@@ -9,6 +9,8 @@ define([
     function ScrollDepth(options) {
         this.opts = _.assign(this.opts, options);
 
+        _.bindAll(this, 'assertScrolling', 'hasDataChanged');
+
         if (this.opts.isContent) {
             this.opts.contentEl = this.contentEl || document.getElementById('article') || document.getElementById('live-blog');
         }
@@ -96,9 +98,9 @@ define([
     };
 
     ScrollDepth.prototype.init = function () {
-        mediator.on('window:scroll', _.debounce(this.assertScrolling.bind(this), 200));
-        mediator.on('scrolldepth:inactive', this.hasDataChanged.bind(this));
-        mediator.on('module:clickstream:click', this.hasDataChanged.bind(this));
+        mediator.on('window:throttledScroll', _.debounce(this.assertScrolling, 200));
+        mediator.on('scrolldepth:inactive', this.hasDataChanged);
+        mediator.on('module:clickstream:click', this.hasDataChanged);
     };
 
     return ScrollDepth;

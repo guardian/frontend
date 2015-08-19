@@ -239,7 +239,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def cards: List[(String, String)] = super.cards ++ List(
-    "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
+    "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian"),
+    "twitter:image" -> openGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   override def elements: Seq[Element] = delegate.elements
@@ -338,6 +339,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   def showFooterContainers = false
+
+  override def iosType = Some("article")
 }
 
 object Content {
