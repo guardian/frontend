@@ -1,5 +1,5 @@
 define([
-    'raven',
+    'common/utils/report-error',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
@@ -8,7 +8,7 @@ define([
     'common/utils/template',
     'text!common/views/content/share-count.html'
 ], function (
-    raven,
+    reportError,
     $,
     ajax,
     detect,
@@ -98,11 +98,9 @@ define([
                     updateTooltip();
                 });
             } catch (e) {
-                raven.captureException(new Error('Error retrieving share counts (' + e.message + ')'), {
-                    tags: {
-                        feature: 'share-count'
-                    }
-                });
+                reportError(new Error('Error retrieving share counts (' + e.message + ')'), {
+                    feature: 'share-count'
+                }, false);
             }
         }
     };

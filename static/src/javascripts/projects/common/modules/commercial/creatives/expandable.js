@@ -1,6 +1,8 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -9,6 +11,8 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
+    _,
     $,
     mediator,
     storage,
@@ -25,18 +29,24 @@ define([
         this.isClosed     = true;
         this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
         this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
+
+        _.bindAll(this, 'listener');
     };
 
     Expandable.prototype.listener = function () {
+        var that = this;
         if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
 
             // TODO - needs to have a creative-specific id
             storage.local.set('gu.commercial.expandable.an-expandable', true, { expires: Date.now() + week });
-            this.$button.toggleClass('button-spin');
-            this.$ad.css('height', this.openedHeight);
-            this.isClosed = false;
+
+            fastdom.write(function () {
+                that.$button.toggleClass('button-spin');
+                that.$ad.css('height', that.openedHeight);
+                that.isClosed = false;
+            });
 
             return true;
         }
@@ -45,19 +55,20 @@ define([
     Expandable.prototype.create = function () {
         var $expandable = $.create(template(expandableTpl, { data: this.params }));
 
-        this.$ad     = $('.ad-exp--expand', $expandable).css('height', this.closedHeight);
+        this.$ad     = $('.ad-exp--expand', $expandable);
         this.$button = $('.ad-exp__close-button', $expandable);
 
-        $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
-
-        if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-        }
-
-        $expandable.appendTo(this.$adSlot);
+        fastdom.write(function () {
+            this.$ad.css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
+            if (this.params.trackingPixel) {
+                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            }
+            $expandable.appendTo(this.$adSlot);
+        }.bind(this));
 
         if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
-            mediator.on('window:scroll', this.listener.bind(this));
+            mediator.on('window:throttledScroll', this.listener);
         }
 
         bean.on(this.$button[0], 'click', function () {

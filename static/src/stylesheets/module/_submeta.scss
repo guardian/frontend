@@ -24,6 +24,23 @@
     .content--liveblog & {
         padding-top: $gs-baseline * 2;
     }
+
+    .submeta__share {
+        float: left;
+    }
+
+    .submeta__syndication {
+        display: none;
+        @include mq(desktop) {
+            padding-top: $gs-baseline/2;
+            display: inline-block;
+            @include fs-textSans(1);
+            height: 32px;
+            float: right;
+            line-height: 15px;
+            margin-bottom: 0;
+        }
+    }
 }
 
 .submeta__head {

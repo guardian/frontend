@@ -3,13 +3,15 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'fastdom'
 ], function (
     bonzo,
     _,
     $,
     config,
-    mediator
+    mediator,
+    fastdom
 ) {
     /**
      * @todo: check if browser natively supports "position: sticky"
@@ -20,16 +22,18 @@ define([
         this.opts     = _.defaults(options || {}, {
             top: 0
         });
+
+        _.bindAll(this, 'updatePosition');
     };
 
     Sticky.prototype.init = function () {
-        mediator.on('window:scroll', _.throttle(this.updatePosition.bind(this), 10));
+        mediator.on('window:throttledScroll', this.updatePosition);
         // kick off an initial position update
-        this.updatePosition();
+        fastdom.read(this.updatePosition);
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight;
+        var fixedTop, css, stickyHeaderHeight, that = this;
 
         stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
 
@@ -49,7 +53,9 @@ define([
             };
         }
 
-        return this.$element.css(css);
+        fastdom.write(function () {
+            that.$element.css(css);
+        });
     };
 
     return Sticky;
