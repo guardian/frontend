@@ -381,19 +381,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
   }
 
-  object pa {
-    lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
-    lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
-
-    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
-  }
-
-  object optaRugby {
-    lazy val endpoint = configuration.getStringProperty("opta.rugby.api.endpoint")
-    lazy val apiKey = configuration.getStringProperty("opta.rugby.api.key")
-    lazy val apiUser = configuration.getStringProperty("opta.rugby.api.user")
-  }
-
   object memcached {
     lazy val host = configuration.getStringProperty("memcached.host")
   }

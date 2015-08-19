@@ -15,12 +15,12 @@ object OptaFeed extends ExecutionContexts with Logging {
 
   private def getLiveScoresResponse: Future[String] = {
 
-    val endpointOpt = conf.Configuration.optaRugby.endpoint
+    val endpointOpt = conf.SportConfiguration.optaRugby.endpoint
     endpointOpt.map { endpoint =>
       val friendlyCompetition= "competition" -> "3"
       val season = "season_id" -> "2016"
-      val apiKey = "psw" -> conf.Configuration.optaRugby.apiKey.getOrElse("")
-      val apiUser = "user" -> conf.Configuration.optaRugby.apiUser.getOrElse("")
+      val apiKey = "psw" -> conf.SportConfiguration.optaRugby.apiKey.getOrElse("")
+      val apiUser = "user" -> conf.SportConfiguration.optaRugby.apiUser.getOrElse("")
       val feedType = "feed_type" -> "ru5"
 
       WS.url(endpoint)
