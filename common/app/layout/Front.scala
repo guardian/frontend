@@ -11,7 +11,7 @@ import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
-import services.{CollectionConfigWithId, FaciaContentConvert}
+import services.CollectionConfigWithId
 import slices.{MostPopular, _}
 import views.support.CutOut
 
@@ -67,15 +67,6 @@ case class ContainerLayoutContext(
 
 object CollectionEssentials {
   /* FAPI Integration */
-
-  def fromCollection(collection: model.Collection) = CollectionEssentials(
-    collection.items.map(FaciaContentConvert.frontentContentToFaciaContent),
-    collection.treats.map(FaciaContentConvert.frontentContentToFaciaContent),
-    collection.displayName,
-    collection.href,
-    collection.lastUpdated,
-    if (collection.curated.isEmpty) Some(9) else None
-  )
 
   def fromPressedCollection(collection: PressedCollection) = CollectionEssentials(
     collection.curatedPlusBackfillDeduplicated,

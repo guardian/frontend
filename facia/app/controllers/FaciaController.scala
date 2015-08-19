@@ -156,7 +156,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             CollectionEssentials.fromPressedCollection(collection)
           )
 
-          val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
+          val html = container(containerDefinition, FrontProperties.empty)
           if (request.isJson)
             JsonCollection(html, collection)
           else
@@ -184,10 +184,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   private object JsonCollection{
     def apply(html: Html, collection: PressedCollection)(implicit request: RequestHeader) = JsonComponent(
-      "html" -> html
-    )
-
-    def apply(html: Html, collection: Collection)(implicit request: RequestHeader) = JsonComponent(
       "html" -> html
     )
   }
