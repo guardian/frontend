@@ -71,7 +71,7 @@ object CrosswordPreferencesController extends Controller with PreferenceControll
   }
 
   def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=old").withCookies(
+    Cached(60)(SeeOther("/crosswords?view=classic").withCookies(
       Cookie(
         CrosswordOptIn, "false",
         path = CrosswordOptInPath,
