@@ -36,7 +36,7 @@ define([
                 supporterLink: this.supporterLink,
                 quoteText: this.quoteText,
                 quoteAuthor: this.quoteAuthor,
-                messageText: 'We noticed you\'re using an ad-blocker. Become a supporter from just £5 per month to ensure quality journalism is available to all.',
+                messageText: 'We notice you\'re using an ad-blocker. Become a supporter from just £5 per month to ensure quality journalism is available to all.',
                 linkText: 'Find out more',
                 imageAuthor: this.imageAuthor,
                 cursor: svgs('cursor'),
