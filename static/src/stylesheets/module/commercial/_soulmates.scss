@@ -262,7 +262,8 @@ $c-soulmates-high: colour(neutral-1);
             background-position: bottom 70px right 0px;
 
             .has-page-skin & {
-                background-position: bottom 78px left 0px;
+                min-height: 257px;
+                background-position: bottom 61px left 0px;
             }
         }
 
@@ -278,6 +279,10 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__header {
         background-color: #332e2e;
+
+        .has-page-skin & {
+            padding-bottom: $gs-baseline/2;
+        }        
 
         .inline-marque-54 {
             @include mq($until: leftCol) {
@@ -370,6 +375,10 @@ $c-soulmates-high: colour(neutral-1);
             margin-bottom: $gs-baseline;
             display: block;
 
+            .has-page-skin & {
+                display: none;
+            }
+
             span {
                 display: block;
             }
@@ -429,8 +438,7 @@ $c-soulmates-high: colour(neutral-1);
             bottom: $gs-gutter;
 
             .has-page-skin & {
-                width: 25%;
-                height: 64px;
+                width: 15%;
                 position: static;
                 float: right;
                 border-left: 1px solid #666666;
@@ -487,6 +495,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($from: leftCol) {
             display: block;
+
+            .has-page-skin & {
+                display: none;
+            }
         }
     }
 
@@ -530,6 +542,12 @@ $c-soulmates-high: colour(neutral-1);
                 width: 20px;
                 height: 20px;
                 padding: 0;
+
+                .has-page-skin & {
+                    width: 16px;
+                    height: 16px;
+                    padding: 2px 0 0;
+                }
             }
 
         }
@@ -596,6 +614,11 @@ $c-soulmates-high: colour(neutral-1);
         @include mq(wide) {
             font-size: 16px; 
             margin: 0 auto $gs-gutter;
+
+            .has-page-skin & {
+                font-size: 15px;
+                margin: 0 auto $gs-baseline;
+            }  
         }
 
         span {
@@ -636,6 +659,10 @@ $c-soulmates-high: colour(neutral-1);
             width: gs-span(8) - $gs-baseline*4;
             padding: $gs-baseline*2;
             margin-right: 0;
+
+            .has-page-skin & {
+                padding: $gs-baseline 18px;
+            }  
         }
 
     }
@@ -713,6 +740,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($from: wide) {
             max-height: 116px;
+
+            .has-page-skin & {
+                max-height: 99px;
+            }
         }
 
     }
@@ -740,6 +771,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($from: wide) {
             @include fs-data(2);
+
+            .has-page-skin & {
+                @include fs-data(1);
+            }
         }
     }
 
@@ -751,6 +786,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($from: wide) {
             @include fs-data(2);
+
+            .has-page-skin & {
+                @include fs-data(1);
+            }
         }
     }
 
@@ -790,6 +829,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq(wide) {
             padding: $gs-baseline*2;
+
+            .has-page-skin & {
+                padding: $gs-baseline 18px;
+            }  
         }
 
         @include mq($from: desktop) {
@@ -822,6 +865,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq(wide) {
             height: $gs-row-height;
+
+            .has-page-skin & {
+                height: 30px;
+            }
         }
     }
 
@@ -876,6 +923,12 @@ $c-soulmates-high: colour(neutral-1);
             @include fs-data(4, $size-only: true);
             background-size: 20px 20px;
             height: $gs-row-height;
+
+            .has-page-skin & {
+                @include fs-data(3, $size-only: true);
+                background-size: 16px 16px;
+                height: 30px;
+            }  
         }
 
     }
@@ -900,6 +953,12 @@ $c-soulmates-high: colour(neutral-1);
             font-size: 15px;
             padding: 8px 0 7px $gs-baseline;
             margin-top: 13px;
+
+            .has-page-skin & {
+                font-size: 12px;
+                padding: 5px 0 5px $gs-baseline;
+                margin: 10px 0 1px;
+            }
         }
 
         .search__submit__text {
