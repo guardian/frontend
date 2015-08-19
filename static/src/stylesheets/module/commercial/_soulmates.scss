@@ -262,8 +262,8 @@ $c-soulmates-high: colour(neutral-1);
             background-position: bottom 70px right 0px;
 
             .has-page-skin & {
-                min-height: 257px;
-                background-position: bottom 61px left 0px;
+                min-height: 248px;
+                background-position: bottom 55px left 0px;
             }
         }
 
@@ -480,6 +480,11 @@ $c-soulmates-high: colour(neutral-1);
             @include mq(wide) {
                 @include fs-data(2);
                 line-height: 20px;
+
+                .has-page-skin & {
+                    @include fs-data(1);
+                    line-height: 20px;
+                }
             }
         }
         .commercial__cta__icon {
@@ -758,6 +763,10 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($from: wide) {
             padding: $gs-gutter/4 $gs-gutter/2;
+
+            .has-page-skin & {
+                padding: 3px 8px;
+            }
         }
 
     }
@@ -957,7 +966,7 @@ $c-soulmates-high: colour(neutral-1);
             .has-page-skin & {
                 font-size: 12px;
                 padding: 5px 0 5px $gs-baseline;
-                margin: 10px 0 1px;
+                margin: 13px 0 1px;
             }
         }
 
