@@ -31,9 +31,10 @@ object RefreshFrontsJob extends Logging {
 
   def getFrontType(json: JsValue, path: String): FrontType = {
     lazy val isCommercial: Boolean = (json \ "fronts" \ path \ "priority") == JsString("commercial")
+    lazy val isTraining: Boolean = (json \ "fronts" \ path \ "priority") == JsString("training")
     if (HighFrequency.highFrequencyPaths.contains(path))
       HighFrequency
-    else if (isCommercial)
+    else if (isCommercial || isTraining)
       LowFrequency
     else
       StandardFrequency

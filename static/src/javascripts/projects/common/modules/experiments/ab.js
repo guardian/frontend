@@ -8,7 +8,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
@@ -21,7 +21,7 @@ define([
     mvtCookie,
     LiveblogNotifications,
     HighCommercialComponent,
-    MembershipMessage,
+    MembershipMessageUK,
     MembershipMessageUSA,
     AdblockStickyBanner
 ) {
@@ -29,7 +29,7 @@ define([
     var TESTS = _.flatten([
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new MembershipMessage(),
+        new MembershipMessageUK(),
         new MembershipMessageUSA(),
         new AdblockStickyBanner()
     ]);
