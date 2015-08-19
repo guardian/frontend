@@ -12,7 +12,7 @@ import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import play.api.libs.ws.WSResponse
 import play.api.{Application => PlayApplication}
-import conf.{FootballClient, Configuration}
+import conf.{SportConfiguration, FootballClient, Configuration}
 import pa.Http
 import io.Source
 import org.joda.time.LocalDate
@@ -94,8 +94,8 @@ object TestHttp extends Http with ExecutionContexts {
   def GET(url: String) = {
 
     val fileName = {
-      val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
-        .replace(s"${Configuration.pa.host}/", "")
+      val file = base + (url.replace(SportConfiguration.pa.apiKey, "APIKEY")
+        .replace(s"${SportConfiguration.pa.host}/", "")
         .replace("/", "__"))
       // spoof todays date
       file.replace(today.toString("yyyyMMdd"), "20121020")
