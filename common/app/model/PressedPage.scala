@@ -87,8 +87,7 @@ case class PressedPage(id: String,
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   override def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = {
-    if (isNetworkFront) DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
-    else Nil
+    DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
   }
 
   override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
