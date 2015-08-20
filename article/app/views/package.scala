@@ -9,6 +9,7 @@ object MainCleaner {
  def apply(article: Article, html: String)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
+        VideoEmbedCleaner(article),
         PictureCleaner(article),
         MainFigCaptionCleaner
       )

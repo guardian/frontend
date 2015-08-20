@@ -64,10 +64,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   val topSlotTakeovers = dateSort {
     lineItems filter { lineItem =>
       lineItem.costType == "CPD" &&
-        lineItem.targeting.adUnits.exists { adUnit =>
-          val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
-          prefix.endsWith("/uk") || prefix.endsWith("/us") || prefix.endsWith("/au")
-        } &&
+        lineItem.targetsNetworkOrSectionFrontDirectly &&
         lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
           geoTarget.locationType == "COUNTRY" && (
             geoTarget.name == "United Kingdom" ||
@@ -76,7 +73,8 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
             )
         } &&
         lineItem.creativeSizes.contains(responsiveSize) &&
-        lineItem.startTime.isBefore(DateTime.now.plusDays(1))
+        lineItem.startTime.isBefore(DateTime.now.plusDays(1)) &&
+        lineItem.endTime.isDefined
     }
   }
 
