@@ -953,6 +953,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABRugbyScores = Switch(
+    "A/B Tests",
+    "ab-rugby-scores",
+    "Switches on the score components for the Rugby",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 7),
+    exposeClientSide = true
+  )
+
   val ABAdblockStickyBanner = Switch(
     "A/B Tests",
     "ab-adblock-sticky-banner",

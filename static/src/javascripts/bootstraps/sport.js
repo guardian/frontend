@@ -28,8 +28,6 @@ define([
 
         if (config.page.rugbyMatch) {
 
-
-
             ajax({
                 url: config.page.rugbyMatch + '.json',
                 type: 'json',
@@ -47,18 +45,15 @@ define([
                 }
             );
 
-
-
         }
     }
 
     function init()  {
-
-        rugby();
         cricket();
     }
 
     return {
-        init: init
+        init: init,
+        rugby: rugby
     };
 });
