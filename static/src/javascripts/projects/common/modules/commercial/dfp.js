@@ -161,8 +161,7 @@ define([
             var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1'];
             for (var i = 0; i < sponsorshipIds.length; i++) {
                 if ($(sponsorshipIds[i]).length > 0) {
-                    var sponsorshipIdFound = sponsorshipIds[i];
-                    return sponsorshipIdFound;
+                    return sponsorshipIds[i];
                 }
             }
         },
@@ -265,8 +264,8 @@ define([
             window.googletag.cmd.push(postDisplay);
 
             // show sponsorship placeholder if adblock detected
-            sponsorshipIdFound = isSponsorshipContainerTest();
-            sponsorshipIdClasses = $(sponsorshipIdFound).attr('class').replace('ad-slot ', '');
+            var sponsorshipIdFound = isSponsorshipContainerTest();
+            var sponsorshipIdClasses = $(sponsorshipIdFound).attr('class').replace('ad-slot ', '');
             if (detect.adblockInUse && sponsorshipIdFound) {
                 var sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + $(sponsorshipIdFound).html() + '</div>';
                 $(sponsorshipIdFound).previous().append(sponsorshipBadge);
