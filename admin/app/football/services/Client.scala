@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
 import play.Logger
 import common.ExecutionContexts
 import pa.{PaClient, Http, Response}
-import conf.Configuration
+import conf.AdminConfiguration
 
 
 trait Client extends PaClient with Http with ExecutionContexts {
@@ -22,8 +22,8 @@ trait Client extends PaClient with Http with ExecutionContexts {
 }
 private object Client extends Client {
 
-  override def apiKey: String = Configuration.pa.apiKey
-  override lazy val base = Configuration.pa.host
+  override def apiKey: String = AdminConfiguration.pa.footballApiKey
+  override lazy val base = AdminConfiguration.pa.footballHost
 
   override def GET(urlString: String): Future[pa.Response] = {
     import play.api.Play.current
