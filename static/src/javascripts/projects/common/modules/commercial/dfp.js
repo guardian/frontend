@@ -16,6 +16,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -37,6 +38,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    dfpOphanTracking,
     geoMostPopular,
     ab,
     beacon,
@@ -113,92 +115,11 @@ define([
             beacon.beaconCounts('ad-render');
         }),
 
-        attachOphanAdTracking = function () {
-            var adTimings = {};
-            spyOnAdDebugTimings();
-            reportAdsAndTimingsOnRender();
-
-            function spyOnAdDebugTimings() {
-                // Spy on undocumented GPT debugging API and store granular ad timing data in 'adTimings' map
-
-                if (!googletag.debug_log || !googletag.debug_log.log) {
-                    return;
-                }
-                var originalDebugger = googletag.debug_log.log;
-                var lifecycleIdToTimingAttr = {
-                    3 : 'fetch',
-                    4 : 'receive',
-                    6 : 'render'
-                };
-
-                googletag.debug_log.log = function interceptedGptDebugger(level, message, service, slot) {
-                    var lifecycleId = message.getMessageId();
-
-                    var slotId, timingAttr;
-                    if (lifecycleId && slot) {
-                        slotId = slot.getSlotId().getDomId();
-                        adTimings[slotId] = adTimings[slotId] || {};
-                        timingAttr = lifecycleIdToTimingAttr[lifecycleId];
-                        adTimings[slotId][timingAttr] = new Date().getTime();
-                    }
-
-                    return originalDebugger.apply(this, arguments);
-                };
-            }
-
-            function reportAdsAndTimingsOnRender() {
-                // We do not know if and when the debugger will be called, so we cannot wait for its timing
-                // data before sending Ophan calls
-
-                googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function reportAdToOphan(event) {
-                    require(['ophan/ng'], function (ophan) {
-                        var renderStart = detect.getTimeOfDomComplete();
-                        var slotId = event.slot.getSlotId().getDomId();
-                        var slotTiming = adTimings[slotId] || {};
-
-                        var lineItemIdOrEmpty = function (event) {
-                            if (event.isEmpty) {
-                                return '__empty__';
-                            } else {
-                                return event.lineItemId;
-                            }
-                        };
-
-                        ophan.record({
-                            ads: [{
-                                slot: event.slot.getSlotId().getDomId(),
-                                campaignId: lineItemIdOrEmpty(event),
-                                creativeId: event.creativeId,
-                                timeToRenderEnded: new Date().getTime() - renderStart,
-
-                                // overall time to make an ad request
-                                timeToAdRequest: safeDiff(renderStart, slotTiming.fetch),
-
-                                // delay between requesting and receiving an ad
-                                adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
-
-                                // delay between receiving and rendering an ad
-                                adRenderTime: safeDiff(slotTiming.receive, slotTiming.render),
-
-                                adServer: 'DFP'
-                            }]
-                        });
-                    });
-                }));
-
-                function safeDiff(first, last) {
-                    if (first && last) {
-                        return last - first;
-                    }
-                }
-            }
-        },
-
         /**
          * Initial commands
          */
         setListeners = function () {
-            attachOphanAdTracking();
+            dfpOphanTracking.attachListeners(googletag);
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
