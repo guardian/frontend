@@ -163,7 +163,7 @@ define([
                 if ($(sponsorshipIds[i]).length > 0) {
                     var sponsorshipIdFound = sponsorshipIds[i];
                     return sponsorshipIdFound;
-                } 
+                }
             }
         },
 
