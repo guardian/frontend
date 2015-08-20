@@ -113,14 +113,41 @@ define([
             beacon.beaconCounts('ad-render');
         }),
 
-        /**
-         * Initial commands
-         */
-        setListeners = function () {
-            var start = detect.getTimeOfDomComplete();
+        attachOphanAdTracking = function () {
+            var renderStart = detect.getTimeOfDomComplete();
+            var timings = {};
+
+            var adLifecycleAliases = {
+                3 : 'fetch',
+                4 : 'receive',
+                6 : 'render'
+            };
+
+            if (googletag.debug_log && googletag.debug_log.log) {
+                googletag.debug_log.log = interceptedWithSpy(googletag.debug_log.log, captureAdDebugTimings);
+            }
+
+            function captureAdDebugTimings(level, message, service, slot) {
+                // Try and use undocumented GPT debugging API to capture granular ad timing data
+                var lifecycleStage = message && message.getMessageId ? message.getMessageId() : null;
+
+                var slotId, lifecycleAlias;
+                if (lifecycleStage && slot) {
+                    slotId = slot.getSlotId().getDomId();
+                    timings[slotId] = timings[slotId] || {};
+                    lifecycleAlias = adLifecycleAliases[lifecycleStage];
+                    timings[slotId][lifecycleAlias] = new Date().getTime();
+                }
+            }
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 require(['ophan/ng'], function (ophan) {
+                    var slotId = event.slot.getSlotId().getDomId();
+                    // We do not know if the timings have been captured successfully, as we can be sure of neither
+                    // the debug API's existence or the fact it is called before this event. We cannot know if has
+                    // been called and we cannot wait for it, either.
+                    var slotTiming = timings[slotId] || {};
+
                     var lineItemIdOrEmpty = function (event) {
                         if (event.isEmpty) {
                             return '__empty__';
@@ -134,12 +161,40 @@ define([
                             slot: event.slot.getSlotId().getDomId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - start,
+                            timeToRenderEnded: new Date().getTime() - renderStart,
+                            // overall time to make an ad request
+                            timeToAdRequest: safeDiff(renderStart, slotTiming.fetch),
+                            // delay between requesting and receiving an ad
+                            adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
+                            // delay between receiving and rendering an ad
+                            adRenderTime: safeDiff(slotTiming.receive, slotTiming.render),
                             adServer: 'DFP'
                         }]
                     });
                 });
+            }));
 
+            function safeDiff(first, last) {
+                if (first && last) {
+                    return last - first;
+                }
+            }
+
+            function interceptedWithSpy(intercepted, spy) {
+                return function () {
+                    spy.apply(this, arguments);
+                    return intercepted.apply(this, arguments);
+                };
+            }
+        },
+
+        /**
+         * Initial commands
+         */
+        setListeners = function () {
+            attachOphanAdTracking();
+
+            googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
