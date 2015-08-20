@@ -3,7 +3,8 @@
   isFeature: Boolean = false,
   isImageContent: Boolean = false,
   url: Option[String] = None,
-  isLightboxable: Boolean = false)(implicit request: RequestHeader)
+  isLightboxable: Boolean = false,
+  pcu: Boolean = false)(implicit request: RequestHeader)
 
 
 @import layout.WidthsByBreakpoint
@@ -56,13 +57,23 @@
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
 
-    <img src="@ImgSrc.getFallbackUrl(picture)"
+    @if(pcu) {
+        <cat-img src="@ImgSrc.getFallbackUrl(picture)"
         srcset="@ImgSrc.srcset(picture, widths)"
         sizes="@widths.sizes"
+            layout="responsive"
+            width=""
         class="maxed responsive-img"
         itemprop="contentUrl"
         alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
-
+    } else {
+        <img src="@ImgSrc.getFallbackUrl(picture)"
+            srcset="@ImgSrc.srcset(picture, widths)"
+            sizes="@widths.sizes"
+            class="maxed responsive-img"
+            itemprop="contentUrl"
+            alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+    }
 }
 
 @caption(picture: model.ImageContainer) = {

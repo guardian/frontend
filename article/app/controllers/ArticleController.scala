@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
-import com.gu.util.liveblogs.{BlockToText, BlockType, Block}
+import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
@@ -25,6 +25,10 @@ trait ArticleWithStoryPackage {
 }
 case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
 case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
+
+sealed trait RequestedFormat
+object HtmlFormat extends RequestedFormat
+object PCUFormat extends RequestedFormat
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -99,38 +103,43 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     }
   }
 
-  def mapModel(path: String)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path) map {
+  def mapModel(path: String, format: RequestedFormat = HtmlFormat)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
+
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
+    getResponse(LiveContentApi.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
     )
 
-    val result = response map { response =>
+  }
 
-      val supportedContent = response.content.filter(isSupported).map(Content(_))
-      val content: Option[ArticleWithStoryPackage] = supportedContent.map {
-        case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
-        case article: Article => ArticlePage(article, RelatedContent(article, response))
-      }
-
-      if (content.exists(_.article.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(content, response)
-      }
+  /**
+   * convert a response into something we can render, and return it
+   * optionally, throw a response if we know it's not right to send the content
+   * @param response
+   * @return
+   */
+  def redirect(response: ItemResponse)(implicit request: RequestHeader) = {
+    val supportedContent = response.content.filter(isSupported).map(Content(_))
+    val content: Option[ArticleWithStoryPackage] = supportedContent.map {
+      case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
+      case article: Article => ArticlePage(article, RelatedContent(article, response))
     }
 
-    result recover convertApiExceptions
+    if (content.exists(_.article.isExpiredAdvertisementFeature)) {
+      Right(MovedPermanently(expiredAdFeatureUrl))
+    } else {
+      ModelOrResult(content, response)
+    }
   }
 
 }

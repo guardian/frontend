@@ -1,4 +1,4 @@
-@(article: model.Article)(implicit request: RequestHeader)
+@(article: model.Article, pcu: Boolean = false)(implicit request: RequestHeader)
 
 @import model.EndSlateComponents
 @import model.{AudioPlayer, VideoPlayer}
@@ -35,7 +35,7 @@
             }
         } else {
             @fragments.img(article.mainPicture, article.hasShowcaseMainElement, article.isFeature, false,
-                Some(article.url), article.isMainMediaLightboxable)
+                Some(article.url), article.isMainMediaLightboxable, pcu)
         }
     }
 }

@@ -1,5 +1,5 @@
 
-@(model: ArticlePage)(implicit request: RequestHeader)
+@(model: ArticlePage, pcu: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -22,7 +22,7 @@
         @fragments.headTonal(article)
 
         @if(article.isFeature && article.hasShowcaseMainElement) {
-            @fragments.mainMedia(article)
+            @fragments.mainMedia(article, pcu)
         }
 
         <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
@@ -32,7 +32,7 @@
                     <div class="js-football-tabs football-tabs content__mobile-full-width"></div>
 
                     @if(!(article.isFeature && article.hasShowcaseMainElement)) {
-                        @fragments.mainMedia(article)
+                        @fragments.mainMedia(article, pcu)
                     }
 
                     @fragments.witnessCallToAction(article)

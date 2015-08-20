@@ -23,11 +23,9 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isWebp: Boolean = {
-      val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)
-      val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg") || media.accepts("image/webp"))
-      imageMimeType.exists(_.mediaSubType == "webp")
-    }
+    lazy val isPcu: Boolean = r.path.endsWith("/pcu")
+
+    lazy val pathWithoutModifiers: String = if (isPcu) r.path.stripSuffix("/pcu") else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 

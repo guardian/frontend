@@ -353,4 +353,5 @@ GET         /embed/video/*path                                                  
 
 # Articles
 GET         /*path.json                                                                                              controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET         /*path/pcu                  controllers.ArticlePCUController.renderPath(path)
 GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
