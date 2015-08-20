@@ -13,7 +13,7 @@ case class RugbyOptaFeedException(message: String) extends RuntimeException(mess
 object OptaFeed extends ExecutionContexts with Logging {
   private val xmlContentType = ("Accept", "application/xml")
 
-  private def getLiveScoresResponse: Future[String] = {
+  private def getResponse(feedParameter: String): Future[String] = {
 
     val endpointOpt = conf.SportConfiguration.optaRugby.endpoint
     endpointOpt.map { endpoint =>
@@ -21,7 +21,7 @@ object OptaFeed extends ExecutionContexts with Logging {
       val season = "season_id" -> "2016"
       val apiKey = "psw" -> conf.SportConfiguration.optaRugby.apiKey.getOrElse("")
       val apiUser = "user" -> conf.SportConfiguration.optaRugby.apiUser.getOrElse("")
-      val feedType = "feed_type" -> "ru5"
+      val feedType = "feed_type" -> feedParameter
 
       WS.url(endpoint)
         .withHeaders(xmlContentType)
@@ -41,8 +41,11 @@ object OptaFeed extends ExecutionContexts with Logging {
     }.getOrElse(Future.failed(RugbyOptaFeedException("No endpoint for rugby found")))
   }
 
-  def getLiveScores: Future[Seq[Match]] = getLiveScoresResponse.map(Parser.parseLiveScores)
+  def getLiveScores: Future[Seq[Match]] = getResponse("ru5").map(Parser.parseLiveScores)
+
+  def getFixturesAndResults: Future[Seq[Match]] = getResponse("ru1").map(Parser.parseFixturesAndResults)
 
   def getLiveScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = RugbyStatsJob.getLiveScore(s"$year/$month/$day/$homeTeamId/$awayTeamId")
+  def getFixturesAndResults(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = RugbyStatsJob.getFixturesAndResultScore(s"$year/$month/$day/$homeTeamId/$awayTeamId")
 
 }

@@ -15,20 +15,24 @@ case class LiveScorePage(liveScore: Match) extends MetaData with ExecutionContex
   override lazy val analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}"
 }
 
-object LiveScoresController extends Controller {
+object MatchesController extends Controller {
 
-  def liveScoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = liveScore(year, month, day, homeTeamId, awayTeamId)
+  def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 
-  def liveScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = Action { implicit request =>
-    OptaFeed.getLiveScore(year, month, day, homeTeamId, awayTeamId).map { liveScore =>
-      val page = LiveScorePage(liveScore)
+  def score(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = Action { implicit request =>
+    val scoreOpt = OptaFeed.getLiveScore(year, month, day, homeTeamId, awayTeamId)
+      .orElse(OptaFeed.getFixturesAndResults(year, month, day, homeTeamId, awayTeamId))
+      .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
+
+    scoreOpt.map { score =>
+      val page = LiveScorePage(score)
       Cached(60){
         if (request.isJson)
           JsonComponent(
-            "liveScore" -> rugby.views.html.fragments.liveScore(page, liveScore).toString
+            "liveScore" -> rugby.views.html.fragments.liveScore(page, score).toString
           )
         else
-          Ok(rugby.views.html.liveScore(page, liveScore))
+          Ok(rugby.views.html.liveScore(page, score))
       }
 
     }.getOrElse(NotFound)
