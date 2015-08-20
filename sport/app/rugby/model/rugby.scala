@@ -6,8 +6,7 @@ case class Match(
   date: DateTime,
   id: String,
   homeTeam: Team,
-  awayTeam: Team,
-  isLive: Boolean
+  awayTeam: Team
 )
 
 case class Team(
