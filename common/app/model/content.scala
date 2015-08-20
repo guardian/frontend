@@ -566,6 +566,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def metaData: Map[String, JsValue] = {
     val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
+
     super.metaData ++ Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(isLiveBlog)),
@@ -605,13 +606,21 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
     "twitter:card" -> "summary"
   )
 
-  private lazy val cricketMetaData = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
-    Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
-  } else {
-    Map()
+  private lazy val sportMetaData = {
+    val rugbyMeta = if (isRugbyMatch) {
+      val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
+      val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
+      val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)
+      Some(("rugbyMatch", JsString(s"rugby/api/score/$date/$team1/$team2")))
+    } else None
+    val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
+      Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
+    } else None
+
+    List[Option[(String, JsValue)]](rugbyMeta, cricketMeta).flatten.toMap
   }
 
-  override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
+  override def metaData: Map[String, JsValue] = super.metaData ++ sportMetaData
   override lazy val lightboxImages = mainFiltered
 
   lazy val blocks = LiveBlogParser.parse(body)
