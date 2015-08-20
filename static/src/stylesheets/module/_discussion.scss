@@ -518,11 +518,18 @@ $avatarPadding: $gs-gutter / 2;
     margin-left: 0;
 }
 
-.i-reply-grey {
-    margin-bottom: -4px;
-    display: inline-block;
+.inline-reply {
+    &.grey {
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        fill: #BDBDBD;
+    }
+    &.blue {
+        fill: #005689;
+    }
 }
-.d-comment-box--top-level .i-reply-grey {
+.d-comment-box--top-level .inline-reply.grey {
     display: none;
 }
 
@@ -832,10 +839,8 @@ $comment-recommend-button-size: 19px;
         text-decoration: underline;
     }
 
-    .i {
-        margin-top: -1px;
+    .inline-reply svg {
         vertical-align: middle;
-        margin-right: 2px;
     }
 }
 
