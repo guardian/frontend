@@ -7,7 +7,6 @@ import * as vars from 'modules/vars';
 import asObservableProps from 'utils/as-observable-props';
 import debounce from 'utils/debounce';
 import fullTrim from 'utils/full-trim';
-import identity from 'utils/identity';
 import populateObservables from 'utils/populate-observables';
 import sanitizeApiQuery from 'utils/sanitize-api-query';
 import urlAbsPath from 'utils/url-abs-path';
@@ -90,7 +89,10 @@ export default class ConfigCollection extends DropTarget {
 
     /** IDs of fronts to which the collection belongs */
     frontIds() {
-        return _.chain(this.parents()).map(front => front.id()).filter(identity).value();
+        return _.chain(this.parents())
+            .map(front => _.result(front, 'id'))
+            .filter(_.identity)
+            .value();
     }
 
     save() {
