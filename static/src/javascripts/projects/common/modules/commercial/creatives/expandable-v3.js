@@ -40,6 +40,8 @@ define([
             this.closedHeight = 150;
             this.openedHeight = 300;
         }
+
+        _.bindAll(this, 'updateBgPosition', 'listener');
     };
 
     /**
@@ -49,80 +51,79 @@ define([
     ExpandableV3.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ExpandableV3.prototype.updateBgPosition = function () {
-        var adHeight, inViewB, inViewT, topCusp, bottomCusp, bottomScroll, topScroll;
-        fastdom.read(function () {
+        var scrollY = window.pageYOffset,
+            viewportHeight = bonzo.viewport().height,
+            adSlotTop = this.$adSlot.offset().top,
+            that = this,
+
             adHeight = (this.isClosed) ?
-                this.closedHeight : this.openedHeight;
-            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top);
-            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20);
+                this.closedHeight : this.openedHeight,
+            inViewB = ((scrollY + viewportHeight) > adSlotTop),
+            inViewT = ((scrollY - (adHeight * 2)) < adSlotTop + 20),
             topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
-                'true' : 'false';
+                ((scrollY + (viewportHeight * 0.4) - adHeight) > adSlotTop)) ?
+                'true' : 'false',
             bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
-                'true' : 'false';
+                (scrollY + (viewportHeight * 0.5)) < adSlotTop) ?
+                'true' : 'false',
             bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50;
+                50 - ((scrollY + (viewportHeight * 0.5) - adSlotTop) * -0.2) : 50,
             topScroll = (topCusp === 'true') ?
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
-        }.bind(this));
+                ((scrollY + (viewportHeight * 0.4) - adSlotTop - adHeight) * 0.2) : 0;
 
         switch (this.params.backgroundImagePType) {
             case 'split':
+                this.scrollAmount = bottomScroll + topScroll + '%';
                 fastdom.write(function () {
-                    this.scrollAmount = bottomScroll + topScroll + '%';
-                    $('.ad-exp--expand-scrolling-bg', $(this.$adSlot)).css({
+                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).css({
                         'background-repeat': 'no-repeat',
-                        'background-position': '50%' + this.scrollAmount
+                        'background-position': '50%' + that.scrollAmount
                     });
-                }.bind(this));
+                });
                 break;
             case 'fixed':
-                fastdom.read(function () {
-                    this.scrollAmount = (window.pageYOffset - this.$adSlot.offset().top) + 'px';
-                }.bind(this));
+                this.scrollAmount = (scrollY - adSlotTop) + 'px';
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(this.$adSlot)).css('background-position', '50%' + this.scrollAmount);
-                }.bind(this));
+                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).css('background-position', '50%' + that.scrollAmount);
+                });
                 break;
             case 'fixed matching fluid250':
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(this.$adSlot)).addClass('ad-exp--expand-scrolling-bg-fixed');
-                }.bind(this));
+                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).addClass('ad-exp--expand-scrolling-bg-fixed');
+                });
                 break;
             case 'parallax':
-                fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                    this.scrollAmountP = this.scrollAmount + '%';
-                }.bind(this));
+                this.scrollAmount = Math.ceil((scrollY - adSlotTop) * 0.3 * -1) + 20;
+                this.scrollAmountP = this.scrollAmount + '%';
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(this.$adSlot)).addClass('ad-exp--expand-scrolling-bg-parallax');
-                    $('.ad-exp--expand-scrolling-bg', $(this.$adSlot)).css('background-position', '50%' + this.scrollAmountP);
-                }.bind(this));
+                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).addClass('ad-exp--expand-scrolling-bg-parallax');
+                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).css('background-position', '50%' + that.scrollAmountP);
+                });
                 break;
         }
     };
 
     ExpandableV3.prototype.listener = function () {
-        fastdom.read(function () {
-            if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
+        var that = this;
+        if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
+            if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
+                // expires in 1 week
+                var week = 1000 * 60 * 60 * 24 * 7;
                 fastdom.write(function () {
-                    if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
-                        // expires in 1 week
-                        var week = 1000 * 60 * 60 * 24 * 7;
-                        storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
-                        this.$button.addClass('button-spin');
-                        $('.ad-exp__open-chevron').removeClass('chevron-up').addClass('chevron-down');
-                        this.$ad.css('height', this.openedHeight);
-                        this.isClosed = false;
-                        this.initialExpandCounter = true;
-                    } else if (this.isClosed) {
-                        $('.ad-exp__open-chevron').addClass('chevron-up');
-                    }
-                }.bind(this));
-                return true;
+                    storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
+                    that.$button.addClass('button-spin');
+                    $('.ad-exp__open-chevron').removeClass('chevron-up').addClass('chevron-down');
+                    that.$ad.css('height', that.openedHeight);
+                    that.isClosed = false;
+                    that.initialExpandCounter = true;
+                });
+            } else if (this.isClosed) {
+                fastdom.write(function () {
+                    $('.ad-exp__open-chevron').addClass('chevron-up');
+                });
             }
-        }.bind(this));
+            return true;
+        }
     };
 
     ExpandableV3.prototype.create = function () {
@@ -172,7 +173,7 @@ define([
             }.bind(this));
         }.bind(this));
 
-        mediator.on('window:scroll', this.listener.bind(this));
+        mediator.on('window:throttledScroll', this.listener);
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
@@ -188,9 +189,9 @@ define([
             // update bg position
             this.updateBgPosition();
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition);
             // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition.bind(this));
+            mediator.on('window:resize', this.updateBgPosition);
         }
 
         return domPromise;

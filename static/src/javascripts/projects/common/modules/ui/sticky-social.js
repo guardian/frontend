@@ -101,7 +101,7 @@ define([
         }
 
         if (testVariant.indexOf('sticky') > -1) {
-            mediator.on('window:scroll', _.throttle(determineStickiness, 10));
+            mediator.on('window:thottledScroll', determineStickiness);
         }
     }
 

@@ -18,43 +18,49 @@ define([
     svgs
 ) {
 
+    var messageId = 'membership-message-uk';
+
     return function () {
 
-        this.id = 'MembershipMessageVariants';
-        this.start = '2015-07-13';
-        this.expiry = '2015-08-20';
+        this.id = 'MembershipMessageUk';
+        this.start = '2015-08-16';
+        this.expiry = '2015-09-21';
         this.author = 'David Rapson';
-        this.description = 'Test if loyal users are encouraged to join Membership as a Supporter';
+        this.description = 'Test if loyal visitors in the UK edition are encouraged to join Membership as a Supporter';
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Loyal users will be interested in becoming a Supporter';
-        this.audienceCriteria = 'Users who have seen 10 or more pages, message shown only on article pages';
-        this.dataLinkNames = 'supporter message, hide, read more';
+        this.successMeasure = 'Loyal visitors will be interested in becoming a Supporter';
+        this.audienceCriteria = 'UK edition visitors who have seen more than 10 pages, message shown only on article pages';
+        this.dataLinkNames = 'membership message, hide, read more';
         this.idealOutcome = 'Users will sign up as a Supporter';
 
         this.canRun = function () {
             /**
-             * Exclude adblock users to avoid conflicts with similar adblock Supporter message,
-             * only show to users who have viewed 10 or more pages.
+             * - Exclude adblock users to avoid conflicts with similar adblock Supporter message
+             * - Exclude mobile/small-screen devices
+             * - Only show for UK edition
+             * - Only show on Article pages
+             * - Only show to visitors who have viewed more than 10 pages.
              */
             var alreadyVisited = storage.local.get('alreadyVisited') || 0;
             return !detect.adblockInUse &&
+                detect.getBreakpoint() !== 'mobile' &&
                 config.page.edition === 'UK' &&
                 config.page.contentType === 'Article' &&
-                alreadyVisited > 9;
+                alreadyVisited > 10;
         };
 
         this.variants = [{
             id: 'A',
             test: function () {
-                new Message('membership-message-variants', {
+                new Message(messageId, {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_A',
-                    messageText: 'Become a Guardian Member and support fearless investigative journalism',
-                    linkText: 'Become a supporter',
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_UK_A',
+                    messageText: '“Become a Guardian Member and support independent journalism” – George Monbiot',
+                    linkText: 'Find out more',
                     arrowWhiteRight: svgs('arrowWhiteRight')
                 }));
             }
@@ -62,13 +68,13 @@ define([
         {
             id: 'B',
             test: function () {
-                new Message('membership-message-variants', {
+                new Message(messageId, {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_B',
-                    messageText: '"If you read the Guardian, join the Guardian" Polly Toynbee.',
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_UK_B',
+                    messageText: '“Support and become part of the Guardian” – Hugh Muir',
                     linkText: 'Find out more',
                     arrowWhiteRight: svgs('arrowWhiteRight')
                 }));

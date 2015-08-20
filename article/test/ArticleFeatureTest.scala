@@ -72,8 +72,8 @@ import collection.JavaConversions._
         $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
-        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(withHost("/profile/phelimoneill"))
+        $("[itemprop=author] a[itemprop='url']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
+        $("[itemprop=author] a[itemprop='url']").last.getAttribute("href") should be(withHost("/profile/phelimoneill"))
       }
     }
 
@@ -162,7 +162,6 @@ import collection.JavaConversions._
 
         Then("I should see the start and end date of coverage")
         val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
-        val woo = liveBlogPosting.findElements(By.xpath(".//*"))
         liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
         liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:27+0100")
       }
