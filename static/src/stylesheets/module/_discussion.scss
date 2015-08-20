@@ -489,13 +489,14 @@ $avatarPadding: $gs-gutter / 2;
     a {
         color: colour(neutral-2);
     }
-    .i-comment-anchor {
+    .inline-comment-anchor {
         display: none;
         vertical-align: middle;
         margin-left: 2px;
+        max-height: 15px;
     }
-    .d-comment__inner:hover & .i-comment-anchor,
-    .d-top-comment__meta:hover & .i-comment-anchor {
+    .d-comment__inner:hover & .inline-comment-anchor,
+    .d-top-comment__meta:hover & .inline-comment-anchor {
         display: inline-block;
     }
 }
