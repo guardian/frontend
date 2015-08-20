@@ -79,6 +79,7 @@ define([
         };
 
         this.sendNamedEvent = function (eventName, ad) {
+            console.log("Sending event: " + eventName);
             this.sendEvent(events[eventName], eventName, ad);
         };
 
@@ -182,3 +183,4 @@ define([
     }
     return OmnitureMedia;
 });
+

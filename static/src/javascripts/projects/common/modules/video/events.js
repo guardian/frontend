@@ -81,22 +81,28 @@ define([
     function bindPrerollEvents(player) {
         var events = {
             end: function () {
+                console.log("End");
                 player.trigger(constructEventName('preroll:end', player));
                 player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
             start: function () {
                 var duration = player.duration();
+                console.log("++ Started");
+
                 if (duration) {
+                    console.log("++ Playroll start");
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
                 }
             },
             vpaidStarted: function () {
+                console.log("vpaid start");
                 player.addClass('vjs-ad-playing--vpaid');
             },
             ready: function () {
+                console.log("++ Ready");
                 player.trigger(constructEventName('preroll:ready', player));
 
                 player.one('adstart', events.start);
@@ -180,7 +186,8 @@ define([
                 update: function () {
                     var adsManager  = this.ima.getAdsManager(),
                         currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
-                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
+                        skipTime = parseInt((skipTimeout - currentTime).toFixed(), 10);
+                        //skipTime    = 5; //parseInt((skipTimeout - currentTime).toFixed(), 10);
 
                     if (skipTime > 0) {
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
