@@ -1,9 +1,11 @@
 define([
+    'bonzo',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/modules/component'
 ], function (
+    bonzo,
     $,
     ajax,
     config,
@@ -26,7 +28,7 @@ define([
 
         if (config.page.rugbyMatch) {
 
-            //var $h = $('.js-score');
+
 
             ajax({
                 url: config.page.rugbyMatch + '.json',
@@ -34,16 +36,18 @@ define([
                 crossOrigin: true
             }).then(
                 function (response) {
-                    response.liveScore; /// bonzo
+                    var $h = $('.js-score'),
+                        scoreContainer = bonzo.create(
+                        '<div class="score-container">' +
+                            response.liveScore +
+                        '</div>'
+                    )[0];
+
+                    $h.after(scoreContainer);
                 }
             );
 
-                /*scoreContainer = bonzo.create(
-                    '<div class="score-container">' +
-                    '</div>'
-                )[0];
 
-            $h.after(scoreContainer);*/
 
         }
     }
