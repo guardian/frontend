@@ -1,4 +1,4 @@
-define(['raven', 'common/utils/detect'], function(raven, detect) {
+define(['raven', 'common/utils/detect'], function (raven, detect) {
 
     function attachListeners(googletag) {
         var adTimings = {};
