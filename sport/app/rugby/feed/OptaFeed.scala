@@ -45,7 +45,7 @@ object OptaFeed extends ExecutionContexts with Logging {
 
   def getFixturesAndResults: Future[Seq[Match]] = getResponse("ru1").map(Parser.parseFixturesAndResults)
 
-  def getLiveScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = RugbyStatsJob.getLiveScore(s"$year/$month/$day/$homeTeamId/$awayTeamId")
-  def getFixturesAndResults(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = RugbyStatsJob.getFixturesAndResultScore(s"$year/$month/$day/$homeTeamId/$awayTeamId")
+  def getLiveScore(year: String, month: String, day: String, team1: String, team2: String) = RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
+  def getFixturesAndResults(year: String, month: String, day: String, team1: String, team2: String) = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
 
 }

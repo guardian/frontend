@@ -19,9 +19,9 @@ object MatchesController extends Controller {
 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 
-  def score(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = Action { implicit request =>
-    val scoreOpt = OptaFeed.getLiveScore(year, month, day, homeTeamId, awayTeamId)
-      .orElse(OptaFeed.getFixturesAndResults(year, month, day, homeTeamId, awayTeamId))
+  def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
+    val scoreOpt = OptaFeed.getLiveScore(year, month, day, team1, team2)
+      .orElse(OptaFeed.getFixturesAndResults(year, month, day, team1, team2))
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
 
     scoreOpt.map { score =>
