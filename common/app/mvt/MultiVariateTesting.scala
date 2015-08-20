@@ -32,18 +32,26 @@ object JspmControlTest extends TestDefinition(
 )
 
 object ABHeadlinesTestVariant extends TestDefinition(
-  List(Variant1, Variant2, Variant3, Variant4, Variant5),
+  Nil,
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
   new LocalDate(2015, 9, 30)
-)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn
+  }
+}
 
 object ABHeadlinesTestControl extends TestDefinition(
-  List(Variant6, Variant7, Variant8, Variant9, Variant0),
+  Nil,
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (test group)",
   new LocalDate(2015, 9, 30)
-)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-B") && switch.isSwitchedOn
+  }
+}
 
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant)
