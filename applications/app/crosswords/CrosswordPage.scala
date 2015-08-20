@@ -1,14 +1,15 @@
 package crosswords
 
+
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import model.{GuardianContentTypes, ApiContentWithMeta, Content}
-import play.api.libs.json.{JsValue, JsString}
+import model.{Content, GuardianContentTypes}
+import play.api.libs.json.{JsString, JsValue}
 
 case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
 }
 
-class CrosswordPage(val crossword: CrosswordData, content: ApiContentWithMeta) extends Content(content) {
+class CrosswordPage(val crossword: CrosswordData, content: com.gu.contentapi.client.model.Content) extends Content(content) {
 
   override lazy val id: String = crossword.id
 
