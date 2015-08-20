@@ -125,6 +125,9 @@ GET        /football/match/:matchId                                             
 GET        /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                  football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET        /football/match-redirect/:matchId                                                   football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
+GET        /rugby/api/live-score/:year/:month/:day/:homeTeamId/:awayTeamId.json                rugby.controllers.LiveScoresController.liveScoreJson(year, month, day, homeTeamId, awayTeamId)
+GET        /rugby/api/live-score/:year/:month/:day/:homeTeamId/:awayTeamId                     rugby.controllers.LiveScoresController.liveScore(year, month, day, homeTeamId, awayTeamId)
+
 # Onward journeys
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
