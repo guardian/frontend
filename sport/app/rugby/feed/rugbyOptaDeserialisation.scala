@@ -35,7 +35,8 @@ object Parser {
           date = Date((game \ "@game_date").text),
           id = (game \ "@id").text,
           homeTeam = homeTeam,
-          awayTeam = awayTeam
+          awayTeam = awayTeam,
+          None
         )
       }
     }
@@ -60,7 +61,8 @@ object Parser {
           date = Date((fixture \ "@game_date").text),
           id = (fixture \ "@id").text,
           homeTeam = homeTeam,
-          awayTeam = awayTeam
+          awayTeam = awayTeam,
+          venue = Some((fixture \ "@venue").text)
         )
       }
     }
