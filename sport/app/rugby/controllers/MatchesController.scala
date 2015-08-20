@@ -8,8 +8,8 @@ import play.api.mvc.{Action, Controller}
 import rugby.feed.OptaFeed
 import rugby.model.Match
 
-case class LiveScorePage(liveScore: Match) extends MetaData with ExecutionContexts {
-  override lazy val id = s"/sport/rugby/api/live-score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
+case class MatchPage(liveScore: Match) extends MetaData with ExecutionContexts {
+  override lazy val id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
   override lazy val section = "rugby"
   override lazy val webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} "
   override lazy val analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}"
@@ -25,7 +25,7 @@ object MatchesController extends Controller {
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
 
     scoreOpt.map { score =>
-      val page = LiveScorePage(score)
+      val page = MatchPage(score)
       Cached(60){
         if (request.isJson)
           JsonComponent(
