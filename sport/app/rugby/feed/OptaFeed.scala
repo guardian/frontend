@@ -4,7 +4,7 @@ import common.{ExecutionContexts, Logging}
 import play.api.Play.current
 import play.api.libs.ws.{WSRequest, WS}
 import rugby.jobs.RugbyStatsJob
-import rugby.model.LiveScore
+import rugby.model.Match
 
 import scala.concurrent.Future
 
@@ -41,7 +41,7 @@ object OptaFeed extends ExecutionContexts with Logging {
     }.getOrElse(Future.failed(RugbyOptaFeedException("No endpoint for rugby found")))
   }
 
-  def getLiveScores: Future[Seq[LiveScore]] = getLiveScoresResponse.map(Parser.parseLiveScores)
+  def getLiveScores: Future[Seq[Match]] = getLiveScoresResponse.map(Parser.parseLiveScores)
 
   def getLiveScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = RugbyStatsJob.getLiveScore(s"$year/$month/$day/$homeTeamId/$awayTeamId")
 

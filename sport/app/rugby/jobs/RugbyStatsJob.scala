@@ -3,10 +3,10 @@ package rugby.jobs
 import common.{Jobs, AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{OptaFeed, RugbyOptaFeedException}
-import rugby.model.LiveScore
+import rugby.model.Match
 
 object RugbyStatsJob extends ExecutionContexts with Logging {
-  private val rugbyStatsAgent = AkkaAgent[Map[String, LiveScore]](Map.empty)
+  private val rugbyStatsAgent = AkkaAgent[Map[String, Match]](Map.empty)
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
 

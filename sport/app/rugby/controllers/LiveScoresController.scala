@@ -6,9 +6,9 @@ import common.{ExecutionContexts, JsonComponent}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import rugby.feed.OptaFeed
-import rugby.model.LiveScore
+import rugby.model.Match
 
-case class LiveScorePage(liveScore: LiveScore) extends MetaData with ExecutionContexts {
+case class LiveScorePage(liveScore: Match) extends MetaData with ExecutionContexts {
   override lazy val id = s"/sport/rugby/api/live-score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
   override lazy val section = "rugby"
   override lazy val webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} "
