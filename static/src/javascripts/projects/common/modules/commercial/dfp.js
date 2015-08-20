@@ -157,6 +157,10 @@ define([
             return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
         },
 
+        isSponsorshipBadgeTest = function () {
+            return detect.adblockInUse && $('#dfp-ad--adbadge1').length > 0;
+        },
+
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
@@ -253,6 +257,11 @@ define([
             }
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
+
+            if (isSponsorshipBadgeTest()) {
+                var sponsorshipBadge = '<div class="ad-slot--paid-for-badge">' + $('#dfp-ad--adbadge1').html() + '</div>';
+                $('#dfp-ad--adbadge1').previous().append(sponsorshipBadge);
+            }
 
             return dfp;
         },
