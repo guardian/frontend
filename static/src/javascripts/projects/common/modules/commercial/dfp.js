@@ -157,8 +157,14 @@ define([
             return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
         },
 
-        isSponsorshipBadgeTest = function () {
-            return detect.adblockInUse && $('#dfp-ad--adbadge1').length > 0;
+        isSponsorshipContainerTest = function () {
+            var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1'];
+            for (var i = 0; i < sponsorshipIds.length; i++) {
+                if ($(sponsorshipIds[i]).length > 0) {
+                    var sponsorshipIdFound = sponsorshipIds[i];
+                    return sponsorshipIdFound;
+                } 
+            }
         },
 
         /**
@@ -258,9 +264,12 @@ define([
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
-            if (isSponsorshipBadgeTest()) {
-                var sponsorshipBadge = '<div class="ad-slot--paid-for-badge">' + $('#dfp-ad--adbadge1').html() + '</div>';
-                $('#dfp-ad--adbadge1').previous().append(sponsorshipBadge);
+            // show sponsorship placeholder if adblock detected
+            sponsorshipIdFound = isSponsorshipContainerTest();
+            sponsorshipIdClasses = $(sponsorshipIdFound).attr('class').replace('ad-slot ', '');
+            if (detect.adblockInUse && sponsorshipIdFound) {
+                var sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + $(sponsorshipIdFound).html() + '</div>';
+                $(sponsorshipIdFound).previous().append(sponsorshipBadge);
             }
 
             return dfp;
