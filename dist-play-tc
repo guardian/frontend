@@ -21,7 +21,7 @@ set -x
 rm -rf "dist"
 
 configurations="admin applications archive article commercial diagnostics discussion "\
-"facia facia-tool facia-press identity image onward png-resizer preview training-preview router sport rss"
+"facia facia-tool facia-press identity image onward preview training-preview router sport rss"
 
 for config in $configurations
 do

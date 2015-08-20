@@ -76,7 +76,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 
   import play.api.Play.current
 
-  override lazy val base = Configuration.pa.host
+  override lazy val base = SportConfiguration.pa.host
 
   private var _http: Http = new Http {
     override def GET(urlString: String): Future[pa.Response] = {
@@ -101,7 +101,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   def http = _http
   def http_=(delegateHttp: Http) = _http = delegateHttp
 
-  lazy val apiKey = Configuration.pa.apiKey
+  lazy val apiKey = SportConfiguration.pa.apiKey
 
   override def GET(urlString: String): Future[pa.Response] = {
     _http.GET(urlString)

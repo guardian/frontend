@@ -1,19 +1,14 @@
 package controllers.preview
 
 import controllers.FaciaController
-import controllers.front.{FrontJsonFapi, FrontJson}
+import controllers.front.FrontJsonFapi
 import services.ConfigAgent
-
-object FrontJsonDraft extends FrontJson {
-  val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
-}
 
 object FrontJsonFapiDraft extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
 object FaciaDraftController extends FaciaController {
-  val frontJson: FrontJson = FrontJsonDraft
   val frontJsonFapi: FrontJsonFapi = FrontJsonFapiDraft
 
   override def renderFront(path: String) = {
