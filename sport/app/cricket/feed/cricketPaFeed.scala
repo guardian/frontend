@@ -19,7 +19,7 @@ object PaFeed extends ExecutionContexts with Logging {
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
   private val paEndpoint = "http://cricket.api.press.net/v1"
   private val englandTeamId = "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075"
-  private val credentials = conf.Configuration.pa.cricketKey.map { ("Apikey", _) }
+  private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept","application/xml")
 
   private def getMatchPaResponse(apiMethod: String) : Future[String] = {
