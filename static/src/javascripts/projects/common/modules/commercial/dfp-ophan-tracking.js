@@ -47,7 +47,7 @@ define([
                         slotId = event.slot.getSlotId().getDomId(),
                         slotTiming = adTimings[slotId] || {};
 
-                    function lineItemIdOrEmpty (event) {
+                    function lineItemIdOrEmpty(event) {
                         if (event.isEmpty) {
                             return '__empty__';
                         } else {
