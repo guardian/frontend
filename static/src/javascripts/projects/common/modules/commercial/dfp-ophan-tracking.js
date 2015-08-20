@@ -1,4 +1,7 @@
-define(['raven', 'common/utils/detect'], function (raven, detect) {
+define([
+    'raven',
+    'common/utils/detect'
+], function (raven, detect) {
 
     function attachListeners(googletag) {
         var adTimings = {};
@@ -11,17 +14,17 @@ define(['raven', 'common/utils/detect'], function (raven, detect) {
             if (!googletag.debug_log || !googletag.debug_log.log) {
                 return;
             }
-            var originalDebugger = googletag.debug_log.log;
-            var lifecycleIdToTimingAttr = {
-                3: 'fetch',
-                4: 'receive',
-                6: 'render'
-            };
+
+            var originalDebugger = googletag.debug_log.log,
+                lifecycleIdToTimingAttr = {
+                    3: 'fetch',
+                    4: 'receive',
+                    6: 'render'
+                };
 
             googletag.debug_log.log = function interceptedGptDebugger(level, message, service, slot) {
-                var lifecycleId = message.getMessageId();
+                var lifecycleId = message.getMessageId(), slotId, timingAttr;
 
-                var slotId, timingAttr;
                 if (lifecycleId && slot) {
                     slotId = slot.getSlotId().getDomId();
                     adTimings[slotId] = adTimings[slotId] || {};
@@ -40,17 +43,17 @@ define(['raven', 'common/utils/detect'], function (raven, detect) {
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function reportAdToOphan(event) {
                 require(['ophan/ng'], function (ophan) {
-                    var renderStart = detect.getTimeOfDomComplete();
-                    var slotId = event.slot.getSlotId().getDomId();
-                    var slotTiming = adTimings[slotId] || {};
+                    var renderStart = detect.getTimeOfDomComplete(),
+                        slotId = event.slot.getSlotId().getDomId(),
+                        slotTiming = adTimings[slotId] || {};
 
-                    var lineItemIdOrEmpty = function (event) {
+                    function lineItemIdOrEmpty (event) {
                         if (event.isEmpty) {
                             return '__empty__';
                         } else {
                             return event.lineItemId;
                         }
-                    };
+                    }
 
                     ophan.record({
                         ads: [{
