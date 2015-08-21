@@ -155,6 +155,10 @@
 
     .social-signin__icon {
         position: absolute;
+
+        svg {
+            float: left;
+        }
     }
 
     .social-signin__icon--fb {
