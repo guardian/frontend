@@ -31,12 +31,12 @@ var register = _.once(() => {
         }
     });
     ko.components.register('fronts-widget', {
-        viewModel: { jspm: 'widgets/fronts' },
-        template: { text: 'widgets/fronts.html' }
+        viewModel: { jspm: 'widgets/columns/fronts' },
+        template: { text: 'widgets/columns/fronts.html' }
     });
     ko.components.register('latest-widget', {
-        viewModel: { jspm: 'widgets/latest' },
-        template: { text: 'widgets/latest.html' }
+        viewModel: { jspm: 'widgets/columns/latest' },
+        template: { text: 'widgets/columns/latest.html' }
     });
     ko.components.register('search-controls', {
         viewModel: {
@@ -50,9 +50,20 @@ var register = _.once(() => {
         },
         template: { text: 'widgets/collection.html' }
     });
+    ko.components.register('trail-widget', {
+        viewModel: {
+            createViewModel: (params) => params.context.$data
+        },
+        synchronous: true,
+        template: { text: 'widgets/trail.html' }
+    });
     ko.components.register('clipboard-widget', {
         viewModel: { jspm: 'widgets/clipboard' },
         template: { text: 'widgets/clipboard.html' }
+    });
+    ko.components.register('fronts-standalone-clipboard', {
+        viewModel: { jspm: 'widgets/columns/fronts-standalone-clipboard' },
+        template: { text: 'widgets/columns/fronts-standalone-clipboard.html' }
     });
     ko.components.register('modal-dialog', {
         viewModel: {
@@ -81,6 +92,30 @@ var register = _.once(() => {
     ko.components.register('autocomplete', {
         viewModel: { jspm: 'widgets/autocomplete' },
         template: { text: 'widgets/autocomplete.html' }
+    });
+    ko.components.register('fronts-config-widget', {
+        viewModel: { jspm: 'widgets/columns/fronts-config' },
+        template: { text: 'widgets/columns/fronts-config.html' }
+    });
+    ko.components.register('presser-detect-stale', {
+        viewModel: { jspm: 'widgets/presser-detect-stale' },
+        template: { text: 'widgets/presser-detect-stale.html' }
+    });
+    ko.components.register('copy-paste-articles', {
+        viewModel: { jspm: 'widgets/copy-paste-articles' },
+        template: '<!-- copy paste articles -->'
+    });
+    ko.components.register('sparklines-trails', {
+        viewModel: { jspm: 'widgets/sparklines-trails' },
+        template: '<!-- sparklines for trails -->'
+    });
+    ko.components.register('config-card-types', {
+        viewModel: { jspm: 'widgets/config-card-types' },
+        template: '<!-- card types -->'
+    });
+    ko.components.register('config-nav-sections', {
+        viewModel: { jspm: 'widgets/config-nav-sections' },
+        template: '<!-- nav sections -->'
     });
     ko.bindingHandlers.ownerClass = {
         init: function (element, valueAccessor) {

@@ -17,22 +17,39 @@
                 </div>
                 <div class="commercial__ctas">
                     <a class="commercial__cta icon__cta" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
-                        <span class="commercial__cta__icon">@fragments.inlineSvg("soulmates-login", "commercial")</span>
-                        <span class="commercial__cta__label">Login</span>
-                    </a>
-                    <a class="commercial__cta icon__cta" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
                         <span class="commercial__cta__icon">@fragments.inlineSvg("soulmates-join", "commercial")</span>
-                        <span class="commercial__cta__label">Become a Soulmate today</span>
+                        <span class="commercial__cta__label">Join now</span>
                     </a>
                 </div>
             </div>
 
             <div class="commercial__body">
+                <div class="lineitems__box">
+                    <h4 class="feed__title">Guardian readers <span>looking for dates now</span></h4>
+                    @fragments.inlineSvg("soulmates-border-topleft", "commercial")
+                    @fragments.inlineSvg("soulmates-border-topright", "commercial")
+                    <ul class="lineitems">
+                        @members.map { member =>
+                            <li class="lineitem">
+                                <a class="lineitem__link"
+                                    data-link-name="merchandising-soulmates-v@{version}_@{date}-profile-@{member.gender}"
+                                    href="@clickMacro@member.profileUrl">
+                                    <div class="lineitem__image__container">
+                                            <img class="lineitem__image" src="@member.profilePhoto" alt="" />
+                                    </div>
+                                    <div class="lineitem__text">
+                                        <h4 class="lineitem__title">@member.username</h4>
+                                        <p class="lineitem__meta">@member.age, @member.location</p>                     
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
                 <div class="commercial__search__box">
                     @fragments.inlineSvg("soulmates-border-topleft", "commercial")
                     @fragments.inlineSvg("soulmates-border-topright", "commercial")
                     <form class="commercial__search" action="@Configuration.commercial.soulmates_url/find" method="get">
-                        <h4 class="feed__title">Guardian readers <span>looking for dates now</span></h4>
                         <div class="form-row">
                             <label for="my_gender" class="search__dropdown">
                                 <select id="my_gender" name="my_gender" class="search__dropdown__options transform">
@@ -74,30 +91,6 @@
                             @fragments.inlineSvg("soulmates-arrow", "commercial")
                         </button>
                     </form>
-                </div>
-
-                <div class="lineitems__box">
-                    <h4 class="feed__title">Guardian readers <span>looking for dates now</span></h4>
-                    @fragments.inlineSvg("soulmates-border-topleft", "commercial")
-                    @fragments.inlineSvg("soulmates-border-topright", "commercial")
-                    <ul class="lineitems">
-                        @members.map { member =>
-                            <li class="lineitem">
-                                <a class="lineitem__link"
-                                    data-link-name="merchandising-soulmates-v@{version}_@{date}-profile-@{member.gender}"
-                                    href="@clickMacro@member.profileUrl">
-                                    <div class="lineitem__image__container">
-                                            <img class="lineitem__image" src="@member.profilePhoto" alt="" />
-                                    </div>
-                                    <div class="lineitem__text">
-                                        <h4 class="lineitem__title">@member.username</h4>
-                                        <p class="lineitem__meta">@member.age, @member.location</p>
-                                        @fragments.inlineSvg("soulmates-person", "commercial")                      
-                                    </div>
-                                </a>
-                            </li>
-                        }
-                    </ul>
                 </div>
             </div>
         </div>

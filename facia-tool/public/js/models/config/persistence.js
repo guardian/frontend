@@ -9,10 +9,10 @@ class Persistence extends EventEmitter {
         super();
 
         this[postUpdateSym] = (opts) => {
-            this.emit('before update');
+            this.emit('update:before');
 
             let callback = () => {
-                this.emit('after update');
+                this.emit('update:after');
             };
 
             return authedAjax.request(_.extend({

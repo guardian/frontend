@@ -21,7 +21,7 @@ object PandaAuthController extends Controller with PanDomainAuthActions {
   }
 
   def authError(message: String) = Action.async { implicit request =>
-    Future(Forbidden(views.html.auth.login(Some(message), "Test")))
+    Future(Forbidden(views.html.auth.login(Some(message))))
   }
 
   def user() = AuthAction { implicit request =>
