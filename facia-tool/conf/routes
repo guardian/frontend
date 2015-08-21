@@ -22,13 +22,13 @@ GET         /assets/facia-tool/*file                 controllers.faciatool.Uncac
 
 # Fronts
 GET         /                                        controllers.FaciaToolController.priorities()
-GET         /editorial                               controllers.FaciaToolController.collectionEditor(priority="editorial")
-GET         /commercial                              controllers.FaciaToolController.collectionEditor(priority="commercial")
-GET         /training                                controllers.FaciaToolController.collectionEditor(priority="training")
+GET         /editorial                               controllers.FaciaToolController.collectionEditor()
+GET         /commercial                              controllers.FaciaToolController.collectionEditor()
+GET         /training                                controllers.FaciaToolController.collectionEditor()
 
-GET         /editorial/config                        controllers.FaciaToolController.configEditor(priority="editorial")
-GET         /commercial/config                       controllers.FaciaToolController.configEditor(priority="commercial")
-GET         /training/config                         controllers.FaciaToolController.configEditor(priority="training")
+GET         /editorial/config                        controllers.FaciaToolController.configEditor()
+GET         /commercial/config                       controllers.FaciaToolController.configEditor()
+GET         /training/config                         controllers.FaciaToolController.configEditor()
 
 POST        /collection/publish/*collectionId        controllers.FaciaToolController.publishCollection(collectionId)
 POST        /collection/discard/*collectionId        controllers.FaciaToolController.discardCollection(collectionId)

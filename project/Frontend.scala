@@ -199,13 +199,6 @@ object Frontend extends Build with Prototypes {
     .settings(frontendCompilationSettings:_*)
     .settings(frontendIntegrationTestsSettings:_*)
 
-  val pngResizer = application("png-resizer")
-    .dependsOn(commonWithTests)
-    .aggregate(common)
-    .settings(
-      libraryDependencies += im4java
-    )
-
   val rss = application("rss")
     .dependsOn(commonWithTests)
     .aggregate(common)
@@ -219,7 +212,6 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     image,
-    pngResizer,
     discussion,
     router,
     diagnostics,

@@ -64,6 +64,7 @@ define([
         validateImageSrc = validateImageSrc.default;
         copiedArticle = copiedArticle.default;
         logger = logger.default;
+        Group = Group.default;
 
         var capiProps = [
                 'webUrl',
@@ -345,6 +346,7 @@ define([
 
             opts = opts || {};
 
+            this.dropTarget = true;
             this.id = ko.observable(opts.id);
 
             this.group = opts.group;
@@ -485,14 +487,10 @@ define([
 
             if (!sourceItem || sourceItem.id === this.id()) { return; }
 
-            mediator.emit('collection:updates', {
+            mediator.emit('drop', {
                 sourceItem: sourceItem.article.get(),
-                sourceGroup: sourceItem.group,
-                targetItem: this,
-                targetGroup: this.group,
-                sourceContext: sourceItem.front,
-                targetContext: this.front
-            });
+                sourceGroup: sourceItem.group
+            }, this, this.group);
         };
 
         Article.prototype.metaDisplayer = function (opts, index, all) {
@@ -672,7 +670,7 @@ define([
             ].filter(function(prop) {return !deepGet(opts, prop); });
 
             if (missingProps.length) {
-                vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
+                mediator.emit('capi:error', 'ContentApi is returning invalid data. Fronts may not update.');
                 logger.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
             } else {
                 this.state.isLoaded(true);
@@ -710,6 +708,13 @@ define([
             return {
                 id:   this.id(),
                 meta: this.getMeta()
+            };
+        };
+
+        Article.prototype.normalizeDropTarget = function() {
+            return {
+                isAfter: false,
+                target: this
             };
         };
 
@@ -907,21 +912,8 @@ define([
             return false;
         };
 
-        Article.prototype.drop = function (source, targetGroup, alternateAction) {
-            if (alternateAction) {
-                // the drop target for replacing the article ID is the inner group
-                return;
-            }
-            mediator.emit('collection:updates', {
-                sourceItem: source.sourceItem,
-                sourceGroup: source.sourceGroup,
-                targetItem: this,
-                targetGroup: targetGroup,
-                isAfter: false,
-                mediaItem: source.mediaItem,
-                sourceContext: source.sourceItem.front,
-                targetContext: this.front
-            });
+        Article.prototype.omitItem = function () {
+            this.group.omitItem(this);
         };
 
         Article.prototype.validateImage = function (params) {
@@ -970,6 +962,12 @@ define([
                     });
             } else {
                 undefineObservables(meta);
+            }
+        };
+
+        Article.prototype.dispose = function () {
+            if (this.meta.supporting) {
+                this.meta.supporting.dispose();
             }
         };
 
@@ -1031,35 +1029,6 @@ define([
                         mediator.emit('ui:open', formFields[nextIndex].meta, self, self.front);
                     }
                 });
-            }
-        };
-
-        ko.bindingHandlers.dropImage = {
-            init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
-                var isDropEnabled = ko.unwrap(valueAccessor());
-
-                if (isDropEnabled) {
-                    el.addEventListener('drop', function (evt) {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-                        bindingContext.$data.dropInEditor(evt.dataTransfer);
-                        bindingContext.$data.underDrag(false);
-                        resize(el);
-                    });
-                    el.addEventListener('dragover', function (evt) {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-                        bindingContext.$data.underDrag(true);
-                    });
-                    el.addEventListener('dragleave', function (evt) {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-                        bindingContext.$data.underDrag(false);
-                    });
-                    el.addEventListener('dragstart', function (evt) {
-                        evt.dataTransfer.setData('sourceMeta', JSON.stringify(bindingContext.$data.meta()));
-                    });
-                }
             }
         };
 

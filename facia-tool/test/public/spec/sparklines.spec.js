@@ -7,6 +7,7 @@ import MockHistogram from 'mock/histogram';
 import mockFrontWidget from 'mock/front-widget';
 import * as sparklines from 'utils/sparklines';
 import tick from 'test/utils/tick';
+import textInside from 'test/utils/text-inside';
 
 describe('Sparklines', function () {
     var originalsparksBatchQueue = vars.CONST.sparksBatchQueue;
@@ -374,7 +375,7 @@ function expectSparklinesOn (elements) {
 }
 
 function sparklinesTitle (element) {
-    return $('.' + element).next('.test-chart').find('.highcharts-title').text().trim();
+    return textInside($('.' + element).next('.test-chart').find('.highcharts-title'));
 }
 
 function inject (model) {

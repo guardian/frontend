@@ -1,43 +1,26 @@
-define([
-    'knockout',
-    'underscore',
-    'modules/vars',
-    'modules/content-api',
-    'models/group',
-    'models/config/collection',
-    'models/config/persistence',
-    'utils/as-observable-props',
-    'utils/populate-observables',
-    'utils/find-first-by-id',
-    'utils/front-count',
-    'utils/validate-image-src'
-], function(
-    ko,
-    _,
-    vars,
-    contentApi,
-    Group,
-    Collection,
-    persistence,
-    asObservableProps,
-    populateObservables,
-    findFirstById,
-    frontCount,
-    validateImageSrc
-) {
-    asObservableProps = asObservableProps.default;
-    findFirstById = findFirstById.default;
-    populateObservables = populateObservables.default;
-    validateImageSrc = validateImageSrc.default;
-    frontCount = frontCount.default;
-    persistence = persistence.default;
+import ko from 'knockout';
+import _ from 'underscore';
+import BaseClass from 'models/base-class';
+import Collection from 'models/config/collection';
+import persistence from 'models/config/persistence';
+import Group from 'models/group';
+import * as contentApi from 'modules/content-api';
+import * as vars from 'modules/vars';
+import asObservableProps from 'utils/as-observable-props';
+import cloneWithKey from 'utils/clone-with-key';
+import frontCount from 'utils/front-count';
+import populateObservables from 'utils/populate-observables';
+import validateImageSrc from 'utils/validate-image-src';
 
-    function Front(opts) {
-        var self = this;
-
-        opts = opts || {};
+export default class ConfigFront extends BaseClass {
+    constructor(opts) {
+        // TODO Phantom Babel bug
+        if (!opts) { opts = {}; }
+        super();
 
         this.id = ko.observable(opts.id);
+        this.opts = opts;
+        this.dom = null;
 
         this.props  = asObservableProps([
             'navSection',
@@ -61,111 +44,112 @@ define([
             'description']);
 
         this.state = asObservableProps([
+            'collectionsCreated',
             'isOpen',
             'isOpenProps',
             'isValidMetadata']);
         this.state.isValidMetadata(true);
 
-        this.state.withinPriority = ko.computed(function() {
-            return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
-        }, this);
-
         this.applyConstraints();
 
-        this.props.priority.subscribe(this.onChangePriority.bind(this));
-
         this.collections = new Group({
-            parent: self,
+            parent: this,
             parentType: 'Front',
-            items:
-               _.chain(opts.collections)
-                .map(function(id) { return vars.model.collectionsMap[id]; })
-                .filter(function(collection) { return !!collection; })
-                .map(function(collection) {
-                    collection.parents.push(self);
-                    return collection;
-                })
-                .value()
+            items: ko.observableArray()
         });
 
-        this.id.subscribe(function() {
+
+        this.subscribeOn(this.props.priority, this.onChangePriority);
+        this.subscribeOn(this.id, () => {
             this.validate(true);
             if (this.id()) {
                 this.setOpen(true);
             }
-        }, this);
+        });
+        this.subscribeOn(this.state.isOpen, () => {
+            if (!this.state.collectionsCreated()) {
+                this.state.collectionsCreated(true);
+                this.collections.items(generateCollections(this.opts.collections));
+            }
+        });
 
         this.provisionalImageUrl = ko.observable();
 
-        this.props.imageUrl.subscribe(function(src){
-            this.provisionalImageUrl(src);
-        }, this);
+        this.subscribeOn(this.props.imageUrl, src => this.provisionalImageUrl(src));
         this.provisionalImageUrl(this.props.imageUrl());
 
-        this.provisionalImageUrl.subscribe(function(src) {
-            var self = this;
-
-            if(!src){
-                self.props.imageUrl(undefined);
-                self.props.imageWidth(undefined);
-                self.props.imageHeight(undefined);
-                self.props.isImageDisplayed(undefined);
-                return;
+        this.subscribeOn(this.provisionalImageUrl, src => {
+            if (!src) {
+                this.props.imageUrl(undefined);
+                this.props.imageWidth(undefined);
+                this.props.imageHeight(undefined);
+                this.props.isImageDisplayed(undefined);
+            } else if (src !== this.props.imageUrl()) {
+                validateImageSrc(src, {minWidth: 120})
+                .then(img => {
+                    this.props.imageUrl(img.src);
+                    this.props.imageWidth(img.width);
+                    this.props.imageHeight(img.height);
+                    this.saveProps();
+                }, err => {
+                    this.provisionalImageUrl(undefined);
+                    window.alert('Sorry! ' + err.message);
+                });
             }
-
-            if (src === this.props.imageUrl()) { return; }
-
-            validateImageSrc(src, {minWidth: 120})
-            .then(function(img) {
-                self.props.imageUrl(img.src);
-                self.props.imageWidth(img.width);
-                self.props.imageHeight(img.height);
-                self.saveProps();
-            }, function(err) {
-                self.provisionalImageUrl(undefined);
-                window.alert('Sorry! ' + err.message);
-            });
-        }, this);
+        });
 
         this.depopulateCollection = this._depopulateCollection.bind(this);
 
         this.placeholders = {};
 
-        this.placeholders.navSection = ko.computed(function() {
+        this.placeholders.navSection = ko.pureComputed(() => {
             var path = asPath(this.id()),
-                isEditionalised = [].concat(vars.pageConfig.editions).some(function(edition) { return edition === path[0]; });
+                isEditionalised = [].concat(vars.model.state().defaults.editions).some(edition => edition === path[0]);
 
             return this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
-        }, this);
+        });
 
-        this.placeholders.webTitle = ko.computed(function() {
+        this.placeholders.webTitle = ko.pureComputed(() => {
             var path = asPath(this.id());
 
             return this.props.webTitle() || this.capiProps.webTitle() || (toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
-        }, this);
+        });
 
-        this.placeholders.title = ko.computed(function() {
+        this.placeholders.title = ko.pureComputed(() => {
             var section = this.props.navSection() || this.placeholders.navSection();
 
             return this.props.title() || (this.placeholders.webTitle() + (section ? ' | ' + toTitleCase(section) : ''));
-        }, this);
+        });
 
-        this.placeholders.description  = ko.computed(function() {
+        this.placeholders.description  = ko.pureComputed(() => {
             return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
-        }, this);
+        });
 
-        this.placeholders.onPageDescription  = ko.computed(function() {
+        this.placeholders.onPageDescription  = ko.pureComputed(() => {
             return this.props.onPageDescription() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
-        }, this);
+        });
 
-        this.ophanPerformances = ko.computed(function () {
+        this.ophanPerformances = ko.pureComputed(() => {
             return vars.CONST.ophanFrontBase + encodeURIComponent('/' + this.id());
-        }, this);
+        });
     }
 
-    Front.prototype.validate = function(checkUniqueness) {
-        var self = this;
+    updateConfig(config) {
+        var originalConfig = this.opts;
+        this.opts = config;
+        populateObservables(this.props, config);
+        if (!_.isEqual(originalConfig.collections, config.collections)) {
+            if (this.state.collectionsCreated()) {
+                this.collections.items(generateCollections(this.opts.collections));
+            }
+        } else {
+            if (this.state.collectionsCreated()) {
+                updateCollections(this.collections.items());
+            }
+        }
+    }
 
+    validate(checkUniqueness) {
         this.id((this.id() || '')
             .toLowerCase()
             .replace(/\/+/g, '/')
@@ -176,54 +160,53 @@ define([
             .join('/')
         );
 
-        if (!this.id()) { return; }
+        if (!this.id() || !checkUniqueness) { return; }
 
-        if(checkUniqueness && _.filter(vars.model.fronts(), function(front) { return front.id() === self.id(); }).length > 1) {
+        var id = this.id();
+        if (_.filter(vars.model.frontsList(), front => front.id === id).length > 1) {
             this.id(undefined);
-            return;
         }
-    };
+    }
 
-    Front.prototype.setOpen = function(isOpen, withOpenProps) {
+    setOpen(isOpen, withOpenProps, scrollIntoView) {
         this.state.isOpen(isOpen);
         this.state.isOpenProps(withOpenProps);
-    };
+        if (scrollIntoView) {
+            this.dom.scrollIntoView();
+        }
+    }
 
-    Front.prototype.toggleOpen = function() {
+    toggleOpen() {
         this.state.isOpen(!this.state.isOpen());
-    };
+    }
 
-    Front.prototype.openProps = function() {
-        var self = this;
-
+    openProps() {
         this.state.isOpenProps(true);
-        this.collections.items().map(function(collection) { collection.close(); });
+        this.collections.items().forEach(collection => collection.close());
 
         contentApi.fetchMetaForPath(this.id())
-        .then(function(meta) {
-            meta = meta || {};
-            _.each(self.capiProps, function(val, key) {
-                val(meta[key]);
-            });
+        .then(meta => {
+            // TODO Phantom Babel bug
+            if (!meta) { meta = {}; }
+            _.each(this.capiProps, (val, key) => val(meta[key]));
         });
-    };
+    }
 
-    Front.prototype.saveProps = function() {
+    saveProps() {
         this.applyConstraints();
-        persistence.front.update(this);
         this.state.isOpenProps(false);
-    };
+        return persistence.front.update(this);
+    }
 
-    Front.prototype.createCollection = function() {
+    createCollection() {
         var collection = new Collection();
 
         collection.toggleOpen();
         collection.parents.push(this);
         this.collections.items.push(collection);
-        vars.model.collections.unshift(collection);
-    };
+    }
 
-    Front.prototype._depopulateCollection = function(collection) {
+    _depopulateCollection(collection) {
         collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
@@ -231,17 +214,17 @@ define([
             this.props.canonical(null);
         }
         this.saveProps();
-    };
+    }
 
-    Front.prototype.applyConstraints = function () {
+    applyConstraints() {
         if (this.props.priority() === 'training') {
             this.state.isTypeLocked = true;
             this.props.isHidden(true);
         }
-    };
+    }
 
-    Front.prototype.onChangePriority = function (newPriority) {
-        var num = frontCount(vars.state.config.fronts, newPriority);
+    onChangePriority(newPriority) {
+        var num = frontCount(vars.model.state().config.fronts, newPriority);
 
         if (num.count >= num.max) {
             this.state.isValidMetadata(false);
@@ -249,17 +232,47 @@ define([
         } else {
             this.state.isValidMetadata(true);
         }
-    };
-
-    function toTitleCase(str) {
-        return (str + '').replace(/\w\S*/g, function(txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
     }
 
-    function asPath(str) {
-       return (str + '').split('/');
+    registerElement(dom) {
+        this.dom = dom;
     }
 
-    return Front;
-});
+    dispose() {
+        super.dispose();
+        this.collections.dispose();
+        this.dom = null;
+    }
+}
+
+function generateCollections (collections) {
+    var collectionDefinition = vars.model.state().config.collections;
+
+    return _.chain(collections)
+        .map(id => {
+            if (collectionDefinition[id]) {
+                return new Collection(cloneWithKey(collectionDefinition[id], id));
+            }
+        })
+        .filter(collection => !!collection)
+        .value();
+}
+
+function updateCollections (collections) {
+    var collectionDefinition = vars.model.state().config.collections;
+
+    collections.forEach(collection => {
+        let id = collection.id;
+        collection.updateConfig(cloneWithKey(collectionDefinition[id], id));
+    });
+}
+
+function toTitleCase(str) {
+    return (str + '').replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+function asPath(str) {
+   return (str + '').split('/');
+}

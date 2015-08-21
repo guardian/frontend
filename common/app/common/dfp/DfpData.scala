@@ -225,6 +225,13 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
 
+  lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
+    targeting.adUnits.exists { adUnit =>
+      val path = adUnit.path
+      (path.length == 3 || path.length == 4) && path(2) == "front"
+    }
+  }
+
   def targetsSectionFrontDirectly(sectionId: String): Boolean = {
     targeting.adUnits.exists { adUnit =>
       val path = adUnit.path

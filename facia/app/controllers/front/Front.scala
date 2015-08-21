@@ -1,8 +1,6 @@
 package controllers.front
 
 import common._
-import model.FaciaPage
-
 
 class Front extends Logging {
 

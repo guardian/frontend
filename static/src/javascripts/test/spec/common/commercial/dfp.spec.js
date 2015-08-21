@@ -100,7 +100,12 @@ describe('DFP', function () {
                 defineSizeMapping: sinon.spy(function () { return window.googletag; }),
                 setTargeting: sinon.spy(function () { return window.googletag; }),
                 enableServices: sinon.spy(),
-                display: sinon.spy()
+                display: sinon.spy(),
+                /*eslint-disable camelcase*/
+                debug_log : { // Undocumented GPT debug API
+                    log : function () {}
+                }
+                /*eslint-enable camelcase*/
             };
             done();
         });
