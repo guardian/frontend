@@ -95,14 +95,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
-  lazy val openGraphImage: String = {
-    val imageUrl = bestOpenGraphImage
-      .orElse(mainPicture.flatMap(largestImageUrl))
-      .orElse(trailPicture.flatMap(largestImageUrl))
-      .getOrElse(facebook.imageFallback)
+  lazy val openGraphImage: String = ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
 
-    ImgSrc(imageUrl, FacebookOpenGraphImage)
-  }
+  private lazy val rawOpenGraphImage: String = bestOpenGraphImage
+    .orElse(mainPicture.flatMap(largestImageUrl))
+    .orElse(trailPicture.flatMap(largestImageUrl))
+    .getOrElse(facebook.imageFallback)
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
   override lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
@@ -239,7 +237,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def cards: List[(String, String)] = super.cards ++ List(
-    "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
+    "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian"),
+    "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   override def elements: Seq[Element] = delegate.elements
@@ -338,6 +337,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   def showFooterContainers = false
+
+  override def iosType = Some("article")
 }
 
 object Content {

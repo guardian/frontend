@@ -129,13 +129,13 @@ p {
 
 .crossword__grid-wrapper {
     float: left;
-    width: 50% !important;
-    margin-right: 3% !important;
-    margin-bottom: 64px !important;
+    width: 9cm !important;
+    margin-bottom: 1cm !important;
 }
 
 .crossword__grid {
-    background-color: #000000 !important;
+    background-color: #7c7c7c !important;
+    -webkit-print-color-adjust: exact; // allow background colour printing
 }
 
 .crossword__controls,
@@ -148,11 +148,13 @@ p {
 }
 
 .crossword__clues {
+    clear: both;
     font-size: 12px;
 }
-
+.crossword__clues--across,
 .crossword__clues--down {
-    margin-top: 24px !important;
+    width: 50% !important;
+    display: inline-block;
 }
 
 .crossword__links {

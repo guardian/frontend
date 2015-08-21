@@ -79,7 +79,9 @@ function updateCollections(edits, win) {
         data: JSON.stringify(edits)
     }, win)
     .then(function (resp) {
-        _.each(collections, collection => collection.populate(resp[collection.id]));
+        return Promise.all(_.map(collections, collection => new Promise(resolve => {
+            collection.populate(resp[collection.id], resolve);
+        })));
     })
     .catch(function (ex) {
         _.each(collections, collection => collection.load());

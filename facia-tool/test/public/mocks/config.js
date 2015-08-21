@@ -1,4 +1,5 @@
 import _ from  'underscore';
+import clone from 'utils/clean-clone';
 import Mock from 'mock/generic-mock';
 
 class Config extends Mock {
@@ -11,8 +12,8 @@ class Config extends Mock {
     }
 
     update(response) {
-        _.extend(this.defaultResponse.fronts, response.fronts);
-        _.extend(this.defaultResponse.collections, response.collections);
+        _.extend(this.defaultResponse.fronts, clone(response.fronts));
+        _.extend(this.defaultResponse.collections, clone(response.collections));
     }
 }
 

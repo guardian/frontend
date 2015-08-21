@@ -1,123 +1,86 @@
-define([
-    'knockout',
-    'underscore',
-    'utils/global-listeners',
-    'utils/mediator'
-], function (
-    ko,
-    _,
-    globalListeners,
-    mediator
-) {
-    mediator = mediator.default;
+import ko from 'knockout';
+import _ from 'underscore';
+import Promise from 'Promise';
+import BaseClass from 'models/base-class';
+import * as globalListeners from 'utils/global-listeners';
 
-    function isNarrow (column) {
-        var percentage = parseInt(column.style.width(), 10),
-            width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+function isNarrow (column) {
+    var percentage = parseInt(column.style.width(), 10),
+        width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
-        return width * percentage / 100 <= 550;
-    }
+    return width * percentage / 100 <= 550;
+}
 
-    function Column (opts) {
-        var column = this;
-
-        this.initialState = {
-            'type': ko.observable(opts.type || 'front'),
-            'config': ko.observable(opts.config)
-        };
-        this.edit = {};
-        cloneObservables(this.initialState, this.edit);
+export default class Column extends BaseClass {
+    constructor(opts) {
+        super();
+        this.opts = opts;
 
         this.layout = opts.layout;
+        this.component = {
+            name: opts.widget,
+            params: _.extend({
+                column: this
+            }, opts.params)
+        };
+        this.config = ko.observable(opts.config);
+
         this.style = {
-            width: function () {
-                return 100 / opts.layout.columns().length + 'vw';
+            width: () => {
+                return 100 / this.layout.currentState.columns().length + 'vw';
             },
-            left: function (data) {
-                return 100 / opts.layout.columns().length * opts.layout.columns.indexOf(data) + 'vw';
+            left: (data) => {
+                return 100 / this.layout.currentState.columns().length * this.layout.currentState.columns.indexOf(data) + 'vw';
             },
             isNarrow: ko.observable()
         };
-        _.delay(function () {
-            column.recomputeWidth();
-        }, 25);
 
-        function isType (what) {
-            return this.edit.type() === what;
-        }
-        this.isFront = ko.computed(isType.bind(this, 'front'), this);
-        this.isLatest = ko.computed(isType.bind(this, 'latest'), this);
-        this.isTreats = ko.computed(isType.bind(this, 'treats'), this);
-        this.isClipboard = ko.computed(isType.bind(this, 'clipboard'), this);
-
-        globalListeners.on('resize', _.debounce(function () {
-            column.recomputeWidth();
-        }, 25));
-    }
-
-    Column.prototype.setType = function (what) {
-        if (this.edit.type() !== what) {
-            this.edit.type(what);
-            this.edit.config(undefined);
-        }
-        return this;
-    };
-
-    Column.prototype.setConfig = function (what) {
-        this.edit.config(what);
-        return this;
-    };
-
-    Column.prototype.reset = function (to) {
-        var hasChanges = false;
-        if (to.type !== this.edit.type()) {
-            this.edit.type(to.type);
-            hasChanges = true;
-        }
-        if (to.config !== this.edit.config()) {
-            this.edit.config(to.config);
-            hasChanges = true;
-        }
-        if (hasChanges) {
-            this.saveChanges();
-            mediator.emit('column:change', this);
-        }
-    };
-
-    Column.prototype.saveChanges = function () {
-        cloneObservables(this.edit, this.initialState);
-        mediator.emit('layout:change');
-    };
-
-    Column.prototype.dropChanges = function () {
-        cloneObservables(this.initialState, this.edit);
-    };
-
-    Column.prototype.serializable = function () {
-        var serialized = {};
-        _.chain(this.edit).keys().each(function (key) {
-            var val = this.edit[key]();
-            if (val !== undefined) {
-                serialized[key] = val;
-            }
+        _.forEach(this.layout.allColumns, function (col) {
+            this['is' + col.layoutType] = ko.pureComputed(() => this.opts.type === col.layoutType);
         }, this);
-        return serialized;
-    };
 
-    Column.prototype.recomputeWidth = function () {
-        this.style.isNarrow(isNarrow(this));
-    };
+        this.onResizeCallback = _.debounce(() => this.recomputeWidth(), 25);
+        this.listenOn(globalListeners, 'resize', this.onResizeCallback);
 
-
-    function cloneObservables (object, into) {
-        _.chain(object).keys().each(function (key) {
-            if (!into[key]) {
-                into[key] = ko.observable(object[key]());
-            } else if (into[key]() !==  object[key]()) {
-                into[key](object[key]());
-            }
+        this.loaded = new Promise(resolve => this.once('widget:registered', resolve))
+        .then(() => {
+            // Recompute layout as soon as possible, but wait for the widget to be loaded
+            this.recomputeWidth();
+            return (this.component.widget.loaded || Promise.resolve()).then(() => this);
         });
     }
 
-    return Column;
-});
+    registerMainWidget(innerWidget) {
+        this.component.widget = innerWidget;
+        this.emit('widget:registered');
+    }
+
+    serializable() {
+        var serialized = {
+            type: this.opts.type
+        };
+        if (this.config()) {
+            serialized.config = this.config();
+        }
+        return serialized;
+    }
+
+    recomputeWidth() {
+        this.style.isNarrow(isNarrow(this));
+    }
+
+    setConfig(newConfig) {
+        if (!_.isEqual(newConfig, this.config())) {
+            this.config(newConfig);
+        }
+        this.layout.onColumnChange();
+    }
+
+    sameAs(column) {
+        if (!column) {
+            return false;
+        }
+        var opts = this.opts;
+        return _.isEqual(opts.widget, column.opts.widget) && _.isEqual(opts.params, column.opts.params);
+    }
+}

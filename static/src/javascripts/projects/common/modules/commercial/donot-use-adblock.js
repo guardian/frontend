@@ -23,7 +23,7 @@ define([
         var participations = ab.getParticipations().AdblockStickyBanner;
 
         return participations && ab.testCanBeRun('AdblockStickyBanner')
-            && participations.variant === 'variant';
+            && (participations.variant === 'variant' || participations.variant === 'challenger');
     }
 
     function init() {

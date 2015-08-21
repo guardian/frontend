@@ -16,6 +16,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -37,6 +38,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    dfpOphanTracking,
     geoMostPopular,
     ab,
     beacon,
@@ -117,29 +119,9 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            var start = detect.getTimeOfDomComplete();
+            dfpOphanTracking.attachListeners(googletag);
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
-                require(['ophan/ng'], function (ophan) {
-                    var lineItemIdOrEmpty = function (event) {
-                        if (event.isEmpty) {
-                            return '__empty__';
-                        } else {
-                            return event.lineItemId;
-                        }
-                    };
-
-                    ophan.record({
-                        ads: [{
-                            slot: event.slot.getSlotId().getDomId(),
-                            campaignId: lineItemIdOrEmpty(event),
-                            creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - start,
-                            adServer: 'DFP'
-                        }]
-                    });
-                });
-
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
@@ -207,7 +189,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            mediator.on('window:throttledScroll', lazyLoad);
             instantLoad();
             lazyLoad();
         },
@@ -265,19 +247,18 @@ define([
         },
         lazyLoad = function () {
             if (slots.length === 0) {
-                mediator.off('window:scroll');
+                mediator.off('window:throttledScroll');
             } else {
-                fastdom.read(function () {
-                    var scrollTop    = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
-                        depth = 0.5;
+                var scrollTop    = window.pageYOffset,
+                    viewportHeight = bonzo.viewport().height,
+                    scrollBottom = scrollTop + viewportHeight,
+                    depth = 0.5;
 
-                    _(slots).keys().forEach(function (slot) {
-                        // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
-                            loadSlot(slot);
-                        }
-                    });
+                _(slots).keys().forEach(function (slot) {
+                    // if the position of the ad is above the viewport - offset (half screen size)
+                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
+                        loadSlot(slot);
+                    }
                 });
             }
         },

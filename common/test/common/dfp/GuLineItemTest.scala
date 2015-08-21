@@ -22,7 +22,10 @@ class GuLineItemTest extends FlatSpec with Matchers {
 
   "targetsSectionFrontDirectly" should
     "be true for a section front targeted directly" in {
-    val targetedAdUnits = Seq(GuAdUnit("id", Seq("theguardian.com", "business", "front")))
+    val targetedAdUnits = Seq(
+      GuAdUnit("id", Seq("theguardian.com")),
+      GuAdUnit("id", Seq("theguardian.com", "business", "front"))
+    )
     lineItem(targetedAdUnits).targetsSectionFrontDirectly("business") shouldBe true
   }
 

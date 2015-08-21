@@ -72,26 +72,6 @@
                 logDevice('chrome', 'windows7');
             }
         }
-    })(window, navigator);
-}
 
-@if(JspmTestUniqueVisitorsBeacon.isSwitchedOn) {
-    (function () {
-        // Send beacon for unique visitors in JspmTest and JspmControl server-side test variants
-        // Requires localStorage, so modern browsers only
-        if (window.guardian.isModernBrowser) {
-            var tests = guardian.config.tests;
-            var inTest = tests.jspmTest || tests.jspmControl;
-            var localStorageKey = 'gu.jspm-test.visited';
-            // Protect browsers with localStorage but permissions disabled
-            try {
-                var visited = !!window.localStorage.getItem(localStorageKey)
-                if (!visited && inTest) {
-                    var beaconName = tests.jspmTest ? 'jspm-test' : 'jspm-control';
-                    (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + beaconName + '.gif';
-                    window.localStorage.setItem(localStorageKey, true);
-                }
-            } catch (e) {}
-        }
-    })();
+    })(window, navigator);
 }

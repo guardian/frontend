@@ -10,9 +10,7 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
 
   conf.Switches.ServerSideTests.switchOn
 
-  // TODO "un-ignore" this test when you delete this import
-  import mvt.ABHeadlinesTestVariant
-  ignore /* "active mvt tests" */ should "not have duplicate variants" in {
+  "active mvt tests" should "not have duplicate variants" in {
     val variantsInUse = mvt.ActiveTests.tests.flatMap(_.variants)
     variantsInUse.size should equal (variantsInUse.distinct.size)
   }
