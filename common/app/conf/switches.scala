@@ -2,8 +2,7 @@ package conf
 
 import java.util.concurrent.TimeoutException
 
-import common._
-import conf.Configuration.environment
+import common._back
 import org.joda.time.{DateTime, Days, Interval, LocalDate}
 import play.api.Play
 
@@ -301,7 +300,7 @@ object Switches {
     "background-js",
     "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 24),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
