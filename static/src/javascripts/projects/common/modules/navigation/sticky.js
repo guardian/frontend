@@ -75,8 +75,6 @@ define([
             }
         }
 
-        console.log(this.isAdblockInUse);
-
         if (this.isAdblockInUse && !this.isMobile && this.isAdblockABTest) {
             fastdom.read(function () {
                 this.$els.bannerDesktop = $('.js-adblock-sticky');
