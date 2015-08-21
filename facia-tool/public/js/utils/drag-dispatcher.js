@@ -121,16 +121,17 @@ function replaceArticleWith (id, sourceItem, oldItem, targetGroup) {
             itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
         };
         var remove = remover(targetContext, sourceGroup, oldItem.id());
+        var detectPressFailure = targetContext.mode() === 'live' ? function () {
+            mediator.emit('presser:detectfailures', targetContext.front());
+        } : function () {};
 
         returnValue = authedAjax.updateCollections({ update })
         .then(() => {
             return authedAjax.updateCollections({ remove });
         })
-        .then(() => {
-            if (targetContext.mode() === 'live') {
-                mediator.emit('presser:detectfailures', targetContext.front());
-            }
-        });
+        .then(detectPressFailure)
+        .catch(detectPressFailure);
+
         if (sourceGroup && !sourceGroup.keepCopy) {
             var insertAt = sourceGroup.items().indexOf(oldItem);
             sourceGroup.items.splice(insertAt, 1, newItem); // for immediate UI effect
