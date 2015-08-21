@@ -46,23 +46,23 @@
         docClass += ' no-svg';
     }
 
+    if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
+        docClass += ' has-flex';
+    } else {
+        docClass += ' has-no-flex';
+    }
+
+    if (testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
+        docClass += ' has-flex-wrap';
+    } else {
+        docClass += ' has-no-flex-wrap';
+    }
+
+    if (testCssSupport('position', 'fixed')) {
+        docClass += ' has-fixed';
+    }
+
     if (window.guardian.isModernBrowser) {
-        if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
-            docClass += ' has-flex';
-        } else {
-            docClass += ' has-no-flex';
-        }
-
-        if (testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
-            docClass += ' has-flex-wrap';
-        } else {
-            docClass += ' has-no-flex-wrap';
-        }
-
-        if (testCssSupport('position', 'fixed')) {
-            docClass += ' has-fixed';
-        }
-
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
 
