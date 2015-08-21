@@ -27,9 +27,7 @@ import scala.util.Try
 /**
  * a combination of CAPI content and things from facia tool, in one place
  */
-class Content protected (delegate: contentapi.Content) extends Trail with MetaData with ShareLinks {
-
-  val apiContent: contentapi.Content = delegate
+class Content protected (val delegate: contentapi.Content) extends Trail with MetaData with ShareLinks {
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)

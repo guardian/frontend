@@ -7,22 +7,22 @@ import com.gu.facia.client.models.TrailMetaData
 object FaciaContentConvert {
   def frontentContentToFaciaContent(frontendContent: model.Content, maybeCollectionConfig: Option[CollectionConfig] = None): FaciaContent = {
     val trailMetaData = TrailMetaData.empty
-    val cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.apiContent, trailMetaData)
-    val resolvedMetaData = ResolvedMetaData.fromContentAndTrailMetaData(frontendContent.apiContent, trailMetaData, cardStyle)
+    val cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.delegate, trailMetaData)
+    val resolvedMetaData = ResolvedMetaData.fromContentAndTrailMetaData(frontendContent.delegate, trailMetaData, cardStyle)
 
     CuratedContent(
-      content = frontendContent.apiContent,
+      content = frontendContent.delegate,
       maybeFrontPublicationDate = None,
       supportingContent = Nil,
-      cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.apiContent, trailMetaData),
+      cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.delegate, trailMetaData),
       headline = frontendContent.headline,
       href = Option(frontendContent.id),
       trailText = frontendContent.trailText,
       group = "0",
-      image = FaciaImage.getFaciaImage(Option(frontendContent.apiContent), trailMetaData, resolvedMetaData),
+      image = FaciaImage.getFaciaImage(Option(frontendContent.delegate), trailMetaData, resolvedMetaData),
       ContentProperties.fromResolvedMetaData(resolvedMetaData),
       frontendContent.byline,
-      kicker = ItemKicker.fromContentAndTrail(Option(frontendContent.apiContent), trailMetaData, resolvedMetaData, maybeCollectionConfig),
+      kicker = ItemKicker.fromContentAndTrail(Option(frontendContent.delegate), trailMetaData, resolvedMetaData, maybeCollectionConfig),
       embedType = None,
       embedUri = None,
       embedCss = None)
