@@ -2,7 +2,8 @@ package conf
 
 import java.util.concurrent.TimeoutException
 
-import common._back
+mport common._
+import conf.Configuration.environment
 import org.joda.time.{DateTime, Days, Interval, LocalDate}
 import play.api.Play
 
