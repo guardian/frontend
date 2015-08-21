@@ -18,6 +18,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support._
+import com.gu.contentapi.client.{model => contentapi}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -26,9 +27,9 @@ import scala.util.Try
 /**
  * a combination of CAPI content and things from facia tool, in one place
  */
-class Content protected (delegate: com.gu.contentapi.client.model.Content) extends Trail with MetaData with ShareLinks {
+class Content protected (delegate: contentapi.Content) extends Trail with MetaData with ShareLinks {
 
-  val apiContent: com.gu.contentapi.client.model.Content = delegate
+  val apiContent: contentapi.Content = delegate
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
@@ -282,7 +283,7 @@ class Content protected (delegate: com.gu.contentapi.client.model.Content) exten
 
 object Content {
 
-  def apply(apiContent: com.gu.contentapi.client.model.Content): Content = {
+  def apply(apiContent: contentapi.Content): Content = {
     apiContent match {
       // liveblog / article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
       case liveBlog if apiContent.isLiveBlog => new LiveBlog(apiContent)
@@ -309,7 +310,7 @@ private object ArticleSchemas {
   }
 }
 
-class Article(delegate: com.gu.contentapi.client.model.Content) extends Content(delegate) with Lightboxable {
+class Article(delegate: contentapi.Content) extends Content(delegate) with Lightboxable {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
@@ -371,7 +372,7 @@ class Article(delegate: com.gu.contentapi.client.model.Content) extends Content(
   override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
 }
 
-class LiveBlog(delegate: com.gu.contentapi.client.model.Content) extends Article(delegate) {
+class LiveBlog(delegate: contentapi.Content) extends Article(delegate) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
@@ -394,7 +395,7 @@ class LiveBlog(delegate: com.gu.contentapi.client.model.Content) extends Article
   lazy val blocks = LiveBlogParser.parse(body)
 }
 
-abstract class Media(delegate: com.gu.contentapi.client.model.Content) extends Content(delegate) {
+abstract class Media(delegate: contentapi.Content) extends Content(delegate) {
 
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override def metaData: Map[String, JsValue] = super.metaData ++ Map("isPodcast" -> JsBoolean(isPodcast))
@@ -409,7 +410,7 @@ abstract class Media(delegate: com.gu.contentapi.client.model.Content) extends C
   )
 }
 
-class Audio(delegate: com.gu.contentapi.client.model.Content) extends Media(delegate) {
+class Audio(delegate: contentapi.Content) extends Media(delegate) {
 
   override lazy val contentType = GuardianContentTypes.Audio
 
@@ -430,7 +431,7 @@ object Audio {
   def apply(delegate: ApiContent): Audio = new Audio(delegate)
 }
 
-class Video(delegate: com.gu.contentapi.client.model.Content) extends Media(delegate) {
+class Video(delegate: contentapi.Content) extends Media(delegate) {
 
   override lazy val contentType = GuardianContentTypes.Video
 
@@ -474,7 +475,7 @@ object Video {
   def apply(delegate: ApiContent): Video = new Video(delegate)
 }
 
-class Gallery(delegate: com.gu.contentapi.client.model.Content) extends Content(delegate) with Lightboxable {
+class Gallery(delegate: contentapi.Content) extends Content(delegate) with Lightboxable {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
@@ -579,7 +580,7 @@ trait Lightboxable extends Content {
 
 }
 
-class Interactive(delegate: com.gu.contentapi.client.model.Content) extends Content(delegate) {
+class Interactive(delegate: contentapi.Content) extends Content(delegate) {
   override lazy val contentType = GuardianContentTypes.Interactive
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
@@ -596,7 +597,7 @@ object Interactive {
   def apply(delegate: ApiContent): Interactive = new Interactive(delegate)
 }
 
-class ImageContent(delegate: com.gu.contentapi.client.model.Content) extends Content(delegate) with Lightboxable {
+class ImageContent(delegate: contentapi.Content) extends Content(delegate) with Lightboxable {
   override val lightboxableCutoffWidth = 940
   override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
