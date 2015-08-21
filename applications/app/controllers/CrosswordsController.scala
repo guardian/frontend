@@ -1,9 +1,9 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
-import common.{Edition, ExecutionContexts}
+import common.{Edition, ExecutionContexts, LinkTo}
 import conf.{Configuration, LiveContentApi, Static}
-import crosswords.{AccessibleCrosswordRows, CrosswordData, CrosswordPage, CrosswordSvg}
+import crosswords.{CrosswordSvg, CrosswordPage, CrosswordData, AccessibleCrosswordRows, CrosswordSearchPage}
 import model._
 import org.joda.time.DateTime
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
@@ -76,12 +76,16 @@ object CrosswordsController extends Controller with ExecutionContexts {
         domain = Some(Configuration.id.domain))))
   }
 
+  def searchForm() = Action { implicit request =>
+    Ok(views.html.crosswordSearch(CrosswordSearchPage))
+  }
+
   def search() = Action.async { implicit request =>
     CrosswordSearch.fromRequest(request) match {
       case Some(params) =>
         val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
-          .stringParam("from-date", params.fromDate.toString("yyyy-mm-dd"))
-          .stringParam("to-date", params.toDate.toString("yyyy-mm-dd"))
+          .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
+          .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
           .pageSize(50)
 
         val maybeSetter = params.setter.fold(withoutSetter) { setter =>
@@ -89,10 +93,16 @@ object CrosswordsController extends Controller with ExecutionContexts {
         }
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
-          val section = Section(ApiSection("crosswords", "Crosswords search results", "//www.theguardian.com/crosswords/search", "", Nil))
-          val page = IndexPage(section, response.results.map(Content(_)))
+          response.results match {
+            case Nil =>
+              Ok(views.html.crosswordsNoResults(CrosswordSearchPage))
 
-          Ok(views.html.index(page))
+            case results =>
+              val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
+              val page = IndexPage(section, results.map(Content(_)))
+
+              Ok(views.html.index(page))
+          }
         }
 
       case None =>
@@ -110,11 +120,11 @@ object CrosswordsController extends Controller with ExecutionContexts {
     def fromRequest(request: Request[AnyContent]): Option[CrosswordSearch] = {
       for {
         formMap <- request.body.asFormUrlEncoded
-        crosswordType <- formMap.get("crosswordType").map(_.mkString)
+        crosswordType <- formMap.get("crossword-type").map(_.mkString)
         month <- formMap.get("month").map(_.mkString.toInt)
         year <- formMap.get("year").map(_.mkString.toInt)
       } yield {
-        val setter = formMap.get("setter").map(_.mkString)
+        val setter = formMap.get("setter").map(_.mkString.toLowerCase).filter(_.nonEmpty)
         val fromDate = new DateTime(year, month, 1, 0, 0)
         val toDate = fromDate.dayOfMonth().withMaximumValue()
 
