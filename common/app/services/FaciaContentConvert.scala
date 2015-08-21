@@ -5,7 +5,7 @@ import com.gu.facia.api.utils.{ContentProperties, ResolvedMetaData, ItemKicker}
 import com.gu.facia.client.models.TrailMetaData
 
 object FaciaContentConvert {
-  def frontentContentToFaciaContent(frontendContent: model.Content, maybeCollectionConfig: Option[CollectionConfig] = None): FaciaContent = {
+  def frontendContentToFaciaContent(frontendContent: model.Content, maybeCollectionConfig: Option[CollectionConfig] = None): FaciaContent = {
     val trailMetaData = TrailMetaData.empty
     val cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.apiContent, trailMetaData)
     val resolvedMetaData = ResolvedMetaData.fromContentAndTrailMetaData(frontendContent.apiContent, trailMetaData, cardStyle)
@@ -28,5 +28,5 @@ object FaciaContentConvert {
       embedCss = None)
   }
 
-  def frontentContentToFaciaContent(frontendContent: model.Content): FaciaContent = frontentContentToFaciaContent(frontendContent, None)
+  def frontendContentToFaciaContent(frontendContent: model.Content): FaciaContent = frontendContentToFaciaContent(frontendContent, None)
 }

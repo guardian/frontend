@@ -21,7 +21,7 @@ case class SaveForLaterItem (
   def compare(other: SaveForLaterItem) : Int = other.savedArticle.date.compareTo(this.savedArticle.date)
 
   val contentCard = FaciaCard.fromTrail(
-    FaciaContentConvert.frontentContentToFaciaContent(content),
+    FaciaContentConvert.frontendContentToFaciaContent(content),
     CollectionConfig.empty,
     ItemClasses(mobile = cards.SavedForLater, tablet = cards.SavedForLater),
     showSeriesAndBlogKickers = false
