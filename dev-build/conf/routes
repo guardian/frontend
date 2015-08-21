@@ -27,6 +27,9 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
 GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id     controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
 
+# Crosswords search
+POST           /crosswords/search                                                                                                controllers.CrosswordsController.search()
+
 # Business data
 GET        /business-data/stocks.json                 controllers.StocksController.stocks
 
