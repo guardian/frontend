@@ -611,7 +611,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
       val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
       val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)
-      Some(("rugbyMatch", JsString(s"/rugby/api/score/$date/$team1/$team2")))
+      Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
     } else None
     val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
       Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
