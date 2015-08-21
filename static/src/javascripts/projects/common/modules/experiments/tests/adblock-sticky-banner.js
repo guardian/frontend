@@ -31,6 +31,12 @@ define([
             quoteText: 'If you read the Guardian, join the Guardian',
             quoteAuthor: 'Polly Toynbee',
             imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=abf0ce1a1a7935e82612b330322f5fa4'
+        },
+        {
+            supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_MACASKILL',
+            quoteText: 'The Guardian enjoys rare freedom and independence. Support our journalism',
+            quoteAuthor: 'Ewen MacAskill',
+            imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
         }];
 
     return function () {
@@ -67,6 +73,7 @@ define([
                     variations[0].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_MONBIOT';
                     variations[1].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_MUIR';
                     variations[2].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_TOYNBEE';
+                    variations[3].supporterLink = 'https://membership.theguardian.com?INTCMP=ADBLOCK_BANNER_MACASKILL';
                     new AdblockBanner(variations[_.random(variations.length - 1)]).show();
                 }
             },
