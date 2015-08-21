@@ -489,13 +489,14 @@ $avatarPadding: $gs-gutter / 2;
     a {
         color: colour(neutral-2);
     }
-    .i-comment-anchor {
+    .inline-comment-anchor {
         display: none;
         vertical-align: middle;
         margin-left: 2px;
+        max-height: 15px;
     }
-    .d-comment__inner:hover & .i-comment-anchor,
-    .d-top-comment__meta:hover & .i-comment-anchor {
+    .d-comment__inner:hover & .inline-comment-anchor,
+    .d-top-comment__meta:hover & .inline-comment-anchor {
         display: inline-block;
     }
 }
@@ -517,11 +518,18 @@ $avatarPadding: $gs-gutter / 2;
     margin-left: 0;
 }
 
-.i-reply-grey {
-    margin-bottom: -4px;
-    display: inline-block;
+.inline-reply {
+    &.grey {
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        fill: #bdbdbd;
+    }
+    &.blue {
+        fill: #005689;
+    }
 }
-.d-comment-box--top-level .i-reply-grey {
+.d-comment-box--top-level .inline-reply.grey {
     display: none;
 }
 
@@ -831,10 +839,8 @@ $comment-recommend-button-size: 19px;
         text-decoration: underline;
     }
 
-    .i {
-        margin-top: -1px;
+    .inline-reply svg {
         vertical-align: middle;
-        margin-right: 2px;
     }
 }
 
