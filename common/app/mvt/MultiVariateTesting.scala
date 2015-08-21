@@ -6,6 +6,7 @@ import conf.Switch
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
+import conf.Switches.ServerSideTests
 
 // To add a test, do the following:
 // 1. Create an object that extends TestDefinition
@@ -38,18 +39,18 @@ object ABHeadlinesTestVariant extends TestDefinition(
   new LocalDate(2015, 9, 30)
 ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn
+    request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
   }
 }
 
 object ABHeadlinesTestControl extends TestDefinition(
   Nil,
   "headlines-ab-control",
-  "To test how much of a difference changing a headline makes (test group)",
+  "To test how much of a difference changing a headline makes (control group)",
   new LocalDate(2015, 9, 30)
 ) {
   override def isParticipating(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-B") && switch.isSwitchedOn
+    request.headers.get("X-GU-hlt").contains("hlt-B") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
   }
 }
 
@@ -99,7 +100,7 @@ trait Tests {
       tests.find { test =>
         test.variants.contains(variant) &&
         test.switch.isSwitchedOn &&
-        conf.Switches.ServerSideTests.isSwitchedOn
+        ServerSideTests.isSwitchedOn
       }
     }
   }
