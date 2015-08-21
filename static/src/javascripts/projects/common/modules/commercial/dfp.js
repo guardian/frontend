@@ -162,7 +162,7 @@ define([
                 sponsorshipIdsReturned = [],
                 sponsorshipIdReturned;
 
-            _.forEach(sponsorshipIds, function (value, key) {
+            _.forEach(sponsorshipIds, function (value) {
                 if ($(value).length) {
                     sponsorshipIdReturned = value;
                     sponsorshipIdsReturned.push(sponsorshipIdReturned);
@@ -177,7 +177,7 @@ define([
 
             if (detect.adblockInUse && sponsorshipIdsFound.length) {
                 fastdom.write(function () {
-                    _.forEach(sponsorshipIdsFound, function (value, key) {
+                    _.forEach(sponsorshipIdsFound, function (value) {
                         var sponsorshipIdFoundEl = $(value),
                             sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
                             sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
