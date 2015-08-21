@@ -5,7 +5,7 @@ import * as capi from 'modules/content-api';
 import * as wait from 'test/utils/wait';
 import {CONST} from 'modules/vars';
 import * as mockjax from 'test/utils/mockjax';
-import mediator from 'utils/mediator';
+import textInside from 'test/utils/text-inside';
 
 describe('Latest widget', function () {
     beforeEach(function () {
@@ -13,7 +13,7 @@ describe('Latest widget', function () {
         this.originallatestArticlesDebounce = CONST.latestArticlesDebounce;
         this.originallatestArticlesPollMs = CONST.latestArticlesPollMs;
         this.ko = inject(`
-            <latest-widget params="position: 0, column: $data"></latest-widget>
+            <latest-widget params="position: 0, column: $data.testColumn"></latest-widget>
             <script type="text/html" id="template_article">
             </script>
         `);
@@ -97,9 +97,6 @@ describe('Latest widget', function () {
                 response: {
                     results: [{ id: 'section-one' }, { id: 'section-two' }]
                 }
-            },
-            onAfterComplete: () => {
-                mediator.emit('mock:search:complete');
             }
         });
 
@@ -179,7 +176,7 @@ describe('Latest widget', function () {
             });
         });
         function paginationText () {
-            return $('.finder__controls:nth(0)').text().trim().replace(/\s+/g, ' ').toLowerCase();
+            return textInside('.finder__controls:nth(0)').toLowerCase();
         }
 
         this.ko.apply({
@@ -265,7 +262,6 @@ describe('Latest widget', function () {
             switches({
                 'facia-tool-draft-content': false
             });
-            mediator.emit('switches:change', switches());
         })
         .then(() => wait.event('search:update', latest))
         .then(() => {
@@ -277,7 +273,6 @@ describe('Latest widget', function () {
             switches({
                 'facia-tool-draft-content': true
             });
-            mediator.emit('switches:change', switches());
         })
         .then(() => {
             expect(capi.fetchLatest.calls.count()).toBe(3);

@@ -21,17 +21,17 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def priorities() = AuthAction { request =>
     Logger.info("Doing priorities..." + request)
     val identity = request.user
-    Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
+    Cached(60) { Ok(views.html.priority(Option(identity))) }
   }
 
-  def collectionEditor(priority: String) = AuthAction { request =>
+  def collectionEditor() = AuthAction { request =>
     val identity = request.user
-    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity))) }
+    Cached(60) { Ok(views.html.admin_main(Option(identity))) }
   }
 
-  def configEditor(priority: String) = AuthAction { request =>
+  def configEditor() = AuthAction { request =>
     val identity = request.user
-    Cached(60) { Ok(views.html.config(Configuration.environment.stage, priority, Option(identity))) }
+    Cached(60) { Ok(views.html.admin_main(Option(identity))) }
   }
 
   def listCollections = APIAuthAction { request =>

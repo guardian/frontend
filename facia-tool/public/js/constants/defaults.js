@@ -1,6 +1,11 @@
 export default {
     editions: ['uk', 'us', 'au'],
 
+    environmentUrlBase: {
+        'prod': 'http://theguardian.com/',
+        'code': 'http://m.code.dev-theguardian.com/'
+    },
+
     extendDynamicContainers: [
         {name: 'nav/list'},
         {name: 'nav/media-list'},
@@ -82,6 +87,10 @@ export default {
         ].join(',')
     ].join('&'),
 
+    draggableTypes: {
+        configCollection: 'config-collection'
+    },
+
 
     frontendApiBase:       '/frontend',
 
@@ -96,7 +105,7 @@ export default {
     latestSnapPrefix:      'Latest from ',
 
     ophanBase:             'http://dashboard.ophan.co.uk/summary',
-    ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
+    ophanFrontBase:        'http://dashboard.ophan.co.uk/info-front?path=',
 
     internalContentPrefix: 'internal-code/content/',
     internalPagePrefix:    'internal-code/page/',

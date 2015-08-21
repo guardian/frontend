@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import clone from 'utils/clean-clone';
 import mockjax from 'test/utils/mockjax';
 import EventEmitter from 'EventEmitter';
 
@@ -37,11 +38,11 @@ class Mock extends EventEmitter {
     }
 
     set(response) {
-        this.defaultResponse = response;
+        this.defaultResponse = clone(response);
     }
 
     update(response) {
-        _.extend(this.defaultResponse, response);
+        _.extend(this.defaultResponse, clone(response));
     }
 
     handle() {

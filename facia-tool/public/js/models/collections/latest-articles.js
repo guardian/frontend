@@ -1,16 +1,17 @@
 import ko from 'knockout';
 import _ from 'underscore';
-import * as vars from 'modules/vars';
-import {combine} from 'utils/array';
-import internalPageCode from 'utils/internal-page-code';
-import parseQueryParams from 'utils/parse-query-params';
-import urlAbsPath from 'utils/url-abs-path';
+import BaseClass from 'models/base-class';
 import Article from 'models/collections/article';
 import * as cache from 'modules/cache';
 import * as capi from 'modules/content-api';
+import {CONST} from 'modules/vars';
+import {combine} from 'utils/array';
 import debounce from 'utils/debounce';
+import internalPageCode from 'utils/internal-page-code';
+import mediator from 'utils/mediator';
+import parseQueryParams from 'utils/parse-query-params';
+import urlAbsPath from 'utils/url-abs-path';
 import AutoComplete from 'widgets/autocomplete';
-import BaseClass from 'modules/class';
 
 var pollerSym = Symbol();
 var debounceSym = Symbol();
@@ -21,7 +22,7 @@ class Latest extends BaseClass {
         super();
         var opts = this.opts = options || {};
 
-        var pageSize = vars.CONST.searchPageSize || 25,
+        var pageSize = CONST.searchPageSize || 25,
             showingDrafts = opts.showingDrafts;
 
         this.articles = ko.observableArray();
@@ -49,7 +50,9 @@ class Latest extends BaseClass {
             return title;
         }, this);
 
-        this[debounceSym] = debounce((opts = {}) => {
+        this[debounceSym] = debounce(opts => {
+            // TODO Phantom Babel bug
+            if (!opts) { opts = {}; }
             if (!opts.noFlushFirst) {
                 this.flush('searching...');
             }
@@ -74,7 +77,7 @@ class Latest extends BaseClass {
             }
 
             return capi.fetchLatest(request);
-        }, vars.CONST.searchDebounceMs);
+        }, CONST.searchDebounceMs);
 
         this.showNext = ko.pureComputed(function () {
             return this.totalPages() > this.page();
@@ -117,11 +120,10 @@ class Latest extends BaseClass {
             loadCallback();
             this.emit('search:update');
         })
-        .catch((error = {
-            message: 'Invalid CAPI result. Please try again'
-        }) => {
-            var errMsg = error.message;
-            vars.model.alert(errMsg);
+        .catch(error => {
+            // TODO Phantom Babel bug
+            var errMsg = (error || {}).message || 'Invalid CAPI result. Please try again';
+            mediator.emit('capi:error', errMsg);
             this.flush(errMsg);
             loadCallback();
             this.emit('search:update');
@@ -152,7 +154,7 @@ class Latest extends BaseClass {
                     isPoll: true
                 });
             }
-        }, vars.CONST.latestArticlesPollMs || 60000);
+        }, CONST.latestArticlesPollMs || 60000);
 
         this.startPoller = function() {}; // make idempotent
     }

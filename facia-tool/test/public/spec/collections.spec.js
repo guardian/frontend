@@ -1,14 +1,11 @@
 import $ from 'jquery';
-import CollectionsLoader from 'test/utils/collections-loader';
-import drag from 'test/utils/drag';
 import MockVisible from 'mock/stories-visible';
+import CollectionsLoader from 'test/utils/collections-loader';
+import * as dom from 'test/utils/dom-nodes';
+import drag from 'test/utils/drag';
 import editAction from 'test/utils/edit-actions';
 import publishAction from 'test/utils/publish-actions';
-import * as dom from 'test/utils/dom-nodes';
 import * as wait from 'test/utils/wait';
-import ko from 'knockout';
-import listManager from 'modules/list-manager';
-import mediator from 'utils/mediator';
 
 describe('Collections', function () {
     beforeEach(function () {
@@ -17,10 +14,7 @@ describe('Collections', function () {
     });
     afterEach(function () {
         this.testInstance.dispose();
-        ko.cleanNode(window.document.body);
         this.mockVisible.dispose();
-        mediator.removeAllListeners();
-        listManager.reset();
     });
 
     it('displays the correct timing', function (done) {
@@ -242,13 +236,13 @@ describe('Collections', function () {
                 // Drop an article in the first position
                 var firstCollection = dom.droppableCollection(1);
                 var collectionDropTarget = drag.droppable(firstCollection);
-                var firstArticleInLatest = dom.articleInside(firstCollection, 1);
-                var thirdArticleInLatest = dom.articleInside(firstCollection, 3);
-                var sourceArticle = new drag.Article(firstArticleInLatest);
+                var firstArticleInCollection = dom.articleInside(firstCollection, 1);
+                var thirdArticleInCollection = dom.articleInside(firstCollection, 3);
+                var sourceArticle = new drag.Article(firstArticleInCollection);
                 // Drop an article on the collection means adding it to the end
-                collectionDropTarget.dragstart(firstArticleInLatest, sourceArticle);
-                collectionDropTarget.dragover(thirdArticleInLatest, sourceArticle);
-                collectionDropTarget.drop(thirdArticleInLatest, sourceArticle);
+                collectionDropTarget.dragstart(firstArticleInCollection, sourceArticle);
+                collectionDropTarget.dragover(thirdArticleInCollection, sourceArticle);
+                collectionDropTarget.drop(thirdArticleInCollection, sourceArticle);
 
                 return {
                     latest: {
@@ -398,8 +392,50 @@ describe('Collections', function () {
         .then(() => wait.event('visible:stories:fetch'))
         .then(function () {
             expect($('.desktop-indicator .indicator')[0].clientHeight > 100).toBe(true);
-            done();
         })
+        .then(done)
+        .catch(done.fail);
+    });
+
+    it('copy paste abouve an article', function (done) {
+        var mockCollection = this.testInstance.mockCollections;
+
+        this.testInstance.load()
+        .then(() => {
+            return editAction(mockCollection, () => {
+                $('.tool--small--copy', dom.latestArticle(5)).click();
+                $('collection-widget trail-widget:nth(0) .tool--small--paste').click();
+
+                return {
+                    latest: {
+                        draft: [{
+                            id: 'internal-code/page/5',
+                            meta: {
+                                group: 0
+                            }
+                        }, {
+                            id: 'internal-code/page/1',
+                            meta: {
+                                group: 0
+                            }
+                        }]
+                    }
+                };
+            });
+        })
+        .then(request => {
+            expect(request.url).toBe('/edits');
+            expect(request.data.type).toBe('Update');
+            expect(request.data.update).toEqual({
+                after: false,
+                live: false,
+                draft: true,
+                id: 'latest',
+                item: 'internal-code/page/5',
+                position: 'internal-code/page/1'
+            });
+        })
+        .then(done)
         .catch(done.fail);
     });
 });

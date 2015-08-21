@@ -26,12 +26,15 @@ mediator.on('ui:close', updateClipboardScrollable);
 mediator.on('ui:omit', updateClipboardScrollable);
 mediator.on('ui:resize', updateClipboardScrollable);
 
+var classCount = 0;
+
 class Clipboard extends BaseWidget {
     constructor(params) {
         super();
-        var listeners = mediator.scope();
 
-        this.storage = storage.bind('gu.front-tools.clipboard.' + vars.identity.email);
+        this.storage = storage.bind('gu.front-tools.clipboard.' +
+            (classCount ? classCount + '.' : '') + vars.model.identity.email);
+        classCount += 1;
         this.uiOpenElement = ko.observable();
         this.column = params.column;
         this.group = new Group({
@@ -41,11 +44,9 @@ class Clipboard extends BaseWidget {
             elementHasFocus: this.elementHasFocus.bind(this)
         });
         this.group.items(this.getItemsFromStorage());
-        this.listeners = listeners;
 
-        listeners.on('ui:open', this.onUIOpen.bind(this));
-        this.onCopiedChangeCallback = this.onCopiedChange.bind(this);
-        copiedArticle.on('change', this.onCopiedChangeCallback);
+        this.listenOn(mediator, 'ui:open', this.onUIOpen);
+        this.listenOn(copiedArticle, 'change', this.onCopiedChange);
         this.pollArticlesChange(this.saveInStorage.bind(this));
 
         this.hasCopiedArticle = ko.observable(false).extend({ notify: 'always' });
@@ -53,7 +54,6 @@ class Clipboard extends BaseWidget {
         this.dropdownOpen = ko.observable(false);
 
         globalListeners.on('paste', this.onGlobalPaste, this);
-        mediator.emit('clipboard:loaded', this);
     }
 
     getCopiedArticle() {
@@ -130,11 +130,11 @@ class Clipboard extends BaseWidget {
     }
 
     dispose() {
-        globalListeners.off('paste', null, this);
-        copiedArticle.off('change', this.onCopiedChangeCallback);
-        clearInterval(this.pollID);
-        this.listeners.dispose();
         super.dispose();
+        this.group.dispose();
+        globalListeners.off('paste', null, this);
+        clearInterval(this.pollID);
+        classCount -= 1;
     }
 }
 

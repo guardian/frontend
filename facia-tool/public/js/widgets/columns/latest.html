@@ -39,10 +39,9 @@
         <search-controls params="context: $context"></search-controls>
 
         <div class="latest-articles">
-            <div data-bind="template: {
-                name: 'template_article',
-                foreach: articles
-            }"></div>
+            <!-- ko foreach: articles -->
+                <trail-widget params="context: $context"></trail-widget>
+            <!-- /ko -->
 
             <!-- ko if: message -->
                 <div class="search-message" data-bind="text: message"></div>
