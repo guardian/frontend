@@ -5,7 +5,6 @@ import java.io.File
 import com.gu.facia.client.models.{FrontJson, ConfigJson}
 import controllers.front.FrontJsonFapi
 import controllers.{front, FaciaController}
-import model.FaciaPage
 import org.jsoup.Jsoup
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
