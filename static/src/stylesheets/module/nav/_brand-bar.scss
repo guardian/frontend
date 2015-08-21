@@ -182,6 +182,13 @@
     }
 }
 
+.is-not-modern {
+    .brand-bar__item--more,
+    .brand-bar__item--edition {
+        display: none;
+    }
+}
+
 .brand-bar__item--masterclasses {
     .brand-bar__item--right--au-edition & {
         // Hide on mobile
