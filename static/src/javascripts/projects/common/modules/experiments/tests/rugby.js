@@ -8,7 +8,7 @@ define([
 
         this.id = 'RugbyScores';
         this.start = '2015-08-21';
-        this.expiry = '2015-11-07';
+        this.expiry = '2015-08-28';
         this.author = 'Jenny Sivapalan';
         this.description = 'Scores for the Rugby World Cup to be loaded in on live blogs / reports etc';
         this.audience = 0;
