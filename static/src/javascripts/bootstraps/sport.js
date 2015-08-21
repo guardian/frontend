@@ -1,13 +1,17 @@
 define([
+    'bonzo',
     'common/utils/$',
+    'common/utils/ajax',
     'common/utils/config',
     'common/modules/component'
 ], function (
+    bonzo,
     $,
+    ajax,
     config,
     Component
 ) {
-    function init() {
+    function cricket() {
         var cricketScore, parentEl,
             matchIdentifier = config.page.cricketMatch;
 
@@ -20,7 +24,36 @@ define([
         }
     }
 
+    function rugby() {
+
+        if (config.page.rugbyMatch) {
+
+            ajax({
+                url: config.page.rugbyMatch + '.json',
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (response) {
+                    var $h = $('.js-score'),
+                        scoreContainer = bonzo.create(
+                        '<div class="score-container">' +
+                            response.liveScore +
+                        '</div>'
+                    )[0];
+
+                    $h.after(scoreContainer);
+                }
+            );
+
+        }
+    }
+
+    function init()  {
+        cricket();
+    }
+
     return {
-        init: init
+        init: init,
+        rugby: rugby
     };
 });
