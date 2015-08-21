@@ -158,11 +158,36 @@ define([
         },
 
         isSponsorshipContainerTest = function () {
-            var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1'];
-            for (var i = 0; i < sponsorshipIds.length; i++) {
-                if ($(sponsorshipIds[i]).length > 0) {
-                    return sponsorshipIds[i];
+            var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
+                sponsorshipIdsReturned =[],
+                sponsorshipIdReturned;
+
+            _.forEach(sponsorshipIds, function (value, key) {
+                if ($(value).length) {
+                    sponsorshipIdReturned = value;
+                    sponsorshipIdsReturned.push(sponsorshipIdReturned);
                 }
+            });
+
+            return sponsorshipIdsReturned;
+        },
+
+        showSponsorshipPlaceholder = function () {
+            var sponsorshipIdsFound = isSponsorshipContainerTest();
+               
+            if (detect.adblockInUse && sponsorshipIdsFound.length) {
+                fastdom.write(function () {
+                    _.forEach(sponsorshipIdsFound, function (value, key) {
+                        sponsorshipIdFoundEl = $(value),
+                        sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', '');
+                        var sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
+                        if (sponsorshipIdFoundEl.previous().length) {
+                            sponsorshipIdFoundEl.previous().append(sponsorshipBadge);
+                        } else {
+                            sponsorshipIdFoundEl.parent().prepend(sponsorshipBadge);
+                        }
+                    });
+                });
             }
         },
 
@@ -264,12 +289,7 @@ define([
             window.googletag.cmd.push(postDisplay);
 
             // show sponsorship placeholder if adblock detected
-            var sponsorshipIdFound = isSponsorshipContainerTest();
-            var sponsorshipIdClasses = $(sponsorshipIdFound).attr('class').replace('ad-slot ', '');
-            if (detect.adblockInUse && sponsorshipIdFound) {
-                var sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + $(sponsorshipIdFound).html() + '</div>';
-                $(sponsorshipIdFound).previous().append(sponsorshipBadge);
-            }
+            showSponsorshipPlaceholder();
 
             return dfp;
         },
