@@ -14,6 +14,7 @@ define([
     'utils/logger',
     'utils/mediator',
     'utils/populate-observables',
+    'utils/report-errors',
     'utils/sanitize-html',
     'utils/snap',
     'utils/url-abs-path',
@@ -40,6 +41,7 @@ define([
         logger,
         mediator,
         populateObservables,
+        reportErrors,
         sanitizeHtml,
         snap,
         urlAbsPath,
@@ -65,6 +67,7 @@ define([
         copiedArticle = copiedArticle.default;
         logger = logger.default;
         Group = Group.default;
+        reportErrors = reportErrors.default;
 
         var capiProps = [
                 'webUrl',
@@ -862,8 +865,9 @@ define([
 
                 self.updateEditorsDisplay();
             })
-            .catch(function() {
+            .catch(function(ex) {
                 self.meta.headline(undefined);
+                reportErrors(ex);
             });
         };
 
