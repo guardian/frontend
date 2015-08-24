@@ -21,8 +21,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {
     scoreData.flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
-        val date = dateFormat.print(aMatch.date)
-        val key = createKey(aMatch, date)
+        val key = createKey(aMatch)
         liveScoreMatches.alter {_ + (key -> aMatch)}
       })
     }.recover {
@@ -34,8 +33,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   def fixturesAndResults(fixturesAndResults: Future[Seq[Match]]) : Future[Any] = {
     fixturesAndResults.flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
-        val date = dateFormat.print(aMatch.date)
-        val key = createKey(aMatch, date)
+        val key = createKey(aMatch)
         fixturesAndResultsMatches.alter {_ +  (key -> aMatch)}
       })
     }.recover {
@@ -44,7 +42,8 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  private def createKey(aMatch: Match, date: String): String = {
+  private def createKey(aMatch: Match): String = {
+    val date = dateFormat.print(aMatch.date)
     s"$date/${aMatch.homeTeam.id}/${aMatch.awayTeam.id}"
   }
 
@@ -64,11 +63,4 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   private def isValidMatch(year: String, month: String, day: String, team1: String, team2: String, rugbyMatch: Match): Boolean = {
     rugbyMatch.hasTeam(team1) && rugbyMatch.hasTeam(team2) && dateFormat.print(rugbyMatch.date) == s"$year/$month/$day"
   }
-
-  private object Date {
-    private val dateTimeParser = DateTimeFormat.forPattern("yyyy/MM/dd")
-
-    def apply(dateTime: String) = dateTimeParser.parseDateTime(dateTime)
-  }
-
 }
