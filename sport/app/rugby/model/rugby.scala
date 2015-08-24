@@ -7,7 +7,8 @@ case class Match(
   id: String,
   homeTeam: Team,
   awayTeam: Team,
-  venue: Option[String]
+  venue: Option[String],
+  competitionName: String
 ) {
   def hasTeam(teamId: String) = homeTeam.id == teamId || awayTeam.id == teamId
 }

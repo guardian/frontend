@@ -45,6 +45,7 @@ import scala.io.Source
       firstResult.awayTeam.score should be(Some(25))
       firstResult.date should be(new org.joda.time.DateTime(2015, 7, 8, 0, 0))
       firstResult.venue should be (Some("Apia Park"))
+      firstResult.competitionName should be ("International")
 
 
       val futureResult = fixturesAndResults.find(_.id == "7528").get
@@ -53,6 +54,7 @@ import scala.io.Source
       futureResult.awayTeam.name should be("Wales")
       futureResult.awayTeam.score should be(None)
       futureResult.venue should be (Some("Aviva Stadium"))
+      futureResult.competitionName should be ("International")
     }
   }
 }
