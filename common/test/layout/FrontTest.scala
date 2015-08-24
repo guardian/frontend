@@ -12,7 +12,7 @@ import services.FaciaContentConvert
 import slices._
 
 class FrontTest extends FlatSpec with Matchers {
-  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontentContentToFaciaContent(new Content(
+  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontendContentToFaciaContent(new Content(
       emptyApiContent.copy(id = theUrl, webUrl = theUrl)
     ) {
       override lazy val url: String = theUrl

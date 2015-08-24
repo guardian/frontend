@@ -90,11 +90,11 @@ trait FaciaTestData extends ModelHelper {
     )
 
 
-  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
-  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
-  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
+  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
+  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
+  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
 
-  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
+  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
 
   val ukFaciaPage: PressedPage = PressedPage(
     id = "uk",
