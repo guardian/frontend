@@ -33,10 +33,11 @@
             position: relative;
         }
 
-        .i {
+        .inline-icon {
             background-color: colour(neutral-2);
             right: 0;
             position: absolute;
+            max-height: 32px;
         }
     }
 
@@ -46,7 +47,7 @@
     }
 
     &.dropdown--active {
-        .dropdown__button .i {
+        .dropdown__button .inline-icon {
             transform: rotate(180deg);
         }
     }

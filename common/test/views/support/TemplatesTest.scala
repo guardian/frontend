@@ -234,7 +234,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
   )
 
-  val testContent = new Article(ApiContentWithMeta(ApiContent(
+  val testContent = new Article(ApiContent(
     "foo/2012/jan/07/bar",
     None,
     None,
@@ -245,7 +245,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     Some(Map("shortUrl" -> "http://gu.com/p/439az")),
     Nil,
     elements = Some(testImages)
-  )))
+  ))
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>

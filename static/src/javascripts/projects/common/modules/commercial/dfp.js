@@ -16,6 +16,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -37,6 +38,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    dfpOphanTracking,
     geoMostPopular,
     ab,
     beacon,
@@ -117,29 +119,9 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            var start = detect.getTimeOfDomComplete();
+            dfpOphanTracking.attachListeners(googletag);
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
-                require(['ophan/ng'], function (ophan) {
-                    var lineItemIdOrEmpty = function (event) {
-                        if (event.isEmpty) {
-                            return '__empty__';
-                        } else {
-                            return event.lineItemId;
-                        }
-                    };
-
-                    ophan.record({
-                        ads: [{
-                            slot: event.slot.getSlotId().getDomId(),
-                            campaignId: lineItemIdOrEmpty(event),
-                            creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - start,
-                            adServer: 'DFP'
-                        }]
-                    });
-                });
-
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
