@@ -16,26 +16,29 @@
         if (valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
             return window.CSS.supports(prop, value);
         } else {
-            var elm = document.createElement('test');
-            prop = cssToDOM(prop);
-            if (elm.style[prop] !== undefined) {
-                if (valueIsDefined) {
-                    var before = elm.style[prop];
-                    try {
-                        elm.style[prop] = value;
-                    } catch (e) {}
-                    if (elm.style[prop] !== before) {
-                        elm = null;
-                        return true;
-                    } else {
-                        elm = null;
-                        return false;
+            try {
+                var elm = document.createElement('test');
+                prop = cssToDOM(prop);
+                if (elm.style[prop] !== undefined) {
+                    if (valueIsDefined) {
+                        var before = elm.style[prop];
+                        try {
+                            elm.style[prop] = value;
+                        } catch (e) {}
+                        if (elm.style[prop] !== before) {
+                            elm = null;
+                            return true;
+                        } else {
+                            elm = null;
+                            return false;
+                        }
                     }
+                    elm = null;
+                    return true;
                 }
-                elm = null;
-                return true;
+            } catch (e) {
+                return false;
             }
-            return false;
         }
     }
 
