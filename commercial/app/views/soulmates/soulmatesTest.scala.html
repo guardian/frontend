@@ -25,7 +25,8 @@
 
             <div class="commercial__body">
                 <div class="lineitems__box">
-                    <h4 class="feed__title">Guardian readers <span>looking for dates now</span></h4>
+                    <h4 class="feed__title feed__title-desktop">Guardian readers looking for dates now</h4>
+                    <h4 class="feed__title feed__title-mobile">Meet someone worth meeting</h4>
                     @fragments.inlineSvg("soulmates-border-topleft", "commercial")
                     @fragments.inlineSvg("soulmates-border-topright", "commercial")
                     <ul class="lineitems">
@@ -62,8 +63,8 @@
                         <div class="form-row">
                             <label for="match_gender" class="search__dropdown">
                                 <select id="match_gender" name="match_gender" class="search__dropdown__options transform">
-                                    @Map("Woman" -> "women", "Man" -> "men", "../../../public" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
-                                        <option value="@matchGenderValue">looking for @matchGenderName</option>
+                                    @Map("Woman" -> "woman", "Man" -> "man", "../../../public" -> "man or woman").map { case (matchGenderValue, matchGenderName) =>
+                                        <option value="@matchGenderValue">seeking a @matchGenderName</option>
                                     }
                                 </select>
                             </label>
