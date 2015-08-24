@@ -1,11 +1,13 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
-import common.{Edition, ExecutionContexts, LinkTo}
+import common.{Edition, ExecutionContexts}
 import conf.{Configuration, LiveContentApi, Static}
 import crosswords.{CrosswordSvg, CrosswordPage, CrosswordData, AccessibleCrosswordRows, CrosswordSearchPage}
 import model._
 import org.joda.time.DateTime
+import play.api.data._
+import play.api.data.Forms._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
 import services.IndexPage
 
@@ -110,6 +112,22 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
+  def lookup() = Action { implicit request =>
+    val form = Form(
+      mapping(
+        "type" -> text,
+        "id" -> number
+      )(CrosswordLookup.apply)(CrosswordLookup.unapply)
+    )
+
+    form.bindFromRequest.get match {
+      case CrosswordLookup(crosswordType, id) =>
+        Redirect(s"$crosswordType/$id")
+      case _ =>
+        Ok(views.html.crosswordsNoResults(CrosswordSearchPage))
+    }
+  }
+
   case class CrosswordSearch(
       crosswordType: String,
       fromDate: DateTime,
@@ -132,4 +150,6 @@ object CrosswordsController extends Controller with ExecutionContexts {
       }
     }
   }
+
+  case class CrosswordLookup(crosswordType: String, id: Int)
 }

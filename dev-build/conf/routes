@@ -30,6 +30,7 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 # Crosswords search
 GET            /crosswords/search                                                                                                controllers.CrosswordsController.searchForm()
 POST           /crosswords/search                                                                                                controllers.CrosswordsController.search()
+POST           /crosswords/lookup                                                                                                controllers.CrosswordsController.lookup()
 
 # Business data
 GET        /business-data/stocks.json                 controllers.StocksController.stocks

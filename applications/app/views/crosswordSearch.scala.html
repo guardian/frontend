@@ -82,6 +82,37 @@
                             </div>
                         </fieldset>
                     </form>
+
+                    <form class="form" method="post" action="/crosswords/lookup">
+                        <fieldset class="fieldset">
+                            <div class="fieldset__heading">
+                                <h2 class="form__heading">Lookup</h2>
+                                <div class="form__note">Find a crossword by ID.</div>
+                            </div>
+
+                            <div class="fieldset__fields">
+                                <div class="form-fields__inline">
+                                    <ul>
+                                        <li class="form-field">
+                                            <label class="label" for="crossword-type">Type</label>
+                                            <select id="type" name="type">
+                                            @page.crosswordTypes.map { crosswordType =>
+                                                <option value="@crosswordType">@crosswordType</option>
+                                            }
+                                            </select>
+                                        </li>
+
+                                        <li class="form-field">
+                                            <label class="label" for="crossword-id">ID</label>
+                                            <input type="text" class="text-input" name="id" id="id" />
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="submit-input" type="submit">Lookup</button>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
     </div>
