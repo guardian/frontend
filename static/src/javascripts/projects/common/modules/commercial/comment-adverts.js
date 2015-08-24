@@ -44,6 +44,7 @@ define([
             !$adSlotContainer.length ||
             !config.switches.discussion ||
             !identityApi.isUserLoggedIn() ||
+            (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts)
             (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
             !config.page.commentable) {
             return false;
