@@ -631,6 +631,7 @@ import collection.JavaConversions._
       goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
         browser =>
           import browser._
+          OutbrainSwitch.switchOn()
           Then("Then the Outbrain placeholder should be rendered")
           var outbrainPlaceholder = $(".js-outbrain")
           outbrainPlaceholder.length should be(1)
