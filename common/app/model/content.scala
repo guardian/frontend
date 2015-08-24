@@ -49,6 +49,10 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
   lazy val displayHint: String = fields.getOrElse("displayHint", "")
 
+  lazy val tweets: Seq[Tweet] = delegate.elements.getOrElse(Nil).filter(_.`type` == "tweet").map{ tweet =>
+    val images = tweet.assets.filter(_.`type` == "image").map(_.file).flatten
+    Tweet(tweet.id, images)
+  }
   override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
   override lazy val requiresMembershipAccess: Boolean = {
     conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
@@ -620,4 +624,8 @@ class ImageContent(delegate: contentapi.Content) extends Content(delegate) with 
     "contentType" -> JsString(contentType),
     "lightboxImages" -> lightbox
   )
+}
+
+case class Tweet(id: String, images: Seq[String]) {
+  val firstImage: Option[String] = images.headOption
 }

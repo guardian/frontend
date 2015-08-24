@@ -413,21 +413,49 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-object TweetCleaner extends HtmlCleaner {
+class TweetCleaner(content: Content) extends HtmlCleaner {
+
+  import conf.Switches.TwitterImageFallback
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("twitter-tweet").foreach { element =>
-      val el = element.clone()
-      if (el.children.size > 1) {
-        val body = el.child(0).attr("class", "tweet-body")
-        val date = el.child(1).attr("class", "tweet-date")
-        val user = el.ownText()
-        val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
-        val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-        element.empty().attr("class", "js-tweet tweet")
-        element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+    document.getElementsByClass("element-tweet").foreach { tweet =>
+
+      val tweetData: Option[Tweet] = Option(tweet.attr("data-canonical-url")).flatMap { url =>
+        url.split('/').lastOption.flatMap { id =>
+          content.tweets.find(_.id == id)
+        }
       }
+
+      val tweetImage = tweetData.flatMap(_.firstImage)
+
+      tweet.getElementsByClass("twitter-tweet").foreach { element =>
+
+        val el = element.clone()
+        if (el.children.size > 1) {
+          val body = el.child(0).attr("class", "tweet-body")
+
+          val date = el.child(1).attr("class", "tweet-date")
+          val user = el.ownText()
+          val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+          val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
+
+          element.empty().attr("class", "js-tweet tweet")
+
+          if (TwitterImageFallback.isSwitchedOn) {
+            tweetImage.foreach { image =>
+              val img = document.createElement("img")
+              img.attr("src", image)
+              img.attr("alt", "")
+              img.addClass("js-tweet-main-image tweet-main-image")
+              element.appendChild(img)
+            }
+          }
+
+          element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+        }
+      }
+
     }
     document
   }
