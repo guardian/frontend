@@ -22,7 +22,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
         crossword <- content.crossword }
        yield f(crossword, content)
        maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
-    } recover { case a => println(a); InternalServerError("Content API query returned an error.") }
+    } recover { case _ => InternalServerError("Content API query returned an error.") }
   }
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
