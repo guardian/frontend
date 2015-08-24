@@ -7,6 +7,7 @@ import feed.OnwardJourneyLifecycle
 import play.Play
 import play.api.mvc.Results._
 import play.api.mvc._
+import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
 
 import scala.concurrent.Future
@@ -67,3 +68,4 @@ object Global extends WithFilters(
   with SwitchboardLifecycle
   with FootballLifecycle
   with CricketLifecycle
+  with RugbyLifecycle

@@ -1,4 +1,4 @@
-<div class="collection">
+<div class="collection" data-bind="ownerClass: $data">
     <div class="list-header" data-bind="
         css: {collapsed: state.collapsed() || configMeta.uneditable()}
     ">
@@ -32,7 +32,7 @@
         </span>
 
         <span class="also" data-bind="if: alsoOn.length">
-            <a data-bind="click: alsoOnToggle">also on&hellip;</a>
+            <a class="alsoOnToggle" data-bind="click: alsoOnToggle">also on&hellip;</a>
         </span>
 
         <span class="list-header__timings" data-bind="
@@ -113,6 +113,29 @@
         slideVisible: state.isHistoryOpen() && !state.collapsed(),
         makeDraggable: true
     ">
-        <div data-bind="template: {name: 'template_article', foreach: history}"></div>
+        <!-- ko foreach: history -->
+            <trail-widget params="context: $context"></trail-widget>
+        <!-- /ko -->
     </div>
 <!-- /ko -->
+
+
+<script type="text/html" id="template_groups">
+    <!-- ko if: name && !front.flattenGroups() -->
+        <div class="group-name" data-bind="text: name"></div>
+    <!-- /ko -->
+    <div class="droppable" data-bind="
+        makeDroppable: true,
+        click: pasteItem,
+        css: {
+            underDrag: underDrag() && !underControlDrag(),
+            underControlDrag: underDrag() && underControlDrag()
+        }">
+            <!-- ko foreach: items -->
+                <trail-widget params="context: $context"></trail-widget>
+            <!-- /ko -->
+            <div class="group-separator" data-bind="css: {'pasteOver': $root.isPasteActive && $root.isPasteActive()}">
+                <span class="helptext">Click to paste</span>
+            </div>
+    </div>
+</script>

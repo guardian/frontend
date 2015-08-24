@@ -3,6 +3,7 @@ import $ from 'jquery';
 import Promise from 'Promise';
 import {CONST} from 'modules/vars';
 import {reauth} from 'utils/oauth-session';
+import reportErrors from 'utils/report-errors';
 
 function collectionEndPoint (isTreats, edits) {
     if (isTreats) {
@@ -79,10 +80,13 @@ function updateCollections(edits, win) {
         data: JSON.stringify(edits)
     }, win)
     .then(function (resp) {
-        _.each(collections, collection => collection.populate(resp[collection.id]));
+        return Promise.all(_.map(collections, collection => new Promise(resolve => {
+            collection.populate(resp[collection.id], resolve);
+        })));
     })
     .catch(function (ex) {
         _.each(collections, collection => collection.load());
+        reportErrors(ex);
         throw ex;
     });
 }

@@ -1,5 +1,6 @@
 // Make karma asynchronous
 window.__karma__.loaded = function () {};
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
 System.baseURL = '/base/public/';
 

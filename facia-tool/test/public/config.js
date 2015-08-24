@@ -46,10 +46,9 @@ System.amdDefine('test-config', [
         },
         defaults: {
             env: 'test',
-            priority: 'test',
-            editions: ['uk','us','au'],
+            editions: ['uk', 'us', 'au'],
             navSections: ['news', 'uk-news', 'us-news', 'au-news'],
-            email: '',
+            email: 'someone@theguardian.com',
             avatarUrl: '',
             lowFrequency: 60,
             highFrequency: 2,

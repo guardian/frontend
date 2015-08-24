@@ -269,15 +269,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val PngResizingSwitch = Switch(
-    "Performance",
-    "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val Viewability = Switch(
     "Performance",
     "viewability",
@@ -310,7 +301,7 @@ object Switches {
     "background-js",
     "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 24),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
@@ -670,15 +661,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ImgixSwitch = Switch(
-    "Feature",
-    "imgix",
-    "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch(
     "Feature",
     "html-5-media-compatibility-check",
@@ -950,6 +932,15 @@ object Switches {
     "Switch for the USA Supporter message test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 21),
+    exposeClientSide = true
+  )
+
+  val ABRugbyScores = Switch(
+    "A/B Tests",
+    "ab-rugby-scores",
+    "Switches on the score components for the Rugby",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = true
   )
 

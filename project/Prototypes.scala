@@ -30,6 +30,7 @@ trait Prototypes {
 
   val frontendIntegrationTestsSettings = Seq (
     concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
+    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     testOptions in Test += Tests.Argument("-oDF"),
     resolvers ++= Seq(Resolver.typesafeRepo("releases")),
     libraryDependencies ++= Seq(

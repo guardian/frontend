@@ -83,7 +83,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
+        $(".byline-img img").getAttribute("src") should include("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
       }
     }
 
@@ -228,7 +228,7 @@ import collection.JavaConversions._
 
         ImageServerSwitch.switchOn()
         inBodyImage.findFirst("[itemprop=contentUrl]").getAttribute("src") should
-          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
+          include("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
@@ -560,6 +560,10 @@ import collection.JavaConversions._
         $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
         $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
         $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/world")
+
+        // at the time of writing, Twitter does not like i.guim.co.uk
+        // will see if I can get that fixed, but in the meantime this must be static.guim.co.uk
+        $("meta[name='twitter:image']").getAttributes("content").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275550234/Irans-President-Hassan-Ro-011.jpg")
       }
     }
 
