@@ -42,10 +42,12 @@ define([
             // make sure the element stays within its parent
             fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height) + stickyHeaderHeight;
 
-            css = {
-                position: 'fixed',
-                top:      fixedTop
-            };
+            if (fixedTop > 0) {
+                css = {
+                    position: 'fixed',
+                    top:      fixedTop
+                };
+            }
         } else {
             css = {
                 position: null,
