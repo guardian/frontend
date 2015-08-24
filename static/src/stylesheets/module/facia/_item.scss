@@ -288,10 +288,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__media-wrapper {
     box-sizing: border-box;
     position: relative;
-
-    .is-not-modern & {
-        display: none !important;
-    }
 }
 
 // Wraps all non-media content
