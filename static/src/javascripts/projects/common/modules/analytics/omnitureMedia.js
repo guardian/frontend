@@ -17,7 +17,7 @@ define([
 
         var lastDurationEvent, durationEventTimer,
             mediaId = getAttribute('data-embed-path') || config.page.pageId,
-            // infer type (audio/video) from what element we have
+            // infer type (audio/v]ideo) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
             prerollPlayed = false,
@@ -62,6 +62,9 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
+            console.log("++ Sending event: " + event + " Event name" + eventName);
+
+
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
             // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
@@ -79,7 +82,6 @@ define([
         };
 
         this.sendNamedEvent = function (eventName, ad) {
-            console.log("Sending event: " + eventName);
             this.sendEvent(events[eventName], eventName, ad);
         };
 
@@ -156,6 +158,7 @@ define([
         };
 
         this.onPrerollPlay = function () {
+            console.log("On preroll play, bebe");
             prerollPlayed = true;
             this.sendNamedEvent('preroll:play', true);
         };

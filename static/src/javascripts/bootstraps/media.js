@@ -237,8 +237,9 @@ define([
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
+                                console.log("+++ the time change!");
                                 events.bindPrerollEvents(player);
-                                player.adSkipCountdown(10);
+                                player.adSkipCountdown(5);
 
                                 require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
                                     player.ima({

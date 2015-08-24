@@ -217,10 +217,14 @@ define([
 
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);
+                    console.log("++++ About to play");
                     this.one(constructEventName('content:play', this), function () {
+                        console.log("++ On Content Play");
                         $('.js-ads-skip', this.el()).hide();
                         window.clearInterval(intervalId);
                     });
+
+
                 }
             };
 
