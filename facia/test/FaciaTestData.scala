@@ -1,15 +1,15 @@
 package test
 
-import com.gu.facia.api.models.{Group, FaciaContent, CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.models.FaciaContent
+import common.editions.{Au, Uk, Us}
 import common.{AkkaAgent, Edition}
-import common.editions.{Au, Us, Uk}
 import controllers.front.Front
-import model._
-import model.PressedPage
+import model.{PressedPage, _}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
+import services.FaciaContentConvert
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import services.{FaciaContentConvert, CollectionConfigWithId}
 
 object TestContent {
 
@@ -23,12 +23,9 @@ object TestContent {
     apiUrl="",
     elements=None
   )
-
-  def apiContentWithMeta: ApiContentWithMeta = ApiContentWithMeta(newApiContent)
-
 }
 
-case class TestTrail(u: String) extends Content(TestContent.apiContentWithMeta) {
+case class TestTrail(u: String) extends Content(TestContent.newApiContent) {
   override lazy val url = u
   override lazy val webPublicationDate: DateTime = DateTime.now
   override lazy val shortUrl: String = ""

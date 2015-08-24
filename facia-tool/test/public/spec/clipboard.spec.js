@@ -1,44 +1,67 @@
 import ko from 'knockout';
 import _ from 'underscore';
 import $ from 'jquery';
-import mockjax from 'test/utils/mockjax';
 import * as cache from 'modules/cache';
-import * as vars from 'modules/vars';
-import newItems from 'models/collections/new-items';
+import Droppable from 'modules/droppable';
+import {CONST} from 'modules/vars';
 import * as widgets from 'models/widgets';
-import listManager from 'modules/list-manager';
 import mediator from 'utils/mediator';
+import inject from 'test/utils/inject';
+import * as mockjax from 'test/utils/mockjax';
+import textInside from 'test/utils/text-inside';
+import * as wait from 'test/utils/wait';
 
 // Store the original settimeout
-var yeld = setTimeout;
+var injectedClipboard;
 
 describe('Clipboard', function () {
-    beforeAll(function () {
-        setUpTests();
-    });
     beforeEach(function () {
-        jasmine.clock().install();
-    });
-    afterAll(function () {
-        clearTests();
+        window.localStorage.clear();
+        this.droppable = new Droppable();
+        widgets.register();
+        cache.put('contentApi', 'internal-code/page/first', {
+            'webUrl': 'http://theguardian.com/banana',
+            'fields': {
+                'headline': 'Bananas are yellow'
+            }
+        });
+        this.scope = mockjax.scope();
+        this.scope({
+            url: '/api/proxy/piuccio*',
+            responseText: {}
+        });
+        this.originaldetectPendingChangesInClipboard = CONST.detectPendingChangesInClipboard;
+        CONST.detectPendingChangesInClipboard = 300;
     });
     afterEach(function () {
-        jasmine.clock().uninstall();
+        this.scope.clear();
+        this.droppable.dispose();
+        injectedClipboard.dispose();
+        CONST.detectPendingChangesInClipboard = this.originaldetectPendingChangesInClipboard;
     });
 
     it('loads items from the history', function (done) {
+        injectClipboard()
+        .then(testDraggingAnArticle)
+        .then(testLoadingFromStorage)
+        .then(testLoadingAfterDelete)
+        .then(testChangingMetadata)
+        .then(done)
+        .catch(done.fail);
+
         function testDraggingAnArticle (clipboard) {
             // Local storage was cleared, the clipboard should be empty
             expect(getArticles().length).toBe(0);
 
-            dragArticle({
+            return dragArticle({
                 id: 'internal-code/page/first'
-            }, clipboard, function () {
+            }, clipboard)
+            .then(() => {
                 expect(getArticles().length).toBe(1);
                 expect(getArticles()[0].headline).toBe('Bananas are yellow');
 
                 // Destroy the clipboard and initialize again
-                injectClipboard(testLoadingFromStorage);
+                return injectClipboard();
             });
         }
 
@@ -46,16 +69,18 @@ describe('Clipboard', function () {
             expect(getArticles().length).toBe(1);
             expect(getArticles()[0].headline).toBe('Bananas are yellow');
 
-            dragArticle({
+            return dragArticle({
                 id: 'internal-code/page/first'
-            }, clipboard, function () {
-                dragArticle({
+            }, clipboard)
+            .then(() => {
+                return dragArticle({
                     id: 'https://github.com/piuccio',
                     meta: {
                         headline: 'GitHub',
                         snapType: 'link'
                     }
-                }, clipboard, testRemovingItems);
+                }, clipboard)
+                .then(testRemovingItems);
             });
         }
 
@@ -65,129 +90,75 @@ describe('Clipboard', function () {
             expect(getArticles()[1].headline).toBe('GitHub');
 
             // Delete and item and check that it's not in storage anymore
-            removeArticle({
+            return removeArticle({
                 id: 'internal-code/page/first'
-            }, clipboard, function () {
-                injectClipboard(testLoadingAfterDelete);
-            });
+            }, clipboard)
+            .then(injectClipboard);
         }
 
         function testLoadingAfterDelete (clipboard) {
             expect(getArticles().length).toBe(1);
             expect(getArticles()[0].headline).toBe('GitHub');
 
-            changeHeadline(0, 'Open Source', clipboard);
-            expect(getArticles()[0].headline).toBe('Open Source');
-
-            injectClipboard(testChangingMetadata);
+            return changeHeadline(0, 'Open Source', clipboard)
+            .then(() => {
+                expect(getArticles()[0].headline).toBe('Open Source');
+                return injectClipboard();
+            });
         }
 
         function testChangingMetadata () {
             expect(getArticles().length).toBe(1);
             expect(getArticles()[0].headline).toBe('Open Source');
-
-            done();
         }
-
-        injectClipboard(testDraggingAnArticle);
     });
 });
 
-var container;
-function injectClipboard (callback) {
-    if (container) {
-        ko.cleanNode(container[0]);
-        container.remove();
-        jasmine.clock().tick(10);
+function injectClipboard () {
+    if (injectedClipboard) {
+        injectedClipboard.dispose();
     }
 
-    container = $([
-        '<div>',
-            '<clipboard-widget params="position: 0, column: $data"></clipboard-widget>',
-        '</div>',
-        '<script type="text/html" id="template_article">',
-            '<div class="article" data-bind="text: headline"></div>',
-        '</script>'
-    ].join('')).appendTo(document.body);
-
-    mediator.once('clipboard:loaded', function (clipboard) {
-        yeld(function () {
-            callback(clipboard);
-        }, 10);
-    });
-
-    ko.applyBindings({
-        isPasteActive: false
-    }, container[0]);
-    jasmine.clock().tick(10);
+    injectedClipboard = inject(`
+        <clipboard-widget params="position: 0, column: $data"></clipboard-widget>
+    `);
+    return injectedClipboard.apply({
+        switches: ko.observable({
+            'facia-tool-sparklines': false
+        })
+    }, true);
 }
 
 function getArticles () {
     var articles = [];
-    $('.article').each(function (i, elem) {
+    $('trail-widget').each(function (i, elem) {
         articles.push({
-            headline: $(elem).text().trim(),
+            headline: textInside($(elem).find('.element__headline')),
             dom: $(elem)
         });
     });
     return articles;
 }
 
-function dragArticle (article, clipboard, callback) {
-    clipboard.group.drop({
+function dragArticle (article, clipboard) {
+    mediator.emit('drop', {
         sourceItem: article,
-    }, clipboard.group);
+        sourceGroup: null
+    }, clipboard.group, clipboard.group);
     // Let knockout refresh the HTML
-    yeld(function () {
-        jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboard);
-        callback(clipboard);
-    }, 10);
+    return wait.ms(CONST.detectPendingChangesInClipboard + 50).then(() => clipboard);
 }
 
-function removeArticle (article, clipboard, callback) {
+function removeArticle (article, clipboard) {
     var actualArticle = _.find(clipboard.group.items(), function (item) {
         return item.id() === article.id;
     });
     clipboard.group.omitItem(actualArticle);
-    yeld(function () {
-        jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboard);
-        callback(clipboard);
-    }, 10);
+    return wait.ms(CONST.detectPendingChangesInClipboard + 50).then(() => clipboard);
 }
 
 function changeHeadline (position, newHeadline, clipboard) {
     var article = clipboard.group.items()[position];
     article.meta.headline(newHeadline);
-    jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboard);
-}
-
-var mockjaxId;
-function setUpTests () {
-    window.localStorage.clear();
-    widgets.register();
-    listManager.init(newItems);
-    cache.put('contentApi', 'internal-code/page/first', {
-        'webUrl': 'http://theguardian.com/banana',
-        'fields': {
-            'headline': 'Bananas are yellow'
-        }
-    });
-    if (!vars.model) {
-        vars.setModel({
-            switches: ko.observable({
-                'facia-tool-sparklines': false
-            })
-        });
-    }
-    mockjaxId = mockjax({
-        url: '/api/proxy/piuccio*',
-        responseText: {}
-    });
-}
-
-function clearTests () {
-    listManager.reset();
-    ko.cleanNode(container[0]);
-    container.remove();
-    mockjax.clear(mockjaxId);
+    return wait.ms(CONST.detectPendingChangesInClipboard + 50).then(() => clipboard);
 }

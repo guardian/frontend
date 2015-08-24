@@ -1,12 +1,18 @@
-@(error: Option[String] = None, env: String)
+@(error: Option[String] = None)
 
-@admin_main("fronts", env) {
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fronts Editor</title>
+        @templates.meta()
+    </head>
+    <body>
         @if(error.isDefined) {
             <div class="alert alert-error">
                 <p>@error.get</p>
             </div>
+        } else {
+            <p>Login successful</p>
         }
-    </div>
-
-</div>
-}
+    </body>
+</html>

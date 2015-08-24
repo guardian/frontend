@@ -5,11 +5,13 @@ import {CONST} from 'modules/vars';
 
 var maxItems = 50;
 
-export default function ({
-    query = '',
-    path = 'tags',
-    page = 1
-} = {}) {
+export default function (opts) {
+    // TODO Phantom Babel bug
+    if (!opts) { opts = {}; }
+    var query = opts.query || '';
+    var path = opts.path || 'tags';
+    var page = opts.page || 1;
+
     return new Promise((resolve, reject) => {
         if (!query) {
             return resolve();
@@ -30,7 +32,9 @@ export default function ({
             request({
                 url: CONST.apiSearchBase + url
             })
-            .then(({ response } = {}) => {
+            .then(res => {
+                // TODO Phantom Babel bug
+                var response = (res || {}).response;
                 if (!response || !response.results) {
                     reject(new Error('No results from CAPI'));
                 } else {

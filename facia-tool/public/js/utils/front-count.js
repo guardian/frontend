@@ -7,7 +7,7 @@ export default function countFronts (fronts, priority) {
     return {
         count: _.countBy(_.values(fronts), function (front) {
             return front.priority || CONST.defaultPriority;
-        })[priority],
+        })[priority] || 0,
         max: CONST.maxFronts[priority] || Infinity
     };
 }

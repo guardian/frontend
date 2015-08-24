@@ -163,7 +163,7 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
   }
 
   private val article: ApiContent =
-    content("article", Nil).apiContent.delegate
+    content("article", Nil).delegate
 
   private def image(  id: String,
                       relation: String,
