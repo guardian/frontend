@@ -446,7 +446,18 @@ $block-padding-right: $gs-gutter;
     display: inline-block;
     font-weight: bold;
     padding-left: 40px;
+    padding-bottom: 1px;
     margin-bottom: 0;
+    background-repeat: no-repeat;
+}
+
+.tweet-main-image {
+    width: 100%;
+    margin-bottom: $gs-gutter;
+    margin-top: $gs-gutter/2;
+    @include mq(tablet) {
+        display: none;
+    }
 }
 
 .tweet-date {

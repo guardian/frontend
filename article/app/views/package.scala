@@ -23,7 +23,7 @@ object BodyCleaner {
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
         BlockNumberCleaner,
-        TweetCleaner,
+        new TweetCleaner(article),
         WitnessCleaner,
         TagLinker(article),
         TableEmbedComplimentaryToP,

@@ -21,14 +21,32 @@ define([
     detect,
     mediator
 ) {
-    var body = qwery('.js-liveblog-body');
+    var body = qwery('.js-liveblog-body'),
+        fallbackImagesCleared = false;
+
+    function dontEnhanceBreakpoint() {
+        return detect.getBreakpoint() === 'mobile';
+    }
+
+    // while not pretty, this is necessary for when you change breakpoints
+    // (i.e. stretch the browser and then narrow it again).
+    function clearFallbackImages() {
+        if (!fallbackImagesCleared) {
+            qwery('.js-tweet-main-image').forEach(function (image) {
+                fastdom.write(function () {
+                    $(image).remove();
+                });
+            });
+            fallbackImagesCleared = true;
+        }
+    }
 
     function bootstrap() {
         mediator.on('window:throttledScroll', _.debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets() {
-        if (detect.getBreakpoint() === 'mobile' || !config.switches.enhanceTweets) {
+        if (dontEnhanceBreakpoint() || !config.switches.enhanceTweets) {
             return;
         }
 
@@ -38,6 +56,8 @@ define([
             viewportHeight      = bonzo.viewport().height,
             nativeTweetElements = qwery('blockquote.twitter-tweet'),
             scrollTop           = window.pageYOffset;
+
+        clearFallbackImages();
 
         tweetElements.forEach(function (element) {
             var $el = bonzo(element),
