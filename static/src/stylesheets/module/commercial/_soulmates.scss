@@ -570,7 +570,20 @@ $c-soulmates-high: colour(neutral-1);
         margin: 0 auto $gs-baseline;
         position: relative;
         font-weight: bold;
-        padding-top: $gs-baseline;
+        display: none;
+
+        &.feed__title-mobile {
+            display: block;
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+
+        &.feed__title-desktop {
+            @include mq(leftCol) {
+                display: block;
+            }
+        }
 
         &:before, &:after {
             content: '';
@@ -591,8 +604,6 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         @include mq(tablet) {
-            margin: 0 auto $gs-baseline;
-            padding: 0;
 
             &:before {
                 left: 5%;
@@ -604,7 +615,6 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         @include mq(desktop) {
-
             &:before {
                 left: 15%;
             }
@@ -624,14 +634,6 @@ $c-soulmates-high: colour(neutral-1);
                 margin: 0 auto $gs-baseline;
             }  
         }
-
-        span {
-            display: block;
-
-            @include mq(mobileLandscape) {
-                display: inline;         
-            }
-        }
     }
 
     /* Line items */
@@ -640,14 +642,13 @@ $c-soulmates-high: colour(neutral-1);
         background-color: #ffffff;
         height: 100%;
         position: relative;
-        padding: 0 18px $gs-baseline;
+        padding: $gs-baseline 18px;
         box-sizing: content-box;
 
         @include mq(tablet) {
             float: right;
             overflow: visible;
             width: gs-span(6) - $gs-baseline*4;
-            padding-top: $gs-baseline;
         }
 
         @include mq(desktop) {
@@ -739,14 +740,14 @@ $c-soulmates-high: colour(neutral-1);
         overflow: hidden;
 
         @include mq($from: tablet) {
-            max-height: 99px;
+            max-height: 100px;
         }
 
         @include mq($from: wide) {
             max-height: 116px;
 
             .has-page-skin & {
-                max-height: 99px;
+                max-height: 100px;
             }
         }
 
@@ -959,8 +960,8 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq(wide) {
             font-size: 15px;
-            padding: 8px 0 7px $gs-baseline;
-            margin-top: 13px;
+            padding: 8px 0 8px $gs-baseline;
+            margin-top: 12px;
 
             .has-page-skin & {
                 font-size: 12px;
@@ -971,6 +972,7 @@ $c-soulmates-high: colour(neutral-1);
 
         .search__submit__text {
             line-height: 29px;
+            float: left;
         }
 
     }
