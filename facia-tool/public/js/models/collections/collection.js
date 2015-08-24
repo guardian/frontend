@@ -8,6 +8,7 @@ define([
     'utils/human-time',
     'utils/mediator',
     'utils/populate-observables',
+    'utils/report-errors',
     'modules/authed-ajax',
     'modules/modal-dialog',
     'models/group',
@@ -23,6 +24,7 @@ define([
     humanTime,
     mediator,
     populateObservables,
+    reportErrors,
     authedAjax,
     modalDialog,
     Group,
@@ -36,6 +38,7 @@ define([
     humanTime = humanTime.default;
     fetchVisibleStories = fetchVisibleStories.default;
     Group = Group.default;
+    reportErrors = reportErrors.default;
 
     function Collection(opts) {
 
@@ -234,37 +237,40 @@ define([
         this.setPending(true);
         this.closeAllArticles();
 
+        var detectPressFailures = goLive ? function () {
+            mediator.emit('presser:detectfailures', self.front.front());
+        } : function () {};
+
         authedAjax.request({
             type: 'post',
             url: vars.CONST.apiBase + '/collection/' + (goLive ? 'publish' : 'discard') + '/' + this.id
         })
         .then(function() {
-            self.load()
-            .then(function(){
-                if (goLive) {
-                    mediator.emit('presser:detectfailures', self.front.front());
-                }
-            });
+            return self.load().then(detectPressFailures);
+        })
+        .catch(function () {
+            detectPressFailures();
+            reportErrors(new Error('POST request while processing draft failed'));
         });
     };
 
     Collection.prototype.drop = function(item) {
-        var front = this.front;
+        var front = this.front.front(), mode = this.front.mode();
         this.setPending(true);
 
         this.state.showIndicators(false);
+        var detectPressFailures = mode === 'live' ? function () {
+            mediator.emit('presser:detectfailures', front);
+        } : function () {};
         authedAjax.updateCollections({
             remove: {
                 collection: this,
                 item:       item.id(),
-                mode:       front.mode()
+                mode:       mode
             }
         })
-        .then(function() {
-            if (front.mode() === 'live') {
-                mediator.emit('presser:detectfailures', front.front());
-            }
-        });
+        .then(detectPressFailures)
+        .catch(detectPressFailures);
     };
 
     Collection.prototype.load = function(opts) {
@@ -292,7 +298,12 @@ define([
                 self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
             });
         })
-        .catch(function () {})
+        .catch(function (ex) {
+            // Network errors should be ignored
+            if (ex instanceof Error) {
+                reportErrors(ex);
+            }
+        })
         .then(function() {
             self.setPending(false);
         });

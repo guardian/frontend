@@ -301,7 +301,7 @@ object Switches {
     "background-js",
     "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 24),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
@@ -923,6 +923,15 @@ object Switches {
     "Switch for the USA Supporter message test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 21),
+    exposeClientSide = true
+  )
+
+  val ABRugbyScores = Switch(
+    "A/B Tests",
+    "ab-rugby-scores",
+    "Switches on the score components for the Rugby",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = true
   )
 

@@ -2,12 +2,13 @@ package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
 import common.{Edition, ExecutionContexts}
-import conf.{Configuration, LiveContentApi, Static}
+import conf.{LiveContentApi, Static}
 import crosswords._
-import model.{ApiContentWithMeta, Cached, Cors}
+import model.{Cached, Cors}
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
-import scala.concurrent.duration._
+
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 object CrosswordsController extends Controller with ExecutionContexts {
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
@@ -23,7 +24,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
          CrosswordSvg(crossword, None, None, false)
       )))
     }
@@ -32,7 +33,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.accessibleCrossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
         AccessibleCrosswordRows(crossword)
       )))
     }

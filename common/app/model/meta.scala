@@ -337,6 +337,7 @@ trait Tags {
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
+  lazy val isMatchReport = tones.exists(_.id == Tags.MatchReports)
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -352,6 +353,9 @@ trait Tags {
     tags.exists(t => t.id == "sport/england-cricket-team") &&
     tags.exists(t => t.id == "sport/over-by-over-reports")
 
+  lazy val isRugbyMatch = (isMatchReport || isLiveBlog) &&
+    tags.exists(t => t.id == "sport/rugby-union")
+
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
 }
 
@@ -363,6 +367,7 @@ object Tags {
   val Editorial = "tone/editorials"
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
+  val MatchReports = "tone/matchreports"
 
   val Article = "type/article"
   val Gallery = "type/gallery"
