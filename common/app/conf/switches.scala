@@ -301,7 +301,7 @@ object Switches {
     "background-js",
     "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 24),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
