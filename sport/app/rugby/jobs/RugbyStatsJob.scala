@@ -1,43 +1,43 @@
 package rugby.jobs
 
-import common.{Jobs, AkkaAgent, ExecutionContexts, Logging}
+import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{OptaFeed, RugbyOptaFeedException}
 import rugby.model.Match
+import scala.concurrent.Future
 
-object RugbyStatsJob extends ExecutionContexts with Logging {
-  private val liveScoreMatches = AkkaAgent[Map[String, Match]](Map.empty)
-  private val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
+object RugbyStatsJob extends RugbyStatsJob
+
+trait RugbyStatsJob extends ExecutionContexts with Logging {
+  protected val liveScoreMatches = AkkaAgent[Map[String, Match]](Map.empty)
+  protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
-
   def run() {
-
-    liveScores
-    fixturesAndResults
+    sendLiveScores(OptaFeed.getLiveScores)
+    fixturesAndResults(OptaFeed.getFixturesAndResults)
   }
 
-  def liveScores {
-    OptaFeed.getLiveScores.map { matches =>
-      matches.map { aMatch =>
+  def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {
+    scoreData.flatMap { matches =>
+      Future.sequence(matches.map { aMatch =>
         val date = dateFormat.print(aMatch.date)
         val key = createKey(aMatch, date)
-        liveScoreMatches.send {_ + (key -> aMatch)}
-      }
-
+        liveScoreMatches.alter {_ + (key -> aMatch)}
+      })
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
       case error: Exception => log.warn(error.getMessage)
     }
   }
 
-  def fixturesAndResults {
-    OptaFeed.getFixturesAndResults.map { matches =>
-      matches.map { aMatch =>
+  def fixturesAndResults(fixturesAndResults: Future[Seq[Match]]) : Future[Any] = {
+    fixturesAndResults.flatMap { matches =>
+      Future.sequence(matches.map { aMatch =>
         val date = dateFormat.print(aMatch.date)
         val key = createKey(aMatch, date)
-        fixturesAndResultsMatches.send {_ +  (key -> aMatch)}
-      }
+        fixturesAndResultsMatches.alter {_ +  (key -> aMatch)}
+      })
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
       case error: Exception => log.warn(error.getMessage)
