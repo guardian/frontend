@@ -264,7 +264,7 @@ define([
         });
 
         // Binding
-        bean.on(document.body, 'click', '.js-show-more', function (e) {
+        bean.on(document.body, 'click', '.matches-nav .js-show-more', function (e) {
             e.preventDefault();
             var el = e.currentTarget;
             ajax({
