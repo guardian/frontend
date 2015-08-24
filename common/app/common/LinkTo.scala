@@ -4,7 +4,7 @@ import conf.Configuration
 import conf.Configuration.environment
 import dev.HttpSwitch
 import layout.ContentCard
-import model.{MetaData, Snap, Trail}
+import model.Trail
 import org.jsoup.Jsoup
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
@@ -49,10 +49,7 @@ trait LinkTo extends Logging {
     case otherUrl => ProcessedUrl(otherUrl, true)
   }
 
-  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapHref.filter(_.nonEmpty).map(apply(_))
-    case t: Trail => Option(apply(t.url))
-  }
+  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.url))
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.header.url.get(request)

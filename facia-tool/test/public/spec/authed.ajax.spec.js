@@ -3,7 +3,7 @@ import * as ajax from 'modules/authed-ajax';
 import * as mockjax from 'test/utils/mockjax';
 import $ from 'jquery';
 import * as panda from 'panda-session';
-import * as vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 
 describe('Authed Ajax', function () {
     beforeEach(function () {
@@ -157,12 +157,12 @@ describe('Authed Ajax', function () {
     });
 });
 
-describe('Collections update', function () {
+describe('Ajax Collections update', function () {
     describe('works', function () {
         beforeEach(function () {
             this.scope = mockjax.scope();
             this.scope({
-                url: vars.CONST.apiBase + '/edits',
+                url: CONST.apiBase + '/edits',
                 status: 200,
                 responseText: {
                     'banana': {
@@ -173,7 +173,7 @@ describe('Collections update', function () {
                     }
                 }
             }, {
-                url: vars.CONST.apiBase + '/treats/banana',
+                url: CONST.apiBase + '/treats/banana',
                 status: 200,
                 responseText: {
                     'banana': {
@@ -197,8 +197,9 @@ describe('Collections update', function () {
                     collection: {
                         id: 'banana',
                         setPending: function () {},
-                        populate: function (arg) {
+                        populate: function (arg, callback) {
                             populateArg = arg;
+                            callback();
                         }
                     },
                     mode: 'live'
@@ -206,7 +207,7 @@ describe('Collections update', function () {
             })
             .then(() => {
                 var call = $.ajax.calls.argsFor(0)[0], data = JSON.parse(call.data);
-                expect(call.url).toBe(vars.CONST.apiBase + '/edits');
+                expect(call.url).toBe(CONST.apiBase + '/edits');
                 expect(call.type).toBe('POST');
                 expect(data).toEqual({
                     type: 'Update',
@@ -219,8 +220,9 @@ describe('Collections update', function () {
                 expect(populateArg).toEqual({
                     works: true
                 });
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('removes a treat', function (done) {
@@ -230,8 +232,9 @@ describe('Collections update', function () {
                     collection: {
                         id: 'banana',
                         setPending: function () {},
-                        populate: function (arg) {
+                        populate: function (arg, callback) {
                             populateArg = arg;
+                            callback();
                         }
                     },
                     mode: 'treats'
@@ -239,7 +242,7 @@ describe('Collections update', function () {
             })
             .then(() => {
                 var call = $.ajax.calls.argsFor(0)[0], data = JSON.parse(call.data);
-                expect(call.url).toBe(vars.CONST.apiBase + '/treats/banana');
+                expect(call.url).toBe(CONST.apiBase + '/treats/banana');
                 expect(call.type).toBe('POST');
                 expect(data).toEqual({
                     type: 'Remove',
@@ -252,8 +255,9 @@ describe('Collections update', function () {
                 expect(populateArg).toEqual({
                     works: true
                 });
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('updates and remove', function (done) {
@@ -263,8 +267,9 @@ describe('Collections update', function () {
                     collection: {
                         id: 'banana',
                         setPending: function () {},
-                        populate: function (arg) {
+                        populate: function (arg, callback) {
                             populateArgUpdate = arg;
+                            callback();
                         }
                     },
                     mode: 'draft'
@@ -273,8 +278,9 @@ describe('Collections update', function () {
                     collection: {
                         id: 'apple',
                         setPending: function () {},
-                        populate: function (arg) {
+                        populate: function (arg, callback) {
                             populateArgRemove = arg;
+                            callback();
                         }
                     },
                     mode: 'draft'
@@ -282,7 +288,7 @@ describe('Collections update', function () {
             })
             .then(() => {
                 var call = $.ajax.calls.argsFor(0)[0], data = JSON.parse(call.data);
-                expect(call.url).toBe(vars.CONST.apiBase + '/edits');
+                expect(call.url).toBe(CONST.apiBase + '/edits');
                 expect(call.type).toBe('POST');
                 expect(data).toEqual({
                     type: 'UpdateAndRemove',
@@ -303,8 +309,9 @@ describe('Collections update', function () {
                 expect(populateArgRemove).toEqual({
                     removed: true
                 });
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
     });
 
@@ -312,7 +319,7 @@ describe('Collections update', function () {
         beforeEach(function () {
             this.scope = mockjax.scope();
             this.scope({
-                url: vars.CONST.apiBase + '/edits',
+                url: CONST.apiBase + '/edits',
                 status: 500,
                 responseText: {}
             });

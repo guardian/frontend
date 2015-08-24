@@ -249,18 +249,21 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__inner {
         background-repeat: no-repeat;
-        background-position: bottom 78px right 0px;
+        background-position: bottom 68px right 0px;
         min-height: 10px;
 
         @include mq(desktop) {
-            min-height: 283px;
+            min-height: 200px;
+            background-position: bottom 51px right 0px;
         }
 
         @include mq(wide) {
-            min-height: 265px;
+            min-height: 260px;
+            background-position: bottom 70px right 0px;
 
             .has-page-skin & {
-                background-position: bottom 78px left 0px;
+                min-height: 248px;
+                background-position: bottom 55px left 0px;
             }
         }
 
@@ -276,6 +279,10 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__header {
         background-color: #332e2e;
+
+        .has-page-skin & {
+            padding-bottom: $gs-baseline/2;
+        }        
 
         .inline-marque-54 {
             @include mq($until: leftCol) {
@@ -294,7 +301,7 @@ $c-soulmates-high: colour(neutral-1);
         padding-top: $gs-baseline;
 
         @include mq(tablet) {
-            background-position: bottom 78px right 0px;
+            background-position: bottom 51px right 0px;
             background-repeat: no-repeat;
             padding-bottom: 0;
         }
@@ -335,28 +342,20 @@ $c-soulmates-high: colour(neutral-1);
 
     .logo--soulmates_large {
 
-        .svg & {
+        svg {
+            width: 100px;
+            height: 21px;
+            padding-top: 4px;
 
-            svg {
-                width: 100px !important;
-                height: 21px !important;
-
-                @include mq(mobileLandscape) {
-                    width: 120px !important;
-                    height: 28px !important;
-                }
+            @include mq(mobileLandscape) {
+                width: 120px;
+                height: 28px;
+                padding: 0;
             }
-        }
-    }
 
-    .inline-logo-soulmates {
-
-        .svg & {
-            background-size: contain;
-
-            svg {
-                width: 86px;
-                height: 18px;
+            @include mq(leftCol, $until: wide) {
+                width: 100px;
+                height: 21px;
             }
 
         }
@@ -364,7 +363,7 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__explainer {
         @include fs-headline(2);
-        font-weight: 900;
+        font-weight: bold;
         color: #ffffff;
         width: auto;
         padding: 0;
@@ -372,20 +371,28 @@ $c-soulmates-high: colour(neutral-1);
         position: static;
         display: none;
 
-        @include mq(tablet) {
-            display: block;
-        }
-
         @include mq(leftCol) {
             margin-bottom: $gs-baseline;
             display: block;
+
+            .has-page-skin & {
+                display: none;
+            }
 
             span {
                 display: block;
             }
         }
 
+        @include mq(desktop) {
+            @include fs-headline(1);
+            font-weight: bold;
+        }
+
         @include mq(wide) {
+            @include fs-headline(2);
+            font-weight: bold;
+
             .has-page-skin & {
                 position: static;
                 margin: 0;
@@ -410,28 +417,28 @@ $c-soulmates-high: colour(neutral-1);
             border-left: 1px solid #666666;
             margin: $gs-baseline/2 0;
             padding-left: $gs-baseline;
+            width: 50%;
 
-            @include mq(mobile) {
-                width: 50%;
+            @include mq(mobileLandscape) {
+                width: 33.33%;
                 height: auto;
             }
 
             @include mq(tablet) {
-                width: 33.33%;
-                height: 64px;
-            }
-
-            @include mq(desktop) {
-                width: 25%;
-                height: 64px;
+                width: 15%;
             }
 
         }
 
+        @include mq(desktop) {
+            bottom: $gs-baseline;
+        }
+
         @include mq(wide) {
+            bottom: $gs-gutter;
+
             .has-page-skin & {
-                width: 25%;
-                height: 64px;
+                width: 15%;
                 position: static;
                 float: right;
                 border-left: 1px solid #666666;
@@ -455,12 +462,8 @@ $c-soulmates-high: colour(neutral-1);
         clear: both;
         overflow: hidden;
 
-        &:first-child {
-            margin-bottom: $gs-baseline/2;
-        }
-
         .commercial__cta__label {
-            @include fs-data(2);
+            @include fs-data(1);
             float: left;
             line-height: 20px;
             width: auto;
@@ -468,16 +471,19 @@ $c-soulmates-high: colour(neutral-1);
 
             @include mq(320px, $until: 479px) {
                 width: 90px;
-                &:last-child {
-                    line-height: 1.2;
-                }
             }
 
             @include mq(leftCol, $until: wide) {
                 width: 90px;
+            }
 
-                &:last-child {
-                    line-height: 1.2;
+            @include mq(wide) {
+                @include fs-data(2);
+                line-height: 20px;
+
+                .has-page-skin & {
+                    @include fs-data(1);
+                    line-height: 20px;
                 }
             }
         }
@@ -485,14 +491,6 @@ $c-soulmates-high: colour(neutral-1);
             width: 28px;
             height: 20px;
             float: left;
-
-            @include mq(leftCol, $until: wide) {
-
-                .inline-soulmates-join {
-                    padding-top: $gs-baseline/3;
-                    display: block;
-                }
-            }
         }
 
     }
@@ -500,8 +498,12 @@ $c-soulmates-high: colour(neutral-1);
     .inline-soulmates-h-line {
         display: none;
 
-        @include mq($from: tablet) {
+        @include mq($from: leftCol) {
             display: block;
+
+            .has-page-skin & {
+                display: none;
+            }
         }
     }
 
@@ -509,14 +511,6 @@ $c-soulmates-high: colour(neutral-1);
         position: absolute;
         top: -16px;
         left: 10px;
-
-        &.lineitems__box {
-            display: none;
-
-            @include mq($from: tablet) {
-                display: block;
-            }
-        }
     }
 
     .inline-soulmates-border-topright {
@@ -524,20 +518,43 @@ $c-soulmates-high: colour(neutral-1);
         top: -112px;
         right: -66px;
         z-index: 0;
+    }
 
-        &.lineitems__box {
-            display: none;
-
-            @include mq($from: tablet) {
-                display: block;
-            }
+    .commercial__search__box .inline-soulmates-border-topleft, .commercial__search__box .inline-soulmates-border-topright {
+        opacity: 0;
+        
+        @include mq(tablet) {
+            opacity: 1;
         }
     }
 
     .inline-soulmates-arrow {
         float: right;
         border-left: 1px solid #666666;
-        padding: $gs-baseline/4 $gs-baseline;
+        padding: $gs-baseline/3 $gs-baseline;
+
+        @include mq(wide) {
+            padding: $gs-baseline/3 $gs-baseline 0;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+            padding: 2px 0 0;
+
+            @include mq(wide) {
+                width: 20px;
+                height: 20px;
+                padding: 0;
+
+                .has-page-skin & {
+                    width: 16px;
+                    height: 16px;
+                    padding: 2px 0 0;
+                }
+            }
+
+        }
     }
 
     .inline-soulmates-person {
@@ -548,13 +565,24 @@ $c-soulmates-high: colour(neutral-1);
 
     h4.feed__title {
         @include fs-header(1);
-        line-height: 1.1;
+        font-size: 15px;
         text-align: center;
-        margin: 0 auto $gs-gutter;
+        margin: 0 auto $gs-baseline;
         position: relative;
+        font-weight: bold;
+        display: none;
 
-        span {
+        &.feed__title-mobile {
             display: block;
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+
+        &.feed__title-desktop {
+            @include mq(leftCol) {
+                display: block;
+            }
         }
 
         &:before, &:after {
@@ -568,34 +596,43 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         &:before {
-            left: 5%;
+            left: 0%;
         }
 
         &:after {
-            right: 5%;
+            right: 0%;
         }
 
         @include mq(tablet) {
 
             &:before {
-                left: 22%;
+                left: 5%;
             }
 
             &:after {
-                right: 22%;
+                right: 5%;
+            }
+        }
+
+        @include mq(desktop) {
+            &:before {
+                left: 15%;
+            }
+
+            &:after {
+                right: 15%;
             }
 
         }
-        @include mq(desktop) {
 
-            &:before {
-                left: 30%;
-            }
+        @include mq(wide) {
+            font-size: 16px; 
+            margin: 0 auto $gs-gutter;
 
-            &:after {
-                right: 30%;
-            }
-
+            .has-page-skin & {
+                font-size: 15px;
+                margin: 0 auto $gs-baseline;
+            }  
         }
     }
 
@@ -605,58 +642,76 @@ $c-soulmates-high: colour(neutral-1);
         background-color: #ffffff;
         height: 100%;
         position: relative;
-        padding: 0 $gs-baseline*2 $gs-baseline*2+$gs-gutter/2;
-        overflow: hidden;
+        padding: $gs-baseline 18px;
         box-sizing: content-box;
 
         @include mq(tablet) {
             float: right;
             overflow: visible;
             width: gs-span(6) - $gs-baseline*4;
-            padding-top: $gs-baseline*2;
         }
 
         @include mq(desktop) {
+            width: gs-span(8) - $gs-baseline*8;
+            margin-right: $gs-baseline*4;
+        }
+
+        @include mq(leftCol) {
+            margin-right: $gs-gutter*3;
+        }
+
+        @include mq(wide) {
             width: gs-span(8) - $gs-baseline*4;
+            padding: $gs-baseline*2;
+            margin-right: 0;
+
+            .has-page-skin & {
+                padding: $gs-baseline 18px;
+            }  
         }
 
-        h4.feed__title {
-            display: none;
-
-            @include mq(tablet) {
-                display: block;
-            }
-
-        }
     }
 
     .lineitems {
         margin: 0;
+        overflow: hidden;
     }
 
     .lineitem {
-        width: percentage(1/2);
-        min-width: 96px;
+        width: percentage(1/3);
+        min-width: 70px;
         border-color: #ffffff;
         padding: 0;
 
-        &:nth-child(n+3) {
+        &:nth-child(n+4) {
             display: none;
         }
 
         @include mq(mobileLandscape) {
-            width: percentage(1/3);
+            width: percentage(1/4);
 
-            &:nth-child(3) {
+            &:nth-child(4) {
                 display: block;
             }
         }
 
         @include mq(phablet) {
+            width: percentage(1/5);
+
+            &:nth-child(5) {
+                display: block;
+            }
+
+            &:nth-child(6) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet) {
             width: percentage(1/4);
 
-            &:nth-child(4) {
-                display: block;
+            &:nth-child(5) {
+                display: none;
             }
         }
 
@@ -667,9 +722,6 @@ $c-soulmates-high: colour(neutral-1);
                 display: block;
             }
 
-            &:nth-child(6) {
-                display: none;
-            }
         }
     }
 
@@ -684,15 +736,19 @@ $c-soulmates-high: colour(neutral-1);
     }
 
     .lineitem__image__container {
-        max-height: 130px;
+        max-height: 95px;
         overflow: hidden;
 
-        @include mq(mobileLandscape) {
-            max-height: 140px;
+        @include mq($from: tablet) {
+            max-height: 100px;
         }
 
-        @include mq($from: tablet) {
-            max-height: 120px;
+        @include mq($from: wide) {
+            max-height: 116px;
+
+            .has-page-skin & {
+                max-height: 100px;
+            }
         }
 
     }
@@ -702,22 +758,48 @@ $c-soulmates-high: colour(neutral-1);
     }
 
     .lineitem__text {
-        padding: $gs-gutter/4 $gs-gutter*2 $gs-gutter/4 $gs-gutter/2;
+        padding: 3px 8px;
         position: relative;
+
+        @include mq($from: wide) {
+            padding: $gs-gutter/4 $gs-gutter/2;
+
+            .has-page-skin & {
+                padding: 3px 8px;
+            }
+        }
+
     }
 
     .lineitem__title {
-        @include fs-data(2);
+        @include fs-data(1);
         @include ellipsis();
         padding: $gs-gutter/10 0 0;
         white-space: pre;
         margin-bottom: 0;
+
+        @include mq($from: wide) {
+            @include fs-data(2);
+
+            .has-page-skin & {
+                @include fs-data(1);
+            }
+        }
     }
 
     .lineitem__meta {
+        @include fs-data(1);
         line-height: 1;
         @include ellipsis();
         white-space: pre;
+
+        @include mq($from: wide) {
+            @include fs-data(2);
+
+            .has-page-skin & {
+                @include fs-data(1);
+            }
+        }
     }
 
     /* Search form */
@@ -742,42 +824,60 @@ $c-soulmates-high: colour(neutral-1);
         box-sizing: border-box;
         width: auto;
         float: none;
-        padding: $gs-baseline*2;
+        padding: 0 $gs-baseline*2 $gs-baseline;
         background-color: #ffffff;
         width: 100%;
-
-        @include mq($until: tablet) {
-            margin-top: $gs-baseline/2;
-            clear: both;
-        }
 
         @include mq(tablet) {
             float: left;
             border-top: 0;
             width: gs-span(3);
+            padding: $gs-baseline 18px;
+            clear: both;
+        }
+
+        @include mq(wide) {
+            padding: $gs-baseline*2;
+
+            .has-page-skin & {
+                padding: $gs-baseline 18px;
+            }  
         }
 
         @include mq($from: desktop) {
             width: gs-span(4);
         }
 
-        h4.feed__title {
-            display: block;
-
-            @include mq(tablet) {
-                display: none;
-            }
-
-        }
     }
 
     .form-row {
         border-top: 2px solid #dfded7;
-        height: $gs-row-height;
+        height: 30px;
         overflow: hidden;
+        box-sizing: border-box;
+        width: 46%;
+        float: left;
+        margin: 0 2%;
 
-        &:first-of-type {
+        &:first-of-type, &:nth-of-type(2) {
             border-top: 0;
+        }
+
+        @include mq(tablet) {
+            width: 100%;
+            margin: 0;
+
+            &:nth-of-type(2) {
+                border-top: 2px solid #dfded7;
+            }
+        }
+
+        @include mq(wide) {
+            height: $gs-row-height;
+
+            .has-page-skin & {
+                height: 30px;
+            }
         }
     }
 
@@ -805,7 +905,7 @@ $c-soulmates-high: colour(neutral-1);
 
     .search__dropdown__options {
         width: 120%;
-        @include fs-data(4, $size-only: true);
+        @include fs-data(1, $size-only: true);
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
@@ -821,32 +921,61 @@ $c-soulmates-high: colour(neutral-1);
         text-indent: .01px;
         text-overflow: '';
         z-index: 1;
+        background-size: 16px 16px;
+        height: 30px;
+
+        @include mq(tablet) {
+            @include fs-data(3, $size-only: true);
+        }
+
+        @include mq(wide) {
+            @include fs-data(4, $size-only: true);
+            background-size: 20px 20px;
+            height: $gs-row-height;
+
+            .has-page-skin & {
+                @include fs-data(3, $size-only: true);
+                background-size: 16px 16px;
+                height: 30px;
+            }  
+        }
+
     }
 
     .search__submit {
-        margin: 23px 0 0;
         background-color: #332e2e;
         color: #ffffff;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 900;
         line-height: 1;
         width: 100%;
         text-align: left;
-        padding: 8px 0 7px $gs-baseline;
+        padding: 5px 0 5px $gs-baseline;
         border: 0;
+        margin: 8px 0 0;
 
         @include mq(tablet) {
-            margin-bottom: 11px;
+            margin: 10px 0 1px;
         }
 
-        @include mq(desktop) {
+        @include mq(wide) {
             font-size: 15px;
+            padding: 8px 0 8px $gs-baseline;
+            margin-top: 12px;
+
+            .has-page-skin & {
+                font-size: 12px;
+                padding: 5px 0 5px $gs-baseline;
+                margin: 13px 0 1px;
+            }
         }
 
         .search__submit__text {
             line-height: 29px;
+            float: left;
         }
 
     }
+
 }
 

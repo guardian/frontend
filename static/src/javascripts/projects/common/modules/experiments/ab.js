@@ -8,9 +8,10 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/adblock-sticky-banner'
+    'common/modules/experiments/tests/adblock-sticky-banner',
+    'common/modules/experiments/tests/rugby'
 ], function (
     reportError,
     _,
@@ -21,17 +22,19 @@ define([
     mvtCookie,
     LiveblogNotifications,
     HighCommercialComponent,
-    MembershipMessage,
+    MembershipMessageUK,
     MembershipMessageUSA,
-    AdblockStickyBanner
+    AdblockStickyBanner,
+    Rugby
 ) {
 
     var TESTS = _.flatten([
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new MembershipMessage(),
+        new MembershipMessageUK(),
         new MembershipMessageUSA(),
-        new AdblockStickyBanner()
+        new AdblockStickyBanner(),
+        new Rugby()
     ]);
 
     var participationsKey = 'gu.ab.participations';

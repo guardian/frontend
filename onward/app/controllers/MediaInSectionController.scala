@@ -83,7 +83,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(trails map FaciaContentConvert.frontendContentToFaciaContent take 7, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps,
       FrontProperties.empty

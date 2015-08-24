@@ -1,13 +1,11 @@
 import _ from 'underscore';
 import parseQueryParams from 'utils/parse-query-params';
 
-function get (override) {
-    var columns = [{
-            'type': 'latest'
-        }, {
-            'type': 'front'
-        }],
-        queryParams = parseQueryParams(override),
+function get (override, path) {
+    var columns = path === 'config' ?
+        [{ 'type': 'config' }, { 'type': 'config' }] :
+        [{ 'type': 'latest' }, { 'type': 'front' }],
+        queryParams = _.isObject(override) ? _.clone(override) : parseQueryParams(override),
         configFromURL = queryParams.layout;
 
     if (queryParams.treats === 'please') {
@@ -32,12 +30,14 @@ function get (override) {
             };
         });
     } else if (queryParams.front) {
-        columns = [{
-            type: 'latest'
-        }, {
-            type: 'front',
-            config: queryParams.front
-        }];
+        columns = path === 'config' ?
+        [{ type: 'config', config: queryParams.front }] :
+        [
+            { type: 'latest' }, {
+                type: 'front',
+                config: queryParams.front
+            }
+        ];
     }
 
     return columns;

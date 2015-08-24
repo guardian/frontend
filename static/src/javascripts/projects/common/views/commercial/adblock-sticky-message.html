@@ -1,4 +1,4 @@
-<div class="adblock-sticky__message js-adblock-sticky" data-link-name="adblock sticky message" role="dialog" aria-label="welcome adblock user" aria-describedby="adblock-sticky__message">
+<div class="adblock-sticky__message js-adblock-sticky <%=customCssClass%>" data-link-name="adblock sticky message" role="dialog" aria-label="welcome adblock user" aria-describedby="adblock-sticky__message">
     <div class="gs-container">
         <div class="adblock-sticky__quote">
             <div class="adblock-sticky__info">
@@ -23,9 +23,10 @@
             <ul class="site-message__actions u-unstyled">
                 <li class="site-message__actions__sticky-item">
                     <%=cursor%>
-                    <a href="<%=supporterLink%>" target="_blank" data-link-name="read more"><%=linkText%></a>
+                    <a href="<%=supporterLink%>" target="_blank" data-link-name="read more <%=quoteAuthor%>"><%=linkText%></a>
                 </li>
             </ul>
         </div>
     </div>
+    <a class="adblock-sticky__link" href="<%=supporterLink%>" target="_blank" data-link-name="read more <%=quoteAuthor%>"></a>
 </div>

@@ -1,148 +1,189 @@
-define([
-    'knockout',
-    'jquery',
-    'jquery-ui/ui/effect',
-    'jquery-ui/ui/effect-size',
-    'jquery-ui/ui/effect-scale',
-    'underscore',
-    'models/layout/column',
-    'modules/copied-article',
-    'modules/vars',
-    'utils/layout-from-url',
-    'utils/update-scrollables'
-], function (
-    ko,
-    $,
-    $effect,
-    $effectSize,
-    $effectScale,
-    _,
-    Column,
-    copiedArticle,
-    vars,
-    layoutFromURL,
-    updateScrollables
-) {
-    copiedArticle = copiedArticle.default;
+import ko from 'knockout';
+import _ from 'underscore';
+import $ from 'jquery';
+import Promise from 'Promise';
+import 'jquery-ui/ui/effect';
+import 'jquery-ui/ui/effect-size';
+import 'jquery-ui/ui/effect-scale';
+import 'models/common-handlers';
+import BaseClass from 'models/base-class';
+import Column from 'models/layout/column';
+import copiedArticle from 'modules/copied-article';
+import * as layoutFromURL from 'utils/layout-from-url';
+import updateScrollables from 'utils/update-scrollables';
 
-    function Layout () {
-        this.initialState = {
-            columns: ko.observableArray()
+function columnDataOf (type, columns) {
+    return _.find(columns, col => {
+        return col.layoutType === type;
+    }) || {};
+}
+
+export default class Layout extends BaseClass {
+    constructor(router, widgets) {
+        super();
+        this.CONST = {
+            addColumnTransition: 300
         };
+        this.router = router;
+
+        this.allColumns = widgets;
+        this.availableColumns = _.filter(widgets, config => {
+            return config.selectable !== false;
+        });
+
         this.configVisible = ko.observable(false);
 
-        _.each(layoutFromURL.get(), function (col) {
-            var config = _.extend(col, {
-                'layout': this
-            });
-            this.initialState.columns.push(new Column(config));
-        }, this);
-        this.columns = ko.observableArray(this.initialState.columns().slice());
+        this.savedState = {
+            columns: ko.observableArray()
+        };
+        this.currentState = {
+            columns: ko.observableArray()
+        };
+        this.savedLayout = null;
 
-        this.configVisible.subscribe(this.onConfigVisibilityChange.bind(this));
+        this.loaded = this.initializeFromLocation();
+
+        this.subscribeOn(this.configVisible, this.locationChange);
+        this.listenOn(router, 'change', this.locationChange);
     }
 
-    Layout.prototype.locationChange = function () {
-        var allColumns = this.columns();
-        _.each(layoutFromURL.get(), function (col, position) {
-            if (allColumns[position]) {
-                allColumns[position].reset(col);
+    locationChange() {
+        this.initializeFromLocation().then(this.recomputeAllWidths.bind(this));
+    }
+
+    initializeFromLocation() {
+        var layout = layoutFromURL.get(this.router.params, this.router.path);
+        if (_.isEqual(layout, this.savedLayout)) {
+            return Promise.resolve();
+        } else {
+            let columns = _.map(layout, col => this.newConfigInstance(col));
+            this.savedState.columns(columns);
+            this.applyToCurrentState(columns);
+            this.savedLayout = layout;
+
+            return Promise.all(this.currentState.columns().map(col => col.loaded));
+        }
+    }
+
+    newConfigInstance(config) {
+        return new Column(_.extend({}, config, {
+            'layout': this
+        }, columnDataOf(config.type, this.allColumns)));
+    }
+
+    applyToCurrentState(columns) {
+        var currentColumns = this.currentState.columns() || [];
+        this.currentState.columns(_.map(columns, (column, position) => {
+            var current = currentColumns[position] || new Column(column.opts);
+            if (column.sameAs(current)) {
+                current.config(column.config());
+            } else {
+                current = column;
             }
-        });
-    };
-
-    Layout.prototype.toggleConfigVisible = function () {
-        this.configVisible(!this.configVisible());
-    };
-
-    Layout.prototype.save = function () {
-        _.each(this.columns(), function (column) {
-            column.saveChanges();
-        });
-        this.initialState.columns(this.columns().slice());
-        this.configVisible(false);
-    };
-
-    Layout.prototype.cancel = function () {
-        this.configVisible(false);
-        _.each(this.columns(), function (column) {
-            column.dropChanges();
-        });
-        this.columns(this.initialState.columns().slice());
-    };
-
-    Layout.prototype.addColumn = function (column) {
-        var position = this.columns.indexOf(column);
-        this.columns.splice(position + 1, 0, new Column({
-            type: 'front',
-            layout: this
+            return current;
         }));
-    };
+    }
 
-    Layout.prototype.removeColumn = function (column) {
-        if (this.columns().length === 1) {
+    toggleConfigVisible() {
+        this.configVisible(!this.configVisible());
+    }
+
+    save() {
+        this.savedState.columns(this.currentState.columns().slice());
+        this.applyToCurrentState(this.savedState.columns());
+        this.onColumnChange();
+        this.configVisible(false);
+    }
+
+    cancel() {
+        this.configVisible(false);
+        this.currentState.columns(this.savedState.columns().slice());
+    }
+
+    onColumnChange() {
+        this.savedState.columns(this.currentState.columns().slice());
+        this.router.navigate({
+            layout: layoutFromURL.serialize(_.map(this.savedState.columns(), column => column.serializable()))
+        });
+    }
+
+    addColumn(column) {
+        var position = this.currentState.columns.indexOf(column);
+        this.currentState.columns.splice(position + 1, 0, this.newConfigInstance({
+            type: column.opts.type
+        }));
+    }
+
+    removeColumn(column) {
+        if (this.currentState.columns().length === 1) {
             return;
         }
-        var position = this.columns.indexOf(column), that = this;
-        $($('.column')[position]).hide('scale', {}, 150, function () {
-            that.columns.splice(position, 1);
-        });
-    };
+        var position = this.currentState.columns.indexOf(column);
+        this.currentState.columns.splice(position, 1);
+    }
 
-    Layout.prototype.serializable = function () {
+    setType(newType, column) {
+        var position = this.currentState.columns.indexOf(column);
+        this.currentState.columns.splice(position, 1, this.newConfigInstance({
+            type: newType
+        }));
+    }
+
+    serializable() {
         return _.map(this.columns(), function (column) {
             return column.serializable();
         });
-    };
+    }
 
-    Layout.prototype.addNewColumn = function (element) {
-        element = $(element);
-        if (element.is('.column')) {
-            element.hide();
-            element.show('scale', {}, 200);
-        }
-    };
-
-    Layout.prototype.onConfigVisibilityChange = function () {
+    onConfigVisibilityChange() {
         copiedArticle.flush();
-        _.each(this.columns(), function (column) {
+        this.recomputeAllWidths();
+    }
+
+    recomputeAllWidths() {
+        _.each(this.currentState.columns(), function (column) {
             column.recomputeWidth();
         });
-    };
+    }
 
+    dispose() {
+        super.dispose();
+        _.chain(this.savedState.columns().concat(this.currentState.columns()))
+            .uniq()
+            .each(column => column.dispose());
+    }
+}
 
-    ko.bindingHandlers.slideIn = {
-        init: function (element, valueAccessor) {
-            var value = ko.unwrap(valueAccessor()),
-                $element = $(element);
-            $element.css({
-                marginLeft: value ? 0 : $(element).outerWidth()
-            });
-            if (value) {
-                $element.show();
-            } else {
-                $element.hide();
-            }
-        },
-        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            var value = ko.unwrap(valueAccessor()),
-                $element = $(element);
-            if (value) {
-                $element.show();
-            }
-            $element.animate({
-                marginLeft: value ? 0 : $(element).outerWidth()
-            }, {
-                complete: function () {
-                    if (!value) {
-                        $element.hide();
-                    }
-                    updateScrollables();
-                    bindingContext.$data.layout.onConfigVisibilityChange();
-                }
-            });
+ko.bindingHandlers.slideIn = {
+    init: function (element, valueAccessor) {
+        var value = ko.unwrap(valueAccessor()),
+            $element = $(element);
+        $element.css({
+            marginLeft: value ? 0 : $(element).outerWidth()
+        });
+        if (value) {
+            $element.show();
+        } else {
+            $element.hide();
         }
-    };
-
-    return Layout;
-});
+    },
+    update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var value = ko.unwrap(valueAccessor()),
+            $element = $(element);
+        if (value) {
+            $element.show();
+        }
+        $element.animate({
+            marginLeft: value ? 0 : $(element).outerWidth()
+        }, {
+            duration: bindingContext.$data.layout.CONST.addColumnTransition,
+            complete: function () {
+                if (!value) {
+                    $element.hide();
+                }
+                updateScrollables();
+                bindingContext.$data.layout.onConfigVisibilityChange();
+            }
+        });
+    }
+};

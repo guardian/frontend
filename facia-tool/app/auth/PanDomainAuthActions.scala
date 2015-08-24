@@ -23,7 +23,7 @@ trait PanDomainAuthActions extends AuthActions with Results {
 
   override def showUnauthedMessage(message: String)(implicit request: RequestHeader): Result = {
     Logger.info(message)
-    Ok(views.html.auth.login(Some(message), "Test"))
+    Ok(views.html.auth.login(Some(message)))
   }
 
   import com.gu.pandomainauth.service.CookieUtils

@@ -37,11 +37,7 @@ define([
         }
 
         if (config.switches.thirdPartiesLater) {
-            if (config.switches.newOutbrain) {
-                outbrain.init();
-            } else {
-                outbrain.load();
-            }
+            outbrain.init();
             // Load third parties after first ad was rendered
             mediator.once('modules:commercial:dfp:rendered', function () {
                 loadOther();

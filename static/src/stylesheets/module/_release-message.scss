@@ -416,7 +416,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
  * Membership message A/B test
  */
 .site-message--membership-message,
-.site-message--membership-message-variants,
+.site-message--membership-message-uk,
 .site-message--membership-message-usa {
     background: colour(news-main-2);
 }
@@ -560,6 +560,30 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             float: left;
             margin-top: $gs-baseline*.25;
             margin-right: $gs-gutter*.25;
+        }
+    }
+
+    .adblock-sticky__link {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &.macaskill {
+        .adblock-sticky__info {
+            @include mq(desktop) {
+                max-width: $gs-column-width*12;
+            }
+            @include mq(wide) {
+                max-width: none;
+            }
+        }
+
+        .adblock-byline-img {
+            right: 8%;
         }
     }
 }

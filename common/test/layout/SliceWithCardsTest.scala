@@ -1,14 +1,14 @@
 package layout
 
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import com.gu.facia.api.models.CollectionConfig
-import model.{ApiContentWithMeta, Content, FaciaImageElement, Trail}
+import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 import services.FaciaContentConvert
 import slices.DesktopBehaviour
-import com.gu.contentapi.client.model.{ Content => ApiContent }
 
 class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   val NumberOfFixtures = 40
@@ -28,9 +28,9 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
     isExpired = None)
 
   val cardFixtures = (1 to NumberOfFixtures) map { n =>
-    IndexedTrail(FaciaContentConvert.frontentContentToFaciaContent(
+    IndexedTrail(FaciaContentConvert.frontendContentToFaciaContent(
       new Content(
-        ApiContentWithMeta(nthApiContent(n), Nil, None)) {
+        nthApiContent(n)) {
           override lazy val webPublicationDate: Imports.DateTime = DateTime.now
 
           override lazy val url: String = s"$n"
@@ -49,12 +49,6 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
           override lazy val headline: String = ""
 
           override lazy val webUrl: String = s"$n"
-
-          override lazy val customImageCutout: Option[FaciaImageElement] = None
-
-          override lazy val snapType: Option[String] = None
-
-          override lazy val snapUri: Option[String] = None
       }), n)
   }
 

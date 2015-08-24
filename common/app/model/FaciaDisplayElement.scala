@@ -55,9 +55,6 @@ case class CrosswordSvg(id: String) extends FaciaDisplayElement {
 }
 
 object InlineSlideshow {
-  def fromTrail(trail: Trail): Option[InlineSlideshow] =
-    Option(InlineSlideshow(trail.trailSlideshow(5, 3)))
-
   def fromFaciaContent(faciaContent: FaciaContent): Option[InlineSlideshow] =
     for (s <- faciaContent.slideshow) yield InlineSlideshow(s)
 }

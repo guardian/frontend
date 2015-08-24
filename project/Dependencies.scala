@@ -28,8 +28,8 @@ object Dependencies {
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.54"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.54"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.55"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.55"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
@@ -38,7 +38,6 @@ object Dependencies {
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
-  val im4java = "org.im4java" % "im4java" % "1.4.0"
   val jacksonCore = "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6"
   val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6"
   val jodaTime = "joda-time" % "joda-time" % "2.3"

@@ -8,9 +8,7 @@
             aria-controls="@hash"
             aria-expanded="@{isActive.toString}">
         <span class="dropdown__label">@name</span>
-        <span class="control modern-visible">
-            <i class="i i-dropdown-mask"></i>
-        </span>
+        @fragments.inlineSvg("dropdown-mask", "icon", List("control", "modern-visible"))
     </button>
 
     <label class="dropdown__toggle-label modern-hidden"

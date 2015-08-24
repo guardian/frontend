@@ -2,12 +2,12 @@ package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
 import common.{Edition, ExecutionContexts}
-import conf.{Configuration, LiveContentApi, Static}
-import crosswords.{CrosswordSvg, CrosswordPage, CrosswordData, AccessibleCrosswordRows, CrosswordSearchPage}
-import model._
+import conf.{LiveContentApi, Static}
+import crosswords.{AccessibleCrosswordRows, CrosswordData, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
+import model.{Cached, Cors, _}
 import org.joda.time.DateTime
-import play.api.data._
 import play.api.data.Forms._
+import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
 import services.IndexPage
 
@@ -22,13 +22,13 @@ object CrosswordsController extends Controller with ExecutionContexts {
         crossword <- content.crossword }
        yield f(crossword, content)
        maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
-    } recover { case _ => InternalServerError("Content API query returned an error.") }
+    } recover { case a => println(a); InternalServerError("Content API query returned an error.") }
   }
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
          CrosswordSvg(crossword, None, None, false)
       )))
     }
@@ -37,7 +37,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.accessibleCrossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
         AccessibleCrosswordRows(crossword)
       )))
     }
@@ -56,28 +56,9 @@ object CrosswordsController extends Controller with ExecutionContexts {
       }
     }
   }
+}
 
-  private val CrosswordOptIn = "crossword_opt_in"
-  private val CrosswordOptInPath= "/crosswords"
-  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
-
-  def crosswordsOptIn = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
-      Cookie(
-        CrosswordOptIn, "true",
-        path = CrosswordOptInPath,
-        maxAge = Some(CrosswordOptInMaxAge),
-        domain = Some(Configuration.id.domain))))
-  }
-
-  def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords?view=old").discardingCookies(
-      DiscardingCookie(
-        CrosswordOptIn,
-        path = CrosswordOptInPath,
-        domain = Some(Configuration.id.domain))))
-  }
-
+object CrosswordSearchController extends Controller with ExecutionContexts {
   def searchForm() = Action { implicit request =>
     Ok(views.html.crosswordSearch(CrosswordSearchPage))
   }
@@ -129,10 +110,10 @@ object CrosswordsController extends Controller with ExecutionContexts {
   }
 
   case class CrosswordSearch(
-      crosswordType: String,
-      fromDate: DateTime,
-      toDate: DateTime,
-      setter: Option[String])
+    crosswordType: String,
+    fromDate: DateTime,
+    toDate: DateTime,
+    setter: Option[String])
 
   object CrosswordSearch {
     def fromRequest(request: Request[AnyContent]): Option[CrosswordSearch] = {
@@ -152,4 +133,33 @@ object CrosswordsController extends Controller with ExecutionContexts {
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)
+}
+
+object CrosswordPreferencesController extends Controller with PreferenceController {
+  private val CrosswordOptIn = "crossword_opt_in"
+  private val CrosswordOptInPath= "/crosswords"
+  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
+  private val CrosswordOptOutMaxAge = 60.days.toSeconds.toInt
+
+  def crosswordsOptIn = Action { implicit request =>
+    Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
+      Cookie(
+        CrosswordOptIn, "true",
+        path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptInMaxAge),
+        domain = getShortenedDomain(request.domain)
+      )
+    ))
+  }
+
+  def crosswordsOptOut = Action { implicit request =>
+    Cached(60)(SeeOther("/crosswords?view=classic").withCookies(
+      Cookie(
+        CrosswordOptIn, "false",
+        path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptOutMaxAge),
+        domain = getShortenedDomain(request.domain)
+      )
+    ))
+  }
 }

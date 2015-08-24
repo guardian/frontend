@@ -1,13 +1,19 @@
-import Promise from 'Promise';
+import BaseClass from 'models/base-class';
 import mediator from 'utils/mediator';
-import BaseClass from 'modules/class';
+
+var loadSym = Symbol();
 
 class BaseWidget extends BaseClass {
     constructor() {
         super();
-        Promise.resolve().then(() => {
+        this[loadSym] = setTimeout(() => {
             mediator.emit('widget:load', this);
-        });
+        }, 20);
+    }
+
+    dispose() {
+        super.dispose();
+        clearTimeout(this[loadSym]);
     }
 }
 

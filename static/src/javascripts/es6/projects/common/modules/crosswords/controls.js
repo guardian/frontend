@@ -45,6 +45,14 @@ export default class Controls extends React.Component {
         if (hasFocus && hasSolutions) {
             controls.clue.unshift(
                 <button className={`${buttonClassName} ${buttonCurrentClassName}`}
+                    onClick={this.props.onClearSingle}
+                    key='clear-single'>
+                    Clear this
+                </button>
+            );
+
+            controls.clue.unshift(
+                <button className={`${buttonClassName} ${buttonCurrentClassName}`}
                     onClick={this.props.onCheat}
                     key='cheat'>
                     Reveal this

@@ -61,7 +61,7 @@ object IndexPage {
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
         val collection = CollectionEssentials.fromFaciaContent(
-          grouping.items.map(FaciaContentConvert.frontentContentToFaciaContent)
+          grouping.items.map(FaciaContentConvert.frontendContentToFaciaContent)
         )
 
         val mpuContainer = (if (isSlow)

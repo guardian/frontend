@@ -1,0 +1,18 @@
+@import model.MetaData
+
+@(page: MetaData, liveScore: rugby.model.Match)(implicit request: RequestHeader)
+
+@main(page, "football") { } {
+    <div class="l-side-margins">
+        <article class="content">
+            <header class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        @rugby.views.html.fragments.liveScore(page, liveScore)
+
+                    </div>
+                </div>
+            </header>
+        </article>
+    </div>
+}

@@ -1,14 +1,15 @@
 import testConfig from 'test-config';
-import ConfigEditor from 'models/config/main';
 import MockConfig from 'mock/config';
+import Router from 'modules/router';
+import handlers from 'modules/route-handlers';
+import clone from 'utils/clean-clone';
+import verticalLayout from 'views/templates/vertical_layout.scala.html!text';
+import mainLayout from 'views/templates/main.scala.html!text';
 import MockSwitches from 'mock/switches';
 import MockCollection from 'mock/collection';
 import MockDefaults from 'mock/defaults';
-import templateConfig from 'views/config.scala.html!text';
-import Bootstrap from 'modules/bootstrap';
+import fakePushState from 'test/utils/push-state';
 import inject from 'test/utils/inject';
-import * as wait from 'test/utils/wait';
-import * as vars from 'modules/vars';
 
 export default class Loader {
     constructor() {
@@ -27,21 +28,22 @@ export default class Loader {
         this.mockCollection = mockCollection;
         this.mockDefaults = mockDefaults;
 
-        this.ko = inject(
-            templateConfig
-                .replace('@{priority}', 'test')
-                .replace('@urlBase(env)', '/')
-                .replace(/\@[^\n]+\n/g, '')
-        );
-
-        vars.priority = testConfig.defaults.priority;
+        this.ko = inject(`
+            ${verticalLayout}
+            ${mainLayout}
+        `);
+        this.router = new Router(handlers, {
+            pathname: '/test/config',
+            search: ''
+        }, {
+            pushState: (...args) => fakePushState.call(this.router.location, ...args)
+        });
     }
 
     load() {
-        new ConfigEditor().init(new Bootstrap(), testConfig);
-        vars.update(testConfig);
-        // Wait for knockout to handle bindings
-        return wait.ms(50);
+        this.baseModule = this.router.load(clone(testConfig));
+        this.ko.apply(this.baseModule);
+        return this.baseModule.loaded;
     }
 
     dispose() {

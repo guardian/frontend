@@ -1,15 +1,15 @@
 package crosswords
 
-import com.gu.contentapi.client.model.{Content => ApiContent}
-import model.{MetaData, GuardianContentTypes, ApiContentWithMeta, Content}
 import org.joda.time.DateTime
-import play.api.libs.json.{JsBoolean, JsValue, JsString}
+import com.gu.contentapi.client.{model => contentapi}
+import model.{MetaData, Content, GuardianContentTypes}
+import play.api.libs.json.{JsString, JsValue}
 
 case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
 }
 
-class CrosswordPage(val crossword: CrosswordData, content: ApiContentWithMeta) extends Content(content) {
+class CrosswordPage(val crossword: CrosswordData, content: contentapi.Content) extends Content(content) {
 
   override lazy val id: String = crossword.id
 
