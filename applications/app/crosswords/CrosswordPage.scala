@@ -51,8 +51,7 @@ class CrosswordSearchPage extends MetaData {
     "quiptic",
     "genius",
     "speedy",
-    "everyman",
-    "azed"
+    "everyman"
   )
 
   val setters = Seq(
