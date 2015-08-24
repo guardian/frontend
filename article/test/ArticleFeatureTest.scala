@@ -628,6 +628,7 @@ import collection.JavaConversions._
     scenario("Outbrain") {
 
       Given("I am on an article")
+      OutbrainSwitch.switchOn()
       goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
         browser =>
           import browser._
