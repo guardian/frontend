@@ -24,4 +24,14 @@ describe('Expandable Video', function () {
         expect(expandableVideo).toBeDefined();
     });
 
+    it('should have show more button', function (done) {
+        $fixturesContainer = fixtures.render(fixturesConfig);
+        new ExpandableVideo($('.expandablevideo-ad-slot', $fixturesContainer), {
+            showMoreType: 'plus-only'
+        }).create().then(function () {
+            expect($('.ad-exp__close-button').length).toBeGreaterThan(0);
+            done();
+        });
+    });
+
 });
