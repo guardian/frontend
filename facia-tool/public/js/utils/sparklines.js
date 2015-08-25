@@ -246,7 +246,7 @@ function loadSparklinesForFront (front) {
 function startPolling () {
     if (!pollingId) {
         var period = vars.CONST.sparksRefreshMs || 60000;
-        setInterval(function () {
+        pollingId = setInterval(function () {
             _.each(subscribedFronts, function (front) {
                 loadSparklinesForFront(front, true);
             });
@@ -257,6 +257,7 @@ function startPolling () {
 function stopPolling () {
     if (pollingId) {
         clearInterval(pollingId);
+        pollingId = null;
     }
 }
 

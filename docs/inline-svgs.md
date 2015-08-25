@@ -19,7 +19,7 @@ Make sure only double quotes (`"`) are used, include for attribute values. The r
 
 In order to stop IE8 from freaking out (even though it cannot even render SVGs), you *must* remove any `xmlns` attributes from the `svg` element.
 
-IE also needs dimensions being set (all versions).
+Also, do ensure you set the viewport (`width` and `height` attributes) as well as the viewBox. The viewBox keeps it easily scalable (`viewBox="x y width height"`).
 
 Since you can target an inline SVG from CSS, remove all the `fill` etc. attributes you can.
 

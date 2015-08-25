@@ -6,6 +6,7 @@ import * as vars from 'modules/vars';
 import MockHistogram from 'mock/histogram';
 import mockFrontWidget from 'mock/front-widget';
 import * as sparklines from 'utils/sparklines';
+import * as mockjax from 'test/utils/mockjax';
 import tick from 'test/utils/tick';
 import textInside from 'test/utils/text-inside';
 
@@ -240,8 +241,7 @@ describe('Sparklines', function () {
     });
 
     it('loads sparklines on multiple fronts and polls', function (done) {
-        vars.CONST.sparksRefreshMs = 2000;
-        jasmine.clock().install();
+        vars.CONST.sparksRefreshMs = 1000;
 
         var frontOne = mockFrontWidget('first', {
                 one: [{ article: '/a' }]
@@ -258,15 +258,12 @@ describe('Sparklines', function () {
                 sparklines.unsubscribe(frontTwo);
                 containerOne.remove();
                 containerTwo.remove();
-                jasmine.clock().uninstall();
                 done();
             };
         sparklines.subscribe(frontOne);
         sparklines.subscribe(frontTwo);
         frontOne.sparklines.promise.then(onResolveOne);
-        frontOne._resolveCollection('one');
         frontTwo.sparklines.promise.then(onResolveTwo);
-        frontTwo._resolveCollection('two');
 
         var continueTest = _.after(2, () => { originalSetTimeout(() => {
             this.mockHistogram.off('complete', continueTest);
@@ -297,12 +294,10 @@ describe('Sparklines', function () {
             }, 10); });
             this.mockHistogram.on('complete', afterInterval);
 
-            tick(3000).then(() => tick(100));
         }, 10); });
         this.mockHistogram.on('complete', continueTest);
-
-        // Advance time to get the mocked response
-        tick(100).then(() => tick(100)).then(() => tick(100));
+        frontOne._resolveCollection('one');
+        frontTwo._resolveCollection('two');
     });
 
     it('refreshes when the collection changes', function (done) {
@@ -363,6 +358,41 @@ describe('Sparklines', function () {
 
         // Advance time to get the mocked response
         tick(100).then(() => tick(100)).then(() => tick(100));
+    });
+
+    it('fails nicely when ophan is down', function (done) {
+        vars.CONST.sparksRefreshMs = 2000;
+        this.mockHistogram.dispose();
+
+        var front = mockFrontWidget('error', {
+                one: [{ article: '/a' }]
+            }),
+            scope = mockjax.scope(),
+            onResolve = sinon.spy(),
+            onReject = sinon.spy(),
+            container = inject(front),
+            finishTest = function () {
+                scope.clear();
+                sparklines.unsubscribe(front);
+                container.remove();
+                done();
+            };
+        scope({
+            url: '/ophan/histogram?referring-path=/error*',
+            status: 400,
+            responseText: '',
+            onAfterComplete: function () {
+                originalSetTimeout(function () {
+                    expect(onResolve.called).toBe(true);
+                    expect(onReject.called).toBe(false);
+
+                    finishTest();
+                }, 10);
+            }
+        });
+        sparklines.subscribe(front);
+        front.sparklines.promise.then(onResolve, onReject);
+        front._resolveCollection('one');
     });
 });
 
