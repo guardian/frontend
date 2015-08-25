@@ -1,20 +1,9 @@
-@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
+@(classes: Seq[String], srcset: String, sizes: String, src: Option[String] = None)
 
-@import views.support.ImgSrc
-
-<div class="fc-item__media-wrapper">
-    <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
-        @widthsByBreakpoint match {
-            case Some(widths) => {
-                <img class="responsive-img"
-                    srcset="@ImgSrc.srcset(imageContainer, widths)"
-                    sizes="@widths.sizes"
-                    @if(inlineImage) { src="@ImgSrc.getFallbackUrl(imageContainer)" }>
-            }
-
-            case _ => {
-                <img src="@ImgSrc.getFallbackUrl(imageContainer)">
-            }
-        }
-    </div>
-</div>
+<img class="@RenderClasses(classes: _*)"
+    srcset="@srcset"
+    sizes="@sizes"
+    @src.map { src =>
+        src="@src"
+    }
+>
