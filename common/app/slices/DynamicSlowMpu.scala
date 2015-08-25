@@ -18,5 +18,9 @@ object DynamicSlowMPU extends DynamicContainer {
     }
   }
 
-  override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] = Seq(Hl3Mpu)
+  override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] =
+    firstSlice match {
+      case Some(_) => Seq(Hl3Mpu)
+      case None    => Seq(TTlMpu)
+    }
 }
