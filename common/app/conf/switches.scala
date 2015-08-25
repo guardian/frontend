@@ -989,6 +989,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val TwitterImageFallback = Switch(
+    "Feature",
+    "twitter-image-fallback",
+    "If switched on, then the first image of a tweet will be included in the embed - it will only display at mobile breakpoints",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   val DiscussionAllPageSizeSwitch = Switch(
     "Feature",
     "discussion-all-page-size",
