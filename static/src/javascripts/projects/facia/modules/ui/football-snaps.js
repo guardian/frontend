@@ -11,8 +11,8 @@ define([
          */
         resizeIfPresent: function (el) {
             if (detect.getBreakpoint() !== 'mobile' && el) {
-                 var $el = bonzo(el);
-                 $el.css('height', $el.parent().css('height'));
+                var $el = bonzo(el);
+                $el.css('height', $el.parent().css('height'));
             }
         }
     };
