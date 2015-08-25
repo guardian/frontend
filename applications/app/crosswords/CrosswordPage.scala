@@ -44,7 +44,7 @@ trait CrosswordSearchPage extends MetaData {
   val year = new DateTime().getYear
   val searchYears = 1999 to year
 
-  val crosswordTypes = Seq(
+  val crosswordTypes: Seq[String] = Seq(
     "quick",
     "cryptic",
     "prize",
@@ -54,7 +54,7 @@ trait CrosswordSearchPage extends MetaData {
     "everyman"
   )
 
-  val setters = Seq(
+  val setters: Seq[String] = Seq(
     "Arachne",
     "Araucaria",
     "Audreus",
