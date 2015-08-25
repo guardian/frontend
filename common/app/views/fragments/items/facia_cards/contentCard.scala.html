@@ -98,15 +98,11 @@
                     <div class="fc-item__media-wrapper">
                         <div class="fc-item__image-container u-responsive-ratio js-slideshow">
                         @imageElements.headOption.map { imageElement =>
-
-                            @lazyImage(
-                                Seq("responsive-img"),
-                                ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                                item.mediaWidthsByBreakpoint.sizes,
-                                None,
-                                containerIndex == 0 && index < 4,
-                                false
-                            )
+                            <img class="responsive-img"
+                                srcset="@ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint)"
+                                sizes="@item.mediaWidthsByBreakpoint.sizes"
+                                @* slideshow images have never been inlined, but they probably should be… *@
+                            >
                             @imageElements.tail.map { imageElement =>
 
                                 @lazyImage(
@@ -163,13 +159,10 @@
             @if(item.cardTypes.showCutOut) {
                 @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
                 <div class="fc-item__avatar">
-                    @lazyImage(
-                        Seq("fc-item__avatar__media", cutOut.cssClass),
-                        ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
-                        FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
-                        None,
-                        false
-                    )
+                    <img class="fc-item__avatar__media @cutOut.cssClass"
+                        srcset="@ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes))"
+                        sizes="@FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes"
+                    >
                 </div>
                 }
             }
