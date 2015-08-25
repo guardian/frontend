@@ -11,15 +11,13 @@ var fixturesConfig = {
 
 describe('Expandable Video', function () {
 
-    var expandableVideo,
-        $fixturesContainer;
+    var expandableVideo;
 
     it('should exist', function () {
         expect(ExpandableVideo).toBeDefined();
     });
 
     it('should be always defined', function () {
-        $fixturesContainer = fixtures.render(fixturesConfig);
         expandableVideo = new ExpandableVideo($('.expandablevideo-ad-slot'), {});
         expect(expandableVideo).toBeDefined();
     });
