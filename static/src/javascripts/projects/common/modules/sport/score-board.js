@@ -14,7 +14,7 @@ define([
     /* Parameters:
         - context.pageType      - 'report', 'stats'
         - context.parent        - the bonzo element that the placeholder, and eventually score, will attach to.
-        - context.autoupdated   - true if the scoreboard should update every 30 or 60 seconds (depending on device).
+        - context.autoupdated   - true if the scoreboard should update every 30 or 60 seconds, depending on device.
     */
     function ScoreBoard (context) {
 
