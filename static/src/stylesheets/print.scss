@@ -130,12 +130,21 @@ p {
 .crossword__grid-wrapper {
     float: left;
     width: 9cm !important;
+    height: 9cm !important;
     margin-bottom: 1cm !important;
+}
+
+.crossword__grid,
+.crossword__grid-background {
+    -webkit-print-color-adjust: exact; // allow background colour printing
 }
 
 .crossword__grid {
     background-color: #7c7c7c !important;
-    -webkit-print-color-adjust: exact; // allow background colour printing
+}
+
+.crossword__grid-background {
+    fill: #7c7c7c !important;
 }
 
 .crossword__controls,
@@ -150,11 +159,17 @@ p {
 .crossword__clues {
     clear: both;
     font-size: 12px;
+    margin-left: 1cm !important;
 }
+
+.crossword__clue {
+    list-style-position: outside;
+}
+
 .crossword__clues--across,
 .crossword__clues--down {
-    width: 50% !important;
-    display: inline-block;
+    float: left;
+    width: 8cm !important;
 }
 
 .crossword__links {
