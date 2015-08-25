@@ -81,7 +81,7 @@ define([
     function bindPrerollEvents(player) {
         var events = {
             end: function () {
-                console.log("++ Preroll video End");
+                console.log("++ Preroll video End. Embed: " + isEmbed );
                 player.trigger(constructEventName('preroll:end', player));
                 player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
@@ -151,6 +151,8 @@ define([
                 });
             },
             ready: function () {
+
+                console.log("Content: Ready");
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);

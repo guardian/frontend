@@ -62,8 +62,6 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
-            console.log("++ Sending event: " + event + " Event name" + eventName);
-
 
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
@@ -158,7 +156,6 @@ define([
         };
 
         this.onPrerollPlay = function () {
-            console.log("On preroll play, bebe");
             prerollPlayed = true;
             this.sendNamedEvent('preroll:play', true);
         };
