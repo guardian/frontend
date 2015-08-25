@@ -3,7 +3,7 @@ package rugby.jobs
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{OptaFeed, RugbyOptaFeedException}
-import rugby.model.Match
+import rugby.model.{ScoreEvent, Match}
 import scala.concurrent.Future
 
 object RugbyStatsJob extends RugbyStatsJob
@@ -11,11 +11,13 @@ object RugbyStatsJob extends RugbyStatsJob
 trait RugbyStatsJob extends ExecutionContexts with Logging {
   protected val liveScoreMatches = AkkaAgent[Map[String, Match]](Map.empty)
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
+  protected val scoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
   def run() {
     sendLiveScores(OptaFeed.getLiveScores)
     fixturesAndResults(OptaFeed.getFixturesAndResults)
+    fetchScoreEvents
   }
 
   def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {
@@ -39,6 +41,22 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
       case error: Exception => log.warn(error.getMessage)
+    }
+  }
+
+  def fetchScoreEvents {
+    val liveMatches = liveScoreMatches.get().values
+    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow)
+    val matches = (liveMatches ++ pastMatches).map(_.id)
+
+    val scoresEventsForMatchesFuture = Future.sequence {
+      matches.map ( matchId => OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents))
+    }
+
+    scoresEventsForMatchesFuture.map { scoreEventsForMatches =>
+      scoreEventsForMatches.map { scoreEventsForMatch =>
+        scoreEvents.alter { _ + (scoreEventsForMatch._1 -> scoreEventsForMatch._2)}
+      }
     }
   }
 
