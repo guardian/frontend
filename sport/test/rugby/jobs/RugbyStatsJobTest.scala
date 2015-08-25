@@ -23,13 +23,17 @@ import scala.language.reflectiveCalls
       date = testDate,
       id = "match id",
       homeTeam = homeTeamOld,
-      awayTeam = awayTeamOld
+      awayTeam = awayTeamOld,
+      venue = Some("kings cross"),
+      competitionName = "competition"
     ),
     Match(
       date = testDate.plusSeconds(1),
       id = "match id",
       homeTeam = homeTeamNew,
-      awayTeam = awayTeamNew
+      awayTeam = awayTeamNew,
+      venue = Some("kings cross"),
+      competitionName = "competition"
     ))
 
   "RugbyStatsJob" - {
