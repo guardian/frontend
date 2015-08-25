@@ -4,6 +4,7 @@ import com.gu.facia.api.models.FaciaContent
 import common.Maps._
 import play.api.libs.json.Json
 import implicits.FaciaContentImplicits._
+import services.FaciaContentConvert
 
 import scala.util.Try
 
@@ -22,13 +23,7 @@ object Story {
     }
   }
 
-  def fromContent(content: model.Content): Story = {
-    Story(
-      /** Stories that are not assigned to a group are treated as standard (0) items */
-      content.group.flatMap(group => Try(group.toInt).toOption).getOrElse(0),
-      content.isBoosted
-    )
-  }
+  def fromContent(content: model.Content): Story = fromFaciaContent(FaciaContentConvert.frontendContentToFaciaContent(content))
 
   def fromFaciaContent(faciaContent: FaciaContent): Story = {
     Story(

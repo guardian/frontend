@@ -15,7 +15,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
-      topStories map { stories => renderTopStoriesPage(stories.map(FaciaContentConvert.frontentContentToFaciaContent)) }
+      topStories map { stories => renderTopStoriesPage(stories.map(FaciaContentConvert.frontendContentToFaciaContent)) }
     }
 
     response map { _ getOrElse NotFound }
@@ -23,7 +23,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   def renderTrails() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
-      topStories map { stories => renderTopStoriesTrails(stories.map(FaciaContentConvert.frontentContentToFaciaContent)) }
+      topStories map { stories => renderTopStoriesTrails(stories.map(FaciaContentConvert.frontendContentToFaciaContent)) }
     }
 
     response map { _ getOrElse NotFound }

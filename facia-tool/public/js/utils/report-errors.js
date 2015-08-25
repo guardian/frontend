@@ -1,8 +1,8 @@
 import Raven from 'raven-js';
-import {pageConfig} from 'modules/vars';
+import {model} from 'modules/vars';
 
 export default function (ex) {
-    if (pageConfig.dev) {
+    if (model.state().defaults.dev) {
         throw ex;
     } else {
         Raven.captureException(ex);

@@ -1,22 +1,17 @@
 package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
-import controllers.front.{FrontJsonFapi, FrontJson}
+import controllers.front.FrontJsonFapi
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent
 
 import scala.concurrent.Future
-
-object FrontJsonDraft extends FrontJson {
-  val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
-}
 
 object FrontJsonFapiDraft extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
 object FaciaDraftController extends FaciaController with RendersItemResponse {
-  val frontJson: FrontJson = FrontJsonDraft
   val frontJsonFapi: FrontJsonFapi = FrontJsonFapiDraft
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {

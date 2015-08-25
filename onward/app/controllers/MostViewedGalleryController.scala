@@ -45,7 +45,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(galleries.map(FaciaContentConvert.frontentContentToFaciaContent), Nil, Some("more galleries"), None, None, None)
+        CollectionEssentials(galleries.map(FaciaContentConvert.frontendContentToFaciaContent), Nil, Some("more galleries"), None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
     )(request)

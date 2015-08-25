@@ -1,9 +1,22 @@
 package views
 
 import common.Edition
+import layout.ContentWidths.MainMedia
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
+
+object Widths {
+
+  def apply(isShowcase: Boolean, isFeature: Boolean): layout.WidthsByBreakpoint = {
+    (isShowcase, isFeature) match {
+      case (true, true) => MainMedia.FeatureShowcase
+      case (true, _) => MainMedia.Showcase
+      case _ => MainMedia.Inline
+    }
+  }
+
+}
 
 object MainCleaner {
  def apply(article: Article, html: String)(implicit request: RequestHeader) = {
@@ -23,7 +36,7 @@ object BodyCleaner {
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
         BlockNumberCleaner,
-        TweetCleaner,
+        new TweetCleaner(article),
         WitnessCleaner,
         TagLinker(article),
         TableEmbedComplimentaryToP,

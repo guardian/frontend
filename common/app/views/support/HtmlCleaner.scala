@@ -173,7 +173,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
 case class PictureCleaner(article: Article)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
-  def replacePictures(body: Document): Document = {
+  def clean(body: Document): Document = {
     for {
       figure <- body.getElementsByTag("figure")
       image <- figure.getElementsByTag("img").headOption
@@ -181,68 +181,41 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.largestImage
     }{
-        val hinting = findBreakpointWidths(figure)
-        val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
+      val hinting = findBreakpointWidths(figure)
+      val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
 
-        val orientationClass = image.orientation match {
-          case Portrait => Some("img--portrait")
-          case _ => Some("img--landscape")
-        }
-
-        val smallImageClass = hinting match {
-          case Thumbnail => None
-          case _ if image.width <= 220 => Some("img--inline")
-          case _ => None
-        }
-
-        val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
-
-        val html = views.html.fragments.contentImage(container, image, widths, figureClasses).toString()
-        figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))
-    }
-
-    body
-  }
-
-  private lazy val expandImage = views.html.fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen")).toString()
-
-  def addSharesAndFullscreen(body: Document): Document = {
-
-    for {
-      (imageElement, index) <- article.bodyFiltered.zipWithIndex
-      if !article.isLiveBlog
-      crop <- imageElement.largestEditorialCrop
-      figure <- body.select("[data-media-id=" + imageElement.id + "]")
-      image <- figure.getElementsByTag("img").headOption
-
-    }{
-      val linkIndex = (index + (if (article.mainFiltered.size > 0) 2 else 1)).toString
-      val hashSuffix = "img-" + linkIndex
-      figure.attr("id", hashSuffix)
-      figure.addClass("fig--narrow-caption")
-      figure.addClass("fig--has-shares")
-
-      val figcaption = figure.getElementsByTag("figcaption")
-      if(figcaption.length < 1) {
-        figure.addClass("fig--no-caption")
+      val orientationClass = image.orientation match {
+        case Portrait => Some("img--portrait")
+        case _ => Some("img--landscape")
       }
 
-      val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+      val smallImageClass = hinting match {
+        case Thumbnail => None
+        case _ if image.width <= 220 => Some("img--inline")
+        case _ => None
+      }
 
-      image.after(html.toString())
-      image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-      image.after(expandImage)
+      val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
+
+      // lightbox uses the images in the order mentioned in the header array
+      val lightboxInfo: Option[(Int, ImageAsset)] = for {
+        index <- Some(article.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
+        crop <- container.largestEditorialCrop
+        if !article.isLiveBlog
+      } yield (index, crop)
+
+      val html = views.html.fragments.img(
+        container,
+        lightboxIndex = lightboxInfo.map(_._1),
+        widthsByBreakpoint = widths,
+        image_figureClasses = Some(image, figureClasses),
+        shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) }
+      ).toString()
+
+      figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))
     }
 
     body
-  }
-
-  def clean(body: Document): Document = {
-    addSharesAndFullscreen(replacePictures(body))
-  }
-
-  def findImageFromId(id: String, src: String, profile: Profile): Option[ImageAsset] = {
-    findContainerFromId(id, src).flatMap(profile.elementFor)
   }
 
   def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
@@ -413,21 +386,49 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-object TweetCleaner extends HtmlCleaner {
+class TweetCleaner(content: Content) extends HtmlCleaner {
+
+  import conf.Switches.TwitterImageFallback
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("twitter-tweet").foreach { element =>
-      val el = element.clone()
-      if (el.children.size > 1) {
-        val body = el.child(0).attr("class", "tweet-body")
-        val date = el.child(1).attr("class", "tweet-date")
-        val user = el.ownText()
-        val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
-        val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-        element.empty().attr("class", "js-tweet tweet")
-        element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+    document.getElementsByClass("element-tweet").foreach { tweet =>
+
+      val tweetData: Option[Tweet] = Option(tweet.attr("data-canonical-url")).flatMap { url =>
+        url.split('/').lastOption.flatMap { id =>
+          content.tweets.find(_.id == id)
+        }
       }
+
+      val tweetImage = tweetData.flatMap(_.firstImage)
+
+      tweet.getElementsByClass("twitter-tweet").foreach { element =>
+
+        val el = element.clone()
+        if (el.children.size > 1) {
+          val body = el.child(0).attr("class", "tweet-body")
+
+          val date = el.child(1).attr("class", "tweet-date")
+          val user = el.ownText()
+          val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+          val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
+
+          element.empty().attr("class", "js-tweet tweet")
+
+          if (TwitterImageFallback.isSwitchedOn) {
+            tweetImage.foreach { image =>
+              val img = document.createElement("img")
+              img.attr("src", image)
+              img.attr("alt", "")
+              img.addClass("js-tweet-main-image tweet-main-image")
+              element.appendChild(img)
+            }
+          }
+
+          element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+        }
+      }
+
     }
     document
   }

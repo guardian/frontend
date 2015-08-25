@@ -1,8 +1,8 @@
+import _ from 'underscore';
 import mockjax from 'test/utils/mockjax';
 import Promise from 'Promise';
-import persistence from 'models/config/persistence';
 
-export default function(mockConfig, action) {
+export default function(mockConfig, baseModel, action) {
 
     return new Promise(function (resolve) {
         var lastRequest, desiredAnswer;
@@ -16,11 +16,14 @@ export default function(mockConfig, action) {
             },
             onAfterComplete: function () {
                 clearRequest();
-                // Every such action is also triggering an update of the config
-                persistence.once('after update', () => {
-                    setTimeout(() => {
-                        resolve(lastRequest);
-                    }, 100);
+                baseModel.once('config:needs:update', callback => {
+                    callback(_.extend({}, baseModel.state(),
+                        { config: {
+                            fronts: _.extend({}, baseModel.state().config.fronts, desiredAnswer.fronts),
+                            collections: _.extend({}, baseModel.state().config.collections, desiredAnswer.collections)
+                        }
+                    }));
+                    resolve(lastRequest);
                 });
             }
         });
@@ -37,10 +40,14 @@ export default function(mockConfig, action) {
             onAfterComplete: function () {
                 clearRequest();
                 // Every such action is also triggering an update of the config
-                persistence.once('after update', () => {
-                    setTimeout(() => {
-                        resolve(lastRequest);
-                    }, 100);
+                baseModel.once('config:needs:update', callback => {
+                    callback(_.extend({}, baseModel.state(),
+                        { config: {
+                            fronts: _.extend({}, baseModel.state().config.fronts, desiredAnswer.fronts),
+                            collections: _.extend({}, baseModel.state().config.collections, desiredAnswer.collections)
+                        }
+                    }));
+                    resolve(lastRequest);
                 });
             }
         });

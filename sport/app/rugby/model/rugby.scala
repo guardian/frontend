@@ -2,12 +2,16 @@ package rugby.model
 
 import org.joda.time.DateTime
 
-case class LiveScore(
+case class Match(
   date: DateTime,
   id: String,
   homeTeam: Team,
-  awayTeam: Team
-)
+  awayTeam: Team,
+  venue: Option[String],
+  competitionName: String
+) {
+  def hasTeam(teamId: String) = homeTeam.id == teamId || awayTeam.id == teamId
+}
 
 case class Team(
   id: String,

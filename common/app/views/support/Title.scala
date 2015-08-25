@@ -12,10 +12,6 @@ object Title {
 
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
     val title = page match {
-      case faciaPage: FaciaPage =>
-        page.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
-          s"${Localisation(page.webTitle)}${pagination(page)}"
-        )
       case pressedPage: PressedPage =>
         pressedPage.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
           s"${Localisation(page.webTitle)}${pagination(page)}"

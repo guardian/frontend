@@ -17,7 +17,7 @@ function latestArticle(index) {
 }
 
 function articleInside(root, index) {
-    return root.querySelector('.article:nth-child(' + (index || 1) + ')');
+    return root.querySelector('trail-widget:nth-child(' + (index || 1) + ') .article');
 }
 
 function click(element) {
@@ -31,7 +31,7 @@ function $(query) {
 }
 
 function type(where, what) {
-    jQuery(where).val(what).change();
+    return jQuery(where).val(what).change();
 }
 
 export {

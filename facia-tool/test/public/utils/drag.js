@@ -1,11 +1,18 @@
 import _ from 'underscore';
-import * as droppable from 'modules/droppable';
+import Droppable from 'modules/droppable';
 
 function Article (element) {
     this.Text = element.querySelector('a').getAttribute('href');
 }
 function Collection (element) {
     this.Text = element.querySelector('a').getAttribute('href');
+}
+function Media (assets, origin) {
+    this['application/vnd.mediaservice.crops+json'] = JSON.stringify({
+        id: 'fake_image_from_media',
+        assets: assets
+    });
+    this['application/vnd.mediaservice.kahuna.uri'] = origin;
 }
 
 function Event (extend) {
@@ -14,26 +21,40 @@ function Event (extend) {
     _.extend(this, extend);
 }
 
-function drop (element, target, source) {
-    droppable.listeners.drop(element, new Event({
+function drop (element, target, source, alternate) {
+    return Droppable.listeners.drop(element, new Event({
         target: target,
         dataTransfer: {
             getData: function (what) {
                 var value = source[what];
                 return value || '';
             }
-        }
+        },
+        ctrlKey: !!alternate
+    }));
+}
+
+function dropInEditor (element, target, source, alternate) {
+    return Droppable.imageEditor.drop(element, new Event({
+        target: target,
+        dataTransfer: {
+            getData: function (what) {
+                var value = source[what];
+                return value || '';
+            }
+        },
+        ctrlKey: !!alternate
     }));
 }
 
 function over (element, target) {
-    droppable.listeners.dragover(element, new Event({
+    return Droppable.listeners.dragover(element, new Event({
         target: target
     }));
 }
 
 function start (element, target, source) {
-    droppable.listeners.dragstart(element, new Event({
+    return Droppable.listeners.dragstart(element, new Event({
         target: target,
         dataTransfer: {
             setData: function (what, value) {
@@ -44,30 +65,24 @@ function start (element, target, source) {
 }
 
 function leave (element, target) {
-    droppable.listeners.dragleave(element, new Event({
+    return Droppable.listeners.dragleave(element, new Event({
         target: target
     }));
 }
 
 function createDroppable (element) {
     return {
-        drop: function (target, source) {
-            drop(element, target, source);
-        },
-        dragover: function (target, source) {
-            over(element, target, source);
-        },
-        dragstart: function (target, source) {
-            start(element, target, source);
-        },
-        dragleave: function (target, source) {
-            leave(element, target, source);
-        }
+        drop: drop.bind(null, element),
+        dragover: over.bind(null, element),
+        dragstart: start.bind(null, element),
+        dragleave: leave.bind(null, element),
+        dropInEditor: dropInEditor.bind(null, element)
     };
 }
 
 export default {
-    Article: Article,
-    Collection: Collection,
+    Article,
+    Collection,
+    Media,
     droppable: createDroppable
 };
