@@ -32,7 +32,7 @@ class CrosswordPage(val crossword: CrosswordData, content: contentapi.Content) e
   )
 }
 
-class CrosswordSearchPage extends MetaData {
+trait CrosswordSearchPage extends MetaData {
   override def id: String = "crosswords/search"
 
   override def section: String = "crosswords"
