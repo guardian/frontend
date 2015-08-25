@@ -13,13 +13,9 @@
                 return true;
             }
         }
-        if(window.useRAFforCSS) {
-            requestAnimationFrame(function () {
-                setMedia(styleSheet);
-            });
-        } else {
-            setTimeout(setMedia, null, styleSheet);
-        }
+        requestAnimationFrame(function () {
+            setMedia(styleSheet);
+        });
 
     }
 
