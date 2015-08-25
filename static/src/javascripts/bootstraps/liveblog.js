@@ -108,7 +108,11 @@ define([
                     targetEl = qwery('#' + eventId),
                     dim = bonzo(targetEl).offset(),
                     duration = 500,
-                    scrollAmount = config.switches.viewability ? dim.top - 52 : dim.top - 12;
+                    slimHeaderHeight = 52,
+                    topPadding = 12,
+                    scrollAmount;
+
+                scrollAmount = config.switches.viewability ? dim.top - slimHeaderHeight : dim.top - topPadding;
                 scroller.scrollTo(scrollAmount, duration, 'easeOutQuint');
                 window.setTimeout(unselectOnScroll, 550);
                 bean.off(curBinding);
