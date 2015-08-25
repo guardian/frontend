@@ -41,7 +41,7 @@ class CrosswordSearchPage extends MetaData {
 
   override def webTitle: String = analyticsName
 
-  val year = new DateTime().getYear()
+  val year = new DateTime().getYear
   val searchYears = 1999 to year
 
   val crosswordTypes = Seq(

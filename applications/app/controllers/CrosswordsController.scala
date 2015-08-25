@@ -125,7 +125,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
       } yield {
         val setter = formMap.get("setter").map(_.mkString.toLowerCase).filter(_.nonEmpty)
         val fromDate = new DateTime(year, month, 1, 0, 0)
-        val toDate = fromDate.dayOfMonth().withMaximumValue()
+        val toDate = fromDate.dayOfMonth.withMaximumValue
 
         CrosswordSearch(crosswordType, fromDate, toDate, setter)
       }
