@@ -5,17 +5,16 @@ import com.gu.facia.api.models.{FaciaContent, LatestSnap}
 import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
 import implicits.FaciaContentImplicits._
-import model.{ApiContentWithMeta, Content}
+import model.Content
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import services.FaciaContentConvert
 import slices._
 
 class FrontTest extends FlatSpec with Matchers {
-  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontentContentToFaciaContent(new Content(ApiContentWithMeta(
-      emptyApiContent.copy(id = theUrl, webUrl = theUrl),
-      Nil
-    )) {
+  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontendContentToFaciaContent(new Content(
+      emptyApiContent.copy(id = theUrl, webUrl = theUrl)
+    ) {
       override lazy val url: String = theUrl
 
       override lazy val webUrl: String = theUrl

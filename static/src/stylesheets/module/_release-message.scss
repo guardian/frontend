@@ -571,4 +571,19 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: 100%;
         height: 100%;
     }
+
+    &.macaskill {
+        .adblock-sticky__info {
+            @include mq(desktop) {
+                max-width: $gs-column-width*12;
+            }
+            @include mq(wide) {
+                max-width: none;
+            }
+        }
+
+        .adblock-byline-img {
+            right: 8%;
+        }
+    }
 }

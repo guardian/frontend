@@ -18,6 +18,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support._
+import com.gu.contentapi.client.{model => contentapi}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -26,14 +27,7 @@ import scala.util.Try
 /**
  * a combination of CAPI content and things from facia tool, in one place
  */
-class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
-
-  lazy val delegate: ApiContent = apiContent.delegate
-
-  lazy val snapType: Option[String] = apiContent.metaData.flatMap(_.snapType).filter(_.nonEmpty)
-  lazy val snapCss: Option[String] = apiContent.metaData.flatMap(_.snapCss).filter(_.nonEmpty)
-  lazy val snapUri: Option[String]  = apiContent.metaData.flatMap(_.snapUri).filter(_.nonEmpty)
-  lazy val snapHref: Option[String] = apiContent.metaData.flatMap(_.href).filter(_.nonEmpty)
+class Content protected (val delegate: contentapi.Content) extends Trail with MetaData with ShareLinks {
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
@@ -55,6 +49,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
   lazy val displayHint: String = fields.getOrElse("displayHint", "")
 
+  lazy val tweets: Seq[Tweet] = delegate.elements.getOrElse(Nil).filter(_.`type` == "tweet").map{ tweet =>
+    val images = tweet.assets.filter(_.`type` == "image").map(_.file).flatten
+    Tweet(tweet.id, images)
+  }
   override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
   override lazy val requiresMembershipAccess: Boolean = {
     conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
@@ -110,12 +108,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val witnessAssignment = references.get("witness-assignment")
   lazy val isbn: Option[String] = references.get("isbn")
   lazy val imdb: Option[String] = references.get("imdb")
-
-  lazy val seriesMeta = {
-    series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
-      Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
-    ) getOrElse Nil
-  }
 
   lazy val syndicationType = {
     if(isBlog){
@@ -180,17 +172,17 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
 
   // draft content may not have a headline. In that case just go with empty. We expect live content to have a headline
-  override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields.getOrDefault("headline", ""))
+  override lazy val headline: String = fields.getOrDefault("headline", "")
 
-  override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
+  override lazy val trailText: Option[String] = fields.get("trailText")
   // old bylines can have html http://content.guardianapis.com/commentisfree/2012/nov/10/cocoa-chocolate-fix-under-threat?show-fields=byline
-  override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline").map(stripHtml))
+  override lazy val byline: Option[String] = fields.get("byline").map(stripHtml)
   override val showByline = resolvedMetaData.showByline
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
-  // Meta Data used by plugins on the page
-  // people (including 3rd parties) rely on the names of these things, think carefully before changing them
+  // Static Meta Data used by plugins on the page. People (including 3rd parties) rely on the names of these things,
+  // think carefully before changing them.
   override def metaData: Map[String, JsValue] = {
     super.metaData ++ Map(
       ("keywords", JsString(keywords.map { _.name }.mkString(","))),
@@ -220,7 +212,34 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("sectionName", JsString(sectionName)),
       ("showRelatedContent", JsBoolean(showInRelated)),
       ("productionOffice", JsString(productionOffice.getOrElse("")))
-    ) ++ Map(seriesMeta: _*)
+    ) ++ conditionalMetaData
+  }
+
+  // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
+  private def conditionalMetaData: Map[String, JsValue] = {
+    val rugbyMeta = if (isRugbyMatch) {
+      val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
+      val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
+      val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)
+      Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
+    } else None
+
+    val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
+      Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
+    } else None
+
+    val (seriesMeta, seriesIdMeta) = series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map { series =>
+      (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
+    } getOrElse (None,None)
+
+    val meta = List[Option[(String, JsValue)]](
+      rugbyMeta,
+      cricketMeta,
+      seriesMeta,
+      seriesIdMeta
+    )
+
+    meta.flatten.toMap
   }
 
   override lazy val cacheSeconds = {
@@ -242,71 +261,15 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   override def elements: Seq[Element] = delegate.elements
-    .map(imageElement ++: _)
     .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
     .getOrElse(Nil)
 
   private lazy val resolvedMetaData: ResolvedMetaData = {
-    val trailMetaData = apiContent.metaData.getOrElse(TrailMetaData.empty)
-    val cardStyle = CardStyle(delegate, trailMetaData)
-    ResolvedMetaData.fromContentAndTrailMetaData(delegate, trailMetaData, cardStyle)
+    val cardStyle = CardStyle(delegate, TrailMetaData.empty)
+    ResolvedMetaData.fromContentAndTrailMetaData(delegate, TrailMetaData.empty, cardStyle)
   }
-
-  // Inherited from FaciaFields
-  override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
-  override lazy val supporting: List[Content] = apiContent.supporting
-  override lazy val isBoosted: Boolean = apiContent.metaData.flatMap(_.isBoosted).getOrElse(false)
-  override lazy val imageHide: Boolean = apiContent.metaData.flatMap(_.imageHide).getOrElse(false)
-  override lazy val isBreaking: Boolean = apiContent.metaData.flatMap(_.isBreaking).getOrElse(false)
-  override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showKickerCustom).getOrElse(false)
-  override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
-  override lazy val showBoostedHeadline: Boolean = apiContent.metaData.flatMap(_.showBoostedHeadline).getOrElse(false)
 
   lazy val contributorTwitterHandle: Option[String] = contributors.headOption.flatMap(_.twitterHandle)
-
-  override lazy val showQuotedHeadline: Boolean = resolvedMetaData.showQuotedHeadline
-
-  override lazy val imageReplace: Boolean = apiContent.metaData.flatMap(_.imageReplace).getOrElse(false)
-
-  override lazy val showKickerTag: Boolean = resolvedMetaData.showKickerTag
-
-  override lazy val showKickerSection: Boolean = apiContent.metaData.flatMap(_.showKickerSection).getOrElse(false)
-  override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
-  override lazy val imageSrcWidth: Option[String] = apiContent.metaData.flatMap(_.imageSrcWidth)
-  override lazy val imageSrcHeight: Option[String] = apiContent.metaData.flatMap(_.imageSrcHeight)
-  lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
-    src <- imageSrc
-    width <- imageSrcWidth
-    height <- imageSrcHeight
-  } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
-
-  override lazy val showMainVideo: Boolean = resolvedMetaData.showMainVideo
-
-  override lazy val imageCutoutReplace: Boolean = resolvedMetaData.imageCutoutReplace
-
-  override lazy val customImageCutout: Option[FaciaImageElement] = for {
-    src <- apiContent.metaData.flatMap(_.imageCutoutSrc)
-    width <- apiContent.metaData.flatMap(_.imageCutoutSrcWidth).flatMap(s => Try(s.toInt).toOption)
-    height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
-  } yield FaciaImageElement(src, width, height)
-
-  override lazy val imageSlideshowReplace: Boolean = {
-    apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace").flatMap(_.asOpt[Boolean])).getOrElse(false)
-  }
-
-  override lazy val slideshow: Iterable[FaciaImageElement] =
-    (for {
-      metaData <- apiContent.metaData
-      slideshowImagesList <- metaData.json.get("slideshow")
-      maybeImageElements = for {
-        slideshowImage <- slideshowImagesList.asInstanceOf[JsArray].value
-        maybeImageElement = for {
-          src <- slideshowImage.asInstanceOf[JsObject].\("src").asOpt[String]
-          width <- slideshowImage.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
-          height <- slideshowImage.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
-        } yield FaciaImageElement(src, width, height)
-      } yield maybeImageElement
-    } yield maybeImageElements).getOrElse(Nil).flatten
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 
@@ -343,105 +306,17 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
 object Content {
 
-  def apply(apiContent: ApiContentWithMeta): Content = {
-    apiContent.delegate match {
+  def apply(apiContent: contentapi.Content): Content = {
+    apiContent match {
       // liveblog / article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
-      case liveBlog if apiContent.delegate.isLiveBlog => new LiveBlog(apiContent)
-      case article if apiContent.delegate.isArticle || apiContent.delegate.isSudoku => new Article(apiContent)
-      case gallery if apiContent.delegate.isGallery => new Gallery(apiContent)
-      case video if apiContent.delegate.isVideo => new Video(apiContent)
-      case audio if apiContent.delegate.isAudio => new Audio(apiContent)
-      case picture if apiContent.delegate.isImageContent => new ImageContent(apiContent)
+      case liveBlog if apiContent.isLiveBlog => new LiveBlog(apiContent)
+      case article if apiContent.isArticle || apiContent.isSudoku => new Article(apiContent)
+      case gallery if apiContent.isGallery => new Gallery(apiContent)
+      case video if apiContent.isVideo => new Video(apiContent)
+      case audio if apiContent.isAudio => new Audio(apiContent)
+      case picture if apiContent.isImageContent => new ImageContent(apiContent)
       case _ => new Content(apiContent)
     }
-  }
-
-  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[com.gu.facia.client.models.MetaDataCommonFields]): Content = {
-    metaData match {
-      case Some(meta) => apply(ApiContentWithMeta(delegate, supporting, metaData))
-      case _ => apply(ApiContentWithMeta(delegate))
-    }
-  }
-
-  def apply(delegate: ApiContent): Content = apply(ApiContentWithMeta(delegate))
-
-  def fromPressedJson(contentJson: JsValue): Option[Content] = {
-    val contentFields: Option[Map[String, String]] = (contentJson \ "safeFields").asOpt[Map[String, String]]
-    val itemId: String = (contentJson \ "id").as[String]
-    val snapMeta: Option[TrailMetaData] = (contentJson \ "meta").asOpt[TrailMetaData]
-    if (Snap.isSnap(itemId)) {
-       Option(
-         new Snap(
-           snapId = itemId,
-           snapSupporting = (contentJson \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-             .flatMap(Content.fromPressedJson),
-           (contentJson \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
-           snapMeta = snapMeta,
-           snapElements = parseElements(contentJson)
-         )
-       )
-     } else {
-      Option(
-        Content(ApiContentWithMeta(
-          ApiContent(
-            itemId,
-            sectionId = (contentJson \ "sectionId").asOpt[String],
-            sectionName = (contentJson \ "sectionName").asOpt[String],
-            webPublicationDateOption = (contentJson \ "webPublicationDate").asOpt[Long].map(new DateTime(_)),
-            webTitle = (contentJson \ "safeFields" \ "headline").as[String],
-            webUrl = (contentJson \ "webUrl").as[String],
-            apiUrl = "",
-            elements = Option(parseElements(contentJson)),
-            fields = contentFields,
-            tags = (contentJson \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
-          ),
-          supporting = (contentJson \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-            .flatMap(Content.fromPressedJson),
-          metaData = (contentJson \ "meta").asOpt[TrailMetaData]
-        )
-        )
-      )
-    }
-  }
-
-  def parseElements(json: JsValue): List[ApiElement] = {
-    (json \ "elements").asOpt[List[JsValue]].map(_.map{ elementJson =>
-      ApiElement(
-        (elementJson \ "id").as[String],
-        (elementJson \ "relation").as[String],
-        (elementJson \ "type").as[String],
-        (elementJson \ "galleryIndex").asOpt[Int],
-        parseAssets(elementJson)
-      )
-    }).getOrElse(Nil)
-  }
-
-  private def parseTags(tagsJson: List[JsValue]): List[ApiTag] =
-    tagsJson.map { tagJson =>
-      ApiTag(
-        id              = (tagJson \ "id").as[String],
-        `type`          = (tagJson \ "type").as[String],
-        sectionId       = (tagJson \ "section").asOpt[String],
-        sectionName     = None,
-        webTitle        = (tagJson \ "webTitle").as[String],
-        webUrl          = (tagJson \ "webUrl").as[String],
-        apiUrl          = "",
-        references      = Nil,
-        bio             = None,
-        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String],
-        bylineLargeImageUrl  = (tagJson \ "bylineLargeImageUrl").asOpt[String]
-      )
-    }
-
-  private def parseAssets(json: JsValue): List[Asset] = {
-    (json \ "assets").asOpt[List[JsValue]].map(_.map{ assetJson =>
-      Asset(
-        (assetJson \ "type").as[String],
-        (assetJson \ "mimeType").asOpt[String],
-        (assetJson \ "file").asOpt[String],
-        (assetJson \ "typeData").asOpt[Map[String, String]].getOrElse(Map.empty)
-      )
-    }).getOrElse(Nil)
   }
 }
 
@@ -458,81 +333,7 @@ private object ArticleSchemas {
   }
 }
 
-object SnapApiContent {
-
-  def apply(): ApiContent = ApiContent(
-    id                           = "",
-    sectionId                   = None,
-    sectionName                 = None,
-    webPublicationDateOption    = Some(DateTime.now),
-    webTitle                    = "",
-    webUrl                      = "http://www.theguardian.com/",
-    apiUrl                      = "",
-    fields                      = None,
-    tags                        = Nil,
-    elements                    = Option(Nil),
-    references                  = Nil,
-    isExpired                   = None
-  )
-
-  def apply(snapElements: List[ApiElement],
-            fields: Option[Map[String, String]] = None,
-            tags: List[Tag] = Nil): ApiContent =
-    apply()
-      .copy(elements = Some(snapElements))
-      .copy(fields = fields)
-}
-
-class Snap(snapId: String,
-           snapSupporting: List[Content],
-           snapWebPublicationDate: DateTime,
-           snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
-           snapElements: List[ApiElement] = Nil
-            ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
-
-  //We set this to snapId as TemplateDeduping uses this ID to dedupe
-  override lazy val url: String = snapId
-
-  //TODO: legacy-snaps: Remove href after we move away from href in favour of snapUri
-  lazy val href = snapMeta.flatMap(_.href)
-
-  //Sorting is done via id
-  override lazy val id: String = snapId
-
-  //Trail implementations
-  override lazy val shortUrl: String = ""
-  override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse("Link")
-
-  //Meta implementations
-  override lazy val webPublicationDate = snapWebPublicationDate
-}
-
-object Snap {
-  def isSnap(id: String): Boolean = id.startsWith("snap/")
-}
-
-case class SnapLatest(articleId: String,
-                      snapSupporting: List[Content],
-                      snapWebPublicationDate: DateTime,
-                      snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
-                      snapElements: List[ApiElement] = Nil,
-                      fields: Map[String, String],
-                      snapTags: List[Tag])
-  extends Content(new ApiContentWithMeta(
-    SnapApiContent(
-      snapElements,
-      Option(fields),
-      snapTags
-    ).copy(
-      webUrl = s"/$articleId",
-      webPublicationDateOption = Some(snapWebPublicationDate)
-    ), supporting = snapSupporting, metaData = snapMeta)) {
-  override lazy val id: String = articleId
-  override lazy val url: String = s"/$articleId"
-  override lazy val tags: Seq[Tag] = snapTags
-}
-
-class Article(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
+class Article(delegate: contentapi.Content) extends Content(delegate) with Lightboxable {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
@@ -566,6 +367,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def metaData: Map[String, JsValue] = {
     val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
+
     super.metaData ++ Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(isLiveBlog)),
@@ -594,7 +396,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
 }
 
-class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
+class LiveBlog(delegate: contentapi.Content) extends Article(delegate) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
@@ -605,19 +407,12 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
     "twitter:card" -> "summary"
   )
 
-  private lazy val cricketMetaData = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
-    Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
-  } else {
-    Map()
-  }
-
-  override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
   override lazy val lightboxImages = mainFiltered
 
   lazy val blocks = LiveBlogParser.parse(body)
 }
 
-abstract class Media(content: ApiContentWithMeta) extends Content(content) {
+abstract class Media(delegate: contentapi.Content) extends Content(delegate) {
 
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override def metaData: Map[String, JsValue] = super.metaData ++ Map("isPodcast" -> JsBoolean(isPodcast))
@@ -632,7 +427,7 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
   )
 }
 
-class Audio(content: ApiContentWithMeta) extends Media(content) {
+class Audio(delegate: contentapi.Content) extends Media(delegate) {
 
   override lazy val contentType = GuardianContentTypes.Audio
 
@@ -650,10 +445,10 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 }
 
 object Audio {
-  def apply(delegate: ApiContent): Audio = new Audio(ApiContentWithMeta(delegate))
+  def apply(delegate: ApiContent): Audio = new Audio(delegate)
 }
 
-class Video(content: ApiContentWithMeta) extends Media(content) {
+class Video(delegate: contentapi.Content) extends Media(delegate) {
 
   override lazy val contentType = GuardianContentTypes.Video
 
@@ -694,10 +489,10 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
 }
 
 object Video {
-  def apply(delegate: ApiContent): Video = new Video(ApiContentWithMeta(delegate))
+  def apply(delegate: ApiContent): Video = new Video(delegate)
 }
 
-class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
+class Gallery(delegate: contentapi.Content) extends Content(delegate) with Lightboxable {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
@@ -761,7 +556,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
 }
 
 object Gallery {
-  def apply(delegate: ApiContent): Gallery = new Gallery(ApiContentWithMeta(delegate))
+  def apply(delegate: ApiContent): Gallery = new Gallery(delegate)
 
 }
 
@@ -802,7 +597,7 @@ trait Lightboxable extends Content {
 
 }
 
-class Interactive(content: ApiContentWithMeta) extends Content(content) {
+class Interactive(delegate: contentapi.Content) extends Content(delegate) {
   override lazy val contentType = GuardianContentTypes.Interactive
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
@@ -816,10 +611,10 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
 }
 
 object Interactive {
-  def apply(delegate: ApiContent): Interactive = new Interactive(ApiContentWithMeta(delegate))
+  def apply(delegate: ApiContent): Interactive = new Interactive(delegate)
 }
 
-class ImageContent(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
+class ImageContent(delegate: contentapi.Content) extends Content(delegate) with Lightboxable {
   override val lightboxableCutoffWidth = 940
   override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
@@ -837,7 +632,6 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) with Li
   )
 }
 
-case class ApiContentWithMeta(
-  delegate: ApiContent,
-  supporting: List[Content] = Nil,
-  metaData: Option[com.gu.facia.client.models.MetaDataCommonFields] = None)
+case class Tweet(id: String, images: Seq[String]) {
+  val firstImage: Option[String] = images.headOption
+}

@@ -301,20 +301,11 @@ object Switches {
     "background-js",
     "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 24),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
   // Commercial
-  val NewOutbrainSwitch = Switch(
-    "Commercial",
-    "new-outbrain",
-    "Allowing to show new outbrain logic for facelift",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 30),
-    exposeClientSide = true
-  )
-
   val NoMobileTopAdSwitch = Switch(
     "Commercial",
     "no-mobile-top-ad",
@@ -935,6 +926,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABRugbyScores = Switch(
+    "A/B Tests",
+    "ab-rugby-scores",
+    "Switches on the score components for the Rugby",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 7),
+    exposeClientSide = true
+  )
+
   val ABAdblockStickyBanner = Switch(
     "A/B Tests",
     "ab-adblock-sticky-banner",
@@ -986,6 +986,15 @@ object Switches {
     "If switched on, a stocks widget will be displayed on the business front",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val TwitterImageFallback = Switch(
+    "Feature",
+    "twitter-image-fallback",
+    "If switched on, then the first image of a tweet will be included in the embed - it will only display at mobile breakpoints",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
