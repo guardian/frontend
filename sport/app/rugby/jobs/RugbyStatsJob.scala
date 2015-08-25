@@ -50,7 +50,9 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     val matches = (liveMatches ++ pastMatches).map(_.id)
 
     val scoresEventsForMatchesFuture = Future.sequence {
-      matches.map ( matchId => OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents))
+      matches.map ( matchId =>
+        OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents)
+      )
     }
 
     scoresEventsForMatchesFuture.map { scoreEventsForMatches =>
@@ -75,8 +77,9 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     fixturesAndResultsMatches.get.values.find { rugbyMatch =>
       isValidMatch(year, month, day, homeTeamId, awayTeamId, rugbyMatch)
     }
-
   }
+
+  def getScoreEvents(matchId: String): Seq[ScoreEvent] = scoreEvents.get().get(matchId).getOrElse(Seq.empty)
 
   private def isValidMatch(year: String, month: String, day: String, team1: String, team2: String, rugbyMatch: Match): Boolean = {
     rugbyMatch.hasTeam(team1) && rugbyMatch.hasTeam(team2) && dateFormat.print(rugbyMatch.date) == s"$year/$month/$day"
