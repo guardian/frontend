@@ -70,7 +70,7 @@ define([
                 this.$ad.css('height', this.openedHeight);
                 $('.slide-video', $(this.$adSlot[0])).css('height', this.openedHeight).addClass('slide-video__expand');
                 var videoSrc = $('#YTPlayer').attr('src') + '&amp;autoplay=1';
-                setTimeout (function () {
+                setTimeout(function () {
                     $('#YTPlayer').attr('src', videoSrc);
                 }, 1000);
             }.bind(this));
