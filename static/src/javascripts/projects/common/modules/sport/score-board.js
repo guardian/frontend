@@ -60,8 +60,7 @@ define([
     ScoreBoard.prototype.loadFromJson = function (html) {
         this.template = html;
         this.render(this.placeholder);
-    }
-
+    };
 
     return ScoreBoard;
 
