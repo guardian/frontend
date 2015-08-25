@@ -12,9 +12,11 @@ define([
     scoreContainerHtml
 ) {
     /* Parameters:
-        - context.pageType      - 'report', 'stats'
-        - context.parent        - the bonzo element that the placeholder, and eventually score, will attach to.
-        - context.autoupdated   - true if the scoreboard should update every 30 or 60 seconds, depending on device.
+        - context.pageType          - one of 'minbymin', 'preview', 'report', 'stats'
+        - context.parent            - the bonzo element that the placeholder, and eventually score, will attach to.
+        - context.autoupdated       - true if the scoreboard should update every 30 or 60 seconds, depending on device.
+        - context.responseDataKey   - the key of the ajax-loaded json object that maps to the scoreboard html.
+        - context.endpoint          - the ajax endpoint which will provide html scores inside a json object.
     */
     function ScoreBoard(context) {
 
@@ -24,15 +26,22 @@ define([
             loadingState: this.pageType !== 'report' ? ' score__loading--live' : ''
         }))[0];
 
-        context.parent.after(this.placeholder);
+        if (this.pageType === 'report') {
+            context.parent.after(this.placeholder);
+        } else {
+            context.parent.addClass('u-h').before(this.placeholder);
+        }
+
+        // These parameters configure the way the Component super class fetches new score html.
+        this.endpoint = context.endpoint;
         this.autoupdated = context.autoupdated;
+        this.responseDataKey = context.responseDataKey;
         this.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
     }
 
     component.define(ScoreBoard);
 
     ScoreBoard.prototype.componentClass = 'match-summary';
-    ScoreBoard.prototype.responseDataKey = 'matchSummary';
 
     ScoreBoard.prototype.prerender = function () {
         this.placeholder.innerHTML = '';
@@ -42,11 +51,17 @@ define([
         this.setState(this.pageType);
     };
 
-    ScoreBoard.prototype.load = function (endpoint, key) {
-        this.endpoint = endpoint;
-
-        this.fetch(this.placeholder, key);
+    // Load the first score html component from ajax, and any subsequent score updates from the same endpoint.
+    ScoreBoard.prototype.load = function () {
+        this.fetch(this.placeholder);
     };
+
+    // Load the first score html component from json, and any subsequent score updates from ajax.
+    ScoreBoard.prototype.loadFromJson = function (html) {
+        this.template = html;
+        this.render(this.placeholder);
+    }
+
 
     return ScoreBoard;
 

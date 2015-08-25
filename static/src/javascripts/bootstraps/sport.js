@@ -34,9 +34,12 @@ define([
 
             var scoreBoard = new ScoreBoard({
                 pageType: 'report',
-                parent: $h });
+                parent: $h,
+                autoupdated: false,
+                responseDataKey: 'liveScore',
+                endpoint: config.page.rugbyMatch + '.json'});
 
-            scoreBoard.load(config.page.rugbyMatch + '.json', 'liveScore');
+            scoreBoard.load();
         }
     }
 
