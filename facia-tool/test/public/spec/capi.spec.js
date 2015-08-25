@@ -41,7 +41,7 @@ describe('Content API', function () {
 
     it('decorateItems in one batch', function (done) {
         this.scope({
-            url: /\/api\/proxy\/search\?ids=.+capi1,.+capi2,.+capi3/,
+            url: /\/api\/preview\/search\?ids=.+capi1,.+capi2,.+capi3/,
             responseText: {
                 response: {
                     results: [{
@@ -78,7 +78,7 @@ describe('Content API', function () {
 
     it('decorateItems in multiple batches', function (done) {
         this.scope({
-            url: /\/api\/proxy\/search\?ids=.+batch1,.+batch2,.+batch3/,
+            url: /\/api\/preview\/search\?ids=.+batch1,.+batch2,.+batch3/,
             responseText: {
                 response: {
                     results: [{
@@ -97,7 +97,7 @@ describe('Content API', function () {
                 }
             }
         }, {
-            url: /\/api\/proxy\/search\?ids=.+batch4/,
+            url: /\/api\/preview\/search\?ids=.+batch4/,
             responseText: {
                 response: {
                     results: [{

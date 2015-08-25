@@ -67,7 +67,7 @@ export default {
     mainDomain:            'www.theguardian.com',
 
     apiBase:               '',
-    apiSearchBase:         '/api/proxy',
+    apiSearchBase:         '/api/preview',
     apiLiveBase:           '/api/live',
     apiSearchParams:       [
         'show-elements=video',

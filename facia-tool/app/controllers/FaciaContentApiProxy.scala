@@ -16,7 +16,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
   override lazy val actorSystem = ActorSystem()
   import play.api.Play.current
 
-  def capi(path: String) = APIAuthAction.async { request =>
+  def capiPreview(path: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)

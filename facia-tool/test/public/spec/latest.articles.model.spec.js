@@ -12,7 +12,7 @@ describe('Latest articles', function() {
 
     it('whole list should filter out articles', function (done) {
         this.scope({
-            url: /\/api\/proxy\/content\/scheduled(\?.+)/,
+            url: /\/api\/preview\/content\/scheduled(\?.+)/,
             urlParams: ['queryString'],
             response: function (request) {
                 var urlParams = parse(request.urlParams.queryString);
@@ -92,7 +92,7 @@ describe('Latest articles', function() {
 
     it('all results empty response', function (done) {
         this.scope({
-            url: /\/api\/proxy\/content\/scheduled(\?.+)/,
+            url: /\/api\/preview\/content\/scheduled(\?.+)/,
             responseText: {
                 response: {
                     status: 'ok',
@@ -112,7 +112,7 @@ describe('Latest articles', function() {
 
     it('searches an article', function (done) {
         this.scope({
-            url: /\/api\/proxy\/uk-news\/important\/stuff\?(.+)/,
+            url: /\/api\/preview\/uk-news\/important\/stuff\?(.+)/,
             responseText: {
                 status: 'ok',
                 response: {
@@ -141,7 +141,7 @@ describe('Latest articles', function() {
 
     it('network fail', function (done) {
         this.scope({
-            url: /\/api\/proxy\/uk-news\/less\/important.*/,
+            url: /\/api\/preview\/uk-news\/less\/important.*/,
             responseText: 'Server error',
             status: 500
         });
