@@ -93,6 +93,23 @@ describe('Slice Adverts', function () {
         });
     });
 
+    it('should have the correct ad names on mobile', function (done) {
+        detect.getBreakpoint = function () {
+            return 'mobile';
+        };
+        sliceAdverts.init();
+
+        fastdom.defer(function () {
+            var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
+
+            expect($adSlots[0].data('name')).toEqual('inline1');
+            expect($adSlots[1].data('name')).toEqual('inline2');
+            expect($adSlots[2].data('name')).toEqual('inline3');
+
+            done();
+        });
+    });
+
     it('should have the correct size mappings', function (done) {
         sliceAdverts.init();
 
