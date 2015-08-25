@@ -417,22 +417,22 @@
 
     .slide-video {
         background: #000000;
-        display: none;
         position: absolute;
-        top: 0;
+        top: 24px;
         width: 100%;
         z-index: 3;
+        display: none;
     }
 
     .slide-video__expand {
-        display: block;
         transition: all 1s;
+        display: block;
     }
 
     .expandable_video {
         position: absolute;
         z-index: 10;
-        margin-top: $gs-baseline/2;
+        margin-left: -50%;
         left: 50%;
     }
 

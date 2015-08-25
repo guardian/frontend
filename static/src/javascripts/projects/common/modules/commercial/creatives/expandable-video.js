@@ -30,7 +30,6 @@ define([
     var ExpandableVideo = function ($adSlot, params) {
         this.$adSlot      = $adSlot;
         this.params       = params;
-        this.isClosed     = true;
 
         if (detect.isBreakpoint({min: 'tablet'})) {
             this.closedHeight = 250;
@@ -44,13 +43,11 @@ define([
 
     ExpandableVideo.prototype.create = function () {
         var videoHeight = this.openedHeight,
-            videoWidth = Math.ceil((videoHeight * 16) / 9),
-            leftMargin = 'margin-left: ' + Math.ceil(videoWidth / -2) + 'px;',
-            videoDesktop = {
-                video: (this.params.videoURL !== '') ?
-                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video" style="' + leftMargin + '"></iframe>' : ''
+            videoSource = {
+                videoEmbed: (this.params.YoutubeVideoURL !== '') ?
+                    '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?rel=0&amp;controls=2&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video"></iframe>' : ''
             },
-            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: _.merge(this.params, videoDesktop) }));
+            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: _.merge(this.params, videoSource) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
@@ -71,9 +68,11 @@ define([
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
                 this.$ad.css('height', this.openedHeight);
-                this.isClosed = !this.isClosed;
                 $('.slide-video', $(this.$adSlot[0])).css('height', this.openedHeight).addClass('slide-video__expand');
-                $('#myYTPlayer').playVideo(); 
+                var videoSrc = $('#YTPlayer').attr('src') + '&amp;autoplay=1';
+                setTimeout(function(){
+                    $('#YTPlayer').attr('src', videoSrc);
+                }, 1000);                      
             }.bind(this));
         }.bind(this));
 
