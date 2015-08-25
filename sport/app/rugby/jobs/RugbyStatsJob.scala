@@ -13,10 +13,6 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
-  def run() {
-    sendLiveScores(OptaFeed.getLiveScores)
-    fixturesAndResults(OptaFeed.getFixturesAndResults)
-  }
 
   def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {
     scoreData.flatMap { matches =>
