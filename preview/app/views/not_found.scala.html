@@ -1,0 +1,42 @@
+@(path: String)
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                font-family: 'Guardian Egyptian Text', Georgia, serif;
+                margin-top: 10%;
+                margin-left: 20%;
+                margin-right: 20%; 
+                background: white;
+                color: rgb(51, 51, 51);
+            }
+
+            h1 {
+                font-weight: bold;
+            }
+
+            a, a:visited {
+                color: #005689;
+                text-decoration: none;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1> 404 - Content could not be found</h1>
+        <p>
+        The content could not be found.        
+        Several reasons are possible:
+
+        <ul>
+            <li> Path is incorrect. Please check <b> @path </b>  </li>
+            <li> Content has not yet been indexed in the Content API</li>
+        </ul>
+        </p>
+
+        <p>If the path is correct and content does not show up after 30 seconds, please report the problem to <a href="mailto:central.production@@guardian.co.uk">central.production@@guardian.co.uk</a></p>
+
+
+    </body>
+</html>

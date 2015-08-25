@@ -9,7 +9,7 @@ var typeBounceSym = Symbol();
 var setFilter = Symbol();
 var preventUpdate = Symbol();
 
-class AutoComplete extends BaseWidget {
+export default class AutoComplete extends BaseWidget {
     constructor(opts) {
         super();
 
@@ -124,5 +124,3 @@ class AutoComplete extends BaseWidget {
         });
     }
 }
-
-export default AutoComplete;

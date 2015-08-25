@@ -1,6 +1,5 @@
-@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, config: com.gu.facia.api.models.CollectionConfig)
+@(trails: Seq[Content], containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit request: RequestHeader, config: com.gu.facia.api.models.CollectionConfig)
 
-@import model.Collection
 @import views.html.fragments.containers.facia_cards.{slice, date}
 @import views.support.{GetClasses, PreviousAndNext}
 @import common.LinkTo
@@ -23,7 +22,7 @@
             <div class="fc-container__header js-container__header">
                 <div class="fc-container__header__title">
                     <span class="u-text-hyphenate">@Html(webTitle)</span>
-                    @date(actualDate)
+                    @date(actualDate, tzOverride)
                 </div>
             </div>
             <div class="fc-container__body fc-container--rolled-up-hide">
@@ -39,6 +38,6 @@
                 }
             </div>
         </div>
-        @fragments.trendingTopics(collection.items.map(FaciaContentConvert.frontentContentToFaciaContent), page.id)
+        @fragments.trendingTopics(trails.map(FaciaContentConvert.frontendContentToFaciaContent), page.id)
     </section>
 }

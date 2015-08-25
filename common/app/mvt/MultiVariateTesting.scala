@@ -6,6 +6,7 @@ import conf.Switch
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
+import conf.Switches.ServerSideTests
 
 // To add a test, do the following:
 // 1. Create an object that extends TestDefinition
@@ -31,19 +32,46 @@ object JspmControlTest extends TestDefinition(
   new LocalDate(2015, 9, 30)
 )
 
-object MobileTopBannerRemoveTest extends TestDefinition(
-  List(Variant1),
-  "mobile-top-banner-remove",
-  "To test the effect of top banner removal on mobile",
-  new LocalDate(2015, 8, 30)
+object ABHeadlinesTestVariant extends TestDefinition(
+  Nil,
+  "headlines-ab-variant",
+  "To test how much of a difference changing a headline makes (variant group)",
+  new LocalDate(2015, 9, 30)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-A") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  }
+}
+
+object ABHeadlinesTestControl extends TestDefinition(
+  Nil,
+  "headlines-ab-control",
+  "To test how much of a difference changing a headline makes (control group)",
+  new LocalDate(2015, 9, 30)
+) {
+  override def isParticipating(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-B") && switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  }
+}
+
+object ABNewFreeMembershipTest extends TestDefinition(
+  List(Variant1, Variant2, Variant3, Variant4, Variant5),
+  "new-free-membership-test",
+  "To test how much of a difference changing a membership link and removing 'free' makes",
+  new LocalDate(2015, 9, 1)
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, MobileTopBannerRemoveTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant, ABNewFreeMembershipTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
+    val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
+      .map{ test => Some(s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}""")}
+
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-    List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+      headlineTests ++
+      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+
     configEntries.flatten.mkString(",")
   }
 }
@@ -77,7 +105,7 @@ trait Tests {
       tests.find { test =>
         test.variants.contains(variant) &&
         test.switch.isSwitchedOn &&
-        conf.Switches.ServerSideTests.isSwitchedOn
+        ServerSideTests.isSwitchedOn
       }
     }
   }

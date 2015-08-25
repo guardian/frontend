@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import javax.inject.Singleton
 import model.{NoCache, IdentityPage}
 import play.api.mvc._
-import play.api.data.Form
+import play.api.data.{Forms, Form}
 import play.api.data.Forms._
 import services._
 import utils.SafeLogging
@@ -31,6 +31,14 @@ class ChangePasswordController @Inject()( api: IdApiClient,
   val page = IdentityPage("/password/change", "Change Password", "change-password")
 
   val passwordForm = Form(
+    mapping(
+      ("oldPassword", optional(Forms.text)),
+      ("newPassword1", Forms.text),
+      ("newPassword2", Forms.text)
+    )(PasswordFormData.apply)(PasswordFormData.unapply)
+  )
+
+  val passwordFormWithConstraints = Form(
     mapping(
       ("oldPassword", optional(idPassword)),
       ("newPassword1", idPassword),
@@ -69,7 +77,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
     authAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)
-        val boundForm = passwordForm.bindFromRequest()
+        val boundForm = passwordFormWithConstraints.bindFromRequest()
         val futureFormOpt = boundForm.value map {
           data =>
             val update = PasswordUpdate(data.oldPassword, data.newPassword1)

@@ -3,6 +3,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
@@ -12,6 +13,7 @@ define([
     qwery,
     $,
     config,
+    detect,
     Component,
     mediator,
     createAdSlot,
@@ -35,8 +37,14 @@ define([
         this.fetch(qwery('.js-popular-trails'), 'html');
     };
 
+    MostPopular.prototype.mobileMaximumSlotsReached = function () {
+        return (detect.getBreakpoint() === 'mobile'
+            && config.switches.noMobileTopAd
+            && $('.ad-slot--inline').length > 1) ? true : false;
+    };
+
     MostPopular.prototype.prerender = function () {
-        if (!config.page.shouldHideAdverts) {
+        if (!(config.page.shouldHideAdverts || this.mobileMaximumSlotsReached())) {
             this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
                 .append(createAdSlot('mostpop', 'container-inline'));
         } else {

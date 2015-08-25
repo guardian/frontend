@@ -1,6 +1,6 @@
 # Inline SVGs
 
-The use of inline SVGs is encouraged over BASE-64-encoded URLs in CSS. It means: 
+The use of inline SVGs is encouraged over BASE-64-encoded URLs in CSS. It means:
 
 - the browser only has to parse what it needs, rather than all the images for the entire site on every page load
 - the weight of the CSS is massively reduced (about 50kb gzipped in theory)
@@ -15,11 +15,11 @@ Any image which you want to insert needs to be added to `/static/src/inline-svgs
 
 All images in `inline-svgs` are run through SVGO before being inserted, so you can afford to leave useful comments etc. in a file if you want.
 
-Make sure all double quotes (`"`) are remove, include for attribute values. The requireJS plugin expects this and its’ string conconcatenation will fail if an `svg` source contains a single quote (`'`).
+Make sure only double quotes (`"`) are used, include for attribute values. The requireJS plugin expects this and its’ string conconcatenation will fail if an `svg` source contains a single quote (`'`).
 
 In order to stop IE8 from freaking out (even though it cannot even render SVGs), you *must* remove any `xmlns` attributes from the `svg` element.
 
-IE also needs dimensions being set (all versions).
+Also, do ensure you set the viewport (`width` and `height` attributes) as well as the viewBox. The viewBox keeps it easily scalable (`viewBox="x y width height"`).
 
 Since you can target an inline SVG from CSS, remove all the `fill` etc. attributes you can.
 
@@ -42,9 +42,10 @@ A scala helper method will insert the image for you:
 
 ### JavaScript templates
 
-These are a bit more complex. To ensures they only appear in the source once, all SVGs that will be used in a JavaScript template need to be added to `common/views/svgs.js`:
+These are a bit more complex. To ensures they only appear in the source once, all SVGs that will be used in a JavaScript template need to be added to `static/src/javascripts/projects/common/views/svgs.js`:
 
 ```javascript
+
 // common/views/svgs.js
 define([
     'inlineSvg!svgs/Filename',
@@ -95,7 +96,7 @@ define([
 
 ## Output
 
-The result of inserting an SVG with either method is the compressed source wrapped inside a `span`, with some default classes for free, plus any extra you've specified. 
+The result of inserting an SVG with either method is the compressed source wrapped inside a `span`, with some default classes for free, plus any extra you've specified.
 
 So both this Scala:
 

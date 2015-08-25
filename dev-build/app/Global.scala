@@ -5,10 +5,12 @@ import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import dfp.DfpDataCacheLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
+import headlines.ABHeadlinesLifecycle
 import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader, WithFilters}
+import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -70,7 +72,9 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with SwitchboardLifecycle
   with FootballLifecycle
   with CricketLifecycle
-  with CorsErrorHandler {
+  with RugbyLifecycle
+  with CorsErrorHandler
+  with ABHeadlinesLifecycle {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

@@ -15,6 +15,13 @@
 }
 
 <div class="l-side-margins">
+
+    @if(!(index.page.id.endsWith("crosswords/series/crossword-editor-update") || index.page.id.endsWith("crosswords/crossword-blog"))) {
+        @if(index.page.id.contains("crosswords")) {
+            @fragments.crosswordsOptOutBanner()
+        }
+    }
+
     <div class="@RenderClasses(Map(
         "u-cf" -> true,
         "index-page" -> true,
@@ -44,7 +51,7 @@
             </div>
         }
 
-        @fragments.trendingTopics(index.trails.map(FaciaContentConvert.frontentContentToFaciaContent), index.page.id, None)
+        @fragments.trendingTopics(index.trails.map(FaciaContentConvert.frontendContentToFaciaContent), index.page.id, None)
         <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>

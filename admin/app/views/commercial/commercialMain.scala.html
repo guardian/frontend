@@ -1,0 +1,7 @@
+@(env: String, title: String, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)
+
+@admin_main(s"Commercial: $title", env, isAuthed = true, hasCharts = hasCharts, autoRefresh = autoRefresh) {
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
+    <h2>@title</h2>
+    @content
+}

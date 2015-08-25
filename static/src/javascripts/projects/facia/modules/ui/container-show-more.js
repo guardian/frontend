@@ -2,7 +2,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'raven',
+    'common/utils/report-error',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax-promise',
@@ -13,7 +13,7 @@ define([
     bonzo,
     fastdom,
     qwery,
-    raven,
+    reportError,
     _,
     $,
     ajax,
@@ -128,6 +128,7 @@ define([
                 }
                 setButtonState(button, STATE_DISPLAYED);
                 updatePref(button.id, button.state);
+                mediator.emit('modules:show-more:loaded');
             });
             button.isLoaded = true;
         }).catch(function (err) {
@@ -136,7 +137,7 @@ define([
             });
 
             showErrorMessage(button);
-            raven.captureException(new Error('Error retrieving show more (' + err + ')'));
+            reportError(new Error('Error retrieving show more (' + err + ')'), false);
         });
     }
 

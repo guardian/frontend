@@ -6,7 +6,9 @@ import * as vars from 'modules/vars';
 import MockHistogram from 'mock/histogram';
 import mockFrontWidget from 'mock/front-widget';
 import * as sparklines from 'utils/sparklines';
+import * as mockjax from 'test/utils/mockjax';
 import tick from 'test/utils/tick';
+import textInside from 'test/utils/text-inside';
 
 describe('Sparklines', function () {
     var originalsparksBatchQueue = vars.CONST.sparksBatchQueue;
@@ -82,10 +84,11 @@ describe('Sparklines', function () {
         expect(onReject.called).toBe(false);
         front._resolveCollection('empty');
 
+        var resolvedObject;
         whenComplete(this.mockHistogram, () => {
             expect(onResolve.called).toBe(true);
             expect(onReject.called).toBe(false);
-            var resolvedObject = onResolve.args[0][0];
+            resolvedObject = onResolve.args[0][0];
             expect(resolvedObject['/article/one/web/url'].series[0].data[0].count = 50);
             expect(resolvedObject['/article/two/web/url'].series[0].data[0].count = 5000);
             expectSparklinesOn(['_article_one_web_url', '_article_two_web_url']);
@@ -112,7 +115,7 @@ describe('Sparklines', function () {
             whenComplete(this.mockHistogram, () => {
                 expect(onResolve.called).toBe(true);
                 expect(onReject.called).toBe(false);
-                var resolvedObject = onResolve.args[0][0];
+                resolvedObject = onResolve.args[0][0];
                 expect(resolvedObject['/article/one/web/url'].series[0].data[0].count = 100);
                 expect(resolvedObject['/article/one/web/url'].series[0].data[2].count = 2000);
                 expectSparklinesOn(['_article_one_web_url', '_fancy-url']);
@@ -238,8 +241,7 @@ describe('Sparklines', function () {
     });
 
     it('loads sparklines on multiple fronts and polls', function (done) {
-        vars.CONST.sparksRefreshMs = 2000;
-        jasmine.clock().install();
+        vars.CONST.sparksRefreshMs = 1000;
 
         var frontOne = mockFrontWidget('first', {
                 one: [{ article: '/a' }]
@@ -256,15 +258,12 @@ describe('Sparklines', function () {
                 sparklines.unsubscribe(frontTwo);
                 containerOne.remove();
                 containerTwo.remove();
-                jasmine.clock().uninstall();
                 done();
             };
         sparklines.subscribe(frontOne);
         sparklines.subscribe(frontTwo);
         frontOne.sparklines.promise.then(onResolveOne);
-        frontOne._resolveCollection('one');
         frontTwo.sparklines.promise.then(onResolveTwo);
-        frontTwo._resolveCollection('two');
 
         var continueTest = _.after(2, () => { originalSetTimeout(() => {
             this.mockHistogram.off('complete', continueTest);
@@ -295,13 +294,10 @@ describe('Sparklines', function () {
             }, 10); });
             this.mockHistogram.on('complete', afterInterval);
 
-            tick(3000);
-            tick(100);
         }, 10); });
         this.mockHistogram.on('complete', continueTest);
-
-        // Advance time to get the mocked response
-        tick(100).then(() => tick(100)).then(() => tick(100));
+        frontOne._resolveCollection('one');
+        frontTwo._resolveCollection('two');
     });
 
     it('refreshes when the collection changes', function (done) {
@@ -363,6 +359,41 @@ describe('Sparklines', function () {
         // Advance time to get the mocked response
         tick(100).then(() => tick(100)).then(() => tick(100));
     });
+
+    it('fails nicely when ophan is down', function (done) {
+        vars.CONST.sparksRefreshMs = 2000;
+        this.mockHistogram.dispose();
+
+        var front = mockFrontWidget('error', {
+                one: [{ article: '/a' }]
+            }),
+            scope = mockjax.scope(),
+            onResolve = sinon.spy(),
+            onReject = sinon.spy(),
+            container = inject(front),
+            finishTest = function () {
+                scope.clear();
+                sparklines.unsubscribe(front);
+                container.remove();
+                done();
+            };
+        scope({
+            url: '/ophan/histogram?referring-path=/error*',
+            status: 400,
+            responseText: '',
+            onAfterComplete: function () {
+                originalSetTimeout(function () {
+                    expect(onResolve.called).toBe(true);
+                    expect(onReject.called).toBe(false);
+
+                    finishTest();
+                }, 10);
+            }
+        });
+        sparklines.subscribe(front);
+        front.sparklines.promise.then(onResolve, onReject);
+        front._resolveCollection('one');
+    });
 });
 
 function expectSparklinesOn (elements) {
@@ -374,7 +405,7 @@ function expectSparklinesOn (elements) {
 }
 
 function sparklinesTitle (element) {
-    return $('.' + element).next('.test-chart').find('.highcharts-title').text().trim();
+    return textInside($('.' + element).next('.test-chart').find('.highcharts-title'));
 }
 
 function inject (model) {

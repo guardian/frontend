@@ -30,14 +30,13 @@ GET         /assets/*file                                                   dev.
 
 # Fronts
 GET         /                                                               controllers.FaciaToolController.priorities()
-GET         /editorial                                                      controllers.FaciaToolController.collectionEditor(priority="editorial")
-GET         /commercial                                                     controllers.FaciaToolController.collectionEditor(priority="commercial")
-GET         /training                                                       controllers.FaciaToolController.collectionEditor(priority="training")
+GET         /editorial                                                      controllers.FaciaToolController.collectionEditor()
+GET         /commercial                                                     controllers.FaciaToolController.collectionEditor()
+GET         /training                                                       controllers.FaciaToolController.collectionEditor()
 
-
-GET         /editorial/config                                               controllers.FaciaToolController.configEditor(priority="editorial")
-GET         /commercial/config                                              controllers.FaciaToolController.configEditor(priority="commercial")
-GET         /training/config                                                controllers.FaciaToolController.configEditor(priority="training")
+GET         /editorial/config                                               controllers.FaciaToolController.configEditor()
+GET         /commercial/config                                              controllers.FaciaToolController.configEditor()
+GET         /training/config                                                controllers.FaciaToolController.configEditor()
 
 
 POST        /collection/publish/*id                                         controllers.FaciaToolController.publishCollection(id)
@@ -50,6 +49,7 @@ GET         /front/lastmodified/*path                                       cont
 
 #Facia Press
 GET         /container/*id.json                                             controllers.FaciaController.renderContainerJson(id)
+GET         /most-relevant-container/*path.json                             controllers.FaciaController.renderMostRelevantContainerJson(path)
 GET         /collection/*id/rss                                             controllers.FaciaController.renderCollectionRss(id)
 
 GET         /collection/*id                                                 controllers.FaciaToolController.getCollection(id)

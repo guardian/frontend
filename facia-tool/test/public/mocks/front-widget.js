@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import Promise from 'Promise';
 import ko from 'knockout';
 import mediator from 'utils/mediator';
 
@@ -14,7 +14,7 @@ function createMockFront (frontId, description) {
     ;
 
     if (description) {
-        var collectionsInFront = applyDescription(front, deferreds, description);
+        let collectionsInFront = applyDescription(front, deferreds, description);
         collectionsInFront.forEach(function (collection) {
             allCollections[collection._key] = collection;
         });
@@ -22,17 +22,17 @@ function createMockFront (frontId, description) {
     }
 
     front._resolveCollection = function (id) {
-        var collection = allCollections[id];
+        let collection = allCollections[id];
         collection.eachArticle(function (article) {
             article.props.webUrl(article._description.article);
         });
-        deferreds[id].deferred.resolve();
+        deferreds[id].deferred();
         mediator.emit('collection:populate', deferreds[id].collection);
     };
 
-    front._load = function (frontId, description) {
-        front.front(frontId);
-        var collectionsInFront = applyDescription(front, deferreds, description);
+    front._load = function (loadedFrontId, loadedDescription) {
+        front.front(loadedFrontId);
+        let collectionsInFront = applyDescription(front, deferreds, loadedDescription);
         collectionsInFront.forEach(function (collection) {
             allCollections[collection._key] = collection;
         });
@@ -40,10 +40,12 @@ function createMockFront (frontId, description) {
     };
 
     front._addArticle = function (id, article) {
-        var collection = allCollections[id];
-        appendArticles(collection._items, [article], front, true);
-        deferreds[id].deferred = new $.Deferred();
-        mediator.emit('collection:populate', collection);
+        return new Promise(resolve => {
+            let collection = allCollections[id];
+            appendArticles(collection._items, [article], front, true);
+            deferreds[id].deferred = resolve;
+            mediator.emit('collection:populate', collection);
+        });
     };
 
     return front;
@@ -54,10 +56,8 @@ function applyDescription (front, deferreds, description) {
 
     Object.keys(description).forEach(function (key) {
         var collection = { front: front },
-            deferred = new $.Deferred(),
             articles = [];
 
-        collection.loaded = deferred.promise();
         collection.eachArticle = function (callback) {
             this._items().forEach(callback);
         };
@@ -72,9 +72,12 @@ function applyDescription (front, deferreds, description) {
         collection._key = key;
 
         deferreds[key] = {
-            deferred: deferred,
+            deferred: null,
             collection: collection
         };
+        collection.loaded = new Promise(resolve => {
+            deferreds[key].deferred = resolve;
+        });
         collections.push(collection);
 
         appendArticles(articles, description[key], front);

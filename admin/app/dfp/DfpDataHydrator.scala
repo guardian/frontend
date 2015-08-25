@@ -4,7 +4,6 @@ import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411._
 import common.Logging
 import common.dfp._
-import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import dfp.DfpApiWrapper.DfpSessionException
 import org.apache.commons.lang.exception.ExceptionUtils
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
@@ -103,7 +102,7 @@ class DfpDataHydrator extends Logging {
             sponsor = sponsor,
             creativeSizes = dfpLineItem.getCreativePlaceholders.map { placeholder =>
               AdSize(placeholder.getSize.getWidth.toInt, placeholder.getSize.getHeight.toInt)
-            }.toSeq,
+            }.toList.sortBy(size => (size.width, size.height)),
             targeting = GuTargeting(adUnits,
               geoTargetsIncluded,
               geoTargetsExcluded,
@@ -215,57 +214,69 @@ class DfpDataHydrator extends Logging {
   }.getOrElse(Failure(new DfpSessionException()))
 
 
-  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] =
+  def loadActiveUserDefinedCreativeTemplates(threshold: Option[JodaDateTime]):
+  Seq[GuCreativeTemplate] = {
+
     dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
-    val templatesQuery = new StatementBuilder()
-      .where("status = :active and type = :type")
-      .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
-      .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
-      .orderBy("name ASC")
 
-      val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(serviceRegistry,
-        templatesQuery) filterNot { template =>
-      val name = template.getName.toUpperCase
-      name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
-    }
+      val templatesQuery = new StatementBuilder()
+        .where("status = :status and type = :type")
+        .withBindVariableValue("status", CreativeTemplateStatus.ACTIVE.getValue)
+        .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
 
-    // fetch merchandising creatives by advertiser and logo creatives by size
-    val creativesQuery = new StatementBuilder()
-      .where("advertiserId = :advertiserId or (width = :width and height = :height)")
-      .withBindVariableValue("advertiserId", guMerchandisingAdvertiserId)
-      .withBindVariableValue("width", "140")
-      .withBindVariableValue("height", "90")
+      val dfpCreativeTemplates =
+        DfpApiWrapper.fetchCreativeTemplates(
+          serviceRegistry, templatesQuery
+        ) filterNot { template =>
+          val name = template.getName.toUpperCase
+          name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
+        }
+
+      val creativesQuery = threshold.foldLeft(new StatementBuilder()) { (stmtBuilder,
+                                                                         lastModified) =>
+        stmtBuilder.where("lastModifiedDateTime > :lastModified")
+          .withBindVariableValue("lastModified", lastModified.toString)
+      }
 
       val creatives = DfpApiWrapper.fetchTemplateCreatives(serviceRegistry, creativesQuery)
 
-    dfpCreativeTemplates map { template =>
-      val templateCreatives = creatives getOrElse(template.getId, Nil)
-      GuCreativeTemplate(
-        id = template.getId,
-        name = template.getName,
-        description = template.getDescription,
-        parameters = template.getVariables map { param =>
-          GuCreativeTemplateParameter(
-            param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
-            param.getLabel,
-            param.getIsRequired,
-            param.getDescription
-          )
-        },
-        snippet = template.getSnippet,
-        creatives = templateCreatives map { creative =>
-          val args = creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) { case (soFar, arg) =>
-            val argValue = arg.getBaseCreativeTemplateVariableValueType match {
-              case "StringCreativeTemplateVariableValue" => Option(arg.asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
-              case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
-              case "UrlCreativeTemplateVariableValue" => Option(arg.asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
-              case other => "???"
-            }
-            soFar + (arg.getUniqueName -> argValue)
-          }
-          GuCreative(creative.getId.longValue(), creative.getName, args)
-        }
-      )
+      dfpCreativeTemplates.map { template =>
+        val templateCreatives = creatives getOrElse(template.getId, Nil)
+        GuCreativeTemplate(
+          id = template.getId,
+          name = template.getName,
+          description = template.getDescription,
+          parameters = template.getVariables map { param =>
+            GuCreativeTemplateParameter(
+              param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
+              param.getLabel,
+              param.getIsRequired,
+              Option(param.getDescription)
+            )
+          },
+          snippet = template.getSnippet,
+          creatives = templateCreatives.map { creative =>
+            val args =
+              creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) {
+                case (soFar, arg) =>
+                  val argValue = arg.getBaseCreativeTemplateVariableValueType match {
+                    case "StringCreativeTemplateVariableValue" => Option(arg
+                      .asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
+                    case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication" +
+                      ".com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+                    case "UrlCreativeTemplateVariableValue" => Option(arg
+                      .asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
+                    case other => "???"
+                  }
+                  soFar + (arg.getUniqueName -> argValue)
+              }
+            GuCreative(creative.getId.longValue(),
+              creative.getName,
+              toJodaTime(creative.getLastModifiedDateTime),
+              args)
+          }.sortBy(_.name)
+        )
+      }.sortBy(_.name)
     }
   }
 

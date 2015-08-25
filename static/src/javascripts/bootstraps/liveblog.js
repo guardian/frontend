@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
@@ -27,6 +28,7 @@ define([
     bean,
     bonzo,
     qwery,
+    fastdom,
     _,
     $,
     config,
@@ -79,12 +81,14 @@ define([
             selectedClass = 'live-blog__key-event--selected';
 
         function unselect() {
-            $('.' + selectedClass).removeClass(selectedClass);
+            fastdom.write(function () {
+                $('.' + selectedClass).removeClass(selectedClass);
+            });
         }
 
         function unselectOnScroll() {
             bean.off(curBinding);
-            curBinding = mediator.once('window:scroll', function () { unselect(); });
+            curBinding = mediator.once('window:throttledScroll', unselect);
         }
 
         bean.on(document.body, 'click', 'a', function (e) {

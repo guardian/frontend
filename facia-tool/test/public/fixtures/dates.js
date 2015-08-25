@@ -16,5 +16,5 @@ export default {
     hourAgo,
     yesterday,
     lastWeek,
-    lastMonth,
+    lastMonth
 };

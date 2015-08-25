@@ -7,9 +7,9 @@ describe('Robust', function () {
 
     it('should log and swallow exceptions', function (success) {
 
-        var reporter = function (ex, options) {
+        var reporter = function (ex, meta) {
             expect(ex.message).toBe('fail');
-            expect(options.tags.module).toBe('test');
+            expect(meta.module).toBe('test');
             success();
         };
 

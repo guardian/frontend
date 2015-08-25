@@ -52,7 +52,7 @@ define([
     function getAdSpace() {
         return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
             // check if spacefinder found another space
-            if (typeof nextSpace === 'undefined') {
+            if (typeof nextSpace === 'undefined' || ads.length >= 9) {
                 return Promise.resolve(null);
             }
 
@@ -62,6 +62,10 @@ define([
                 return getAdSpace();
             });
         });
+    }
+
+    function inMobileAdsTest() {
+        return config.switches.noMobileTopAd && detect.getBreakpoint() === 'mobile';
     }
 
     var ads = [],
@@ -107,7 +111,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (config.switches.viewability && config.switches.commercialExtraAds) {
+            if (config.switches.viewability && !inMobileAdsTest()) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);

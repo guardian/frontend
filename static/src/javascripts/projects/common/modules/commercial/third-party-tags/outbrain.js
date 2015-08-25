@@ -4,70 +4,85 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/template',
+    'common/modules/identity/api',
+    'text!common/views/commercial/outbrain.html'
 ], function (
     fastdom,
     $,
     _,
     config,
     detect,
-    mediator
+    mediator,
+    template,
+    identity,
+    outbrainTpl
 ) {
-    var outbrainUrl = '//widgets.outbrain.com/outbrain.js',
-        $outbrain = $('.js-outbrain');
+    var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
     function load() {
+        var $outbrain  = $('.js-outbrain'),
+            $container = $('.js-outbrain-container');
         // outbrain leaks the URL of preview content so we don't show it there.
-        if (config.switches.outbrain && !config.page.isPreview && $outbrain.length > 0) {
-            var widgetIds = {},
-                widgetCode;
+        if (config.switches.outbrain && !config.page.isPreview && $outbrain.length > 0 && !identity.isUserLoggedIn()) {
+            var widgetConfig = {},
+                breakpoint = detect.getBreakpoint(),
+                widgetCode, widgetCodeImage, widgetCodeText;
 
-            widgetIds = {
-                mobile: 'MB_2',
-                tablet: 'MB_1',
-                desktop: 'AR_11',
-                wide: 'AR_11'
-            };
-
-            widgetCode = widgetIds[detect.getBreakpoint()];
-
-            if (config.switches.newOutbrain) {
-                widgetIds = {
-                    wide: {
+            breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
+            widgetConfig = {
+                desktop: {
+                    image: {
                         sections: 'AR_12',
                         all     : 'AR_13'
                     },
-                    desktop: {
+                    text: {
                         sections: 'AR_14',
                         all     : 'AR_15'
+                    }
+                },
+                tablet: {
+                    image: {
+                        sections: 'MB_6',
+                        all     : 'MB_7'
                     },
-                    tablet: {
+                    text: {
                         sections: 'MB_8',
                         all     : 'MB_9'
-                    },
-                    mobile: {
+                    }
+                },
+                mobile: {
+                    image: {
                         sections: 'MB_4',
                         all     : 'MB_5'
                     }
-                };
+                }
+            };
 
-                widgetCode = widgetIds[detect.getBreakpoint()][getSection()];
-            }
+            widgetCodeImage = widgetConfig[breakpoint].image[getSection()];
+            widgetCode = widgetCodeImage;
 
             fastdom.write(function () {
                 $outbrain.css('display', 'block');
+                $container.append($.create(template(outbrainTpl, { widgetCode: widgetCode })));
             });
 
-            $('.OUTBRAIN')
-                .first()
-                .attr('data-widget-id', widgetCode);
+            if (breakpoint !== 'mobile') {
+                widgetCodeText  = widgetConfig[breakpoint].text[getSection()];
+
+                fastdom.write(function () {
+                    $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
+                });
+            }
+
             return require(['js!' + outbrainUrl]);
         }
     }
 
     function getSection() {
-        return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId.toLowerCase())
-            || _.contains(['politics', 'world'], config.page.section.toLowerCase()) ? 'sections' : 'all';
+        return config.page.section.toLowerCase().match('news')
+            || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
     }
 
     function init() {
@@ -80,7 +95,6 @@ define([
     }
 
     return {
-        init: init,
-        load: load
+        init: init
     };
 });

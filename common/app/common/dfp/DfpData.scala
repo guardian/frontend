@@ -224,6 +224,22 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+
+  lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
+    targeting.adUnits.exists { adUnit =>
+      val path = adUnit.path
+      (path.length == 3 || path.length == 4) && path(2) == "front"
+    }
+  }
+
+  def targetsSectionFrontDirectly(sectionId: String): Boolean = {
+    targeting.adUnits.exists { adUnit =>
+      val path = adUnit.path
+      path.length == 3 &&
+        path(1) == sectionId &&
+        path(2) == "front"
+    }
+  }
 }
 
 object GuLineItem {
@@ -261,13 +277,57 @@ object GuLineItem {
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
-
 }
 
 
-case class GuCreativeTemplateParameter(parameterType: String, label: String, isRequired: Boolean, description: String)
+case class GuCreativeTemplateParameter(parameterType: String,
+                                       label: String,
+                                       isRequired: Boolean,
+                                       description: Option[String])
 
-case class GuCreative(id: Long, name: String, args: Map[String, String])
+object GuCreativeTemplateParameter {
+
+  implicit val writes = new Writes[GuCreativeTemplateParameter] {
+    def writes(param: GuCreativeTemplateParameter): JsValue = {
+      Json.obj(
+        "type" -> param.parameterType,
+        "label" -> param.label,
+        "isRequired" -> param.isRequired,
+        "description" -> param.description
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreativeTemplateParameter] = (
+    (JsPath \ "type").read[String] and
+      (JsPath \ "label").read[String] and
+      (JsPath \ "isRequired").read[Boolean] and
+      (JsPath \ "description").readNullable[String]
+    )(GuCreativeTemplateParameter.apply _)
+}
+
+case class GuCreative(id: Long, name: String, lastModified: DateTime, args: Map[String, String])
+
+object GuCreative {
+
+  implicit val writes = new Writes[GuCreative] {
+    def writes(creative: GuCreative): JsValue = {
+      Json.obj(
+        "id" -> creative.id,
+        "name" -> creative.name,
+        "lastModified" -> creative.lastModified,
+        "args" -> creative.args
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreative] = (
+    (JsPath \ "id").read[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "lastModified").read[DateTime] and
+      (JsPath \ "args").read[Map[String, String]]
+    )(GuCreative.apply _)
+}
 
 case class GuCreativeTemplate(id: Long,
                               name: String,
@@ -293,8 +353,66 @@ case class GuCreativeTemplate(id: Long,
 
 }
 
+object GuCreativeTemplate extends implicits.Collections {
 
-case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem])
+  def lastModified(templates: Seq[GuCreativeTemplate]): Option[DateTime] = {
+    val cachedLastModified = for {
+      template <- templates
+      creative <- template.creatives
+    } yield creative.lastModified
+    if (cachedLastModified.isEmpty) None
+    else Some(cachedLastModified maxBy (_.getMillis))
+  }
+
+  def merge(oldTemplates: Seq[GuCreativeTemplate],
+            newTemplates: Seq[GuCreativeTemplate]): Seq[GuCreativeTemplate] = {
+
+    def toMap(templates: Seq[GuCreativeTemplate]): Map[Long, GuCreativeTemplate] =
+      templates.groupBy(_.id).mapValues(_.head)
+
+    val oldMap = toMap(oldTemplates)
+
+    def dedup(creatives: Seq[GuCreative]): Seq[GuCreative] =
+      creatives.sortBy(_.lastModified.getMillis).reverse.distinctBy(_.id)
+
+    for (template <- newTemplates) yield {
+      val modifiedTemplate = for (oldTemplate <- oldMap.get(template.id)) yield {
+        val creatives = dedup(oldTemplate.creatives ++ template.creatives) sortBy (_.name)
+        template.copy(creatives = creatives)
+      }
+      modifiedTemplate getOrElse template
+    }
+  }
+
+  implicit val writes = new Writes[GuCreativeTemplate] {
+    def writes(template: GuCreativeTemplate): JsValue = {
+      Json.obj(
+        "id" -> template.id,
+        "name" -> template.name,
+        "description" -> template.description,
+        "parameters" -> template.parameters,
+        "snippet" -> template.snippet,
+        "creatives" -> template.creatives
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreativeTemplate] = (
+    (JsPath \ "id").read[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "description").read[String] and
+      (JsPath \ "parameters").read[Seq[GuCreativeTemplateParameter]] and
+      (JsPath \ "snippet").read[String] and
+      (JsPath \ "creatives").read[Seq[GuCreative]]
+    )(GuCreativeTemplate.apply _)
+}
+
+case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
+
+  lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
+    _.targeting.hasAdTestTargetting
+  }
+}
 
 object LineItemReport {
 

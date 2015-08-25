@@ -12,23 +12,31 @@ object Entry {
   implicit val jsonWrites = Json.writes[Entry]
 
   def fromCrosswordEntry(entry: CrosswordEntry): Entry = Entry(
+    entry.id,
     entry.number.getOrElse(0),
     entry.clue.getOrElse(""),
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
+    entry.group,
     entry.position.getOrElse(CrosswordPosition(0,0)),
+    entry.separatorLocations,
     entry.solution
   )
 }
 
 case class Entry(
+  id: String,
   number: Int,
   clue: String,
   direction: String,
   length: Int,
+  group: Option[Seq[String]],
   position: CrosswordPosition,
+  separatorLocations: Option[Map[String, Seq[Int]]],
   solution: Option[String]
-)
+) extends CrosswordGridColumnNotation {
+  lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
+}
 
 object CrosswordData {
 
@@ -48,7 +56,9 @@ object CrosswordData {
     dateFormatUTC.parseDateTime(crossword.date),
     crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
-    crossword.`type`
+    crossword.`type`,
+    crossword.pdf,
+    crossword.instructions
   )
 }
 
@@ -60,5 +70,7 @@ case class CrosswordData(
   date: DateTime,
   entries: Seq[Entry],
   dimensions: CrosswordDimensions,
-  crosswordType: String
+  crosswordType: String,
+  pdf: Option[String],
+  instructions: Option[String]
 )

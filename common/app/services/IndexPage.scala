@@ -9,7 +9,7 @@ import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
 import model.meta.{ItemList, ListItem}
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
 
@@ -61,7 +61,7 @@ object IndexPage {
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
         val collection = CollectionEssentials.fromFaciaContent(
-          grouping.items.map(FaciaContentConvert.frontentContentToFaciaContent)
+          grouping.items.map(FaciaContentConvert.frontendContentToFaciaContent)
         )
 
         val mpuContainer = (if (isSlow)
@@ -161,7 +161,8 @@ object IndexPage {
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now) {
+                     date: DateTime = DateTime.now,
+                     tzOverride: Option[DateTimeZone] = None) {
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),
     Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }

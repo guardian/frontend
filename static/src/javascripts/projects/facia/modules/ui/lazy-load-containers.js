@@ -18,12 +18,12 @@ define([
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
             containers = qwery('.js-container--lazy-load'),
-            lazyLoad = function () {
+            lazyLoad = _.throttle(function () {
                 if (containers.length === 0) {
-                    mediator.off('window:scroll', lazyLoad);
+                    mediator.off('window:throttledScroll', lazyLoad);
                 } else {
                     fastdom.read(function () {
-                        var scrollTop = bonzo(document.body).scrollTop(),
+                        var scrollTop = window.pageYOffset,
                             scrollBottom = scrollTop + bonzo.viewport().height,
                             bottomOffset = $frontBottom.offset().top,
                             $container;
@@ -37,9 +37,9 @@ define([
                         }
                     });
                 }
-            };
+            }, 500);
 
-        mediator.on('window:scroll', lazyLoad);
+        mediator.on('window:throttledScroll', lazyLoad);
         lazyLoad();
     };
 });

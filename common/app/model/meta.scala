@@ -75,35 +75,35 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
-    "og:url"       -> webUrl,
-    "al:ios:url" -> s"gnmguardian://${iosId("applinks")}",
+    "og:url"       -> webUrl) ++ (iosId("applinks") map (iosId => List(
+    "al:ios:url" -> s"gnmguardian://$iosId",
     "al:ios:app_store_id" -> "409128287",
     "al:ios:app_name" -> "The Guardian"
-  )
+  )) getOrElse Nil)
 
   def openGraphImages: Seq[String] = Seq()
 
   def cards: List[(String, String)] = List(
-    "twitter:site" -> "@guardian",
+    "twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId => List(
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
-    "twitter:app:url:iphone" -> s"gnmguardian://${iosId("twitter")}",
+    "twitter:app:url:iphone" -> s"gnmguardian://$iosId",
     "twitter:app:name:ipad" -> "The Guardian",
     "twitter:app:id:ipad" -> "409128287",
-    "twitter:app:url:ipad" -> s"gnmguardian://${iosId("twitter")}",
+    "twitter:app:url:ipad" -> s"gnmguardian://$iosId",
     "twitter:app:name:googleplay" -> "The Guardian",
     "twitter:app:id:googleplay" -> "com.guardian"
-  )
+  )) getOrElse Nil)
 
   def linkedData: List[LinkedData] = List(
-    Guardian(),
+    Guardian()) ++ (iosType.map(_ => List(
     WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
-  )
+  )).getOrElse(Nil))
 
-  def iosId(referrer: String): String = s"$id?contenttype=$iosType&source=$referrer"
+  def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
   // this could be article/front/list, it's a hint to the ios app to start the right engine
-  def iosType: String = "article"
+  def iosType: Option[String] = None
 
   def cacheSeconds = 60
 
@@ -119,10 +119,6 @@ trait MetaData extends Tags {
 
   def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
 }
-
-
-
-
 
 class Page(
   val id: String,
@@ -224,13 +220,22 @@ trait Elements {
   def mainPicture: Option[ImageContainer] = images.find(_.isMain)
 
   lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
-  lazy val hasShowcaseMainPicture = {
-    val showcase = for {
+
+  // Currently, only Picture and Embed elements can be given the showcase role.
+  lazy val hasShowcaseMainElement = {
+    val showcasePicture = for {
       main  <- mainPicture
       image <- main.largestImage
       role  <- image.role
     } yield role == "showcase"
-    showcase.getOrElse(false)
+
+    val showcaseEmbed = for {
+      embed <- mainEmbed
+      asset <- embed.embedAssets.headOption
+      role <- asset.role
+    } yield role == "showcase"
+
+    showcasePicture.getOrElse(false) || showcaseEmbed.getOrElse(false)
   }
 
   def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
@@ -332,6 +337,7 @@ trait Tags {
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
+  lazy val isMatchReport = tones.exists(_.id == Tags.MatchReports)
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -347,6 +353,9 @@ trait Tags {
     tags.exists(t => t.id == "sport/england-cricket-team") &&
     tags.exists(t => t.id == "sport/over-by-over-reports")
 
+  lazy val isRugbyMatch = (isMatchReport || isLiveBlog) &&
+    tags.exists(t => t.id == "sport/rugby-union")
+
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
 }
 
@@ -358,6 +367,7 @@ object Tags {
   val Editorial = "tone/editorials"
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
+  val MatchReports = "tone/matchreports"
 
   val Article = "type/article"
   val Gallery = "type/gallery"

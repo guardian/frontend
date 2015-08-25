@@ -6,13 +6,13 @@ describe('Most popular', function () {
     var fixturesConfig = {
             id: 'most-popular',
             fixtures: [
-                '<div class="js-popular"></div>'
+                '<div class="js-popular"></div><div class="ad-slot--inline"></div><div class="ad-slot--inline"></div>'
             ]
         },
         html = '<b>popular</b>',
         server,
         injector = new Injector(),
-        Popular, config, mediator;
+        Popular, config, mediator, detect;
 
     beforeEach(function (done) {
         injector.mock({
@@ -31,10 +31,11 @@ describe('Most popular', function () {
                 }
             }
         });
-        injector.test(['common/modules/onward/popular', 'common/utils/config', 'common/utils/mediator'], function () {
+        injector.test(['common/modules/onward/popular', 'common/utils/config', 'common/utils/mediator', 'common/utils/detect'], function () {
             Popular = arguments[0];
             config = arguments[1];
             mediator = arguments[2];
+            detect = arguments[3];
 
             config.page.section = 'football';
 
@@ -50,6 +51,8 @@ describe('Most popular', function () {
     afterEach(function () {
         server.restore();
         fixtures.clean(fixturesConfig.id);
+        config.switches.noMobileTopAd = false;
+        detect.getBreakpoint = function () { return 'desktop'; };
     });
 
     // json test needs to be run asynchronously
@@ -79,4 +82,19 @@ describe('Most popular', function () {
         new Popular().init();
     });
 
+    it('should render MPU', function () {
+        var popular = new Popular();
+
+        popular.prerender();
+        expect(typeof popular.$mpu).toEqual('object');
+    });
+
+    it('should not render MPU when on mobile and 2+ MPUs are already on the page', function () {
+        var popular = new Popular();
+
+        config.switches.noMobileTopAd = true;
+        detect.getBreakpoint = function () { return 'mobile'; };
+        popular.prerender();
+        expect(popular.$mpu).toBeUndefined();
+    });
 });

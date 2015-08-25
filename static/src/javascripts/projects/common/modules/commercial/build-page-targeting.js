@@ -3,8 +3,10 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/storage',
     'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/krux',
+    'common/modules/identity/api',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
@@ -12,8 +14,10 @@ define([
     config,
     cookies,
     detect,
+    storage,
     audienceScienceGateway,
     krux,
+    identity,
     userAdTargeting,
     ab
 ) {
@@ -36,7 +40,11 @@ define([
             if (!id) {
                 return null;
             }
-            return format(id.split('/').pop());
+            if (config.switches.ukNewsTarget && id === 'uk/uk') {
+                return id;
+            } else {
+                return format(id.split('/').pop());
+            }
         },
         parseIds = function (ids) {
             if (!ids) {
@@ -75,11 +83,22 @@ define([
                 }
                 return cookieAdtest;
             }
+        },
+        getVisitedValue = function () {
+            var alreadyVisited = storage.local.get('alreadyVisited') || 0,
+                visitedValue;
+
+            if (alreadyVisited > 4) {
+                visitedValue = '5plus';
+            } else {
+                visitedValue = alreadyVisited.toString();
+            }
+
+            return visitedValue;
         };
 
     return function (opts) {
         var win         = (opts || {}).window || window,
-            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
@@ -91,14 +110,16 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
-                pv:      viewId,
+                pv:      config.ophan.pageViewId,
                 bp:      detect.getBreakpoint(),
                 at:      adtestParams(),
+                si:      identity.isUserLoggedIn() ? 't' : 'f',
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
+                fr:      getVisitedValue(),
                 tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined

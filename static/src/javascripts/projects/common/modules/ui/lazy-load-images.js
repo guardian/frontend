@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'fastdom',
     'qwery',
@@ -7,7 +6,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
-    bean,
     bonzo,
     fastdom,
     qwery,
@@ -35,18 +33,14 @@ define([
         distanceBeforeLoad = distanceBeforeLoad || detect.getViewport().height;
 
         lazyLoad = _.throttle(function () {
-            fastdom.read(function () {
-                var scrollTop,
-                    scrollBottom,
-                    threshold,
-                    $nextImages = [];
-
-                if ($images.length === 0) {
-                    bean.off(window, 'scroll', lazyLoad);
-                } else {
-                    scrollTop = bonzo(document.body).scrollTop();
-                    scrollBottom = scrollTop + detect.getViewport().height;
-                    threshold = scrollBottom + distanceBeforeLoad;
+            if ($images.length === 0) {
+                mediator.off('window:throttledScroll', lazyLoad);
+            } else {
+                fastdom.read(function () {
+                    var scrollTop = window.pageYOffset,
+                        scrollBottom = scrollTop + detect.getViewport().height,
+                        threshold = scrollBottom + distanceBeforeLoad,
+                        $nextImages = [];
 
                     _.forEach($images, function ($image) {
                         // offsetParent is fast to check, but it won't work for fixed elements.
@@ -58,11 +52,11 @@ define([
                         }
                     });
                     $images = $nextImages;
-                }
-            });
-        }, 100);
+                });
+            }
+        }, 250);
 
-        bean.on(window, 'scroll', lazyLoad);
+        mediator.on('window:throttledScroll', lazyLoad);
         lazyLoad();
     }
 

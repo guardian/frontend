@@ -95,7 +95,7 @@
 }
 
 @item.openGraphImages.map{ case (imageUrl) =>
-    <meta property="og:image" content="@{imageUrl}" />
+    <meta property="og:image" content="@Html(imageUrl)" />
 }
 
 @item.pagination.map{ pagination =>
@@ -118,4 +118,6 @@
     </script>
 }
 
-<link rel="alternate" href="ios-app://409128287/gnmguardian/@{item.iosId("google")}" />
+@item.iosId("google").map { iosId =>
+    <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
+}

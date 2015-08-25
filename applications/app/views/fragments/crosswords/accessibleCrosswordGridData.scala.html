@@ -1,0 +1,6 @@
+@(blanks: List[crosswords.AccessibleCrosswordRow])
+<ul class="crossword__accessible-blank-data">
+    @for( row <- blanks) {
+        <li class="crossword__accessible-row-data"><span class="crossword__accessible-row-data--row-number">Line @row.rowNumber</span>: @row.blankColumns.mkString(" ")</li>
+    }
+</ul>

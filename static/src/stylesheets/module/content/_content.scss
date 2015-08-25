@@ -680,7 +680,7 @@
     box-sizing: border-box;
 
     .meta__extras--crossword & {
-        @include mq(tablet) {
+        @include mq(leftCol) {
             float: left;
         }
     }

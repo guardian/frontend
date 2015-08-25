@@ -12,7 +12,8 @@ GET         /oauth2callback                                                     
 GET         /logout                                                                                 controllers.admin.OAuthLoginController.logout
 
 # static files
-GET         /public/*file                                                                           controllers.Assets.at(path="/public", file)
+GET         /assets/admin/lib/*file                                                                 controllers.admin.UncachedWebAssets.at(file)
+GET         /assets/admin/*file                                                                     controllers.admin.UncachedAssets.at(file)
 GET         /assets/*path                                                                           dev.DevAssetsController.at(path)
 
 ##################### NOTE ############################
@@ -31,6 +32,9 @@ GET         /api/proxy/*path                                                    
 GET         /api/tag                                                                                controllers.admin.Api.tag(q, callback)
 GET         /api/item/*path                                                                         controllers.admin.Api.item(path, callback)
 GET         /json/proxy/*absUrl                                                                     controllers.admin.Api.json(absUrl)
+
+GET         /images/clear                                                                           controllers.images.ImageDecacheController.renderImageDecacheForm()
+POST        /images/clear                                                                           controllers.images.ImageDecacheController.decache()
 
 # Ophan proxying for https
 GET         /ophan/pageviews/*path                                                                  controllers.admin.OphanApiController.pageViews(path)
@@ -51,6 +55,9 @@ GET         /analytics/content/video                                            
 GET         /analytics/omniture/segments/:rsid                                                      controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                         controllers.admin.OmnitureReportController.getReport(reportName)
 
+GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
+
+
 # Commercial
 GET         /admin/commercial                                                                       controllers.admin.CommercialController.renderCommercialMenu()
 GET         /analytics/commercial                                                                   controllers.admin.CommercialController.renderCommercial()
@@ -68,6 +75,7 @@ GET         /analytics/commercial/adtests                                       
 GET         /admin/commercial/dfp/flush/view                                                        controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /admin/commercial/dfp/flush                                                             controllers.admin.commercial.DfpDataController.flushCache()
 GET         /admin/commercial/radiator                                                              controllers.admin.CommercialController.renderCommercialRadiator()
+GET         /admin/commercial/slot/:slotName                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /admin/commercial/adops/takeovers-empty-mpus                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /admin/commercial/adops/takeovers-empty-mpus/create                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST        /admin/commercial/adops/takeovers-empty-mpus/create                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()

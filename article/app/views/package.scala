@@ -3,7 +3,18 @@ package views
 import common.Edition
 import model.Article
 import play.api.mvc.RequestHeader
-import support._
+import views.support._
+
+object MainCleaner {
+ def apply(article: Article, html: String)(implicit request: RequestHeader) = {
+      implicit val edition = Edition(request)
+      withJsoup(BulletCleaner(html))(
+        VideoEmbedCleaner(article),
+        PictureCleaner(article),
+        MainFigCaptionCleaner
+      )
+  }
+}
 
 object BodyCleaner {
   def apply(article: Article, html: String)(implicit request: RequestHeader) = {
@@ -12,7 +23,7 @@ object BodyCleaner {
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
         BlockNumberCleaner,
-        TweetCleaner,
+        new TweetCleaner(article),
         WitnessCleaner,
         TagLinker(article),
         TableEmbedComplimentaryToP,

@@ -28,11 +28,25 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
   val requestPasswordResetForm = Form(
     Forms.single(
+      "email-address" -> Forms.text
+    )
+  )
+
+  val requestPasswordResetFormWithConstraints = Form(
+    Forms.single(
       "email-address" -> of[String].verifying(Constraints.nonEmpty)
     )
   )
 
   val passwordResetForm = Form(
+    Forms.tuple (
+      "password" -> Forms.text,
+      "password-confirm" ->  Forms.text,
+      "email-address" -> Forms.text
+    )
+  )
+
+  val passwordResetFormWithConstraints = Form(
     Forms.tuple (
       "password" ->  idPassword
         .verifying(Constraints.nonEmpty),
@@ -64,7 +78,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
   def processPasswordResetRequestForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
-    val boundForm = requestPasswordResetForm.bindFromRequest
+    val boundForm = requestPasswordResetFormWithConstraints.bindFromRequest
 
     def onError(formWithErrors: Form[(String)]): Future[Result] = {
       logger.info("bad password reset request form submission")
@@ -100,7 +114,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
   }
 
   def resetPassword(token : String) = Action.async { implicit request =>
-    val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm.bindFromRequest)
+    val boundForm = passwordResetFormWithConstraints.bindFromRequest
 
     def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
       logger.info("form errors in reset password attempt")

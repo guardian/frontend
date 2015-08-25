@@ -204,6 +204,8 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
     body
   }
 
+  private lazy val expandImage = views.html.fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen")).toString()
+
   def addSharesAndFullscreen(body: Document): Document = {
 
     for {
@@ -226,9 +228,10 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
       }
 
       val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+
       image.after(html.toString())
       image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-      image.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+      image.after(expandImage)
     }
 
     body
@@ -410,21 +413,49 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-object TweetCleaner extends HtmlCleaner {
+class TweetCleaner(content: Content) extends HtmlCleaner {
+
+  import conf.Switches.TwitterImageFallback
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("twitter-tweet").foreach { element =>
-      val el = element.clone()
-      if (el.children.size > 1) {
-        val body = el.child(0).attr("class", "tweet-body")
-        val date = el.child(1).attr("class", "tweet-date")
-        val user = el.ownText()
-        val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
-        val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-        element.empty().attr("class", "js-tweet tweet")
-        element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+    document.getElementsByClass("element-tweet").foreach { tweet =>
+
+      val tweetData: Option[Tweet] = Option(tweet.attr("data-canonical-url")).flatMap { url =>
+        url.split('/').lastOption.flatMap { id =>
+          content.tweets.find(_.id == id)
+        }
       }
+
+      val tweetImage = tweetData.flatMap(_.firstImage)
+
+      tweet.getElementsByClass("twitter-tweet").foreach { element =>
+
+        val el = element.clone()
+        if (el.children.size > 1) {
+          val body = el.child(0).attr("class", "tweet-body")
+
+          val date = el.child(1).attr("class", "tweet-date")
+          val user = el.ownText()
+          val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+          val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
+
+          element.empty().attr("class", "js-tweet tweet")
+
+          if (TwitterImageFallback.isSwitchedOn) {
+            tweetImage.foreach { image =>
+              val img = document.createElement("img")
+              img.attr("src", image)
+              img.attr("alt", "")
+              img.addClass("js-tweet-main-image tweet-main-image")
+              element.appendChild(img)
+            }
+          }
+
+          element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+        }
+      }
+
     }
     document
   }
@@ -548,6 +579,13 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
+object MainFigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img caption--main")}
     document
   }
 }

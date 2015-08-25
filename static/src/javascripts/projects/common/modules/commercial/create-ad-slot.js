@@ -94,11 +94,14 @@ define([
         }
     };
 
-    if (config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile') {
+    if (config.switches.noMobileTopAd && detect.getBreakpoint() === 'mobile') {
         adSlotDefinitions.inline1.sizeMappings = {
             mobile: '1,1|300,250'
         };
         adSlotDefinitions.inline.sizeMappings = {
+            mobile: '1,1|300,250'
+        };
+        adSlotDefinitions.mostpop.sizeMappings = {
             mobile: '1,1|300,250'
         };
     }

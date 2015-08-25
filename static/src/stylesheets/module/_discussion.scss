@@ -109,22 +109,14 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-discussion__size-message {
-    display: none;
-}
+    @include fs-textSans(2);
+    margin-bottom: $gs-baseline * 2 / 3;
+    border-top: 1px solid colour(neutral-4);
+    padding-top: $gs-baseline;
+    color: colour(neutral-2);
 
-.discussion--pagesize-msg-show {
-
-    .d-discussion__size-message {
-        @include fs-textSans(2);
-        margin-bottom: $gs-baseline * 2 / 3;
-        border-top: 1px solid colour(neutral-4);
-        padding-top: $gs-baseline;
-        color: colour(neutral-2);
-        display: block;
-
-        & + .d-comment {
-            border-top: 0;
-        }
+    & + .d-comment {
+        border-top: 0;
     }
 }
 
@@ -200,9 +192,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion--empty {
-    .discussion__top-comments,
     .discussion__toolbar,
-    .discussion__main-comments,
     .discussion__show-button {
         display: none;
     }
@@ -499,13 +489,14 @@ $avatarPadding: $gs-gutter / 2;
     a {
         color: colour(neutral-2);
     }
-    .i-comment-anchor {
+    .inline-comment-anchor {
         display: none;
         vertical-align: middle;
         margin-left: 2px;
+        max-height: 15px;
     }
-    .d-comment__inner:hover & .i-comment-anchor,
-    .d-top-comment__meta:hover & .i-comment-anchor {
+    .d-comment__inner:hover & .inline-comment-anchor,
+    .d-top-comment__meta:hover & .inline-comment-anchor {
         display: inline-block;
     }
 }
@@ -527,11 +518,18 @@ $avatarPadding: $gs-gutter / 2;
     margin-left: 0;
 }
 
-.i-reply-grey {
-    margin-bottom: -4px;
-    display: inline-block;
+.inline-reply {
+    &.grey {
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        fill: #bdbdbd;
+    }
+    &.blue {
+        fill: #005689;
+    }
 }
-.d-comment-box--top-level .i-reply-grey {
+.d-comment-box--top-level .inline-reply.grey {
     display: none;
 }
 
@@ -841,10 +839,8 @@ $comment-recommend-button-size: 19px;
         text-decoration: underline;
     }
 
-    .i {
-        margin-top: -1px;
+    .inline-reply svg {
         vertical-align: middle;
-        margin-right: 2px;
     }
 }
 
@@ -900,7 +896,7 @@ $comment-recommend-button-size: 19px;
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 3;
+    z-index: $zindex-content;
     width: gs-span(4);
     color: colour(neutral-1);
     padding: $gs-baseline / 2 $gs-gutter / 2;

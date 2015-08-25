@@ -8,6 +8,7 @@ define([
     'utils/human-time',
     'utils/mediator',
     'utils/populate-observables',
+    'utils/report-errors',
     'modules/authed-ajax',
     'modules/modal-dialog',
     'models/group',
@@ -23,6 +24,7 @@ define([
     humanTime,
     mediator,
     populateObservables,
+    reportErrors,
     authedAjax,
     modalDialog,
     Group,
@@ -35,6 +37,8 @@ define([
     mediator = mediator.default;
     humanTime = humanTime.default;
     fetchVisibleStories = fetchVisibleStories.default;
+    Group = Group.default;
+    reportErrors = reportErrors.default;
 
     function Collection(opts) {
 
@@ -53,6 +57,14 @@ define([
         this.isDynamic = !!_.findWhere(vars.CONST.typesDynamic, {name: opts.type});
 
         this.dom = undefined;
+        var onDomLoadResolve;
+        var onDomLoad = new Promise(function (resolve) {
+            onDomLoadResolve = resolve;
+        });
+        this.registerElement = function (element) {
+            this.dom = element;
+            onDomLoadResolve();
+        };
 
         this.visibleStories = null;
         this.visibleCount = ko.observable({});
@@ -103,7 +115,7 @@ define([
         this.state.isHistoryOpen(this.front.confirmSendingAlert());
 
         this.setPending(true);
-        this.loaded = this.load();
+        this.loaded = this.load().then(function () { return onDomLoad; });
 
         var that = this;
         this.listeners.on('ui:open', function () {
@@ -208,7 +220,7 @@ define([
             })
             .then(function () {
                 that.processDraft(true);
-            });
+            }, function () {});
         } else {
             this.processDraft(true);
         }
@@ -225,78 +237,76 @@ define([
         this.setPending(true);
         this.closeAllArticles();
 
+        var detectPressFailures = goLive ? function () {
+            mediator.emit('presser:detectfailures', self.front.front());
+        } : function () {};
+
         authedAjax.request({
             type: 'post',
             url: vars.CONST.apiBase + '/collection/' + (goLive ? 'publish' : 'discard') + '/' + this.id
         })
         .then(function() {
-            self.load()
-            .then(function(){
-                if (goLive) {
-                    mediator.emit('presser:detectfailures', self.front.front());
-                }
-            });
+            return self.load().then(detectPressFailures);
+        })
+        .catch(function () {
+            detectPressFailures();
+            reportErrors(new Error('POST request while processing draft failed'));
         });
     };
 
     Collection.prototype.drop = function(item) {
-        var front = this.front;
+        var front = this.front.front(), mode = this.front.mode();
         this.setPending(true);
 
         this.state.showIndicators(false);
+        var detectPressFailures = mode === 'live' ? function () {
+            mediator.emit('presser:detectfailures', front);
+        } : function () {};
         authedAjax.updateCollections({
             remove: {
                 collection: this,
                 item:       item.id(),
-                mode:       front.mode()
+                mode:       mode
             }
         })
-        .then(function() {
-            if (front.mode() === 'live') {
-                mediator.emit('presser:detectfailures', front.front());
-            }
-        });
+        .then(detectPressFailures)
+        .catch(detectPressFailures);
     };
 
     Collection.prototype.load = function(opts) {
-        var self = this,
-            deferred = new $.Deferred();
+        var self = this;
 
         opts = opts || {};
 
-        authedAjax.request({
+        return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
         .then(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
+            if (!raw) { return; }
 
-            if (!raw) {
-                self.loaded.resolve();
-                return;
-            }
+            // We need to wait for the populate
+            return new Promise(function (resolve) {
+                self.state.hasConcurrentEdits(false);
 
-            self.state.hasConcurrentEdits(false);
+                self.populate(raw, resolve);
 
-            self.populate(raw);
+                populateObservables(self.collectionMeta, raw);
 
-            populateObservables(self.collectionMeta, raw);
+                self.collectionMeta.updatedBy(raw.updatedEmail === vars.model.identity.email ? 'you' : raw.updatedBy);
 
-            self.collectionMeta.updatedBy(raw.updatedEmail === vars.identity.email ? 'you' : raw.updatedBy);
-
-            self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+                self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+            });
         })
-        .catch(function () {
-            self.loaded.resolve();
+        .catch(function (ex) {
+            // Network errors should be ignored
+            if (ex instanceof Error) {
+                reportErrors(ex);
+            }
         })
         .then(function() {
             self.setPending(false);
         });
-
-        return deferred;
-    };
-
-    Collection.prototype.registerElement = function (element) {
-        this.dom = element;
     };
 
     Collection.prototype.hasOpenArticles = function() {
@@ -310,7 +320,8 @@ define([
     };
 
 
-    Collection.prototype.populate = function(rawCollection) {
+    Collection.prototype.populate = function(rawCollection, callback) {
+        callback = callback || function () {};
         var self = this,
             list,
             loading = [];
@@ -321,7 +332,7 @@ define([
             this.state.hasDraft(_.isArray(this.raw.draft));
 
             if (this.hasOpenArticles()) {
-                this.state.hasConcurrentEdits(this.raw.updatedEmail !== vars.identity.email && this.state.lastUpdated());
+                this.state.hasConcurrentEdits(this.raw.updatedEmail !== vars.model.identity.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
                 list = this.front.getCollectionList(this.raw);
@@ -351,10 +362,11 @@ define([
 
         this.refreshVisibleStories();
         this.setPending(false);
-        $.when.apply($, loading).always(function () {
+        Promise.all(loading).then(function () {
             mediator.emit('collection:populate', self);
-            self.loaded.resolve();
-        });
+            callback();
+        })
+        .catch(callback);
     };
 
     Collection.prototype.populateHistory = function(list) {
@@ -457,6 +469,9 @@ define([
 
     Collection.prototype.dispose = function () {
         this.listeners.dispose();
+        this.groups.forEach(function (group) {
+            group.dispose();
+        });
     };
 
     ko.bindingHandlers.indicatorHeight = {

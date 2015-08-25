@@ -26,7 +26,7 @@ define([
         if (this.$adSlot.data('name') !== 'right') {
             return;
         }
-        articleBodyOffset = config.page.hasShowcaseMainPicture ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
+        articleBodyOffset = config.page.hasShowcaseMainElement ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
         this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
         new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
     };

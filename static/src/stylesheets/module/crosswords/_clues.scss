@@ -1,6 +1,3 @@
-.crossword__clues {
-}
-
 .crossword__clues-header {
     @include fs-header(1);
     border-top: 1px solid colour(crosswordAccent2);
@@ -11,10 +8,6 @@
 .crossword__clues-list {
     margin: 0;
     margin-bottom: $gs-baseline;
-}
-
-.crossword__clues--across,
-.crossword__clues--down {
 }
 
 .crossword__clue {
@@ -35,9 +28,10 @@
 }
 
 .crossword__clue--selected {
-    color: darken(colour(crosswordAccent2), 15%);
+    font-weight: bold;
+    color: darken(colour(crosswordAccent2), 20%);
 }
 
 .crossword__clue--answered {
-    color: colour(neutral-4);
+    color: colour(neutral-2);
 }

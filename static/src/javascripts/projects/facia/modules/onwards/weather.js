@@ -15,7 +15,7 @@
 define([
     'bean',
     'qwery',
-    'raven',
+    'common/utils/report-error',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax-promise',
@@ -29,7 +29,7 @@ define([
 ], function (
     bean,
     qwery,
-    raven,
+    reportError,
     _,
     $,
     ajaxPromise,
@@ -102,11 +102,7 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                     }.bind(this)).catch(function (err) {
-                        raven.captureException(err, {
-                            tags: {
-                                feature: 'weather'
-                            }
-                        });
+                        reportError(err, { feature: 'weather' });
                     });
             }
         },
@@ -117,11 +113,7 @@ define([
                     this.render(response, location.city);
                     this.fetchForecastData(location);
                 }.bind(this)).catch(function (err) {
-                    raven.captureException(err, {
-                        tags: {
-                            feature: 'weather'
-                        }
-                    });
+                    reportError(err, { feature: 'weather' });
                 });
         },
 
@@ -135,11 +127,7 @@ define([
                 .then(function (response) {
                     this.renderForecast(response);
                 }.bind(this)).catch(function (err) {
-                    raven.captureException(err, {
-                        tags: {
-                            feature: 'weather'
-                        }
-                    });
+                    reportError(err, { feature: 'weather' });
                 });
         },
 

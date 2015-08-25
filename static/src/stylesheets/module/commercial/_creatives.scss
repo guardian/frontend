@@ -509,8 +509,29 @@
             &.ad-scrolling-text-hide {
                 background-position: 0 -250px;
             }
+            &.ad-scrolling-text-hide-left {
+                background-position: left -250px;
+            }
+            &.ad-scrolling-text-hide-right {
+                background-position: right -250px;
+            }
+            &.ad-scrolling-text-hide-centre {
+                background-position: center -250px;
+            }
             &.ad-scrolling-text-animate {
                 animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-left {
+                animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-right {
+                animation: textanimation-right 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-centre {
+                animation: textanimation-centre 1.4s ease .4s;
                 animation-fill-mode: forwards;
             }
         }
@@ -699,6 +720,34 @@
 
     100% {
         background-position: 0 0;
+    }
+}
+
+@keyframes textanimation-right {
+    0% {
+        background-position: right -250px;
+    }
+
+    75% {
+        background-position: right 0;
+    }
+
+    100% {
+        background-position: right 0;
+    }
+}
+
+@keyframes textanimation-centre {
+    0% {
+        background-position: center -250px;
+    }
+
+    75% {
+        background-position: center 0;
+    }
+
+    100% {
+        background-position: center 0;
     }
 }
 

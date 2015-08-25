@@ -16,6 +16,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -37,6 +38,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    dfpOphanTracking,
     geoMostPopular,
     ab,
     beacon,
@@ -117,31 +119,9 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            var start = detect.getTimeOfDomComplete();
-
+            dfpOphanTracking.attachListeners(googletag);
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
-                require(['ophan/ng'], function (ophan) {
-                    var lineItemIdOrEmpty = function (event) {
-                        if (event.isEmpty) {
-                            return '__empty__';
-                        } else {
-                            return event.lineItemId;
-                        }
-                    };
-
-                    ophan.record({
-                        ads: [{
-                            slot: event.slot.getSlotId().getDomId(),
-                            campaignId: lineItemIdOrEmpty(event),
-                            creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - start,
-                            adServer: 'DFP'
-                        }]
-                    });
-                });
-
-
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
@@ -150,35 +130,46 @@ define([
         },
 
         setPageTargeting = function () {
-            if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'],
-                    function (ophan) {
-                        var viewId = (ophan || {}).viewId;
-                        setTarget({viewId: viewId});
-                    },
-                    function (err) {
-                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
-                            tags: {
-                                feature: 'DFP'
-                            }
-                        });
-
-                        setTarget();
-                    }
-                );
-            } else {
-                setTarget();
-            }
-        },
-
-        setTarget = function (opts) {
-            _.forOwn(buildPageTargeting(opts), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
 
         isMobileBannerTest = function () {
             return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
+        },
+
+        isSponsorshipContainerTest = function () {
+            var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
+                sponsorshipIdsReturned = [];
+
+            _.forEach(sponsorshipIds, function (value) {
+                if ($(value).length) {
+                    sponsorshipIdsReturned.push(value);
+                }
+            });
+
+            return sponsorshipIdsReturned;
+        },
+
+        showSponsorshipPlaceholder = function () {
+            var sponsorshipIdsFound = isSponsorshipContainerTest();
+
+            if (detect.adblockInUse && sponsorshipIdsFound.length) {
+                fastdom.write(function () {
+                    _.forEach(sponsorshipIdsFound, function (value) {
+                        var sponsorshipIdFoundEl = $(value),
+                            sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
+                            sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
+
+                        if (sponsorshipIdFoundEl.previous().length) {
+                            sponsorshipIdFoundEl.previous().append(sponsorshipBadge);
+                        } else {
+                            sponsorshipIdFoundEl.parent().prepend(sponsorshipBadge);
+                        }
+                    });
+                });
+            }
         },
 
         /**
@@ -211,12 +202,10 @@ define([
                 .valueOf();
         },
         setPublisherProvidedId = function () {
-            if (config.switches.dfpUserId) {
-                var user = id.getUserFromCookie();
-                if (user) {
-                    var hashedId = sha1.hash(user.id);
-                    googletag.pubads().setPublisherProvidedId(hashedId);
-                }
+            var user = id.getUserFromCookie();
+            if (user) {
+                var hashedId = sha1.hash(user.id);
+                googletag.pubads().setPublisherProvidedId(hashedId);
             }
         },
         displayAds = function () {
@@ -233,7 +222,8 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            mediator.on('window:throttledScroll', lazyLoad);
+            instantLoad();
             lazyLoad();
         },
         windowResize = _.debounce(
@@ -270,9 +260,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the main test or if there is a switch on
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if ((config.switches.viewability || config.switches.lzAds) && !(config.page.hasPageSkin)) {
+            if (config.switches.viewability && !config.page.hasPageSkin) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
@@ -280,31 +269,39 @@ define([
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
+            // show sponsorship placeholder if adblock detected
+            showSponsorshipPlaceholder();
+
             return dfp;
+        },
+        instantLoad = function () {
+            _(slots).keys().forEach(function (slot) {
+                if (_.contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                    loadSlot(slot);
+                }
+            });
         },
         lazyLoad = function () {
             if (slots.length === 0) {
-                mediator.off('window:scroll');
+                mediator.off('window:throttledScroll');
             } else {
-                fastdom.read(function () {
-                    var scrollTop    = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
-                        depth = 0.5;
+                var scrollTop    = window.pageYOffset,
+                    viewportHeight = bonzo.viewport().height,
+                    scrollBottom = scrollTop + viewportHeight,
+                    depth = 0.5;
 
-                    _(slots).keys().forEach(function (slot) {
-                        // if the position of the ad is above the viewport - offset (half screen size)
-                        // Pageskin and Outbrain needs to be loaded at the page load - TODO: unit test
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth
-                            || slot === 'dfp-ad--pageskin-inread'
-                            || slot === 'dfp-ad--merchandising-high') {
-                            googletag.display(slot);
-
-                            slots = _(slots).omit(slot).value();
-                            displayed = true;
-                        }
-                    });
+                _(slots).keys().forEach(function (slot) {
+                    // if the position of the ad is above the viewport - offset (half screen size)
+                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
+                        loadSlot(slot);
+                    }
                 });
             }
+        },
+        loadSlot = function (slot) {
+            googletag.display(slot);
+            slots = _(slots).omit(slot).value();
+            displayed = true;
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),

@@ -46,8 +46,25 @@ System['import']('core').then(function () {
                 }
             );
 
-            // Uncaught exceptions
+            // Report uncaught exceptions
             raven.install();
+
+            var oldOnError = window.onerror;
+            window.onerror = function (message, filename, lineno, colno, error) {
+                // Not all browsers pass the error object
+                if (!error || !error.reported) {
+                    oldOnError.apply(window, arguments);
+                }
+            };
+
+            // Report unhandled promise rejections
+            // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+            window.addEventListener('unhandledRejection', function (event) {
+                var error = event.detail.reason;
+                if (error && !error.reported) {
+                    raven.captureException(error);
+                }
+            });
 
             // Safe to depend on Lodash because it's part of core
             System['import']('common/utils/_').then(function (_) {

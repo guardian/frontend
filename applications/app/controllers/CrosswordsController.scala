@@ -1,12 +1,11 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
-import conf.LiveContentApi
 import common.{Edition, ExecutionContexts}
-import conf.Static
-import model.{Cors, ApiContentWithMeta, Cached}
-import play.api.mvc.{Result, Action, Controller, RequestHeader}
+import conf.{LiveContentApi, Static}
 import crosswords._
+import model.{Cached, Cors}
+import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -25,8 +24,17 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), ApiContentWithMeta(content)),
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
          CrosswordSvg(crossword, None, None, false)
+      )))
+    }
+  }
+
+  def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+    withCrossword(crosswordType, id) { (crossword, content) =>
+      Cached(60)(Ok(views.html.accessibleCrossword(
+        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
+        AccessibleCrosswordRows(crossword)
       )))
     }
   }
@@ -43,5 +51,34 @@ object CrosswordsController extends Controller with ExecutionContexts {
         }
       }
     }
+  }
+}
+
+object CrosswordPreferencesController extends Controller with PreferenceController {
+  private val CrosswordOptIn = "crossword_opt_in"
+  private val CrosswordOptInPath= "/crosswords"
+  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
+  private val CrosswordOptOutMaxAge = 60.days.toSeconds.toInt
+
+  def crosswordsOptIn = Action { implicit request =>
+    Cached(60)(SeeOther("/crosswords?view=beta").withCookies(
+      Cookie(
+        CrosswordOptIn, "true",
+        path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptInMaxAge),
+        domain = getShortenedDomain(request.domain)
+      )
+    ))
+  }
+
+  def crosswordsOptOut = Action { implicit request =>
+    Cached(60)(SeeOther("/crosswords?view=classic").withCookies(
+      Cookie(
+        CrosswordOptIn, "false",
+        path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptOutMaxAge),
+        domain = getShortenedDomain(request.domain)
+      )
+    ))
   }
 }

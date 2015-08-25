@@ -1,12 +1,15 @@
 /* eslint new-cap: 0 */
 
 import React from 'react';
+import bonzo from 'bonzo';
+import bean from 'bean';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
 
+import AnagramHelper from './anagram-helper/main';
 import Clues from './clues';
 import Controls from './controls';
 import HiddenInput from './hidden-input';
@@ -14,8 +17,6 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
-import loadComments from './comments';
-import renderSeries from './series';
 
 class Crossword extends React.Component {
 
@@ -34,6 +35,8 @@ class Crossword extends React.Component {
             'onCheck',
             'onCheckAll',
             'onClearAll',
+            'onClearSingle',
+            'onToggleAnagramHelper',
             'onSelect',
             'onKeyDown',
             'onClickHiddenInput',
@@ -43,8 +46,6 @@ class Crossword extends React.Component {
             'goToReturnPosition'
         );
 
-        loadComments();
-        renderSeries();
 
         this.state = {
             grid: helpers.buildGrid(
@@ -54,7 +55,8 @@ class Crossword extends React.Component {
                 persistence.loadGridState(this.props.data.id)
             ),
             cellInFocus: null,
-            directionOfEntry: null
+            directionOfEntry: null,
+            showAnagramHelper: false
         };
     }
 
@@ -69,6 +71,13 @@ class Crossword extends React.Component {
                 firstClue.position.y,
                 firstClue.direction
             );
+        }
+    }
+
+    componentDidUpdate (prevProps, prevState) {
+        // return focus to active cell after exiting anagram helper
+        if (!this.state.showAnagramHelper && (this.state.showAnagramHelper !== prevState.showAnagramHelper)) {
+            this.focusCurrentCell();
         }
     }
 
@@ -195,18 +204,39 @@ class Crossword extends React.Component {
     }
 
     focusPrevious () {
-        if (this.isAcross()) {
-            this.moveFocus(-1, 0);
+        const cell = this.state.cellInFocus;
+        const clue = this.clueInFocus();
+
+        if (helpers.isFirstCellInClue(cell, clue)) {
+            const newClue = helpers.getPreviousClueInGroup(this.props.data.entries, clue);
+            if (newClue) {
+                const newCell = helpers.getLastCellInClue(newClue);
+                this.focusClue(newCell.x, newCell.y, newClue.direction);
+            }
         } else {
-            this.moveFocus(0, -1);
+            if (this.isAcross()) {
+                this.moveFocus(-1, 0);
+            } else {
+                this.moveFocus(0, -1);
+            }
         }
     }
 
     focusNext () {
-        if (this.isAcross()) {
-            this.moveFocus(1, 0);
+        const cell = this.state.cellInFocus;
+        const clue = this.clueInFocus();
+
+        if (helpers.isLastCellInClue(cell, clue)) {
+            const newClue = helpers.getNextClueInGroup(this.props.data.entries, clue);
+            if (newClue) {
+                this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
+            }
         } else {
-            this.moveFocus(0, 1);
+            if (this.isAcross()) {
+                this.moveFocus(1, 0);
+            } else {
+                this.moveFocus(0, 1);
+            }
         }
     }
 
@@ -221,7 +251,7 @@ class Crossword extends React.Component {
     }
 
     focusHiddenInput (x, y) {
-        const wrapper = this.refs.hiddenInputComponent.refs.wrapper.getDOMNode();
+        const wrapper = React.findDOMNode(this.refs.hiddenInputComponent.refs.wrapper);
         const left = helpers.gridSize(x);
         const top = helpers.gridSize(y);
         const position = this.asPercentage(left, top);
@@ -230,7 +260,7 @@ class Crossword extends React.Component {
         wrapper.style.left = position.x + '%';
         wrapper.style.top = position.y + '%';
 
-        const hiddenInputNode = this.refs.hiddenInputComponent.refs.input.getDOMNode();
+        const hiddenInputNode = React.findDOMNode(this.refs.hiddenInputComponent.refs.input);
 
         if (document.activeElement !== hiddenInputNode) {
             hiddenInputNode.focus();
@@ -293,6 +323,10 @@ class Crossword extends React.Component {
                 directionOfEntry: direction
             });
         }
+    }
+
+    focusCurrentCell () {
+        this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
     }
 
     cluesFor (x, y) {
@@ -415,6 +449,27 @@ class Crossword extends React.Component {
         this.save();
     }
 
+    onClearSingle () {
+        const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
+
+        this.setState({
+            grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                if (_.some(cellsInFocus, c => c.x === gridX && c.y === gridY)) {
+                    cell.value = '';
+                }
+                return cell;
+            })
+        });
+
+        this.save();
+    }
+
+    onToggleAnagramHelper () {
+        this.setState({
+            showAnagramHelper: !this.state.showAnagramHelper
+        });
+    }
+
     hiddenInputValue () {
         const cell = this.state.cellInFocus;
 
@@ -439,7 +494,16 @@ class Crossword extends React.Component {
 
     render () {
         const focussed = this.clueInFocus();
-        const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
+        const isHighlighted = (x, y) => focussed
+            ? focussed.group.some(id => {
+                const entry = _.find(this.props.data.entries, { id });
+                return helpers.entryHasCell(entry, x, y);
+            })
+            : false;
+
+        const anagramHelper = this.state.showAnagramHelper && (
+            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+        );
 
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
@@ -448,6 +512,7 @@ class Crossword extends React.Component {
                         rows={this.rows}
                         columns={this.columns}
                         cells={this.state.grid}
+                        separators={helpers.buildSeparatorMap(this.props.data.entries)}
                         setCellValue={this.setCellValue}
                         onSelect={this.onSelect}
                         isHighlighted={isHighlighted}
@@ -462,7 +527,10 @@ class Crossword extends React.Component {
                         value={this.hiddenInputValue()}
                         ref='hiddenInputComponent'
                     />
+
+                    {anagramHelper}
                 </div>
+
                 <Controls
                     hasSolutions={this.hasSolutions()}
                     clueInFocus={focussed}
@@ -471,6 +539,8 @@ class Crossword extends React.Component {
                     onCheck={this.onCheck}
                     onCheckAll={this.onCheckAll}
                     onClearAll={this.onClearAll}
+                    onClearSingle={this.onClearSingle}
+                    onToggleAnagramHelper={this.onToggleAnagramHelper}
                 />
                 <Clues
                     clues={this.cluesData()}
@@ -483,7 +553,7 @@ class Crossword extends React.Component {
 }
 
 export default function () {
-    $('.js-crossword').each(function (element) {
+    $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
             React.render(<Crossword data={crosswordData} />, element);
@@ -491,5 +561,9 @@ export default function () {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
     });
-}
 
+    $('.js-print-crossword').each(element => {
+        bean.on(element, 'click', window.print.bind(window));
+        bonzo(element).removeClass('js-print-crossword');
+    });
+}

@@ -1,49 +1,40 @@
 define([
-    'raven',
+    'common/utils/report-error',
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/film-containers',
-    'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/facebook-most-viewed',
-    'common/modules/experiments/tests/twitter-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/signed-out-save-for-later',
-    'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/tests/membership-message'
+    'common/modules/experiments/tests/membership-message-uk',
+    'common/modules/experiments/tests/membership-message-usa',
+    'common/modules/experiments/tests/adblock-sticky-banner',
+    'common/modules/experiments/tests/rugby'
 ], function (
-    raven,
+    reportError,
     _,
     config,
     cookies,
     mediator,
     store,
     mvtCookie,
-    FilmContainers,
-    ArticleTruncation,
-    FacebookMostViewed,
-    TwitterMostViewed,
     LiveblogNotifications,
     HighCommercialComponent,
-    SignedOutSaveForLater,
-    CookieRefresh,
-    MembershipMessage
+    MembershipMessageUK,
+    MembershipMessageUSA,
+    AdblockStickyBanner,
+    Rugby
 ) {
 
     var TESTS = _.flatten([
-        new FilmContainers(),
-        new ArticleTruncation(),
-        new FacebookMostViewed(),
-        new TwitterMostViewed(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new SignedOutSaveForLater(),
-        new CookieRefresh(),
-        new MembershipMessage()
+        new MembershipMessageUK(),
+        new MembershipMessageUSA(),
+        new AdblockStickyBanner(),
+        new Rugby()
     ]);
 
     var participationsKey = 'gu.ab.participations';
@@ -338,7 +329,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-                raven.captureException(error);
+                reportError(error, false);
             }
 
             return abLogObject;

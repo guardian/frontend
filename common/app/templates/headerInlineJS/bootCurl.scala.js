@@ -25,7 +25,9 @@ var curl = {
         'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
         'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
         'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
-        'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+        @if(item.isFront) {
+            'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+        }
         'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
         'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
         'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
@@ -86,20 +88,40 @@ require([
         }
     );
 
-    // Uncaught exceptions
+    // Report uncaught exceptions
     raven.install();
+
+    var oldOnError = window.onerror;
+    window.onerror = function (message, filename, lineno, colno, error) {
+        // Not all browsers pass the error object
+        if (!error || !error.reported) {
+            oldOnError.apply(window, arguments);
+        }
+    };
+
+    // Report unhandled promise rejections
+    // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+    window.addEventListener('unhandledRejection', function (event) {
+        var error = event.detail.reason;
+        if (error && !error.reported) {
+            raven.captureException(error);
+        }
+    });
 
     require([
         'common/utils/config',
         'common/modules/experiments/ab',
         'common/modules/ui/images',
-        'common/modules/ui/lazy-load-images'
+        'common/modules/ui/lazy-load-images',
+        'common/utils/storage'
     ], function (
         config,
         ab,
         images,
-        lazyLoadImages
+        lazyLoadImages,
+        storage
     ) {
+        var alreadyVisted;
 
         if (guardian.isModernBrowser) {
             ab.segmentUser();
@@ -113,6 +135,11 @@ require([
         lazyLoadImages.init();
         images.upgradePictures();
         images.listen();
+
+        if (guardian.isModernBrowser) {
+            alreadyVisted = storage.local.get('alreadyVisited') || 0;
+            storage.local.set('alreadyVisited', alreadyVisted + 1);
+        }
 
         // Preference pages are served via HTTPS for service worker support.
         // These pages must not have mixed (HTTP/HTTPS) content, so

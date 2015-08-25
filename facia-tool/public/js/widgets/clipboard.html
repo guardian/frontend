@@ -31,8 +31,10 @@
                 underDrag: underDrag() && !underControlDrag(),
                 underControlDrag: underDrag() && underControlDrag()
             }">
-            <div data-bind="template: {name: 'template_article', foreach: items}"></div>
-            <div class="group-separator" data-bind="css: {'pasteOver': $root.isPasteActive}">
+            <!-- ko foreach: items -->
+                <trail-widget params="context: $context"></trail-widget>
+            <!-- /ko -->
+            <div class="group-separator" data-bind="css: {'pasteOver': $root.isPasteActive && $root.isPasteActive()}">
                 <span class="helptext">Click to paste</span>
             </div>
         </div>
