@@ -28,7 +28,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
     isExpired = None)
 
   val cardFixtures = (1 to NumberOfFixtures) map { n =>
-    IndexedTrail(FaciaContentConvert.frontentContentToFaciaContent(
+    IndexedTrail(FaciaContentConvert.frontendContentToFaciaContent(
       new Content(
         nthApiContent(n)) {
           override lazy val webPublicationDate: Imports.DateTime = DateTime.now
