@@ -68,6 +68,7 @@ export default {
 
     apiBase:               '',
     apiSearchBase:         '/api/proxy',
+    apiLiveBase:           '/api/live',
     apiSearchParams:       [
         'show-elements=video',
         'show-tags=all',
