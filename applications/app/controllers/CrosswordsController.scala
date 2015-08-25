@@ -60,7 +60,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
 object CrosswordSearchController extends Controller with ExecutionContexts {
   def searchForm() = Action { implicit request =>
-    Ok(views.html.crosswordSearch(CrosswordSearchPage))
+    Cached(60)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))
   }
 
   def search() = Action.async { implicit request =>
@@ -78,13 +78,13 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results match {
             case Nil =>
-              Ok(views.html.crosswordsNoResults(CrosswordSearchPage))
+              Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
 
             case results =>
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
               val page = IndexPage(section, results.map(Content(_)))
 
-              Ok(views.html.index(page))
+              Cached(60)(Ok(views.html.index(page)))
           }
         }
 
@@ -105,7 +105,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
       case CrosswordLookup(crosswordType, id) =>
         Redirect(s"$crosswordType/$id")
       case _ =>
-        Ok(views.html.crosswordsNoResults(CrosswordSearchPage))
+        Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
     }
   }
 
