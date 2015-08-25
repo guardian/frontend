@@ -18,13 +18,6 @@ describe('Slice Adverts', function () {
         sliceAdverts, config, detect;
 
     beforeEach(function (done) {
-        /*injector.mock({
-            'common/utils/detect': {
-                getBreakpoint: function () {
-                    return 'desktop';
-                }
-            }
-        });*/
         injector.test(['common/modules/commercial/slice-adverts', 'common/utils/config', 'common/utils/detect'], function () {
             sliceAdverts = arguments[0];
             config = arguments[1];
@@ -65,9 +58,6 @@ describe('Slice Adverts', function () {
     });
 
     it('should remove the "fc-slice__item--no-mpu" class', function (done) {
-        detect.getBreakpoint = function () {
-            return 'desktop';
-        };
         sliceAdverts.init();
 
         fastdom.defer(function () {
