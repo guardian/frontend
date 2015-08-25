@@ -18,3 +18,21 @@ case class Team(
   name: String,
   score: Option[Int] = None
 )
+
+case class Player(
+  id: String,
+  name: String,
+  team: Team
+)
+
+case class ScoreEvent(
+  player: Player,
+  minute: Int,
+  `type`: ScoreType.Value
+)
+
+object ScoreType extends Enumeration {
+  val `Try` = Value("Try")
+  val Conversion = Value("Conversion")
+  val Penalty = Value("Penalty")
+}
