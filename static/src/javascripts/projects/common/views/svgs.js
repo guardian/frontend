@@ -27,7 +27,8 @@ define([
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/icon/cursor',
     'inlineSvg!svgs/icon/fb',
-    'inlineSvg!svgs/icon/gplus'
+    'inlineSvg!svgs/icon/gplus',
+    'inlineSvg!svgs/icon/plus'
 ], function (
     _,
     commentCount16icon,
@@ -53,7 +54,8 @@ define([
     notificationsExplainerDesktop,
     cursor,
     fb,
-    gplus
+    gplus,
+    plus
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -79,7 +81,8 @@ define([
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         cursor: cursor,
         fb: fb,
-        gplus: gplus
+        gplus: gplus,
+        plus: plus
     };
 
     return function (name, classes, title) {
