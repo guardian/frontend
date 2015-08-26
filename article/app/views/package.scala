@@ -6,10 +6,10 @@ import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
 
-object Widths {
+object MainMediaWidths {
 
-  def apply(isShowcase: Boolean, isFeature: Boolean): layout.WidthsByBreakpoint = {
-    (isShowcase, isFeature) match {
+  def apply(article: Article): layout.WidthsByBreakpoint = {
+    (article.hasShowcaseMainElement, article.isFeature) match {
       case (true, true) => MainMedia.FeatureShowcase
       case (true, _) => MainMedia.Showcase
       case _ => MainMedia.Inline
