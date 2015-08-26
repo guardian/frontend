@@ -48,7 +48,6 @@ define([
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?rel=0&amp;controls=2&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video"></iframe>' : ''
             },
             $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: _.merge(this.params, videoSource) })),
-
             domPromise = new Promise(function (resolve) {
                 fastdom.write(function () {
 
@@ -59,6 +58,7 @@ define([
                     if (this.params.trackingPixel) {
                         this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
                     }
+                    
                     $ExpandableVideo.appendTo(this.$adSlot);
                     resolve();
                 }.bind(this));
