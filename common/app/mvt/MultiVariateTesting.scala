@@ -26,7 +26,7 @@ object JspmTest extends TestDefinition(
 )
 
 object PayloadSizeTest extends TestDefinition(
-  List(Variant1),
+  List(Variant6),
   "payload-size-test",
   "To test whether increased payload size causes a drop in unique visitors and/or page views",
   new LocalDate(2015, 9, 30)
