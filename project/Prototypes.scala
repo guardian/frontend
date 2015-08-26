@@ -30,7 +30,6 @@ trait Prototypes {
 
   val frontendIntegrationTestsSettings = Seq (
     concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
-    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     testOptions in Test += Tests.Argument("-oDF"),
     resolvers ++= Seq(Resolver.typesafeRepo("releases")),
     libraryDependencies ++= Seq(
@@ -85,7 +84,7 @@ trait Prototypes {
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
-    unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
+    unmanagedClasspath in Test <+= baseDirectory map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
       scalaTest,
@@ -100,22 +99,23 @@ trait Prototypes {
     baseDirectory in Test := file(".")
   )
 
+  def frontendDistSettings(application: String) = List(
+    name in Universal := application,
+    topLevelDirectory in Universal := Some(application),
+    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1))
+  )
+
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
-    .settings(frontendCompilationSettings:_*)
+    .settings(frontendCompilationSettings)
 
   def application(applicationName: String) = {
     Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
-    .settings(frontendDependencyManagementSettings:_*)
-    .settings(frontendCompilationSettings:_*)
-    .settings(frontendClientSideSettings:_*)
-    .settings(frontendTestSettings:_*)
-    .settings(VersionInfo.settings:_*)
-    .settings(
-      libraryDependencies ++= Seq(
-        commonsIo
-      )
-    )
-    .settings(name in Universal := applicationName)
-    .settings(topLevelDirectory in Universal := Some(applicationName))
+    .settings(frontendDependencyManagementSettings)
+    .settings(frontendCompilationSettings)
+    .settings(frontendClientSideSettings)
+    .settings(frontendTestSettings)
+    .settings(VersionInfo.settings)
+    .settings(libraryDependencies ++= Seq(commonsIo))
+    .settings(frontendDistSettings(applicationName))
   }
 }
