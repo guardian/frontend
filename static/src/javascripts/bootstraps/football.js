@@ -12,8 +12,8 @@ define([
     'common/modules/sport/football/football',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-list-live',
-    'common/modules/sport/football/score-board',
     'common/modules/sport/football/tag-page-stats',
+    'common/modules/sport/score-board',
     'common/modules/ui/rhc'
 ], function (
     bean,
@@ -29,8 +29,8 @@ define([
     football,
     MatchInfo,
     MatchListLive,
-    ScoreBoard,
     tagPageStats,
+    ScoreBoard,
     rhc
 ) {
 
@@ -143,34 +143,20 @@ define([
                 renderNav(match);
             } else {
                 var $h = $('.js-score'),
-                    scoreBoard = new ScoreBoard(),
-                    scoreContainer = bonzo.create(
-                        '<div class="score-container">' +
-                            '<div class="score__loading' + (match.pageType !== 'report' ? ' score__loading--live' : '') + '">' +
-                                '<div class="loading__text">Fetching the scores…</div>' +
-                                '<div class="is-updating"></div>' +
-                            '</div>' +
-                        '</div>'
-                    )[0];
-
-                if (match.pageType === 'report') {
-                    $h.after(scoreContainer);
-                } else {
-                    $h.addClass('u-h').before(scoreContainer);
-                }
+                    scoreBoard = new ScoreBoard({
+                        pageType: match.pageType,
+                        parent: $h,
+                        responseDataKey: 'matchSummary',
+                        autoupdated: match.isLive
+                    });
 
                 renderNav(match, function (resp, $nav, endpoint) {
                     dropdownTemplate = resp.dropdown;
-                    scoreContainer.innerHTML = '';
-                    scoreBoard.template = resp.matchSummary;
 
+                    // Test if template is not composed of just whitspace. A content validation check, apparently.
                     if (!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.endpoint = endpoint;
-                        scoreBoard.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
-                        scoreBoard.autoupdated = match.isLive;
-
-                        scoreBoard.render(scoreContainer);
-                        scoreBoard.setState(match.pageType);
+                        scoreBoard.loadFromJson(resp.matchSummary);
                     } else {
                         $h.removeClass('u-h');
                     }
