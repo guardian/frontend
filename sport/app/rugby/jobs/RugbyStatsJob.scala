@@ -60,6 +60,10 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
+  def getAllFixturesAndResults() = {
+    fixturesAndResultsMatches.get
+  }
+
   def getMatchNavContent(rugbyMatch: Match): Option[MatchNavigation] = {
     matchNavContent.get.get(rugbyMatch.key)
   }
