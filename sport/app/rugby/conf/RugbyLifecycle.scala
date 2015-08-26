@@ -18,10 +18,14 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
       RugbyStatsJob.run()
     }
 
-    //todo break up live and results
-    Jobs.deschedule("LiveAndResultEventScores")
-    Jobs.schedule("LiveAndResultEventScores", "0 * * * * ?") {
-      RugbyStatsJob.fetchScoreEvents
+    Jobs.deschedule("LiveEventScores")
+    Jobs.schedule("LiveEventScores", "0 * * * * ?") {
+      RugbyStatsJob.fetchLiveScoreEvents
+    }
+
+    Jobs.deschedule("PastEventScores")
+    Jobs.schedule("PastEventScores", "0 0/30 * * * ?") {
+      RugbyStatsJob.fetchPastScoreEvents
     }
 
     AkkaAsync {
@@ -30,7 +34,8 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
 
     //delay to allow previous jobs to complete
     AkkaAsync.after(initializationTimeout) {
-      RugbyStatsJob.fetchScoreEvents
+      RugbyStatsJob.fetchLiveScoreEvents
+      RugbyStatsJob.fetchPastScoreEvents
     }
   }
 }

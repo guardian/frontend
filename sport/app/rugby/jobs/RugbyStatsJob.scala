@@ -13,13 +13,13 @@ object RugbyStatsJob extends RugbyStatsJob
 trait RugbyStatsJob extends ExecutionContexts with Logging {
   protected val liveScoreMatches = AkkaAgent[Map[String, Match]](Map.empty)
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
-  protected val scoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
+  protected val liveScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
+  protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
   def run() {
     sendLiveScores(OptaFeed.getLiveScores)
     fixturesAndResults(OptaFeed.getFixturesAndResults)
-    fetchScoreEvents
   }
 
   def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {
@@ -46,12 +46,27 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  //todo split in to fetchScoreEventsResults (updates 30 mins?) and live scores (every min)?
-  def fetchScoreEvents {
-    val liveMatches = liveScoreMatches.get().values
-    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow)
-    val matches = (liveMatches ++ pastMatches).map(_.id)
+  def fetchLiveScoreEvents {
+    val liveMatches = liveScoreMatches.get().values.map(_.id).toList
 
+    fetchScoreEvents(liveMatches).map { scoreEventsForMatchesMap =>
+      scoreEventsForMatchesMap.map { case (aMatch, events) =>
+        liveScoreEvents.alter { _ + (aMatch -> events)}
+      }
+    }
+  }
+
+  def fetchPastScoreEvents {
+    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).map(_.id).toList
+
+    fetchScoreEvents(pastMatches).map { scoreEventsForMatchesMap =>
+      scoreEventsForMatchesMap.map { case (aMatch, events) =>
+        pastScoreEvents.alter { _ + (aMatch -> events)}
+      }
+    }
+  }
+
+  def fetchScoreEvents(matches: List[String]): Future[Map[String, List[ScoreEvent]]] = {
     val scoresEventsForMatchesFuture: Future[List[(String, List[ScoreEvent])]] = Future.sequence {
       matches.toList.map(matchId =>
         OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents.toList)
@@ -62,13 +77,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
       case Failure(t) => log.warn("Failed to fetch live event score result with error:" + t)
     }
 
-    val scoreEventsForMatchesAsMapFuture: Future[Map[String, List[ScoreEvent]]] = scoresEventsForMatchesFuture.map(_.toMap)
-
-    scoreEventsForMatchesAsMapFuture.map { scoreEventsForMatchesMap =>
-      scoreEventsForMatchesMap.map { case (aMatch, events) =>
-        scoreEvents.alter { _ + (aMatch -> events)}
-      }
-    }
+    scoresEventsForMatchesFuture.map(_.toMap)
   }
 
   private def createKey(aMatch: Match): String = {
@@ -88,7 +97,10 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  def getScoreEvents(matchId: String): Seq[ScoreEvent] = scoreEvents.get().get(matchId).getOrElse(Seq.empty)
+  def getScoreEvents(matchId: String): Seq[ScoreEvent] = {
+    val liveScoreEvent = liveScoreEvents.get().get(matchId)
+    liveScoreEvent.orElse(pastScoreEvents.get().get(matchId)).getOrElse(Seq.empty)
+  }
 
   private def isValidMatch(year: String, month: String, day: String, team1: String, team2: String, rugbyMatch: Match): Boolean = {
     rugbyMatch.hasTeam(team1) && rugbyMatch.hasTeam(team2) && dateFormat.print(rugbyMatch.date) == s"$year/$month/$day"
