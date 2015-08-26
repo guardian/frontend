@@ -40,12 +40,14 @@ define([
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height) + stickyHeaderHeight;
+            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
 
-            css = {
-                position: 'fixed',
-                top:      fixedTop
-            };
+            if (fixedTop !== 0) {
+                css = {
+                    position: 'fixed',
+                    top:      fixedTop
+                };
+            }
         } else {
             css = {
                 position: null,
