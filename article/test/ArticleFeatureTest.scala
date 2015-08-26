@@ -1,6 +1,6 @@
 package test
 
-import conf.Configuration
+import conf.{Switches, Configuration}
 import conf.Switches._
 import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
@@ -381,17 +381,6 @@ import collection.JavaConversions._
       }
     }
 
-//    scenario("Hide main picture if video is at start of article") {
-//      Given("I am on an article with a video at the start of the body")
-//      goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
-//        import browser._
-//        Then("the main picture should be hidden")
-//        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
-//
-//        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg")
-//      }
-//    }
-
     scenario("SEO Thumbnail") {
       goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
         import browser._
@@ -401,19 +390,6 @@ import collection.JavaConversions._
         findFirst("meta[name=thumbnail]").getAttribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
       }
     }
-
-//    scenario("Show main picture if video is further down article") {
-//      Given("I am on an article with a video further down inside the body")
-//      goTo("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
-//        import browser._
-//
-//        Then("the main picture should be shown")
-//        $("[itemprop='contentURL']") should have size 1
-//
-//        And("the embedded video should not have a poster when there are no images in the video element")
-//        findFirst("video").getAttribute("poster") should be("")
-//      }
-//    }
 
     scenario("Show embedded video in live blogs") {
       Given("I am on a live blog with an embedded video")
@@ -431,6 +407,19 @@ import collection.JavaConversions._
 
         Then("I should see the embedded video")
         $(".element-tweet").size should be(12)
+      }
+    }
+
+    scenario("Should include the first image of a tweet") {
+
+      Switches.TwitterImageFallback.switchOn()
+
+      Given("I am on an article with a embedded Tweet")
+      goTo("/world/2015/aug/22/hawker-hunter-plane-crash-shoreham-air-show-reports") { browser =>
+        import browser._
+
+        Then("I should see the first image of the tweet")
+        findFirst(".tweet").findFirst("img").getAttribute("src") should include ("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
       }
     }
 
@@ -628,6 +617,7 @@ import collection.JavaConversions._
     scenario("Outbrain") {
 
       Given("I am on an article")
+      OutbrainSwitch.switchOn()
       goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
         browser =>
           import browser._
