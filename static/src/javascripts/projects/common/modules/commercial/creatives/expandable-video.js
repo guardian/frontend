@@ -47,29 +47,29 @@ define([
                 videoEmbed: (this.params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?rel=0&amp;controls=2&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video"></iframe>' : ''
             },
-            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: _.merge(this.params, videoSource) }));
+            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: _.merge(this.params, videoSource) })),
 
-        var domPromise = new Promise(function (resolve) {
-            fastdom.write(function () {
+            domPromise = new Promise(function (resolve) {
+                fastdom.write(function () {
 
-                this.$ad = $('.ad-exp--expand', $ExpandableVideo).css('height', this.closedHeight);
+                    this.$ad = $('.ad-exp--expand', $ExpandableVideo).css('height', this.closedHeight);
 
-                $('.ad-exp-collapse__slide', $ExpandableVideo).css('height', this.closedHeight);
+                    $('.ad-exp-collapse__slide', $ExpandableVideo).css('height', this.closedHeight);
 
-                if (this.params.trackingPixel) {
-                    this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-                }
+                    if (this.params.trackingPixel) {
+                        this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                    }
 
-                $ExpandableVideo.appendTo(this.$adSlot);
-                resolve();
+                    $ExpandableVideo.appendTo(this.$adSlot);
+                    resolve();
+                }.bind(this));
             }.bind(this));
-        }.bind(this));
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
-                this.$ad.css('height', this.openedHeight);
-                $('.slide-video', $(this.$adSlot[0])).css('height', this.openedHeight).addClass('slide-video__expand');
                 var videoSrc = $('#YTPlayer').attr('src') + '&amp;autoplay=1';
+                this.$ad.css('height', this.openedHeight);
+                $('.slide-video', $(this.$adSlot[0])).css('height', this.openedHeight).addClass('slide-video__expand');              
                 setTimeout(function () {
                     $('#YTPlayer').attr('src', videoSrc);
                 }, 1000);
