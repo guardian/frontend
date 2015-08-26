@@ -1,8 +1,8 @@
 package rugby.jobs
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import rugby.feed.{MatchNavigation, OptaFeed, RugbyOptaFeedException, CapiFeed}
-import rugby.model.Match
+import rugby.feed.{MatchNavigation, OptaFeed, RugbyOptaFeedException}
+import rugby.model.{Status, Match}
 import scala.concurrent.Future
 
 object RugbyStatsJob extends RugbyStatsJob
@@ -60,8 +60,9 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  def getAllFixturesAndResults() = {
-    fixturesAndResultsMatches.get
+  def getAllResults(): Seq[Match] = {
+    fixturesAndResultsMatches.get.values.toList.filter(_.status == Status.Result) ++
+    liveScoreMatches.get.values.toList.filter(_.status == Status.Result)
   }
 
   def getMatchNavContent(rugbyMatch: Match): Option[MatchNavigation] = {

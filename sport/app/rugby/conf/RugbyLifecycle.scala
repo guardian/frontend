@@ -19,6 +19,11 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
       RugbyStatsJob.fixturesAndResults(OptaFeed.getFixturesAndResults)
     }
 
+    Jobs.deschedule("MatchNavArticles")
+    Jobs.schedule("MatchNavArticles", "0 0/2 * * * ?") {
+      RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
+    }
+
     AkkaAsync {
       RugbyStatsJob.sendLiveScores(OptaFeed.getLiveScores)
       RugbyStatsJob.fixturesAndResults(OptaFeed.getFixturesAndResults)

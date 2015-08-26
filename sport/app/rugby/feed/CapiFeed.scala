@@ -17,7 +17,7 @@ object CapiFeed extends ExecutionContexts with Logging {
 
   def getMatchArticles() : Future[Map[String, MatchNavigation]] = {
     Future.sequence(
-      RugbyStatsJob.getAllFixturesAndResults().values.map { rugbyMatch =>
+      RugbyStatsJob.getAllResults().map { rugbyMatch =>
         loadNavigation(rugbyMatch).map( _.map( (rugbyMatch.key, _) ) )
       }
     ).map(_.flatten.toMap)
