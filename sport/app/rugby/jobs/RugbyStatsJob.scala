@@ -15,7 +15,6 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   def run() {
     sendLiveScores(OptaFeed.getLiveScores)
     fixturesAndResults(OptaFeed.getFixturesAndResults)
-    sendMatchArticles(CapiFeed.getMatchArticles(fixturesAndResultsMatches.get.values.toList))
   }
 
   def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {

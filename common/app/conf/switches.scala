@@ -278,6 +278,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val DisableStickyNavOnMobileSwitch = Switch(
+    "Performance",
+    "disable-sticky-nav-on-mobile",
+    "If this switch is on, the sticky nav will be disabled on mobile.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val SaveForLaterSwitch = Switch(
     "Performance",
     "save-for-later",
