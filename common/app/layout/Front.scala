@@ -388,17 +388,23 @@ object Front extends implicits.Collections {
                       initialContext: ContainerLayoutContext = ContainerLayoutContext.empty) = {
     import scalaz.std.list._
     import scalaz.syntax.traverse._
+    import scalaz.syntax.semigroup._
+    import scalaz.Scalaz.listInstance
+    import scalaz.Scalaz.mapMonoid
 
     pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
-        (Set.empty[TrailUrl], initialContext, Nil: Seq[TrailUrl])
+        (Set.empty[TrailUrl], initialContext, Map.empty[(String, String), List[TrailUrl]])
       ) { case ((seenTrails, context, usedInLastIteration), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
         val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
+
+        val usedInIterationMap: Map[(String, String), List[TrailUrl]] = Map((pressedCollection.id, pressedCollection.displayName) -> usedInThisIteration.toList)
+
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
         ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext, usedInLastIteration ++ usedInThisIteration), FaciaContainer.fromConfig(
+          case (containerLayout, newContext) => ((newSeen, newContext, usedInLastIteration |+| usedInIterationMap), FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
@@ -407,7 +413,7 @@ object Front extends implicits.Collections {
             None
           ))
         } getOrElse {
-          ((newSeen, context, usedInLastIteration ++ usedInThisIteration), FaciaContainer.fromConfig(
+          ((newSeen, context, usedInLastIteration |+| usedInIterationMap), FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
