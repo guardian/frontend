@@ -36,7 +36,7 @@ define([
                 pageType: 'report',
                 parent: $h,
                 autoupdated: false,
-                responseDataKey: 'liveScore',
+                responseDataKey: 'matchSummary',
                 endpoint: config.page.rugbyMatch + '.json'});
 
             scoreBoard.load();

@@ -35,10 +35,10 @@ object MatchesController extends Controller {
       Cached(60){
         if (request.isJson)
           JsonComponent(
-            "liveScore" -> rugby.views.html.fragments.liveScore(page, aMatch, homeTeamScorers, awayTeamScorers).toString
+            "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers).toString
           )
         else
-          Ok(rugby.views.html.liveScore(page, aMatch, homeTeamScorers, awayTeamScorers))
+          Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))
       }
 
     }.getOrElse(NotFound)
