@@ -69,7 +69,7 @@ define([
             fastdom.write(function () {
                 var videoSrc = $('#YTPlayer').attr('src') + '&amp;autoplay=1';
                 this.$ad.css('height', this.openedHeight);
-                $('.slide-video', $(this.$adSlot[0])).css('height', this.openedHeight).addClass('slide-video__expand');              
+                $('.slide-video', $(this.$adSlot[0])).css('height', this.openedHeight).addClass('slide-video__expand');
                 setTimeout(function () {
                     $('#YTPlayer').attr('src', videoSrc);
                 }, 1000);
