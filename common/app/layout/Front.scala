@@ -292,8 +292,8 @@ case class DedupedItem(id: String)
 case class DedupedContainerResult(
   containerId: String,
   containerDisplayName: String,
-  removed: List[DedupedItem],
-  notRemovedButNotRelevant: List[DedupedItem])
+  deduped: List[DedupedItem],
+  validForDedupingButNotDeduped: List[DedupedItem])
 
 case class DedupedFrontResult(
   path: String,
