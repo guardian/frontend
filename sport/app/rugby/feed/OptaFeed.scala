@@ -14,7 +14,7 @@ case class RugbyOptaFeedException(message: String) extends RuntimeException(mess
 object OptaFeed extends ExecutionContexts with Logging {
   private val xmlContentType = ("Accept", "application/xml")
 
-  private def getResponse(feedParameter: String, gameParameter: Option[(String, String)] = None): Future[String] = {
+  private def getResponse(path: String, feedParameter: String, gameParameter: Option[(String, String)] = None): Future[String] = {
 
     val endpointOpt = conf.SportConfiguration.optaRugby.endpoint
     endpointOpt.map { endpoint =>
@@ -26,7 +26,7 @@ object OptaFeed extends ExecutionContexts with Logging {
 
       val queryParams = List(friendlyCompetition,  season, apiKey, apiUser, feedType) ++ gameParameter
 
-      WS.url(endpoint)
+      WS.url(s"$endpoint$path")
         .withHeaders(xmlContentType)
         .withQueryString(queryParams: _*)
         .get
@@ -43,16 +43,12 @@ object OptaFeed extends ExecutionContexts with Logging {
     }.getOrElse(Future.failed(RugbyOptaFeedException("No endpoint for rugby found")))
   }
 
-  def getLiveScores: Future[Seq[Match]] = getResponse("ru5").map(Parser.parseLiveScores)
+  def getLiveScores: Future[Seq[Match]] = getResponse("/competition.php", "ru5").map(Parser.parseLiveScores)
 
-  def getFixturesAndResults: Future[Seq[Match]] = getResponse("ru1").map(Parser.parseFixturesAndResults)
+  def getFixturesAndResults: Future[Seq[Match]] = getResponse("/competition.php", "ru1").map(Parser.parseFixturesAndResults)
 
   def getScoreEvents(matchId: String): Future[Seq[ScoreEvent]] = {
-    println("get score event" + matchId)
-    getResponse("ru7", Some("game_id" -> matchId)).map { data =>
-      val x = XML.loadString(data)
-      println("-- test " + x \ "@id") //TODO remove
-
+    getResponse("/", "ru7", Some("game_id" -> matchId)).map { data =>
       Parser.parseLiveEventsStatsToGetScoreEvents(data)
     }
   }

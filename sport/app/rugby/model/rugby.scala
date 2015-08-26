@@ -27,7 +27,7 @@ case class Player(
 
 case class ScoreEvent(
   player: Player,
-  minute: Int,
+  minute: String,
   `type`: ScoreType.Value
 )
 

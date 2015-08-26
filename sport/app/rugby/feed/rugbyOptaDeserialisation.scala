@@ -87,7 +87,7 @@ object Parser {
       player.map { p =>
         ScoreEvent(
           player = p,
-          minute = (scoreEventData \ "@minute").text.toInt,
+          minute = (scoreEventData \ "@minute").text,
           `type` = ScoreType.withName((scoreEventData \ "@type").text)
         )
       }

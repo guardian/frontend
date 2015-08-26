@@ -5,6 +5,8 @@ import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{OptaFeed, RugbyOptaFeedException}
 import rugby.model.{ScoreEvent, Match}
 import scala.concurrent.Future
+import scala.util.Failure
+import scala.util.Success
 
 object RugbyStatsJob extends RugbyStatsJob
 
@@ -44,20 +46,27 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
+  //todo split in to fetchScoreEventsResults (updates 30 mins?) and live scores (every min)?
   def fetchScoreEvents {
     val liveMatches = liveScoreMatches.get().values
     val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow)
     val matches = (liveMatches ++ pastMatches).map(_.id)
 
-    val scoresEventsForMatchesFuture = Future.sequence {
-      matches.map ( matchId =>
-        OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents)
+    val scoresEventsForMatchesFuture: Future[List[(String, List[ScoreEvent])]] = Future.sequence {
+      matches.toList.map(matchId =>
+        OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents.toList)
       )
     }
+    scoresEventsForMatchesFuture.onComplete {
+      case Success(result) => //do nothing
+      case Failure(t) => log.warn("Failed to fetch live event score result with error:" + t)
+    }
 
-    scoresEventsForMatchesFuture.map { scoreEventsForMatches =>
-      scoreEventsForMatches.map { scoreEventsForMatch =>
-        scoreEvents.alter { _ + (scoreEventsForMatch._1 -> scoreEventsForMatch._2)}
+    val scoreEventsForMatchesAsMapFuture: Future[Map[String, List[ScoreEvent]]] = scoresEventsForMatchesFuture.map(_.toMap)
+
+    scoreEventsForMatchesAsMapFuture.map { scoreEventsForMatchesMap =>
+      scoreEventsForMatchesMap.map { case (aMatch, events) =>
+        scoreEvents.alter { _ + (aMatch -> events)}
       }
     }
   }
