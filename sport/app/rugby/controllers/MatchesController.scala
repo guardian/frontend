@@ -6,7 +6,7 @@ import common.{ExecutionContexts, JsonComponent}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import rugby.jobs.RugbyStatsJob
-import rugby.model.Match
+import rugby.model.{ScoreType, Match}
 
 case class MatchPage(liveScore: Match) extends MetaData with ExecutionContexts {
   override lazy val id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
@@ -28,14 +28,17 @@ object MatchesController extends Controller {
 
     matchOpt.map { aMatch =>
       val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch.id)
+
+      val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
+
       val page = MatchPage(aMatch)
       Cached(60){
         if (request.isJson)
           JsonComponent(
-            "liveScore" -> rugby.views.html.fragments.liveScore(page, aMatch, scoreEvents).toString
+            "liveScore" -> rugby.views.html.fragments.liveScore(page, aMatch, homeTeamScorers, awayTeamScorers).toString
           )
         else
-          Ok(rugby.views.html.liveScore(page, aMatch, scoreEvents))
+          Ok(rugby.views.html.liveScore(page, aMatch, homeTeamScorers, awayTeamScorers))
       }
 
     }.getOrElse(NotFound)

@@ -1,12 +1,38 @@
 @import model.MetaData
 
 @import rugby.model.ScoreEvent
-@(page: MetaData, liveScore: rugby.model.Match, scoreEvents: Seq[ScoreEvent])
+@import rugby.model.ScoreType
+@(page: MetaData, liveScore: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])
+
+@scoreTypeEvents(scoreType: ScoreType.Value) = {
+    <tr>
+        <td class="match-summary__rugby-table__home-data">@teamScorersFor(scoreType, homeTeamScorers)</td>
+        <th>@{
+            scoreType match {
+                case (ScoreType.`Try`) => "Tries"
+                case (ScoreType.Conversion) => "Conversions"
+                case (ScoreType.Penalty) => "Penalties"
+            }
+        }</th>
+        <td class="match-summary__rugby-table__away-data">@teamScorersFor(scoreType, awayTeamScorers)</td>
+    </tr>
+}
+
+@teamScorersFor(scoreType: ScoreType.Value, teamScoreEvents: Seq[ScoreEvent]) = {
+    @{
+        teamScoreEvents.filter(_.`type` == scoreType).groupBy(_.player.name).map { case (playerName, scoreEvents) =>
+            val numberOfTries = if(scoreEvents.size > 1) s" (${scoreEvents.size})" else ""
+            s"$playerName$numberOfTries"
+        }.mkString(", ")
+    }
+}
+
+
+
 <div class="match-summary match-summary--responsive">
     <div class="match-info">
         <div class="match-info__competition">@{liveScore.competitionName}</div>
         <div class="match-info__venue">@{liveScore.venue}</div>
-        @scoreEvents
     </div>
     <div class="match-summary__teams">
         <div class="match-summary__team match-summary__team--home u-cf">
@@ -42,5 +68,14 @@
                 </h2>
             </div>
         </div>
+    </div>
+    <div>
+        @if(homeTeamScorers.size > 0) {
+            <table class="match-summary__rugby-table">
+                @scoreTypeEvents(ScoreType.`Try`)
+                @scoreTypeEvents(ScoreType.Conversion)
+                @scoreTypeEvents(ScoreType.Penalty)
+            </table>
+        }
     </div>
 </div>
