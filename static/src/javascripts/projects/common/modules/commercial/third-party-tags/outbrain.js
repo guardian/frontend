@@ -22,7 +22,7 @@ define([
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
     return {
-        load: function() {
+        load: function () {
             var $outbrain    = $('.js-outbrain'),
                 $container   = $('.js-outbrain-container'),
                 widgetConfig = {},
@@ -75,7 +75,7 @@ define([
                 }
 
                 require(['js!' + outbrainUrl]);
-            }.bind(this));
+            });
         },
 
         getSection: function () {
@@ -92,5 +92,5 @@ define([
                 }.bind(this));
             }
         }
-    }
+    };
 });
