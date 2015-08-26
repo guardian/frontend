@@ -403,6 +403,10 @@ $block-padding-right: $gs-gutter;
     background-repeat: no-repeat;
     border-top: 1px dotted colour(neutral-3);
 
+    @include mq($until: tablet) {
+        clear: left;
+    }
+
     .block-time + .block-elements .element-tweet:first-child & {
         border-top: 0;
     }
@@ -446,7 +450,17 @@ $block-padding-right: $gs-gutter;
     display: inline-block;
     font-weight: bold;
     padding-left: 40px;
+    padding-bottom: 1px;
     margin-bottom: 0;
+    background-repeat: no-repeat;
+}
+
+.tweet-main-image {
+    width: 100%;
+    margin-bottom: $gs-gutter;
+    @include mq(tablet) {
+        display: none;
+    }
 }
 
 .tweet-date {
