@@ -427,7 +427,7 @@ object Front extends implicits.Collections {
   }
 
   def fromPressedPageWithDeduped(pressedPage: PressedPage,
-                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty) = {
+                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): ((Set[Front.TrailUrl], ContainerLayoutContext, DedupedFrontResult), List[FaciaContainer]) = {
     import scalaz.std.list._
     import scalaz.syntax.traverse._
 
