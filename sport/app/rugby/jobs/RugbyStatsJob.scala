@@ -1,8 +1,7 @@
 package rugby.jobs
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
-import rugby.feed.{OptaFeed, RugbyOptaFeedException}
+import rugby.feed.{MatchNavigation, OptaFeed, RugbyOptaFeedException, CapiFeed}
 import rugby.model.Match
 import scala.concurrent.Future
 
@@ -11,18 +10,19 @@ object RugbyStatsJob extends RugbyStatsJob
 trait RugbyStatsJob extends ExecutionContexts with Logging {
   protected val liveScoreMatches = AkkaAgent[Map[String, Match]](Map.empty)
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
-  val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
+  protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
 
   def run() {
     sendLiveScores(OptaFeed.getLiveScores)
     fixturesAndResults(OptaFeed.getFixturesAndResults)
+    sendMatchArticles(CapiFeed.getMatchArticles(fixturesAndResultsMatches.get.values.toList))
   }
 
   def sendLiveScores(scoreData: Future[Seq[Match]]) : Future[Any] = {
     scoreData.flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
-        val key = createKey(aMatch)
-        liveScoreMatches.alter {_ + (key -> aMatch)}
+
+        liveScoreMatches.alter {_ + (aMatch.key -> aMatch)}
       })
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
@@ -33,8 +33,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   def fixturesAndResults(fixturesAndResults: Future[Seq[Match]]) : Future[Any] = {
     fixturesAndResults.flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
-        val key = createKey(aMatch)
-        fixturesAndResultsMatches.alter {_ +  (key -> aMatch)}
+        fixturesAndResultsMatches.alter {_ +  (aMatch.key -> aMatch)}
       })
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
@@ -42,9 +41,12 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  private def createKey(aMatch: Match): String = {
-    val date = dateFormat.print(aMatch.date)
-    s"$date/${aMatch.homeTeam.id}/${aMatch.awayTeam.id}"
+  def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]]) = {
+    navigationArticles.flatMap { matches =>
+      Future.sequence(matches.map { matchItem =>
+        matchNavContent.alter { _ + matchItem }
+      })
+    }
   }
 
   def getLiveScore(year: String, month: String, day: String, team1: String, team2: String) = {
@@ -57,10 +59,13 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     fixturesAndResultsMatches.get.values.find { rugbyMatch =>
       isValidMatch(year, month, day, homeTeamId, awayTeamId, rugbyMatch)
     }
+  }
 
+  def getMatchNavContent(rugbyMatch: Match): Option[MatchNavigation] = {
+    matchNavContent.get.get(rugbyMatch.key)
   }
 
   private def isValidMatch(year: String, month: String, day: String, team1: String, team2: String, rugbyMatch: Match): Boolean = {
-    rugbyMatch.hasTeam(team1) && rugbyMatch.hasTeam(team2) && dateFormat.print(rugbyMatch.date) == s"$year/$month/$day"
+    rugbyMatch.hasTeam(team1) && rugbyMatch.hasTeam(team2) && Match.dateFormat.print(rugbyMatch.date) == s"$year/$month/$day"
   }
 }
