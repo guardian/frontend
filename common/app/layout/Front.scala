@@ -332,7 +332,7 @@ object Front extends implicits.Collections {
     seen: Set[TrailUrl],
     container: Container,
     faciaContentList: Seq[FaciaContent]
-    ): (Set[TrailUrl], Seq[FaciaContent], Seq[DedupedItem]) = {
+    ): (Set[TrailUrl], Seq[FaciaContent], (Seq[DedupedItem], Seq[DedupedItem])) = {
     container match {
       case Dynamic(dynamicContainer) =>
         /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
@@ -344,32 +344,40 @@ object Front extends implicits.Collections {
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
-            .take(itemsVisible(containerDefinition)), faciaContentList, Nil)
+            .take(itemsVisible(containerDefinition)), faciaContentList, (Nil, Nil))
         } getOrElse {
-          (seen, faciaContentList, Nil)
+          (seen, faciaContentList, (Nil, Nil))
         }
 
       /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
       case Fixed(containerDefinition) if containerDefinition.isSingleton =>
-        (seen, faciaContentList, Nil)
+        (seen, faciaContentList, (Nil, Nil))
 
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val usedInThisIteration: Seq[DedupedItem] =
+        val usedInThisIteration: Seq[FaciaContent] =
           faciaContentList
-            .filter(c => participatesInDeduplication(c) && seen.contains(c.url))
+            .filter(c => seen.contains(c.url))
+
+       val usedButNotDeduped = usedInThisIteration
+            .filter(c => !participatesInDeduplication(c))
+            .map(_.url)
+            .map(DedupedItem(_))
+
+        val usedAndDeduped = usedInThisIteration
+            .filter(participatesInDeduplication)
             .map(_.url)
             .map(DedupedItem(_))
 
         val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.url) || !participatesInDeduplication(faciaContent))
           .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, usedInThisIteration)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, (usedAndDeduped, usedButNotDeduped))
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
-        (seen, faciaContentList, Nil)
+        (seen, faciaContentList, (Nil, Nil))
     }
   }
 
@@ -429,9 +437,9 @@ object Front extends implicits.Collections {
         (Set.empty[TrailUrl], initialContext, emptyDedupedResultWithPath)
       ) { case ((seenTrails, context, dedupedFrontResult), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
-        val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
+        val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
 
-        val dedupedContainerResult: DedupedContainerResult = DedupedContainerResult(pressedCollection.id, pressedCollection.displayName, usedInThisIteration.toList, Nil)
+        val dedupedContainerResult: DedupedContainerResult = DedupedContainerResult(pressedCollection.id, pressedCollection.displayName, usedAndDeduped.toList, usedButNotDeduped.toList)
 
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
