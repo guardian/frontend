@@ -3,13 +3,15 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/sport/score-board'
 ], function (
     bonzo,
     $,
     ajax,
     config,
-    Component
+    Component,
+    ScoreBoard
 ) {
     function cricket() {
         var cricketScore, parentEl,
@@ -28,23 +30,16 @@ define([
 
         if (config.page.rugbyMatch) {
 
-            ajax({
-                url: config.page.rugbyMatch + '.json',
-                type: 'json',
-                crossOrigin: true
-            }).then(
-                function (response) {
-                    var $h = $('.js-score'),
-                        scoreContainer = bonzo.create(
-                        '<div class="score-container">' +
-                            response.liveScore +
-                        '</div>'
-                    )[0];
+            var $h = $('.js-score');
 
-                    $h.after(scoreContainer);
-                }
-            );
+            var scoreBoard = new ScoreBoard({
+                pageType: 'report',
+                parent: $h,
+                autoupdated: false,
+                responseDataKey: 'liveScore',
+                endpoint: config.page.rugbyMatch + '.json'});
 
+            scoreBoard.load();
         }
     }
 
