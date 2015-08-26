@@ -1,7 +1,8 @@
 package rugby.feed
 
 import org.joda.time.format.DateTimeFormat
-import rugby.model.{Team, Match}
+import rugby.model.{Team, Match, Status}
+import Status._
 
 import scala.xml.{NodeSeq, XML}
 
@@ -37,7 +38,8 @@ object Parser {
           homeTeam = homeTeam,
           awayTeam = awayTeam,
           venue = None,
-          competitionName = (game \ "@comp_name").text
+          competitionName = (game \ "@comp_name").text,
+          status = parseStatus(game)
         )
       }
     }
@@ -64,7 +66,8 @@ object Parser {
           homeTeam = homeTeam,
           awayTeam = awayTeam,
           venue = Some((fixture \ "@venue").text),
-          competitionName = (fixture \ "@comp_name").text
+          competitionName = (fixture \ "@comp_name").text,
+          status = parseStatus(fixture)
         )
       }
     }
@@ -102,6 +105,26 @@ object Parser {
     teamsData.map { team =>
       Team((team \ "@id").text,
         (team \ "@name").text)
+    }
+  }
+
+  private def parseStatus(game: NodeSeq): Status = {
+    (game \ "@status").text match {
+      case "Result" => Result
+      case "Postponed" => Postponed
+      case "Abandoned" => Abandoned
+      case "Fixture" => Fixture
+      case "Team in" => TeamIn
+      case "First half" => FirstHalf
+      case "Halftime" => HalfTime
+      case "Second half" => SecondHalf
+      case "Fulltime" => FullTime
+      case "Extra time first half" => ExtraTimeFirstHalf
+      case "Extra time half time" => ExtraTimeHalfTime
+      case "Extra time second half" => ExtraTimeSecondHalf
+      case "Sudden death" => SuddenDeath
+      case "Shoot out" => ShootOut
+      case _ => Fixture
     }
   }
 }
