@@ -79,11 +79,17 @@ define([
     }
 
     function bindPrerollEvents(player) {
-        var events = {
+        var preRollPlay = false,
+        events = {
             end: function () {
                 console.log("++ Preroll video End. Embed: " + isEmbed );
-                player.trigger(constructEventName('preroll:end', player));
-                player.removeClass('vjs-ad-playing--vpaid');
+                if (preRollPlay) {
+                    console.log("Preroll has started");
+                    player.trigger(constructEventName('preroll:end', player));
+                    player.removeClass('vjs-ad-playing--vpaid');
+                } else {
+                    console.log("++ No preroll play");
+                }
                 bindContentEvents(player, true);
             },
             start: function () {
@@ -91,12 +97,14 @@ define([
                 console.log("++ Started");
 
                 if (duration) {
+                    preRollPlay = true;
                     console.log("++ Playroll start");
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
                 }
             },
+
             vpaidStarted: function () {
                 console.log("vpaid start");
                 player.addClass('vjs-ad-playing--vpaid');

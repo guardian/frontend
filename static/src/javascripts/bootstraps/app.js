@@ -68,6 +68,7 @@ define([
             }
 
             if (config.isMedia || qwery('video, audio').length) {
+                console.log("++ MMMMEEEEEDJA! " + config.isMedia + "  DOM Test " + qwery('video, audio').length);
                 bootstrapContext('media', media);
             }
 

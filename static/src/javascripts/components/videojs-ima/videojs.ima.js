@@ -186,8 +186,7 @@
           player.ima.onAdComplete_);
 
 
-      console.log("++ Trigger");
-      player.trigger('adsready');
+      //player.trigger('adsready');
     };
 
     /**
