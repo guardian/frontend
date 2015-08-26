@@ -19,18 +19,18 @@ object Widths {
 }
 
 object MainCleaner {
- def apply(article: Article, html: String)(implicit request: RequestHeader) = {
+ def apply(article: Article, html: String, pcu: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         VideoEmbedCleaner(article),
-        PictureCleaner(article),
+        PictureCleaner(article, pcu),
         MainFigCaptionCleaner
       )
   }
 }
 
 object BodyCleaner {
-  def apply(article: Article, html: String)(implicit request: RequestHeader) = {
+  def apply(article: Article, html: String, pcu: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         InBodyElementCleaner,
@@ -42,7 +42,7 @@ object BodyCleaner {
         TableEmbedComplimentaryToP,
         R2VideoCleaner(article),
         VideoEmbedCleaner(article),
-        PictureCleaner(article),
+        PictureCleaner(article, pcu),
         LiveBlogDateFormatter(article.isLiveBlog),
         LiveBlogLinkedData(article.isLiveBlog),
         BloggerBylineImage(article),

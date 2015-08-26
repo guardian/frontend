@@ -37,7 +37,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(_))
 
   private def renderLatestFrom(model: ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
+      val html = withJsoup(BodyCleaner(model.article, model.article.body, false)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
             val blocksToKeep = d.getElementsByTag("div") takeWhile {
