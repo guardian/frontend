@@ -423,8 +423,10 @@ object Front extends implicits.Collections {
     import scalaz.std.list._
     import scalaz.syntax.traverse._
 
+    val emptyDedupedResultWithPath = DedupedFrontResult(pressedPage.id, Nil)
+
     pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
-        (Set.empty[TrailUrl], initialContext, DedupedFrontResult(pressedPage.id, Nil))
+        (Set.empty[TrailUrl], initialContext, emptyDedupedResultWithPath)
       ) { case ((seenTrails, context, dedupedFrontResult), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
         val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
