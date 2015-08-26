@@ -109,12 +109,6 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
   lazy val isbn: Option[String] = references.get("isbn")
   lazy val imdb: Option[String] = references.get("imdb")
 
-  lazy val seriesMeta = {
-    series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
-      Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
-    ) getOrElse Nil
-  }
-
   lazy val syndicationType = {
     if(isBlog){
       "blog"
@@ -187,8 +181,8 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
-  // Meta Data used by plugins on the page
-  // people (including 3rd parties) rely on the names of these things, think carefully before changing them
+  // Static Meta Data used by plugins on the page. People (including 3rd parties) rely on the names of these things,
+  // think carefully before changing them.
   override def metaData: Map[String, JsValue] = {
     super.metaData ++ Map(
       ("keywords", JsString(keywords.map { _.name }.mkString(","))),
@@ -218,7 +212,34 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
       ("sectionName", JsString(sectionName)),
       ("showRelatedContent", JsBoolean(showInRelated)),
       ("productionOffice", JsString(productionOffice.getOrElse("")))
-    ) ++ Map(seriesMeta: _*)
+    ) ++ conditionalMetaData
+  }
+
+  // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
+  private def conditionalMetaData: Map[String, JsValue] = {
+    val rugbyMeta = if (isRugbyMatch) {
+      val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
+      val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
+      val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)
+      Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
+    } else None
+
+    val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
+      Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
+    } else None
+
+    val (seriesMeta, seriesIdMeta) = series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map { series =>
+      (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
+    } getOrElse (None,None)
+
+    val meta = List[Option[(String, JsValue)]](
+      rugbyMeta,
+      cricketMeta,
+      seriesMeta,
+      seriesIdMeta
+    )
+
+    meta.flatten.toMap
   }
 
   override lazy val cacheSeconds = {
@@ -386,21 +407,6 @@ class LiveBlog(delegate: contentapi.Content) extends Article(delegate) {
     "twitter:card" -> "summary"
   )
 
-  private lazy val sportMetaData = {
-    val rugbyMeta = if (isRugbyMatch) {
-      val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
-      val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
-      val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)
-      Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
-    } else None
-    val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
-      Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
-    } else None
-
-    List[Option[(String, JsValue)]](rugbyMeta, cricketMeta).flatten.toMap
-  }
-
-  override def metaData: Map[String, JsValue] = super.metaData ++ sportMetaData
   override lazy val lightboxImages = mainFiltered
 
   lazy val blocks = LiveBlogParser.parse(body)

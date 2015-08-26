@@ -403,6 +403,10 @@ $block-padding-right: $gs-gutter;
     background-repeat: no-repeat;
     border-top: 1px dotted colour(neutral-3);
 
+    @include mq($until: tablet) {
+        clear: left;
+    }
+
     .block-time + .block-elements .element-tweet:first-child & {
         border-top: 0;
     }
@@ -454,7 +458,6 @@ $block-padding-right: $gs-gutter;
 .tweet-main-image {
     width: 100%;
     margin-bottom: $gs-gutter;
-    margin-top: $gs-gutter/2;
     @include mq(tablet) {
         display: none;
     }
