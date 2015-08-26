@@ -303,7 +303,7 @@ object Front extends implicits.Collections {
     seen: Set[TrailUrl],
     container: Container,
     faciaContentList: Seq[FaciaContent]
-    ): (Set[TrailUrl], Seq[FaciaContent]) = {
+    ): (Set[TrailUrl], Seq[FaciaContent], Seq[TrailUrl]) = {
     container match {
       case Dynamic(dynamicContainer) =>
         /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
@@ -315,26 +315,27 @@ object Front extends implicits.Collections {
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
-            .take(itemsVisible(containerDefinition)), faciaContentList)
+            .take(itemsVisible(containerDefinition)), faciaContentList, Nil)
         } getOrElse {
-          (seen, faciaContentList)
+          (seen, faciaContentList, Nil)
         }
 
       /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
       case Fixed(containerDefinition) if containerDefinition.isSingleton =>
-        (seen, faciaContentList)
+        (seen, faciaContentList, Nil)
 
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
+        val usedInThisIteration: Seq[FaciaContent] = faciaContentList.filter(c => seen.contains(c.url))
         val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.url) || !participatesInDeduplication(faciaContent))
           .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, usedInThisIteration.map(_.url))
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
-        (seen, faciaContentList)
+        (seen, faciaContentList, Nil)
     }
   }
 
@@ -349,7 +350,7 @@ object Front extends implicits.Collections {
       configs.zipWithIndex.toList.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
-        val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
+        val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config, newItems) map {
           case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
@@ -391,7 +392,7 @@ object Front extends implicits.Collections {
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
-        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
+        val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
