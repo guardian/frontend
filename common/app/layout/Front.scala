@@ -350,7 +350,9 @@ object Front extends implicits.Collections {
       configs.zipWithIndex.toList.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
-        val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, collection.items)
+
+        //We don't need usedInIteration in this case of fromConfigsAndContainers
+        val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config, newItems) map {
           case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
@@ -382,22 +384,21 @@ object Front extends implicits.Collections {
     })
   }
 
-  def fromPressedPage(pressedPage: PressedPage,
-                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): Front = {
+  def fromPressedPageWithDeduped(pressedPage: PressedPage,
+                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty) = {
     import scalaz.std.list._
     import scalaz.syntax.traverse._
 
-    Front(
-      pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
-        (Set.empty[TrailUrl], initialContext)
-      ) { case ((seenTrails, context), (pressedCollection, index)) =>
+    pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
+        (Set.empty[TrailUrl], initialContext, Nil: Seq[TrailUrl])
+      ) { case ((seenTrails, context, usedInLastIteration), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
         val (newSeen, newItems, usedInThisIteration) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
         ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
+          case (containerLayout, newContext) => ((newSeen, newContext, usedInLastIteration ++ usedInThisIteration), FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
@@ -406,7 +407,7 @@ object Front extends implicits.Collections {
             None
           ))
         } getOrElse {
-          ((newSeen, context), FaciaContainer.fromConfig(
+          ((newSeen, context, usedInLastIteration ++ usedInThisIteration), FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
@@ -415,10 +416,12 @@ object Front extends implicits.Collections {
             None
           ))
         }
-      }._2
-    )
-
+    }
   }
+
+  def fromPressedPage(pressedPage: PressedPage,
+    initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): Front =
+    Front(fromPressedPageWithDeduped(pressedPage, initialContext)._2)
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(
