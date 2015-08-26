@@ -53,7 +53,7 @@ object CapiFeed extends ExecutionContexts with Logging {
         }
     }.recoverWith {
       case error: Throwable => {
-        log.warn(s"Rugby capi queryfailed: ${error.getMessage}")
+        log.warn(s"Rugby capi query failed: ${error.getMessage}")
         Future.successful(None)
       }
     }
