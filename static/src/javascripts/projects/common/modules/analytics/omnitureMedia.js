@@ -17,7 +17,7 @@ define([
 
         var lastDurationEvent, durationEventTimer,
             mediaId = getAttribute('data-embed-path') || config.page.pageId,
-            // infer type (audio/v]ideo) from what element we have
+            // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
             prerollPlayed = false,
@@ -62,7 +62,6 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
-
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
             // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
@@ -183,4 +182,3 @@ define([
     }
     return OmnitureMedia;
 });
-

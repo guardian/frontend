@@ -90,7 +90,6 @@ define([
             },
             start: function () {
                 var duration = player.duration();
-
                 if (duration) {
                     preRollPlay = true;
                     player.trigger(constructEventName('preroll:play', player));
@@ -98,7 +97,6 @@ define([
                     player.one('durationchange', events.start);
                 }
             },
-
             vpaidStarted: function () {
                 player.addClass('vjs-ad-playing--vpaid');
             },
@@ -151,7 +149,6 @@ define([
                 });
             },
             ready: function () {
-
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
@@ -187,7 +184,7 @@ define([
                 update: function () {
                     var adsManager  = this.ima.getAdsManager(),
                         currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
-                        skipTime = parseInt((skipTimeout - currentTime).toFixed(), 10);
+                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
 
                     if (skipTime > 0) {
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
@@ -221,8 +218,6 @@ define([
                         $('.js-ads-skip', this.el()).hide();
                         window.clearInterval(intervalId);
                     });
-
-
                 }
             };
 

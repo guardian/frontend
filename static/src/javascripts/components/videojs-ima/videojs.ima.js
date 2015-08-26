@@ -185,8 +185,7 @@
           google.ima.AdEvent.Type.COMPLETE,
           player.ima.onAdComplete_);
 
-
-      //player.trigger('adsready');
+      player.trigger('adsready');
     };
 
     /**
