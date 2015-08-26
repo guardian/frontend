@@ -328,10 +328,10 @@ object Front extends implicits.Collections {
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val usedInThisIteration: Seq[FaciaContent] = faciaContentList.filter(c => seen.contains(c.url))
+        val usedInThisIteration: Seq[String] = faciaContentList.filter(c => participatesInDeduplication(c) && seen.contains(c.url)).map(_.url)
         val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.url) || !participatesInDeduplication(faciaContent))
           .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, usedInThisIteration.map(_.url))
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, usedInThisIteration)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
