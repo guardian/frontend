@@ -82,23 +82,17 @@ define([
         var preRollPlay = false,
         events = {
             end: function () {
-                console.log("++ Preroll video End. Embed: " + isEmbed );
                 if (preRollPlay) {
-                    console.log("Preroll has started");
                     player.trigger(constructEventName('preroll:end', player));
-                    player.removeClass('vjs-ad-playing--vpaid');
-                } else {
-                    console.log("++ No preroll play");
                 }
+                player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
             start: function () {
                 var duration = player.duration();
-                console.log("++ Started");
 
                 if (duration) {
                     preRollPlay = true;
-                    console.log("++ Playroll start");
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
@@ -106,11 +100,9 @@ define([
             },
 
             vpaidStarted: function () {
-                console.log("vpaid start");
                 player.addClass('vjs-ad-playing--vpaid');
             },
             ready: function () {
-                console.log("++ Ready");
                 player.trigger(constructEventName('preroll:ready', player));
 
                 player.one('adstart', events.start);
@@ -160,7 +152,6 @@ define([
             },
             ready: function () {
 
-                console.log("Content: Ready");
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
@@ -197,7 +188,6 @@ define([
                     var adsManager  = this.ima.getAdsManager(),
                         currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
                         skipTime = parseInt((skipTimeout - currentTime).toFixed(), 10);
-                        //skipTime    = 5; //parseInt((skipTimeout - currentTime).toFixed(), 10);
 
                     if (skipTime > 0) {
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
@@ -227,9 +217,7 @@ define([
 
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);
-                    console.log("++++ About to play");
                     this.one(constructEventName('content:play', this), function () {
-                        console.log("++ On Content Play");
                         $('.js-ads-skip', this.el()).hide();
                         window.clearInterval(intervalId);
                     });

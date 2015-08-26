@@ -237,7 +237,6 @@ define([
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
-                                console.log("+++ the times it has changed!");
                                 events.bindPrerollEvents(player);
                                 player.adSkipCountdown(10);
 
