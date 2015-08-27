@@ -1,6 +1,6 @@
-@(paths: List[String])
+@(environment: String, paths: List[String])
 
-@admin_main("CSS reports", "DEV") {
+@admin_main("What is Deduped?", environment, isAuthed = true) {
 
     <div class="container">
         <table class="table table-striped">

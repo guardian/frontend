@@ -1,10 +1,10 @@
 @import layout.DedupedFrontResult
-@(dedupedFrontResult: DedupedFrontResult)
+@(environment: String, dedupedFrontResult: DedupedFrontResult)
 
 @import layout.DedupedContainerResult
 @import layout.DedupedItem
 
-@admin_main("Deduped For", "DEV") {
+@admin_main(s"Deduped For ${dedupedFrontResult.path}", environment, isAuthed = true) {
 
     <div class="container">
         <div><a href="@controllers.admin.routes.WhatIsDeduped.index()">Back</a></div>

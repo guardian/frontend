@@ -16,7 +16,7 @@ object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
 
    def index() = AuthActions.AuthActionTest { request =>
      val paths: List[String] = ConfigAgent.getPathIds.sorted
-     Cached(60)(Ok(views.html.dedupePathsList(paths)))
+     Cached(60)(Ok(views.html.dedupePathsList(Configuration.environment.stage, paths)))
    }
 
    def dedupedFor(path: String) = AuthActions.AuthActionTest.async {
@@ -24,7 +24,8 @@ object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
      val url = s"$domain/$path/deduped.json"
      WS.url(url).get().map { response =>
        response.json.validate[DedupedFrontResult] match {
-         case JsSuccess(dedupedFrontResult, _) => Cached(60)(Ok(views.html.dedupedOnPath(dedupedFrontResult)))
+         case JsSuccess(dedupedFrontResult, _) =>
+           Cached(60)(Ok(views.html.dedupedOnPath(Configuration.environment.stage, dedupedFrontResult)))
          case JsError(errors) => NoCache(NotFound)
        }
      }
