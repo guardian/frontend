@@ -56,7 +56,7 @@ define([
 
             $.create(
                 '<button class="u-button-reset button button--large button--show-more liveblog__show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">' +
-                    svgs("plus", ["icon"]) +
+                    svgs('plus', ['icon']) +
                     viewUpdatesLabel +
                 '</button>'
             ).each(function (el) {
