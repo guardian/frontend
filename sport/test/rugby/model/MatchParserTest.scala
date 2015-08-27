@@ -71,7 +71,7 @@ import scala.io.Source
       val topTryScorer: Seq[ScoreEvent] = tryScoreEvents.filter(_.player.id == "19083")
       topTryScorer.size should be(2)
       topTryScorer.head.player.name should be("Anthony Watson")
-      topTryScorer.head.minute should be(10)
+      topTryScorer.head.minute should be("10")
 
       topTryScorer.head.player.team.id should be("550")
       topTryScorer.head.player.team.name should be("England")
