@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/component',
     'common/modules/sport/score-board'
 ], function (
@@ -10,6 +11,7 @@ define([
     $,
     ajax,
     config,
+    detect,
     Component,
     ScoreBoard
 ) {
@@ -28,7 +30,7 @@ define([
 
     function rugby() {
 
-        if (config.page.rugbyMatch) {
+        if (config.page.rugbyMatch && detect.getBreakpoint() === 'desktop') {
 
             var $h = $('.js-score');
 
