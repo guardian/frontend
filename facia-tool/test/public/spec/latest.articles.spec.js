@@ -92,7 +92,7 @@ describe('Latest widget', function () {
         });
 
         this.scope({
-            url: /api\/proxy\/section/,
+            url: /api\/preview\/section/,
             responseText: {
                 response: {
                     results: [{ id: 'section-one' }, { id: 'section-two' }]
