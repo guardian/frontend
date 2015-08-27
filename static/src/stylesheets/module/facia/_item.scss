@@ -188,19 +188,14 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     .u-faux-block-link--hover {
-        // For touch devices we want to reduce the time before the click event
-        // as much as possible, because browsers on touch devices give feedback
-        // at the end of the click event.
-        @include mq(desktop) {
-            background-color: colour(neutral-6);
+        background-color: colour(neutral-6);
 
-            .fc-item__image-container {
-                background-color: #000000;
+        .fc-item__image-container {
+            background-color: #000000;
 
-                // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
-                .responsive-img {
-                    opacity: .9;
-                }
+            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+            .responsive-img {
+                opacity: .9;
             }
         }
 
