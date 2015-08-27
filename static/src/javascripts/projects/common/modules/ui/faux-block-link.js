@@ -24,7 +24,9 @@ define([
             });
         };
 
+        // mouseover
         bean.on(document.body, 'mouseenter', overlaySelector, showIntentToClick);
+        // mouseout
         bean.on(document.body, 'mouseleave', overlaySelector, removeIntentToClick);
     };
 });
