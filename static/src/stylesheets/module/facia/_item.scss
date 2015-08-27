@@ -187,9 +187,12 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__media-wrapper {
         background-color: colour(neutral-6);
+    }
 
+    .u-faux-block-link--hover {
         .fc-item__image-container {
             background-color: #000000;
 
@@ -288,10 +291,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__media-wrapper {
     box-sizing: border-box;
     position: relative;
-
-    .is-not-modern & {
-        display: none !important;
-    }
 }
 
 // Wraps all non-media content

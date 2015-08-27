@@ -66,14 +66,6 @@ Media list item. Looks a bit like this:
             @include mq(tablet) {
                 padding-left: $image-width;
             }
-
-            .is-not-modern & {
-                padding-left: 0;
-
-                @include mq(tablet) {
-                    padding-left: 0;
-                }
-            }
         }
     }
 

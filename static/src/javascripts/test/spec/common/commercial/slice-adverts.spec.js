@@ -15,17 +15,23 @@ describe('Slice Adverts', function () {
         },
         $fixtureContainer,
         injector = new Injector(),
-        sliceAdverts, config;
+        sliceAdverts, config, detect;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/slice-adverts', 'common/utils/config'], function () {
+        injector.test(['common/modules/commercial/slice-adverts', 'common/utils/config', 'common/utils/detect'], function () {
             sliceAdverts = arguments[0];
             config = arguments[1];
+            detect = arguments[2];
+
             config.page = {
                 pageId: 'uk/commentisfree'
             };
             config.switches = {
                 standardAdverts: true
+            };
+
+            detect.getBreakpoint = function () {
+                return 'desktop';
             };
 
             $fixtureContainer = fixtures.render(fixturesConfig);
@@ -42,11 +48,11 @@ describe('Slice Adverts', function () {
         expect(sliceAdverts).toBeDefined();
     });
 
-    it('should only create a maximum of 6 advert slots', function (done) {
+    it('should only create a maximum of 3 advert slots', function (done) {
         sliceAdverts.init();
 
         fastdom.defer(function () {
-            expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(6);
+            expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
             done();
         });
     });
@@ -70,11 +76,25 @@ describe('Slice Adverts', function () {
             var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
             expect($adSlots[0].data('name')).toEqual('inline1');
-            expect($adSlots[1].data('name')).toEqual('inline1');
-            expect($adSlots[2].data('name')).toEqual('inline2');
-            expect($adSlots[3].data('name')).toEqual('inline2');
-            expect($adSlots[4].data('name')).toEqual('inline3');
-            expect($adSlots[5].data('name')).toEqual('inline3');
+            expect($adSlots[1].data('name')).toEqual('inline2');
+            expect($adSlots[2].data('name')).toEqual('inline3');
+
+            done();
+        });
+    });
+
+    it('should have the correct ad names on mobile', function (done) {
+        detect.getBreakpoint = function () {
+            return 'mobile';
+        };
+        sliceAdverts.init();
+
+        fastdom.defer(function () {
+            var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
+
+            expect($adSlots[0].data('name')).toEqual('inline1');
+            expect($adSlots[1].data('name')).toEqual('inline2');
+            expect($adSlots[2].data('name')).toEqual('inline3');
 
             done();
         });
@@ -147,7 +167,8 @@ describe('Slice Adverts', function () {
         });
     });
 
-    it('should add one slot for tablet, one slot for mobile after container', function (done) {
+    //TODO: get data if we need to reintroduce this again
+    xit('should add one slot for tablet, one slot for mobile after container', function (done) {
         sliceAdverts.init();
 
         fastdom.defer(function () {

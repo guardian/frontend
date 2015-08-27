@@ -6,7 +6,7 @@
             data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in"
             href="@idUrlBuilder.buildOAuthUrl("/facebook/" + route.facebook.path, idRequest)">
             <span>@route.facebook.name with Facebook</span>
-            <i class="i-fb i social-signin__icon social-signin__icon--fb"></i>
+            @fragments.inlineSvg("fb", "icon", List("social-signin__icon", "social-signin__icon--fb"))
         </a>
     </li>
     <li class="social-signin__item">
@@ -14,7 +14,7 @@
             data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
             href="@idUrlBuilder.buildOAuthUrl("/google/" + route.google.path, idRequest)">
             <span>@route.google.name with Google</span>
-            <i class="i-gplus i social-signin__icon social-signin__icon--gplus"></i>
+            @fragments.inlineSvg("gplus", "icon", List("social-signin__icon", "social-signin__icon--gplus"))
         </a>
     </li>
 </ul>

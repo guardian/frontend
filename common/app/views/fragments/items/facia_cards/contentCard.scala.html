@@ -59,7 +59,7 @@
                     @fallback.map { fallbackImage =>
                         <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
                             <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
-                            @image(
+                            @itemImage(
                                 fallbackImage.imageContainer,
                                 inlineImage = containerIndex == 0 && index < 4,
                                 widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
@@ -79,7 +79,7 @@
                 }
 
                 case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                    @image(
+                    @itemImage(
                         fallbackImage.imageContainer,
                         inlineImage = containerIndex == 0 && index < 4,
                         widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
@@ -87,7 +87,7 @@
                 }
 
                 case Some(InlineImage(imageContainer)) => {
-                    @image(
+                    @itemImage(
                         imageContainer,
                         inlineImage = containerIndex == 0 && index < 4,
                         widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
@@ -98,24 +98,19 @@
                     <div class="fc-item__media-wrapper">
                         <div class="fc-item__image-container u-responsive-ratio js-slideshow">
                         @imageElements.headOption.map { imageElement =>
-
-                            @lazyImage(
-                                Seq("responsive-img"),
-                                ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                                item.mediaWidthsByBreakpoint.sizes,
-                                None,
-                                containerIndex == 0 && index < 4,
-                                false
-                            )
+                            @if(containerIndex == 0 && index < 4) {
+                                @image(
+                                    classes = Seq("responsive-img"),
+                                    srcset = ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                    sizes = item.mediaWidthsByBreakpoint.sizes,
+                                    src = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
+                                )
+                            }
                             @imageElements.tail.map { imageElement =>
-
                                 @lazyImage(
                                     Seq("responsive-img"),
                                     ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                                    item.mediaWidthsByBreakpoint.sizes,
-                                    None,
-                                    false,
-                                    true
+                                    item.mediaWidthsByBreakpoint.sizes
                                 )
                             }
                         }
@@ -163,12 +158,10 @@
             @if(item.cardTypes.showCutOut) {
                 @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
                 <div class="fc-item__avatar">
-                    @lazyImage(
-                        Seq("fc-item__avatar__media", cutOut.cssClass),
-                        ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
-                        FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
-                        None,
-                        false
+                    @image(
+                        classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                        srcset = ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
+                        sizes = FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes
                     )
                 </div>
                 }
