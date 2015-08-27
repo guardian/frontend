@@ -26,15 +26,16 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       .orElse(matchFixture)
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
 
+    val currentPage = request.getParameter("page")
+
     scoreOpt.map { score =>
-      val matchNav = CapiFeed.findMatchArticle(score)
+      val matchNav = CapiFeed.findMatchArticle(score).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
       val page = MatchPage(score)
       Cached(60){
         if (request.isJson)
           JsonComponent(
             "liveScore" -> rugby.views.html.fragments.liveScore(page, score).toString,
-            "minByMin" -> matchNav.map(_.minByMin.url).getOrElse(""),
-            "matchReport" -> matchNav.map(_.matchReport.url).getOrElse("")
+            "nav" -> matchNav.getOrElse("")
           )
         else
           Ok(rugby.views.html.liveScore(page, score))
