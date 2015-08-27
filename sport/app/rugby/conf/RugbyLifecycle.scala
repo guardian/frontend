@@ -2,7 +2,7 @@ package rugby.conf
 
 import common.{AkkaAsync, ExecutionContexts, Jobs}
 import play.api.GlobalSettings
-import rugby.feed.OptaFeed
+import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob
 
 import scala.concurrent.duration.FiniteDuration
@@ -34,6 +34,11 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
       RugbyStatsJob.fetchPastScoreEvents
     }
 
+    Jobs.deschedule("MatchNavArticles")
+    Jobs.schedule("MatchNavArticles", "0 0/2 * * * ?") {
+      RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
+    }
+
     AkkaAsync {
       RugbyStatsJob.sendLiveScores(OptaFeed.getLiveScores)
       RugbyStatsJob.fixturesAndResults(OptaFeed.getFixturesAndResults)
@@ -43,6 +48,7 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
     AkkaAsync.after(initializationTimeout) {
       RugbyStatsJob.fetchLiveScoreEvents
       RugbyStatsJob.fetchPastScoreEvents
+      RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
     }
   }
 }
