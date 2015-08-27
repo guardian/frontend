@@ -5,7 +5,7 @@ import java.net.URL
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import org.apache.commons.io.IOUtils
-import play.api.libs.json.{JsObject, JsString, Json}
+import play.api.libs.json._
 import play.api.{Mode, Play}
 
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
@@ -17,7 +17,7 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, assetMap: String) {
+class AssetMap(base: String, paths: Map[String, String]) {
   def apply(path: String): Asset = {
 
     // Avoid memoizing the asset map in Dev.
@@ -29,27 +29,40 @@ class AssetMap(base: String, assetMap: String) {
   }
 
   private def assets(): Map[String, Asset] = {
-
-    // Use the grunt-generated asset map in Dev.
-    val json: String = if (Play.current.mode == Mode.Dev) {
-      val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
-      IOUtils.toString(assetMapUri)
-    } else {
-      val url = AssetFinder(assetMap)
-      IOUtils.toString(url)
-    }
-    val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
-
-    val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
-
     paths mapValues { path => Asset(base + path) }
   }
 
   private lazy val memoizedAssets = assets()
 }
 
+class JspmAssets(base: String) {
+  val jsonString: String = IOUtils.toString(AssetFinder("assets/systemjs-bundle-config.json"))
+  val paths: Map[String, String] = Json.parse(jsonString).validate[Map[String, List[String]]] match {
+    case JsSuccess(myMap, _) => myMap
+      .mapValues(_.mkString)
+      .map(_.swap)
+      .map{case (k, v) => (s"javascripts/$k.js", s"$v.js")}
+    case JsError(errors) => Map.empty
+  }
+
+  val lookup = new AssetMap(base, paths)
+  def apply(path: String): Asset = lookup(path)
+}
+
 class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMap)
+
+  // Use the grunt-generated asset map in Dev.
+  val jsonString: String = if (Play.current.mode == Mode.Dev) {
+    val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
+    IOUtils.toString(assetMapUri)
+  } else {
+    val url = AssetFinder(assetMap)
+    IOUtils.toString(url)
+  }
+  val json: JsObject = Json.parse(jsonString).asInstanceOf[JsObject]
+  val paths = json.fields.toMap mapValues { _.asInstanceOf[JsString].value }
+
+  val lookup = new AssetMap(base, paths)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
@@ -149,7 +162,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
      val systemJs: String = inlineJs("assets/system.src.js")
      val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
      val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
-     val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
+     val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.json")
 
      lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body
   }

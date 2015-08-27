@@ -85,6 +85,14 @@ module.exports = function(grunt, options) {
                 }
             ]
         },
+        systemJsBundleConfig: {
+            files: [{
+                expand: true,
+                cwd: options.staticSrcDir,
+                src: ['systemjs-bundle-config.json'],
+                dest: 'common/conf/assets'
+            }]
+        },
         // assets.map must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.
         assetMap: {

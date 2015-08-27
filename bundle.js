@@ -90,8 +90,8 @@ var writeBundlesConfig = function (bundles) {
         accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
         return accumulator;
     }, {});
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundlesConfig, null, '\t') + ' })';
+    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.json');
+    var configFileData = JSON.stringify(bundlesConfig, null, '\t');
     console.log('writing to %s', configFilePath);
     fs.writeFileSync(configFilePath, configFileData);
 };
