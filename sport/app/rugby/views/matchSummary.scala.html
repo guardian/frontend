@@ -1,7 +1,7 @@
 @import model.MetaData
 
 @import rugby.model.ScoreEvent
-@(page: MetaData, liveScore: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader)
+@(page: MetaData, theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader)
 
 @main(page, "football") { } {
     <div class="l-side-margins">
@@ -9,7 +9,7 @@
             <header class="content__main">
                 <div class="gs-container">
                     <div class="content__main-column">
-                        @rugby.views.html.fragments.matchSummary(page, liveScore, homeTeamScorers, awayTeamScorers)
+                        @rugby.views.html.fragments.matchSummary(page, theMatch, homeTeamScorers, awayTeamScorers)
 
                     </div>
                 </div>
