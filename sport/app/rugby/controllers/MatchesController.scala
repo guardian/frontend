@@ -29,9 +29,9 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       .orElse(matchFixture)
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
     val currentPage = request.getParameter("page")
-    
+
     matchOpt.map { aMatch =>
-      val matchNav = CapiFeed.findMatchArticle(score).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
+      val matchNav = CapiFeed.findMatchArticle(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
 
       val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch.id)
 
