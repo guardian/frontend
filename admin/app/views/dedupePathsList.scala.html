@@ -1,0 +1,24 @@
+@(paths: List[String])
+
+@admin_main("CSS reports", "DEV") {
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Path</th>
+                </tr>
+            </thead>
+            <tbody>
+                @paths.map { path =>
+                  <tr>
+                    <td>
+                      <a href="deduped/@path">@path</a>
+                    </td>
+                  </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}

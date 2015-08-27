@@ -208,6 +208,8 @@ GET         /metrics/errors/5xx                                                 
 GET         /metrics/memory                                                                                          controllers.admin.MetricsController.renderMemory()
 GET         /metrics/assets                                                                                          controllers.admin.MetricsController.renderAssets()
 GET         /metrics/afg                                                                                             controllers.admin.MetricsController.renderAfg()
+GET         /deduped                                                                                                 controllers.admin.WhatIsDeduped.index()
+GET         /deduped/*path                                                                                           controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
@@ -315,6 +317,7 @@ GET         /                                                                   
 GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>  controllers.FaciaController.renderFrontPressSpecial(path)
 GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
+GET        /*path/deduped.json                                                                                       controllers.DedupedController.getDedupedForPath(path)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 GET         /most-relevant-container/*path.json                                                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
