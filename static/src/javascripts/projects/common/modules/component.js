@@ -161,11 +161,10 @@ define([
             method: 'get',
             crossOrigin: true,
             data: this.fetchData
-        }).then(function(resp){
+        }).then(function (resp) {
             self.fetched(resp);
             return resp;
-        })
-
+        });
     };
 
     /**
