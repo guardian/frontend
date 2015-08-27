@@ -393,7 +393,7 @@ object Front extends implicits.Collections {
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
 
-        //We don't need usedInIteration in this case of fromConfigsAndContainers
+        //We don't need the used in the case of fromConfigsAndContainers
         val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config, newItems) map {
