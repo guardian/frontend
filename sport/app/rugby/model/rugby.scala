@@ -53,6 +53,7 @@ object ScoreType extends Enumeration {
   val `Try` = Value("Try")
   val Conversion = Value("Conversion")
   val Penalty = Value("Penalty")
+  val DropGoal = Value("Drop goal")
 }
 
 trait Status

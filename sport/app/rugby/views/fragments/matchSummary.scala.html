@@ -12,6 +12,8 @@
                 case (ScoreType.`Try`) => "Tries"
                 case (ScoreType.Conversion) => "Conversions"
                 case (ScoreType.Penalty) => "Penalties"
+                case (ScoreType.DropGoal) => "Drop goals"
+                case _ => ""
             }
         }</th>
         <td class="match-summary__rugby-table__away-data">@teamScorersFor(scoreType, awayTeamScorers)</td>
@@ -70,11 +72,14 @@
         </div>
     </div>
     <div>
-        @if(homeTeamScorers.size > 0 && awayTeamScorers.size > 0) {
+        @if(homeTeamScorers.nonEmpty && awayTeamScorers.nonEmpty) {
             <table class="match-summary__rugby-table">
                 @scoreTypeEvents(ScoreType.`Try`)
                 @scoreTypeEvents(ScoreType.Conversion)
                 @scoreTypeEvents(ScoreType.Penalty)
+                @if(homeTeamScorers.filter(_.`type` == ScoreType.DropGoal).nonEmpty || awayTeamScorers.filter(_.`type` == ScoreType.DropGoal).nonEmpty) {
+                    @scoreTypeEvents(ScoreType.DropGoal)
+                }
             </table>
         }
     </div>
