@@ -28,9 +28,10 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       .map ( m => m.copy( venue = matchFixture.flatMap(_.venue)))
       .orElse(matchFixture)
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
-
+    val currentPage = request.getParameter("page")
+    
     matchOpt.map { aMatch =>
-      val matchNav = CapiFeed.findMatchArticle(aMatch)
+      val matchNav = CapiFeed.findMatchArticle(score).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
 
       val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch.id)
 
@@ -41,9 +42,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
         if (request.isJson)
           JsonComponent(
             "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers).toString,
-            "minByMin" -> matchNav.map(_.minByMin.url).getOrElse(""),
-            "matchReport" -> matchNav.map(_.matchReport.url).getOrElse("")
-        )
+            "nav" -> matchNav.getOrElse("")
+          )
         else
           Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))
       }

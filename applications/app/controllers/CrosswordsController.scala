@@ -1,11 +1,15 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
+import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
 import common.{Edition, ExecutionContexts}
 import conf.{LiveContentApi, Static}
-import crosswords._
-import model.{Cached, Cors}
+import crosswords.{AccessibleCrosswordRows, CrosswordData, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
+import model.{Cached, Cors, _}
+import org.joda.time.DateTime
+import play.api.data.Forms._
+import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
+import services.IndexPage
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -52,6 +56,83 @@ object CrosswordsController extends Controller with ExecutionContexts {
       }
     }
   }
+}
+
+object CrosswordSearchController extends Controller with ExecutionContexts {
+  def searchForm() = Action { implicit request =>
+    Cached(60)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))
+  }
+
+  def search() = Action.async { implicit request =>
+    CrosswordSearch.fromRequest(request) match {
+      case Some(params) =>
+        val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
+          .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
+          .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
+          .pageSize(50)
+
+        val maybeSetter = params.setter.fold(withoutSetter) { setter =>
+          withoutSetter.stringParam("tag", s"profile/${setter}")
+        }
+
+        LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
+          response.results match {
+            case Nil =>
+              Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+
+            case results =>
+              val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
+              val page = IndexPage(section, results.map(Content(_)))
+
+              Cached(60)(Ok(views.html.index(page)))
+          }
+        }
+
+      case None =>
+        Future.successful(NotFound)
+    }
+  }
+
+  def lookup() = Action { implicit request =>
+    val form = Form(
+      mapping(
+        "type" -> text,
+        "id" -> number
+      )(CrosswordLookup.apply)(CrosswordLookup.unapply)
+    )
+
+    form.bindFromRequest.get match {
+      case CrosswordLookup(crosswordType, id) =>
+        Redirect(s"$crosswordType/$id")
+      case _ =>
+        Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+    }
+  }
+
+  case class CrosswordSearch(
+    crosswordType: String,
+    fromDate: DateTime,
+    toDate: DateTime,
+    setter: Option[String])
+
+  object CrosswordSearch {
+    def fromRequest(request: Request[AnyContent]): Option[CrosswordSearch] = {
+      for {
+        formMap <- request.body.asFormUrlEncoded
+        crosswordType <- formMap.get("crossword-type").map(_.mkString)
+        month <- formMap.get("month").map(_.mkString.toInt)
+        year <- formMap.get("year").map(_.mkString.toInt)
+      } yield {
+        val setter = formMap.get("setter").map(_.mkString.toLowerCase).filter(_.nonEmpty)
+        val fromDate = new DateTime(year, month, 1, 0, 0)
+        val toDate = fromDate.dayOfMonth.withMaximumValue
+
+        CrosswordSearch(crosswordType, fromDate, toDate, setter)
+      }
+    }
+  }
+
+  case class CrosswordLookup(crosswordType: String, id: Int)
 }
 
 object CrosswordPreferencesController extends Controller with PreferenceController {
