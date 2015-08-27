@@ -2,7 +2,7 @@ package rugby.conf
 
 import common.{AkkaAsync, ExecutionContexts, Jobs}
 import play.api.GlobalSettings
-import rugby.feed.OptaFeed
+import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob
 
 trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
@@ -19,9 +19,15 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
       RugbyStatsJob.fixturesAndResults(OptaFeed.getFixturesAndResults)
     }
 
+    Jobs.deschedule("MatchNavArticles")
+    Jobs.schedule("MatchNavArticles", "0 0/2 * * * ?") {
+      RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
+    }
+
     AkkaAsync {
       RugbyStatsJob.sendLiveScores(OptaFeed.getLiveScores)
       RugbyStatsJob.fixturesAndResults(OptaFeed.getFixturesAndResults)
+      RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
     }
   }
 }
