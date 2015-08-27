@@ -2,6 +2,7 @@ package rugby.model
 
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import Status._
 
 case class Match(
   date: DateTime,
@@ -25,6 +26,19 @@ case class Match(
   override def toString(): String = {
     s"${homeTeam.name} v ${awayTeam.name} ${date.toString}"
   }
+
+  val isLive: Boolean = {
+    List( FirstHalf,
+          HalfTime,
+          SecondHalf,
+          ExtraTimeFirstHalf,
+          ExtraTimeHalfTime,
+          ExtraTimeSecondHalf,
+          SuddenDeath,
+          ShootOut).contains(status)
+  }
+
+  val isFixture: Boolean = status == Fixture
 }
 
 object Match {
