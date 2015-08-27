@@ -13,8 +13,12 @@
             <div class="gs-container">
                 <div class="content__main-column content__main-column--image">
 
-                    @fragments.img(image.mainPicture, isImageContent = true,
-                        isLightboxable = image.isMainMediaLightboxable)
+                    @image.mainPicture.map { picture =>
+                        @fragments.img(
+                            picture,
+                            lightboxIndex = if(image.isMainMediaLightboxable) Some(1) else None
+                        )
+                    }
 
                     @fragments.contentMeta(image)
 
@@ -23,7 +27,7 @@
             </div>
         </div>
     </article>
-    
+
     @fragments.contentFooter(image, page.related)
 </div>
 
