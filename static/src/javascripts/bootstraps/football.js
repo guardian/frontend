@@ -35,9 +35,9 @@ define([
 ) {
 
     function renderNav(match, callback) {
-        var matchInfo;
+        var matchInfo = new MatchInfo(match, config.page.pageId);
 
-        return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function (resp) {
+        return matchInfo.fetch().then(function (resp) {
             var $nav;
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav).first().each(function (nav) {

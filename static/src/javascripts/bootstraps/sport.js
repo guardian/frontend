@@ -37,7 +37,17 @@ define([
                 parent: $h,
                 autoupdated: false,
                 responseDataKey: 'liveScore',
-                endpoint: config.page.rugbyMatch + '.json'});
+                endpoint: config.page.rugbyMatch + '.json?page=' + encodeURIComponent(config.page.pageId)});
+
+            // Rugby score returns the match nav too, to optimise calls.
+            scoreBoard.fetched = function(resp) {
+                $.create(resp.nav).first().each(function (nav) {
+                    // There ought to be exactly two tabs; match report and min-by-min
+                    if ($('.tabs__tab', nav).length === 2) {
+                        $('.js-football-tabs').append(nav);
+                    }
+                });
+            }
 
             scoreBoard.load();
         }
