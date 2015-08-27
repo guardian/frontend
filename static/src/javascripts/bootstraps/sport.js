@@ -30,7 +30,7 @@ define([
 
     function rugby() {
 
-        if (config.page.rugbyMatch && detect.getBreakpoint() === 'desktop') {
+        if (config.page.rugbyMatch) {
 
             var $h = $('.js-score');
 
