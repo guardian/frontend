@@ -23,8 +23,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
 
   def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
-    val matchFixture = RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
-    val matchOpt =  RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+    val matchFixture = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+    val matchOpt =  RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
       .map ( m => m.copy( venue = matchFixture.flatMap(_.venue)))
       .orElse(matchFixture)
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
