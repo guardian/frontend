@@ -5,6 +5,8 @@ import common._
 import common.{ExecutionContexts, JsonComponent}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
+import rugby.jobs.RugbyStatsJob
+import rugby.model.{ScoreType, Match}
 import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.model.Match
 
@@ -20,24 +22,30 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 
   def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
-    val matchFixture = OptaFeed.getFixturesAndResults(year, month, day, team1, team2)
-    val scoreOpt = OptaFeed.getLiveScore(year, month, day, team1, team2)
+
+    val matchFixture = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+    val matchOpt =  RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
       .map ( m => m.copy( venue = matchFixture.flatMap(_.venue)))
       .orElse(matchFixture)
       .filter(m => m.awayTeam.score.isDefined && m.homeTeam.score.isDefined)
+    val currentPage = request.getParameter("page")
 
-    scoreOpt.map { score =>
-      val matchNav = CapiFeed.findMatchArticle(score)
-      val page = MatchPage(score)
+    matchOpt.map { aMatch =>
+      val matchNav = CapiFeed.findMatchArticle(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
+
+      val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch.id)
+
+      val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
+
+      val page = MatchPage(aMatch)
       Cached(60){
         if (request.isJson)
           JsonComponent(
-            "liveScore" -> rugby.views.html.fragments.liveScore(page, score).toString,
-            "minByMin" -> matchNav.map(_.minByMin.url).getOrElse(""),
-            "matchReport" -> matchNav.map(_.matchReport.url).getOrElse("")
+            "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers).toString,
+            "nav" -> matchNav.getOrElse("")
           )
         else
-          Ok(rugby.views.html.liveScore(page, score))
+          Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))
       }
 
     }.getOrElse(NotFound)
