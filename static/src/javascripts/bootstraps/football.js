@@ -250,7 +250,7 @@ define([
         });
 
         // Binding
-        bean.on(document.body, 'click', '.js-show-more', function (e) {
+        bean.on(document.body, 'click', '.js-show-more-football-matches', function (e) {
             e.preventDefault();
             var el = e.currentTarget;
             ajax({
