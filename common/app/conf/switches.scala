@@ -567,6 +567,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val KruxVideoTracking = Switch(
+    "Commercial",
+    "krux-video-tracking",
+    "If this switch is ON, there will be a Krux pixel fired to track particular videos",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 
   // Monitoring
 

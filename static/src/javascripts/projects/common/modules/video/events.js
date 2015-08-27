@@ -2,6 +2,7 @@
 define([
     'bean',
     'qwery',
+    'common/utils/url',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/_',
@@ -14,6 +15,7 @@ define([
 ], function (
     bean,
     qwery,
+    url,
     reportError,
     $,
     _,
@@ -120,6 +122,16 @@ define([
         });
     }
 
+    function kruxTracking() {
+        //if switch
+        var queryParams = url.getUrlVars();
+        console.log(queryParams);
+        if (queryParams.adtest === 'tom') {
+            //Krux is a global object loaded by krux.js file
+            Krux('admEvent','KAIQvckS', {});
+        }
+    }
+
     function bindContentEvents(player) {
         var events = {
             end: function () {
@@ -164,13 +176,17 @@ define([
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
+            kruxTracking();
+            console.log('playing');
             bean.fire(document.body, 'videoPlaying');
         });
         player.on('pause', function () {
             bean.fire(document.body, 'videoPause');
+            console.log('videoPause');
         });
         player.on('ended', function () {
             bean.fire(document.body, 'videoEnded');
+            console.log('videoEnded');
         });
     }
 
