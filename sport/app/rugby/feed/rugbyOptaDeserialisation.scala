@@ -81,7 +81,7 @@ object Parser {
 
     val scoreEventsData = eventsData.filter { eventData =>
       val eventType = (eventData \ "@type").text
-      eventType == "Try" || eventType == "Conversion" || eventType == "Penalty"
+      ScoreType.values.exists(_.toString == eventType)
     }
 
     val players = getPlayers(data \ "TeamDetail" \ "Team")
