@@ -2,16 +2,13 @@
     @include fs-textSans(3);
     color: colour(neutral-2);
 
-    th {
-        text-align: center;
-    }
-
     tr {
         border: solid colour(neutral-6);
         border-width: 1px 0;
     }
 
-    td {
+    td,
+    th {
         padding: $gs-baseline / 2;
     }
 }
@@ -21,6 +18,11 @@
     width: 40%;
 }
 
-.match-summary__rugby-table__away-data {
+.match-summary__rugby-table__away-data,
+.match-summary__rugby-table__away-team-name {
     text-align: right;
+}
+
+.match-summary__rugby-table__score-type {
+    text-align: center;
 }
