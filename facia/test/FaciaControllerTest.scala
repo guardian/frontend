@@ -32,33 +32,33 @@ import services.ConfigAgent
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
-    val result = FaciaController.renderFront("film")(TestRequest()) //Film is actually a facia front ON PROD
+    val result = FaciaController.renderFront("does-not-exist")(TestRequest()) //Film is actually a facia front ON PROD
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/film"))
+    header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist"))
   }
 
   it should "serve an X-Accel-Redirect for /rss that it doesn't know about" in {
-    val fakeRequest = FakeRequest("GET", "/film/rss")
+    val fakeRequest = FakeRequest("GET", "/does-not-exist/rss")
 
-    val result = FaciaController.renderFrontRss("film")(fakeRequest)
+    val result = FaciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/rss_server/film/rss"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss"))
   }
 
   it should "keep query params for X-Accel-Redirect" in {
-    val fakeRequest = FakeRequest("GET", "/film?page=77")
+    val fakeRequest = FakeRequest("GET", "/does-not-exist?page=77")
 
-    val result = FaciaController.renderFront("film")(fakeRequest)
+    val result = FaciaController.renderFront("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/film?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist?page=77"))
   }
 
   it should "keep query params for X-Accel-Redirect with RSS" in {
-    val fakeRequest = FakeRequest("GET", "/film/rss?page=77")
+    val fakeRequest = FakeRequest("GET", "/does-not-exist/rss?page=77")
 
-    val result = FaciaController.renderFrontRss("film")(fakeRequest)
+    val result = FaciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/rss_server/film/rss?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss?page=77"))
   }
 
   it should "not serve X-Accel for a path facia serves" in {
