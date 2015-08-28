@@ -1,0 +1,31 @@
+@(page: crosswords.CrosswordSearchPage)(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+@main(page) { } {
+    <div class="l-side-margins">
+        <article class="content content--article tonal tonal--tone-news" role="main">
+            <header class="content__head tonal__head tonal__head--tone-news">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo("/crosswords")">Crosswords</a>
+                            </div>
+                        </div>
+                        <h1 itemprop="headline" class="content__headline js-score">No crosswords found</h1>
+                    </div>
+                </div>
+            </header>
+        </article>
+
+        <div class="content__main tonal__main tonal__main--tone-news">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <p>Sorry, we couldn’t find any crosswords for your search.</p>
+                    <p>Please <a href="@LinkTo("/crosswords/search")">try again</a> or visit the <a href="@LinkTo("/crosswords")">crosswords homepage</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
