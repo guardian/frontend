@@ -64,7 +64,7 @@ define([
 
     ScoreBoard.prototype.error = function () {
         this.placeholder.innerHTML = '';
-    }
+    };
 
     return ScoreBoard;
 
