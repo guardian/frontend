@@ -226,9 +226,9 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def createCollectionJson(identity: User, update: UpdateList): CollectionJson =
     if (update.live)
-      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
+      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, s"${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
     else
-      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
+      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, s"${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
 
   def capCollection(collectionJson: CollectionJson): CollectionJson =
     collectionJson.copy(live = collectionJson.live.take(collectionCap), draft = collectionJson.draft.map(_.take(collectionCap)))
