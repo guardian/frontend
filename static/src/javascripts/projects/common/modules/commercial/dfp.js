@@ -408,6 +408,10 @@ define([
                     callbacks[size](event, $slot);
                 }
 
+                if (ab.DisableAdsSurvey config.switches.DisableAdsSurvey) {
+
+                }
+
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
                     fastdom.write(function () {
                         $slot.parent().css('display', 'flex');
