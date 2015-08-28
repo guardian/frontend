@@ -84,7 +84,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
               val page = IndexPage(section, results.map(Content(_)))
 
-              Cached(60)(Ok(views.html.index(page)))
+              NoCache(Ok(views.html.index(page)))
           }
         }
 

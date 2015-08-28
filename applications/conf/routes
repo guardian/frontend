@@ -16,7 +16,7 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 
 # Crosswords search
 GET         /crosswords/search                                                                                               controllers.CrosswordSearchController.searchForm()
-POST        /crosswords/search                                                                                               controllers.CrosswordSearchController.search()
+POST        /crosswords/search/results                                                                                       controllers.CrosswordSearchController.search()
 POST        /crosswords/lookup                                                                                               controllers.CrosswordSearchController.lookup()
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
