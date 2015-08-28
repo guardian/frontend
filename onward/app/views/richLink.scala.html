@@ -21,7 +21,7 @@
 
         @if(play.Play.isDev()) {
             <script>
-                @Html(Static.js.systemJsSetupFragment)
+                @Html(templates.js.systemJsSetup().body)
 
                 // Our app assumes a normal env
                 window.guardian = {

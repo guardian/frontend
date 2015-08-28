@@ -304,14 +304,15 @@ GET         /commercial/magento/books                                           
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
 
+# Applications (must come before wildcard)
+GET         /offline-page                                                                                            controllers.WebAppController.offlinePage()
+GET         /2015-05-28-2-service-worker.js                                                                          controllers.WebAppController.serviceWorker()
+
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                                              controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
-
-# Applications (must come before wildcard)
-GET         /2015-05-28-2-service-worker.js                                                                          controllers.WebAppController.serviceWorker()
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")

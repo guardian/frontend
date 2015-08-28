@@ -5,6 +5,48 @@
 /*global self*/
 /*global clients*/
 
+//
+// Offline page
+//
+
+// How can we invalidate the shell cache each time we the HTML changes?
+var version = 1;
+var staticCacheName = 'static-' + version;
+self.addEventListener('install', function (event) {
+    event.waitUntil(
+        caches.open(staticCacheName).then(function (cache) {
+            return cache.addAll([
+                '/offline-page',
+                '@Static("stylesheets/head.content.css")',
+                '@Static("stylesheets/content.css")',
+                '@Static("stylesheets/print.css")',
+                // Crossword pages use jspm
+                '@StaticJspm("javascripts/core.js")',
+                '@StaticJspm("javascripts/bootstraps/app.js")',
+                '@StaticJspm("javascripts/es6/bootstraps/crosswords.js")'
+            ]);
+        })
+    );
+});
+
+this.addEventListener('fetch', function (event) {
+    // this assumes we invalidate the cache every release!
+    event.respondWith(
+        fetch(event.request)
+            .catch(function () {
+                // If a request is cached, respond with that. Otherwise respond with the shell, whose subresources will
+                // in the cache.
+                return caches.match(event.request).then(function (response) {
+                    return response || caches.match('/offline-page');
+                })
+            })
+    );
+});
+
+//
+// Push notifications
+//
+
 var findInArray = function (array, fn) {
     for (var i = array.length - 1; i >= 0; i--) {
         var value = array[i];
