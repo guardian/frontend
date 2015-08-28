@@ -825,6 +825,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RugbyWorldCupswitch = Switch(
+    "Feature",
+    "rugby-world-cup-cleanup",
+    "Does nothing, other than remind us to delete some World Cup specific code",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
+  )
+
   val WeatherSwitch = Switch(
     "Feature",
     "weather",
