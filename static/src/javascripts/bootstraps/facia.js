@@ -20,7 +20,6 @@ define([
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/lazy-load-containers',
     'facia/modules/ui/live-blog-updates',
-    'facia/modules/ui/slideshow/controller',
     'facia/modules/ui/snaps',
     'facia/modules/ui/sponsorship',
     'facia/modules/onwards/weather'
@@ -44,7 +43,6 @@ define([
     containerShowMore,
     lazyLoadContainers,
     liveblogUpdates,
-    slideshow,
     snaps,
     sponsorship,
     weather
