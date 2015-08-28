@@ -95,14 +95,6 @@ define([
                 }
             },
 
-            startSlideshow: function () {
-                if (detect.isBreakpoint({ min: 'tablet' })) {
-                    mediator.on('page:front:ready', function () {
-                        slideshow.init();
-                    });
-                }
-            },
-
             finished: function () {
                 mediator.emit('page:front:ready');
             }
@@ -121,7 +113,6 @@ define([
                 ['f-sponsorship', sponsorship],
                 ['f-weather', modules.showWeather],
                 ['f-live-blog-updates', modules.showLiveblogUpdates],
-                ['f-slideshow', modules.startSlideshow],
                 ['f-finished', modules.finished]
             ]));
         };
