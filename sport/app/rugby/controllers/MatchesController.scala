@@ -44,7 +44,7 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
           JsonComponent(
             "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
             "scoreEvents" -> rugby.views.html.fragments.scoreEvents(aMatch, homeTeamScorers, awayTeamScorers).toString,
-            "dropdown" -> views.html.fragments.dropdown("")(Html("")),
+            "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
             "nav" -> matchNav.getOrElse("")
           )
         else
