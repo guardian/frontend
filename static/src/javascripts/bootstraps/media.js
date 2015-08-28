@@ -233,7 +233,7 @@ define([
 
                     player.fullscreener();
 
-                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
+                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview && !config.page.shouldHideAdverts && !window.location.hash.match(/[#&]noads(&.*)?$/)) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {

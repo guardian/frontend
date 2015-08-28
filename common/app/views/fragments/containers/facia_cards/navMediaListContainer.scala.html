@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.InlineImage
-@import views.html.fragments.items.elements.facia_cards.image
+@import views.html.fragments.items.elements.facia_cards.itemImage
 @import views.html.fragments.containers.facia_cards.containerHeader
 @import implicits.FaciaContentImplicits._
 @import model.SupportedUrl
@@ -17,7 +17,7 @@
             <li class="fc-slice__item--nav-list">
                 <a href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index" class="fc-item fc-item--list-compact--media">
                     @InlineImage.fromFaciaContent(item).map { imageContainer =>
-                        @image(imageContainer.imageContainer)
+                        @itemImage(imageContainer.imageContainer)
                     }
                     @item.headline
                 </a>

@@ -3,13 +3,17 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/modules/component'
+    'common/utils/detect',
+    'common/modules/component',
+    'common/modules/sport/score-board'
 ], function (
     bonzo,
     $,
     ajax,
     config,
-    Component
+    detect,
+    Component,
+    ScoreBoard
 ) {
     function cricket() {
         var cricketScore, parentEl,
@@ -26,25 +30,36 @@ define([
 
     function rugby() {
 
-        if (config.page.rugbyMatch) {
+        var pageType = '';
 
-            ajax({
-                url: config.page.rugbyMatch + '.json',
-                type: 'json',
-                crossOrigin: true
-            }).then(
-                function (response) {
-                    var $h = $('.js-score'),
-                        scoreContainer = bonzo.create(
-                        '<div class="score-container">' +
-                            response.liveScore +
-                        '</div>'
-                    )[0];
+        if (config.page.isLiveBlog) {
+            pageType = 'minbymin';
+        } else if (config.hasTone('Match reports')) {
+            pageType = 'report';
+        }
 
-                    $h.after(scoreContainer);
-                }
-            );
+        if (config.page.rugbyMatch && pageType) {
 
+            var $h = $('.js-score');
+
+            var scoreBoard = new ScoreBoard({
+                pageType: pageType,
+                parent: $h,
+                autoupdated: false,
+                responseDataKey: 'matchSummary',
+                endpoint: config.page.rugbyMatch + '.json?page=' + encodeURIComponent(config.page.pageId)});
+
+            // Rugby score returns the match nav too, to optimise calls.
+            scoreBoard.fetched = function (resp) {
+                $.create(resp.nav).first().each(function (nav) {
+                    // There ought to be exactly two tabs; match report and min-by-min
+                    if ($('.tabs__tab', nav).length === 2) {
+                        $('.js-football-tabs').append(nav);
+                    }
+                });
+            };
+
+            scoreBoard.load();
         }
     }
 

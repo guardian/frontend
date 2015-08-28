@@ -2,7 +2,6 @@ import _ from 'underscore';
 import sinon from 'sinon';
 import {CONST} from 'modules/vars';
 import * as capi from 'modules/content-api';
-import Mock from 'mock/search';
 import {scope} from 'test/utils/mockjax';
 import * as cache from 'modules/cache';
 import modalDialog from 'modules/modal-dialog';
@@ -21,13 +20,13 @@ describe('Content API', function () {
         };
 
     beforeEach(function () {
-        this.mock = new Mock();
+        this.scope = scope();
         this.defaultCapiBatchSize = CONST.capiBatchSize;
         CONST.capiBatchSize = 3;
     });
 
     afterEach(function () {
-        this.mock.dispose();
+        this.scope.clear();
         CONST.capiBatchSize = this.defaultCapiBatchSize;
     });
 
@@ -35,13 +34,15 @@ describe('Content API', function () {
         capi.decorateItems([]).then(function () {
             // Just make sure the callback is called for empty arrays
             expect(true).toBe(true);
-            done();
-        });
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
     it('decorateItems in one batch', function (done) {
-        this.mock.set({
-            'internal-code/page/capi1,internal-code/page/capi2,internal-code/page/capi3': {
+        this.scope({
+            url: /\/api\/preview\/search\?ids=.+capi1,.+capi2,.+capi3/,
+            responseText: {
                 response: {
                     results: [{
                         fields: {
@@ -65,18 +66,20 @@ describe('Content API', function () {
             createArticle('capi3')
         ];
 
-        capi.decorateItems(articles).then(function () {
+        capi.decorateItems(articles).then(() => {
             // Just make sure the callback is called for empty arrays
             _.each(articles, function (article) {
                 expect(article.addCapiData.called).toBe(true);
             });
-            done();
-        });
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
     it('decorateItems in multiple batches', function (done) {
-        this.mock.set({
-            'internal-code/page/batch1,internal-code/page/batch2,internal-code/page/batch3': {
+        this.scope({
+            url: /\/api\/preview\/search\?ids=.+batch1,.+batch2,.+batch3/,
+            responseText: {
                 response: {
                     results: [{
                         fields: {
@@ -92,8 +95,10 @@ describe('Content API', function () {
                         }
                     }]
                 }
-            },
-            'internal-code/page/batch4': {
+            }
+        }, {
+            url: /\/api\/preview\/search\?ids=.+batch4/,
+            responseText: {
                 response: {
                     results: [{
                         fields: {
@@ -110,23 +115,17 @@ describe('Content API', function () {
             createArticle('batch4')
         ];
 
-        capi.decorateItems(articles).then(function () {
+        capi.decorateItems(articles).then(() => {
             // Just make sure the callback is called for empty arrays
             _.each(articles, function (article) {
                 expect(article.addCapiData.called).toBe(true);
             });
-            done();
-        });
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
     describe('fetchContent', function () {
-        beforeEach(function () {
-            this.scope = scope();
-        });
-        afterEach(function () {
-            this.scope.clear();
-        });
-
         it('fails if no response', function (done) {
             this.scope({
                 url: CONST.apiSearchBase + '/capi-url',

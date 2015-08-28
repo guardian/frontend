@@ -383,6 +383,89 @@
     }
 }
 
+.creative--expandable-video {
+    margin-bottom: $gs-baseline;
+
+    .facia-container__inner {
+        border-top: 0;
+        padding-top: 0;
+    }
+    .ad-slot__label--wrapper {
+        @include mq($until: tablet) {
+            width: auto;
+        }
+    }
+    .ad-slot__label {
+        text-align: left;
+    }
+    .ad-exp--expand {
+        height: 0;
+        position: relative;
+        overflow: hidden;
+        transition: height 1s;
+    }
+    .ad-exp--expand .facia-container__inner {
+        height: 100%;
+        position: relative;
+
+        @include mq($until: tablet) {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    .slide-video {
+        background: #000000;
+        position: absolute;
+        top: 24px;
+        width: 100%;
+        z-index: 3;
+        display: none;
+    }
+
+    .slide-video__expand {
+        transition: all 1s;
+        display: block;
+    }
+
+    .expandable_video {
+        position: absolute;
+        z-index: 10;
+        margin-left: -50%;
+        left: 50%;
+    }
+
+    .slide-1 {
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .ad-exp-collapse__slide {
+        position: relative;
+    }
+
+    .ad-exp__layer {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.ad-exp__layer1 {
+            z-index: 1;
+        }
+
+        &.ad-exp__layer2 {
+            z-index: 2;
+        }
+
+        &.ad-exp__layer3 {
+            z-index: 3;
+        }
+    }
+}
+
 .creative--expandable-ga {
     $expandable-colour: #f3f3f3;
     .ad-exp-collapse__slide {

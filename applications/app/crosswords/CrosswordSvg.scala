@@ -30,7 +30,7 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
     val viewBoxHeight = if (trim) width * 0.6 else height
 
     <svg viewBox={s"0, 0, $width, $viewBoxHeight"} class="crossword__grid" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width={width.toString} height={height.toString} style="fill: #000000" />
+      <rect x="0" y="0" width={width.toString} height={height.toString} class="crossword__grid-background" />
       {
         for {
           (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)

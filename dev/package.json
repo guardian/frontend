@@ -1,6 +1,7 @@
 {
   "description": "dev tasks for guardian.com frontend",
   "main": "makefile",
+  "private": true,
   "license": "ISC",
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",

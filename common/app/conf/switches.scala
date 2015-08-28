@@ -278,6 +278,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val DisableStickyNavOnMobileSwitch = Switch(
+    "Performance",
+    "disable-sticky-nav-on-mobile",
+    "If this switch is on, the sticky nav will be disabled on mobile.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val SaveForLaterSwitch = Switch(
     "Performance",
     "save-for-later",
@@ -285,15 +294,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val RafCSSLoaderSwitch = Switch(
-    "Performance",
-    "raf-css-loader",
-    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 28),
-    exposeClientSide = false
   )
 
   val BackgroundJSSwitch = Switch(
@@ -511,15 +511,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val ThirdPartiesLaterSwitch = Switch(
-    "Commercial",
-    "third-parties-later",
-    "If this switch is on, less important third parties will be loaded after all ads are rendered",
-    safeState = Off,
-    sellByDate = new LocalDate(2015,8, 30),
-    exposeClientSide = true
   )
 
   val AdBlockMessage = Switch(
@@ -816,6 +807,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RugbyWorldCupswitch = Switch(
+    "Feature",
+    "rugby-world-cup-cleanup",
+    "Does nothing, other than remind us to delete some World Cup specific code",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
+  )
+
   val WeatherSwitch = Switch(
     "Feature",
     "weather",
@@ -940,7 +940,7 @@ object Switches {
     "ab-adblock-sticky-banner",
     "Switch for the Ad-block sticky banner A/B test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 28),
+    sellByDate = new LocalDate(2015, 9, 11),
     exposeClientSide = true
   )
 
