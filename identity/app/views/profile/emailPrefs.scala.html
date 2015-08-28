@@ -22,7 +22,10 @@
                             value="@if(subscription.subscribedTo){unsubscribe-}@subscription.listId">
                         @if(subscription.subscribedTo){Unsubscribe}else{Subscribe}
                     </button>
-                    <div class="email-subscription__frequency"><i class="i i-clock-light-grey"></i>@subscription.frequency</div>
+                    <div class="email-subscription__frequency">
+                        @fragments.inlineSvg("clock", "icon", List("light-grey"))
+                        @subscription.frequency
+                    </div>
                 </div>
             </div>
         }
