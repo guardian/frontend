@@ -122,13 +122,16 @@ define([
         });
     }
 
-    function kruxTracking() {
-        //if switch
-        var queryParams = url.getUrlVars();
-        console.log(queryParams);
-        if (queryParams.adtest === 'tom') {
-            //Krux is a global object loaded by krux.js file
-            Krux('admEvent','KAIQvckS', {});
+    function kruxTracking(player, event) {
+        var desiredVideos = ['gu-video-457263940'];
+
+        if (config.switches.kruxVideoTracking && $(player.el()).attr('data-media-id') && _.indexOf(desiredVideos, $(player.el()).attr('data-media-id')) != -1) {
+            if (event === 'playing') {
+                //Krux is a global object loaded by krux.js file
+                Krux('admEvent','KAIQvckS', {});
+            } else if (event === 'videoEnded') {
+                Krux('admEvent','KBaTegd5', {});
+            }
         }
     }
 
@@ -176,17 +179,15 @@ define([
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
-            kruxTracking();
-            console.log('playing');
+            kruxTracking(player, 'playing');
             bean.fire(document.body, 'videoPlaying');
         });
         player.on('pause', function () {
             bean.fire(document.body, 'videoPause');
-            console.log('videoPause');
         });
         player.on('ended', function () {
             bean.fire(document.body, 'videoEnded');
-            console.log('videoEnded');
+            kruxTracking(player, 'videoEnded');
         });
     }
 
