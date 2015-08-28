@@ -16,7 +16,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
   override lazy val actorSystem = ActorSystem()
   import play.api.Play.current
 
-  def capi(path: String) = APIAuthAction.async { request =>
+  def capiPreview(path: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
@@ -35,10 +35,29 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
+  def capiLive(path: String) = APIAuthAction.async { request =>
+    FaciaToolMetrics.ProxyCount.increment()
+    val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
+       "%s=%s".format(p._1, p._2.head.urlEncoded)
+    }.mkString("&")
+
+    val contentApiHost = Configuration.contentApi.contentApiLiveHost
+
+    val url = s"$contentApiHost/$path?$queryString${Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse("")}"
+
+    Logger.info("Proxying tag API query to: %s".format(url, request))
+
+    WS.url(url).get().map { response =>
+      Cached(60) {
+        Ok(rewriteBody(response.body)).as("application/javascript")
+      }
+    }
+  }
+
   def http(url: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
 
-    WS.url(url).withPreviewAuth.get().map { response =>
+    WS.url(url).get().map { response =>
       Cached(60) {
         Ok(response.body).as("text/html")
       }
@@ -65,11 +84,11 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     val ophanApiHost = Configuration.ophanApi.host.get
     val ophanKey = Configuration.ophanApi.key.map(key => s"&api-key=$key").getOrElse("")
 
-    val url = s"$ophanApiHost/$path?$queryString&$paths&ophanKey"
+    val url = s"$ophanApiHost/$path?$queryString&$paths&$ophanKey"
 
     Logger.info("Proxying ophan request to: %s".format(url, request))
 
-    WS.url(url).withPreviewAuth.get().map { response =>
+    WS.url(url).get().map { response =>
       Cached(60) {
         Ok(response.body).as("application/json")
       }

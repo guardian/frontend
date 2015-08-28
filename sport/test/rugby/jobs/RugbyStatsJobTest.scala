@@ -25,7 +25,8 @@ import scala.language.reflectiveCalls
       homeTeam = homeTeamOld,
       awayTeam = awayTeamOld,
       venue = Some("kings cross"),
-      competitionName = "competition"
+      competitionName = "competition",
+      status = Status.Result
     ),
     Match(
       date = testDate.plusSeconds(1),
@@ -33,7 +34,8 @@ import scala.language.reflectiveCalls
       homeTeam = homeTeamNew,
       awayTeam = awayTeamNew,
       venue = Some("kings cross"),
-      competitionName = "competition"
+      competitionName = "competition",
+      status = Status.Result
     ))
 
   "RugbyStatsJob" - {

@@ -116,7 +116,7 @@ export default class Grid extends React.Component {
                     'crossword__grid': true,
                     'crossword__grid--focussed': !!this.props.focussedCell
                 })}>
-                <rect x={0} y={0} width={width} height={height} />
+                <rect x={0} y={0} width={width} height={height} className="crossword__grid-background" />
                 {cells}
                 {separators}
             </svg>

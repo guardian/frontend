@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/component',
     'common/modules/sport/score-board'
 ], function (
@@ -10,6 +11,7 @@ define([
     $,
     ajax,
     config,
+    detect,
     Component,
     ScoreBoard
 ) {
@@ -28,16 +30,34 @@ define([
 
     function rugby() {
 
-        if (config.page.rugbyMatch) {
+        var pageType = '';
+
+        if (config.page.isLiveBlog) {
+            pageType = 'minbymin';
+        } else if (config.hasTone('Match reports')) {
+            pageType = 'report';
+        }
+
+        if (config.page.rugbyMatch && pageType) {
 
             var $h = $('.js-score');
 
             var scoreBoard = new ScoreBoard({
-                pageType: 'report',
+                pageType: pageType,
                 parent: $h,
                 autoupdated: false,
-                responseDataKey: 'liveScore',
-                endpoint: config.page.rugbyMatch + '.json'});
+                responseDataKey: 'matchSummary',
+                endpoint: config.page.rugbyMatch + '.json?page=' + encodeURIComponent(config.page.pageId)});
+
+            // Rugby score returns the match nav too, to optimise calls.
+            scoreBoard.fetched = function (resp) {
+                $.create(resp.nav).first().each(function (nav) {
+                    // There ought to be exactly two tabs; match report and min-by-min
+                    if ($('.tabs__tab', nav).length === 2) {
+                        $('.js-football-tabs').append(nav);
+                    }
+                });
+            };
 
             scoreBoard.load();
         }

@@ -1,13 +1,13 @@
 System.config({
-  "defaultJSExtensions": true,
-  "transpiler": "babel",
-  "babelOptions": {
+  defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
     "optional": [
       "runtime"
     ],
     "blacklist": []
   },
-  "paths": {
+  paths: {
     "*": "javascripts/*",
     "admin/*": "javascripts/projects/admin/*",
     "common/*": "javascripts/projects/common/*",
@@ -26,19 +26,17 @@ System.config({
     "bower:*": "jspm_packages/bower/*",
     "facebook.js": "//connect.facebook.net/en_US/all",
     "foresee.js": "javascripts/vendor/foresee/20150703/foresee-trigger"
-  }
-});
+  },
 
-System.config({
-  "map": {
+  map: {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:cujojs/when@3.7.3/es6-shim/Promise",
-    "babel": "npm:babel-core@5.8.22",
+    "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
-    "core-js": "npm:core-js@0.9.18",
+    "core-js": "npm:core-js@1.1.1",
     "domready": "npm:domready@1.0.8",
     "enhancer": "github:guardian/enhancer@0.1.3",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
@@ -164,7 +162,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:core-js@0.9.18": {
+    "npm:core-js@1.1.1": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
@@ -264,4 +262,3 @@ System.config({
     }
   }
 });
-

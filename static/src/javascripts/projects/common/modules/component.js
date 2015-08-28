@@ -148,6 +148,7 @@ define([
      */
     Component.prototype._fetch = function () {
         var endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint,
+            self = this,
             opt;
 
         for (opt in this.options) {
@@ -160,6 +161,9 @@ define([
             method: 'get',
             crossOrigin: true,
             data: this.fetchData
+        }).then(function (resp) {
+            self.fetched(resp);
+            return resp;
         });
     };
 
@@ -224,6 +228,12 @@ define([
      * This function is made to be overridden
      */
     Component.prototype.error = function () {};
+
+    /**
+     * This is called whenever a fetch occurs. This includes
+     * explicit fetch calls and autoupdate.
+     */
+    Component.prototype.fetched = function () {};
 
     /**
      * @param {Element} elem new element

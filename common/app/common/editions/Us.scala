@@ -2,6 +2,7 @@ package common.editions
 
 import common._
 import common.editions.Uk._
+import conf.Switches
 import org.joda.time.DateTimeZone
 import contentapi.QueryDefaults
 import common.NavItem
@@ -51,14 +52,17 @@ object Us extends Edition(
     energy,
     pollution
   )
-
+  import Switches.RugbyWorldCupswitch
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(us),
       NavItem(world, worldLocalNav),
       NavItem(opinion),
-      NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
+      NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl,
+        // TODO delete and replace with nothing
+        rugbyWorldCup)
+      ),
       NavItem(soccer, footballNav),
       NavItem(technology),
       NavItem(arts, cultureLocalNav),
