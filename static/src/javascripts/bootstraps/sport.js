@@ -68,7 +68,7 @@ define([
                 if (detect.isBreakpoint({ max: 'mobile' })) {
                     $('.js-after-article').append(
                         $.create(dropdownTemplate).each(function (dropdown) {
-                            var $dropdown = $(dropdown).addClass('dropdown--key-events');
+                            var $dropdown = $(dropdown);
                             if (config.page.isLiveBlog) { $dropdown.addClass('dropdown--key-events'); }
                             $dropdown.addClass('dropdown--active');
                             $('.dropdown__label', dropdown).append(name);
