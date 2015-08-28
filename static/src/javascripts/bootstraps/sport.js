@@ -30,12 +30,20 @@ define([
 
     function rugby() {
 
-        if (config.page.rugbyMatch && detect.getBreakpoint() === 'desktop') {
+        var pageType = '';
+
+        if (config.page.isLiveBlog) {
+            pageType = 'minbymin';
+        } else if (config.hasTone('Match reports')) {
+            pageType = 'report';
+        }
+
+        if (config.page.rugbyMatch && pageType) {
 
             var $h = $('.js-score');
 
             var scoreBoard = new ScoreBoard({
-                pageType: 'report',
+                pageType: pageType,
                 parent: $h,
                 autoupdated: false,
                 responseDataKey: 'matchSummary',

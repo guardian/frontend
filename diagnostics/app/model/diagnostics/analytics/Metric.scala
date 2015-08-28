@@ -53,23 +53,6 @@ object Metric extends Logging {
     ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
     ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
 
-    // temporarily count use of RAF for LoadCSSRafTest
-    ("ipad-old-start-raf", CountMetric(s"ipad-old-start-raf")),
-    ("ipad-old-after-5-raf", CountMetric(s"ipad-old-after-5-raf")),
-    ("ipad-2orMini-start-raf", CountMetric(s"ipad-2orMini-start-raf")),
-    ("ipad-2orMini-after-5-raf", CountMetric(s"ipad-2orMini-after-5-raf")),
-    ("ipad-3orLater-start-raf", CountMetric(s"ipad-3orLater-start-raf")),
-    ("ipad-3orLater-after-5-raf", CountMetric(s"ipad-3orLater-after-5-raf")),
-    ("android-nexus5-start-raf", CountMetric(s"android-nexus5-start-raf")),
-    ("android-nexus5-after-5-raf", CountMetric(s"android-nexus5-after-5-raf")),
-    ("android-nexus7-start-raf", CountMetric(s"android-nexus7-start-raf")),
-    ("android-nexus7-after-5-raf", CountMetric(s"android-nexus7-after-5-raf")),
-    ("android-sgs4-start-raf", CountMetric(s"android-sgs4-start-raf")),
-    ("android-sgs4-after-5-raf", CountMetric(s"android-sgs4-after-5-raf")),
-    ("android-sgs3-start-raf", CountMetric(s"android-sgs3-start-raf")),
-    ("android-sgs3-after-5-raf", CountMetric(s"android-sgs3-after-5-raf")),
-
-
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen")),
     ("headlines-variant-clicked", CountMetric(s"headlines-variant-clicked")),
