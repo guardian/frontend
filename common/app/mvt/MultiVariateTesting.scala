@@ -25,6 +25,13 @@ object JspmTest extends TestDefinition(
   new LocalDate(2015, 9, 30)
 )
 
+object PayloadSizeTest extends TestDefinition(
+  List(Variant6),
+  "payload-size-test",
+  "To test whether increased payload size causes a drop in unique visitors and/or page views",
+  new LocalDate(2015, 9, 30)
+)
+
 object JspmControlTest extends TestDefinition(
   List(Variant7),
   "jspm-control",
@@ -62,7 +69,7 @@ object ABNewFreeMembershipTest extends TestDefinition(
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant, ABNewFreeMembershipTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, PayloadSizeTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant, ABNewFreeMembershipTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)

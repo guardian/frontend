@@ -1,0 +1,18 @@
+@(matchNav: rugby.feed.MatchNavigation, currentPage: Option[String])(implicit request: RequestHeader)
+
+@tab(content: model.Content, text: String) = {
+    @if(currentPage.exists( _.endsWith(content.id))) {
+        <li class="tabs__tab tab--@text.toLowerCase tabs__tab--selected tone-colour tone-accent-border">
+            <span class="tab__link">@text</span>
+        </li>
+    } else {
+        <li class="tabs__tab tab--@text.toLowerCase">
+            <a href="@LinkTo{@content.webUrl}" data-link-name="@text">@text</a>
+        </li>
+    }
+}
+
+<ol class="tabs__container tabs__container--multiple" data-link-name="Rugby match nav">
+    @tab(matchNav.matchReport, "Report")
+    @tab(matchNav.minByMin, "Min-by-min")
+</ol>

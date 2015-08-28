@@ -12,7 +12,7 @@ function parse (string) {
 
 class Search extends Mock {
     constructor() {
-        super(/\/api\/proxy\/search\?(.+)/, ['queryString']);
+        super(/\/api\/live\/search\?(.+)/, ['queryString']);
 
         this.latestArticles = {
             response: {
