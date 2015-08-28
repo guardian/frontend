@@ -522,15 +522,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ThirdPartiesLaterSwitch = Switch(
-    "Commercial",
-    "third-parties-later",
-    "If this switch is on, less important third parties will be loaded after all ads are rendered",
-    safeState = Off,
-    sellByDate = new LocalDate(2015,8, 30),
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
