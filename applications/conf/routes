@@ -14,6 +14,10 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
 GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id     controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
 
+# Crosswords search
+GET         /crosswords/search                                                                                               controllers.CrosswordSearchController.searchForm()
+POST        /crosswords/search                                                                                               controllers.CrosswordSearchController.search()
+POST        /crosswords/lookup                                                                                               controllers.CrosswordSearchController.lookup()
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)

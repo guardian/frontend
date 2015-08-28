@@ -24,9 +24,9 @@ define([
             });
         };
 
-        bean.on(document.body, 'touchstart', overlaySelector, showIntentToClick);
-        bean.on(document.body, 'touchend', overlaySelector, removeIntentToClick);
+        // mouseover
         bean.on(document.body, 'mouseenter', overlaySelector, showIntentToClick);
+        // mouseout
         bean.on(document.body, 'mouseleave', overlaySelector, removeIntentToClick);
     };
 });
