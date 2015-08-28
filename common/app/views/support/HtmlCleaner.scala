@@ -420,6 +420,7 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
               val img = document.createElement("img")
               img.attr("src", image)
               img.attr("alt", "")
+              img.attr("rel", "nofollow")
               img.addClass("js-tweet-main-image tweet-main-image")
               element.appendChild(img)
             }
