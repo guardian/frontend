@@ -62,6 +62,10 @@ define([
         this.render(this.placeholder);
     };
 
+    ScoreBoard.prototype.error = function () {
+        this.placeholder.innerHTML = '';
+    };
+
     return ScoreBoard;
 
 }); // define
