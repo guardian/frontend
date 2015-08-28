@@ -33,7 +33,7 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:cujojs/when@3.7.3/es6-shim/Promise",
-    "babel": "npm:babel-core@5.8.22",
+    "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
