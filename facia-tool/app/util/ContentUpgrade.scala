@@ -1,14 +1,13 @@
 package util
 
-import com.gu.facia.api.utils.{CardStyle, ResolvedMetaData}
-import com.gu.facia.client.models.TrailMetaData
-import model.Content
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import com.gu.contentapi.client.parser.JsonParser._
+import com.gu.facia.api.utils.{CardStyle, ResolvedMetaData}
+import com.gu.facia.client.models.TrailMetaData
 import org.json4s.JValue
 import org.json4s.JsonAST._
 import org.json4s.native.JsonMethods
-import Json4s._
+import util.Json4s._
 
 /** Helper for Facia tool - passes over the JSON that is proxied, adding in defaults */
 object ContentUpgrade {
