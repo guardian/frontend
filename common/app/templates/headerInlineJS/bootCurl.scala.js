@@ -112,13 +112,11 @@ require([
         'common/utils/config',
         'common/modules/experiments/ab',
         'common/modules/ui/images',
-        'common/modules/ui/lazy-load-images',
         'common/utils/storage'
     ], function (
         config,
         ab,
         images,
-        lazyLoadImages,
         storage
     ) {
         var alreadyVisted;
@@ -132,7 +130,6 @@ require([
                 window.onload = images.upgradePictures;
             }
         }
-        lazyLoadImages.init();
         images.upgradePictures();
         images.listen();
 

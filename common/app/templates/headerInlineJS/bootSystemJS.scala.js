@@ -76,12 +76,10 @@ System['import']('core').then(function () {
                 importAll([
                     'common/utils/config',
                     'common/modules/experiments/ab',
-                    'common/modules/ui/images',
-                    'common/modules/ui/lazy-load-images']).then(function(values) {
+                    'common/modules/ui/images']).then(function(values) {
                     var config = values[0];
                     var ab = values[1];
                     var images = values[2];
-                    var lazyLoadImages = values[3];
                     ab.segmentUser();
                     ab.run();
                     if(guardian.config.page.isFront) {
@@ -89,7 +87,6 @@ System['import']('core').then(function () {
                             window.onload = images.upgradePictures;
                         }
                     }
-                    lazyLoadImages.init();
                     images.upgradePictures();
                     images.listen();
                     if (config.switches.commercial && !config.page.isPreferencesPage) {
