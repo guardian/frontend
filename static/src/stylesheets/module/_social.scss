@@ -176,8 +176,9 @@ category: Common
     background-color: colour(social-pinterest);
 
     .i {
-        background-size: 49% !important;
-        background-position: 45% center !important;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
     }
 
     &:hover {
