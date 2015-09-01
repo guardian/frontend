@@ -62,22 +62,24 @@ define([
     }
 
     function initRelated() {
-        insertOrProximity('.js-related', function () {
-            var opts = {
-                excludeTags: []
-            };
+        if (!(config.page.seriesId || config.page.blogIds)) {
+            insertOrProximity('.js-related', function () {
+                var opts = {
+                    excludeTags: []
+                };
 
-            // exclude ad features from non-ad feature content
-            if (config.page.sponsorshipType !== 'advertisement-features') {
-                opts.excludeTags.push('tone/advertisement-features');
-            }
-            // don't want to show professional network content on videos or interactives
-            if ('contentType' in config.page &&
-                contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
-                opts.excludeTags.push('guardian-professional/guardian-professional');
-            }
-            new Related(opts).renderRelatedComponent();
-        });
+                // exclude ad features from non-ad feature content
+                if (config.page.sponsorshipType !== 'advertisement-features') {
+                    opts.excludeTags.push('tone/advertisement-features');
+                }
+                // don't want to show professional network content on videos or interactives
+                if ('contentType' in config.page &&
+                    contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
+                    opts.excludeTags.push('guardian-professional/guardian-professional');
+                }
+                new Related(opts).renderRelatedComponent();
+            });
+        }
     }
 
     function initOnwardContent() {
