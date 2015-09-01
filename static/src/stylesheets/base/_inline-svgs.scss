@@ -6,6 +6,15 @@
     }
 }
 
+.inline-icon.light-grey {
+    fill: colour(neutral-3);
+}
+
+.inline-close.small {
+    height: 45%;
+    width: 45%;
+}
+
 .inline-icon__fallback {
     display: none;
 }
