@@ -2,11 +2,10 @@ package controllers
 
 import model.Cached
 import com.gu.contentapi.client.{model => contentapi}
-import com.gu.contentapi.client.model.{Crossword, Content => ApiContent}
-import common.{Edition, ExecutionContexts}
-import conf.LiveContentApi
+import common.ExecutionContexts
 import crosswords.{CrosswordData, CrosswordPage}
-import play.api.mvc.{RequestHeader, Result, Action, Controller}
+import play.api.mvc.{Action, Controller}
+import services.ContentApiGetters.withCrossword
 
 import scala.concurrent.Future
 
@@ -30,17 +29,6 @@ object WebAppController extends Controller with ExecutionContexts {
 
   def manifest() = Action {
     Cached(3600) { Ok(templates.js.webAppManifest()) }
-  }
-
-
-  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all")).map { response =>
-      val maybeCrossword = for {
-        content <- response.content
-        crossword <- content.crossword }
-        yield f(crossword, content)
-      maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
-    } recover { case _ => InternalServerError("Content API query returned an error.") }
   }
 
   def offlinePage() = Action.async { implicit request =>
