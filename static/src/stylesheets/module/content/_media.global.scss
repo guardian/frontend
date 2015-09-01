@@ -78,10 +78,6 @@
         width: .8em;
         @include icon(volume-high-white, $with-width: false);
     }
-    .content--media--video & {
-        width: 1.04em;
-        @include icon(video-icon-white, $with-width: false);
-    }
     .content--gallery &,
     .content--image & {
         width: .9em;
