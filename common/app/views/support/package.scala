@@ -74,7 +74,7 @@ object ContributorLinks {
       case (t, tag) =>
         t.replaceFirst(tag.name,
         s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
-           |  <a rel="author" class="tone-colour" itemprop="url" data-link-name="auto tag link"
+           |  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
            |    href="${LinkTo("/"+tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin)
     }
   }
