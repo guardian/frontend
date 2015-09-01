@@ -266,8 +266,7 @@ function dateYyyymmdd() {
 }
 
 function fetchLatest (options) {
-    var url = CONST.apiSearchBase + '/',
-        propName, term, filter;
+    var propName, term, filter;
 
     options = _.extend({
         article: '',
@@ -281,6 +280,8 @@ function fetchLatest (options) {
     term = options.term;
     filter = options.filter;
 
+    var url = (options.isDraft ? CONST.apiSearchBase : CONST.apiLiveBase) + '/';
+
     if (options.article) {
         term = options.article;
         propName = 'content';
@@ -288,10 +289,10 @@ function fetchLatest (options) {
     } else {
         term = encodeURIComponent(term.trim());
         propName = 'results';
-        url += 'search?' + CONST.apiSearchParams;
+        url += (options.isDraft ? 'content/scheduled?' : 'search?') + CONST.apiSearchParams;
         url += options.isDraft ?
-            '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
-            '&content-set=web-live&order-by=newest';
+            '&order-by=oldest&from-date=' + dateYyyymmdd() :
+            '&order-by=newest';
         url += '&page-size=' + options.pageSize;
         url += '&page=' + options.page;
         url += term ? '&q=' + term : '';

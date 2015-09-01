@@ -296,15 +296,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val RafCSSLoaderSwitch = Switch(
-    "Performance",
-    "raf-css-loader",
-    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 28),
-    exposeClientSide = false
-  )
-
   val BackgroundJSSwitch = Switch(
     "Performance",
     "background-js",
@@ -464,7 +455,7 @@ object Switches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 30),
+    sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = false
   )
 
@@ -522,15 +513,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ThirdPartiesLaterSwitch = Switch(
-    "Commercial",
-    "third-parties-later",
-    "If this switch is on, less important third parties will be loaded after all ads are rendered",
-    safeState = Off,
-    sellByDate = new LocalDate(2015,8, 30),
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
@@ -576,15 +558,6 @@ object Switches {
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val OmnitureConfidenceNoJsSwitch = Switch(
-    "Monitoring",
-    "enable-omniture-confidence-no-js",
-    "Enables Omniture confidence tracking for no-JS devices",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
@@ -825,6 +798,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RugbyWorldCupswitch = Switch(
+    "Feature",
+    "rugby-world-cup-cleanup",
+    "Does nothing, other than remind us to delete some World Cup specific code",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
+  )
+
   val WeatherSwitch = Switch(
     "Feature",
     "weather",
@@ -949,7 +931,7 @@ object Switches {
     "ab-adblock-sticky-banner",
     "Switch for the Ad-block sticky banner A/B test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 28),
+    sellByDate = new LocalDate(2015, 9, 11),
     exposeClientSide = true
   )
 
