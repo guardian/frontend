@@ -5,7 +5,8 @@
         background-color: colour(comment-background);
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__media-wrapper {
         background-color: darken(colour(comment-background), 5%);
     }
 

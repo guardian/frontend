@@ -47,7 +47,8 @@ POST        /treats/*collectionId                    controllers.FaciaToolContro
 
 # endpoints for proxying https
 GET         /switches                                controllers.SwitchesProxy.getSwitches()
-GET         /api/proxy/*path                         controllers.FaciaContentApiProxy.capi(path)
+GET         /api/preview/*path                       controllers.FaciaContentApiProxy.capiPreview(path)
+GET         /api/live/*path                          controllers.FaciaContentApiProxy.capiLive(path)
 GET         /http/proxy/*url                         controllers.FaciaContentApiProxy.http(url)
 GET         /json/proxy/*absUrl                      controllers.FaciaContentApiProxy.json(absUrl)
 GET         /ophan/*path                             controllers.FaciaContentApiProxy.ophan(path)

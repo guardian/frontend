@@ -5,7 +5,8 @@
         color: colour(analysis-default);
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__media-wrapper {
         background-color: darken(colour(analysis-background), 5%);
     }
 
