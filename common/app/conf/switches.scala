@@ -464,7 +464,7 @@ object Switches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 30),
+    sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = false
   )
 
