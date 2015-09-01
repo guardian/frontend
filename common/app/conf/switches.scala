@@ -561,15 +561,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val OmnitureConfidenceNoJsSwitch = Switch(
-    "Monitoring",
-    "enable-omniture-confidence-no-js",
-    "Enables Omniture confidence tracking for no-JS devices",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 2),
-    exposeClientSide = true
-  )
-
   val DiagnosticsLogging = Switch(
     "Monitoring",
     "enable-diagnostics-logging",
