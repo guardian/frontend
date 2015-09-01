@@ -14,14 +14,8 @@
                             how about a quick crossword
                             (<a href="/crosswords/@crosswordPage.crossword.id">number @crosswordPage.crossword.number</a>)?</p>
                     </div>
-                </div>
-            </div>
-            <div class="content__main tonal__main tonal__main--tone-news">
-                <div class="gs-container">
-                    <div class="js-content-main-column">
-                        <div class="js-crossword"
-                             data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
-                    </div>
+                    <div class="js-crossword"
+                         data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
                 </div>
             </div>
         </article>
