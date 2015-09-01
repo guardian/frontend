@@ -2,6 +2,7 @@ define([
     'bonzo',
     'bean',
     'common/utils/$',
+    'common/utils/template',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
@@ -11,6 +12,7 @@ define([
     bonzo,
     bean,
     $,
+    template,
     ajax,
     config,
     detect,
@@ -60,28 +62,16 @@ define([
                     }
                 });
 
-                var content = $.create(resp.scoreEvents);
-                var dropdownTemplate = detect.isBreakpoint({ max: 'mobile' }) && resp.dropdown;
-                var name = 'Score breakdown';
-                var button;
-
+                var contentString = resp.scoreEvents;
                 if (detect.isBreakpoint({ max: 'mobile' })) {
-                    $('.js-after-article').append(
-                        $.create(dropdownTemplate).each(function (dropdown) {
-                            var $dropdown = $(dropdown);
-                            if (config.page.isLiveBlog) { $dropdown.addClass('dropdown--key-events'); }
-                            $dropdown.addClass('dropdown--active');
-                            $('.dropdown__label', dropdown).append(name);
-                            $('.dropdown__content', dropdown).append(content);
-                            button = $('.dropdown__button', dropdown);
-                            button
-                                .attr('data-link-name', 'Show dropdown: ' + name);
-                        })
-                    );
+                    var $scoreEventsMobile = $.create(template(resp.dropdown)({ name: 'Score breakdown', content: contentString }));
+                    if (config.page.isLiveBlog) { $scoreEventsMobile.addClass('dropdown--key-events'); }
+                    $scoreEventsMobile.addClass('dropdown--active');
+                    $('.js-after-article').append($scoreEventsMobile);
                 } else {
-                    var placeholder = $.create('<div class="hide-on-mobile"></div>');
-                    $('.score-container').after(placeholder);
-                    placeholder.append(content);
+                    var $scoreEventsTabletUp = $.create(contentString);
+                    $scoreEventsTabletUp.addClass('hide-on-mobile');
+                    $('.score-container').after($scoreEventsTabletUp);
                 }
 
             };
