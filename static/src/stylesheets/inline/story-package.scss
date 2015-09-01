@@ -6,8 +6,13 @@
     .tone-#{$tone}--item {
         .fc-item__kicker,
         .rich-link__kicker,
-        .fc-item__byline {
+        .fc-item__byline,
+        .fc-save-for-later--is-saved {
             color: $colour;
+        }
+
+        .fc-save-for-later--is-saved .inline-tone-fill {
+            fill: $colour;
         }
     }
 
@@ -108,6 +113,10 @@
         .inline-icon {
             fill: mix(#ffffff, colour(story-package), 80%);
         }
+    }
+
+    .fc-save-for-later {
+        border-color: mix(colour(story-package), #ffffff, 80%);
     }
 
     .live-pulse-icon:before {
