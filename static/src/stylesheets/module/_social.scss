@@ -174,7 +174,9 @@ category: Common
 
 .social-icon--pinterest {
     background-color: colour(social-pinterest);
-
+    
+    // The pinterest icon needs to be centered within the span due to its small width/height
+    
     .i {
         margin: auto;
         position: absolute;
