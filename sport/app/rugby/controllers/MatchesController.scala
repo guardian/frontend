@@ -5,6 +5,7 @@ import common._
 import common.{ExecutionContexts, JsonComponent}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
+import play.twirl.api.Html
 import rugby.jobs.RugbyStatsJob
 import rugby.model.{ScoreType, Match}
 import rugby.feed.{CapiFeed, OptaFeed}
@@ -41,7 +42,9 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       Cached(60){
         if (request.isJson)
           JsonComponent(
-            "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers).toString,
+            "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
+            "scoreEvents" -> rugby.views.html.fragments.scoreEvents(aMatch, homeTeamScorers, awayTeamScorers).toString,
+            "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
             "nav" -> matchNav.getOrElse("")
           )
         else

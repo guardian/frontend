@@ -3,6 +3,7 @@ package rugby.feed
 import common.{Edition, Logging, ExecutionContexts}
 import conf.LiveContentApi
 import model.Content
+import org.joda.time.DateTimeZone
 import rugby.jobs.RugbyStatsJob
 import rugby.model.Match
 
@@ -40,7 +41,7 @@ object CapiFeed extends ExecutionContexts with Logging {
       .fromDate(matchDate.toDateTimeAtStartOfDay)
       .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
     ).flatMap { response =>
-        val navContent = response.results.map(Content(_))
+        val navContent = response.results.map(Content(_)).filter(_.webPublicationDate.toDateTime(DateTimeZone.UTC).toLocalDate.isEqual(matchDate))
         (for {
           matchReport <- navContent.find(_.isMatchReport)
           liveBlog <- navContent.find(_.isLiveBlog)
