@@ -104,6 +104,9 @@ System['import']('core').then(function () {
                         storage.local.set('alreadyVisited', alreadyVisted + 1);
                     }
 
+                    // Preference pages are served via HTTPS for service worker support.
+                    // These pages must not have mixed (HTTP/HTTPS) content, so
+                    // we disable ads (until the day comes when all ads are HTTPS).
                     if (config.switches.commercial && !config.page.isPreferencesPage) {
                         System['import']('bootstraps/commercial').then(raven.wrap(
                             { tags: { feature: 'commercial' } },
