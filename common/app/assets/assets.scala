@@ -17,7 +17,7 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, paths: Map[String, String]) {
+class AssetMap(base: String, assetMap: String) {
   def apply(path: String): Asset = {
 
     // Avoid memoizing the asset map in Dev.
@@ -29,6 +29,19 @@ class AssetMap(base: String, paths: Map[String, String]) {
   }
 
   private def assets(): Map[String, Asset] = {
+
+    // Use the grunt-generated asset map in Dev.
+    val json: String = if (Play.current.mode == Mode.Dev) {
+      val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
+      IOUtils.toString(assetMapUri)
+    } else {
+      val url = AssetFinder(assetMap)
+      IOUtils.toString(url)
+    }
+    val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
+
+    val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
+
     paths mapValues { path => Asset(base + path) }
   }
 
@@ -36,19 +49,7 @@ class AssetMap(base: String, paths: Map[String, String]) {
 }
 
 class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
-
-  // Use the grunt-generated asset map in Dev.
-  val jsonString: String = if (Play.current.mode == Mode.Dev) {
-    val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
-    IOUtils.toString(assetMapUri)
-  } else {
-    val url = AssetFinder(assetMap)
-    IOUtils.toString(url)
-  }
-  val json: JsObject = Json.parse(jsonString).asInstanceOf[JsObject]
-  val paths = json.fields.toMap mapValues { _.asInstanceOf[JsString].value }
-
-  val lookup = new AssetMap(base, paths)
+  val lookup = new AssetMap(base, assetMap)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
