@@ -9,7 +9,6 @@
 // Offline page
 //
 
-// How can we invalidate the shell cache each time we the HTML changes?
 var version = 1;
 var staticCacheName = 'static-' + version;
 self.addEventListener('install', function (event) {
@@ -30,12 +29,11 @@ self.addEventListener('install', function (event) {
 });
 
 this.addEventListener('fetch', function (event) {
-    // this assumes we invalidate the cache every release!
     event.respondWith(
         fetch(event.request)
             .catch(function () {
-                // If a request is cached, respond with that. Otherwise respond with the shell, whose subresources will
-                // in the cache.
+                // If a request is cached, respond with that. Otherwise respond
+                // with the shell, whose subresources will be in the cache.
                 return caches.match(event.request).then(function (response) {
                     return response || caches.match('/offline-page');
                 })
