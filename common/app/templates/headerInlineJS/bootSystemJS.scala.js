@@ -77,13 +77,19 @@ System['import']('core').then(function () {
                     'common/utils/config',
                     'common/modules/experiments/ab',
                     'common/modules/ui/images',
-                    'common/modules/ui/lazy-load-images']).then(function(values) {
+                    'common/modules/ui/lazy-load-images',
+                    'common/utils/storage']).then(function(values) {
                     var config = values[0];
                     var ab = values[1];
                     var images = values[2];
                     var lazyLoadImages = values[3];
-                    ab.segmentUser();
-                    ab.run();
+                    var storage = values[4];
+                    var alreadyVisted;
+
+                    if (guardian.isModernBrowser) {
+                        ab.segmentUser();
+                        ab.run();
+                    }
                     if(guardian.config.page.isFront) {
                         if(!document.addEventListener) { // IE8 and below
                             window.onload = images.upgradePictures;
@@ -92,6 +98,15 @@ System['import']('core').then(function () {
                     lazyLoadImages.init();
                     images.upgradePictures();
                     images.listen();
+
+                    if (guardian.isModernBrowser) {
+                        alreadyVisted = storage.local.get('alreadyVisited') || 0;
+                        storage.local.set('alreadyVisited', alreadyVisted + 1);
+                    }
+
+                    // Preference pages are served via HTTPS for service worker support.
+                    // These pages must not have mixed (HTTP/HTTPS) content, so
+                    // we disable ads (until the day comes when all ads are HTTPS).
                     if (config.switches.commercial && !config.page.isPreferencesPage) {
                         System['import']('bootstraps/commercial').then(raven.wrap(
                             { tags: { feature: 'commercial' } },
