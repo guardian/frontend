@@ -74,7 +74,7 @@ define([
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
-                var videoSrc = $('#YTPlayer').attr('src'), 
+                var videoSrc = $('#YTPlayer').attr('src'),
                     videoSrcAutoplay = videoSrc;
                 if (videoSrc.indexOf("autoplay") === -1) {
                     videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
