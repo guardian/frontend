@@ -26,8 +26,12 @@ object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
        response.json.validate[DedupedFrontResult] match {
          case JsSuccess(dedupedFrontResult, _) =>
            Cached(60)(Ok(views.html.dedupedOnPath(Configuration.environment.stage, dedupedFrontResult)))
-         case JsError(errors) => NoCache(NotFound)
+         case JsError(errors) => NoCache(NotFound(s"$path Not Found"))
        }
+     }.recover {
+       case t: Throwable =>
+         log.error(s"Error with deduped request: $t")
+         InternalServerError(s"Something went wrong with request to: $url")
      }
    }
 
