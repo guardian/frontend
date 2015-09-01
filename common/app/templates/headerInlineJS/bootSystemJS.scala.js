@@ -82,8 +82,11 @@ System['import']('core').then(function () {
                     var ab = values[1];
                     var images = values[2];
                     var lazyLoadImages = values[3];
-                    ab.segmentUser();
-                    ab.run();
+
+                    if (guardian.isModernBrowser) {
+                        ab.segmentUser();
+                        ab.run();
+                    }
                     if(guardian.config.page.isFront) {
                         if(!document.addEventListener) { // IE8 and below
                             window.onload = images.upgradePictures;
