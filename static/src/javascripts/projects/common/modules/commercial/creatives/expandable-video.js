@@ -76,7 +76,7 @@ define([
             fastdom.write(function () {
                 var videoSrc = $('#YTPlayer').attr('src'),
                     videoSrcAutoplay = videoSrc;
-                if (videoSrc.indexOf("autoplay") === -1) {
+                if (videoSrc.indexOf('autoplay') === -1) {
                     videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
                 } else {
                     videoSrcAutoplay = videoSrcAutoplay.replace(this.isClosed ? 'autoplay=0' : 'autoplay=1', this.isClosed ? 'autoplay=1' : 'autoplay=0');
