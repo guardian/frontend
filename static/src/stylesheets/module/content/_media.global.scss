@@ -151,19 +151,15 @@
         text-align: left; //Required for end slate items
         @include text-clamp(3, get-line-height(headline, 1));
         height: get-line-height(headline, 1) * 3;
-
-        &:before {
-            display: inline-block;
-            content: '';
-            margin-right: $gs-gutter/5;
-            height: 10px;
-            width: 16px;
+        .inline-video-icon {
+            fill: colour(media-default);
+            svg {
+                height: .75em;
+                width: 1.1em;
+                margin-right: .3em;
+            }
         }
     }
-}
-
-.items--video .fc-item__title:before {
-    @include icon(video-icon, false);
 }
 
 .items--audio .fc-item__title:before {
