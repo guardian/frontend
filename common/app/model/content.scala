@@ -9,7 +9,7 @@ import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
-import conf.Switches.FacebookShareUseTrailPicFirstSwitch
+import conf.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -242,7 +242,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
     meta.flatten.toMap
   }
 
-  override lazy val cacheSeconds = {
+  override def cacheSeconds = {
     if (isLive) 5
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 10
     else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 30
@@ -347,6 +347,15 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
 
   override def hasInlineMerchandise = {
     isbn.isDefined || super.hasInlineMerchandise
+  }
+
+  override lazy val cacheSeconds = if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) {
+    if (isLive) 5
+    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 300
+    else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 1200
+    else 1200
+  } else {
+    super.cacheSeconds
   }
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
