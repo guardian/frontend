@@ -1,6 +1,6 @@
 package controllers
 
-import model.{Cached, NoCache}
+import model.Cached
 import com.gu.contentapi.client.{model => contentapi}
 import com.gu.contentapi.client.model.{Crossword, Content => ApiContent}
 import common.{Edition, ExecutionContexts}
@@ -19,10 +19,12 @@ class OfflinePage(crossword: CrosswordData, content: contentapi.Content) extends
 object WebAppController extends Controller with ExecutionContexts {
 
   def serviceWorker() = Action { implicit request =>
-    if (conf.Switches.NotificationsSwitch.isSwitchedOn || conf.Switches.OfflinePageSwitch.isSwitchedOn) {
-      NoCache(Ok(templates.js.serviceWorker()))
-    } else {
-      NotFound
+    Cached(3600) {
+      if (conf.Switches.NotificationsSwitch.isSwitchedOn || conf.Switches.OfflinePageSwitch.isSwitchedOn) {
+        Ok(templates.js.serviceWorker())
+      } else {
+        NotFound
+      }
     }
   }
 
