@@ -123,6 +123,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val SoftPurgeWithLongCachingSwitch = Switch(
+    "Performance",
+    "soft-purge-with-long-caching-switch",
+    "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   val CircuitBreakerSwitch = Switch(
     "Performance",
     "circuit-breaker",
