@@ -196,10 +196,7 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__image-container {
             background-color: #000000;
 
-            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
-            .responsive-img {
-                opacity: .9;
-            }
+            opacity: .9;
         }
 
         .u-faux-block-link__cta {
