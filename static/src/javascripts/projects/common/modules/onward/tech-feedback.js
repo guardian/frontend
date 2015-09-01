@@ -30,8 +30,9 @@ define([
         };
     }
 
-    function registerEmailHandler(cssClass) {
-        var link = $(cssClass);
+    function registerEmailHandler(selector) {
+        var link = $(selector);
+
         if (link.length) {
             bean.on(link[0], 'click', addEmailHeaders(link));
         }
@@ -40,5 +41,6 @@ define([
     return function () {
         registerEmailHandler('.js-tech-feedback-mailto');
         registerEmailHandler('.js-userhelp-mailto');
+        registerEmailHandler('[href=mailto:crosswords.beta@theguardian.com]');
     };
 });

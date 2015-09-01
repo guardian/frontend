@@ -187,9 +187,12 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__media-wrapper {
         background-color: colour(neutral-6);
+    }
 
+    .u-faux-block-link--hover {
         .fc-item__image-container {
             background-color: #000000;
 
@@ -288,10 +291,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__media-wrapper {
     box-sizing: border-box;
     position: relative;
-
-    .is-not-modern & {
-        display: none !important;
-    }
 }
 
 // Wraps all non-media content
@@ -308,6 +307,54 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__image-container {
     display: none;
 }
+
+.fc-item__slideshow {
+    img {
+        @include mq($until: tablet) {
+            &:nth-child(1n+2) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
+        }
+    }
+}
+
+@for $i from 2 through 5 {
+    $sections: $i * 2;
+    @keyframes fc-item__slideshow--#{$i} {
+        0% {
+            opacity: 0;
+        }
+        #{100% / $sections} {
+            opacity: 1;
+        }
+        #{(100% / $sections) * 2} {
+            opacity: 1;
+        }
+        #{(100% / $sections) * 3} {
+            opacity: 0;
+        }
+    }
+    @include mq(tablet) {
+        .fc-item__slideshow--#{$i} img {
+            animation-duration: #{$sections}s;
+            animation-name: fc-item__slideshow--#{$i};
+
+            @for $j from 2 through $i {
+                &:nth-child(#{$j}) {
+                    animation-delay: #{($sections / $i) * ($j - 1)}s;
+                }
+            }
+        }
+    }
+}
+
 
 .fc-item__video-play {
     display: block;

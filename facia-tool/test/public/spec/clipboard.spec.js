@@ -27,7 +27,7 @@ describe('Clipboard', function () {
         });
         this.scope = mockjax.scope();
         this.scope({
-            url: '/api/proxy/piuccio*',
+            url: '/api/preview/piuccio*',
             responseText: {}
         });
         this.originaldetectPendingChangesInClipboard = CONST.detectPendingChangesInClipboard;

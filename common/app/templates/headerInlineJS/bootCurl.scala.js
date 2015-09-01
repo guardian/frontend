@@ -112,13 +112,11 @@ require([
         'common/utils/config',
         'common/modules/experiments/ab',
         'common/modules/ui/images',
-        'common/modules/ui/lazy-load-images',
         'common/utils/storage'
     ], function (
         config,
         ab,
         images,
-        lazyLoadImages,
         storage
     ) {
         var alreadyVisted;
@@ -132,7 +130,6 @@ require([
                 window.onload = images.upgradePictures;
             }
         }
-        lazyLoadImages.init();
         images.upgradePictures();
         images.listen();
 
@@ -144,7 +141,7 @@ require([
         // Preference pages are served via HTTPS for service worker support.
         // These pages must not have mixed (HTTP/HTTPS) content, so
         // we disable ads (until the day comes when all ads are HTTPS).
-        if (! config.page.isPreferencesPage) {
+        if (config.switches.commercial && !config.page.isPreferencesPage) {
             require(['bootstraps/commercial'], raven.wrap(
                 { tags: { feature: 'commercial' } },
                 function (commercial) {

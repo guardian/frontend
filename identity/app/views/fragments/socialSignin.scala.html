@@ -13,7 +13,7 @@
                 }
             ">
             <span>@route.facebook.name with Facebook</span>
-            <i class="i-fb i social-signin__icon social-signin__icon--fb"></i>
+            @fragments.inlineSvg("fb", "icon", List("social-signin__icon", "social-signin__icon--fb"))
         </a>
     </li>
     <li class="social-signin__item">
@@ -26,7 +26,7 @@
                 }
             ">
             <span>@route.google.name with Google</span>
-            <i class="i-gplus i social-signin__icon social-signin__icon--gplus"></i>
+            @fragments.inlineSvg("gplus", "icon", List("social-signin__icon", "social-signin__icon--gplus"))
         </a>
     </li>
 </ul>

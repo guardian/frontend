@@ -6,6 +6,7 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs'
 ], function (
@@ -16,6 +17,7 @@ define([
     $,
     _,
     config,
+    detect,
     createAdSlot,
     userPrefs
 ) {
@@ -68,12 +70,15 @@ define([
                     return new Promise(function (resolve) {
                         fastdom.write(function () {
                             // add a tablet+ ad to the slice
-                            $adSlice
-                                .removeClass('fc-slice__item--no-mpu')
-                                .append($tabletAdSlot);
-                            // add a mobile advert after the container
-                            $mobileAdSlot
-                                .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+                            if (detect.getBreakpoint() !== 'mobile') {
+                                $adSlice
+                                    .removeClass('fc-slice__item--no-mpu')
+                                    .append($tabletAdSlot);
+                            } else {
+                                // add a mobile advert after the container
+                                $mobileAdSlot
+                                    .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+                            }
 
                             resolve(null);
                         });
