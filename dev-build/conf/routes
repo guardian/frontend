@@ -306,7 +306,7 @@ GET         /series/*path.json                                                  
 
 # Applications (must come before wildcard)
 GET         /offline-page                                                                                            controllers.WebAppController.offlinePage()
-GET         /2015-05-28-2-service-worker.js                                                                          controllers.WebAppController.serviceWorker()
+GET         /service-worker.js                                                                                       controllers.WebAppController.serviceWorker()
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)

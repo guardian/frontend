@@ -34,7 +34,7 @@ GET        /crosswords/optout                                                   
 
 # Web App paths
 GET        /offline-page                                                        controllers.WebAppController.offlinePage()
-GET        /2015-05-28-2-service-worker.js                                      controllers.WebAppController.serviceWorker()
+GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)

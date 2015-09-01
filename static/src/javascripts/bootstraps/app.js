@@ -111,7 +111,7 @@ define([
             }
 
             if (config.switches.offlinePage && window.location.href.match(/^https/)) {
-                navigator.serviceWorker.register('/2015-05-28-2-service-worker.js');
+                navigator.serviceWorker.register('/service-worker.js');
             }
 
             if (config.page.pageId === 'help/accessibility-help') {
