@@ -5,11 +5,13 @@ import dfp.DfpDataCacheLifecycle
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{RequestHeader, Results, WithFilters}
+import services.ConfigAgentLifecycle
 
 import scala.concurrent.Future
 
 object Global extends WithFilters(Gzipper)
   with AdminLifecycle
+  with ConfigAgentLifecycle
   with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
   with Results

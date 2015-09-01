@@ -1,34 +1,8 @@
 @import model.MetaData
 
-@import rugby.model.ScoreEvent
-@import rugby.model.ScoreType
 @import rugby.model.Status._
-@(page: MetaData, theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])
 
-@scoreTypeEvents(scoreType: ScoreType.Value) = {
-    <tr>
-        <td class="match-summary__rugby-table__home-data">@teamScorersFor(scoreType, homeTeamScorers)</td>
-        <th>@{
-            scoreType match {
-                case (ScoreType.`Try`) => "Tries"
-                case (ScoreType.Conversion) => "Conversions"
-                case (ScoreType.Penalty) => "Penalties"
-                case (ScoreType.DropGoal) => "Drop goals"
-                case _ => ""
-            }
-        }</th>
-        <td class="match-summary__rugby-table__away-data">@teamScorersFor(scoreType, awayTeamScorers)</td>
-    </tr>
-}
-
-@teamScorersFor(scoreType: ScoreType.Value, teamScoreEvents: Seq[ScoreEvent]) = {
-    @{
-        teamScoreEvents.filter(_.`type` == scoreType).groupBy(_.player.name).map { case (playerName, scoreEvents) =>
-            val numberOfTries = if(scoreEvents.size > 1) s" (${scoreEvents.size})" else ""
-            s"$playerName$numberOfTries"
-        }.mkString(", ")
-    }
-}
+@(page: MetaData, theMatch: rugby.model.Match)
 
 @status() = {
     @theMatch.status match {
@@ -91,17 +65,5 @@
                 </h2>
             </div>
         </div>
-    </div>
-    <div>
-        @if(homeTeamScorers.nonEmpty && awayTeamScorers.nonEmpty) {
-            <table class="match-summary__rugby-table">
-                @scoreTypeEvents(ScoreType.`Try`)
-                @scoreTypeEvents(ScoreType.Conversion)
-                @scoreTypeEvents(ScoreType.Penalty)
-                @if(homeTeamScorers.filter(_.`type` == ScoreType.DropGoal).nonEmpty || awayTeamScorers.filter(_.`type` == ScoreType.DropGoal).nonEmpty) {
-                    @scoreTypeEvents(ScoreType.DropGoal)
-                }
-            </table>
-        }
     </div>
 </div>
