@@ -1,0 +1,12 @@
+.ad-slot {
+    .ad-slot--remove {
+        width: gs-span(2);
+        height: gs-height(2);
+        position: absolute;
+        top: 20px;
+        right: 0px;
+        /*TODO proper icon as a base64*/
+        background-image: url('https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/48x48/cancel.png');
+        cursor: pointer;
+    }
+}

@@ -949,7 +949,7 @@ object Switches {
     "ab-disable-ad-survey",
     "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 1),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = true
   )
 

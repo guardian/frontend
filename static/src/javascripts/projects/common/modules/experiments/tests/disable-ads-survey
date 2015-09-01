@@ -35,7 +35,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-
+                    console.log('DisableAdsSurvey');
                 }
             },
             {

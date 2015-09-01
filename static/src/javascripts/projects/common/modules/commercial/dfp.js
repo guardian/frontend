@@ -90,6 +90,12 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
+            /*if (ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
+             && ab.getParticipations().DisableAdsSurvey.variant === 'variant') {*/
+                console.log($adSlot);
+                $('<div></div>').addClass('ad-slot--remove').appendTo($adSlot);
+               // $adSlot.append("<div class='ad-slot--remove'></div>");
+            // }
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
@@ -406,10 +412,6 @@ define([
                 // is there a callback for this size
                 if (callbacks[size]) {
                     callbacks[size](event, $slot);
-                }
-
-                if (ab.DisableAdsSurvey config.switches.DisableAdsSurvey) {
-
                 }
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
