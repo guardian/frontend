@@ -61,7 +61,6 @@ static/hash
 static/requirejs
 static/target
 
-static/src/systemjs-bundle-config.json
 static/src/stylesheets/icons/*
 
 # Eclipse #

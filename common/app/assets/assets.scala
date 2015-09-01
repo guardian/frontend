@@ -35,20 +35,6 @@ class AssetMap(base: String, paths: Map[String, String]) {
   private lazy val memoizedAssets = assets()
 }
 
-class JspmAssets(base: String) {
-  val jsonString: String = IOUtils.toString(AssetFinder("assets/systemjs-bundle-config.json"))
-  val paths: Map[String, String] = Json.parse(jsonString).validate[Map[String, List[String]]] match {
-    case JsSuccess(myMap, _) => myMap
-      .mapValues(_.mkString)
-      .map(_.swap)
-      .map{case (k, v) => (s"javascripts/$k.js", s"$v.js")}
-    case JsError(errors) => Map.empty
-  }
-
-  val lookup = new AssetMap(base, paths)
-  def apply(path: String): Asset = lookup(path)
-}
-
 class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
 
   // Use the grunt-generated asset map in Dev.
@@ -154,15 +140,21 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   }
 
   object js {
-     private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
+     private def contents(path: String): String = IOUtils.toString(AssetFinder(path))
 
-     val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
+     val curl: String = RelativePathEscaper.escapeLeadingDotPaths(contents("assets/curl-domReady.js"))
 
-     val systemJsPolyfills: String = inlineJs("assets/system-polyfills.src.js")
-     val systemJs: String = inlineJs("assets/system.src.js")
-     val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
-     val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
-     val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.json")
+     val systemJsPolyfills: String = contents("assets/system-polyfills.src.js")
+     val systemJs: String = contents("assets/system.src.js")
+     val systemJsAppConfig: String = contents("assets/systemjs-config.js")
+     val systemJsNormalize: String = contents("assets/systemjs-normalize.js")
+
+     private val map: Map[String, List[String]] = Json.parse(contents("assets/jspm-assets.map")).validate[Map[String, String]] match {
+       case JsSuccess(m, _) => m
+         .map{case (source, destination) => (destination.replaceFirst(".js$", ""), List(source.replaceFirst("^javascripts/", "").replaceFirst(".js$", "")))}
+       case JsError(_) => Map.empty
+     }
+     val systemJsBundleConfig: String = Json.toJson(map).toString()
   }
 }
 
