@@ -1,6 +1,8 @@
 define([
     'bonzo',
+    'bean',
     'common/utils/$',
+    'common/utils/template',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
@@ -8,7 +10,9 @@ define([
     'common/modules/sport/score-board'
 ], function (
     bonzo,
+    bean,
     $,
+    template,
     ajax,
     config,
     detect,
@@ -57,6 +61,19 @@ define([
                         $('.js-football-tabs').append(nav);
                     }
                 });
+
+                var contentString = resp.scoreEvents;
+                if (detect.isBreakpoint({ max: 'mobile' })) {
+                    var $scoreEventsMobile = $.create(template(resp.dropdown)({ name: 'Score breakdown', content: contentString }));
+                    if (config.page.isLiveBlog) { $scoreEventsMobile.addClass('dropdown--key-events'); }
+                    $scoreEventsMobile.addClass('dropdown--active');
+                    $('.js-after-article').append($scoreEventsMobile);
+                } else {
+                    var $scoreEventsTabletUp = $.create(contentString);
+                    $scoreEventsTabletUp.addClass('hide-on-mobile');
+                    $('.score-container').after($scoreEventsTabletUp);
+                }
+
             };
 
             scoreBoard.load();

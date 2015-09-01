@@ -123,6 +123,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val SoftPurgeWithLongCachingSwitch = Switch(
+    "Performance",
+    "soft-purge-with-long-caching-switch",
+    "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   val CircuitBreakerSwitch = Switch(
     "Performance",
     "circuit-breaker",
@@ -455,7 +464,7 @@ object Switches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 30),
+    sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = false
   )
 
@@ -513,15 +522,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ThirdPartiesLaterSwitch = Switch(
-    "Commercial",
-    "third-parties-later",
-    "If this switch is on, less important third parties will be loaded after all ads are rendered",
-    safeState = Off,
-    sellByDate = new LocalDate(2015,8, 30),
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
@@ -567,15 +567,6 @@ object Switches {
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val OmnitureConfidenceNoJsSwitch = Switch(
-    "Monitoring",
-    "enable-omniture-confidence-no-js",
-    "Enables Omniture confidence tracking for no-JS devices",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
