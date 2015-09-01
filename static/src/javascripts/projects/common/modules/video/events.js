@@ -2,7 +2,6 @@
 define([
     'bean',
     'qwery',
-    'common/utils/url',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/_',
@@ -15,7 +14,6 @@ define([
 ], function (
     bean,
     qwery,
-    url,
     reportError,
     $,
     _,
