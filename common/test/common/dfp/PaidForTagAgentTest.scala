@@ -594,6 +594,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     expired should be(true)
   }
 
+  "isExpiredAdvertisementFeature" should "be false for any content page without the ad feature tone" in {
+    val tags = Seq(toKeyword("section/tagName"))
+    val expired = TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None)
+    expired should be(false)
+  }
+
   it should "be false for an ad feature with multiple line items where one has no end date" in {
     val tags = Seq(toKeyword("section/tagNameMatchingMultipleLineItems"))
     TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
