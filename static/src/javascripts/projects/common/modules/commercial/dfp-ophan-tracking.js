@@ -42,6 +42,8 @@ define([
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function reportAdToOphan(event) {
                 require(['ophan/ng'], function (ophan) {
+                    console.log(document.readyState, renderStartTime);
+
                     var slotId = event.slot.getSlotId().getDomId(),
                         slotTiming = adTimings[slotId] || {};
 
@@ -58,7 +60,7 @@ define([
                             slot: event.slot.getSlotId().getDomId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - renderStartTime,
+                            timeToRenderEnded: safeDiff(renderStartTime, new Date().getTime()),
 
                             // overall time to make an ad request
                             timeToAdRequest: safeDiff(renderStartTime, slotTiming.fetch),
