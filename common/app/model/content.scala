@@ -66,6 +66,8 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
     }
   }
 
+  lazy val cardStyle: CardStyle = CardStyle.apply(delegate, TrailMetaData.empty)
+
   lazy val hasTonalHeaderByline: Boolean = {
     (cardStyle == Comment || cardStyle == Editorial) &&
       hasSingleContributor &&
