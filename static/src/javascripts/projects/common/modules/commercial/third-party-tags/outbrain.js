@@ -74,6 +74,9 @@ define([
                     $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
                 }
 
+                s.link2 = 'outbrain';
+                s.tl(true, 'o', 'outbrain');
+
                 require(['js!' + outbrainUrl]);
             });
         },
