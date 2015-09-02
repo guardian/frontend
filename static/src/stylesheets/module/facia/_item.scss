@@ -323,29 +323,31 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 @for $i from 2 through 5 {
-    $sections: $i * 2;
+    $hangTime: 4;
+    $fadeTime: 1;
+    $totalLoopTime: $i * ($hangTime + $fadeTime);
     @keyframes fc-item__slideshow--#{$i} {
         0% {
             opacity: 0;
         }
-        #{100% / $sections} {
+        #{(100% / $totalLoopTime) * $fadeTime} {
             opacity: 1;
         }
-        #{(100% / $sections) * 2} {
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime)} {
             opacity: 1;
         }
-        #{(100% / $sections) * 3} {
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
             opacity: 0;
         }
     }
     @include mq(tablet) {
         .fc-item__slideshow--#{$i} img {
-            animation-duration: #{$sections}s;
+            animation-duration: #{$totalLoopTime}s;
             animation-name: fc-item__slideshow--#{$i};
 
             @for $j from 2 through $i {
                 &:nth-child(#{$j}) {
-                    animation-delay: #{($sections / $i) * ($j - 1)}s;
+                    animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
                 }
             }
         }

@@ -31,7 +31,7 @@
 
 
 <div class="match-summary match-summary--responsive">
-    @if(homeTeamScorers.nonEmpty && awayTeamScorers.nonEmpty) {
+    @if(homeTeamScorers.nonEmpty || awayTeamScorers.nonEmpty) {
         <table class="match-summary__rugby-table">
             <tr class="mobile-only">
                 <th>@theMatch.homeTeam.name</th>
