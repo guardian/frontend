@@ -1104,7 +1104,7 @@ object Switches {
     "no-bounce-indicator",
     "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = true
   )
 
