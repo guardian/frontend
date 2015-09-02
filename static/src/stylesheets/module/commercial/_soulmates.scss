@@ -254,16 +254,16 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq(desktop) {
             min-height: 200px;
-            background-position: bottom 51px right 0px;
+            background-position: bottom 52px right 0px;
         }
 
         @include mq(wide) {
             min-height: 260px;
-            background-position: bottom 70px right 0px;
+            background-position: bottom 69px right 0px;
 
             .has-page-skin & {
                 min-height: 248px;
-                background-position: bottom 55px left 0px;
+                background-position: bottom 52px left 0px;
             }
         }
 
@@ -301,7 +301,7 @@ $c-soulmates-high: colour(neutral-1);
         padding-top: $gs-baseline;
 
         @include mq(tablet) {
-            background-position: bottom 51px right 0px;
+            background-position: bottom 52px right 0px;
             background-repeat: no-repeat;
             padding-bottom: 0;
         }
@@ -509,15 +509,18 @@ $c-soulmates-high: colour(neutral-1);
 
     .inline-soulmates-border-topleft {
         position: absolute;
-        top: -16px;
+        top: -12px;
         left: 10px;
+        line-height: 1;
+        height: 8px;
     }
 
     .inline-soulmates-border-topright {
         position: absolute;
         top: -112px;
-        right: -66px;
+        right: -65px;
         z-index: 0;
+        line-height: .9;
     }
 
     .commercial__search__box .inline-soulmates-border-topleft, .commercial__search__box .inline-soulmates-border-topright {
@@ -570,7 +573,20 @@ $c-soulmates-high: colour(neutral-1);
         margin: 0 auto $gs-baseline;
         position: relative;
         font-weight: bold;
-        padding-top: $gs-baseline;
+        display: none;
+
+        &.feed__title-mobile {
+            display: block;
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+
+        &.feed__title-desktop {
+            @include mq(leftCol) {
+                display: block;
+            }
+        }
 
         &:before, &:after {
             content: '';
@@ -591,8 +607,6 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         @include mq(tablet) {
-            margin: 0 auto $gs-baseline;
-            padding: 0;
 
             &:before {
                 left: 5%;
@@ -604,7 +618,6 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         @include mq(desktop) {
-
             &:before {
                 left: 15%;
             }
@@ -624,14 +637,6 @@ $c-soulmates-high: colour(neutral-1);
                 margin: 0 auto $gs-baseline;
             }  
         }
-
-        span {
-            display: block;
-
-            @include mq(mobileLandscape) {
-                display: inline;         
-            }
-        }
     }
 
     /* Line items */
@@ -640,14 +645,13 @@ $c-soulmates-high: colour(neutral-1);
         background-color: #ffffff;
         height: 100%;
         position: relative;
-        padding: 0 18px $gs-baseline;
+        padding: $gs-baseline 18px;
         box-sizing: content-box;
 
         @include mq(tablet) {
             float: right;
             overflow: visible;
             width: gs-span(6) - $gs-baseline*4;
-            padding-top: $gs-baseline;
         }
 
         @include mq(desktop) {
@@ -674,6 +678,18 @@ $c-soulmates-high: colour(neutral-1);
     .lineitems {
         margin: 0;
         overflow: hidden;
+
+        @include mq(tablet) {
+            margin-bottom: 1px;
+        }
+
+        @include mq(wide) {
+            margin-bottom: 0;
+
+            .has-page-skin & {
+                margin-bottom: 1px;
+            }
+        }
     }
 
     .lineitem {
@@ -739,14 +755,14 @@ $c-soulmates-high: colour(neutral-1);
         overflow: hidden;
 
         @include mq($from: tablet) {
-            max-height: 99px;
+            max-height: 100px;
         }
 
         @include mq($from: wide) {
             max-height: 116px;
 
             .has-page-skin & {
-                max-height: 99px;
+                max-height: 100px;
             }
         }
 
@@ -757,14 +773,14 @@ $c-soulmates-high: colour(neutral-1);
     }
 
     .lineitem__text {
-        padding: 3px 8px;
+        padding: 3px 8px 1px;
         position: relative;
 
         @include mq($from: wide) {
-            padding: $gs-gutter/4 $gs-gutter/2;
+            padding: $gs-gutter/4 $gs-gutter/2 $gs-gutter/5;
 
             .has-page-skin & {
-                padding: 3px 8px;
+                padding: 2px 8px 1px;
             }
         }
 
@@ -788,7 +804,7 @@ $c-soulmates-high: colour(neutral-1);
 
     .lineitem__meta {
         @include fs-data(1);
-        line-height: 1;
+        line-height: 1.2;
         @include ellipsis();
         white-space: pre;
 
@@ -922,9 +938,11 @@ $c-soulmates-high: colour(neutral-1);
         z-index: 1;
         background-size: 16px 16px;
         height: 30px;
+        padding-right: 32%;
 
         @include mq(tablet) {
             @include fs-data(3, $size-only: true);
+            padding-right: 0;
         }
 
         @include mq(wide) {
@@ -954,23 +972,23 @@ $c-soulmates-high: colour(neutral-1);
         margin: 8px 0 0;
 
         @include mq(tablet) {
-            margin: 10px 0 1px;
+            margin: 11px 0 0;
         }
 
         @include mq(wide) {
             font-size: 15px;
-            padding: 8px 0 7px $gs-baseline;
-            margin-top: 13px;
+            padding: 8px 0 8px $gs-baseline;
+            margin: 11px 0 1px;
 
             .has-page-skin & {
                 font-size: 12px;
                 padding: 5px 0 5px $gs-baseline;
-                margin: 13px 0 1px;
             }
         }
 
         .search__submit__text {
             line-height: 29px;
+            float: left;
         }
 
     }

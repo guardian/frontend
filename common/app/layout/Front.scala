@@ -10,6 +10,7 @@ import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import services.CollectionConfigWithId
 import slices.{MostPopular, _}
@@ -286,6 +287,34 @@ case class FaciaContainer(
   }
 }
 
+case class DedupedItem(id: String)
+
+case class DedupedContainerResult(
+  containerId: String,
+  containerDisplayName: String,
+  deduped: List[DedupedItem],
+  validForDedupingButNotDeduped: List[DedupedItem])
+
+case class DedupedFrontResult(
+  path: String,
+  results: List[DedupedContainerResult]) {
+
+  def addResult(result: DedupedContainerResult): DedupedFrontResult =
+    this.copy(results = results :+ result)
+}
+
+object DedupedItem {
+  implicit val dedupedItemFormat = Json.format[DedupedItem]
+}
+
+object DedupedContainerResult {
+  implicit val dedupedContainerResultFormat = Json.format[DedupedContainerResult]
+}
+
+object DedupedFrontResult {
+  implicit val dedupedFrontResultFormat = Json.format[DedupedFrontResult]
+}
+
 object Front extends implicits.Collections {
   type TrailUrl = String
 
@@ -303,7 +332,7 @@ object Front extends implicits.Collections {
     seen: Set[TrailUrl],
     container: Container,
     faciaContentList: Seq[FaciaContent]
-    ): (Set[TrailUrl], Seq[FaciaContent]) = {
+    ): (Set[TrailUrl], Seq[FaciaContent], (Seq[DedupedItem], Seq[DedupedItem])) = {
     container match {
       case Dynamic(dynamicContainer) =>
         /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
@@ -315,26 +344,40 @@ object Front extends implicits.Collections {
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
-            .take(itemsVisible(containerDefinition)), faciaContentList)
+            .take(itemsVisible(containerDefinition)), faciaContentList, (Nil, Nil))
         } getOrElse {
-          (seen, faciaContentList)
+          (seen, faciaContentList, (Nil, Nil))
         }
 
       /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
       case Fixed(containerDefinition) if containerDefinition.isSingleton =>
-        (seen, faciaContentList)
+        (seen, faciaContentList, (Nil, Nil))
 
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
+        val usedInThisIteration: Seq[FaciaContent] =
+          faciaContentList
+            .filter(c => seen.contains(c.url))
+
+       val usedButNotDeduped = usedInThisIteration
+            .filter(c => !participatesInDeduplication(c))
+            .map(_.url)
+            .map(DedupedItem(_))
+
+        val usedAndDeduped = usedInThisIteration
+            .filter(participatesInDeduplication)
+            .map(_.url)
+            .map(DedupedItem(_))
+
         val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.url) || !participatesInDeduplication(faciaContent))
           .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, (usedAndDeduped, usedButNotDeduped))
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
-        (seen, faciaContentList)
+        (seen, faciaContentList, (Nil, Nil))
     }
   }
 
@@ -349,7 +392,9 @@ object Front extends implicits.Collections {
       configs.zipWithIndex.toList.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
-        val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
+
+        //We don't need the used in the case of fromConfigsAndContainers
+        val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config, newItems) map {
           case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
@@ -381,22 +426,26 @@ object Front extends implicits.Collections {
     })
   }
 
-  def fromPressedPage(pressedPage: PressedPage,
-                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): Front = {
+  def fromPressedPageWithDeduped(pressedPage: PressedPage,
+                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): ((Set[Front.TrailUrl], ContainerLayoutContext, DedupedFrontResult), List[FaciaContainer]) = {
     import scalaz.std.list._
     import scalaz.syntax.traverse._
 
-    Front(
-      pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
-        (Set.empty[TrailUrl], initialContext)
-      ) { case ((seenTrails, context), (pressedCollection, index)) =>
+    val emptyDedupedResultWithPath = DedupedFrontResult(pressedPage.id, Nil)
+
+    pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
+        (Set.empty[TrailUrl], initialContext, emptyDedupedResultWithPath)
+      ) { case ((seenTrails, context, dedupedFrontResult), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
-        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
+        val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
+
+        val dedupedContainerResult: DedupedContainerResult = DedupedContainerResult(pressedCollection.id, pressedCollection.displayName, usedAndDeduped.toList, usedButNotDeduped.toList)
+
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
         ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
+          case (containerLayout, newContext) => ((newSeen, newContext, dedupedFrontResult.addResult(dedupedContainerResult)), FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
@@ -405,7 +454,7 @@ object Front extends implicits.Collections {
             None
           ))
         } getOrElse {
-          ((newSeen, context), FaciaContainer.fromConfig(
+          ((newSeen, context, dedupedFrontResult.addResult(dedupedContainerResult)), FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
@@ -414,10 +463,12 @@ object Front extends implicits.Collections {
             None
           ))
         }
-      }._2
-    )
-
+    }
   }
+
+  def fromPressedPage(pressedPage: PressedPage,
+    initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): Front =
+    Front(fromPressedPageWithDeduped(pressedPage, initialContext)._2)
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(

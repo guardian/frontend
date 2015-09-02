@@ -1,3 +1,4 @@
+@import views.MainMediaWidths
 @(article: model.Article)(implicit request: RequestHeader)
 
 @import model.EndSlateComponents
@@ -34,8 +35,15 @@
                 </figure>
             }
         } else {
-            @fragments.img(article.mainPicture, article.hasShowcaseMainElement, article.isFeature, false,
-                Some(article.url), article.isMainMediaLightboxable)
+            @article.mainPicture.map { picture =>
+                @fragments.img(
+                    picture,
+                    if(article.isMainMediaLightboxable) Some(1) else None,
+                    article.hasShowcaseMainElement,
+                    article.isFeature,
+                    MainMediaWidths(article)
+                )
+            }
         }
     }
 }

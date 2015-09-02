@@ -123,6 +123,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val SoftPurgeWithLongCachingSwitch = Switch(
+    "Performance",
+    "soft-purge-with-long-caching-switch",
+    "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   val CircuitBreakerSwitch = Switch(
     "Performance",
     "circuit-breaker",
@@ -278,6 +287,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val DisableStickyNavOnMobileSwitch = Switch(
+    "Performance",
+    "disable-sticky-nav-on-mobile",
+    "If this switch is on, the sticky nav will be disabled on mobile.",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val SaveForLaterSwitch = Switch(
     "Performance",
     "save-for-later",
@@ -285,15 +303,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val RafCSSLoaderSwitch = Switch(
-    "Performance",
-    "raf-css-loader",
-    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 28),
-    exposeClientSide = false
   )
 
   val BackgroundJSSwitch = Switch(
@@ -306,15 +315,6 @@ object Switches {
   )
 
   // Commercial
-  val NewOutbrainSwitch = Switch(
-    "Commercial",
-    "new-outbrain",
-    "Allowing to show new outbrain logic for facelift",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 30),
-    exposeClientSide = true
-  )
-
   val NoMobileTopAdSwitch = Switch(
     "Commercial",
     "no-mobile-top-ad",
@@ -464,7 +464,7 @@ object Switches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 30),
+    sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = false
   )
 
@@ -522,15 +522,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ThirdPartiesLaterSwitch = Switch(
-    "Commercial",
-    "third-parties-later",
-    "If this switch is on, less important third parties will be loaded after all ads are rendered",
-    safeState = Off,
-    sellByDate = new LocalDate(2015,8, 30),
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
@@ -567,6 +558,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val KruxVideoTracking = Switch(
+    "Commercial",
+    "krux-video-tracking",
+    "If this switch is ON, there will be a Krux pixel fired to track particular videos",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 
   // Monitoring
 
@@ -576,15 +576,6 @@ object Switches {
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val OmnitureConfidenceNoJsSwitch = Switch(
-    "Monitoring",
-    "enable-omniture-confidence-no-js",
-    "Enables Omniture confidence tracking for no-JS devices",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 2),
     exposeClientSide = true
   )
 
@@ -825,6 +816,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RugbyWorldCupswitch = Switch(
+    "Feature",
+    "rugby-world-cup-cleanup",
+    "Does nothing, other than remind us to delete some World Cup specific code",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
+  )
+
   val WeatherSwitch = Switch(
     "Feature",
     "weather",
@@ -949,7 +949,7 @@ object Switches {
     "ab-adblock-sticky-banner",
     "Switch for the Ad-block sticky banner A/B test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 28),
+    sellByDate = new LocalDate(2015, 9, 11),
     exposeClientSide = true
   )
 
@@ -995,6 +995,15 @@ object Switches {
     "If switched on, a stocks widget will be displayed on the business front",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val TwitterImageFallback = Switch(
+    "Feature",
+    "twitter-image-fallback",
+    "If switched on, then the first image of a tweet will be included in the embed - it will only display at mobile breakpoints",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
@@ -1105,7 +1114,7 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
       "check the DB size.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

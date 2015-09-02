@@ -36,19 +36,12 @@ define([
                 break;
         }
 
-        if (config.switches.thirdPartiesLater) {
-            if (config.switches.newOutbrain) {
-                outbrain.init();
-            } else {
-                outbrain.load();
-            }
-            // Load third parties after first ad was rendered
-            mediator.once('modules:commercial:dfp:rendered', function () {
-                loadOther();
-            });
-        } else {
+        // Outbrain needs to be loaded before first ad as it is checking for presence of high relevance component on page
+        outbrain.init();
+        // Load third parties after first ad was rendered
+        mediator.once('modules:commercial:dfp:rendered', function () {
             loadOther();
-        }
+        });
 
         return Promise.resolve(null);
     }

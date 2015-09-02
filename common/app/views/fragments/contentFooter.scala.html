@@ -15,7 +15,7 @@
         }
 
         @fragments.storyPackagePlaceholder(content, related)
-        @if(content.showFooterContainers && !content.shouldHideAdverts && Switches.NewOutbrainSwitch.isSwitchedOn) {
+        @if(content.showFooterContainers && !content.shouldHideAdverts && Switches.OutbrainSwitch.isSwitchedOn) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
             @fragments.outbrainPlaceholder()
             </div>
@@ -27,12 +27,6 @@
         }
 
         @fragments.mostPopularPlaceholder(content.section)
-
-        @if(content.showFooterContainers && !content.shouldHideAdverts && !Switches.NewOutbrainSwitch.isSwitchedOn) {
-            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
-            @fragments.outbrainPlaceholder()
-            </div>
-        }
 
         @if(!content.shouldHideAdverts) {
             <div class="fc-container fc-container--commercial">

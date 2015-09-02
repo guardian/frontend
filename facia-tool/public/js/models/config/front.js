@@ -263,7 +263,11 @@ function updateCollections (collections) {
 
     collections.forEach(collection => {
         let id = collection.id;
-        collection.updateConfig(cloneWithKey(collectionDefinition[id], id));
+        if (collectionDefinition[id]) {
+            // If the collection has no ID, it's because it was not saved yet
+            // do not update it yet
+            collection.updateConfig(cloneWithKey(collectionDefinition[id], id));
+        }
     });
 }
 

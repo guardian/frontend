@@ -1,7 +1,9 @@
 package rugby.feed
 
 import org.joda.time.format.DateTimeFormat
-import rugby.model.{Team, Match}
+import rugby.model._
+import rugby.model.{Team, Match, Status}
+import Status._
 
 import scala.xml.{NodeSeq, XML}
 
@@ -35,7 +37,10 @@ object Parser {
           date = Date((game \ "@game_date").text),
           id = (game \ "@id").text,
           homeTeam = homeTeam,
-          awayTeam = awayTeam
+          awayTeam = awayTeam,
+          venue = None,
+          competitionName = (game \ "@comp_name").text,
+          status = parseStatus(game)
         )
       }
     }
@@ -60,8 +65,45 @@ object Parser {
           date = Date((fixture \ "@game_date").text),
           id = (fixture \ "@id").text,
           homeTeam = homeTeam,
-          awayTeam = awayTeam
+          awayTeam = awayTeam,
+          venue = Some((fixture \ "@venue").text),
+          competitionName = (fixture \ "@comp_name").text,
+          status = parseStatus(fixture)
         )
+      }
+    }
+  }
+
+  def parseLiveEventsStatsToGetScoreEvents(body: String): Seq[ScoreEvent] = {
+    val data = XML.loadString(body)
+
+    val eventsData = data \ "Events" \ "Event"
+
+    val scoreEventsData = eventsData.filter { eventData =>
+      val eventType = (eventData \ "@type").text
+      ScoreType.values.exists(_.toString == eventType)
+    }
+
+    val players = getPlayers(data \ "TeamDetail" \ "Team")
+
+    scoreEventsData.flatMap { scoreEventData =>
+      val player = players.find(_.id == (scoreEventData \ "@player_id").text)
+      player.map { p =>
+        ScoreEvent(
+          player = p,
+          minute = (scoreEventData \ "@minute").text,
+          `type` = ScoreType.withName((scoreEventData \ "@type").text)
+        )
+      }
+    }
+  }
+
+  private def getPlayers(teamsNodes: NodeSeq): Seq[Player] = {
+    teamsNodes.flatMap { teamData =>
+      val team = Team((teamData \ "@team_id").text, (teamData \ "@team_name").text)
+      val playersData = teamData \ "Player"
+      playersData.map { playerData =>
+        Player((playerData \ "@id").text, (playerData \ "@player_name").text, team)
       }
     }
   }
@@ -98,6 +140,26 @@ object Parser {
     teamsData.map { team =>
       Team((team \ "@id").text,
         (team \ "@name").text)
+    }
+  }
+
+  private def parseStatus(game: NodeSeq): Status = {
+    (game \ "@status").text match {
+      case "Result" => Result
+      case "Postponed" => Postponed
+      case "Abandoned" => Abandoned
+      case "Fixture" => Fixture
+      case "Team in" => TeamIn
+      case "First half" => FirstHalf
+      case "Halftime" => HalfTime
+      case "Second half" => SecondHalf
+      case "Fulltime" => FullTime
+      case "Extra time first half" => ExtraTimeFirstHalf
+      case "Extra time half time" => ExtraTimeHalfTime
+      case "Extra time second half" => ExtraTimeSecondHalf
+      case "Sudden death" => SuddenDeath
+      case "Shoot out" => ShootOut
+      case _ => Fixture
     }
   }
 }

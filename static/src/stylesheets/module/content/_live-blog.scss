@@ -412,6 +412,7 @@ $block-padding-right: $gs-gutter;
 }
 .tweet,
 .from-content-api blockquote.tweet {
+    display: inline-block;
     border-left-width: 0;
     padding: $gs-baseline/2 0 0;
     margin-bottom: $gs-baseline;
@@ -425,13 +426,17 @@ $block-padding-right: $gs-gutter;
     }
 
     @include mq(tablet) {
-        margin-left: $block-padding-left;
+
+        // forcing this max-width because that is the width of
+        // the 'upgrade' from Twitter and we don't want it jumping
+        // on upgrade
+        max-width: 500px;
+
         margin-right: $block-padding-right;
     }
 }
 // Temporary fix to issue #1674
 .from-content-api blockquote.tweet {
-    display: block;
     width: auto;
 }
 // End temporary fix
@@ -446,7 +451,14 @@ $block-padding-right: $gs-gutter;
     display: inline-block;
     font-weight: bold;
     padding-left: 40px;
+    padding-bottom: 1px;
     margin-bottom: 0;
+    background-repeat: no-repeat;
+}
+
+.tweet-main-image {
+    width: 100%;
+    margin-bottom: $gs-gutter;
 }
 
 .tweet-date {
@@ -796,7 +808,7 @@ $timeline-width: 15px;
     }
 }
 
-.content--liveblog.section-football { // Football overrides
+.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
     .tonal__header {
         background-color: #ffffff;
 

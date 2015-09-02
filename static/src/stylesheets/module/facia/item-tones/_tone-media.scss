@@ -8,7 +8,8 @@
         color: $c-headline;
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__media-wrapper {
         background-color: darken(colour(media-background), 7.5%);
     }
 

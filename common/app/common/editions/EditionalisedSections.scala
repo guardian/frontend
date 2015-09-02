@@ -19,7 +19,8 @@ object EditionalisedSections {
     "sustainable-business",
     "technology",
     "media",
-    "environment"
+    "environment",
+    "film"
   )
 
   def isEditionalised(id: String) = sections.contains(id)
