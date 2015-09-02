@@ -9,11 +9,15 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--single-column">
                         <h1 class="content__headline">Unable to connect to the Internet</h1>
-                        <p>In the meantime, how about a quick crossword
-                            (<a href="/crosswords/@crosswordPage.crossword.id">number @crosswordPage.crossword.number</a>)?</p>
+                        <p>In the meantime, how about a quick crossword?</p>
+                        <button class="button js-open-crossword-btn">Open crossword</button>
                     </div>
-                    <div class="js-crossword"
-                         data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
+                    <div class="js-crossword-container is-hidden u-baseline-top">
+                        <h2><a href="/crosswords/@crosswordPage.crossword.id">@crosswordPage.crossword.name</a></h2>
+                        <div class="js-crossword"
+                            data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>

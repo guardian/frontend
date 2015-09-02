@@ -1,6 +1,9 @@
 define([
+    'fastdom',
+    'bean',
     'qwery',
     'raven',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -9,8 +12,11 @@ define([
     'bootstraps/media',
     'bootstraps/sport'
 ], function (
+    fastdom,
+    bean,
     qwery,
     raven,
+    $,
     config,
     detect,
     mediator,
@@ -110,8 +116,20 @@ define([
                 });
             }
 
-            if (config.switches.offlinePage && window.location.href.match(/^https/)) {
-                navigator.serviceWorker.register('/service-worker.js');
+            if (config.switches.offlinePage) {
+                if (window.location.href.match(/^https/)) {
+                    navigator.serviceWorker.register('/service-worker.js');
+                }
+
+                if (config.page.pageId === 'offline-page') {
+                    var $button = $('.js-open-crossword-btn');
+                    bean.on($button[0], 'click', function () {
+                        fastdom.write(function () {
+                            $('.js-crossword-container').removeClass('is-hidden');
+                            $button.remove();
+                        });
+                    });
+                }
             }
 
             if (config.page.pageId === 'help/accessibility-help') {
