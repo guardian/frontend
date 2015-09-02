@@ -1,9 +1,8 @@
 define([
-    'raven',
-    'common/utils/detect'
-], function (raven, detect) {
+    'raven'
+], function (raven) {
 
-    function attachListeners(googletag) {
+    function trackPerformance(googletag, renderStartTime) {
         var adTimings = {};
         spyOnAdDebugTimings();
         reportAdsAndTimingsOnRender();
@@ -43,8 +42,10 @@ define([
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function reportAdToOphan(event) {
                 require(['ophan/ng'], function (ophan) {
-                    var renderStart = detect.getTimeOfDomComplete(),
-                        slotId = event.slot.getSlotId().getDomId(),
+                    console.log(document.readyState, renderStartTime);
+                    console.log('domLoaded', window.performance.timing.domInteractive);
+
+                    var slotId = event.slot.getSlotId().getDomId(),
                         slotTiming = adTimings[slotId] || {};
 
                     function lineItemIdOrEmpty(event) {
@@ -60,10 +61,10 @@ define([
                             slot: event.slot.getSlotId().getDomId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - renderStart,
+                            timeToRenderEnded: new Date().getTime() - renderStartTime,
 
                             // overall time to make an ad request
-                            timeToAdRequest: safeDiff(renderStart, slotTiming.fetch),
+                            timeToAdRequest: safeDiff(renderStartTime, slotTiming.fetch),
 
                             // delay between requesting and receiving an ad
                             adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
@@ -86,6 +87,6 @@ define([
     }
 
     return {
-        attachListeners : attachListeners
+        trackPerformance : trackPerformance
     };
 });
