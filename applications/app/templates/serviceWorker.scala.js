@@ -9,8 +9,7 @@
 // Offline page
 //
 
-var version = 1;
-var staticCacheName = 'static-' + version;
+var staticCacheName = 'static';
 
 var getISODate = function () { return new Date().toISOString().split('T')[0]; };
 
