@@ -248,6 +248,11 @@ define([
                                     // Video analytics event.
                                     player.trigger(events.constructEventName('preroll:request', player));
                                     player.ima.requestAds();
+                                }, function (e) {
+                                    Raven.captureException(e, { tags: { feature: 'media' } });
+                                    // ad blocker, so just carry on without
+                                    events.bindContentEvents(player);
+                                    throw e;
                                 });
                             }
                         )();
