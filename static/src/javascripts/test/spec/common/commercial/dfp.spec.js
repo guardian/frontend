@@ -37,13 +37,14 @@ describe('DFP', function () {
             };
         },
         injector = new Injector(),
-        dfp, config;
+        dfp, config, ophanTracking;
 
     beforeEach(function (done) {
 
-        injector.test(['common/modules/commercial/dfp', 'common/utils/config'], function () {
+        injector.test(['common/modules/commercial/dfp', 'common/utils/config', 'common/modules/commercial/dfp-ophan-tracking'], function () {
             dfp = arguments[0];
             config = arguments[1];
+            ophanTracking = arguments[2];
 
             config.switches = {
                 commercialComponents: true,
@@ -100,13 +101,12 @@ describe('DFP', function () {
                 defineSizeMapping: sinon.spy(function () { return window.googletag; }),
                 setTargeting: sinon.spy(function () { return window.googletag; }),
                 enableServices: sinon.spy(),
-                display: sinon.spy(),
-                /*eslint-disable camelcase*/
-                debug_log : { // Undocumented GPT debug API
-                    log : function () {}
-                }
-                /*eslint-enable camelcase*/
+                display: sinon.spy()
             };
+            ophanTracking.trackPerformance = ()=> {
+                // noop
+            };
+
             done();
         });
     });
