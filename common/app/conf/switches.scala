@@ -908,15 +908,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABHighCommercialComponent = Switch(
-    "A/B Tests",
-    "ab-high-commercial-component",
-    "Switch for the High Commercial Component A/B test.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ABMembershipMessageUk = Switch(
     "A/B Tests",
     "ab-membership-message-uk",
