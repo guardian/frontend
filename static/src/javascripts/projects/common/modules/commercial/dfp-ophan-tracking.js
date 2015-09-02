@@ -42,7 +42,6 @@ define([
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function reportAdToOphan(event) {
                 require(['ophan/ng'], function (ophan) {
-                    console.log(document.readyState, renderStartTime);
 
                     var slotId = event.slot.getSlotId().getDomId(),
                         slotTiming = adTimings[slotId] || {};
