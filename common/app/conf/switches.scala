@@ -1114,7 +1114,7 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
       "check the DB size.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
