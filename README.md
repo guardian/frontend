@@ -27,6 +27,12 @@ make two calls to the content API or any
 * The average response time of any endpoint is less than 500ms.
 * Requests that take longer than two seconds will be terminated.
 
+## Developer principles
+* no developer should merge unless they are sure they can stay at their laptop until it's in prod
+* when picking up an issue, always reply-all so the sender knows it's being worked on
+* average time from merge to deploy should be 15 minutes
+* maximum time from merge to deploy must be 30 minutes
+
 New developers quick-start
 ===========================
 
