@@ -36,7 +36,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
       val maybeCrossword = for {
-        content <- response.results.lift(0)
+        content <- response.results.headOption
         crossword <- content.crossword }
         yield f(crossword, content)
       maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
