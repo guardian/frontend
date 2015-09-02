@@ -29,5 +29,6 @@ GET        /most-relevant-container/*path.json                         controlle
 GET        /*path/show-more/*id.json                                   controllers.FaciaController.renderShowMore(path, id)
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)
+GET        /*path/deduped.json                                         controllers.DedupedController.getDedupedForPath(path)
 GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)
 GET        /*path                                                      controllers.FaciaController.renderFront(path)

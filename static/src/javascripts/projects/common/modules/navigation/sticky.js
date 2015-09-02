@@ -22,6 +22,13 @@ define([
     smartAppBanner
 ) {
     function StickyHeader() {
+        this.breakpoint = detect.getBreakpoint();
+
+        // temporarily disable on mobile
+        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
+            return;
+        }
+
         this.$els   = {};
         this.config = {
             showHeaderDepth: 0.5,
@@ -34,7 +41,6 @@ define([
             firstLoadDepth: 500,
             isNavigationLocked: false
         };
-        this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
@@ -42,12 +48,17 @@ define([
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
         this.isAdblockABTest = ab.getParticipations().AdblockStickyBanner && ab.testCanBeRun('AdblockStickyBanner')
-            && ab.getParticipations().AdblockStickyBanner.variant === 'variant';
+            && (ab.getParticipations().AdblockStickyBanner.variant === 'variant' || ab.getParticipations().AdblockStickyBanner.variant === 'challenger');
 
         _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
 
     StickyHeader.prototype.init = function () {
+        // temporarily disable on mobile
+        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
+            return;
+        }
+
         this.$els.header           = $('.js-header');
         this.$els.bannerDesktop    = $('.js-top-banner-above-nav');
         this.$els.bannerMobile     = $('.js-top-banner-mobile');

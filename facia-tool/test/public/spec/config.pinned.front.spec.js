@@ -170,4 +170,114 @@ describe('Config Pinned Front', function () {
             expect($('.cnf-front:nth(0) .input-url-path').length).toBe(1);
         }
     });
+
+    it('keeps editing existing fronts while refreshing', function (done) {
+        var baseModel = this.baseModel, scope = this.scope;
+
+        populateWithFronts()
+        .then(openExistingFront)
+        .then(createNewCollection)
+        .then(updateConfiguration)
+        .then(saveCollection)
+        .then(expectRequestValid)
+        .then(done)
+        .catch(done.fail);
+
+        function populateWithFronts () {
+            baseModel.update({
+                config: {
+                    fronts: {
+                        one: {
+                            collections: ['a', 'b', 'c'],
+                            priority: 'training'
+                        },
+                        two: { priority: 'training' },
+                        three: { priority: 'training' }
+                    },
+                    collections: {
+                        a: { displayName: 'First' },
+                        b: { displayName: 'Second' },
+                        c: { displayName: 'Third' }
+                    }
+                },
+                defaults: {}
+            });
+            return wait.ms(10);
+        }
+        function openExistingFront () {
+            expect($('.cnf-front').length).toBe(3);
+            $('.cnf-front:nth(0) .title--text').click();
+        }
+        function createNewCollection () {
+            $('.cnf-front:nth(0) .linky.tool--container').click();
+            dom.type('.title--input', 'Fourth');
+            $('.type-option-chosen').click();
+            $('.type-option-value:nth(1)').click();
+        }
+        function updateConfiguration () {
+            baseModel.update({
+                config: {
+                    fronts: {
+                        one: {
+                            collections: ['a', 'b', 'c'],
+                            priority: 'training'
+                        },
+                        two: { priority: 'training' },
+                        three: { priority: 'training' }
+                    },
+                    collections: {
+                        a: { displayName: 'First' },
+                        b: { displayName: 'Second' },
+                        c: { displayName: 'Third' }
+                    }
+                },
+                defaults: {}
+            });
+        }
+        function saveCollection () {
+            var request;
+            return new Promise(resolve => {
+                scope({
+                    url: '/config/collections',
+                    method: 'post',
+                    response: function (req) {
+                        request = req;
+                        this.responseText = {};
+                    }
+                });
+                baseModel.once('config:needs:update', callback => {
+                    callback({
+                        config: {
+                            fronts: {
+                                one: {
+                                    collections: ['a', 'b', 'c', 'd'],
+                                    priority: 'training'
+                                },
+                                two: { priority: 'training' },
+                                three: { priority: 'training' },
+                                four: { priority: 'training' }
+                            },
+                            collections: {
+                                a: { displayName: 'First' },
+                                b: { displayName: 'Second' },
+                                c: { displayName: 'Third' },
+                                d: { displayName: 'Fourth' }
+                            }
+                        },
+                        defaults: {}
+                    });
+                    resolve(request);
+                });
+                $('.tool-save-container').click();
+            });
+        }
+        function expectRequestValid (request) {
+            var data = JSON.parse(request.data);
+            expect(data.frontIds).toEqual(['one']);
+            expect(data.collection).toEqual({
+                displayName: 'Fourth',
+                type: 'fixed/test'
+            });
+        }
+    });
 });
