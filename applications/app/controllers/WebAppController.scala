@@ -1,11 +1,13 @@
 package controllers
 
+import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
+import conf.LiveContentApi
 import model.Cached
 import com.gu.contentapi.client.{model => contentapi}
-import common.ExecutionContexts
+import common.{Logging, Edition, ExecutionContexts}
 import crosswords.{CrosswordData, CrosswordPage}
-import play.api.mvc.{Action, Controller}
-import services.ContentApiGetters.withCrossword
+import play.api.mvc.{RequestHeader, Result, Action, Controller}
+import services.ContentApiGetters._
 
 import scala.concurrent.Future
 
@@ -15,7 +17,7 @@ class OfflinePage(crossword: CrosswordData, content: contentapi.Content) extends
   override lazy val webTitle: String = "Unable to connect to the Internet"
 }
 
-object WebAppController extends Controller with ExecutionContexts {
+object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
     Cached(3600) {
@@ -29,6 +31,19 @@ object WebAppController extends Controller with ExecutionContexts {
 
   def manifest() = Action {
     Cached(3600) { Ok(templates.js.webAppManifest()) }
+  }
+
+  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
+    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
+      val maybeCrossword = for {
+        content <- response.results.lift(0)
+        crossword <- content.crossword }
+        yield f(crossword, content)
+      maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
+    } recover { case e =>
+      log.error("Content API query returned an error.", e)
+      InternalServerError("Content API query returned an error.")
+    }
   }
 
   def offlinePage() = Action.async { implicit request =>

@@ -11,24 +11,53 @@
 
 var version = 1;
 var staticCacheName = 'static-' + version;
+
+var getISODate = function () { return new Date().toISOString().split('T')[0]; };
+
+var updateCache = function () {
+    return caches.open([getISODate(), staticCacheName].join('-')).then(function (cache) {
+        return cache.addAll([
+            '/offline-page',
+            '@Static("stylesheets/head.content.css")',
+            '@Static("stylesheets/content.css")',
+            '@Static("stylesheets/print.css")',
+            // Crossword pages use jspm
+            '@StaticJspm("javascripts/core.js")',
+            '@StaticJspm("javascripts/bootstraps/app.js")',
+            '@StaticJspm("javascripts/es6/bootstraps/crosswords.js")'
+        ]);
+    });
+};
+
+var deleteOldCaches = function () {
+    return caches.keys().then(function (keys) {
+        return Promise.all(
+            keys.map(function (key) {
+                if (!keyMatchesTodaysCache(key)) {
+                    return caches.delete(key);
+                }
+            })
+        );
+    })
+};
+
+var keyMatchesTodaysCache = function (key) {
+    return new RegExp('^' + getISODate() + '-').test(key);
+};
+
 self.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(staticCacheName).then(function (cache) {
-            return cache.addAll([
-                '/offline-page',
-                '@Static("stylesheets/head.content.css")',
-                '@Static("stylesheets/content.css")',
-                '@Static("stylesheets/print.css")',
-                // Crossword pages use jspm
-                '@StaticJspm("javascripts/core.js")',
-                '@StaticJspm("javascripts/bootstraps/app.js")',
-                '@StaticJspm("javascripts/es6/bootstraps/crosswords.js")'
-            ]);
-        })
-    );
+    event.waitUntil(updateCache());
 });
 
 this.addEventListener('fetch', function (event) {
+    caches.keys().then(function (keys) {
+        var isUpdated = keys.some(keyMatchesTodaysCache);
+
+        if (!isUpdated) {
+            updateCache().then(deleteOldCaches);
+        }
+    });
+
     event.respondWith(
         fetch(event.request)
             .catch(function () {
