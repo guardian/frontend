@@ -55,8 +55,6 @@ define([
 
             // Rugby score returns the match nav too, to optimise calls.
             scoreBoard.fetched = function (resp) {
-                $('.content--liveblog').addClass('content--liveblog--rugby');
-
                 $.create(resp.nav).first().each(function (nav) {
                     // There ought to be exactly two tabs; match report and min-by-min
                     if ($('.tabs__tab', nav).length === 2) {
