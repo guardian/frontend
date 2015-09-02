@@ -28,11 +28,7 @@ object ContentFooterContainersLayout {
 
       def includeOutbrainPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
         if (content.showFooterContainers && !content.shouldHideAdverts && OutbrainSwitch.isSwitchedOn) {
-          if (htmlBlocks.size > 2) {
-            (htmlBlocks.take(3) :+ outbrainPlaceholder) ++ htmlBlocks.drop(3)
-          } else {
-            (htmlBlocks.take(2) :+ outbrainPlaceholder) ++ htmlBlocks.drop(2)
-          }
+          (htmlBlocks.take(2) :+ outbrainPlaceholder) ++ htmlBlocks.drop(2)
         } else htmlBlocks
       }
 

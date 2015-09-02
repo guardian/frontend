@@ -10,9 +10,11 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   OutbrainSwitch.switchOn()
 
-  private def contentItem(shouldHideAdverts: Boolean = false, commentable: Boolean = true): Content = {
+  private def contentItem(showInRelatedContent: Boolean = true,
+                          shouldHideAdverts: Boolean = false,
+                          commentable: Boolean = true): Content = {
     new Article(FixtureTemplates.emptyApiContent.copy(fields = Some(Map(
-      "showInRelatedContent" -> "true",
+      "showInRelatedContent" -> showInRelatedContent.toString,
       "shouldHideAdverts" -> shouldHideAdverts.toString,
       "commentable" -> commentable.toString
     ))))
@@ -41,7 +43,7 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
   it should "show all footer containers in right order by default" in {
     val html = buildHtml(contentItem(), relatedContent())
     html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml onwardHtml outbrainHtml commentsHtml mostPopularHtml " +
+      "highRelevanceCommercialHtml storyPackageHtml outbrainHtml onwardHtml commentsHtml mostPopularHtml " +
         "standardCommercialHtml "
   }
 
@@ -57,8 +59,13 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   it should "omit commits when article won't allow them" in {
     val html = buildHtml(contentItem(commentable = false), relatedContent())
-    html.toString shouldBe "highRelevanceCommercialHtml storyPackageHtml onwardHtml outbrainHtml mostPopularHtml " +
-      "standardCommercialHtml "
+    html.toString shouldBe
+      "highRelevanceCommercialHtml storyPackageHtml outbrainHtml onwardHtml mostPopularHtml standardCommercialHtml "
+  }
 
+  it should "omit story package placeholder when there's no story package to show" in {
+    val html = buildHtml(contentItem(showInRelatedContent = false), relatedContent())
+    html.toString shouldBe
+      "highRelevanceCommercialHtml onwardHtml outbrainHtml commentsHtml mostPopularHtml standardCommercialHtml "
   }
 }
