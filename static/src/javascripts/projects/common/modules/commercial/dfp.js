@@ -20,7 +20,8 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/adfree-survey'
 ], function (
     bean,
     bonzo,
@@ -42,7 +43,8 @@ define([
     geoMostPopular,
     ab,
     beacon,
-    id
+    id,
+    AdfreeSurvey
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -92,8 +94,20 @@ define([
                 }
             /*if (ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
              && ab.getParticipations().DisableAdsSurvey.variant === 'variant') {*/
-                console.log($adSlot);
-                $('<div></div>').addClass('ad-slot--remove').appendTo($adSlot);
+                var $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').appendTo($adSlot);
+
+                //show hidden survey overlay
+                new AdfreeSurvey().show();
+
+                bean.on(document, 'click', $adSlotRemove, function (e) {
+                    console.log('clked');
+                    $('.js-survey-overlay').removeClass('u-h');
+                    /*fastdom.write(function () {
+                        target.toggleClass('navigation-container--expanded navigation-container--collapsed');
+                        mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
+                    });*/
+                });
+                //$('<div></div>').addClass('ad-slot--remove').appendTo($adSlot);
                // $adSlot.append("<div class='ad-slot--remove'></div>");
             // }
             },

@@ -1,12 +1,33 @@
 .ad-slot {
     .ad-slot--remove {
-        width: gs-span(2);
-        height: gs-height(2);
+        width: 48px;
+        height: 48px;
         position: absolute;
         top: 20px;
         right: 0px;
-        /*TODO proper icon as a base64*/
+        /*TODO proper icon as a base64 NOT black*/
         background-image: url('https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/48x48/cancel.png');
+        background-repeat: no-repeat;
         cursor: pointer;
+    }
+}
+
+.survey-overlay {
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.6);
+    z-index:10000; /*TODO set proper z-index*/
+    width:100%;
+    height:100%;
+
+    .survey-container {
+        position: absolute;
+        top: percentage(1/5);
+        left: percentage(1/5);
+        z-index:10001; /*TODO set proper z-index*/
+        width: $gs-column-width*10;
+        height: $gs-row-height*10;
+        background-color: colour(comment-support-4);
     }
 }
