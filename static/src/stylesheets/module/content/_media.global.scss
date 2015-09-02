@@ -78,13 +78,18 @@
         width: .8em;
         @include icon(volume-high-white, $with-width: false);
     }
+    .content--media--video & {
+        content: none;
+    }
     .content--gallery &,
     .content--image & {
         width: .9em;
         @include icon(camera-white-large, $with-width: false);
     }
 }
-
+.content--media--video .inline-video-icon {
+    margin-right: .1em;
+}
 
 /* Media item
    ========================================================================== */
