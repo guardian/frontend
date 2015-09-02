@@ -1,24 +1,40 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
-@import views.support.ContentFooterContainersLayout
+
+@import conf.Switches
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
     @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
 
-    @ContentFooterContainersLayout(content, related, content.isAdvertisementFeature) {
+    @* majority of footer components we don't want to appear on advertisement feature articles *@
+    @if(!content.isAdvertisementFeature) {
+        @if(!content.shouldHideAdverts) {
+            <div class="fc-container fc-container--commercial-high">
+            @fragments.commercial.commercialComponentHigh()
+            </div>
+        }
+
         @fragments.storyPackagePlaceholder(content, related)
-    } {
+        @if(content.showFooterContainers && !content.shouldHideAdverts && Switches.OutbrainSwitch.isSwitchedOn) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
+            @fragments.outbrainPlaceholder()
+            </div>
+        }
         @fragments.onwardPlaceholder()
-    } {
-        <div class="js-repositioned-comments content__repositioned-comments"></div>
-    } {
+
+        @if(content.isCommentable) {
+            <div class="js-repositioned-comments content__repositioned-comments"></div>
+        }
+
         @fragments.mostPopularPlaceholder(content.section)
-    } {
-        <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
-    } {
-        <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
-    } {
-        <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">@fragments.outbrainPlaceholder()</div>
+
+        @if(!content.shouldHideAdverts) {
+            <div class="fc-container fc-container--commercial">
+            @fragments.commercial.commercialComponent()
+            </div>
+        }
+    } else {
+        @fragments.storyPackagePlaceholder(content, related)
     }
 
 </div>
