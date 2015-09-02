@@ -199,10 +199,11 @@ trait PaidForTagAgent {
   def isExpiredAdvertisementFeature(pageId: String,
                                     capiTags: Seq[Tag],
                                     maybeSectionId: Option[String]): Boolean = {
-    lazy val hasAdFeatureTone = capiTags exists (_.id == "tone/advertisement-features")
-    lazy val maybeDfpTag =
-      findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map (_.dfpTag)
-    isExpiredAdvertisementFeature(pageId, hasAdFeatureTone, maybeDfpTag, maybeSectionId)
+    val hasAdFeatureTone = capiTags exists (_.id == "tone/advertisement-features")
+    if (hasAdFeatureTone) {
+      lazy val maybeDfpTag = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map (_.dfpTag)
+      isExpiredAdvertisementFeature(pageId, hasAdFeatureTone, maybeDfpTag, maybeSectionId)
+    } else false
   }
 
   def isExpiredAdvertisementFeatureFront(pageId: String,
