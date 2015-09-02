@@ -15,10 +15,8 @@
         }
 
         @fragments.storyPackagePlaceholder(content, related)
-        @if(content.showFooterContainers && !content.shouldHideAdverts && Switches.OutbrainSwitch.isSwitchedOn) {
-            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
+        @if(content.showFooterContainers && !content.shouldHideAdverts && Switches.OutbrainSwitch.isSwitchedOn) {            
             @fragments.outbrainPlaceholder()
-            </div>
         }
         @fragments.onwardPlaceholder()
 
