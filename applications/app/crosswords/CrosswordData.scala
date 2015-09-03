@@ -17,7 +17,7 @@ object Entry {
     entry.clue.getOrElse(""),
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
-    entry.group,
+    entry.group.getOrElse(Seq()),
     entry.position.getOrElse(CrosswordPosition(0,0)),
     entry.separatorLocations,
     entry.solution
@@ -30,7 +30,7 @@ case class Entry(
   clue: String,
   direction: String,
   length: Int,
-  group: Option[Seq[String]],
+  group: Seq[String],
   position: CrosswordPosition,
   separatorLocations: Option[Map[String, Seq[Int]]],
   solution: Option[String]
