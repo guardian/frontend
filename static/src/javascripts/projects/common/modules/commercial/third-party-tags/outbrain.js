@@ -30,7 +30,8 @@ define([
                 section      = this.getSection(),
                 widgetCode,
                 widgetCodeImage,
-                widgetCodeText;
+                widgetCodeText,
+                s = window.s;
 
             breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
