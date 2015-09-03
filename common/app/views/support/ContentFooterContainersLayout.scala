@@ -28,13 +28,20 @@ object ContentFooterContainersLayout {
 
       def includeOutbrainPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
         if (content.showFooterContainers && !content.shouldHideAdverts && OutbrainSwitch.isSwitchedOn) {
-          (htmlBlocks.take(2) :+ outbrainPlaceholder) ++ htmlBlocks.drop(2)
+          val pos = if (related.hasStoryPackage && content.showInRelated) {
+            2
+          } else if(content.isSeries && !related.hasStoryPackage) {
+            3
+          } else {
+            4
+          }
+          (htmlBlocks.take(pos) :+ outbrainPlaceholder) ++ htmlBlocks.drop(pos)
         } else htmlBlocks
       }
 
       val apartFromOutbrain = Seq(
         optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
-        optional(related.hasStoryPackage && content.showInRelated, storyPackagePlaceholder),
+        Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
         optional(content.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
