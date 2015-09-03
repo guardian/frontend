@@ -107,7 +107,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
   }
 
   override def onStart(app: play.api.Application) {
-    log.info("onStart started")
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
@@ -118,7 +117,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       OmnitureReportJob.run()
       VideoEncodingsJob.run()
     }
-    log.info("onStart finished")
   }
 
   override def onStop(app: play.api.Application) {
