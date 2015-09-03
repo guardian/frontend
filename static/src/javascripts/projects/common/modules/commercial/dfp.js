@@ -99,17 +99,9 @@ define([
                 //show hidden survey overlay
                 new AdfreeSurvey().show();
 
-                bean.on(document, 'click', $adSlotRemove, function (e) {
-                    console.log('clked');
+                bean.on(document, 'click', $adSlotRemove, function () {
                     $('.js-survey-overlay').removeClass('u-h');
-                    /*fastdom.write(function () {
-                        target.toggleClass('navigation-container--expanded navigation-container--collapsed');
-                        mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
-                    });*/
                 });
-                //$('<div></div>').addClass('ad-slot--remove').appendTo($adSlot);
-               // $adSlot.append("<div class='ad-slot--remove'></div>");
-            // }
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {

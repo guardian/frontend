@@ -1,15 +1,19 @@
-.ad-slot {
-    .ad-slot--remove {
-        width: 48px;
-        height: 48px;
-        position: absolute;
-        top: 20px;
-        right: 0px;
-        /*TODO proper icon as a base64 NOT black*/
-        background-image: url('https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/48x48/cancel.png');
-        background-repeat: no-repeat;
-        cursor: pointer;
-    }
+.ad-slot--remove,
+.survey-close {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    /*TODO proper icon as a base64 NOT black*/
+    background-image: url('https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/48x48/cancel.png');
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.survey-close {
+    top: 10px;
+    right: 10px;
 }
 
 .survey-overlay {
@@ -23,11 +27,68 @@
 
     .survey-container {
         position: absolute;
-        top: percentage(1/5);
-        left: percentage(1/5);
+        top: 0;
+        left: 0;
         z-index:10001; /*TODO set proper z-index*/
-        width: $gs-column-width*10;
-        height: $gs-row-height*10;
+        width: 100%;
+        height: 100%;
+        padding: $gs-row-height $gs-column-width;
         background-color: colour(comment-support-4);
+        color: #FFF;
+        box-sizing: border-box;
+
+        @include mq(tablet) {
+            left: percentage(1/10);
+            top: percentage(1/5);
+            width: $gs-column-width*10;
+            height: auto;
+        }
+
+        @include mq(desktop) {
+            left: percentage(2/10);
+        }
+
+        @include mq(wide) {
+            left: percentage(3/10);
+        }
+    }
+
+    .survey-logo {
+        margin-bottom: $gs-baseline;
+        text-align: center;
+    }
+
+    .survey-text--header {
+        @include fs-headline(5);
+    }
+
+    .survey-text--info {
+        @include fs-textSans(1);
+    }
+
+    .survey-subtext {
+        margin-top: $gs-baseline*2;
+    }
+
+    .survey-link {
+        width: $gs-column-width*4.3;
+        margin: 0 auto;
+        @include clearfix;
+        border: 1px solid rgba(#ffffff, .3);
+        @include circular;
+    }
+
+    .survey-link--takepart {
+        color: #FFF;
+        @include fs-data(2);
+        display: block;
+        float: left;
+        padding: 8px 0 0 8px;
+    }
+
+    .inline-arrow-white-right {
+        display: block;
+        float: right;
+        height: 30px;
     }
 }

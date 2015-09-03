@@ -1,12 +1,14 @@
-<div class="survey-overlay js-survey-overlay u-h" data-link-name="adblock sticky message" role="dialog" aria-label="welcome adblock user" aria-describedby="adblock-sticky__message">
+<div class="survey-overlay js-survey-overlay u-h" data-link-name="survey overlay" role="dialog" aria-label="take part in our survey" aria-describedby="survey-text--header">
     <div class="survey-container">
+        <div class="survey-close js-survey-close">
+        </div>
         <div class="survey-logo">
             <%=marque54icon%>
         </div>
         <div class="survey-text">
-            <p class="survey-text--header">
+            <h3 class="survey-text--header">
                 <%=surveyHeader%>
-            </p>
+            </h3>
             <span class="survey-text--info">
                 <%=surveyText%>
             </span>
@@ -16,6 +18,9 @@
                 <%=surveySubHeader%>
             </p>
         </div>
+        <div class="survey-link">
+            <a class="survey-link--takepart" href="<%=surveyLink%>" target="_blank" data-link-name="take part"><%=linkText%></a>
+            <%=arrowWhiteRight%>
+        </div>
     </div>
-    <a class="survey-link" href="<%=surveyLink%>" target="_blank" data-link-name="take part"><%=linkText%></a>
 </div>

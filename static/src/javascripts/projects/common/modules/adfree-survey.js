@@ -1,4 +1,5 @@
 define([
+    'bean',
     'fastdom',
     'common/utils/$',
     'common/utils/_',
@@ -6,6 +7,7 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/adfree-survey.html'
 ], function (
+    bean,
     fastdom,
     $,
     _,
@@ -31,13 +33,20 @@ define([
                 surveySubHeader: 'Suspendisse sagittis facilisis libero, ac blandit leo lobortis finibus. Sed vel nunc pulvinar, lobortis neque ut, euismod sapien.',
                 linkText: 'Be awesome and take part in our survey',
                 surveyLink: 'http://google.com',
-                cursor: svgs('cursor'),
+                arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque54icon: svgs('marque54icon')
             });
 
         fastdom.write(function () {
             $(document.body).append(bannerTmpl);
+
+            console.log($('.js-survey-close'), $('.js-survey-overlay'));
+            bean.on(document, 'click', $('.js-survey-close'), function () {
+                $('.js-survey-overlay').addClass('u-h');
+            });
         });
+
+
     };
 
     return AdfreeSurvey;
