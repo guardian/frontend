@@ -48,18 +48,65 @@ object CrosswordData {
 
   implicit val jsonWrites = Json.writes[CrosswordData]
 
-  def fromCrossword(crossword: Crossword) = CrosswordData(
-    s"${crossword.`type`}/${crossword.number.toString}",
-    crossword.number,
-    crossword.name,
-    crossword.creator,
-    dateFormatUTC.parseDateTime(crossword.date),
-    crossword.entries.map(Entry.fromCrosswordEntry),
-    crossword.dimensions,
-    crossword.`type`,
-    crossword.pdf,
-    crossword.instructions
-  )
+  def fromCrossword(crossword: Crossword) = {
+    // For entry groups, all separator locations for entries within the
+    // group are incorrectly stored on the first group entry. We normalize
+    // the data to store the separator locations on their corresponding entries.
+
+    val entries = crossword.entries.map(Entry.fromCrosswordEntry)
+
+    val entryGroups = entries
+      .groupBy(_.group)
+      // Sort using the group ordering
+      .map { case (orderedGroupEntryIds, groupEntries) =>
+        (orderedGroupEntryIds, orderedGroupEntryIds.flatMap(id => groupEntries.find(_.id == id)))
+      }
+
+    val newEntries = entryGroups.map { case (k, groupEntries) =>
+      val maybeSeparatorLocations: Option[Map[String, Seq[Int]]] =
+        groupEntries
+          .find(_.separatorLocations.exists(_.nonEmpty))
+          .flatMap(_.separatorLocations)
+
+      val bounds: Map[(Int, Int), Entry] =
+        groupEntries.foldLeft((0, Map.empty[(Int, Int), Entry])) { case ((upperBound, m), entry) =>
+          val newLowerBound = upperBound
+          val newUpperBound = upperBound + entry.length
+          (newUpperBound, m + ((newLowerBound, newUpperBound) -> entry))
+        }._2
+
+      val newGroupEntries: Seq[Entry] = bounds.map { case ((lowerBound, upperBound), entry) =>
+        maybeSeparatorLocations.map { separatorLocations =>
+          val newSeparatorLocations: Map[String, Seq[Int]] = separatorLocations.map { case (separator, locations) =>
+            val newLocations =
+              locations
+                .filter(location => location > lowerBound && location <= upperBound)
+                .map(location => location - lowerBound)
+            (separator, newLocations)
+          }
+          entry.copy(separatorLocations = Some(newSeparatorLocations))
+        }.getOrElse(entry)
+      }.toList
+
+      newGroupEntries
+    }.toList.flatten
+
+    // Revert back to the original order
+    val sortedNewEntries = entries.flatMap(entry => newEntries.find(_.id == entry.id))
+
+    CrosswordData(
+      s"${crossword.`type`}/${crossword.number.toString}",
+      crossword.number,
+      crossword.name,
+      crossword.creator,
+      dateFormatUTC.parseDateTime(crossword.date),
+      sortedNewEntries,
+      crossword.dimensions,
+      crossword.`type`,
+      crossword.pdf,
+      crossword.instructions
+    )
+  }
 }
 
 case class CrosswordData(
