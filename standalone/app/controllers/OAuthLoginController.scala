@@ -36,7 +36,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
   def loginAction = Action.async { implicit request =>
-    googleAuthConfig.map(checkIsSecure).map { config =>
+    googleAuthConfig.map(checkIsSecure).map(overrideRedirectUrl).map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
         _.withSession {
@@ -57,13 +57,20 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
     }
   }
 
+  private def overrideRedirectUrl(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
+    request.getQueryString("redirect-url") match {
+      case Some(url) => config.copy(redirectUrl = url)
+      case _ => config
+    }
+  }
+
   /*
   User comes back from Google.
   We must ensure we have the anti forgery token from the loginAction call and pass this into a verification call which
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
   def oauth2Callback = Action.async { implicit request =>
-    googleAuthConfig.map(checkIsSecure).map { config =>
+    googleAuthConfig.map(checkIsSecure).map(overrideRedirectUrl).map { config =>
       request.session.get(ANTI_FORGERY_KEY) match {
         case None =>
           Future.successful(Redirect(routes.OAuthLoginController.login())
