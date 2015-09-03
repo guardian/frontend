@@ -23,7 +23,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       model.abtests.AbTestJob.run()
     }
 
-    Jobs.schedule("LoadBalancerLoadJob", "* 0/15 * * * ?") {
+    Jobs.schedule("LoadBalancerLoadJob", "0 4/15 * * * ?") {
       LoadBalancer.refresh()
     }
 
@@ -107,6 +107,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
   }
 
   override def onStart(app: play.api.Application) {
+    log.info("onStart started")
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
@@ -117,6 +118,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       OmnitureReportJob.run()
       VideoEncodingsJob.run()
     }
+    log.info("onStart finished")
   }
 
   override def onStop(app: play.api.Application) {

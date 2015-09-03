@@ -1,6 +1,7 @@
 package tools
 
-import common.AkkaAgent
+import com.amazonaws.services.elasticloadbalancing.model.DescribeLoadBalancersRequest
+import common.{Logging, AkkaAgent}
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import scala.collection.JavaConversions._
 import services.AwsEndpoints
@@ -11,7 +12,7 @@ case class LoadBalancer(id: String,
                         url: Option[String] = None,
                         testPath: Option[String] = None)
 
-object LoadBalancer {
+object LoadBalancer extends Logging {
 
   import conf.Configuration.aws.credentials
 
@@ -29,7 +30,6 @@ object LoadBalancer {
       LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
       LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
       LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
-      LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football"),
       LoadBalancer("frontend-Diagnost-1SCNCG3BR1RFE", "Diagnostics", "frontend-diagnostics" ),
       LoadBalancer("frontend-ArchiveL-C2GJNZE0TS7", "Archive", "frontend-archive" )
     )
@@ -38,16 +38,20 @@ object LoadBalancer {
   private val agent =  AkkaAgent(loadBalancers)
 
   def refresh() {
+    log.info("starting refresh LoadBalancer ELB DNS names")
     credentials.foreach{ credentials =>
       val client = new AmazonElasticLoadBalancingClient(credentials)
       client.setEndpoint(AwsEndpoints.elb)
-      val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
+      val request = new DescribeLoadBalancersRequest()
+      request.setLoadBalancerNames(loadBalancers.map(_.id))
+      val elbs = client.describeLoadBalancers(request).getLoadBalancerDescriptions
       client.shutdown()
       val newLoadBalancers = loadBalancers.map{ lb =>
         lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
       }
       agent.send(newLoadBalancers)
     }
+    log.info("finished refresh LoadBalancer ELB DNS names")
   }
 
   def all: Seq[LoadBalancer] = agent()
