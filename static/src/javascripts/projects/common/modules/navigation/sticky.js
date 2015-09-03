@@ -48,7 +48,7 @@ define([
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
         this.isAdblockABTest = ab.getParticipations().AdblockStickyBanner && ab.testCanBeRun('AdblockStickyBanner')
-            && ab.getParticipations().AdblockStickyBanner.variant === 'variant';
+            && (ab.getParticipations().AdblockStickyBanner.variant === 'variant' || ab.getParticipations().AdblockStickyBanner.variant === 'challenger');
 
         _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }

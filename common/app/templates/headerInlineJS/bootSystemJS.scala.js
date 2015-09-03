@@ -77,13 +77,11 @@ System['import']('core').then(function () {
                     'common/utils/config',
                     'common/modules/experiments/ab',
                     'common/modules/ui/images',
-                    'common/modules/ui/lazy-load-images',
                     'common/utils/storage']).then(function(values) {
                     var config = values[0];
                     var ab = values[1];
                     var images = values[2];
-                    var lazyLoadImages = values[3];
-                    var storage = values[4];
+                    var storage = values[3];
                     var alreadyVisted;
 
                     if (guardian.isModernBrowser) {
@@ -95,7 +93,6 @@ System['import']('core').then(function () {
                             window.onload = images.upgradePictures;
                         }
                     }
-                    lazyLoadImages.init();
                     images.upgradePictures();
                     images.listen();
 

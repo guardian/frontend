@@ -1,5 +1,6 @@
 package conf
 
+import cache.SurrogateKey
 import common.ExecutionContexts
 import filters.RequestLoggingFilter
 import org.apache.commons.codec.digest.DigestUtils
@@ -54,14 +55,14 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
 // See https://www.fastly.com/blog/surrogate-keys-part-1/
 object SurrogateKeyFilter extends Filter with ExecutionContexts {
 
-  private val SurrogateKey = "Surrogate-Key"
+  private val SurrogateKeyHeader = "Surrogate-Key"
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    val surrogateKey = DigestUtils.md5Hex(request.path)
+    val surrogateKey = SurrogateKey(request)
     nextFilter(request).map{ result =>
-      // Surrogate keys are space delimited, so string them together if there are already some
-      val key = result.header.headers.get(SurrogateKey).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)
-      result.withHeaders(SurrogateKey -> key)
+      // Surrogate keys are space delimited, so string them together if there are already some present
+      val key = result.header.headers.get(SurrogateKeyHeader).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)
+      result.withHeaders(SurrogateKeyHeader -> key)
     }
   }
 }

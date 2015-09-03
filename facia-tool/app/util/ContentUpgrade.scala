@@ -1,14 +1,13 @@
 package util
 
-import fronts.MetadataDefaults
-import model.Content
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import com.gu.contentapi.client.parser.JsonParser._
+import com.gu.facia.api.utils.{CardStyle, ResolvedMetaData}
+import com.gu.facia.client.models.TrailMetaData
 import org.json4s.JValue
 import org.json4s.JsonAST._
 import org.json4s.native.JsonMethods
-import Json4s._
-import views.support.CardStyleForFrontend
+import util.Json4s._
 
 /** Helper for Facia tool - passes over the JSON that is proxied, adding in defaults */
 object ContentUpgrade {
@@ -42,17 +41,17 @@ object ContentUpgrade {
   }
 
   def upgradeItem(json: JValue): JValue = {
+    //Used to upgrade Content items with the CardStyle and MetaDataDefaults it will receive.
     (json, json.extractOpt[ApiContent]) match {
       case (jsObj: JObject, Some(content)) =>
-        val frontendContent = Content(content)
 
-        val metaDataDefaults = MetadataDefaults(frontendContent)
-        val cardStyle = CardStyleForFrontend(frontendContent)
+        val cardStyle: CardStyle = CardStyle(content, TrailMetaData.empty)
+        val metaDataMap: Map[String, Boolean] = ResolvedMetaData.toMap(ResolvedMetaData.fromContent(content, cardStyle))
 
         import org.json4s.JsonDSL._
 
         jsObj update ("frontsMeta" ->
-          ("defaults" -> metaDataDefaults) ~
+          ("defaults" -> metaDataMap) ~
           ("tone" -> cardStyle.toneString))
 
       case _ =>

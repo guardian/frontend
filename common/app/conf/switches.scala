@@ -123,6 +123,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val SoftPurgeWithLongCachingSwitch = Switch(
+    "Performance",
+    "soft-purge-with-long-caching-switch",
+    "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   val CircuitBreakerSwitch = Switch(
     "Performance",
     "circuit-breaker",
@@ -546,6 +555,15 @@ object Switches {
     "Uses full UK News keyword for DFP targeting.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 9),
+    exposeClientSide = true
+  )
+
+  val KruxVideoTracking = Switch(
+    "Commercial",
+    "krux-video-tracking",
+    "If this switch is ON, there will be a Krux pixel fired to track particular videos",
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -1086,7 +1104,7 @@ object Switches {
     "no-bounce-indicator",
     "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = true
   )
 
@@ -1096,7 +1114,7 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
       "check the DB size.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
