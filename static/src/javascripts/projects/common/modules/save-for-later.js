@@ -37,7 +37,18 @@ define([
             saveThisArticle: '.js-save-for-later',
             saveThisVideo: '.js-save-for-later-video',
             saveThisArticleButton: '.js-save-for-later__button',
-            profileDropdownCount: '.brand-bar__item--saved-for-later-count'
+            onwardContainer: '.js-onward',
+            relatedContainer: '.js-related',
+            showMoreContainer: '.js-show-more',
+            itemMeta: '.js-item__meta',
+            itemSaveLink: '.js-save-for-later-link',
+            itemSaveLinkHeading: '.save-for-later-link__heading',
+            profileDropdownCount: '.brand-bar__item--saved-for-later-count',
+            fcItemIsSaved: 'fc-save-for-later--is-saved'
+        };
+        this.attributes = {
+            containerItemShortUrl: 'data-loyalty-short-url',
+            containerItemDataId: 'data-id'
         };
 
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
@@ -48,13 +59,21 @@ define([
             'save',
             'delete',
             'onSaveArticle',
-            'onDeleteArticle'
+            'onDeleteArticle',
+            'createSaveFaciaItemHandler',
+            'createDeleteFaciaItemHandler',
+            'signUserInToSaveArticle'
         );
     }
 
     var bookmarkSvg = svgs('bookmark', ['rounded-icon']),
         shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
         savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
+
+    var getCustomEventProperties = function (contentId) {
+        var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
+        return { prop74: prefix + 'ContainerSave:' + contentId };
+    };
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
@@ -86,16 +105,22 @@ define([
                         this.userData = resp.savedArticles;
                     }
 
-                    this.renderSaveButtonsInArticle();
+                    this.prepareFaciaItemLinks(true);
+
+                    if (this.isContent) {
+                        this.renderSaveButtonsInArticle();
+                    }
                 }.bind(this));
         } else {
-            var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&INTCMP=SFL-SO', {
-                idUrl: config.page.idUrl,
-                returnUrl: encodeURIComponent(document.location.href),
-                shortUrl: shortUrl,
-                platform: savedPlatformAnalytics
-            });
-            this.renderArticleSaveButton({ url: url, isSaved: false });
+            if (this.isContent) {
+                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&INTCMP=SFL-SO', {
+                    idUrl: config.page.idUrl,
+                    returnUrl: encodeURIComponent(document.location.href),
+                    shortUrl: shortUrl,
+                    platform: savedPlatformAnalytics
+                });
+                this.renderArticleSaveButton({ url: url, isSaved: false });
+            }
         }
 
     };
@@ -135,6 +160,76 @@ define([
                     )
                 );
             }
+        }.bind(this));
+    };
+
+    SaveForLater.prototype.getElementsIndexedById = function (context) {
+        var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
+
+        return _.forEach(elements, function (el) {
+            return bonzo(el).attr(this.attributes.containerItemShortUrl);
+        }.bind(this));
+    };
+
+    SaveForLater.prototype.prepareFaciaItemLinks = function (signedIn) {
+
+        this.renderFaciaItemLinks(signedIn, document.body);
+
+        mediator.once('modules:tonal:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
+
+        mediator.once('modules:onward:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
+
+        mediator.once('modules:tonal:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
+
+        mediator.once('modules:related:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
+        }.bind(this));
+
+        mediator.on('modules:show-more:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.showMoreContainer);
+            $(this.classes.showMoreContainer).removeClass('js-show-more');
+        }.bind(this));
+    };
+
+    // Configure the save for later links on a front or in a container
+    SaveForLater.prototype.renderFaciaItemLinks = function (signedIn, context) {
+        var elements = this.getElementsIndexedById(context);
+
+        _.forEach(elements, function (item) {
+            var $item = $(item),
+                $itemSaveLink = $(this.classes.itemSaveLink, item),
+                shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
+                id = item.getAttribute(this.attributes.containerItemDataId),
+                isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
+
+            if (signedIn) {
+                this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
+            } else {
+                bean.one($itemSaveLink[0], 'click', function (id, shortUrl) {
+                    this.signUserInToSaveArticle(id, shortUrl);
+                }.bind(this, id, shortUrl));
+            }
+
+
+            fastdom.write(function () {
+                if (isSaved) {
+                    $itemSaveLink.addClass(this.classes.fcItemIsSaved);
+                } else {
+                    var contentId = $($.ancestor($itemSaveLink[0], 'fc-item')).attr('data-id');
+                    $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
+                }
+                $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
+
+                // only while in test
+                $item.addClass('fc-item--has-metadata');
+                $itemSaveLink.removeClass('is-hidden');
+            }.bind(this));
         }.bind(this));
     };
 
@@ -191,6 +286,91 @@ define([
         if (success) {
             this.updateSavedCount();
         }
+    };
+
+    // handle saving/deleting from fronts
+
+    SaveForLater.prototype.saveFaciaItem = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onSaveFaciaItem);
+    };
+
+    SaveForLater.prototype.onSaveFaciaItem = function (link, id, shortUrl, success) {
+        var that = this;
+        if (success) {
+            this.createDeleteFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
+
+            fastdom.write(function () {
+                bonzo(link)
+                    .addClass(that.classes.fcItemIsSaved)
+                    .attr('data-link-name', 'Unsave')
+                    .attr('data-custom-event-properties', '');
+            });
+        } else {
+            this.createSaveFaciaItemHandler(link, id, shortUrl);
+
+            fastdom.write(function () {
+                bonzo(qwery(that.classes.itemSaveLinkHeading, link)[0]).html('Error Saving');
+            });
+        }
+    };
+
+    SaveForLater.prototype.deleteFaciaItem = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onDeleteFaciaItem);
+    };
+
+    SaveForLater.prototype.onDeleteFaciaItem = function (link, id, shortUrl, success) {
+        var that = this;
+        if (success) {
+            this.createSaveFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
+
+            fastdom.write(function () {
+                var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
+                bonzo(link)
+                    .removeClass(that.classes.fcItemIsSaved)
+                    .attr('data-link-name', 'Save')
+                    .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
+            });
+        } else {
+            this.createDeleteFaciaItemHandler(link, id, shortUrl);
+
+            fastdom.write(function () {
+                bonzo(qwery(that.classes.itemSaveLinkHeading, link)[0]).html('Error Removing');
+            });
+        }
+    };
+
+    //--Create container link click handlers
+    SaveForLater.prototype.createSaveFaciaItemHandler = function (link, id, shortUrl) {
+        bean.one(link, 'click',
+            this.save.bind(this,
+                id,
+                shortUrl,
+                this.onSaveFaciaItem.bind(this, link, id, shortUrl)
+            )
+        );
+    };
+
+    SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
+        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
+            idUrl: config.page.idUrl,
+            returnUrl: encodeURIComponent(document.location.href),
+            shortUrl: shortUrl,
+            platform: savedPlatformAnalytics,
+            articleId: id
+        });
+        window.location = url;
+    };
+
+    SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
+        bean.one(link, 'click',
+            this.delete.bind(this,
+                id,
+                shortUrl,
+                this.onDeleteFaciaItem.bind(this, link, id, shortUrl)
+            )
+        );
     };
 
     SaveForLater.prototype.getSavedArticle = function (shortUrl) {

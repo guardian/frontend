@@ -5,17 +5,16 @@ import com.gu.facia.api.models.{FaciaContent, LatestSnap}
 import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
 import implicits.FaciaContentImplicits._
-import model.{ApiContentWithMeta, Content}
+import model.Content
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import services.FaciaContentConvert
 import slices._
 
 class FrontTest extends FlatSpec with Matchers {
-  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontentContentToFaciaContent(new Content(ApiContentWithMeta(
-      emptyApiContent.copy(id = theUrl, webUrl = theUrl),
-      Nil
-    )) {
+  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontendContentToFaciaContent(new Content(
+      emptyApiContent.copy(id = theUrl, webUrl = theUrl)
+    ) {
       override lazy val url: String = theUrl
 
       override lazy val webUrl: String = theUrl
@@ -64,7 +63,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   "deduplicate" should "not remove items from a dynamic container" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("one", "two"), Dynamic(DynamicFast), Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("one", "two"), Dynamic(DynamicFast), Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -74,7 +73,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "include items seen in a dynamic container in the set of urls for further deduplication" in {
-    val (nowSeen, _) = Front.deduplicate(Set("/one", "/two"), Dynamic(DynamicFast), Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set("/one", "/two"), Dynamic(DynamicFast), Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -84,7 +83,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "remove items from a fixed container" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("/one", "/two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("/one", "/two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -94,7 +93,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "include items seen in a fixed container in the set of urls for further deduplication" in {
-    val (nowSeen, _) = Front.deduplicate(Set("/one", "/two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set("/one", "/two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -104,7 +103,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not remove items from a nav list" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("/one", "/two"), NavList, Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("/one", "/two"), NavList, Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -114,7 +113,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not include items seen in a nav list in the set of urls for further deduplication" in {
-    val (nowSeen, _) = Front.deduplicate(Set("/one", "/two"), NavList, Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set("/one", "/two"), NavList, Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -124,7 +123,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not remove items from a nav media list" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("one", "two"), NavMediaList, Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("one", "two"), NavMediaList, Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -134,7 +133,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not include items seen in a singleton container in the set of urls for further deduplication" in {
-    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.thrasher), Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.thrasher), Seq(
       trailWithUrl("one")
     ))
 
@@ -142,7 +141,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not remove items from a singleton container" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("one"), Fixed(FixedContainers.thrasher), Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("one"), Fixed(FixedContainers.thrasher), Seq(
       trailWithUrl("one")
     ))
 
@@ -150,7 +149,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not include items seen in a nav media list in the set of urls for further deduplication" in {
-    val (nowSeen, _) = Front.deduplicate(Set("/one", "/two"), NavMediaList, Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set("/one", "/two"), NavMediaList, Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -160,7 +159,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not remove items from most popular" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("/one", "/two"), MostPopular, Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("/one", "/two"), MostPopular, Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -170,7 +169,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not include items seen in most popular in the set of urls for further deduplication" in {
-    val (nowSeen, _) = Front.deduplicate(Set("/one", "/two"), MostPopular, Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set("/one", "/two"), MostPopular, Seq(
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
@@ -180,7 +179,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not deduplicate dream snaps" in {
-    val (_, dedupedTrails) = Front.deduplicate(Set("one", "two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
+    val (_, dedupedTrails, _) = Front.deduplicate(Set("one", "two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
       dreamSnapWithUrl("one")
     ))
 
@@ -188,7 +187,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not skip dream snaps when considering items visible to be added to the set of seen urls" in {
-    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedSmallSlowIV), Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedSmallSlowIV), Seq(
       dreamSnapWithUrl("one"),
       dreamSnapWithUrl("two"),
       trailWithUrl("three"),
@@ -201,7 +200,7 @@ class FrontTest extends FlatSpec with Matchers {
   }
 
   it should "not include dream snaps in the seen urls" in {
-    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedMediumFastXI), Seq(
+    val (nowSeen, _, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedMediumFastXI), Seq(
       dreamSnapWithUrl("one")
     ))
 

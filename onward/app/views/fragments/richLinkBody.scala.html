@@ -1,9 +1,9 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 
-@import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media}
+@import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media, CardStyle}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{ImgSrc, CardStyleForFrontend, RichLinkContributor, Item460, RenderClasses}
+@import views.support.{ImgSrc, RichLinkContributor, Item460, RenderClasses}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -25,7 +25,7 @@
     ))">
 
     <div class="rich-link__container">
-        @if(CardStyleForFrontend(content) == Media || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
+        @if(CardStyle.fromContent(content.delegate) == Media || CardStyle.fromContent(content.delegate) == Feature || CardStyle.fromContent(content.delegate) == DefaultCardstyle) {
             @content.trailPicture.map { trailPictureContainer =>
                 @Item460.bestFor(trailPictureContainer).map { imgSrc =>
 
@@ -38,7 +38,7 @@
 
         <div class="rich-link__header">
             <h1 class="rich-link__title"><a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
-            @if(!content.isMedia && CardStyleForFrontend(content) == Comment) {
+            @if(!content.isMedia && CardStyle.fromContent(content.delegate) == Comment) {
                 <div class="rich-link__byline">@content.byline.map { byline => @Html(byline) }</div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }

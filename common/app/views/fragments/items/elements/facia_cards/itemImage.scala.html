@@ -1,0 +1,23 @@
+@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
+
+@import views.support.ImgSrc
+@import views.html.fragments.items.elements.facia_cards.image
+
+<div class="fc-item__media-wrapper">
+    <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
+        @widthsByBreakpoint match {
+            case Some(widths) => {
+                @image(
+                    classes = Seq("responsive-img"),
+                    srcset = ImgSrc.srcset(imageContainer, widths),
+                    sizes = widths.sizes,
+                    src = if(inlineImage) ImgSrc.getFallbackUrl(imageContainer) else None
+                )
+            }
+
+            case _ => {
+                <img src="@ImgSrc.getFallbackUrl(imageContainer)">
+            }
+        }
+    </div>
+</div>

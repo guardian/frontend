@@ -58,6 +58,19 @@ object Jobs extends Logging {
     }
   }
 
+  def scheduleEveryNSeconds(name: String, intervalInSeconds: Int)(block: => Unit): Unit = {
+    if (!Play.isTest) {
+      val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(intervalInSeconds)
+      log.info(s"Scheduling $name to run every $intervalInSeconds minutes")
+      jobs.put(name, () => block)
+
+      scheduler.scheduleJob(
+        JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
+        TriggerBuilder.newTrigger().withSchedule(schedule).build()
+      )
+    }
+  }
+
   def deschedule(name: String) {
     log.info(s"Descheduling $name")
     jobs.remove(name)

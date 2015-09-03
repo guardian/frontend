@@ -19,10 +19,16 @@ define([
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
     'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/icon/dropdown-mask',
+    'inlineSvg!svgs/icon/comment-anchor',
+    'inlineSvg!svgs/icon/reply',
     'inlineSvg!svgs/icon/expand-image',
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/notifications-explainer-desktop',
-    'inlineSvg!svgs/icon/cursor'
+    'inlineSvg!svgs/icon/cursor',
+    'inlineSvg!svgs/icon/fb',
+    'inlineSvg!svgs/icon/gplus',
+    'inlineSvg!svgs/icon/plus'
 ], function (
     _,
     commentCount16icon,
@@ -40,10 +46,16 @@ define([
     arrowWhiteRight,
     arrowRight,
     bookmark,
+    dropdownMask,
+    commentAnchor,
+    reply,
     expandImage,
     notificationsExplainerMobile,
     notificationsExplainerDesktop,
-    cursor
+    cursor,
+    fb,
+    gplus,
+    plus
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -61,10 +73,16 @@ define([
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
         bookmark: bookmark,
+        dropdownMask: dropdownMask,
+        commentAnchor: commentAnchor,
+        reply: reply,
         expandImage: expandImage,
         notificationsExplainerMobile: notificationsExplainerMobile,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
-        cursor: cursor
+        cursor: cursor,
+        fb: fb,
+        gplus: gplus,
+        plus: plus
     };
 
     return function (name, classes, title) {

@@ -79,15 +79,19 @@ define([
     }
 
     function bindPrerollEvents(player) {
-        var events = {
+        var preRollPlay = false,
+        events = {
             end: function () {
-                player.trigger(constructEventName('preroll:end', player));
+                if (preRollPlay) {
+                    player.trigger(constructEventName('preroll:end', player));
+                }
                 player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
             start: function () {
                 var duration = player.duration();
                 if (duration) {
+                    preRollPlay = true;
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
@@ -118,6 +122,30 @@ define([
             player.trigger('adscanceled');
             bindContentEvents(player);
         });
+    }
+
+    function kruxTracking(player, event) {
+        var desiredVideos = ['gu-video-457263940', 'gu-video-55e4835ae4b00856194f85c2'];
+        //test videos /artanddesign/video/2015/jun/25/damien-hirst-paintings-john-hoyland-newport-street-gallery-london-video
+        ///music/video/2015/aug/31/vmas-2015-highlights-video
+
+
+        if (config.switches.kruxVideoTracking && config.switches.krux && $(player.el()).attr('data-media-id') && _.indexOf(desiredVideos, $(player.el()).attr('data-media-id')) !== -1) {
+            if (event === 'videoPlaying') {
+                //Krux is a global object loaded by krux.js file
+
+                /*eslint-disable */
+                Krux('admEvent', 'KAIQvckS', {});
+                /*eslint-enable */
+
+            } else if (event === 'videoEnded') {
+
+                /*eslint-disable */
+                Krux('admEvent', 'KBaTegd5', {});
+                /*eslint-enable */
+            }
+        }
+
     }
 
     function bindContentEvents(player) {
@@ -164,6 +192,7 @@ define([
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
+            kruxTracking(player, 'videoPlaying');
             bean.fire(document.body, 'videoPlaying');
         });
         player.on('pause', function () {
@@ -171,6 +200,7 @@ define([
         });
         player.on('ended', function () {
             bean.fire(document.body, 'videoEnded');
+            kruxTracking(player, 'videoEnded');
         });
     }
 

@@ -95,7 +95,7 @@
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
                                         FaciaCardAndIndex.fromTrail(
-                                            FaciaContentConvert.frontentContentToFaciaContent(trail),
+                                            FaciaContentConvert.frontendContentToFaciaContent(trail),
                                             ItemClasses.liveBlogMore,
                                             index
                                         ).transformCard(_.withTimeStamp),

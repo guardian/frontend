@@ -187,16 +187,16 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__media-wrapper {
         background-color: colour(neutral-6);
+    }
 
+    .u-faux-block-link--hover {
         .fc-item__image-container {
             background-color: #000000;
 
-            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
-            .responsive-img {
-                opacity: .9;
-            }
+            opacity: .9;
         }
 
         .u-faux-block-link__cta {
@@ -288,10 +288,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__media-wrapper {
     box-sizing: border-box;
     position: relative;
-
-    .is-not-modern & {
-        display: none !important;
-    }
 }
 
 // Wraps all non-media content
@@ -308,6 +304,56 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__image-container {
     display: none;
 }
+
+.fc-item__slideshow {
+    img {
+        @include mq($until: tablet) {
+            &:nth-child(1n+2) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
+        }
+    }
+}
+
+@for $i from 2 through 5 {
+    $hangTime: 4;
+    $fadeTime: 1;
+    $totalLoopTime: $i * ($hangTime + $fadeTime);
+    @keyframes fc-item__slideshow--#{$i} {
+        0% {
+            opacity: 0;
+        }
+        #{(100% / $totalLoopTime) * $fadeTime} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime)} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
+            opacity: 0;
+        }
+    }
+    @include mq(tablet) {
+        .fc-item__slideshow--#{$i} img {
+            animation-duration: #{$totalLoopTime}s;
+            animation-name: fc-item__slideshow--#{$i};
+
+            @for $j from 2 through $i {
+                &:nth-child(#{$j}) {
+                    animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
+                }
+            }
+        }
+    }
+}
+
 
 .fc-item__video-play {
     display: block;
@@ -556,6 +602,76 @@ $block-height: 71px;
 
 .fc-trail__count--inline-template {
     display: none;
+}
+
+.fc-save-for-later {
+    // reset button defaults
+    border: 0;
+    border-left: 1px solid;
+    background-color: transparent;
+    padding: 0;
+    color: transparent;
+    margin-right: 0 - ($gs-gutter / 4);
+    padding-right: ($gs-gutter / 4);
+    padding-left: $gs-gutter / 4;
+    transition: color 100ms;
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: underline;
+        color: inherit;
+    }
+
+
+    &:after {
+        content: 'save';
+    }
+
+    &.fc-save-for-later--is-saved:after {
+        content: 'saved';
+    }
+
+    @include mq($until: tablet) {
+        border-left: 0;
+        float: right;
+
+        .fc-item--has-timestamp & {
+            &:after,
+            &.fc-save-for-later--is-saved:after {
+                content: '';
+            }
+        }
+    }
+
+    @include mq($from: tablet, $until: desktop) {
+        .fc-item--has-timestamp &:last-child {
+            border-left: 0;
+            padding-left: 0;
+
+            .inline-icon {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .inline-icon {
+        float: right;
+        margin-left: $gs-gutter / 4;
+        margin-right: 0;
+
+        @include mq(tablet) {
+            float: left;
+            margin-right: $gs-gutter / 4;
+        }
+    }
+}
+
+.facia-page .fc-save-for-later:only-child {
+    @include mq(tablet) {
+        border: 0;
+        padding: 0;
+    }
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {

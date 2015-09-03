@@ -18,7 +18,7 @@ object PopularInTag extends Controller with Related with Containers with Logging
 
   private def renderPopularInTag(trails: Seq[Content])(implicit request: RequestHeader) = Cached(600) {
     val html = views.html.fragments.containers.facia_cards.container(
-      onwardContainer("related content", trails map FaciaContentConvert.frontentContentToFaciaContent take 8),
+      onwardContainer("related content", trails map FaciaContentConvert.frontendContentToFaciaContent take 8),
       FrontProperties.empty
     )(request)
 

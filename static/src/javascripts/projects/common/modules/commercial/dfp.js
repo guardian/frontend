@@ -16,6 +16,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -37,6 +38,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    dfpOphanTracking,
     geoMostPopular,
     ab,
     beacon,
@@ -117,29 +119,9 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            var start = detect.getTimeOfDomComplete();
+            dfpOphanTracking.attachListeners(googletag);
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
-                require(['ophan/ng'], function (ophan) {
-                    var lineItemIdOrEmpty = function (event) {
-                        if (event.isEmpty) {
-                            return '__empty__';
-                        } else {
-                            return event.lineItemId;
-                        }
-                    };
-
-                    ophan.record({
-                        ads: [{
-                            slot: event.slot.getSlotId().getDomId(),
-                            campaignId: lineItemIdOrEmpty(event),
-                            creativeId: event.creativeId,
-                            timeToRenderEnded: new Date().getTime() - start,
-                            adServer: 'DFP'
-                        }]
-                    });
-                });
-
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
@@ -155,6 +137,39 @@ define([
 
         isMobileBannerTest = function () {
             return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
+        },
+
+        isSponsorshipContainerTest = function () {
+            var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
+                sponsorshipIdsReturned = [];
+
+            _.forEach(sponsorshipIds, function (value) {
+                if ($(value).length) {
+                    sponsorshipIdsReturned.push(value);
+                }
+            });
+
+            return sponsorshipIdsReturned;
+        },
+
+        showSponsorshipPlaceholder = function () {
+            var sponsorshipIdsFound = isSponsorshipContainerTest();
+
+            if (detect.adblockInUse && sponsorshipIdsFound.length) {
+                fastdom.write(function () {
+                    _.forEach(sponsorshipIdsFound, function (value) {
+                        var sponsorshipIdFoundEl = $(value),
+                            sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
+                            sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
+
+                        if (sponsorshipIdFoundEl.previous().length) {
+                            sponsorshipIdFoundEl.previous().append(sponsorshipBadge);
+                        } else {
+                            sponsorshipIdFoundEl.parent().prepend(sponsorshipBadge);
+                        }
+                    });
+                });
+            }
         },
 
         /**
@@ -253,6 +268,9 @@ define([
             }
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
+
+            // show sponsorship placeholder if adblock detected
+            showSponsorshipPlaceholder();
 
             return dfp;
         },
