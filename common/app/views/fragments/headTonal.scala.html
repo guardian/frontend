@@ -13,7 +13,13 @@
                 @fragments.meta.metaInline(content)
 
                 <h1 class="content__headline js-score" itemprop="headline">
-                    @Html(content.headline)
+                    @content match {
+                        case v: Video => {
+                            @fragments.inlineSvg("video-icon", "icon")
+                            @Html(content.headline)
+                        }
+                        case _ => { @Html(content.headline) }
+                    }
                 </h1>
 
                 @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
