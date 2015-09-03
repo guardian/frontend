@@ -60,10 +60,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       OmnitureReportJob.run()
     }
 
-    Jobs.schedule("SentryReportJob", "0 */5 * * * ?") {
-      SentryReportJob.run()
-    }
-
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
       MatchDayRecorder.record()
     }
@@ -119,7 +115,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       RebuildIndexJob.run()
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
-      SentryReportJob.run()
       VideoEncodingsJob.run()
     }
   }
