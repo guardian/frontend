@@ -23,6 +23,8 @@ class Crossword extends React.Component {
     constructor (props) {
         super(props);
 
+        console.log("++ Wotcha!");
+
         const dimensions = this.props.data.dimensions;
 
         this.columns = dimensions.cols;

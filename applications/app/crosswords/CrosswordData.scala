@@ -10,18 +10,27 @@ object Entry {
   implicit val positionWrites = Json.writes[CrosswordPosition]
 
   implicit val jsonWrites = Json.writes[Entry]
+  val testSeps = Map("," -> Seq(5,8), "-" -> Seq(12))
 
-  def fromCrosswordEntry(entry: CrosswordEntry): Entry = Entry(
-    entry.id,
-    entry.number.getOrElse(0),
-    entry.clue.getOrElse(""),
-    entry.direction.getOrElse(""),
-    entry.length.getOrElse(0),
-    entry.group,
-    entry.position.getOrElse(CrosswordPosition(0,0)),
-    entry.separatorLocations,
-    entry.solution
-  )
+  def fromCrosswordEntry(entry: CrosswordEntry): Entry = {
+
+    val seps = (entry.number, entry.direction) match {
+      case (Some(8), Some("down")) => Option(testSeps)
+      case _ => entry.separatorLocations
+    }
+
+    Entry(
+      entry.id,
+      entry.number.getOrElse(0),
+      entry.clue.getOrElse(""),
+      entry.direction.getOrElse(""),
+      entry.length.getOrElse(0),
+      entry.group,
+      entry.position.getOrElse(CrosswordPosition(0, 0)),
+      seps,
+      entry.solution
+    )
+  }
 }
 
 case class Entry(
@@ -37,6 +46,8 @@ case class Entry(
 ) extends CrosswordGridColumnNotation {
   lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
 }
+
+case class EntrySeparator()
 
 object CrosswordData {
 
@@ -74,3 +85,5 @@ case class CrosswordData(
   pdf: Option[String],
   instructions: Option[String]
 )
+
+

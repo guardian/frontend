@@ -91,6 +91,20 @@
     }
 }
 
+.crossword__anagram-helper__cell--with-space {
+    border-right: 3px solid colour(neutral-1);
+}
+
+.crossword__anagram-helper__cell--with-hyphen::after {
+    content: '-';
+    padding-left: 27px;
+    font-size: 24px;
+
+    @include mq($until: mobileLandscape) {
+        padding-left: 15px;
+    }
+}
+
 .crossword__anagram-helper-shuffler {
     position: relative;
     top: 25px;
