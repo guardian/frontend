@@ -12,7 +12,7 @@
         @if(article.isAdvertisementFeature){content--advertisement-feature}
         @if(article.isFeature && article.hasShowcaseMainElement){has-feature-showcase-element}"
         itemscope itemtype="@article.schemaType" role="main">
-
+<h1>@article.chapterHeadings</h1>
         <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
         <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <meta itemprop="name" content="The Guardian">
