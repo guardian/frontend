@@ -40,7 +40,6 @@ define([
         fastdom.write(function () {
             $(document.body).append(bannerTmpl);
 
-            console.log($('.js-survey-close'), $('.js-survey-overlay'));
             bean.on(document, 'click', $('.js-survey-close'), function () {
                 $('.js-survey-overlay').addClass('u-h');
             });

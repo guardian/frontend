@@ -21,7 +21,8 @@ define([
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
     'common/modules/identity/api',
-    'common/modules/adfree-survey'
+    'common/modules/adfree-survey',
+    'common/views/svgs'
 ], function (
     bean,
     bonzo,
@@ -44,7 +45,8 @@ define([
     ab,
     beacon,
     id,
-    AdfreeSurvey
+    AdfreeSurvey,
+    svgs
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -92,16 +94,6 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
-            /*if (ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
-             && ab.getParticipations().DisableAdsSurvey.variant === 'variant') {*/
-                var $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').appendTo($adSlot);
-
-                //show hidden survey overlay
-                new AdfreeSurvey().show();
-
-                bean.on(document, 'click', $adSlotRemove, function () {
-                    $('.js-survey-overlay').removeClass('u-h');
-                });
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
@@ -247,6 +239,25 @@ define([
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
         },
+        showAdsFreeSurvey = function (size, $adSlot) {
+            fastdom.write(function () {
+                /*if (ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
+                 && ab.getParticipations().DisableAdsSurvey.variant === 'variant') {*/
+                var crossIcon = svgs('crossIcon'),
+                    $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').append('<span class="ad-slot--hide-ads">Hide ads</span>').append(crossIcon).appendTo($adSlot);
+
+                if ($adSlot.hasClass('ad-slot--top-above-nav')) {
+                    $adSlotRemove.addClass('top-slot');
+                }
+
+                bean.on(document, 'click', $adSlotRemove, function () {
+                    $('.js-survey-overlay').removeClass('u-h');
+                });
+            });
+        },
+        addSurveyOverlay = function () {
+            new AdfreeSurvey().show();
+        },
 
         /**
          * Public functions
@@ -283,6 +294,9 @@ define([
 
             // show sponsorship placeholder if adblock detected
             showSponsorshipPlaceholder();
+
+            //TODO if AB test append hidden survey overlay
+            addSurveyOverlay();
 
             return dfp;
         },
@@ -419,6 +433,12 @@ define([
                 if (callbacks[size]) {
                     callbacks[size](event, $slot);
                 }
+                console.log(size);
+
+                //TODO if AB test append hidden survey overlay
+                if (size !== '1,1') {
+                    showAdsFreeSurvey(size, $slot);
+                }
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
                     fastdom.write(function () {
@@ -449,9 +469,10 @@ define([
             }
         },
         addLabel = function ($slot) {
+            //TODO if in AB test
             fastdom.write(function () {
                 if (shouldRenderLabel($slot)) {
-                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+                    $slot.prepend('<div class="ad-slot__label ad-slot__survey" data-test-id="ad-slot-label">Advertisement</div>');
                 }
             });
         },
