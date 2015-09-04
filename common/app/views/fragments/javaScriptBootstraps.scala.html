@@ -2,17 +2,11 @@
 @import conf.Switches._
 @import conf.Static
 @import conf.Configuration
-@import util.Random
 
 <script>
     @if(mvt.JspmTest.isParticipating || item.section == "crosswords") {
         @Html(templates.headerInlineJS.js.bootSystemJS(item).body)
     } else {
         @Html(templates.headerInlineJS.js.bootCurl(item, curlPaths).body)
-    }
-
-    @if(mvt.PayloadSizeTest.isParticipating) {
-        @* Add about 20kb after gzip *@
-        "@Random.alphanumeric.take(25000).mkString";
     }
 </script>
