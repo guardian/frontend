@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
 import GustyleComcontent from 'common/modules/commercial/creatives/gu-style-comcontent';
