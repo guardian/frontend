@@ -37,14 +37,14 @@ describe('DFP', function () {
             };
         },
         injector = new Injector(),
-        dfp, config, ophanTracking;
+        dfp, config;
 
     beforeEach(function (done) {
 
         injector.test(['common/modules/commercial/dfp', 'common/utils/config', 'common/modules/commercial/dfp-ophan-tracking'], function () {
             dfp = arguments[0];
             config = arguments[1];
-            ophanTracking = arguments[2];
+            let ophanTracking = arguments[2];
 
             config.switches = {
                 commercialComponents: true,
