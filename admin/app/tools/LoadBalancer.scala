@@ -42,9 +42,7 @@ object LoadBalancer extends Logging {
     credentials.foreach{ credentials =>
       val client = new AmazonElasticLoadBalancingClient(credentials)
       client.setEndpoint(AwsEndpoints.elb)
-      val request = new DescribeLoadBalancersRequest()
-      request.setLoadBalancerNames(loadBalancers.map(_.id))
-      val elbs = client.describeLoadBalancers(request).getLoadBalancerDescriptions
+      val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
       client.shutdown()
       val newLoadBalancers = loadBalancers.map{ lb =>
         lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
