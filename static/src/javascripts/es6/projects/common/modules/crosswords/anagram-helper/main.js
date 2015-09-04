@@ -65,7 +65,6 @@ export default class AnagramHelper extends React.Component {
             return this.props.grid[coords.x][coords.y];
         });
 
-
         const inner = this.state.showInput ?
             <ClueInput value={this.state.clueInput} clue={this.props.clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
             <Shuffler entries={entries} word={this.state.clueInput.trim().split('')} />;
@@ -91,7 +90,7 @@ export default class AnagramHelper extends React.Component {
                     shuffle
                 </button>
 
-                <CluePreview clue={this.props.clue} entries={entries}/>
+                <CluePreview clue={this.props.clue} entries={entries} />
             </div>
         );
     }

@@ -17,11 +17,7 @@ export default class Grid extends React.Component {
     }
 
     getSeparators (x, y) {
-        var sep = this.props.separators[helpers.clueMapKey(x, y)];
-        if (sep)
-         console.log("Sep x "  +  x + " y " + y + "s " + JSON.stringify(sep) );
-
-        return sep;
+        return this.props.separators[helpers.clueMapKey(x, y)];
     }
 
     // Position at end of previous cell
@@ -90,8 +86,6 @@ export default class Grid extends React.Component {
         const cells = [];
         let separators = [];
 
-        console.log("SEPS: " + JSON.stringify(this.props.separators));
-
         _.forEach(_.range(this.props.rows), (y) => {
             _.map(_.range(this.props.columns), (x) => {
                 const cellProps = this.props.cells[x][y];
@@ -115,8 +109,6 @@ export default class Grid extends React.Component {
 
             });
         });
-
-        ///onsole.log("SEPS 2: " + JSON.stringify(separators[0]));
 
         return (
             <svg viewBox={`0 0 ${width} ${height}`}
