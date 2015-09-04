@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'common/utils/_';
 
-
 export default class CluePreview extends React.Component {
 
     letterHasBoundary(separators, letterIndex) {
@@ -11,7 +10,7 @@ export default class CluePreview extends React.Component {
     }
 
     //Checks a object in the form{",":[4,7]}
-    getSeparatorLocationsForClue (locations, letterIndex) {
+    checkIfLetterHasSeparator (locations, letterIndex) {
         const spaces = locations[','];
         if (spaces && this.letterHasBoundary(spaces, letterIndex)) {
             return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-space';
@@ -28,11 +27,11 @@ export default class CluePreview extends React.Component {
 
     render () {
         return (
-            <div className={'crossword__anagram-helper__clue-preview ' + (this.props.entries.length >= 7 ? 'long' : '')}>
+            <div className={'crossword__anagram-helper__clue-preview ' + (this.props.entries.length >= 9 ? 'long' : '')}>
                 <div><strong>{this.props.clue.number} <span className="crossword__anagram-helper__direction">{this.props.clue.direction}</span></strong> {this.props.clue.clue}</div>
 
                 {_.map(this.props.entries, (entry, i) => {
-                    const classNames = this.getSeparatorLocationsForClue(this.props.clue.separatorLocations, i + 1);  //Separators are one indexed in CAPI, annoyingly
+                    const classNames = this.checkIfLetterHasSeparator(this.props.clue.separatorLocations, i + 1);  //Separators are one indexed in CAPI, annoyingly
                     const span = <span className={classNames + (entry.value ? 'has-value' : '')} key={i}>{entry.value}</span>;
                     return span;
                 })}
