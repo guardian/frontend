@@ -1,6 +1,5 @@
 package tools
 
-import com.amazonaws.services.elasticloadbalancing.model.DescribeLoadBalancersRequest
 import common.{Logging, AkkaAgent}
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import scala.collection.JavaConversions._
