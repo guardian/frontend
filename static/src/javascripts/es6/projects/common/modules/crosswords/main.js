@@ -549,7 +549,7 @@ class Crossword extends React.Component {
 
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
-                <div className='crossword__grid-view-container' ref='gridViewContainer'>
+                <div className='crossword__container__game' ref='gridViewContainer'>
                     <div className='crossword__sticky-clue-wrapper' ref='stickyClueWrapper'>
                         <div className='crossword__sticky-clue' ref='stickyClue'>
                             {focussedClue && (
@@ -561,7 +561,7 @@ class Crossword extends React.Component {
                             )}
                         </div>
                     </div>
-                    <div className='crossword__grid-wrapper'>
+                    <div className='crossword__container__grid-wrapper'>
                         <Grid
                             rows={this.rows}
                             columns={this.columns}

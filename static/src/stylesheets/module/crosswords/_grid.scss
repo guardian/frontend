@@ -3,7 +3,7 @@ $stickyClueLineHeight: 20;
 $stickyClueLines: 2;
 $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $stickyClueLines);
 
-.crossword__grid-view-container {
+.crossword__container__game {
     position: relative;
     background-color: colour(neutral-8);
     // Placeholder for sticky clue
@@ -19,12 +19,12 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
 // Wrapper for .crossword__sticky-clue because fixed positioning doesn't play
 // well with CSS tables
 .crossword__sticky-clue-wrapper {
-    // Relative to parent, .crossword__grid-view-container
+    // Relative to parent, .crossword__container__game
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    // Position above sibling, .crossword__grid-wrapper, which has its own
+    // Position above sibling, .crossword__container__grid-wrapper, which has its own
     // stacking context
     z-index: 1;
     // Needs its own layer so we don't keep repainting when the top value is
@@ -51,7 +51,7 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
     height: $stickyClueHeight;
     border-bottom: 1px solid black;
     // The border needs to be included in the height because we use the height
-    // as padding on parent, .crossword__grid-view-container
+    // as padding on parent, .crossword__container__game
     box-sizing: border-box;
     padding-top: $stickyClueVerticalPadding;
     padding-bottom: $stickyClueVerticalPadding;
@@ -75,7 +75,7 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
     @include text-clamp(2, $stickyClueLineHeight);
 }
 
-.crossword__grid-wrapper {
+.crossword__container__grid-wrapper {
     position: relative;
 }
 
