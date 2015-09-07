@@ -1,0 +1,28 @@
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, groupCode: String)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@import views.html.fragments.thirdPartyLandingPage
+@import views.html.fragments.thirdPartyConditions
+
+@main(page, projectName = Option("identity")){
+}{
+<div class="identity-wrapper monocolumn-wrapper">
+
+    @thirdPartyLandingPage(groupCode)
+
+    <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl(s"/agree/${groupCode}", idRequest)" role="main" method="post">
+
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <button type="submit" class="submit-input" data-link-name="Continue" data-test-id="agree-button" tabindex="3">Continue</button>
+            </div>
+            <div class="fieldset__fields">
+                <div class="form__note">
+                    @thirdPartyConditions(Some(groupCode), false)
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+
+}

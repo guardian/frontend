@@ -56,7 +56,22 @@ object BlockquoteCleaner extends HtmlCleaner {
     quotedBlockquotes.foreach(wrapBlockquoteChildren)
     document
   }
+}
 
+object PullquoteCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    val pullquotes = document.getElementsByTag("aside").filter(_.hasClass("element-pullquote"))
+    val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
+    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing")).toString()
+
+    pullquotes.foreach { element: Element =>
+      element.prepend(openingQuoteSvg)
+      element.append(closingQuoteSvg)
+    }
+
+    document
+  }
 }
 
 case class R2VideoCleaner(article: Article) extends HtmlCleaner {

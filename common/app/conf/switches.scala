@@ -647,7 +647,7 @@ object Switches {
     "Feature",
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
@@ -917,15 +917,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABHighCommercialComponent = Switch(
-    "A/B Tests",
-    "ab-high-commercial-component",
-    "Switch for the High Commercial Component A/B test.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ABMembershipMessageUk = Switch(
     "A/B Tests",
     "ab-membership-message-uk",
@@ -1113,7 +1104,7 @@ object Switches {
     "no-bounce-indicator",
     "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = true
   )
 

@@ -53,7 +53,9 @@ object BodyCleaner {
         MembershipEventCleaner,
         BlockquoteCleaner,
         CmpParamCleaner,
-        ChaptersLinksCleaner
+        ChaptersLinksCleaner,
+        PullquoteCleaner,
+        CmpParamCleaner
       )
   }
 }

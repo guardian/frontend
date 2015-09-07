@@ -34,7 +34,7 @@ class SignoutControllerTest extends path.FreeSpec with ShouldMatchers with Mocki
   val signoutController = new SignoutController( returnUrlVerifier, conf, api, idRequestParser, signInService)
   val trackingData = mock[TrackingData]
 
-  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None, Some(false))
+  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None, None, Some(false), false)
   when(idRequestParser.apply(anyObject())).thenReturn(identityRequest)
 
   "the signout method" - {

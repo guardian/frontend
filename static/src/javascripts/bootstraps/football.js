@@ -42,7 +42,7 @@ define([
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav).first().each(function (nav) {
                     if (match.id || $('.tabs__tab', nav).length > 2) {
-                        $('.js-football-tabs').append(nav);
+                        $('.js-sport-tabs').append(nav);
                     }
                 });
             }
