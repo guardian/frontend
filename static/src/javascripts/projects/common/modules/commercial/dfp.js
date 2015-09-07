@@ -115,6 +115,11 @@ define([
             }
         },
 
+        isAdfreeSurvey = function (variant) {
+            return ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
+                && ab.getParticipations().DisableAdsSurvey.variant === variant;
+        },
+
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
         }),
@@ -295,8 +300,9 @@ define([
             // show sponsorship placeholder if adblock detected
             showSponsorshipPlaceholder();
 
-            //TODO if AB test append hidden survey overlay
-            addSurveyOverlay();
+            if (isAdfreeSurvey('variant')) {
+                addSurveyOverlay();
+            }
 
             return dfp;
         },
@@ -433,10 +439,8 @@ define([
                 if (callbacks[size]) {
                     callbacks[size](event, $slot);
                 }
-                console.log(size);
 
-                //TODO if AB test append hidden survey overlay
-                if (size !== '1,1') {
+                if (isAdfreeSurvey('variant') && size !== '1,1') {
                     showAdsFreeSurvey(size, $slot);
                 }
 
@@ -469,10 +473,11 @@ define([
             }
         },
         addLabel = function ($slot) {
-            //TODO if in AB test
             fastdom.write(function () {
+                var adSlotClass = isAdfreeSurvey('variant') ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
+
                 if (shouldRenderLabel($slot)) {
-                    $slot.prepend('<div class="ad-slot__label ad-slot__survey" data-test-id="ad-slot-label">Advertisement</div>');
+                    $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
                 }
             });
         },

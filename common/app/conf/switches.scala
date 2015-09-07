@@ -946,7 +946,7 @@ object Switches {
 
   val ABDisableAdsSurvey = Switch(
     "A/B Tests",
-    "ab-disable-ad-survey",
+    "ab-disable-ads-survey",
     "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
     safeState = Off,
     sellByDate = new LocalDate(2015, 10, 1),

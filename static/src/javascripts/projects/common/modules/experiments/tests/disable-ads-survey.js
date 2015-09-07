@@ -1,20 +1,6 @@
-define([
-    'common/utils/_',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/template',
-    'common/views/svgs',
-    'common/modules/adblock-banner'
-], function (
-    _,
-    config,
-    detect,
-    template,
-    svgs,
-    AdblockBanner
-) {
-    return function () {
+define(function () {
 
+    return function () {
         this.id = 'DisableAdsSurvey';
         this.start = '2015-09-01';
         this.expiry = '2015-10-01';
@@ -35,13 +21,11 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    console.log('DisableAdsSurvey');
                 }
             },
             {
                 id: 'challenger',
                 test: function () {
-                    /*TODO variant with just a link*/
                 }
             },
             {
@@ -51,3 +35,4 @@ define([
         ];
     };
 });
+
