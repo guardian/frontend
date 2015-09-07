@@ -34,16 +34,21 @@ describe('Performance tracking', () => {
 });
 
 function MockGoogleTag() {
+    /*eslint-disable camelcase*/
     this.debug_log = {
         log : noop
     };
+    /*eslint-enable camelcase*/
+
     this.pubads = () => ({
         addEventListener : noop
     });
 
+    /*jscs:disable disallowEmptyBlocks*/
     function noop() {
         // does nothing
     }
+    /*jscs:enable disallowEmptyBlocks*/
 }
 
 function mimicGoogletagLogCall(logger) {

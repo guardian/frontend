@@ -103,9 +103,11 @@ describe('DFP', function () {
                 enableServices: sinon.spy(),
                 display: sinon.spy()
             };
+            //jscs:disable disallowEmptyBlocks
             ophanTracking.trackPerformance = ()=> {
                 // noop
             };
+            //jscs:enable disallowEmptyBlocks
 
             done();
         });
