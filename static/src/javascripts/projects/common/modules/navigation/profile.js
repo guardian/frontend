@@ -28,6 +28,7 @@ define([
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
         this.dom.register = document.body.querySelector('.' + Profile.CONFIG.classes.register);
+        this.dom.profileLink = document.body.querySelector('.' + Profile.CONFIG.classes.container + ' .' + Profile.CONFIG.classes.action);
     }
 
     /** @type {Object.<string.*>} */
@@ -37,7 +38,8 @@ define([
             container: 'js-profile-nav',
             content: 'js-profile-info',
             popup: 'js-profile-popup',
-            register: 'js-profile-register'
+            register: 'js-profile-register',
+            action: 'brand-bar__item--action'
         }
     };
 
@@ -59,7 +61,8 @@ define([
             $container = bonzo(this.dom.container),
             $content = bonzo(this.dom.content),
             $popup = bonzo(this.dom.popup),
-            $register = bonzo(this.dom.register);
+            $register = bonzo(this.dom.register),
+            $profileLink = bonzo(this.dom.profileLink);
 
         if (user) {
             // Run this code only if we haven't already inserted
@@ -81,6 +84,12 @@ define([
                     this.menuListItem('Sign out', this.opts.url + '/signout') +
                     '</ul>'
             );
+        }
+
+        if (!$profileLink.hasClass('popup__toggle')) {
+            fastdom.write(function () {
+                $profileLink.addClass('popup__toggle')
+            });
         }
 
         this.emitLoadedEvent(user);
