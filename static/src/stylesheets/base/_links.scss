@@ -21,3 +21,8 @@ a[name] {
     display: inline-block;
     width: 0px;
 }
+
+.anchor-link-fix {
+    padding-top: $gs-baseline*4.5;
+    margin-top: $gs-baseline*-4.5;
+}
