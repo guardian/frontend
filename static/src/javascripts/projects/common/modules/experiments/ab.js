@@ -10,8 +10,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/adblock-sticky-banner',
-    'common/modules/experiments/tests/rugby'
+    'common/modules/experiments/tests/adblock-sticky-banner'
 ], function (
     reportError,
     _,
@@ -24,8 +23,7 @@ define([
     HighCommercialComponent,
     MembershipMessageUK,
     MembershipMessageUSA,
-    AdblockStickyBanner,
-    Rugby
+    AdblockStickyBanner
 ) {
 
     var TESTS = _.flatten([
@@ -33,8 +31,7 @@ define([
         new HighCommercialComponent(),
         new MembershipMessageUK(),
         new MembershipMessageUSA(),
-        new AdblockStickyBanner(),
-        new Rugby()
+        new AdblockStickyBanner()
     ]);
 
     var participationsKey = 'gu.ab.participations';

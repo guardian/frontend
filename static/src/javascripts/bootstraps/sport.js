@@ -84,10 +84,12 @@ define([
 
     function init()  {
         cricket();
+        if(config.switches.rugbyWorldCup) {
+            rugby();
+        }
     }
 
     return {
-        init: init,
-        rugby: rugby
+        init: init
     };
 });
