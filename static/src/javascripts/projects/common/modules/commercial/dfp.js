@@ -110,6 +110,7 @@ define([
                 });
             }
         },
+        renderStartTime = null,
 
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
@@ -119,7 +120,7 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            dfpOphanTracking.attachListeners(googletag);
+            dfpOphanTracking.trackPerformance(googletag, renderStartTime);
 
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
@@ -256,6 +257,9 @@ define([
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
 
+            window.googletag.cmd.push(function () {
+                renderStartTime = new Date().getTime();
+            });
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);

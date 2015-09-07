@@ -180,6 +180,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     display: block;
     padding: 0;
     height: $btn-height + 2px;
+    width: $btn-height + 2px;
     @include fs-textSans(2);
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
