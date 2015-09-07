@@ -540,15 +540,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val CreativeTemplatesInS3 = Switch(
-    "Commercial",
-    "creative-templates-in-s3",
-    "Stores DFP creative template data in S3.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
-    exposeClientSide = false
-  )
-
   val KruxVideoTracking = Switch(
     "Commercial",
     "krux-video-tracking",
