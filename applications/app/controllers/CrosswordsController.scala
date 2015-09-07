@@ -78,7 +78,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results match {
             case Nil =>
-              Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+              NoCache(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
 
             case results =>
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
