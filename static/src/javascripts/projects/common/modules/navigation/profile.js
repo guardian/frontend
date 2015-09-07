@@ -88,7 +88,7 @@ define([
 
         if (!$profileLink.hasClass('popup__toggle')) {
             fastdom.write(function () {
-                $profileLink.addClass('popup__toggle')
+                $profileLink.addClass('popup__toggle');
             });
         }
 
