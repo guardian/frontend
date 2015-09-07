@@ -6,8 +6,9 @@ import actions.AuthenticatedActions.AuthRequest
 import client.Logging
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
+import play.api.mvc.Results._
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
-import play.api.mvc.{ActionRefiner, RequestHeader, Results}
+import play.api.mvc.{Result, RequestHeader, ActionRefiner, Results}
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -30,6 +31,8 @@ class AuthenticatedActions @Inject()(authService: AuthenticationService, identit
   def sendUserToReauthenticate(request: RequestHeader) = redirectWithReturn(request, "/reauthenticate")
 
   def authAction = new AuthenticatedBuilder(authService.authenticatedUserFor(_), sendUserToSignin)
+
+  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result) = new AuthenticatedBuilder(authService.authenticatedUserFor(_), unAuthorizedCallback)
 
   def apiVerifiedUserRefiner() = new ActionRefiner[AuthRequest, AuthRequest] {
     def refine[A](request: AuthRequest[A]) = for (meResponse <- identityApiClient.me(request.user.auth)) yield {
