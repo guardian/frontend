@@ -5,7 +5,6 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
 
 .crossword__container__game {
     position: relative;
-    background-color: colour(neutral-8);
     // Placeholder for sticky clue
     padding-top: $stickyClueHeight;
 
