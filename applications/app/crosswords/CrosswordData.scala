@@ -74,5 +74,3 @@ case class CrosswordData(
   pdf: Option[String],
   instructions: Option[String]
 )
-
-
