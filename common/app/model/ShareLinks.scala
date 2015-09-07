@@ -3,7 +3,6 @@ package model
 import java.net.URLEncoder
 
 import common.`package`._
-import conf.Configuration.facebook.{ appId => facbookAppId }
 
 case class ShareLink (
   text: String,
@@ -32,22 +31,15 @@ trait ShareLinks { self: Content =>
     }
 
     shareType match {
-      case "facebook" =>
-        val imageUrl = mediaPath.map(_.urlEncoded).map(url => s"&picture=$url").getOrElse("")
-        Some(ShareLink(
-        "Facebook", "facebook",
-        "Share on Facebook",
-        s"https://www.facebook.com/dialog/share?app_id=${facbookAppId}&href=$facebook&redirect_uri=${shortLinkUrl.urlEncoded}$imageUrl")
-        )
-
-      case "twitter"  =>
+      case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
+      case "twitter"  => {
         val text = if (this.isClimateChangeSeries) {
           s"${title.urlEncoded} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
         } else {
           title.urlEncoded
         }
         Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=$text&url=$twitter"))
-
+      }
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
