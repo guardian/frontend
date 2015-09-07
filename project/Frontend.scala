@@ -103,11 +103,9 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      postgres,
       paClient,
       dfpAxis,
       anormModule,
-      jdbc,
       bootstrap,
       jquery,
       jqueryui,

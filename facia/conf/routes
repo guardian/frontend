@@ -13,6 +13,7 @@ GET        /_agentcontents                                             controlle
 
 GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")
 GET        /rockabox/rockabox_buster.html                              controllers.Assets.at(path="/public", file="rockabox_buster.html")
+GET        /external/eyeblaster/addineyeV2.html                        controllers.Assets.at(path="/public", file="addineyeV2.html")
 
 # Editionalised redirects
 # TODO we should get rid of these. we should not have to add these manually here as routes
