@@ -440,7 +440,7 @@ import collection.JavaConversions._
         import browser._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
-        val fbShareUrl = "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&ref=responsive"
+        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
 
@@ -449,16 +449,6 @@ import collection.JavaConversions._
         findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should be(fbShareUrl)
         findFirst(".social__item[data-link-name=twitter] .social__action").getAttribute("href") should be(twitterShareUrl)
         findFirst(".social__item[data-link-name=gplus] .social__action").getAttribute("href") should be(gplusShareUrl)
-      }
-
-      Given("I want to track the responsive share buttons using Facebook Insights")
-
-      goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
-
-        val fbShareTrackingToken = "ref=responsive"
-
-        Then("I should pass Facebook a tracking token")
-        browser.findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should include(fbShareTrackingToken)
       }
     }
 
