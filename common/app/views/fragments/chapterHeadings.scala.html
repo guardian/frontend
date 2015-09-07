@@ -1,6 +1,8 @@
 @(content: model.Article)(implicit request: RequestHeader)
 
-@if(content.chapterHeadings.size > 2) {
+@import conf.Switches._
+
+@if(ChapterHeadingsSwitch.isSwitchedOn && content.chapterHeadings.size > 2) {
     <div class="chapters">
         <span class="chapters__heading">Contents</span>
         <ol>

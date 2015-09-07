@@ -643,6 +643,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val ChapterHeadingsSwitch = Switch(
+    "Feature",
+    "chapter-headings",
+    "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val NotificationsSwitch = Switch(
     "Feature",
     "notifications",
