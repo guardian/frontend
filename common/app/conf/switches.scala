@@ -647,7 +647,7 @@ object Switches {
     "Feature",
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
