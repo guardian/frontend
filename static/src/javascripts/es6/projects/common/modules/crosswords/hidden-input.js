@@ -2,6 +2,7 @@ import React from 'react';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 
+import $ from 'common/utils/$';
 import scroller from 'common/utils/scroller';
 import detect from 'common/utils/detect';
 
@@ -20,7 +21,7 @@ export default class HiddenInput extends React.Component {
         if (detect.isBreakpoint({ max: 'mobile' })) {
             fastdom.read(function () {
                 const offsets = bonzo(React.findDOMNode(this.refs.input)).offset();
-                scroller.scrollTo(offsets.top - (offsets.height * 1.5), 250, 'easeOutQuad');
+                scroller.scrollTo(offsets.top - (offsets.height * 1.5) - $('.crossword__sticky-clue').offset().height, 250, 'easeOutQuad');
             }.bind(this));
         }
     }

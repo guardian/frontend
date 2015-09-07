@@ -3,9 +3,11 @@
 import React from 'react';
 import bonzo from 'bonzo';
 import bean from 'bean';
+import fastdom from 'fastdom';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
+import mediator from 'common/utils/mediator';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
 
@@ -72,6 +74,44 @@ class Crossword extends React.Component {
                 firstClue.direction
             );
         }
+
+        // Sticky clue
+        const $stickyClueWrapper = $(React.findDOMNode(this.refs.stickyClueWrapper));
+        const $grid = $(React.findDOMNode(this.refs.grid));
+        const $gridViewContainer = $(React.findDOMNode(this.refs.gridViewContainer));
+
+        mediator.on('window:throttledScroll', () => {
+            fastdom.write(() => {
+                // Clear previous state
+                $stickyClueWrapper
+                    .css('top', '')
+                    .css('bottom', '')
+                    .removeClass('is-fixed');
+
+                const { scrollY } = window;
+                const scrollYPastGridViewContainer = scrollY - $gridViewContainer.offset().top;
+
+                if (scrollYPastGridViewContainer >= 0) {
+                    const crosswordOffset = $grid.offset();
+                    const crosswordOffsetBottom = crosswordOffset.top + crosswordOffset.height;
+
+                    if (scrollY > (crosswordOffsetBottom - $stickyClueWrapper.offset().height)) {
+                        $stickyClueWrapper
+                            .css('top', 'auto')
+                            .css('bottom', 0);
+                    } else {
+                        // iOS doesn't support sticky things when the keyboard
+                        // is open, so we use absolute positioning and
+                        // programatically update the value of top
+                        if (detect.isIOS()) {
+                            $stickyClueWrapper.css('top', scrollYPastGridViewContainer);
+                        } else {
+                            $stickyClueWrapper.addClass('is-fixed');
+                        }
+                    }
+                }
+            });
+        });
     }
 
     componentDidUpdate (prevProps, prevState) {
@@ -505,30 +545,45 @@ class Crossword extends React.Component {
             <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
+        const focussedClue = this.clueInFocus();
+
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
-                <div className='crossword__grid-wrapper'>
-                    <Grid
-                        rows={this.rows}
-                        columns={this.columns}
-                        cells={this.state.grid}
-                        separators={helpers.buildSeparatorMap(this.props.data.entries)}
-                        setCellValue={this.setCellValue}
-                        onSelect={this.onSelect}
-                        isHighlighted={isHighlighted}
-                        focussedCell={this.state.cellInFocus}
-                        ref='grid'
-                    />
-                    <HiddenInput
-                        onChange={this.insertCharacter}
-                        onClick={this.onClickHiddenInput}
-                        onKeyDown={this.onKeyDown}
-                        onBlur={this.goToReturnPosition}
-                        value={this.hiddenInputValue()}
-                        ref='hiddenInputComponent'
-                    />
+                <div className='crossword__grid-view-container' ref='gridViewContainer'>
+                    <div className='crossword__sticky-clue-wrapper' ref='stickyClueWrapper'>
+                        <div className='crossword__sticky-clue' ref='stickyClue'>
+                            {focussedClue && (
+                                <div className='crossword__sticky-clue__inner'>
+                                    <div className='crossword__sticky-clue__inner__inner'>
+                                        <strong>{focussedClue.number} <span className='crossword__sticky-clue__direction'>{focussedClue.direction}</span></strong> {focussedClue.clue}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className='crossword__grid-wrapper'>
+                        <Grid
+                            rows={this.rows}
+                            columns={this.columns}
+                            cells={this.state.grid}
+                            separators={helpers.buildSeparatorMap(this.props.data.entries)}
+                            setCellValue={this.setCellValue}
+                            onSelect={this.onSelect}
+                            isHighlighted={isHighlighted}
+                            focussedCell={this.state.cellInFocus}
+                            ref='grid'
+                        />
+                        <HiddenInput
+                            onChange={this.insertCharacter}
+                            onClick={this.onClickHiddenInput}
+                            onKeyDown={this.onKeyDown}
+                            onBlur={this.goToReturnPosition}
+                            value={this.hiddenInputValue()}
+                            ref='hiddenInputComponent'
+                        />
 
-                    {anagramHelper}
+                        {anagramHelper}
+                    </div>
                 </div>
 
                 <Controls
