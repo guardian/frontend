@@ -534,9 +534,9 @@ object Switches {
   val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
     "fixed-top-above-nav",
-    "Fixes size of top-above-nav ad slot on UK network front.",
+    "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
+    sellByDate = new LocalDate(2015, 10, 7),
     exposeClientSide = false
   )
 
