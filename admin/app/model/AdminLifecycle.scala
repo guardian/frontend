@@ -23,7 +23,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       model.abtests.AbTestJob.run()
     }
 
-    Jobs.schedule("LoadBalancerLoadJob", "* 0/15 * * * ?") {
+    Jobs.schedule("LoadBalancerLoadJob", "0 4/15 * * * ?") {
       LoadBalancer.refresh()
     }
 
@@ -58,10 +58,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
       OmnitureReportJob.run()
-    }
-
-    Jobs.schedule("SentryReportJob", "0 */5 * * * ?") {
-      SentryReportJob.run()
     }
 
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
@@ -119,7 +115,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       RebuildIndexJob.run()
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
-      SentryReportJob.run()
       VideoEncodingsJob.run()
     }
   }

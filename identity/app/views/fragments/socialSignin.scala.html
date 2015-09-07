@@ -1,14 +1,15 @@
 @(route: views.SocialSigninRoutes, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
 
 @import conf.Switches.IdentitySocialOAuthSwitch
+@import utils.ThirdPartyConditions
 
 <ul class="social-signin">
     <li class="social-signin__item">
         <a class="social-signin__action social-signin__action--fb"
             data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in"
             href="@if(IdentitySocialOAuthSwitch.isSwitchedOn) {
-                    @idUrlBuilder.buildOAuthUrl("/facebook/" + route.facebook.path, idRequest)
-                } else {
+                    @idUrlBuilder.buildOAuthUrl("/facebook/" + route.facebook.path, idRequest, ThirdPartyConditions.agreeUrlParamOpt(idRequest, idUrlBuilder))
+            } else {
                     @idUrlBuilder.buildWebappUrl("/facebook/" + route.facebook.path, idRequest)
                 }
             ">
@@ -20,7 +21,7 @@
         <a class="social-signin__action social-signin__action--gplus"
             data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
             href="@if(IdentitySocialOAuthSwitch.isSwitchedOn) {
-                    @idUrlBuilder.buildOAuthUrl("/google/" + route.google.path, idRequest)
+                    @idUrlBuilder.buildOAuthUrl("/google/" + route.google.path, idRequest, ThirdPartyConditions.agreeUrlParamOpt(idRequest, idUrlBuilder))
                 } else {
                     @idUrlBuilder.buildWebappUrl("/google/" + route.google.path, idRequest)
                 }
