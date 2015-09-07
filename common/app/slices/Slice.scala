@@ -431,6 +431,35 @@ case object Hl4Half extends Slice {
   )
 }
 
+/* ._________________._________________.
+ * |_###_____________|                 |
+ * |_###_____________|     MPU         |
+ * |_###_____________|_________________|
+ */
+/*
+* The order of this sequence is important.
+* We use flex-direction(row-reverse) to maintain DOM hierarchy whilst having correct visual ordering.
+* */
+case object Hl3Mpu extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "hl3-mpu",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 3,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = MediaList
+        )
+      ),
+      MPU(
+        colSpan = 1
+      )
+    )
+  )
+}
+
 /** This is not actually used but is a reflection of Hl4Half, for the thumbnail display in the tool */
 object HalfHl4 extends Slice {
   val layout = Hl4Half.layout.copy(

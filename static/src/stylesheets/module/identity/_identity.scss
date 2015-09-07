@@ -349,13 +349,14 @@
 .email-subscription__meta {
     margin-top: $gs-baseline;
 }
+
 .email-subscription__frequency {
     @include fs-textSans(1);
     float: right;
     margin-bottom: $gs-baseline/1.5;
     margin-top: $gs-baseline/1.5;
 
-    .i {
+    .inline-icon {
         margin-right: $gs-gutter/4;
         vertical-align: text-top;
     }
