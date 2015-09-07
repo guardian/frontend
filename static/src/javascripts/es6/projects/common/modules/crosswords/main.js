@@ -4,6 +4,7 @@ import React from 'react';
 import bonzo from 'bonzo';
 import bean from 'bean';
 import fastdom from 'fastdom';
+import classNames from 'classnames';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
@@ -551,7 +552,12 @@ class Crossword extends React.Component {
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
                 <div className='crossword__container__game' ref='gridViewContainer'>
                     <div className='crossword__sticky-clue-wrapper' ref='stickyClueWrapper'>
-                        <div className='crossword__sticky-clue' ref='stickyClue'>
+                        <div
+                            className={classNames({
+                                'crossword__sticky-clue': true,
+                                'is-hidden': !focussedClue
+                            })}
+                            ref='stickyClue'>
                             {focussedClue && (
                                 <div className='crossword__sticky-clue__inner'>
                                     <div className='crossword__sticky-clue__inner__inner'>
