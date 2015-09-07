@@ -23,7 +23,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/analytics/omniture',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool'
 ], function (
@@ -37,7 +36,6 @@ define([
     detect,
     mediator,
     template,
-    omniture,
     userPrefs,
     SearchTool
     ) {
