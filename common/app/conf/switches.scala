@@ -549,6 +549,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  val AdFreeExperience = Switch(
+    "Commercial",
+    "advert-opt-out",
+    "Display advert free experience",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
 
   // Monitoring
 
