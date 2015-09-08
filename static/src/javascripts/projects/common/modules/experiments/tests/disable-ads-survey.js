@@ -1,7 +1,11 @@
 define([
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/config',
+    'common/modules/adfree-trash'
 ], function (
-   $
+   $,
+   config,
+   AdfreeTrash
 ) {
     return function () {
 
@@ -25,7 +29,19 @@ define([
             {
                 id: 'variant',
                 test: function () {
+                    var $container;
+
+                    if (config.page.isFront) {
+                        $container = $('.js-container--first');
+                    } else if (config.page.contentType === "Article") {
+                        $container = $('.fc-container').last();
+                    }
+                    
+                    new AdfreeTrash({
+                        $container: $container
+                    }).show();
                 }
+                    //$('.js-container--first').insertAfter('.js-container--first');
             },
             {
                 id: 'challenger',

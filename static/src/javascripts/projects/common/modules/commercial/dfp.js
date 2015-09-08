@@ -471,7 +471,6 @@ define([
         addLabel = function ($slot) {
             fastdom.write(function () {
                 var adSlotClass = isAdfreeSurvey('variant') ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
-                console.log(isAdfreeSurvey('variant'), adSlotClass);
 
                 if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
