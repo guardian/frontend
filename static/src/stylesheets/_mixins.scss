@@ -251,3 +251,11 @@
 
     @return $width;
 }
+
+@mixin content-gutter {
+    padding: 0 $gs-gutter/2;
+
+    @include mq(mobileLandscape) {
+        padding: 0 $gs-gutter;
+    }
+}

@@ -80,7 +80,7 @@ linters:
 
   PropertySpelling:
     enabled: true
-    extra_properties: []
+    extra_properties: ['will-change']
 
   SelectorDepth:
     enabled: true

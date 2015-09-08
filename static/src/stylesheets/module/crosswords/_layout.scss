@@ -14,7 +14,7 @@
             }
         }
 
-        .crossword__grid-wrapper {
+        .crossword__container__game {
             @include mq(tablet) {
                 margin-left: 0 - $size;
                 width: $size;
