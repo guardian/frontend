@@ -853,43 +853,6 @@
 
 }
 
-.gu-style-commcontent {
-    background-color: colour(neutral-8);
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-    color: colour(neutral-2);
-
-    a {
-        color: colour(neutral-2);
-    }
-
-    .creative__article__title {
-        @include f-headlineSans;
-        @include font-size(16, 20);
-        padding: $gs-baseline / 2;
-        text-align: left;
-    }
-
-    .creative__article__text {
-        @include f-textSans;
-        @include font-size(14, 18);
-        text-align: left;
-        padding: $gs-baseline / 2;
-        margin: 0;
-    }
-
-    .creative__article__image {
-        width: 100%;
-    }
-
-    .creative__article__image-container {
-        max-height: 180px;
-        overflow: hidden;
-    }
-
-}
-
 @keyframes textanimation {
     0% {
         background-position: 0 -250px;
