@@ -49,7 +49,7 @@ object Cached extends implicits.Dates {
 }
 
 object NoCache {
-  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache, no-store, must-revalidate, max-age=0", "Pragma" -> "no-cache")
 }
 
 case class NoCache[A](action: Action[A]) extends Action[A] {
@@ -58,7 +58,7 @@ case class NoCache[A](action: Action[A]) extends Action[A] {
 
     action(request) map { response =>
       response.withHeaders(
-        ("Cache-Control", "no-cache, no-store, must-revalidate"),
+        ("Cache-Control", "no-cache, no-store, must-revalidate, max-age=0"),
         ("Pragma", "no-cache"),
         ("Expires", "0")
       )
