@@ -23,9 +23,28 @@
         color: #6e6e6e;
     }
 
-    &.top-slot {
+    .ad-slot--top-above-nav &,
+    .ad-slot--merchandising-high &,
+    .ad-slot--merchandising & {
         top: 0;
         right: percentage(1/2);
+    }
+
+    .ad-slot--merchandising-high &,
+    .ad-slot--merchandising & {
+        top: 4px;
+    }
+
+    .ad-slot--gallery-inline & {
+        color: colour(neutral-3);
+
+        .inline-icon {
+            fill: colour(neutral-3);
+        }
+
+        .ad-slot--hide-ads {
+            color: colour(neutral-3);
+        }
     }
 }
 

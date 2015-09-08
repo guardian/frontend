@@ -250,10 +250,6 @@ define([
                     $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').attr('data-link-name', 'hide ads')
                         .append('<a href="#" class="ad-slot--hide-ads" data-link-name="hide adslot: ' + size + '">Hide ads ' + crossIcon + '</a>').appendTo($adSlot);
 
-                if ($adSlot.hasClass('ad-slot--top-above-nav')) {
-                    $adSlotRemove.addClass('top-slot');
-                }
-
                 bean.on(document, 'click', $adSlotRemove, function (e) {
                     e.preventDefault();
                     $('.js-survey-overlay').removeClass('u-h');
@@ -475,6 +471,7 @@ define([
         addLabel = function ($slot) {
             fastdom.write(function () {
                 var adSlotClass = isAdfreeSurvey('variant') ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
+                console.log(isAdfreeSurvey('variant'), adSlotClass);
 
                 if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
