@@ -80,6 +80,7 @@ class Crossword extends React.Component {
         const $stickyClueWrapper = $(React.findDOMNode(this.refs.stickyClueWrapper));
         const $grid = $(React.findDOMNode(this.refs.grid));
         const $gridViewContainer = $(React.findDOMNode(this.refs.gridViewContainer));
+        const isIOS = detect.isIOS();
 
         mediator.on('window:throttledScroll', () => {
             fastdom.write(() => {
@@ -104,7 +105,7 @@ class Crossword extends React.Component {
                         // iOS doesn't support sticky things when the keyboard
                         // is open, so we use absolute positioning and
                         // programatically update the value of top
-                        if (detect.isIOS()) {
+                        if (isIOS) {
                             $stickyClueWrapper.css('top', scrollYPastGridViewContainer);
                         } else {
                             $stickyClueWrapper.addClass('is-fixed');
@@ -546,8 +547,6 @@ class Crossword extends React.Component {
             <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
-        const focussedClue = this.clueInFocus();
-
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
                 <div className='crossword__container__game' ref='gridViewContainer'>
@@ -555,13 +554,13 @@ class Crossword extends React.Component {
                         <div
                             className={classNames({
                                 'crossword__sticky-clue': true,
-                                'is-hidden': !focussedClue
+                                'is-hidden': !focussed
                             })}
                             ref='stickyClue'>
-                            {focussedClue && (
+                            {focussed && (
                                 <div className='crossword__sticky-clue__inner'>
                                     <div className='crossword__sticky-clue__inner__inner'>
-                                        <strong>{focussedClue.number} <span className='crossword__sticky-clue__direction'>{focussedClue.direction}</span></strong> {focussedClue.clue}
+                                        <strong>{focussed.number} <span className='crossword__sticky-clue__direction'>{focussed.direction}</span></strong> {focussed.clue}
                                     </div>
                                 </div>
                             )}
