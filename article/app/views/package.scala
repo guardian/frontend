@@ -52,6 +52,7 @@ object BodyCleaner {
         RichLinkCleaner,
         MembershipEventCleaner,
         BlockquoteCleaner,
+        PullquoteCleaner,
         CmpParamCleaner
       )
   }

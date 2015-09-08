@@ -3,7 +3,8 @@ package idapiclient
 import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User, SavedArticles}
 import client.{Anonymous, Auth, Response, Parameters}
 import client.connection.{Http, HttpResponse}
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future, ExecutionContext}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
@@ -167,6 +168,11 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
     post("user/send-validation-email", Some(auth), Some(trackingParameters)) map extractUnit
+
+  // THIRD PARTY SIGN-IN
+  def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
+    post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
+  }
 
   def post(apiPath: String,
            auth: Option[Auth] = None,

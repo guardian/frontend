@@ -23,7 +23,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       model.abtests.AbTestJob.run()
     }
 
-    Jobs.schedule("LoadBalancerLoadJob", "* 0/15 * * * ?") {
+    Jobs.schedule("LoadBalancerLoadJob", "0 4/15 * * * ?") {
       LoadBalancer.refresh()
     }
 

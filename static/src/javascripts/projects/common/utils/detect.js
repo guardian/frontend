@@ -235,7 +235,8 @@ define([
             });
         };
 
-        var woff2Candidacy = /(chrome|firefox)\/([0-9]+)/.exec(ua);
+        var isNotEdgeBrowser = !/edge\/([0-9]+)/.test(ua);
+        var woff2Candidacy = isNotEdgeBrowser && /(chrome|firefox)\/([0-9]+)/.exec(ua);
 
         if (!!woff2Candidacy && thisBrowserSupportsWoff2(woff2Candidacy)) {
             return 'woff2';

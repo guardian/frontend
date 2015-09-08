@@ -10,9 +10,9 @@ import scala.xml.{NodeSeq, XML}
 object Parser {
 
   private object Date {
-    private val dateTimeParser = DateTimeFormat.forPattern("yyyyMMdd")
+    private val dateTimeParser = DateTimeFormat.forPattern("yyyyMMdd HH:mm:ss")
 
-    def apply(dateTime: String) = dateTimeParser.parseDateTime(dateTime)
+    def apply(date: String, time: String) = dateTimeParser.parseDateTime(s"$date $time")
   }
 
   def parseLiveScores(body: String): Seq[Match] = {
@@ -34,7 +34,7 @@ object Parser {
       } yield {
 
         Match(
-          date = Date((game \ "@game_date").text),
+          date = Date((game \ "@game_date").text, (game \ "@time").text),
           id = (game \ "@id").text,
           homeTeam = homeTeam,
           awayTeam = awayTeam,
@@ -62,7 +62,7 @@ object Parser {
         awayTeam <- getTeamWithResult(teamNodes, teams, "away")
       } yield {
         Match(
-          date = Date((fixture \ "@game_date").text),
+          date = Date((fixture \ "@game_date").text, (fixture \ "@time").text),
           id = (fixture \ "@id").text,
           homeTeam = homeTeam,
           awayTeam = awayTeam,
