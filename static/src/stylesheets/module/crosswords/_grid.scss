@@ -45,9 +45,9 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
 }
 
 .crossword__sticky-clue {
-    background: white;
+    background: #ffffff;
     height: $stickyClueHeight;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #000000;
     // The border needs to be included in the height because we use the height
     // as padding on parent, .crossword__container__game
     box-sizing: border-box;
