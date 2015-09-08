@@ -12,7 +12,7 @@ object Jobs extends Logging {
   implicit val global = scala.concurrent.ExecutionContext.global
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
   private val jobs = mutable.Map[String, () => Unit]()
-  private val outstanding = Map[String,akka.agent.Agent[Int]]().withDefault(_=>akka.agent.Agent(0))
+  private val outstanding = mutable.Map[String,akka.agent.Agent[Int]]().withDefault(_=>akka.agent.Agent(0))
 
   class FunctionJob extends Job {
     def execute(context: JobExecutionContext) {
@@ -21,6 +21,7 @@ object Jobs extends Logging {
       if (outstanding(name).get() > 0) {
         log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
       } else {
+        outstanding.update(name,outstanding(name))
         outstanding(name).send(_ + 1)
         f()
         outstanding(name).send(_ - 1)
