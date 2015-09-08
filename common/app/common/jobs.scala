@@ -10,25 +10,23 @@ import play.api.Play
 import Play.current
 
 object Jobs extends Logging {
+  implicit val global = scala.concurrent.ExecutionContext.global
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
   private val jobs = mutable.Map[String, () => Unit]()
-  private val outstanding = mutable.Map[String,AtomicInteger]().withDefaultValue(new AtomicInteger(0))
+  private val outstanding = akka.agent.Agent(Map[String,Int]().withDefaultValue(0))
 
   class FunctionJob extends Job {
     def execute(context: JobExecutionContext) {
       val name = context.getJobDetail.getKey.getName
       val f = jobs(name)
-      val counter = outstanding(name)
-      if (counter.getAndIncrement() > 0) {
-        counter.decrementAndGet()
+      if (outstanding.get()(name) > 0) {
         log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
       } else {
+        outstanding.send(map => map.updated(name, map(name) + 1))
         try {
-          // need to save the value into the map
-          outstanding.update(name, counter)
           f()
         } finally {
-          counter.decrementAndGet()
+          outstanding.send(map => map.updated(name, map(name) - 1))
         }
       }
     }
