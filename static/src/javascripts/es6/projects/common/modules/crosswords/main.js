@@ -184,6 +184,7 @@ class Crossword extends React.Component {
     }
 
     moveFocus (deltaX, deltaY) {
+
         const cell = this.state.cellInFocus;
         const x = cell.x + deltaX;
         const y = cell.y + deltaY;
@@ -342,13 +343,22 @@ class Crossword extends React.Component {
         }
     }
 
+    clueIsInFocusGroup (clue) {
+        if (this.state.cellInFocus) {
+            const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
+            return _.contains(cluesForCell[this.state.directionOfEntry].group, clue.id);
+        } else {
+            return null;
+        }
+    }
+
     cluesData () {
         return _.map(this.props.data.entries, (entry) => ({
             entry: entry,
             hasAnswered: _.every(helpers.cellsForEntry(entry), (position) => {
                 return /^[A-Z]$/.test(this.state.grid[position.x][position.y].value);
             }),
-            isSelected: this.clueInFocus() === entry
+            isSelected: this.clueIsInFocusGroup(entry)
         }));
     }
 
