@@ -76,5 +76,35 @@ import scala.io.Source
       topTryScorer.head.player.team.id should be("550")
       topTryScorer.head.player.team.name should be("England")
     }
+
+    "should parse player stats correctly" in {
+      val liveEventsStatsData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/live-events-stats.xml")).mkString
+
+      val matchStat = rugby.feed.Parser.parseLiveEventsStatsToGetMatchStat(liveEventsStatsData)
+
+      matchStat.teams.size should be(2)
+      matchStat.teams.head.name should be("England")
+      matchStat.teams.head.players.size should be(23)
+      matchStat.teams.last.name should be("France")
+      matchStat.teams.last.players.size should be(23)
+
+      val firstEnglandPlayer = matchStat.teams.head.players.head
+
+      firstEnglandPlayer.id should be(475857)
+      firstEnglandPlayer.player_id should be(9486)
+      firstEnglandPlayer.kick.kick_from_hand_metres should be(137)
+      firstEnglandPlayer.lineout.lineout_throw_won_clean should be(1)
+      firstEnglandPlayer.collection.collection_success should be(6.00)
+      firstEnglandPlayer.tackles should be(1)
+      firstEnglandPlayer.minutes.minutes_played_total should be(49)
+
+      val lastFrancePlayer = matchStat.teams.last.players.last
+
+      lastFrancePlayer.player_id should be(19857)
+      lastFrancePlayer.turnover.turnover_won should be(1)
+      lastFrancePlayer.tackle_success should be(0.00)
+      
+
+    }
   }
 }
