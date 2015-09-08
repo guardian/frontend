@@ -42,7 +42,7 @@
         border-bottom: 0;
 
         .meta__number {
-            @include mq(desktop) {
+            @include mq(tablet) {
                 float: right;
                 border-left: 1px solid colour(neutral-5);
                 padding-left: $gs-gutter / 2;
@@ -63,7 +63,7 @@
         }
 
         .meta__social {
-            @include mq(desktop) {
+            @include mq(tablet) {
                 float: left;
                 position: relative;
                 z-index: 2;
