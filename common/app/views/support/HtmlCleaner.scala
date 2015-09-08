@@ -613,16 +613,14 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 
   override def clean(document: Document): Document = {
-    if(ChapterHeadingsSwitch.isSwitchedOn) {
-      val autoaChapters = document.getElementsByClass("auto-chapter")
+    val autoaChapters = document.getElementsByClass("auto-chapter")
 
-      autoaChapters.foreach { ch =>
-        val h2 = ch.getElementsByTag("h2")
-        h2.attr("id", slugify(h2.text()))
+    autoaChapters.foreach { ch =>
+      val h2 = ch.getElementsByTag("h2")
+      h2.attr("id", slugify(h2.text()))
 
-        if(Viewability.isSwitchedOn) {
-          h2.attr("class", "anchor-link-fix")
-        }
+      if(Viewability.isSwitchedOn) {
+        h2.attr("class", "anchor-link-fix")
       }
     }
     document
