@@ -30,7 +30,8 @@ define([
                 section      = this.getSection(),
                 widgetCode,
                 widgetCodeImage,
-                widgetCodeText;
+                widgetCodeText,
+                s = window.s;
 
             breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
@@ -73,6 +74,9 @@ define([
                     widgetCodeText  = widgetConfig[breakpoint].text[section];
                     $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
                 }
+
+                s.link2 = 'outbrain';
+                s.tl(true, 'o', 'outbrain');
 
                 require(['js!' + outbrainUrl]);
             });
