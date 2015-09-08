@@ -49,7 +49,7 @@ define([
             var scoreBoard = new ScoreBoard({
                 pageType: pageType,
                 parent: $h,
-                autoupdated: false,
+                autoupdated: config.page.isLive,
                 responseDataKey: 'matchSummary',
                 endpoint: config.page.rugbyMatch + '.json?page=' + encodeURIComponent(config.page.pageId)});
 
