@@ -56,10 +56,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       TravelOffersCacheJob.run()
     }
 
-    Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
-      OmnitureReportJob.run()
-    }
-
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
       MatchDayRecorder.record()
     }
@@ -94,7 +90,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
-    Jobs.deschedule("OmnitureReportJob")
     Jobs.deschedule("MatchDayRecorderJob")
     Jobs.deschedule("SentryReportJob")
     Jobs.deschedule("FrontPressJobHighFrequency")
@@ -114,7 +109,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     AkkaAsync {
       RebuildIndexJob.run()
       TravelOffersCacheJob.run()
-      OmnitureReportJob.run()
       VideoEncodingsJob.run()
     }
   }
