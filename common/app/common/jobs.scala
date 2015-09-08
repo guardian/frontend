@@ -12,7 +12,7 @@ import Play.current
 object Jobs extends Logging {
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
   private val jobs = mutable.Map[String, () => Unit]()
-  private val outstanding = mutable.Map[String,AtomicInteger]().withDefault(_=>new AtomicInteger(0))
+  private val outstanding = mutable.Map[String,AtomicInteger]().withDefaultValue(new AtomicInteger(0))
 
   class FunctionJob extends Job {
     def execute(context: JobExecutionContext) {
