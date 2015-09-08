@@ -35,3 +35,12 @@
 .crossword__clue--answered {
     color: colour(neutral-2);
 }
+
+.crossword__clue--display-group-order {
+
+    padding-left: 0px;
+
+    &:before {
+        position: relative;
+    }
+}

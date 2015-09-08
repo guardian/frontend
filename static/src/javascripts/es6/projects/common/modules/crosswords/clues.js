@@ -23,10 +23,11 @@ class Clue extends React.Component {
             <li className={classNames({
                     'crossword__clue': true,
                     'crossword__clue--answered': this.props.hasAnswered,
-                    'crossword__clue--selected': this.props.isSelected
+                    'crossword__clue--selected': this.props.isSelected,
+                    'crossword__clue--display-group-order' : JSON.stringify(this.props.number) !== this.props.displayNumber
                 })}
                 onClick={this.onClick}
-                value={parseInt(this.props.number, 10)}
+                value={this.props.displayNumber}
                 /* jscs:disable disallowDanglingUnderscores */
                 dangerouslySetInnerHTML={{__html: this.props.clue}}
                 /* jscs:enable disallowDanglingUnderscores */
@@ -44,7 +45,8 @@ export default class Clues extends React.Component {
             .map((clue) =>
                 <Clue
                     key={clue.entry.id}
-                    number={clue.entry.number + '.'}
+                    number={clue.entry.number}
+                    displayNumber={clue.entry.humanNumber}
                     clue={clue.entry.clue}
                     hasAnswered={clue.hasAnswered}
                     isSelected={clue.isSelected}
