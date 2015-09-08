@@ -82,7 +82,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _) => Right(Found(s"/$leftSide+$rightSide"))
+      case GuardianContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
     }).recover(convertApiExceptions)
 
   }
@@ -137,7 +137,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path"))
+      case GuardianContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
     }).recover(convertApiExceptions)
   }
 

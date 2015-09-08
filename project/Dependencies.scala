@@ -23,7 +23,7 @@ object Dependencies {
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val contentApiClient = "com.gu" %% "content-api-client" % "6.6"
+  val contentApiClient = "com.gu" %% "content-api-client" % "6.10"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.0.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
