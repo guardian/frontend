@@ -1,6 +1,7 @@
 package common
 
 import java.util.TimeZone
+import java.util.concurrent.atomic.AtomicInteger
 
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
@@ -9,22 +10,26 @@ import play.api.Play
 import Play.current
 
 object Jobs extends Logging {
-  implicit val global = scala.concurrent.ExecutionContext.global
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
   private val jobs = mutable.Map[String, () => Unit]()
-  private val outstanding = mutable.Map[String,akka.agent.Agent[Int]]().withDefault(_=>akka.agent.Agent(0))
+  private val outstanding = mutable.Map[String,AtomicInteger]().withDefault(_=>new AtomicInteger(0))
 
   class FunctionJob extends Job {
     def execute(context: JobExecutionContext) {
       val name = context.getJobDetail.getKey.getName
       val f = jobs(name)
-      if (outstanding(name).get() > 0) {
+      val counter = outstanding(name)
+      if (counter.getAndIncrement() > 0) {
+        counter.decrementAndGet()
         log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
       } else {
-        outstanding.update(name,outstanding(name))
-        outstanding(name).send(_ + 1)
-        f()
-        outstanding(name).send(_ - 1)
+        try {
+          // need to save the value into the map
+          outstanding.update(name, counter)
+          f()
+        } finally {
+          counter.decrementAndGet()
+        }
       }
     }
   }
