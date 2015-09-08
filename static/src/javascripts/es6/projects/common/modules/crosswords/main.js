@@ -79,10 +79,15 @@ class Crossword extends React.Component {
         // Sticky clue
         const $stickyClueWrapper = $(React.findDOMNode(this.refs.stickyClueWrapper));
         const $grid = $(React.findDOMNode(this.refs.grid));
-        const $gridViewContainer = $(React.findDOMNode(this.refs.gridViewContainer));
+        const $game = $(React.findDOMNode(this.refs.game));
         const isIOS = detect.isIOS();
 
         mediator.on('window:throttledScroll', () => {
+            const gridOffset = $grid.offset();
+            const gameOffset = $game.offset();
+            const stickyClueWrapperOffset = $stickyClueWrapper.offset();
+            const { scrollY } = window;
+
             fastdom.write(() => {
                 // Clear previous state
                 $stickyClueWrapper
@@ -90,14 +95,12 @@ class Crossword extends React.Component {
                     .css('bottom', '')
                     .removeClass('is-fixed');
 
-                const { scrollY } = window;
-                const scrollYPastGridViewContainer = scrollY - $gridViewContainer.offset().top;
+                const scrollYPastGame = scrollY - gameOffset.top;
 
-                if (scrollYPastGridViewContainer >= 0) {
-                    const crosswordOffset = $grid.offset();
-                    const crosswordOffsetBottom = crosswordOffset.top + crosswordOffset.height;
+                if (scrollYPastGame >= 0) {
+                    const gridOffsetBottom = gridOffset.top + gridOffset.height;
 
-                    if (scrollY > (crosswordOffsetBottom - $stickyClueWrapper.offset().height)) {
+                    if (scrollY > (gridOffsetBottom - stickyClueWrapperOffset.height)) {
                         $stickyClueWrapper
                             .css('top', 'auto')
                             .css('bottom', 0);
@@ -106,7 +109,7 @@ class Crossword extends React.Component {
                         // is open, so we use absolute positioning and
                         // programatically update the value of top
                         if (isIOS) {
-                            $stickyClueWrapper.css('top', scrollYPastGridViewContainer);
+                            $stickyClueWrapper.css('top', scrollYPastGame);
                         } else {
                             $stickyClueWrapper.addClass('is-fixed');
                         }
@@ -549,7 +552,7 @@ class Crossword extends React.Component {
 
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
-                <div className='crossword__container__game' ref='gridViewContainer'>
+                <div className='crossword__container__game' ref='game'>
                     <div className='crossword__sticky-clue-wrapper' ref='stickyClueWrapper'>
                         <div
                             className={classNames({
