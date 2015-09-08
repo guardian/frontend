@@ -246,16 +246,16 @@ define([
         },
         showAdsFreeSurvey = function (size, $adSlot) {
             fastdom.write(function () {
-                /*if (ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
-                 && ab.getParticipations().DisableAdsSurvey.variant === 'variant') {*/
                 var crossIcon = svgs('crossIcon'),
-                    $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').append('<span class="ad-slot--hide-ads">Hide ads</span>').append(crossIcon).appendTo($adSlot);
+                    $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').attr('data-link-name', 'hide ads')
+                        .append('<a href="#" class="ad-slot--hide-ads" data-link-name="hide adslot: ' + size + '">Hide ads ' + crossIcon + '</a>').appendTo($adSlot);
 
                 if ($adSlot.hasClass('ad-slot--top-above-nav')) {
                     $adSlotRemove.addClass('top-slot');
                 }
 
-                bean.on(document, 'click', $adSlotRemove, function () {
+                bean.on(document, 'click', $adSlotRemove, function (e) {
+                    e.preventDefault();
                     $('.js-survey-overlay').removeClass('u-h');
                 });
             });

@@ -1,6 +1,10 @@
-define(function () {
-
+define([
+    'common/utils/$'
+], function (
+   $
+) {
     return function () {
+
         this.id = 'DisableAdsSurvey';
         this.start = '2015-09-01';
         this.expiry = '2015-10-01';
@@ -10,7 +14,7 @@ define(function () {
         this.audienceOffset = 0.8;
         this.successMeasure = 'Users will be interested in paying for the non-ads Guardian';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'TODO';
+        this.dataLinkNames = 'hide ads hide adslot: {slot size}, survey overlay take part';
         this.idealOutcome = 'Users will be interested in paying a lot for the non-ads Guardian';
 
         this.canRun = function () {
@@ -26,6 +30,7 @@ define(function () {
             {
                 id: 'challenger',
                 test: function () {
+                    /*TODO variant with just a link*/
                 }
             },
             {

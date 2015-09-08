@@ -1,7 +1,8 @@
 .ad-slot--remove {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 2px;
+    right: 2px;
+    z-index: 1;
     cursor: pointer;
     color: #6e6e6e;
     font-family: $f-sans-serif-text;
@@ -19,6 +20,7 @@
     .ad-slot--hide-ads {
         display: inline-block;
         padding-right: 4px;
+        color: #6e6e6e;
     }
 
     &.top-slot {
