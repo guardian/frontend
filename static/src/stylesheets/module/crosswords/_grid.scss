@@ -39,8 +39,7 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
         position: fixed;
         // When the element is out of the document flow, we must manually offset
         // for the page gutter
-        left: ($gs-gutter / 2);
-        right: ($gs-gutter / 2);
+        @include content-gutter();
     }
 
 }

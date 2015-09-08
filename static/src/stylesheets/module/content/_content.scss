@@ -18,11 +18,7 @@
     // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
     box-sizing: border-box;
-    padding: 0 $gs-gutter/2;
-
-    @include mq(mobileLandscape) {
-        padding: 0 $gs-gutter;
-    }
+    @include content-gutter();
 }
 
 .content__main-column {
