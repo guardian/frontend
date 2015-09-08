@@ -184,7 +184,6 @@ class Crossword extends React.Component {
     }
 
     moveFocus (deltaX, deltaY) {
-
         const cell = this.state.cellInFocus;
         const x = cell.x + deltaX;
         const y = cell.y + deltaY;
