@@ -1,19 +1,19 @@
 package controllers
 
-import model.Cached
-import com.gu.contentapi.client.{model => contentapi}
-import com.gu.contentapi.client.model.{Crossword, Content => ApiContent}
+import model.{MetaData, Cached}
+import com.gu.contentapi.client.model.Crossword
 import common.{Logging, Edition, ExecutionContexts}
 import conf.LiveContentApi
-import crosswords.{CrosswordData, CrosswordPage}
+import crosswords.CrosswordData
 import play.api.mvc.{RequestHeader, Result, Action, Controller}
 
 import scala.concurrent.Future
 
-class OfflinePage(crossword: CrosswordData, content: contentapi.Content) extends CrosswordPage(crossword, content) {
-  override lazy val id: String = "offline-page"
-
-  override lazy val webTitle: String = "Unable to connect to the Internet"
+class OfflinePage(val crossword: CrosswordData) extends MetaData {
+  lazy val id: String = "offline-page"
+  lazy val section: String = ""
+  lazy val analyticsName: String = id
+  lazy val webTitle: String = "Unable to connect to the Internet"
 }
 
 object WebAppController extends Controller with ExecutionContexts with Logging {
@@ -33,12 +33,12 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
   }
 
 
-  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
+  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
       val maybeCrossword = for {
         content <- response.results.headOption
         crossword <- content.crossword }
-        yield f(crossword, content)
+        yield f(crossword)
       maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
     } recover { case e =>
       log.error("Content API query returned an error.", e)
@@ -48,9 +48,9 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def offlinePage() = Action.async { implicit request =>
     if (conf.Switches.OfflinePageSwitch.isSwitchedOn) {
-      withCrossword("quick", 14127) { (crossword, content) =>
+      withCrossword("quick", 14127) { crossword =>
         Cached(60)(Ok(views.html.offlinePage(
-          new OfflinePage(CrosswordData.fromCrossword(crossword), content))))
+          new OfflinePage(CrosswordData.fromCrossword(crossword)))))
       }
     } else {
       Future(NotFound)

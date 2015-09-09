@@ -121,7 +121,7 @@ System['import']('core').then(function () {
                             app.go();
                         });
                     }
-                    @if(item.section == "crosswords") {
+                    @if(item.section == "crosswords" || item.id == "offline-page") {
                         System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
                             crosswords.default.init();
                         });
