@@ -118,7 +118,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
                              year: Int,
                              setter: Option[String]) {
     val fromDate = new LocalDate(year, month, 1)
-    val toDate = fromDate.dayOfMonth.withMaximumValue
+    val toDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)
