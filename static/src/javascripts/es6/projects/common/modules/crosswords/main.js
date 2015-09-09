@@ -64,18 +64,6 @@ class Crossword extends React.Component {
     }
 
     componentDidMount () {
-        // focus the first clue if we're above mobile
-        if (detect.isBreakpoint({ min: 'tablet' })) {
-            const firstClue = _.reduceRight(_.sortBy(this.props.data.entries, 'direction'), function (prev, current) {
-                return (helpers.isAcross(current) && (prev.number < current.number ? prev : current));
-            });
-            this.focusClue(
-                firstClue.position.x,
-                firstClue.position.y,
-                firstClue.direction
-            );
-        }
-
         // Sticky clue
         const $stickyClueWrapper = $(React.findDOMNode(this.refs.stickyClueWrapper));
         const $grid = $(React.findDOMNode(this.refs.grid));
