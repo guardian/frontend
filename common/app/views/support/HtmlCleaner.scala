@@ -186,7 +186,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
   def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
 }
 
-case class PictureCleaner(article: Article, pcu: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article, amp: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     for {
@@ -225,7 +225,7 @@ case class PictureCleaner(article: Article, pcu: Boolean)(implicit request: Requ
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
         shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) },
-        pcu = pcu
+        amp = amp
       ).toString()
 
       figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))

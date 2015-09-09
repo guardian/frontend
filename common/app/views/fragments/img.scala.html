@@ -12,7 +12,7 @@
     widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.Inline,
     image_figureClasses: Option[(model.ImageAsset, String)] = None,
     shareInfo: Option[(Seq[model.ShareLink], String)] = None,
-    pcu: Boolean = false
+    amp: Boolean = false
 )(implicit request: RequestHeader)
 
 
@@ -81,9 +81,9 @@
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
 
-@if(pcu) {
+@if(amp) {
     @picture.largestImage.map { largestImage =>
-        <cat-img src="@ImgSrc.getFallbackUrl(picture)"
+        <amp-img src="@ImgSrc.getFallbackUrl(picture)"
         srcset="@ImgSrc.srcset(picture, widths)"
         sizes="@widths.sizes"
         layout="responsive"
