@@ -92,9 +92,14 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 ```
 #### A JDK
 
-Ubuntu:
+Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
+
 ```bash
-sudo apt-get install openjdk-7-jdk
+sudo apt-get purge openjdk*
+sudo add-apt-repository -y ppa:webupd8team/java
+sudo apt-get update
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo apt-get -y install oracle-java8-installer
 ```
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
