@@ -42,7 +42,10 @@ Contents:
 ## Local Test Server setup
 You need A Mac or Linux PC (ubuntu).
 
+Before checking out the repository you may need to [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/).
+
 ### Automatic
+
 1. Check out the repository:
 
     ```
@@ -52,8 +55,6 @@ You need A Mac or Linux PC (ubuntu).
 
 2. Run ```./setup.sh``` to install dependencies and compile assets
 3. All being well, you should be able to [run the app](#run-the-app)
-
-Before checking out the repository you may need to add an SSH key to your GitHub account, information on how to do so is here - https://help.github.com/articles/generating-ssh-keys/
 
 ### Manual
 Install each of the things listed:
@@ -91,9 +92,14 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 ```
 #### A JDK
 
-Ubuntu:
+Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
+
 ```bash
-sudo apt-get install openjdk-7-jdk
+sudo apt-get purge openjdk*
+sudo add-apt-repository -y ppa:webupd8team/java
+sudo apt-get update
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo apt-get -y install oracle-java8-installer
 ```
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
@@ -235,7 +241,7 @@ Install to your IDE from http://editorconfig.org/#download
 
 ###intelliJ metadata
 To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins.  It supports SBT and Play.
-Then load IntelliJ, then click Import project and import the directory as an SBT project.  Default settings are fine, except you need to make sure you choose JDK 1.8 otherwise it won't import correctly.
+Then load IntelliJ, then click Import project and import the directory as an SBT project.  Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
@@ -296,10 +302,14 @@ For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number
 
 Now you should be able to compile and run. Yay.
 
-###"No route to host"
+###"No route to host" or "Unsupported major.minor version 52.0"
 
 If you get no route to host, it means you are not using the 1.8 jre.  Type `java -version` to check.  You may need
 to close and reopen your terminal if you installed 1.8 recently.
+
+You may also see `java.lang.UnsupportedClassVersionError: play/runsupport/classloader/ApplicationClassLoaderProvider : Unsupported major.minor version 52.0` which is described in the [Play 2.4 migration guide](https://www.playframework.com/documentation/2.4.x/Migration24#Java-8-support).
+
+Follow the [JDK install guide above.](#a-jdk)
 
 ## Optional steps
 
