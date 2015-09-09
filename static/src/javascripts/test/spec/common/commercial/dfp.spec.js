@@ -280,7 +280,7 @@ describe('DFP', function () {
             });
         });
 
-        it('should run javascript', function () {
+        xit('should run javascript', function () {
             var str = 'This came from an iframe';
             createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "' + str + '"</script>');
             dfp.init();

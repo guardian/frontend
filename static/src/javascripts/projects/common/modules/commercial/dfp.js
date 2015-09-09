@@ -410,9 +410,8 @@ define([
                 var adType = checkForBreakout($slot);
 
                 if (adType && adType.type === 'gu-style') {
-                    console.log(adType.type, adType.variant);
+                    // TODO: gu style ads addons
                 } else {
-                    console.log('normal ad');
                     addLabel($slot);
                 }
 
