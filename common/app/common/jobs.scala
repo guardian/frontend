@@ -22,11 +22,13 @@ object Jobs extends Logging {
       if (outstanding.get()(name) > 0) {
         log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
       } else {
+        log.info(s"Running job: $name")
         outstanding.send(map => map.updated(name, map(name) + 1))
         try {
           f()
         } finally {
           outstanding.send(map => map.updated(name, map(name) - 1))
+          log.info(s"Finished job: $name")
         }
       }
     }
