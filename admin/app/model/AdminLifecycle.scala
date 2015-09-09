@@ -23,7 +23,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       model.abtests.AbTestJob.run()
     }
 
-    Jobs.schedule("LoadBalancerLoadJob", "* 0/15 * * * ?") {
+    Jobs.schedule("LoadBalancerLoadJob", "0 4/15 * * * ?") {
       LoadBalancer.refresh()
     }
 
@@ -54,14 +54,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     // every 30 minutes
     Jobs.schedule("TravelOffersCacheJob", "0 1/30 * * * ? *") {
       TravelOffersCacheJob.run()
-    }
-
-    Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
-      OmnitureReportJob.run()
-    }
-
-    Jobs.schedule("SentryReportJob", "0 */5 * * * ?") {
-      SentryReportJob.run()
     }
 
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
@@ -98,7 +90,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
-    Jobs.deschedule("OmnitureReportJob")
     Jobs.deschedule("MatchDayRecorderJob")
     Jobs.deschedule("SentryReportJob")
     Jobs.deschedule("FrontPressJobHighFrequency")
@@ -118,8 +109,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     AkkaAsync {
       RebuildIndexJob.run()
       TravelOffersCacheJob.run()
-      OmnitureReportJob.run()
-      SentryReportJob.run()
       VideoEncodingsJob.run()
     }
   }

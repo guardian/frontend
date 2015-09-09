@@ -1,49 +1,77 @@
-import _ from 'underscore';
 import * as contentApi from 'modules/content-api';
-import MockSearch from 'mock/search';
-import mockjax from 'test/utils/mockjax';
+import * as mockjax from 'test/utils/mockjax';
+import parse from 'utils/parse-query-params';
 
 describe('Latest articles', function() {
     beforeEach(function () {
-        this.mock = new MockSearch();
+        this.scope = mockjax.scope();
     });
     afterEach(function () {
-        this.mock.dispose();
+        this.scope.clear();
     });
 
     it('whole list should filter out articles', function (done) {
-        this.mock.latest([{
-            fields: {
-                headline: 'This has an header'
+        this.scope({
+            url: /\/api\/preview\/content\/scheduled(\?.+)/,
+            urlParams: ['queryString'],
+            response: function (request) {
+                var urlParams = parse(request.urlParams.queryString);
+                expect(urlParams.page).toBe('1');
+                expect(urlParams['order-by']).toBe('oldest');
+                expect(urlParams['page-size']).toBe('50');
+                expect(urlParams.q).toBeUndefined();
+
+                this.responseText = {
+                    response: {
+                        status: 'ok',
+                        results: [{
+                            fields: {
+                                headline: 'This has an header'
+                            }
+                        }, {
+                            not: 'This doesn\'t, filter out'
+                        }]
+                    }
+                };
             }
-        }, {
-            not: 'This doesn\'t, filter out'
-        }]);
+        });
 
         contentApi.fetchLatest()
-        .then(assert(this.mock, function (request, list) {
-            expect(request.urlParams.page).toBe('1');
-            expect(request.urlParams['content-set']).toBe('-web-live');
-            expect(request.urlParams['order-by']).toBe('oldest');
-            expect(request.urlParams['page-size']).toBe('50');
-            expect(request.urlParams.q).toBeUndefined();
-
+        .then(list => {
             expect(list.results).toEqual([{
                 fields: {
                     headline: 'This has an header'
                 }
             }]);
-
-            done();
-        }));
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
     it('filter out based on a search term', function (done) {
-        this.mock.latest([{
-            fields: {
-                headline: 'Filtering results'
+        this.scope({
+            url: /\/api\/live\/search(\?.+)/,
+            urlParams: ['queryString'],
+            response: function (request) {
+                var urlParams = parse(request.urlParams.queryString);
+                expect(urlParams.page).toBe('1');
+                expect(urlParams['order-by']).toBe('newest');
+                expect(urlParams['page-size']).toBe('50');
+                expect(urlParams.q).toBe('one');
+                expect(urlParams.author).toBe('me');
+
+                this.responseText = {
+                    response: {
+                        status: 'ok',
+                        results: [{
+                            fields: {
+                                headline: 'Filtering results'
+                            }
+                        }]
+                    }
+                };
             }
-        }]);
+        });
 
         contentApi.fetchLatest({
             isDraft: false,
@@ -51,39 +79,40 @@ describe('Latest articles', function() {
             filterType: 'author',
             filter: 'me'
         })
-        .then(assert(this.mock, function (request, list) {
-            expect(request.urlParams.page).toBe('1');
-            expect(request.urlParams['content-set']).toBe('web-live');
-            expect(request.urlParams['order-by']).toBe('newest');
-            expect(request.urlParams['page-size']).toBe('50');
-            expect(request.urlParams.q).toBe('one');
-            expect(request.urlParams.author).toBe('me');
-
+        .then(list => {
             expect(list.results).toEqual([{
                 fields: {
                     headline: 'Filtering results'
                 }
             }]);
-
-            done();
-        }));
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
     it('all results empty response', function (done) {
-        this.mock.latest([]);
+        this.scope({
+            url: /\/api\/preview\/content\/scheduled(\?.+)/,
+            responseText: {
+                response: {
+                    status: 'ok',
+                    results: []
+                }
+            }
+        });
 
         contentApi.fetchLatest()
-        .then(done.fail, assert(this.mock, function (request, list) {
-            expect(list instanceof Error).toBe(true);
-            expect(list.message).toMatch(/not currently returning content/i);
+        .then(done.fail, error => {
+            expect(error instanceof Error).toBe(true);
+            expect(error.message).toMatch(/not currently returning content/i);
 
             done();
-        }));
+        });
     });
 
     it('searches an article', function (done) {
-        var mockId = mockjax({
-            url: /\/api\/proxy\/uk-news\/important\/stuff\?(.+)/,
+        this.scope({
+            url: /\/api\/preview\/uk-news\/important\/stuff\?(.+)/,
             responseText: {
                 status: 'ok',
                 response: {
@@ -99,21 +128,20 @@ describe('Latest articles', function() {
         contentApi.fetchLatest({
             article: 'uk-news/important/stuff'
         })
-        .then(function (list) {
+        .then(list => {
             expect(list.results).toEqual([{
                 fields: {
                     headline: 'Single article'
                 }
             }]);
-
-            mockjax.clear(mockId);
-            done();
-        });
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
     it('network fail', function (done) {
-        var mockId = mockjax({
-            url: /\/api\/proxy\/uk-news\/less\/important.*/,
+        this.scope({
+            url: /\/api\/preview\/uk-news\/less\/important.*/,
             responseText: 'Server error',
             status: 500
         });
@@ -122,29 +150,11 @@ describe('Latest articles', function() {
             article: 'uk-news/less/important',
             term: 'ignored'
         })
-        .then(done.fail, function (error) {
+        .then(done.fail, error => {
             expect(error instanceof Error).toBe(true);
             expect(error.message).toMatch(/Content API error/i);
 
-            mockjax.clear(mockId);
             done();
         });
     });
-
-    function assert (mock, what) {
-        var promisedValue, lastRequest;
-        var wait = _.after(2, function () {
-            what(lastRequest, promisedValue);
-        });
-
-        mock.once('complete', function (request) {
-            lastRequest = request;
-            wait();
-        });
-
-        return function (value) {
-            promisedValue = value;
-            wait();
-        };
-    }
 });

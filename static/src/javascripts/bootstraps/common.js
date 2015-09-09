@@ -1,6 +1,7 @@
 /*eslint-disable no-new*/
 /* TODO - fix module constructors */
 define([
+    'fastdom',
     'bean',
     'bonzo',
     'qwery',
@@ -54,6 +55,7 @@ define([
     'text!common/views/international-control-message.html',
     'bootstraps/identity-common'
 ], function (
+    fastdom,
     bean,
     bonzo,
     qwery,
@@ -230,8 +232,8 @@ define([
 
             // Adds a global window:throttledScroll event to mediator, which throttles
             // scroll events until there's a spare animationFrame.
-            // Callbacks of all listeners to window:throttledScroll are run in the
-            // same animationFrame, meaning they can all perform DOM reads for free
+            // Callbacks of all listeners to window:throttledScroll are run in a
+            // fastdom.read, meaning they can all perform DOM reads for free
             // (after the first one that needs layout triggers it).
             // However, this means it's VITAL that all writes in callbacks are delegated to fastdom
             throttledScrollEvent: function () {
@@ -239,7 +241,10 @@ define([
                 window.addEventListener('scroll', function () {
                     if (!running) {
                         running = true;
-                        requestAnimationFrame(function () {
+                        // Use fastdom to avoid forced synchronous layout:
+                        // https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts
+                        // *Fastdom guarantees that reads will come before writes*
+                        fastdom.read(function () {
                             mediator.emitEvent('window:throttledScroll');
                             running = false;
                         });

@@ -4,7 +4,6 @@ import common.Edition
 import common.dfp.DfpAgent
 import implicits.Dates
 import org.scala_tools.time.Imports._
-import views.support.CardStyleForFrontend
 
 /**
  * additional information needed to display something on a facia page from CAPI
@@ -47,6 +46,4 @@ trait Trail extends Elements with Tags with Dates {
   def faciaUrl: Option[String] = this match {
     case t: Trail => Option(t.url)
   }
-
-  def cardStyle = CardStyleForFrontend(this)
 }

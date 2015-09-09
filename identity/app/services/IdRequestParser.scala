@@ -3,7 +3,7 @@ package services
 import idapiclient.TrackingData
 import play.api.mvc.RequestHeader
 import com.google.inject.{Inject, Singleton}
-import utils.RemoteAddress
+import utils.{ThirdPartyConditions, RemoteAddress}
 import jobs.TorExitNodeList
 import conf.Switches
 
@@ -12,6 +12,7 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
   def apply(request: RequestHeader): IdentityRequest = {
 
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
+    val groupCode = ThirdPartyConditions.validGroupCode(ThirdPartyConditions.thirdPartyConditions, request.getQueryString("group"))
     val ip = clientIp(request)
 
     IdentityRequest(
@@ -24,8 +25,10 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
         userAgent = request.headers.get("User-Agent")
       ),
       returnUrl = returnUrl,
+      groupCode = groupCode,
       clientIp = ip,
       skipConfirmation =  request.getQueryString("skipConfirmation").map(_ == "true"),
+      skipThirdPartyLandingPage = request.getQueryString("skipThirdPartyLandingPage").map(_ == "true").getOrElse(false),
       shortUrl = request.getQueryString("shortUrl"),
       articleId = request.getQueryString("articleId"),
       page = request.getQueryString("page").map(_.toInt),
@@ -54,8 +57,10 @@ class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifi
 case class IdentityRequest(
   trackingData: TrackingData,
   returnUrl: Option[String],
+  groupCode: Option[String],
   clientIp: Option[String],
   skipConfirmation: Option[Boolean],
+  skipThirdPartyLandingPage: Boolean,
   shortUrl: Option[String] = None,
   articleId: Option[String] = None,
   page: Option[Int] = None,

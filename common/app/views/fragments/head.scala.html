@@ -14,15 +14,6 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@* temporarily open up CSS loading to half of our browsers *@
-<script>
-    @if(RafCSSLoaderSwitch.isSwitchedOn) {
-        window.useRAFforCSS = Math.random() > .5;
-    } else {
-        window.useRAFforCSS = false;
-    }
-</script>
-
 @* get the stylesheets downloading ASAP *@
 @fragments.stylesheetLinks(projectName)
 
@@ -33,7 +24,7 @@
 @fragments.fonts()
 
 @* start trying to use the stylesheets *@
-@fragments.stylesheetLinksEnable(projectName)
+@fragments.stylesheetLinksEnable()
 
 @* load the app *@
 @fragments.javaScriptBootstraps(metaData, curlPaths)

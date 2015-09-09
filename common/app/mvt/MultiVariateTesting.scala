@@ -58,7 +58,7 @@ object ABNewFreeMembershipTest extends TestDefinition(
   List(Variant1, Variant2, Variant3, Variant4, Variant5),
   "new-free-membership-test",
   "To test how much of a difference changing a membership link and removing 'free' makes",
-  new LocalDate(2015, 9, 1)
+  new LocalDate(2015, 9, 15)
 )
 
 object ActiveTests extends Tests {

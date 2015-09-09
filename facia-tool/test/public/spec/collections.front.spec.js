@@ -183,7 +183,7 @@ describe('Front', function () {
             url: '/stories-visible/long',
             responseText: {}
         }, {
-            url: '/api/proxy/search?ids=' + encodeURIComponent('internal-code/page/') + '1*',
+            url: '/api/preview/search?ids=' + encodeURIComponent('internal-code/page/') + '1*',
             responseText: {
                 response: {
                     results: [{
@@ -202,7 +202,7 @@ describe('Front', function () {
                 }
             }
         }, {
-            url: '/api/proxy/search?ids=' + encodeURIComponent('internal-code/page/') + '3*',
+            url: '/api/preview/search?ids=' + encodeURIComponent('internal-code/page/') + '3*',
             responseText: {
                 response: {
                     results: [{

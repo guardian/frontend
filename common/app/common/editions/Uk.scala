@@ -1,6 +1,7 @@
 package common.editions
 
 import common._
+import conf.Switches
 import org.joda.time.DateTimeZone
 
 object Uk extends Edition(
@@ -11,18 +12,20 @@ object Uk extends Edition(
 
   implicit val UK = Uk
 
+  import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(
     football,
     cricket,
-    rugbyunion,
+
+    // TODO delete & replace with rugbyUnion
+    rugbyWorldCup, //rugbyunion
     formulaOne,
     tennis,
     golf,
     cycling,
     boxing,
     racing,
-    rugbyLeague,
-    usSport
+    rugbyLeague
   )
 
   val cultureLocalNav: Seq[SectionLink] = Seq(

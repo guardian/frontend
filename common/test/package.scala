@@ -102,7 +102,10 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
       additionalConfiguration = Map(
         ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
         ("guardian.projectName", "test-project"),
-        ("ws.compressionEnabled", true)
+        ("ws.compressionEnabled", true),
+        ("ws.timeout.connection", "10000"),// when running healthchecks on a cold app it can time out
+        ("ws.timeout.idle", "10000"),
+        ("ws.timeout.request", "10000")
       )
   )
 }

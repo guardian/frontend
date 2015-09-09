@@ -21,14 +21,17 @@ define([
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
-    function load() {
-        var $outbrain  = $('.js-outbrain'),
-            $container = $('.js-outbrain-container');
-        // outbrain leaks the URL of preview content so we don't show it there.
-        if (config.switches.outbrain && !config.page.isPreview && $outbrain.length > 0 && !identity.isUserLoggedIn()) {
-            var widgetConfig = {},
-                breakpoint = detect.getBreakpoint(),
-                widgetCode, widgetCodeImage, widgetCodeText;
+    return {
+        load: function () {
+            var $outbrain    = $('.js-outbrain'),
+                $container   = $('.js-outbrain-container'),
+                widgetConfig = {},
+                breakpoint   = detect.getBreakpoint(),
+                section      = this.getSection(),
+                widgetCode,
+                widgetCodeImage,
+                widgetCodeText,
+                s = window.s;
 
             breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
@@ -60,41 +63,38 @@ define([
                 }
             };
 
-            widgetCodeImage = widgetConfig[breakpoint].image[getSection()];
+            widgetCodeImage = widgetConfig[breakpoint].image[section];
             widgetCode = widgetCodeImage;
 
             fastdom.write(function () {
                 $outbrain.css('display', 'block');
                 $container.append($.create(template(outbrainTpl, { widgetCode: widgetCode })));
-            });
 
-            if (breakpoint !== 'mobile') {
-                widgetCodeText  = widgetConfig[breakpoint].text[getSection()];
-
-                fastdom.write(function () {
+                if (breakpoint !== 'mobile') {
+                    widgetCodeText  = widgetConfig[breakpoint].text[section];
                     $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
-                });
-            }
+                }
 
-            return require(['js!' + outbrainUrl]);
+                s.link2 = 'outbrain';
+                s.tl(true, 'o', 'outbrain');
+
+                require(['js!' + outbrainUrl]);
+            });
+        },
+
+        getSection: function () {
+            return config.page.section.toLowerCase().match('news')
+                || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
+        },
+
+        init: function () {
+            if (config.switches.outbrain && !config.page.isPreview && !identity.isUserLoggedIn() && config.page.section !== 'childrens-books-site') {
+                mediator.on('modules:commercial:dfp:rendered', function (event) {
+                    if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+                        this.load();
+                    }
+                }.bind(this));
+            }
         }
-    }
-
-    function getSection() {
-        return config.page.section.toLowerCase().match('news')
-            || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
-    }
-
-    function init() {
-        mediator.on('modules:commercial:dfp:rendered', function (event) {
-            if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high'
-                && event.isEmpty && config.page.section !== 'childrens-books-site') {
-                load();
-            }
-        });
-    }
-
-    return {
-        init: init
     };
 });

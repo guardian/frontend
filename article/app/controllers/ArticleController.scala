@@ -15,6 +15,7 @@ import play.api.libs.json.{Json, _}
 import play.api.mvc._
 import views.BodyCleaner
 import views.support._
+import conf.Switches.SoftPurgeWithLongCachingSwitch
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -93,7 +94,15 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = MemcachedAction { implicit request =>
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+    if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) Action.async { implicit request =>
+        loadArticle(path, lastUpdate, rendered)
+    } else MemcachedAction { implicit request =>
+      loadArticle(path, lastUpdate, rendered)
+    }
+  }
+
+  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path) { model =>
       (lastUpdate, rendered) match {
         case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)

@@ -22,7 +22,7 @@ define([
         this.$adSlot       = $adSlot;
         this.params        = params;
         this.params.header = (!config.page.isFront && config.page.sponsorshipTag) ?
-            'Guardian ' + config.page.sponsorshipTag + ' is supported by:' : 'Supported by:';
+            config.page.sponsorshipTag + ' is supported by:' : 'Supported by:';
     };
 
     Template.prototype.create = function () {

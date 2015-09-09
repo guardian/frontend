@@ -155,6 +155,10 @@
 
     .social-signin__icon {
         position: absolute;
+
+        svg {
+            float: left;
+        }
     }
 
     .social-signin__icon--fb {
@@ -259,7 +263,7 @@
     position: relative;
     padding-left: 24px;
 
-    i {
+    .inline-icon {
         position: absolute;
         top: 0;
         left: 0;
@@ -345,13 +349,14 @@
 .email-subscription__meta {
     margin-top: $gs-baseline;
 }
+
 .email-subscription__frequency {
     @include fs-textSans(1);
     float: right;
     margin-bottom: $gs-baseline/1.5;
     margin-top: $gs-baseline/1.5;
 
-    .i {
+    .inline-icon {
         margin-right: $gs-gutter/4;
         vertical-align: text-top;
     }
