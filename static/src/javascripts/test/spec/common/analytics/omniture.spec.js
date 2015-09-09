@@ -62,7 +62,6 @@ describe('omniture', function () {
         sessionStorage.removeItem('gu.analytics.referrerVars');
         mediator.removeEvent('module:clickstream:interaction');
         mediator.removeEvent('module:clickstream:click');
-        mediator.removeEvent('module:analytics:omniture:pageview:sent');
     });
 
     it('should track clicks with correct analytics name', function () {

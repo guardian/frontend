@@ -20,7 +20,6 @@ module.exports = function(grunt, options) {
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
                 reqwest:              'components/reqwest/reqwest',
-                omniture:             'vendor/omniture',
                 socketio:             'components/socket.io-client/socket.io',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
@@ -45,9 +44,7 @@ module.exports = function(grunt, options) {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-                    omniture: {
-                        exports: 's'
-                    }
+
                 },
                 modules: [
                     {
@@ -255,9 +252,6 @@ module.exports = function(grunt, options) {
                     },
                     videojsembed: {
                         deps: ['videojs']
-                    },
-                    omniture: {
-                        exports: 's'
                     }
                 },
                 exclude: [
