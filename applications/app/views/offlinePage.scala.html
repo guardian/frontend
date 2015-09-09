@@ -2,24 +2,43 @@
 
 @import play.api.libs.json._
 
-@main(crosswordPage) { } {
-    <div class="l-side-margins">
-        <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
-            <div class="content__head tonal__head tonal__head--tone-news">
-                <div class="gs-container">
-                    <div class="content__main-column content__main-column--single-column">
-                        <h1 class="content__headline">Unable to connect to the Internet</h1>
-                        <p>In the meantime, how about a quick crossword?</p>
-                        <button class="button js-open-crossword-btn">Open crossword</button>
-                    </div>
-                    <div class="js-crossword-container is-hidden u-baseline-top">
-                        <h2><a href="/crosswords/@crosswordPage.crossword.id">@crosswordPage.crossword.name</a></h2>
-                        <div class="js-crossword"
-                            data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
+<!DOCTYPE html>
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+<head>
+    @fragments.head(crosswordPage, None, Html(""), Map.empty)
+</head>
+    <body
+        id="top"
+        itemscope itemtype="http://schema.org/WebPage">
+
+        <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
+
+        @fragments.header(crosswordPage)
+
+        <div class="l-side-margins">
+            <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
+                <div class="content__head tonal__head tonal__head--tone-news">
+                    <div class="gs-container">
+                        <div class="content__main-column content__main-column--single-column">
+                            <h1 class="content__headline">Unable to connect to the Internet</h1>
+                            <p>In the meantime, how about a quick crossword?</p>
+                            <button class="button js-open-crossword-btn">Open crossword</button>
+                        </div>
+                        <div class="js-crossword-container is-hidden u-baseline-top">
+                            <h2><a href="/crosswords/@crosswordPage.crossword.id">@crosswordPage.crossword.name</a></h2>
+                            <div class="js-crossword"
+                                data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </article>
-    </div>
-}
+            </article>
+        </div>
+
+        @fragments.footer(crosswordPage)
+
+        @fragments.footerJavaScript()
+
+    </body>
+</html>
