@@ -23,9 +23,9 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isPcu: Boolean = r.path.endsWith("/pcu")
+    lazy val isPcu: Boolean = r.path.endsWith("/amp")
 
-    lazy val pathWithoutModifiers: String = if (isPcu) r.path.stripSuffix("/pcu") else r.path.stripSuffix("/all")
+    lazy val pathWithoutModifiers: String = if (isPcu) r.path.stripSuffix("/amp") else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 

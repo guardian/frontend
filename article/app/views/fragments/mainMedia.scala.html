@@ -1,5 +1,5 @@
 @import views.MainMediaWidths
-@(article: model.Article, pcu: Boolean = false)(implicit request: RequestHeader)
+@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import model.EndSlateComponents
 @import model.{AudioPlayer, VideoPlayer}
@@ -8,7 +8,7 @@
 
 @if(article.hasMainEmbed || article.elements("main").isEmpty) {
     <div class="media-primary">
-        @MainCleaner(article, article.main, pcu)
+        @MainCleaner(article, article.main, amp)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
@@ -42,7 +42,7 @@
                     article.hasShowcaseMainElement,
                     article.isFeature,
                     MainMediaWidths(article),
-                    pcu = pcu
+                    amp = amp
                 )
             }
         }

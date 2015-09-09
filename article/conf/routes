@@ -10,5 +10,5 @@ GET     /_healthcheck               conf.HealthCheck.healthcheck()
 GET     /_cdn_healthcheck           controllers.CdnHealthcheckController.healthcheck()
 
 GET     /*path.json                 controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
-GET     /*path/pcu                  controllers.ArticlePCUController.renderPath(path)
+GET     /*path/amp                  controllers.ArticleAMPController.renderPath(path)
 GET     /*path                      controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
