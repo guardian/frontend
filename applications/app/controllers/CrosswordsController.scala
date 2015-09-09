@@ -5,7 +5,7 @@ import common.{Edition, ExecutionContexts}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordData, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model.{Cached, Cors, _}
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
@@ -59,13 +59,27 @@ object CrosswordsController extends Controller with ExecutionContexts {
 }
 
 object CrosswordSearchController extends Controller with ExecutionContexts {
-  def searchForm() = Action { implicit request =>
-    Cached(60)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))
-  }
+  val searchForm = Form(
+    mapping(
+      "crossword_type" -> nonEmptyText,
+      "month" -> number,
+      "year" -> number,
+      "setter" -> optional(text)
+    )(CrosswordSearch.apply)(CrosswordSearch.unapply)
+  )
+
+  val lookupForm = Form(
+    mapping(
+      "type" -> text,
+      "id" -> number
+    )(CrosswordLookup.apply)(CrosswordLookup.unapply)
+  )
 
   def search() = Action.async { implicit request =>
-    CrosswordSearch.fromRequest(request) match {
-      case Some(params) =>
+    searchForm.bindFromRequest.fold(
+      empty => Future.successful(Cached(7.days)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))),
+
+      params => {
         val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
           .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
           .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
@@ -77,59 +91,34 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results match {
-            case Nil =>
-              NoCache(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+            case Nil => Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
 
             case results =>
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
               val page = IndexPage(section, results.map(Content(_)))
 
-              NoCache(Ok(views.html.index(page)))
+              Cached(15.minutes)(Ok(views.html.index(page)))
           }
         }
-
-      case None =>
-        Future.successful(NotFound)
-    }
+      }
+    )
   }
 
   def lookup() = Action { implicit request =>
-    val form = Form(
-      mapping(
-        "type" -> text,
-        "id" -> number
-      )(CrosswordLookup.apply)(CrosswordLookup.unapply)
-    )
-
-    form.bindFromRequest.get match {
+    lookupForm.bindFromRequest.get match {
       case CrosswordLookup(crosswordType, id) =>
         Redirect(s"$crosswordType/$id")
       case _ =>
-        Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+        Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
     }
   }
 
-  case class CrosswordSearch(
-    crosswordType: String,
-    fromDate: DateTime,
-    toDate: DateTime,
-    setter: Option[String])
-
-  object CrosswordSearch {
-    def fromRequest(request: Request[AnyContent]): Option[CrosswordSearch] = {
-      for {
-        formMap <- request.body.asFormUrlEncoded
-        crosswordType <- formMap.get("crossword-type").map(_.mkString)
-        month <- formMap.get("month").map(_.mkString.toInt)
-        year <- formMap.get("year").map(_.mkString.toInt)
-      } yield {
-        val setter = formMap.get("setter").map(_.mkString.toLowerCase).filter(_.nonEmpty)
-        val fromDate = new DateTime(year, month, 1, 0, 0)
-        val toDate = fromDate.dayOfMonth.withMaximumValue
-
-        CrosswordSearch(crosswordType, fromDate, toDate, setter)
-      }
-    }
+  case class CrosswordSearch(crosswordType: String,
+                             month: Int,
+                             year: Int,
+                             setter: Option[String]) {
+    val fromDate = new LocalDate(year, month, 1)
+    val toDate = fromDate.dayOfMonth.withMaximumValue
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)
