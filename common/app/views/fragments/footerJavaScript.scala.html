@@ -4,6 +4,7 @@
  *@
 
 @import conf.Switches.IdentityProfileNavigationSwitch
+@import conf.Configuration
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
 
@@ -45,11 +46,32 @@
                     return null;
                 }
 
+                function getUserIdFromCookie() {
+                    var cookieData = getCookieValue('GU_U');
+                    var userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
+
+                    if (userData) {
+                        return userData[0];
+                    }
+                    return null;
+
+                }
+
                 var userDisplayName = getUserDisplayNameFromCookie();
 
                 if (userDisplayName) {
                     document.getElementsByClassName('js-profile-info')[0].innerHTML = userDisplayName;
-                    document.getElementsByClassName('js-profile-nav')[0].classList.add('is-signed-in');
+                    var $profileNavElem = document.getElementsByClassName('js-profile-nav')[0];
+                    $profileNavElem.classList.add('is-signed-in');
+                    var $signInLinkElem = $profileNavElem.getElementsByTagName('a')[0];
+                    if ($signInLinkElem) {
+                        var userId = getUserIdFromCookie();
+                        if(userId) {
+                            $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'user/id/' + userId));
+                        } else {
+                            $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'public/edit/'));
+                        }
+                    }
                     var $register = document.getElementsByClassName('js-profile-register')[0];
                     $register.parentElement.removeChild($register);
                 }

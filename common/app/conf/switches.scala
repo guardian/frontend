@@ -534,28 +534,10 @@ object Switches {
   val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
     "fixed-top-above-nav",
-    "Fixes size of top-above-nav ad slot on UK network front.",
+    "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
+    sellByDate = new LocalDate(2015, 10, 7),
     exposeClientSide = false
-  )
-
-  val CreativeTemplatesInS3 = Switch(
-    "Commercial",
-    "creative-templates-in-s3",
-    "Stores DFP creative template data in S3.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
-    exposeClientSide = false
-  )
-
-  val UkNewsTargeting = Switch(
-    "Commercial",
-    "uk-news-target",
-    "Uses full UK News keyword for DFP targeting.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
-    exposeClientSide = true
   )
 
   val KruxVideoTracking = Switch(
@@ -818,8 +800,8 @@ object Switches {
 
   val RugbyWorldCupswitch = Switch(
     "Feature",
-    "rugby-world-cup-cleanup",
-    "Does nothing, other than remind us to delete some World Cup specific code",
+    "rugby-world-cup",
+    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = true
@@ -923,15 +905,6 @@ object Switches {
     "Switch for the USA Supporter message test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 21),
-    exposeClientSide = true
-  )
-
-  val ABRugbyScores = Switch(
-    "A/B Tests",
-    "ab-rugby-scores",
-    "Switches on the score components for the Rugby",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = true
   )
 
