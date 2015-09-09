@@ -128,13 +128,13 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
 object ConfigAgent extends ConfigAgentTrait
 
-trait ConfigAgentLifecycle extends GlobalSettings {
+trait  ConfigAgentLifecycle extends GlobalSettings {
 
   override def onStart(app: Application) {
     super.onStart(app)
 
     Jobs.deschedule("ConfigAgentJob")
-    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
+    Jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()
     }
 

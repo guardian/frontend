@@ -417,7 +417,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     Jobs.deschedule("ApplicationSystemMetricsJob")
     super.onStart(app)
 
-    Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
+    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
       report()
     }
   }
