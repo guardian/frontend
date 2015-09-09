@@ -18,13 +18,13 @@ object OptaFeed extends ExecutionContexts with Logging {
 
     val endpointOpt = conf.SportConfiguration.optaRugby.endpoint
     endpointOpt.map { endpoint =>
-      val friendlyCompetition= "competition" -> "3"
+      val competition= "competition" -> "210"
       val season = "season_id" -> "2016"
       val apiKey = "psw" -> conf.SportConfiguration.optaRugby.apiKey.getOrElse("")
       val apiUser = "user" -> conf.SportConfiguration.optaRugby.apiUser.getOrElse("")
       val feedType = "feed_type" -> feedParameter
 
-      val queryParams = List(friendlyCompetition,  season, apiKey, apiUser, feedType) ++ gameParameter
+      val queryParams = List(competition,  season, apiKey, apiUser, feedType) ++ gameParameter
 
       WS.url(s"$endpoint$path")
         .withHeaders(xmlContentType)
