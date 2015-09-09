@@ -40,7 +40,8 @@
 
     padding-left: 0px;
 
+    //For grouped clues we display 11.12,23 accross instead of just a number
     &:before {
-        position: relative;
+        position: initial;
     }
 }
