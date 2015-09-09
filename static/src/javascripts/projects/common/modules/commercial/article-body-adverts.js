@@ -16,7 +16,7 @@ define([
     config,
     detect,
     spacefinder,
-    createAdSlot
+    createAdSlot,
     userAdPreference
 ) {
     function getRules() {

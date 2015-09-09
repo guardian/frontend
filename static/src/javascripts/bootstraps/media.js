@@ -240,8 +240,7 @@ define([
                         !config.page.isPreview &&
                         !config.page.shouldHideAdverts &&
                         !window.location.hash.match(/[#&]noads(&.*)?$/) &&
-                        !userAdPreference.hideAds) 
-                    {
+                        !userAdPreference.hideAds) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {

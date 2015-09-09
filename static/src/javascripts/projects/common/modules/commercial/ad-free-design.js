@@ -2,7 +2,7 @@ define([
     'Promise',
     'common/utils/$',
     'common/modules/commercial/user-ad-preference'
-], function(
+], function (
     Promise,
     $,
     userAdPreference
