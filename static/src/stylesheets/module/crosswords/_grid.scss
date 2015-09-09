@@ -78,7 +78,6 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
 }
 
 .crossword__grid {
-    width: 100%;
-    height: auto;
+    // SVGs are inline by default
     display: block;
 }
