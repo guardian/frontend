@@ -1,0 +1,37 @@
+.gu-comcontent {
+    background-color: colour(neutral-8);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.gu-comcontent__title {
+    @include f-headlineSans;
+    @include font-size(18, 20);
+
+    padding: $gs-baseline / 2;
+    text-align: left;
+    
+    a {
+        color: colour(neutral-1);
+    }
+}
+
+.gu-comcontent__text {
+    @include f-textSans;
+    @include font-size(14, 18);
+    
+    color: colour(neutral-2);
+    text-align: left;
+    padding: $gs-baseline / 2;
+    margin: 0;
+}
+
+.gu-comcontent__image {
+    width: 100%;
+}
+
+.gu-comcontent__image-container {
+    max-height: 180px;
+    overflow: hidden;
+}

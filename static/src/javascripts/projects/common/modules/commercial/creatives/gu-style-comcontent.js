@@ -24,7 +24,7 @@ define([
 
     GustyleComcontent.prototype.create = function () {
         var templateOptions = {
-            clickMacro:       this.params.clickMacro
+            clickMacro: this.params.clickMacro
         };
 
         $.create(template(gustyleComcontentTpl, { data: _.merge(this.params, templateOptions) })).appendTo(this.$adSlot);
