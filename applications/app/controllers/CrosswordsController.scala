@@ -77,7 +77,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
   def search() = Action.async { implicit request =>
     searchForm.bindFromRequest.fold(
-      empty => Future.successful(Cached(60)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))),
+      empty => Future.successful(Cached(7.days)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))),
 
       params => {
         val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
@@ -91,13 +91,13 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results match {
-            case Nil => Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+            case Nil => Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
 
             case results =>
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
               val page = IndexPage(section, results.map(Content(_)))
 
-              Cached(60)(Ok(views.html.index(page)))
+              Cached(15.minutes)(Ok(views.html.index(page)))
           }
         }
       }
@@ -109,7 +109,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
       case CrosswordLookup(crosswordType, id) =>
         Redirect(s"$crosswordType/$id")
       case _ =>
-        Cached(60)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+        Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
     }
   }
 
