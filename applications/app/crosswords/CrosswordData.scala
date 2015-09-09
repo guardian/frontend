@@ -14,6 +14,7 @@ object Entry {
   def fromCrosswordEntry(entry: CrosswordEntry): Entry = Entry(
     entry.id,
     entry.number.getOrElse(0),
+    entry.humanNumber.getOrElse("0"),
     entry.clue.getOrElse(""),
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
@@ -27,6 +28,7 @@ object Entry {
 case class Entry(
   id: String,
   number: Int,
+  humanNumber: String,
   clue: String,
   direction: String,
   length: Int,
