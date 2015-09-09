@@ -24,7 +24,7 @@ describe('Article Body Adverts', function () {
             ]
         },
         injector = new Injector(),
-        articleBodyAdverts, config, detect, spacefinder;
+        articleBodyAdverts, config, detect, spacefinder, userAdPreference;
 
     beforeEach(function (done) {
 
@@ -32,12 +32,15 @@ describe('Article Body Adverts', function () {
             'common/modules/commercial/article-body-adverts',
             'common/utils/config',
             'common/utils/detect',
-            'common/modules/article/spacefinder'], function () {
+            'common/modules/article/spacefinder',
+            'common/modules/commercial/user-ad-preference'
+        ], function () {
 
                 articleBodyAdverts = arguments[0];
                 config = arguments[1];
                 detect = arguments[2];
                 spacefinder = arguments[3];
+                userAdPreference = arguments[4];
 
                 $fixturesContainer = fixtures.render(fixturesConfig);
                 $style = $.create('<style type="text/css"></style>')
@@ -75,6 +78,8 @@ describe('Article Body Adverts', function () {
                 getParaWithSpaceStub.onCall(10).returns(Promise.resolve(paras[10]));
                 getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
                 spacefinder.getParaWithSpace = getParaWithSpaceStub;
+
+                userAdPreference.hideAds = false;
 
                 done();
             });
@@ -176,6 +181,11 @@ describe('Article Body Adverts', function () {
 
     it('should not display ad slot if a live blog', function () {
         config.page.contentType = 'LiveBlog';
+        expect(articleBodyAdverts.init()).toBe(false);
+    });
+
+    it('should not display ad slot if user has opted out of adverts', function () {
+        userAdPreference.hideAds = true;
         expect(articleBodyAdverts.init()).toBe(false);
     });
 
