@@ -5,7 +5,7 @@ import common.{Edition, ExecutionContexts}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordData, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model.{Cached, Cors, _}
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
@@ -117,7 +117,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
                              month: Int,
                              year: Int,
                              setter: Option[String]) {
-    val fromDate = new DateTime(year, month, 1, 0, 0)
+    val fromDate = new LocalDate(year, month, 1)
     val toDate = fromDate.dayOfMonth.withMaximumValue
   }
 
