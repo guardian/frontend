@@ -35,54 +35,53 @@ describe('Article Body Adverts', function () {
             'common/modules/article/spacefinder',
             'common/modules/commercial/user-ad-preference'
         ], function () {
+            articleBodyAdverts = arguments[0];
+            config = arguments[1];
+            detect = arguments[2];
+            spacefinder = arguments[3];
+            userAdPreference = arguments[4];
 
-                articleBodyAdverts = arguments[0];
-                config = arguments[1];
-                detect = arguments[2];
-                spacefinder = arguments[3];
-                userAdPreference = arguments[4];
+            $fixturesContainer = fixtures.render(fixturesConfig);
+            $style = $.create('<style type="text/css"></style>')
+                .html('body:after{ content: "desktop"}')
+                .appendTo('head');
 
-                $fixturesContainer = fixtures.render(fixturesConfig);
-                $style = $.create('<style type="text/css"></style>')
-                    .html('body:after{ content: "desktop"}')
-                    .appendTo('head');
+            config.page = {
+                contentType: 'Article',
+                isLiveBlog: false,
+                hasInlineMerchandise: false
+            };
+            config.switches = {
+                standardAdverts: true,
+                viewability: true
+            };
+            config.tests = {
+                mobileTopBannerRemove: false
+            };
+            detect.getBreakpoint = function () {
+                return 'desktop';
+            };
 
-                config.page = {
-                    contentType: 'Article',
-                    isLiveBlog: false,
-                    hasInlineMerchandise: false
-                };
-                config.switches = {
-                    standardAdverts: true,
-                    viewability: true
-                };
-                config.tests = {
-                    mobileTopBannerRemove: false
-                };
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
+            getParaWithSpaceStub = sinon.stub();
+            var paras = qwery('p', $fixturesContainer);
+            getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
+            getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
+            getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
+            getParaWithSpaceStub.onCall(3).returns(Promise.resolve(paras[3]));
+            getParaWithSpaceStub.onCall(4).returns(Promise.resolve(paras[4]));
+            getParaWithSpaceStub.onCall(5).returns(Promise.resolve(paras[5]));
+            getParaWithSpaceStub.onCall(6).returns(Promise.resolve(paras[6]));
+            getParaWithSpaceStub.onCall(7).returns(Promise.resolve(paras[7]));
+            getParaWithSpaceStub.onCall(8).returns(Promise.resolve(paras[8]));
+            getParaWithSpaceStub.onCall(9).returns(Promise.resolve(paras[9]));
+            getParaWithSpaceStub.onCall(10).returns(Promise.resolve(paras[10]));
+            getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
+            spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
-                getParaWithSpaceStub = sinon.stub();
-                var paras = qwery('p', $fixturesContainer);
-                getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
-                getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
-                getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
-                getParaWithSpaceStub.onCall(3).returns(Promise.resolve(paras[3]));
-                getParaWithSpaceStub.onCall(4).returns(Promise.resolve(paras[4]));
-                getParaWithSpaceStub.onCall(5).returns(Promise.resolve(paras[5]));
-                getParaWithSpaceStub.onCall(6).returns(Promise.resolve(paras[6]));
-                getParaWithSpaceStub.onCall(7).returns(Promise.resolve(paras[7]));
-                getParaWithSpaceStub.onCall(8).returns(Promise.resolve(paras[8]));
-                getParaWithSpaceStub.onCall(9).returns(Promise.resolve(paras[9]));
-                getParaWithSpaceStub.onCall(10).returns(Promise.resolve(paras[10]));
-                getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
-                spacefinder.getParaWithSpace = getParaWithSpaceStub;
+            userAdPreference.hideAds = false;
 
-                userAdPreference.hideAds = false;
-
-                done();
-            });
+            done();
+        });
     });
 
     afterEach(function () {
