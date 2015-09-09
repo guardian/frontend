@@ -256,9 +256,6 @@ define([
                 });
             });
         },
-        addSurveyOverlay = function () {
-            new AdfreeSurvey().show();
-        },
 
         /**
          * Public functions
@@ -295,10 +292,6 @@ define([
 
             // show sponsorship placeholder if adblock detected
             showSponsorshipPlaceholder();
-
-            if (isAdfreeSurvey('variant')) {
-                addSurveyOverlay();
-            }
 
             return dfp;
         },

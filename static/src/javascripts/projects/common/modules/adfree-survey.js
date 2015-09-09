@@ -25,7 +25,7 @@ define([
     var AdfreeSurvey = function () {
     };
 
-    AdfreeSurvey.prototype.show = function () {
+    AdfreeSurvey.prototype.attach = function () {
         var bannerTmpl = template(adfreeSurvey,
             {
                 surveyHeader: 'Here\'s new amazing incredible benefit',

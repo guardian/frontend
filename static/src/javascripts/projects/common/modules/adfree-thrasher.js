@@ -5,7 +5,7 @@ define([
     'common/utils/_',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adfree-trash.html'
+    'text!common/views/commercial/adfree-thrasher.html'
 ], function (
     bean,
     fastdom,
@@ -13,7 +13,7 @@ define([
     _,
     template,
     svgs,
-    adfreeTrash
+    adfreeThrasher
 ) {
 
     /**
@@ -22,13 +22,13 @@ define([
      * @constructor
      * @param {Object=} options
      */
-    var AdfreeSurvey = function (options) {
+    var AdfreeThrasher = function (options) {
         var opts = options || {};
         this.$container = opts.$container || '';
     };
 
-    AdfreeSurvey.prototype.show = function () {
-        var bannerTmpl = template(adfreeSurvey,
+    AdfreeThrasher.prototype.show = function () {
+        var thrasherTmpl = template(adfreeThrasher,
             {
                 surveyHeader: 'Here\'s new amazing incredible benefit',
                 surveyText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sagittis facilisis libero, ac blandit leo lobortis finibus. Sed vel nunc pulvinar, lobortis neque ut, euismod sapien. Quisque nec euismod tortor, at suscipit orci. Quisque id tincidunt est. Mauris gravida, urna a molestie dictum, magna elit consequat erat, ac ullamcorper nisi nisi nec lorem. Sed imperdiet aliquam urna, in condimentum enim convallis eget. Fusce faucibus dui quis faucibus tristique. Integer id orci elit.',
@@ -40,15 +40,16 @@ define([
             });
 
         fastdom.write(function () {
-            $(document.body).append(bannerTmpl);
+            this.$container.after(thrasherTmpl);
 
-            bean.on(document, 'click', $('.js-survey-close'), function () {
-                $('.js-survey-overlay').addClass('u-h');
+            bean.on(document, 'click', $('.js-thrasher-link'), function (e) {
+                e.preventDefault();
+                $('.js-survey-overlay').removeClass('u-h');
             });
-        });
+        }.bind(this));
 
 
     };
 
-    return AdfreeSurvey;
+    return AdfreeThrasher;
 });

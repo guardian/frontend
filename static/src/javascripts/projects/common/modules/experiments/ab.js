@@ -12,7 +12,7 @@ define([
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adblock-sticky-banner',
     'common/modules/experiments/tests/rugby',
-    'common/modules/experiments/tests/disable-ads-survey'
+    'common/modules/experiments/tests/adfree-survey'
 ], function (
     reportError,
     _,
@@ -27,7 +27,7 @@ define([
     MembershipMessageUSA,
     AdblockStickyBanner,
     Rugby,
-    DisableAdsSurvey
+    AddfreeSurvey
 ) {
 
     var TESTS = _.flatten([
@@ -37,7 +37,7 @@ define([
         new MembershipMessageUSA(),
         new AdblockStickyBanner(),
         new Rugby(),
-        new DisableAdsSurvey()
+        new AddfreeSurvey()
     ]);
 
     var participationsKey = 'gu.ab.participations';

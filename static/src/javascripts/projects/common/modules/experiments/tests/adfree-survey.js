@@ -1,11 +1,13 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/modules/adfree-trash'
+    'common/modules/adfree-thrasher',
+    'common/modules/adfree-survey'
 ], function (
-   $,
-   config,
-   AdfreeTrash
+    $,
+    config,
+    AdfreeThrasher,
+    AdfreeSurvey
 ) {
     return function () {
 
@@ -14,7 +16,7 @@ define([
         this.expiry = '2015-10-01';
         this.author = 'Zofia Korcz';
         this.description = 'Survey to test if users will be interested in paying for the Guardian with no ads';
-        this.audience = 0.15;
+        this.audience = 0.075;
         this.audienceOffset = 0.8;
         this.successMeasure = 'Users will be interested in paying for the non-ads Guardian';
         this.audienceCriteria = 'All users';
@@ -31,17 +33,21 @@ define([
                 test: function () {
                     var $container;
 
+                    //attach hidden survey overlay, it will be triggered by a 'Remove ads' label or thrasher
+                    new AdfreeSurvey().attach();
+
                     if (config.page.isFront) {
                         $container = $('.js-container--first');
                     } else if (config.page.contentType === "Article") {
                         $container = $('.fc-container').last();
                     }
-                    
-                    new AdfreeTrash({
-                        $container: $container
-                    }).show();
+
+                    if ($container) {
+                        new AdfreeThrasher({
+                            $container: $container
+                        }).show();
+                    }
                 }
-                    //$('.js-container--first').insertAfter('.js-container--first');
             },
             {
                 id: 'challenger',
@@ -56,4 +62,3 @@ define([
         ];
     };
 });
-
