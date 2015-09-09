@@ -554,7 +554,7 @@ object Switches {
     "advert-opt-out",
     "Display advert free experience",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2015, 12, 9),
     exposeClientSide = true
   )
 
