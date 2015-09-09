@@ -307,7 +307,7 @@ Now you should be able to compile and run. Yay.
 If you get no route to host, it means you are not using the 1.8 jre.  Type `java -version` to check.  You may need
 to close and reopen your terminal if you installed 1.8 recently.
 
-You may also see 'java.lang.UnsupportedClassVersionError: play/runsupport/classloader/ApplicationClassLoaderProvider : Unsupported major.minor version 52.0' which is described in the [Play 2.4 migration guide](https://www.playframework.com/documentation/2.4.x/Migration24#Java-8-support).
+You may also see `java.lang.UnsupportedClassVersionError: play/runsupport/classloader/ApplicationClassLoaderProvider : Unsupported major.minor version 52.0` which is described in the [Play 2.4 migration guide](https://www.playframework.com/documentation/2.4.x/Migration24#Java-8-support).
 
 Follow the [JDK install guide above.](#a-jdk)
 
