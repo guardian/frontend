@@ -24,9 +24,7 @@ object CapiLookupAgent extends ExecutionContexts with Logging {
     def lookup(tagType: TagType, tagName: String): Future[((TagType, String), Seq[String])] = {
       val query = LiveContentApi.tags.q(tagName).tagType(tagType.name).pageSize(50)
       val lookupResult = getResponse(query) map { response =>
-        val tags = response.results
-        log.info(s"Looking up $tagType '$tagName' gave ${tags.map(_.id)}")
-        tags
+        response.results
       } recover {
         case e: Exception =>
           log.warn(s"Failed to look up $tagType '$tagName': ${e.getMessage}")

@@ -134,7 +134,7 @@ trait ConfigAgentLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("ConfigAgentJob")
-    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
+    Jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()
     }
 

@@ -416,8 +416,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   override def onStart(app: PlayApp) {
     Jobs.deschedule("ApplicationSystemMetricsJob")
     super.onStart(app)
-
-    Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
+    //run every minute, 36 seconds after the minute
+    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
       report()
     }
   }

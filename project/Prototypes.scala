@@ -20,7 +20,7 @@ trait Prototypes {
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.4",
+    scalaVersion := "2.11.7",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
