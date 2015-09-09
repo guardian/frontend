@@ -27,10 +27,6 @@ trait ArticleWithStoryPackage {
 case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
 case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
 
-sealed trait RequestedFormat
-object HtmlFormat extends RequestedFormat
-object PCUFormat extends RequestedFormat
-
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
@@ -112,7 +108,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     }
   }
 
-  def mapModel(path: String, format: RequestedFormat = HtmlFormat)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+  def mapModel(path: String)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
