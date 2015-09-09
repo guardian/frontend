@@ -54,7 +54,7 @@ figure {
     // CSS, there is no way to undo the CSS to re-use original dimensions
     // provided by those attributes, so instead we just never set the CSS on
     // those elements.
-    &:not(.crossword__grid__separators rect) {
+    &:not(rect) {
         width: 100% !important;
         height: auto !important;
     }
