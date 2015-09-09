@@ -4,6 +4,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
+    'Promise',
     'raven',
     'common/utils/$',
     'common/utils/$css',
@@ -26,6 +27,7 @@ define([
     bonzo,
     fastdom,
     qwery,
+    Promise,
     raven,
     $,
     $css,
@@ -404,8 +406,16 @@ define([
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
                 });
-                checkForBreakout($slot);
-                addLabel($slot);
+
+                var adType = checkForBreakout($slot);
+
+                if (adType && adType.type === 'gu-style') {
+                    console.log(adType.type, adType.variant);
+                } else {
+                    console.log('normal ad');
+                    addLabel($slot);
+                }
+
                 size = event.size.join(',');
                 // is there a callback for this size
                 if (callbacks[size]) {
@@ -460,7 +470,8 @@ define([
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
-                $iFrameParent      = $iFrame.parent();
+                $iFrameParent      = $iFrame.parent(),
+                type               = {};
 
             if (iFrameBody) {
                 _.forEach(breakoutClasses, function (breakoutClass) {
@@ -482,6 +493,11 @@ define([
                                 // evil, but we own the returning js snippet
                                 eval(breakoutContent);
                             }
+
+                            type = {
+                                type: creativeConfig.params.type || '',
+                                variant: creativeConfig.params.variant || ''
+                            };
 
                         } else {
                             fastdom.write(function () {
@@ -506,6 +522,8 @@ define([
                     $iFrame.hide();
                 });
             }
+
+            return type;
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutClasses).
@@ -517,27 +535,31 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot).each(function (iFrame) {
-                // IE needs the iFrame to have loaded before we can interact with it
-                if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                    bean.on(iFrame, 'readystatechange', function (e) {
-                        var updatedIFrame = e.srcElement;
+            return _($('iframe', $slot))
+                .chain()
+                .map(function (iFrame) {
+                    // IE needs the iFrame to have loaded before we can interact with it
+                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                        bean.on(iFrame, 'readystatechange', function (e) {
+                            var updatedIFrame = e.srcElement;
 
-                        if (
-                            /*eslint-disable valid-typeof*/
-                            updatedIFrame &&
-                                typeof updatedIFrame.readyState !== 'unknown' &&
-                                updatedIFrame.readyState === 'complete'
-                            /*eslint-enable valid-typeof*/
-                        ) {
-                            breakoutIFrame(updatedIFrame, $slot);
-                            bean.off(updatedIFrame, 'readystatechange');
-                        }
-                    });
-                } else {
-                    breakoutIFrame(iFrame, $slot);
-                }
-            });
+                            if (
+                                /*eslint-disable valid-typeof*/
+                                updatedIFrame &&
+                                    typeof updatedIFrame.readyState !== 'unknown' &&
+                                    updatedIFrame.readyState === 'complete'
+                                /*eslint-enable valid-typeof*/
+                            ) {
+                                return breakoutIFrame(updatedIFrame, $slot);
+                                bean.off(updatedIFrame, 'readystatechange');
+                            }
+                        });
+                    } else {
+                        return breakoutIFrame(iFrame, $slot);
+                    }
+                }).find(function (item) {
+                    return item.type !== '';
+                }).value();
         },
         breakpointNameToAttribute = function (breakpointName) {
             return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
