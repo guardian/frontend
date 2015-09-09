@@ -17,9 +17,15 @@
         .crossword__container__game {
             @include mq(tablet) {
                 margin-left: 0 - $size;
-                width: $size;
-                height: $size;
             }
+        }
+
+        // Because the parent is floated, it has no dimensions, so we must
+        // define dimensions for the grid. (SVGs use viewBox which require
+        // the parent to have dimensions)
+        .crossword__container__grid-wrapper {
+            width: $size;
+            height: $size;
         }
 
         .crossword__controls {
