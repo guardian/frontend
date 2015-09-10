@@ -195,7 +195,7 @@ p {
     &:before {
         content: attr(value);
         font-weight: bold;
-        margin-right: 0.5rem;
+        margin-right: .5rem;
     }
 }
 
