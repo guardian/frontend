@@ -6,14 +6,14 @@
 .crossword__cell--highlighted {
     &,
     .crossword__grid--focussed & {
-        fill: $xword-highlight;
+        fill: $xword-highlight-colour;
     }
 }
 
 .crossword__cell--focussed {
     &,
     .crossword__grid--focussed & {
-        fill: $xword-focussed;
+        fill: $xword-focussed-background-colour;
     }
 }
 
@@ -42,6 +42,10 @@
             }
         }
     }
+}
+
+.crossword__cell-text--focussed {
+    font-weight: bold;
 }
 
 .crossword__cell-text--error {
