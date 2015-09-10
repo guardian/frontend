@@ -98,6 +98,16 @@
                 color: #005689;
             }
 
+            .main-header {
+                background: #005689;
+                min-height: 45px;
+            }
+
+            .logo-wrapper {
+                float: right;
+                margin: 0.1875rem 0.625rem 0.75rem 0;
+            }
+
             @* Image related styling below *@
             .content__mobile-full-width, .media-primary {
                 margin: 0;
@@ -109,6 +119,11 @@
     </head>
     <body>
         @* @fragments.header(metaData) *@
+        <header class="main-header">
+            <a href="@LinkTo{/}" class="logo-wrapper">
+                @fragments.inlineSvg("guardian-logo-160", "logo")
+            </a>
+        </header>
         @fragments.articleBody(model, true)
         @* <h1>Sample document</h1>
         <p>
