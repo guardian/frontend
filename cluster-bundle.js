@@ -168,6 +168,7 @@ if (cluster.isMaster) {
     for (var i = 0; i < numCPUs; i++) {
         var worker = cluster.fork({ num: i });
 
+        worker.send({ configs: bundleConfigs[i] });
         worker.on('message', updateBundles);
     }
 
@@ -181,27 +182,27 @@ if (cluster.isMaster) {
         writeConfig();
     });
 } else {
-    var configs = bundleConfigs[process.env.num];
+    process.on('message', function go(message) {
+        Promise.all(message.configs.map(function (config) {
+            var moduleExpression = config[0];
+            var outName = config[1];
 
-    Promise.all(configs.map(function (config) {
-        var moduleExpression = config[0];
-        var outName = config[1];
+            return builder.build(moduleExpression, null)
+                .then(processBuild(moduleExpression, outName))
+                .then(makeDirectory)
+                .then(writeBundleToDisk)
+                .then(writeBundleMapToDisk);
+        })).then(function (bundles) {
+            var configs = bundles.reduce(function (accumulator, bundle) {
+                accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
+                return accumulator;
+            }, {});
 
-        return builder.build(moduleExpression, null)
-            .then(processBuild(moduleExpression, outName))
-            .then(makeDirectory)
-            .then(writeBundleToDisk)
-            .then(writeBundleMapToDisk);
-    })).then(function (bundles) {
-        var configs = bundles.reduce(function (accumulator, bundle) {
-            accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
-            return accumulator;
-        }, {});
-
-        process.send({ id: process.env.num, configs: configs });
-        process.exit(0);
-    }).catch(function (err) {
-        console.error(err);
-        process.exit(1);
+            process.send({ id: process.env.num, configs: configs });
+            process.exit(0);
+        }).catch(function (err) {
+            console.error(err);
+            process.exit(1);
+        });
     });
 }
