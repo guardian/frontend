@@ -163,6 +163,8 @@ function writeConfig() {
 }
 
 if (cluster.isMaster) {
+    console.log('using', numCPUs, 'cores');
+
     for (var i = 0; i < numCPUs; i++) {
         var worker = cluster.fork({ num: i });
 
@@ -197,7 +199,7 @@ if (cluster.isMaster) {
         }, {});
 
         process.send({ id: process.env.num, configs: configs });
-        process.exit();
+        process.exit(0);
     }).catch(function (err) {
         console.error(err);
         process.exit(1);
