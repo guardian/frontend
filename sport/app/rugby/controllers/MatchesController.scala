@@ -35,10 +35,10 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
     matchOpt.map { aMatch =>
       val matchNav = CapiFeed.findMatchArticle(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
 
-      val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch.id)
+      val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch)
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
 
-      val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch.id) else None
+      val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch) else None
 
       val page = MatchPage(aMatch)
       Cached(60){

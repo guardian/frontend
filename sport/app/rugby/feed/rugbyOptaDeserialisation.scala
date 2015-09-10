@@ -2,7 +2,6 @@ package rugby.feed
 
 import org.joda.time.format.DateTimeFormat
 import rugby.model._
-import rugby.model.{Team, Match, Status}
 import Status._
 
 import scala.xml.{NodeSeq, XML, MetaData, UnprefixedAttribute, Null}
@@ -15,7 +14,7 @@ object Parser {
     def apply(date: String, time: String) = dateTimeParser.parseDateTime(s"$date $time")
   }
 
-  def parseLiveScores(body: String): Seq[Match] = {
+  def parseLiveScores(body: String, event: OptaEvent): Seq[Match] = {
 
     val data = XML.loadString(body)
 
@@ -40,13 +39,14 @@ object Parser {
           awayTeam = awayTeam,
           venue = None,
           competitionName = (game \ "@comp_name").text,
-          status = parseStatus(game)
+          status = parseStatus(game),
+          event = event
         )
       }
     }
   }
 
-  def parseFixturesAndResults(body: String): Seq[Match] = {
+  def parseFixturesAndResults(body: String, event: OptaEvent): Seq[Match] = {
     val data = XML.loadString(body)
 
     val fixturesData = data \ "fixture"
@@ -68,7 +68,8 @@ object Parser {
           awayTeam = awayTeam,
           venue = Some((fixture \ "@venue").text),
           competitionName = (fixture \ "@comp_name").text,
-          status = parseStatus(fixture)
+          status = parseStatus(fixture),
+          event = event
         )
       }
     }

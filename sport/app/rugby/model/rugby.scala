@@ -3,6 +3,7 @@ package rugby.model
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import Status._
+import rugby.feed.OptaEvent
 
 case class Match(
   date: DateTime,
@@ -11,7 +12,8 @@ case class Match(
   awayTeam: Team,
   venue: Option[String],
   competitionName: String,
-  status: Status
+  status: Status,
+  event: OptaEvent
 ) {
   def hasTeam(teamId: String) = homeTeam.id == teamId || awayTeam.id == teamId
 
