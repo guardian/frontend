@@ -4,7 +4,8 @@ module.exports = function(grunt, options) {
             options: {
                 map: options.isDev,
                 base: 16,
-                fallback: false
+                fallback: false,
+                ignore: ['stroke-width']
             },
             files: [{
                 expand: true,
