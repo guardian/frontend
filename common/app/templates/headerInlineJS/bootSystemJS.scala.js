@@ -3,9 +3,6 @@
 @import conf.Static
 @import conf.Configuration
 
-// Service worker only caches the bundles, so the offline page can only ask for those
-@JavaScript(templates.js.systemJsSetup(useBundlesInDev = item.id == "offline-page").body)
-
  // Bracket notation for IE8 (import is reserved)
 System['import']('core').then(function () {
     return System['import']('domready');

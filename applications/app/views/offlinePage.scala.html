@@ -6,7 +6,34 @@
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
 <head>
-    @fragments.head(crosswordPage, None, Html(""), Map.empty)
+    <meta charset="utf-8" />
+    <title>@views.support.Title(crosswordPage)</title>
+
+    @fragments.metaData(crosswordPage)
+
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheetLinks(None)
+
+    @* polyfill, feature detect etc before we try and use the stylesheets *@
+    @fragments.javaScriptPreFlight(crosswordPage)
+
+    @* try and load fonts before we use the stylesheets *@
+    @fragments.fonts()
+
+    @* start trying to use the stylesheets *@
+    @fragments.stylesheetLinksEnable()
+
+    <script>
+        @JavaScript(Static.systemJs.setupFragment)
+
+        @* Service worker only caches the bundles, so the offline page can only ask for those.
+        For production, we rely on bundles from systemJsSetup *@
+        @if(play.Play.isDev()) {
+            System.config({ bundles: @JavaScript(Static.systemJs.bundleConfig) });
+        }
+
+        @Html(templates.headerInlineJS.js.bootSystemJS(crosswordPage).body)
+    </script>
 </head>
     <body
         id="top"

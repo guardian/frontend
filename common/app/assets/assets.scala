@@ -154,6 +154,8 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     val appConfig: String = contents("assets/systemjs-config.js")
     val normalize: String = contents("assets/systemjs-normalize.js")
 
+    lazy val setupFragment: String = templates.js.systemJsSetup().body
+
     private val jspmAssetMap: Map[String, String] =
       Json.parse(contents("assets/jspm-assets.map")).validate[Map[String, String]] match {
         case JsSuccess(m, _) => m

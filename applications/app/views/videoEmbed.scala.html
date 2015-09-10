@@ -29,7 +29,7 @@
 
 @bootSystemJs() = {
     <script>
-        @Html(templates.js.systemJsSetup().body)
+        @Html(Static.systemJs.setupFragment)
 
         // Bracket notation for IE8 (import is reserved)
         System['import']('core').then(function () {

@@ -1,4 +1,4 @@
-@(useBundlesInDev: Boolean = false)
+@()
 
 @JavaScript(Static.systemJs.polyfills)
 @JavaScript(Static.systemJs.main)
@@ -23,7 +23,7 @@ System.config({
 
 @JavaScript(Static.systemJs.appConfig)
 
-@if(!play.Play.isDev() || (play.Play.isDev() && useBundlesInDev)) {
+@if(!play.Play.isDev()) {
     System.config({ bundles: @JavaScript(Static.systemJs.bundleConfig) });
 }
 
