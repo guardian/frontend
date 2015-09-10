@@ -19,19 +19,24 @@ trait AdminLifecycle extends GlobalSettings with Logging {
   lazy val adminRebuildIndexRateInMinutes: Int = Configuration.indexes.adminRebuildIndexRateInMinutes
 
   private def scheduleJobs() {
+
+    //every 0, 30 seconds past the minute
     Jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
       model.abtests.AbTestJob.run()
     }
 
-    Jobs.schedule("LoadBalancerLoadJob", "0 4/15 * * * ?") {
+    //every 4, 19, 34, 49 minutes past the hour, on the 2nd second past the minute (e.g 13:04:02, 13:19:02)
+    Jobs.schedule("LoadBalancerLoadJob", "2 4/15 * * * ?") {
       LoadBalancer.refresh()
     }
 
-    Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?") {
+    //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
+    Jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
       FastlyCloudwatchLoadJob.run()
     }
 
-    Jobs.schedule("AnalyticsSanityCheckJob", "0 0/15 * * * ?") {
+    //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
+    Jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
       AnalyticsSanityCheckJob.run()
     }
 
@@ -47,20 +52,17 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       RefreshFrontsJob.runLowFrequency()
     }
 
-    Jobs.schedule("RebuildIndexJob", s"0 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
+    Jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
       RebuildIndexJob.run()
     }
 
-    // every 30 minutes
-    Jobs.schedule("TravelOffersCacheJob", "0 1/30 * * * ? *") {
+    // every 1, 31 minutes past the hour, 14 seconds past the minute (e.g 13:01:14, 13:31:14)
+    Jobs.schedule("TravelOffersCacheJob", "14 1/30 * * * ? *") {
       TravelOffersCacheJob.run()
     }
 
-    Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
-      OmnitureReportJob.run()
-    }
-
-    Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
+    // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
+    Jobs.schedule("MatchDayRecorderJob", "22 * * * * ?") {
       MatchDayRecorder.record()
     }
 
@@ -79,7 +81,8 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       }
     }
 
-    Jobs.schedule("VideoEncodingsJob", "0 0/15 * * * ?") {
+    //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
+    Jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
       log.info("Starting VideoEncodingsJob")
       VideoEncodingsJob.run()
     }
@@ -94,7 +97,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
-    Jobs.deschedule("OmnitureReportJob")
     Jobs.deschedule("MatchDayRecorderJob")
     Jobs.deschedule("SentryReportJob")
     Jobs.deschedule("FrontPressJobHighFrequency")
@@ -114,7 +116,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     AkkaAsync {
       RebuildIndexJob.run()
       TravelOffersCacheJob.run()
-      OmnitureReportJob.run()
       VideoEncodingsJob.run()
     }
   }

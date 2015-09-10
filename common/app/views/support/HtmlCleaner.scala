@@ -55,7 +55,22 @@ object BlockquoteCleaner extends HtmlCleaner {
     quotedBlockquotes.foreach(wrapBlockquoteChildren)
     document
   }
+}
 
+object PullquoteCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    val pullquotes = document.getElementsByTag("aside").filter(_.hasClass("element-pullquote"))
+    val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
+    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing")).toString()
+
+    pullquotes.foreach { element: Element =>
+      element.prepend(openingQuoteSvg)
+      element.append(closingQuoteSvg)
+    }
+
+    document
+  }
 }
 
 case class R2VideoCleaner(article: Article) extends HtmlCleaner {
@@ -171,7 +186,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
   def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
 }
 
-case class PictureCleaner(article: Article)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article, amp: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     for {
@@ -209,7 +224,8 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) }
+        shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) },
+        amp = amp
       ).toString()
 
       figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))

@@ -99,6 +99,11 @@ require([
         }
     };
 
+    // IE8 and below use attachEvent
+    if (!window.addEventListener) {
+        window.addEventListener = window.attachEvent;
+    }
+
     // Report unhandled promise rejections
     // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
     window.addEventListener('unhandledRejection', function (event) {

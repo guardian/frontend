@@ -126,7 +126,7 @@ describe('Build Page Targeting', function () {
     });
 
     it('should set correct k param', function () {
-        expect(buildPageTargeting().k).toEqual(['prince-charles-letters', 'uk', 'prince-charles']);
+        expect(buildPageTargeting().k).toEqual(['prince-charles-letters', 'uk/uk', 'prince-charles']);
     });
 
     it('should use pageId if no keywordIds', function () {
