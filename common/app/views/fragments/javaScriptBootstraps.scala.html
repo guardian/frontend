@@ -5,7 +5,7 @@
 
 <script>
     @if(mvt.JspmTest.isParticipating || item.section == "crosswords") {
-        @JavaScript(Static.systemJs.setupFragment)
+        @Html(Static.systemJs.setupFragment)
 
         @Html(templates.headerInlineJS.js.bootSystemJS(item).body)
     } else {

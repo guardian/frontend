@@ -24,7 +24,7 @@ System.config({
 @JavaScript(Static.systemJs.appConfig)
 
 @if(!play.Play.isDev()) {
-    System.config({ bundles: @JavaScript(Static.systemJs.bundleConfig) });
+    System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
 }
 
 @JavaScript(Static.systemJs.normalize)
