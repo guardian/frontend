@@ -126,10 +126,14 @@ function writeConfig() {
         return processedBundles[key];
     });
 
-    console.log(bundles);
-
     var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
     var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundles, null, '\t') + ' })';
+
+    console.log('writing to %s', configFilePath);
+    fs.writeFile(configFilePath, configFileData, function (e) {
+        if (e) return process.exit(1);
+        process.exit(0);
+    });
 }
 
 function updateBundles(message) {
@@ -151,7 +155,11 @@ function writeConfig() {
     var configFileData = 'System.config({ bundles: ' + JSON.stringify(configs, null, '\t') + ' })';
 
     console.log('writing to %s', configFilePath);
-    fs.writeFile(configFilePath, configFileData, process.exit(0).bind());
+
+    fs.writeFile(configFilePath, configFileData, function (e) {
+        if (e) return process.exit(1);
+        process.exit(0);
+    });
 }
 
 if (cluster.isMaster) {
