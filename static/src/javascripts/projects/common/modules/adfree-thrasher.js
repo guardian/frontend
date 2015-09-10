@@ -30,13 +30,10 @@ define([
     AdfreeThrasher.prototype.show = function () {
         var thrasherTmpl = template(adfreeThrasher,
             {
-                surveyHeader: 'Here\'s new amazing incredible benefit',
-                surveyText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sagittis facilisis libero, ac blandit leo lobortis finibus. Sed vel nunc pulvinar, lobortis neque ut, euismod sapien. Quisque nec euismod tortor, at suscipit orci. Quisque id tincidunt est. Mauris gravida, urna a molestie dictum, magna elit consequat erat, ac ullamcorper nisi nisi nec lorem. Sed imperdiet aliquam urna, in condimentum enim convallis eget. Fusce faucibus dui quis faucibus tristique. Integer id orci elit.',
-                surveySubHeader: 'Suspendisse sagittis facilisis libero, ac blandit leo lobortis finibus. Sed vel nunc pulvinar, lobortis neque ut, euismod sapien.',
-                linkText: 'Be awesome and take part in our survey',
+                surveyHeader: 'Become a member and experience the Guardian without advertising',
                 surveyLink: 'http://google.com',
-                arrowWhiteRight: svgs('arrowWhiteRight'),
-                marque54icon: svgs('marque54icon')
+                marque36icon: svgs('marque36icon'),
+                membershipLogo: svgs('membershipLogo')
             });
 
         fastdom.write(function () {
