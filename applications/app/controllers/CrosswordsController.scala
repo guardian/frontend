@@ -108,7 +108,10 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
   def lookup() = Action.async { implicit request =>
     lookupForm.bindFromRequest.get match {
       case CrosswordLookup(id) =>
-        val search = LiveContentApi.search(Edition(request)).section("crosswords").q(id.toString)
+        val search = LiveContentApi.search(Edition(request))
+          .section("crosswords")
+          .orderBy("oldest") // puzzles are posted before solutions
+          .q(id.toString)
 
         LiveContentApi.getResponse(search).map { response =>
           response.results match {
