@@ -4,7 +4,6 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/_',
-    'common/modules/commercial/ad-free-design',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -19,7 +18,6 @@ define([
     mediator,
     robust,
     _,
-    adFreeDesign,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -35,8 +33,7 @@ define([
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init],
-        ['cm-adFreeDesign', adFreeDesign.init]
+        ['cm-badges', badges.init]
     ];
 
     return {
