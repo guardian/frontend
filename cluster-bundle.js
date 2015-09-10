@@ -100,9 +100,10 @@ function makeDirectory(bundle) {
 function writeBundleToDisk(bundle) {
     var bundleFileName = path.join(prefixPath, bundle.uri);
 
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
         console.log('writing to %s', bundleFileName);
-        fs.writeFile(bundleFileName, bundle.source + '\n//# sourceMappingURL=' + path.basename(bundleFileName) + '.map', function () {
+        fs.writeFile(bundleFileName, bundle.source + '\n//# sourceMappingURL=' + path.basename(bundleFileName) + '.map', function (e) {
+            if (e) return reject(e);
             resolve(bundle);
         });
     });
@@ -111,9 +112,10 @@ function writeBundleToDisk(bundle) {
 function writeBundleMapToDisk(bundle) {
     var bundleMapFileName = path.join(prefixPath, bundle.uri) + '.map';
 
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
         console.log('writing to %s', bundleMapFileName);
-        fs.writeFile(bundleMapFileName, bundle.sourceMap, function () {
+        fs.writeFile(bundleMapFileName, bundle.sourceMap, function (e) {
+            if (e) return reject(e);
             resolve(bundle);
         });
     });
