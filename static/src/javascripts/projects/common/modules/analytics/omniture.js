@@ -109,7 +109,7 @@ define([
 
     Omniture.prototype.populateEventProperties = function (linkName) {
 
-        this.s.linkTrackVars = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
+        this.s.linkTrackVars = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
                                'prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events';
         this.s.linkTrackEvents = 'event37';
         this.s.events = 'event37';
@@ -215,6 +215,9 @@ define([
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
+
+        // Sponsored Content Flag
+        this.s.prop38    = config.page.sponsorshipType + ':' + config.page.sponsor;
 
         this.s.prop40    = detect.adblockInUse || detect.getFirefoxAdblockPlusInstalled();
 
