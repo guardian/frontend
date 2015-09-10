@@ -15,6 +15,7 @@ define([
     'common/utils/url',
     'common/utils/user-timing',
     'common/utils/sha1',
+    'common/modules/commercial/gustyle/gustyle',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/dfp-ophan-tracking',
@@ -38,6 +39,7 @@ define([
     urlUtils,
     userTiming,
     sha1,
+    GuStyle,
     StickyMpu,
     buildPageTargeting,
     dfpOphanTracking,
@@ -410,7 +412,7 @@ define([
                 var adType = checkForBreakout($slot);
 
                 if (adType && adType.type === 'gu-style') {
-                    // TODO: gu style ads addons
+                    GuStyle.create($slot, adType);
                 } else {
                     addLabel($slot);
                 }
