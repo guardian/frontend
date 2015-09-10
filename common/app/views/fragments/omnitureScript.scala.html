@@ -22,7 +22,7 @@
     </script>
 } else {
     @* hardly ever changes, so extremely cacheable *@
-    @* unfortunately we cannot put 'defer' on it, hence the ability
-    to switch between this and an inline version for testing*@
+    @* unfortunately we cannot put 'defer' on it because we must be able to guarantee this script has run before other
+    scripts are called, hence the ability to switch between this and an inline version for testing *@
     <script id="omniture" src="@Static("javascripts/vendor/omniture.js")"></script>
 }
