@@ -19,7 +19,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
 
-  protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
+  protected val configuration = ConfigurationFactory.getNonLoggingConfiguration(application, webappConfDirectory)
 
   private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
     def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
