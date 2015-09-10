@@ -113,4 +113,13 @@ describe('Most popular', function () {
         popular.prerender();
         expect(popular.$mpu).toBeUndefined();
     });
+
+    it('should not render MPU when in the childrens books section', function () {
+        var popular = new Popular();
+        config.page.section = 'childrens-books-site';
+
+        popular.prerender();
+        expect(popular.$mpu).toBeUndefined();
+    });
+
 });

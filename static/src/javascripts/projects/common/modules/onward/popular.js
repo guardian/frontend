@@ -48,6 +48,7 @@ define([
     MostPopular.prototype.prerender = function () {
         if (!(
             config.page.shouldHideAdverts || /* sensitive pages */
+            config.page.section === 'childrens-books-site' ||
             this.mobileMaximumSlotsReached() ||
             userAdPreference.hideAds
         )) {
