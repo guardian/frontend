@@ -105,12 +105,19 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
     )
   }
 
-  def lookup() = Action { implicit request =>
+  def lookup() = Action.async { implicit request =>
     lookupForm.bindFromRequest.get match {
-      case CrosswordLookup(crosswordType, id) =>
-        Redirect(s"$crosswordType/$id")
-      case _ =>
-        Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+      case CrosswordLookup(id) =>
+        val search = LiveContentApi.search(Edition(request)).section("crosswords").q(id.toString)
+
+        LiveContentApi.getResponse(search).map { response =>
+          response.results match {
+            case Nil    => noResults
+            case c :: _ => Redirect(s"/${c.id}")
+          }
+        }
+
+      case _ => Future.successful(noResults)
     }
   }
 
@@ -122,7 +129,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
     val toDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
   }
 
-  case class CrosswordLookup(crosswordType: String, id: Int)
+  case class CrosswordLookup(id: Int)
 }
 
 object CrosswordPreferencesController extends Controller with PreferenceController {
