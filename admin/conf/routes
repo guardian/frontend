@@ -26,6 +26,9 @@ GET         /admin                                                              
 
 #Facia Press
 GET         /press/all                                                                              controllers.FrontPressController.queueAllFrontsForPress()
+GET         /press/high                                                                             controllers.FrontPressController.queueHighFrequencyFrontsForPress()
+GET         /press/standard                                                                         controllers.FrontPressController.queueStandardFrequencyFrontsForPress()
+GET         /press/low                                                                              controllers.FrontPressController.queueLowFrequencyFrontsForPress()
 
 # API endpoint proxying for https
 GET         /api/proxy/*path                                                                        controllers.admin.Api.proxy(path, callback)
