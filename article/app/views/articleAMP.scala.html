@@ -48,6 +48,16 @@
                 margin: 0;
             }
 
+            .contact {
+                height: 1.3125rem;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            .inline-twitter-bird {
+                margin-left: -0.3rem;
+            }
+
             .byline {
                 font-size: 1rem;
                 line-height: 1.375rem;
@@ -56,13 +66,17 @@
                 margin: 0;
             }
 
-            p, .caption, .byline, .content__dateline {
+            p, .caption, .byline, .content__dateline, .element-rich-link--not-upgraded a:before {
                 color: #767676;
             }
 
             .tone-colour {
                 color: #005689;
                 text-decoration: none;
+            }
+
+            .inline-tone-fill {
+                fill: #005689;
             }
 
             p {
@@ -98,6 +112,49 @@
                 color: #005689;
             }
 
+            .main-header {
+                background: #005689;
+                min-height: 45px;
+            }
+
+            .logo-wrapper {
+                float: right;
+                margin: 0.1875rem 0.625rem 0.75rem 0;
+            }
+
+            .element-rich-link--not-upgraded {
+                float: left;
+                width: 13.75rem;
+                margin: 0.25rem 1.25rem 0.375rem 0;
+                border-top: 0.0625rem dotted #bdbdbd;
+                border-bottom: 0.0625rem dotted #bdbdbd;
+            }
+
+            .element-rich-link--not-upgraded span {
+                display: none;
+            }
+
+            .element-rich-link--not-upgraded p {
+                margin: 0;
+            }
+
+            .element-rich-link--not-upgraded a {
+                display: block;
+                padding: 0;
+                color: #333;
+                border: 0;
+                padding-bottom: 1.125rem;
+            }
+
+            .element-rich-link--not-upgraded a:before {
+                content: 'More on this topic';
+                display: block;
+                font-size: 0.75rem;
+                line-height: 1rem;
+                font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+                padding: 0.1875rem 0;
+            }
+
             @* Image related styling below *@
             .content__mobile-full-width, .media-primary {
                 margin: 0;
@@ -109,6 +166,11 @@
     </head>
     <body>
         @* @fragments.header(metaData) *@
+        <header class="main-header">
+            <a href="@LinkTo{/}" class="logo-wrapper">
+                @fragments.inlineSvg("guardian-logo-160", "logo")
+            </a>
+        </header>
         @fragments.articleBody(model, true)
         @* <h1>Sample document</h1>
         <p>
