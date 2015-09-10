@@ -1,5 +1,6 @@
 import javax.inject._
 
+import com.gu.contentapi.client.GuardianContentApiError
 import play.api._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.Results._
