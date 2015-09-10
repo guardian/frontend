@@ -70,10 +70,11 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
   val lookupForm = Form(
     mapping(
-      "type" -> text,
       "id" -> number
     )(CrosswordLookup.apply)(CrosswordLookup.unapply)
   )
+
+  def noResults()(implicit request: RequestHeader) = Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
 
   def search() = Action.async { implicit request =>
     searchForm.bindFromRequest.fold(
@@ -91,7 +92,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results match {
-            case Nil => Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+            case Nil => noResults
 
             case results =>
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
