@@ -72,15 +72,6 @@
             <div class="form-fields__inline">
                 <ul>
                     <li class="form-field">
-                        <label class="label" for="crossword-type">Type</label>
-                        <select id="type" name="type">
-                        @page.crosswordTypes.map { crosswordType =>
-                            <option value="@crosswordType">@crosswordType</option>
-                        }
-                        </select>
-                    </li>
-
-                    <li class="form-field">
                         <label class="label" for="crossword-id">ID</label>
                         <input type="text" class="text-input" name="id" id="id" />
                     </li>
