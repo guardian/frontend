@@ -54,15 +54,8 @@ object ABHeadlinesTestControl extends TestDefinition(
   }
 }
 
-object ABNewFreeMembershipTest extends TestDefinition(
-  List(Variant1, Variant2, Variant3, Variant4, Variant5),
-  "new-free-membership-test",
-  "To test how much of a difference changing a membership link and removing 'free' makes",
-  new LocalDate(2015, 9, 15)
-)
-
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant, ABNewFreeMembershipTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, ABHeadlinesTestControl, ABHeadlinesTestVariant)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
