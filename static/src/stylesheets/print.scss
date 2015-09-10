@@ -180,10 +180,23 @@ p {
     font-size: 12px;
 }
 
+
 .crossword__clues--across,
 .crossword__clues--down {
     float: left;
     width: 8cm !important;
+}
+
+.crossword__clues-list {
+    list-style: none;
+}
+
+.crossword__clue {
+    &:before {
+        content: attr(value);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
 }
 
 .crossword__links {
