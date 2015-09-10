@@ -1045,6 +1045,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val FrontPressJobSwitchStandardFrequency = Switch(
+    "Facia",
+    "front-press-job-switch-standard-frequency",
+    "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val IphoneConfidence = Switch(
     "Performance",
     "iphone-confidence",
