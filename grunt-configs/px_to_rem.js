@@ -1,3 +1,5 @@
+/* Chrome doesn't recognise rems on SVG stroke-width property (https://code.google.com/p/chromium/issues/detail?id=470449) so we ignore that in the px conversion to rems */
+
 module.exports = function(grunt, options) {
     return {
         dist: {
