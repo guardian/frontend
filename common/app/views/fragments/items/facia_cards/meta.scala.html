@@ -24,6 +24,10 @@
                     @item.shortUrl.map { url => value="@url" }>
             @fragments.inlineSvg("cross", "icon") Remove
             </button>
+        } else {
+            <button class="js-save-for-later-link fc-save-for-later u-faux-block-link__promote  is-hidden">
+            @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
+            </button>
         }
     }
 </aside>

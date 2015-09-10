@@ -72,6 +72,11 @@ object SystemMetrics extends implicits.Numbers {
     () => new File("/").getTotalSpace / 1048576
   )
 
+  object ThreadCountMetric extends GaugeMetric("thread-count", "Thread Count",
+    () => ManagementFactory.getThreadMXBean.getThreadCount,
+    StandardUnit.Count
+  )
+
   // yeah, casting to com.sun.. ain't too pretty
   object TotalPhysicalMemoryMetric extends GaugeMetric("total-physical-memory", "Total physical memory",
     () => ManagementFactory.getOperatingSystemMXBean match {
@@ -378,11 +383,19 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   def applicationName: String
   def applicationMetrics: List[FrontendMetric] = List(FilterCacheHit, FilterCacheMiss) ++ PaMetrics.all
 
-  def systemMetrics: List[FrontendMetric] = List(SystemMetrics.MaxHeapMemoryMetric,
-    SystemMetrics.UsedHeapMemoryMetric, SystemMetrics.TotalPhysicalMemoryMetric, SystemMetrics.FreePhysicalMemoryMetric,
-    SystemMetrics.AvailableProcessorsMetric, SystemMetrics.BuildNumberMetric, SystemMetrics.FreeDiskSpaceMetric,
-    SystemMetrics.TotalDiskSpaceMetric, SystemMetrics.MaxFileDescriptorsMetric,
-    SystemMetrics.OpenFileDescriptorsMetric) ++ SystemMetrics.garbageCollectors.flatMap{ gc => List(
+  def systemMetrics: List[FrontendMetric] = List(
+    SystemMetrics.MaxHeapMemoryMetric,
+    SystemMetrics.UsedHeapMemoryMetric,
+    SystemMetrics.TotalPhysicalMemoryMetric,
+    SystemMetrics.FreePhysicalMemoryMetric,
+    SystemMetrics.AvailableProcessorsMetric,
+    SystemMetrics.BuildNumberMetric,
+    SystemMetrics.FreeDiskSpaceMetric,
+    SystemMetrics.TotalDiskSpaceMetric,
+    SystemMetrics.MaxFileDescriptorsMetric,
+    SystemMetrics.OpenFileDescriptorsMetric,
+    SystemMetrics.ThreadCountMetric
+  ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => List(
       GaugeMetric(s"${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
         () => gc.gcCount.toLong,
         StandardUnit.Count
@@ -403,8 +416,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   override def onStart(app: PlayApp) {
     Jobs.deschedule("ApplicationSystemMetricsJob")
     super.onStart(app)
-
-    Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
+    //run every minute, 36 seconds after the minute
+    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
       report()
     }
   }

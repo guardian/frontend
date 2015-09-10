@@ -1,15 +1,16 @@
 .element-pullquote {
-    &:before,
-    &:after {
-        content: '';
-        @include icon(quote-mask);
-        display: block !important;
+    .inline-quote {
+        margin-bottom: $gs-baseline / 2;
+        display: block;
+        width: 34px;
+        height: 30px;
     }
-    &:before {
-        margin-bottom: $gs-baseline / 3;
+    svg {
+        width: 34px;
+        height: 30px;
     }
-    &:after {
-        margin-top: $gs-baseline / 3;
+    .inline-quote.closing {
+        margin-top: $gs-baseline / 2;
         transform: rotate(180deg);
     }
 }

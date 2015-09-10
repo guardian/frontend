@@ -10,6 +10,13 @@
         color: colour(neutral-2);
     }
 
+    // Extra specificity needed to overcome above rule
+    .crossword__controls__button--confirm {
+        background-color: colour(comment-support-3);
+        color: #000000;
+        border: 0;
+    }
+
     .button--crossword--current {
         @include button-colour(
             $fill-colour: lighten(colour(crosswordAccent2), 30%),

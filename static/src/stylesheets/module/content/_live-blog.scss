@@ -808,7 +808,7 @@ $timeline-width: 15px;
     }
 }
 
-.content--liveblog.section-football { // Football overrides
+.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
     .tonal__header {
         background-color: #ffffff;
 

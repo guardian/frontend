@@ -534,27 +534,18 @@ object Switches {
   val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
     "fixed-top-above-nav",
-    "Fixes size of top-above-nav ad slot on UK network front.",
+    "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
+    sellByDate = new LocalDate(2015, 10, 7),
     exposeClientSide = false
   )
 
-  val CreativeTemplatesInS3 = Switch(
+  val KruxVideoTracking = Switch(
     "Commercial",
-    "creative-templates-in-s3",
-    "Stores DFP creative template data in S3.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
-    exposeClientSide = false
-  )
-
-  val UkNewsTargeting = Switch(
-    "Commercial",
-    "uk-news-target",
-    "Uses full UK News keyword for DFP targeting.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 9),
+    "krux-video-tracking",
+    "If this switch is ON, there will be a Krux pixel fired to track particular videos",
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -809,8 +800,8 @@ object Switches {
 
   val RugbyWorldCupswitch = Switch(
     "Feature",
-    "rugby-world-cup-cleanup",
-    "Does nothing, other than remind us to delete some World Cup specific code",
+    "rugby-world-cup",
+    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = true
@@ -899,15 +890,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABHighCommercialComponent = Switch(
-    "A/B Tests",
-    "ab-high-commercial-component",
-    "Switch for the High Commercial Component A/B test.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ABMembershipMessageUk = Switch(
     "A/B Tests",
     "ab-membership-message-uk",
@@ -923,24 +905,6 @@ object Switches {
     "Switch for the USA Supporter message test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 21),
-    exposeClientSide = true
-  )
-
-  val ABRugbyScores = Switch(
-    "A/B Tests",
-    "ab-rugby-scores",
-    "Switches on the score components for the Rugby",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 7),
-    exposeClientSide = true
-  )
-
-  val ABAdblockStickyBanner = Switch(
-    "A/B Tests",
-    "ab-adblock-sticky-banner",
-    "Switch for the Ad-block sticky banner A/B test",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 11),
     exposeClientSide = true
   )
 
@@ -1104,7 +1068,7 @@ object Switches {
     "no-bounce-indicator",
     "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = true
   )
 
@@ -1114,7 +1078,7 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
       "check the DB size.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

@@ -40,7 +40,7 @@ define([
             if (!id) {
                 return null;
             }
-            if (config.switches.ukNewsTarget && id === 'uk/uk') {
+            if (id === 'uk/uk') {
                 return id;
             } else {
                 return format(id.split('/').pop());

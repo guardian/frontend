@@ -43,6 +43,11 @@ object FrontendDependentController extends Controller with PanDomainAuthActions 
     "snap"
   )
 
+  private val DynamicMpu = Seq(
+    "standard",
+    "big"
+  )
+
   def configuration = APIAuthAction { request =>
     Cached(60) {
       Ok(Json.toJson(Defaults(
@@ -60,6 +65,8 @@ object FrontendDependentController extends Controller with PanDomainAuthActions 
         DynamicContainers.all.keys.toSeq.map(id =>
           if (id == "dynamic/package") {
             ContainerJsonConfig(id, Some(DynamicPackage))
+          } else if (id == "dynamic/slow-mpu") {
+            ContainerJsonConfig(id, Some(DynamicMpu))
           } else {
             ContainerJsonConfig(id, Some(DynamicGroups))
           }

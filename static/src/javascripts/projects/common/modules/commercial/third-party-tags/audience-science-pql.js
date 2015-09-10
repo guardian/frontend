@@ -51,7 +51,8 @@ define([
             if (config.switches.audienceScienceGateway && storedSegments) {
                 segments = _(_.pairs(storedSegments[section]))
                     .filter(function (placement) {
-                        return placement[1].default;
+                        //keyword `default` written in dot notation throws an exception IE8
+                        return placement[1]['default']; //eslint-disable-line
                     })
                     .map(function (placement) {
                         return ['pq_' + placement[0], 'T'];

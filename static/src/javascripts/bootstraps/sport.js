@@ -49,16 +49,18 @@ define([
             var scoreBoard = new ScoreBoard({
                 pageType: pageType,
                 parent: $h,
-                autoupdated: false,
+                autoupdated: config.page.isLive,
                 responseDataKey: 'matchSummary',
                 endpoint: config.page.rugbyMatch + '.json?page=' + encodeURIComponent(config.page.pageId)});
 
             // Rugby score returns the match nav too, to optimise calls.
             scoreBoard.fetched = function (resp) {
+                $('.content--liveblog').addClass('content--liveblog--rugby');
+
                 $.create(resp.nav).first().each(function (nav) {
                     // There ought to be exactly two tabs; match report and min-by-min
                     if ($('.tabs__tab', nav).length === 2) {
-                        $('.js-football-tabs').append(nav);
+                        $('.js-sport-tabs').append(nav);
                     }
                 });
 
@@ -82,10 +84,12 @@ define([
 
     function init()  {
         cricket();
+        if (config.switches.rugbyWorldCup) {
+            rugby();
+        }
     }
 
     return {
-        init: init,
-        rugby: rugby
+        init: init
     };
 });
