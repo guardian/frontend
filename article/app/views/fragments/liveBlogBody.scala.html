@@ -74,7 +74,7 @@
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-                                @BodyCleaner(article, article.body)
+                                @BodyCleaner(article, article.body, amp = false)
                             </div>
                         </div>
 

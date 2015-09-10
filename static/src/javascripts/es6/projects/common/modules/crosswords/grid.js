@@ -118,7 +118,9 @@ export default class Grid extends React.Component {
                 })}>
                 <rect x={0} y={0} width={width} height={height} className="crossword__grid-background" />
                 {cells}
-                {separators}
+                <g className='crossword__grid__separators'>
+                    {separators}
+                </g>
             </svg>
         );
     }

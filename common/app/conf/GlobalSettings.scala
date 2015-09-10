@@ -39,7 +39,8 @@ trait SwitchboardLifecycle extends GlobalSettings with ExecutionContexts with Lo
   override def onStart(app: Application) {
     super.onStart(app)
     Jobs.deschedule("SwitchBoardRefreshJob")
-    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
+    //run every minute, 47 seconds after the minute
+    Jobs.schedule("SwitchBoardRefreshJob", "47 * * * * ?") {
       refresh()
     }
 
