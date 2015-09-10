@@ -6,8 +6,10 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
+    'common/modules/charts/table-doughnut',
     'common/modules/component',
-    'common/modules/sport/score-board'
+    'common/modules/sport/score-board',
+    'common/modules/ui/rhc'
 ], function (
     bonzo,
     bean,
@@ -16,8 +18,10 @@ define([
     ajax,
     config,
     detect,
+    Doughnut,
     Component,
-    ScoreBoard
+    ScoreBoard,
+    rhc
 ) {
     function cricket() {
         var cricketScore, parentEl,
@@ -79,6 +83,13 @@ define([
 
                     $('.score-container').after($scoreEventsTabletUp);
                 }
+
+                $.create('<div class="match-stats__container">'+ resp.matchStat + '</div>').each(function (container) {
+                    $('.js-chart', container).each(function (el) {
+                        new Doughnut().render(el);
+                    });
+                    rhc.addComponent(container, 3);
+                });
 
             };
 

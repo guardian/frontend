@@ -5,7 +5,7 @@ import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{OptaFeed, RugbyOptaFeedException}
 import rugby.model.{ScoreEvent, Match}
 import rugby.feed.{MatchNavigation, OptaFeed, RugbyOptaFeedException}
-import rugby.model.{Status, Match}
+import rugby.model.{Status, Match, MatchStat}
 import scala.concurrent.Future
 import scala.util.Failure
 import scala.util.Success
@@ -18,6 +18,10 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
   protected val liveScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
   protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
+  protected val liveMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
+  protected val pastMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
+
+
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
   def run() {
@@ -52,7 +56,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     val liveMatches = liveScoreMatches.get().values.map(_.id).toList
 
     fetchScoreEvents(liveMatches).map { scoreEventsForMatchesMap =>
-      scoreEventsForMatchesMap.map { case (aMatch, events) =>
+      scoreEventsForMatchesMap.foreach { case (aMatch, events) =>
         liveScoreEvents.alter { _ + (aMatch -> events)}
       }
     }
@@ -62,7 +66,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).map(_.id).toList
 
     fetchScoreEvents(pastMatches).map { scoreEventsForMatchesMap =>
-      scoreEventsForMatchesMap.map { case (aMatch, events) =>
+      scoreEventsForMatchesMap.foreach { case (aMatch, events) =>
         pastScoreEvents.alter { _ + (aMatch -> events)}
       }
     }
@@ -70,16 +74,51 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
 
   def fetchScoreEvents(matches: List[String]): Future[Map[String, List[ScoreEvent]]] = {
     val scoresEventsForMatchesFuture: Future[List[(String, List[ScoreEvent])]] = Future.sequence {
-      matches.toList.map(matchId =>
+      matches.map(matchId =>
         OptaFeed.getScoreEvents(matchId).map(scoreEvents => matchId -> scoreEvents.toList)
       )
     }
     scoresEventsForMatchesFuture.onComplete {
       case Success(result) => //do nothing
-      case Failure(t) => log.warn("Failed to fetch live event score result with error:" + t)
+      case Failure(t) => log.warn(s"Failed to fetch event score result with error: ${t.getMessage}" , t)
     }
 
     scoresEventsForMatchesFuture.map(_.toMap)
+  }
+
+
+  def fetchLiveMatchesStat {
+    val liveMatches = liveScoreMatches.get().values.map(_.id).toList
+
+    fetchMatchesStat(liveMatches).map { statForMatches =>
+      statForMatches.foreach { case (aMatch, stat) =>
+        liveMatchesStat.alter { _ + (aMatch -> stat)}
+      }
+    }
+  }
+
+  def fetchPastMatchesStat {
+    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).map(_.id).toList
+
+    fetchMatchesStat(pastMatches).map { statForMatches =>
+      statForMatches.foreach { case (aMatch, stat) =>
+        pastMatchesStat.alter { _ + (aMatch -> stat)}
+      }
+    }
+  }
+
+  def fetchMatchesStat(matches: List[String]): Future[Map[String, MatchStat]] = {
+    val statForMatchesFuture = Future.sequence {
+      matches.map(matchId =>
+        OptaFeed.getMatchStat(matchId).map(matchStat => matchId -> matchStat)
+      )
+    }
+    statForMatchesFuture.onComplete {
+      case Success(result) => //do nothing
+      case Failure(t) => log.warn(s"Failed to fetch match stat with error: ${t.getMessage}", t)
+    }
+
+    statForMatchesFuture.map(_.toMap)
   }
 
   def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]]) = {
@@ -110,6 +149,11 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   def getScoreEvents(matchId: String): Seq[ScoreEvent] = {
     val liveScoreEvent = liveScoreEvents.get().get(matchId)
     liveScoreEvent.orElse(pastScoreEvents.get().get(matchId)).getOrElse(Seq.empty)
+  }
+
+  def getMatchStat(matchId: String): Option[MatchStat] = {
+    val liveMatchStat = liveMatchesStat.get().get(matchId)
+    liveMatchStat.orElse(pastMatchesStat.get().get(matchId))
   }
 
   def getMatchNavContent(rugbyMatch: Match): Option[MatchNavigation] = {

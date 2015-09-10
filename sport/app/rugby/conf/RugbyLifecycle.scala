@@ -34,6 +34,17 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
       RugbyStatsJob.fetchPastScoreEvents
     }
 
+    Jobs.deschedule("LiveMatchesStat")
+    Jobs.schedule("LiveMatchesStat", "0 * * * * ?") {
+      RugbyStatsJob.fetchLiveMatchesStat
+    }
+
+    Jobs.deschedule("PastMatchesStat")
+    Jobs.schedule("PastMatchesStat", "0 0/30 * * * ?") {
+      RugbyStatsJob.fetchPastMatchesStat
+    }
+
+
     Jobs.deschedule("MatchNavArticles")
     Jobs.schedule("MatchNavArticles", "0 0/2 * * * ?") {
       RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
@@ -48,6 +59,8 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
     AkkaAsync.after(initializationTimeout) {
       RugbyStatsJob.fetchLiveScoreEvents
       RugbyStatsJob.fetchPastScoreEvents
+      RugbyStatsJob.fetchLiveMatchesStat
+      RugbyStatsJob.fetchPastMatchesStat
       RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
     }
   }

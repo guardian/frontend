@@ -4,7 +4,7 @@ import common.{ExecutionContexts, Logging}
 import play.api.Play.current
 import play.api.libs.ws.{WSRequest, WS}
 import rugby.jobs.RugbyStatsJob
-import rugby.model.{ScoreEvent, Match}
+import rugby.model.{ScoreEvent, Match, MatchStat}
 
 import scala.concurrent.Future
 import scala.xml.XML
@@ -52,4 +52,11 @@ object OptaFeed extends ExecutionContexts with Logging {
       Parser.parseLiveEventsStatsToGetScoreEvents(data)
     }
   }
+
+  def getMatchStat(matchId: String): Future[MatchStat] = {
+    getResponse("/", "ru7", Some("game_id" -> matchId)).map { data =>
+      Parser.parseLiveEventsStatsToGetMatchStat(data)
+    }
+  }
+
 }
