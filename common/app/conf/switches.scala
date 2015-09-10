@@ -829,7 +829,7 @@ object Switches {
     "rugby-world-cup-match-stats",
     "If this switch is on rugby world cup stats will be loaded in to rugby match reports and liveblogs",
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = true
   )
 
