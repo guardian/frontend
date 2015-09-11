@@ -7,6 +7,7 @@ export default class CluePreview extends React.Component {
         return _.some(separators, function (separator) {
             return separator === letterIndex;
         });
+va
     }
 
     //Checks a object in the form{",":[4,7]}
@@ -26,6 +27,7 @@ export default class CluePreview extends React.Component {
 
 
     render () {
+        console.log("+++ entries length : " + JSON.stringify( this.props ) );
         return (
             <div className={'crossword__anagram-helper__clue-preview ' + (this.props.entries.length >= 9 ? 'long' : '')}>
                 <div><strong>{this.props.clue.number} <span className="crossword__anagram-helper__direction">{this.props.clue.direction}</span></strong> {this.props.clue.clue}</div>
