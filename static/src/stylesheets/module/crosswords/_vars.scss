@@ -5,9 +5,10 @@ $xword-cell-width-small: 24px; // only used in anagram helper preview cells
 $xword-cell-width-xsmall: 20px; // as above but for long (10+ letter) clues
 $xword-border-width: 1px;
 
-$xword-highlight: lighten(colour(crosswordAccent2), 30%);
-$xword-focussed: lighten(colour(crosswordAccent2), 10%);
-$xword-ink: #3f4ac3; // biro blue
+$xword-highlight-colour: colour(crosswordAccent2);
+$xword-focussed-colour: colour(crosswordAccent1);
+$xword-focussed-background-colour: lighten($xword-highlight-colour, 30%);
+
 
 $xword-grid-sizes: (
     quick: 13,
