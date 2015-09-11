@@ -48,7 +48,7 @@ define([
     ScoreBoard.prototype.prerender = function () {
         var scoreLoadingPlaceholder = $('.score__loading', $(this.placeholder));
         if (scoreLoadingPlaceholder.length) {
-            scoreLoadingPlaceholder.remove()
+            scoreLoadingPlaceholder.remove();
         }
     };
 
