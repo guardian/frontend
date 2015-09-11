@@ -6,19 +6,20 @@
 .crossword__cell--highlighted {
     &,
     .crossword__grid--focussed & {
-        fill: $xword-highlight;
+        fill: $xword-highlight-colour;
     }
 }
 
 .crossword__cell--focussed {
     &,
     .crossword__grid--focussed & {
-        fill: $xword-focussed;
+        fill: $xword-focussed-background-colour;
     }
 }
 
 .crossword__cell-number,
 .crossword__cell-text {
+    fill: #000000;
     font-family: $f-sans-serif-text;
 }
 
@@ -30,7 +31,6 @@
     display: inline-block;
     opacity: 1;
     -webkit-font-smoothing: subpixel-antialiased;
-    fill: colour(neutral-1); // r.i.p biro blue #3f4ac3
     transition: opacity .15s ease-in;
 
     @each $xword, $cells in $xword-grid-sizes {
@@ -42,6 +42,10 @@
             }
         }
     }
+}
+
+.crossword__cell-text--focussed {
+    font-weight: bold;
 }
 
 .crossword__cell-text--error {

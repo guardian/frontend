@@ -47,8 +47,6 @@ define([
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
-        this.isAdblockABTest = ab.getParticipations().AdblockStickyBanner && ab.testCanBeRun('AdblockStickyBanner')
-            && (ab.getParticipations().AdblockStickyBanner.variant === 'variant' || ab.getParticipations().AdblockStickyBanner.variant === 'challenger');
 
         _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
@@ -86,12 +84,6 @@ define([
             }
         }
 
-        if (this.isAdblockInUse && !this.isMobile && this.isAdblockABTest) {
-            fastdom.read(function () {
-                this.$els.bannerDesktop = $('.js-adblock-sticky');
-            }.bind(this));
-        }
-
         // Get the name of the method to run after scroll
         this.updateMethod = this.getUpdateMethod();
 
@@ -124,7 +116,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (this.isAdblockInUse && !this.isAdblockABTest) {
+        } else if (this.isAdblockInUse) {
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';
