@@ -57,7 +57,7 @@ object RefreshFrontsJob extends Logging {
   }
 
   def runStandardFrequency(): Unit = {
-    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
+    if (FrontPressJobSwitchStandardFrequency.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       log.info("Putting press jobs on Facia Cron (Standard Frequency)")
 
       for {

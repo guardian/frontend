@@ -27,18 +27,14 @@ trait ArticleWithStoryPackage {
 case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
 case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
 
-sealed trait RequestedFormat
-object HtmlFormat extends RequestedFormat
-object PCUFormat extends RequestedFormat
-
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(_))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
 
   private def renderLatestFrom(model: ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(model.article, model.article.body, false)) {
+      val html = withJsoup(BodyCleaner(model.article, model.article.body, amp = false)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
             val blocksToKeep = d.getElementsByTag("div") takeWhile {
@@ -82,14 +78,22 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   }
 
-  private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
+  private def render(path: String, model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
     case blog: LiveBlogPage =>
-      val htmlResponse = () => views.html.liveBlog(blog)
-      val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+      if (request.isAmp) {
+        MovedPermanently(path)
+      } else {
+        val htmlResponse = () => views.html.liveBlog(blog)
+        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
+        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+      }
 
     case article: ArticlePage =>
-      val htmlResponse = () => views.html.article(article)
+      val htmlResponse = () => if (request.isAmp) {
+        views.html.articleAMP(article)
+      } else {
+        views.html.article(article)
+      }
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
   }
@@ -107,12 +111,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       (lastUpdate, rendered) match {
         case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
         case (None, Some(false)) => blockText(model, 6)
-        case (_, _) => render(model)
+        case (_, _) => render(path, model)
       }
     }
   }
 
-  def mapModel(path: String, format: RequestedFormat = HtmlFormat)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+  def mapModel(path: String)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)

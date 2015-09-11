@@ -9,8 +9,7 @@ define([
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-uk',
-    'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/adblock-sticky-banner'
+    'common/modules/experiments/tests/membership-message-usa'
 ], function (
     reportError,
     _,
@@ -22,16 +21,14 @@ define([
     LiveblogNotifications,
     HighCommercialComponent,
     MembershipMessageUK,
-    MembershipMessageUSA,
-    AdblockStickyBanner
+    MembershipMessageUSA
 ) {
 
     var TESTS = _.flatten([
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new MembershipMessageUK(),
-        new MembershipMessageUSA(),
-        new AdblockStickyBanner()
+        new MembershipMessageUSA()
     ]);
 
     var participationsKey = 'gu.ab.participations';
