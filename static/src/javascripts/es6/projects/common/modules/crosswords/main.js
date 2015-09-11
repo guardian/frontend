@@ -538,7 +538,7 @@ class Crossword extends React.Component {
 
         /* We need to handle touch seperately as touching an input on iPhone does not fire the
         click event - listen for a touchStart and preventDefault to avoid calling onSelect twice on
-        devices that fire click AND touch events. */
+        devices that fire click AND touch events. The click event doesn't fire only when the input is already focused */
         if (event.type === 'touchstart') {
             event.preventDefault();
         }
