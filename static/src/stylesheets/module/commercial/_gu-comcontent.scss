@@ -6,11 +6,15 @@
     position: relative;
 }
 
+.gu-comcontent__box {
+    padding: $gs-baseline / 2;
+}
+
 .gu-comcontent__title {
     @include f-headlineSans;
     @include font-size(18, 20);
 
-    padding: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
     text-align: left;
     
     a {
@@ -24,8 +28,7 @@
     
     color: colour(neutral-2);
     text-align: left;
-    padding: $gs-baseline / 2;
-    margin: 0;
+    margin-bottom: $gs-row-height;
 }
 
 .gu-comcontent__kicker {
@@ -34,6 +37,22 @@
 
 .gu-comcontent__divider {
     color: colour(neutral-3);   
+}
+
+.gu-comcontent__brand {
+    text-align: right;
+}
+
+.gu-comcontent__note {
+    @include f-textSans;
+    @include font-size(13, 18);
+
+    color: colour(neutral-2);   
+}
+
+.gu-comcontent__logo {
+    width: 40%;
+    vertical-align: bottom;
 }
 
 .gu-comcontent__image {
@@ -47,15 +66,30 @@
 
 .gu-comlabel {
     @include f-textSans;
-    @include font-size(16, 18);
+    @include font-size(13, 18);
 
     position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 7px 10px 5px 10px;
+    top: $gs-baseline / 2;
+    right: $gs-baseline / 2;
+    padding: 5px 5px 1px 5px;
     z-index: $zindex-modal;
     background-color: $gustyle-tone;
     border: none;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.gu-comlabel__icon {
+    svg {
+        width: 13px;
+        height: 13px;
+        fill: colour(neutral-1);
+        vertical-align: middle;
+    }
+}
+
+.gu-style {
+    width: auto;
+    margin-left: $gs-gutter / 2;
+    margin-right: $gs-gutter / 2;
 }

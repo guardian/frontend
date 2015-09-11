@@ -4,6 +4,12 @@
             <img class="gu-comcontent__image" src="<%=data.articleImage%>">
         </div>
     </a>
-    <h2 class="gu-comcontent__title"><a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="article"><span class="gu-comcontent__kicker"><%=data.brand%></span> <span class="gu-comcontent__divider">/</span> <%=data.articleHeaderText%></a></h2>
-    <p class="gu-comcontent__text"><%=data.articleText%></p>
+    <div class="gu-comcontent__box">
+        <h2 class="gu-comcontent__title"><a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="article"><%=data.articleHeaderText%></a></h2>
+        <p class="gu-comcontent__text"><%=data.articleText%></p>
+        <div class="gu-comcontent__brand">
+        	<span class="gu-comcontent__note">Brought to you by:</span>
+        	<img class="gu-comcontent__logo" src="<%=data.brandLogo%>">
+        </div>
+    </div>
 </div>
