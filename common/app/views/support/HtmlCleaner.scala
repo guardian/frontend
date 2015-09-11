@@ -422,18 +422,23 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
         if (amp) {
           tweetData.foreach { elem =>
+            element.empty()
             element.tagName("amp-twitter")
-            element.attr("layout", "responsive")
             element.attr("data-tweetId", elem.id)
             element.attr("data-​c​ards", "hidden")
+            element.attr("layout", "responsive")
             element.attr("width", "486")
-            element.attr("height", "100")
+            // temporary fix to give tweets with an image a larger height
+            if (elem.firstImage.size > 0) {
+              element.attr("height", "600")
+            } else {
+              element.attr("height", "200")
+            }
           }
         } else {
           val el = element.clone()
           if (el.children.size > 1) {
             val body = el.child(0).attr("class", "tweet-body")
-
             val date = el.child(1).attr("class", "tweet-date")
             val user = el.ownText()
             val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
