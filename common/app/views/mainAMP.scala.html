@@ -1,9 +1,8 @@
-@(model: ArticlePage)(implicit request: RequestHeader)
+@(metaData: model.MetaData)(implicit request: RequestHeader)(body: Html)
 @import conf.Switches._
 
 <!doctype html AMP>
 <html>
-    @defining(model.article) { metaData =>
     <head>
         <meta charset="utf-8">
         <title>@views.support.Title(metaData)</title>
@@ -181,5 +180,4 @@
                 <!-- <script>document.write(…)</script> -->
         </cat-ad>*@
     </body>
-    }
 </html>
