@@ -409,10 +409,10 @@ define([
                     $adSlotContent.addClass('ad-slot__content');
                 });
 
+                // Check if creative is a new gu style creative and place lables accordingly
                 var adType = checkForBreakout($slot);
-
                 if (adType && adType.type === 'gu-style') {
-                    GuStyle.create($slot, adType);
+                    new GuStyle($slot, adType).addLabel();
                 } else {
                     addLabel($slot);
                 }

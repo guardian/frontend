@@ -13,16 +13,15 @@ fdescribe('GU Style', function () {
         });
     });
 
-    it('call get create method with adslot and adtype parameters', function () {
-        spyOn(sut, 'create');
-
+    it('create new instance with slot and ad type in parameters', function () {
         var adSlot = '<div class="ad-slot"></div>',
             adType =  {
                 type: 'gu-style',
                 variant: 'content'
             };
 
-        sut.create(adSlot, adType);
-        expect(sut.create).toHaveBeenCalledWith(adSlot, adType);
+        var gustyle = new sut(adSlot, adType);
+        expect(gustyle.slot).toEqual(adSlot);
+        expect(gustyle.adtype).toEqual(adType);
     });
 });

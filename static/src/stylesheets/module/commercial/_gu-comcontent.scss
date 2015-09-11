@@ -1,5 +1,6 @@
 .gu-comcontent {
     background-color: colour(neutral-8);
+    border-top: 1px solid $gustyle-tone;
     padding: 0;
     overflow: hidden;
     position: relative;
@@ -27,6 +28,14 @@
     margin: 0;
 }
 
+.gu-comcontent__kicker {
+    color: colour(neutral-2);
+}
+
+.gu-comcontent__divider {
+    color: colour(neutral-3);   
+}
+
 .gu-comcontent__image {
     width: 100%;
 }
@@ -34,4 +43,19 @@
 .gu-comcontent__image-container {
     max-height: 180px;
     overflow: hidden;
+}
+
+.gu-comlabel {
+    @include f-textSans;
+    @include font-size(16, 18);
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 7px 10px 5px 10px;
+    z-index: $zindex-modal;
+    background-color: $gustyle-tone;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
 }
