@@ -1072,15 +1072,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val InlineOmnitureScript = Switch(
-    "Performance",
-    "inline-omniture-script",
-    "If this switch is on then the contents of the Omniture script will be inlined in the page",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 10),
-    exposeClientSide = false
-  )
-
   val FaciaDynamoArchive = Switch(
     "Facia",
     "facia-tool-dynamo-archive",
