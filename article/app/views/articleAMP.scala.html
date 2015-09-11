@@ -196,6 +196,10 @@
             .content__mobile-full-width, .media-primary {
                 margin: 0;
             }
+            @* Fix for amp images specific styling *@
+            .-amp-fill-content {
+                height: auto !important;
+            }
 
             figure.element {
                 margin: 1rem 0 0.75rem;
@@ -253,6 +257,7 @@
         </style>
         @fragments.metaData(metaData)
         <script src="https://www.gstatic.com/amphtml/v0.js"></script>
+        <script custom-element="amp-twitter" src="https://www.gstatic.com/amphtml/v0/amp-twitter-0.1.js"async></script>
     </head>
     <body>
         @* @fragments.header(metaData) *@
