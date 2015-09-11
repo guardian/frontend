@@ -28,7 +28,7 @@ case class RugbyOptaFeedException(message: String) extends RuntimeException(mess
 
 object OptaFeed extends ExecutionContexts with Logging {
   
-  private val events = List(WarmupWorldCup2015, WorldCup2015)
+  private val events = List(/*WarmupWorldCup2015, */WorldCup2015)
 
   private val xmlContentType = ("Accept", "application/xml")
 
