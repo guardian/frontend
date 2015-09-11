@@ -38,7 +38,7 @@ define([
 
                     if (config.page.isFront) {
                         $container = $('.js-container--first');
-                    } else if (config.page.contentType === "Article") {
+                    } else if (config.page.contentType === 'Article') {
                         $container = $('.fc-container').last();
                     }
 

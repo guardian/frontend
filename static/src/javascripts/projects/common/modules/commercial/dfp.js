@@ -94,6 +94,7 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
+                showAdsFreeSurvey('300,250', $adSlot);
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
@@ -431,10 +432,6 @@ define([
                 // is there a callback for this size
                 if (callbacks[size]) {
                     callbacks[size](event, $slot);
-                }
-
-                if (isAdfreeSurvey('variant') && size !== '1,1') {
-                    showAdsFreeSurvey(size, $slot);
                 }
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
