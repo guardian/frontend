@@ -17,6 +17,7 @@ var config = {
 };
 
 var articleAsideAdverts,
+    userAdPreference,
     injector = new Injector();
 
 injector.mock({
@@ -45,8 +46,16 @@ describe('Article Aside Adverts', function () {
 
         $fixturesContainer = fixtures.render(fixturesConfig);
 
-        injector.test(['common/modules/commercial/article-aside-adverts'], function () {
+        injector.test([
+            'common/modules/commercial/article-aside-adverts',
+            'common/modules/commercial/user-ad-preference'
+        ], function () {
             articleAsideAdverts = arguments[0];
+            userAdPreference = arguments[1];
+
+            // Reset dependencies
+            userAdPreference.hideAds = false;
+
             done();
         });
     });
@@ -104,6 +113,13 @@ describe('Article Aside Adverts', function () {
 
     it('should not display ad slot if not on an article', function () {
         config.page.contentType = 'Gallery';
+
+        expect(articleAsideAdverts.init()).toBe(false);
+        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+    });
+
+    it('should not display ad slot if user opts out of adverts', function () {
+        userAdPreference.hideAds = true;
 
         expect(articleAsideAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
