@@ -39,7 +39,6 @@ export default class HiddenInput extends React.Component {
                     maxLength='1'
                     onClick={this.props.onClick}
                     onChange={this.handleChange}
-                    onTouchStart={this.props.touchStart}
                     onKeyDown={this.props.onKeyDown}
                     onBlur={this.props.onBlur}
                     value={this.state.value}
