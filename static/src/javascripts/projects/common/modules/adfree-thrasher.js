@@ -33,7 +33,8 @@ define([
                 surveyHeader: 'Become a member and experience the Guardian without advertising',
                 surveyLink: 'http://google.com',
                 marque36icon: svgs('marque36icon'),
-                membershipLogo: svgs('membershipLogo')
+                membershipLogo: svgs('membershipLogo'),
+                thrasherBenefit: svgs('thrasherBenefit')
             });
 
         fastdom.write(function () {
@@ -44,8 +45,6 @@ define([
                 $('.js-survey-overlay').removeClass('u-h');
             });
         }.bind(this));
-
-
     };
 
     return AdfreeThrasher;
