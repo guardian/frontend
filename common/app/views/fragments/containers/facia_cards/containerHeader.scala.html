@@ -5,7 +5,7 @@
 @import layout.{DescriptionMetaHeader, LoneDateHeadline, MetaDataHeader}
 
 @containerDefinition.customHeader.map { customHeader =>
-    <div class="fc-container__header js-container__header__outer">
+    <div class="fc-container__header">
         @customHeader match {
             case metaDataHeader: MetaDataHeader => {
                 @dateHeadline(metaDataHeader.dateHeadline, containerDefinition.dateLink)
