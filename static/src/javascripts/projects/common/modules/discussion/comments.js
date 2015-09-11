@@ -13,8 +13,7 @@ define([
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/whole-discussion',
-    'common/modules/ui/relativedates',
-    'common/modules/user-prefs'
+    'common/modules/ui/relativedates'
 ], function(
     bean,
     bonzo,
@@ -30,18 +29,9 @@ define([
     DiscussionApi,
     CommentBox,
     WholeDiscussion,
-    relativedates,
-    userPrefs
+    relativedates
 ) {
 'use strict';
-
-var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
-var shouldMakeTimestampsRelative = function () {
-    return !config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
-        || (config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
-            && config.page.section === 'crosswords'
-            && userPrefs.get(PREF_RELATIVE_TIMESTAMPS));
-};
 
 var Comments = function(options) {
     this.setOptions(options);
@@ -88,18 +78,15 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('commentReport'), this.reportComment);
 
-    if (shouldMakeTimestampsRelative()) {
-        window.setInterval(
-            function () {
-                this.relativeDates();
-            }.bind(this),
-            60000
-        );
-
-        this.relativeDates();
-    }
+    window.setInterval(
+        function () {
+            this.relativeDates();
+        }.bind(this),
+        60000
+    );
 
     this.emit('ready');
+    this.relativeDates();
 
     this.on('click', '.js-report-comment-close', function() {
         $('.js-report-comment-form').addClass('u-h');
@@ -215,9 +202,7 @@ Comments.prototype.renderComments = function(resp) {
 
     this.postedCommentEl = resp.postedCommentHtml;
 
-    if (shouldMakeTimestampsRelative()) {
-        this.relativeDates();
-    }
+    this.relativeDates();
     this.emit('rendered', resp.paginationHtml);
 
     mediator.emit('modules:comments:renderComments:rendered');
@@ -226,9 +211,7 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.emit('first-load');
-    if (shouldMakeTimestampsRelative()) {
-        this.relativeDates();
-    }
+    this.relativeDates();
 };
 
 Comments.prototype.addMoreRepliesButtons = function (comments) {
@@ -281,9 +264,7 @@ Comments.prototype.getMoreReplies = function(event) {
         bonzo(li).addClass('u-h');
         this.emit('untruncate-thread');
 
-        if (shouldMakeTimestampsRelative()) {
-            this.relativeDates();
-        }
+        this.relativeDates();
     }.bind(this));
 };
 
@@ -461,9 +442,7 @@ Comments.prototype.addUser = function(user) {
 };
 
 Comments.prototype.relativeDates = function() {
-    if (shouldMakeTimestampsRelative()) {
-        relativedates.init();
-    }
+    relativedates.init();
 };
 
 Comments.prototype.isAllPageSizeActive = function() {
