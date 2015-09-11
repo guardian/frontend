@@ -87,10 +87,6 @@
     @include clearfix;
 }
 
-.u-baseline-top {
-    margin-top: $gs-baseline;
-}
-
 // To show skip links when user tabs over
 .skip:focus,
 .skip:active {
