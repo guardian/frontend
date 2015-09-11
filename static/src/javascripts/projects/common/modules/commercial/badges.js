@@ -67,12 +67,8 @@ define([
 
             return new Promise(function (resolve) {
                 fastdom.write(function () {
-                    var $header = $('.js-container__header', container);
-                    if ($header.length === 1) {
-                        $header.after($adSlot);
-                    } else {
-                        $('.js-container__header .js-container__header', container).after($adSlot);
-                    }
+                    $('.js-container__header', container)
+                        .after($adSlot);
 
                     resolve($adSlot);
                 });
