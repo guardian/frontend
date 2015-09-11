@@ -808,8 +808,8 @@ object Switches {
 
   val RugbyWorldCupswitch = Switch(
     "Feature",
-    "rugby-world-cup-cleanup",
-    "Does nothing, other than remind us to delete some World Cup specific code",
+    "rugby-world-cup",
+    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = true
@@ -913,24 +913,6 @@ object Switches {
     "Switch for the USA Supporter message test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 21),
-    exposeClientSide = true
-  )
-
-  val ABRugbyScores = Switch(
-    "A/B Tests",
-    "ab-rugby-scores",
-    "Switches on the score components for the Rugby",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 7),
-    exposeClientSide = true
-  )
-
-  val ABAdblockStickyBanner = Switch(
-    "A/B Tests",
-    "ab-adblock-sticky-banner",
-    "Switch for the Ad-block sticky banner A/B test",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 11),
     exposeClientSide = true
   )
 
@@ -1065,6 +1047,15 @@ object Switches {
   val FrontPressJobSwitch = Switch(
     "Facia",
     "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val FrontPressJobSwitchStandardFrequency = Switch(
+    "Facia",
+    "front-press-job-switch-standard-frequency",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off,
     sellByDate = never,

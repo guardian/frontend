@@ -19,8 +19,8 @@ define([
         - context.endpoint          - the ajax endpoint which will provide html scores inside a json object.
     */
     function ScoreBoard(context) {
-
         this.pageType = context.pageType;
+        this.parent = context.parent;
 
         this.placeholder = bonzo.create(template(scoreContainerHtml, {
             loadingState: this.pageType !== 'report' ? ' score__loading--live' : ''
@@ -64,6 +64,7 @@ define([
 
     ScoreBoard.prototype.error = function () {
         this.placeholder.innerHTML = '';
+        this.parent.removeClass('u-h');
     };
 
     return ScoreBoard;

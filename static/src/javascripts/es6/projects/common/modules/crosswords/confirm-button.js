@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 export default class ConfirmButton extends React.Component {
     constructor (props) {
@@ -21,8 +22,15 @@ export default class ConfirmButton extends React.Component {
         const inner = this.state.confirming ?
             'Confirm ' + this.props.text.toLowerCase() : this.props.text;
 
+        const className = classNames({
+            [this.props.className]: true,
+            'crossword__controls__button--confirm': this.state.confirming
+        });
+
         return (
-            <button {...this.props} onClick={this.confirm.bind(this)}>
+            <button {...this.props}
+                onClick={this.confirm.bind(this)}
+                className={className}>
                 {inner}
             </button>
         );
