@@ -1,16 +1,20 @@
-import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
+import $ from 'common/utils/$';
 
-var sut, // System under test
-    injector = new Injector();
+var Sut, // System under test
+    injector = new Injector(),
+    gustyle;
 
 fdescribe('GU Style', function () {
     beforeEach(function (done) {
-        injector.test([
-            'common/modules/commercial/gustyle/gustyle'], function () {
-            sut = arguments[0];
+        injector.test(['common/modules/commercial/gustyle/gustyle'], function () {
+            Sut = arguments[0];
             done();
         });
+    });
+
+    afterEach(function () {
+        gustyle = null;
     });
 
     it('should create new instance with slot and ad type in parameters', function () {
@@ -20,7 +24,7 @@ fdescribe('GU Style', function () {
                 variant: 'content'
             };
 
-        var gustyle = new sut(adSlot, adType);
+        gustyle = new Sut(adSlot, adType);
         expect(gustyle.slot).toEqual(adSlot);
         expect(gustyle.adtype).toEqual(adType);
     });
@@ -32,7 +36,7 @@ fdescribe('GU Style', function () {
                 variant: 'content'
             };
 
-        var gustyle = new sut(adSlot, adType);
+        gustyle = new Sut(adSlot, adType);
         expect($('ad-slot').hasClass('gu-style')).toBeTruthy();
     });
 
@@ -43,7 +47,7 @@ fdescribe('GU Style', function () {
                 variant: 'content'
             };
 
-        var gustyle = new sut(adSlot, adType);
+        gustyle = new Sut(adSlot, adType);
         expect($('.gu-comlabel').length).toEqual(1);
     });
 });

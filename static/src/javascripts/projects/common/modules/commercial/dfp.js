@@ -411,7 +411,6 @@ define([
 
                 // Check if creative is a new gu style creative and place lables accordingly
                 var adType = checkForBreakout($slot);
-                
                 if (adType && adType.type === 'gu-style') {
                     new GuStyle($slot, adType).addLabel();
                 } else {
@@ -552,8 +551,8 @@ define([
                                     updatedIFrame.readyState === 'complete'
                                 /*eslint-enable valid-typeof*/
                             ) {
-                                return breakoutIFrame(updatedIFrame, $slot);
                                 bean.off(updatedIFrame, 'readystatechange');
+                                return breakoutIFrame(updatedIFrame, $slot);
                             }
                         });
                     } else {
@@ -660,5 +659,4 @@ define([
         };
 
     return dfp;
-
 });

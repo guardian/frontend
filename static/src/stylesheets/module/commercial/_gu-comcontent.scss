@@ -71,10 +71,10 @@
     position: absolute;
     top: $gs-baseline / 2;
     right: $gs-baseline / 2;
-    padding: 5px 5px 1px 5px;
+    padding: 5px 5px 1px;
     z-index: $zindex-modal;
     background-color: $gustyle-tone;
-    border: none;
+    border: 0;
     font-weight: bold;
     text-transform: uppercase;
 }
