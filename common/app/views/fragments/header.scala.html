@@ -19,14 +19,6 @@
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register">
-                        @if(mvt.ABNewFreeMembershipTest.isParticipating) {
-                            <a href="http://membership.theguardian.com?INTCMP=HEADER_AB_NONFREE"
-                            data-link-name="Register link"
-                            class="brand-bar__item--action">
-                                @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="control__info js-control-info control__info--supporting">become a member</span>
-                            </a>
-                        } else {
                             <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=HEADER_GU_REG&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
                                 data-link-name="Register link"
                                 class="brand-bar__item--action">
@@ -34,7 +26,6 @@
                                 <span class="brand-bar__item__badge control__icon-wrapper control__icon-wrapper--text">free</span>
                                 <span class="control__info js-control-info control__info--supporting">become a member</span>
                             </a>
-                        }
                         </div>
                     }
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {

@@ -22,41 +22,44 @@ object ModelOrResult extends Results with Logging {
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
 private object ItemOrRedirect extends ItemResponses with Logging {
 
+  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit request: RequestHeader): Either[T, Result] = {
+
+    maybeSection map redirectSection(item, request) getOrElse redirectArticle(item, response, request)
+  }
+
+  private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[T, Result] = {
+
+    canonicalPath(response) match {
+      case Some(canonicalPath) if canonicalPath != request.pathWithoutModifiers && !(request.isJson || request.isRss) =>
+        Right(Found(canonicalPath + paramString(request)))
+      case _ => Left(item)
+    }
+
+  }
+
+  private def redirectSection[T](item: T, request: RequestHeader)(section: ApiSection): Either[T, Result] = {
+
+    if (request.path.endsWith("/all") &&
+      pathWithoutEdition(section) != request.path.stripSuffix("/all"))
+      Right(Found(pathWithoutEdition(section) + "/all"))
+
+    else if (request.getQueryString("page").exists(_ != "1") &&
+      pathWithoutEdition(section) != request.path)
+      Right(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
+
+    else Left(item)
+
+  }
+
   private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
 
-  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit request: RequestHeader) = {
-    val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
+  private def canonicalPath(response: ItemResponse) = response.webUrl.map(new URI(_)).map(_.getPath)
 
-    def pathWithoutEdition(section: ApiSection) =
-      section.editions.find(_.code == "default")
-        .map(edition => s"/${edition.id}")
-        .getOrElse(Paths.stripEditionIfPresent(section.id))
+  private def pathWithoutEdition(section: ApiSection) =
+    section.editions.find(_.code == "default")
+      .map(edition => s"/${edition.id}")
+      .getOrElse(Paths.stripEditionIfPresent(section.id))
 
-    maybeSection match {
-      case Some(section) if request.path.endsWith("/all") &&
-        pathWithoutEdition(section) != request.path.stripSuffix("/all") =>
-        Right(Found(pathWithoutEdition(section) + "/all"))
-
-      case Some(section) if request.getQueryString("page").exists(_ != "1") &&
-        pathWithoutEdition(section) != request.path =>
-        Right(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
-
-      case Some(_) => Left(item)
-
-      case None => itemPath match {
-        case Some(itemPath) if needsRedirect(itemPath) =>
-          val itemPathWithQueryString =
-            itemPath + paramString(request)
-          Right(Found(itemPathWithQueryString))
-        case _ => Left(item)
-      }
-    }
-  }
-
-  private def needsRedirect[T](itemPath: String)(implicit request: RequestHeader): Boolean = {
-    // redirect if itemPath is not the same as request's, and this isn't an all page, a JSON or an RSS request
-    itemPath != request.path.stripSuffix("/all") && !(request.isJson || request.isRss)
-  }
 }
 
 
