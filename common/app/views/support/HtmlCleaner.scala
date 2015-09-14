@@ -402,7 +402,7 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-class TweetCleaner(content: Content) extends HtmlCleaner {
+class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
   import conf.Switches.TwitterImageFallback
 
@@ -420,32 +420,47 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
 
       tweet.getElementsByClass("twitter-tweet").foreach { element =>
 
-        val el = element.clone()
-        if (el.children.size > 1) {
-          val body = el.child(0).attr("class", "tweet-body")
-
-          val date = el.child(1).attr("class", "tweet-date")
-          val user = el.ownText()
-          val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
-          val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
-
-          element.empty().attr("class", "js-tweet tweet")
-
-          if (TwitterImageFallback.isSwitchedOn) {
-            tweetImage.foreach { image =>
-              val img = document.createElement("img")
-              img.attr("src", image)
-              img.attr("alt", "")
-              img.attr("rel", "nofollow")
-              img.addClass("js-tweet-main-image tweet-main-image")
-              element.appendChild(img)
+        if (amp) {
+          tweetData.foreach { elem =>
+            element.empty()
+            element.tagName("amp-twitter")
+            element.attr("data-tweetId", elem.id)
+            element.attr("data-​c​ards", "hidden")
+            element.attr("layout", "responsive")
+            element.attr("width", "486")
+            // temporary fix to give tweets with an image a larger height
+            if (elem.firstImage.size > 0) {
+              element.attr("height", "600")
+            } else {
+              element.attr("height", "200")
             }
           }
+        } else {
+          val el = element.clone()
+          if (el.children.size > 1) {
+            val body = el.child(0).attr("class", "tweet-body")
+            val date = el.child(1).attr("class", "tweet-date")
+            val user = el.ownText()
+            val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+            val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-          element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+            element.empty().attr("class", "js-tweet tweet")
+
+            if (TwitterImageFallback.isSwitchedOn) {
+              tweetImage.foreach { image =>
+                val img = document.createElement("img")
+                img.attr("src", image)
+                img.attr("alt", "")
+                img.attr("rel", "nofollow")
+                img.addClass("js-tweet-main-image tweet-main-image")
+                element.appendChild(img)
+              }
+            }
+
+            element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+          }
         }
       }
-
     }
     document
   }

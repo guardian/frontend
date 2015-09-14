@@ -36,7 +36,7 @@ object BodyCleaner {
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
         BlockNumberCleaner,
-        new TweetCleaner(article),
+        new TweetCleaner(article, amp),
         WitnessCleaner,
         TagLinker(article),
         TableEmbedComplimentaryToP,
