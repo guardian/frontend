@@ -70,7 +70,7 @@
 
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                @if(amp) {
+                @if(amp) { @* TODO refactor this to use the code from img.scala.html as it's mostly duplicated here *@
                     @imageElement.largestImage.map { largestImage =>
                         <amp-img src="@ImgSrc.getFallbackUrl(imageElement)"
                         srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
