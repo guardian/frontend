@@ -22,25 +22,27 @@ define([
         this.init = function () {
             controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
 
-            controls.forEach(function (control) {
-                if (!bonzo(control).hasClass(readyClass)) {
-                    var target = self.getTarget(control);
-                    if (target) {
-                        control.toggleTarget = target;
-                        bonzo(control).addClass(readyClass);
-                        bean.add(control, 'click', function (e) {
-                            e.preventDefault();
-                            self.toggle(control, controls);
-                        });
-                    }
-                }
-            });
+            controls.forEach(this.addComponent);
         };
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
                 return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
+        };
+
+        this.addComponent = function (control) {
+            if (!bonzo(control).hasClass(readyClass)) {
+                var target = self.getTarget(control);
+                if (target) {
+                    control.toggleTarget = target;
+                    bonzo(control).addClass(readyClass);
+                    bean.add(control, 'click', function (e) {
+                        e.preventDefault();
+                        self.toggle(control, controls);
+                    });
+                }
+            }
         };
 
         mediator.on('module:clickstream:click', function (clickSpec) {
