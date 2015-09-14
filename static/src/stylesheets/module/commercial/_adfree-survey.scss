@@ -55,8 +55,7 @@
     height: 48px;
     top: 10px;
     right: 10px;
-    /*TODO proper icon as a base64*/
-    background-image: url('https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/48x48/cancel.png');
+    background-image: url('https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/48x48/cancel.png'); //temporary icon
     background-repeat: no-repeat;
 }
 
@@ -76,15 +75,18 @@
         z-index: 10001; /*TODO set proper z-index*/
         width: 100%;
         height: 100%;
-        padding: $gs-row-height $gs-column-width;
-        background-color: colour(comment-support-4);
+        padding: $gs-row-height $gs-column-width*.5;
+        background-color: #aad7f0;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSIzNTBweCIgaGVpZ2h0PSIyMDBweCIgdmlld0JveD0iMCAwIDIxMi4wMTEgMTE4LjkyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMTIuMDExIDExOC45MiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gZmlsbD0iI0JDNDA3RiIgcG9pbnRzPSIwLDExOC45MiAwLDE1LjExNiAxOTAuNjI3LDAgMjAxLjkwNiwxMTguOTIgIi8+PHBvbHlnb24gZmlsbD0iIzc3OTZBOCIgcG9pbnRzPSIxODkuNTkyLDExOC45MiAxMDkuMDgsMTAyLjU5NCAxMDUuNTAyLDExOC45MiAiLz48cG9seWdvbiBmaWxsPSIjRkNFQjQwIiBwb2ludHM9IjkwLjM3OCwxMTguOTIgMjA4LjQ0OSw5NS40MTQgMjEyLjAxMiwxMTguOTIgIi8+PC9zdmc+);
+        background-repeat: no-repeat;
+        background-position: 0 100%;
         color: #ffffff;
         box-sizing: border-box;
 
         @include mq(tablet) {
             left: percentage(1/10);
             top: percentage(1/5);
-            width: $gs-column-width*10;
+            width: $gs-column-width*6;
             height: auto;
         }
 
@@ -93,25 +95,34 @@
         }
 
         @include mq(wide) {
-            left: percentage(3/10);
+            left: percentage(4/10);
         }
     }
 
     .survey-logo {
-        margin-bottom: $gs-baseline;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+
+        svg {
+            fill: #000000;
+            width: 26px;
+        }
+    }
+
+    .survey-icon {
         text-align: center;
     }
 
     .survey-text__header {
         @include fs-headline(5);
+        color: #000000;
+        font-weight: bold;
+        margin-top: $gs-baseline*2;
     }
 
     .survey-text__info {
-        @include fs-textSans(1);
-    }
-
-    .survey-subtext {
-        margin-top: $gs-baseline*2;
+        @include fs-bodyCopy(3);
     }
 
     .survey-link {

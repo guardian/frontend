@@ -30,7 +30,8 @@ define([
     'inlineSvg!svgs/icon/gplus',
     'inlineSvg!svgs/icon/plus',
     'inlineSvg!svgs/logo/membership-logo',
-    'inlineSvg!svgs/commercial/thrasher-benefit-icon'
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon',
+    'inlineSvg!svgs/commercial/survey-overlay'
 ], function (
     _,
     commentCount16icon,
@@ -59,7 +60,8 @@ define([
     gplus,
     plus,
     membershipLogo,
-    thrasherBenefit
+    thrasherBenefit,
+    surveyOverlay
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -88,6 +90,7 @@ define([
         gplus: gplus,
         plus: plus,
         membershipLogo: membershipLogo,
+        surveyOverlay: surveyOverlay,
         thrasherBenefit: thrasherBenefit
     };
 

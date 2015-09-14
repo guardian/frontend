@@ -94,7 +94,9 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
-                showAdsFreeSurvey('300,250', $adSlot);
+                if (isAdfreeSurvey('variant')) {
+                    showAdsFreeSurvey('300,250', $adSlot);
+                }
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
