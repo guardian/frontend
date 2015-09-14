@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)(body: Html)
+@(metaData: model.MetaData)(body: Html)(implicit request: RequestHeader)
 @import conf.Switches._
 
 <!doctype html AMP>
@@ -260,7 +260,7 @@
                 @fragments.inlineSvg("guardian-logo-160", "logo")
             </a>
         </header>
-        @fragments.articleBody(model, true)
+        @body
         @* <h1>Sample document</h1>
         <p>
             Some text

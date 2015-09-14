@@ -2,6 +2,7 @@
 @import views.support.TrailCssClasses.articleToneClass
 @import layout.ContentWidths.GalleryMedia
 @import views.support.ImgSrc
+@import views.support.Gallery
 
 <div class="l-side-margins l-side-margins--media">
 
@@ -19,8 +20,18 @@
                     @fragments.witnessCallToAction(gallery)
                     @fragments.contentMeta(gallery)
                     <ul class="gallery2">
-                        @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
+                        @if(amp){
+                            @defining(Gallery.boundingBox(gallery.largestCrops)) { case (widest, tallest) =>
+                                <amp-carousel width="@widest" height="@tallest">
+                                @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                                    @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
+                                }
+                                </amp-carousel>
+                            }
+                        } else {
+                            @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                                @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
+                            }
                         }
                     </ul>
                     @fragments.witnessCallToAction(gallery)
@@ -102,3 +113,41 @@
         }
     }
 }
+
+    @image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
+
+    @if(amp) {
+        @picture.largestImage.map { largestImage =>
+            <amp-img src="@ImgSrc.getFallbackUrl(picture)"
+            srcset="@ImgSrc.srcset(picture, widths)"
+            sizes="@widths.sizes"
+            layout="responsive"
+            width="@largestImage.width"
+            height="@largestImage.height"
+            class="maxed responsive-img"
+            itemprop="contentUrl"
+            alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+        }
+    } else {
+
+        @picture.largestImage.map{ largestImage =>
+            <div
+            class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
+                @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
+            >
+        }
+
+        <img src="@ImgSrc.getFallbackUrl(picture)"
+        srcset="@ImgSrc.srcset(picture, widths)"
+        sizes="@widths.sizes"
+        class="@if(isMain) {maxed responsive-img} else {gu-image}"
+        itemprop="contentUrl"
+        alt="@imageOption.flatMap(_.altText).getOrElse("")" />
+
+        @picture.largestImage.map{ largestImage =>
+        </div>
+        }
+
+    }
+
+    }
