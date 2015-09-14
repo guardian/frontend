@@ -615,24 +615,6 @@ object Switches {
   )
 
   // Features
-  val DiscussionCrosswordsOptionalRelativeTimestampSwitch = Switch(
-    "Feature",
-    "discussion-crosswords-optional-relative-timestamp-switch",
-    "Discussion optional relative timestamp in the crossword section",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 28),
-    exposeClientSide = true
-  )
-
-  val OfflinePageSwitch = Switch(
-    "Feature",
-    "offline-page",
-    "Offline page",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",

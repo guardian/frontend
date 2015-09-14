@@ -48,7 +48,9 @@
 .crossword__container {
     position: relative;
 
-    margin-top: $gs-baseline;
+    @include mq($until: tablet) {
+        margin-top: $gs-baseline;
+    }
 }
 
 .crossword__controls {
