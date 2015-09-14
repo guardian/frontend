@@ -49,7 +49,7 @@ define([
             var scoreBoard = new ScoreBoard({
                 pageType: pageType,
                 parent: $h,
-                autoupdated: false,
+                autoupdated: config.page.isLive,
                 responseDataKey: 'matchSummary',
                 endpoint: config.page.rugbyMatch + '.json?page=' + encodeURIComponent(config.page.pageId)});
 
@@ -60,6 +60,7 @@ define([
                 $.create(resp.nav).first().each(function (nav) {
                     // There ought to be exactly two tabs; match report and min-by-min
                     if ($('.tabs__tab', nav).length === 2) {
+                        $('.js-sport-tabs').empty();
                         $('.js-sport-tabs').append(nav);
                     }
                 });
@@ -73,6 +74,9 @@ define([
                 } else {
                     var $scoreEventsTabletUp = $.create(contentString);
                     $scoreEventsTabletUp.addClass('hide-on-mobile');
+
+                    $('.rugby-stats').remove();
+
                     $('.score-container').after($scoreEventsTabletUp);
                 }
 
