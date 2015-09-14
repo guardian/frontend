@@ -9,7 +9,8 @@ define([
     'common/modules/identity/api',
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'common/modules/commercial/user-ad-preference'
 ], function (
     fastdom,
     Promise,
@@ -21,7 +22,8 @@ define([
     identityApi,
     ab,
     createAdSlot,
-    dfp
+    dfp,
+    userAdPreference
 ) {
     return function (options) {
         var adType,
@@ -44,7 +46,8 @@ define([
             !$adSlotContainer.length ||
             !config.switches.discussion ||
             !identityApi.isUserLoggedIn() ||
-            (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) ||
+            (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) || /* Sensitive pages */
+            userAdPreference.hideAds ||
             (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
             !config.page.commentable) {
             return false;

@@ -507,8 +507,15 @@ class Crossword extends React.Component {
     }
 
     onToggleAnagramHelper () {
+        // only show anagram helper if a clue is active
+        if (!this.state.showAnagramHelper) {
+            return this.clueInFocus() && this.setState({
+                showAnagramHelper: true
+            });
+        }
+
         this.setState({
-            showAnagramHelper: !this.state.showAnagramHelper
+            showAnagramHelper: false
         });
     }
 

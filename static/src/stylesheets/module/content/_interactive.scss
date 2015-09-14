@@ -42,20 +42,32 @@
         border-bottom: 0;
 
         .meta__number {
-            float: right;
-            border-left: 1px solid colour(neutral-5);
-            padding-left: $gs-gutter / 2;
+            @include mq(tablet) {
+                float: right;
+                border-left: 1px solid colour(neutral-5);
+                padding-left: $gs-gutter / 2;
+
+                &:first-child {
+                    padding-right: 0;
+                }
+            }
 
             @include mq($until: mobile) {
                 position: relative;
                 top: $gs-baseline;
             }
+
+            &:last-child {
+                padding-right: $gs-gutter / 2;
+            }
         }
 
         .meta__social {
-            float: left;
-            position: relative;
-            z-index: 2;
+            @include mq(tablet) {
+                float: left;
+                position: relative;
+                z-index: 2;
+            }
         }
 
         @include mq(leftCol) {

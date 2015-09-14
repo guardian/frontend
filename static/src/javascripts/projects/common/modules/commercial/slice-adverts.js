@@ -8,7 +8,8 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/modules/commercial/user-ad-preference'
 ], function (
     bonzo,
     fastdom,
@@ -19,11 +20,12 @@ define([
     config,
     detect,
     createAdSlot,
-    userPrefs
+    userPrefs,
+    userAdPreference
 ) {
     var adNames = ['inline1', 'inline2', 'inline3'],
         init = function (options) {
-            if (!config.switches.standardAdverts) {
+            if (!config.switches.standardAdverts || userAdPreference.hideAds) {
                 return false;
             }
 
