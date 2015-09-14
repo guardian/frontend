@@ -225,7 +225,7 @@ Loader.prototype.initToolbar = function() {
 
         var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
         // Default to true
-        var prefValue = typeof userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== 'undefined'
+        var prefValue = userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
             ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
             : true;
         updateLabelText(prefValue);
