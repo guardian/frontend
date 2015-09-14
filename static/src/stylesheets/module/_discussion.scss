@@ -254,7 +254,7 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-.discussion__toolbar-dropdown {
+.discussion__toolbar-item {
     position: relative;
     top: 1px;
     float: left;
@@ -294,6 +294,12 @@ $avatarPadding: $gs-gutter / 2;
         margin-left: $gs-gutter / 2;
         border-left: 1px solid colour(neutral-4);
     }
+}
+
+.discussion__toolbar-item__checkbox {
+    // Unset global styles
+    float: none;
+    margin-left: 0;
 }
 
 /* All comments (top level and reply)
