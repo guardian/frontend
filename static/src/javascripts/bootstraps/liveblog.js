@@ -193,7 +193,6 @@ define([
                 dropdowns.updateAria(dropdown);
 
                 if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
-                    
                     topMarker = qwery('.js-top-marker')[0];
                     /*eslint-disable no-new*/
                     new Affix({

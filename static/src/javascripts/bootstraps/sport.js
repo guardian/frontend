@@ -85,7 +85,7 @@ define([
                 }
 
                 $('.match-stats__container').remove();
-                $.create('<div class="match-stats__container">'+ resp.matchStat + '</div>').each(function (container) {
+                $.create('<div class="match-stats__container">' + resp.matchStat + '</div>').each(function (container) {
                     $('.js-chart', container).each(function (el) {
                         new Doughnut().render(el);
                     });
