@@ -1,9 +1,8 @@
 package model
 
-import com.gu.contentapi.client.model.{ Content => ApiContent, Tag => ApiTag }
+import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 import org.joda.time.DateTime
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.Play
 
 class UrlsTest extends FlatSpec with Matchers {
@@ -12,9 +11,13 @@ class UrlsTest extends FlatSpec with Matchers {
 
   "Urls" should "be created relative for articles" in {
 
-    val content = ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    val content = ApiContent(id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("type/article")),
       elements = None
     )
@@ -26,9 +29,13 @@ class UrlsTest extends FlatSpec with Matchers {
 
   they should "be created relative for galleries" in {
 
-    val content = ApiContent("foo/gallery/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",
+    val content = ApiContent(id = "foo/gallery/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",
       tags = List(tag("type/gallery")),
       elements = None
     )

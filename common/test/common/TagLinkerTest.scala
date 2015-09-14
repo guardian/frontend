@@ -84,10 +84,13 @@ class TagLinkerTest extends FlatSpec with Matchers {
     article(tags:_*).delegate.copy(fields = Some(Map("showInRelatedContent" -> "false")))
   )
 
-  private def article(tags: ApiTag*) = new Article(ApiContent("foo/2012/jan/07/bar", None, None,
-    Some(new DateTime), "Some article",
-    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    "http://content.guardianapis.com/foo/2012/jan/07/bar",
+  private def article(tags: ApiTag*) = new Article(ApiContent(id = "foo/2012/jan/07/bar",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = Some(new DateTime),
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
     elements = None,
     tags = tags.toList,
     fields = Some(Map("showInRelatedContent" -> "true"))
