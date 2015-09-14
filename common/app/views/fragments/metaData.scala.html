@@ -122,6 +122,6 @@
     <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
 }
 
-@if(item.isArticle && !item.isLiveBlog){
+@if((item.isArticle && !item.isLiveBlog) || item.isGallery){
     <link rel="amphtml" href="/@item.id/amp">
 }
