@@ -15,10 +15,12 @@ window.guardian = {
 window.s_account = 'guardiangu-frontend,guardiangu-network';
 /*eslint-enable camelcase*/
 
+/*eslint-disable no-unused-vars*/
 window.s = {
-    tl: function (a,b,c) {
+    tl: function (a, b, c) {
 
     }
 };
+/*eslint-enable no-unused-vars*/
 
 window.require = System.amdRequire;
