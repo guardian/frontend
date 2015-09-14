@@ -8,8 +8,17 @@ window.guardian = {
         tests: { }
     }
 };
+
+// Omniture variables expected on the page
+
 /*eslint-disable camelcase*/
 window.s_account = 'guardiangu-frontend,guardiangu-network';
 /*eslint-enable camelcase*/
+
+window.s = {
+    tl: function (a,b,c) {
+
+    }
+};
 
 window.require = System.amdRequire;
