@@ -1,12 +1,11 @@
 package views.support
 
-import org.joda.time.DateTime
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-import model.{ImageContainer, ImageAsset}
-import com.gu.contentapi.client.model.{Content, Asset, Tag, Element}
-import conf.Switches.ImageServerSwitch
+import com.gu.contentapi.client.model.{Asset, Content, Element, Tag}
 import conf.Configuration
+import conf.Switches.ImageServerSwitch
+import model.{ImageAsset, ImageContainer}
+import org.joda.time.DateTime
+import org.scalatest.{FlatSpec, Matchers}
 
 
 class ImgSrcTest extends FlatSpec with Matchers  {
@@ -25,12 +24,16 @@ class ImgSrcTest extends FlatSpec with Matchers  {
   val tag = List(Tag(id = "type/article", `type` = "keyword", webTitle = "",
       sectionId = None, sectionName = None, webUrl = "", apiUrl = "apiurl", references = Nil))
 
-  val content = Content("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = tag,
-      elements = Some(List(element))
-    )
+  val content = Content(id = "foo/2012/jan/07/bar",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = Some(new DateTime),
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    tags = tag,
+    elements = Some(List(element))
+  )
 
   val imageAsset = ImageAsset(asset, 1)
 

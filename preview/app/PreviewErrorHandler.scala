@@ -1,11 +1,12 @@
 import javax.inject._
 
 import com.gu.contentapi.client.GuardianContentApiError
-import play.api.http.DefaultHttpErrorHandler
 import play.api._
-import play.api.mvc._
+import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.Results._
+import play.api.mvc._
 import play.api.routing.Router
+
 import scala.concurrent._
 
 class PreviewErrorHandler @Inject() (
@@ -17,7 +18,7 @@ class PreviewErrorHandler @Inject() (
 
   override def onServerError(request: RequestHeader, exception: Throwable) = {
     exception match  {
-      case GuardianContentApiError(statusCode, statusMessage) if statusCode == 404 =>
+      case GuardianContentApiError(statusCode, statusMessage, _) if statusCode == 404 =>
         Future.successful(NotFound(views.html.not_found(request.path)))
       case _ =>
         super.onServerError(request, exception)

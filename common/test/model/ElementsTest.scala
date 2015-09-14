@@ -1,22 +1,24 @@
 package model
 
+import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement}
 import contentapi.FixtureTemplates
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-
-import com.gu.contentapi.client.model.{ Asset, Element => ApiElement, Content => ApiContent}
 import org.joda.time.DateTime
+import org.scalatest.{FlatSpec, Matchers}
 
 class ElementsTest extends FlatSpec with Matchers {
 
   "Elements" should "find the biggest crop of the main picture" in {
     val images: Elements = Content(
-      ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-        "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-        "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      ApiContent(id = "foo/2012/jan/07/bar",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDateOption = Some(new DateTime),
+        webTitle = "Some article",
+        webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+        apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
         elements = Some(List(
-        image("test-image-0","main", 0, List(asset("smaller picture 1",50), asset("biggest picture 1",100))),
-        image("test-image-1","main", 1, "a single picture 2", 200))),
+          image("test-image-0", "main", 0, List(asset("smaller picture 1", 50), asset("biggest picture 1", 100))),
+          image("test-image-1", "main", 1, "a single picture 2", 200))),
         fields = None)
     )
 
