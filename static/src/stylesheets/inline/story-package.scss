@@ -65,7 +65,8 @@
     }
 
     // Item Level
-    .fc-item {
+    .fc-item,
+    .fc-item__media-wrapper {
         // This shouldn't need to be important but too specific selectors on some tones force it to be
         background-color: colour(story-package) !important;
 
