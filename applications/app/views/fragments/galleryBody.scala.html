@@ -3,6 +3,7 @@
 @import layout.ContentWidths.GalleryMedia
 @import views.support.ImgSrc
 @import views.support.Gallery
+@import layout.WidthsByBreakpoint
 
 <div class="l-side-margins l-side-margins--media">
 
@@ -69,12 +70,26 @@
 
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                @if(amp) {
+                    @imageElement.largestImage.map { largestImage =>
+                        <amp-img src="@ImgSrc.getFallbackUrl(imageElement)"
+                        srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
+                        sizes="@GalleryMedia.Inline.sizes"
+                        layout="responsive"
+                        width="@largestImage.width"
+                        height="@largestImage.height"
+                        class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                        itemprop="contentUrl"
+                        alt="@image.altText.getOrElse("")" />
+                    }
+                } else {
+                    <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                     srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
                     sizes="@GalleryMedia.Inline.sizes"
                     src="@ImgSrc.getFallbackUrl(imageElement)"
                     alt="@image.altText.getOrElse("")"
                     itemprop="contentUrl" />
+                }
 
                 @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen"))
             </a>
@@ -113,41 +128,3 @@
         }
     }
 }
-
-    @image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
-
-    @if(amp) {
-        @picture.largestImage.map { largestImage =>
-            <amp-img src="@ImgSrc.getFallbackUrl(picture)"
-            srcset="@ImgSrc.srcset(picture, widths)"
-            sizes="@widths.sizes"
-            layout="responsive"
-            width="@largestImage.width"
-            height="@largestImage.height"
-            class="maxed responsive-img"
-            itemprop="contentUrl"
-            alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
-        }
-    } else {
-
-        @picture.largestImage.map{ largestImage =>
-            <div
-            class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
-                @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
-            >
-        }
-
-        <img src="@ImgSrc.getFallbackUrl(picture)"
-        srcset="@ImgSrc.srcset(picture, widths)"
-        sizes="@widths.sizes"
-        class="@if(isMain) {maxed responsive-img} else {gu-image}"
-        itemprop="contentUrl"
-        alt="@imageOption.flatMap(_.altText).getOrElse("")" />
-
-        @picture.largestImage.map{ largestImage =>
-        </div>
-        }
-
-    }
-
-    }
