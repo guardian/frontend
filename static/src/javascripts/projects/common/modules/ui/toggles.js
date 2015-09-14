@@ -12,37 +12,36 @@ define([
     mediator
 ) {
 
-    var Toggles = function () {
+    var Toggles = function (parent) {
 
         var self = this,
             controls,
             doNotReset = ['popup--search'],
-            readyClass = 'js-toggle-ready';
+            readyClass = 'js-toggle-ready',
+            parent = parent || document.body;
 
         this.init = function () {
-            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
+            controls = Array.prototype.slice.call(parent.querySelectorAll('[data-toggle]'));
 
-            controls.forEach(this.addComponent);
+            controls.forEach(function (control) {
+                if (!bonzo(control).hasClass(readyClass)) {
+                    var target = self.getTarget(control);
+                    if (target) {
+                        control.toggleTarget = target;
+                        bonzo(control).addClass(readyClass);
+                        bean.add(control, 'click', function (e) {
+                            e.preventDefault();
+                            self.toggle(control, controls);
+                        });
+                    }
+                }
+            });
         };
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
                 return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
-        };
-
-        this.addComponent = function (control) {
-            if (!bonzo(control).hasClass(readyClass)) {
-                var target = self.getTarget(control);
-                if (target) {
-                    control.toggleTarget = target;
-                    bonzo(control).addClass(readyClass);
-                    bean.add(control, 'click', function (e) {
-                        e.preventDefault();
-                        self.toggle(control, controls);
-                    });
-                }
-            }
         };
 
         mediator.on('module:clickstream:click', function (clickSpec) {
