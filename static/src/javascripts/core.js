@@ -24,6 +24,7 @@ define([
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/user-ad-preference',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/lazyload',

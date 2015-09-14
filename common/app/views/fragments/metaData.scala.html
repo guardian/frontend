@@ -121,3 +121,7 @@
 @item.iosId("google").map { iosId =>
     <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
 }
+
+@if(item.isArticle && !item.isLiveBlog){
+    <link rel="amphtml" href="/@item.id/amp">
+}

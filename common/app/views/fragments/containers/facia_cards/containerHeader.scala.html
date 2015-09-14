@@ -1,9 +1,8 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
-@import views.html.fragments.containers.facia_cards.{date, latestUpdate}
-@import layout.{MetaDataHeader, LoneDateHeadline, DescriptionMetaHeader}
 @import fragments.containers.facia_cards.{dateHeadline, descriptionHeadline, standardHeaderMeta}
 @import fragments.nav.treats
+@import layout.{DescriptionMetaHeader, LoneDateHeadline, MetaDataHeader}
 
 @containerDefinition.customHeader.map { customHeader =>
     <div class="fc-container__header js-container__header">
