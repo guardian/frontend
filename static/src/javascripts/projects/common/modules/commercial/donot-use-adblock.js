@@ -21,9 +21,9 @@ define([
 ) {
     function init() {
         var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
+            adblockLink = 'https://membership.theguardian.com?INTCMP=adb-mv';
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
             new Message('adblock', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant',
