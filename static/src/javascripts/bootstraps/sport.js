@@ -75,7 +75,7 @@ define([
                     var $scoreEventsTabletUp = $.create(contentString);
                     $scoreEventsTabletUp.addClass('hide-on-mobile');
 
-                    $('.rugby-stats').remove()
+                    $('.rugby-stats').remove();
 
                     $('.score-container').after($scoreEventsTabletUp);
                 }
