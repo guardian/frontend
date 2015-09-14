@@ -15,13 +15,19 @@ describe('Slice Adverts', function () {
         },
         $fixtureContainer,
         injector = new Injector(),
-        sliceAdverts, config, detect;
+        sliceAdverts, config, detect, userAdPreference;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/slice-adverts', 'common/utils/config', 'common/utils/detect'], function () {
+        injector.test([
+            'common/modules/commercial/slice-adverts',
+            'common/utils/config',
+            'common/utils/detect',
+            'common/modules/commercial/user-ad-preference'
+        ], function () {
             sliceAdverts = arguments[0];
             config = arguments[1];
             detect = arguments[2];
+            userAdPreference = arguments[3];
 
             config.page = {
                 pageId: 'uk/commentisfree'
@@ -33,6 +39,8 @@ describe('Slice Adverts', function () {
             detect.getBreakpoint = function () {
                 return 'desktop';
             };
+
+            userAdPreference.hideAds = false;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
@@ -135,6 +143,13 @@ describe('Slice Adverts', function () {
 
     it('should not not display ad slot if standard-adverts switch is off', function () {
         config.switches.standardAdverts = false;
+
+        expect(sliceAdverts.init()).toBe(false);
+        expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+    });
+
+    it('should not display ad slot if user has opted out of advertising', function () {
+        userAdPreference.hideAds = true;
 
         expect(sliceAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);

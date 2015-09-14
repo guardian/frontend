@@ -70,10 +70,11 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
   val lookupForm = Form(
     mapping(
-      "type" -> text,
       "id" -> number
     )(CrosswordLookup.apply)(CrosswordLookup.unapply)
   )
+
+  def noResults()(implicit request: RequestHeader) = Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
 
   def search() = Action.async { implicit request =>
     searchForm.bindFromRequest.fold(
@@ -91,7 +92,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results match {
-            case Nil => Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+            case Nil => noResults
 
             case results =>
               val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
@@ -104,12 +105,22 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
     )
   }
 
-  def lookup() = Action { implicit request =>
+  def lookup() = Action.async { implicit request =>
     lookupForm.bindFromRequest.get match {
-      case CrosswordLookup(crosswordType, id) =>
-        Redirect(s"$crosswordType/$id")
-      case _ =>
-        Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+      case CrosswordLookup(id) =>
+        val search = LiveContentApi.search(Edition(request))
+          .section("crosswords")
+          .orderBy("oldest") // puzzles are posted before solutions
+          .q(id.toString)
+
+        LiveContentApi.getResponse(search).map { response =>
+          response.results match {
+            case Nil    => noResults
+            case c :: _ => Redirect(s"/${c.id}")
+          }
+        }
+
+      case _ => Future.successful(noResults)
     }
   }
 
@@ -121,7 +132,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
     val toDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
   }
 
-  case class CrosswordLookup(crosswordType: String, id: Int)
+  case class CrosswordLookup(id: Int)
 }
 
 object CrosswordPreferencesController extends Controller with PreferenceController {
