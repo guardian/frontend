@@ -98,6 +98,8 @@ object ImgSrc extends Logging {
     "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 
+  def tokenFor(host:String): Option[String] = hostPrefixMapping.get(host).map(_.token)
+
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
   def apply(url: String, imageType: ElementProfile): String = {
