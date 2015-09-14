@@ -19,7 +19,7 @@
     padding-left: 2em;
 
     &:before {
-        content: attr(value);
+        content: attr(data-number);
         position: absolute;
         left: 0;
         font-weight: bold;
@@ -42,6 +42,8 @@
 
     //For grouped clues we display 11.12,23 accross instead of just a number
     &:before {
-        position: initial;
+        padding-right: 2em; // Match the padding of non-grouped clues, but wrap only grouped clues underneath the number
+        position: static;
+        left: auto;
     }
 }
