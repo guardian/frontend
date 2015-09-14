@@ -196,6 +196,10 @@
             .content__mobile-full-width, .media-primary {
                 margin: 0;
             }
+            @* Fix for amp images specific styling *@
+            img.-amp-fill-content {
+                height: auto !important;
+            }
 
             figure.element {
                 margin: 1rem 0 0.75rem;
@@ -219,7 +223,7 @@
                 position: absolute;
             }
 
-             @* Pullquote related styling below *@
+            @* Pullquote related styling below *@
             .element-pullquote .inline-quote {
                 margin-bottom: 0.375rem;
                 display: block;
@@ -253,6 +257,7 @@
         </style>
         @fragments.metaData(metaData)
         <script src="https://www.gstatic.com/amphtml/v0.js"></script>
+        <script element="amp-twitter" src="https://www.gstatic.com/amphtml/v0/amp-twitter-0.1.js"async></script>
     </head>
     <body>
         @* @fragments.header(metaData) *@
