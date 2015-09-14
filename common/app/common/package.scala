@@ -17,10 +17,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case e: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
       Right(NoCache(ServiceUnavailable))
-    case GuardianContentApiError(404, message) =>
+    case GuardianContentApiError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       Right(NoCache(NotFound))
-    case GuardianContentApiError(410, message) =>
+    case GuardianContentApiError(410, message, _) =>
       log.info(s"Got a 410 while calling content api: $message")
       Right(NoCache(Gone))
     case timeout: TimeoutException =>

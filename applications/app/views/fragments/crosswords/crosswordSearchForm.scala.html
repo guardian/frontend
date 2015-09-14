@@ -1,6 +1,6 @@
 @(page: crosswords.CrosswordSearchPage)(implicit request: RequestHeader)
 
-<form class="form" method="post" action="/crosswords/search/results">
+<form class="form" method="get" action="/crosswords/search">
     <fieldset class="fieldset">
         <div class="fieldset__heading">
             <h2 class="form__heading">Search</h2>
@@ -11,8 +11,8 @@
             <div class="form-fields__inline">
                 <ul>
                     <li class="form-field">
-                        <label class="label" for="crossword-type">Type</label>
-                        <select id="crossword-type" name="crossword-type">
+                        <label class="label" for="crossword_type">Type</label>
+                        <select id="crossword_type" name="crossword_type">
                             @page.crosswordTypes.map { crosswordType =>
                                 <option value="@crosswordType">@crosswordType</option>
                             }
@@ -61,7 +61,7 @@
     </fieldset>
 </form>
 
-<form class="form" method="post" action="/crosswords/lookup">
+<form class="form" method="get" action="/crosswords/lookup">
     <fieldset class="fieldset">
         <div class="fieldset__heading">
             <h2 class="form__heading">Lookup</h2>
@@ -71,15 +71,6 @@
         <div class="fieldset__fields">
             <div class="form-fields__inline">
                 <ul>
-                    <li class="form-field">
-                        <label class="label" for="crossword-type">Type</label>
-                        <select id="type" name="type">
-                        @page.crosswordTypes.map { crosswordType =>
-                            <option value="@crosswordType">@crosswordType</option>
-                        }
-                        </select>
-                    </li>
-
                     <li class="form-field">
                         <label class="label" for="crossword-id">ID</label>
                         <input type="text" class="text-input" name="id" id="id" />

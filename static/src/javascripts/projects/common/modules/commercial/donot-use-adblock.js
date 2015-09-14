@@ -19,18 +19,11 @@ define([
     messageTemplate,
     svgs
 ) {
-    function isAdblockAbTest() {
-        var participations = ab.getParticipations().AdblockStickyBanner;
-
-        return participations && ab.testCanBeRun('AdblockStickyBanner')
-            && (participations.variant === 'variant' || participations.variant === 'challenger');
-    }
-
     function init() {
         var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
+            adblockLink = 'https://membership.theguardian.com?INTCMP=adb-mv';
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted && !isAdblockAbTest()) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
             new Message('adblock', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant',

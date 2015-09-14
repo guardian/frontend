@@ -34,7 +34,7 @@ va
 
                 {_.map(this.props.entries, (entry, i) => {
                     const classNames = this.checkIfLetterHasSeparator(this.props.clue.separatorLocations, i + 1);  //Separators are one indexed in CAPI, annoyingly
-                    const span = <span className={classNames + (entry.value ? 'has-value' : '')} key={i}>{entry.value}</span>;
+                    const span = <span className={classNames + (entry.value ? ' has-value' : '')} key={i}>{entry.value}</span>;
                     return span;
                 })}
             </div>

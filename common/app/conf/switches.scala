@@ -549,6 +549,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  val AdFreeExperience = Switch(
+    "Commercial",
+    "advert-opt-out",
+    "Display advert free experience",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 9),
+    exposeClientSide = true
+  )
 
   // Monitoring
 
@@ -607,6 +615,15 @@ object Switches {
   )
 
   // Features
+  val DiscussionCrosswordsOptionalRelativeTimestampSwitch = Switch(
+    "Feature",
+    "discussion-crosswords-optional-relative-timestamp-switch",
+    "Discussion optional relative timestamp in the crossword section",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 28),
+    exposeClientSide = true
+  )
+
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -908,15 +925,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABAdblockStickyBanner = Switch(
-    "A/B Tests",
-    "ab-adblock-sticky-banner",
-    "Switch for the Ad-block sticky banner A/B test",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 11),
-    exposeClientSide = true
-  )
-
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
@@ -1048,6 +1056,15 @@ object Switches {
   val FrontPressJobSwitch = Switch(
     "Facia",
     "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val FrontPressJobSwitchStandardFrequency = Switch(
+    "Facia",
+    "front-press-job-switch-standard-frequency",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off,
     sellByDate = never,

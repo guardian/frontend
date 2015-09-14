@@ -1,5 +1,5 @@
 @import views.MainMediaWidths
-@(article: model.Article)(implicit request: RequestHeader)
+@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import model.EndSlateComponents
 @import model.{AudioPlayer, VideoPlayer}
@@ -8,7 +8,7 @@
 
 @if(article.hasMainEmbed || article.elements("main").isEmpty) {
     <div class="media-primary">
-        @MainCleaner(article, article.main)
+        @MainCleaner(article, article.main, amp)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
@@ -41,7 +41,8 @@
                     if(article.isMainMediaLightboxable) Some(1) else None,
                     article.hasShowcaseMainElement,
                     article.isFeature,
-                    MainMediaWidths(article)
+                    MainMediaWidths(article),
+                    amp = amp
                 )
             }
         }

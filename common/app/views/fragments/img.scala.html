@@ -11,7 +11,8 @@
     isFeature: Boolean = false,
     widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.Inline,
     image_figureClasses: Option[(model.ImageAsset, String)] = None,
-    shareInfo: Option[(Seq[model.ShareLink], String)] = None
+    shareInfo: Option[(Seq[model.ShareLink], String)] = None,
+    amp: Boolean = false
 )(implicit request: RequestHeader)
 
 
@@ -80,23 +81,39 @@
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
 
+@if(amp) {
+    @picture.largestImage.map { largestImage =>
+        <amp-img src="@ImgSrc.getFallbackUrl(picture)"
+        srcset="@ImgSrc.srcset(picture, widths)"
+        sizes="@widths.sizes"
+        layout="responsive"
+        width="@largestImage.width"
+        height="@largestImage.height"
+        class="maxed responsive-img"
+        itemprop="contentUrl"
+        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+    }
+} else {
+
     @picture.largestImage.map{ largestImage =>
         <div
-            class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
+        class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
             @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
         >
     }
 
-        <img src="@ImgSrc.getFallbackUrl(picture)"
-                srcset="@ImgSrc.srcset(picture, widths)"
-                sizes="@widths.sizes"
-                class="@if(isMain){maxed responsive-img} else {gu-image}"
-                itemprop="contentUrl"
-                alt="@imageOption.flatMap(_.altText).getOrElse("")" />
+    <img src="@ImgSrc.getFallbackUrl(picture)"
+    srcset="@ImgSrc.srcset(picture, widths)"
+    sizes="@widths.sizes"
+    class="@if(isMain) {maxed responsive-img} else {gu-image}"
+    itemprop="contentUrl"
+    alt="@imageOption.flatMap(_.altText).getOrElse("")" />
 
     @picture.largestImage.map{ largestImage =>
         </div>
     }
+
+}
 
 }
 

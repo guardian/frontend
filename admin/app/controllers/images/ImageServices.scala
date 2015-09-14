@@ -7,6 +7,8 @@ import conf.AdminConfiguration.{fastly, imgix}
 import play.api.libs.json.{JsObject, JsString}
 import play.api.libs.ws.{WS, WSAuthScheme}
 import play.api.Play.current
+import views.support.ImgSrc.tokenFor
+import views.support.ImageUrlSigner.sign
 
 object ImageServices extends ExecutionContexts {
 
@@ -31,9 +33,12 @@ object ImageServices extends ExecutionContexts {
   private def imgixBackendFor(host: String): String = imgixBackends(host)
 
   def clearImgix(originUri: URI) {
-    val imgixHost = imgixBackendFor(originUri.getHost)
+    val host = originUri.getHost
+    val imgixHost = imgixBackendFor(host)
     val http = originUri.getScheme
-    val path = originUri.getPath
+    val originalPath = originUri.getPath
+    val path = tokenFor(host).map(sign(originalPath, _)).getOrElse(originalPath)
+
     val url = s"$http://$imgixHost$path"
     val bodyJson = JsObject(Seq("url" -> JsString(url)))
 

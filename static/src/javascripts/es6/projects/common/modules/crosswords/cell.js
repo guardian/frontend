@@ -37,13 +37,15 @@ export default class Cell extends React.Component {
         if (this.props.value !== undefined) {
             cellValue = (
                 <text
-                    x={left + (constants.cellSize * .315)}
+                    x={left + (constants.cellSize * .5)}
                     y={top + (constants.cellSize * .675)}
                     key='entry'
                     className={classNames({
                         'crossword__cell-text': true,
+                        'crossword__cell-text--focussed': this.props.isFocussed,
                         'crossword__cell-text--error': this.props.isError
-                    })}>
+                    })}
+                    textAnchor='middle'>
                     {this.props.value}
                 </text>
             );

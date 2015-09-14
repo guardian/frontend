@@ -13,6 +13,7 @@ define([
     'common/utils/url',
     'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/user-ad-preference',
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
@@ -33,6 +34,7 @@ define([
     urlUtils,
     beacon,
     buildPageTargeting,
+    userAdPreference,
     Component,
     events,
     fullscreener,
@@ -233,7 +235,12 @@ define([
 
                     player.fullscreener();
 
-                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview && !config.page.shouldHideAdverts && !window.location.hash.match(/[#&]noads(&.*)?$/)) {
+                    if (config.switches.videoAdverts &&
+                        !blockVideoAds &&
+                        !config.page.isPreview &&
+                        !config.page.shouldHideAdverts &&
+                        !window.location.hash.match(/[#&]noads(&.*)?$/) &&
+                        !userAdPreference.hideAds) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {

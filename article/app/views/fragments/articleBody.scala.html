@@ -1,5 +1,5 @@
 
-@(model: ArticlePage)(implicit request: RequestHeader)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -22,7 +22,7 @@
         @fragments.headTonal(article)
 
         @if(article.isFeature && article.hasShowcaseMainElement) {
-            @fragments.mainMedia(article)
+            @fragments.mainMedia(article, amp)
         }
 
         <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
@@ -32,7 +32,7 @@
                     <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
                     @if(!(article.isFeature && article.hasShowcaseMainElement)) {
-                        @fragments.mainMedia(article)
+                        @fragments.mainMedia(article, amp)
                     }
 
                     @fragments.witnessCallToAction(article)
@@ -45,7 +45,7 @@
 
                     <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
                         data-test-id="article-review-body">
-                        @BodyCleaner(article, article.body)
+                        @BodyCleaner(article, article.body, amp = amp)
                     </div>
 
                     @fragments.witnessCallToAction(article)

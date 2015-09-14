@@ -19,30 +19,30 @@ object MainMediaWidths {
 }
 
 object MainCleaner {
- def apply(article: Article, html: String)(implicit request: RequestHeader) = {
+ def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         VideoEmbedCleaner(article),
-        PictureCleaner(article),
+        PictureCleaner(article, amp),
         MainFigCaptionCleaner
       )
   }
 }
 
 object BodyCleaner {
-  def apply(article: Article, html: String)(implicit request: RequestHeader) = {
+  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
         BlockNumberCleaner,
-        new TweetCleaner(article),
+        new TweetCleaner(article, amp),
         WitnessCleaner,
         TagLinker(article),
         TableEmbedComplimentaryToP,
         R2VideoCleaner(article),
         VideoEmbedCleaner(article),
-        PictureCleaner(article),
+        PictureCleaner(article, amp),
         LiveBlogDateFormatter(article.isLiveBlog),
         LiveBlogLinkedData(article.isLiveBlog),
         BloggerBylineImage(article),
