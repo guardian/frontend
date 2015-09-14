@@ -39,7 +39,6 @@ var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
 var shouldMakeTimestampsRelative = function () {
     return !config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
         || (config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
-            && config.page.section === 'crosswords'
             && userPrefs.get(PREF_RELATIVE_TIMESTAMPS));
 };
 
