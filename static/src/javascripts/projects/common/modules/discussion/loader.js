@@ -229,8 +229,6 @@ Loader.prototype.initToolbar = function() {
             ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
             : true;
         updateLabelText(prefValue);
-        // Set the default
-        userPrefs.set(PREF_RELATIVE_TIMESTAMPS, prefValue);
 
         this.on('click', '.js-timestamps-dropdown .popup__action', function(e) {
             bean.fire(qwery('.js-timestamps-dropdown [data-toggle]')[0], 'click');
