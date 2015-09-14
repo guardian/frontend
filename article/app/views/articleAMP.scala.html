@@ -1,8 +1,8 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<!doctype html AMP>
-<html>
+<!doctype html>
+<html AMP>
     @defining(model.article) { metaData =>
     <head>
         <meta charset="utf-8">
