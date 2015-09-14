@@ -20,7 +20,7 @@ define([
         this.audienceOffset = 0.8;
         this.successMeasure = 'Users will be interested in paying for the non-ads Guardian';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'hide ads hide adslot: {slot size}, survey overlay take part';
+        this.dataLinkNames = 'hide ads hide adslot: {slot size}, survey overlay take part, adfree trash read more';
         this.idealOutcome = 'Users will be interested in paying a lot for the non-ads Guardian';
 
         this.canRun = function () {

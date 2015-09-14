@@ -149,12 +149,35 @@
         background-repeat: no-repeat;
     }
 
+    .thrasher-glogo {
+        position: absolute;
+        top: 10px;
+        left: 0;
+
+        @include mq(tablet) {
+            top: initial;
+            left: initial;
+            bottom: 0;
+            right: 4%;
+        }
+
+        @include mq(wide) {
+            right: 10%;
+        }
+
+        svg {
+            width: 26px;
+            height: 26px;
+        }
+    }
+
     .inline-icon {
         fill: #000000;
     }
 
     .thrasher-content {
         @include clearfix;
+        margin-top: 40px;
     }
 
     .thrasher-link {
@@ -168,7 +191,7 @@
     }
 
     .thrasher-content__logo {
-        margin: 10px 0 0 20px;
+        margin: 10px 0 0 $gs-gutter;
 
         @include mq(desktop) {
             float: right;
@@ -177,7 +200,7 @@
     }
 
     .thrasher-content__header {
-        margin: 20px $gs-gutter*2 0;
+        margin: 20px 0 0 20px;
 
         @include mq(desktop) {
             float: right;
@@ -213,7 +236,6 @@
     }
 
     .thrasher-content__header--text {
-        text-align: center;
         @include fs-headline(5);
         font-weight: bold;
 
@@ -222,7 +244,17 @@
             width: $gs-column-width*9;
             margin: $gs-row-height 0 0 $gs-gutter;
             @include fs-headline(6);
-            text-align: left;
+            font-weight: bold;
+        }
+    }
+}
+
+.has-page-skin {
+    .adfree-thrasher {
+        .thrasher-content__header {
+            @include mq(leftCol) {
+                margin-right: 0;
+            }
         }
     }
 }
