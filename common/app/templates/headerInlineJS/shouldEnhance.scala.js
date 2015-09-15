@@ -31,7 +31,7 @@
     };
 
     window.shouldEnhance = !personPrefersCore() && !isOlderDevice();
-})(navigator, window)
+})(navigator, window);
 
 
 
