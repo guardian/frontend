@@ -3,6 +3,7 @@ package rugby.model
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import Status._
+import rugby.feed.OptaEvent
 
 case class Match(
   date: DateTime,
@@ -11,7 +12,8 @@ case class Match(
   awayTeam: Team,
   venue: Option[String],
   competitionName: String,
-  status: Status
+  status: Status,
+  event: OptaEvent
 ) {
   def hasTeam(teamId: String) = homeTeam.id == teamId || awayTeam.id == teamId
 
@@ -88,3 +90,55 @@ object Status {
   object SuddenDeath extends Status           // Occurs after extra time and essentially means the first point scorer in this period wins
   object ShootOut extends Status              // This is after sudden death and involves players taking drop kicks
 }
+
+case class MatchStat(
+  teams:Seq[TeamStat]
+)
+
+case class TeamStat(
+  name: String,
+  id: Long,
+  possession: Float,
+  territory: Float,
+  carries_metres: Int,
+  tackles: Int,
+  missed_tackles: Int,
+  tackle_success: Float,
+  turnover_won: Int,
+  turnovers_conceded: Int,
+
+  lineouts_won:Int,
+  lineouts_lost:Int,
+
+  mauls_won: Int,
+  mauls_lost: Int,
+  mauls_total: Int,
+
+  penalties_conceded: Int,
+  penalty_conceded_dissent: Int,
+  penalty_conceded_delib_knock_on: Int,
+  penalty_conceded_early_tackle: Int,
+  penalty_conceded_handling_in_ruck: Int,
+  penalty_conceded_high_tackle: Int,
+  penalty_conceded_lineout_offence: Int,
+  penalty_conceded_collapsing: Int,
+  penalty_conceded_collapsing_maul: Int,
+  penalty_conceded_collapsing_offence: Int,
+  penalty_conceded_obstruction: Int,
+  penalty_conceded_offside: Int,
+  penalty_conceded_opp_half: Int,
+  penalty_conceded_own_half: Int,
+  penalty_conceded_other: Int,
+  penalty_conceded_scrum_offence: Int,
+  penalty_conceded_stamping: Int,
+  penalty_conceded_wrong_side: Int,
+
+  rucks_won: Int,
+  rucks_lost: Int,
+  rucks_total: Int,
+
+  scrums_won:Int,
+  scrums_lost:Int,
+  scrums_total: Int
+
+)
