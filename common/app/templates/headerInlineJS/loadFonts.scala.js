@@ -80,18 +80,20 @@
 
     // Load fonts by injecting a `link` element.
     function loadFontsAsynchronously() {
-        var scripts = document.getElementsByTagName('script'),
-            thisScript = scripts[scripts.length - 1],
-            fonts = document.createElement('link');
+        try {
+            var scripts = document.getElementsByTagName('script'),
+                thisScript = scripts[scripts.length - 1],
+                fonts = document.createElement('link');
 
-        fonts.rel = 'stylesheet';
-        fonts.className = 'webfonts';
+            fonts.rel = 'stylesheet';
+            fonts.className = 'webfonts';
 
-        // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-        fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
-        window.setTimeout(function () {
-            thisScript.parentNode.insertBefore(fonts, thisScript);
-        }, 0);
+            // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
+            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
+            window.setTimeout(function () {
+                thisScript.parentNode.insertBefore(fonts, thisScript);
+            }, 0);
+        } catch (e) {};
     }
 
     // Detect whether browser is smoothing its fonts.
@@ -102,73 +104,75 @@
     // http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top),
     // we only test non-IE, and only on Windows. Everyone else we assume `true`.
     function fontSmoothingEnabled() {
-        var ua = navigator.userAgent,
-            fontSmoothingEnabled = null,
-            canvasNode, ctx, alpha, x, y;
+        try {
+            var ua = navigator.userAgent,
+                fontSmoothingEnabled = null,
+                canvasNode, ctx, alpha, x, y;
 
-        // If we've already run this test, return the result.
-        // This can be force-overidden using a '#check-smoothing' hash fragment.
-        if (document.cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
-            return document.cookie.indexOf('GU_fonts_smoothing=on') !== -1;
-        }
+            // If we've already run this test, return the result.
+            // This can be force-overidden using a '#check-smoothing' hash fragment.
+            if (document.cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
+                return document.cookie.indexOf('GU_fonts_smoothing=on') !== -1;
+            }
 
-        // Internal function to store font-smoothing state for 30 days
-        function saveFontSmoothing(state) {
-            state = state ? 'on' : 'off';
-            document.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
-        }
+            // Internal function to store font-smoothing state for 30 days
+            function saveFontSmoothing(state) {
+                state = state ? 'on' : 'off';
+                document.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
+            }
 
-        // If Windows desktop and not IE…
-        if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
-            try {
-                // Create a 35x35 Canvas block.
-                canvasNode = document.createElement('canvas');
-                canvasNode.width = '35';
-                canvasNode.height = '35';
-                canvasNode.style.display = 'none';
-                document.documentElement.appendChild(canvasNode);
+            // If Windows desktop and not IE…
+            if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
+                try {
+                    // Create a 35x35 Canvas block.
+                    canvasNode = document.createElement('canvas');
+                    canvasNode.width = '35';
+                    canvasNode.height = '35';
+                    canvasNode.style.display = 'none';
+                    document.documentElement.appendChild(canvasNode);
 
-                // Draw a black '@@', in 32px Arial, onto it.
-                ctx = canvasNode.getContext('2d');
-                ctx.textBaseline = 'top';
-                ctx.font = '32px Arial';
-                ctx.fillStyle = 'black';
-                ctx.strokeStyle = 'black';
-                ctx.fillText('@@', 0, 0);
+                    // Draw a black '@@', in 32px Arial, onto it.
+                    ctx = canvasNode.getContext('2d');
+                    ctx.textBaseline = 'top';
+                    ctx.font = '32px Arial';
+                    ctx.fillStyle = 'black';
+                    ctx.strokeStyle = 'black';
+                    ctx.fillText('@@', 0, 0);
 
-                // Search the top left-hand corner of the canvas from left to
-                // right, top to bottom, until we find a non-black pixel (most
-                // likely). If so we return true.
+                    // Search the top left-hand corner of the canvas from left to
+                    // right, top to bottom, until we find a non-black pixel (most
+                    // likely). If so we return true.
 
-                // - no point in searching the whole thing, so keep it as short
-                // as possible.
-                for (x = 0; x <= 16; x++) {
-                    for (y = 0; y <= 16; y++) {
-                        alpha = ctx.getImageData(x, y, 1, 1).data[3];
+                    // - no point in searching the whole thing, so keep it as short
+                    // as possible.
+                    for (x = 0; x <= 16; x++) {
+                        for (y = 0; y <= 16; y++) {
+                            alpha = ctx.getImageData(x, y, 1, 1).data[3];
 
-                        if (alpha > 0 && alpha < 255) {
-                            // font-smoothing must be on
-                            // save this info for 30 days
-                            saveFontSmoothing(true);
-                            return true;
+                            if (alpha > 0 && alpha < 255) {
+                                // font-smoothing must be on
+                                // save this info for 30 days
+                                saveFontSmoothing(true);
+                                return true;
+                            }
                         }
                     }
-                }
 
-                // Didn't find any non-black pixels - return false.
-                saveFontSmoothing(false);
-                return false;
-            } catch (ex) {
-                // Something went wrong (for example, non-blink Opera cannot use
-                // the canvas fillText() method) so we assume false for safety's
-                // sake.
-                saveFontSmoothing(false);
-                return false;
+                    // Didn't find any non-black pixels - return false.
+                    saveFontSmoothing(false);
+                    return false;
+                } catch (ex) {
+                    // Something went wrong (for example, non-blink Opera cannot use
+                    // the canvas fillText() method) so we assume false for safety's
+                    // sake.
+                    saveFontSmoothing(false);
+                    return false;
+                }
+            } else {
+                // You're not on Windows or you're using IE, so we assume true
+                return true;
             }
-        } else {
-            // You're not on Windows or you're using IE, so we assume true
-            return true;
-        }
+        } catch (e) {};
     }
 
     // Make it possible to toggle fonts with `#fonts-off/on`.
