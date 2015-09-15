@@ -3,7 +3,7 @@ package layout
 import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
 import common.LinkTo
 import common.dfp.{DfpAgent, SponsorshipTag}
-import conf.Switches
+import conf.switches.Switches
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
 import model.PressedPage

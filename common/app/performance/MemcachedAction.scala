@@ -8,7 +8,7 @@ import play.api.libs.iteratee.{Enumerator, Iteratee}
 import scala.concurrent.duration._
 import org.apache.commons.codec.digest.DigestUtils
 import DigestUtils.sha256Hex
-import conf.Switches.{MemcachedSwitch, IncludeBuildNumberInMemcachedKey}
+import conf.switches.Switches.{MemcachedSwitch, IncludeBuildNumberInMemcachedKey}
 import common.MemcachedMetrics._
 import play.api.mvc.Result
 import play.api.mvc.ResponseHeader

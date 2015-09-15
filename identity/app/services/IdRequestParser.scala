@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 import com.google.inject.{Inject, Singleton}
 import utils.{ThirdPartyConditions, RemoteAddress}
 import jobs.TorExitNodeList
-import conf.Switches
+import conf.switches.Switches
 
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {

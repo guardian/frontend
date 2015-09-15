@@ -1,6 +1,7 @@
 package football.controllers
 
 import common._
+import conf.switches.Switches
 import model._
 import conf._
 import play.api.mvc.{ Controller, Action }

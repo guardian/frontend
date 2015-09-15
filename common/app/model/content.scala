@@ -9,7 +9,7 @@ import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
-import conf.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -55,7 +55,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
   }
   override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
   override lazy val requiresMembershipAccess: Boolean = {
-    conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").contains("true")
@@ -226,7 +226,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
       Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
     } else None
 
-    val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
+    val cricketMeta = if (isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
       Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
     } else None
 

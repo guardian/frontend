@@ -9,7 +9,7 @@ import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
-import conf.Switches
+import conf.switches.Switches
 
 @Singleton
 class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,

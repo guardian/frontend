@@ -36,7 +36,7 @@
 
     <script type="text/javascript">
         window.abSwitches = {
-            @conf.Switches.all.filter(_.group == "A/B Tests").map{ s =>
+            @conf.switches.Switches.all.filter(_.group == "A/B Tests").map{ s =>
                 "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
             }
         };

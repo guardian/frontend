@@ -1,5 +1,5 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 
 @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
 

@@ -1,5 +1,6 @@
 package dev
 
+import conf.switches.Switch
 import play.api.mvc.RequestHeader
 import conf.Configuration
 
@@ -16,7 +17,7 @@ trait EnvConfig {
     HttpSwitch(DemoSwitch).isSwitchedOn // will yield true
     DemoSwitch.isSwitchedOn // will yield false
  */
-case class HttpSwitch(switch :conf.Switch) extends EnvConfig {
+case class HttpSwitch(switch: Switch) extends EnvConfig {
   import HttpSwitch._
 
   def isSwitchedOn(implicit request: RequestHeader): Boolean =

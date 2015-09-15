@@ -3,7 +3,7 @@ package views.support
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp.{AdSize, AdSlot, TopAboveNavSlot, TopSlot}
-import conf.Switches._
+import conf.switches.Switches._
 import model.MetaData
 
 object Commercial {

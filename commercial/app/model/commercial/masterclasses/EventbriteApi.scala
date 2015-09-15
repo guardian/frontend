@@ -1,7 +1,7 @@
 package model.commercial.masterclasses
 
 import common.{ExecutionContexts, Logging}
-import conf.Switches.MasterclassFeedSwitch
+import conf.switches.Switches.MasterclassFeedSwitch
 import conf.{CommercialConfiguration, Configuration}
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time.DateTime.now

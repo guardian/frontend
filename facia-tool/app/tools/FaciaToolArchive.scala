@@ -5,7 +5,8 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
 import com.amazonaws.services.dynamodbv2.model.{AttributeValue, PutItemRequest}
 import common.{ExecutionContexts, Logging}
-import conf.{Switches, Configuration}
+import conf.switches.Switches
+import conf.Configuration
 import implicits.JsonImplicits._
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json._

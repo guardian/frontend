@@ -2,7 +2,7 @@ package model.commercial.jobs
 
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
-import conf.Switches.JobFeedSwitch
+import conf.switches.Switches.JobFeedSwitch
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time._
 

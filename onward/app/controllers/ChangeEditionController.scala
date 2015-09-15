@@ -2,7 +2,7 @@ package controllers
 
 import common.{Edition, InternationalEdition }
 import play.api.mvc._
-import conf.Switches.InternationalEditionSwitch
+import conf.switches.Switches.InternationalEditionSwitch
 
 object ChangeEditionController extends Controller with PreferenceController {
 

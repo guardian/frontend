@@ -1,7 +1,7 @@
 package controllers
 
 import common._
-import conf.Switches
+import conf.switches.Switches
 import model.diagnostics.quizzes.Quizzes
 import model.{TinyResponse, Cached, NoCache, Cors}
 import play.api.mvc._

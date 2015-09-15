@@ -2,7 +2,7 @@ package jobs
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration.frontend.webEngineersEmail
-import conf.Switches
+import conf.switches.Switches
 import services.EmailService
 
 import scala.util.control.NonFatal

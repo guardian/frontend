@@ -2,7 +2,7 @@ package views.support
 
 import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
-import conf.Switches.SaveForLaterSwitch
+import conf.switches.Switches.SaveForLaterSwitch
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob) = {

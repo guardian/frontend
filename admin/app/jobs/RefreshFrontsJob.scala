@@ -3,7 +3,7 @@ package jobs
 import common.Logging
 import services.{S3FrontsApi, FrontPressNotification}
 import play.api.libs.json.{JsString, JsObject, JsValue, Json}
-import conf.Switches._
+import conf.switches.Switches._
 import conf.Configuration
 
 sealed trait FrontType

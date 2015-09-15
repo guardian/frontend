@@ -2,12 +2,13 @@ package services
 
 import com.gu.googleauth.UserIdentity
 import com.gu.pandomainauth.model.User
-import conf.{Switches, Configuration}
+import conf.Configuration
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
+import conf.switches.Switches
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play

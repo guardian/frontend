@@ -2,7 +2,7 @@ package model.commercial.soulmates
 
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
-import conf.Switches.SoulmatesFeedSwitch
+import conf.switches.Switches.SoulmatesFeedSwitch
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import play.api.libs.json.{JsArray, JsValue}
 

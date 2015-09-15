@@ -3,7 +3,7 @@ package contentapi
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
-import conf.Switches
+import conf.switches.Switches
 import scala.concurrent.{ExecutionContext, Future}
 import common._
 import model.{Content, Trail}

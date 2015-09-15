@@ -5,7 +5,7 @@ import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches
+import conf.switches.Switches
 import controllers.front._
 import layout.{Front, CollectionEssentials, FaciaContainer}
 import model._

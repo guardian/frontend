@@ -46,7 +46,7 @@ object DiagnosticsController extends Controller with Logging {
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
 
   def css = Action(jsonParser) { implicit request =>
-    if (conf.Switches.CssLogging.isSwitchedOn) {
+    if (conf.switches.Switches.CssLogging.isSwitchedOn) {
       Css.report(request.body)
     }
     TinyResponse.noContent()

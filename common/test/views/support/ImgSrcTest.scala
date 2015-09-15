@@ -2,7 +2,7 @@ package views.support
 
 import com.gu.contentapi.client.model.{Asset, Content, Element, Tag}
 import conf.Configuration
-import conf.Switches.ImageServerSwitch
+import conf.switches.Switches.ImageServerSwitch
 import model.{ImageAsset, ImageContainer}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}

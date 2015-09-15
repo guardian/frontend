@@ -4,7 +4,7 @@ import java.net.URL
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
-import conf.Switches._
+import conf.switches.Switches._
 import layout.{WidthsByBreakpoint, ContentWidths}
 import layout.ContentWidths._
 import model._
@@ -404,7 +404,7 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
 
 class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
-  import conf.Switches.TwitterImageFallback
+  import conf.switches.Switches.TwitterImageFallback
 
   override def clean(document: Document): Document = {
 

@@ -3,6 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
 import conf._
+import conf.switches.Switches
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import services.ImageQuery

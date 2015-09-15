@@ -1,7 +1,7 @@
 package football.feed
 
 import common.{Edition, ExecutionContexts, Logging}
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.ws.WS

@@ -2,7 +2,7 @@ package views.support
 
 import java.net.{URI, URISyntaxException}
 import common.Logging
-import conf.Switches.ImageServerSwitch
+import conf.switches.Switches.ImageServerSwitch
 import conf.Configuration
 import layout.WidthsByBreakpoint
 import model.{Content, ImageAsset, ImageContainer, MetaData}

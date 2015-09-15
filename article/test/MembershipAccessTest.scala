@@ -1,6 +1,6 @@
 package test
 
-import conf.Switches
+import conf.switches.Switches
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest._
 

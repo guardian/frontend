@@ -2,7 +2,7 @@ package model.commercial.travel
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration.commercial._
-import conf.Switches._
+import conf.switches.Switches._
 import org.joda.time.format.DateTimeFormat
 import services.S3
 

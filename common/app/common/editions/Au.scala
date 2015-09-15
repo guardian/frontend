@@ -1,7 +1,7 @@
 package common.editions
 
 import common.editions.Uk._
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 import common._
 import contentapi.QueryDefaults

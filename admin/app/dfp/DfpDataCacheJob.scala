@@ -3,8 +3,8 @@ package dfp
 import common.dfp.GuCreativeTemplate.{lastModified, merge}
 import common.dfp._
 import common.{ExecutionContexts, Logging}
-import conf.Switches
-import conf.Switches.DfpCachingSwitch
+import conf.switches.Switches
+import conf.switches.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store

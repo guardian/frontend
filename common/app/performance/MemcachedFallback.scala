@@ -5,7 +5,7 @@ import implicits.Dates
 import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
-import conf.Switches._
+import conf.switches.Switches._
 import conf.Configuration
 import play.api.Play
 import Play.current

@@ -8,7 +8,7 @@ object WebAppController extends Controller with ExecutionContexts {
 
   def serviceWorker() = Action { implicit request =>
     Cached(3600) {
-      conf.Switches.NotificationsSwitch.isSwitchedOn match {
+      conf.switches.Switches.NotificationsSwitch.isSwitchedOn match {
         case true => Ok(templates.js.serviceWorker())
         case false => NotFound
       }

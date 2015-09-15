@@ -1,5 +1,5 @@
 @(stylesheet: String, reload: String = "")
-@import conf.Switches._
+@import conf.switches.Switches._
 
 @if(AsyncCss.isSwitchedOn) {
     <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" media="only x" />

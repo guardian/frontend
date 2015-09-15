@@ -2,7 +2,6 @@ package model.commercial
 
 import com.ning.http.client.{Response => AHCResponse}
 import common.Logging
-import conf.Switch
 import model.diagnostics.CloudWatch
 import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
@@ -101,7 +100,7 @@ object FeedReader extends Logging {
 
 
 case class FeedRequest(feedName: String,
-                       switch: Switch,
+                       switch: conf.switches.Switch,
                        url: String,
                        timeout: Duration = 2.seconds,
                        responseEncoding: Option[String] = None)

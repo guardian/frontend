@@ -3,7 +3,7 @@ package frontpress
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common._
-import conf.{Switches, Configuration}
+import conf.Configuration
 import metrics._
 import org.joda.time.DateTime
 import play.api.libs.json.JsNull

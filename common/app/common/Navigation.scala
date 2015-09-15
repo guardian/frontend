@@ -1,6 +1,6 @@
 package common
 
-import conf.Switches
+import conf.switches.Switches
 import model.{Content, MetaData}
 import play.api.mvc.RequestHeader
 

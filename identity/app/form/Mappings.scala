@@ -7,7 +7,7 @@ import play.api.i18n.{Messages, I18nSupport}
 import model.Countries
 import org.scala_tools.time.Imports._
 import jobs.BlockedEmailDomainList
-import conf.Switches
+import conf.switches.Switches
 
 trait Mappings extends I18nSupport {
 

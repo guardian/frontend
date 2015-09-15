@@ -1,6 +1,6 @@
 package common
 
-import conf.Switches
+import conf.switches.Switches
 import mvt.MultiVariateTesting._
 import mvt.{TestDefinition, MultiVariateTesting, Tests}
 import org.scalatest.{Matchers, FlatSpec}
@@ -8,7 +8,7 @@ import test.TestRequest
 
 class MultiVariateTestingTest extends FlatSpec with Matchers {
 
-  conf.Switches.ServerSideTests.switchOn
+  conf.switches.Switches.ServerSideTests.switchOn
 
   "active mvt tests" should "not have duplicate variants" in {
     val variantsInUse = mvt.ActiveTests.tests.flatMap(_.variants)

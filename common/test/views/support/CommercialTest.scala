@@ -4,7 +4,7 @@ import common.Edition
 import common.Edition.defaultEdition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp.{AdSize, AdSlot}
-import conf.Switches._
+import conf.switches.Switches._
 import model.MetaData
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
 import views.support.Commercial.topAboveNavSlot

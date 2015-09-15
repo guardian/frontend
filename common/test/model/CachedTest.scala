@@ -1,8 +1,8 @@
 package model
 
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import conf.Switches
-import conf.Switches.DoubleCacheTimesSwitch
+import conf.switches.Switches
+import conf.switches.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import org.scalatest.{FlatSpec, Matchers}

@@ -7,7 +7,7 @@ import model.Competition
 import pa.{Round, FootballMatch}
 import implicits.Football
 import football.collections.RichList
-import conf.Switches
+import conf.switches.Switches
 
 
 trait MatchesList extends Football with RichList with implicits.Collections {

@@ -1,6 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.Switches.SponsoredSwitch
+@import conf.switches.Switches.SponsoredSwitch
 @import model.{Gallery, Interactive, LiveBlog, Media}
 
 @defining(content.isSponsored(Some(Edition(request))),

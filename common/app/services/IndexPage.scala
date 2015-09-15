@@ -3,7 +3,7 @@ package services
 import com.gu.facia.api.models.CollectionConfig
 import com.gu.facia.api.utils.{CartoonKicker, ReviewKicker, TagKicker}
 import common.{Edition, LinkTo}
-import conf.Switches
+import conf.switches.Switches
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._

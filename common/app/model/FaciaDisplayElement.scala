@@ -1,10 +1,10 @@
 package model
 
 import com.gu.facia.api.models.FaciaContent
-import conf.Switches
-import implicits.FaciaContentImplicits._
+import conf.Configuration
+import conf.switches.Switches
 import implicits.FaciaContentFrontendHelpers._
-import conf.{Switches,Configuration}
+import implicits.FaciaContentImplicits._
 import layout.ItemClasses
 
 object FaciaDisplayElement {

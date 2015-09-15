@@ -1,6 +1,6 @@
 @(content: model.Content, position: String = "bottom")(implicit request: RequestHeader)
 @import views.support.URLEncode
-@import conf.Switches.SyndicationReprintEnabledSwitch
+@import conf.switches.Switches.SyndicationReprintEnabledSwitch
 
 @if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
     <div class="submeta__syndication">

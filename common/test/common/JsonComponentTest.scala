@@ -1,6 +1,6 @@
 package common
 
-import conf.Switches.AutoRefreshSwitch
+import conf.switches.Switches.AutoRefreshSwitch
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import play.twirl.api.Html

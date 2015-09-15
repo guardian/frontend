@@ -1,9 +1,10 @@
 package jobs
 
 import common.{Edition, Logging, ExecutionContexts, AkkaAgent}
+import conf.switches.Switches
 import model.Video
 import scala.language.postfixOps
-import conf.{Switches, LiveContentApi}
+import conf.LiveContentApi
 import LiveContentApi.getResponse
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration._

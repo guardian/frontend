@@ -5,7 +5,8 @@ import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
 
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
-import conf.{Switches, Configuration}
+import conf.Configuration
+import conf.switches.Switches
 import metrics.{CountMetric, FrontendMetric, FrontendTimingMetric, GaugeMetric}
 import model.diagnostics.CloudWatch
 import play.api.{GlobalSettings, Application => PlayApp}

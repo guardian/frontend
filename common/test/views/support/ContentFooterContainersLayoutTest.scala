@@ -1,6 +1,6 @@
 package views.support
 
-import conf.Switches.OutbrainSwitch
+import conf.switches.Switches.OutbrainSwitch
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{Article, Content, RelatedContent}
 import org.scalatest.{FlatSpec, Matchers}

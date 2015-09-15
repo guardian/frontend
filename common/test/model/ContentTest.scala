@@ -120,7 +120,7 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 
   it should "detect if article requires membershipAccess" in {
 
-    conf.Switches.MembersAreaSwitch.switchOn()
+    conf.switches.Switches.MembersAreaSwitch.switchOn()
 
     val membershipArticle = ApiContent(id = "membership/2015/jan/01/foo",
       sectionId = None,
