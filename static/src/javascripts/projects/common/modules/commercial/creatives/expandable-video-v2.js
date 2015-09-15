@@ -9,7 +9,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-video.html'
+    'text!common/views/commercial/creatives/expandable-video-v2.html'
 ], function (
     bean,
     bonzo,
@@ -84,7 +84,7 @@ define([
                 $('.ad-exp__close-button').toggleClass('button-spin');
                 $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
                 this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
-                $('.slide-video', $(this.$adSlot[0])).css('height', this.isClosed ? this.openedHeight : this.closedHeight).toggleClass('slide-video__expand');
+                $('.slide-video, .slide-video .ad-exp__layer', $(this.$adSlot[0])).css('height', this.isClosed ? this.openedHeight : this.closedHeight).toggleClass('slide-video__expand');
                 this.isClosed = !this.isClosed;
                 setTimeout(function () {
                     $('#YTPlayer').attr('src', videoSrcAutoplay);
