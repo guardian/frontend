@@ -3,6 +3,7 @@ package rugby.controllers
 import common._
 
 import common.{ExecutionContexts, JsonComponent}
+import conf.Switches.RugbyWorldCupMatchStatsSwitch
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
@@ -10,6 +11,7 @@ import rugby.jobs.RugbyStatsJob
 import rugby.model.{ScoreType, Match}
 import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.model.Match
+
 
 case class MatchPage(liveScore: Match) extends MetaData {
   override lazy val id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
@@ -33,9 +35,10 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
     matchOpt.map { aMatch =>
       val matchNav = CapiFeed.findMatchArticle(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
 
-      val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch.id)
-
+      val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch)
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
+
+      val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch) else None
 
       val page = MatchPage(aMatch)
       Cached(60){
@@ -44,7 +47,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
             "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
             "scoreEvents" -> rugby.views.html.fragments.scoreEvents(aMatch, homeTeamScorers, awayTeamScorers).toString,
             "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
-            "nav" -> matchNav.getOrElse("")
+            "nav" -> matchNav.getOrElse(""),
+            "matchStat" -> rugby.views.html.fragments.matchStats(aMatch, matchStat)
           )
         else
           Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))

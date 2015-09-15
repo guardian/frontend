@@ -39,7 +39,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, PlayResult]] = {
+  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)
+           (implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
 
     val section = leftSide.split('/').head
 

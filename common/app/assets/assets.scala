@@ -150,6 +150,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
      val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
      val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
      val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
+     val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
 
      lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body
   }
