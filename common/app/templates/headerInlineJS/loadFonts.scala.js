@@ -4,9 +4,6 @@
 // Determine what type of font-hinting we want.
 
 (function (window, document) {
-    if (!window.guardian.isModernBrowser) {
-        return false;
-    }
     var fontHinting = function () {
         var ua = navigator.userAgent,
             windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
