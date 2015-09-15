@@ -61,13 +61,12 @@ object Application extends Controller with ExecutionContexts {
   def pressDraftForAll() = Action.async {
     ConfigAgent.getPathIds.foldLeft(Future.successful(List[(String, Result)]())){ case (lastFuture, path) =>
       lastFuture
-        .flatMap(l => handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
-        .map(path -> _)
-        .map(l :+ _))
+        .flatMap(resultList => handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
+          .map(path -> _)
+          .map(resultList :+ _))
     }.map { pressedPaths =>
       Ok(s"Pressed ${pressedPaths.length} paths on DRAFT: ${pressedPaths.map{ case (a, b) => (a, b.header.status)}}")}
     .recover { case t: Throwable =>
-        InternalServerError(s"Error pressing all paths on draft: $t")
-    }
+        InternalServerError(s"Error pressing all paths on draft: $t")}
   }
 }
