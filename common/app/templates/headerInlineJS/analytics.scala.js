@@ -11,7 +11,9 @@ try {
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now      = new Date(),
-            webPublicationDate = config.page.webPublicationDate;
+            webPublicationDate = config.page.webPublicationDate,
+            standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
+                'prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events';
 
         var getChannel = function () {
             if (config.page.contentType === 'Network Front') {
@@ -125,11 +127,11 @@ try {
         // Set Page View Event
         s.events    = s.apl(s.events, 'event4', ',', 2);
 
-        this.s.prop56    = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
+        s.prop56    = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
 
         /* Set Time Parting Day and Hour Combination - 0 = GMT */
-        this.s.prop20    = tpA[2] + ':' + tpA[1];
-        this.s.eVar20    = 'D=c20';
+        s.prop20    = tpA[2] + ':' + tpA[1];
+        s.eVar20    = 'D=c20';
 
         @*
           eVar1 contains today's date
@@ -137,17 +139,19 @@ try {
           value a user gets, so in effect it is the first time
           we saw this user
         *@
-        this.s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
+        s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
 
-        this.s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
+        s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
 
         if (webPublicationDate) {
-            this.s.prop30 = 'content';
+            s.prop30 = 'content';
         } else {
-            this.s.prop30 = 'non-content';
+            s.prop30 = 'non-content';
         }
 
-        this.s.prop47    = config.page.edition || '';
+        s.prop47    = config.page.edition || '';
+
+        s.linkTrackVars = standardProps;
 
         @*
             this makes the call to Omniture.
