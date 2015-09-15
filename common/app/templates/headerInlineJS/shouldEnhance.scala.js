@@ -30,8 +30,8 @@
         return false;
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderDevice();
-})(navigator, window)
+    window.shouldEnhance = !personPrefersCore() && !isOlderDevice() && !(@item.isFront && window.serveCoreFronts);
+})(navigator, window);
 
 
 

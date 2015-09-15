@@ -14,6 +14,22 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
+@* provide some ipad users with the core view of fronts *@
+<script>
+    @if(ServeCoreFrontsToSomeIpadsSwitch.isSwitchedOn) {
+        if(navigator.platform === 'iPad' &&
+                window.devicePixelRatio === 2 &&
+                /.*iPad; CPU OS ([789])_\d+.*/.test(navigator.userAgent) &&
+                Math.random() > .5) {
+            window.serveCoreFronts = true;
+        } else {
+            window.serveCoreFronts = false;
+        }
+    } else {
+        window.serveCoreFronts = false;
+    }
+</script>
+
 @* get the stylesheets downloading ASAP *@
 @fragments.stylesheetLinks(projectName)
 

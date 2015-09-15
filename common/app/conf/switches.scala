@@ -314,6 +314,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ServeCoreFrontsToSomeIpadsSwitch = Switch(
+    "Performance",
+    "ipad-core-fronts",
+    "Serve core fronts to a random percentage of crash-prone ipad users",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 31),
+    exposeClientSide = true
+  )
+
   // Commercial
   val NoMobileTopAdSwitch = Switch(
     "Commercial",
