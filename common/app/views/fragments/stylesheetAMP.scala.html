@@ -94,6 +94,10 @@
         font-style: italic;
     }
 
+    .u-cf:after {
+        clear: both;
+    }
+
     .u-cf:after, .u-cf:before {
         content: '';
         display: table;
@@ -172,6 +176,16 @@
     @* Image related styling below *@
     .content__mobile-full-width, .media-primary {
         margin: 0;
+    }
+
+    .content__head--byline-pic .byline-img {
+        float: right;
+        height: 9.375rem;
+        z-index: 2;
+    }
+
+    .content__head--byline-pic .byline-img img {
+        height: 100%;
     }
 
     @* Temporary fix for amp images specific styling *@
