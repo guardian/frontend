@@ -40,6 +40,6 @@
 
 //For grouped clues we display 11.12,23 accross instead of just a number
 .crossword__clue--display-group-order:before {
-    padding-right: 0.875rem; // 14px - Matches the padding of non-grouped clues
+    padding-right: .875em; // 14px - Matches the width between double digit numbers and clue of non-grouped clues
 }
 
