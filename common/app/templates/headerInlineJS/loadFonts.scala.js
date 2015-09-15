@@ -44,24 +44,33 @@
 
     // Load fonts from `localStorage`.
     function loadFontsFromStorage() {
-        var storedFontFormat = localStorage['gu.fonts.format'],
-            fonts, fontFormat, font, dataAttrName, nameAndCacheKey, fontData;
+        try {
+            var storedFontFormat = localStorage['gu.fonts.format'],
+                fonts, fontFormat, font, dataAttrName, nameAndCacheKey, fontData;
 
-        if (storedFontFormat) {
-            fonts = document.querySelectorAll('.webfont');
-            fontFormat = JSON.parse(storedFontFormat).value;
+            if (storedFontFormat && fontHinting) {
+                fonts = document.querySelectorAll('.webfont');
+                fontFormat = JSON.parse(storedFontFormat).value;
 
-            for (var i = 0, j = fonts.length; i < j; ++i) {
-                font = fonts[i];
-                dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat;
-                nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/);
-                fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
+                for (var i = 0, j = fonts.length; i < j; ++i) {
+                    font = fonts[i];
+                    dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat;
+                    nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/);
+                    fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
-                if (fontData) {
-                    font.innerHTML = JSON.parse(fontData).value;
-                    font.setAttribute('data-loaded-from', 'local');
+                    if (fontData) {
+                        font.innerHTML = JSON.parse(fontData).value;
+                        font.setAttribute('data-loaded-from', 'local');
+                    } else {
+                        return false;
+                    }
                 }
+                return true;
+            } else {
+                return false;
             }
+        } catch (e) {
+            return false;
         }
     }
 
@@ -171,9 +180,7 @@
     // If they won't render properly (no smoothing), disable them entirely.
     if (fontsEnabled()) {
         if (fontSmoothingEnabled()) {
-            try {
-                loadFontsFromStorage();
-            } catch (e) {
+            if (!loadFontsFromStorage()) {
                 loadFontsAsynchronously();
             }
         } else {
