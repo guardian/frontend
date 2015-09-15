@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model.{ErrorResponse, ItemQuery, ItemResponse, SearchQuery}
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
-import conf.Switches
+import conf.switches.Switches
 import scala.concurrent.{ExecutionContext, Future}
 import common._
 import model.{Content, Trail}
