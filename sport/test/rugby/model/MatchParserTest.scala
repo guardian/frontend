@@ -23,6 +23,7 @@ import scala.io.Source
       firstResult.awayTeam.score should be(Some(13))
       firstResult.date should be(new org.joda.time.DateTime(2015, 8, 15, 8, 35))
       firstResult.venue should be (None)
+      firstResult.stage should be (Stage.Group)
 
       val futureResult = liveScores.find(_.id == "2873").get
       futureResult.homeTeam.name should be("Argentina")
@@ -30,6 +31,7 @@ import scala.io.Source
       futureResult.awayTeam.name should be("South Africa")
       futureResult.awayTeam.score should be(None)
       futureResult.venue should be (None)
+      futureResult.stage should be (Stage.Group)
     }
 
     "should parse rugby results correctly" in {
@@ -47,6 +49,7 @@ import scala.io.Source
       firstResult.date should be(new org.joda.time.DateTime(2015, 7, 8, 3, 0))
       firstResult.venue should be (Some("Apia Park"))
       firstResult.competitionName should be ("International")
+      firstResult.stage should be(Stage.Group)
 
 
       val futureResult = fixturesAndResults.find(_.id == "7528").get
@@ -56,6 +59,7 @@ import scala.io.Source
       futureResult.awayTeam.score should be(None)
       futureResult.venue should be (Some("Aviva Stadium"))
       futureResult.competitionName should be ("International")
+      futureResult.stage should be(Stage.Group)
     }
 
     "should parse live events stats correctly" in {
@@ -130,6 +134,29 @@ import scala.io.Source
       england.scrums_total should be(7)
     
       val france = matchStat.teams.last
+    }
+
+    "should parse group tables correctly" in {
+      val tablesData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/group-tables.xml")).mkString
+      val tables = rugby.feed.Parser.parseGroupTables(tablesData)
+
+      tables.size should be(4)
+      tables.head.name should be("Pool A") 
+      val fiji = tables.head.teams.head
+      fiji.name should be("Fiji")
+      fiji.rank should be(1)
+      fiji.played should be(2)
+      fiji.won should be(1)
+      fiji.drawn should be(1)
+      fiji.lost should be(0)
+      fiji.points should be(4)
+      fiji.pointsdiff should be(75)
+
+      val wales = tables.head.teams(1)
+      wales.name should be("Wales")
+      wales.rank should be(2)
+      wales.pointsdiff should be(-25)
+
     }
   }
 }

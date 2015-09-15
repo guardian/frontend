@@ -4,7 +4,7 @@ import common.{ExecutionContexts, Logging}
 import play.api.Play.current
 import play.api.libs.ws.{WSRequest, WS}
 import rugby.jobs.RugbyStatsJob
-import rugby.model.{ScoreEvent, Match, MatchStat}
+import rugby.model._
 import conf.Configuration
 
 import scala.concurrent.Future
@@ -13,16 +13,19 @@ import scala.xml.XML
 sealed trait OptaEvent {
   def competition: String
   def season: String
+  def hasGroupTable(stage: Stage.Value): Boolean
 }
 
 case object WarmupWorldCup2015 extends OptaEvent {
   override val competition = "3"
   override val season = "2016"
+  override def hasGroupTable(stage: Stage.Value) = false
 }
 
 case object WorldCup2015 extends OptaEvent {
   override val competition = "210"
   override val season = "2016"
+  override def hasGroupTable(stage: Stage.Value) = stage == Stage.Group
 }
 
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
@@ -90,5 +93,12 @@ object OptaFeed extends ExecutionContexts with Logging {
       Parser.parseLiveEventsStatsToGetMatchStat(data)
     }
   }
+
+  def getGroupTables: Future[Map[OptaEvent, Seq[GroupTable]]] = {
+    val tables = events.map { event =>
+      getResponse(event, "/competition.php", "ru2").map(Parser.parseGroupTables)
+    }
+    Future.sequence(tables).map(tables => (events zip tables).toMap)  
+  }  
 
 }
