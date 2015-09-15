@@ -1,12 +1,18 @@
 define([
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/cookies'
 ], function (
-    config
+    config,
+    cookies
 ) {
-    // For the moment, we're just deferring to the switch state
-    var hideAds = config.switches.advertOptOut;
+    var featureEnabled = config.switches.advertOptOut;
+
+    function userOptsOut() {
+        var preferenceCookie = cookies.get('ad_free_experience');
+        return preferenceCookie === 'true';
+    }
 
     return {
-        hideAds : hideAds
+        hideAds : featureEnabled && userOptsOut()
     };
 });

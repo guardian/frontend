@@ -552,7 +552,7 @@ object Switches {
   val AdFreeExperience = Switch(
     "Commercial",
     "advert-opt-out",
-    "Display advert free experience",
+    "Enable advert-free experience. See with cookie 'ad_free_experience' = true",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 9),
     exposeClientSide = true
