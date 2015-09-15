@@ -368,13 +368,4 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val AMPAdsSwitch = Switch(
-    "Feature",
-    "amp-ads",
-    "amp pages will have the amp-ad element",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 14),
-    exposeClientSide = false
-  )
-
 }
