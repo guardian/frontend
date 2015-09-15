@@ -137,15 +137,14 @@
                     document.documentElement.className = docClass;
                 </script>
 
+                @fragments.omnitureScript(None)
+
                 @if(mvt.JspmTest.isParticipating) {
                     @bootSystemJs()
                 } else {
                     @bootCurl()
                 }
-
             }
-
         }
-
     </body>
 </html>

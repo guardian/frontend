@@ -23,7 +23,7 @@ class WsFormstackHttp extends FormstackHttp with ExecutionContexts {
       .get()
       .map(response => FormstackHttpResponse(response.body, response.status, response.statusText))
       .recover{
-        case GuardianContentApiError(status, message) => FormstackHttpResponse("", status, message)
+        case GuardianContentApiError(status, message, _) => FormstackHttpResponse("", status, message)
     }
   }
 }

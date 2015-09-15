@@ -1,14 +1,15 @@
 package controllers
 
-import common._
-import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
-import services._
-import play.api.libs.json.{Json, JsArray}
-import scala.concurrent.Future
-import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
-import LiveContentApi.getResponse
+import common._
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import model._
+import play.api.libs.json.{JsArray, Json}
+import play.api.mvc.{Action, Controller, RequestHeader}
+import services._
+
+import scala.concurrent.Future
 
 object TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
 
@@ -49,7 +50,7 @@ object TaggedContentController extends Controller with Related with Logging with
       .pageSize(3)
     ).map { response =>
         response.results map { Content(_) }
-    } recover { case GuardianContentApiError(404, message) =>
+    } recover { case GuardianContentApiError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil
     }

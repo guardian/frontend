@@ -1,11 +1,11 @@
 package views.support
 
-import org.scalatest.{Matchers, FlatSpec}
-import model.{Tag, MetaData, Content, Page}
-import play.api.test.FakeRequest
-import common.Pagination
 import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
+import common.Pagination
+import model.{Content, MetaData, Page, Tag}
 import org.joda.time.DateTime
+import org.scalatest.{FlatSpec, Matchers}
+import play.api.test.FakeRequest
 
 class TitleTest extends FlatSpec with Matchers {
 
@@ -29,8 +29,14 @@ class TitleTest extends FlatSpec with Matchers {
   }
 
   it should "should create a title for Content" in {
-    val content = ApiContent("lifeandstyle/foobar", Some("lifeandstyle"), Some("Life & Style"), Some(new DateTime()),
-      "The title", "http://www.guardian.co.uk/canonical", "http://foo.bar", elements = None)
+    val content = ApiContent(id = "lifeandstyle/foobar",
+      sectionId = Some("lifeandstyle"),
+      sectionName = Some("Life & Style"),
+      webPublicationDateOption = Some(new DateTime()),
+      webTitle = "The title",
+      webUrl = "http://www.guardian.co.uk/canonical",
+      apiUrl = "http://foo.bar",
+      elements = None)
 
     Title(Content(content))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Life & Style | The Guardian")
   }

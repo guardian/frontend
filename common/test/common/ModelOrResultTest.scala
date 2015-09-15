@@ -1,12 +1,12 @@
 package common
 
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-import com.gu.contentapi.client.model.{ Section, ItemResponse, Tag, Content }
+import com.gu.contentapi.client.model.{Content, ItemResponse, Section, Tag}
 import org.joda.time.DateTime
-import play.api.test.Helpers._
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
+import play.api.test.Helpers._
 import test.TestRequest
+
 import scala.concurrent.Future
 
 private object TestModel
@@ -15,8 +15,14 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
 
   implicit val request: RequestHeader = TestRequest()
 
-  val testContent = Content("the/id", None, None, Some(new DateTime()), "the title", "http://www.guardian.co.uk/canonical",
-    "http://foo.bar", elements = None)
+  val testContent = Content(id = "the/id",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = Some(new DateTime()),
+    webTitle = "the title",
+    webUrl = "http://www.guardian.co.uk/canonical",
+    apiUrl = "http://foo.bar",
+    elements = None)
 
   val articleTag = new Tag("type/article", "type", webTitle = "the title", webUrl = "http://foo.bar", apiUrl = "http://foo.bar")
   val galleryTag = articleTag.copy(id = "type/gallery")
