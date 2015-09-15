@@ -25,10 +25,11 @@ GET         /                                                                   
 GET         /admin                                                                                  controllers.admin.AdminIndexController.admin()
 
 #Facia Press
-GET         /press/all                                                                              controllers.FrontPressController.queueAllFrontsForPress()
-GET         /press/high                                                                             controllers.FrontPressController.queueHighFrequencyFrontsForPress()
-GET         /press/standard                                                                         controllers.FrontPressController.queueStandardFrequencyFrontsForPress()
-GET         /press/low                                                                              controllers.FrontPressController.queueLowFrequencyFrontsForPress()
+GET         /press                                                                                  controllers.FrontPressController.press()
+POST        /press/all                                                                              controllers.FrontPressController.queueAllFrontsForPress()
+POST        /press/high                                                                             controllers.FrontPressController.queueHighFrequencyFrontsForPress()
+POST        /press/standard                                                                         controllers.FrontPressController.queueStandardFrequencyFrontsForPress()
+POST        /press/low                                                                              controllers.FrontPressController.queueLowFrequencyFrontsForPress()
 
 # API endpoint proxying for https
 GET         /api/proxy/*path                                                                        controllers.admin.Api.proxy(path, callback)

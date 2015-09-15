@@ -6,6 +6,11 @@ import jobs.RefreshFrontsJob
 import play.api.mvc.Controller
 
 object FrontPressController extends Controller with Logging with AuthLogging with ExecutionContexts {
+
+  def press() = AuthActions.AuthActionTest { request =>
+    Ok(views.html.press())
+  }
+
   def queueAllFrontsForPress() = AuthActions.AuthActionTest { request =>
     RefreshFrontsJob.runAll() match {
       case Some(l) => Ok(s"Pushed ${l.length} fronts to the SQS queue")
@@ -14,18 +19,20 @@ object FrontPressController extends Controller with Logging with AuthLogging wit
   }
 
   def queueHighFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
-    RefreshFrontsJob.runHighFrequency()
-    Ok("Running high frequency press job but you'll have to check the logs to see if it worked")
+    runJob(RefreshFrontsJob.runHighFrequency(), "high frequency")
   }
 
   def queueStandardFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
-    RefreshFrontsJob.runStandardFrequency()
-    Ok("Running standard frequency press job but you'll have to check the logs to see if it worked")
+    runJob(RefreshFrontsJob.runStandardFrequency(), "standard frequency")
   }
 
   def queueLowFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
-    RefreshFrontsJob.runLowFrequency()
-    Ok("Running low frequency press job but you'll have to check the logs to see if it worked")
+    runJob(RefreshFrontsJob.runLowFrequency(), "low frequency")
+  }
+
+  private def runJob(didRun: Boolean, jobName: String) = {
+    if(didRun) Ok(s"Pushed $jobName fronts to the SQS queue")
+    else InternalServerError("Could not push to the SQS queue, is there an SNS topic set? (frontPressSns)")
   }
 }
 
