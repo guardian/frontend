@@ -14,14 +14,13 @@ describe('GU Style', function () {
                 '<div class="ad-slot-test"></div>'
             ]
         },
-        $fixturesContainer,
         adSlot, adType;
 
     beforeEach(function (done) {
         injector.test(['common/modules/commercial/gustyle/gustyle'], function () {
             Sut = arguments[0];
 
-            $fixturesContainer = fixtures.render(fixturesConfig);
+            fixtures.render(fixturesConfig);
 
             adSlot = $('.ad-slot-test');
             adType =  {

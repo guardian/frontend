@@ -33,4 +33,8 @@
 
 /* Creative styles */
 @import '_creatives';
-@import '_gu-comcontent'; // GU styled commercial content
+
+/* GU styled commercial content */
+@import 'gustyle/_gu-comcontent';
+@import 'gustyle/_gu-comlabel';
+@import 'gustyle/_gu-compopup';

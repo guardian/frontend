@@ -18,10 +18,10 @@ define([
             controls,
             doNotReset = ['popup--search'],
             readyClass = 'js-toggle-ready',
-            parent = parent || document.body;
+            component  = parent || document.body;
 
         this.init = function () {
-            controls = Array.prototype.slice.call(parent.querySelectorAll('[data-toggle]'));
+            controls = Array.prototype.slice.call(component.querySelectorAll('[data-toggle]'));
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
