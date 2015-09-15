@@ -549,6 +549,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  val AdFreeExperience = Switch(
+    "Commercial",
+    "advert-opt-out",
+    "Display advert free experience",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 9),
+    exposeClientSide = true
+  )
 
   // Monitoring
 
@@ -607,6 +615,15 @@ object Switches {
   )
 
   // Features
+  val DiscussionCrosswordsOptionalRelativeTimestampSwitch = Switch(
+    "Feature",
+    "discussion-crosswords-optional-relative-timestamp-switch",
+    "Discussion optional relative timestamp in the crossword section",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 28),
+    exposeClientSide = true
+  )
+
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",

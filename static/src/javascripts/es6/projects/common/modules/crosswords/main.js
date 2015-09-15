@@ -507,8 +507,15 @@ class Crossword extends React.Component {
     }
 
     onToggleAnagramHelper () {
+        // only show anagram helper if a clue is active
+        if (!this.state.showAnagramHelper) {
+            return this.clueInFocus() && this.setState({
+                showAnagramHelper: true
+            });
+        }
+
         this.setState({
-            showAnagramHelper: !this.state.showAnagramHelper
+            showAnagramHelper: false
         });
     }
 
@@ -524,10 +531,17 @@ class Crossword extends React.Component {
         return currentValue ? currentValue : '';
     }
 
-    onClickHiddenInput () {
+    onClickHiddenInput (event) {
         const focussed = this.state.cellInFocus;
 
         this.onSelect(focussed.x, focussed.y);
+
+        /* We need to handle touch seperately as touching an input on iPhone does not fire the
+        click event - listen for a touchStart and preventDefault to avoid calling onSelect twice on
+        devices that fire click AND touch events. The click event doesn't fire only when the input is already focused */
+        if (event.type === 'touchstart') {
+            event.preventDefault();
+        }
     }
 
     hasSolutions () {
@@ -581,6 +595,7 @@ class Crossword extends React.Component {
                         <HiddenInput
                             onChange={this.insertCharacter}
                             onClick={this.onClickHiddenInput}
+                            touchStart={this.onClickHiddenInput}
                             onKeyDown={this.onKeyDown}
                             onBlur={this.goToReturnPosition}
                             value={this.hiddenInputValue()}

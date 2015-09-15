@@ -1,13 +1,12 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
-@import views.support.{ImgSrc, Item140, RenderClasses}
+@import common.{LinkTo, Localisation}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
-@import common.LinkTo
-@import common.Localisation
+@import views.support.{ImgSrc, Item140, RenderClasses}
 
 
 @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
-    <div class="fc-container__header js-container__header">
+    <div class="fc-container__header  @if(containerDefinition.customHeader.isEmpty) {js-container__header}">
         @title.map { title =>
             @defining(frontProperties.editorialType.contains("contributor")) { isContributor =>
                 <div class="@RenderClasses(Map(
