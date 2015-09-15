@@ -3,6 +3,8 @@
 @import conf.Static
 @import conf.Configuration
 
+@JavaScript(Static.js.systemJsSetupFragment)
+
  // Bracket notation for IE8 (import is reserved)
 System['import']('core').then(function () {
     return System['import']('domready');
@@ -118,7 +120,7 @@ System['import']('core').then(function () {
                             app.go();
                         });
                     }
-                    @if(item.section == "crosswords" || item.id == "offline-page") {
+                    @if(item.section == "crosswords") {
                         System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
                             crosswords.default.init();
                         });

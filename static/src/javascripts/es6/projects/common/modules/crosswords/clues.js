@@ -27,7 +27,7 @@ class Clue extends React.Component {
                     'crossword__clue--display-group-order' : JSON.stringify(this.props.number) !== this.props.humanNumber
                 })}
                 onClick={this.onClick}
-                value={this.props.humanNumber}
+                data-number={this.props.humanNumber} // Use data attr instead of value as value removes everything after first comma
                 /* jscs:disable disallowDanglingUnderscores */
                 dangerouslySetInnerHTML={{__html: this.props.clue}}
                 /* jscs:enable disallowDanglingUnderscores */

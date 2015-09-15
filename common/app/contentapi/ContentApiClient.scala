@@ -1,20 +1,20 @@
 package contentapi
 
 import akka.actor.ActorSystem
+import akka.pattern.{CircuitBreaker, CircuitBreakerOpenException}
 import com.gu.contentapi.client.ContentApiClientLogic
+import com.gu.contentapi.client.model.{ErrorResponse, ItemQuery, ItemResponse, SearchQuery}
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
-import conf.Switches
-import scala.concurrent.{ExecutionContext, Future}
 import common._
+import conf.Configuration.contentApi
+import conf.Switches
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import conf.Configuration.contentApi
-import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
-import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
+import scala.concurrent.{ExecutionContext, Future}
 
 trait QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
@@ -147,4 +147,13 @@ class LiveContentApiClient extends CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
+}
+
+object ErrorResponseHandler {
+
+  private val commercialExpiryMessage = "The requested resource has expired for commercial reason."
+
+  def isCommercialExpiry(error: ErrorResponse): Boolean = {
+    error.message == commercialExpiryMessage
+  }
 }

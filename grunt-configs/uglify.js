@@ -28,8 +28,14 @@ module.exports = function (grunt, options) {
                 expand: true,
                 cwd: 'static/src',
                 src: ['systemjs-normalize.js',
-                      'systemjs-config.js'],
+                      'systemjs-config.js',
+                      'systemjs-bundle-config.js'],
                 dest: 'common/conf/assets'
+            }, {
+                expand: true,
+                cwd: 'static/public/javascripts/vendor',
+                src: ['omniture.js'],
+                dest: 'common/conf/assets/vendor'
             }],
             options:   {
                 compress: {

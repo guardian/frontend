@@ -140,6 +140,15 @@
     .l-header--is-slim & {
         display: none;
     }
+
+    .is-not-modern & {
+        &:hover,
+        &:focus {
+            .top-bar__popup--edition {
+                display: block;
+            }
+        }
+    }
 }
 
 .brand-bar__item--jobs {
