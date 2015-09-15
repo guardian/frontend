@@ -5,26 +5,30 @@
 
 (function (window, document) {
     var fontHinting = function () {
-        var ua = navigator.userAgent,
-            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-            hinting = 'Off',
-            version;
+        try {
+            var ua = navigator.userAgent,
+                windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+                hinting = 'Off',
+                version;
 
-        if (windowsNT) {
-            version = parseFloat(windowsNT[1], 10);
+            if (windowsNT) {
+                version = parseFloat(windowsNT[1], 10);
 
-            // For Windows XP-7
-            if (version >= 5.1 && version <= 6.1) {
-                if (/Chrome/.exec(ua) && version < 6.0) {
-                    // Chrome on windows XP wants auto-hinting
-                    hinting = 'Auto';
-                } else {
-                    // All others use cleartype
-                    hinting = 'Cleartype';
+                // For Windows XP-7
+                if (version >= 5.1 && version <= 6.1) {
+                    if (/Chrome/.exec(ua) && version < 6.0) {
+                        // Chrome on windows XP wants auto-hinting
+                        hinting = 'Auto';
+                    } else {
+                        // All others use cleartype
+                        hinting = 'Cleartype';
+                    }
                 }
             }
+            return hinting;
+        } catch (e) {
+            return false;
         }
-        return hinting;
     }();
 
     // Check to see if you should get webfonts, and then try to load them from localStorage if so
