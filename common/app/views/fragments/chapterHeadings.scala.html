@@ -1,0 +1,14 @@
+@(content: model.Article)(implicit request: RequestHeader)
+
+@import conf.Switches._
+
+@if(ChapterHeadingsSwitch.isSwitchedOn && content.chapterHeadings.size > 2) {
+    <div class="chapters">
+        <span class="chapters__heading">Contents</span>
+        <ol>
+            @content.chapterHeadings.map { case (linkId, linkText) =>
+                <li><a href="#@linkId">@linkText</a></li>
+            }
+        </ol>
+    </div>
+}
