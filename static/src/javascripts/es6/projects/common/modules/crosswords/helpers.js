@@ -32,9 +32,7 @@ const getPreviousClueInGroup = (entries, clue) => {
     return _.find(entries, { id: newClueId });
 };
 
-
 const getGroupEntriesForClue = (entries, group) =>  {
-
     return _.map(group, (clueId) => {
         return _.find(entries, { id: clueId });
     });
