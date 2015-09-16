@@ -36,21 +36,21 @@ const getPreviousClueInGroup = (entries, clue) => {
 const getGroupEntriesForClue = (entries, group) =>  {
 
     return _.map(group, (clueId) => {
-            return _.find(entries, { id: clueId })
-        });
-}
+        return _.find(entries, { id: clueId });
+    });
+};
 
-const clueIsInGroup = (clue) => clue.group.length != 1
+const clueIsInGroup = (clue) => clue.group.length !== 1;
 
 const getAllSeparatorsForGroup = (clues) => {
 
     const k = {};
 
-    _.forEach([',','-'], (separator) => {
-        var cnt = 0;
+    _.forEach([',', '-'], (separator) => {
+        let cnt = 0;
         const flattenedSeparators = _.flatten(
             _.map(clues, (clue) => {
-                const seps = _.map(clue.separatorLocations[separator], (s) => { return s + cnt})
+                const seps = _.map(clue.separatorLocations[separator], (s) => { return s + cnt; });
                 cnt += clue.length;
                 return seps;
             })
@@ -58,25 +58,25 @@ const getAllSeparatorsForGroup = (clues) => {
         k[separator] = flattenedSeparators;
     });
     return k;
-}
+};
 
-const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue
+const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue;
 
 const getNumbersForGroupedEntries = (clueGroup) =>  _.first(clueGroup).humanNumber;
 
 const getAnagramClueData = (entries, clue) => {
-     if (clueIsInGroup(clue)) {
-         const groupEnts = getGroupEntriesForClue(entries, clue.group);
-         return {
+    if (clueIsInGroup(clue)) {
+        const groupEnts = getGroupEntriesForClue(entries, clue.group);
+        return {
             id: clue.id,
             number: getNumbersForGroupedEntries(groupEnts),
             separatorLocations: getAllSeparatorsForGroup(groupEnts),
             direction: '',
             clue: getClueForGroupedEntries(groupEnts)
-         }
-     }
-     return clue;
-}
+        };
+    }
+    return clue;
+};
 
 const isAcross = (clue) => clue.direction === 'across';
 
@@ -93,16 +93,13 @@ const cellsForEntry = (entry) => isAcross(entry) ?
     }));
 
 const cellsForClue = (entries, clue) => {
-    if(clueIsInGroup(clue)) {
-        const entriesForClue = getGroupEntriesForClue(entries, clue.group)
-        const cells = _.flatten(_.map(entriesForClue, (entry) => {return cellsForEntry(entry)} ))
-        console.log("Cells: " + JSON.stringify(cells));
+    if (clueIsInGroup(clue)) {
+        const entriesForClue = getGroupEntriesForClue(entries, clue.group);
+        return _.flatten(_.map(entriesForClue, (entry) => { return cellsForEntry(entry); }));
+    } else {
+        return cellsForEntry(clue);
     }
-    else {
-        return cellsForEntry(clue)
-    }
-}
-
+};
 
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
@@ -218,5 +215,5 @@ export default {
     getGroupEntriesForClue: getGroupEntriesForClue,
     getNumbersForGroupedEntries: getNumbersForGroupedEntries,
     getClueForGroupedEntries: getClueForGroupedEntries,
-    getAllSeparatorsForGroup: getAllSeparatorsForGroup,
+    getAllSeparatorsForGroup: getAllSeparatorsForGroup
 };

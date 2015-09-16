@@ -57,16 +57,11 @@ export default class AnagramHelper extends React.Component {
     }
 
     render () {
-
-        console.log("++ Anagram props: " + JSON.stringify(_.keys(this.props)))
-
-
         /* jscs:disable disallowDanglingUnderscores */
         const closeIcon = { __html: svgs('closeCentralIcon') };
         /* jscs:enable disallowDanglingUnderscores */
-        const clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry)
-        const cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry)
-        console.log("Cells: " + JSON.stringify(this.props.entries));
+        const clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
+        const cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
 
         const entries = _.map(cells, coords => {
             return this.props.grid[coords.x][coords.y];
