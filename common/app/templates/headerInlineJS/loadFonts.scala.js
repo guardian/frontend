@@ -1,9 +1,9 @@
 @()
 
-// Duplicated in /static/src/javascripts/projects/common/utils/detect.js
-// Determine what type of font-hinting we want.
-
 (function (window, document) {
+
+    // Duplicated in /static/src/javascripts/projects/common/utils/detect.js
+    // Determine what type of font-hinting we want.
     var fontHinting = function () {
         try {
             var ua = navigator.userAgent,
@@ -51,8 +51,7 @@
         try {
             var storedFontFormat = localStorage['gu.fonts.format'],
                 fonts, fontFormat, font, dataAttrName, nameAndCacheKey, fontData;
-
-            if (storedFontFormat && fontHinting) {
+            if (storedFontFormat) {
                 fonts = document.querySelectorAll('.webfont');
                 fontFormat = JSON.parse(storedFontFormat).value;
 
@@ -65,14 +64,10 @@
                     if (fontData) {
                         font.innerHTML = JSON.parse(fontData).value;
                         font.setAttribute('data-loaded-from', 'local');
-                    } else {
-                        return false;
                     }
                 }
-                return true;
-            } else {
-                return false;
             }
+            return true;
         } catch (e) {
             return false;
         }
@@ -188,9 +183,7 @@
     // If they won't render properly (no smoothing), disable them entirely.
     if (fontsEnabled()) {
         if (fontSmoothingEnabled()) {
-            if (!loadFontsFromStorage()) {
-                loadFontsAsynchronously();
-            }
+            loadFontsFromStorage() || loadFontsAsynchronously();
         } else {
             disableFonts();
         }
