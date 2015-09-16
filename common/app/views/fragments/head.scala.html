@@ -16,11 +16,13 @@
 
 @* provide some ipad users with the core view of fronts *@
 <script>
+    console.log("*** platform: " + navigator.platform);
+    console.log("*** devicePixelRatio: " + window.devicePixelRatio);
+    console.log("*** userAgent:" + navigator.userAgent);
     @if(ServeCoreFrontsToSomeIpadsSwitch.isSwitchedOn) {
         if(navigator.platform === 'iPad' &&
                 window.devicePixelRatio === 2 &&
-                /.*iPad; CPU OS ([789])_\d+.*/.test(navigator.userAgent) &&
-                Math.random() > .5) {
+                /.*iPad; CPU OS ([789])_\d+.*/.test(navigator.userAgent)) {
             window.serveCoreFronts = true;
         } else {
             window.serveCoreFronts = false;
