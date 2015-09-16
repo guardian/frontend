@@ -620,17 +620,6 @@ class Interactive(delegate: contentapi.Content) extends Content(delegate) {
     "twitter:card" -> "summary_large_image"
   )
 
-//  lazy val fallbackEl = {
-//    val inner = body.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html())
-//    val noscript: Option[Int] = inner.map(Jsoup.parseBodyFragment(_).getElementsByTag("noscript").length)
-//
-//    if(noscript > 0) {
-//      inner
-//    } else {
-//      inner.map(Jsoup.parseBodyFragment(_).getElementsByTag("noscript").first().outerHtml())
-//    }
-//  }
-
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(body.getOrElse("")).getElementsByTag("noscript")
 
