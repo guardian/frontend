@@ -619,6 +619,30 @@ class Interactive(delegate: contentapi.Content) extends Content(delegate) {
     "twitter:title" -> linkText,
     "twitter:card" -> "summary_large_image"
   )
+
+//  lazy val fallbackEl = {
+//    val inner = body.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html())
+//    val noscript: Option[Int] = inner.map(Jsoup.parseBodyFragment(_).getElementsByTag("noscript").length)
+//
+//    if(noscript > 0) {
+//      inner
+//    } else {
+//      inner.map(Jsoup.parseBodyFragment(_).getElementsByTag("noscript").first().outerHtml())
+//    }
+//  }
+
+  lazy val fallbackEl = {
+    val noscriptEls = Jsoup.parseBodyFragment(body.getOrElse("")).getElementsByTag("noscript")
+
+    if (noscriptEls.length > 0) {
+      noscriptEls.html()
+    } else {
+      Jsoup.parseBodyFragment(body.getOrElse("")).getElementsByTag("figure").html()
+    }
+  }
+
+  lazy val figureEl = body.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
+
 }
 
 object Interactive {
@@ -630,8 +654,6 @@ class ImageContent(delegate: contentapi.Content) extends Content(delegate) with 
   override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-
-
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"

@@ -131,6 +131,11 @@ define([
                 navigation.init();
             },
 
+            initImmersiveInteractives: function () {
+                console.log("foo2");
+                //$('.l-side-margins').addClass('u-h');
+            },
+
             initialiseStickyHeader: function () {
                 if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive') && config.page.contentType !== 'Crossword') {
                     sticky.init();
@@ -395,6 +400,7 @@ define([
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
                 ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-immersive-hide', modules.initImmersiveInteractives],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
