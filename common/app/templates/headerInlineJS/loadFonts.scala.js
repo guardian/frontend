@@ -1,76 +1,123 @@
 @()
 
 (function (window, document) {
+    var ua = navigator.userAgent;
 
     // Duplicated in /static/src/javascripts/projects/common/utils/detect.js
     // Determine what type of font-hinting we want.
-    var fontHinting = function () {
-        try {
-            var ua = navigator.userAgent,
-                windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-                hinting = 'Off',
-                version;
+    var fontHinting = (function () {
+        var hinting;
 
-            if (windowsNT) {
-                version = parseFloat(windowsNT[1], 10);
+        function determineHinting () {
+            if (typeof hinting === 'undefined') {
+                try {
+                    var windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+                        version;
 
-                // For Windows XP-7
-                if (version >= 5.1 && version <= 6.1) {
-                    if (/Chrome/.exec(ua) && version < 6.0) {
-                        // Chrome on windows XP wants auto-hinting
-                        hinting = 'Auto';
-                    } else {
-                        // All others use cleartype
-                        hinting = 'Cleartype';
+                    hinting = 'Off';
+                    if (windowsNT) {
+                        version = parseFloat(windowsNT[1], 10);
+
+                        // For Windows XP-7
+                        if (version >= 5.1 && version <= 6.1) {
+                            if (/Chrome/.exec(ua) && version < 6.0) {
+                                // Chrome on windows XP wants auto-hinting
+                                hinting = 'Auto';
+                            } else {
+                                // All others use cleartype
+                                hinting = 'Cleartype';
+                            }
+                        }
                     }
-                }
+                } catch (e) {}
             }
             return hinting;
-        } catch (e) {
-            return false;
         }
-    }();
+        return determineHinting;
+    })();
 
-    // Check to see if you should get webfonts, and then try to load them from localStorage if so
-    var cookieData = 'GU_fonts=off; domain=' + location.hostname + '; path=/';
+    var fontFormat = (function() {
+        var fontFormat = localStorage['gu.fonts.format'];
 
-    function disableFonts() {
-        document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
-    }
-
-    function enableFonts() {
-        document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    }
-
-    function fontsEnabled() {
-        return document.cookie.indexOf('GU_fonts=off') === -1;
-    }
+        function getFontFormat() {
+            if (!fontFormat) {
+                function supportsWoff2 () { // https://github.com/filamentgroup/woff2-feature-test
+                    if ("FontFace" in window) {
+                        var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+                        f.load().catch(function(){});
+                        return f.status === 'loading';
+                    }
+                    return false;
+                };
+                fontFormat = localStorage['gu.fonts.format'] = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
+            }
+            return fontFormat;
+        }
+        return getFontFormat;
+    })();
 
     // Load fonts from `localStorage`.
     function loadFontsFromStorage() {
-        try {
-            var storedFontFormat = localStorage['gu.fonts.format'],
-                fonts, fontFormat, font, dataAttrName, nameAndCacheKey, fontData;
-            if (storedFontFormat) {
-                fonts = document.querySelectorAll('.webfont');
-                fontFormat = JSON.parse(storedFontFormat).value;
+        if ("localStorage" in window) {
+            try {
+                function useFont(el, css) {
+                    el.innerHTML = css;
+                }
 
+                // hangover from previous version
+                function guFont(fontData) {
+                    return fontData.css;
+                }
+
+                function fetchFont(url, el, fontName, fontHash) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            var css = eval(xhr.responseText);
+                            useFont(el, css);
+                            saveFont(fontName, fontHash, css);
+                        }
+                    };
+                    xhr.send();
+                }
+
+                function saveFont(fontName, fontHash, css) {
+                    for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
+                        var key = localStorage.key(i);
+                        if (key.indexOf('gu.fonts.' + fontName + '.') !== -1) {
+                            localStorage.removeItem(key);
+                            break;
+                        }
+                    };
+                    localStorage.setItem(storageKey(fontName, fontHash), JSON.stringify({value: css}));
+                }
+
+                function storageKey(fontName, fontHash) {
+                    return 'gu.fonts.' + fontName + '.' + fontHash;
+                }
+
+                var fonts = document.querySelectorAll('.webfont');
                 for (var i = 0, j = fonts.length; i < j; ++i) {
-                    font = fonts[i];
-                    dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat;
-                    nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
-                    fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
+                    var font = fonts[i],
+                        dataAttrName = 'data-cache-file-' + (fontHinting() === 'Off' ? '' : 'hinted-' + fontHinting() + '-') + fontFormat(),
+                        nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/),
+                        fontName = nameAndCacheKey[2],
+                        fontHash = nameAndCacheKey[1],
+                        fontData = localStorage.getItem(storageKey(fontName, fontHash));
 
                     if (fontData) {
-                        font.innerHTML = JSON.parse(fontData).value;
-                        font.setAttribute('data-loaded-from', 'local');
+                        useFont(font, JSON.parse(fontData).value);
+                    } else {
+                        fetchFont(font.getAttribute(dataAttrName), font, fontName, fontHash);
                     }
                 }
+                return true;
+            } catch (e) {
+                return false;
             }
-            return true;
-        } catch (e) {
-            return false;
-        }
+        };
+        return false;
     }
 
     // Load fonts by injecting a `link` element.
@@ -84,11 +131,13 @@
             fonts.className = 'webfonts';
 
             // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
+            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting()].kerningOn;
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             }, 0);
-        } catch (e) {};
+        } catch (e) {
+            console.error(e);
+        };
     }
 
     // Detect whether browser is smoothing its fonts.
@@ -170,22 +219,44 @@
         } catch (e) {};
     }
 
+    // Check to see if you should get webfonts, and then try to load them from localStorage if so
+    var cookieData = 'GU_fonts=off; domain=' + location.hostname + '; path=/';
+
+    function disableFonts() {
+        document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
+    }
+
+    function enableFonts() {
+        document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
+
+    function fontsEnabled() {
+        return document.cookie.indexOf('GU_fonts=off') === -1;
+    }
+
     // Make it possible to toggle fonts with `#fonts-off/on`.
-    if (window.location.hash === '#fonts-off') {
-        disableFonts();
-    } else if (window.location.hash === '#fonts-on' || window.location.hash === '#check-smoothing') {
-        enableFonts();
+    function checkUserFontDisabling() {
+        if (window.location.hash === '#fonts-off') {
+            disableFonts();
+        } else if (window.location.hash === '#fonts-on' || window.location.hash === '#check-smoothing') {
+            enableFonts();
+        }
     }
 
     // Finally, if we're meant to use fonts, check they'll render ok
     // and then try and load them from storage. If that fails (i.e. likely lack of
     // support), inject a standard stylesheet `link` to load them.
     // If they won't render properly (no smoothing), disable them entirely.
-    if (fontsEnabled()) {
-        if (fontSmoothingEnabled()) {
-            loadFontsFromStorage() || loadFontsAsynchronously();
-        } else {
-            disableFonts();
+    function loadFonts() {
+        checkUserFontDisabling();
+        if (fontsEnabled()) {
+            if (fontSmoothingEnabled()) {
+                loadFontsFromStorage() || loadFontsAsynchronously();
+            } else {
+                disableFonts();
+            }
         }
     }
+
+    loadFonts();
 })(window, document);
