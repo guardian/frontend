@@ -61,7 +61,7 @@
     "moment": "2.8.3",
     "shoe": "0.0.11",
     "phantom": "0.6.5",
-    "phantomjs": "1.9.10",
+    "phantomjs": "1.9.18",
     "q": "1.0.1",
     "svgo": "0.4.5",
     "time-grunt": "1.2.0"

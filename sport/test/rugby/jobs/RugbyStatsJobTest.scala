@@ -5,6 +5,7 @@ import org.scalatest._
 import org.scalatest.concurrent.Eventually
 import test.ConfiguredTestSuite
 import rugby.model._
+import rugby.feed.WarmupWorldCup2015
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
@@ -26,7 +27,8 @@ import scala.language.reflectiveCalls
       awayTeam = awayTeamOld,
       venue = Some("kings cross"),
       competitionName = "competition",
-      status = Status.Result
+      status = Status.Result,
+      event = WarmupWorldCup2015
     ),
     Match(
       date = testDate.plusSeconds(1),
@@ -35,7 +37,8 @@ import scala.language.reflectiveCalls
       awayTeam = awayTeamNew,
       venue = Some("kings cross"),
       competitionName = "competition",
-      status = Status.Result
+      status = Status.Result,
+      event = WarmupWorldCup2015
     ))
 
   "RugbyStatsJob" - {

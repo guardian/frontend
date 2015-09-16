@@ -16,7 +16,7 @@ trait Prototypes {
     organization := "com.gu",
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
-    scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-target:jvm-1.8",
+    scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),

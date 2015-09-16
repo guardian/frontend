@@ -1,0 +1,50 @@
+<div class="creative--expandable-video <%=data.videoOptions%>">
+
+    <div class="ad-slot__label adFullWidth__label facia-container--layout-front" data-test-id="ad-slot-label">
+        <div class="facia-container__inner">Advertisement</div>
+    </div>
+
+    <div class="ad-exp--expand l-side-margins mobile-only" style="background-color: <%=data.backgroundColor%>">
+        <div class="slide-container" style="background: url('<%=data.backgroundImageM%>') <%=data.backgroundRepeatM%> <%=data.backgroundPositionM%>;">
+            <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImageM%>') <%=data.slide1BGImageRepeatM%> <%=data.slide1BGImagePositionM%>;">          
+                <div class="ad-exp__open">
+                    <div class="ad-exp__layer ad-exp__layer1" style="background: url('<%=data.slide1Layer1BGImageM%>') <%=data.slide1Layer1BGImageRepeatM%> <%=data.slide1Layer1BGImagePositionM%>;"></div>
+                    <div class="ad-exp__layer ad-exp__layer2" style="background: url('<%=data.slide1Layer2BGImageM%>') <%=data.slide1Layer2BGImageRepeatM%> <%=data.slide1Layer2BGImagePositionM%>;"></div>
+                    <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide1Layer3BGImageM%>') <%=data.slide1Layer3BGImageRepeatM%> <%=data.slide1Layer3BGImagePositionM%>;"></div>
+                </div>            
+            </div>
+            <div class="ad-exp-collapse__slide slide-2" style="background: <%=data.slide2BGColor%> url('<%=data.slide2BGImageM%>') <%=data.slide2BGImagePositionM%> <%=data.slide2BGImageRepeatM%>;">
+                <div class="ad-exp__layer ad-exp__layer1" style="background: url('<%=data.slide2Layer1BGImageM%>') <%=data.slide2Layer1BGImageRepeatM%> <%=data.slide2Layer1BGImagePositionM%>;"></div>
+                <div class="ad-exp__layer ad-exp__layer2" style="background: url('<%=data.slide2Layer2BGImageM%>') <%=data.slide2Layer2BGImageRepeatM%> <%=data.slide2Layer2BGImagePositionM%>;"></div>
+                <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImageM%>') <%=data.slide2Layer3BGImageRepeatM%> <%=data.slide2Layer3BGImagePositionM%>;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background-color: <%=data.backgroundColor%>">
+        <div class="slide-container" style="background: url('<%=data.backgroundImage%>') <%=data.backgroundRepeat%> <%=data.backgroundPosition%>;">
+            <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImage%>') <%=data.slide1BGImageRepeat%> <%=data.slide1BGImagePosition%>;">
+                <div class="ad-exp__open">
+                    <div class="ad-exp__layer ad-exp__layer1" style="background: url('<%=data.slide1Layer1BGImage%>') <%=data.slide1Layer1BGImageRepeat%> <%=data.slide1Layer1BGImagePosition%>;"></div>
+                    <div class="ad-exp__layer ad-exp__layer2" style="background: url('<%=data.slide1Layer2BGImage%>') <%=data.slide1Layer2BGImageRepeat%> <%=data.slide1Layer2BGImagePosition%>;"></div>
+                    <div class="ad-exp__layer ad-exp__layer3" style="background : url('<%=data.slide1Layer3BGImage%>') <%=data.slide1Layer3BGImageRepeat%> <%=data.slide1Layer3BGImagePosition%>;"></div>
+                </div>
+            </div>
+            <div class="ad-exp-collapse__slide slide-2" style="background: <%=data.slide2BGColor%> url('<%=data.slide2BGImage%>') <%=data.slide2BGImagePosition%> <%=data.slide2BGImageRepeat%>;">              
+                <div class="ad-exp__layer ad-exp__layer1" style="background: url('<%=data.slide2Layer1BGImage%>') <%=data.slide2Layer1BGImageRepeat%> <%=data.slide2Layer1BGImagePosition%>;"></div>
+                <div class="ad-exp__layer ad-exp__layer2" style="background: url('<%=data.slide2Layer2BGImage%>') <%=data.slide2Layer2BGImageRepeat%> <%=data.slide2Layer2BGImagePosition%>;"></div>
+                <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImage%>') <%=data.slide2Layer3BGImageRepeat%> <%=data.slide2Layer3BGImagePosition%>;"></div>               
+            </div>
+        </div>   
+    </div>
+
+    <div class="slide-video" style="background: url('<%=data.videoBGImage%>') <%=data.videoBGImageRepeat%> <%=data.videoBGImagePosition%>;">
+        <div class="slide-container">
+            <div class="ad-exp__layer ad-exp__layer1" style="background: url('<%=data.videoLayer1BGImage%>') <%=data.videoLayer1BGImageRepeat%> <%=data.videoLayer1BGImagePosition%>;"></div>
+            <div class="video-container__inner"><%=data.videoEmbed%></div>
+        </div>
+    </div>
+    
+    <%=data.showPlus%>
+    <%=data.showArrow%>
+</div>

@@ -1,6 +1,7 @@
 package rugby.model
 
 import org.scalatest._
+import rugby.feed.WarmupWorldCup2015
 import test.ConfiguredTestSuite
 
 import scala.io.Source
@@ -11,7 +12,7 @@ import scala.io.Source
     "should parse rugby live scores correctly" in {
       val liveScoreData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/live-scores.xml")).mkString
 
-      val liveScores = rugby.feed.Parser.parseLiveScores(liveScoreData)
+      val liveScores = rugby.feed.Parser.parseLiveScores(liveScoreData, WarmupWorldCup2015)
 
       liveScores.size should be(4)
 
@@ -34,7 +35,7 @@ import scala.io.Source
     "should parse rugby results correctly" in {
       val fixturesAndResultsData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/fixtures-and-results.xml")).mkString
 
-      val fixturesAndResults = rugby.feed.Parser.parseFixturesAndResults(fixturesAndResultsData)
+      val fixturesAndResults = rugby.feed.Parser.parseFixturesAndResults(fixturesAndResultsData, WarmupWorldCup2015)
 
       fixturesAndResults.size should be(26)
 
@@ -75,6 +76,60 @@ import scala.io.Source
 
       topTryScorer.head.player.team.id should be("550")
       topTryScorer.head.player.team.name should be("England")
+    }
+
+     "should parse team stats correctly" in {
+      val liveEventsStatsData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/live-events-stats.xml")).mkString
+
+      val matchStat = rugby.feed.Parser.parseLiveEventsStatsToGetMatchStat(liveEventsStatsData)
+
+      matchStat.teams.size should be(2)
+      matchStat.teams.head.name should be("England")
+      matchStat.teams.last.name should be("France")
+
+      val england = matchStat.teams.head
+
+      england.id should be(29754)
+      england.possession should be(0.49F)
+      england.territory should be(0.50)
+      england.carries_metres should be(323)
+      england.tackles should be(103)
+      england.missed_tackles should be(25)
+      england.tackle_success should be(0.80F)
+      england.turnover_won should be(8)
+      england.turnovers_conceded should be(13)
+      england.lineouts_won should be(13)
+      england.lineouts_lost should be(3)
+      england.mauls_won should be(4)
+      england.mauls_lost should be(1)
+      england.mauls_total should be(5) 
+      england.penalties_conceded should be(9)
+      england.penalty_conceded_dissent should be(0)
+      england.penalty_conceded_delib_knock_on should be(0)
+      england.penalty_conceded_early_tackle should be(0)
+      england.penalty_conceded_handling_in_ruck should be(0)
+      england.penalty_conceded_high_tackle should be(0)
+      england.penalty_conceded_lineout_offence should be(0)
+      england.penalty_conceded_collapsing_maul should be(0)
+      england.penalty_conceded_collapsing_offence should be(0)
+      england.penalty_conceded_obstruction should be(0)
+      england.penalty_conceded_offside should be(0)
+      england.penalty_conceded_opp_half should be(6)
+      england.penalty_conceded_own_half should be(4)
+      england.penalty_conceded_other should be(9)
+      england.penalty_conceded_scrum_offence should be(0)
+      england.penalty_conceded_stamping should be(0)
+      england.penalty_conceded_wrong_side should be(0)
+
+      england.rucks_won should be(65)
+      england.rucks_lost should be(3)
+      england.rucks_total should be(68)
+
+      england.scrums_won should be(5)
+      england.scrums_lost should be(2)
+      england.scrums_total should be(7)
+    
+      val france = matchStat.teams.last
     }
   }
 }

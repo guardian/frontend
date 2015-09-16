@@ -7,6 +7,7 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
     var options = {
+        useCluster: (grunt.option('cluster') !== undefined) ? Boolean(grunt.option('cluster')) : false,
         isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
@@ -91,7 +92,11 @@ module.exports = function (grunt) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
         if (!options.isDev) {
-            grunt.task.run('shell:jspmBundleStatic');
+            if (options.useCluster) {
+                grunt.task.run('shell:jspmClusterBundleStatic');
+            } else {
+                grunt.task.run('shell:jspmBundleStatic');
+            }
         }
 
         if (options.isDev) {

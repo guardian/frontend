@@ -7,6 +7,7 @@ import conf.LiveContentApi.getResponse
 import conf._
 import model._
 import play.api.mvc._
+import play.twirl.api.Html
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -60,7 +61,9 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.gallery(model.gallery, model.related, model.index)
+    val htmlResponse: (() => Html) = () =>
+      if (request.isAmp) views.html.galleryAMP(model.gallery, model.related, model.index)
+      else views.html.gallery(model.gallery, model.related, model.index)
     val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.related, model.index)
     renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
   }
