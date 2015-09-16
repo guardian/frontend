@@ -1,33 +1,30 @@
 package model.commercial.masterclasses
 
 import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
 import conf.Switches.MasterclassFeedSwitch
-import conf.{CommercialConfiguration, Configuration}
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time.DateTime.now
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsArray, JsValue}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object EventbriteApi extends ExecutionContexts with Logging {
 
-  lazy val organiserId = "684756979"
-  lazy val apiKeyOption = CommercialConfiguration.getProperty("masterclasses.api.key")
-
-  lazy val devUrl = CommercialConfiguration.getProperty("masterclasses.dev.url")
-
-  private val maybeUrl: Option[String] = {
-    val env = Configuration.environment
-    if (env.isNonProd) devUrl
-    else apiKeyOption map { apiKey =>
-      s"https://www.eventbrite.com/json/organizer_list_events?app_key=$apiKey&id=$organiserId"
+  private lazy val maybeUrl: Option[String] = {
+    for (token <- CommercialConfiguration.getProperty("eventbrite.token")) yield {
+      val queryString = s"token=$token&order_by=start_desc&expand=ticket_classes,venue&page=2"
+      s"https://www.eventbriteapi.com/v3/users/me/owned_events/?$queryString"
     }
   }
 
-  def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = jsValue \\ "event"
+  def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = {
+    val maybeEvents = for (JsArray(events) <- (jsValue \ "events").toOption) yield events
+    maybeEvents getOrElse Nil
+  }
 
-  def loadAds(): Future[Seq[EventbriteMasterClass]] = {
+  def loadEvents(): Future[Seq[EventbriteMasterClass]] = {
     maybeUrl map { url =>
       val request = FeedRequest(
         feedName = "Masterclasses",

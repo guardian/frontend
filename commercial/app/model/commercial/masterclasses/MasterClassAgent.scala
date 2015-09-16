@@ -79,7 +79,7 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
     }
 
     for {
-      eventBrite <- EventbriteApi.loadAds()
+      eventBrite <- EventbriteApi.loadEvents()
       masterclasses <- wrapEventbriteWithContentApi(populateKeywordIds(eventBrite.filter(_.isOpen)))
     } {
       updateCurrentMasterclasses(masterclasses)
