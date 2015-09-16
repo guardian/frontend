@@ -5,6 +5,7 @@ import play.api.Play.current
 import play.api.libs.ws.{WSRequest, WS}
 import rugby.jobs.RugbyStatsJob
 import rugby.model.{ScoreEvent, Match, MatchStat}
+import conf.Configuration
 
 import scala.concurrent.Future
 import scala.xml.XML
@@ -27,8 +28,11 @@ case object WorldCup2015 extends OptaEvent {
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
 
 object OptaFeed extends ExecutionContexts with Logging {
-  
-  private val events = List(/*WarmupWorldCup2015, */WorldCup2015)
+
+  private val events =
+    if(Configuration.environment.isNonProd && conf.Switches.RugbyWorldCupFriendlies.isSwitchedOn) List(WarmupWorldCup2015, WorldCup2015)
+    else List(WorldCup2015)
+
 
   private val xmlContentType = ("Accept", "application/xml")
 
@@ -65,14 +69,14 @@ object OptaFeed extends ExecutionContexts with Logging {
     val scores = events.map { event =>
       getResponse(event, "/competition.php", "ru5").map(Parser.parseLiveScores(_, event))
     }
-    Future.sequence(scores).map(_.flatten)    
+    Future.sequence(scores).map(_.flatten)
   }
 
   def getFixturesAndResults: Future[Seq[Match]] = {
     val fixtures = events.map { event =>
       getResponse(event, "/competition.php", "ru1").map(Parser.parseFixturesAndResults(_, event))
     }
-    Future.sequence(fixtures).map(_.flatten)    
+    Future.sequence(fixtures).map(_.flatten)
   }
 
   def getScoreEvents(rugbyMatch: Match): Future[Seq[ScoreEvent]] = {
