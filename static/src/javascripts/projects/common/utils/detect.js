@@ -221,34 +221,6 @@ define([
 
     }
 
-    function getFontFormatSupport(ua) {
-        ua = ua.toLowerCase();
-
-        var browsersThatSupportWoff2 = {
-            'chrome': 36,
-            'firefox': 39
-        };
-
-        var thisBrowserSupportsWoff2 = function (candidacy) {
-            return _.some(browsersThatSupportWoff2, function (supportingVersion, supportingBrowser) {
-                return candidacy[1] === supportingBrowser && parseInt(candidacy[2], 10) >= supportingVersion;
-            });
-        };
-
-        var isNotEdgeBrowser = !/edge\/([0-9]+)/.test(ua);
-        var woff2Candidacy = isNotEdgeBrowser && /(chrome|firefox)\/([0-9]+)/.exec(ua);
-
-        if (!!woff2Candidacy && thisBrowserSupportsWoff2(woff2Candidacy)) {
-            return 'woff2';
-        }
-
-        if (ua.indexOf('android') > -1) {
-            return 'ttf';
-        }
-
-        return 'woff';
-    }
-
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -444,7 +416,6 @@ define([
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
-        getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
