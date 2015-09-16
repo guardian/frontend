@@ -35,7 +35,7 @@ define([
                 marque36icon: svgs('marque36icon'),
                 membershipLogo: svgs('membershipLogo'),
                 thrasherBenefit: svgs('thrasherBenefit'),
-                surveyNew: svgs('surveyNew'),
+                surveyNew: svgs('surveyNew')
             });
 
         fastdom.write(function () {
