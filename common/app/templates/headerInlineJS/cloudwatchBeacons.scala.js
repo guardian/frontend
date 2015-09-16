@@ -87,10 +87,9 @@
                 logDevice('4', 'iphone');
             }
         }
-
-        // KILL THESE WHILE THE IPAD CORE TEST IS RUNNING TO SAVE £££s ON AWS BEACON COSTS
-        // ** REMEMBER TO UPDATE diagnostics/app/model/diagnostics/analytics/Metric.scala IF RE-ENABLING **
-        //// This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
+@* KILL THESE WHILE THE IPAD CORE TEST IS RUNNING TO SAVE £££s ON AWS BEACON COSTS
+        (REMEMBER TO UPDATE diagnostics/app/model/diagnostics/analytics/Metric.scala IF RE-ENABLING)
+        // This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
         //if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')) {
         //    var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
         //
@@ -105,6 +104,6 @@
         //        logDevice('chrome', 'windows7');
         //    }
         //}
-
+*@
     })(window, navigator);
 }
