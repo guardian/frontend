@@ -10,7 +10,7 @@ set +x
 echo "##teamcity[progressStart 'sbt test and dist']"
 set -x
 
-./sbt-tc "project root" compile test assets dist
+./dev/teamcity/sbt-tc "project root" compile test assets dist
 
 set +x
 echo "##teamcity[progressFinish 'sbt test and dist']"
