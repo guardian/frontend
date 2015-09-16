@@ -3,12 +3,10 @@
 (function (window, document) {
     var ua = navigator.userAgent;
 
-    // Duplicated in /static/src/javascripts/projects/common/utils/detect.js
     // Determine what type of font-hinting we want.
     var fontHinting = (function () {
         var hinting;
-
-        function determineHinting () {
+        function determineHinting() {
             if (typeof hinting === 'undefined') {
                 try {
                     var windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
@@ -32,27 +30,36 @@
                 } catch (e) {}
             }
             return hinting;
-        }
+        };
         return determineHinting;
     })();
 
-    var fontFormat = (function() {
-        var fontFormat = localStorage['gu.fonts.format'];
+    // detect which font format (ttf, woff, woff2 etc) we want
+    var fontFormat = (function () {
+        var fontFormat = localStorage.getItem('gu.fonts.format');
 
         function getFontFormat() {
             if (!fontFormat) {
-                function supportsWoff2 () { // https://github.com/filamentgroup/woff2-feature-test
-                    if ("FontFace" in window) {
+                function supportsWoff2() {
+                    if ("FontFace" in window) { // https://github.com/filamentgroup/woff2-feature-test
                         var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
                         f.load().catch(function(){});
                         return f.status === 'loading';
+                    } else if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
+                        var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua),
+                            supportsWoff2 = {
+                                'chrome': 36,
+                                'firefox': 39
+                            };
+                        return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
                     }
                     return false;
                 };
                 fontFormat = localStorage['gu.fonts.format'] = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
             }
             return fontFormat;
-        }
+        };
+
         return getFontFormat;
     })();
 
@@ -149,8 +156,7 @@
     // we only test non-IE, and only on Windows. Everyone else we assume `true`.
     function fontSmoothingEnabled() {
         try {
-            var ua = navigator.userAgent,
-                fontSmoothingEnabled = null,
+            var fontSmoothingEnabled = null,
                 canvasNode, ctx, alpha, x, y;
 
             // If we've already run this test, return the result.
