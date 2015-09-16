@@ -46,8 +46,13 @@ object Metric extends Logging {
 
     ("ipad-old-start", CountMetric(s"ipad-old-start")),
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
+    ("ipad-old-after-10", CountMetric(s"ipad-old-after-10")),
+    ("ipad-old-after-60", CountMetric(s"ipad-old-after-60")),
+
     ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
+    ("ipad-2orMini-after-10", CountMetric(s"ipad-2orMini-after-10")),
+    ("ipad-2orMini-after-60", CountMetric(s"ipad-2orMini-after-60")),
 
     ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
     ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
@@ -86,8 +91,8 @@ object Metric extends Logging {
     Seq(
       s"iphone-$model-start" -> CountMetric(s"iphone-$model-start"),
       s"iphone-$model-after-5" -> CountMetric(s"iphone-$model-after-5"),
-      s"iphone-$model-start-raf" -> CountMetric(s"iphone-$model-start-raf"),
-      s"iphone-$model-after-5-raf" -> CountMetric(s"iphone-$model-after-5-raf")
+      s"iphone-$model-after-10" -> CountMetric(s"iphone-$model-after-10"),
+      s"iphone-$model-after-60" -> CountMetric(s"iphone-$model-after-60")
     )
   )
 
