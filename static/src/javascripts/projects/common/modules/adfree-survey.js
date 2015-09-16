@@ -36,6 +36,7 @@ define([
                 surveyLink: 'http://google.com',
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
+                crossIcon: svgs('crossIcon'),
                 surveyOverlay: svgs('surveyOverlay'),
                 membershipLogo: svgs('membershipLogo')
             });
