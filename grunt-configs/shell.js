@@ -52,6 +52,16 @@ module.exports = function(grunt, options) {
 
         jspmBundleStatic: {
             command:
+                'node ./bundle',
+            options: {
+                execOptions: {
+                    cwd: '.'
+                }
+            }
+        },
+
+        jspmClusterBundleStatic: {
+            command:
                 'node ./cluster-bundle',
             options: {
                 execOptions: {
