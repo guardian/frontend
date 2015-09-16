@@ -66,7 +66,7 @@ export default class AnagramHelper extends React.Component {
         /* jscs:enable disallowDanglingUnderscores */
         const clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry)
         const cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry)
-        console.log("Cells: " + JSON.stringify(cells));
+        console.log("Cells: " + JSON.stringify(this.props.entries));
 
         const entries = _.map(cells, coords => {
             return this.props.grid[coords.x][coords.y];

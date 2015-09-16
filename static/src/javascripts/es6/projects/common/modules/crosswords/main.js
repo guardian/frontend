@@ -557,8 +557,6 @@ class Crossword extends React.Component {
             })
             : false;
 
-        //console.log("+++ IH" + JSON.stringify(this.props) );
-
         const anagramHelper = this.state.showAnagramHelper && (
             <AnagramHelper focussedEntry={focussed} entries={this.props.data.entries} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );

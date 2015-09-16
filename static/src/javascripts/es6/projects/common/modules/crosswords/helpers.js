@@ -42,21 +42,14 @@ const getGroupEntriesForClue = (entries, group) =>  {
 
 const clueIsInGroup = (clue) => clue.group.length != 1
 
-const lenthOfGroup = (clues) => {
-    return _.reduce(clues, (total, clue) => {
-            return total + clue.length},
-            0
-        )
-}
-
 const getAllSeparatorsForGroup = (clues) => {
 
     console.log("K: " + JSON.stringify(clues));
 
-    return _.map([',','-'], (separator) => {
-        console.log("Separator: " + separator);
+    const k = {};
+
+    _.forEach([',','-'], (separator) => {
         var cnt = 0;
-        const k = {};
         const flattenedSeparators = _.flatten(
             _.map(clues, (clue) => {
                 const seps = _.map(clue.separatorLocations[separator], (s) => { return s + cnt})
@@ -65,45 +58,24 @@ const getAllSeparatorsForGroup = (clues) => {
             })
         );
         k[separator] = flattenedSeparators;
-        console.log("K: " + JSON.stringify(k));
-        return k;
-    })
+    });
+    return k;
 }
 
-const getStartPositionOfClueInGroup = (clues, highlightedClue) => {
-    return  _.reduce(
-              _.first(clues, (clue) => { return clue.id !== highlightedClue.id}),
-              (total, clue) => {return total + clue.length},
-            0
-         );
-}
+const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue
 
-const getClueForGroup = (clueGroup) => _.first(clueGroup).clue
-
-const getNumbersForGroup = (clueGroup) =>  _.first(clueGroup).humanNumber;
+const getNumbersForGroupedEntries = (clueGroup) =>  _.first(clueGroup).humanNumber;
 
 const getAnagramClueData = (entries, clue) => {
      if (clueIsInGroup(clue)) {
          const groupEnts = getGroupEntriesForClue(entries, clue.group);
-         const len =  lenthOfGroup(groupEnts);
-         const seps = getAllSeparatorsForGroup(groupEnts);
-         const start =  getStartPositionOfClueInGroup(groupEnts, clue)
-         const desc = getClueForGroup(groupEnts);
-         const number = getNumbersForGroup(groupEnts);
-         console.log("++++++++++ Start ps: " + desc)
          return {
             id: clue.id,
-            length: lenthOfGroup(groupEnts),
-            number: getNumbersForGroup(groupEnts),
+            number: getNumbersForGroupedEntries(groupEnts),
             separatorLocations: getAllSeparatorsForGroup(groupEnts),
             direction: '',
-            clue: getClueForGroup(groupEnts),
-            startIndex: getStartPositionOfClueInGroup(groupEnts, clue)
+            clue: getClueForGroupedEntries(groupEnts)
          }
-     }
-     else {
-
-        console.log("++ Not group, but a clue: " + JSON.stringify(clue))
      }
      return clue;
 }
@@ -122,15 +94,14 @@ const cellsForEntry = (entry) => isAcross(entry) ?
         y: y
     }));
 
-//                const seps = _.map(clue.separatorLocations[separator], (s) => { return s + cnt})
-
 const cellsForClue = (entries, clue) => {
-    if(clueIsInGroup) {
+    if(clueIsInGroup(clue)) {
         const entriesForClue = getGroupEntriesForClue(entries, clue.group)
-        return _.flatten(_.map(entriesForClue, (entry) => {return cellsForEntry(entry)} ))
+        const cells = _.flatten(_.map(entriesForClue, (entry) => {return cellsForEntry(entry)} ))
+        console.log("Cells: " + JSON.stringify(cells));
     }
     else {
-        return cellsForEntry(entry)
+        return cellsForEntry(clue)
     }
 }
 
@@ -244,5 +215,10 @@ export default {
     isFirstCellInClue,
     isLastCellInClue,
     getNextClueInGroup,
-    getPreviousClueInGroup
+    getPreviousClueInGroup,
+    clueIsInGroup: clueIsInGroup,
+    getGroupEntriesForClue: getGroupEntriesForClue,
+    getNumbersForGroupedEntries: getNumbersForGroupedEntries,
+    getClueForGroupedEntries: getClueForGroupedEntries,
+    getAllSeparatorsForGroup: getAllSeparatorsForGroup,
 };
