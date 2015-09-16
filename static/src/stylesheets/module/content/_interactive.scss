@@ -13,11 +13,9 @@
     }
 
     .content__main-column--interactive {
-        .js-on.is-modern & {
-            @include mq(desktop) {
-                max-width: none;
-                margin: 0;
-            }
+        @include mq(desktop) {
+            max-width: none;
+            margin: 0;
         }
     }
 
