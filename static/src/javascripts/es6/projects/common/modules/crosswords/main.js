@@ -472,7 +472,7 @@ class Crossword extends React.Component {
     onCheck () {
         // 'Check this' checks single and grouped clues
         _.forEach(this.allHighlightedClues(), (entry) => {
-                this.check(entry);
+            this.check(entry);
         });
         this.save();
     }
