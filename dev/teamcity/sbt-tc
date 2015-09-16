@@ -35,4 +35,4 @@ cat /dev/null | java -Xmx6144M \
   -DAPP_SECRET=$fake_secret \
   -Duser.timezone=Australia/Sydney \
   $BUILD_PARAMS \
-  -jar `dirname $0`/dev/sbt-launch.jar "$@"
+  -jar `dirname $0`/../sbt-launch.jar "$@"
