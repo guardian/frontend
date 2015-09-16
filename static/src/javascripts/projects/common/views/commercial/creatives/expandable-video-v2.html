@@ -1,7 +1,9 @@
 <div class="creative--expandable-video <%=data.videoOptions%>">
+
     <div class="ad-slot__label adFullWidth__label facia-container--layout-front" data-test-id="ad-slot-label">
         <div class="facia-container__inner">Advertisement</div>
     </div>
+
     <div class="ad-exp--expand l-side-margins mobile-only" style="background-color: <%=data.backgroundColor%>">
         <div class="slide-container" style="background: url('<%=data.backgroundImageM%>') <%=data.backgroundRepeatM%> <%=data.backgroundPositionM%>;">
             <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImageM%>') <%=data.slide1BGImageRepeatM%> <%=data.slide1BGImagePositionM%>;">          
@@ -18,6 +20,7 @@
             </div>
         </div>
     </div>
+
     <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background-color: <%=data.backgroundColor%>">
         <div class="slide-container" style="background: url('<%=data.backgroundImage%>') <%=data.backgroundRepeat%> <%=data.backgroundPosition%>;">
             <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImage%>') <%=data.slide1BGImageRepeat%> <%=data.slide1BGImagePosition%>;">
@@ -33,13 +36,15 @@
                 <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImage%>') <%=data.slide2Layer3BGImageRepeat%> <%=data.slide2Layer3BGImagePosition%>;"></div>               
             </div>
         </div>   
-    </div> 
+    </div>
+
     <div class="slide-video" style="background: url('<%=data.videoBGImage%>') <%=data.videoBGImageRepeat%> <%=data.videoBGImagePosition%>;">
         <div class="slide-container">
             <div class="ad-exp__layer ad-exp__layer1" style="background: url('<%=data.videoLayer1BGImage%>') <%=data.videoLayer1BGImageRepeat%> <%=data.videoLayer1BGImagePosition%>;"></div>
             <div class="video-container__inner"><%=data.videoEmbed%></div>
         </div>
     </div>
+    
     <%=data.showPlus%>
     <%=data.showArrow%>
 </div>

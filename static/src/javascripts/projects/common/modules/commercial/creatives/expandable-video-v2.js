@@ -16,7 +16,7 @@ define([
     fastdom,
     _,
     $,
-	detect,
+    detect,
     mediator,
     storage,
     template,
@@ -24,9 +24,6 @@ define([
     ExpandableVideoTpl
 ) {
 
-    /**
-     * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
-     */
     var ExpandableVideo = function ($adSlot, params) {
         this.$adSlot      = $adSlot;
         this.params       = params;
