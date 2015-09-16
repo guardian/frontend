@@ -34,7 +34,8 @@ define([
                 surveyLink: 'http://google.com',
                 marque36icon: svgs('marque36icon'),
                 membershipLogo: svgs('membershipLogo'),
-                thrasherBenefit: svgs('thrasherBenefit')
+                thrasherBenefit: svgs('thrasherBenefit'),
+                surveyNew: svgs('surveyNew'),
             });
 
         fastdom.write(function () {

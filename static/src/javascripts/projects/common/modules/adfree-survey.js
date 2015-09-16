@@ -38,6 +38,7 @@ define([
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
                 surveyOverlay: svgs('surveyOverlay'),
+                surveyNew: svgs('surveyNew'),
                 membershipLogo: svgs('membershipLogo')
             });
 
