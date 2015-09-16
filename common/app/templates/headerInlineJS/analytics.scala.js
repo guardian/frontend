@@ -11,9 +11,7 @@ try {
             isEmbed = !!guardian.isEmbed,
             tpA     = s.getTimeParting('n', '+0'),
             now      = new Date(),
-            webPublicationDate = config.page.webPublicationDate,
-            standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
-                'prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events';
+            webPublicationDate = config.page.webPublicationDate;
 
         var getChannel = function () {
             if (config.page.contentType === 'Network Front') {
@@ -150,8 +148,6 @@ try {
         }
 
         s.prop47    = config.page.edition || '';
-
-        s.linkTrackVars = standardProps;
 
         @*
             this makes the call to Omniture.
