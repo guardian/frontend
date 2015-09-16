@@ -375,6 +375,14 @@ class Crossword extends React.Component {
         }
     }
 
+    allHighlightedClues () {
+        return _.filter(this.props.data.entries, (entry) => {
+            if (this.clueIsInFocusGroup(entry)) {
+                return entry;
+            }
+        });
+    }
+
     clueIsInFocusGroup (clue) {
         if (this.state.cellInFocus) {
             const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
@@ -462,7 +470,10 @@ class Crossword extends React.Component {
     }
 
     onCheck () {
-        this.check(this.clueInFocus());
+        // 'Check this' checks single and grouped clues
+        _.forEach(this.allHighlightedClues(), (entry) => {
+                this.check(entry);
+        });
         this.save();
     }
 
