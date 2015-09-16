@@ -166,6 +166,25 @@ describe('Helpers', function () {
         });
     });
 
+    describe('getAnagramClueData', function() {
+        it('should return the clue for a non grouped clue', function() {
+            expect(helpers.getAnagramClueData(entriesFixture, entryFixture)).toEqual(entryFixture);
+        });
+
+        it('should return the correct data when the clue is part of a group', function(){
+           var expectedData = {
+               id: '10-across',
+               number : '2,10,23,21across',
+               separatorLocations : {",": [ 4, 8, 11, 17, 21, 25, 28 ], "-":[]},
+               direction: '',
+               clue : 'Excuse me? Did some old people at any time cause our ruin? Thats a funny revolutionary line (4,4,3,6,4,4,3,2)'
+           };
+           var clue =  { id: '10-across', humanNumber: 10, length: 9, clue: 'See 2', group: [ '2-down', '10-across', '23-down', '21-across' ], position: { x: 5, y: 3 }, separatorLocations: { ",": [ 3, 9 ] } };
+           expect(helpers.getAnagramClueData(entriesFixture, clue)).toEqual(expectedData);
+
+        });
+    });
+
     describe('getGroupEntriesForClue', function(){
         it('should return the entries for a clue in the group in the correct order', function() {
             var group = [ '2-down', '10-across', '23-down', '21-across' ];

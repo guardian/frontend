@@ -44,8 +44,6 @@ const clueIsInGroup = (clue) => clue.group.length != 1
 
 const getAllSeparatorsForGroup = (clues) => {
 
-    console.log("K: " + JSON.stringify(clues));
-
     const k = {};
 
     _.forEach([',','-'], (separator) => {
