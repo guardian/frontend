@@ -62,7 +62,6 @@ describe('omniture', function () {
         sessionStorage.removeItem('gu.analytics.referrerVars');
         mediator.removeEvent('module:clickstream:interaction');
         mediator.removeEvent('module:clickstream:click');
-        mediator.removeEvent('module:analytics:omniture:pageview:sent');
     });
 
     it('should track clicks with correct analytics name', function () {
@@ -92,76 +91,17 @@ describe('omniture', function () {
         omniture.go();
         omniture.trackLink('link object', 'outer:link');
 
-        expect(s.linkTrackVars).toBe('channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events');
+        expect(s.linkTrackVars).toBe('channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,prop51,prop61,prop64,prop65,prop74,prop40,prop63,eVar7,eVar37,eVar38,eVar39,eVar50,eVar24,eVar60,eVar51,eVar31,eVar18,eVar32,eVar40,list1,list2,list3,events');
         expect(s.linkTrackEvents).toBe('event37');
         expect(s.events).toBe('event37');
-    });
-
-    it('should correctly set page properties', function () {
-        config.page = {
-            omnitureAccount: 'the_account',
-            webTitle: 'a really long title a really long title a really long title a really long title a really long title a really long title ',
-            contentType: 'Article',
-            pageCode: '12345',
-            section: 'theworld',
-            keywords: 'Syria,Yemen,Egypt,Bahrain',
-            author: 'Brian Whitaker,Haroon Siddique',
-            tones: 'Minute by minutes,News,Blogposts',
-            series: 'The Fiver',
-            blogs: 'Middle East Live',
-            edition: 'US',
-            webPublicationDate: '2012-02-22T16:58:00.000Z',
-            analyticsName: 'GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long',
-            inBodyInternalLinkCount: '7',
-            inBodyExternalLinkCount: '0'
-        };
-        s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
-        omniture.go();
-
-        expect(s.linkInternalFilters).toBe('guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com');
-        expect(s.pageName).toBe('GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long');
-        expect(s.eVar1).toMatch('\\d\\d\\d\\d/\\d\\d/\\d\\d');  // in reality todays date e.g. 2014/05/21
-        expect(s.prop9).toBe('Article');
-        expect(s.channel).toBe('theworld');
-        expect(s.prop4).toBe('Syria,Yemen,Egypt,Bahrain');
-        expect(s.prop6).toBe('Brian Whitaker,Haroon Siddique');
-        expect(s.prop8).toBe('12345');
-        expect(s.prop10).toBe('Minute by minutes,News,Blogposts');
-        expect(s.prop13).toBe('The Fiver');
-        expect(s.prop25).toBe('Middle East Live');
-        expect(s.prop47).toBe('US');
-        expect(s.prop58).toBe('7');
-        expect(s.prop69).toBe('0');
-        expect(s.prop56).toBe('Javascript');
-        expect(s.prop30).toBe('content');
-        expect(s.prop19).toBe('frontend');
-        expect(s.prop67).toBe('nextgen-served');
-        expect(s.prop19).toBe('frontend');
-        expect(s.eVar50).toBe('test');
-        expect(s.cookieDomainPeriods).toBe('2');
-        expect(s.trackingServer).toBe('hits.theguardian.com');
-        expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');
-    });
-
-    it('should correctly set cookieDomainPeriods for UK edition', function () {
-        s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
-        omniture.go();
-
-        expect(s.cookieDomainPeriods).toBe('2');
     });
 
     it('should log a page view event', function () {
         omniture.go();
 
-        expect(s.t).toHaveBeenCalledOnce();
+        expect(s.tl).toHaveBeenCalledOnce();
     });
 
-    it('should send event46 when a page has comments', function () {
-        omniture.go();
-
-        expect(s.apl).toHaveBeenCalled();
-        expect(s.apl.args[0][1]).toBe('event46');
-    });
 
     it('should log a clickstream event', function () {
         var clickSpec = {
@@ -174,7 +114,7 @@ describe('omniture', function () {
         omniture.go();
         mediator.emit('module:clickstream:click', clickSpec);
 
-        expect(s.tl).toHaveBeenCalledOnce();
+        expect(s.tl).toHaveBeenCalledTwice();
     });
 
     it('should not log clickstream events with an invalidTarget', function () {
@@ -186,7 +126,7 @@ describe('omniture', function () {
         omniture.go();
         mediator.emit('module:clickstream:click', clickSpec);
 
-        expect(s.tl.callCount).toBe(0);
+        expect(s.tl.callCount).toBe(1); //only the initial call
     });
 
     it('should make a non-delayed s.tl call for same-page links', function () {
