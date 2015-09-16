@@ -14,6 +14,7 @@
 .gu-compopup__title {
     @include font-size(13, 18);
 
+    margin: 0;
     font-family: inherit;
     font-weight: bold;
 }

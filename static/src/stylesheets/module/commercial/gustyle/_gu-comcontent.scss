@@ -4,6 +4,8 @@
     padding: 0;
     overflow: hidden;
     position: relative;
+
+
 }
 
 %gu-style-box {
@@ -12,11 +14,13 @@
 
 .gu-comcontent__box {
     @extend %gu-style-box;
+
+    padding-top: 0;
 }
 
 .gu-comcontent__title {
     @include f-headlineSans;
-    @include font-size(18, 20);
+    @include font-size(21, 26);
 
     padding-bottom: $gs-baseline;
     text-align: left;
@@ -68,8 +72,26 @@
     overflow: hidden;
 }
 
+$mobile-max-container-width: gs-span(8);
+@include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+
 .gu-style {
     width: auto;
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(containerWidestMobile) {
+        margin: 0 auto;
+        width: $mobile-max-container-width;
+    }
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+    }
 }
