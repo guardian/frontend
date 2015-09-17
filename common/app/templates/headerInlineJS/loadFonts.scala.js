@@ -7,7 +7,7 @@ do you have fonts in localStorage?
     yes – inject them (minimises 2nd layout as fonts are loaded before DOM is created)
     no  – did the localStorage check go ok?
         yes – ajax them in as JSON immediately, inject them and save them to localStorage
-        no  – load font files async using @font-face
+        no  – load font files async using @@font-face
 
 */
 
