@@ -1,6 +1,7 @@
 package views.support
 
 import java.net.URL
+import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -43,6 +44,7 @@ object BlockquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     val quotedBlockquotes = document.getElementsByTag("blockquote").filter(_.hasClass("quoted"))
+    val quoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
     val wrapBlockquoteChildren = (blockquoteElement: Element) => {
       val container = document.createElement("div")
       container.addClass("quoted__contents")
@@ -50,8 +52,9 @@ object BlockquoteCleaner extends HtmlCleaner {
       val children = blockquoteElement.children()
       blockquoteElement.prependChild(container)
       container.insertChildren(0, children)
-    }
 
+      blockquoteElement.prepend(quoteSvg)
+    }
     quotedBlockquotes.foreach(wrapBlockquoteChildren)
     document
   }
@@ -615,6 +618,29 @@ object MembershipEventCleaner extends HtmlCleaner {
       .attr("data-component", "membership-events")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
 
+    document
+  }
+}
+
+object ChaptersLinksCleaner extends HtmlCleaner {
+  def slugify(text: String): String = {
+    Normalizer.normalize(text, Normalizer.Form.NFKD)
+      .toLowerCase
+      .replaceAll("[^0-9a-z ]", "")
+      .trim.replaceAll(" +", "-")
+  }
+
+  override def clean(document: Document): Document = {
+    val autoaChapters = document.getElementsByClass("auto-chapter")
+
+    autoaChapters.foreach { ch =>
+      val h2 = ch.getElementsByTag("h2")
+      h2.attr("id", slugify(h2.text()))
+
+      if(Viewability.isSwitchedOn) {
+        h2.attr("class", "anchor-link-fix")
+      }
+    }
     document
   }
 }

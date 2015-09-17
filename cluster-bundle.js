@@ -21,7 +21,7 @@ var jspmBaseUrl = 'static/src';
 var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 
-var bundleConfigs = split([
+var bundleConfigs = [
     ['core + system-script + domready', 'core'],
     ['es6/bootstraps/crosswords - core', 'crosswords'],
     ['bootstraps/accessibility - core - bootstraps/app - bootstraps/facia', 'accessibility'],
@@ -49,7 +49,7 @@ var bundleConfigs = split([
     ['bootstraps/dev - core - bootstraps/app', 'dev'],
     ['bootstraps/creatives - core - bootstraps/app', 'creatives'],
     ['zxcvbn', 'zxcvbn']
-], numCPUs);
+];
 
 var processedBundles = {};
 
@@ -144,7 +144,7 @@ function writeConfig() {
     var configs = Object.keys(processedBundles).reduce(function (acc, key) {
         var bundles = processedBundles[key];
 
-        Object.keys(bundles).map(function (bundleKey) {
+        Object.keys(bundles).forEach(function (bundleKey) {
             acc[bundleKey] = bundles[bundleKey];
         });
 
@@ -163,12 +163,15 @@ function writeConfig() {
 }
 
 if (cluster.isMaster) {
-    console.log('using', numCPUs, 'cores');
+    var split = split(bundleConfigs, numCPUs);
+    var cores = Math.min(numCPUs, split.length);
 
-    for (var i = 0; i < numCPUs; i++) {
+    console.log('using', cores, 'cores');
+
+    for (var i = 0; i < cores; i++) {
         var worker = cluster.fork({ num: i });
 
-        worker.send({ configs: bundleConfigs[i] });
+        worker.send({ configs: split[i] });
         worker.on('message', updateBundles);
     }
 

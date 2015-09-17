@@ -5,6 +5,7 @@ import java.util.TimeZone
 import common.{AkkaAsync, Jobs, Logging}
 import conf.Configuration
 import conf.Configuration.environment
+import conf.Switches._
 import football.feed.MatchDayRecorder
 import jobs._
 import play.api.GlobalSettings
@@ -41,15 +42,15 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
-      RefreshFrontsJob.runHighFrequency()
+      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(HighFrequency)
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
-      RefreshFrontsJob.runStandardFrequency()
+      if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(StandardFrequency)
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
-      RefreshFrontsJob.runLowFrequency()
+      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(LowFrequency)
     }
 
     Jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {

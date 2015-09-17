@@ -314,6 +314,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ServeCoreFrontsToSomeIpadsSwitch = Switch(
+    "Performance",
+    "ipad-core-fronts",
+    "Serve core fronts to a random percentage of crash-prone ipad users",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 31),
+    exposeClientSide = true
+  )
+
   // Commercial
   val NoMobileTopAdSwitch = Switch(
     "Commercial",
@@ -651,6 +660,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val ChapterHeadingsSwitch = Switch(
+    "Feature",
+    "chapter-headings",
+    "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 7),
+    exposeClientSide = false
+  )
+
   val NotificationsSwitch = Switch(
     "Feature",
     "notifications",
@@ -840,6 +858,15 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = true
+  )
+
+  val RugbyWorldCupFriendlies = Switch(
+    "Feature",
+    "rugby-world-cup-friendlies-for-pre-prod",
+    "If this switch is on rugby world cup scores will be load in Friendlies too (only use in CODE)",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = false
   )
 
   val WeatherSwitch = Switch(
