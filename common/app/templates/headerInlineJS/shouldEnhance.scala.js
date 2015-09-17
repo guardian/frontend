@@ -33,7 +33,7 @@
 
     window.shouldEnhance = !personPrefersCore() && !isOlderDevice();
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
-})(navigator, window)
+})(navigator, window);
 
 
 
