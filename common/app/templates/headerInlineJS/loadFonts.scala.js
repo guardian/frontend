@@ -156,7 +156,7 @@
             fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting()].kerningOn;
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
-            }, 0);
+            });
         } catch (e) {};
     }
 
