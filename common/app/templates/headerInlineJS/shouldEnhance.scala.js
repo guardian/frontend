@@ -4,6 +4,7 @@
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement
     var personPrefersCore = function () {
+        if (window.location.hash === '#core') return true;
         try {
             var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
             return /"value":"on"/.test(preference);
@@ -31,6 +32,7 @@
     };
 
     window.shouldEnhance = !personPrefersCore() && !isOlderDevice();
+    window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 
 
