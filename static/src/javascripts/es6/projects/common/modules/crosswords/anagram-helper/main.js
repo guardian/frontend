@@ -47,7 +47,7 @@ export default class AnagramHelper extends React.Component {
 
     canShuffle () {
         return this.state.clueInput &&
-               this.state.clueInput.length === this.props.focussedEntry.length;
+               this.state.clueInput.length > 0;
     }
 
     onClueInput (text) {
