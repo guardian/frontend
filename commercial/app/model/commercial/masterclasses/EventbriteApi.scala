@@ -12,10 +12,16 @@ import scala.concurrent.duration._
 
 object EventbriteApi extends ExecutionContexts with Logging {
 
-  private lazy val maybeUrl: Option[String] = {
+  private val feedName = "Masterclasses"
+  private val url: String = "https://www.eventbriteapi.com/v3/users/me/owned_events/"
+
+  private lazy val maybeParameters: Option[Map[String, String]] = {
     for (token <- CommercialConfiguration.masterclassesToken) yield {
-      val queryString = s"token=$token&status=live&expand=ticket_classes,venue"
-      s"https://www.eventbriteapi.com/v3/users/me/owned_events/?$queryString"
+      Map(
+        "token" -> token,
+        "status" -> "live",
+        "expand" -> "ticket_classes,venue"
+      )
     }
   }
 
@@ -43,15 +49,22 @@ object EventbriteApi extends ExecutionContexts with Logging {
       }
     }
 
-    events flatMap identity
+    val eventualEvents = events flatMap identity
+
+    eventualEvents onSuccess {
+      case results => log.info(s"Loaded ${results.size} $feedName from $url")
+    }
+
+    eventualEvents
   }
 
   def loadPageOfEvents(pageIndex: Int): Future[PageResult] = {
-    val pageResult = maybeUrl map { url =>
+    val pageResult = maybeParameters map { parameters =>
       val request = FeedRequest(
-        feedName = "Masterclasses",
+        feedName,
         switch = MasterclassFeedSwitch,
-        s"$url&page=$pageIndex",
+        url,
+        parameters + ("page" -> pageIndex.toString),
         timeout = 60.seconds,
         responseEncoding = Some("utf-8"))
       FeedReader.read(request) { content =>
@@ -65,8 +78,8 @@ object EventbriteApi extends ExecutionContexts with Logging {
         PageResult(masterclasses, pageCount)
       }
     } getOrElse {
-      log.warn(s"Missing URL for Masterclasses feed")
-      Future.failed(FeedMissingConfigurationException("Masterclasses"))
+      log.warn(s"Missing URL for $feedName feed")
+      Future.failed(FeedMissingConfigurationException(feedName))
     }
 
     pageResult onSuccess {
