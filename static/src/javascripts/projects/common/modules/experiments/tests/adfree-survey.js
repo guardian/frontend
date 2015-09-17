@@ -2,12 +2,16 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/modules/adfree-thrasher',
-    'common/modules/adfree-survey'
+    'common/modules/adfree-survey',
+    'common/modules/adfree-thrasher-simple',
+    'common/modules/adfree-survey-simple'
 ], function (
     $,
     config,
     AdfreeThrasher,
-    AdfreeSurvey
+    AdfreeSurvey,
+    AdfreeThrasherSimple,
+    AdfreeSurveySimple
 ) {
     return function () {
 
@@ -52,7 +56,22 @@ define([
             {
                 id: 'challenger',
                 test: function () {
-                    /*TODO variant with just a link*/
+                    var $container;
+
+                    //attach hidden survey overlay, it will be triggered by a 'Remove ads' label or thrasher
+                    new AdfreeSurveySimple().attach();
+
+                    if (config.page.isFront) {
+                        $container = $('.js-container--first');
+                    } else if (config.page.contentType === 'Article') {
+                        $container = $('.fc-container').last();
+                    }
+
+                    if ($container) {
+                        new AdfreeThrasherSimple({
+                            $container: $container
+                        }).show();
+                    }
                 }
             },
             {

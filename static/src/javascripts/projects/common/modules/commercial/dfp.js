@@ -22,6 +22,7 @@ define([
     'common/modules/analytics/beacon',
     'common/modules/identity/api',
     'common/modules/adfree-survey',
+    'common/modules/adfree-survey-simple',
     'common/views/svgs'
 ], function (
     bean,
@@ -46,6 +47,7 @@ define([
     beacon,
     id,
     AdfreeSurvey,
+    AdfreeSurveySimple,
     svgs
 ) {
     /**
@@ -94,7 +96,7 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
-                if (isAdfreeSurvey('variant')) {
+                if (isAdfreeSurvey('variant') || isAdfreeSurvey('challenger')) {
                     showAdsFreeSurvey('300,250', $adSlot);
                 }
             },
@@ -466,7 +468,7 @@ define([
         },
         addLabel = function ($slot) {
             fastdom.write(function () {
-                var adSlotClass = isAdfreeSurvey('variant') ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
+                var adSlotClass = (isAdfreeSurvey('variant') || isAdfreeSurvey('challenger')) ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
 
                 if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
