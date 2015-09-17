@@ -94,4 +94,8 @@ $mobile-max-container-width: gs-span(8);
         margin-left: $gs-gutter / 2;
         margin-right: $gs-gutter / 2;
     }
+
+    @include mq(desktop) {
+        width: 300px;
+    }
 }

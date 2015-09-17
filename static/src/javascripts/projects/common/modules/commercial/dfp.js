@@ -410,35 +410,36 @@ define([
                 });
 
                 // Check if creative is a new gu style creative and place lables accordingly
-                var adType = checkForBreakout($slot);
-                if (adType && adType.type === 'gu-style') {
-                    new GuStyle($slot, adType).addLabel();
-                } else {
-                    addLabel($slot);
-                }
+                checkForBreakout($slot).then(function (adType) {
+                    if (adType && adType.type === 'gu-style') {
+                        //new GuStyle($slot, adType).addLabel();
+                    } else {
+                        addLabel($slot);
+                    }
 
-                size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, $slot);
-                }
+                    size = event.size.join(',');
+                    // is there a callback for this size
+                    if (callbacks[size]) {
+                        callbacks[size](event, $slot);
+                    }
 
-                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'flex');
-                    });
-                } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'block');
-                    });
-                }
+                    if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
+                        fastdom.write(function () {
+                            $slot.parent().css('display', 'flex');
+                        });
+                    } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                        fastdom.write(function () {
+                            $slot.parent().css('display', 'block');
+                        });
+                    }
 
-                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    fastdom.write(function () {
-                        $slot.addClass('ad-slot__fluid250');
-                    });
-                }
+                    if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                    || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                        fastdom.write(function () {
+                            $slot.addClass('ad-slot__fluid250');
+                        });
+                    }
+                });
             }
         },
         allAdsRendered = function (slotId) {
@@ -536,9 +537,8 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return _($('iframe', $slot))
-                .chain()
-                .map(function (iFrame) {
+            return Promise.all(_.map($('iframe', $slot), function (iFrame) {
+                return new Promise(function (resolve) {
                     // IE needs the iFrame to have loaded before we can interact with it
                     if (iFrame.readyState && iFrame.readyState !== 'complete') {
                         bean.on(iFrame, 'readystatechange', function (e) {
@@ -552,15 +552,20 @@ define([
                                 /*eslint-enable valid-typeof*/
                             ) {
                                 bean.off(updatedIFrame, 'readystatechange');
-                                return breakoutIFrame(updatedIFrame, $slot);
+                                resolve(breakoutIFrame(updatedIFrame, $slot));
                             }
                         });
                     } else {
-                        return breakoutIFrame(iFrame, $slot);
+                        resolve(breakoutIFrame(iFrame, $slot));
                     }
-                }).find(function (item) {
-                    return item.type !== '';
-                }).value();
+                });
+            })).then(function (items) {
+                return _(items)
+                    .chain()
+                    .find(function (item) {
+                        return item.type !== '';
+                    }).value();
+            });
         },
         breakpointNameToAttribute = function (breakpointName) {
             return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
