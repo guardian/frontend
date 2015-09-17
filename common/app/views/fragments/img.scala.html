@@ -84,9 +84,8 @@
 @if(amp) {
     @picture.largestImage.map { largestImage =>
         <amp-img src="@ImgSrc.getFallbackUrl(picture)"
-        @*srcset is broken, remiving until this is resolved: https://github.com/ampproject/amphtml/issues/172
         srcset="@ImgSrc.srcset(picture, widths)"
-        sizes="@widths.sizes"*@
+        sizes="@widths.sizes"
         layout="responsive"
         width="@largestImage.width"
         height="@largestImage.height"
