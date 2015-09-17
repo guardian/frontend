@@ -140,16 +140,30 @@
     .l-header--is-slim & {
         display: none;
     }
+}
 
+.brand-bar__item--edition {
     .is-not-modern & {
         &:hover,
         &:focus {
-            .top-bar__popup--edition {
+            .popup {
                 display: block;
             }
         }
     }
 }
+
+.is-signed-in.brand-bar__item--profile {
+    .is-not-modern & {
+        &:hover,
+        &:focus {
+            .popup {
+                display: block;
+            }
+        }
+    }
+}
+
 
 .brand-bar__item--jobs {
     .brand-bar__item--right--uk-edition &,

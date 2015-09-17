@@ -76,8 +76,8 @@ $control-offset: 36 + $gs-gutter/2;
     z-index: 11;
 }
 
-.popup__toggle {
-
+.popup__toggle,
+.is-signed-in.brand-bar__item--profile a {
     // disclosure arrow
     &:after {
         content: '';
