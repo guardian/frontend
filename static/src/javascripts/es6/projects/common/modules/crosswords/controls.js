@@ -65,16 +65,16 @@ export default class Controls extends React.Component {
                     Check this
                 </button>
             );
-        }
 
-        // anagram helper
-        controls.clue.push(
-            <button className={`${buttonClassName} ${buttonCurrentClassName}`}
-                onClick={this.props.onToggleAnagramHelper}
-                key='anagram'>
-                Anagram helper
-            </button>
-        );
+            // anagram helper
+            controls.clue.push(
+                <button className={`${buttonClassName} ${buttonCurrentClassName}`}
+                    onClick={this.props.onToggleAnagramHelper}
+                    key='anagram'>
+                    Anagram helper
+                </button>
+            );
+        }
 
         return (
             <div className='crossword__controls'>

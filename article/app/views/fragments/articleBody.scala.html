@@ -12,7 +12,6 @@
         @if(article.isAdvertisementFeature){content--advertisement-feature}
         @if(article.isFeature && article.hasShowcaseMainElement){has-feature-showcase-element}"
         itemscope itemtype="@article.schemaType" role="main">
-
         <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
         <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <meta itemprop="name" content="The Guardian">
@@ -42,6 +41,8 @@
                     @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
                         <hr class="content__hr hide-until-leftcol" />
                     }
+
+                    @fragments.chapterHeadings(article)
 
                     <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
                         data-test-id="article-review-body">
