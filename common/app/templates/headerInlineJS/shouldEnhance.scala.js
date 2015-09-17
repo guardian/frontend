@@ -31,7 +31,7 @@
         return false;
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderDevice();
+    window.shouldEnhance = !personPrefersCore() && !isOlderDevice() && !(@item.isFront && window.serveCoreFronts);
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 
