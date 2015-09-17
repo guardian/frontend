@@ -157,9 +157,7 @@
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             }, 0);
-        } catch (e) {
-            console.error(e);
-        };
+        } catch (e) {};
     }
 
     // Detect whether browser is smoothing its fonts.
