@@ -44,6 +44,7 @@ object BlockquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     val quotedBlockquotes = document.getElementsByTag("blockquote").filter(_.hasClass("quoted"))
+    val quoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
     val wrapBlockquoteChildren = (blockquoteElement: Element) => {
       val container = document.createElement("div")
       container.addClass("quoted__contents")
@@ -51,8 +52,9 @@ object BlockquoteCleaner extends HtmlCleaner {
       val children = blockquoteElement.children()
       blockquoteElement.prependChild(container)
       container.insertChildren(0, children)
-    }
 
+      blockquoteElement.prepend(quoteSvg)
+    }
     quotedBlockquotes.foreach(wrapBlockquoteChildren)
     document
   }
