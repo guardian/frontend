@@ -17,6 +17,7 @@
             max-width: none;
             margin: 0;
         }
+
     }
 
     .meta__numbers {
@@ -165,6 +166,7 @@
     .content__main-column--interactive {
         border-top: 1px dotted colour(neutral-5);
         padding-top: $gs-baseline/2;
+        min-height: $gs-baseline*10;
     }
 }
 

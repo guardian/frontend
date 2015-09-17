@@ -4,9 +4,9 @@
 
 @body(page.interactive, page.interactive.isImmersive)
 
-@figureEl(interactive: model.Interactive) = {
-    @page.interactive.figureEl.map { figure =>
-        @HtmlFormat.raw(figure)
+@bodyRaw(interactive: model.Interactive) = {
+    @page.interactive.body.map { body =>
+        @HtmlFormat.raw(body)
     }.getOrElse {
         <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
     }
@@ -36,9 +36,10 @@
                 <div class="gs-container" data-test-id="interactive-content-body">
                     <div class="content__main-column content__main-column--interactive">
                         @if(!isImmersive) {
-                            @figureEl(interactive)
+                            @bodyRaw(interactive)
+                        } else {
+                            @HtmlFormat.raw(interactive.fallbackEl)
                         }
-                        @HtmlFormat.raw(interactive.fallbackEl)
                     </div>
                 </div>
 
@@ -55,6 +56,6 @@
     </div>
 
     @if(isImmersive) {
-        @figureEl(interactive)
+        @interactive.figureEl.map(HtmlFormat.raw(_))
     }
 }
