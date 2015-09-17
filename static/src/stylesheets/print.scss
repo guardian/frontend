@@ -193,7 +193,7 @@ p {
 
 .crossword__clue {
     &:before {
-        content: attr(value);
+        content: attr(data-number);
         font-weight: bold;
         margin-right: .5rem;
     }

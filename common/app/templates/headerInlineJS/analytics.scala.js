@@ -125,11 +125,11 @@ try {
         // Set Page View Event
         s.events    = s.apl(s.events, 'event4', ',', 2);
 
-        this.s.prop56    = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
+        s.prop56    = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
 
         /* Set Time Parting Day and Hour Combination - 0 = GMT */
-        this.s.prop20    = tpA[2] + ':' + tpA[1];
-        this.s.eVar20    = 'D=c20';
+        s.prop20    = tpA[2] + ':' + tpA[1];
+        s.eVar20    = 'D=c20';
 
         @*
           eVar1 contains today's date
@@ -137,17 +137,17 @@ try {
           value a user gets, so in effect it is the first time
           we saw this user
         *@
-        this.s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
+        s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
 
-        this.s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
+        s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
 
         if (webPublicationDate) {
-            this.s.prop30 = 'content';
+            s.prop30 = 'content';
         } else {
-            this.s.prop30 = 'non-content';
+            s.prop30 = 'non-content';
         }
 
-        this.s.prop47    = config.page.edition || '';
+        s.prop47    = config.page.edition || '';
 
         @*
             this makes the call to Omniture.
