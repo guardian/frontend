@@ -5,7 +5,7 @@ import conf.CommercialConfiguration
 import conf.Switches.MasterclassFeedSwitch
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time.DateTime.now
-import play.api.libs.json.{JsArray, JsValue}
+import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -13,8 +13,8 @@ import scala.concurrent.duration._
 object EventbriteApi extends ExecutionContexts with Logging {
 
   private lazy val maybeUrl: Option[String] = {
-    for (token <- CommercialConfiguration.getProperty("eventbrite.token")) yield {
-      val queryString = s"token=$token&order_by=start_desc&expand=ticket_classes,venue&page=2"
+    for (token <- CommercialConfiguration.masterclassesToken) yield {
+      val queryString = s"token=$token&status=live&expand=ticket_classes,venue"
       s"https://www.eventbriteapi.com/v3/users/me/owned_events/?$queryString"
     }
   }
@@ -25,24 +25,56 @@ object EventbriteApi extends ExecutionContexts with Logging {
   }
 
   def loadEvents(): Future[Seq[EventbriteMasterClass]] = {
-    maybeUrl map { url =>
+
+    val eventualFirstPageResult = loadPageOfEvents(1)
+
+    val events = for (firstPageResult <- eventualFirstPageResult) yield {
+      val pageCount = firstPageResult.pageCount
+      val eventualEventsFromOtherPages = if (pageCount > 1) {
+        val events = for (i <- 2 to pageCount) yield {
+          for (pageResult <- loadPageOfEvents(i)) yield pageResult.events
+        }
+        Future.sequence(events) map (_.flatten)
+      } else {
+        Future.successful(Nil)
+      }
+      for (eventsFromOtherPages <- eventualEventsFromOtherPages) yield {
+        firstPageResult.events ++ eventsFromOtherPages
+      }
+    }
+
+    events flatMap identity
+  }
+
+  def loadPageOfEvents(pageIndex: Int): Future[PageResult] = {
+    val pageResult = maybeUrl map { url =>
       val request = FeedRequest(
         feedName = "Masterclasses",
         switch = MasterclassFeedSwitch,
-        url,
+        s"$url&page=$pageIndex",
         timeout = 60.seconds,
         responseEncoding = Some("utf-8"))
-      FeedReader.readSeqFromJson(request) { json =>
-        for {
+      FeedReader.read(request) { content =>
+        val json = Json.parse(content)
+        val pageCount = (json \ "pagination" \ "page_count").as[Int]
+        val masterclasses = for {
           jsValue <- extractEventsFromFeed(json)
           masterclass <- EventbriteMasterClass(jsValue)
           if masterclass.startDate.isAfter(now.plusWeeks(2))
         } yield masterclass
+        PageResult(masterclasses, pageCount)
       }
     } getOrElse {
       log.warn(s"Missing URL for Masterclasses feed")
       Future.failed(FeedMissingConfigurationException("Masterclasses"))
     }
-  }
 
+    pageResult onSuccess {
+      case result => log.info(s"Loaded page $pageIndex of ${result.pageCount} masterclass pages")
+    }
+
+    pageResult
+  }
 }
+
+case class PageResult(events: Seq[EventbriteMasterClass], pageCount: Int)
