@@ -20,22 +20,33 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
     }
 
     Jobs.deschedule("FixturesAndResults")
-    Jobs.schedule("FixturesAndResults", "0 0/30 * * * ?") {
+    Jobs.schedule("FixturesAndResults", "5 0/5 * * * ?") {
       RugbyStatsJob.fixturesAndResults(OptaFeed.getFixturesAndResults)
     }
 
     Jobs.deschedule("LiveEventScores")
-    Jobs.schedule("LiveEventScores", "0 * * * * ?") {
+    Jobs.schedule("LiveEventScores", "10 * * * * ?") {
       RugbyStatsJob.fetchLiveScoreEvents
     }
 
     Jobs.deschedule("PastEventScores")
-    Jobs.schedule("PastEventScores", "0 0/30 * * * ?") {
+    Jobs.schedule("PastEventScores", "15 0/5 * * * ?") {
       RugbyStatsJob.fetchPastScoreEvents
     }
 
+    Jobs.deschedule("LiveMatchesStat")
+    Jobs.schedule("LiveMatchesStat", "20 * * * * ?") {
+      RugbyStatsJob.fetchLiveMatchesStat
+    }
+
+    Jobs.deschedule("PastMatchesStat")
+    Jobs.schedule("PastMatchesStat", "25 0/5 * * * ?") {
+      RugbyStatsJob.fetchPastMatchesStat
+    }
+
+
     Jobs.deschedule("MatchNavArticles")
-    Jobs.schedule("MatchNavArticles", "0 0/2 * * * ?") {
+    Jobs.schedule("MatchNavArticles", "30 0/2 * * * ?") {
       RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
     }
 
@@ -48,6 +59,8 @@ trait RugbyLifecycle extends GlobalSettings with ExecutionContexts {
     AkkaAsync.after(initializationTimeout) {
       RugbyStatsJob.fetchLiveScoreEvents
       RugbyStatsJob.fetchPastScoreEvents
+      RugbyStatsJob.fetchLiveMatchesStat
+      RugbyStatsJob.fetchPastMatchesStat
       RugbyStatsJob.sendMatchArticles(CapiFeed.getMatchArticles())
     }
   }

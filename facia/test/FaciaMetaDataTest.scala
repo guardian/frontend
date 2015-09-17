@@ -70,12 +70,12 @@ import scala.concurrent.Future
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(14)
+    containers.size should be(8)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (20)
+    topContainer.size should be (10)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/musicblog/2015/may/27/stone-roses-spike-island-the-reality")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/2015/sep/10/billie-holiday-hologram-headed-to-new-yorks-apollo-theatre")
 
   }
 

@@ -1,8 +1,5 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
 @import conf.Static
-@import conf.Configuration
-@import views.support.OmnitureAnalyticsData
 
 @* Critical scripts that should execute as soon as possible, preventing layout thrashing *@
 
@@ -10,18 +7,23 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
+@fragments.omnitureScript(Some(item))
+
 <script id="gu">
+
+    @* NOTE the order of these is important  *@
     @Html(templates.headerInlineJS.js.polyfills().body)
     @Html(templates.headerInlineJS.js.shouldEnhance(item).body)
     @Html(templates.headerInlineJS.js.config(item).body)
+
+    @Html(templates.headerInlineJS.js.analytics().body)
+
     @Html(templates.headerInlineJS.js.featureDetection().body)
 
     @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
     @Html(templates.headerInlineJS.js.cloudwatchBeacons(item).body)
 
-    @* must always be set before the Omniture file is parsed *@
-    window.s_account = "@OmnitureAnalyticsAccount(item)"; //omniture
 </script>
 
 @*

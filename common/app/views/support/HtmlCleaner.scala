@@ -1,6 +1,7 @@
 package views.support
 
 import java.net.URL
+import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -43,6 +44,7 @@ object BlockquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     val quotedBlockquotes = document.getElementsByTag("blockquote").filter(_.hasClass("quoted"))
+    val quoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
     val wrapBlockquoteChildren = (blockquoteElement: Element) => {
       val container = document.createElement("div")
       container.addClass("quoted__contents")
@@ -50,8 +52,9 @@ object BlockquoteCleaner extends HtmlCleaner {
       val children = blockquoteElement.children()
       blockquoteElement.prependChild(container)
       container.insertChildren(0, children)
-    }
 
+      blockquoteElement.prepend(quoteSvg)
+    }
     quotedBlockquotes.foreach(wrapBlockquoteChildren)
     document
   }
@@ -61,8 +64,8 @@ object PullquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     val pullquotes = document.getElementsByTag("aside").filter(_.hasClass("element-pullquote"))
-    val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
-    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing")).toString()
+    val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("inline-tone-fill")).toString()
+    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing", "inline-tone-fill")).toString()
 
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
@@ -402,7 +405,7 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-class TweetCleaner(content: Content) extends HtmlCleaner {
+class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
   import conf.Switches.TwitterImageFallback
 
@@ -420,32 +423,47 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
 
       tweet.getElementsByClass("twitter-tweet").foreach { element =>
 
-        val el = element.clone()
-        if (el.children.size > 1) {
-          val body = el.child(0).attr("class", "tweet-body")
-
-          val date = el.child(1).attr("class", "tweet-date")
-          val user = el.ownText()
-          val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
-          val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
-
-          element.empty().attr("class", "js-tweet tweet")
-
-          if (TwitterImageFallback.isSwitchedOn) {
-            tweetImage.foreach { image =>
-              val img = document.createElement("img")
-              img.attr("src", image)
-              img.attr("alt", "")
-              img.attr("rel", "nofollow")
-              img.addClass("js-tweet-main-image tweet-main-image")
-              element.appendChild(img)
+        if (amp) {
+          tweetData.foreach { elem =>
+            element.empty()
+            element.tagName("amp-twitter")
+            element.attr("data-tweetId", elem.id)
+            element.attr("data-​c​ards", "hidden")
+            element.attr("layout", "responsive")
+            element.attr("width", "486")
+            // temporary fix to give tweets with an image a larger height
+            if (elem.firstImage.size > 0) {
+              element.attr("height", "600")
+            } else {
+              element.attr("height", "200")
             }
           }
+        } else {
+          val el = element.clone()
+          if (el.children.size > 1) {
+            val body = el.child(0).attr("class", "tweet-body")
+            val date = el.child(1).attr("class", "tweet-date")
+            val user = el.ownText()
+            val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+            val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-          element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+            element.empty().attr("class", "js-tweet tweet")
+
+            if (TwitterImageFallback.isSwitchedOn) {
+              tweetImage.foreach { image =>
+                val img = document.createElement("img")
+                img.attr("src", image)
+                img.attr("alt", "")
+                img.attr("rel", "nofollow")
+                img.addClass("js-tweet-main-image tweet-main-image")
+                element.appendChild(img)
+              }
+            }
+
+            element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+          }
         }
       }
-
     }
     document
   }
@@ -600,6 +618,29 @@ object MembershipEventCleaner extends HtmlCleaner {
       .attr("data-component", "membership-events")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
 
+    document
+  }
+}
+
+object ChaptersLinksCleaner extends HtmlCleaner {
+  def slugify(text: String): String = {
+    Normalizer.normalize(text, Normalizer.Form.NFKD)
+      .toLowerCase
+      .replaceAll("[^0-9a-z ]", "")
+      .trim.replaceAll(" +", "-")
+  }
+
+  override def clean(document: Document): Document = {
+    val autoaChapters = document.getElementsByClass("auto-chapter")
+
+    autoaChapters.foreach { ch =>
+      val h2 = ch.getElementsByTag("h2")
+      h2.attr("id", slugify(h2.text()))
+
+      if(Viewability.isSwitchedOn) {
+        h2.attr("class", "anchor-link-fix")
+      }
+    }
     document
   }
 }

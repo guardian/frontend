@@ -2,10 +2,9 @@ package rugby.feed
 
 import org.joda.time.format.DateTimeFormat
 import rugby.model._
-import rugby.model.{Team, Match, Status}
 import Status._
 
-import scala.xml.{NodeSeq, XML}
+import scala.xml.{NodeSeq, XML, MetaData, UnprefixedAttribute, Null}
 
 object Parser {
 
@@ -15,7 +14,7 @@ object Parser {
     def apply(date: String, time: String) = dateTimeParser.parseDateTime(s"$date $time")
   }
 
-  def parseLiveScores(body: String): Seq[Match] = {
+  def parseLiveScores(body: String, event: OptaEvent): Seq[Match] = {
 
     val data = XML.loadString(body)
 
@@ -40,13 +39,14 @@ object Parser {
           awayTeam = awayTeam,
           venue = None,
           competitionName = (game \ "@comp_name").text,
-          status = parseStatus(game)
+          status = parseStatus(game),
+          event = event
         )
       }
     }
   }
 
-  def parseFixturesAndResults(body: String): Seq[Match] = {
+  def parseFixturesAndResults(body: String, event: OptaEvent): Seq[Match] = {
     val data = XML.loadString(body)
 
     val fixturesData = data \ "fixture"
@@ -68,7 +68,8 @@ object Parser {
           awayTeam = awayTeam,
           venue = Some((fixture \ "@venue").text),
           competitionName = (fixture \ "@comp_name").text,
-          status = parseStatus(fixture)
+          status = parseStatus(fixture),
+          event = event
         )
       }
     }
@@ -162,4 +163,74 @@ object Parser {
       case _ => Fixture
     }
   }
+
+  def parseLiveEventsStatsToGetMatchStat(body: String): MatchStat = {
+    val data = XML.loadString(body)
+
+    val teams = data \ "TeamDetail" \ "Team"
+
+    val teamsStats: Seq[TeamStat] = teams.map { team =>
+      
+      val teamStatDataRaw =  team \ "TeamStats" \ "TeamStat"
+
+      /* MetaData.append is extremly slow as it tries to normalize all attributes each time we append, so we chain attributes manually */ 
+      val allAttributes = chainAttributes(teamStatDataRaw.map(_.attributes))
+      val teamStatData = <TeamStat />.copy(attributes = allAttributes)
+      
+      TeamStat(
+        name = (team \ "@team_name").text,
+        id = (teamStatData \ "@id").text.toLong,
+        possession = (teamStatData \ "@possession").text.toFloat,
+        territory = (teamStatData \ "@territory").text.toFloat,
+        carries_metres = (teamStatData \ "@carries_metres").text.toInt,
+        tackles = (teamStatData \ "@tackles").text.toInt,
+        missed_tackles = (teamStatData \ "@missed_tackles").text.toInt,
+        tackle_success = (teamStatData \ "@tackle_success").text.toFloat,
+        turnover_won = (teamStatData \ "@turnover_won").text.toInt,
+        turnovers_conceded = (teamStatData \ "@turnovers_conceded").text.toInt,
+        lineouts_won = (teamStatData \ "@lineouts_won").text.toInt,
+        lineouts_lost = (teamStatData \ "@lineouts_Lost").text.toInt,
+        mauls_won = (teamStatData \ "@mauls_won").text.toInt,
+        mauls_lost = (teamStatData \ "@mauls_lost").text.toInt,
+        mauls_total = (teamStatData \ "@mauls_total").text.toInt,
+
+        penalties_conceded = (teamStatData \ "@penalties_conceded").text.toInt,
+        penalty_conceded_dissent = (teamStatData \ "@penalty_conceded_dissent").text.toInt,
+        penalty_conceded_delib_knock_on = (teamStatData \ "@penalty_conceded_delib_knock_on").text.toInt,
+        penalty_conceded_early_tackle = (teamStatData \ "@penalty_conceded_early_tackle").text.toInt,
+        penalty_conceded_handling_in_ruck = (teamStatData \ "@penalty_conceded_handling_in_ruck").text.toInt,
+        penalty_conceded_high_tackle = (teamStatData \ "@penalty_conceded_high_tackle").text.toInt,
+        penalty_conceded_lineout_offence = (teamStatData \ "@penalty_conceded_lineout_offence").text.toInt,
+        penalty_conceded_collapsing = (teamStatData \ "@penalty_conceded_collapsing").text.toInt,
+        penalty_conceded_collapsing_maul = (teamStatData \ "@penalty_conceded_collapsing_maul").text.toInt,
+        penalty_conceded_collapsing_offence = (teamStatData \ "@penalty_conceded_collapsing_offence").text.toInt,
+        penalty_conceded_obstruction = (teamStatData \ "@penalty_conceded_obstruction").text.toInt,
+        penalty_conceded_offside = (teamStatData \ "@penalty_conceded_offside").text.toInt,
+        penalty_conceded_opp_half = (teamStatData \ "@penalty_conceded_opp_half").text.toInt,
+        penalty_conceded_own_half = (teamStatData \ "@penalty_conceded_own_half").text.toInt,
+        penalty_conceded_other = (teamStatData \ "@penalty_conceded_other").text.toInt,
+        penalty_conceded_scrum_offence = (teamStatData \ "@penalty_conceded_scrum_offence").text.toInt,
+        penalty_conceded_stamping = (teamStatData \ "@penalty_conceded_stamping").text.toInt,
+        penalty_conceded_wrong_side = (teamStatData \ "@penalty_conceded_wrong_side").text.toInt,
+
+        rucks_won = (teamStatData \ "@rucks_won").text.toInt,
+        rucks_lost = (teamStatData \ "@rucks_lost").text.toInt,
+        rucks_total = (teamStatData \ "@rucks_total").text.toInt,
+
+        scrums_won = (teamStatData \ "@scrums_won").text.toInt,
+        scrums_lost = (teamStatData \ "@scrums_lost").text.toInt,
+        scrums_total = (teamStatData \ "@scrums_total").text.toInt
+      )
+    }
+    MatchStat(teamsStats)
+  }
+
+  private def chainAttributes(attributes: Iterable[MetaData]): MetaData = {
+    attributes match {
+      case Nil => Null
+      case head :: tail => new UnprefixedAttribute(head.key, head.value, chainAttributes(tail))
+    }
+  }
+
+
 }

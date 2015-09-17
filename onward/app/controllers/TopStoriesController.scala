@@ -1,14 +1,15 @@
 package controllers
 
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.facia.api.models.FaciaContent
 import common._
+import conf.LiveContentApi.getResponse
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{Action, Controller, RequestHeader}
 import services.FaciaContentConvert
+
 import scala.concurrent.Future
-import com.gu.contentapi.client.GuardianContentApiError
-import LiveContentApi.getResponse
 
 object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
@@ -38,7 +39,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
           case Nil => None
           case picks => Some(picks)
         }
-      } recover { case GuardianContentApiError(404, message) =>
+      } recover { case GuardianContentApiError(404, message, _) =>
         log.info(s"Got a 404 while calling content api: $message")
         None
       }

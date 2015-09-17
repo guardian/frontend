@@ -1,7 +1,6 @@
 .i,
 .caption:before,
-figcaption:before,
-blockquote.quoted:before {
+figcaption:before {
     display: inline-block;
     background-repeat: no-repeat;
 }
@@ -37,22 +36,17 @@ blockquote.quoted:before {
 }
 
 // Quotes
-blockquote.quoted {
-    // Clearfix
-    overflow: hidden;
-
-    &:before {
-        content: '';
-        float: left;
-        transform: scale(.8);
-        transform-origin: 0;
-        @include icon(quote-grey);
+blockquote.quoted .inline-quote {
+    fill: colour(neutral-2);
+    position: absolute;
+    svg {
+        width: 27px;
+        height: 18px;
     }
+}
 
-    & > .quoted__contents {
-        // Do not allow text to wrap around blockquote icon
-        overflow: hidden;
-    }
+blockquote .quoted__contents {
+    margin-left: 35px;
 }
 
 .item--dark .i-comment-light-grey {

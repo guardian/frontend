@@ -13,7 +13,8 @@ define([
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/whole-discussion',
-    'common/modules/ui/relativedates'
+    'common/modules/ui/relativedates',
+    'common/modules/user-prefs'
 ], function(
     bean,
     bonzo,
@@ -29,9 +30,21 @@ define([
     DiscussionApi,
     CommentBox,
     WholeDiscussion,
-    relativedates
+    relativedates,
+    userPrefs
 ) {
 'use strict';
+
+var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
+var shouldMakeTimestampsRelative = function () {
+    // Default to true
+    var prefValue = userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
+        ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
+        : true;
+    return !config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
+        || (config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
+            && prefValue);
+};
 
 var Comments = function(options) {
     this.setOptions(options);
@@ -78,15 +91,18 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('commentReport'), this.reportComment);
 
-    window.setInterval(
-        function () {
-            this.relativeDates();
-        }.bind(this),
-        60000
-    );
+    if (shouldMakeTimestampsRelative()) {
+        window.setInterval(
+            function () {
+                this.relativeDates();
+            }.bind(this),
+            60000
+        );
+
+        this.relativeDates();
+    }
 
     this.emit('ready');
-    this.relativeDates();
 
     this.on('click', '.js-report-comment-close', function() {
         $('.js-report-comment-form').addClass('u-h');
@@ -202,7 +218,9 @@ Comments.prototype.renderComments = function(resp) {
 
     this.postedCommentEl = resp.postedCommentHtml;
 
-    this.relativeDates();
+    if (shouldMakeTimestampsRelative()) {
+        this.relativeDates();
+    }
     this.emit('rendered', resp.paginationHtml);
 
     mediator.emit('modules:comments:renderComments:rendered');
@@ -211,7 +229,9 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.emit('first-load');
-    this.relativeDates();
+    if (shouldMakeTimestampsRelative()) {
+        this.relativeDates();
+    }
 };
 
 Comments.prototype.addMoreRepliesButtons = function (comments) {
@@ -264,7 +284,9 @@ Comments.prototype.getMoreReplies = function(event) {
         bonzo(li).addClass('u-h');
         this.emit('untruncate-thread');
 
-        this.relativeDates();
+        if (shouldMakeTimestampsRelative()) {
+            this.relativeDates();
+        }
     }.bind(this));
 };
 
@@ -442,7 +464,9 @@ Comments.prototype.addUser = function(user) {
 };
 
 Comments.prototype.relativeDates = function() {
-    relativedates.init();
+    if (shouldMakeTimestampsRelative()) {
+        relativedates.init();
+    }
 };
 
 Comments.prototype.isAllPageSizeActive = function() {

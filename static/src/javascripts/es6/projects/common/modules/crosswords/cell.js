@@ -42,6 +42,7 @@ export default class Cell extends React.Component {
                     key='entry'
                     className={classNames({
                         'crossword__cell-text': true,
+                        'crossword__cell-text--focussed': this.props.isFocussed,
                         'crossword__cell-text--error': this.props.isError
                     })}
                     textAnchor='middle'>

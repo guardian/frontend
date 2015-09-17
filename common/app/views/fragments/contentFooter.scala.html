@@ -3,7 +3,7 @@
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
-    @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
+    @fragments.discussionFooter(content, content.isCommentable, content.isClosedForComments, content.shortUrlId)
 
     @ContentFooterContainersLayout(content, related, content.isAdvertisementFeature) {
         @fragments.storyPackagePlaceholder(content, related)

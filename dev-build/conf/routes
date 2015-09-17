@@ -328,6 +328,7 @@ GET         /$path<[^/]+(/[^/]+)?>                                              
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.lightboxJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                             controllers.GalleryController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/amp                                                               controllers.GalleryController.render(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                                  controllers.GalleryController.render(path)
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                           controllers.ImageContentController.renderJson(path)
@@ -355,5 +356,5 @@ GET         /embed/video/*path                                                  
 
 # Articles
 GET         /*path.json                                                                                              controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
-GET         /*path/amp                  controllers.ArticleAMPController.renderPath(path)
+GET         /*path/amp                                                                                               controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
 GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
