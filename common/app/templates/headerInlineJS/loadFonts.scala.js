@@ -36,8 +36,8 @@
 
     // Load fonts from `localStorage`.
     function loadFontsFromStorage() {
-        if ("localStorage" in window) {
-            try {
+        try {
+            if ("localStorage" in window) {
                 // detect which font format (ttf, woff, woff2 etc) we want
                 var fontFormat = (function () {
                     var fontFormat = localStorage.getItem('gu.fonts.format');
@@ -127,9 +127,9 @@
                     }
                 }
                 return true;
-            } catch (e) {
-                return false;
-            }
+            };
+        } catch (e) {
+            return false;
         };
         return false;
     }
