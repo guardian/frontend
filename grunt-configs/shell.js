@@ -60,6 +60,16 @@ module.exports = function(grunt, options) {
             }
         },
 
+        jspmClusterBundleStatic: {
+            command:
+                'node ./cluster-bundle',
+            options: {
+                execOptions: {
+                    cwd: '.'
+                }
+            }
+        },
+
         updateCanIUse: {
           command: 'npm update caniuse-db'
         }

@@ -1,6 +1,7 @@
 package views.support
 
 import java.net.URL
+import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -61,8 +62,8 @@ object PullquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     val pullquotes = document.getElementsByTag("aside").filter(_.hasClass("element-pullquote"))
-    val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
-    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing")).toString()
+    val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("inline-tone-fill")).toString()
+    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing", "inline-tone-fill")).toString()
 
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
@@ -615,6 +616,29 @@ object MembershipEventCleaner extends HtmlCleaner {
       .attr("data-component", "membership-events")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
 
+    document
+  }
+}
+
+object ChaptersLinksCleaner extends HtmlCleaner {
+  def slugify(text: String): String = {
+    Normalizer.normalize(text, Normalizer.Form.NFKD)
+      .toLowerCase
+      .replaceAll("[^0-9a-z ]", "")
+      .trim.replaceAll(" +", "-")
+  }
+
+  override def clean(document: Document): Document = {
+    val autoaChapters = document.getElementsByClass("auto-chapter")
+
+    autoaChapters.foreach { ch =>
+      val h2 = ch.getElementsByTag("h2")
+      h2.attr("id", slugify(h2.text()))
+
+      if(Viewability.isSwitchedOn) {
+        h2.attr("class", "anchor-link-fix")
+      }
+    }
     document
   }
 }
