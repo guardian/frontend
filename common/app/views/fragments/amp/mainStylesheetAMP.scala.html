@@ -247,5 +247,22 @@
         transform: rotate(180deg);
     }
 
+    @* Bullet Points related styling below *@
+    .bullet {
+        font-size: 0.00625rem;
+        color: transparent;
+    }
+
+    .bullet:before {
+        display: inline-block;
+        content: '';
+        -webkit-border-radius: 0.375rem;
+        border-radius: 0.375rem;
+        height: 0.75rem;
+        width: 0.75rem;
+        margin-right: 0.125rem;
+        background-color: #bdbdbd;
+    }
+
     @fragments.amp.tonalStylesheet()
 </style>
