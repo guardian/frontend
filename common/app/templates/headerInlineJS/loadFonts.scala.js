@@ -34,39 +34,40 @@
         return determineHinting;
     })();
 
-    // detect which font format (ttf, woff, woff2 etc) we want
-    var fontFormat = (function () {
-        var fontFormat = localStorage.getItem('gu.fonts.format');
-
-        function getFontFormat() {
-            if (!fontFormat) {
-                function supportsWoff2() {
-                    if ("FontFace" in window) { // https://github.com/filamentgroup/woff2-feature-test
-                        var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
-                        f.load().catch(function(){});
-                        return f.status === 'loading';
-                    } else if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
-                        var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua),
-                            supportsWoff2 = {
-                                'chrome': 36,
-                                'firefox': 39
-                            };
-                        return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
-                    }
-                    return false;
-                };
-                fontFormat = localStorage['gu.fonts.format'] = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
-            }
-            return fontFormat;
-        };
-
-        return getFontFormat;
-    })();
-
     // Load fonts from `localStorage`.
     function loadFontsFromStorage() {
         if ("localStorage" in window) {
             try {
+                // detect which font format (ttf, woff, woff2 etc) we want
+                var fontFormat = (function () {
+                    var fontFormat = localStorage.getItem('gu.fonts.format');
+
+                    function getFontFormat() {
+                        if (!fontFormat) {
+                            function supportsWoff2() {
+                                if ("FontFace" in window) { // https://github.com/filamentgroup/woff2-feature-test
+                                    var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+                                    f.load().catch(function(){});
+                                    return f.status === 'loading';
+                                } else if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
+                                    var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua),
+                                        supportsWoff2 = {
+                                            'chrome': 36,
+                                            'firefox': 39
+                                        };
+                                    return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
+                                }
+                                return false;
+                            };
+                            fontFormat = localStorage['gu.fonts.format'] = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
+                        }
+                        return fontFormat;
+                    };
+
+                    return getFontFormat;
+                })();
+
+                // use whatever font CSS we've now got
                 function useFont(el, css) {
                     el.innerHTML = css;
                 }
@@ -76,6 +77,7 @@
                     return fontData.css;
                 }
 
+                // download font as json to store/use etc
                 function fetchFont(url, el, fontName, fontHash) {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true);
@@ -89,6 +91,7 @@
                     xhr.send();
                 }
 
+                // save font css to localstorage
                 function saveFont(fontName, fontHash, css) {
                     for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
                         var key = localStorage.key(i);
@@ -100,10 +103,14 @@
                     localStorage.setItem(storageKey(fontName, fontHash), JSON.stringify({value: css}));
                 }
 
+                // generic method to construct a storage key
                 function storageKey(fontName, fontHash) {
                     return 'gu.fonts.' + fontName + '.' + fontHash;
                 }
 
+                // down to business
+                // the target for each font and holders of all the necessary metadata
+                // are some style elements in the head, all identified by a .webfont class
                 var fonts = document.querySelectorAll('.webfont');
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font = fonts[i],
