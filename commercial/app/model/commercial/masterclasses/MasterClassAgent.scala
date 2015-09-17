@@ -8,13 +8,16 @@ import scala.concurrent.Future
 object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionContexts with Logging {
 
   def masterclassesTargetedAt(segment: Segment) = {
-    lazy val defaultClasses = available take 4
+
+    def startDateSort: (MasterClass) => Long = _.eventBriteEvent.startDate.getMillis
+
+    lazy val defaultClasses = available.sortBy(startDateSort) take 4
     val targeted = available filter { masterclass =>
       Keyword.idSuffixesIntersect(segment.context.keywords,
         masterclass.eventBriteEvent.keywordIdSuffixes)
     }
-    val toShow = (targeted ++ defaultClasses) take 4
-    toShow sortBy (_.eventBriteEvent.startDate.getMillis)
+    val toShow = (targeted.sortBy(startDateSort) ++ defaultClasses) take 4
+    toShow sortBy startDateSort
   }
 
   def specificClasses(eventBriteIds: Seq[String]): Seq[MasterClass] = {
