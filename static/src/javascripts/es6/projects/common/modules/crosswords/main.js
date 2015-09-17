@@ -439,6 +439,7 @@ class Crossword extends React.Component {
                 grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
                     if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
                         cell.isError = true;
+                        cell.value = '';
                     }
 
                     return cell;
