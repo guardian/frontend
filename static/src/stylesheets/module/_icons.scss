@@ -37,9 +37,9 @@ figcaption:before {
 
 // Quotes
 blockquote.quoted .inline-quote {
-    fill: #767676;
+    fill: colour(neutral-2);
     position: absolute;
-    & svg {
+    svg {
         width: 27px;
         height: 18px;
     }
