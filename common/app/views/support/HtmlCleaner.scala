@@ -51,6 +51,8 @@ object BlockquoteCleaner extends HtmlCleaner {
       val children = blockquoteElement.children()
       blockquoteElement.prependChild(container)
       container.insertChildren(0, children)
+      val quoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
+      blockquoteElement.prepend(quoteSvg)
     }
 
     quotedBlockquotes.foreach(wrapBlockquoteChildren)
