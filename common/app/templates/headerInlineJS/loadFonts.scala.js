@@ -42,23 +42,31 @@
                 var fontFormat = (function () {
                     var fontFormat = localStorage.getItem('gu.fonts.format');
 
+                    function supportsWoff2() {
+                        // try feature detecting first
+                        // https://github.com/filamentgroup/woff2-feature-test
+                        if ("FontFace" in window) {
+                            var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+                            f.load().catch(function(){});
+                            return f.status === 'loading';
+                        };
+
+                        // some browsers (e.g. FF40) support WOFF2 but not window.FontFace,
+                        // so fall back to known support
+                        if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
+                            var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua),
+                                supportsWoff2 = {
+                                    'chrome': 36,
+                                    'firefox': 39
+                                };
+                            return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
+                        }
+
+                        return false;
+                    };
+
                     function getFontFormat() {
                         if (!fontFormat) {
-                            function supportsWoff2() {
-                                if ("FontFace" in window) { // https://github.com/filamentgroup/woff2-feature-test
-                                    var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
-                                    f.load().catch(function(){});
-                                    return f.status === 'loading';
-                                } else if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
-                                    var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua),
-                                        supportsWoff2 = {
-                                            'chrome': 36,
-                                            'firefox': 39
-                                        };
-                                    return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
-                                }
-                                return false;
-                            };
                             fontFormat = localStorage['gu.fonts.format'] = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
                         }
                         return fontFormat;
