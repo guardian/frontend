@@ -461,7 +461,7 @@ class Crossword extends React.Component {
     }
 
     onCheat () {
-        this.cheat(this.clueInFocus());
+        _.forEach(this.allHighlightedClues(), this.cheat, this);
         this.save();
     }
 
@@ -493,7 +493,8 @@ class Crossword extends React.Component {
     }
 
     onClearSingle () {
-        const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
+        // Merge arrays of cells from all highlighted clues
+        const cellsInFocus = [].concat.apply([], _.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
