@@ -1,12 +1,12 @@
 @(metaData: model.MetaData)(body: Html)(implicit request: RequestHeader)
-@import conf.Switches._
+@import common.LinkTo
 
 <!doctype html AMP>
 <html>
     <head>
         <meta charset="utf-8">
         <title>@views.support.Title(metaData)</title>
-        <link rel="canonical" href="/@metaData.id" />
+        <link rel="canonical" href="@LinkTo{/@metaData.id}" />
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
         @fragments.amp.mainStylesheetAMP()
         @fragments.metaData(metaData)

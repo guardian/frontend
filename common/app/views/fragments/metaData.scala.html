@@ -1,11 +1,10 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import common.{AnalyticsHost, _}
 @import common.editions.EditionalisedSections
+@import common.{AnalyticsHost, _}
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
 @import play.api.Play
 @import play.api.Play.current
-@import views.support._
 
 @* Critical meta data that have an impact on rendering speed *@
 
@@ -122,5 +121,5 @@
 }
 
 @if((item.isArticle && !item.isLiveBlog) || item.isGallery){
-    <link rel="amphtml" href="/@item.id/amp">
+    <link rel="amphtml" href="@LinkTo{/@item.id/amp}">
 }
