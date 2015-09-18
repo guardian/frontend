@@ -5,7 +5,18 @@
     overflow: hidden;
     position: relative;
 
+    &:hover {
+        background-color: colour(neutral-6);
 
+        .gu-comcontent__image-container {
+            background-color: #000000;
+            opacity: .9;
+        }
+    }
+}
+
+.gu-comcontent__image-container {
+    background-color: colour(neutral-8);
 }
 
 %gu-style-box {
@@ -27,6 +38,10 @@
     
     a {
         color: colour(neutral-1);
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
@@ -60,11 +75,12 @@
 
 .gu-comcontent__logo {
     width: 40%;
-    vertical-align: bottom;
+    vertical-align: sub;
 }
 
 .gu-comcontent__image {
     width: 100%;
+    display: block;
 }
 
 .gu-comcontent__image-container {

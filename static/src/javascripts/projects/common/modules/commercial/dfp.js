@@ -411,9 +411,7 @@ define([
 
                 // Check if creative is a new gu style creative and place lables accordingly
                 checkForBreakout($slot).then(function (adType) {
-                    if (adType && adType.type === 'gu-style') {
-                        //new GuStyle($slot, adType).addLabel();
-                    } else {
+                    if (!adType || adType.type !== 'gu-style') {
                         addLabel($slot);
                     }
 
