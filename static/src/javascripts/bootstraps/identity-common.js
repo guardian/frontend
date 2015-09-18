@@ -13,11 +13,11 @@ define([
 ) {
     function setCssClass(config) {
         Id.init(config);
-        //// Used to show elements that need signin. Use .sign-in-required
-        //if (Id.isUserLoggedIn()) {
-        //    document.documentElement.className = document.documentElement.className
-        //        .replace(/\bid--signed-out\b/, 'id--signed-in');
-        //}
+        // Used to show elements that need signin. Use .sign-in-required
+        if (Id.isUserLoggedIn()) {
+            document.documentElement.className = document.documentElement.className
+                .replace(/\bid--signed-out\b/, 'id--signed-in');
+        }
     }
 
     return function () {

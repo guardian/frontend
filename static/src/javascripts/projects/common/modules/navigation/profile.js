@@ -73,12 +73,6 @@ define([
                     $register.hide();
                 });
             }
-
-            if (!$profileLink.hasClass('popup__toggle--signed-in')) {
-                fastdom.write(function () {
-                    $profileLink.addClass('popup__toggle');
-                });
-            }
         }
 
         this.emitLoadedEvent(user);
