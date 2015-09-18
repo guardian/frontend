@@ -103,7 +103,7 @@ define([
 
                 $('.js-football-table').remove();
                 $.create('<div class="js-football-table" data-link-name="football-table-embed">' + resp.groupTable + '</div>').each(function (container) {
-                    var extras = []
+                    var extras = [];
                     extras[0] = {
                         name: 'Table',
                         importance: 3,
