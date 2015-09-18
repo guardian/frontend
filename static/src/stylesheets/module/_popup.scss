@@ -206,16 +206,16 @@ $control-offset: 36 + $gs-gutter/2;
     @if ($old-ie == true) {
         .popup__toggle:hover:before,
         .popup__toggle:after {
-            display: none;
+            display: none !important;
         }
         &.is-signed-in .popup__toggle {
             display: inline-block;
         }
     } @else {
         &:not(.is-signed-in) .popup__toggle {
-            &:hover:before,
+            &:before,
             &:after {
-                display: none;
+                display: none !important;
             }
         }
     }

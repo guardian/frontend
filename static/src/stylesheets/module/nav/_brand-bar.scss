@@ -142,17 +142,7 @@
     }
 }
 
-.brand-bar__item--edition {
-    .is-not-modern & {
-        &:hover,
-        &:focus {
-            .popup {
-                display: block;
-            }
-        }
-    }
-}
-
+.brand-bar__item--edition,
 .is-signed-in.brand-bar__item--profile {
     .is-not-modern & {
         &:hover,
@@ -163,7 +153,6 @@
         }
     }
 }
-
 
 .brand-bar__item--jobs {
     .brand-bar__item--right--uk-edition &,
