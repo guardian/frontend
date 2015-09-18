@@ -136,13 +136,15 @@ function writeConfig() {
 
     console.log('writing to %s', configFilePath);
 
-    return new Promise(function (resolve, reject) {
-        fs.writeFile(configFilePath, configFileData, function (e) {
-            if (e) {
-                reject(e);
-            } else {
-                resolve();
-            }
+    return makeDirectory(path.dirname(configFilePath)).then(function () {
+        return new Promise(function (resolve, reject) {
+            fs.writeFile(configFilePath, configFileData, function (e) {
+                if (e) {
+                    reject(e);
+                } else {
+                    resolve();
+                }
+            });
         });
     });
 }
