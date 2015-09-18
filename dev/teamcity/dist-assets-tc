@@ -19,6 +19,25 @@ echo "##teamcity[progressStart 'asset dist']"
 set -x
 ./grunt-tc compile emitAbTestInfo  --cluster
 
+static_folder="static/target/riffraff"
+rm -rf $static_folder
+
+mkdir -p "$static_folder/packages/frontend-static"
+
+cp "static/conf/deploy.json" "$static_folder"
+cp -r static/hash/*                                     "$static_folder/packages/frontend-static"
+cp static/abtests.json                                  "$static_folder/packages/frontend-abtests"
+
+pushd $static_folder
+zip -r "../artifacts.zip" .
+popd
+
+set +o xtrace
+echo "##teamcity[publishArtifacts 'static/target/artifacts.zip']"
+set -o xtrace
+
+rm -rf $static_folder
+
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
