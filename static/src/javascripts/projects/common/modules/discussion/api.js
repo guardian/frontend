@@ -19,6 +19,7 @@ define([
             : config.page.discussionApiRoot,
         Api = {
             root: root,
+            // TODO get rid of discussion proxy completely when we're changed over to https
             proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
             clientHeader: config.page.discussionApiClientHeader
         };
