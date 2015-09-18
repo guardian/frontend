@@ -74,12 +74,13 @@ define([
                     $register.hide();
                 });
             }
-        }
 
-        if (!$profileLink.hasClass('popup__toggle')) {
-            fastdom.write(function () {
-                $profileLink.addClass('popup__toggle');
-            });
+            if (!$profileLink.hasClass('popup__toggle')) {
+                fastdom.write(function () {
+                    $profileLink.addClass('popup__toggle');
+                    $profileLink.attr('data-toggle', 'popup--profile');
+                });
+            }
         }
 
         this.emitLoadedEvent(user);
