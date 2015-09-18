@@ -1,0 +1,71 @@
+@(offlinePage: controllers.OfflinePage)(implicit request: RequestHeader)
+
+@import play.api.libs.json._
+
+<!DOCTYPE html>
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@views.support.Title(offlinePage)</title>
+
+    @fragments.metaData(offlinePage)
+
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheetLinks(None)
+
+    @* polyfill, feature detect etc before we try and use the stylesheets *@
+    @fragments.javaScriptPreFlight(offlinePage)
+
+    @* try and load fonts before we use the stylesheets *@
+    @fragments.fonts()
+
+    @* start trying to use the stylesheets *@
+    @fragments.stylesheetLinksEnable()
+
+    <script>
+        @Html(Static.systemJs.setupFragment)
+
+        @* Service worker only caches the bundles, so the offline page can only ask for those.
+        For production, we rely on bundles from systemJsSetup *@
+        @if(play.Play.isDev()) {
+            System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
+        }
+
+        @Html(templates.headerInlineJS.js.bootSystemJS(offlinePage).body)
+    </script>
+</head>
+    <body
+        id="top"
+        itemscope itemtype="http://schema.org/WebPage">
+
+        <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
+
+        @fragments.header(offlinePage)
+
+        <div class="l-side-margins">
+            <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
+                <div class="content__head tonal__head tonal__head--tone-news">
+                    <div class="gs-container">
+                        <div class="content__main-column content__main-column--single-column">
+                            <h1 class="content__headline">Unable to connect to the Internet</h1>
+                            <p>In the meantime, how about a quick crossword?</p>
+                            <button class="button js-open-crossword-btn">Open crossword</button>
+                        </div>
+                        <div class="js-crossword-container is-hidden u-baseline-top">
+                            <h2><a href="/crosswords/@offlinePage.crossword.id">@offlinePage.crossword.name</a></h2>
+                            <div class="js-crossword"
+                                data-crossword-data="@Json.stringify(Json.toJson(offlinePage.crossword))">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        @fragments.footer(offlinePage)
+
+        @fragments.footerJavaScript()
+
+    </body>
+</html>

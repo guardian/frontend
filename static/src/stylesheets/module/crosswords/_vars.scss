@@ -6,9 +6,10 @@ $xword-cell-width-xsmall: 20px; // as above but for long (10+ letter) clues
 $xword-border-width: 1px;
 
 $xword-highlight-colour: colour(crosswordAccent2);
-$xword-focussed-colour: colour(crosswordAccent1);
+$xword-focussed-colour: #000000;
 $xword-focussed-background-colour: lighten($xword-highlight-colour, 30%);
 
+$xword-clue-number-width: 32px;
 
 $xword-grid-sizes: (
     quick: 13,
