@@ -373,7 +373,6 @@ define([
             count = this.userData.articles.length;
 
         fastdom.write(function () {
-            console.log('foo2');
             $saveForLaterEl.attr('data-saved-content-count', count);
         });
     };
