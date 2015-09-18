@@ -75,10 +75,9 @@ define([
                 });
             }
 
-            if (!$profileLink.hasClass('popup__toggle')) {
+            if (!$profileLink.hasClass('popup__toggle--signed-in')) {
                 fastdom.write(function () {
                     $profileLink.addClass('popup__toggle');
-                    $profileLink.attr('data-toggle', 'popup--profile');
                 });
             }
         }

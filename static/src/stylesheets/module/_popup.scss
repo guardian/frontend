@@ -77,7 +77,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .popup__toggle,
-.is-signed-in.brand-bar__item--profile a {
+.is-signed-in .popup__toggle--signed-in {
     // disclosure arrow
     &:after {
         content: '';
@@ -96,7 +96,8 @@ $control-offset: 36 + $gs-gutter/2;
 
     &.is-active,
     .is-active > &,
-    .is-not-modern &:hover {
+    .is-not-modern .brand-bar__item--edition:hover &,
+    .is-not-modern .brand-bar__item--profile:hover & {
         @include mq(tablet) {
             &:after {
                 border-top: 0;
