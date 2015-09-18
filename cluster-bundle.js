@@ -136,7 +136,7 @@ function writeConfig() {
 
     console.log('writing to %s', configFilePath);
 
-    return new Promise(function (reject, resolve) {
+    return new Promise(function (resolve, reject) {
         fs.writeFile(configFilePath, configFileData, function (e) {
             if (e) {
                 reject(e);
