@@ -11,6 +11,7 @@ object Commercial {
   def shouldShowAds(metaData: MetaData): Boolean = metaData match {
     case c: model.Content if c.shouldHideAdverts => false
     case p: model.Page if p.section == "identity" => false
+    case model.CommercialExpiryPage(_) => false
     case _ => true
   }
 

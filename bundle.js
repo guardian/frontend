@@ -85,22 +85,48 @@ var writeBundlesToDisk = function (bundles) {
     });
 };
 
+var createModuleExpressionToFilenameMap = function (bundles) {
+    return Promise.all(bundles.map(function (bundle) {
+        return System.normalize(bundle.id).then(function (absolutePath) {
+            absolutePath = absolutePath.replace('file://', '');
+            var pathRelativeToDir = path.relative(__dirname, absolutePath);
+            return path.relative(jspmBaseUrl, pathRelativeToDir);
+        }).then(function (relativeFilename) {
+            return {
+                expression: bundle.id,
+                relativeFilename: relativeFilename
+            };
+        });
+    })).then(function (modules) {
+        return modules.reduce(function (accumulator, module) {
+            accumulator[module.expression] = module.relativeFilename;
+            return accumulator;
+        }, {});
+    });
+};
+
 var writeBundlesConfig = function (bundles) {
-    var bundlesConfig = bundles.reduce(function (accumulator, bundle) {
-        accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
-        return accumulator;
-    }, {});
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundlesConfig, null, '\t') + ' })';
-    console.log('writing to %s', configFilePath);
-    fs.writeFileSync(configFilePath, configFileData);
+    return createModuleExpressionToFilenameMap(bundles).then(function (map) {
+        var bundlesConfig = bundles.reduce(function (accumulator, bundle) {
+            accumulator[map[bundle.id]] = bundle.uri;
+            return accumulator;
+        }, {});
+        var filePath = path.join(prefixPath, 'assets/jspm-assets.map');
+        var fileData = JSON.stringify(bundlesConfig, null, '\t');
+
+        mkdirp.sync(path.dirname(filePath));
+
+        console.log('writing to %s', filePath);
+        fs.writeFileSync(filePath, fileData);
+    });
 };
 
 Promise.all(bundleConfigs.map(createBundle))
     .then(function (bundles) {
         writeBundlesToDisk(bundles);
-        writeBundlesConfig(bundles);
+        return writeBundlesConfig(bundles);
     })
     .catch(function (error) {
         console.error(error.stack);
+        process.exit(1);
     });

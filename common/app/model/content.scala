@@ -405,6 +405,21 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   )
 
   override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
+
+  lazy val chapterHeadings: Map[String, String] = {
+    val jsoupBody = Jsoup.parseBodyFragment(body)
+    val jsoupChapterCleaner = ChaptersLinksCleaner.clean(jsoupBody)
+    val chapterElements = jsoupChapterCleaner.getElementsByClass("auto-chapter")
+    chapterElements.map { el =>
+      val headingElOpt = el.getElementsByTag("h2").headOption
+      headingElOpt.flatMap { headingEl =>
+        val attributes = headingEl.attributes()
+        if(attributes.hasKey("id")) {
+          Some((attributes.get("id"), headingEl.text()))
+        } else None
+      }
+    }.flatten.toMap
+  }
 }
 
 class LiveBlog(delegate: contentapi.Content) extends Article(delegate) {

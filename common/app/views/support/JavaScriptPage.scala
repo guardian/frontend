@@ -5,7 +5,7 @@ import common.{Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
 import conf.Switches.IdentitySocialOAuthSwitch
-import model.{Content, MetaData}
+import model.{CommercialExpiryPage, Content, MetaData}
 import org.joda.time.DateTime
 import play.api.Play
 import play.api.Play.current
@@ -45,6 +45,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("omitMPUs", JsBoolean(metaData.omitMPUsFromContainers(edition))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
+        case CommercialExpiryPage(_) => true
         case _ => false
       })),
       ("isPreview", JsBoolean(environment.isPreview)),

@@ -214,6 +214,31 @@ Loader.prototype.initToolbar = function() {
         userPrefs.set('discussion.threading', this.comments.options.threading);
         this.loadComments();
     });
+
+    if (config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
+        && config.page.section === 'crosswords') {
+        var $timestampsLabel = $('.js-timestamps');
+        var updateLabelText = function (prefValue) {
+            $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
+        };
+        updateLabelText(prefValue);
+
+        var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
+        // Default to true
+        var prefValue = userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
+            ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
+            : true;
+        updateLabelText(prefValue);
+
+        this.on('click', '.js-timestamps-dropdown .popup__action', function(e) {
+            bean.fire(qwery('.js-timestamps-dropdown [data-toggle]')[0], 'click');
+            var format = bonzo(e.currentTarget).data('timestamp');
+            var prefValue = format === 'relative';
+            updateLabelText(prefValue);
+            userPrefs.set(PREF_RELATIVE_TIMESTAMPS, prefValue);
+            this.loadComments();
+        });
+    }
 };
 
 Loader.prototype.isOpenForRecommendations = function() {
