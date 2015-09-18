@@ -12,7 +12,7 @@ fi
 BUILD_PARAMS=""
 if [ -n "$BUILD_NUMBER" ]; then
   BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.number=\"$BUILD_NUMBER\""
-fi 
+fi
 if [ -n "$BUILD_VCS_NUMBER" ]; then
   BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
 fi
