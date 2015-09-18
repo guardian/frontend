@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
         @fragments.amp.mainStylesheetAMP()
         @fragments.metaData(metaData)
-        <script src="https://www.gstatic.com/amphtml/v0.js"></script>
+        <script src="https://www.gstatic.com/amphtml/v0.js" @if(Play.isDev) { development }></script>
         <script element="amp-twitter" src="https://www.gstatic.com/amphtml/v0/amp-twitter-0.1.js" async></script>
     </head>
     <body>
