@@ -294,7 +294,7 @@
         }
 
         @include mq(tablet) {
-            margin: 0 0 $gs-column-width/2 0;
+            margin: 0 0 $gs-column-width/2;
         }
     }
 
