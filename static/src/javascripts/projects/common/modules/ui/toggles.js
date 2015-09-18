@@ -3,13 +3,15 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/identity/api'
 ], function (
     bean,
     bonzo,
     $,
     _,
-    mediator
+    mediator,
+    id
 ) {
 
     var Toggles = function () {
@@ -17,7 +19,8 @@ define([
         var self = this,
             controls,
             doNotReset = ['popup--search'],
-            readyClass = 'js-toggle-ready';
+            readyClass = 'js-toggle-ready',
+            user = id.getUserFromCookie();
 
         this.init = function () {
             controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
@@ -25,7 +28,8 @@ define([
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
                     var target = self.getTarget(control);
-                    if (target) {
+
+                    if (target && !(!user && control.getAttribute('data-toggle-signed-in') === 'true')) {
                         control.toggleTarget = target;
                         bonzo(control).addClass(readyClass);
                         bean.add(control, 'click', function (e) {
