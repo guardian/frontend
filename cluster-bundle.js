@@ -89,11 +89,11 @@ function processBuild(moduleExpression, outName) {
     };
 }
 
-function makeDirectory(bundle) {
+function makeDirectory(dirPath) {
     return new Promise(function (resolve, reject) {
-        mkdirp(path.dirname(path.join(prefixPath, bundle.uri)), function (e) {
+        mkdirp(dirPath, function (e) {
             if (e) return reject(e);
-            resolve(bundle);
+            resolve();
         });
     });
 }
@@ -200,7 +200,10 @@ if (cluster.isMaster) {
 
             return builder.build(moduleExpression, null)
                 .then(processBuild(moduleExpression, outName))
-                .then(makeDirectory)
+                .then(function (bundle) {
+                    return makeDirectory(path.dirname(path.join(prefixPath, bundle.uri)))
+                        .then(function () { return bundle; });
+                })
                 .then(writeBundleToDisk)
                 .then(writeBundleMapToDisk);
         })).then(function (bundles) {
