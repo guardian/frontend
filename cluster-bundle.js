@@ -8,6 +8,7 @@ var path = require('path');
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var _ = require('lodash');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
@@ -126,15 +127,9 @@ function updateBundles(message) {
 }
 
 function writeConfig() {
-    var configs = Object.keys(processedBundles).reduce(function (acc, key) {
-        var bundles = processedBundles[key];
-
-        Object.keys(bundles).forEach(function (bundleKey) {
-            acc[bundleKey] = bundles[bundleKey];
-        });
-
-        return acc;
-    }, {});
+    var configs = _(processedBundles)
+        .map()
+        .reduce(function (a, o) { return _.merge(a, o); });
 
     var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
     var configFileData = 'System.config({ bundles: ' + JSON.stringify(configs, null, '\t') + ' })';
