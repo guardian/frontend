@@ -76,8 +76,7 @@ $control-offset: 36 + $gs-gutter/2;
     z-index: 11;
 }
 
-.popup__toggle,
-.is-signed-in .popup__toggle--signed-in {
+.popup__toggle {
     // disclosure arrow
     &:after {
         content: '';
@@ -119,7 +118,14 @@ $control-offset: 36 + $gs-gutter/2;
             border-right: $popup-anchor-arrow-size solid transparent;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
             top: $popup-top - $popup-anchor-arrow-size;
+        }
+    }
+}
 
+.popup__toggle {
+    &.is-active,
+    .is-active > & {
+        &:before {
             .brand-bar__item--has-control & {
                 @include mq(tablet) {
                     margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
@@ -198,7 +204,7 @@ $control-offset: 36 + $gs-gutter/2;
 .brand-bar__item--profile {
     // stupid having to reset this, but :not was :not available to all in 2009
     @if ($old-ie == true) {
-        .popup__toggle:before,
+        .popup__toggle:hover:before,
         .popup__toggle:after {
             display: none;
         }
@@ -207,7 +213,7 @@ $control-offset: 36 + $gs-gutter/2;
         }
     } @else {
         &:not(.is-signed-in) .popup__toggle {
-            &:before,
+            &:hover:before,
             &:after {
                 display: none;
             }

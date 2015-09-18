@@ -60,7 +60,6 @@ define([
         var user = id.getUserFromCookie(),
             $container = bonzo(this.dom.container),
             $content = bonzo(this.dom.content),
-            $popup = bonzo(this.dom.popup),
             $register = bonzo(this.dom.register),
             $profileLink = bonzo(this.dom.profileLink);
 
