@@ -8,6 +8,7 @@ var path = require('path');
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var _ = require('lodash');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
@@ -121,44 +122,28 @@ function writeBundleMapToDisk(bundle) {
     });
 }
 
-function writeConfig() {
-    var bundles = Object.keys(processedBundles).map(function (key) {
-        return processedBundles[key];
-    });
-
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundles, null, '\t') + ' })';
-
-    console.log('writing to %s', configFilePath);
-    fs.writeFile(configFilePath, configFileData, function (e) {
-        if (e) return process.exit(1);
-        process.exit(0);
-    });
-}
-
 function updateBundles(message) {
     processedBundles[message.id] = message.configs;
 }
 
 function writeConfig() {
-    var configs = Object.keys(processedBundles).reduce(function (acc, key) {
-        var bundles = processedBundles[key];
-
-        Object.keys(bundles).forEach(function (bundleKey) {
-            acc[bundleKey] = bundles[bundleKey];
-        });
-
-        return acc;
-    }, {});
+    var configs = _(processedBundles)
+        .map()
+        .reduce(function (a, o) { return _.merge(a, o); });
 
     var configFilePath = path.join(prefixPath, 'assets/jspm-assets.map');
     var configFileData = JSON.stringify(configs, null, '\t');
 
     console.log('writing to %s', configFilePath);
 
-    fs.writeFile(configFilePath, configFileData, function (e) {
-        if (e) return process.exit(1);
-        process.exit(0);
+    return new Promise(function (reject, resolve) {
+        fs.writeFile(configFilePath, configFileData, function (e) {
+            if (e) {
+                reject(e);
+            } else {
+                resolve();
+            }
+        });
     });
 }
 
@@ -202,7 +187,10 @@ if (cluster.isMaster) {
             if (cluster.workers[id].isConnected()) return;
         }
 
-        writeConfig();
+        writeConfig().catch(function (err) {
+            console.error(err.stack);
+            process.exit(1);
+        });
     });
 } else {
     process.on('message', function go(message) {
@@ -226,7 +214,7 @@ if (cluster.isMaster) {
                 process.exit(0);
             });
         }).catch(function (err) {
-            console.error(err);
+            console.error(err.stack);
             process.exit(1);
         });
     });
