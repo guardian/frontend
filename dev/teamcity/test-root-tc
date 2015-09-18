@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+./dev/teamcity/sbt-tc "project root" compile assets test
+
+echo "Tested everything."
