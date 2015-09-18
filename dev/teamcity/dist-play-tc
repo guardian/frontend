@@ -10,6 +10,6 @@ set +x
 echo "##teamcity[progressStart 'sbt test and dist']"
 set -x
 
-./dev/teamcity/sbt-tc "project root" compile assets test dist
+./dev/teamcity/sbt-tc "project root" compile assets test riffRaffUpload
 
 echo "Done disting."
