@@ -1,11 +1,14 @@
 package com.gu
 
 import com.gu.versioninfo.VersionInfo
+import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt._
 import sbt.Keys._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import com.typesafe.sbt.packager.Keys._
+import com.gu.riffraff.artifact.RiffRaffArtifact
+import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import play.twirl.sbt.Import._
 import Dependencies._
 
@@ -102,14 +105,23 @@ trait Prototypes {
   def frontendDistSettings(application: String) = List(
     name in Universal := application,
     topLevelDirectory in Universal := Some(application),
-    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1))
+    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
+    riffRaffPackageType := (packageBin in Universal).value,
+    riffRaffPackageName := application,
+    riffRaffBuildIdentifier := "DEV-Build", //needs stage
+    riffRaffUploadArtifactBucket := "aws-frontend-teamcity",
+    riffRaffUploadManifestBucket := "aws-frontend-teamcity",
+    riffRaffArtifactPublishPath := application,
+    artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+      artifact.name + "." + artifact.extension
+    }
   )
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
     .settings(frontendCompilationSettings)
 
   def application(applicationName: String) = {
-    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala, RiffRaffArtifact, UniversalPlugin)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
     .settings(frontendClientSideSettings)
