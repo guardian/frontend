@@ -36,8 +36,6 @@ set +o xtrace
 echo "##teamcity[publishArtifacts 'static/target/artifacts.zip']"
 set -o xtrace
 
-rm -rf $static_folder
-
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
