@@ -113,6 +113,9 @@ var writeBundlesConfig = function (bundles) {
         }, {});
         var filePath = path.join(prefixPath, 'assets/jspm-assets.map');
         var fileData = JSON.stringify(bundlesConfig, null, '\t');
+
+        mkdirp.sync(path.dirname(filePath));
+
         console.log('writing to %s', filePath);
         fs.writeFileSync(filePath, fileData);
     });
