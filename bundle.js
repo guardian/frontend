@@ -128,4 +128,5 @@ Promise.all(bundleConfigs.map(createBundle))
     })
     .catch(function (error) {
         console.error(error.stack);
+        process.exit(1);
     });
