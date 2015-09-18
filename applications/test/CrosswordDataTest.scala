@@ -23,8 +23,8 @@ import scala.io.Source
 
       val capiCrossword = crosswordJson.as[Crossword]
       val crossword = CrosswordData.fromCrossword(capiCrossword)
-
-      crossword.entries.size should be (30)
+      
+      crossword.entries.size should be (4)
 
       val entriesMap = crossword.entries.map(entry => (entry.id, entry)).toMap
 
