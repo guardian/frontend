@@ -2,17 +2,21 @@
 @import common.Edition
 @import views.support.TrailCssClasses.articleToneClass
 
-@body(page.interactive, page.interactive.isImmersive)
+@if(page.interactive.isImmersive) {
+    @bodyRaw(page.interactive)
+} else {
+    @body(page.interactive)
+}
 
-@figureEl(interactive: model.Interactive) = {
-    @page.interactive.figureEl.map { figure =>
-        @HtmlFormat.raw(figure)
+@bodyRaw(interactive: model.Interactive) = {
+    @page.interactive.body.map { body =>
+        @HtmlFormat.raw(body)
     }.getOrElse {
         <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
     }
 }
 
-@body(interactive: model.Interactive, isImmersive: Boolean) = {
+@body(interactive: model.Interactive) = {
     <div class="l-side-margins">
         <article class="@RenderClasses(
                 Map(
@@ -33,18 +37,15 @@
                     </div>
                 </div>
 
-                <div class="gs-container" xdata-test-id="interactive-content-body">
+                <div class="gs-container" data-test-id="interactive-content-body">
                     <div class="content__main-column content__main-column--interactive">
-                        @if(!isImmersive) {
-                            @figureEl(interactive)
-                        }
-                        @HtmlFormat.raw(interactive.fallbackEl)
+                        @bodyRaw(interactive)
                     </div>
                 </div>
 
                 <div class="gs-container u-cf">
                     <div class="content__main-column content__meta-footer">
-                        @fragments.contentMeta(interactive, showBadge = false)
+                    @fragments.contentMeta(interactive, showBadge = false)
                     </div>
                 </div>
             </div>
@@ -53,8 +54,4 @@
         @fragments.contentFooter(interactive, page.related)
 
     </div>
-
-    @if(isImmersive) {
-        @figureEl(interactive)
-    }
 }
