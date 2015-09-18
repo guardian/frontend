@@ -28,7 +28,6 @@ define([
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
         this.dom.register = document.body.querySelector('.' + Profile.CONFIG.classes.register);
-        this.dom.profileLink = document.body.querySelector('.' + Profile.CONFIG.classes.container + ' .' + Profile.CONFIG.classes.action);
     }
 
     /** @type {Object.<string.*>} */
