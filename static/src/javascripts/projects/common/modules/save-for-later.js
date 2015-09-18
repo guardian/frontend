@@ -12,8 +12,7 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html',
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'text!common/views/save-for-later/save-button.html'
 ], function (
     qwery,
     bonzo,
@@ -28,8 +27,7 @@ define([
     identity,
     svgs,
     saveLink,
-    saveButton,
-    profileLinkTmp
+    saveButton
 ) {
 
     function SaveForLater() {
@@ -77,21 +75,12 @@ define([
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
-
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
-                    var popup = qwery('.popup--profile')[0];
 
-                    fastdom.write(function () {
-                        bonzo(popup).prepend(bonzo.create(
-                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                idUrl: config.page.idUrl
-                            })
-                        ));
-                        this.updateSavedCount();
-                    }.bind(this));
+                    this.updateSavedCount();
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         // this user has never saved anything, so create a new
@@ -380,18 +369,12 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var saveForLaterProfileCount = $(this.classes.profileDropdownCount);
-        var profile = $('.brand-bar__item--profile');
-        var count = this.userData.articles.length;
+        var $saveForLaterEl = $('.brand-bar__item--saved-for-later'),
+            count = this.userData.articles.length;
 
         fastdom.write(function () {
-            if (count > 0) {
-                $('.save-for-later__icon', profile).attr('data-saved-content-count', count);
-                saveForLaterProfileCount.text(count);
-            } else {
-                $('.save-for-later__icon', profile).removeAttr('data-saved-content-count');
-                saveForLaterProfileCount.text('');
-            }
+            console.log('foo2');
+            $saveForLaterEl.attr('data-saved-content-count', count);
         });
     };
 

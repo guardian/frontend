@@ -28,6 +28,7 @@ define([
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
         this.dom.register = document.body.querySelector('.' + Profile.CONFIG.classes.register);
+        this.dom.commentActivity = document.body.querySelector('.' + Profile.CONFIG.classes.commentActivity);
     }
 
     /** @type {Object.<string.*>} */
@@ -38,6 +39,7 @@ define([
             content: 'js-profile-info',
             popup: 'js-profile-popup',
             register: 'js-profile-register',
+            commentActivity: 'js-comment-activity',
             action: 'brand-bar__item--action'
         }
     };
@@ -60,7 +62,7 @@ define([
             $container = bonzo(this.dom.container),
             $content = bonzo(this.dom.content),
             $register = bonzo(this.dom.register),
-            $profileLink = bonzo(this.dom.profileLink);
+            $commentActivity = bonzo(this.dom.commentActivity);
 
         if (user) {
             // Run this code only if we haven't already inserted
@@ -72,6 +74,9 @@ define([
                     $register.hide();
                 });
             }
+
+            $commentActivity.removeClass('u-h');
+            $commentActivity.attr('href', this.opts.url + '/user/id/' + user.id);
         }
 
         this.emitLoadedEvent(user);

@@ -170,8 +170,11 @@ $control-offset: 36 + $gs-gutter/2;
 
 .popup__item {
     display: block;
-    border-bottom: 1px solid colour(neutral-5);
     line-height: 36px;
+
+    a {
+        border-bottom: 1px solid colour(neutral-5);
+    }
 
     &:last-child {
         border-bottom: 0;
@@ -233,8 +236,9 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.brand-bar__item--saved-for-later-count {
+.js-on .brand-bar__item--saved-for-later:after {
     display: inline-block;
+    content: attr(data-saved-content-count);
     position: relative;
     top: -1px;
     line-height: $gs-baseline;
