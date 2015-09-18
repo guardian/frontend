@@ -151,8 +151,8 @@ function writeConfig() {
         return acc;
     }, {});
 
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(configs, null, '\t') + ' })';
+    var configFilePath = path.join(prefixPath, 'assets/jspm-assets.map');
+    var configFileData = JSON.stringify(configs, null, '\t');
 
     console.log('writing to %s', configFilePath);
 
@@ -161,6 +161,26 @@ function writeConfig() {
         process.exit(0);
     });
 }
+
+var createModuleExpressionToFilenameMap = function (bundles) {
+    return Promise.all(bundles.map(function (bundle) {
+        return System.normalize(bundle.id).then(function (absolutePath) {
+            absolutePath = absolutePath.replace('file://', '');
+            var pathRelativeToDir = path.relative(__dirname, absolutePath);
+            return path.relative(jspmBaseUrl, pathRelativeToDir);
+        }).then(function (relativeFilename) {
+            return {
+                expression: bundle.id,
+                relativeFilename: relativeFilename
+            };
+        });
+    })).then(function (modules) {
+        return modules.reduce(function (accumulator, module) {
+            accumulator[module.expression] = module.relativeFilename;
+            return accumulator;
+        }, {});
+    });
+};
 
 if (cluster.isMaster) {
     var split = split(bundleConfigs, numCPUs);
@@ -196,13 +216,15 @@ if (cluster.isMaster) {
                 .then(writeBundleToDisk)
                 .then(writeBundleMapToDisk);
         })).then(function (bundles) {
-            var configs = bundles.reduce(function (accumulator, bundle) {
-                accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
-                return accumulator;
-            }, {});
+            return createModuleExpressionToFilenameMap(bundles).then(function (map) {
+                var configs = bundles.reduce(function (accumulator, bundle) {
+                    accumulator[map[bundle.id]] = bundle.uri;
+                    return accumulator;
+                }, {});
 
-            process.send({ id: process.env.num, configs: configs });
-            process.exit(0);
+                process.send({ id: process.env.num, configs: configs });
+                process.exit(0);
+            });
         }).catch(function (err) {
             console.error(err);
             process.exit(1);
