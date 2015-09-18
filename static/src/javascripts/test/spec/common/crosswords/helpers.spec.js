@@ -166,7 +166,7 @@ describe('Helpers', function () {
         });
     });
 
-    describe('getAnagramClueData', function () {
+    fdescribe('getAnagramClueData', function () {
         it('should return the clue for a non grouped clue', function () {
             expect(helpers.getAnagramClueData(entriesFixture, entryFixture)).toEqual(entryFixture);
         });
@@ -175,6 +175,7 @@ describe('Helpers', function () {
             var expectedData = {
                 id: '10-across',
                 number: '2,10,23,21across',
+                length: 30,
                 separatorLocations: {',': [4, 8, 11, 17, 21, 25, 28], '-': []},
                 direction: '',
                 clue: 'Excuse me? Did some old people at any time cause our ruin? Thats a funny revolutionary line (4,4,3,6,4,4,3,2)'
@@ -209,6 +210,12 @@ describe('Helpers', function () {
         it('should get the correct separators for the whole clue grouup', function () {
             var expectedSeparators = {',': [4, 8, 11, 17, 21, 25, 28], '-': []};
             expect(helpers.getAllSeparatorsForGroup(groupFixture)).toEqual(expectedSeparators);
+        });
+    });
+
+    describe("getTtotalLengthOfGroup", function () {
+        it('should get the total length of a group', function() {
+           expect(helpers.getTtotalLengthOfGroup(groupFixture)).toEqual(30)
         });
     });
 

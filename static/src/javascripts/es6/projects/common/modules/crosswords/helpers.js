@@ -62,12 +62,17 @@ const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue;
 
 const getNumbersForGroupedEntries = (clueGroup) =>  _.first(clueGroup).humanNumber;
 
+const getTtotalLengthOfGroup = (clueGroup) => {
+    return _.reduce(clueGroup, (total, clue) => { return total += clue.length}, 0 );
+};
+
 const getAnagramClueData = (entries, clue) => {
     if (clueIsInGroup(clue)) {
         const groupEnts = getGroupEntriesForClue(entries, clue.group);
         return {
             id: clue.id,
             number: getNumbersForGroupedEntries(groupEnts),
+            length: getTtotalLengthOfGroup(groupEnts),
             separatorLocations: getAllSeparatorsForGroup(groupEnts),
             direction: '',
             clue: getClueForGroupedEntries(groupEnts)
@@ -213,5 +218,6 @@ export default {
     getGroupEntriesForClue: getGroupEntriesForClue,
     getNumbersForGroupedEntries: getNumbersForGroupedEntries,
     getClueForGroupedEntries: getClueForGroupedEntries,
-    getAllSeparatorsForGroup: getAllSeparatorsForGroup
+    getAllSeparatorsForGroup: getAllSeparatorsForGroup,
+    getTtotalLengthOfGroup: getTtotalLengthOfGroup
 };
