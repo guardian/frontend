@@ -29,7 +29,7 @@ define([
         var bannerTmpl = template(adfreeSurvey,
             {
                 surveyHeader: 'Advert free experience on the Guardian site and apps',
-                surveyText: 'From £5 a month join exclusive Guardian events, get a quality ad free experience of our site and apps and support our journalism.',
+                surveyText: 'From £5 a month join exclusive Guardian events, get a quality ad free experience of our site and apps plus support our journalism.',
                 linkText: 'Explore Guardian Members',
                 alreadyMember: 'Already a member?',
                 alreadyMemberLink: 'http://google.com',

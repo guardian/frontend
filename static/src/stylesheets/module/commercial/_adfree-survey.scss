@@ -57,7 +57,7 @@
     right: 20px;
 
     svg {
-        padding-top: 5px;
+        margin-top: 5px;
         width: 14px;
         height: 14px;
     }
@@ -71,6 +71,7 @@
     z-index: 10000; /*TODO set proper z-index*/
     width: 100%;
     height: 100%;
+
 
     .site-message__close-btn {
         border: 1px solid rgba(#333333, .3);
@@ -108,7 +109,7 @@
         color: #ffffff;
         box-sizing: border-box;
 
-        @include mq(mobileLandscape) {
+        @include mq(tablet) {
             left: 50%;
             top: percentage(1/5);
             width: $gs-column-width*6;
@@ -133,6 +134,11 @@
 
     .survey-icon {
         text-align: center;
+        display: none;
+
+        @include mq(tablet) {
+            display: block;
+        }
     }
 
     .survey-new {
@@ -144,14 +150,14 @@
     }
 
     .survey-text__header {
-        @include fs-headline(5);
-        font-size: 23px;
+        @include fs-headline(4);
         color: #000000;
         font-weight: bold;
         margin-bottom: $gs-baseline*4;
 
         @include mq(mobileLandscape) {
-            font-size: 28px;
+            @include fs-headline(5);
+            font-weight: bold;
         }
     }
 
@@ -160,7 +166,7 @@
         bottom: 50px;
         padding-right: 30px;
 
-        @include mq(mobileLandscape) {
+        @include mq(tablet) {
             position: static;
             padding: 0;
         }        
@@ -171,6 +177,13 @@
         font-size: 12px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-gutter/2 0;
+    }
+
+    .inline-membership-logo {
+        svg {
+            width: 100px;
+            height: 34px;
+        }
     }
 
     .survey-link {
@@ -225,7 +238,7 @@
         color: #ffffff;
         box-sizing: border-box;
 
-        @include mq(mobileLandscape) {
+        @include mq(tablet) {
             left: 50%;
             top: percentage(1/5);
             width: $gs-column-width*6;
@@ -253,18 +266,35 @@
         svg {
             width: 100px;
             height: 100px;
+            margin-top: -20px; 
+
+            @include mq(mobileLandscape) {
+                display: none;
+            }
+
+            @include mq(tablet) {
+                display: inline;
+                width: 150px;
+                height: 150px;
+            }
+
         }
     }
 
     .survey-text__header {
-        @include fs-headline(5);
-        font-size: 23px;
+        @include fs-headline(4);
         color: #ffffff;
         font-weight: bold;
         margin-bottom: $gs-column-width/2;
 
         @include mq(mobileLandscape) {
-            font-size: 28px;
+            @include fs-headline(5);
+            font-weight: bold;
+            margin: -27px 50px 0 0;
+        }
+
+        @include mq(tablet) {
+            margin: 0 0 $gs-column-width/2 0;
         }
     }
 
@@ -273,7 +303,7 @@
         bottom: 35px;
         padding-right: 30px;
 
-        @include mq(mobileLandscape) {
+        @include mq(tablet) {
             position: static;
             padding: 0;
         }        
@@ -322,6 +352,9 @@
         background-repeat: no-repeat;
         background-size: 150% 80%;
 
+        @include mq(tablet) {
+        }
+
         @include mq(desktop) {
             background-size: 100% 95%;
         }
@@ -356,7 +389,7 @@
 
     .thrasher-content {
         @include clearfix;
-        margin-top: 40px;
+        margin-top: 20px;
     }
 
     .thrasher-content-new {
@@ -379,24 +412,31 @@
     }
 
     .thrasher-content__logo {
-        margin: 0 0 10px 20px;
+        margin: 0 0 0 20px;
+        position: absolute;
+        bottom: 5px;
 
         @include mq(desktop) {
-            margin: $gs-row-height*3 10px 10px 0;
+            margin-left: 0;
         }
 
         @include mq(wide) {
             margin-left: 90px;
         }
+
+        svg {
+            width: 100px;
+            height: 34px;
+        }
     }
 
     .thrasher-content__header {
-        margin: 20px 0 0 20px;
+        margin: 20px 0 65px 20px;
 
         @include mq(desktop) {
             float: right;
             @include clearfix;
-            margin: 0;
+            margin-bottom: 35px;
         }
         @include mq(leftCol) {
             margin-right: 110px;
@@ -435,21 +475,33 @@
         @include mq(desktop) {
             float: left;
             width: $gs-column-width*9;
-            margin: 5px 0 0 $gs-gutter;
+            margin: 5px $gs-gutter 0 0;
             @include fs-headline(6);
             font-weight: bold;
             padding-right: 0;
         }
+
+        @include mq(wide) {
+            margin: 5px 0 0 $gs-gutter;
+        }
+
     }
 }
 
 .has-page-skin {
     .adfree-thrasher {
-        .thrasher-content__header {
-            @include mq(leftCol) {
+        @include mq(wide) {
+            .thrasher-content__header {
                 margin-right: 0;
             }
+            .thrasher-glogo {
+                right: 4%;
+            }
+            .thrasher-content__logo {
+                margin-left: 20px;
+            }
         }
+
     }
 }
 
@@ -576,9 +628,9 @@
 
 .has-page-skin {
     .adfree-thrasher-simple {
-        .thrasher-content__header {
-            @include mq(leftCol) {
-                margin-right: 0;
+        @include mq(wide) {
+            .thrasher-content__header--text {
+                margin: $gs-baseline*2 $gs-column-width*3 $gs-baseline*2 0;
             }
         }
     }
