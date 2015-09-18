@@ -12,7 +12,7 @@ trait Notification extends Logging with ExecutionContexts {
 
   val topic: String
 
-  def sns: Option[AmazonSNSAsyncClient] = Configuration.aws.credentials.map{ credentials =>
+  lazy val sns: Option[AmazonSNSAsyncClient] = Configuration.aws.credentials.map{ credentials =>
     val client = new AmazonSNSAsyncClient(credentials)
     client.setEndpoint(AwsEndpoints.sns)
     client
