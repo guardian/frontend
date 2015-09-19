@@ -44,7 +44,7 @@ object Edition {
   // gives templates an implicit edition
   implicit def edition(implicit request: RequestHeader): Edition = this(request)
 
-  val defaultEdition = editions.Uk
+  lazy val defaultEdition: Edition = editions.Uk
 
   lazy val all = List(
     editions.Uk,
@@ -77,7 +77,7 @@ object Edition {
      .orElse(editionFromHeader)
      .orElse(editionFromCookie)
      .filter(const(!isInternationalControlGroup))
-     .getOrElse(Edition.defaultEdition.id)
+     .getOrElse(defaultEdition.id)
   }
 
   def apply(request: RequestHeader): Edition = {
@@ -114,9 +114,11 @@ object Edition {
 
   def otherPagesFor(request: RequestHeader): Seq[EditionLink] = {
     val path = request.path
+    val edition = Edition(request)
     path match {
       case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
-        Edition.othersById(editionId).map(EditionLink(_, section))
+        val links = Edition.othersById(editionId).map(EditionLink(_, section))
+        links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
       case EditionalisedFront(editionId) =>
         Edition.othersByHomepage(path).map(EditionLink(_, "/"))
       case _ => Nil
