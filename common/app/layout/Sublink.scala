@@ -2,7 +2,7 @@ package layout
 
 import com.gu.facia.api.models._
 import com.gu.facia.api.utils.{ExternalLink, MediaType, CardStyle, ItemKicker}
-import common.{Edition, InternationalEdition, LinkTo}
+import common.{Edition, LinkTo}
 import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
 import model._

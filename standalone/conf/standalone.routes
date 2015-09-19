@@ -134,9 +134,10 @@ GET        /series/*path.json                                                   
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
 
 # Facia
-GET        /                                                                                   controllers.FaciaDraftController.editionRedirect(path = "")
+GET        /                                                                                   controllers.FaciaDraftController.rootEditionRedirect()
+GET        /rss                                                                                controllers.FaciaController.renderRootFrontRss()
 GET        /$path<.+>/show-more/*id.json                                                       controllers.FaciaDraftController.renderShowMore(path, id)
-GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.editionRedirect(path)
+GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.renderFront(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.FaciaDraftController.renderFrontRss(path)
 GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonLite(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.FaciaDraftController.renderFrontJson(path)

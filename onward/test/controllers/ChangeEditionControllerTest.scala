@@ -9,9 +9,6 @@ import test.{ConfiguredTestSuite, TestRequest}
 
   val callbackName = "aFunction"
 
-  override def afterEach(): Unit = {
-    Switches.InternationalEditionSwitch.switchOff()
-  }
 
   "ChangeEditionController" should "redirect to correct page" in {
     val result = controllers.ChangeEditionController.render("uk")(TestRequest())
@@ -29,8 +26,6 @@ import test.{ConfiguredTestSuite, TestRequest}
 
   it should "set the international cookie if enabled" in {
 
-    Switches.InternationalEditionSwitch.switchOn()
-
     val result = controllers.ChangeEditionController.render("intl")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
@@ -38,14 +33,6 @@ import test.{ConfiguredTestSuite, TestRequest}
     GU_EDITION.value should be ("INTL")
 
     header("Location", result).head should endWith ("/international")
-  }
-
-  it should "not set the international cookie if not enabled" in {
-
-    Switches.InternationalEditionSwitch.switchOff()
-
-    val result = controllers.ChangeEditionController.render("intl")(TestRequest())
-    status(result) should be (404)
   }
 
   it should "not cache" in {

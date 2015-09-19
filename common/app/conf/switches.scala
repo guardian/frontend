@@ -624,11 +624,11 @@ object Switches {
     exposeClientSide = true
   )
 
-  val InternationalEditionSwitch = Switch(
+  val InternationalEditionBetaSwitch = Switch(
     "Feature",
     "international-edition",
     "International edition A/B test on",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )

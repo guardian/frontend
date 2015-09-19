@@ -122,18 +122,6 @@ define([
             }
         });
 
-        if (config.tests.internationalEditionVariant) {
-            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
-
-            // don't use the edition of the page - we specifically want the cookie version
-            // this allows us to figure out who has "opted out" and "opted into" the test
-            editionFromCookie = cookies.get('GU_EDITION');
-
-            if (editionFromCookie) {
-                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
-            }
-        }
-
         _.forEach(getServerSideTests(), function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
         });
@@ -215,9 +203,7 @@ define([
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        // International Edition is not really a test.
         return _(config.tests)
-            .omit('internationalEditionVariant')
             .pick(function (participating) { return !!participating; })
             .keys()
             .value();

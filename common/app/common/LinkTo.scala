@@ -29,7 +29,7 @@ trait LinkTo extends Logging {
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
   def apply(url: String, edition: Edition)(implicit request: RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition, InternationalEdition.isInternationalEdition(request)).url
+    val processedUrl: String = processUrl(url, edition).url
     handleQueryStrings(processedUrl)
   }
 
@@ -38,9 +38,9 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition, isInternationalEdition: Boolean = false) = url match {
-    case "http://www.theguardian.com" => ProcessedUrl(urlFor("", edition, isInternationalEdition))
-    case "/" => ProcessedUrl(urlFor("", edition, isInternationalEdition))
+  def processUrl(url: String, edition: Edition) = url match {
+    case "http://www.theguardian.com" => ProcessedUrl(urlFor("", edition))
+    case "/" => ProcessedUrl(urlFor("", edition))
     case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
     case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
     case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
@@ -54,8 +54,8 @@ trait LinkTo extends Logging {
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.header.url.get(request)
 
-  private def urlFor(path: String, edition: Edition, isInternationalEdition: Boolean = false): String = {
-    val editionalisedPath = Editionalise(clean(path), edition, isInternationalEdition)
+  private def urlFor(path: String, edition: Edition): String = {
+    val editionalisedPath = Editionalise(clean(path), edition)
     val url = s"$host/$editionalisedPath"
     url match {
       case AbsoluteGuardianUrl(_) if isHttpsEnabled(editionalisedPath) =>  url.replace("http://", "//")

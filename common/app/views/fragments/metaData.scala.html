@@ -1,6 +1,5 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 @import common.{AnalyticsHost, _}
-@import common.editions.EditionalisedSections
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
 @import play.api.Play
@@ -37,8 +36,8 @@
     ONLY for EDITONALISED sections
     https://support.google.com/webmasters/answer/189077
 *@
-@EditionalisedSections.otherPagesFor(request).map{ link =>
-    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.lang" />
+@Edition.otherPagesFor(request).map{ link =>
+    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
 }
 
 <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />

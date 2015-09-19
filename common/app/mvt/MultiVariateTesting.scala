@@ -1,7 +1,6 @@
 package mvt
 
 import MultiVariateTesting._
-import common.InternationalEditionVariant
 import conf.Switch
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -61,8 +60,7 @@ object ActiveTests extends Tests {
     val headlineTests = List(ABHeadlinesTestControl, ABHeadlinesTestVariant).filter(_.isParticipating)
       .map{ test => Some(s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}""")}
 
-    val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-      headlineTests ++
+    val configEntries = headlineTests ++
       List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
 
     configEntries.flatten.mkString(",")

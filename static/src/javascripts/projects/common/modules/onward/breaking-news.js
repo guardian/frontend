@@ -69,8 +69,7 @@ define([
                         collection.href = (collection.href || '').toLowerCase();
                         return collection;
                     }),
-                    treatAsInternationalForAlerts = page.internationalEdition === 'international',
-                    edition = treatAsInternationalForAlerts ? 'intl' : (page.edition || '').toLowerCase(),
+                    edition = (page.edition || '').toLowerCase(),
                     section = supportedSections[page.section],
 
                     articles = _.chain([
