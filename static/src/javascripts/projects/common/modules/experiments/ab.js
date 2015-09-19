@@ -108,7 +108,7 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [], editionFromCookie;
+            tag = [];
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
