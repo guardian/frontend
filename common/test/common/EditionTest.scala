@@ -36,4 +36,13 @@ class EditionTest extends FlatSpec with Matchers {
 
     Edition(request) should be(Uk)
   }
+
+  "The Default Edition" should "include all possible editionalised sections" in {
+    // because they are used as defaults for other editions that do not override them
+
+    val defaultSections = Edition.defaultEdition.editionalisedSections.sorted
+    val allSections = Edition.all.flatMap(_.editionalisedSections).distinct.sorted
+
+    allSections should equal (defaultSections)
+  }
 }
