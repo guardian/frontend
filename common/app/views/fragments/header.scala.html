@@ -48,9 +48,12 @@
                             </a>
                             <div class="js-profile-popup">
                                 <ul class="popup popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
-                                    <li class="popup__item">
-                                        <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later" data-saved-content-count="0">Saved for later</a>
-                                    </li>
+                                    @if(conf.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                        <li class="popup__item">
+                                            <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later" data-saved-content-count="0">
+                                                Saved for later</a>
+                                        </li>
+                                    }
                                     <li class="popup__item"><a class="brand-bar__item--action js-comment-activity u-h" data-link-name="Comment activity">Comment activity</a></li>
                                     <li class="popup__item"><a href="@Configuration.id.url/public/edit" class="brand-bar__item--action" data-link-name="Edit profile">Edit profile</a></li>
                                     <li class="popup__item"><a href="@Configuration.id.url/email-prefs" class="brand-bar__item--action" data-link-name="Email preferences">Email preferences</a></li>

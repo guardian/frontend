@@ -42,7 +42,8 @@ define([
             itemSaveLink: '.js-save-for-later-link',
             itemSaveLinkHeading: '.save-for-later-link__heading',
             profileDropdownCount: '.brand-bar__item--saved-for-later-count',
-            fcItemIsSaved: 'fc-save-for-later--is-saved'
+            fcItemIsSaved: 'fc-save-for-later--is-saved',
+            profileDropdownLink: '.brand-bar__item--saved-for-later'
         };
         this.attributes = {
             containerItemShortUrl: 'data-loyalty-short-url',
@@ -369,11 +370,13 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var $saveForLaterEl = $('.brand-bar__item--saved-for-later'),
+        var $saveForLaterEl = $(this.classes.profileDropdownLink),
             count = this.userData.articles.length;
 
+        console.log('foo22');
         fastdom.write(function () {
             $saveForLaterEl.attr('data-saved-content-count', count);
+            console.log('foo23');
         });
     };
 
