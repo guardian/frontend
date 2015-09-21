@@ -108,7 +108,7 @@ trait Prototypes {
     concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     riffRaffPackageType := (packageBin in Universal).value,
     riffRaffPackageName := application,
-    riffRaffBuildIdentifier := "DEV-Build", //needs stage
+    riffRaffBuildIdentifier := System.getProperty("build.vcs.number", "DEV"),
     riffRaffUploadArtifactBucket := "aws-frontend-teamcity",
     riffRaffUploadManifestBucket := "aws-frontend-teamcity",
     riffRaffArtifactPublishPath := application,
