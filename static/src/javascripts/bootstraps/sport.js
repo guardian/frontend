@@ -6,6 +6,7 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/page',
     'common/modules/charts/table-doughnut',
     'common/modules/component',
     'common/modules/sport/score-board',
@@ -18,6 +19,7 @@ define([
     ajax,
     config,
     detect,
+    page,
     Doughnut,
     Component,
     ScoreBoard,
@@ -89,12 +91,75 @@ define([
                     $('.js-chart', container).each(function (el) {
                         new Doughnut().render(el);
                     });
-                    rhc.addComponent(container, 3);
+                    var extras = [];
+                    extras[0] = {
+                        name: 'Match stats',
+                        importance: 3,
+                        content: container,
+                        ready: true
+                    };
+                    renderExtras(extras);
+                });
+
+                $('.js-football-table').remove();
+                $.create('<div class="js-football-table" data-link-name="football-table-embed">' + resp.groupTable + '</div>').each(function (container) {
+                    var extras = [];
+                    extras[0] = {
+                        name: 'Table',
+                        importance: 3,
+                        content: container,
+                        ready: true
+                    };
+                    renderExtras(extras);
                 });
 
             };
 
             scoreBoard.load();
+        }
+    }
+
+    function renderExtras(extras, dropdownTemplate) {
+        // clean
+        extras = extras.filter(function (extra) {
+            return extra;
+        });
+        var ready = extras.filter(function (extra) {
+            return extra.ready === false;
+        }).length === 0;
+
+        if (ready) {
+            page.belowArticleVisible(function () {
+                var b;
+                $('.js-after-article').append(
+                    $.create('<div class="football-extras"></div>').each(function (extrasContainer) {
+                        extras.forEach(function (extra, i) {
+                            if (dropdownTemplate) {
+                                $.create(dropdownTemplate).each(function (dropdown) {
+                                    if (config.page.isLiveBlog) { $(dropdown).addClass('dropdown--key-events'); }
+                                    $('.dropdown__label', dropdown).append(extra.name);
+                                    $('.dropdown__content', dropdown).append(extra.content);
+                                    $('.dropdown__button', dropdown)
+                                        .attr('data-link-name', 'Show dropdown: ' + extra.name)
+                                        .each(function (el) {
+                                            if (i === 0) { b = el; }
+                                        });
+                                }).appendTo(extrasContainer);
+                            } else {
+                                extrasContainer.appendChild(extra.content);
+                            }
+                        });
+                    })
+                );
+
+                // unfortunately this is here as the buttons event is delegated
+                // so it needs to be in the dom
+                if (b) { bean.fire(b, 'click'); }
+            }, function () {
+                extras.forEach(function (extra) {
+                    rhc.addComponent(extra.content, extra.importance);
+                });
+            });
         }
     }
 

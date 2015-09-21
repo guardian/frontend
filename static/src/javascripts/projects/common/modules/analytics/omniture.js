@@ -30,9 +30,9 @@ define([
 ) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
-        standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
+        standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
             'prop51,prop61,prop64,prop65,prop74,prop40,prop63,eVar7,eVar37,eVar38,eVar39,eVar50,eVar24,eVar60,eVar51,' +
-            'eVar31,eVar18,eVar32,eVar40,events';
+            'eVar31,eVar18,eVar32,eVar40,list1,list2,list3,events';
 
     function Omniture() {
         this.s = window.s;
@@ -177,6 +177,14 @@ define([
         }
 
         this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
+
+        // Sponsored content
+        this.s.prop38 = _.uniq($('[data-sponsorship]')).map(function (n) {
+            var sponsorshipType = n.getAttribute('data-sponsorship');
+            var maybeSponsor = n.getAttribute('data-sponsor');
+            var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
+            return sponsorshipType + ':' + sponsor;
+        }).toString();
 
 
         this.s.linkTrackVars = standardProps;

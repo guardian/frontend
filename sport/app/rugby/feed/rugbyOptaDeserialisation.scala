@@ -40,7 +40,8 @@ object Parser {
           venue = None,
           competitionName = (game \ "@comp_name").text,
           status = parseStatus(game),
-          event = event
+          event = event,
+          stage = Stage((game \ "@stage").text.toInt)
         )
       }
     }
@@ -69,7 +70,8 @@ object Parser {
           venue = Some((fixture \ "@venue").text),
           competitionName = (fixture \ "@comp_name").text,
           status = parseStatus(fixture),
-          event = event
+          event = event,
+          stage = Stage((fixture \ "@stage").text.toInt)
         )
       }
     }
@@ -232,5 +234,27 @@ object Parser {
     }
   }
 
+  def parseGroupTables(body: String): Seq[GroupTable] = {
+    val data = XML.loadString(body)
+    val groupsData = data \ "comp" \ "group"
 
+    groupsData.map { group => 
+      val name = (group \ "@name").text
+      val teamData = group \ "team"
+      val teams = teamData.map { team =>
+        TeamRank(
+          id = (team \ "@id").text,
+          name = (team \ "@name").text,
+          rank = (team \ "@rank").text.toInt,
+          played = (team \ "@played").text.toInt,
+          won = (team \ "@won").text.toInt,
+          drawn = (team \ "@drawn").text.toInt,
+          lost = (team \ "@lost").text.toInt,
+          pointsdiff = (team \ "@pointsdiff").text.toInt,
+          points = (team \ "@points").text.toInt
+        )
+      }
+      GroupTable(name, teams)
+    }
+  }
 }

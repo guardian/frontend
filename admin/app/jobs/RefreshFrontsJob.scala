@@ -40,51 +40,21 @@ object RefreshFrontsJob extends Logging {
       StandardFrequency
   }
 
-  def runHighFrequency(): Unit = {
-    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
-      log.info("Putting press jobs on Facia Cron (High Frequency)")
+  def runFrequency(frontType: FrontType): Boolean = {
+    if (Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
+      log.info(s"Putting press jobs on Facia Cron $frontType")
 
       for {
         updates <- getAllCronUpdates
-        update <- updates.filter(_.frontType == HighFrequency)
+        update <- updates.filter(_.frontType == frontType)
       } {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)
       }
+      true
     } else {
       log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
-    }
-  }
-
-  def runStandardFrequency(): Unit = {
-    if (FrontPressJobSwitchStandardFrequency.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
-      log.info("Putting press jobs on Facia Cron (Standard Frequency)")
-
-      for {
-        updates <- getAllCronUpdates
-        update <- updates.filter(_.frontType == StandardFrequency)
-      } {
-        log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update.path)
-      }
-    } else {
-      log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
-    }
-  }
-
-  def runLowFrequency(): Unit = {
-    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
-      log.info("Putting press jobs on Facia Cron (Commercial Frequency)")
-
-      for {
-        updates <- getAllCronUpdates
-        update <- updates.filter(_.frontType == LowFrequency)
-      } {
-        log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update.path)
-      }
-    } else {
-      log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
+      false
     }
   }
 

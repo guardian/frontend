@@ -1,8 +1,8 @@
-package views.support
+package views.support.cleaner
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 class CmpParamCleanerTest extends FlatSpec with Matchers {
 

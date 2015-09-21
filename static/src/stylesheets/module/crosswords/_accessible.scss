@@ -20,7 +20,7 @@
     padding-left: 2em;
 
     &:before {
-        content: attr(value);
+        content: attr(data-number);
         position: absolute;
         left: 0;
         font-weight: bold;

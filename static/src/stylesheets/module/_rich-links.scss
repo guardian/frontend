@@ -177,12 +177,12 @@
     }
 }
 
-.rich-link.tone-comment--item .rich-link__title:before {
-    @include icon(quote-grey);
-    width: 1.2em !important;
-    height: .7em !important;
-    padding-right: $gs-gutter / 5;
-    content: '';
+.rich-link__title .inline-quote {
+    fill: colour(neutral-2);
+    svg {
+        height: 14px;
+        width: 23px;
+    }
 }
 
 .rich-link__byline-img {
