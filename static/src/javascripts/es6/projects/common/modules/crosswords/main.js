@@ -495,7 +495,17 @@ class Crossword extends React.Component {
 
     onClearSingle () {
         // Merge arrays of cells from all highlighted clues
-        const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+        const clues = this.allHighlightedClues();
+        console.log("++  Clues " + JSON.stringify(clues));
+        _.forEach(clues, (clue) => {
+            const cells = helpers.cellsForEntry(clue);
+            console.log("++  cells " + JSON.stringify(cells))
+            _.forEach(cells, (cell) => {
+                const cluesFor = this.cluesFor(cell.x, cell.y);
+                console.log("++ CLUES FOR CELL " + JSON.stringify(cluesFor));
+            })
+        } )
+        const cellsInFocus = _.flatten(_.map(clues, helpers.cellsForEntry, this));
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
