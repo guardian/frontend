@@ -66,7 +66,7 @@
     height: $xword-cell-width;
     line-height: $xword-cell-width;
     border: 1px solid colour(neutral-3);
-    border-left: 0;
+    border-left: 1px solid colour(neutral-3);;
 
 
     @include mq($until: mobileLandscape) {
@@ -92,7 +92,7 @@
 }
 
 .crossword__anagram-helper__cell--with-space {
-    border-right: 3px solid colour(neutral-1);
+    border-right: 1px solid colour(neutral-1);
 }
 
 .crossword__anagram-helper__cell--with-hyphen::after {

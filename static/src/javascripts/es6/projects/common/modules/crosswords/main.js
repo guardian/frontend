@@ -571,7 +571,7 @@ class Crossword extends React.Component {
             : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
-            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+            <AnagramHelper focussedEntry={focussed} entries={this.props.data.entries} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
         return (
