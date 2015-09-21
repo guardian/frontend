@@ -12,9 +12,4 @@ import scala.collection.JavaConversions._
     val result = controllers.InteractiveController.renderInteractive(url)(TestRequest(url))
     status(result) should be(200)
   }
-
-  it should "hide all ui for immersive content"  in goTo("/lifeandstyle/ng-interactive/2015/feb/12/watch-me-date") { browser =>
-    import browser._
-    $(".content__head").length should be (0)
-  }
 }
