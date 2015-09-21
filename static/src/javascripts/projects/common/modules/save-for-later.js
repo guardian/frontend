@@ -373,10 +373,8 @@ define([
         var $saveForLaterEl = $(this.classes.profileDropdownLink),
             count = this.userData.articles.length;
 
-        console.log('foo22');
         fastdom.write(function () {
             $saveForLaterEl.attr('data-saved-content-count', count);
-            console.log('foo23');
         });
     };
 
