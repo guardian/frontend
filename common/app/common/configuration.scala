@@ -335,31 +335,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object faciatool {
-    lazy val contentApiPostEndpoint = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
-    /** When retrieving items from Content API, maximum number of requests to make concurrently */
-    lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
-    /** When retrieving items from Content API, maximum number of items to request per concurrent request */
-    lazy val frontPressItemSearchBatchSize = {
-      val size = configuration.getIntegerProperty("frontpress.item_search_batch_size", 20)
-      assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
-      size
-    }
-
-    lazy val pandomainHost = configuration.getStringProperty("faciatool.pandomain.host")
-    lazy val pandomainDomain = configuration.getStringProperty("faciatool.pandomain.domain")
-    lazy val pandomainSecret = configuration.getStringProperty("pandomain.aws.secret")
-    lazy val pandomainKey = configuration.getStringProperty("pandomain.aws.key")
 
     lazy val configBeforePressTimeout: Int = 1000
-
-    val oauthCredentials: Option[OAuthCredentials] =
-      for {
-        oauthClientId <- configuration.getStringProperty("faciatool.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("faciatool.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
     val showTestContainers =
       configuration.getStringProperty("faciatool.show_test_containers").contains("true")
@@ -376,9 +355,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       Try(configuration.getStringProperty("admin.pressjob.low.push.rate.inminutes").get.toInt)
         .getOrElse(60)
 
-    lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
-
-    lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
   }
 
   object memcached {

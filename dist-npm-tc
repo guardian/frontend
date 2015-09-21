@@ -8,4 +8,4 @@ echo "Npm installation."
 npm prune --production
 npm install --production
 
-./grunt-tc clean shell:npmInstallFaciaTool install:jspm
+./grunt-tc clean install:jspm
