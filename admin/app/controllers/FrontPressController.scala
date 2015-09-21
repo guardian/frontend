@@ -2,7 +2,7 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import controllers.admin.AuthActions
-import jobs.RefreshFrontsJob
+import jobs.{LowFrequency, StandardFrequency, HighFrequency, RefreshFrontsJob}
 import play.api.mvc.Controller
 
 object FrontPressController extends Controller with Logging with AuthLogging with ExecutionContexts {
@@ -19,15 +19,15 @@ object FrontPressController extends Controller with Logging with AuthLogging wit
   }
 
   def queueHighFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
-    runJob(RefreshFrontsJob.runHighFrequency(), "high frequency")
+    runJob(RefreshFrontsJob.runFrequency(HighFrequency), "high frequency")
   }
 
   def queueStandardFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
-    runJob(RefreshFrontsJob.runStandardFrequency(), "standard frequency")
+    runJob(RefreshFrontsJob.runFrequency(StandardFrequency), "standard frequency")
   }
 
   def queueLowFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
-    runJob(RefreshFrontsJob.runLowFrequency(), "low frequency")
+    runJob(RefreshFrontsJob.runFrequency(LowFrequency), "low frequency")
   }
 
   private def runJob(didRun: Boolean, jobName: String) = {
