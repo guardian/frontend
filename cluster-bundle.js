@@ -8,7 +8,6 @@ var path = require('path');
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var _ = require('lodash');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
@@ -89,11 +88,11 @@ function processBuild(moduleExpression, outName) {
     };
 }
 
-function makeDirectory(dirPath) {
+function makeDirectory(bundle) {
     return new Promise(function (resolve, reject) {
-        mkdirp(dirPath, function (e) {
+        mkdirp(path.dirname(path.join(prefixPath, bundle.uri)), function (e) {
             if (e) return reject(e);
-            resolve();
+            resolve(bundle);
         });
     });
 }
@@ -127,47 +126,26 @@ function updateBundles(message) {
 }
 
 function writeConfig() {
-    var configs = _(processedBundles)
-        .map()
-        .reduce(function (a, o) { return _.merge(a, o); });
+    var configs = Object.keys(processedBundles).reduce(function (acc, key) {
+        var bundles = processedBundles[key];
 
-    var configFilePath = path.join(prefixPath, 'assets/jspm-assets.map');
-    var configFileData = JSON.stringify(configs, null, '\t');
+        Object.keys(bundles).forEach(function (bundleKey) {
+            acc[bundleKey] = bundles[bundleKey];
+        });
+
+        return acc;
+    }, {});
+
+    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
+    var configFileData = 'System.config({ bundles: ' + JSON.stringify(configs, null, '\t') + ' })';
 
     console.log('writing to %s', configFilePath);
 
-    return makeDirectory(path.dirname(configFilePath)).then(function () {
-        return new Promise(function (resolve, reject) {
-            fs.writeFile(configFilePath, configFileData, function (e) {
-                if (e) {
-                    reject(e);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    fs.writeFile(configFilePath, configFileData, function (e) {
+        if (e) return process.exit(1);
+        process.exit(0);
     });
 }
-
-var createModuleExpressionToFilenameMap = function (bundles) {
-    return Promise.all(bundles.map(function (bundle) {
-        return System.normalize(bundle.id).then(function (absolutePath) {
-            absolutePath = absolutePath.replace('file://', '');
-            var pathRelativeToDir = path.relative(__dirname, absolutePath);
-            return path.relative(jspmBaseUrl, pathRelativeToDir);
-        }).then(function (relativeFilename) {
-            return {
-                expression: bundle.id,
-                relativeFilename: relativeFilename
-            };
-        });
-    })).then(function (modules) {
-        return modules.reduce(function (accumulator, module) {
-            accumulator[module.expression] = module.relativeFilename;
-            return accumulator;
-        }, {});
-    });
-};
 
 if (cluster.isMaster) {
     var split = split(bundleConfigs, numCPUs);
@@ -189,10 +167,7 @@ if (cluster.isMaster) {
             if (cluster.workers[id].isConnected()) return;
         }
 
-        writeConfig().catch(function (err) {
-            console.error(err.stack);
-            process.exit(1);
-        });
+        writeConfig();
     });
 } else {
     process.on('message', function go(message) {
@@ -202,24 +177,19 @@ if (cluster.isMaster) {
 
             return builder.build(moduleExpression, null)
                 .then(processBuild(moduleExpression, outName))
-                .then(function (bundle) {
-                    return makeDirectory(path.dirname(path.join(prefixPath, bundle.uri)))
-                        .then(function () { return bundle; });
-                })
+                .then(makeDirectory)
                 .then(writeBundleToDisk)
                 .then(writeBundleMapToDisk);
         })).then(function (bundles) {
-            return createModuleExpressionToFilenameMap(bundles).then(function (map) {
-                var configs = bundles.reduce(function (accumulator, bundle) {
-                    accumulator[map[bundle.id]] = bundle.uri;
-                    return accumulator;
-                }, {});
+            var configs = bundles.reduce(function (accumulator, bundle) {
+                accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
+                return accumulator;
+            }, {});
 
-                process.send({ id: process.env.num, configs: configs });
-                process.exit(0);
-            });
+            process.send({ id: process.env.num, configs: configs });
+            process.exit(0);
         }).catch(function (err) {
-            console.error(err.stack);
+            console.error(err);
             process.exit(1);
         });
     });
