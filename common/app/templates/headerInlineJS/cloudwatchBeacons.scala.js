@@ -22,7 +22,7 @@
         function logDevice(model, device) {
             var identifier = function() {
                 var id = device + '-' + model;
-                if ((device === 'ipad' && model === '3orLater')) {
+                if ((device === 'ipad' && model === 'retina')) {
                     if (coreOptedIn()) {
                         return id + '-core-opted-in';
                     }
@@ -67,7 +67,7 @@
             // Apple seems to purposefully make this a difficult thing to do.
             var isOlderIpad = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
             var isIpad2orMini = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
-            var isIpad3orLater = !isIphone && window.devicePixelRatio === 2 && /.*iPad;.*/.test(navigator.userAgent);
+            var isIpadRetina = !isIphone && window.devicePixelRatio === 2 && /.*iPad;.*/.test(navigator.userAgent);
 
             if (isOlderIpad) {
                 logDevice('old', 'ipad');
@@ -77,8 +77,8 @@
                 logDevice('2orMini', 'ipad');
             }
 
-            if (isIpad3orLater) {
-                logDevice('3orLater', 'ipad');
+            if (isIpadRetina) {
+                logDevice('retina', 'ipad');
             }
 
             if (isIphone6) {
