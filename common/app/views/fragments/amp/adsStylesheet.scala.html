@@ -1,10 +1,22 @@
-amp-ad {
+.amp-ad-container {
     background: #f6f6f6;
     float: left;
     margin-right: 0.5rem;
 }
 
-amp-ad::before {
+@@media (max-width: 500px) {
+    .amp-ad-container {
+        float: none;
+        margin-right: 0;
+    }
+
+    amp-ad.-amp-layout {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+.amp-ad-container::before {
     content: "Advertisement";
     display: block;
     font-size: 0.75rem;
