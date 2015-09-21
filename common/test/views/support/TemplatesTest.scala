@@ -235,15 +235,14 @@ class TemplatesTest extends FlatSpec with Matchers {
   )
 
   val testContent = new Article(ApiContent(
-    "foo/2012/jan/07/bar",
-    None,
-    None,
-    None,
-    "Some article",
-    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    Some(Map("shortUrl" -> "http://gu.com/p/439az")),
-    Nil,
+    id = "foo/2012/jan/07/bar",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = None,
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    fields = Some(Map("shortUrl" -> "http://gu.com/p/439az")),
     elements = Some(testImages)
   ))
 

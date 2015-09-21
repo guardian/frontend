@@ -22,6 +22,8 @@ object Metric extends Logging {
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
     ("user-navigated-early", CountMetric("user-navigated-early")),
+    ("omniture-library-error", CountMetric("omniture-library-error")),
+    ("omniture-pageview-error", CountMetric("omniture-pageview-error")),
 
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
@@ -44,14 +46,33 @@ object Metric extends Logging {
 
     ("ipad-old-start", CountMetric(s"ipad-old-start")),
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
+    ("ipad-old-after-10", CountMetric(s"ipad-old-after-10")),
+    ("ipad-old-after-60", CountMetric(s"ipad-old-after-60")),
+
     ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
+    ("ipad-2orMini-after-10", CountMetric(s"ipad-2orMini-after-10")),
+    ("ipad-2orMini-after-60", CountMetric(s"ipad-2orMini-after-60")),
+
     ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
     ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
-    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
-    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
-    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
-    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
+    ("ipad-3orLater-after-10", CountMetric(s"ipad-3orLater-after-10")),
+    ("ipad-3orLater-after-60", CountMetric(s"ipad-3orLater-after-60")),
+
+    ("ipad-3orLater-core-opted-in-start", CountMetric(s"ipad-3orLater-core-opted-in-start")),
+    ("ipad-3orLater-core-opted-in-after-5", CountMetric(s"ipad-3orLater-core-opted-in-after-5")),
+    ("ipad-3orLater-core-opted-in-after-10", CountMetric(s"ipad-3orLater-core-opted-in-after-10")),
+    ("ipad-3orLater-core-opted-in-after-60", CountMetric(s"ipad-3orLater-core-opted-in-after-60")),
+
+    ("ipad-3orLater-core-fronts-start", CountMetric(s"ipad-3orLater-core-fronts-start")),
+    ("ipad-3orLater-core-fronts-after-5", CountMetric(s"ipad-3orLater-core-fronts-after-5")),
+    ("ipad-3orLater-core-fronts-after-10", CountMetric(s"ipad-3orLater-core-fronts-after-10")),
+    ("ipad-3orLater-core-fronts-after-60", CountMetric(s"ipad-3orLater-core-fronts-after-60")),
+
+//    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
+//    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
+//    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
+//    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
 
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen")),
@@ -70,8 +91,8 @@ object Metric extends Logging {
     Seq(
       s"iphone-$model-start" -> CountMetric(s"iphone-$model-start"),
       s"iphone-$model-after-5" -> CountMetric(s"iphone-$model-after-5"),
-      s"iphone-$model-start-raf" -> CountMetric(s"iphone-$model-start-raf"),
-      s"iphone-$model-after-5-raf" -> CountMetric(s"iphone-$model-after-5-raf")
+      s"iphone-$model-after-10" -> CountMetric(s"iphone-$model-after-10"),
+      s"iphone-$model-after-60" -> CountMetric(s"iphone-$model-after-60")
     )
   )
 

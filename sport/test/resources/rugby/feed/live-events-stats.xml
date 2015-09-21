@@ -7,6 +7,7 @@
         <Event minute="0" period="First Half" player_id="0" second="0" team_id="550" type="First Half Start" />
         <Event minute="6" period="First Half" player_id="8805" second="44" team_id="650" type="Penalty" />
         <Event minute="10" period="First Half" player_id="19083" second="51" team_id="550" type="Try" />
+        <Event minute="12" period="First Half" player_id="0" second="11" team_id="550" type="Penalty Try"/>
         <Event minute="12" period="First Half" player_id="9938" second="16" team_id="550" type="Conversion" />
         <Event minute="16" period="First Half" player_id="19857" second="36" team_id="650" temporary="Blood Replacement" type="Sub On" />
         <Event minute="16" period="First Half" player_id="10719" second="36" team_id="650" temporary="Blood Replacement" type="Sub Off" />

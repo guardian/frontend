@@ -375,6 +375,10 @@ class Crossword extends React.Component {
         }
     }
 
+    allHighlightedClues () {
+        return _.filter(this.props.data.entries, this.clueIsInFocusGroup, this);
+    }
+
     clueIsInFocusGroup (clue) {
         if (this.state.cellInFocus) {
             const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
@@ -435,6 +439,7 @@ class Crossword extends React.Component {
                 grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
                     if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
                         cell.isError = true;
+                        cell.value = '';
                     }
 
                     return cell;
@@ -457,26 +462,23 @@ class Crossword extends React.Component {
     }
 
     onCheat () {
-        this.cheat(this.clueInFocus());
+        _.forEach(this.allHighlightedClues(), this.cheat, this);
         this.save();
     }
 
     onCheck () {
-        this.check(this.clueInFocus());
+        // 'Check this' checks single and grouped clues
+        _.forEach(this.allHighlightedClues(), this.check, this);
         this.save();
     }
 
     onSolution () {
-        _.forEach(this.props.data.entries, (entry) => {
-            this.cheat(entry);
-        });
+        _.forEach(this.props.data.entries, this.cheat, this);
         this.save();
     }
 
     onCheckAll () {
-        _.forEach(this.props.data.entries, (entry) => {
-            this.check(entry);
-        });
+        _.forEach(this.props.data.entries, this.check, this);
         this.save();
     }
 
@@ -492,7 +494,8 @@ class Crossword extends React.Component {
     }
 
     onClearSingle () {
-        const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
+        // Merge arrays of cells from all highlighted clues
+        const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
@@ -531,10 +534,17 @@ class Crossword extends React.Component {
         return currentValue ? currentValue : '';
     }
 
-    onClickHiddenInput () {
+    onClickHiddenInput (event) {
         const focussed = this.state.cellInFocus;
 
         this.onSelect(focussed.x, focussed.y);
+
+        /* We need to handle touch seperately as touching an input on iPhone does not fire the
+        click event - listen for a touchStart and preventDefault to avoid calling onSelect twice on
+        devices that fire click AND touch events. The click event doesn't fire only when the input is already focused */
+        if (event.type === 'touchstart') {
+            event.preventDefault();
+        }
     }
 
     hasSolutions () {
@@ -551,7 +561,7 @@ class Crossword extends React.Component {
             : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
-            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+            <AnagramHelper focussedEntry={focussed} entries={this.props.data.entries} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
         return (
@@ -588,6 +598,7 @@ class Crossword extends React.Component {
                         <HiddenInput
                             onChange={this.insertCharacter}
                             onClick={this.onClickHiddenInput}
+                            touchStart={this.onClickHiddenInput}
                             onKeyDown={this.onKeyDown}
                             onBlur={this.goToReturnPosition}
                             value={this.hiddenInputValue()}

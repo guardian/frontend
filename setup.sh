@@ -109,7 +109,7 @@ install_jspm() {
 }
 
 install_ruby() {
-  if linux; then
+  if linux && ! installed ruby; then
     sudo apt-get install -y ruby1.9.1-full
   fi
 }

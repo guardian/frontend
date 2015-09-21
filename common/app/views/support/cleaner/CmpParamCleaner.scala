@@ -1,6 +1,7 @@
-package views.support
+package views.support.cleaner
 
 import org.jsoup.nodes.{Document, Element}
+import views.support.HtmlCleaner
 
 import scala.collection.JavaConversions._
 
