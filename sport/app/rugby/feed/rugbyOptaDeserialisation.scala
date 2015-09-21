@@ -77,6 +77,8 @@ object Parser {
     }
   }
 
+  private val eventScoreAssignedToTeam = "0"
+
   def parseLiveEventsStatsToGetScoreEvents(body: String): Seq[ScoreEvent] = {
     val data = XML.loadString(body)
 
@@ -92,7 +94,7 @@ object Parser {
 
     scoreEventsData.flatMap { scoreEventData =>
       val player = players.find(_.id == (scoreEventData \ "@player_id").text).orElse {
-        if((scoreEventData \ "@player_id").text == "0") {
+        if((scoreEventData \ "@player_id").text == eventScoreAssignedToTeam) {
           fakePlayerForTeam(teamNode, scoreEventData)
         } else None
       }
@@ -117,7 +119,7 @@ object Parser {
     val team = teams.find(team => team.id == (scoreEventData \ "@team_id").text)
     val scoreType = ScoreType.withName((scoreEventData \ "@type").text)
     val name = if(scoreType == ScoreType.PenaltyTry) "Penalty" else ""
-    team.map(t => Player(id = "0", name = name, team = t))
+    team.map(t => Player(id = (scoreEventData \ "@player_id").text, name = name, team = t))
   }
 
   private def getTeams(teamNodes: NodeSeq): Seq[Team] = {
