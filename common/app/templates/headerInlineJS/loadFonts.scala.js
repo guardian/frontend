@@ -103,7 +103,7 @@
         }
 
         // Internal function to store font-smoothing state for 30 days
-        function saveFontSmoothing(state, a,) {
+        function saveFontSmoothing(state) {
             state = state ? 'on' : 'off';
             document.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
         }
