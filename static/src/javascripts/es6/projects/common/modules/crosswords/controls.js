@@ -2,7 +2,7 @@ import React from 'react';
 
 import ConfirmButton from './confirm-button';
 
-const buttonClassName = 'button button--primary button--large';
+const buttonClassName = 'button button--primary';
 const buttonCurrentClassName = 'button--crossword--current';
 const buttonGenericClassName = 'button--secondary';
 

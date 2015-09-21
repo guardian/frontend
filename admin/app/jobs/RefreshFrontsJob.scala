@@ -40,14 +40,8 @@ object RefreshFrontsJob extends Logging {
       StandardFrequency
   }
 
-  def runHighFrequency(): Boolean = runFrequency(HighFrequency)
-
-  def runStandardFrequency(): Boolean = runFrequency(StandardFrequency)
-
-  def runLowFrequency(): Boolean = runFrequency(LowFrequency)
-
   def runFrequency(frontType: FrontType): Boolean = {
-    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
+    if (Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       log.info(s"Putting press jobs on Facia Cron $frontType")
 
       for {

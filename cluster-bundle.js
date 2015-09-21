@@ -121,21 +121,6 @@ function writeBundleMapToDisk(bundle) {
     });
 }
 
-function writeConfig() {
-    var bundles = Object.keys(processedBundles).map(function (key) {
-        return processedBundles[key];
-    });
-
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundles, null, '\t') + ' })';
-
-    console.log('writing to %s', configFilePath);
-    fs.writeFile(configFilePath, configFileData, function (e) {
-        if (e) return process.exit(1);
-        process.exit(0);
-    });
-}
-
 function updateBundles(message) {
     processedBundles[message.id] = message.configs;
 }
