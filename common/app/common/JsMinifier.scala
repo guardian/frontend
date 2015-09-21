@@ -1,6 +1,7 @@
 package common
 
 import com.google.javascript.jscomp._
+import play.api.Play
 
 import scala.util.Try
 
@@ -22,19 +23,28 @@ object JsMinifier {
   }
 
   def maybeCompileWithAdvancedOptimisation(codeToCompile: String): Option[String] =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS))
-      .toOption
-      .filter(_.nonEmpty)
+    if (Play.isDev) {
+      Option(codeToCompile)}
+    else {
+      Try(compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS))
+        .toOption
+        .filter(_.nonEmpty)}
 
   def maybeCompileWithStandardOptimisation(codeToCompile: String): Option[String] =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.SIMPLE_OPTIMIZATIONS))
-      .toOption
-      .filter(_.nonEmpty)
+    if (Play.isDev) {
+      Option(codeToCompile)}
+    else {
+      Try(compileUnsafe(codeToCompile, CompilationLevel.SIMPLE_OPTIMIZATIONS))
+        .toOption
+        .filter(_.nonEmpty)}
 
   def maybeCompileWithWhitespaceOptimisation(codeToCompile: String): Option[String] =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.WHITESPACE_ONLY))
-      .toOption
-      .filter(_.nonEmpty)
+    if (Play.isDev) {
+      Option(codeToCompile)}
+    else {
+      Try(compileUnsafe(codeToCompile, CompilationLevel.WHITESPACE_ONLY))
+        .toOption
+        .filter(_.nonEmpty)}
 
   //Default is to compile with Advanced Optimisations
   val maybeCompile: String => Option[String] = maybeCompileWithAdvancedOptimisation
