@@ -28,7 +28,8 @@ import scala.language.reflectiveCalls
       venue = Some("kings cross"),
       competitionName = "competition",
       status = Status.Result,
-      event = WarmupWorldCup2015
+      event = WarmupWorldCup2015,
+      stage = Stage.Group
     ),
     Match(
       date = testDate.plusSeconds(1),
@@ -38,7 +39,8 @@ import scala.language.reflectiveCalls
       venue = Some("kings cross"),
       competitionName = "competition",
       status = Status.Result,
-      event = WarmupWorldCup2015
+      event = WarmupWorldCup2015,
+      stage = Stage.Group
     ))
 
   "RugbyStatsJob" - {
