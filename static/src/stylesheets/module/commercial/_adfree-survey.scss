@@ -637,10 +637,20 @@
 }
 
 .adfreesurvey-wrapper {
-    margin: 30px auto;
-    
+
+    .adfreesurvey-wrapper-inner {
+        margin: 0 auto;
+        width: auto;
+        padding-bottom: $gs-gutter;
+
+        @include mq(tablet) {
+            margin: $gs-gutter auto;
+            width: $gs-column-width*6;
+        }
+    }
+
     .inline-membership-logo {
-        margin-bottom: 20px;
+        margin: $gs-gutter*2 0 $gs-gutter;
         display: block;
 
         svg {
@@ -653,21 +663,56 @@
         }
     }
 
+    .inline-survey-thumbsup {
+        margin-bottom: $gs-gutter/2;
+        display: block;
+    }
+
+    .inline-survey-loudspeaker {
+        display: block;
+        text-align: center;
+        margin-top: $gs-gutter;
+    }
+
     h1 {
         @include fs-headline(6);
         color: guss-colour(guardian-brand, $pasteup-palette);
         font-weight: bold;
+        margin-bottom: $gs-gutter;
     }
 
     h2 {
         @include fs-bodyHeading(1);
         color: guss-colour(guardian-brand, $pasteup-palette);
-        margin-bottom: $gs-gutter;
+        margin-bottom: $gs-baseline/2;
     }
 
     p {
-        margin-bottom: $gs-max-columns;
+        margin-bottom: $gs-baseline;
         @include fs-bodyCopy(1);
+    }
+
+    .standfirst {
+        @include fs-bodyCopy(2);
+    }
+
+    .button--secondary {
+        border-color: #7d7d7d;
+        background-color: transparent;
+
+        &:hover {
+            background-color: guss-colour(neutral-7, $pasteup-palette);
+        }
+    }
+
+    .footer-area {
+        background-color: colour(neutral-5);
+
+        .adfreesurvey-wrapper-inner {
+            width: $gs-column-width*10;
+            padding: $gs-gutter*2 0;
+            margin: 0 auto;
+        }
     }
 
 
