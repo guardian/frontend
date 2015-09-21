@@ -141,9 +141,11 @@ function writeConfig() {
 
     console.log('writing to %s', configFilePath);
 
-    fs.writeFile(configFilePath, configFileData, function (e) {
-        if (e) return process.exit(1);
-        process.exit(0);
+    return new Promise(function (resolve, reject) {
+        fs.writeFile(configFilePath, configFileData, function (e) {
+            if (e) return reject(e);
+            resolve();
+        });
     });
 }
 
@@ -167,7 +169,10 @@ if (cluster.isMaster) {
             if (cluster.workers[id].isConnected()) return;
         }
 
-        writeConfig();
+        writeConfig().catch(function (err) {
+          console.error(err.stack);
+          process.exit(1);
+        });
     });
 } else {
     process.on('message', function go(message) {
@@ -189,7 +194,7 @@ if (cluster.isMaster) {
             process.send({ id: process.env.num, configs: configs });
             process.exit(0);
         }).catch(function (err) {
-            console.error(err);
+            console.error(err.stack);
             process.exit(1);
         });
     });
