@@ -21,23 +21,23 @@ object JsMinifier {
     compiler.toSource
   }
 
-  def maybeCompileWithAdvancedOptimisation(codeToCompile: String) =
+  def maybeCompileWithAdvancedOptimisation(codeToCompile: String): Option[String] =
     Try(compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS))
       .toOption
       .filter(_.nonEmpty)
 
-  def maybeCompileWithStandardOptimisation(codeToCompile: String) =
+  def maybeCompileWithStandardOptimisation(codeToCompile: String): Option[String] =
     Try(compileUnsafe(codeToCompile, CompilationLevel.SIMPLE_OPTIMIZATIONS))
       .toOption
       .filter(_.nonEmpty)
 
-  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String) =
+  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String): Option[String] =
     Try(compileUnsafe(codeToCompile, CompilationLevel.WHITESPACE_ONLY))
       .toOption
       .filter(_.nonEmpty)
 
   //Default is to compile with Advanced Optimisations
-  val maybeCompile = maybeCompileWithAdvancedOptimisation _
+  val maybeCompile: String => Option[String] = maybeCompileWithAdvancedOptimisation
 
 }
 
