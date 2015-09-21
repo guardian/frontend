@@ -32,6 +32,56 @@ const getPreviousClueInGroup = (entries, clue) => {
     return _.find(entries, { id: newClueId });
 };
 
+const getGroupEntriesForClue = (entries, group) =>  {
+    return _.map(group, (clueId) => {
+        return _.find(entries, { id: clueId });
+    });
+};
+
+const clueIsInGroup = (clue) => clue.group.length !== 1;
+
+const getAllSeparatorsForGroup = (clues) => {
+
+    const k = {};
+
+    _.forEach([',', '-'], (separator) => {
+        let cnt = 0;
+        const flattenedSeparators = _.flatten(
+            _.map(clues, (clue) => {
+                const seps = _.map(clue.separatorLocations[separator], (s) => { return s + cnt; });
+                cnt += clue.length;
+                return seps;
+            })
+        );
+        k[separator] = flattenedSeparators;
+    });
+    return k;
+};
+
+const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue;
+
+const getNumbersForGroupedEntries = (clueGroup) =>  _.first(clueGroup).humanNumber;
+
+const getTtotalLengthOfGroup = (clueGroup) => {
+    const length =  _.reduce(clueGroup, (total, clue) => { let t = total += clue.length; return t; }, 0);
+    return length;
+};
+
+const getAnagramClueData = (entries, clue) => {
+    if (clueIsInGroup(clue)) {
+        const groupEnts = getGroupEntriesForClue(entries, clue.group);
+        return {
+            id: clue.id,
+            number: getNumbersForGroupedEntries(groupEnts),
+            length: getTtotalLengthOfGroup(groupEnts),
+            separatorLocations: getAllSeparatorsForGroup(groupEnts),
+            direction: '',
+            clue: getClueForGroupedEntries(groupEnts)
+        };
+    }
+    return clue;
+};
+
 const isAcross = (clue) => clue.direction === 'across';
 
 const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
@@ -45,6 +95,15 @@ const cellsForEntry = (entry) => isAcross(entry) ?
         x: entry.position.x,
         y: y
     }));
+
+const cellsForClue = (entries, clue) => {
+    if (clueIsInGroup(clue)) {
+        const entriesForClue = getGroupEntriesForClue(entries, clue.group);
+        return _.flatten(_.map(entriesForClue, (entry) => { return cellsForEntry(entry); }));
+    } else {
+        return cellsForEntry(clue);
+    }
+};
 
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
@@ -146,12 +205,20 @@ export default {
     buildClueMap: buildClueMap,
     buildSeparatorMap,
     cellsForEntry: cellsForEntry,
+    cellsForClue: cellsForClue,
     entryHasCell: entryHasCell,
     gridSize: gridSize,
     mapGrid: mapGrid,
+    getAnagramClueData: getAnagramClueData,
     getLastCellInClue,
     isFirstCellInClue,
     isLastCellInClue,
     getNextClueInGroup,
-    getPreviousClueInGroup
+    getPreviousClueInGroup,
+    clueIsInGroup: clueIsInGroup,
+    getGroupEntriesForClue: getGroupEntriesForClue,
+    getNumbersForGroupedEntries: getNumbersForGroupedEntries,
+    getClueForGroupedEntries: getClueForGroupedEntries,
+    getAllSeparatorsForGroup: getAllSeparatorsForGroup,
+    getTtotalLengthOfGroup: getTtotalLengthOfGroup
 };

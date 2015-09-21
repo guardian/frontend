@@ -25,7 +25,7 @@ export default class AnagramHelper extends React.Component {
 
     componentWillReceiveProps (next) {
         // reset on clue change
-        if (next.clue !== this.props.clue) {
+        if (next.clue !== this.props.focussedEntry) {
             this.reset();
         }
     }
@@ -47,7 +47,7 @@ export default class AnagramHelper extends React.Component {
 
     canShuffle () {
         return this.state.clueInput &&
-               this.state.clueInput.length === this.props.clue.length;
+               this.state.clueInput.length > 0;
     }
 
     onClueInput (text) {
@@ -60,13 +60,15 @@ export default class AnagramHelper extends React.Component {
         /* jscs:disable disallowDanglingUnderscores */
         const closeIcon = { __html: svgs('closeCentralIcon') };
         /* jscs:enable disallowDanglingUnderscores */
+        const clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
+        const cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
 
-        const entries = _.map(helpers.cellsForEntry(this.props.clue), coords => {
+        const entries = _.map(cells, coords => {
             return this.props.grid[coords.x][coords.y];
         });
 
         const inner = this.state.showInput ?
-            <ClueInput value={this.state.clueInput} clue={this.props.clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
+            <ClueInput value={this.state.clueInput} clue={clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
             <Shuffler entries={entries} word={this.state.clueInput.trim().split('')} />;
 
         return (
@@ -90,7 +92,7 @@ export default class AnagramHelper extends React.Component {
                     shuffle
                 </button>
 
-                <CluePreview clue={this.props.clue} entries={entries} />
+                <CluePreview clue={clue} entries={entries} />
             </div>
         );
     }
