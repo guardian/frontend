@@ -213,9 +213,9 @@ describe('Helpers', function () {
         });
     });
 
-    describe("getTtotalLengthOfGroup", function () {
-        it('should get the total length of a group', function() {
-           expect(helpers.getTtotalLengthOfGroup(groupFixture)).toEqual(30)
+    describe('getTtotalLengthOfGroup', function () {
+        it('should get the total length of a group', function () {
+            expect(helpers.getTtotalLengthOfGroup(groupFixture)).toBe(30);
         });
     });
 

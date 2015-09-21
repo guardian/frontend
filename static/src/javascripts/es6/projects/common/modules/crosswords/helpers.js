@@ -63,7 +63,8 @@ const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue;
 const getNumbersForGroupedEntries = (clueGroup) =>  _.first(clueGroup).humanNumber;
 
 const getTtotalLengthOfGroup = (clueGroup) => {
-    return _.reduce(clueGroup, (total, clue) => { return total += clue.length}, 0 );
+    const length =  _.reduce(clueGroup, (total, clue) => { let t = total += clue.length; return t; }, 0);
+    return length;
 };
 
 const getAnagramClueData = (entries, clue) => {
