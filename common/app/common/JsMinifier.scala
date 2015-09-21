@@ -1,8 +1,12 @@
 package common
 
+import java.security.MessageDigest
+
 import com.google.javascript.jscomp._
 import play.api.{Application, Play}
+import play.twirl.api.Html
 
+import scala.collection.concurrent.TrieMap
 import scala.util.Try
 
 
@@ -59,3 +63,14 @@ object JsMinifierDevSensitive {
     maybeCompileWithAdvancedOptimisation(codeToCompile)(application)
 }
 
+object InlineJs {
+  private val memoizedMap: TrieMap[String, String] = TrieMap()
+
+  def apply(codeToCompile: String)(implicit application: Application): Html = {
+    val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
+    lazy val compiledCode: String =
+      JsMinifier.maybeCompileWithAdvancedOptimisation(codeToCompile).getOrElse(codeToCompile)
+
+    Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+  }
+}
