@@ -635,3 +635,40 @@
         }
     }
 }
+
+.adfreesurvey-wrapper {
+    margin: 30px auto;
+    
+    .inline-membership-logo {
+        margin-bottom: 20px;
+        display: block;
+
+        svg {
+            width: 120px;
+            height: 40px;
+
+            g {
+                fill: #333333;
+            }
+        }
+    }
+
+    h1 {
+        @include fs-headline(6);
+        color: guss-colour(guardian-brand, $pasteup-palette);
+        font-weight: bold;
+    }
+
+    h2 {
+        @include fs-bodyHeading(1);
+        color: guss-colour(guardian-brand, $pasteup-palette);
+        margin-bottom: $gs-gutter;
+    }
+
+    p {
+        margin-bottom: $gs-max-columns;
+        @include fs-bodyCopy(1);
+    }
+
+
+}

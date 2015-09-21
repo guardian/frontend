@@ -32,7 +32,7 @@ define([
                 surveyText: 'From £5 a month join exclusive Guardian events, get a quality ad free experience of our site and apps plus support our journalism.',
                 linkText: 'Explore Guardian Members',
                 alreadyMember: 'Already a member?',
-                alreadyMemberLink: 'http://google.com',
+                alreadyMemberLink: '/adfreesurvey-page',
                 surveyLink: 'http://google.com',
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),

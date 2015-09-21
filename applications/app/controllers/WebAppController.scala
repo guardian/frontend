@@ -16,6 +16,14 @@ class OfflinePage(val crossword: CrosswordData) extends MetaData {
   lazy val webTitle: String = "Unable to connect to the Internet"
 }
 
+class AdfreesurveyPage() extends MetaData {
+  lazy val id: String = "adfreesurvey-page"
+  lazy val section: String = ""
+  lazy val analyticsName: String = id
+  lazy val webTitle: String = "Adfree Survey"
+  override def hasSlimHeader: Boolean = true
+}
+
 object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
@@ -56,4 +64,10 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
       Future(NotFound)
     }
   }
+
+  def adfreesurveyPage() = Action { implicit request =>
+    Cached(60)(Ok(views.html.adfreesurveyPage(
+      new AdfreesurveyPage())))
+  }
+
 }

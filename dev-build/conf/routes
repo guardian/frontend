@@ -280,6 +280,9 @@ GET         /commercial/capi-single                                             
 GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffersController.itemJson
 GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffersController.itemHtml
 
+# DisableAds Survey
+GET        /adfreesurvey-page                                                   									 controllers.WebAppController.adfreesurveyPage()
+
 # Commercial Admin
 GET         /admin/commercial                                                                                        controllers.admin.CommercialController.renderCommercialMenu()
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
