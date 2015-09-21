@@ -14,14 +14,6 @@
                 ]
             }
         },
-        "frontend-static":{
-            "type":"aws-s3",
-            "apps":[ "aws-s3" ],
-            "data":{
-                "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=315360000"
-            }
-        },
         "frontend-abtests":{
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
@@ -33,16 +25,13 @@
     },
     "recipes":{
         "default":{
-            "depends" : ["abTestsFileUpload", "staticFilesUpload", "artifactUpload", "deploy"]
+            "depends" : ["abTestsFileUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
             "actionsBeforeApp": ["article.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["article.uploadArtifacts"]
-        },
-        "staticFilesUpload":{
-            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         },
         "abTestsFileUpload":{
             "actionsBeforeApp": ["frontend-abtests.uploadStaticFiles"]
