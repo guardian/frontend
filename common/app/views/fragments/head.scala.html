@@ -18,8 +18,7 @@
 <script>
     @if(ServeCoreFrontsToSomeIpadsSwitch.isSwitchedOn) {
             if(navigator.platform === 'iPad' &&
-                window.devicePixelRatio === 2 &&
-                /.*iPad; CPU OS ([789])_\d+.*/.test(navigator.userAgent)) {
+                window.devicePixelRatio === 2) {
                 try {
                     var storage = window.localStorage;
                     var participation = storage.getItem('gu.core-fronts-test');

@@ -27,7 +27,9 @@
                         return id + '-core-opted-in';
                     }
                     if (window.serveCoreFronts) {
-                        return id + '-core-fronts';
+                        return id + '-core-fronts-test';
+                    } else {
+                        return id + '-core-fronts-control';
                     }
                 }
                 return id;
@@ -65,7 +67,7 @@
             // Apple seems to purposefully make this a difficult thing to do.
             var isOlderIpad = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
             var isIpad2orMini = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
-            var isIpad3orLater = !isIphone && window.devicePixelRatio === 2 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
+            var isIpad3orLater = !isIphone && window.devicePixelRatio === 2 && /.*iPad;.*/.test(navigator.userAgent);
 
             if (isOlderIpad) {
                 logDevice('old', 'ipad');
