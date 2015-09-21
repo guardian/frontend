@@ -91,7 +91,7 @@ describe('omniture', function () {
         omniture.go();
         omniture.trackLink('link object', 'outer:link');
 
-        expect(s.linkTrackVars).toBe('channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,prop51,prop61,prop64,prop65,prop74,prop40,prop63,eVar7,eVar37,eVar38,eVar39,eVar50,eVar24,eVar60,eVar51,eVar31,eVar18,eVar32,eVar40,list1,list2,list3,events');
+        expect(s.linkTrackVars).toBe('channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,prop51,prop61,prop64,prop65,prop74,prop40,prop63,eVar7,eVar37,eVar38,eVar39,eVar50,eVar24,eVar60,eVar51,eVar31,eVar18,eVar32,eVar40,list1,list2,list3,events');
         expect(s.linkTrackEvents).toBe('event37');
         expect(s.events).toBe('event37');
     });

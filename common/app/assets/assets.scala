@@ -5,7 +5,7 @@ import java.net.URL
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import org.apache.commons.io.IOUtils
-import play.api.libs.json.{JsObject, JsString, Json}
+import play.api.libs.json._
 import play.api.{Mode, Play}
 
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
@@ -144,15 +144,31 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
      private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
-
-     val systemJsPolyfills: String = inlineJs("assets/system-polyfills.src.js")
-     val systemJs: String = inlineJs("assets/system.src.js")
-     val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
-     val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
-     val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
+  }
 
-     lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body
+  object systemJs {
+    private def contents(path: String): String = IOUtils.toString(AssetFinder(path))
+
+    val main: String = contents("assets/system.src.js")
+    val polyfills: String = contents("assets/system-polyfills.src.js")
+    val appConfig: String = contents("assets/systemjs-config.js")
+    val normalize: String = contents("assets/systemjs-normalize.js")
+
+    lazy val setupFragment: String = templates.js.systemJsSetup().body
+
+    private val jspmAssetMap: Map[String, String] =
+      Json.parse(contents("assets/jspm-assets.map")).validate[Map[String, String]] match {
+        case JsSuccess(m, _) => m
+        case JsError(_) => Map.empty
+      }
+
+    private val bundleConfigMap: Map[String, List[String]] =
+      jspmAssetMap.map { case (source, destination) =>
+        (destination.replaceFirst(".js$", ""), List(source.replaceFirst("^javascripts/", "").replaceFirst(".js$", "")))
+      }
+
+    val bundleConfig: String = Json.toJson(bundleConfigMap).toString()
   }
 }
 

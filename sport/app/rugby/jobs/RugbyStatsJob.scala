@@ -3,9 +3,8 @@ package rugby.jobs
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{OptaFeed, RugbyOptaFeedException}
-import rugby.model.{ScoreEvent, Match}
-import rugby.feed.{MatchNavigation, OptaFeed, RugbyOptaFeedException}
-import rugby.model.{Status, Match, MatchStat}
+import rugby.model._
+import rugby.feed.{MatchNavigation, OptaFeed, OptaEvent, RugbyOptaFeedException}
 import scala.concurrent.Future
 import scala.util.Failure
 import scala.util.Success
@@ -20,6 +19,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
   protected val liveMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
   protected val pastMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
+  protected val groupTables =  AkkaAgent[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
 
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
@@ -37,7 +37,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
       })
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
-      case error: Exception => log.warn(error.getMessage)
+      case error: Exception => log.warn(error.getMessage, error)
     }
   }
 
@@ -48,9 +48,19 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
       })
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
-      case error: Exception => log.warn(error.getMessage)
+      case error: Exception => log.warn(error.getMessage, error)
     }
   }
+
+  def groupTables(groupTablesData: Future[Map[OptaEvent, Seq[GroupTable]]]) : Future[Any] = {
+    groupTablesData.map { data =>
+      groupTables.alter { data }
+    }.recover {
+      case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
+      case error: Exception => log.warn(error.getMessage, error)
+    }
+  }
+
 
   def fetchLiveScoreEvents {
     val liveMatches = liveScoreMatches.get().values.toList
@@ -135,9 +145,21 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  def getFixturesAndResultScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = {
+  def getFixturesAndResultScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Option[Match] = {
     fixturesAndResultsMatches.get.values.find { rugbyMatch =>
       isValidMatch(year, month, day, homeTeamId, awayTeamId, rugbyMatch)
+    }
+  }
+
+  def getGroupTable(rugbyMatch: Match): Option[GroupTable] = {
+    if (rugbyMatch.hasGroupTable) {
+      groupTables.get.get(rugbyMatch.event).flatMap { tables =>
+        tables.find { groupTable =>
+          groupTable.teams.exists(_.id == rugbyMatch.homeTeam.id)
+        }
+      }
+    } else {
+      None
     }
   }
 
