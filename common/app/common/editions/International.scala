@@ -20,7 +20,10 @@ object International extends Edition(
 
   override def isBeta: Boolean = InternationalEditionBetaSwitch.isSwitchedOn
 
-  override val cookieValue: String = "INTL"
+  // TODO temporary to let us migrate cookies to proper value (i.e. INT)
+  // it is currently INTL
+  override def matchesCookie(cookieValue: String): Boolean = super.matchesCookie(cookieValue) ||
+    "INTL".equalsIgnoreCase(cookieValue)
 
   import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(

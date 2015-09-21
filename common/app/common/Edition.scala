@@ -35,8 +35,9 @@ abstract class Edition(
 
   def isBeta: Boolean = false
 
-  val cookieValue: String = id
   def isEditionalised(id: String) = editionalisedSections.contains(id)
+
+  def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
 
 }
 
@@ -82,7 +83,7 @@ object Edition {
 
   def apply(request: RequestHeader): Edition = {
     val cookieValue = editionCookieValue(request)
-    all.find(_.cookieValue.equalsIgnoreCase(cookieValue)).getOrElse(defaultEdition)
+    all.find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
   }
 
   def others(implicit request: RequestHeader): Seq[Edition] = {
