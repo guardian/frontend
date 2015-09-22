@@ -93,7 +93,6 @@
     // we only test non-IE, and only on Windows. Everyone else we assume `true`.
     function fontSmoothingEnabled() {
         var ua = navigator.userAgent,
-            fontSmoothingEnabled = null,
             canvasNode, ctx, alpha, x, y;
 
         // If we've already run this test, return the result.
