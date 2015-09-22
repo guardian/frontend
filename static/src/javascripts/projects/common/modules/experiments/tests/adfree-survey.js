@@ -24,7 +24,7 @@ define([
         this.audienceOffset = 0.8;
         this.successMeasure = 'Users will be interested in paying for the non-ads Guardian';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'hide ads hide adslot: {slot size}, survey overlay take part, adfree trash read more';
+        this.dataLinkNames = '--From the variant test: adfree trash read more, hide ads hide adslot: {slot size}, survey overlay take part, survey overlay hide survey message --From the simple test: adfree trash simple read more, hide ads simple hide adslot: {slot size}, survey overlay simple take part, survey overlay simple hide survey message';
         this.idealOutcome = 'Users will be interested in paying a lot for the non-ads Guardian';
 
         this.canRun = function () {
@@ -54,7 +54,7 @@ define([
                 }
             },
             {
-                id: 'challenger',
+                id: 'simple',
                 test: function () {
                     var $container;
 

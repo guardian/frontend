@@ -96,7 +96,7 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
-                if (isAdfreeSurvey('variant') || isAdfreeSurvey('challenger')) {
+                if (isAdfreeSurvey('variant') || isAdfreeSurvey('simple')) {
                     showAdsFreeSurvey('300,250', $adSlot);
                 }
             },
@@ -253,7 +253,8 @@ define([
         showAdsFreeSurvey = function (size, $adSlot) {
             fastdom.write(function () {
                 var crossIcon = svgs('crossIcon'),
-                    $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').attr('data-link-name', 'hide ads')
+                    dataAttr = isAdfreeSurvey('variant') ? 'hide ads' : 'hide ads simple',
+                    $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').attr('data-link-name', dataAttr)
                         .append('<a href="#" class="ad-slot--hide-ads" data-link-name="hide adslot: ' + size + '">Hide ads ' + crossIcon + '</a>').appendTo($adSlot);
 
                 bean.on(document, 'click', $adSlotRemove, function (e) {
@@ -468,7 +469,7 @@ define([
         },
         addLabel = function ($slot) {
             fastdom.write(function () {
-                var adSlotClass = (isAdfreeSurvey('variant') || isAdfreeSurvey('challenger')) ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
+                var adSlotClass = (isAdfreeSurvey('variant') || isAdfreeSurvey('simple')) ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
 
                 if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
