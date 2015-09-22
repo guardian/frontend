@@ -59,7 +59,9 @@ do you have fonts in localStorage?
                         if ("FontFace" in window) {
                             var f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
                             f.load().catch(function(){});
-                            return f.status === 'loading';
+                            if (f.status === 'loading') {
+                                return true;
+                            }
                         };
 
                         // some browsers (e.g. FF40) support WOFF2 but not window.FontFace,
