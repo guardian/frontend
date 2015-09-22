@@ -54,6 +54,13 @@ do you have fonts in localStorage?
                     var formatStorageKey = 'gu.fonts.format';
                     format = localStorage.getItem(formatStorageKey);
 
+                    // flush out weird old json value
+                    // no value to it and JSON.parse is pointless overhead
+                    if (format && /value/.test(format)) {
+                        format = JSON.parse(format).value;
+                        localStorage.setItem(formatStorageKey, format);
+                    };
+
                     function supportsWoff2() {
                         // try feature detecting first
                         // https://github.com/filamentgroup/woff2-feature-test
