@@ -29,7 +29,7 @@ define([
         var bannerTmpl = template(adfreeSurveySimple,
             {
                 surveyHeader: 'Advert free experience on the Guardian site and apps',
-                surveyText: 'From £5 a month get a quality advert free experience of the Guardian and support our journalism.',
+                surveyText: 'From <em>£5 a month</em> get a quality advert free experience of the Guardian and support our journalism.',
                 linkText: 'Get advert free experience',
                 surveyLink: '/adfreesurvey-page',
                 arrowWhiteRight: svgs('arrowWhiteRight'),
