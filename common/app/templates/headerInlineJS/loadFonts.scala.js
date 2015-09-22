@@ -144,8 +144,8 @@ do you have fonts in localStorage?
                 var fonts = document.querySelectorAll('.webfont');
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font = fonts[i],
-                        fontHinting = fontHinting() === 'Off' ? '' : 'hinted-' + fontHinting() + '-';
-                        fontURL = font.getAttribute('data-cache-file-' + fontHinting + fontFormat()),
+                        hinting = fontHinting() === 'Off' ? '' : 'hinted-' + fontHinting() + '-';
+                        fontURL = font.getAttribute('data-cache-file-' + hinting + fontFormat()),
                         fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/),
                         fontName = fontInfo[2],
                         fontHash = fontInfo[1],
