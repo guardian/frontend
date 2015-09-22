@@ -101,7 +101,7 @@ do you have fonts in localStorage?
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true);
                     xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4) {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
                             var css = eval(xhr.responseText);
                             useFont(el, css);
                             saveFont(fontName, fontHash, css);
