@@ -84,20 +84,20 @@ object JsMinifier {
 }
 
 object JsMinifierDevSensitive {
-  def maybeCompileWithAdvancedOptimisation(codeToCompile: String)(implicit application: Application): String =
+  def unsafeCompileWithAdvancedOptimisation(codeToCompile: String)(implicit application: Application): String =
     if (Play.isDev) codeToCompile
     else JsMinifier.unsafeCompileWithAdvancedOptimisation(codeToCompile)
 
-  def maybeCompileWithStandardOptimisation(codeToCompile: String)(implicit application: Application): String =
+  def unsafeCompileWithStandardOptimisation(codeToCompile: String)(implicit application: Application): String =
     if (Play.isDev) codeToCompile
     else JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
 
-  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String)(implicit application: Application): String =
+  def unsafeCompileWithWhitespaceOptimisation(codeToCompile: String)(implicit application: Application): String =
     if (Play.isDev) codeToCompile
     else JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile)
 
   def maybeCompile(codeToCompile: String)(implicit application: Application): String =
-    maybeCompileWithAdvancedOptimisation(codeToCompile)(application)
+    unsafeCompileWithAdvancedOptimisation(codeToCompile)(application)
 }
 
 object InlineJs {
