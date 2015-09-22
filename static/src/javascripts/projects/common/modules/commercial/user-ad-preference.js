@@ -8,7 +8,7 @@ define([
     var featureEnabled = config.switches.advertOptOut;
 
     function userOptsOut() {
-        var preferenceCookie = cookies.get('ad_free_experience');
+        var preferenceCookie = cookies.get('gu_ads_disabled');
         return preferenceCookie === 'true';
     }
 
