@@ -32,9 +32,10 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   // AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
-    val params = buildParams(Some(userAuth), Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
+    val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
     val headers = buildHeaders(Some(userAuth))
-    val response = http.POST(apiUrl("auth"), None, params, headers)
+    val body = write(userAuth)
+    val response = http.POST(apiUrl("auth"), Some(body), params, headers)
     response map extract(jsonField("cookies"))
   }
 

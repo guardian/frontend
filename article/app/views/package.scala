@@ -23,7 +23,7 @@ object MainCleaner {
  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
-        VideoEmbedCleaner(article),
+        VideoEmbedCleaner(article, amp),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner
       )
@@ -42,7 +42,7 @@ object BodyCleaner {
       TagLinker(article),
       TableEmbedComplimentaryToP,
       R2VideoCleaner(article),
-      VideoEmbedCleaner(article),
+      VideoEmbedCleaner(article, amp),
       PictureCleaner(article, amp),
       LiveBlogDateFormatter(article.isLiveBlog),
       LiveBlogLinkedData(article.isLiveBlog),

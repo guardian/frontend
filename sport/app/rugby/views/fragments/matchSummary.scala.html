@@ -7,6 +7,7 @@
 @status() = {
     @theMatch.status match {
         case Result      => { <abbr class="m-status">FT</abbr> }
+        case HalfTime    => { <abbr class="m-status">HT</abbr> }
         case FirstHalf   => { <abbr class="m-status">1st</abbr> }
         case SecondHalf  => { <abbr class="m-status">2nd</abbr> }
         case _ => {}
