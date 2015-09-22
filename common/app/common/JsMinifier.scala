@@ -84,23 +84,6 @@ object JsMinifier {
 
 }
 
-object JsMinifierDevSensitive {
-  def unsafeCompileWithAdvancedOptimisation(codeToCompile: String)(implicit application: Application): String =
-    if (Play.isDev) codeToCompile
-    else JsMinifier.unsafeCompileWithAdvancedOptimisation(codeToCompile)
-
-  def unsafeCompileWithStandardOptimisation(codeToCompile: String)(implicit application: Application): String =
-    if (Play.isDev) codeToCompile
-    else JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
-
-  def unsafeCompileWithWhitespaceOptimisation(codeToCompile: String)(implicit application: Application): String =
-    if (Play.isDev) codeToCompile
-    else JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile)
-
-  def maybeCompile(codeToCompile: String)(implicit application: Application): String =
-    unsafeCompileWithAdvancedOptimisation(codeToCompile)(application)
-}
-
 object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
