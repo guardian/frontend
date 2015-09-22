@@ -31,7 +31,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   }
 
   // AUTH
-  def authBrowser(userAuth: EmailPassword, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
+  def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
     val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
     val headers = buildHeaders(Some(userAuth))
     val body = write(userAuth)
