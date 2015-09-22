@@ -18,9 +18,6 @@ define([
 
     /**
      * Message which is shown as an overlay to all users who want to remove ads.
-     *
-     * @constructor
-     * @param {Object=} options
      */
     var AdfreeSurvey = function () {
     };
@@ -32,8 +29,8 @@ define([
                 surveyText: 'From <em>£5 a month</em> join exclusive Guardian events, get a quality ad free experience of our site and apps plus support our journalism.',
                 linkText: 'Explore Guardian Members',
                 alreadyMember: 'Already a member?',
-                alreadyMemberLink: '/adfreesurvey-page',
-                surveyLink: '/adfreesurvey-page',
+                alreadyMemberLink: '/commercial/ad-free-survey',
+                surveyLink: '/commercial/ad-free-survey',
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
