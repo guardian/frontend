@@ -80,7 +80,7 @@ object JsMinifier {
       .get
 
   //Default is to compile with Advanced Optimisations
-  val maybeCompile: String => String = unsafeCompileWithAdvancedOptimisation
+  val unsafeCompile: String => String = unsafeCompileWithAdvancedOptimisation
 
 }
 
