@@ -37,7 +37,7 @@ import sun.security.x509.X509CertImpl
 
   private val hosts = webTeamHosts ++ ophanHosts
 
-  "API.nextgen host test" should "be turned on assuming if the cert is valid now" in {
+  "fronts.gutools.co.uk host test" should "be turned on assuming if the cert is valid now" in {
     if (tooLate/*TODO also delete this val*/) {
       fail("fronts.gutools.co.uk cert should be updated by now")
     }
