@@ -87,10 +87,11 @@ do you have fonts in localStorage?
                     };
 
                     function getFontFormat() {
-                        if (!fontFormat) {
-                            fontFormat = localStorage['gu.fonts.format'] = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
+                        if (!format) {
+                            format = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
+                            localStorage.setItem(formatStorageKey, format);
                         }
-                        return fontFormat;
+                        return format;
                     };
 
                     return getFontFormat;
