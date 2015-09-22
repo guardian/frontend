@@ -51,12 +51,10 @@ set -u
 
 BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
 
-cp static/conf/build-template.json static/target/build.json
-
-sed -e "s/\<%build_number%>/$BUILD_NUMBER/" \
-    -e "s/\<%start_time%>/$BUILD_START_DATE/" \
-    -e "s/\<%revision%>/$BUILD_VCS_NUMBER/" \
-    -e "s/\<%branch%>/$BUILD_VCS_BRANCH/" \
+sed -e "s/<%build_number%>/$BUILD_NUMBER/" \
+    -e "s/<%start_time%>/$BUILD_START_DATE/" \
+    -e "s/<%revision%>/$BUILD_VCS_NUMBER/" \
+    -e "s/<%branch%>/$BUILD_VCS_BRANCH/" \
     static/conf/build-template.json | tee static/target/build.json
 
 aws s3 cp static/target/build.json    s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
