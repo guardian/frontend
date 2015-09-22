@@ -166,7 +166,7 @@ describe('Helpers', function () {
         });
     });
 
-    fdescribe('getAnagramClueData', function () {
+    describe('getAnagramClueData', function () {
         it('should return the clue for a non grouped clue', function () {
             expect(helpers.getAnagramClueData(entriesFixture, entryFixture)).toEqual(entryFixture);
         });
