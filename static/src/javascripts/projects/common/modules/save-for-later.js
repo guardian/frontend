@@ -50,6 +50,7 @@ define([
             containerItemDataId: 'data-id'
         };
 
+
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
@@ -76,6 +77,7 @@ define([
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
+
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
@@ -373,9 +375,11 @@ define([
         var $saveForLaterEl = $(this.classes.profileDropdownLink),
             count = this.userData.articles.length;
 
-        fastdom.write(function () {
+        if (count > 0) {
             $saveForLaterEl.attr('data-saved-content-count', count);
-        });
+        } else {
+            $saveForLaterEl.removeAttr('data-saved-content-count', count);
+        }
     };
 
     SaveForLater.prototype.saveIntroArticle = function () {

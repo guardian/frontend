@@ -236,7 +236,7 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.js-on .brand-bar__item--saved-for-later:after {
+.js-on.is-modern .brand-bar__item--saved-for-later:after {
     display: inline-block;
     content: attr(data-saved-content-count);
     position: relative;
