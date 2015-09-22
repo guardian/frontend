@@ -3,6 +3,7 @@ package common
 import java.security.MessageDigest
 
 import com.google.javascript.jscomp._
+import conf.Switches
 import play.api.{Application, Play}
 import play.twirl.api.Html
 
@@ -104,10 +105,14 @@ object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
   def apply(codeToCompile: String)(implicit application: Application): Html = {
-    val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-    lazy val compiledCode: String =
-      JsMinifier.unsafeCompileWithAdvancedOptimisation(codeToCompile)
+    if (Switches.InlineJsSwitch.isSwitchedOn) {
+      val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
+      lazy val compiledCode: String =
+        JsMinifier.unsafeCompileWithAdvancedOptimisation(codeToCompile)
 
-    Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+      Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+    } else {
+      Html(codeToCompile)
+    }
   }
 }
