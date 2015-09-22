@@ -72,6 +72,13 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
       }
 
+      "passes the parameters to the http lib's POST body" in {
+        val auth = EmailPassword("email@test.com", "password", None)
+        val jsonBody = Option(write(auth))
+        api.authBrowser(auth, trackingParameters)
+        verify(http).POST(Matchers.any[String], Matchers.eq(jsonBody), argThat(new ParamsIncludes(Iterable(("format", "cookies")))),  Matchers.any[Parameters])
+      }
+
       "returns a cookies response" in {
         api.authBrowser(Anonymous, trackingParameters).map {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
