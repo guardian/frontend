@@ -51,7 +51,8 @@ do you have fonts in localStorage?
             if ("localStorage" in window) {
                 // detect which font format (ttf, woff, woff2 etc) we want
                 var fontFormat = (function () {
-                    var fontFormat = localStorage.getItem('gu.fonts.format');
+                    var formatStorageKey = 'gu.fonts.format';
+                    format = localStorage.getItem(formatStorageKey);
 
                     function supportsWoff2() {
                         // try feature detecting first
