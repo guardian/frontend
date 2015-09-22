@@ -21,9 +21,16 @@ object JsMinifier {
     val extern: SourceFile = SourceFile.fromCode("extern.js", "")
     val input: SourceFile = SourceFile.fromCode("input.js", codeToCompile)
 
-    compiler.compile(extern, input, compilerOptions)
+    val result: Result = compiler.compile(extern, input, compilerOptions)
 
-    compiler.toSource
+    if (result.warnings.isEmpty && result.errors.isEmpty && result.success) {
+      compiler.toSource
+    } else {
+      val errors: List[String] = result.errors.map(_.toString).toList
+      val warnings: List[String] = result.warnings.map(_.toString).toList
+      val errorString: String = s"${errors.mkString("\n")}\n${warnings.mkString("\n")}}"
+      throw new RuntimeException(errorString)
+    }
   }
 
   def maybeCompileWithAdvancedOptimisation(codeToCompile: String): Option[String] =
