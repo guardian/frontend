@@ -66,12 +66,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
-      "passes the auth parameters to the http lib's GET method" in {
-        val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
-        api.authBrowser(auth, trackingParameters)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.argThat(new ParamsIncludes(Iterable(("testParam", "value")))), Matchers.any[Parameters])
-      }
-
       "passes the auth header to the http lib's GET method" in {
         val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
         api.authBrowser(auth, trackingParameters)
