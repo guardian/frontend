@@ -33,40 +33,38 @@ object JsMinifier {
     }
   }
 
-  def maybeCompileWithAdvancedOptimisation(codeToCompile: String): Option[String] =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS))
-      .toOption
-      .filter(_.nonEmpty)
+  def maybeCompileWithAdvancedOptimisation(codeToCompile: String): String =
+    compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS)
 
-  def maybeCompileWithStandardOptimisation(codeToCompile: String): Option[String] =
+  def maybeCompileWithStandardOptimisation(codeToCompile: String): String =
     Try(compileUnsafe(codeToCompile, CompilationLevel.SIMPLE_OPTIMIZATIONS))
-      .toOption
       .filter(_.nonEmpty)
+      .get
 
-  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String): Option[String] =
+  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String): String =
     Try(compileUnsafe(codeToCompile, CompilationLevel.WHITESPACE_ONLY))
-      .toOption
       .filter(_.nonEmpty)
+      .get
 
   //Default is to compile with Advanced Optimisations
-  val maybeCompile: String => Option[String] = maybeCompileWithAdvancedOptimisation
+  val maybeCompile: String => String = maybeCompileWithAdvancedOptimisation
 
 }
 
 object JsMinifierDevSensitive {
-  def maybeCompileWithAdvancedOptimisation(codeToCompile: String)(implicit application: Application): Option[String] =
-    if (Play.isDev) Option(codeToCompile)
+  def maybeCompileWithAdvancedOptimisation(codeToCompile: String)(implicit application: Application): String =
+    if (Play.isDev) codeToCompile
     else JsMinifier.maybeCompileWithAdvancedOptimisation(codeToCompile)
 
-  def maybeCompileWithStandardOptimisation(codeToCompile: String)(implicit application: Application): Option[String] =
-    if (Play.isDev) Option(codeToCompile)
+  def maybeCompileWithStandardOptimisation(codeToCompile: String)(implicit application: Application): String =
+    if (Play.isDev) codeToCompile
     else JsMinifier.maybeCompileWithStandardOptimisation(codeToCompile)
 
-  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String)(implicit application: Application): Option[String] =
-    if (Play.isDev) Option(codeToCompile)
+  def maybeCompileWithWhitespaceOptimisation(codeToCompile: String)(implicit application: Application): String =
+    if (Play.isDev) codeToCompile
     else JsMinifier.maybeCompileWithWhitespaceOptimisation(codeToCompile)
 
-  def maybeCompile(codeToCompile: String)(implicit application: Application): Option[String] =
+  def maybeCompile(codeToCompile: String)(implicit application: Application): String =
     maybeCompileWithAdvancedOptimisation(codeToCompile)(application)
 }
 
@@ -76,7 +74,7 @@ object InlineJs {
   def apply(codeToCompile: String)(implicit application: Application): Html = {
     val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
     lazy val compiledCode: String =
-      JsMinifier.maybeCompileWithAdvancedOptimisation(codeToCompile).getOrElse(codeToCompile)
+      JsMinifier.maybeCompileWithAdvancedOptimisation(codeToCompile)
 
     Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
   }
