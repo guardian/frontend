@@ -59,7 +59,6 @@ describe('Most popular', function () {
     afterEach(function () {
         server.restore();
         fixtures.clean(fixturesConfig.id);
-        config.switches.noMobileTopAd = false;
         detect.getBreakpoint = function () { return 'desktop'; };
     });
 
@@ -100,7 +99,6 @@ describe('Most popular', function () {
     it('should not render MPU when on mobile and 2+ MPUs are already on the page', function () {
         var popular = new Popular();
 
-        config.switches.noMobileTopAd = true;
         detect.getBreakpoint = function () { return 'mobile'; };
         popular.prerender();
         expect(popular.$mpu).toBeUndefined();
