@@ -64,7 +64,9 @@ object JsMinifier {
   }
 
   def unsafeCompileWithAdvancedOptimisation(codeToCompile: String): String =
-    compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS)
+    Try(compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS))
+      .filter(_.nonEmpty)
+      .get
 
   def unsafeCompileWithStandardOptimisation(codeToCompile: String): String =
     Try(compileUnsafe(codeToCompile, CompilationLevel.SIMPLE_OPTIMIZATIONS))
