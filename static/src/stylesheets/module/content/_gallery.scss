@@ -179,6 +179,10 @@
         }
     }
 
+    .is-not-modern & {
+        display: none;
+    }
+
     @if $old-ie {
         display: none;
     }
