@@ -33,8 +33,24 @@ zip -r "../artifacts.zip" .
 popd
 
 set +o xtrace
-echo "##teamcity[publishArtifacts 'static/target/artifacts.zip']"
+echo "##teamcity[publishArtifacts 'static/target/artifacts.zip => static']"
 set -o xtrace
+
+echo "Uploading artifact to S3"
+
+set +u
+if [[ -z $BUILD_NUMBER ]]; then
+  BUILD_NUMBER=dev-build
+fi
+if [[ -z $BUILD_VCS_NUMBER ]]; then
+  BUILD_VCS_NUMBER=dev-vcs-build
+fi
+if [[ -z $RIFF_RAFF_BUCKET ]]; then
+  RIFF_RAFF_BUCKET=aws-frontend-teamcity
+fi
+set -u
+
+aws s3 cp static/target/artifacts.zip s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
 
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
