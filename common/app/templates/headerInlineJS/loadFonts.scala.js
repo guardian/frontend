@@ -133,16 +133,17 @@ do you have fonts in localStorage?
                 var fonts = document.querySelectorAll('.webfont');
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font = fonts[i],
-                        dataAttrName = 'data-cache-file-' + (fontHinting() === 'Off' ? '' : 'hinted-' + fontHinting() + '-') + fontFormat(),
-                        nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/),
-                        fontName = nameAndCacheKey[2],
-                        fontHash = nameAndCacheKey[1],
+                        fontHinting = fontHinting() === 'Off' ? '' : 'hinted-' + fontHinting() + '-';
+                        fontURL = font.getAttribute('data-cache-file-' + fontHinting + fontFormat()),
+                        fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/),
+                        fontName = fontInfo[2],
+                        fontHash = fontInfo[1],
                         fontData = localStorage.getItem(storageKey(fontName, fontHash));
 
                     if (fontData) {
                         useFont(font, JSON.parse(fontData).value);
                     } else {
-                        fetchFont(font.getAttribute(dataAttrName), font, fontName, fontHash);
+                        fetchFont(fontURL, font, fontName, fontHash);
                     }
                 }
                 return true;
