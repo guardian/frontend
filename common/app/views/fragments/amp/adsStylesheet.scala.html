@@ -1,0 +1,26 @@
+.amp-ad-container {
+    background: #f6f6f6;
+    border-top: 0.0625rem solid #dfdfdf;
+    float: left;
+    height: 275px;
+    width: 300px;
+    margin-right: 0.75rem;
+}
+
+@@media (max-width: 500px) {
+    .amp-ad-container {
+        float: none;
+        margin: 0 auto;
+    }
+}
+
+.amp-ad-container::before {
+    content: "Advertisement";
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    padding: 0.1875rem 0.5rem;
+    color: #6e6e6e;
+    text-align: right;
+}

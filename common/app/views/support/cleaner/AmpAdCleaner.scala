@@ -13,7 +13,7 @@ object AmpAdCleaner extends HtmlCleaner {
   val DONT_INTERLEAVE_SMALL_PARA = 50
 
   def adAfter(element: Element) = {
-    element.after("""<amp-ad width=300 height=250 type="doubleclick" json='{"targeting":{"sc":["1"]}}' data-slot="/59666047/theguardian.com/uk"></amp-ad>""")
+    element.after("""<div class="amp-ad-container"><amp-ad width=300 height=250 type="doubleclick" json='{"targeting":{"sc":["1"]}}' data-slot="/59666047/theguardian.com/uk"></amp-ad></div>""")
   }
 
   def findElementsNeedingAdsAfter(children: List[Element]): List[Element] = {

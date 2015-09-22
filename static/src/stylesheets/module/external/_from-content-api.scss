@@ -37,7 +37,7 @@
     }
     > li, // sometimes HTML is malformed on purpose by editors
     > ol,
-    > blockquote > ul,
+    > blockquote ul,
     > ul {
         list-style: none;
     }
