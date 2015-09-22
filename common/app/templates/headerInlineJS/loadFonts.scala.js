@@ -65,7 +65,7 @@ do you have fonts in localStorage?
                         // some browsers (e.g. FF40) support WOFF2 but not window.FontFace,
                         // so fall back to known support
                         if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
-                            var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua),
+                            var browser = /(chrome|firefox)\/([0-9]+)/.exec(ua.toLowerCase()),
                                 supportsWoff2 = {
                                     'chrome': 36,
                                     'firefox': 39
