@@ -128,16 +128,12 @@
     @include faux-bullet-point;
 }
 
-.from-content-api ul,
-.content__standfirst ul {
-    list-style: none;
+.from-content-api ul > li,
+.content__standfirst ul > li {
+    @include faux-bullet-point($right-space: 4px);
 
-    > li {
-        @include faux-bullet-point($right-space: 4px);
-
-        > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
-            display: inline;
-        }
+    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
+        display: inline;
     }
 }
 
