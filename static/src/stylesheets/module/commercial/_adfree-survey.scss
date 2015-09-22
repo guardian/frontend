@@ -641,48 +641,68 @@
     .adfreesurvey-wrapper-inner {
         margin: 0 auto;
         width: auto;
-        padding-bottom: $gs-gutter;
+        padding: 0 $gs-gutter $gs-gutter;
 
         @include mq(tablet) {
             margin: $gs-gutter auto;
             width: $gs-column-width*6;
-        }
-    }
-
-    .inline-membership-logo {
-        margin: $gs-gutter*2 0 $gs-gutter;
-        display: block;
-
-        svg {
-            width: 120px;
-            height: 40px;
-
-            g {
-                fill: #333333;
-            }
+            padding: 0 0 $gs-gutter;
         }
     }
 
     .inline-survey-thumbsup {
         margin-bottom: $gs-gutter/2;
         display: block;
+        padding-top: $gs-gutter;
     }
 
     .inline-survey-loudspeaker {
         display: block;
         text-align: center;
         margin-top: $gs-gutter;
+
+        svg {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .inline-arrow-right {
+        float: right;
+        fill: #7d7d7d;
+
+    }
+
+    .inline-membership-logo {
+        margin: $gs-gutter 0 $gs-gutter;
+        display: block;
+        svg {
+            width: 100px;
+            height: 40px;
+
+            g {
+                fill: #bf4181;
+            }
+        }
+        @include mq(tablet) {
+            margin: $gs-gutter*2 0 30px;
+        }
     }
 
     h1 {
-        @include fs-headline(6);
+        @include fs-headline(4);
         color: guss-colour(guardian-brand, $pasteup-palette);
         font-weight: bold;
         margin-bottom: $gs-gutter;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
     }
 
     h2 {
-        @include fs-bodyHeading(1);
+        @include fs-header(4);
         color: guss-colour(guardian-brand, $pasteup-palette);
         margin-bottom: $gs-baseline/2;
     }
@@ -705,14 +725,36 @@
         }
     }
 
+    .button--medium {
+        line-height: 32px;
+    }
+
     .footer-area {
         background-color: colour(neutral-5);
 
         .adfreesurvey-wrapper-inner {
-            width: $gs-column-width*10;
-            padding: $gs-gutter*2 0;
+            width: auto;
+            padding: $gs-gutter;
             margin: 0 auto;
+
+            @include mq(tablet) {
+                width: $gs-column-width*10;
+                padding: $gs-gutter*2 0;
+            }
         }
+
+        img {
+            display: block;
+        }
+
+        .l-row__item:last-child {
+            margin-top: $gs-gutter;
+
+            @include mq(tablet) {
+                margin-top: 0;
+            }            
+        }
+
     }
 
 
