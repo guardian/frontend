@@ -8,4 +8,8 @@ object StaticPageController extends Controller {
   def renderAdFreeSurveyPage() = Action { implicit request =>
     Cached(60)(Ok(views.html.static.adFreeSurveyPage()))
   }
+
+  def renderAdFreeSurveySimplePage() = Action { implicit request =>
+    Cached(60)(Ok(views.html.static.adFreeSurveySimplePage()))
+  }
 }

@@ -28,7 +28,7 @@ define([
                 surveyHeader: 'Advert free experience on the Guardian site and apps',
                 surveyText: 'From <em>£5 a month</em> get a quality advert free experience of the Guardian and support our journalism.',
                 linkText: 'Get advert free experience',
-                surveyLink: '/commercial/ad-free-survey',
+                surveyLink: '/commercial/ad-free-survey-simple',
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),

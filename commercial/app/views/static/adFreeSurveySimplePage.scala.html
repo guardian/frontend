@@ -1,46 +1,46 @@
 @()(implicit request: RequestHeader)
-@import views.support.StaticPages.adFreeSurvey
+@import views.support.StaticPages.adFreeSurveySimple
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
-    <head>
-        <meta charset="utf-8" />
-        <title>@views.support.Title(adFreeSurvey)</title>
+<head>
+    <meta charset="utf-8" />
+    <title>@views.support.Title(adFreeSurveySimple)</title>
 
-        @fragments.metaData(adFreeSurvey)
+    @fragments.metaData(adFreeSurveySimple)
 
-        @* get the stylesheets downloading ASAP *@
-        @fragments.stylesheetLinks(None)
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheetLinks(None)
 
-        @* polyfill, feature detect etc before we try and use the stylesheets *@
-        @fragments.javaScriptPreFlight(adFreeSurvey)
+    @* polyfill, feature detect etc before we try and use the stylesheets *@
+    @fragments.javaScriptPreFlight(adFreeSurveySimple)
 
-        @* try and load fonts before we use the stylesheets *@
-        @fragments.fonts()
+    @* try and load fonts before we use the stylesheets *@
+    @fragments.fonts()
 
-        @* start trying to use the stylesheets *@
-        @fragments.stylesheetLinksEnable()
+    @* start trying to use the stylesheets *@
+    @fragments.stylesheetLinksEnable()
 
-        <script>
-            @Html(Static.systemJs.setupFragment)
+    <script>
+        @Html(Static.systemJs.setupFragment)
 
-            @* Service worker only caches the bundles, so the offline page can only ask for those.
-            For production, we rely on bundles from systemJsSetup *@
-            @if(play.Play.isDev()) {
-                System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
-            }
+        @* Service worker only caches the bundles, so the offline page can only ask for those.
+        For production, we rely on bundles from systemJsSetup *@
+        @if(play.Play.isDev()) {
+            System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
+        }
 
-            @Html(templates.headerInlineJS.js.bootSystemJS(adFreeSurvey).body)
-        </script>
-    </head>
+        @Html(templates.headerInlineJS.js.bootSystemJS(adFreeSurveySimple).body)
+    </script>
+</head>
     <body
-    id="top"
-    itemscope itemtype="http://schema.org/WebPage">
+        id="top"
+        itemscope itemtype="http://schema.org/WebPage">
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @fragments.header(adFreeSurvey)
+        @fragments.header(adFreeSurveySimple)
 
         <div class="l-side-margins">
 
@@ -100,7 +100,7 @@
 
         </div>
 
-        @fragments.footer(adFreeSurvey)
+        @fragments.footer(adFreeSurveySimple)
 
         @fragments.footerJavaScript()
 

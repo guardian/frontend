@@ -169,7 +169,7 @@
         @include mq(tablet) {
             position: static;
             padding: 0;
-        }        
+        }
     }
 
     .survey-text__info {
@@ -266,7 +266,7 @@
         svg {
             width: 100px;
             height: 100px;
-            margin-top: -20px; 
+            margin-top: -20px;
 
             @include mq(mobileLandscape) {
                 display: none;
@@ -306,7 +306,7 @@
         @include mq(tablet) {
             position: static;
             padding: 0;
-        }        
+        }
     }
 
     .survey-text__info {
@@ -548,7 +548,6 @@
     }
 
     .thrasher-content__header {
-
         @include mq(desktop) {
             float: right;
             @include clearfix;
@@ -575,7 +574,6 @@
     }
 
     .inline-thrasher-benefit-icon-simple {
-
         svg {
             width: 250px;
             height: 120px;
@@ -589,7 +587,7 @@
         text-align: left;
         margin: $gs-baseline 0 $gs-baseline*2;
         padding: 0 $gs-gutter;
-        
+
         @include mq(mobileLandscape) {
             @include fs-headline(5);
             line-height: 1.2;
@@ -637,16 +635,15 @@
 }
 
 .adfreesurvey-wrapper {
-
     .adfreesurvey-wrapper-inner {
         margin: 0 auto;
         width: auto;
         padding: 0 $gs-gutter $gs-gutter;
 
         @include mq(tablet) {
-            margin: $gs-gutter auto;
+            margin: 0 auto;
             width: $gs-column-width*6;
-            padding: 0 0 $gs-gutter;
+            padding: $gs-gutter 0 $gs-gutter;
         }
     }
 
@@ -752,7 +749,7 @@
 
             @include mq(tablet) {
                 margin-top: 0;
-            }            
+            }
         }
 
     }
