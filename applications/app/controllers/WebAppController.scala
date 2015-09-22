@@ -1,11 +1,11 @@
 package controllers
 
-import model.{MetaData, Cached}
 import com.gu.contentapi.client.model.Crossword
-import common.{Logging, Edition, ExecutionContexts}
+import common.{Edition, ExecutionContexts, Logging}
 import conf.LiveContentApi
 import crosswords.CrosswordData
-import play.api.mvc.{RequestHeader, Result, Action, Controller}
+import model.{Cached, MetaData}
+import play.api.mvc.{Action, Controller, RequestHeader, Result}
 
 import scala.concurrent.Future
 
@@ -14,14 +14,6 @@ class OfflinePage(val crossword: CrosswordData) extends MetaData {
   lazy val section: String = ""
   lazy val analyticsName: String = id
   lazy val webTitle: String = "Unable to connect to the Internet"
-}
-
-class AdfreesurveyPage() extends MetaData {
-  lazy val id: String = "adfreesurvey-page"
-  lazy val section: String = ""
-  lazy val analyticsName: String = id
-  lazy val webTitle: String = "Adfree Survey"
-  override def hasSlimHeader: Boolean = true
 }
 
 object WebAppController extends Controller with ExecutionContexts with Logging {
@@ -64,10 +56,4 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
       Future(NotFound)
     }
   }
-
-  def adfreesurveyPage() = Action { implicit request =>
-    Cached(60)(Ok(views.html.adfreesurveyPage(
-      new AdfreesurveyPage())))
-  }
-
 }

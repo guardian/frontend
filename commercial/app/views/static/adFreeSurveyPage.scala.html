@@ -1,21 +1,20 @@
-@(adfreesurveyPage: controllers.AdfreesurveyPage)(implicit request: RequestHeader)
-
-@import play.api.libs.json._
+@()(implicit request: RequestHeader)
+@import views.support.StaticPages.adFreeSurvey
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
 <head>
     <meta charset="utf-8" />
-    <title>@views.support.Title(adfreesurveyPage)</title>
+    <title>@views.support.Title(adFreeSurvey)</title>
 
-    @fragments.metaData(adfreesurveyPage)
+    @fragments.metaData(adFreeSurvey)
 
     @* get the stylesheets downloading ASAP *@
     @fragments.stylesheetLinks(None)
 
     @* polyfill, feature detect etc before we try and use the stylesheets *@
-    @fragments.javaScriptPreFlight(adfreesurveyPage)
+    @fragments.javaScriptPreFlight(adFreeSurvey)
 
     @* try and load fonts before we use the stylesheets *@
     @fragments.fonts()
@@ -32,7 +31,7 @@
             System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
         }
 
-        @Html(templates.headerInlineJS.js.bootSystemJS(adfreesurveyPage).body)
+        @Html(templates.headerInlineJS.js.bootSystemJS(adFreeSurvey).body)
     </script>
 </head>
     <body
@@ -41,14 +40,14 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @fragments.header(adfreesurveyPage)
+        @fragments.header(adFreeSurvey)
 
         <div class="l-side-margins">
 
             <div class="adfreesurvey-wrapper">
 
                 <div class="adfreesurvey-wrapper-inner">
-                
+
                     @fragments.inlineSvg("membership-logo", "logo")
 
                     @fragments.inlineSvg("survey-thumbsup", "commercial")
@@ -66,7 +65,7 @@
                     <p><a href="#" class="button button--primary button--small">Tell us your thoughts</a></p>
 
                 </div>
-                    
+
                 <div class="footer-area">
 
                     <div class="adfreesurvey-wrapper-inner">
@@ -99,7 +98,7 @@
 
         </div>
 
-        @fragments.footer(adfreesurveyPage)
+        @fragments.footer(adFreeSurvey)
 
         @fragments.footerJavaScript()
 
