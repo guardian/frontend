@@ -1,17 +1,16 @@
 <style amp-custom>
-    html {
-        background: rgba(51,51,51,0.05);
-    }
-
     body {
         font-family: Georgia,serif;
         font-size: 100%;
         line-height: 1.5rem;
         color: #333;
-        background: #fff;
-        margin: 0;
+        background: rgba(51,51,51,0.05);
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
+    }
+
+    .main-body {
+        background: #fff;
         max-width: 600px;
         margin: 0 auto;
     }
@@ -172,4 +171,5 @@
     @fragments.amp.quoteStylesheet()
     @fragments.amp.richLinkStylesheet()
     @fragments.amp.adsStylesheet()
+    @fragments.amp.tableStylesheet()
 </style>
