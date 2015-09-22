@@ -30,8 +30,7 @@ define([
                 section      = this.getSection(),
                 widgetCode,
                 widgetCodeImage,
-                widgetCodeText,
-                s = window.s;
+                widgetCodeText;
 
             breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
@@ -76,12 +75,12 @@ define([
                 }
 
                 this.tracking(widgetCode);
-                
                 require(['js!' + outbrainUrl]);
             }.bind(this));
         },
 
         tracking: function (widgetCode) {
+            var s = window.s;
             // Omniture
             s.link2 = 'outbrain';
             s.tl(true, 'o', 'outbrain');
