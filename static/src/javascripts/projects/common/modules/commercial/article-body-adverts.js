@@ -110,7 +110,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (config.switches.viewability) {
+            if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);
