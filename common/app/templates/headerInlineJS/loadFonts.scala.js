@@ -16,50 +16,38 @@ do you have fonts in localStorage?
 
     // Determine what type of font-hinting we want.
     var fontHinting = (function () {
-        var hinting;
-        function determineHinting() {
-            if (typeof hinting === 'undefined') {
-                try {
-                    var windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-                        version;
+        var hinting = 'Off',
+            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+            version;
+        try { // belt and braces
+            if (windowsNT) {
+                version = parseFloat(windowsNT[1], 10);
 
-                    hinting = 'Off';
-                    if (windowsNT) {
-                        version = parseFloat(windowsNT[1], 10);
-
-                        // For Windows XP-7
-                        if (version >= 5.1 && version <= 6.1) {
-                            if (/Chrome/.exec(ua) && version < 6.0) {
-                                // Chrome on windows XP wants auto-hinting
-                                hinting = 'Auto';
-                            } else {
-                                // All others use cleartype
-                                hinting = 'Cleartype';
-                            }
-                        }
+                // For Windows XP-7
+                if (version >= 5.1 && version <= 6.1) {
+                    if (/Chrome/.exec(ua) && version < 6.0) {
+                        // Chrome on windows XP wants auto-hinting
+                        hinting = 'Auto';
+                    } else {
+                        // All others use cleartype
+                        hinting = 'Cleartype';
                     }
-                } catch (e) {}
+                }
             }
-            return hinting;
-        };
-        return determineHinting;
+        } catch (e) {
+            @if(play.Play.isDev){throw(e)}
+        }
+        return hinting;
     })();
 
     // Load fonts from `localStorage`.
     function loadFontsFromStorage() {
-        try {
+        try { // localStorage can fail for many reasons
             if ("localStorage" in window) {
                 // detect which font format (ttf, woff, woff2 etc) we want
                 var fontFormat = (function () {
-                    var formatStorageKey = 'gu.fonts.format';
-                    format = localStorage.getItem(formatStorageKey);
-
-                    // flush out weird old json value
-                    // no value to it and JSON.parse is pointless overhead
-                    if (format && /value/.test(format)) {
-                        format = JSON.parse(format).value;
-                        localStorage.setItem(formatStorageKey, format);
-                    };
+                    var formatStorageKey = 'gu.fonts.format',
+                        format = localStorage.getItem(formatStorageKey);
 
                     function supportsWoff2() {
                         // try feature detecting first
@@ -86,15 +74,19 @@ do you have fonts in localStorage?
                         return false;
                     };
 
-                    function getFontFormat() {
-                        if (!format) {
-                            format = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
-                            localStorage.setItem(formatStorageKey, format);
-                        }
-                        return format;
+                    // flush out weird old json value
+                    // no value to it and JSON.parse is pointless overhead
+                    if (/value/.test(format)) {
+                        format = JSON.parse(format).value;
+                        localStorage.setItem(formatStorageKey, format);
                     };
 
-                    return getFontFormat;
+                    if (!format) {
+                        format = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
+                        localStorage.setItem(formatStorageKey, format);
+                    }
+
+                    return format;
                 })();
 
                 // use whatever font CSS we've now got
@@ -141,11 +133,12 @@ do you have fonts in localStorage?
                 // down to business
                 // the target for each font and holders of all the necessary metadata
                 // are some style elements in the head, all identified by a .webfont class
-                var fonts = document.querySelectorAll('.webfont');
+                var fonts = document.querySelectorAll('.webfont'),
+                    hinting = fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-',
+                    urlAttribute = 'data-cache-file-' + hinting + fontFormat;
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font = fonts[i],
-                        hinting = fontHinting() === 'Off' ? '' : 'hinted-' + fontHinting() + '-';
-                        fontURL = font.getAttribute('data-cache-file-' + hinting + fontFormat()),
+                        fontURL = font.getAttribute(urlAttribute),
                         fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/),
                         fontName = fontInfo[2],
                         fontHash = fontInfo[1],
@@ -177,7 +170,7 @@ do you have fonts in localStorage?
             fonts.className = 'webfonts';
 
             // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting()].kerningOn;
+            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });
