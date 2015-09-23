@@ -19,3 +19,6 @@ DEPENDENCIES
   hologram (= 1.2.0)
   sass (~> 3.3.14)
   scss-lint (= 0.26.2)
+
+BUNDLED WITH
+   1.10.1

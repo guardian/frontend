@@ -1,10 +1,24 @@
 .element-rich-link--not-upgraded {
     float: left;
-    width: 50%;
-    max-width: 13.75rem;
-    margin: 0.25rem 1.25rem 0.375rem 0;
-    border-top: 0.0625rem dotted #bdbdbd;
-    border-bottom: 0.0625rem dotted #bdbdbd;
+    margin: 0.25rem 0.625rem 0.375rem 0;
+    padding: 4px;
+    background-color: #f6f6f6;
+    border-top: 1px solid #bdbdbd;
+}
+
+@@media (max-width: 29.99rem) {
+    .element-rich-link--not-upgraded {
+    width: 8.125rem;
+    font-size: 0.875rem;
+    }
+}
+
+@@media (min-width: 30rem) {
+    .element-rich-link--not-upgraded {
+    width: 13.75rem;
+    margin-right: 1.25rem;
+    font-size: 1.25rem;
+    }
 }
 
 .element-rich-link--not-upgraded span {
@@ -13,6 +27,15 @@
 
 .element-rich-link--not-upgraded p {
     margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+}
+
+@@media (min-width: 30rem) {
+    .element-rich-link--not-upgraded p {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    }
 }
 
 .element-rich-link--not-upgraded a {
@@ -29,5 +52,4 @@
     font-size: 0.75rem;
     line-height: 1rem;
     font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-    padding: 0.1875rem 0;
 }
