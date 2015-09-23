@@ -1,68 +1,68 @@
 System.config({ bundles: {
-	"bundles/core/5f28e354b60a408288fba12392215503/core": [
+	"bundles/core/f1ff28c5a137613061da67795810aec3/core": [
 		"core"
 	],
-	"bundles/crosswords/cb292bc83471eaea24eb90fde2c8fd54/crosswords": [
+	"bundles/crosswords/d4e5aeb11b87e9ccaca6d75652894f16/crosswords": [
 		"es6/bootstraps/crosswords"
 	],
-	"bundles/accessibility/aa65fc9639952a99b07a4eaebf81f255/accessibility": [
+	"bundles/accessibility/9d7a63f35723e258af4dc39a0628e2a6/accessibility": [
 		"bootstraps/accessibility"
 	],
-	"bundles/app/0ae224b8368f4d16c434e038c267fa1f/app": [
+	"bundles/app/d14b28eed009594b07ec31ea31a39847/app": [
 		"bootstraps/app"
 	],
-	"bundles/commercial/80f192f90acd7c1beef4307a74d8e437/commercial": [
+	"bundles/commercial/64dc8bf7d7feb002dce2acd159454a63/commercial": [
 		"bootstraps/commercial"
 	],
-	"bundles/sudoku/463bbfc8bda0d4855e64cce7a56c33c7/sudoku": [
+	"bundles/sudoku/d4b2011e85a5cb361f9e6383d9fbc118/sudoku": [
 		"bootstraps/sudoku"
 	],
-	"bundles/image-content/564ed44ca06c32534a9ed5a0ec89f817/image-content": [
+	"bundles/image-content/8d870cf9ece7c605b00ac3bc96dcfe50/image-content": [
 		"bootstraps/image-content"
 	],
-	"bundles/facia/0077d0aa114678641bd77800626bfb8e/facia": [
+	"bundles/facia/f9cf09d5ffb99c3dce4ad820d7e08015/facia": [
 		"bootstraps/facia"
 	],
-	"bundles/football/7cf27fc7e3bed6b03789f964395f6e65/football": [
+	"bundles/football/e9160d988119215bdc412030946f834e/football": [
 		"bootstraps/football"
 	],
-	"bundles/preferences/b23f1dc5040e15970a3a54712cbf7c67/preferences": [
+	"bundles/preferences/e8a932d9cf0611a24ea09cb6c683e67c/preferences": [
 		"bootstraps/preferences"
 	],
-	"bundles/membership/38a96a9a6cb255fdbeb5368f6dc8818b/membership": [
+	"bundles/membership/02058ba83845df574c32fa688b604849/membership": [
 		"bootstraps/membership"
 	],
-	"bundles/article/20c06257cd6f221f1f1bdbdc7a47ea49/article": [
+	"bundles/article/8f34522606dcdaceb29cfb4b866c0864/article": [
 		"bootstraps/article"
 	],
-	"bundles/liveblog/09d851e7da4de43732df66d9a1797efd/liveblog": [
+	"bundles/liveblog/b753980388fe8ef4179d05444d4add24/liveblog": [
 		"bootstraps/liveblog"
 	],
-	"bundles/gallery/d4d42df5c394a53e5d9a0ca8e1c6f09a/gallery": [
+	"bundles/gallery/8afd71a41e226277cc67273b31460b70/gallery": [
 		"bootstraps/gallery"
 	],
-	"bundles/trail/acf530f6abefa5eb1d0b6d3a35a50384/trail": [
+	"bundles/trail/28b2e5f57cdb64fa50c374e8a381afaf/trail": [
 		"bootstraps/trail"
 	],
-	"bundles/profile/eb09351f24f3a6a393608eae67fd28d8/profile": [
+	"bundles/profile/2b699b8785d1183fff24af20a31eebcd/profile": [
 		"bootstraps/profile"
 	],
 	"bundles/ophan/affb211a6a380a348cc796ac64411894/ophan": [
 		"bootstraps/ophan"
 	],
-	"bundles/admin/9df1996fe48e243e6a6dcb063b9f7a0e/admin": [
+	"bundles/admin/2a9d0e1f45ae8dec8c9a798012321439/admin": [
 		"bootstraps/admin"
 	],
-	"bundles/video-player/fadc315b48fe25eff2aba453f412df5c/video-player": [
+	"bundles/video-player/38c430c621988322cb43116b10732ca6/video-player": [
 		"bootstraps/video-player"
 	],
-	"bundles/video-embed/32bdf41ef7a506005ae28bf9f1a969c1/video-embed": [
+	"bundles/video-embed/30ffc19d934f4dd884e79942c8d75a4f/video-embed": [
 		"bootstraps/video-embed"
 	],
-	"bundles/dev/cfbf42657b78e787fbf2ce304cec2398/dev": [
+	"bundles/dev/a03e5bb2dc88662d4ebc7948896f2323/dev": [
 		"bootstraps/dev"
 	],
-	"bundles/creatives/fdf2e4dde0a1a7cecced3a572bcf23e0/creatives": [
+	"bundles/creatives/a3ea41c75cf97b2dae8fb914961c0e28/creatives": [
 		"bootstraps/creatives"
 	],
 	"bundles/zxcvbn/5a189bc6deb7476020d21c0be59c4623/zxcvbn": [

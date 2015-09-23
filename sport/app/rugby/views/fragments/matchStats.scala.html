@@ -64,7 +64,7 @@
             </thead>
             <tbody>
                 <tr>
-                @defining((firstTeamProperty * 100.toInt).toInt, (secondTeamProperty * 100).toInt) { case (firstProperty, secondProperty) =>
+                @defining(PercentMaker((firstTeamProperty * 100.toInt).toInt, (secondTeamProperty * 100).toInt)) { case (firstProperty, secondProperty) =>
                 <td
                 class="bar-fight__bar bar-fight__bar--home"
                 data-chart-value="@secondProperty"

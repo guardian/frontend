@@ -1,0 +1,95 @@
+figure.element-table {
+    margin: 0 0.1rem 0 1.25rem;
+    float: right;
+    width: 18.75rem;
+}
+
+@@media (max-width: 500px) {
+    figure.element-table {
+        width: 100%;
+        margin: 0 0.125rem;
+    }
+}
+
+.player-card {
+    padding: 0.75rem 0.625rem;
+    background: #f6f6f6;
+    border-top: 0.0625rem solid #005689;
+    color: #333;
+}
+
+.player-card__player {
+    margin-bottom: 1.5rem;
+    min-height: 6.25rem;
+    padding-right: 6.25rem;
+}
+
+@@media (max-width: 500px) {
+    .player-card__player {
+        min-height: 5rem;
+    }
+}
+
+.player-card__image-container {
+    float: right;
+}
+
+.player-card__image {
+    -webkit-border-radius: 62.5rem;
+    border-radius: 62.5rem;
+    height: 6.25rem;
+    width: 6.25rem;
+    float: right;
+}
+@@media (max-width: 500px) {
+    .player-card__image {
+        height: 5rem;
+        width: 5rem;
+    }
+}
+
+.player-card__name {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-family: Georgia,serif;
+    font-weight: 900;
+    font-weight: normal;
+}
+
+.player-card__stats {
+    margin: 0;
+}
+
+.player-card__position,
+.player-card__stat-name,
+.player-card__stat-value {
+    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+
+.player-card__stat-name, .player-card__stat-value {
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+
+}
+
+.player-card__position {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    color: #005689;
+}
+
+.player-card__stat-name {
+    display: block;
+    float: left;
+    font-weight: normal;
+    padding: 0.25rem 0 0.5rem;
+}
+
+.player-card__stat-value {
+    border-top: 0.0625rem solid #bdbdbd;
+    font-weight: bold;
+    padding-left: 85%;
+    text-align: right;
+    margin: 0;
+    padding: 0.25rem 0 0.5rem;
+}
