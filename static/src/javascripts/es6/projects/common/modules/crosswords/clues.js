@@ -30,10 +30,10 @@ class Clue extends React.Component {
                 <div className="crossword__clue__number">{this.props.humanNumber}</div>
 
                 <div className="crossword__clue__text"
-                /* jscs:disable disallowDanglingUnderscores */
-                     dangerouslySetInnerHTML={{__html: this.props.clue}}>
-                /* jscs:enable disallowDanglingUnderscores */
-                </div>
+                     /* jscs:disable disallowDanglingUnderscores */
+                     dangerouslySetInnerHTML={{__html: this.props.clue}}
+                     /* jscs:enable disallowDanglingUnderscores */
+                ></div>
             </li>
         );
     }
