@@ -19,17 +19,18 @@ echo "##teamcity[progressStart 'asset dist']"
 set -x
 ./grunt-tc compile emitAbTestInfo  --cluster
 
-static_folder="static/target/riffraff"
+static_folder="static/riffraff"
 rm -rf $static_folder
 
 mkdir -p "$static_folder/packages/frontend-static"
 
 cp "static/conf/deploy.json" "$static_folder"
-cp -r static/hash/*                                     "$static_folder/packages/frontend-static"
-cp static/abtests.json                                  "$static_folder/packages/frontend-abtests"
+cp -r static/hash/*          "$static_folder/packages/frontend-static"
+cp static/abtests.json       "$static_folder/packages/frontend-abtests"
 
 pushd $static_folder
 zip -r "../artifacts.zip" .
+mv ../artifacts.zip ./artifacts.zip
 popd
 
 echo "Uploading artifact and build manifest to S3"
@@ -55,10 +56,10 @@ sed -e "s/<%build_number%>/$BUILD_NUMBER/" \
     -e "s/<%start_time%>/$BUILD_START_DATE/" \
     -e "s/<%revision%>/$BUILD_VCS_NUMBER/" \
     -e "s/<%branch%>/$BUILD_VCS_BRANCH/" \
-    static/conf/build-template.json | tee static/target/build.json
+    static/conf/build-template.json | tee $static_folder/build.json
 
-aws s3 cp static/target/build.json    s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
-aws s3 cp static/target/artifacts.zip s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
+aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
+aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
 
 set +o xtrace
 echo "##teamcity[publishArtifacts 'static/target/artifacts.zip => static']"
