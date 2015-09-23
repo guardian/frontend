@@ -103,7 +103,7 @@ trait Prototypes {
   )
 
   def frontendDistSettings(application: String) = List(
-    name in Universal := application,
+    packageName in Universal := application,
     topLevelDirectory in Universal := Some(application),
     concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     riffRaffPackageType := (packageBin in Universal).value,
