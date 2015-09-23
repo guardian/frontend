@@ -303,6 +303,7 @@ case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: Request
 
         }
         el.select(".block-elements").foreach { blockElements =>
+          //itemprop needs to go around children but not the author tag which is added in BloggerBylineImage
           val container = body.createElement("div")
           container.attr("itemprop", "articleBody")
           // Get children before mutating
