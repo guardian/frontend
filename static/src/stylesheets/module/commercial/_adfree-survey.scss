@@ -754,5 +754,12 @@
 
     }
 
+    &.adfreesurvey-simple-wrapper {
+        .adfreesurvey-wrapper-inner {
+            @include mq(tablet) {
+                width: $gs-column-width*8;
+            }
+        }
+    }
 
 }
