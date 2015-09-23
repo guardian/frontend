@@ -27,7 +27,7 @@ function (
                 },
                 'ui:images:lazyLoaded': function (context) {
                     picturefill({
-                        elements: [context]
+                        elements: context ? [context] : null
                     });
                 }
             });
