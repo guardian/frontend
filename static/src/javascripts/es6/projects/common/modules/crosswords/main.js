@@ -137,7 +137,7 @@ class Crossword extends React.Component {
 
     insertCharacter (character) {
         const cell = this.state.cellInFocus;
-        if (/[A-Z]/.test(character)) {
+        if (/[A-Z]/.test(character) && character.length === 1) {
             this.setCellValue(cell.x, cell.y, character);
             this.save();
             this.focusNext();
@@ -375,6 +375,10 @@ class Crossword extends React.Component {
         }
     }
 
+    allHighlightedClues () {
+        return _.filter(this.props.data.entries, this.clueIsInFocusGroup, this);
+    }
+
     clueIsInFocusGroup (clue) {
         if (this.state.cellInFocus) {
             const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
@@ -435,6 +439,7 @@ class Crossword extends React.Component {
                 grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
                     if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
                         cell.isError = true;
+                        cell.value = '';
                     }
 
                     return cell;
@@ -457,26 +462,23 @@ class Crossword extends React.Component {
     }
 
     onCheat () {
-        this.cheat(this.clueInFocus());
+        _.forEach(this.allHighlightedClues(), this.cheat, this);
         this.save();
     }
 
     onCheck () {
-        this.check(this.clueInFocus());
+        // 'Check this' checks single and grouped clues
+        _.forEach(this.allHighlightedClues(), this.check, this);
         this.save();
     }
 
     onSolution () {
-        _.forEach(this.props.data.entries, (entry) => {
-            this.cheat(entry);
-        });
+        _.forEach(this.props.data.entries, this.cheat, this);
         this.save();
     }
 
     onCheckAll () {
-        _.forEach(this.props.data.entries, (entry) => {
-            this.check(entry);
-        });
+        _.forEach(this.props.data.entries, this.check, this);
         this.save();
     }
 
@@ -492,7 +494,8 @@ class Crossword extends React.Component {
     }
 
     onClearSingle () {
-        const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
+        // Merge arrays of cells from all highlighted clues
+        const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
@@ -558,7 +561,7 @@ class Crossword extends React.Component {
             : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
-            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+            <AnagramHelper focussedEntry={focussed} entries={this.props.data.entries} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
         return (

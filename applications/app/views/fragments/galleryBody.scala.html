@@ -73,9 +73,8 @@
                 @if(amp) { @* TODO refactor this to use the code from img.scala.html as it's mostly duplicated here *@
                     @imageElement.largestImage.map { largestImage =>
                         <amp-img src="@ImgSrc.getFallbackUrl(imageElement)"
-                        @* srcset is broken, removing until this is resolved:
                         srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
-                        sizes="@GalleryMedia.Inline.sizes" *@
+                        sizes="@GalleryMedia.Inline.sizes"
                         layout="responsive"
                         width="@largestImage.width"
                         height="@largestImage.height"
@@ -92,7 +91,7 @@
                     itemprop="contentUrl" />
                 }
 
-                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen"))
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen modern-visible"))
             </a>
 
             <div class="gallery2__figcaption">

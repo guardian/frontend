@@ -2,9 +2,8 @@
 @import conf.Switches._
 @import common.InlineJs
 
-@fragments.fontDefinitions()
-
 @if(FontSwitch.isSwitchedOn) {
+    @fragments.fontDefinitions()
     <script>
         @InlineJs(templates.headerInlineJS.js.loadFonts().body)
     </script>

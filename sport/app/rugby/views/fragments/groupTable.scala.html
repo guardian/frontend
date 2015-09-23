@@ -1,0 +1,58 @@
+@import rugby.model.Match
+@import rugby.model.GroupTable
+
+@(theMatch: Match, group: Option[GroupTable])
+
+@if(group.isDefined) {
+<div data-component="football-table-embed" class="c-football-table table--hide-from-importance-1">
+
+    <div class="table__container">
+    <table class="@RenderClasses(Map(
+            "table" -> true,
+            "table--league-table" -> true,
+            "table--football" -> true,
+            "table--striped" -> false,
+            "table--responsive-font" -> false
+        ))">
+        <thead>
+            <tr>
+                <th class="table-column--sub"><abbr title="Position">Pos</abbr></th>
+                <th class="table-column--main">Team</th>
+                <th><abbr title="Played">P</abbr></th>
+                <th><abbr title="Won">W</abbr></th>
+                <th><abbr title="Drawn">D</abbr></th>
+                <th><abbr title="Lost">L</abbr></th>
+                <th><abbr title="Points difference">PD</abbr></th>
+                <th><abbr title="Points">Pts</abbr></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @group.get.teams.zipWithIndex.map { case (team, index) =>
+                <tr class="@RenderClasses(Map(
+                        "table-row--highlight" -> false,
+                        "table-row--divider" -> (index == 2)  ))">
+                    <td class="table-column--sub">@team.rank</td>
+                    <td class="table-column--main">
+                        <span class="team-name">
+                            <span class="team-name__long">@team.name</span>
+                        </span>
+                    </td>
+                    <td>@team.played</td>
+                    <td>@team.won</td>
+                    <td>@team.drawn</td>
+                    <td>@team.lost</td>
+                    <td>@team.pointsdiff</td>
+                    <td><b>@team.points</b></td>
+                </tr>
+            }
+        </tbody>
+
+        <caption class="table__caption table__caption--top">
+            <a href="http://www.theguardian.com/sport/ng-interactive/2015/sep/07/rugby-world-cup-2015-digital-wallchart" class="football-matches__heading">@group.get.name</a>
+        </caption>
+    </table>
+    </div>
+
+</div>
+}

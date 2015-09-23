@@ -5,7 +5,7 @@ import layout.ContentWidths.MainMedia
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{CmpParamCleaner, AmpAdCleaner}
+import views.support.cleaner.{VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
 
 object MainMediaWidths {
 
@@ -23,7 +23,7 @@ object MainCleaner {
  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
-        VideoEmbedCleaner(article),
+        VideoEmbedCleaner(article, amp),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner
       )
@@ -42,7 +42,7 @@ object BodyCleaner {
       TagLinker(article),
       TableEmbedComplimentaryToP,
       R2VideoCleaner(article),
-      VideoEmbedCleaner(article),
+      VideoEmbedCleaner(article, amp),
       PictureCleaner(article, amp),
       LiveBlogDateFormatter(article.isLiveBlog),
       LiveBlogLinkedData(article.isLiveBlog),

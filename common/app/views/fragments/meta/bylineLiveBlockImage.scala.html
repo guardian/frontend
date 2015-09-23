@@ -3,7 +3,7 @@
     @profileTag.contributorImagePath.map{ src =>
         <img class="liveblog-block-byline__img" src="@ImgSrc(src, Item300)" alt="@profileTag.name" />
     }
-    <p class="liveblog-block-byline__name">@profileTag.name</p>
+    <p class="liveblog-block-byline__name" itemprop="author">@profileTag.name</p>
 </div>
 
 

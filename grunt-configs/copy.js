@@ -91,13 +91,13 @@ module.exports = function(grunt, options) {
                 }
             ]
         },
-        // assets.map must go where Play can find it from resources at runtime.
+        // asset maps must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.
-        assetMap: {
+        assetMaps: {
             files: [{
                 expand: true,
                 cwd: options.staticHashDir + 'assets',
-                src: ['**/assets.map'],
+                src: ['**/assets.map', '**/jspm-assets.map'],
                 dest: 'common/conf/assets'
             }]
         },
