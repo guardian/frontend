@@ -23,7 +23,7 @@ import sun.security.x509.X509CertImpl
   // Also do not include hosts that are unreachable (e.g. inside the firewall)
   private val webTeamHosts = if (tooLate) Seq(
     "fronts.gutools.co.uk") else Nil ++ Seq(
-  "api.nextgen.guardianapps.co.uk",
+    "api.nextgen.guardianapps.co.uk",
     "i.guim.co.uk",
     "beacon.guim.co.uk",
     "profile.theguardian.com",
