@@ -302,8 +302,13 @@ case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: Request
           title.attr("itemprop", "headline")
 
         }
-        el.select(".block-elements").foreach { body =>
-          body.attr("itemprop", "articleBody")
+        el.select(".block-elements").foreach { blockElements =>
+          val container = body.createElement("div")
+          container.attr("itemprop", "articleBody")
+          // Get children before mutating
+          val children = blockElements.children()
+          blockElements.prependChild(container)
+          container.insertChildren(0, children)
         }
       }
     }
