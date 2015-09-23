@@ -112,6 +112,7 @@ trait Prototypes {
     riffRaffUploadArtifactBucket := System.getenv().getOrDefault("RIFF_RAFF_BUCKET", "aws-frontend-teamcity"),
     riffRaffUploadManifestBucket := System.getenv().getOrDefault("RIFF_RAFF_BUCKET", "aws-frontend-teamcity"),
     riffRaffArtifactPublishPath := application,
+    riffRaffManifestProjectName := s"dotcom:$application",
     artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
       artifact.name + "." + artifact.extension
     }
