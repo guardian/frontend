@@ -80,7 +80,7 @@ object JsMinifier {
       .get
 
   //Default is to compile with Advanced Optimisations
-  val unsafeCompile: String => String = unsafeCompileWithAdvancedOptimisation
+  val unsafeCompile: String => String = unsafeCompileWithStandardOptimisation
 
 }
 
@@ -91,7 +91,7 @@ object InlineJs {
     if (Switches.InlineJsSwitch.isSwitchedOn) {
       val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
       lazy val compiledCode: String =
-        JsMinifier.unsafeCompileWithAdvancedOptimisation(codeToCompile)
+        JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
 
       Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
     } else {
