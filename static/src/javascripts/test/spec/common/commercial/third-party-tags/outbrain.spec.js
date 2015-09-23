@@ -280,4 +280,24 @@ describe('Outbrain', function () {
             });
         });
     });
+
+    describe('Tracking', () => {
+        it('should call tracking method', (done) => {
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
+            sut.getSection = function () {
+                return 'all';
+            };
+
+            spyOn(sut, 'tracking');
+
+            sut.load();
+
+            fastdom.defer(function () {
+                expect(sut.tracking).toHaveBeenCalledWith('AR_13');
+                done();
+            });
+        });
+    });
 });
