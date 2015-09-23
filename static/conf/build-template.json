@@ -1,5 +1,5 @@
-{  
-   "projectName":"static",
+{
+   "projectName":"dotcom:static",
    "buildNumber":"<%build_number%>",
    "startTime":"<%start_time%>",
    "revision":"<%revision%>",
