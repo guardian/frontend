@@ -41,7 +41,6 @@ define([
     'common/modules/ui/clickstream',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
-    'common/modules/ui/fonts',
     'common/modules/ui/message',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
@@ -95,7 +94,6 @@ define([
     Clickstream,
     Dropdowns,
     fauxBlockLink,
-    fonts,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -380,7 +378,6 @@ define([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
-                ['c-fonts', fonts],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
