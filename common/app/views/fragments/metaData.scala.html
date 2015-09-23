@@ -15,7 +15,6 @@
 @if(amp) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
-    <link rel="amphtml" href="/@item.id/amp">
 } else {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -37,6 +36,10 @@
     <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
 
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
+
+    @if((item.isArticle && !item.isLiveBlog)) {
+        <link rel="amphtml" href="/@item.id/amp">
+    }
 }
 
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
