@@ -1,4 +1,5 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "training-preview":{
             "type":"autoscaling",

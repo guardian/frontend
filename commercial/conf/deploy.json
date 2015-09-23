@@ -1,4 +1,5 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "commercial":{
             "type":"autoscaling",

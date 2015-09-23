@@ -1,4 +1,5 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "sport":{
             "type":"autoscaling",

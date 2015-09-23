@@ -1,4 +1,5 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "article":{
             "type":"autoscaling",

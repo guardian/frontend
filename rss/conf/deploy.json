@@ -1,4 +1,5 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "rss":{
             "type":"autoscaling",
