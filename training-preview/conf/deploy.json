@@ -2,7 +2,6 @@
     "packages":{
         "training-preview":{
             "type":"autoscaling",
-            "apps":[ "frontend::training-preview" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

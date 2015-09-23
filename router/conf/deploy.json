@@ -2,7 +2,6 @@
     "packages":{
         "router":{
             "type":"autoscaling",
-            "apps":[ "frontend::router" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

@@ -2,7 +2,6 @@
     "packages":{
         "identity":{
             "type":"autoscaling",
-            "apps":[ "frontend::identity" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

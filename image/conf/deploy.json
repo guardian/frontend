@@ -2,7 +2,6 @@
     "packages":{
         "image":{
             "type":"autoscaling",
-            "apps":[ "frontend::image" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

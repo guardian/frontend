@@ -2,7 +2,6 @@
     "packages":{
         "admin":{
             "type":"autoscaling",
-            "apps":[ "frontend::admin" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

@@ -2,7 +2,6 @@
     "packages":{
         "preview":{
             "type":"autoscaling",
-            "apps":[ "frontend::preview" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

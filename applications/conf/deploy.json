@@ -2,7 +2,6 @@
     "packages":{
         "applications":{
             "type":"autoscaling",
-            "apps":[ "frontend::applications" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
