@@ -85,6 +85,7 @@
     @picture.largestImage.map { largestImage =>
         <amp-img src="@ImgSrc.getFallbackUrl(picture)"
         srcset="@ImgSrc.srcset(picture, widths)"
+        sizes="@widths.sizes"
         layout="responsive"
         width="@largestImage.width"
         height="@largestImage.height"
