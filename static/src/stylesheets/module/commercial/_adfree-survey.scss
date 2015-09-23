@@ -68,7 +68,7 @@
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, .6);
-    z-index: 10000; /*TODO set proper z-index*/
+    z-index: $zindex-overlay;
     width: 100%;
     height: 100%;
 
@@ -97,7 +97,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 10001; /*TODO set proper z-index*/
         width: 100%;
         height: 100%;
         padding: $gs-row-height $gs-column-width*.5;
@@ -214,7 +213,7 @@
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, .6);
-    z-index: 10000; /*TODO set proper z-index*/
+    z-index: $zindex-overlay;
     width: 100%;
     height: 100%;
 
@@ -230,7 +229,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 10001; /*TODO set proper z-index*/
         width: 100%;
         height: 100%;
         padding: $gs-row-height $gs-column-width*.5;
@@ -405,7 +403,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 1; /*TODO set proper z-index*/
+        z-index: 1;
         display: block;
         width: 100%;
         height: 100%;
@@ -541,7 +539,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 1; /*TODO set proper z-index*/
+        z-index: 1;
         display: block;
         width: 100%;
         height: 100%;
@@ -643,7 +641,7 @@
         @include mq(tablet) {
             margin: 0 auto;
             width: $gs-column-width*6;
-            padding: $gs-gutter 0 $gs-gutter;
+            padding: $gs-gutter 0;
         }
     }
 
