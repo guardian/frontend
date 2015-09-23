@@ -130,11 +130,13 @@ p {
 
 #crossword {
     .content__head {
-        padding-top: .5cm !important;
+        padding-top: 0 !important;
     }
 
     .content__headline {
-        font-size: 28px;
+        font-size: 22px;
+        margin-bottom: 0 !important;
+        line-height: initial !important;
     }
 }
 
@@ -178,8 +180,9 @@ p {
 .crossword__clues {
     clear: both;
     font-size: 12px;
+    position: relative;
+    top: -.5cm;
 }
-
 
 .crossword__clues--across,
 .crossword__clues--down {
@@ -187,16 +190,22 @@ p {
     width: 8cm !important;
 }
 
+.crossword__clues--across {
+    margin-right: .5cm !important;
+}
+
 .crossword__clues-list {
     list-style: none;
 }
 
-.crossword__clue {
-    &:before {
-        content: attr(data-number);
-        font-weight: bold;
-        margin-right: .5rem;
-    }
+.crossword__clue__number,
+.crossword__clue__text {
+    display: table-cell !important;
+    width: auto !important;
+}
+
+.crossword__clue__number {
+    width: 25px !important;
 }
 
 .crossword__links {
