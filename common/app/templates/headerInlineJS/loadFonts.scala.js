@@ -160,6 +160,7 @@ do you have fonts in localStorage?
                 return true;
             };
         } catch (e) {
+            @if(play.Play.isDev){throw(e)}
             return false;
         };
         return false;
@@ -180,7 +181,9 @@ do you have fonts in localStorage?
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });
-        } catch (e) {};
+        } catch (e) {
+            @if(play.Play.isDev){throw(e)}
+        };
     }
 
     // Detect whether browser is smoothing its fonts.
@@ -248,6 +251,7 @@ do you have fonts in localStorage?
                     saveFontSmoothing(false);
                     return false;
                 } catch (ex) {
+                    @if(play.Play.isDev){throw(e)}
                     // Something went wrong (for example, non-blink Opera cannot use
                     // the canvas fillText() method) so we assume false for safety's
                     // sake.
@@ -258,7 +262,9 @@ do you have fonts in localStorage?
                 // You're not on Windows or you're using IE, so we assume true
                 return true;
             }
-        } catch (e) {};
+        } catch (e) {
+            @if(play.Play.isDev){throw(e)}
+        };
     }
 
     // Check to see if you should get webfonts, and then try to load them from localStorage if so
