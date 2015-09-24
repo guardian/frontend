@@ -212,6 +212,12 @@ category: Common
         padding: 0 $gs-gutter / 10;
         width: 32px;
     }
+
+    .inline-icon svg {
+        width: 80%;
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 .selection-sharing.selection-sharing--active {
@@ -220,7 +226,6 @@ category: Common
 }
 
 // Testing static social on mobile
-
 .social-fixed {
     height: 40px;
     position: fixed;
