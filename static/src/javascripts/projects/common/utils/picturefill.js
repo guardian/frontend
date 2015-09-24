@@ -405,7 +405,7 @@ define([
                 candidates,
                 options = opt || {};
 
-            elements = options.elements || pf.getAllElements();
+            elements = options.elements || pf.getAllElements;
 
             // w._browserWidth = pf.getBrowserWidth();
 
