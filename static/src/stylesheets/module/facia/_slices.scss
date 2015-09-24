@@ -229,6 +229,7 @@ Hence why a greater depth of selector specificity is needed.
 
         .tabs__pane {
             width: (100% / 3) * 2;
+            min-height: 300px;
         }
     }
 }
