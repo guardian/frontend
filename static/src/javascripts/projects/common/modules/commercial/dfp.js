@@ -1,4 +1,3 @@
-/* global googletag: false */
 define([
     'bean',
     'bonzo',
@@ -16,6 +15,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
@@ -38,6 +38,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    commercialFeatures,
     dfpOphanTracking,
     geoMostPopular,
     ab,
@@ -241,6 +242,10 @@ define([
          * Public functions
          */
         init = function (options) {
+            if (!commercialFeatures.dfpAdvertising) {
+                return false;
+            }
+
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });

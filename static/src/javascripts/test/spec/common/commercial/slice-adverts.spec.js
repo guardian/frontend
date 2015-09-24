@@ -15,32 +15,29 @@ describe('Slice Adverts', function () {
         },
         $fixtureContainer,
         injector = new Injector(),
-        sliceAdverts, config, detect, userAdPreference;
+        sliceAdverts, config, detect, commercialFeatures;
 
     beforeEach(function (done) {
         injector.test([
             'common/modules/commercial/slice-adverts',
+            'common/modules/commercial/commercial-features',
             'common/utils/config',
-            'common/utils/detect',
-            'common/modules/commercial/user-ad-preference'
+            'common/utils/detect'
         ], function () {
             sliceAdverts = arguments[0];
-            config = arguments[1];
-            detect = arguments[2];
-            userAdPreference = arguments[3];
+            commercialFeatures = arguments[1];
+            config = arguments[2];
+            detect = arguments[3];
 
             config.page = {
                 pageId: 'uk/commentisfree'
-            };
-            config.switches = {
-                standardAdverts: true
             };
 
             detect.getBreakpoint = function () {
                 return 'desktop';
             };
 
-            userAdPreference.hideAds = false;
+            commercialFeatures.sliceAdverts = true;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
@@ -141,15 +138,8 @@ describe('Slice Adverts', function () {
         });
     });
 
-    it('should not not display ad slot if standard-adverts switch is off', function () {
-        config.switches.standardAdverts = false;
-
-        expect(sliceAdverts.init()).toBe(false);
-        expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
-    });
-
-    it('should not display ad slot if user has opted out of advertising', function () {
-        userAdPreference.hideAds = true;
+    it('should not display ad slot if disabled in commercial-features', function () {
+        commercialFeatures.sliceAdverts = false;
 
         expect(sliceAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);

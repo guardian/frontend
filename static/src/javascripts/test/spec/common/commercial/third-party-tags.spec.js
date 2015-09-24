@@ -6,18 +6,16 @@ import jasmineSinon from 'jasmine-sinon';
 describe('Tags Container', function () {
 
     var injector = new Injector(),
-        tagsContainer, config;
+        tagsContainer, commercialFeatures;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/third-party-tags', 'common/utils/config'], function () {
+        injector.test([
+            'common/modules/commercial/third-party-tags',
+            'common/modules/commercial/commercial-features'
+        ], function () {
             tagsContainer = arguments[0];
-            config = arguments[1];
-            config.page = {
-                contentType: 'Article',
-                section: 'article',
-                edition: 'uk'
-            };
-            config.switches = {};
+            commercialFeatures = arguments[1];
+            commercialFeatures.thirdPartyTags = true;
             done();
         });
     });
@@ -26,15 +24,8 @@ describe('Tags Container', function () {
         expect(tagsContainer).toBeDefined();
     });
 
-    it('should not run if "Identity" content type', function () {
-        config.page.contentType = 'Identity';
-
-        expect(tagsContainer.init()).toBe(false);
-    });
-
-    it('should not run if "identity" section', function () {
-        config.page.section = 'identity';
-
+    it('should not run if disabled in commercial features', function () {
+        commercialFeatures.thirdPartyTags = false;
         expect(tagsContainer.init()).toBe(false);
     });
 
