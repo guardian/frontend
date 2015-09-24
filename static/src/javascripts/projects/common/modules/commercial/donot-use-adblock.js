@@ -22,30 +22,30 @@ define([
     svgs
 ) {
     function init() {
-        var alreadyVisted = storage.local.get('alreadyVisited') || 0;
-        var adblockLink = 'https://membership.theguardian.com';
-        var message = _.sample([
-            {
-                id: 'monthly',
-                messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter from just £5 per month',
-                linkText: 'Find out more'
-            },
-            {
-                id: 'annual',
-                messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for just £50 per a year',
-                linkText: 'Find out more'
-            },
-            {
-                id: 'weekly',
-                messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for less than £1 per week',
-                linkText: 'Find out more'
-            },
-            {
-                id: 'no-price',
-                messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                linkText: 'Become a supporter today'
-            }
-        ]);
+        var alreadyVisted = storage.local.get('alreadyVisited') || 0,
+            adblockLink = 'https://membership.theguardian.com',
+            message = _.sample([
+                {
+                    id: 'monthly',
+                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter from just £5 per month',
+                    linkText: 'Find out more'
+                },
+                {
+                    id: 'annual',
+                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for just £50 per a year',
+                    linkText: 'Find out more'
+                },
+                {
+                    id: 'weekly',
+                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter for less than £1 per week',
+                    linkText: 'Find out more'
+                },
+                {
+                    id: 'no-price',
+                    messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                    linkText: 'Become a supporter today'
+                }
+            ]);
 
         if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
             new Message('adblock-message', {
