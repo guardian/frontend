@@ -40,7 +40,7 @@ describe('GU Style', function () {
     it('should create new instance with slot and ad type in parameters', function () {
         gustyle = new Sut(adSlot, adType);
         expect(gustyle.$slot).toEqual(adSlot);
-        expect(gustyle.adtype).toEqual(adType);
+        expect(gustyle.params).toEqual(adType);
     });
 
     it('should set escape usual ad slot boundaries', function (done) {
