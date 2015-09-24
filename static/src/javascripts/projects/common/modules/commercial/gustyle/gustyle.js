@@ -31,7 +31,8 @@ define([
                     'are paid for by a third party advertiser' : 'are paid for by a third party advertisers and link to an external site',
                 infoLinkText: 'Learn how advertising supports the Guardian',
                 infoLinkUrl: 'http://www.theguardian.com/sponsored-content',
-                icon: svgs('arrowicon', ['gu-comlabel__icon'])
+                icon: svgs('arrowicon', ['gu-comlabel__icon']),
+                dataAttr: this.$slot.attr('id')
             };
 
         fastdom.write(function () {
