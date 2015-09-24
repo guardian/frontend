@@ -651,7 +651,8 @@
         padding-top: $gs-gutter;
     }
 
-    .inline-survey-loudspeaker {
+    .inline-survey-loudspeaker,
+    .inline-thankyou-email {
         display: block;
         text-align: center;
         margin-top: $gs-gutter;
@@ -753,7 +754,7 @@
     }
 
     &.adfreesurvey-simple-wrapper {
-        .adfreesurvey-wrapper-inner {
+        .adfreesurvey-wrapper-inner--footer {
             @include mq(tablet) {
                 width: $gs-column-width*8;
             }
