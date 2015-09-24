@@ -1,8 +1,8 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "onward":{
             "type":"autoscaling",
-            "apps":[ "frontend::onward" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,

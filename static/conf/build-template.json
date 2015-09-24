@@ -1,0 +1,8 @@
+{
+   "projectName":"dotcom:static",
+   "buildNumber":"<%build_number%>",
+   "startTime":"<%start_time%>",
+   "revision":"<%revision%>",
+   "vcsURL":"git@github.com:guardian/frontend.git",
+   "branch":"<%branch%>"
+}
