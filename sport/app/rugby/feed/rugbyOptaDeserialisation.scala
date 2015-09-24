@@ -40,7 +40,8 @@ object Parser {
           venue = None,
           competitionName = (game \ "@comp_name").text,
           status = parseStatus(game),
-          event = event
+          event = event,
+          stage = Stage((game \ "@stage").text.toInt)
         )
       }
     }
@@ -69,11 +70,14 @@ object Parser {
           venue = Some((fixture \ "@venue").text),
           competitionName = (fixture \ "@comp_name").text,
           status = parseStatus(fixture),
-          event = event
+          event = event,
+          stage = Stage((fixture \ "@stage").text.toInt)
         )
       }
     }
   }
+
+  private val eventScoreAssignedToTeam = "0"
 
   def parseLiveEventsStatsToGetScoreEvents(body: String): Seq[ScoreEvent] = {
     val data = XML.loadString(body)
@@ -85,17 +89,42 @@ object Parser {
       ScoreType.values.exists(_.toString == eventType)
     }
 
-    val players = getPlayers(data \ "TeamDetail" \ "Team")
+    val teamNode = data \ "TeamDetail" \ "Team"
+    val players = getPlayers(teamNode)
 
     scoreEventsData.flatMap { scoreEventData =>
-      val player = players.find(_.id == (scoreEventData \ "@player_id").text)
+      val player = players.find(_.id == (scoreEventData \ "@player_id").text).orElse {
+        if((scoreEventData \ "@player_id").text == eventScoreAssignedToTeam) {
+          fakePlayerForTeam(teamNode, scoreEventData)
+        } else None
+      }
+
       player.map { p =>
+        val initalScoreType = ScoreType.withName((scoreEventData \ "@type").text)
+        //merge Penalty Tries into Try events
+        val scoreType: ScoreType.Value = if(initalScoreType == ScoreType.PenaltyTry) ScoreType.`Try` else initalScoreType
+
         ScoreEvent(
           player = p,
           minute = (scoreEventData \ "@minute").text,
-          `type` = ScoreType.withName((scoreEventData \ "@type").text)
+          `type` = scoreType
         )
       }
+    }
+  }
+
+  //when a score event has player=0 this means a team event e.g. Penalty Try
+  private def fakePlayerForTeam(teamNodes: NodeSeq, scoreEventData: NodeSeq): Option[Player] = {
+    val teams = getTeams(teamNodes)
+    val team = teams.find(team => team.id == (scoreEventData \ "@team_id").text)
+    val scoreType = ScoreType.withName((scoreEventData \ "@type").text)
+    val name = if(scoreType == ScoreType.PenaltyTry) "Penalty" else ""
+    team.map(t => Player(id = (scoreEventData \ "@player_id").text, name = name, team = t))
+  }
+
+  private def getTeams(teamNodes: NodeSeq): Seq[Team] = {
+    teamNodes.map { teamData =>
+      Team((teamData \ "@team_id").text, (teamData \ "@team_name").text)
     }
   }
 
@@ -170,13 +199,13 @@ object Parser {
     val teams = data \ "TeamDetail" \ "Team"
 
     val teamsStats: Seq[TeamStat] = teams.map { team =>
-      
+
       val teamStatDataRaw =  team \ "TeamStats" \ "TeamStat"
 
-      /* MetaData.append is extremly slow as it tries to normalize all attributes each time we append, so we chain attributes manually */ 
+      /* MetaData.append is extremly slow as it tries to normalize all attributes each time we append, so we chain attributes manually */
       val allAttributes = chainAttributes(teamStatDataRaw.map(_.attributes))
       val teamStatData = <TeamStat />.copy(attributes = allAttributes)
-      
+
       TeamStat(
         name = (team \ "@team_name").text,
         id = (teamStatData \ "@id").text.toLong,
@@ -232,5 +261,27 @@ object Parser {
     }
   }
 
+  def parseGroupTables(body: String): Seq[GroupTable] = {
+    val data = XML.loadString(body)
+    val groupsData = data \ "comp" \ "group"
 
+    groupsData.map { group =>
+      val name = (group \ "@name").text
+      val teamData = group \ "team"
+      val teams = teamData.map { team =>
+        TeamRank(
+          id = (team \ "@id").text,
+          name = (team \ "@name").text,
+          rank = (team \ "@rank").text.toInt,
+          played = (team \ "@played").text.toInt,
+          won = (team \ "@won").text.toInt,
+          drawn = (team \ "@drawn").text.toInt,
+          lost = (team \ "@lost").text.toInt,
+          pointsdiff = (team \ "@pointsdiff").text.toInt,
+          points = (team \ "@points").text.toInt
+        )
+      }
+      GroupTable(name, teams)
+    }
+  }
 }

@@ -1,17 +1,16 @@
-<style>
-    html {
-        background: rgba(51,51,51,0.05);
-    }
-
+<style amp-custom>
     body {
         font-family: Georgia,serif;
         font-size: 100%;
         line-height: 1.5rem;
         color: #333;
-        background: #fff;
-        margin: 0;
+        background: rgba(51,51,51,0.05);
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
+    }
+
+    .main-body {
+        background: #fff;
         max-width: 600px;
         margin: 0 auto;
     }
@@ -111,7 +110,7 @@
     }
 
     @* temporarily hiding these for demo *@
-    .inline-expand-image, .meta__extras, .submeta, .content-footer, .content__dateline-lm , .block-share, .witness-cta-wrapper {
+    .inline-expand-image, .meta__extras, .submeta, .content__dateline-lm , .block-share, .witness-cta-wrapper {
         display: none;
     }
 
@@ -167,8 +166,10 @@
         background-color: #bdbdbd;
     }
 
-    @fragments.amp.tonalStylesheet()
-    @fragments.amp.embedStylesheet()
-    @fragments.amp.quoteStylesheet()
-    @fragments.amp.richLinkStylesheet()
+    @fragments.amp.stylesheets.tones()
+    @fragments.amp.stylesheets.embeds()
+    @fragments.amp.stylesheets.quotes()
+    @fragments.amp.stylesheets.richLinks()
+    @fragments.amp.stylesheets.ads()
+    @fragments.amp.stylesheets.tables()
 </style>

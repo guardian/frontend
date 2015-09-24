@@ -1,8 +1,8 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "training-preview":{
             "type":"autoscaling",
-            "apps":[ "frontend::training-preview" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
@@ -13,39 +13,17 @@
                     "/management/healthcheck"
                 ]
             }
-        },
-        "frontend-static":{
-            "type":"aws-s3",
-            "apps":[ "aws-s3" ],
-            "data":{
-                "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=315360000"
-            }
-        },
-        "frontend-abtests":{
-            "type":"aws-s3",
-            "apps":[ "aws-s3" ],
-            "data":{
-                "bucket":"aws-frontend-abtests",
-                "cacheControl":"public, max-age=300"
-            }
         }
     },
     "recipes":{
         "default":{
-            "depends" : ["abTestsFileUpload", "staticFilesUpload", "artifactUpload", "deploy"]
+            "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
             "actionsBeforeApp": ["training-preview.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["training-preview.uploadArtifacts"]
-        },
-        "staticFilesUpload":{
-            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
-        },
-        "abTestsFileUpload":{
-            "actionsBeforeApp": ["frontend-abtests.uploadStaticFiles"]
         }
     }
 }

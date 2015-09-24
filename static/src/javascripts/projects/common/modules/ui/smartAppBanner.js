@@ -27,7 +27,7 @@ define([
             IOS: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/ios-logo.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-                LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df56ab1f7e',
+                LINK: 'https://app.adjust.com/w97upi?deep_link=gnmguardian://root?contenttype=front&source=adjust',
                 STORE: 'on the App Store'
             },
             ANDROID: {

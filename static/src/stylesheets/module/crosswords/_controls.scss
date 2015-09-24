@@ -3,8 +3,8 @@
     margin-bottom: $gs-baseline / 2;
 
     .button {
-        @include fs-textSans(5);
-        margin-bottom: $gs-baseline / 2;
+        @include fs-textSans(4);
+        margin-bottom: $gs-baseline;
     }
 
     .button--secondary {
@@ -17,4 +17,8 @@
         color: #000000;
         border: 0;
     }
+}
+
+.crossword__controls__clue .button:last-child {
+    margin-right: 0;
 }

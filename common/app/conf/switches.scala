@@ -561,7 +561,7 @@ object Switches {
   val AdFreeExperience = Switch(
     "Commercial",
     "advert-opt-out",
-    "Display advert free experience",
+    "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 9),
     exposeClientSide = true
@@ -867,6 +867,15 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = false
+  )
+
+  val RugbyWorldCupTablesSwitch = Switch(
+    "Feature",
+    "rugby-world-cup-tables",
+    "If this switch is on rugby world cup tables will be loaded in to rugby match reports and liveblogs",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
   )
 
   val WeatherSwitch = Switch(

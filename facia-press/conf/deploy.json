@@ -1,8 +1,8 @@
 {
+    "defaultStacks": ["frontend"],
     "packages": {
         "facia-press": {
             "type": "autoscaling",
-            "apps": ["frontend::facia-press"],
             "data": {
                 "secondsToWait": 1200,
                 "port": 18080,
