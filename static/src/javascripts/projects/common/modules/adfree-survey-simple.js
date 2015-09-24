@@ -13,17 +13,10 @@ define([
     _,
     template,
     svgs,
-    adfreeSurveySimple
+    adfreeSurveySimpleTemplate
 ) {
-
-    /**
-     * Message which is shown as an overlay to all users who want to remove ads.
-     */
     var AdfreeSurveySimple = function () {
-    };
-
-    AdfreeSurveySimple.prototype.attach = function () {
-        var bannerTmpl = template(adfreeSurveySimple,
+        this.bannerTmpl = template(adfreeSurveySimpleTemplate,
             {
                 surveyHeader: 'Advert free experience on the Guardian site and apps',
                 surveyText: 'From <em>£5 a month</em> get a quality advert free experience of the Guardian and support our journalism.',
@@ -34,14 +27,16 @@ define([
                 crossIcon: svgs('crossIcon'),
                 surveyOverlaySimple: svgs('surveyOverlaySimple')
             });
+    };
 
+    AdfreeSurveySimple.prototype.attach = function () {
         fastdom.write(function () {
-            $(document.body).append(bannerTmpl);
+            $(document.body).append(this.bannerTmpl);
 
             bean.on(document, 'click', $('.js-survey-close'), function () {
                 $('.js-survey-overlay').addClass('u-h');
             });
-        });
+        }.bind(this));
     };
 
     return AdfreeSurveySimple;

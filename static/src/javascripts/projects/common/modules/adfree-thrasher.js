@@ -13,33 +13,25 @@ define([
     _,
     template,
     svgs,
-    adfreeThrasher
+    adfreeThrasherTemplate
 ) {
-
-    /**
-     * Message which is shown as an trash component to encourage people in joining membership.
-     *
-     * @constructor
-     * @param {Object=} options
-     */
     var AdfreeThrasher = function (options) {
         var opts = options || {};
-        this.$container = opts.$container || '';
-    };
+        this.$container = opts.$container;
 
-    AdfreeThrasher.prototype.show = function () {
-        var thrasherTmpl = template(adfreeThrasher,
+        this.thrasherTmpl = template(adfreeThrasherTemplate,
             {
                 surveyHeader: 'Become a member and experience the Guardian without advertising',
-                surveyLink: 'http://google.com',
                 marque36icon: svgs('marque36icon'),
                 membershipLogo: svgs('membershipLogo'),
                 thrasherBenefit: svgs('thrasherBenefit'),
                 surveyNew: svgs('surveyNew')
             });
+    };
 
+    AdfreeThrasher.prototype.show = function () {
         fastdom.write(function () {
-            this.$container.after(thrasherTmpl);
+            this.$container.after(this.thrasherTmpl);
 
             bean.on(document, 'click', $('.js-thrasher-link'), function (e) {
                 e.preventDefault();
