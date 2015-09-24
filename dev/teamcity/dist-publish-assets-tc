@@ -52,8 +52,8 @@ sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%branch%>|$BUILD_VCS_BRANCH|" \
     static/build-template.json | tee $static_folder/build.json
 
-aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUILD_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
-aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_ARTIFACT_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
+aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUILD_BUCKET/dotcom:static/$BUILD_NUMBER/build.json    --region=eu-west-1
+aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_ARTIFACT_BUCKET/dotcom:static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
 
 set +o xtrace
 echo "##teamcity[publishArtifacts '$static_folder/artifacts.zip => static']"
