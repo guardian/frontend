@@ -1,8 +1,8 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "commercial":{
             "type":"autoscaling",
-            "apps":[ "frontend::commercial" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
@@ -13,28 +13,17 @@
                     "/management/healthcheck"
                 ]
             }
-        },
-        "frontend-static":{
-            "type":"aws-s3",
-            "apps":[ "aws-s3" ],
-            "data":{
-                "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=315360000"
-            }
         }
     },
     "recipes":{
         "default":{
-            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
+            "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
             "actionsBeforeApp": ["commercial.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["commercial.uploadArtifacts"]
-        },
-        "staticFilesUpload":{
-            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         }
     }
 }
