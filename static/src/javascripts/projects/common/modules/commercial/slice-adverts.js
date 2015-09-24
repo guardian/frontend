@@ -56,8 +56,10 @@ define([
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
                 } else {
+                    $(container).addClass('omitted-mpus');
                     index++;
                 }
+
             }
 
             return Promise.all(_(adSlices)
