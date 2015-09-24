@@ -13,7 +13,7 @@ import Dependencies._
 
 object Frontend extends Build with Prototypes {
 
-  val common = application("common").settings(
+  val common = library("common").settings(
     libraryDependencies ++= Seq(
       akkaAgent,
       apacheCommonsMath3,

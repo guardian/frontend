@@ -135,4 +135,14 @@ trait Prototypes {
     .settings(libraryDependencies ++= Seq(commonsIo))
     .settings(frontendDistSettings(applicationName))
   }
+
+  def library(applicationName: String) = {
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
+    .settings(frontendDependencyManagementSettings)
+    .settings(frontendCompilationSettings)
+    .settings(frontendClientSideSettings)
+    .settings(frontendTestSettings)
+    .settings(VersionInfo.settings)
+    .settings(libraryDependencies ++= Seq(commonsIo))
+  }
 }
