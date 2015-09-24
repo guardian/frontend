@@ -21,6 +21,7 @@ object Dependencies {
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
+  val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val contentApiClient = "com.gu" %% "content-api-client" % "6.10"
