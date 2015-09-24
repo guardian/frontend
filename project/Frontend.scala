@@ -47,7 +47,8 @@ object Frontend extends Build with Prototypes {
       snappyJava,
       ws,
       faciaFapiScalaClient,
-      dispatchTest
+      dispatchTest,
+      closureCompiler
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
