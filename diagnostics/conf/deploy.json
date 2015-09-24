@@ -1,8 +1,8 @@
 {
+    "defaultStacks": ["frontend"],
     "packages":{
         "diagnostics":{
             "type":"autoscaling",
-            "apps":[ "frontend::diagnostics" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
