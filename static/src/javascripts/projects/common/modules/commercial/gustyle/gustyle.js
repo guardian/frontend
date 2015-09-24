@@ -13,17 +13,28 @@ define([
     svgs,
     labelTpl
 ) {
-    var Gustyle = function ($slot, adtype) {
+    var Gustyle = function ($slot, params) {
         this.$slot = $slot;
-        this.adtype = adtype;
+        this.params  = params;
     };
 
     Gustyle.prototype.addLabel = function () {
-        var toggles;
+        var toggles,
+            templateOptions = {
+                buttonTitle: (this.params.adVariant === 'content') ?
+                    'Paid Story' : 'Ad',
+                infoTitle: (this.params.adVariant === 'content') ?
+                    'Paid Stories' : 'Adverts',
+                infoText: (this.params.adVariant === 'content') ?
+                    'are paid for by a third party advertiser' : 'are paid for by a third party advertisers and link to an external site',
+                infoLinkText: 'Learn how advertising supports the Guardian',
+                infoLinkUrl: 'http://www.theguardian.com/sponsored-content',
+                icon: svgs('arrowicon', ['gu-comlabel__icon'])
+            };
 
         fastdom.write(function () {
             this.$slot.addClass('gu-style');
-            this.$slot.prepend($.create(template(labelTpl, {icon: svgs('arrowicon', ['gu-comlabel__icon'])})));
+            this.$slot.prepend($.create(template(labelTpl, { data: _.merge(templateOptions) })));
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();

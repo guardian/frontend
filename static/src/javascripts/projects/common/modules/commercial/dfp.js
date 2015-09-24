@@ -15,7 +15,6 @@ define([
     'common/utils/url',
     'common/utils/user-timing',
     'common/utils/sha1',
-    'common/modules/commercial/gustyle/gustyle',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/dfp-ophan-tracking',
@@ -39,7 +38,6 @@ define([
     urlUtils,
     userTiming,
     sha1,
-    GuStyle,
     StickyMpu,
     buildPageTargeting,
     dfpOphanTracking,
@@ -409,7 +407,7 @@ define([
                     $adSlotContent.addClass('ad-slot__content');
                 });
 
-                // Check if creative is a new gu style creative and place lables accordingly
+                // Check if creative is a new gu style creative and place labels accordingly
                 checkForBreakout($slot).then(function (adType) {
                     if (!adType || adType.type !== 'gu-style') {
                         addLabel($slot);
@@ -495,8 +493,8 @@ define([
                             }
 
                             type = {
-                                type: creativeConfig.params.type || '',
-                                variant: creativeConfig.params.variant || ''
+                                type: creativeConfig.params.adType || '',
+                                variant: creativeConfig.params.adVariant || ''
                             };
 
                         } else {
@@ -561,7 +559,7 @@ define([
                 return _(items)
                     .chain()
                     .find(function (item) {
-                        return item.type !== '';
+                        return item.adType !== '';
                     }).value();
             });
         },

@@ -1,21 +1,4 @@
-.gu-comcontent {
-    background-color: colour(neutral-8);
-    border-top: 1px solid $gustyle-tone;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-
-    &:hover {
-        background-color: colour(neutral-6);
-
-        .gu-comcontent__image-container {
-            background-color: #000000;
-            opacity: .9;
-        }
-    }
-}
-
-.gu-comcontent__image-container {
+.gu-image-container {
     background-color: colour(neutral-8);
 }
 
@@ -23,13 +6,11 @@
     padding: $gs-baseline / 2;
 }
 
-.gu-comcontent__box {
+.gu-box {
     @extend %gu-style-box;
-
-    padding-top: 0;
 }
 
-.gu-comcontent__title {
+.gu-title {
     @include f-headlineSans;
     @include font-size(21, 26);
 
@@ -45,7 +26,7 @@
     }
 }
 
-.gu-comcontent__text {
+.gu-text {
     @include f-textSans;
     @include font-size(14, 18);
     
@@ -54,38 +35,85 @@
     margin-bottom: $gs-row-height;
 }
 
-.gu-comcontent__kicker {
-    color: colour(neutral-2);
-}
-
-.gu-comcontent__divider {
-    color: colour(neutral-3);   
-}
-
-.gu-comcontent__brand {
+.gu-brand {
     text-align: right;
 }
 
-.gu-comcontent__note {
+.gu-note {
     @include f-textSans;
     @include font-size(13, 18);
 
     color: colour(neutral-2);   
 }
 
-.gu-comcontent__logo {
+.gu-logo {
     width: 40%;
     vertical-align: sub;
 }
 
-.gu-comcontent__image {
+.gu-image {
     width: 100%;
     display: block;
 }
 
-.gu-comcontent__image-container {
-    max-height: 180px;
+.gu-external-icon {
+    float: right; 
+    svg {
+        fill: #ffffff;
+        margin: 0 5px;
+        width: 15px;
+        height: 15px;
+        vertical-align: sub;
+    }
+}
+
+.gu-comcontent {
+    background-color: colour(neutral-8);
+    border-top: 1px solid $gustyle-tone;
+    padding: 0;
     overflow: hidden;
+    position: relative;
+
+    &:hover {
+        background-color: colour(neutral-6);
+    }
+
+    .gu-image-container {
+        max-height: 180px;
+        overflow: hidden;
+    }
+
+}
+
+.gu-display {
+    min-height: 400px;
+    position: relative;
+
+    .gu-image-container {
+        width: 100%;
+    }
+
+    .gu-box {
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        padding: $gs-gutter/2;
+    }
+
+    .gu-title {
+        padding-bottom: $gs-baseline/2;
+        
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .button {
+        float: left;
+        color: #ffffff;
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
+    }
+
 }
 
 $mobile-max-container-width: gs-span(8);

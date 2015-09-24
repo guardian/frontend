@@ -1,15 +1,15 @@
-<div class="gu-comcontent" data-link-name="creative | gu style commercial content">
+<div class="<%=data.gustyleClass%>" data-link-name="creative | gu style commercial content">
     <a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="article">
-        <div class="gu-comcontent__image-container">
-            <img class="gu-comcontent__image" src="<%=data.articleImage%>">
+        <div class="gu-image-container">
+            <img class="gu-image" src="<%=data.articleImage%>">
         </div>
     </a>
-    <div class="gu-comcontent__box">
-        <h2 class="gu-comcontent__title"><a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="article"><%=data.articleHeaderText%></a></h2>
-        <p class="gu-comcontent__text"><%=data.articleText%></p>
-        <div class="gu-comcontent__brand">
-        	<span class="gu-comcontent__note">Brought to you by:</span>
-        	<img class="gu-comcontent__logo" src="<%=data.brandLogo%>">
+    <div class="gu-box">
+        <h2 class="gu-title"><a href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="article"><%=data.articleHeaderText%></a></h2>
+        <%=data.standFirst%>
+        <div class="gu-brand">
+        	<%=data.noteOrLink%>
+        	<img class="gu-logo" src="<%=data.brandLogo%>" alt="<%=data.brand%>">
         </div>
     </div>
 </div>
