@@ -109,8 +109,8 @@ trait Prototypes {
     riffRaffPackageType := (packageBin in Universal).value,
     riffRaffPackageName := application,
     riffRaffBuildIdentifier := System.getProperty("build.number", "DEV").replaceAll("\"",""),
-    riffRaffUploadArtifactBucket := System.getenv().getOrDefault("RIFF_RAFF_BUCKET", "aws-frontend-teamcity"),
-    riffRaffUploadManifestBucket := System.getenv().getOrDefault("RIFF_RAFF_BUCKET", "aws-frontend-teamcity"),
+    riffRaffUploadArtifactBucket := System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity"),
+    riffRaffUploadManifestBucket := System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity"),
     riffRaffArtifactPublishPath := application,
     riffRaffManifestProjectName := s"dotcom:$application",
     artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
