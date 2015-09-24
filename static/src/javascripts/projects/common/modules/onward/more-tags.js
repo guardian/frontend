@@ -9,15 +9,16 @@ define([
     $,
     bean
 ) {
+    var ACTIVE_STATE = 'is-available';
 
     function MoreTags() {
         this.init = function () {
             var $more = $('.js-more-tags');
             if ($more.length !== 0) {
-                $more.removeClass('modern-hidden');
+                $more.addClass(ACTIVE_STATE);
                 bean.on(document.querySelector('.js-more-tags__link'), 'click', function () {
                     $('.modern-hidden-tag').removeClass('modern-hidden');
-                    $more.addClass('modern-hidden');
+                    $more.removeClass(ACTIVE_STATE);
                 });
             }
         };

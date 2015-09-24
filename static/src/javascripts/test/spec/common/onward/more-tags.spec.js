@@ -3,6 +3,9 @@ import MoreTags from 'common/modules/onward/more-tags';
 import fixtures from 'helpers/fixtures';
 
 describe('MoreTabs', function () {
+
+    var ACTIVE_STATE = 'is-available';
+
     beforeEach(function () {
         fixtures.render({
             id: 'more-tags-fixtures',
@@ -60,7 +63,7 @@ describe('MoreTabs', function () {
 
         new MoreTags().init();
 
-        expect($('.js-more-tags').hasClass('modern-hidden')).toBeFalsy();
+        expect($('.js-more-tags').hasClass(ACTIVE_STATE)).toBeTruthy();
 
         // but the tags should remain hidden
         expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeTruthy();
@@ -75,7 +78,7 @@ describe('MoreTabs', function () {
         expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeFalsy();
 
         // but the more link should now be hidden
-        expect($('.js-more-tags').hasClass('modern-hidden')).toBeTruthy();
+        expect($('.js-more-tags').hasClass(ACTIVE_STATE)).toBeFalsy();
     });
 });
 
