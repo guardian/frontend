@@ -67,7 +67,7 @@ export default class AnagramHelper extends React.Component {
             return this.props.grid[coords.x][coords.y];
         });
 
-        console.log("++ Main Entries " + JSON.stringify(entries) );
+      //  console.log("++ Main Entries " + JSON.stringify(entries) );
 
         const inner = this.state.showInput ?
             <ClueInput value={this.state.clueInput} clue={clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
