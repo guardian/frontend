@@ -105,6 +105,16 @@ object Switches {
   lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val InlineJsSwitch = Switch(
+    "Performance",
+    "inline-js",
+    "If this switch is on, InlineJs object will use the closure compiler",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+
   val LazyLoadContainersSwitch = Switch(
     "Performance",
     "lazy-load-containers",

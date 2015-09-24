@@ -188,8 +188,7 @@ do you have fonts in localStorage?
     // we only test non-IE, and only on Windows. Everyone else we assume `true`.
     function fontSmoothingEnabled() {
         try {
-            var fontSmoothingEnabled = null,
-                canvasNode, ctx, alpha, x, y;
+            var canvasNode, ctx, alpha, x, y;
 
             // If we've already run this test, return the result.
             // This can be force-overidden using a '#check-smoothing' hash fragment.

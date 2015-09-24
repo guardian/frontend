@@ -27,7 +27,7 @@ class AdsTest
   }
 
   "Ads" should "display on the sport front" in {
-    implicitlyWait(20)
+    implicitlyWait(30)
     get("/uk/sport", ads = true)
     shouldBeVisible(first("#dfp-ad--top-above-nav > *"))
   }
