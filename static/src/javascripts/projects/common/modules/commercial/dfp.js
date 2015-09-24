@@ -1,3 +1,4 @@
+/* global googletag: false */
 define([
     'bean',
     'bonzo',

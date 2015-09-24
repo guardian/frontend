@@ -26,13 +26,13 @@ define([
         // Each filter encapsulates a feature policy - a condition where it is implemented,
         // and the commercial features it disables.
 
-        sensitiveContent : function(){
+        sensitiveContent : function () {
             // Avoid inappropriate adverts on pages with content of a sensitive nature
             if (config.page.shouldHideAdverts || config.page.section === 'childrens-books-site') {
                 disableAllFeatures();
             }
         },
-        adfreeExperience : function() {
+        adfreeExperience : function () {
             // Some paying users may opt out of _some_ advertising
             if (userAdPreference.hideAds) {
                 commercialFeatures.articleMPUs = false;
@@ -41,23 +41,23 @@ define([
                 commercialFeatures.videoPreRolls = false;
             }
         },
-        sslExclusions : function() {
+        sslExclusions : function () {
             if (config.page.isSSL && config.page.section !== 'admin') {
                 disableAllFeatures();
             }
         },
-        uriOptOuts : function() {
+        uriOptOuts : function () {
             // Allow performance tests to exclude advertising
             if (window.location.hash.match(/[#&]noads(&.*)?$/)) {
                 disableAllFeatures();
             }
         },
-        userPrefs : function() {
+        userPrefs : function () {
             if (userPrefs.isOff('adverts')) {
                 disableAllFeatures();
             }
         },
-        switchboardSettings : function() {
+        switchboardSettings : function () {
             if (!config.switches.videoAdverts) {
                 commercialFeatures.videoPreRolls = false;
             }
@@ -72,7 +72,7 @@ define([
                 commercialFeatures.badges = false;
             }
         },
-        contentSpecific : function() {
+        contentSpecific : function () {
             if (config.page.contentType !== 'Article' && !config.page.isLiveBlog) {
                 commercialFeatures.articleMPUs = false;
             }
@@ -83,7 +83,7 @@ define([
                 commercialFeatures.thirdPartyTags = false;
             }
         },
-        previewPage : function() {
+        previewPage : function () {
             if (config.page.isPreview) {
                 commercialFeatures.videoPreRolls = false;
             }
@@ -91,13 +91,13 @@ define([
     };
 
     function applyFeatureFilters() {
-        _.forOwn(featureFilters, function applyFilter(filterFunction){
+        _.forOwn(featureFilters, function applyFilter(filterFunction) {
             filterFunction();
         });
     }
 
     function disableAllFeatures() {
-        _.forOwn(commercialFeatures, function(featureState, featureKey) {
+        _.forOwn(commercialFeatures, function (featureState, featureKey) {
             commercialFeatures[featureKey] = false;
         });
     }

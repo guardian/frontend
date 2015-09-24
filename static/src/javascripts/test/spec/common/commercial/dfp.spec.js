@@ -136,7 +136,7 @@ describe('DFP', function () {
         expect(dfp.init()).toBe(dfp);
     });
 
-    it('should not run if disabled in commercial features', function() {
+    it('should not run if disabled in commercial features', function () {
         commercialFeatures.dfpAdvertising = false;
         expect(dfp.init()).toBe(false);
     });
