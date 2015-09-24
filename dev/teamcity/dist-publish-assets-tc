@@ -15,7 +15,7 @@ rm -rf $static_folder
 
 mkdir -p "$static_folder/packages/frontend-static"
 
-cp "static/conf/deploy.json" "$static_folder"
+cp "static/deploy.json"      "$static_folder"
 cp -r static/hash/*          "$static_folder/packages/frontend-static"
 cp static/abtests.json       "$static_folder/packages/frontend-abtests"
 
@@ -50,7 +50,7 @@ sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%start_time%>|$BUILD_START_DATE|" \
     -e "s|<%revision%>|$BUILD_VCS_NUMBER|" \
     -e "s|<%branch%>|$BUILD_VCS_BRANCH|" \
-    static/conf/build-template.json | tee $static_folder/build.json
+    static/build-template.json | tee $static_folder/build.json
 
 aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUILD_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
 aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_ARTIFACT_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
