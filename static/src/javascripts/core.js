@@ -30,6 +30,7 @@ define([
     'common/modules/lazyload',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
     'common/modules/ui/rhc',
     'common/modules/user-prefs',
     'common/views/svgs'

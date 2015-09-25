@@ -1,0 +1,30 @@
+{
+    "defaultStacks": ["frontend"],
+    "packages":{
+        "image":{
+            "type":"autoscaling",
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "warmupGrace":30,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        }
+
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["artifactUpload", "deploy"]
+        },
+        "deploy":{
+            "actionsBeforeApp": ["image.deploy"]
+        },
+        "artifactUpload":{
+            "actionsBeforeApp": ["image.uploadArtifacts"]
+        }
+    }
+}

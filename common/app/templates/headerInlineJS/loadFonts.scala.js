@@ -58,7 +58,7 @@ do you have fonts in localStorage?
                             if (f.status === 'loading') {
                                 return true;
                             }
-                        };
+                        }
 
                         // some browsers (e.g. FF40) support WOFF2 but not window.FontFace,
                         // so fall back to known support
@@ -72,14 +72,14 @@ do you have fonts in localStorage?
                         }
 
                         return false;
-                    };
+                    }
 
                     // flush out weird old json value
                     // no value to it and JSON.parse is pointless overhead
                     if (/value/.test(format)) {
                         format = JSON.parse(format).value;
                         localStorage.setItem(formatStorageKey, format);
-                    };
+                    }
 
                     if (!format) {
                         format = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
@@ -98,6 +98,8 @@ do you have fonts in localStorage?
                 function guFont(fontData) {
                     return fontData.css;
                 }
+                /* Closure Exports */
+                this['guFont'] = guFont;
 
                 // download font as json to store/use etc
                 function fetchFont(url, el, fontName, fontHash) {
@@ -121,7 +123,7 @@ do you have fonts in localStorage?
                             localStorage.removeItem(key);
                             break;
                         }
-                    };
+                    }
                     localStorage.setItem(storageKey(fontName, fontHash), JSON.stringify({value: css}));
                 }
 
@@ -151,11 +153,10 @@ do you have fonts in localStorage?
                     }
                 }
                 return true;
-            };
+            }
         } catch (e) {
             @if(play.Play.isDev){throw(e)}
-            return false;
-        };
+        }
         return false;
     }
 
@@ -176,7 +177,7 @@ do you have fonts in localStorage?
             });
         } catch (e) {
             @if(play.Play.isDev){throw(e)}
-        };
+        }
     }
 
     // Detect whether browser is smoothing its fonts.
@@ -188,8 +189,7 @@ do you have fonts in localStorage?
     // we only test non-IE, and only on Windows. Everyone else we assume `true`.
     function fontSmoothingEnabled() {
         try {
-            var fontSmoothingEnabled = null,
-                canvasNode, ctx, alpha, x, y;
+            var canvasNode, ctx, alpha, x, y;
 
             // If we've already run this test, return the result.
             // This can be force-overidden using a '#check-smoothing' hash fragment.
@@ -239,25 +239,21 @@ do you have fonts in localStorage?
                             }
                         }
                     }
-
-                    // Didn't find any non-black pixels - return false.
-                    saveFontSmoothing(false);
-                    return false;
-                } catch (ex) {
+                } catch (e) {
                     @if(play.Play.isDev){throw(e)}
-                    // Something went wrong (for example, non-blink Opera cannot use
-                    // the canvas fillText() method) so we assume false for safety's
-                    // sake.
-                    saveFontSmoothing(false);
-                    return false;
                 }
+                // Didn't find any non-black pixels or something went wrong (for example,
+                // non-blink Opera cannot use the canvas fillText() method) so we assume
+                // false for safety's sake.
+                saveFontSmoothing(false);
+                return false;
             } else {
                 // You're not on Windows or you're using IE, so we assume true
                 return true;
             }
         } catch (e) {
             @if(play.Play.isDev){throw(e)}
-        };
+        }
     }
 
     // Check to see if you should get webfonts, and then try to load them from localStorage if so

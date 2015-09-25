@@ -3,6 +3,7 @@ package integration
 import java.util.concurrent.TimeUnit
 
 import akka.agent.Agent
+import commercial.AdsTest
 import driver.SauceLabsWebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.{By, WebDriver, WebElement}

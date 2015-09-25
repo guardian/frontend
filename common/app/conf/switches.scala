@@ -105,6 +105,16 @@ object Switches {
   lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val InlineJsSwitch = Switch(
+    "Performance",
+    "inline-js",
+    "If this switch is on, InlineJs object will use the closure compiler",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+
   val LazyLoadContainersSwitch = Switch(
     "Performance",
     "lazy-load-containers",
@@ -1143,31 +1153,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val FaciaDynamoArchive = Switch(
-    "Facia",
-    "facia-tool-dynamo-archive",
-    "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
-      "check the DB size.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = false
-  )
-
   val FaciaPressOnDemand = Switch(
     "Facia",
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FaciaToolPutPrivate = Switch(
-    "Facia",
-    "facia-tool-put-private",
-    "If this is switched on, facia tool will put collections to S3 as private",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

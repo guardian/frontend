@@ -9,7 +9,8 @@ var entryFixture = {
     },
     direction: 'across',
     length: 2,
-    number: 15
+    number: 15,
+    solution: 'IT'
 };
 
 //I've stripped out the values here that aren't used in the methods tested
@@ -224,7 +225,7 @@ describe('Helpers', function () {
             expect(helpers.cellsForClue(entriesFixture, entryFixture)).toEqual([{x: 2, y: 3}, {x: 3, y: 3}]);
         });
 
-        it('should return all cells for a single entry', function () {
+        it('should return all cells for a grouped entry', function () {
             var clue = {id: '10-across',
                         humanNumber: 10,
                         length: 9,
@@ -241,6 +242,255 @@ describe('Helpers', function () {
                  {x: 4, y: 11}, {x: 5, y: 11}, {x: 6, y: 11}, {x: 7, y: 11}, {x: 8, y: 11}, {x: 9, y: 11}
             ];
             expect(helpers.cellsForClue(entriesFixture, clue)).toEqual(expectedCells);
+        });
+    });
+
+    describe('areCluesInAGroup', function () {
+        var thisEntryFixture = {
+            id: '2-across',
+            group: ['2-across', '10-down']
+        };
+
+        var thatEntryFixture = {
+            id: '10-down',
+            group: ['2-across', '10-down']
+        };
+
+        var otherEntryFixture = {
+            id: '10-across',
+            group: ['10-across', '12-down']
+        };
+
+        it('should return true when two clues are part of the same group', function () {
+            expect(helpers.cluesAreInGroup(thisEntryFixture, thatEntryFixture)).toBe(true);
+        });
+
+        it('should return false when two clues are not part of the same group', function () {
+            expect(helpers.cluesAreInGroup(thatEntryFixture, otherEntryFixture)).toBe(false);
+        });
+    });
+
+    describe('checkClueHasBeenAnswered', function () {
+
+        //This is *really* counter intuitive. If you mock the grid like ths (i've ommted other values i don't need) 'down clues' appear horizontal ( the all have the same x value )
+        // I blame berry
+        var gridFixture = [
+            [{value: 'R'}, {value: 'I'}, {value: 'V'}, {value: 'E'}, {value: 'R'}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}]
+        ];
+
+        var answeredEntryFixture = { id: '1-down', solution: 'RIVER', position: { x: 0, y: 0 }, direction: 'down', length: 5 };
+        var unAnsweredEntryFixture = { id: '1-across', solution: 'IDIOT', position: { x: 0, y: 1 }, direction: 'across', length: 5 };
+
+        it('should return true when the clue has been answered', function () {
+            expect(helpers.checkClueHasBeenAnswered(gridFixture, answeredEntryFixture)).toBe(true);
+        });
+
+        it('should return false when the clue has not been answered', function () {
+            expect(helpers.checkClueHasBeenAnswered(gridFixture, unAnsweredEntryFixture)).toBe(false);
+        });
+    });
+
+    describe('getClearableCellsForEntry', function () {
+
+        //Replicates state.grid but with just the value field for a partially completed grid with clues and grouped clues intersecting and not intersecting eachothe
+        // 'SANTA CLAUSE', 'NORTHERN LIGHTS' and 'SOUTHERN CROSS' are grouped clues
+
+        /*
+           R S       H
+           I A  NORTHERN
+           V N    A  A
+           E T   FIGHTS
+           R A    L  H
+                  R  E
+           CLAUSE O  N
+                  A
+           LIGHTS D
+           U I     C
+           S SOUTHERN
+           T T     O
+           R       S
+           E       S
+         */
+
+        var gridFixture = [
+            [{value: 'R'}, {value: 'I'}, {value: 'V'}, {value: 'E'}, {value: 'R'}, {value: ''}, {value: 'C'}, {value: ''}, {value: 'L'}, {value: 'U'}, {value: 'S'}, {value: 'T'}, {value: 'R'}, {value: 'E'}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'L'}, {value: ''}, {value: 'I'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: 'S'}, {value: 'A'}, {value: 'N'}, {value: 'T'}, {value: 'A'}, {value: ''}, {value: 'A'}, {value: ''}, {value: 'G'}, {value: 'I'}, {value: 'S'}, {value: 'T'}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'U'}, {value: ''}, {value: 'H'}, {value: ''}, {value: 'O'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'S'}, {value: ''}, {value: 'T'}, {value: ''}, {value: 'u'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'N'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'E'}, {value: ''}, {value: 'S'}, {value: ''}, {value: 'T'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'O'}, {value: ''}, {value: 'F'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'H'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'R'}, {value: 'A'}, {value: 'I'}, {value: 'L'}, {value: 'R'}, {value: 'O'}, {value: 'A'}, {value: 'D'}, {value: ''}, {value: 'E'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'T'}, {value: ''}, {value: 'G'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'C'}, {value: 'R'}, {value: 'O'}, {value: 'S'}, {value: 'S'}],
+            [{value: ''}, {value: 'H'}, {value: ''}, {value: 'H'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: 'N'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'E'}, {value: ''}, {value: 'T'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'R'}, {value: ''}, {value: 'S'}, {value: 'O'}, {value: 'U'}, {value: 'T'}, {value: 'H'}, {value: 'E'}, {value: 'R'}, {value: 'N'}, {value: ''}, {value: ''}, {value: ''}],
+            [{value: ''}, {value: 'N'}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}, {value: ''}]
+        ];
+
+        var oneDownFixture = { id: '1-down', group: ['1-down'], solution: 'RIVER', position: { x: 0, y: 0 }, direction: 'down', length: 5 };
+        var twoDownFixture = { id: '2-down', group: ['2-down', '1-across'], solution: 'SANTA', position: { x: 2, y: 0 }, direction: 'down', length: 5 };
+        var threeDownFixture = { id: '3-down', group: ['3-down'], solution: 'RAILROAD', position: { x: 7, y: 1 }, direction: 'down', length: 8 };
+
+        //Unanswered clue
+        var fourDownFixture = { id: '4-down', group: ['4-down'], solution: 'HEATHEN', position: { x: 10, y: 0 }, direction: 'down', length: 7 };
+        var fiveDownFixture = { id: '5-down', group: ['5-down'], solution: 'LUSTRE', position: { x: 0, y: 8 }, direction: 'down', length: 6 };
+        var sixDownFixture =  { id: '6-down', group: ['6-down'], solution: 'GIST', position: { x: 2, y: 8 }, direction: 'down', length: 4 };
+        var sevenDownFixture = {id: '7-down', group: ['5-across', '7-down'], solution: 'CROSS', position: { x: 8, y: 9 }, direction: 'down', length: 5};
+
+        var oneAcrossFixture = { id: '1-across', group: ['2-down', '1-across'], solution: 'CLAUSE', position: { x: 0, y: 6 }, direction: 'across', length: 6 };
+        var twoAcrossFixture = { id: '2-across', group: ['3-across', '2-across'], solution: 'LIGHTS', position: { x: 0, y: 8 }, direction: 'across', length: 6 };
+        var threeAcrossFixture = { id: '3-across', group: ['3-across', '2-across'], solution: 'NORTHERN', position: { x: 5, y: 1 }, direction: 'across', length: 8 };
+
+
+        var fourAcrossFixture = { id: '4-across', group: ['4-across'], solution: 'FIGHTS', position: { x: 6, y: 3 }, direction: 'across', length: 6 };
+        var fiveAcrossFixture = { id: '5-across', group: ['5-across', '7-down'], solution: 'SOUTHERN', position: { x: 2, y: 10 }, direction: 'across', length: 8 };
+
+        var theEntriesFixture = [oneDownFixture, twoDownFixture, threeDownFixture, fourDownFixture, fiveDownFixture, sixDownFixture, sevenDownFixture,
+                               oneAcrossFixture, twoAcrossFixture, threeAcrossFixture, fourAcrossFixture, fiveAcrossFixture];
+
+        var clueMapFixture = {
+
+            //RIVER [0,0]
+            '0_0': {down: oneDownFixture},
+            '0_1': {down: oneDownFixture},
+            '0_2': {down: oneDownFixture},
+            '0_3': {down: oneDownFixture},
+            '0_4': {down: oneDownFixture},
+
+            //SANTA[2,0]
+            '2_0': {down: twoDownFixture},
+            '2_1': {down: twoDownFixture},
+            '2_2': {down: twoDownFixture},
+            '2_3': {down: twoDownFixture},
+            '2_4': {down: twoDownFixture},
+
+            //RAILROAD[7,1]
+            '7_1': {accross: threeAcrossFixture, down: threeDownFixture}, //intersects NORTHERN
+            '7_2': {down: threeDownFixture},
+            '7_3': {across: fourAcrossFixture, down: threeDownFixture},    //intersects FIGHTS
+            '7_4': {down: threeDownFixture},
+            '7_5': {down: threeDownFixture},
+            '7_6': {down: threeDownFixture},
+            '7_7': {down: threeDownFixture},
+
+            //HEATHEN[10,1][
+            '10_0': {down: fourDownFixture},
+            '10_1': {across: threeAcrossFixture, down: fourDownFixture}, //intersects NORTHERN
+            '10_2': {down: fourDownFixture},
+            '10_3': {across: fourAcrossFixture, down: fourDownFixture},  //intersects FIGHTS
+            '10_4': {down: fourDownFixture},
+            '10_5': {down: fourDownFixture},
+            '10_6': {down: fourDownFixture},
+
+            //LUSTRE[0.8]
+            '0_8': {across: twoAcrossFixture, down: fiveDownFixture}, //intersects LIGHTS
+            '0_9': {down: fiveDownFixture},
+            '0_10': {down: fiveDownFixture},
+            '0_11': {down: fiveDownFixture},
+            '0_12': {down: fiveDownFixture},
+            '0_13': {down: fiveDownFixture},
+
+            //GIST[0,6]
+            '2_8': {across: twoAcrossFixture, down: sixDownFixture }, //intersects GIST
+            '2_9': {down: sixDownFixture },
+            '2_10': {across: fiveAcrossFixture, down: sixDownFixture }, //Intersects SOUTHERN
+            '2_11': {down: sixDownFixture },
+
+            //CLAUSE[0,6]
+            '0_6': {across: oneAcrossFixture},
+            '1_6': {across: oneAcrossFixture},
+            '2_6': {across: oneAcrossFixture},
+            '3_6': {across: oneAcrossFixture},
+            '4_6': {across: oneAcrossFixture},
+            '5_6': {across: oneAcrossFixture},
+
+            //LIGHTS[0,6] - minus 'L' and 'G'
+            '1_8': {across: twoAcrossFixture},
+            '3_8': {across: twoAcrossFixture},
+            '4_8': {across: twoAcrossFixture},
+            '5_8': {across: twoAcrossFixture},
+
+            //NORTHERN[5,1] - minus 'O' and 'R'
+            '5_1': {across: threeAcrossFixture},
+            '6_1': {across: threeAcrossFixture},
+            '8_1': {across: threeAcrossFixture},
+            '9_1': {across: threeAcrossFixture},
+            '11_1': {across: threeAcrossFixture},
+            '12_1': {across: threeAcrossFixture},
+
+            //FIGHTS[6,3]  -
+            '6_3': {across: fourAcrossFixture},
+            '8_3': {across: fourAcrossFixture},
+            '9_3': {across: fourAcrossFixture},
+            '11_3': {across: fourAcrossFixture},
+
+            //SOUTHERN [x: 2, y: 10][8] 'S' Missing 'R'    OUTHE N
+            '3_10': {across: fiveAcrossFixture },
+            '4_10': {across: fiveAcrossFixture },
+            '5_10': {across: fiveAcrossFixture },
+            '6_10': {across: fiveAcrossFixture },
+            '7_10': {across: fiveAcrossFixture },
+            '9_10': {across: fiveAcrossFixture },
+
+            //CROSS[x: 8, y: 9]
+            '8_9': {down: sevenDownFixture },
+            '8_10': {across: fiveAcrossFixture, down: sevenDownFixture }, //Intersects SOUTHERN
+            '8_11': {down: sevenDownFixture },
+            '8_12': {down: sevenDownFixture },
+            '8_13': {down: sevenDownFixture }
+        };
+
+
+
+        // duplicate cells' - a cell which is used by more than one completed clue
+        it('should return all cells for an ungrouped clue which does not intersect other answered clues', function () {
+            var expectedCells =  [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}, {x: 0, y: 4}];
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, oneDownFixture)).toEqual(expectedCells);
+        });
+
+        //F GHTS because 'RAILROAD' has been answered, because 'HEATHEN' hasnt
+        it('should return all correct cells for an ungrouped clue which intersects an unanswered clue', function () {
+            var expectedCells = [{x: 6, y: 3}, {x: 8, y: 3}, {x: 9, y: 3}, {x: 10, y: 3}, {x: 11, y: 3}];
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, fourAcrossFixture)).toEqual(expectedCells);
+        });
+
+        //SANTACLAUSE
+        it('should return all cells for a grouped clue which does not intersect other answered clues', function () {
+            var expectedCells = [
+                {x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2}, {x: 2, y: 3}, {x: 2, y: 4}, {x: 0, y: 6}, {x: 1, y: 6},
+                {x: 2, y: 6}, {x: 3, y: 6}, {x: 4, y: 6}, {x: 5, y: 6}
+            ];
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, twoDownFixture)).toEqual(expectedCells);
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, oneAcrossFixture)).toEqual(expectedCells);
+        });
+
+        //NORTHERN 5, 1 LIGHTS  0 8
+        //NORTHERN LIGHTS should clear NO THERN  I HTS
+        it('should return all cells for a grouped clue which intersects other completed clues', function () {
+            var expectedCells =  [
+                {x: 5, y: 1}, {x: 6, y: 1}, {x: 8, y: 1}, {x: 9, y: 1}, {x: 10, y: 1}, {x: 11, y: 1}, {x: 12, y: 1},
+                {x: 1, y: 8}, {x: 3, y: 8}, {x: 4, y: 8}, {x: 5, y: 8}
+            ];
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, twoAcrossFixture)).toEqual(expectedCells);
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, threeAcrossFixture)).toEqual(expectedCells);
+        });
+
+        //SOUTHERN  8, 9, CROSS 8. 9
+        //should clear OUTHERN CR SS
+        it('should return the correct cells where entries in a grouped clue intersect each other', function () {
+            var expectedCells = [
+               {x: 3, y: 10}, {x: 4, y: 10}, {x: 5, y: 10}, {x: 6, y: 10}, {x: 7, y: 10}, {x: 8, y: 10}, {x: 9, y: 10},
+               {x: 8, y: 9}, {x: 8, y: 11}, {x: 8, y: 12}, {x: 8, y: 13}
+            ];
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, fiveAcrossFixture)).toEqual(expectedCells);
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, sevenDownFixture)).toEqual(expectedCells);
+
         });
     });
 });

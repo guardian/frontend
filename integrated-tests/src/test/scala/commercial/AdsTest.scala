@@ -1,5 +1,6 @@
-package integration
+package commercial
 
+import integration.SharedWebDriver
 import org.openqa.selenium.WebElement
 import org.scalatest._
 
@@ -9,6 +10,8 @@ class AdsTest
   with OptionValues
   with BeforeAndAfterAll
   with SharedWebDriver {
+
+  override protected def beforeAll(): Unit = implicitlyWait(40)
 
   private def findComponent(path: String, selector: String): WebElement = {
     get(path, ads = true)
@@ -20,25 +23,14 @@ class AdsTest
   }
 
   private def shouldBeVisible(maybeComponent: => WebElement): Unit = {
-//    withClue(s"Page source: ${pageSource}") {
+    withClue(s"Page source: ${webDriver.getPageSource}") {
       maybeComponent shouldBe 'displayed
-//    }
+    }
   }
 
   "Ads" should "display on the sport front" in {
-
-    implicitlyWait(20)
-
     get("/uk/sport", ads = true)
-
-    withClue("Should display top banner ad") {
-      shouldBeVisible(first("#dfp-ad--top-above-nav > *"))
-      }
-
-    withClue("Should display two MPUs") {
-      shouldBeVisible(first("#dfp-ad--inline1 > *"))
-      shouldBeVisible(first("#dfp-ad--inline2 > *"))
-    }
+    shouldBeVisible(first("#dfp-ad--top-above-nav > *"))
   }
 
   "A logo" should "appear on a sponsored front" in {
