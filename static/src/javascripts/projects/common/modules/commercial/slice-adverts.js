@@ -59,7 +59,6 @@ define([
                     $(container).addClass('omitted-mpus');
                     index++;
                 }
-
             }
 
             return Promise.all(_(adSlices)
