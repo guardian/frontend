@@ -1,6 +1,7 @@
 define([
     'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/commercial-component',
+    'common/modules/commercial/creatives/gu-style-comcontent',
     'common/modules/commercial/creatives/expandable-v3',
     'common/modules/commercial/creatives/expandable-video',
     'common/modules/commercial/creatives/expandable-video-v2',
