@@ -239,11 +239,6 @@
         &:hover {
             background-color: colour-hover(social-facebook);
         }
-
-        .inline-icon svg {
-            width: 23px;
-            height: 23px;
-        }
     }
 
     .block-share__item--twitter {
@@ -252,7 +247,9 @@
         &:hover {
             background-color: colour-hover(social-twitter);
         }
+    }
 
+    .block-share__item--facebook, .block-share__item--twitter {
         .inline-icon svg {
             width: 23px;
             height: 23px;
@@ -265,16 +262,10 @@
         &:hover {
             background-color: colour-hover(social-pinterest);
         }
-
+        // due to its different size, needs different width and height then other share icons
         .inline-icon svg {
-            width: 14px;
+            width: 20px;
             height: 14px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
         }
     }
 }

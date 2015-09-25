@@ -96,14 +96,16 @@ category: Common
         text-decoration: none;
     }
 
-    .svg & {
-        i {
-            width: 100%;
-            height: 100%;
-            vertical-align: middle;
-            background-size: 88%;
-            background-position: center;
-        }
+    svg {
+        height: 88%;
+        width: 88%;
+        vertical-align: middle;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
     }
 
     .social-icon__label {
@@ -176,16 +178,10 @@ category: Common
     background-color: colour(social-pinterest);
 
     // The pinterest icon needs to be centered within the span due to its small width/height
-
-    .i {
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 16px !important;
-        height: 20px !important;
+    svg {
+        top: -10px;
+        width: 14px !important;
+        height: 30px !important;
     }
 
     &:hover {
