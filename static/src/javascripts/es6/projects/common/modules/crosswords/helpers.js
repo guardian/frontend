@@ -124,7 +124,11 @@ const cluesForCell = (clueMap, cell) => {
 const getClearableCellsForClue = (grid, clueMap, entries, clue) => {
    if (clueIsInGroup(clue)) {
        const entriesForClue = getGroupEntriesForClue(entries, clue.group);
-       return _.flatten(_.map(entriesForClue, (entry) => { return getClearableCellsForEntry(grid, clueMap, entries, entry); }));
+       return _.uniq(_.flatten(_.map(entriesForClue, (entry) => {
+                    return getClearableCellsForEntry(grid, clueMap, entries, entry);
+                })
+             ), (cell) => { return [cell.x, cell.y].join(); }
+        );
     } else {
         return getClearableCellsForEntry(grid, clueMap, entries, clue);
     }
@@ -137,7 +141,7 @@ const getClearableCellsForEntry = (grid, clueMap, entries, entry) => {
         const clues = cluesForCell(clueMap, cell);
         const otherClue = clues[direction];
         if( otherClue ) {
-            return !checkClueHasBeenAnswered( grid, otherClue );
+            return cluesAreInGroup(entry, otherClue) || !checkClueHasBeenAnswered( grid, otherClue );
         }
         return true;
     });

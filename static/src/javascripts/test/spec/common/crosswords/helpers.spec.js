@@ -321,7 +321,7 @@ describe('Helpers', function () {
         var nineDownFixture = { id: '9-down', group: ['9-down'], solution: 'HEATHEN', position: { x: 10, y: 0 }, direction:'down', length: 7 };
         var elevenDownFixture = { id: '11-down', group: ['11-down'], solution: 'LUSTRE', position: { x: 0, y: 8 }, direction:'down', length: 6 };
         var thirteenDownFixture = { id: '13-down', group: ['13-down'], solution: 'GIST', position: { x: 2, y: 8 }, direction:'down', length: 4 };
- ;      var fifteenDownFixture = {id: '15-down', group: ['8-across', '15-down'], solution: 'CROSS', position: { x: 2, y: 8 }, direction:'down', length: 5};
+ ;      var fifteenDownFixture = {id: '15-down', group: ['8-across', '15-down'], solution: 'CROSS', position: { x: 8, y: 9 }, direction:'down', length: 5};
 
         var oneAcrossFixture = { id: '1-across', group: ['2-down', '1-across'], solution: 'CLAUSE', position: { x: 0, y: 6 }, direction:'across', length: 6 };
         var twoAcrossFixture = { id: '2-across', group: ['3-across', '2-across'], solution: 'LIGHTS', position: { x: 0, y: 8 }, direction:'across', length: 6 };
@@ -329,10 +329,10 @@ describe('Helpers', function () {
 
 
         var sixAcrossFixture = { id: '6-across', group: ['6-across'], solution: 'FIGHTS', position: { x: 6, y: 3 }, direction:'across', length: 6 };
-        var eightAcrossFixture = { id: '8-across', group: ['8-across', '15-down'], solution: 'SOUTHERN', position: { x: 2, y: 10 }, direction:'down', length: 8 }
+        var eightAcrossFixture = { id: '8-across', group: ['8-across', '15-down'], solution: 'SOUTHERN', position: { x: 2, y: 10 }, direction:'across', length: 8 }
 
-        var entriesFixture = [ oneDownFixture, twoDownFixture, fourDownFixture, nineDownFixture, elevenDownFixture, thirteenDownFixture,
-                               oneAcrossFixture, twoAcrossFixture, threeAcrossFixture, sixAcrossFixture, fifteenDownFixture ];
+        var entriesFixture = [ oneDownFixture, twoDownFixture, fourDownFixture, nineDownFixture, elevenDownFixture, thirteenDownFixture, fifteenDownFixture,
+                               oneAcrossFixture, twoAcrossFixture, threeAcrossFixture, sixAcrossFixture, eightAcrossFixture ];
 
         var clueMapFixture = {
 
@@ -428,8 +428,6 @@ describe('Helpers', function () {
 
         };
 
-;
-
 
 
         // duplicate cells' - a cell which is used by more than one completed clue
@@ -462,10 +460,22 @@ describe('Helpers', function () {
                 {x: 5, y: 1}, {x: 6, y: 1}, {x: 8, y: 1}, {x: 9, y: 1}, {x: 10, y: 1}, {x: 11, y: 1}, {x: 12, y: 1},
                 {x: 1, y: 8}, {x: 3, y: 8},{x: 4, y: 8},{x: 5, y: 8},
             ];
-
             expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, entriesFixture, twoAcrossFixture)).toEqual(expectedCells)
             expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, entriesFixture, threeAcrossFixture)).toEqual(expectedCells)
         });
+
+        //SOUTHERN  8, 9, CROSS 8. 9
+        //should clear OUTHERN CR SS
+        it('should return the correct cells where entries in a grouped clue intersect each other', function() {
+            var expectedCells = [
+               {x: 3, y: 10}, {x: 4, y: 10}, {x: 5, y: 10}, {x: 6, y: 10}, {x: 7, y: 10}, {x: 8, y: 10}, {x: 9, y: 10},
+               {x: 8, y: 9}, {x: 8, y: 11}, {x: 8, y: 12}, {x: 8, y: 13}
+            ]
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, entriesFixture, eightAcrossFixture)).toEqual(expectedCells)
+            expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, entriesFixture, fifteenDownFixture)).toEqual(expectedCells)
+
+        })
+
 
     });
 });
