@@ -15,7 +15,12 @@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
-                <link itemprop="sameAs" content="http://www.theguardian.com">
+                @if(amp) {
+                    @* AMP doesn't support sameAs *@
+                    <meta itemprop="logo" content="/assets/images/favicons/152x152.png">
+                } else {
+                    <link itemprop="sameAs" href="http://www.theguardian.com">
+                }
             </div>
 
             @fragments.headTonal(article)
