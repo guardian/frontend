@@ -33,8 +33,11 @@ fi
 if [[ -z $BUILD_VCS_NUMBER ]]; then
   BUILD_VCS_NUMBER=dev-vcs-build
 fi
-if [[ -z $RIFF_RAFF_BUCKET ]]; then
-  RIFF_RAFF_BUCKET=aws-frontend-teamcity
+if [[ -z $RIFF_RAFF_ARTIFACT_BUCKET ]]; then
+  RIFF_RAFF_ARTIFACT_BUCKET=aws-frontend-teamcity
+fi
+if [[ -z $RIFF_RAFF_BUILD_BUCKET ]]; then
+  RIFF_RAFF_BUILD_BUCKET=aws-frontend-teamcity
 fi
 if [[ -z $BUILD_VCS_BRANCH ]]; then
   BUILD_VCS_BRANCH=dev-branch
@@ -49,8 +52,8 @@ sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%branch%>|$BUILD_VCS_BRANCH|" \
     static/conf/build-template.json | tee $static_folder/build.json
 
-aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
-aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
+aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUILD_BUCKET/static/$BUILD_NUMBER/build.json    --region=eu-west-1
+aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_ARTIFACT_BUCKET/static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
 
 set +o xtrace
 echo "##teamcity[publishArtifacts '$static_folder/artifacts.zip => static']"
