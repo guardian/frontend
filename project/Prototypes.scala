@@ -107,13 +107,17 @@ trait Prototypes {
     topLevelDirectory in Universal := Some(application),
     concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     riffRaffPackageType := (packageBin in Universal).value,
-    riffRaffPackageName := application,
     riffRaffBuildIdentifier := System.getProperty("build.number", "DEV").replaceAll("\"",""),
     riffRaffUploadArtifactBucket := System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity"),
     riffRaffUploadManifestBucket := System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity"),
     riffRaffArtifactPublishPath := application,
     riffRaffManifestProjectName := s"dotcom:$application",
-    artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+    riffRaffPackageName := s"dotcom:$application",
+    riffRaffArtifactResources := Seq(
+      riffRaffPackageType.value -> s"packages/$application/${riffRaffPackageType.value.getName}",
+      baseDirectory.value / "deploy.json" -> "deploy.json"
+    ),
+    artifactName in Universal := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
       artifact.name + "." + artifact.extension
     }
   )
@@ -130,5 +134,15 @@ trait Prototypes {
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
     .settings(frontendDistSettings(applicationName))
+  }
+
+  def library(applicationName: String) = {
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
+    .settings(frontendDependencyManagementSettings)
+    .settings(frontendCompilationSettings)
+    .settings(frontendClientSideSettings)
+    .settings(frontendTestSettings)
+    .settings(VersionInfo.settings)
+    .settings(libraryDependencies ++= Seq(commonsIo))
   }
 }

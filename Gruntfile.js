@@ -128,8 +128,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool', 'uglify:conf']);
-    grunt.registerTask('install:npm', ['shell:npmInstall', 'shell:npmInstallFaciaTool']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'uglify:conf']);
+    grunt.registerTask('install:npm', ['shell:npmInstall']);
 
     grunt.registerTask('prepare', function() {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');
