@@ -44,8 +44,9 @@ do you have fonts in localStorage?
     function loadFontsFromStorage() {
         try { // localStorage can fail for many reasons
             if ("localStorage" in window) {
-                // detect which font format (ttf, woff, woff2 etc) we want
                 const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
+
+                // detect which font format (ttf, woff, woff2 etc) we want
                 const fontFormat = (() => {
                     const formatStorageKey = 'gu.fonts.format';
 
@@ -68,9 +69,9 @@ do you have fonts in localStorage?
                         if (!/edge\/([0-9]+)/.test(ua)) { // don't let edge tell you it's chrome when it's not
                             const browser = /(chrome|firefox)\/([0-9]+)/.exec(ua.toLowerCase());
                             const supportsWoff2 = {
-                                    'chrome': 36,
-                                    'firefox': 39
-                                };
+                                'chrome': 36,
+                                'firefox': 39
+                            };
                             return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
                         }
 
