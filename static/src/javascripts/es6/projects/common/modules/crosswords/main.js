@@ -137,7 +137,7 @@ class Crossword extends React.Component {
 
     insertCharacter (character) {
         const cell = this.state.cellInFocus;
-        if (/[A-Z]/.test(character)) {
+        if (/[A-Z]/.test(character) && character.length === 1) {
             this.setCellValue(cell.x, cell.y, character);
             this.save();
             this.focusNext();

@@ -18,19 +18,18 @@
 <script>
     @if(ServeCoreFrontsToSomeIpadsSwitch.isSwitchedOn) {
             if(navigator.platform === 'iPad' &&
-                window.devicePixelRatio === 2 &&
-                /.*iPad; CPU OS ([789])_\d+.*/.test(navigator.userAgent)) {
+                window.devicePixelRatio === 2) {
                 try {
                     var storage = window.localStorage;
-                    var participation = storage.getItem('gu.core-fronts-test');
+                    var participation = storage.getItem('gu.retina-core-fronts-test');
                     if (!participation) {
                         if(Math.random() > .5) {
-                            storage.setItem('gu.core-fronts-test', 'true');
+                            storage.setItem('gu.retina-core-fronts-test', 'true');
                         } else {
-                            storage.setItem('gu.core-fronts-test', 'false');
+                            storage.setItem('gu.retina-core-fronts-test', 'false');
                         }
                     }
-                    window.serveCoreFronts = storage.getItem('gu.core-fronts-test') === 'true';
+                    window.serveCoreFronts = storage.getItem('gu.retina-core-fronts-test') === 'true';
                 } catch (e) {
                     window.serveCoreFronts = false;
                 }

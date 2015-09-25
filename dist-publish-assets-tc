@@ -1,0 +1,59 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+echo "Asset publish"
+
+set +x
+echo "##teamcity[progressStart 'asset publish']"
+set -x
+
+static_folder="static/riffraff"
+rm -rf $static_folder
+
+mkdir -p "$static_folder/packages/frontend-static"
+
+cp "static/deploy.json"      "$static_folder"
+cp -r static/hash/*          "$static_folder/packages/frontend-static"
+cp static/abtests.json       "$static_folder/packages/frontend-abtests"
+
+pushd $static_folder
+zip -r "../artifacts.zip" .
+mv ../artifacts.zip ./artifacts.zip
+popd
+
+echo "Uploading artifact and build manifest to S3"
+
+set +u
+if [[ -z $BUILD_NUMBER ]]; then
+  BUILD_NUMBER=dev-build
+fi
+if [[ -z $BUILD_VCS_NUMBER ]]; then
+  BUILD_VCS_NUMBER=dev-vcs-build
+fi
+if [[ -z $RIFF_RAFF_BUCKET ]]; then
+  RIFF_RAFF_BUCKET=aws-frontend-teamcity
+fi
+if [[ -z $BUILD_VCS_BRANCH ]]; then
+  BUILD_VCS_BRANCH=dev-branch
+fi
+set -u
+
+BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
+
+sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
+    -e "s|<%start_time%>|$BUILD_START_DATE|" \
+    -e "s|<%revision%>|$BUILD_VCS_NUMBER|" \
+    -e "s|<%branch%>|$BUILD_VCS_BRANCH|" \
+    static/build-template.json | tee $static_folder/build.json
+
+set +o xtrace
+echo "##teamcity[publishArtifacts '$static_folder/artifacts.zip => static']"
+echo "##teamcity[publishArtifacts '$static_folder/build.json => static']"
+set -o xtrace
+
+set +x
+echo "##teamcity[progressFinish 'asset publish']"
+set -x

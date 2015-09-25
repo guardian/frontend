@@ -30,8 +30,7 @@ define([
                 section      = this.getSection(),
                 widgetCode,
                 widgetCodeImage,
-                widgetCodeText,
-                s = window.s;
+                widgetCodeText;
 
             breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
@@ -75,10 +74,25 @@ define([
                     $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
                 }
 
-                s.link2 = 'outbrain';
-                s.tl(true, 'o', 'outbrain');
-
+                this.tracking(widgetCode);
                 require(['js!' + outbrainUrl]);
+            }.bind(this));
+        },
+
+        tracking: function (widgetCode) {
+            var s = window.s;
+            // Omniture
+            s.link2 = 'outbrain';
+            s.tl(true, 'o', 'outbrain');
+
+            // Ophan
+            require(['ophan/ng'], function (ophan) {
+                ophan.record({
+                    ads: [{
+                        slot: 'outbrain',
+                        widgetId: widgetCode
+                    }]
+                });
             });
         },
 

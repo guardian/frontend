@@ -1,33 +1,35 @@
 @(metaData: model.MetaData)(body: Html)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<!doctype html AMP>
-<html>
+<!doctype html>
+<html AMP>
     <head>
+        @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
+        @fragments.metaData(metaData, true)
         <title>@views.support.Title(metaData)</title>
-        <link rel="canonical" href="/@metaData.id" />
-        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
-        @fragments.amp.mainStylesheetAMP()
-        @fragments.metaData(metaData)
-        <script src="https://www.gstatic.com/amphtml/v0.js" @if(Play.isDev) { development }></script>
-        <script element="amp-twitter" src="https://www.gstatic.com/amphtml/v0/amp-twitter-0.1.js" async></script>
+        <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
+        @fragments.amp.stylesheets.main()
+        <script src="https://cdn.ampproject.org/v0.js" @if(Play.isDev) { development } async></script>
+        <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
     </head>
     <body>
-        @* @fragments.header(metaData) *@
-        <header class="main-header">
-            <a href="@LinkTo{/}" class="logo-wrapper">
-                @fragments.inlineSvg("guardian-logo-160", "logo")
-            </a>
-        </header>
-        @body
-        @* <h1>Sample document</h1>
-        <p>
-            Some text
-            <amp-img src=sample.jpg width=300 height=300 layout="responsive"/>
-        </p>
-        <cat-ad width=100% height=300>
-                <!-- <script>document.write(…)</script> -->
-        </cat-ad>*@
+        <div class="main-body">
+            @* @fragments.header(metaData) *@
+            <header class="main-header">
+                <a href="@LinkTo{/}" class="logo-wrapper">
+                    @fragments.inlineSvg("guardian-logo-160", "logo")
+                </a>
+            </header>
+            @body
+            @* <h1>Sample document</h1>
+            <p>
+                Some text
+                <amp-img src=sample.jpg width=300 height=300 layout="responsive"/>
+            </p>
+            <cat-ad width=100% height=300>
+                    <!-- <script>document.write(…)</script> -->
+            </cat-ad>*@
+        </div>
     </body>
 </html>

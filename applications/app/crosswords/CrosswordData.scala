@@ -6,15 +6,27 @@ import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
 
 object Entry {
-
   implicit val positionWrites = Json.writes[CrosswordPosition]
-
   implicit val jsonWrites = Json.writes[Entry]
+
+  val NumberPattern = "[^a-z]+".r
+  val DirectionPattern = "[a-z]+".r
+
+  def formatHumanNumber(numbers: String): Option[String] = {
+    NumberPattern.findFirstIn(numbers).map { number =>
+      val spaced = number.split(",").mkString(", ")
+
+      DirectionPattern.findFirstIn(numbers) match {
+        case Some(direction) => spaced.concat(s" $direction")
+        case None => spaced
+      }
+    }
+  }
 
   def fromCrosswordEntry(entry: CrosswordEntry): Entry = Entry(
     entry.id,
     entry.number.getOrElse(0),
-    entry.humanNumber.getOrElse("0"),
+    entry.humanNumber.flatMap(formatHumanNumber).getOrElse("0"),
     entry.clue.getOrElse(""),
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),

@@ -21,7 +21,7 @@ object EmailSubscriptions {
       "news",
       "News",
       "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
-      "Every weekday",
+      "Every day",
       "1506",
       11,
       subscribedTo = subscribedListIds.exists{ x => x == "1506" }
@@ -138,7 +138,7 @@ object EmailSubscriptions {
       "news",
       "News",
       "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
-      "Every weekday morning",
+      "Every day",
       "37",
       12,
       subscribedTo = subscribedListIds.exists{ x => x == "37" }
@@ -148,7 +148,7 @@ object EmailSubscriptions {
       "news",
       "News",
       "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
-      "Every weekday morning",
+      "Every day",
       "1493",
       11,
       subscribedTo = subscribedListIds.exists{ x => x == "1493" }

@@ -26,12 +26,15 @@ class Clue extends React.Component {
                     'crossword__clue--selected': this.props.isSelected,
                     'crossword__clue--display-group-order' : JSON.stringify(this.props.number) !== this.props.humanNumber
                 })}
-                onClick={this.onClick}
-                data-number={this.props.humanNumber} // Use data attr instead of value as value removes everything after first comma
-                /* jscs:disable disallowDanglingUnderscores */
-                dangerouslySetInnerHTML={{__html: this.props.clue}}
-                /* jscs:enable disallowDanglingUnderscores */
-            />
+                onClick={this.onClick}>
+                <div className="crossword__clue__number">{this.props.humanNumber}</div>
+
+                <div className="crossword__clue__text"
+                     /* jscs:disable disallowDanglingUnderscores */
+                     dangerouslySetInnerHTML={{__html: this.props.clue}}
+                     /* jscs:enable disallowDanglingUnderscores */
+                ></div>
+            </li>
         );
     }
 }
