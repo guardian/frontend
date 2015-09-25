@@ -295,7 +295,7 @@ describe('Helpers', function () {
         });
     });
 
-    fdescribe('getClearableCellsForEntry', function () {
+    describe('getClearableCellsForEntry', function () {
 
         //Replicates state.grid but with just the value field for a partially completed grid with clues and grouped clues intersecting and not intersecting eachothe
         // 'SANTA CLAUSE', 'NORTHERN LIGHTS' and 'SOUTHERN CROSS' are grouped clues
@@ -449,7 +449,7 @@ describe('Helpers', function () {
 
 
         // duplicate cells' - a cell which is used by more than one completed clue
-        it('should return all cells for an ungrouped clue with no duplicate cells', function () {
+        it('should return all cells for an ungrouped clue which does not intersect other answered clues', function () {
             var expectedCells =  [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}, {x: 0, y: 4}];
             expect(helpers.getClearableCellsForClue(gridFixture, clueMapFixture, theEntriesFixture, oneDownFixture)).toEqual(expectedCells);
         });
@@ -461,7 +461,7 @@ describe('Helpers', function () {
         });
 
         //SANTACLAUSE
-        it('should return all cells for a grouped clue with no duplicate cells', function () {
+        it('should return all cells for a grouped clue which does not intersect other answered clues', function () {
             var expectedCells = [
                 {x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2}, {x: 2, y: 3}, {x: 2, y: 4}, {x: 0, y: 6}, {x: 1, y: 6},
                 {x: 2, y: 6}, {x: 3, y: 6}, {x: 4, y: 6}, {x: 5, y: 6}

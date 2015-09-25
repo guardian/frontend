@@ -303,7 +303,7 @@ class Crossword extends React.Component {
     // called when cell is selected (by click or programtically focussed)
     onSelect (x, y) {
         const cellInFocus = this.state.cellInFocus;
-        const clue = this.cluesFor(x, y);
+        const clue = helpers.cluesFor(this.clueMap, x, y);
         const focussedClue = this.clueInFocus();
 
         let newDirection;
@@ -346,7 +346,7 @@ class Crossword extends React.Component {
     }
 
     focusClue (x, y, direction) {
-        const clues = this.cluesFor(x, y);
+        const clues = helpers.cluesFor(this.clueMap, x, y);
 
         if (clues && clues[direction]) {
             this.focusHiddenInput(x, y);
@@ -362,13 +362,9 @@ class Crossword extends React.Component {
         this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
     }
 
-    cluesFor (x, y) {
-        return this.clueMap[helpers.clueMapKey(x, y)];
-    }
-
     clueInFocus () {
         if (this.state.cellInFocus) {
-            const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
+            const cluesForCell = helpers.cluesFor(this.clueMap, this.state.cellInFocus.x, this.state.cellInFocus.y);
             return cluesForCell[this.state.directionOfEntry];
         } else {
             return null;
@@ -381,7 +377,7 @@ class Crossword extends React.Component {
 
     clueIsInFocusGroup (clue) {
         if (this.state.cellInFocus) {
-            const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
+            const cluesForCell = helpers.cluesFor(this.clueMap, this.state.cellInFocus.x, this.state.cellInFocus.y);
             return _.contains(cluesForCell[this.state.directionOfEntry].group, clue.id);
         } else {
             return null;
@@ -493,7 +489,8 @@ class Crossword extends React.Component {
 
     onClearSingle () {
         // Merge arrays of cells from all highlighted clues
-        const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+        //const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+        const cellsInFocus = helpers.getClearableCellsForClue(this.state.grid, this.clueMap, this.props.data.entries, this.clueInFocus());
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {

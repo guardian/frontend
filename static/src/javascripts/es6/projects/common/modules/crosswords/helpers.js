@@ -115,9 +115,8 @@ const cellsForClue = (entries, clue) => {
     }
 };
 
-const cluesForCell = (clueMap, cell) => {
-    const key = `${cell.x}_${cell.y}`;
-    return clueMap[key];
+const cluesFor = (clueMap, x, y) => {
+    return clueMap[clueMapKey(x, y)];
 };
 
 const getClearableCellsForClue = (grid, clueMap, entries, clue) => {
@@ -135,7 +134,7 @@ const getClearableCellsForClue = (grid, clueMap, entries, clue) => {
 const getClearableCellsForEntry = (grid, clueMap, entries, entry) => {
     const direction = entry.direction === 'across' ? 'down' : 'across';
     return _.filter(cellsForEntry(entry), (cell) => {
-        const clues = cluesForCell(clueMap, cell);
+        const clues = cluesFor(clueMap, cell.x, cell.y);
         const otherClue = clues[direction];
         if (otherClue) {
             return cluesAreInGroup(entry, otherClue) || !checkClueHasBeenAnswered(grid, otherClue);
@@ -242,6 +241,7 @@ export default {
     otherDirection: otherDirection,
     buildGrid: buildGrid,
     clueMapKey: clueMapKey,
+    cluesFor: cluesFor,
     buildClueMap: buildClueMap,
     buildSeparatorMap,
     cellsForEntry: cellsForEntry,
