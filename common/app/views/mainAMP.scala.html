@@ -4,10 +4,10 @@
 <!doctype html>
 <html AMP>
     <head>
+        @fragments.metaData(metaData, true)
         <title>@views.support.Title(metaData)</title>
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
         @fragments.amp.stylesheets.main()
-        @fragments.metaData(metaData, true)
         <script src="https://cdn.ampproject.org/v0.js" @if(Play.isDev) { development } async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
     </head>
