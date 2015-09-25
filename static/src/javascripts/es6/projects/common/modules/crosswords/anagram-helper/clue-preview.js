@@ -26,7 +26,6 @@ export default class CluePreview extends React.Component {
 
 
     render () {
-        console.log("AG E:" + JSON.stringify(this.props.entries))
         return (
             <div className={'crossword__anagram-helper__clue-preview ' + (this.props.entries.length >= 9 ? 'long' : '')}>
                 <div><strong>{this.props.clue.number} <span className="crossword__anagram-helper__direction">{this.props.clue.direction}</span></strong> {this.props.clue.clue}</div>

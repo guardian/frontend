@@ -389,18 +389,11 @@ class Crossword extends React.Component {
     }
 
     cluesData () {
-
-        const cluedata = _.map(this.props.data.entries, (entry) => ({
+        return _.map(this.props.data.entries, (entry) => ({
             entry: entry,
-            /*
-            hasAnswered: _.every(helpers.cellsForEntry(entry), (position) => {
-                return /^[A-Z]$/.test(this.state.grid[position.x][position.y].value);
-            })*/
-            hasAnswered: helpers.checkClueHasBeenAnswered( this.state.grid, entry ),
+            hasAnswered: helpers.checkClueHasBeenAnswered(this.state.grid, entry),
             isSelected: this.clueIsInFocusGroup(entry)
         }));
-        return cluedata;
-
     }
 
     save () {
@@ -500,18 +493,7 @@ class Crossword extends React.Component {
 
     onClearSingle () {
         // Merge arrays of cells from all highlighted clues
-
-        const clues = this.allHighlightedClues();
-        console.log("++  THE cluest " + JSON.stringify(this.clueMap));
-        _.forEach(clues, (clue) => {
-            const cells = helpers.cellsForEntry(clue);
-          //  console.log("++  cells " + JSON.stringify(cells))
-            _.forEach(cells, (cell) => {
-                const cluesFor = this.cluesFor(cell.x, cell.y);
-            //    console.log("++ CLUES FOR CELL " + JSON.stringify(cluesFor));
-            })
-        } )
-        const cellsInFocus = _.flatten(_.map(clues, helpers.cellsForEntry, this));
+        const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
