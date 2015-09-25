@@ -96,13 +96,6 @@ do you have fonts in localStorage?
                     el.innerHTML = css;
                 }
 
-                // hangover from previous version
-                function guFont(fontData) {
-                    return fontData.css;
-                }
-                /* Closure Exports */
-                this['guFont'] = guFont;
-
                 // download font as json to store/use etc
                 function fetchFont(url, el, fontName, fontHash) {
                     const xhr = new XMLHttpRequest();
