@@ -12203,7 +12203,7 @@
     },
     "lodash": {
       "version": "3.10.1",
-      "from": "lodash@*",
+      "from": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz",
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
     },
     "megalog": {
