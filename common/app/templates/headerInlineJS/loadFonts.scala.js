@@ -46,6 +46,7 @@ do you have fonts in localStorage?
             if ("localStorage" in window) {
                 // detect which font format (ttf, woff, woff2 etc) we want
                 const fontFormat = (() => {
+                    const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
                     const formatStorageKey = 'gu.fonts.format';
 
                     let format = localStorage.getItem(formatStorageKey);
@@ -120,16 +121,13 @@ do you have fonts in localStorage?
                 function saveFont(fontName, fontHash, css) {
                     for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
                         var key = localStorage.key(i);
-                        if (key.indexOf(storageKey(fontName)) !== -1) {
+                        if (key.indexOf(fontStorageKey(fontName)) !== -1) {
                             localStorage.removeItem(key);
                             break;
                         }
                     }
-                    localStorage.setItem(storageKey(fontName, fontHash), JSON.stringify({value: css}));
+                    localStorage.setItem(fontStorageKey(fontName, fontHash), JSON.stringify({value: css}));
                 }
-
-                // generic method to construct a storage key
-                const storageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
 
                 // down to business
                 // the target for each font and holders of all the necessary metadata
@@ -144,7 +142,7 @@ do you have fonts in localStorage?
                     const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
-                    const fontData = localStorage.getItem(storageKey(fontName, fontHash));
+                    const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
 
                     if (fontData) {
                         useFont(font, JSON.parse(fontData).value);
