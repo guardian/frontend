@@ -66,14 +66,45 @@
     color: #005689;
 }
 
+.tonal--tone-news  .tonal__standfirst{
+    padding-top: 0;
+}
+
+.tonal--tone-comment .tonal__header {
+    background-color: #efefec;
+}
+
+.tonal--tone-comment .tonal__header .content__labels {
+    border-bottom-color: rgba(118,118,118,0.3);
+}
+
+.content__headline--byline {
+    display: block;
+    padding-top: 0;
+    margin-top: -1.5rem;
+    padding-bottom: 1.5rem;
+}
+
 .tonal--tone-comment .tonal__header .content__section-label__link,
 .tonal--tone-comment .tone-colour {
     color: #e6711b;
 }
 
-.tonal--tone-feature .tonal__header .content__section-label__link,
 .tonal--tone-feature .tone-colour {
     color: #951c55;
+}
+
+.tonal--tone-feature .tonal__header .content__labels {
+    border-bottom-color: rgba(234,234,234,0.3);
+}
+
+.tonal--tone-feature .tonal__header .content__section-label__link {
+    color: #fdadba;
+}
+
+.tonal--tone-feature .tonal__standfirst .bullet:before, 
+.tonal--tone-feature .tonal__standfirst ul>li:before {
+    background-color: rgba(255,255,255,0.4);
 }
 
 .tonal--tone-review .tone-colour {
@@ -111,7 +142,8 @@
     color: #fff;
 }
 
-.tonal--tone-review .tonal__header .content__series-label__link {
+.tonal--tone-review .tonal__header .content__series-label__link,
+.tonal--tone-feature .tonal__header .content__series-label__link {
     color: #eaeaea;
 }
 
