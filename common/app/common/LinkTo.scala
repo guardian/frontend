@@ -117,13 +117,13 @@ class CanonicalLink {
     "page"
   )
 
-  def apply(implicit request: RequestHeader): String = {
+  def apply(implicit request: RequestHeader, webUrl: String): String = {
     val queryString = {
       val q = significantParams.flatMap(key => request.getQueryString(key).map(value => s"$key=${value.urlEncoded}"))
         .sorted.mkString("&")
       if (q.isEmpty) "" else s"?$q"
     }
-    s"${scheme(request)}://${request.host}${request.path}$queryString"
+    s"$webUrl$queryString"
   }
 }
 

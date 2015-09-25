@@ -63,7 +63,7 @@
 }
 
 @if(!item.shouldGoogleIndex) { <meta name="robots" content="noindex"> }
-<link rel="canonical" href="@item.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request))" />
+<link rel="canonical" href="@item.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, item.webUrl))" />
 
 <meta name="apple-mobile-web-app-title" content="Guardian" />
 <meta name="application-name" content="The Guardian" />
