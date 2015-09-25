@@ -117,7 +117,7 @@ trait Prototypes {
       riffRaffPackageType.value -> s"packages/$application/${riffRaffPackageType.value.getName}",
       baseDirectory.value / "deploy.json" -> "deploy.json"
     ),
-    artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+    artifactName in Universal := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
       artifact.name + "." + artifact.extension
     }
   )
