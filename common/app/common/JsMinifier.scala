@@ -92,11 +92,15 @@ object InlineJs {
 
   def apply(codeToCompile: String)(implicit application: Application): Html = {
     if (Switches.InlineJsSwitch.isSwitchedOn) {
-      val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-      lazy val compiledCode: String =
-        JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
+      if (Play.isDev) {
+        Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile))
+      } else {
+        val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
+        lazy val compiledCode: String =
+          JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
 
-      Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+        Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+      }
     } else {
       Html(codeToCompile)
     }
