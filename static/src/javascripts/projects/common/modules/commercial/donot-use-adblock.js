@@ -23,7 +23,7 @@ define([
 ) {
     function init() {
         var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com',
+            adblockLink = 'https://membership.theguardian.com/',
             message = _.sample([
                 {
                     id: 'monthly',
