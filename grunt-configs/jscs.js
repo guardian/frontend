@@ -49,17 +49,6 @@ module.exports = function(grunt, options) {
                 ]
             }]
         },
-        faciaTool: {
-            files: [{
-                expand: true,
-                cwd: 'facia-tool/public/javascripts/',
-                src: [
-                    '**/*.js',
-                    '!components/**',
-                    '!**/*.js'
-                ]
-            }]
-        },
         membership: {
             files: [{
                 expand: true,
