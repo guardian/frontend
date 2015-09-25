@@ -28,7 +28,8 @@ define([
     'inlineSvg!svgs/icon/cursor',
     'inlineSvg!svgs/icon/fb',
     'inlineSvg!svgs/icon/gplus',
-    'inlineSvg!svgs/icon/plus'
+    'inlineSvg!svgs/icon/plus',
+    'inlineSvg!svgs/icon/external-link'
 ], function (
     _,
     commentCount16icon,
@@ -55,7 +56,8 @@ define([
     cursor,
     fb,
     gplus,
-    plus
+    plus,
+    externalLink
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -82,7 +84,8 @@ define([
         cursor: cursor,
         fb: fb,
         gplus: gplus,
-        plus: plus
+        plus: plus,
+        externalLink: externalLink
     };
 
     return function (name, classes, title) {
