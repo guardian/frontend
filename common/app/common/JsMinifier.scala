@@ -44,6 +44,9 @@ object JsMinifier {
     options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT6_STRICT)
     options.setLanguageOut(CompilerOptions.LanguageMode.ECMASCRIPT3)
 
+    /* Disable some checks */
+    options.setWarningLevel(DiagnosticGroups.LINT_CHECKS, CheckLevel.OFF)
+
     options
   }
 
