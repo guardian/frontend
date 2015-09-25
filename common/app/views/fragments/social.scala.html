@@ -9,6 +9,9 @@
                 target="_blank"
                 title="@item.text">
                 <span class="u-h">@item.userMessage</span>
+                <span class="rounded-icon social-icon social-icon--@item.css inline-icon__fallback">
+                    <i class="i-share-@item.css--white i"></i>
+                </span>
                 @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "social-icon", "social-icon--" + item.css))
             </a>
         </li>
