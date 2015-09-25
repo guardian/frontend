@@ -25,7 +25,7 @@ describe('Commercial features', ()=> {
         mockPolicySwitches.policyTwo = {foo : true};
         mockPolicySwitches.policyThree = {bar : false};
 
-        const switches = commercialFeatures._init();
+        const switches = commercialFeatures.reset();
         expect(switches.foo).toBe(true);
         expect(switches.bar).toBe(false);
     });
@@ -35,7 +35,7 @@ describe('Commercial features', ()=> {
         mockPolicySwitches.policyTwo = {foo : false};
         mockPolicySwitches.policyThree = {foo: true};
 
-        const switches = commercialFeatures._init();
+        const switches = commercialFeatures.reset();
         expect(switches.foo).toBe(false);
     });
 });

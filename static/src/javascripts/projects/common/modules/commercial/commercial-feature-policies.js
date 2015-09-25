@@ -11,7 +11,7 @@ define([
 ) {
     var policies = {};
 
-    policies.defaultAds = function() {
+    policies.defaultAds = function () {
         return new CommercialFeatureSwitches(true);
     };
 
@@ -22,25 +22,25 @@ define([
         }
     };
 
-    policies.sslContent = function() {
+    policies.sslContent = function () {
         if (config.page.isSSL && config.page.section !== 'admin') {
             return new CommercialFeatureSwitches(false);
         }
     };
 
-    policies.uriSwitches = function() {
+    policies.uriSwitches = function () {
         if (window.location.hash.match(/[#&]noads(&.*)?$/)) {
             return new CommercialFeatureSwitches(false);
         }
     };
 
-    policies.userPrefs = function() {
+    policies.userPrefs = function () {
         if (userPrefs.isOff('adverts')) {
             return new CommercialFeatureSwitches(false);
         }
     };
 
-    policies.adfreeExperience = function() {
+    policies.adfreeExperience = function () {
         if (userAdPreference.hideAds) {
             return {
                 articleMPUs : false,
@@ -51,25 +51,25 @@ define([
         }
     };
 
-    policies.identityPages = function() {
+    policies.identityPages = function () {
         if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
             return {thirdPartyTags : false};
         }
     };
 
-    policies.nonArticlePages = function() {
+    policies.nonArticlePages = function () {
         if (config.page.contentType !== 'Article' && !config.page.isLiveBlog) {
             return {articleMPUs : false};
         }
     };
 
-    policies.nonFrontPages = function() {
+    policies.nonFrontPages = function () {
         if (!config.page.isFront) {
             return {frontCommercialComponents : false};
         }
     };
 
-    policies.switchboard = function() {
+    policies.switchboard = function () {
         var switches = {};
 
         if (!config.switches.videoAdverts) {

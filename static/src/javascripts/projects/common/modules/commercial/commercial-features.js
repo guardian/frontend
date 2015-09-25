@@ -7,11 +7,11 @@ define([
 ) {
     function init() {
         var commercialFeatures = getFeatureSwitches();
-        commercialFeatures._init = init; // Exposed for testing
+        commercialFeatures.reset = init; // Exposed for testing
         return commercialFeatures;
     }
 
-    function getFeatureSwitches () {
+    function getFeatureSwitches() {
         // Take the results of all our commercial content policies and smush them together
 
         var activeSwitches = {};
