@@ -56,11 +56,15 @@ do you have fonts in localStorage?
                         // try feature detecting first
                         // https://github.com/filamentgroup/woff2-feature-test
                         if ("FontFace" in window) {
-                            const f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+                            try {
+                                const f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
 
-                            f.load().catch(() => {});
-                            if (f.status === 'loading') {
-                                return true;
+                                f.load().catch(() => {});
+                                if (f.status === 'loading') {
+                                    return true;
+                                }
+                            } catch (e) {
+                                @if(play.Play.isDev){throw(e)}
                             }
                         }
 
