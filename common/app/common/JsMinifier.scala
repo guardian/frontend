@@ -37,6 +37,9 @@ object JsMinifier {
     options.setWarningLevel(DiagnosticGroups.INVALID_CASTS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_USELESS_CODE, CheckLevel.WARNING)
 
+    /* Disable some check */
+    options.setWarningLevel(DiagnosticGroups.ES3, CheckLevel.OFF)
+
     //Aggressive
     //options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
     //options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)

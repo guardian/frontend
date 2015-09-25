@@ -13,7 +13,7 @@ import Dependencies._
 
 object Frontend extends Build with Prototypes {
 
-  val common = application("common").settings(
+  val common = library("common").settings(
     libraryDependencies ++= Seq(
       akkaAgent,
       apacheCommonsMath3,
@@ -119,13 +119,6 @@ object Frontend extends Build with Prototypes {
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
 
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      playJsonVariants,
-      awsKinesis
-    )
-  )
-
   val faciaPress = application("facia-press").dependsOn(commonWithTests)
 
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
@@ -169,8 +162,8 @@ object Frontend extends Build with Prototypes {
     )
 
   val faciaEndToEnd = application("facia-end-to-end")
-    .dependsOn(faciaTool, facia, faciaPress)
-    .aggregate(faciaTool, facia, faciaPress)
+    .dependsOn(facia, faciaPress)
+    .aggregate(facia, faciaPress)
     .settings(
       javaOptions in Runtime += "-Dconfig.file=facia-end-to-end/conf/facia-end-to-end.application.conf"
     )
@@ -205,7 +198,6 @@ object Frontend extends Build with Prototypes {
   val main = root().aggregate(
     common,
     facia,
-    faciaTool,
     faciaPress,
     article,
     applications,
