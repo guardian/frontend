@@ -45,8 +45,8 @@ do you have fonts in localStorage?
         try { // localStorage can fail for many reasons
             if ("localStorage" in window) {
                 // detect which font format (ttf, woff, woff2 etc) we want
+                const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
                 const fontFormat = (() => {
-                    const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
                     const formatStorageKey = 'gu.fonts.format';
 
                     let format = localStorage.getItem(formatStorageKey);
