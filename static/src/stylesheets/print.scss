@@ -129,6 +129,18 @@ p {
 }
 
 #crossword {
+    .content__main-column {
+        position: absolute;
+        text-align: right !important;
+        top: 60px * .75 !important;
+        margin-top: 10px !important;
+        z-index: 1 !important;
+
+        &, & * {
+            background-color: transparent !important;
+        }
+    }
+
     .content__head {
         padding-top: 0 !important;
     }
@@ -137,6 +149,11 @@ p {
         font-size: 22px;
         margin-bottom: 0 !important;
         line-height: initial !important;
+    }
+
+    &.content--article:before {
+        zoom: 75%;
+        text-align: right !important;;
     }
 }
 
