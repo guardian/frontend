@@ -240,8 +240,9 @@
             background-color: colour-hover(social-facebook);
         }
 
-        .i {
-            @include icon(share-facebook--white);
+        .inline-icon svg {
+            width: 23px;
+            height: 23px;
         }
     }
 
@@ -252,8 +253,9 @@
             background-color: colour-hover(social-twitter);
         }
 
-        .i {
-            @include icon(share-twitter--white);
+        .inline-icon svg {
+            width: 23px;
+            height: 23px;
         }
     }
 
@@ -264,8 +266,15 @@
             background-color: colour-hover(social-pinterest);
         }
 
-        .i {
-            @include icon(share-pinterest--white);
+        .inline-icon svg {
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
         }
     }
 }

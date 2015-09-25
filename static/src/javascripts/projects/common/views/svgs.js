@@ -1,4 +1,4 @@
-/* global console */
+s/* global console */
 // Include any images needed in templates here.
 // This file is only required by core, and so has a long cache time.
 
@@ -30,7 +30,9 @@ define([
     'inlineSvg!svgs/icon/gplus',
     'inlineSvg!svgs/icon/plus',
     'inlineSvg!svgs/icon/share-twitter',
-    'inlineSvg!svgs/icon/share-email'
+    'inlineSvg!svgs/icon/share-email',
+    'inlineSvg!svgs/icon/share-facebook',
+    'inlineSvg!svgs/icon/share-pinterest'
 ], function (
     _,
     commentCount16icon,
@@ -59,7 +61,9 @@ define([
     gplus,
     plus,
     shareTwitter,
-    shareEmail
+    shareEmail,
+    shareFacebook,
+    sharePinterest
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -88,7 +92,9 @@ define([
         gplus: gplus,
         plus: plus,
         shareTwitter: shareTwitter,
-        shareEmail: shareEmail
+        shareEmail: shareEmail,
+        shareFacebook: shareFacebook,
+        sharePinterest: sharePinterest
     };
 
     return function (name, classes, title) {
