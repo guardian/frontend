@@ -28,20 +28,17 @@ echo "Uploading artifact and build manifest to S3"
 
 set +u
 if [[ -z $BUILD_NUMBER ]]; then
-  BUILD_NUMBER=dev-build
+  BUILD_NUMBER=0
 fi
 if [[ -z $BUILD_VCS_NUMBER ]]; then
   BUILD_VCS_NUMBER=dev-vcs-build
-fi
-if [[ -z $RIFF_RAFF_BUCKET ]]; then
-  RIFF_RAFF_BUCKET=aws-frontend-teamcity
 fi
 if [[ -z $BUILD_VCS_BRANCH ]]; then
   BUILD_VCS_BRANCH=dev-branch
 fi
 set -u
 
-BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
+BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%S.000Z")
 
 sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%start_time%>|$BUILD_START_DATE|" \
