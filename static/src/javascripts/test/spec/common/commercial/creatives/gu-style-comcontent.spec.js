@@ -18,7 +18,7 @@ describe('GU-style Commercial Content', function () {
         expect(GustyleComcontent).toBeDefined();
     });
 
-    it('should be defined', function () {
+    it('can render slot', function () {
         $fixturesContainer = fixtures.render(fixturesConfig);
 
         gustyleComcontent = new GustyleComcontent($('.ad-slot', $fixturesContainer), {});
