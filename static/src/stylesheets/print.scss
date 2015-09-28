@@ -133,7 +133,9 @@ p {
         position: absolute;
         text-align: right !important;
         top: 60px * .75 !important;
+        right: 0;
         margin-top: 10px !important;
+        max-width: 300px !important;
         z-index: 1 !important;
 
         &, & * {
@@ -234,6 +236,11 @@ p {
 
 .crossword__links {
     display: none;
+}
+
+.crossword__instructions {
+    font-size: 13px;
+    text-align: left;
 }
 
 .site-message--crosswords {
