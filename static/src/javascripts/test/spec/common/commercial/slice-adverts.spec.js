@@ -24,10 +24,7 @@ describe('Slice Adverts', function () {
             'common/utils/config',
             'common/utils/detect'
         ], function () {
-            sliceAdverts = arguments[0];
-            commercialFeatures = arguments[1];
-            config = arguments[2];
-            detect = arguments[3];
+            [sliceAdverts, commercialFeatures, config, detect] = arguments;
 
             config.page = {
                 pageId: 'uk/commentisfree'

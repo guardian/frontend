@@ -38,11 +38,7 @@ describe('Most popular', function () {
             'common/utils/mediator',
             'common/utils/detect'
         ], function () {
-            Popular = arguments[0];
-            commercialFeatures = arguments[1];
-            config = arguments[2];
-            mediator = arguments[3];
-            detect = arguments[4];
+            [Popular, commercialFeatures, config, mediator, detect] = arguments;
 
             config.page.section = 'football';
             commercialFeatures.popularContentMPU = true;

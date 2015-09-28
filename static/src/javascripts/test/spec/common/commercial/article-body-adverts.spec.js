@@ -35,11 +35,7 @@ describe('Article Body Adverts', function () {
             'common/modules/article/spacefinder',
             'common/modules/commercial/commercial-features'
         ], function () {
-            articleBodyAdverts = arguments[0];
-            config = arguments[1];
-            detect = arguments[2];
-            spacefinder = arguments[3];
-            commercialFeatures = arguments[4];
+            [articleBodyAdverts, config, detect, spacefinder, commercialFeatures] = arguments;
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             $style = $.create('<style type="text/css"></style>')

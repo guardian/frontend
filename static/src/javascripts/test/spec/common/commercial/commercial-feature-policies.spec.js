@@ -14,12 +14,7 @@ describe('Commercial features', ()=> {
             'common/modules/commercial/user-ad-preference',
             'common/modules/user-prefs'
         ], function () {
-            commercialFeaturePolicies = arguments[0];
-            config = arguments[1];
-            location = arguments[2];
-            userAdPreference = arguments[3];
-            userPrefs = arguments[4];
-
+            [commercialFeaturePolicies, config, location, userAdPreference, userPrefs] = arguments;
             done();
         });
     });
