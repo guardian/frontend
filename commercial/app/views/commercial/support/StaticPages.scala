@@ -1,6 +1,6 @@
 package views.commercial.support
 
-import common.commercial.StaticPage
+import common.StaticPage
 import model.MetaData
 
 object StaticPages {

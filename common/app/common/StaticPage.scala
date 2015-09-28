@@ -1,6 +1,6 @@
-package common.commercial
+package common
 
-import model.GuardianContentTypes.Interactive
+import model.GuardianContentTypes._
 import model.MetaData
 
 trait StaticPage extends MetaData {
