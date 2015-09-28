@@ -90,18 +90,18 @@ object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
   def apply(codeToCompile: String)(implicit application: Application): Html = {
-    if (Switches.InlineJsSwitch.isSwitchedOn) {
-      if (Play.isDev) {
-        Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile))
-      } else {
-        val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-        lazy val compiledCode: String =
-          JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
-
-        Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
-      }
+    if (Play.isDev) {
+      Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile))
     } else {
-      Html(codeToCompile)
+      val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
+
+      lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
+        JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
+      } else {
+        JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile)
+      }
+
+      Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
     }
   }
 }
