@@ -136,6 +136,15 @@
     }
 }
 
+.share-modal__item--email {
+    background-color: colour(social-email);
+    color: #ffffff;
+
+    &:hover {
+        background-color: darken(colour(social-email), 15%);
+    }
+}
+
 .block-share--liveblog-mobile {
     margin-left: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
@@ -172,6 +181,11 @@
     text-align: center;
     position: relative;
     border: 0;
+
+    &.inline-icon__fallback {
+        width: 150px;
+        position: relative;
+    }
 
     .inline-icon {
         position: absolute;

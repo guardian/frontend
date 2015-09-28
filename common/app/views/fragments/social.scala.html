@@ -8,10 +8,7 @@
                 href="@item.href"
                 target="_blank"
                 title="@item.text">
-                <span class="u-h">@item.userMessage</span>
-                <span class="rounded-icon social-icon social-icon--@item.css inline-icon__fallback">
-                    <i class="i-share-@item.css--white i"></i>
-                </span>
+                <span class='@if(item.css.matches("facebook|twitter|email")) {inline-icon__fallback button share-modal__item share-modal__item--@item.css} else { u-h }'>@item.userMessage</span>
                 @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "social-icon", "social-icon--" + item.css))
             </a>
         </li>
