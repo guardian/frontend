@@ -29,7 +29,6 @@ object JsMinifier {
 
     /* Diagnostic checks */
     options.setWarningLevel(DiagnosticGroups.ACCESS_CONTROLS, CheckLevel.WARNING)
-    options.setWarningLevel(DiagnosticGroups.LINT_CHECKS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.DEPRECATED_ANNOTATIONS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.DEBUGGER_STATEMENT_PRESENT, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_REGEXP, CheckLevel.WARNING)
@@ -37,12 +36,12 @@ object JsMinifier {
     options.setWarningLevel(DiagnosticGroups.INVALID_CASTS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_USELESS_CODE, CheckLevel.WARNING)
 
-    /* Disable some check */
-    options.setWarningLevel(DiagnosticGroups.ES3, CheckLevel.OFF)
-
     //Aggressive
     //options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
     //options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)
+
+    options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT6_STRICT)
+    options.setLanguageOut(CompilerOptions.LanguageMode.ECMASCRIPT3)
 
     options
   }
@@ -91,14 +90,18 @@ object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
   def apply(codeToCompile: String)(implicit application: Application): Html = {
-    if (Switches.InlineJsSwitch.isSwitchedOn) {
+    if (Play.isDev) {
+      Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile))
+    } else {
       val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-      lazy val compiledCode: String =
+
+      lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
         JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
+      } else {
+        JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile)
+      }
 
       Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
-    } else {
-      Html(codeToCompile)
     }
   }
 }

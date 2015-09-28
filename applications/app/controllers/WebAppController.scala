@@ -1,11 +1,11 @@
 package controllers
 
-import model.{MetaData, Cached}
 import com.gu.contentapi.client.model.Crossword
-import common.{Logging, Edition, ExecutionContexts}
+import common.{Edition, ExecutionContexts, Logging}
 import conf.LiveContentApi
 import crosswords.CrosswordData
-import play.api.mvc.{RequestHeader, Result, Action, Controller}
+import model.{Cached, MetaData}
+import play.api.mvc.{Action, Controller, RequestHeader, Result}
 
 import scala.concurrent.Future
 
