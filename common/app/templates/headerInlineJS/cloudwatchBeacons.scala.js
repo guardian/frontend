@@ -56,7 +56,6 @@
         }
 
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
-            var platform = navigator.platform;
             var isIphone = navigator.platform === 'iPhone';
 
             // http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
