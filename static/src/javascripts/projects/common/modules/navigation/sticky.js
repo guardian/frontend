@@ -25,7 +25,7 @@ define([
         this.breakpoint = detect.getBreakpoint();
 
         // temporarily disable on mobile
-        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
+        if ((this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) || $('.adfreesurvey-wrapper').length) {
             return;
         }
 
@@ -53,7 +53,7 @@ define([
 
     StickyHeader.prototype.init = function () {
         // temporarily disable on mobile
-        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
+        if ((this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) || $('.adfreesurvey-wrapper').length) {
             return;
         }
 
@@ -86,6 +86,7 @@ define([
 
         // Get the name of the method to run after scroll
         this.updateMethod = this.getUpdateMethod();
+        console.log(this.updateMethod);
 
         // Profile page doesn't need scroll event as it has only slim sticky nav from the beginning
         if (this.isProfilePage) {

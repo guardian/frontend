@@ -20,7 +20,7 @@ define([
             {
                 surveyHeader: 'Advert free experience on the Guardian site and apps',
                 surveyText: 'From <em>£5 a month</em> join exclusive Guardian events, get a quality ad free experience of our site and apps plus support our journalism.',
-                linkText: 'Explore Guardian Members',
+                linkText: 'Join Guardian Members',
                 alreadyMember: 'Already a member?',
                 alreadyMemberLink: '/commercial/ad-free-survey',
                 surveyLink: '/commercial/ad-free-survey',
