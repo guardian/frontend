@@ -11,7 +11,9 @@
         }).replace(/^-/, '');
     }
 
-    function testCssSupport(prop, value) {
+    function testCssSuportForProperty(prop) { return testCssSupportForPropertyAndValue(prop, undefined); }
+
+    function testCssSupportForPropertyAndValue(prop, value) {
         var valueIsDefined = value !== undefined;
         if (valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
             return window.CSS.supports(prop, value);
@@ -20,6 +22,7 @@
                 var elm = document.createElement('test');
                 prop = cssToDOM(prop);
                 if (elm.style[prop] !== undefined) {
+
                     if (valueIsDefined) {
                         var before = elm.style[prop];
                         try {
@@ -49,19 +52,19 @@
         docClass += ' no-svg';
     }
 
-    if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
+    if (testCssSuportForProperty('flex') || testCssSuportForProperty('-ms-flex') || testCssSuportForProperty('-webkit-flex') || testCssSuportForProperty('-moz-box-flex') || testCssSuportForProperty('-webkit-box-flex')) {
         docClass += ' has-flex';
     } else {
         docClass += ' has-no-flex';
     }
 
-    if (testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
+    if (testCssSuportForProperty('flex-wrap') || testCssSuportForProperty('-ms-flex-wrap') || testCssSuportForProperty('-webkit-flex-wrap')) {
         docClass += ' has-flex-wrap';
     } else {
         docClass += ' has-no-flex-wrap';
     }
 
-    if (testCssSupport('position', 'fixed')) {
+    if (testCssSupportForPropertyAndValue('position', 'fixed')) {
         docClass += ' has-fixed';
     }
 
