@@ -177,24 +177,6 @@ category: Common
 .social-icon--pinterest {
     background-color: colour(social-pinterest);
 
-    // The pinterest icon needs to be centered within the span due to its small width/height
-    svg {
-        top: -10px;
-        width: 14px !important;
-        height: 30px !important;
-    }
-    // for pinterest fallback
-    .i {
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 16px !important;
-        height: 20px !important;
-    }
-
     &:hover {
         background-color: darken(colour(social-pinterest), 10%);
     }

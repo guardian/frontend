@@ -85,15 +85,6 @@
     color: colour(social-pinterest);
     .inline-icon {
         fill: colour(social-pinterest);
-        // due to its different size, needs different width and height then other share icons
-        svg {
-            width: 20px;
-            height: 14px;
-            .block-share--article & {
-                position: relative;
-                top: -2px;
-            }
-        }
     }
 
     .block-share--article & {
@@ -112,7 +103,6 @@
 .share-modal__item--facebook {
     background-color: colour(social-facebook);
     color: #ffffff;
-    .i { @include icon(share-facebook--white); }
 
     &:hover {
         background-color: darken(colour(social-facebook), 15%);
@@ -122,7 +112,6 @@
 .share-modal__item--twitter {
     background-color: colour(social-twitter);
     color: #ffffff;
-    .i { @include icon(share-twitter--white); }
 
     &:hover {
         background-color: darken(colour(social-twitter), 15%);
@@ -132,7 +121,6 @@
 .share-modal__item--gplus {
     background-color: colour(social-gplus);
     color: #ffffff;
-    .i { @include icon(share-gplus--white); }
 
     &:hover {
         background-color: darken(colour(social-gplus), 15%);
@@ -142,10 +130,6 @@
 .share-modal__item--pinterest {
     background-color: colour(social-pinterest);
     color: #ffffff;
-    .i {
-        @include icon(share-pinterest--white);
-        margin-left: 6px !important;
-    }
 
     &:hover {
         background-color: darken(colour(social-pinterest), 15%);
