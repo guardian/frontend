@@ -84,7 +84,9 @@ describe('Commercial features', ()=> {
 
     describe('#noads hash policy', ()=> {
         it('hides all features when the page has the #noads hash', ()=> {
-            location.getHash = ()=> {return '#noads';};
+            location.getHash = ()=> {
+                return '#noads';
+            };
             const switches = commercialFeaturePolicies.getPolicySwitches().noadsHash;
             _.forOwn(switches, (featureSwitch)=> {
                 expect(featureSwitch).toBe(false);
@@ -92,7 +94,9 @@ describe('Commercial features', ()=> {
         });
 
         it('applies no changes otherwise', ()=> {
-            location.getHash = ()=> {return ''};
+            location.getHash = ()=> {
+                return '';
+            };
             const switches = commercialFeaturePolicies.getPolicySwitches().noadsHash;
             expect(switches).toBeUndefined();
         });
