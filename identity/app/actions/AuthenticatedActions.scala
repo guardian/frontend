@@ -28,12 +28,7 @@ class AuthenticatedActions @Inject()(authService: AuthenticationService, identit
       case _ => s"$path?returnUrl=$returnUrl"
     }
 
-    SeeOther(identityUrlBuilder.buildUrl(signinUrl))
-  }
-
-  def sendUserToSignin(request: RequestHeader) = {
-    redirectWithReturn(request, "/signin")
-  }
+  def sendUserToSignin(request: RequestHeader) = redirectWithReturn(request, "/signin")
 
   def sendUserToReauthenticate(request: RequestHeader) = redirectWithReturn(request, "/reauthenticate")
 

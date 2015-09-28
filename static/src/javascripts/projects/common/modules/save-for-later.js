@@ -113,7 +113,6 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                console.log("Wowzer dowse");
                 var url = template('<%= idUrl%>/save-content?INTCMP=DOTCOM_ARTICLE_SFL&returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
                     idUrl: config.page.idUrl,
                     returnUrl: encodeURIComponent(document.location.href),
