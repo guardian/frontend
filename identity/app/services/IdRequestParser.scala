@@ -32,7 +32,7 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
       shortUrl = request.getQueryString("shortUrl"),
       articleId = request.getQueryString("articleId"),
       page = request.getQueryString("page").map(_.toInt),
-      platform = request.getQueryString("platform")
+      platform = request.getQueryString("platform"),
       campaignCode = request.getQueryString("INTCMP")
     )
   }
