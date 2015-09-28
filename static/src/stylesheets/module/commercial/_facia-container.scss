@@ -3,23 +3,6 @@
    ========================================================================== */
 .commercial {
     background-color: colour(neutral-6);
-
-    .button--tertiary {
-
-        .i-arrow-black {
-            path { fill: #000000; }
-        }
-        .i-arrow-black-right,
-        .i-arrow-black {
-            opacity: .3;
-        }
-        &:hover {
-            .i-arrow-black-right,
-            .i-arrow-black {
-                opacity: 1;
-            }
-        }
-    }
 }
 .commercial__inner {
     position: relative;
