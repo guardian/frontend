@@ -62,6 +62,6 @@
     }
 
     .inline-icon__fallback {
-        display: initial;
+        display: block !important;
     }
 }
