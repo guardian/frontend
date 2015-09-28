@@ -337,6 +337,12 @@
     @include fc-item--list-compact--media;
 }
 
+.omitted-mpus .l-row--cols-3 .l-row__item--span-1 .fc-item__avatar__media {
+    @include mq(tablet) {
+        right: -5%;
+    }
+}
+
 //Live blog items
 .fc-slice--single-col {
 

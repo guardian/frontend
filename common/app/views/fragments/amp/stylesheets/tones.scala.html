@@ -3,6 +3,11 @@
     padding-top: 0.375rem;
 }
 
+.tonal__standfirst p {
+    line-height: 1.3rem;
+    margin-top: 0;
+}
+
 .tonal--tone-comment .content__standfirst,
 .tonal--tone-feature .content__standfirst,
 .tonal--tone-review .content__standfirst,
@@ -20,8 +25,16 @@
     background-color: #e6711b;
 }
 
-.tonal--tone-feature .tonal__standfirst {
+.tonal--tone-feature .tonal__header {
     background-color: #951c55;
+}
+
+.tonal--tone-feature .tonal__standfirst {
+    background-color: #b82266;
+}
+
+.tonal__head--tone-review .tonal__header {
+    background-color: #615b52;
 }
 
 .tonal--tone-review .tonal__standfirst {
@@ -53,19 +66,86 @@
     color: #005689;
 }
 
+.tonal--tone-news .tonal__standfirst {
+    padding-top: 0;
+}
+
+.tonal--tone-comment .tonal__header,
+.tonal--tone-editorial .tonal__header {
+    background-color: #efefec;
+}
+
+.tonal--tone-comment .tonal__header .content__labels {
+    border-bottom-color: rgba(118,118,118,0.3);
+}
+
+.content__headline--byline {
+    display: block;
+    padding-top: 0;
+    margin-top: -1.5rem;
+    padding-bottom: 1.5rem;
+}
+
 .tonal--tone-comment .tonal__header .content__section-label__link,
 .tonal--tone-comment .tone-colour {
     color: #e6711b;
 }
 
-.tonal--tone-feature .tonal__header .content__section-label__link,
 .tonal--tone-feature .tone-colour {
     color: #951c55;
 }
 
-.tonal--tone-review .tonal__header .content__section-label__link,
+.tonal--tone-feature .tonal__header .content__labels {
+    border-bottom-color: rgba(234,234,234,0.3);
+}
+
+.tonal--tone-feature .tonal__header .content__section-label__link {
+    color: #fdadba;
+}
+
+.tonal--tone-feature .tonal__standfirst .bullet:before, 
+.tonal--tone-feature .tonal__standfirst ul>li:before {
+    background-color: rgba(255,255,255,0.4);
+}
+
 .tonal--tone-review .tone-colour {
     color: #7d7569;
+}
+
+.tonal--tone-review .tonal__header .content__section-label__link {
+    color: #ffce4b;
+}
+
+.u-h {
+    display: none;
+}
+
+.tonal--tone-review .stars {
+    margin-top: -1.125rem;
+    margin-bottom: 1.125rem;
+}
+
+.tonal--tone-review .stars .star__item--golden {
+    fill: #ffce4b;
+}
+
+.tonal--tone-review .stars .star__item--grey {
+    fill: #000000;
+    opacity: .15;
+}
+
+.tonal--tone-review .tonal__header .content__labels {
+    border-bottom-color: rgba(234,234,234,0.3);
+}
+
+.tonal--tone-review .tonal__header .content__headline,
+.tonal--tone-feature .tonal__header .content__headline {
+    color: #fff;
+}
+
+.tonal--tone-review .tonal__header .content__series-label__link,
+.tonal--tone-feature .tonal__header .content__series-label__link {
+    color: #eaeaea;
 }
 
 .tonal--tone-editorial .tonal__header .content__section-label__link,

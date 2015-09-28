@@ -12,15 +12,16 @@ define([
     mediator
 ) {
 
-    var Toggles = function () {
+    var Toggles = function (parent) {
 
         var self = this,
             controls,
             doNotReset = ['popup--search'],
-            readyClass = 'js-toggle-ready';
+            readyClass = 'js-toggle-ready',
+            component  = parent || document.body;
 
         this.init = function () {
-            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
+            controls = Array.prototype.slice.call(component.querySelectorAll('[data-toggle]'));
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {

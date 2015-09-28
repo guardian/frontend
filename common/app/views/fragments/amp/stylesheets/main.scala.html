@@ -25,12 +25,21 @@
         font-size: 1rem;
         line-height: 1.35rem;
         font-weight: 300;
+        margin: 12px 0px;
+    }
+
+    figcaption {
+        margin: 0px;
     }
 
     .from-content-api h2, .from-content-api .block-elements h2 {
         font-size: 1.125rem;
         line-height: 1.5rem;
         font-weight: 900;
+    }
+
+    .meta__contact-header {
+        display: none;
     }
 
     .content__head .gs-container, .content__article-body, .caption, .content__meta-container, .media-primary .caption--main {
@@ -54,7 +63,6 @@
         border-bottom: 0.0625rem dotted #dfdfdf;
         position: relative;
         z-index: 1;
-        overflow: hidden;
     }
 
     .content__headline {
@@ -62,9 +70,20 @@
         font-size: 1.75rem;
         font-weight: 400;
         line-height: 2rem;
+        letter-spacing: -.02rem;
         padding-top: 0.125rem;
         padding-bottom: 1.5rem;
         margin: 0;
+    }
+
+    @@media (min-width: 30rem) {
+    .content__head .gs-container, .content__article-body, .caption, .content__meta-container, .media-primary .caption--main {
+        margin: 0 20px;
+        }
+    .content__headline {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        }
     }
 
     .content__standfirst {
@@ -78,10 +97,12 @@
         height: 1.3125rem;
         display: inline-block;
         vertical-align: top;
+        font-size: 0.75rem;
+        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     }
 
     .inline-twitter-bird {
-        margin-left: -0.3rem;
+        margin: 0 -6px 0 -0.3rem;
     }
 
     .byline {
@@ -110,16 +131,16 @@
     }
 
     @* temporarily hiding these for demo *@
-    .inline-expand-image, .meta__extras, .submeta, .content-footer, .content__dateline-lm , .block-share, .witness-cta-wrapper {
+    .inline-expand-image, .meta__extras, .submeta, .content__dateline-lm , .block-share, .witness-cta-wrapper {
         display: none;
     }
 
     .caption {
-        padding: 0.25rem 0 1rem;
+        padding: 0.5rem 0 1.5rem 0;
     }
 
     .content__dateline {
-        padding: 0.125rem 0 0.375rem;
+        padding: 0.125rem 0 0.5rem;
         margin: 0;
     }
 
@@ -146,7 +167,7 @@
 
     .logo-wrapper {
         float: right;
-        margin: 0.1875rem 0.625rem 0.75rem 0;
+        margin: 0.1875rem 0.625rem 0.34rem 0;
     }
 
     @* Bullet Points related styling below *@

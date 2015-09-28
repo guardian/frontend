@@ -22,3 +22,5 @@ set -x
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
+
+

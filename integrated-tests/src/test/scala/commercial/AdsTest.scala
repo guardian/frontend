@@ -11,6 +11,8 @@ class AdsTest
   with BeforeAndAfterAll
   with SharedWebDriver {
 
+  override protected def beforeAll(): Unit = implicitlyWait(60)
+
   private def findComponent(path: String, selector: String): WebElement = {
     get(path, ads = true)
     first(selector)
@@ -27,7 +29,6 @@ class AdsTest
   }
 
   "Ads" should "display on the sport front" in {
-    implicitlyWait(20)
     get("/uk/sport", ads = true)
     shouldBeVisible(first("#dfp-ad--top-above-nav > *"))
   }

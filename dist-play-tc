@@ -10,47 +10,6 @@ set +x
 echo "##teamcity[progressStart 'sbt test and dist']"
 set -x
 
-./sbt-tc "project root" compile test assets dist
-
-set +x
-echo "##teamcity[progressFinish 'sbt test and dist']"
-
-echo "##teamcity[progressStart 'zipping and publishing']"
-set -x
-
-rm -rf "dist"
-
-configurations="admin applications archive article commercial diagnostics discussion "\
-"facia facia-tool facia-press identity image onward preview training-preview router sport rss"
-
-for config in $configurations
-do
-    echo "Dist for $config"
-
-    # Generate folder for the application zip.
-    app_folder="dist/$config"
-
-    mkdir -p "$app_folder/packages/frontend-static"
-    mkdir -p "$app_folder/packages/$config"
-
-    mv "$config/target/universal/$config-0.1-SNAPSHOT.zip"  "$app_folder/packages/$config/$config.zip"
-    cp "$config/conf/deploy.json"                           "$app_folder"
-    cp -r static/hash/*                                     "$app_folder/packages/frontend-static"
-    cp static/abtests.json                                  "$app_folder/packages/frontend-abtests"
-
-    pushd $app_folder
-    zip -r "../$config.zip" .
-    popd
-
-    rm -rf $app_folder
-
-    set +o xtrace
-    echo "##teamcity[publishArtifacts 'dist/$config.zip']"
-    set -o xtrace
-done
-
-set +x
-echo "##teamcity[progressFinish 'zipping and publishing']"
-set -x
+./sbt-tc "project root" compile assets test riffRaffArtifact
 
 echo "Done disting."

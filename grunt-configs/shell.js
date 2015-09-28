@@ -24,19 +24,6 @@ module.exports = function(grunt, options) {
                      'static/abtests.json'
         },
 
-        npmInstallFaciaTool: {
-            command: 'cd facia-tool/public && npm prune && npm install'
-        },
-
-        jspmInstallFaciaTool: {
-            command: './node_modules/.bin/jspm install',
-            options: {
-                execOptions: {
-                    cwd: 'facia-tool/public'
-                }
-            }
-        },
-
         npmInstall: {
             command: 'npm prune && npm install'
         },

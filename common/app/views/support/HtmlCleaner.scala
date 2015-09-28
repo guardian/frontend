@@ -194,13 +194,16 @@ case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: Request
     if (isLiveBlog) {
       body.select(".block").foreach { el =>
         val id = el.id()
+        val blockElements = el.select(".block-elements")
+        val noByline = el.attributes().get("data-block-contributor").isEmpty
         el.attr("itemprop", "liveBlogUpdate")
         el.attr("itemscope", "")
         el.attr("itemtype", "http://schema.org/BlogPosting")
         el.select(".block-time.published-time time").foreach { time =>
           time.attr("itemprop", "datePublished")
         }
-        el.select(".block-elements").foreach { body =>
+        if (noByline) blockElements.addClass("block-elements--no-byline")
+        blockElements.foreach { body =>
           body.attr("itemprop", "articleBody")
         }
       }
@@ -217,7 +220,7 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
         if (contributorId.nonEmpty) {
           article.tags.find(_.id == contributorId).map{ contributorTag =>
             val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-            el.getElementsByClass("block-elements").headOption.foreach(_.prepend(html.toString()))
+            el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
           }
         }
       }
