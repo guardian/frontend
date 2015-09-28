@@ -19,6 +19,7 @@ define([
             : config.page.discussionApiRoot,
         Api = {
             root: root,
+            // TODO get rid of discussion proxy completely when we're changed over to https
             proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
             clientHeader: config.page.discussionApiClientHeader
         };
@@ -30,7 +31,7 @@ define([
      * @return {Reqwest} a promise
      */
     Api.send = function (endpoint, method, data) {
-        var root = (method === 'post') ? Api.proxyRoot : Api.root;
+        var root = (method === 'post' && document.location.protocol === 'http:') ? Api.proxyRoot : Api.root;
         data = data || {};
         if (cookies.get('GU_U')) {
             data.GU_U = cookies.get('GU_U');
@@ -69,7 +70,7 @@ define([
      */
     Api.previewComment = function (comment) {
         var endpoint = '/comment/preview';
-        return Api.send(endpoint, 'post', comment, true);
+        return Api.send(endpoint, 'post', comment);
     };
 
     /**
@@ -107,7 +108,7 @@ define([
      */
     Api.reportComment = function (id, report) {
         var endpoint = '/comment/' + id + '/reportAbuse';
-        return Api.send(endpoint, 'post', report, true);
+        return Api.send(endpoint, 'post', report);
     };
 
     /**

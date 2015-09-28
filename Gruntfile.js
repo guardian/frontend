@@ -11,6 +11,7 @@ module.exports = function (grunt) {
         isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
+        staticSrcDir:    './static/src/',
         staticHashDir:   './static/hash/',
         testConfDir:     './static/test/javascripts/conf/',
         requirejsDir:    './static/requirejs',
@@ -116,7 +117,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'compile:css',
         'compile:js',
@@ -127,8 +128,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool', 'uglify:conf']);
-    grunt.registerTask('install:npm', ['shell:npmInstall', 'shell:npmInstallFaciaTool']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'uglify:conf']);
+    grunt.registerTask('install:npm', ['shell:npmInstall']);
 
     grunt.registerTask('prepare', function() {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');

@@ -9,9 +9,6 @@ module.exports = function(grunt, options) {
             reportSlowerThan: 1000,
             colors: !!options.isDev
         },
-        // 'facia-tool': {
-        //     configFile: 'facia-tool/test/public/conf/karma.conf.js'
-        // },
         'project': {
             configFile: 'static/src/javascripts/test/conf/settings.js'
         }

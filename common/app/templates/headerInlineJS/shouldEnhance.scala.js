@@ -4,7 +4,8 @@
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement
     var personPrefersCore = function () {
-        if (window.location.hash === '#core') return true;
+        if (window.location.hash === '#core' || window.location.hash === 'gu.prefs.force-core=on') return true;
+        if (window.location.hash === '#nocore' || window.location.hash === 'gu.prefs.force-core=off') return false;
         try {
             var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
             return /"value":"on"/.test(preference);
@@ -31,7 +32,7 @@
         return false;
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderDevice();
+    window.shouldEnhance = !personPrefersCore() && !isOlderDevice() && !(@item.isFront && window.serveCoreFronts);
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 

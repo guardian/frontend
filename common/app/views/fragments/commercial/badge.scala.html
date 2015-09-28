@@ -33,7 +33,9 @@
                 Map("mobile" -> Seq("1,1", s"$adSlotWidth,90")),
                 showLabel = false,
                 refresh = false,
-                forceDisplay = content.sponsor.nonEmpty
+                forceDisplay = content.sponsor.nonEmpty,
+                contentSponsor = content.sponsor,
+                paidForContentType = content.sponsorshipType
             ) {
                 @content.sponsor.map { sponsor =>
                     <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">

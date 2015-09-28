@@ -105,6 +105,16 @@ object Switches {
   lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val InlineJsSwitch = Switch(
+    "Performance",
+    "inline-js",
+    "If this switch is on, InlineJs object will use the closure compiler",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+
   val LazyLoadContainersSwitch = Switch(
     "Performance",
     "lazy-load-containers",
@@ -311,6 +321,15 @@ object Switches {
     "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
+  val ServeCoreFrontsToSomeIpadsSwitch = Switch(
+    "Performance",
+    "ipad-core-fronts",
+    "Serve core fronts to a random percentage of crash-prone ipad users",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 31),
     exposeClientSide = true
   )
 
@@ -552,7 +571,7 @@ object Switches {
   val AdFreeExperience = Switch(
     "Commercial",
     "advert-opt-out",
-    "Display advert free experience",
+    "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 9),
     exposeClientSide = true
@@ -621,6 +640,15 @@ object Switches {
     "Discussion optional relative timestamp in the crossword section",
     safeState = Off,
     sellByDate = new LocalDate(2015, 9, 28),
+    exposeClientSide = true
+  )
+
+  val OfflinePageSwitch = Switch(
+    "Feature",
+    "offline-page",
+    "Offline page",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
@@ -849,6 +877,15 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = false
+  )
+
+  val RugbyWorldCupTablesSwitch = Switch(
+    "Feature",
+    "rugby-world-cup-tables",
+    "If this switch is on rugby world cup tables will be loaded in to rugby match reports and liveblogs",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
   )
 
   val WeatherSwitch = Switch(
@@ -1116,31 +1153,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val FaciaDynamoArchive = Switch(
-    "Facia",
-    "facia-tool-dynamo-archive",
-    "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
-      "check the DB size.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = false
-  )
-
   val FaciaPressOnDemand = Switch(
     "Facia",
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FaciaToolPutPrivate = Switch(
-    "Facia",
-    "facia-tool-put-private",
-    "If this is switched on, facia tool will put collections to S3 as private",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

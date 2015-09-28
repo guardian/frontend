@@ -60,8 +60,8 @@ developer.properties
 static/hash
 static/requirejs
 static/target
+static/riffraff
 
-static/src/systemjs-bundle-config.js
 static/src/stylesheets/icons/*
 
 # Eclipse #

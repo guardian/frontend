@@ -1,5 +1,0 @@
-name: fronts
-mappings:
-  - prefix: fronts
-    port: 9000
-    path: /

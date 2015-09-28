@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2001-2015 Opta Sportsdata Ltd. All rights reserved. -->
+
+<!-- PRODUCTION HEADER
+     produced on:        valde-jobq-a03.nexus.opta.net
+     production time:    20150915T093008,125Z
+     production module:  Opta::Feed::XML::RugbyUnion::RU2
+-->
+<table datetime="20150915103007">
+  <comp id="210" long_name="Rugby World Cup" name="Rugby World Cup" round="0" season_id="2016" short_name="">
+    <group name="Pool A">
+      <team id="954" against="0" bonus="0" drawn="1" for="0" home_group="10" losingbonus="0" lost="0" name="Fiji" name_home_group="Pool A" played="2" points="4" pointsdiff="75" rank="1" triesagainst="0" triesbonus="0" triesfor="0" won="1" />
+      <team id="500" against="0" bonus="0" drawn="0" for="0" home_group="10" losingbonus="0" lost="1" name="Wales" name_home_group="Pool A" played="1" points="0" pointsdiff="-25" rank="2" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="100" against="0" bonus="0" drawn="0" for="0" home_group="10" losingbonus="0" lost="0" name="Australia" name_home_group="Pool A" played="0" points="0" pointsdiff="0" rank="3" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="2800" against="0" bonus="0" drawn="0" for="0" losingbonus="0" lost="0" name="Uruguay" played="0" points="0" pointsdiff="0" rank="4" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="550" against="0" bonus="0" drawn="0" for="0" home_group="10" losingbonus="0" lost="0" name="England" name_home_group="Pool A" played="0" points="0" pointsdiff="0" rank="5" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+    </group>
+    <group name="Pool B">
+      <team id="950" against="0" bonus="0" drawn="0" for="0" home_group="11" losingbonus="0" lost="0" name="Samoa" name_home_group="Pool B" played="0" points="0" pointsdiff="0" rank="1" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="900" against="0" bonus="0" drawn="0" for="0" home_group="11" losingbonus="0" lost="0" name="South Africa" name_home_group="Pool B" played="0" points="0" pointsdiff="0" rank="2" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="2950" against="0" bonus="0" drawn="0" for="0" home_group="11" losingbonus="0" lost="0" name="USA" name_home_group="Pool B" played="0" points="0" pointsdiff="0" rank="3" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="3000" against="0" bonus="0" drawn="0" for="0" losingbonus="0" lost="0" name="Japan" played="0" points="0" pointsdiff="0" rank="4" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="700" against="0" bonus="0" drawn="0" for="0" home_group="11" losingbonus="0" lost="0" name="Scotland" name_home_group="Pool B" played="0" points="0" pointsdiff="0" rank="5" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+    </group>
+    <group name="Pool C">
+      <team id="850" against="0" bonus="0" drawn="0" for="0" home_group="12" losingbonus="0" lost="0" name="New Zealand" name_home_group="Pool C" played="0" points="0" pointsdiff="0" rank="1" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="2900" against="0" bonus="0" drawn="0" for="0" home_group="12" losingbonus="0" lost="0" name="Namibia" name_home_group="Pool C" played="0" points="0" pointsdiff="0" rank="2" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="750" against="0" bonus="0" drawn="0" for="0" home_group="12" losingbonus="0" lost="0" name="Tonga" name_home_group="Pool C" played="0" points="0" pointsdiff="0" rank="3" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="800" against="0" bonus="0" drawn="0" for="0" home_group="12" losingbonus="0" lost="0" name="Argentina" name_home_group="Pool C" played="0" points="0" pointsdiff="0" rank="4" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="2850" against="0" bonus="0" drawn="0" for="0" losingbonus="0" lost="0" name="Georgia" played="0" points="0" pointsdiff="0" rank="5" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+    </group>
+    <group name="Pool D">
+      <team id="650" against="0" bonus="0" drawn="0" for="0" home_group="18" losingbonus="0" lost="0" name="France" name_home_group="Pool D" played="0" points="0" pointsdiff="0" rank="1" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="953" against="0" bonus="0" drawn="0" for="0" home_group="18" losingbonus="0" lost="0" name="Canada" name_home_group="Pool D" played="0" points="0" pointsdiff="0" rank="2" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="951" against="0" bonus="0" drawn="0" for="0" losingbonus="0" lost="0" name="Romania" played="0" points="0" pointsdiff="0" rank="3" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="952" against="0" bonus="0" drawn="0" for="0" home_group="18" losingbonus="0" lost="0" name="Italy" name_home_group="Pool D" played="0" points="0" pointsdiff="0" rank="4" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+      <team id="600" against="0" bonus="0" drawn="0" for="0" home_group="18" losingbonus="0" lost="0" name="Ireland" name_home_group="Pool D" played="0" points="0" pointsdiff="0" rank="5" triesagainst="0" triesbonus="0" triesfor="0" won="0" />
+    </group>
+  </comp>
+</table>
