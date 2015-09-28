@@ -28,7 +28,7 @@ echo "Uploading artifact and build manifest to S3"
 
 set +u
 if [[ -z $BUILD_NUMBER ]]; then
-  BUILD_NUMBER=dev-build
+  BUILD_NUMBER=0
 fi
 if [[ -z $BUILD_VCS_NUMBER ]]; then
   BUILD_VCS_NUMBER=dev-vcs-build
@@ -44,7 +44,7 @@ if [[ -z $BUILD_VCS_BRANCH ]]; then
 fi
 set -u
 
-BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
+BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%S.000Z")
 
 sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%start_time%>|$BUILD_START_DATE|" \
@@ -52,8 +52,8 @@ sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%branch%>|$BUILD_VCS_BRANCH|" \
     static/build-template.json | tee $static_folder/build.json
 
-aws s3 cp $static_folder/build.json     s3://$RIFF_RAFF_BUILD_BUCKET/dotcom:static/$BUILD_NUMBER/build.json    --region=eu-west-1
-aws s3 cp $static_folder/artifacts.zip  s3://$RIFF_RAFF_ARTIFACT_BUCKET/dotcom:static/$BUILD_NUMBER/artifacts.zip --region=eu-west-1
+aws s3api put-object --acl bucket-owner-full-control --region=eu-west-1 --bucket $RIFF_RAFF_BUILD_BUCKET --key dotcom:static/$BUILD_NUMBER/build.json  --body $static_folder/build.json
+aws s3api put-object --acl bucket-owner-full-control --region=eu-west-1 --bucket $RIFF_RAFF_ARTIFACT_BUCKET --key dotcom:static/$BUILD_NUMBER/artifacts.zip --body $static_folder/artifacts.zip
 
 set +o xtrace
 echo "##teamcity[publishArtifacts '$static_folder/artifacts.zip => static']"

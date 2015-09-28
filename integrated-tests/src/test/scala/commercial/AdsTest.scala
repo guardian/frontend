@@ -11,7 +11,7 @@ class AdsTest
   with BeforeAndAfterAll
   with SharedWebDriver {
 
-  override protected def beforeAll(): Unit = implicitlyWait(30)
+  override protected def beforeAll(): Unit = implicitlyWait(60)
 
   private def findComponent(path: String, selector: String): WebElement = {
     get(path, ads = true)

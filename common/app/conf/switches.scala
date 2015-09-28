@@ -951,15 +951,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val SyndicationReprintEnabledSwitch = Switch (
-    "Feature",
-    "syndication-reprint-enabled",
-    "Toggle on/off the syndication button on all pages (for desktop or above only)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
