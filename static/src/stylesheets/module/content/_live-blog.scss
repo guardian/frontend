@@ -374,7 +374,7 @@ $block-padding-right: $gs-gutter;
             }
         }
 
-        &.block-elements--no-byline > .element-image:first-child,
+        &.block-elements--no-byline > .element-image:first-child:not(.element--thumbnail),
         &.block-elements--no-byline > .element-video:first-child {
             @include mq(tablet) {
                 margin-top: 55px; // Extra margin top to position media below block-time
