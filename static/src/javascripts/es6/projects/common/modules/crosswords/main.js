@@ -640,6 +640,12 @@ export default function () {
 
             const entryId = window.location.hash.replace('#', '');
             crosswordComponent.focusClueByEntryId({ entryId });
+
+            window.addEventListener('hashchange', hashEvent => {
+                const idMatch = hashEvent.newURL.match(/#.*/);
+                const newEntryId = idMatch && idMatch[0].replace('#', '');
+                crosswordComponent.focusClueByEntryId({ entryId: newEntryId });
+            });
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
