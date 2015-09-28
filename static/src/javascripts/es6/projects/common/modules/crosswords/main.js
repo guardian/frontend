@@ -359,7 +359,7 @@ class Crossword extends React.Component {
     }
 
     focusClueByEntryId ({ entryId }) {
-        const entry = _.find(this.props.data.entries, { entryId });
+        const entry = _.find(this.props.data.entries, { id: entryId });
         if (entry) {
             this.focusClue(entry.position.x, entry.position.y, entry.direction);
         }
