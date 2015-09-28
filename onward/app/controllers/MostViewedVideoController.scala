@@ -2,7 +2,7 @@ package controllers
 
 import common.{JsonComponent, Logging, ExecutionContexts}
 import feed.MostViewedVideoAgent
-import model.Cached
+import model.{NoCache, Cached}
 import play.api.mvc.{ Controller, Action }
 
 object MostViewedVideoController extends Controller with Logging with ExecutionContexts {
@@ -12,10 +12,14 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
     val size = request.getQueryString("size").getOrElse("6").toInt
     val videos = MostViewedVideoAgent.mostViewedVideo().take(size)
 
-    Cached(900) {
-      JsonComponent(
-        "html" -> views.html.fragments.mostViewedVideo(videos)
-      )
+    if (videos.nonEmpty) {
+      Cached(900) {
+        JsonComponent(
+          "html" -> views.html.fragments.mostViewedVideo(videos)
+        )
+      }
+    } else {
+      NoCache(JsonComponent("html" -> "{}"))
     }
   }
 }
