@@ -108,7 +108,7 @@ object Switches {
   val MinifyInlineJsSwitch = Switch(
     "Performance",
     "minify-inline-js",
-    "If this switch is on, InlineJs objects will be minified by closure compiler",
+    "If this switch is on, InlineJs output will be minified by closure compiler",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
