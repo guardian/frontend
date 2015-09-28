@@ -189,13 +189,17 @@
     position: relative;
     border: 0;
 
-    .i {
-        float: left;
+    .inline-icon {
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto 0;
         left: 5px;
+        svg {
+            width: 33px;
+            height: 33px;
+            vertical-align: middle;
+        }
     }
 }
 

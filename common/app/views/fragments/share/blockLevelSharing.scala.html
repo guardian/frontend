@@ -22,7 +22,8 @@
             @shareItems.map { item: model.ShareLink =>
                 <a class="share-modal__link" href="@item.href" target="_blank" data-link-name="social @item.css">
                     <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">
-                        <i class="i"></i>@item.text
+                        @fragments.inlineSvg("share-" + item.css, "icon")
+                        @item.text
                     </div>
                 </a>
             }
