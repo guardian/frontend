@@ -216,6 +216,15 @@
             }
         }
     }
+
+    .is-not-modern & {
+        &:hover,
+        &:focus {
+            .top-bar__popup--more {
+                display: block;
+            }
+        }
+    }
 }
 
 // Popups
