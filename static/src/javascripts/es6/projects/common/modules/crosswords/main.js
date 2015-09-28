@@ -358,6 +358,13 @@ class Crossword extends React.Component {
         }
     }
 
+    focusClueByEntryId ({ entryId }) {
+        const entry = _.find(this.props.data.entries, { entryId });
+        if (entry) {
+            this.focusClue(entry.position.x, entry.position.y, entry.direction);
+        }
+    }
+
     focusCurrentCell () {
         this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
     }
@@ -629,7 +636,10 @@ export default function () {
     $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
-            React.render(<Crossword data={crosswordData} />, element);
+            const crosswordComponent = React.render(<Crossword data={crosswordData} />, element);
+
+            const entryId = window.location.hash.replace('#', '');
+            crosswordComponent.focusClueByEntryId({ entryId });
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
