@@ -54,7 +54,9 @@ define([
     };
 
     policies.identityPages = function () {
-        if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
+        if (config.page.contentType === 'Identity' ||
+            config.page.section === 'identity' // needed for pages under the profile subdomain
+        ) {
             return {thirdPartyTags : false};
         }
     };
