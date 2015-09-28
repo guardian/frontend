@@ -95,7 +95,7 @@ object InlineJs {
     } else {
       val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
 
-      lazy val compiledCode = if (Switches.InlineJsSwitch.isSwitchedOn) {
+      lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
         JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
       } else {
         JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile)
