@@ -648,7 +648,7 @@ object Switches {
     "offline-page",
     "Offline page",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 10, 16),
     exposeClientSide = true
   )
 
