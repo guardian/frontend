@@ -23,10 +23,17 @@ class AuthenticatedActions @Inject()(authService: AuthenticationService, identit
 
   def redirectWithReturn(request: RequestHeader, path: String) = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
-    SeeOther(identityUrlBuilder.buildUrl(s"$path?returnUrl=$returnUrl"))
+    val signinUrl = request.getQueryString("INTCMP") match {
+      case Some(campaignCode) => s"$path?INTCMP=$campaignCode&returnUrl=$returnUrl"
+      case _ => s"$path?returnUrl=$returnUrl"
+    }
+
+    SeeOther(identityUrlBuilder.buildUrl(signinUrl))
   }
 
-  def sendUserToSignin(request: RequestHeader) = redirectWithReturn(request, "/signin")
+  def sendUserToSignin(request: RequestHeader) = {
+    redirectWithReturn(request, "/signin")
+  }
 
   def sendUserToReauthenticate(request: RequestHeader) = redirectWithReturn(request, "/reauthenticate")
 
