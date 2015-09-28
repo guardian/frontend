@@ -33,7 +33,13 @@ define([
     'inlineSvg!svgs/icon/share-email',
     'inlineSvg!svgs/icon/share-facebook',
     'inlineSvg!svgs/icon/share-pinterest',
-    'inlineSvg!svgs/icon/external-link'
+    'inlineSvg!svgs/icon/external-link',
+    'inlineSvg!svgs/logo/membership-logo',
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon',
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon-simple',
+    'inlineSvg!svgs/commercial/survey-overlay',
+    'inlineSvg!svgs/commercial/survey-overlay-simple',
+    'inlineSvg!svgs/commercial/survey-new'
 ], function (
     _,
     commentCount16icon,
@@ -65,7 +71,13 @@ define([
     shareEmail,
     shareFacebook,
     sharePinterest,
-    externalLink
+    externalLink,
+    membershipLogo,
+    thrasherBenefit,
+    thrasherBenefitSimple,
+    surveyOverlay,
+    surveyOverlaySimple,
+    surveyNew
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -97,7 +109,13 @@ define([
         shareEmail: shareEmail,
         shareFacebook: shareFacebook,
         sharePinterest: sharePinterest,
-        externalLink: externalLink
+        externalLink: externalLink,
+        membershipLogo: membershipLogo,
+        surveyOverlay: surveyOverlay,
+        surveyOverlaySimple: surveyOverlaySimple,
+        surveyNew: surveyNew,
+        thrasherBenefit: thrasherBenefit,
+        thrasherBenefitSimple: thrasherBenefitSimple
     };
 
     return function (name, classes, title) {

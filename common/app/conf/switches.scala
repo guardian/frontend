@@ -980,6 +980,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABDisableAdsSurvey = Switch(
+    "A/B Tests",
+    "ab-disable-ads-survey",
+    "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 15),
+    exposeClientSide = true
+  )
+
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
