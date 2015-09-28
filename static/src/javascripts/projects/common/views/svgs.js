@@ -32,7 +32,8 @@ define([
     'inlineSvg!svgs/icon/share-twitter',
     'inlineSvg!svgs/icon/share-email',
     'inlineSvg!svgs/icon/share-facebook',
-    'inlineSvg!svgs/icon/share-pinterest'
+    'inlineSvg!svgs/icon/share-pinterest',
+    'inlineSvg!svgs/icon/external-link'
 ], function (
     _,
     commentCount16icon,
@@ -63,7 +64,8 @@ define([
     shareTwitter,
     shareEmail,
     shareFacebook,
-    sharePinterest
+    sharePinterest,
+    externalLink
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -94,7 +96,8 @@ define([
         shareTwitter: shareTwitter,
         shareEmail: shareEmail,
         shareFacebook: shareFacebook,
-        sharePinterest: sharePinterest
+        sharePinterest: sharePinterest,
+        externalLink: externalLink
     };
 
     return function (name, classes, title) {

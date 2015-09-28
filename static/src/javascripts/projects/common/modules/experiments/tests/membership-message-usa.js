@@ -24,7 +24,7 @@ define([
 
         this.id = 'MembershipMessageUsa';
         this.start = '2015-08-05';
-        this.expiry = '2015-09-21';
+        this.expiry = '2015-11-18';
         this.author = 'David Rapson';
         this.description = 'Test if loyal visitors in the US edition are encouraged to join Membership as a Supporter';
         this.audience = 1;

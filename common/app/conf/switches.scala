@@ -105,10 +105,10 @@ object Switches {
   lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
-  val InlineJsSwitch = Switch(
+  val MinifyInlineJsSwitch = Switch(
     "Performance",
-    "inline-js",
-    "If this switch is on, InlineJs object will use the closure compiler",
+    "minify-inline-js",
+    "If this switch is on, InlineJs output will be minified by closure compiler",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -951,15 +951,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val SyndicationReprintEnabledSwitch = Switch (
-    "Feature",
-    "syndication-reprint-enabled",
-    "Toggle on/off the syndication button on all pages (for desktop or above only)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
@@ -976,7 +967,7 @@ object Switches {
     "ab-membership-message-uk",
     "Switch for the UK Membership message A/B variants test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 21),
+    sellByDate = new LocalDate(2015, 11, 18),
     exposeClientSide = true
   )
 
@@ -985,7 +976,7 @@ object Switches {
     "ab-membership-message-usa",
     "Switch for the USA Supporter message test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 21),
+    sellByDate = new LocalDate(2015, 11, 18),
     exposeClientSide = true
   )
 

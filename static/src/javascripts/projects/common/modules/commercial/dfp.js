@@ -4,6 +4,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
+    'Promise',
     'raven',
     'common/utils/$',
     'common/utils/$css',
@@ -26,6 +27,7 @@ define([
     bonzo,
     fastdom,
     qwery,
+    Promise,
     raven,
     $,
     $css,
@@ -404,30 +406,36 @@ define([
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
                 });
-                checkForBreakout($slot);
-                addLabel($slot);
-                size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, $slot);
-                }
 
-                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'flex');
-                    });
-                } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'block');
-                    });
-                }
+                // Check if creative is a new gu style creative and place labels accordingly
+                checkForBreakout($slot).then(function (adType) {
+                    if (!adType || adType.type !== 'gu-style') {
+                        addLabel($slot);
+                    }
 
-                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    fastdom.write(function () {
-                        $slot.addClass('ad-slot__fluid250');
-                    });
-                }
+                    size = event.size.join(',');
+                    // is there a callback for this size
+                    if (callbacks[size]) {
+                        callbacks[size](event, $slot);
+                    }
+
+                    if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
+                        fastdom.write(function () {
+                            $slot.parent().css('display', 'flex');
+                        });
+                    } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                        fastdom.write(function () {
+                            $slot.parent().css('display', 'block');
+                        });
+                    }
+
+                    if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                    || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                        fastdom.write(function () {
+                            $slot.addClass('ad-slot__fluid250');
+                        });
+                    }
+                });
             }
         },
         allAdsRendered = function (slotId) {
@@ -460,7 +468,8 @@ define([
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
-                $iFrameParent      = $iFrame.parent();
+                $iFrameParent      = $iFrame.parent(),
+                type               = {};
 
             if (iFrameBody) {
                 _.forEach(breakoutClasses, function (breakoutClass) {
@@ -482,6 +491,11 @@ define([
                                 // evil, but we own the returning js snippet
                                 eval(breakoutContent);
                             }
+
+                            type = {
+                                type: creativeConfig.params.adType || '',
+                                variant: creativeConfig.params.adVariant || ''
+                            };
 
                         } else {
                             fastdom.write(function () {
@@ -506,6 +520,8 @@ define([
                     $iFrame.hide();
                 });
             }
+
+            return type;
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutClasses).
@@ -517,26 +533,34 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot).each(function (iFrame) {
-                // IE needs the iFrame to have loaded before we can interact with it
-                if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                    bean.on(iFrame, 'readystatechange', function (e) {
-                        var updatedIFrame = e.srcElement;
+            return Promise.all(_.map($('iframe', $slot), function (iFrame) {
+                return new Promise(function (resolve) {
+                    // IE needs the iFrame to have loaded before we can interact with it
+                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                        bean.on(iFrame, 'readystatechange', function (e) {
+                            var updatedIFrame = e.srcElement;
 
-                        if (
-                            /*eslint-disable valid-typeof*/
-                            updatedIFrame &&
-                                typeof updatedIFrame.readyState !== 'unknown' &&
-                                updatedIFrame.readyState === 'complete'
-                            /*eslint-enable valid-typeof*/
-                        ) {
-                            breakoutIFrame(updatedIFrame, $slot);
-                            bean.off(updatedIFrame, 'readystatechange');
-                        }
-                    });
-                } else {
-                    breakoutIFrame(iFrame, $slot);
-                }
+                            if (
+                                /*eslint-disable valid-typeof*/
+                                updatedIFrame &&
+                                    typeof updatedIFrame.readyState !== 'unknown' &&
+                                    updatedIFrame.readyState === 'complete'
+                                /*eslint-enable valid-typeof*/
+                            ) {
+                                bean.off(updatedIFrame, 'readystatechange');
+                                resolve(breakoutIFrame(updatedIFrame, $slot));
+                            }
+                        });
+                    } else {
+                        resolve(breakoutIFrame(iFrame, $slot));
+                    }
+                });
+            })).then(function (items) {
+                return _(items)
+                    .chain()
+                    .find(function (item) {
+                        return item.adType !== '';
+                    }).value();
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
@@ -636,5 +660,4 @@ define([
         };
 
     return dfp;
-
 });
