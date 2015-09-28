@@ -1,10 +1,12 @@
 define([
     'common/utils/_',
+    'common/utils/location',
     'common/utils/config',
     'common/modules/commercial/user-ad-preference',
     'common/modules/user-prefs'
 ], function (
     _,
+    location,
     config,
     userAdPreference,
     userPrefs
@@ -28,8 +30,8 @@ define([
         }
     };
 
-    policies.uriSwitches = function () {
-        if (window.location.hash.match(/[#&]noads(&.*)?$/)) {
+    policies.noadsHash = function () {
+        if (location.getHash().match(/[#&]noads(&.*)?$/)) {
             return new CommercialFeatureSwitches(false);
         }
     };

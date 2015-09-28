@@ -4,19 +4,21 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 describe('Commercial features', ()=> {
-    let commercialFeaturePolicies, config, userAdPreference, userPrefs;
+    let commercialFeaturePolicies, config, location, userAdPreference, userPrefs;
 
     beforeEach((done)=> {
         injector.test([
             'common/modules/commercial/commercial-feature-policies',
             'common/utils/config',
+            'common/utils/location',
             'common/modules/commercial/user-ad-preference',
             'common/modules/user-prefs'
         ], function () {
             commercialFeaturePolicies = arguments[0];
             config = arguments[1];
-            userAdPreference = arguments[2];
-            userPrefs = arguments[3];
+            location = arguments[2];
+            userAdPreference = arguments[3];
+            userPrefs = arguments[4];
 
             done();
         });
@@ -76,6 +78,22 @@ describe('Commercial features', ()=> {
             config.page.isSSL = true;
             config.page.section = 'admin';
             const switches = commercialFeaturePolicies.getPolicySwitches().sslContent;
+            expect(switches).toBeUndefined();
+        });
+    });
+
+    describe('#noads hash policy', ()=> {
+        it('hides all features when the page has the #noads hash', ()=> {
+            location.getHash = ()=> {return '#noads';};
+            const switches = commercialFeaturePolicies.getPolicySwitches().noadsHash;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
+        });
+
+        it('applies no changes otherwise', ()=> {
+            location.getHash = ()=> {return ''};
+            const switches = commercialFeaturePolicies.getPolicySwitches().noadsHash;
             expect(switches).toBeUndefined();
         });
     });
