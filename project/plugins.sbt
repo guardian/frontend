@@ -17,4 +17,4 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.9")
 
 addSbtPlugin("org.jetbrains.teamcity.plugins" % "sbt-teamcity-logger" % "0.3.0")
 
-addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "0.8.0")
+addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "0.8.1")
