@@ -92,13 +92,12 @@ define([
         },
         init = function () {
             var rules, lenientRules, inlineMercPromise;
-            
             if (
                 !config.switches.standardAdverts ||
                 config.page.contentType !== 'Article' ||
                 config.page.isLiveBlog ||
                 userAdPreference.hideAds
-            ) {       
+            ) {
                 return false;
             }
 
