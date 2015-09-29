@@ -358,7 +358,7 @@ class Crossword extends React.Component {
         }
     }
 
-    focusClueByEntryId ({ entryId }) {
+    focusClueById (entryId) {
         const entry = _.find(this.props.data.entries, { id: entryId });
         if (entry) {
             this.focusClue(entry.position.x, entry.position.y, entry.direction);
@@ -639,12 +639,12 @@ export default function () {
             const crosswordComponent = React.render(<Crossword data={crosswordData} />, element);
 
             const entryId = window.location.hash.replace('#', '');
-            crosswordComponent.focusClueByEntryId({ entryId });
+            crosswordComponent.focusClueById(entryId);
 
             window.addEventListener('hashchange', hashEvent => {
                 const idMatch = hashEvent.newURL.match(/#.*/);
                 const newEntryId = idMatch && idMatch[0].replace('#', '');
-                crosswordComponent.focusClueByEntryId({ entryId: newEntryId });
+                crosswordComponent.focusClueById(newEntryId);
             });
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
