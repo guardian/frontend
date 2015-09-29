@@ -253,8 +253,19 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-object VideoEncodingUrlCleaner{
+object VideoEncodingUrlCleaner {
   def apply(url: String): String = url.filter(_ != '\n')
+}
+
+object AmpVideoSrcCleaner {
+  def apply(videoSrc: String) = {
+    // All videos need to start with https for AMP.
+    // Temperary code until all videos returned from CAPI are https
+    if (videoSrc.startsWith("http:")) {
+      val (first, last) = videoSrc.splitAt(4);
+      first + "s" + last
+    }
+  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
