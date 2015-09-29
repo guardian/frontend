@@ -5,8 +5,8 @@
 @import views.support.VideoEncodingUrlCleaner
 @import views.support.AmpVideoSrcCleaner
 
-@if(amp) {
-    <div class="gu-media-wrapper gu-media-wrapper--video">
+<div class="gu-media-wrapper gu-media-wrapper--video">
+    @if(amp) {
         <amp-video
             controls
             width="5"
@@ -19,9 +19,7 @@
                 }
             }
         </amp-video>
-    </div>
-} else {
-    <div class="gu-media-wrapper gu-media-wrapper--video">
+    } else {
         <div class="@RenderClasses(Map(
             "u-responsive-ratio" -> true,
             "u-responsive-ratio--hd" -> player.isRatioHd
@@ -64,5 +62,5 @@
                 }
             </video>
         </div>
-    </div>
     }
+</div>
