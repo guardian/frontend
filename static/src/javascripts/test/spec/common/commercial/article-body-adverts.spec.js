@@ -5,7 +5,7 @@ import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
 
-describe('Article Body Adverts', function () {
+xdescribe('Article Body Adverts', function () {
     var getParaWithSpaceStub, $fixturesContainer, $style,
         fixturesConfig = {
             id: 'article-body-adverts',
