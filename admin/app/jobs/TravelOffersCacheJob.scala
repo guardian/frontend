@@ -1,8 +1,8 @@
 package jobs
 
-import com.ning.http.util.AsyncHttpProviderUtils
 import common.{ExecutionContexts, Logging}
 import conf.Configuration.commercial._
+import conf.switches.Switches.TravelOffersFeedSwitch
 import implicits.Dates
 import model.diagnostics.CloudWatch
 import play.api.Play.current
@@ -26,31 +26,33 @@ object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
   }
 
 
-  def run() {
-    Future {
-      url map {u =>
-        val start = System.currentTimeMillis
+  def run(): Unit = {
+    if (TravelOffersFeedSwitch.isSwitchedOn) {
+      Future {
+        url map { u =>
+          val start = System.currentTimeMillis
 
-        // Go grab the thing
-        val future: Future[WSResponse] = WS.url(u) withRequestTimeout loadTimeout get()
+          // Go grab the thing
+          val future: Future[WSResponse] = WS.url(u) withRequestTimeout loadTimeout get()
 
-        future onSuccess {
-          case response =>
-            val status = response.status
-            if (status == 200) {
-              log.info(s"Successfully loaded Travel Offers from $u")
-              recordLoad(System.currentTimeMillis - start)
+          future onSuccess {
+            case response =>
+              val status = response.status
+              if (status == 200) {
+                log.info(s"Successfully loaded Travel Offers from $u")
+                recordLoad(System.currentTimeMillis - start)
 
-              Store.putCachedTravelOffersFeed(response.body)
-            } else {
-              log.error(s"Error loading Travel Offers from $u, response code is $status")
+                Store.putCachedTravelOffersFeed(response.body)
+              } else {
+                log.error(s"Error loading Travel Offers from $u, response code is $status")
+                recordLoad(-1)
+              }
+          }
+          future onFailure {
+            case e: Exception =>
+              log.error(s"Error loading Travel Offers from $u: ${e.getMessage}")
               recordLoad(-1)
-            }
-        }
-        future onFailure {
-          case e: Exception =>
-            log.error(s"Error loading Travel Offers from $u: ${e.getMessage}")
-            recordLoad(-1)
+          }
         }
       }
     }
