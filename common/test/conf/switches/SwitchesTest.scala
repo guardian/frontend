@@ -1,8 +1,7 @@
-package conf
+package conf.switches
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import org.joda.time.LocalDate
 
 class SwitchesTest extends FlatSpec with Matchers {
 

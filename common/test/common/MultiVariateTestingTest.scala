@@ -1,6 +1,6 @@
 package common
 
-import conf.switches.Switches
+import conf.switches.{Expiry, Switches}
 import mvt.MultiVariateTesting._
 import mvt.{TestDefinition, MultiVariateTesting, Tests}
 import org.scalatest.{Matchers, FlatSpec}
@@ -46,13 +46,13 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       List(Variant0),
       "test0",
       "an experiment test",
-      Switches.never
+      Expiry.never
     )
     object test1 extends TestDefinition(
       List(Variant1, Variant2),
       "test1",
       "an experiment test",
-      Switches.never
+      Expiry.never
     )
 
     val tests = List(test0, test1)
