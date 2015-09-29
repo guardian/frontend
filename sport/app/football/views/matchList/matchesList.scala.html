@@ -50,11 +50,6 @@
                                 <span class="team-name__long">@theMatch.homeTeam.name</span>
                             </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
-                            @if(theMatch.isFixture){
-                                <div class="football-team__form">
-                                    @football.views.html.fragments.teamForm(theMatch.homeTeam.id, competition)
-                                </div>
-                            }
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
@@ -62,11 +57,6 @@
                                 <span class="team-name__long">@theMatch.awayTeam.name</span>
                             </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>
-                            @if(theMatch.isFixture){
-                                <div class="football-team__form team__results--shrink">
-                                    @football.views.html.fragments.teamForm(theMatch.awayTeam.id, competition)
-                                </div>
-                            }
                         </div>
 
                         <div class="football-teams__battleline"></div>
