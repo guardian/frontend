@@ -68,7 +68,7 @@
     @lightboxIndex.map { index =>
         <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
                 @imageHtml
-                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen"))
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen modern-visible"))
         </a>
         @shareInfo.map { case (shareLinks, contentType) =>
             @share.blockLevelSharing(s"img-$index", shareLinks, contentType)

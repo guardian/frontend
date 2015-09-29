@@ -4,15 +4,14 @@
 <!doctype html>
 <html AMP>
     <head>
+        @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
+        @fragments.metaData(metaData, true)
         <title>@views.support.Title(metaData)</title>
-        <link rel="canonical" href="/@metaData.id" />
-        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
-        @fragments.amp.mainStylesheet()
-        @fragments.metaData(metaData)
+        @fragments.amp.stylesheets.main()
         <script src="https://cdn.ampproject.org/v0.js" @if(Play.isDev) { development } async></script>
-        <script element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
+        <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
     </head>
     <body>
         <div class="main-body">

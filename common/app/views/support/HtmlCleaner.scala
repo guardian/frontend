@@ -91,129 +91,6 @@ case class R2VideoCleaner(article: Article) extends HtmlCleaner {
 
 }
 
-case class VideoEmbedCleaner(article: Article, amp: Boolean) extends HtmlCleaner {
-
-  override def clean(document: Document): Document = {
-    document.getElementsByClass("element-video").filter { element: Element =>
-      element.getElementsByClass("gu-video").length == 0
-    }.foreach { element: Element =>
-      element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
-    }
-
-    if (amp) {
-      document.getElementsByTag("video").foreach( video => {
-        video.tagName("amp-video")
-        video.removeAttr("data-media-id")
-        video.removeAttr("poster")
-
-        // Need to hard code aspect ratio 5:3 for Amp pages.
-        video.attr("width", "5")
-        video.attr("height", "3")
-        // Layout responsive keeps the aspect ratio, but ignores the height and width attributes above
-        video.attr("layout", "responsive")
-        video.attr("controls", "")
-
-        video.getElementsByTag("source").foreach( source => {
-          val videoSrc = source.attr("src")
-          // All videos need to start with https for AMP.
-          // Temperary code until all videos returned from CAPI are https
-          if(!videoSrc.startsWith("https")) {
-            val (first, last) = videoSrc.splitAt(4);
-            val newSrc = first + "s" + last
-            source.attr("src", newSrc)
-          }
-        })
-      })
-    } else {
-      if(!article.isLiveBlog) {
-        document.getElementsByClass("element-video").foreach( element => {
-          val shortUrl = element.attr("data-short-url")
-          val webUrl = element.attr("data-canonical-url")
-          val blockId = element.attr("data-media-id")
-          val mediaPath = element.attr("data-video-poster")
-          val mediaTitle = element.attr("data-video-name")
-
-          if(!shortUrl.isEmpty) {
-            val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
-            element.child(0).after(html.toString())
-            element.addClass("fig--has-shares")
-            element.addClass("fig--narrow-caption")
-            // add extra margin if there is no caption to fit the share buttons
-            val figcaption = element.getElementsByTag("figcaption")
-            if(figcaption.length < 1) {
-              element.addClass("fig--no-caption")
-            }
-          }
-        })
-      }
-
-      document.getElementsByClass("element-video").foreach { figure: Element =>
-        val canonicalUrl = figure.attr("data-canonical-url")
-        figure.getElementsByClass("gu-video").foreach { element: Element =>
-          element
-            .removeClass("gu-video")
-            .addClass("js-gu-media--enhance gu-media gu-media--video")
-            .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
-
-          val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
-
-          val mediaId = element.attr("data-media-id")
-
-          val asset = findVideoFromId(mediaId)
-
-          element.getElementsByTag("source").remove()
-
-          val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-            videoAsset.encoding.map { encoding =>
-              s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
-            }.getOrElse("")
-          }.mkString("")
-
-          element.append(sourceHTML)
-
-          // add the poster url
-          asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
-            element.attr("poster", url)
-          }
-
-          asset.foreach(video => {
-            element.append(
-              s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
-                  <param name="allowFullScreen" value="true" />
-                  <param name="movie" value="$flashMediaElement" />
-                  <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
-                  Sorry, your browser is unable to play this video.
-                </object>""")
-
-          })
-
-          findVideoApiElement(mediaId).foreach{ videoElement =>
-            element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-            if(!canonicalUrl.isEmpty && videoElement.embeddable) {
-              element.attr("data-embeddable", "true")
-              element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
-            } else {
-              element.attr("data-embeddable", "false")
-            }
-          }
-        }
-      }
-
-      document.getElementsByClass("element-witness--main").foreach { element: Element =>
-        element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
-      }
-    }
-
-    document
-  }
-
-  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
-
-  def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
-
-  def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
-}
-
 case class PictureCleaner(article: Article, amp: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
@@ -317,13 +194,16 @@ case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: Request
     if (isLiveBlog) {
       body.select(".block").foreach { el =>
         val id = el.id()
+        val blockElements = el.select(".block-elements")
+        val noByline = el.attributes().get("data-block-contributor").isEmpty
         el.attr("itemprop", "liveBlogUpdate")
         el.attr("itemscope", "")
         el.attr("itemtype", "http://schema.org/BlogPosting")
         el.select(".block-time.published-time time").foreach { time =>
           time.attr("itemprop", "datePublished")
         }
-        el.select(".block-elements").foreach { body =>
+        if (noByline) blockElements.addClass("block-elements--no-byline")
+        blockElements.foreach { body =>
           body.attr("itemprop", "articleBody")
         }
       }
@@ -340,7 +220,7 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
         if (contributorId.nonEmpty) {
           article.tags.find(_.id == contributorId).map{ contributorTag =>
             val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-            el.getElementsByClass("block-elements").headOption.foreach(_.prepend(html.toString()))
+            el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
           }
         }
       }
@@ -636,15 +516,15 @@ object RichLinkCleaner extends HtmlCleaner {
 }
 
 object MembershipEventCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
-    val membershipEvents = document.getElementsByClass("element-membership")
-    membershipEvents
-      .addClass("element-membership--not-upgraded")
-      .attr("data-component", "membership-events")
-      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
+    override def clean(document: Document): Document = {
+      val membershipEvents = document.getElementsByClass("element-membership")
+      membershipEvents
+        .addClass("element-membership--not-upgraded")
+        .attr("data-component", "membership-events")
+        .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
 
-    document
-  }
+      document
+    }
 }
 
 object ChaptersLinksCleaner extends HtmlCleaner {

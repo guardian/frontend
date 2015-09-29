@@ -105,6 +105,16 @@ object Switches {
   lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val MinifyInlineJsSwitch = Switch(
+    "Performance",
+    "minify-inline-js",
+    "If this switch is on, InlineJs output will be minified by closure compiler",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+
   val LazyLoadContainersSwitch = Switch(
     "Performance",
     "lazy-load-containers",
@@ -552,7 +562,7 @@ object Switches {
   val AdFreeExperience = Switch(
     "Commercial",
     "advert-opt-out",
-    "Display advert free experience",
+    "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 9),
     exposeClientSide = true
@@ -614,22 +624,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  // Features
-  val DiscussionCrosswordsOptionalRelativeTimestampSwitch = Switch(
-    "Feature",
-    "discussion-crosswords-optional-relative-timestamp-switch",
-    "Discussion optional relative timestamp in the crossword section",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 28),
-    exposeClientSide = true
-  )
-
   val OfflinePageSwitch = Switch(
     "Feature",
     "offline-page",
     "Offline page",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 10, 16),
     exposeClientSide = true
   )
 
@@ -932,15 +932,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val SyndicationReprintEnabledSwitch = Switch (
-    "Feature",
-    "syndication-reprint-enabled",
-    "Toggle on/off the syndication button on all pages (for desktop or above only)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
@@ -957,7 +948,7 @@ object Switches {
     "ab-membership-message-uk",
     "Switch for the UK Membership message A/B variants test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 21),
+    sellByDate = new LocalDate(2015, 11, 18),
     exposeClientSide = true
   )
 
@@ -966,7 +957,16 @@ object Switches {
     "ab-membership-message-usa",
     "Switch for the USA Supporter message test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 21),
+    sellByDate = new LocalDate(2015, 11, 18),
+    exposeClientSide = true
+  )
+
+  val ABDisableAdsSurvey = Switch(
+    "A/B Tests",
+    "ab-disable-ads-survey",
+    "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 15),
     exposeClientSide = true
   )
 
@@ -1134,31 +1134,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val FaciaDynamoArchive = Switch(
-    "Facia",
-    "facia-tool-dynamo-archive",
-    "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
-      "check the DB size.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = false
-  )
-
   val FaciaPressOnDemand = Switch(
     "Facia",
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FaciaToolPutPrivate = Switch(
-    "Facia",
-    "facia-tool-put-private",
-    "If this is switched on, facia tool will put collections to S3 as private",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

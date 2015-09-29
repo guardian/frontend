@@ -5,7 +5,7 @@ import layout.ContentWidths.MainMedia
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{CmpParamCleaner, AmpAdCleaner}
+import views.support.cleaner.{VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
 
 object MainMediaWidths {
 

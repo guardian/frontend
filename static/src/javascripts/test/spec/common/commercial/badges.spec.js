@@ -48,7 +48,7 @@ describe('Badges', function () {
                 }
             );
         },
-        $fixtureContainer, badges, config,
+        $fixtureContainer, badges, config, commercialFeatures,
         injector = new Injector();
 
     beforeEach(function (done) {
@@ -57,9 +57,14 @@ describe('Badges', function () {
                 addSlot: function () {}
             }
         });
-        injector.test(['common/modules/commercial/badges', 'common/utils/config'], function () {
+        injector.test([
+            'common/modules/commercial/badges',
+            'common/utils/config',
+            'common/modules/commercial/commercial-features'
+        ], function () {
             badges = arguments[0];
             config = arguments[1];
+            commercialFeatures = arguments[2];
 
             config.images = {
                 commercial: {}
@@ -67,9 +72,8 @@ describe('Badges', function () {
             config.page = {
                 section: 'news'
             };
-            config.switches = {
-                sponsored: true
-            };
+
+            commercialFeatures.badges = true;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
@@ -85,8 +89,8 @@ describe('Badges', function () {
         expect(badges).toBeDefined();
     });
 
-    it('should not display ad slot if sponsored switch is off', function () {
-        config.switches.sponsored = false;
+    it('should not display ad slot if badges disabled in commercial features', function () {
+        commercialFeatures.badges = false;
         expect(badges.init()).toBe(false);
         expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
     });

@@ -50,6 +50,10 @@
         border-top-color: colour(neutral-2);
         background-color: transparent;
     }
+
+    &.ad-slot__survey {
+        text-align: left;
+    }
 }
 
 /**
@@ -242,7 +246,6 @@
         position: relative;
         height: auto;
         margin: 0 $gs-gutter/2;
-        width: gs-span(4.5);
 
         .content-footer & {
             width: 300px;

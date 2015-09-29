@@ -22,14 +22,14 @@ object JspmTest extends TestDefinition(
   List(Variant0),
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
-  new LocalDate(2015, 9, 30)
+  new LocalDate(2015, 11, 30)
 )
 
 object JspmControlTest extends TestDefinition(
   List(Variant7),
   "jspm-control",
   "A control test/variant to compare with the JspmTest",
-  new LocalDate(2015, 9, 30)
+  new LocalDate(2015, 11, 30)
 )
 
 object ABHeadlinesTestVariant extends TestDefinition(
