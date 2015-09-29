@@ -6,12 +6,12 @@ import org.joda.time.LocalDate
 trait FeatureSwitches {
 
   // Features
-  val DiscussionCrosswordsOptionalRelativeTimestampSwitch = Switch(
+  val OfflinePageSwitch = Switch(
     "Feature",
-    "discussion-crosswords-optional-relative-timestamp-switch",
-    "Discussion optional relative timestamp in the crossword section",
+    "offline-page",
+    "Offline page",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 28),
+    sellByDate = new LocalDate(2015, 10, 16),
     exposeClientSide = true
   )
 
@@ -30,6 +30,15 @@ trait FeatureSwitches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val ChapterHeadingsSwitch = Switch(
+    "Feature",
+    "chapter-headings",
+    "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 7),
     exposeClientSide = false
   )
 
@@ -224,6 +233,24 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val RugbyWorldCupFriendlies = Switch(
+    "Feature",
+    "rugby-world-cup-friendlies-for-pre-prod",
+    "If this switch is on rugby world cup scores will be load in Friendlies too (only use in CODE)",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = false
+  )
+
+  val RugbyWorldCupTablesSwitch = Switch(
+    "Feature",
+    "rugby-world-cup-tables",
+    "If this switch is on rugby world cup tables will be loaded in to rugby match reports and liveblogs",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 6),
+    exposeClientSide = true
+  )
+
   val WeatherSwitch = Switch(
     "Feature",
     "weather",
@@ -285,15 +312,6 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
-  )
-
-  val SyndicationReprintEnabledSwitch = Switch(
-    "Feature",
-    "syndication-reprint-enabled",
-    "Toggle on/off the syndication button on all pages (for desktop or above only)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
   )
 
   val FootballFeedRecorderSwitch = Switch(

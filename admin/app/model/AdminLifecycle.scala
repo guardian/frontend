@@ -5,7 +5,7 @@ import java.util.TimeZone
 import common.{AkkaAsync, Jobs, Logging}
 import conf.Configuration
 import conf.Configuration.environment
-import conf.Switches._
+import conf.switches.Switches._
 import football.feed.MatchDayRecorder
 import jobs._
 import play.api.GlobalSettings

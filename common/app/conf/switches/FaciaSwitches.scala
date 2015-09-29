@@ -69,16 +69,6 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
-  val FaciaDynamoArchive = Switch(
-    "Facia",
-    "facia-tool-dynamo-archive",
-    "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please " +
-      "check the DB size.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = false
-  )
-
   val FaciaPressOnDemand = Switch(
     "Facia",
     "facia-press-on-demand",
@@ -88,12 +78,4 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
-  val FaciaToolPutPrivate = Switch(
-    "Facia",
-    "facia-tool-put-private",
-    "If this is switched on, facia tool will put collections to S3 as private",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = false
-  )
 }

@@ -5,6 +5,15 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
+  val MinifyInlineJsSwitch = Switch(
+    "Performance",
+    "minify-inline-js",
+    "If this switch is on, InlineJs output will be minified by closure compiler",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   // Performance
   val LazyLoadContainersSwitch = Switch(
     "Performance",
@@ -230,6 +239,15 @@ trait PerformanceSwitches {
     "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
     safeState = On,
     sellByDate = new LocalDate(2016, 1, 10),
+    exposeClientSide = true
+  )
+
+  val ServeCoreFrontsToSomeIpadsSwitch = Switch(
+    "Performance",
+    "ipad-core-fronts",
+    "Serve core fronts to a random percentage of crash-prone ipad users",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 31),
     exposeClientSide = true
   )
 
