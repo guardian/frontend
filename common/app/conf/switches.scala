@@ -138,7 +138,7 @@ object Switches {
     "soft-purge-with-long-caching-switch",
     "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 10, 31),
     exposeClientSide = false
   )
 
@@ -647,7 +647,7 @@ object Switches {
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 10, 10),
     exposeClientSide = true
   )
 
@@ -1021,15 +1021,6 @@ object Switches {
     "If switched on, a stocks widget will be displayed on the business front",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val TwitterImageFallback = Switch(
-    "Feature",
-    "twitter-image-fallback",
-    "If switched on, then the first image of a tweet will be included in the embed - it will only display at mobile breakpoints",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

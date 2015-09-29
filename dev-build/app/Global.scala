@@ -5,7 +5,6 @@ import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import dfp.DfpDataCacheLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
-import headlines.ABHeadlinesLifecycle
 import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -73,8 +72,7 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with FootballLifecycle
   with CricketLifecycle
   with RugbyLifecycle
-  with CorsErrorHandler
-  with ABHeadlinesLifecycle {
+  with CorsErrorHandler {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

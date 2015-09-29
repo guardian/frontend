@@ -312,8 +312,6 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
 
 class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
-  import conf.Switches.TwitterImageFallback
-
   override def clean(document: Document): Document = {
 
     document.getElementsByClass("element-tweet").foreach { tweet =>
@@ -354,15 +352,13 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
             element.empty().attr("class", "js-tweet tweet")
 
-            if (TwitterImageFallback.isSwitchedOn) {
-              tweetImage.foreach { image =>
-                val img = document.createElement("img")
-                img.attr("src", image)
-                img.attr("alt", "")
-                img.attr("rel", "nofollow")
-                img.addClass("js-tweet-main-image tweet-main-image")
-                element.appendChild(img)
-              }
+            tweetImage.foreach { image =>
+              val img = document.createElement("img")
+              img.attr("src", image)
+              img.attr("alt", "")
+              img.attr("rel", "nofollow")
+              img.addClass("js-tweet-main-image tweet-main-image")
+              element.appendChild(img)
             }
 
             element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
