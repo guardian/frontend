@@ -197,14 +197,13 @@
 .ad-slot--liveblog-inline {
     width: 300px;
     margin: $gs-baseline auto;
-    min-height: 50 + $mpu-ad-label-height;
+    height: 250px + $mpu-ad-label-height;
     text-align: center;
 
     @include mq(mobileLandscape) {
         width: 320px;
     }
     @include mq(tablet) {
-        height: 250px + $mpu-ad-label-height;
         width: auto;
     }
     .ad-slot__label {

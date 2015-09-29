@@ -2,23 +2,12 @@
 @import conf.Switches._
 @import views.support.Commercial.topSlot
 
-@if(NoMobileTopAdSwitch.isSwitchedOn) {
-    @if(topSlot.hasResponsiveAd(metaData, edition)) {
-        <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile js-top-banner-mobile">
-        @fragments.commercial.standardAd(
-            "top",
-            Seq("top-banner-ad"),
-            Map("mobile" -> Seq("1,1", "88,70")),
-            showLabel = false
-        )
-        </div>
-    }
-} else {
-    <div class="top-banner-ad-container top-banner-ad-container--mobile js-top-banner-mobile">
+@if(topSlot.hasResponsiveAd(metaData, edition)) {
+    <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile js-top-banner-mobile">
     @fragments.commercial.standardAd(
         "top",
         Seq("top-banner-ad"),
-        Map("mobile" -> Seq("1,1", "300,50", "320,50", "88,70")),
+        Map("mobile" -> Seq("1,1", "88,70")),
         showLabel = false
     )
     </div>
