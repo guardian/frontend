@@ -4,7 +4,7 @@ import common.Maps.RichMap
 import common.{StaticPage, Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
-import conf.Switches.IdentitySocialOAuthSwitch
+import conf.switches.Switches.IdentitySocialOAuthSwitch
 import model.{CommercialExpiryPage, Content, MetaData}
 import org.joda.time.DateTime
 import play.api.Play
