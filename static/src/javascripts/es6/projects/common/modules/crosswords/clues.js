@@ -18,21 +18,23 @@ class Clue extends React.Component {
 
     render () {
         return (
-            <li className={classNames({
+            <li>
+                <a href={`#${this.props.id}`}
+                   onClick={this.onClick}
+                   className={classNames({
                     'crossword__clue': true,
                     'crossword__clue--answered': this.props.hasAnswered,
                     'crossword__clue--selected': this.props.isSelected,
                     'crossword__clue--display-group-order' : JSON.stringify(this.props.number) !== this.props.humanNumber
                 })}>
-                <div className="crossword__clue__number">{this.props.humanNumber}</div>
+                    <div className="crossword__clue__number">{this.props.humanNumber}</div>
 
-                <a href={`#${this.props.id}`}
-                   onClick={this.onClick}
-                   className="crossword__clue__text"
-                   /* jscs:disable disallowDanglingUnderscores */
-                   dangerouslySetInnerHTML={{__html: this.props.clue}}
-                   /* jscs:enable disallowDanglingUnderscores */
-                ></a>
+                    <div className="crossword__clue__text"
+                       /* jscs:disable disallowDanglingUnderscores */
+                       dangerouslySetInnerHTML={{__html: this.props.clue}}
+                       /* jscs:enable disallowDanglingUnderscores */
+                    ></div>
+                </a>
             </li>
         );
     }

@@ -8,6 +8,7 @@
 .crossword__clues-list {
     margin: 0;
     margin-bottom: $gs-baseline;
+    list-style-type: none;
 }
 
 .crossword__clue {
@@ -15,12 +16,7 @@
     @include fs-textSans(4);
     padding: $gs-baseline * .25 $gs-baseline;
     margin: $gs-baseline * .25 0;
-    list-style-type: none;
-}
-
-.crossword__clue__text {
-    // Stretch the table cell link
-    width: 100%;
+    display: block;
 
     // Override link styles
     &:hover {
