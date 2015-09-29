@@ -202,6 +202,10 @@ case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: Request
         el.select(".block-time.published-time time").foreach { time =>
           time.attr("itemprop", "datePublished")
         }
+        el.select(".block-title").foreach { title =>
+          title.attr("itemprop", "headline")
+
+        }
         if (noByline) blockElements.addClass("block-elements--no-byline")
         blockElements.foreach { body =>
           body.attr("itemprop", "articleBody")
