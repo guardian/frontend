@@ -12,7 +12,7 @@ class Clue extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick (event) {
+    onClick () {
         this.props.setReturnPosition();
     }
 
