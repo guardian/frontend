@@ -347,14 +347,18 @@ class Crossword extends React.Component {
 
     focusClue (x, y, direction) {
         const clues = helpers.cluesFor(this.clueMap, x, y);
+        const clue = clues[direction];
 
-        if (clues && clues[direction]) {
+        if (clues && clue) {
             this.focusHiddenInput(x, y);
 
             this.setState({
                 cellInFocus: { x: x, y: y },
                 directionOfEntry: direction
             });
+
+            // Side effect
+            window.location.hash = clue.id;
         }
     }
 
