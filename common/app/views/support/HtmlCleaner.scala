@@ -255,6 +255,8 @@ object VideoEncodingUrlCleaner {
 
 object AmpVideoSrcCleaner {
   def apply(videoSrc: String) = {
+    // All videos need to start with https for AMP.
+    // Temperary code until all videos returned from CAPI are https
     if (videoSrc.startsWith("http:")) {
       val (first, last) = videoSrc.splitAt(4);
       first + "s" + last
