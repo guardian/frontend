@@ -1,6 +1,7 @@
 package conf
 
 import common._
+import conf.switches.Switches
 import model.Cors
 import play.api.{Application, GlobalSettings}
 import play.api.mvc.{Result, RequestHeader, Results}

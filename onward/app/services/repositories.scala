@@ -5,7 +5,7 @@ import model.Content
 import scala.concurrent.Future
 import conf.LiveContentApi
 import feed.MostReadAgent
-import conf.Switches.RelatedContentSwitch
+import conf.switches.Switches.RelatedContentSwitch
 import LiveContentApi.getResponse
 
 trait Related extends ConciergeRepository {

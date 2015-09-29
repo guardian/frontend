@@ -20,7 +20,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
     Cached(3600) {
-      if (conf.Switches.NotificationsSwitch.isSwitchedOn || conf.Switches.OfflinePageSwitch.isSwitchedOn) {
+      if (conf.switches.Switches.NotificationsSwitch.isSwitchedOn || conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
         Ok(templates.js.serviceWorker())
       } else {
         NotFound
@@ -47,7 +47,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
   }
 
   def offlinePage() = Action.async { implicit request =>
-    if (conf.Switches.OfflinePageSwitch.isSwitchedOn) {
+    if (conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
       withCrossword("quick", 14127) { crossword =>
         Cached(60)(Ok(views.html.offlinePage(
           new OfflinePage(CrosswordData.fromCrossword(crossword)))))

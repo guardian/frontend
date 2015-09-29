@@ -2,7 +2,7 @@ package common
 
 import play.api.GlobalSettings
 import play.api.mvc.{Handler, RequestHeader}
-import conf.Switches
+import conf.switches.Switches
 
 trait DiagnosticsLifecycle extends GlobalSettings with Logging {
 

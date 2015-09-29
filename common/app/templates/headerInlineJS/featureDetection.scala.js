@@ -1,5 +1,5 @@
 @()
-@import conf.Switches._
+@import conf.switches.Switches._
 
 (function (documentElement, window, navigator) {
     // feature detection
