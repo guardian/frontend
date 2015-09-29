@@ -113,15 +113,17 @@ define([
                 if (shouldAutoPlay(player)) {
                     player.play();
                 }
+            },
+            adsFailed: function () {
+                player.trigger('adscanceled');
+                bindContentEvents(player);
             }
         };
         player.one('adsready', events.ready);
 
         //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
-        player.one('adtimeout', function () {
-            player.trigger('adscanceled');
-            bindContentEvents(player);
-        });
+        player.ima.onAdsLoaderError_ = events.adsFailed();
+        player.one('adtimeout', events.adsFailed);
     }
 
     function kruxTracking(player, event) {
