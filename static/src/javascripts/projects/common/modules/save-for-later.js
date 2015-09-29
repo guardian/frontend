@@ -92,7 +92,7 @@ define([
                         this.userData = {version: date, articles: []};
                         this.saveIntroArticle();
                     } else {
-                        this.userData = resp;
+                        this.userData = resp.savedArticles;
                     }
 
                     this.updateSavedCount();
