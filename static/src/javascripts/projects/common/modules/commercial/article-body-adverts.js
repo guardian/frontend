@@ -7,6 +7,7 @@ define([
     'common/utils/detect',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/user-ad-preference',
     'common/modules/commercial/commercial-features'
 ], function (
     fastdom,
@@ -17,6 +18,7 @@ define([
     detect,
     spacefinder,
     createAdSlot,
+    userAdPreference,
     commercialFeatures
 ) {
     function getRules() {
@@ -90,8 +92,13 @@ define([
         },
         init = function () {
             var rules, lenientRules, inlineMercPromise;
-
-            if (!commercialFeatures.articleMPUs) {
+            
+            if (
+                !config.switches.standardAdverts ||
+                config.page.contentType !== 'Article' ||
+                config.page.isLiveBlog ||
+                userAdPreference.hideAds
+            ) {       
                 return false;
             }
 
