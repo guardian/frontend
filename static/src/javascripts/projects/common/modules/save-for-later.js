@@ -372,14 +372,15 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var $saveForLaterEl = $(this.classes.profileDropdownLink),
-            count = this.userData.articles.length;
-
-        if (count > 0) {
-            $saveForLaterEl.attr('data-saved-content-count', count);
-        } else {
-            $saveForLaterEl.removeAttr('data-saved-content-count', count);
-        }
+        // To-do: Restore functionality
+        //var $saveForLaterEl = $(this.classes.profileDropdownLink),
+        //    count = this.userData.articles.length;
+        //
+        //if (count > 0) {
+        //    $saveForLaterEl.attr('data-saved-content-count', count);
+        //} else {
+        //    $saveForLaterEl.removeAttr('data-saved-content-count', count);
+        //}
     };
 
     SaveForLater.prototype.saveIntroArticle = function () {
