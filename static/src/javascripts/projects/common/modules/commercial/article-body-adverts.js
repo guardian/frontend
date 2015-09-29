@@ -7,8 +7,7 @@ define([
     'common/utils/detect',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/user-ad-preference',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/user-ad-preference'
 ], function (
     fastdom,
     Promise,
@@ -18,8 +17,7 @@ define([
     detect,
     spacefinder,
     createAdSlot,
-    userAdPreference,
-    commercialFeatures
+    userAdPreference
 ) {
     function getRules() {
         return {
