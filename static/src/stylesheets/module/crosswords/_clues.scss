@@ -13,25 +13,39 @@
 .crossword__clue {
     position: relative;
     cursor: pointer;
-    @include fs-textSans(5);
-    padding: $gs-baseline * .25 0;
+    @include fs-textSans(4);
+    padding: $gs-baseline * .25 $gs-baseline;
+    margin: $gs-baseline * .25 0;
     list-style-type: none;
-    padding-left: 2em;
+}
 
-    &:before {
-        content: attr(data-number);
-        display: inline-block;
-        min-width: 2em;
-        margin-left: -2em;
-        position: static;
-        font-weight: bold;
-        -webkit-font-smoothing: initial;
+.crossword__clue__number,
+.crossword__clue__text {
+    display: table-cell;
+}
+
+.crossword__clue__number {
+    font-weight: bold;
+    -webkit-font-smoothing: initial;
+    width: $gs-gutter;
+    padding-right: $gs-gutter / 2;
+
+    .has-grouped-clues & {
+        width: $gs-gutter * 2;
+
+        @include mq(leftCol) {
+            width: $gs-gutter * 3;
+        }
     }
 }
 
 .crossword__clue--selected {
-    font-weight: bold;
-    color: $xword-focussed-colour;
+    background-color: $xword-focussed-background-colour;
+
+    > * {
+        font-weight: bold;
+        color: $xword-focussed-colour;
+    }
 }
 
 .crossword__clue--answered {
@@ -40,6 +54,6 @@
 
 //For grouped clues we display 11.12,23 accross instead of just a number
 .crossword__clue--display-group-order:before {
-    padding-right: .875em; // 14px - Matches the width between double digit numbers and clue of non-grouped clues
+    padding-right: 14px; // 14px - Matches the width between double digit numbers and clue of non-grouped clues
 }
 

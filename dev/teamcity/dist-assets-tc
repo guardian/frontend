@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+echo "Asset compilation"
+
+set +x
+echo "##teamcity[progressStart 'asset validation and tests']"
+set -x
+
+./grunt-tc validate:sass validate:js test:unit
+
+set +x
+echo "##teamcity[progressFinish 'asset validation and tests']"
+
+echo "##teamcity[progressStart 'asset dist']"
+set -x
+./grunt-tc compile emitAbTestInfo  --cluster
+
+set +x
+echo "##teamcity[progressFinish 'asset dist']"
+set -x
+
+

@@ -14,6 +14,31 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
+@* provide some ipad users with the core view of fronts *@
+<script>
+    @if(ServeCoreFrontsToSomeIpadsSwitch.isSwitchedOn) {
+            if(navigator.platform === 'iPad' &&
+                window.devicePixelRatio === 2) {
+                try {
+                    var storage = window.localStorage;
+                    var participation = storage.getItem('gu.retina-core-fronts-test');
+                    if (!participation) {
+                        if(Math.random() > .5) {
+                            storage.setItem('gu.retina-core-fronts-test', 'true');
+                        } else {
+                            storage.setItem('gu.retina-core-fronts-test', 'false');
+                        }
+                    }
+                    window.serveCoreFronts = storage.getItem('gu.retina-core-fronts-test') === 'true';
+                } catch (e) {
+                    window.serveCoreFronts = false;
+                }
+            }
+    } else {
+        window.serveCoreFronts = false;
+    }
+</script>
+
 @* get the stylesheets downloading ASAP *@
 @fragments.stylesheetLinks(projectName)
 

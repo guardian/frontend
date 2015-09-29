@@ -66,8 +66,7 @@
             </ul>
         </div>
 
-        @if(DiscussionCrosswordsOptionalRelativeTimestampSwitch.isSwitchedOn
-            && content.section == "crosswords") {
+        @if(content.section == "crosswords") {
             <div class="discussion__toolbar-item js-timestamps-dropdown hide-until-tablet">
                 <button class="u-button-reset popup__toggle" data-toggle="popup--timestamp"
                         aria-haspopup="true" aria-controls="timestamp-popup">Timestamps <span class="js-timestamps"></span></button>

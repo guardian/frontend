@@ -20,7 +20,7 @@ object FeedReader extends Logging {
              (parse: String => T)
              (implicit ec: ExecutionContext): Future[T] = {
 
-    def readUrl(url: String): Future[T] = {
+    def readUrl(): Future[T] = {
 
       def recordLoad(duration: Long): Unit = {
         val feedName = request.feedName.toLowerCase.replaceAll("\\s+", "-")
@@ -31,7 +31,9 @@ object FeedReader extends Logging {
       val start = System.currentTimeMillis
 
       val requestHolder = {
-        val unsignedRequestHolder = WS.url(url).withRequestTimeout(request.timeout.toMillis.toInt)
+        val unsignedRequestHolder = WS.url(request.url)
+          .withQueryString(request.parameters.toSeq: _*)
+          .withRequestTimeout(request.timeout.toMillis.toInt)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
           soFar.sign(calc)
         }
@@ -59,7 +61,7 @@ object FeedReader extends Logging {
     }
 
     request.switch.onInitialized flatMap { switch =>
-      if (switch.isSwitchedOn) readUrl(request.url)
+      if (switch.isSwitchedOn) readUrl()
       else Future.failed(FeedSwitchOffException(request.feedName))
     }
   }
@@ -102,6 +104,7 @@ object FeedReader extends Logging {
 case class FeedRequest(feedName: String,
                        switch: conf.switches.Switch,
                        url: String,
+                       parameters: Map[String, String] = Map.empty,
                        timeout: Duration = 2.seconds,
                        responseEncoding: Option[String] = None)
 

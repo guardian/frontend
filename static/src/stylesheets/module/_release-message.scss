@@ -410,16 +410,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.site-message--adblock {
-    background: colour(news-support-2);
-}
 /**
- * Membership message A/B test
+ * Membership messages
  */
+.site-message--adblock-message,
 .site-message--membership-message,
 .site-message--membership-message-uk,
 .site-message--membership-message-usa {
-    background: colour(news-main-2);
+    background: colour(membership-default);
 }
 
 /**

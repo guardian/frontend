@@ -1,8 +1,6 @@
 @(content: model.Content, position: String = "bottom")(implicit request: RequestHeader)
 @import views.support.URLEncode
-@import conf.switches.Switches.SyndicationReprintEnabledSwitch
 
-@if(SyndicationReprintEnabledSwitch.isSwitchedOn) {
     <div class="submeta__syndication">
         <ul class="syndication--@position u-unstyled">
             <li class="syndication__item">
@@ -16,4 +14,3 @@
             </li>
         </ul>
     </div>
-}

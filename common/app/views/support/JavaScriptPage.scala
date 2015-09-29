@@ -1,7 +1,7 @@
 package views.support
 
 import common.Maps.RichMap
-import common.{Edition, InternationalEdition}
+import common.{StaticPage, Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
 import conf.switches.Switches.IdentitySocialOAuthSwitch
@@ -45,6 +45,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("omitMPUs", JsBoolean(metaData.omitMPUsFromContainers(edition))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
+        case p: StaticPage => true
         case CommercialExpiryPage(_) => true
         case _ => false
       })),

@@ -52,19 +52,20 @@
 }
 
 .submeta__share {
+    margin-bottom: $gs-baseline / 2;
+
     @include mq(tablet) {
         float: left;
         margin-right: $gs-gutter / 2;
+        margin-bottom: 0;
     }
 }
 
 .submeta__save-for-later {
     // Shown with test
     display: none;
-    margin-top: $gs-baseline / 2;
 
     @include mq(tablet) {
-        margin-top: 0;
         float: left;
     }
 }

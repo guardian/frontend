@@ -1,10 +1,10 @@
 @()
 @import conf.switches.Switches._
-
-@fragments.fontDefinitions()
+@import common.InlineJs
 
 @if(FontSwitch.isSwitchedOn) {
+    @fragments.fontDefinitions()
     <script>
-        @Html(templates.headerInlineJS.js.loadFonts().body)
+        @InlineJs(templates.headerInlineJS.js.loadFonts().body)
     </script>
 }

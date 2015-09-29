@@ -27,12 +27,12 @@
             *@
 
             if (!guardian.isModernBrowser) {
-                var omnitureScript = document.createElement('script'),
+                var ophanScript = document.createElement('script'),
                         sc = document.getElementsByTagName('script')[0];
 
-                omnitureScript.src = '@Static("javascripts/bootstraps/ophan.js")';
-                omnitureScript.aysnc = true;
-                sc.parentNode.insertBefore(s, sc);
+                ophanScript.src = '@Static("javascripts/bootstraps/ophan.js")';
+                ophanScript.async = true;
+                sc.parentNode.insertBefore(ophanScript, sc);
             }
         </script>
 }

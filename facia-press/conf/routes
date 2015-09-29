@@ -5,5 +5,6 @@ GET        /debug/config        controllers.Application.showCurrentConfig
 GET        /pressed/fronts      controllers.Application.generateFrontJson()
 GET        /pressed/live/*path    controllers.Application.generateLivePressedFor(path)
 
-GET        /press/live/*path    controllers.Application.pressLiveForPath(path)
-GET        /press/draft/*path   controllers.Application.pressDraftForPath(path)
+POST        /press/live/*path    controllers.Application.pressLiveForPath(path)
+POST        /press/draft/all     controllers.Application.pressDraftForAll()
+POST        /press/draft/*path   controllers.Application.pressDraftForPath(path)

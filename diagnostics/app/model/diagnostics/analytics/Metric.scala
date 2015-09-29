@@ -46,14 +46,33 @@ object Metric extends Logging {
 
     ("ipad-old-start", CountMetric(s"ipad-old-start")),
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
+    ("ipad-old-after-10", CountMetric(s"ipad-old-after-10")),
+    ("ipad-old-after-60", CountMetric(s"ipad-old-after-60")),
+
     ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
-    ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
-    ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
-    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
-    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
-    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
-    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
+    ("ipad-2orMini-after-10", CountMetric(s"ipad-2orMini-after-10")),
+    ("ipad-2orMini-after-60", CountMetric(s"ipad-2orMini-after-60")),
+
+    ("ipad-retina-core-opted-in-start", CountMetric(s"ipad-retina-core-opted-in-start")),
+    ("ipad-retina-core-opted-in-after-5", CountMetric(s"ipad-retina-core-opted-in-after-5")),
+    ("ipad-retina-core-opted-in-after-10", CountMetric(s"ipad-retina-core-opted-in-after-10")),
+    ("ipad-retina-core-opted-in-after-60", CountMetric(s"ipad-retina-core-opted-in-after-60")),
+
+    ("ipad-retina-core-fronts-control-start", CountMetric(s"ipad-retina-core-fronts-control-start")),
+    ("ipad-retina-core-fronts-control-after-5", CountMetric(s"ipad-retina-core-fronts-control-after-5")),
+    ("ipad-retina-core-fronts-control-after-10", CountMetric(s"ipad-retina-core-fronts-control-after-10")),
+    ("ipad-retina-core-fronts-control-after-60", CountMetric(s"ipad-retina-core-fronts-control-after-60")),
+
+    ("ipad-retina-core-fronts-test-start", CountMetric(s"ipad-retina-core-fronts-test-start")),
+    ("ipad-retina-core-fronts-test-after-5", CountMetric(s"ipad-retina-core-fronts-test-after-5")),
+    ("ipad-retina-core-fronts-test-after-10", CountMetric(s"ipad-retina-core-fronts-test-after-10")),
+    ("ipad-retina-core-fronts-test-after-60", CountMetric(s"ipad-retina-core-fronts-test-after-60")),
+
+//    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
+//    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
+//    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
+//    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
 
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen")),
@@ -72,8 +91,8 @@ object Metric extends Logging {
     Seq(
       s"iphone-$model-start" -> CountMetric(s"iphone-$model-start"),
       s"iphone-$model-after-5" -> CountMetric(s"iphone-$model-after-5"),
-      s"iphone-$model-start-raf" -> CountMetric(s"iphone-$model-start-raf"),
-      s"iphone-$model-after-5-raf" -> CountMetric(s"iphone-$model-after-5-raf")
+      s"iphone-$model-after-10" -> CountMetric(s"iphone-$model-after-10"),
+      s"iphone-$model-after-60" -> CountMetric(s"iphone-$model-after-60")
     )
   )
 

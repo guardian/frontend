@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc._
 import common.{FaciaToolMetrics, ExecutionContexts}
 import model.Cached
-import conf.switches.Switches
+import conf.Switches
 import play.api.libs.json.Json
 import akka.actor.ActorSystem
 import auth.PanDomainAuthActions

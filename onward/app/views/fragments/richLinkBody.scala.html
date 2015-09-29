@@ -37,7 +37,12 @@
         }
 
         <div class="rich-link__header">
-            <h1 class="rich-link__title"><a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
+            <h1 class="rich-link__title">
+                @if( toneClass(content) == "tone-comment" ) {
+                    @fragments.inlineSvg("quote", "icon")
+                }
+                <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a>
+            </h1>
             @if(!content.isMedia && CardStyle.fromContent(content.delegate) == Comment) {
                 <div class="rich-link__byline">@content.byline.map { byline => @Html(byline) }</div>
             }

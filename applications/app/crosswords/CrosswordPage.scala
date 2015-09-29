@@ -30,6 +30,8 @@ class CrosswordPage(val crossword: CrosswordData, content: contentapi.Content) e
     crossword.dimensions.cols * (CellSize + BorderSize) + BorderSize,
     crossword.dimensions.rows * (CellSize + BorderSize) + BorderSize
   )
+
+  def hasGroupedClues = crossword.entries.exists(_.group.length > 1)
 }
 
 trait CrosswordSearchPage extends MetaData {

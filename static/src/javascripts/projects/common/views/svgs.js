@@ -28,7 +28,14 @@ define([
     'inlineSvg!svgs/icon/cursor',
     'inlineSvg!svgs/icon/fb',
     'inlineSvg!svgs/icon/gplus',
-    'inlineSvg!svgs/icon/plus'
+    'inlineSvg!svgs/icon/plus',
+    'inlineSvg!svgs/icon/external-link',
+    'inlineSvg!svgs/logo/membership-logo',
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon',
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon-simple',
+    'inlineSvg!svgs/commercial/survey-overlay',
+    'inlineSvg!svgs/commercial/survey-overlay-simple',
+    'inlineSvg!svgs/commercial/survey-new'
 ], function (
     _,
     commentCount16icon,
@@ -55,7 +62,14 @@ define([
     cursor,
     fb,
     gplus,
-    plus
+    plus,
+    externalLink,
+    membershipLogo,
+    thrasherBenefit,
+    thrasherBenefitSimple,
+    surveyOverlay,
+    surveyOverlaySimple,
+    surveyNew
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -82,7 +96,14 @@ define([
         cursor: cursor,
         fb: fb,
         gplus: gplus,
-        plus: plus
+        plus: plus,
+        externalLink: externalLink,
+        membershipLogo: membershipLogo,
+        surveyOverlay: surveyOverlay,
+        surveyOverlaySimple: surveyOverlaySimple,
+        surveyNew: surveyNew,
+        thrasherBenefit: thrasherBenefit,
+        thrasherBenefitSimple: thrasherBenefitSimple
     };
 
     return function (name, classes, title) {

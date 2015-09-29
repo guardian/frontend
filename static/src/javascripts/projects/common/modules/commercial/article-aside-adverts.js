@@ -6,7 +6,7 @@ define([
     'common/utils/$css',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/user-ad-preference'
+    'common/modules/commercial/commercial-features'
 ], function (
     fastdom,
     Promise,
@@ -15,7 +15,7 @@ define([
     $css,
     config,
     createAdSlot,
-    userAdPreference
+    commercialFeatures
 ) {
     function init(options) {
         var $mainCol, adType,
@@ -31,12 +31,8 @@ define([
             $componentsContainer,
             $adSlotContainer;
 
-        // is the switch off, or not an article, or the secondary column hidden, or user opts out
-        if (!config.switches.standardAdverts ||
-            !/Article|LiveBlog/.test(config.page.contentType) ||
-            colIsHidden ||
-            userAdPreference.hideAds
-        ) {
+        // are article aside ads disabled, or secondary column hidden?
+        if (!commercialFeatures.articleMPUs || colIsHidden) {
             return false;
         }
 
