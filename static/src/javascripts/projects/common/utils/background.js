@@ -1,31 +1,17 @@
 /*
-    runs each block on a separate animation frame to prevent excessive lumpiness
+    used to run each block on a separate timeout to prevent excessive lumpiness, however caused interleaving
+    of code that depended on each other (most popular didn't work)
  */
 define([
-    'fastdom',
-    'common/utils/_',
-    'common/utils/config'
+    'common/utils/_'
 ], function (
-    fastdom,
-    _,
-    config
+    _
 ) {
 
     return function (codeBlocks) {
-        var background = config.switches.backgroundJs;
-        (_.reduceRight(codeBlocks, function (restFunctions, fn) {
-            return function () {
-                var link = function () {
-                    fn();
-                    restFunctions();
-                };
-                if (background) {
-                    setTimeout(link, 1);
-                } else {
-                    link();
-                }
-            };
-        }, function () {}))();
+        _.forEach(codeBlocks, function (fn) {
+            fn()
+        });
     };
 
 });
