@@ -17,41 +17,10 @@
     }
 }
 
-@mixin team-result--thin {
-    margin-left: ($gs-gutter/10)*2;
-    height: 14px;
-    top: 2px;
-    width: 2px;
-    border-radius: 0;
-}
-
-@mixin team-result--shrink {
-    border-radius: 8px;
-    height: 4px;
-    margin-left: ($gs-gutter/4)+3;
-    width: 4px;
-}
-
 .team__results {
     min-width: $gs-gutter*1.5;
     font-size: 0;
     white-space: nowrap;
-}
-
-.team__results--shrink {
-    .team-result {
-        @include mq($until: tablet) {
-            @include team-result--shrink;
-        }
-    }
-}
-
-.team__results--thin {
-    .team-result {
-        @include mq($until: tablet) {
-            @include team-result--thin;
-        }
-    }
 }
 
 .team-result {
@@ -59,9 +28,9 @@
     top: 0;
     vertical-align: middle;
     border-radius: 4px;
-    height: 8px;
-    margin-left: ($gs-gutter/4)+3;
-    width: 8px;
+    margin-left: 2px ;
+    height: $gs-baseline;
+    width: 4px;
     cursor: help;
 
     &:first-child {
@@ -69,20 +38,17 @@
     }
 }
 
-.c-football-table .table--football {
-    .team-result {
-        @include team-result--thin;
-    }
-}
-
 .team-result--won {
     background-color: colour(status-positive);
+    margin-top: - $gs-baseline / 2;
 }
 
 .team-result--drew {
     background-color: colour(status-neutral);
+    height: 4px;
 }
 
 .team-result--lost {
     background-color: colour(status-negative);
+    margin-top: $gs-baseline / 2;
 }
