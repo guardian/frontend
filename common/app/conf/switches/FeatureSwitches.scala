@@ -283,7 +283,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 1),
+    sellByDate = new LocalDate(2015, 12, 1),
     exposeClientSide = false
   )
 
