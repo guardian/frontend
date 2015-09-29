@@ -347,14 +347,25 @@ class Crossword extends React.Component {
 
     focusClue (x, y, direction) {
         const clues = helpers.cluesFor(this.clueMap, x, y);
+        const clue = clues[direction];
 
-        if (clues && clues[direction]) {
+        if (clues && clue) {
             this.focusHiddenInput(x, y);
 
             this.setState({
                 cellInFocus: { x: x, y: y },
                 directionOfEntry: direction
             });
+
+            // Side effect
+            window.location.hash = clue.id;
+        }
+    }
+
+    focusClueById (entryId) {
+        const entry = _.find(this.props.data.entries, { id: entryId });
+        if (entry) {
+            this.focusClue(entry.position.x, entry.position.y, entry.direction);
         }
     }
 
@@ -629,7 +640,16 @@ export default function () {
     $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
-            React.render(<Crossword data={crosswordData} />, element);
+            const crosswordComponent = React.render(<Crossword data={crosswordData} />, element);
+
+            const entryId = window.location.hash.replace('#', '');
+            crosswordComponent.focusClueById(entryId);
+
+            window.addEventListener('hashchange', hashEvent => {
+                const idMatch = hashEvent.newURL.match(/#.*/);
+                const newEntryId = idMatch && idMatch[0].replace('#', '');
+                crosswordComponent.focusClueById(newEntryId);
+            });
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }

@@ -1,6 +1,6 @@
 package model
 
-import conf.Switches.DoubleCacheTimesSwitch
+import conf.switches.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.mvc.{Request, Action, Result}

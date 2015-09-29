@@ -12,28 +12,29 @@ class Clue extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick (event) {
-        event.preventDefault();
+    onClick () {
         this.props.setReturnPosition();
-        this.props.focusClue();
     }
 
     render () {
         return (
-            <li className={classNames({
+            <li>
+                <a href={`#${this.props.id}`}
+                   onClick={this.onClick}
+                   className={classNames({
                     'crossword__clue': true,
                     'crossword__clue--answered': this.props.hasAnswered,
                     'crossword__clue--selected': this.props.isSelected,
                     'crossword__clue--display-group-order' : JSON.stringify(this.props.number) !== this.props.humanNumber
-                })}
-                onClick={this.onClick}>
-                <div className="crossword__clue__number">{this.props.humanNumber}</div>
+                })}>
+                    <div className="crossword__clue__number">{this.props.humanNumber}</div>
 
-                <div className="crossword__clue__text"
-                     /* jscs:disable disallowDanglingUnderscores */
-                     dangerouslySetInnerHTML={{__html: this.props.clue}}
-                     /* jscs:enable disallowDanglingUnderscores */
-                ></div>
+                    <div className="crossword__clue__text"
+                       /* jscs:disable disallowDanglingUnderscores */
+                       dangerouslySetInnerHTML={{__html: this.props.clue}}
+                       /* jscs:enable disallowDanglingUnderscores */
+                    ></div>
+                </a>
             </li>
         );
     }
@@ -47,6 +48,7 @@ export default class Clues extends React.Component {
             .filter((clue) => clue.entry.direction === direction)
             .map((clue) =>
                 <Clue
+                    id={clue.entry.id}
                     key={clue.entry.id}
                     number={clue.entry.number}
                     humanNumber={clue.entry.humanNumber}

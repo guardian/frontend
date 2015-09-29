@@ -12,7 +12,7 @@ import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, GlobalSettings}
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import conf.Switches.SoftPurgeWithLongCachingSwitch
+import conf.switches.Switches.SoftPurgeWithLongCachingSwitch
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

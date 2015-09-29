@@ -1,7 +1,7 @@
 @()
 @import conf.Static
 @import org.joda.time.DateTime
-@import conf.Switches.NoBounceIndicator
+@import conf.switches.Switches.NoBounceIndicator
 
 try {
 

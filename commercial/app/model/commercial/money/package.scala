@@ -2,7 +2,7 @@ package model.commercial
 
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
-import conf.Switches._
+import conf.switches.Switches._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

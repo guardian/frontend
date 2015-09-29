@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import views.support.{ WitnessCleaner, withJsoup }
 import play.twirl.api.Html
-import conf.Switches
+import conf.switches.Switches
 
 class WitnessCleanerTest extends FlatSpec with Matchers {
 

@@ -3,7 +3,7 @@ package common
 import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
-import conf.Switches.AutoRefreshSwitch
+import conf.switches.Switches.AutoRefreshSwitch
 import play.api.mvc.{ RequestHeader, Results, Result }
 import play.twirl.api.Html
 import play.api.http.ContentTypes._
