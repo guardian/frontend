@@ -12,7 +12,14 @@
     .main-body {
         background: #fff;
         max-width: 600px;
-        margin: 0 auto;
+        margin: 0 auto 1.5em auto;
+        padding-bottom: 1.5rem;
+    }
+
+    @@media (max-width: 600px) {
+    .main-body {
+        margin-bottom: 0;
+        }
     }
 
     a {
