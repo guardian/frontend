@@ -362,7 +362,7 @@ define([
                     var saveForLater = new SaveForLater();
                     saveForLater.init();
                 }
-            },
+            }
         };
 
     return {
