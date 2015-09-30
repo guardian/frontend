@@ -14,9 +14,9 @@ object VersionInfo extends Plugin {
 
   private def getRepo(repo: java.io.File) = {
     try {
-      val repo = new FileRepositoryBuilder().findGitDir(repo)
-      if (repo.build.getConfig.getString("remote", "origin", "url") == "git@github.com:guardian/frontend.git") {
-        Some(repo)
+      val gitRepo = new FileRepositoryBuilder().findGitDir(repo)
+      if (gitRepo.build.getConfig.getString("remote", "origin", "url") == "git@github.com:guardian/frontend.git") {
+        Some(gitRepo)
       } else {
         None
       }
