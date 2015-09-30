@@ -724,25 +724,32 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment__recommend-button {
-    @include icon-button(arrow-up-grey, $comment-recommend-button-size);
+    width: $comment-recommend-button-size;
+    height: $comment-recommend-button-size;
     display: inline-block;
     background-color: colour(neutral-7);
     cursor: default;
     position: relative;
     top: 1px;
     float: right;
-    i {
-        width: 13px !important;
-        height: 13px !important;
-        left: 2px;
-    }
 
+    .inline-arrow-up-white svg {
+        position: relative;
+        height: $gs-baseline;
+        padding-top: $gs-baseline/4;
+        padding-left: $gs-baseline/6;
+        fill: colour(neutral-2);
+    }
     .id--signed-in .d-discussion--recommendations-open & {
         cursor: pointer;
     }
     .d-comment__recommend--clicked &,
     .d-comment__recommend--recommended & {
         cursor: default;
+
+        svg {
+            fill: #ffffff;
+        }
     }
 }
 
@@ -798,9 +805,6 @@ $comment-recommend-button-size: 19px;
     }
     .d-comment__recommend-pulse {
         animation: pulse .5s ease-in-out 1;
-    }
-    .d-comment__recommend-button i {
-        @include icon(arrow-up-white);
     }
 }
 

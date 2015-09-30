@@ -8,17 +8,6 @@ if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
 
-# Build configuration
-BUILD_PARAMS=""
-if [ -n "$BUILD_NUMBER" ]; then
-  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.number=\"$BUILD_NUMBER\""
-fi
-if [ -n "$BUILD_VCS_NUMBER" ]; then
-  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
-fi
-
-DOMAIN=`hostname -d`
-
 echo ''
 echo "********************************* JAVA VERSION *********************************"
 /usr/lib/jvm/java-1.8.0/bin/java -version
@@ -37,5 +26,4 @@ cat /dev/null | /usr/lib/jvm/java-1.8.0/bin/java -Xmx6144M \
   -XX:+UseConcMarkSweepGC \
   -DAPP_SECRET=$fake_secret \
   -Duser.timezone=Australia/Sydney \
-  $BUILD_PARAMS \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"

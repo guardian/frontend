@@ -14,6 +14,7 @@ define([
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
+    'common/views/svgs',
     'text!common/views/content/block-sharing.html',
     'text!common/views/content/button.html',
     'text!common/views/content/endslate.html',
@@ -36,6 +37,7 @@ define([
     Component,
     blockSharing,
     imagesModule,
+    svgs,
     blockSharingTpl,
     buttonTpl,
     endslateTpl,
@@ -133,14 +135,17 @@ define([
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
+                'icon': svgs('shareFacebook', ['icon']),
                 'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
+                'icon': svgs('shareTwitter', ['icon']),
                 'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
+                'icon': svgs('sharePinterest', ['icon']),
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
             }];
 

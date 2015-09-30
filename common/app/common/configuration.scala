@@ -6,7 +6,8 @@ import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.gu.conf.ConfigurationFactory
-import conf.{Configuration, Switches}
+import conf.Configuration
+import conf.switches.Switches
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current

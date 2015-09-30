@@ -1,5 +1,5 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 @import common.{LinkTo, Edition}
 @import common.editions._
 @import conf.Configuration
@@ -19,7 +19,7 @@
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register">
-                            <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=HEADER_GU_REG&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
+                            <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=DOTCOM_HEADER_BECOMEMEMBER&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
                                 data-link-name="Register link"
                                 class="brand-bar__item--action">
                                     @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
@@ -31,8 +31,7 @@
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
                                     has-popup brand-bar__item--has-control js-profile-nav"
-                             data-component="identity-profile">
-                            <a href="@Configuration.id.url/signin"
+                             data-component="identity-profile">                                                                                    <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
                                data-link-name="User profile"
                                data-toggle="popup--profile"
                                data-toggle-signed-in="true"
@@ -40,7 +39,7 @@
                                data-test-id="sign-in-link"
                                aria-haspopup="true">
                                 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                @if(conf.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
                                     @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
                                 }
                                 <span class="js-profile-info control__info"
@@ -48,7 +47,7 @@
                             </a>
                             <div class="js-profile-popup">
                                 <ul class="popup popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
-                                    @if(conf.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
                                         <li class="popup__item">
                                             <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
                                                 Saved for later</a>

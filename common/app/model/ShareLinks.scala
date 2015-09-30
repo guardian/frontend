@@ -42,9 +42,9 @@ trait ShareLinks { self: Content =>
 
       case "twitter"  =>
         val text = if (this.isClimateChangeSeries) {
-          s"${title.urlEncoded} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
+          s"${title.encodeURIComponent} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
         } else {
-          title.urlEncoded
+          title.encodeURIComponent
         }
         Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=$text&url=$twitter"))
 

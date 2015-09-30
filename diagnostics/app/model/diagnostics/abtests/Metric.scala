@@ -2,7 +2,7 @@ package model.diagnostics.abtests
 
 import common.Logging
 import views.support.CamelCase
-import conf.Switches.{all => AllSwitches}
+import conf.switches.Switches.{all => AllSwitches}
 
 import com.google.common.util.concurrent.AtomicDouble
 import org.jboss.netty.util.internal.ConcurrentHashMap

@@ -96,25 +96,25 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   }
 
   it should "create a simple canonical url" in {
-    TestCanonicalLink(TestRequest("/foo").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo")
+    TestCanonicalLink(TestRequest("/foo").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo")
   }
 
   it should "ignore insignificant params" in {
-    TestCanonicalLink(TestRequest("/foo?view=mobile").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo")
+    TestCanonicalLink(TestRequest("/foo?view=mobile").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo")
   }
 
   it should "include significant params" in {
-    TestCanonicalLink(TestRequest("/foo?page=3").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?page=3")
-    TestCanonicalLink(TestRequest("/foo?index=2").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?index=2")
-    TestCanonicalLink(TestRequest("/foo?page=3&index=1").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?index=1&page=3")
-    TestCanonicalLink(TestRequest("/foo?page=3&random=55&index=1").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?index=1&page=3")
+    TestCanonicalLink(TestRequest("/foo?page=3").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo?page=3")
+    TestCanonicalLink(TestRequest("/foo?index=2").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo?index=2")
+    TestCanonicalLink(TestRequest("/foo?page=3&index=1").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo?index=1&page=3")
+    TestCanonicalLink(TestRequest("/foo?page=3&random=55&index=1").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo?index=1&page=3")
   }
 
   it should "escape params" in {
-    TestCanonicalLink(TestRequest("/foo?page=http://www.theguardian.com").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?page=http%3A%2F%2Fwww.theguardian.com")
+    TestCanonicalLink(TestRequest("/foo?page=http://www.theguardian.com").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo?page=http%3A%2F%2Fwww.theguardian.com")
   }
 
   it should "link to https for https sections" in {
-    TestCanonicalLink(TestRequest("/info/foo").withHost("www.theguardian.com")) should be ("https://www.theguardian.com/info/foo")
+    TestCanonicalLink(TestRequest("/info/foo").withHost("www.theguardian.com"), "http://www.theguardian.com/info/foo") should be ("https://www.theguardian.com/info/foo")
   }
 }

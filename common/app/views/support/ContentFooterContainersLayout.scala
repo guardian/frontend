@@ -1,6 +1,6 @@
 package views.support
 
-import conf.Switches.OutbrainSwitch
+import conf.switches.Switches.OutbrainSwitch
 import model.{Content, RelatedContent}
 import play.twirl.api.{Html, HtmlFormat}
 

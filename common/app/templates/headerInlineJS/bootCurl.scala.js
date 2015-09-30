@@ -1,5 +1,5 @@
 @(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 @import conf.Static
 @import conf.Configuration
 
@@ -41,7 +41,7 @@ require([
                     }
                 }
 
-                return @conf.Switches.DiagnosticsLogging.isSwitchedOn &&
+                return @conf.switches.Switches.DiagnosticsLogging.isSwitchedOn &&
                     Math.random() < 0.2 &&
                     @{!play.Play.isDev()}; @* don't actually notify sentry in dev mode*@
             }
