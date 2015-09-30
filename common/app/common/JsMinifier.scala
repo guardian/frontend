@@ -3,7 +3,7 @@ package common
 import java.security.MessageDigest
 
 import com.google.javascript.jscomp._
-import conf.Switches
+import conf.switches.Switches
 import play.api.{Application, Play}
 import play.twirl.api.Html
 

@@ -1,5 +1,5 @@
 @(content: model.Content, isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 
 @sectionHeading = {
 
@@ -8,8 +8,8 @@
         <div class="container__meta">
             <h2 class="container__meta__title">comments <span class="discussion__comment-count js-discussion-comment-count"></span></h2>
 
-            <p class="container__meta__item discussion__meta discussion__meta--open-signed-out"><a class="u-underline" href="@Configuration.id.url/signin">Sign in</a>
-                or <a class="u-underline" href="@Configuration.id.url/register">create your Guardian account</a> to join the discussion.
+            <p class="container__meta__item discussion__meta discussion__meta--open-signed-out"><a class="u-underline" href="@Configuration.id.url/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN">Sign in</a>
+                or <a class="u-underline" href="@Configuration.id.url/register?INTCMP=DOTCOM_COMMENTS_REG">create your Guardian account</a> to join the discussion.
             </p>
 
             <p class="container__meta__item discussion__meta discussion__meta--closed">This discussion is closed for comments.</p>

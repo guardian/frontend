@@ -2,6 +2,7 @@ package football.controllers
 
 import common._
 import conf._
+import conf.switches.Switches
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._

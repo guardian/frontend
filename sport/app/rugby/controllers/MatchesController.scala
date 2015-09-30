@@ -3,7 +3,7 @@ package rugby.controllers
 import common._
 
 import common.{ExecutionContexts, JsonComponent}
-import conf.Switches.{RugbyWorldCupMatchStatsSwitch, RugbyWorldCupTablesSwitch}
+import conf.switches.Switches.{RugbyWorldCupMatchStatsSwitch, RugbyWorldCupTablesSwitch}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html

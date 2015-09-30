@@ -70,9 +70,9 @@ itemscope itemtype="http://schema.org/Comment">
                 <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
                 <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
             </span>
-            <button class="u-button-reset d-comment__recommend-button">
+            <button class="u-button-reset d-comment__recommend-button rounded-icon">
                 <span class="d-comment__recommend-pulse"></span>
-                <i></i>
+                @fragments.inlineSvg("arrow-up-white", "icon")
             </button>
         </div>
 

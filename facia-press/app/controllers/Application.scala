@@ -2,7 +2,7 @@ package controllers
 
 import common.ExecutionContexts
 import conf.Configuration
-import conf.Switches.FaciaPressOnDemand
+import conf.switches.Switches.FaciaPressOnDemand
 import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress}
 import model.NoCache
 import play.api.libs.json.Json

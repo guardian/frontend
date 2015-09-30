@@ -1,6 +1,6 @@
 package test
 
-import conf.Switches.FacebookShareUseTrailPicFirstSwitch
+import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.collection.JavaConversions._
 

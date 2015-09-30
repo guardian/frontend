@@ -46,7 +46,15 @@
 }
 
 .tonal--tone-analysis .tonal__standfirst {
-    background-color: #4bc6df;
+    background-color: #f6f6f6;
+}
+
+.tonal--tone-analysis .tonal__header {
+    background-color: #f1f1f1;
+}
+
+.tonal--tone-analysis .content__standfirst {
+    color: #767676;
 }
 
 .tonal--tone-live .tonal__standfirst,
@@ -62,7 +70,7 @@
     background-color: #63717a;
 }
 
-.tonal--tone-news .tone-colour {
+.tonal--tone-news .tone-colour, .tonal--tone-analysis .tonal__header .content__headline {
     color: #005689;
 }
 
@@ -75,7 +83,8 @@
     background-color: #efefec;
 }
 
-.tonal--tone-comment .tonal__header .content__labels {
+.tonal--tone-comment .tonal__header .content__labels,
+.tonal--tone-analysis .tonal__header .content__labels {
     border-bottom-color: rgba(118,118,118,0.3);
 }
 
@@ -103,8 +112,9 @@
     color: #fdadba;
 }
 
-.tonal--tone-feature .tonal__standfirst .bullet:before, 
-.tonal--tone-feature .tonal__standfirst ul>li:before {
+.tonal--tone-feature .tonal__standfirst ul>li:before,
+.tonal--tone-comment .tonal__standfirst ul>li:before,
+.tonal--tone-review .tonal__standfirst ul>li:before {
     background-color: rgba(255,255,255,0.4);
 }
 
@@ -153,7 +163,6 @@
     color: #005689;
 }
 
-.tonal--tone-analysis .tonal__header .content__section-label__link,
 .tonal--tone-analysis .tone-colour {
     color: #4bc6df;
 }
