@@ -1,6 +1,12 @@
 // Additional information on initialization
 logLevel := Level.Warn
 
+// Dependencies used by the VersionInfo plugin
+libraryDependencies ++= Seq(
+  "joda-time" % "joda-time" % "2.3",
+  "org.joda" % "joda-convert" % "1.7"
+)
+
 resolvers ++= Seq(
   Classpaths.typesafeReleases,
   Resolver.sonatypeRepo("releases"),
@@ -18,3 +24,5 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.9")
 addSbtPlugin("org.jetbrains.teamcity.plugins" % "sbt-teamcity-logger" % "0.3.0")
 
 addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "0.8.1")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.8.5")
