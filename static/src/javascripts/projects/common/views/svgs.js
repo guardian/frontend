@@ -26,10 +26,19 @@ define([
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/icon/cursor',
-    'inlineSvg!svgs/icon/fb',
-    'inlineSvg!svgs/icon/gplus',
     'inlineSvg!svgs/icon/plus',
-    'inlineSvg!svgs/icon/external-link'
+    'inlineSvg!svgs/icon/share-twitter',
+    'inlineSvg!svgs/icon/share-email',
+    'inlineSvg!svgs/icon/share-facebook',
+    'inlineSvg!svgs/icon/share-pinterest',
+    'inlineSvg!svgs/icon/share-gplus',
+    'inlineSvg!svgs/icon/external-link',
+    'inlineSvg!svgs/logo/membership-logo',
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon',
+    'inlineSvg!svgs/commercial/thrasher-benefit-icon-simple',
+    'inlineSvg!svgs/commercial/survey-overlay',
+    'inlineSvg!svgs/commercial/survey-overlay-simple',
+    'inlineSvg!svgs/commercial/survey-new'
 ], function (
     _,
     commentCount16icon,
@@ -54,10 +63,19 @@ define([
     notificationsExplainerMobile,
     notificationsExplainerDesktop,
     cursor,
-    fb,
-    gplus,
     plus,
-    externalLink
+    shareTwitter,
+    shareEmail,
+    shareFacebook,
+    sharePinterest,
+    shareGPlus,
+    externalLink,
+    membershipLogo,
+    thrasherBenefit,
+    thrasherBenefitSimple,
+    surveyOverlay,
+    surveyOverlaySimple,
+    surveyNew
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -82,10 +100,19 @@ define([
         notificationsExplainerMobile: notificationsExplainerMobile,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         cursor: cursor,
-        fb: fb,
-        gplus: gplus,
         plus: plus,
-        externalLink: externalLink
+        shareTwitter: shareTwitter,
+        shareEmail: shareEmail,
+        shareFacebook: shareFacebook,
+        sharePinterest: sharePinterest,
+        shareGPlus: shareGPlus,
+        externalLink: externalLink,
+        membershipLogo: membershipLogo,
+        surveyOverlay: surveyOverlay,
+        surveyOverlaySimple: surveyOverlaySimple,
+        surveyNew: surveyNew,
+        thrasherBenefit: thrasherBenefit,
+        thrasherBenefitSimple: thrasherBenefitSimple
     };
 
     return function (name, classes, title) {

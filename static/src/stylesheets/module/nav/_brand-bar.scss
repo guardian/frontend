@@ -142,6 +142,18 @@
     }
 }
 
+.brand-bar__item--edition,
+.is-signed-in.brand-bar__item--profile {
+    .is-not-modern & {
+        &:hover,
+        &:focus {
+            .popup {
+                display: block;
+            }
+        }
+    }
+}
+
 .brand-bar__item--jobs {
     .brand-bar__item--right--uk-edition &,
     .brand-bar__item--right--us-edition & {
@@ -209,15 +221,6 @@
     }
 }
 
-.is-not-modern .brand-bar__item--has-control {
-    &:hover,
-    &:focus {
-        .popup {
-            display: block;
-        }
-    }
-}
-
 // Popups
 
 // Mobile only
@@ -231,6 +234,15 @@
                 display: block;
             }
         }
+    }
+}
+
+.is-not-modern .brand-bar__item--has-control {
+        &:hover,
+        &:focus {
+            .popup {
+                display: block;
+            }
     }
 }
 

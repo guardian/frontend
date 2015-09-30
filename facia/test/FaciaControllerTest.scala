@@ -2,7 +2,7 @@ package test
 
 import com.gu.facia.client.models.{FrontJson, ConfigJson}
 import common.editions.{Us, Uk}
-import conf.Switches
+import conf.switches.Switches
 import implicits.FakeRequests
 import play.api.test._
 import play.api.test.Helpers._

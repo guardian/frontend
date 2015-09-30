@@ -1,7 +1,7 @@
 package common.editions
 
 import common._
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 
 object Uk extends Edition(
