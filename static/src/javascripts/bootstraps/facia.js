@@ -4,7 +4,6 @@ define([
     // Common libraries
     'common/utils/_',
     'common/utils/$',
-    'common/utils/background',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -28,7 +27,6 @@ define([
     qwery,
     _,
     $,
-    background,
     config,
     detect,
     mediator,
