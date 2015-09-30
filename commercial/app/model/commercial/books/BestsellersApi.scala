@@ -3,7 +3,7 @@ package model.commercial.books
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
 import conf.Configuration.commercial.magento
-import conf.Switches._
+import conf.switches.Switches._
 import model.commercial._
 
 import scala.concurrent.Future

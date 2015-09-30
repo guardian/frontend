@@ -4,6 +4,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
+    'Promise',
     'raven',
     'common/utils/$',
     'common/utils/$css',
@@ -20,12 +21,16 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/adfree-survey',
+    'common/modules/adfree-survey-simple',
+    'common/views/svgs'
 ], function (
     bean,
     bonzo,
     fastdom,
     qwery,
+    Promise,
     raven,
     $,
     $css,
@@ -42,7 +47,10 @@ define([
     geoMostPopular,
     ab,
     beacon,
-    id
+    id,
+    AdfreeSurvey,
+    AdfreeSurveySimple,
+    svgs
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -90,6 +98,9 @@ define([
                         new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
+                if (isAdfreeSurvey('variant') || isAdfreeSurvey('simple')) {
+                    showAdsFreeSurvey('300,250', $adSlot);
+                }
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
@@ -111,6 +122,11 @@ define([
             }
         },
         renderStartTime = null,
+
+        isAdfreeSurvey = function (variant) {
+            return ab.getParticipations().DisableAdsSurvey && ab.testCanBeRun('DisableAdsSurvey')
+                && ab.getParticipations().DisableAdsSurvey.variant === variant;
+        },
 
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
@@ -235,6 +251,19 @@ define([
         ),
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
+        },
+        showAdsFreeSurvey = function (size, $adSlot) {
+            fastdom.write(function () {
+                var crossIcon = svgs('crossIcon'),
+                    dataAttr = isAdfreeSurvey('variant') ? 'hide ads' : 'hide ads simple',
+                    $adSlotRemove = $(document.createElement('div')).addClass('ad-slot--remove').attr('data-link-name', dataAttr)
+                        .append('<a href="#" class="ad-slot--hide-ads" data-link-name="hide adslot: ' + size + '">Hide ads ' + crossIcon + '</a>').appendTo($adSlot);
+
+                bean.on(document, 'click', $adSlotRemove, function (e) {
+                    e.preventDefault();
+                    $('.js-survey-overlay').removeClass('u-h');
+                });
+            });
         },
 
         /**
@@ -404,30 +433,36 @@ define([
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
                 });
-                checkForBreakout($slot);
-                addLabel($slot);
-                size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, $slot);
-                }
 
-                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'flex');
-                    });
-                } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'block');
-                    });
-                }
+                // Check if creative is a new gu style creative and place labels accordingly
+                checkForBreakout($slot).then(function (adType) {
+                    if (!adType || adType.type !== 'gu-style') {
+                        addLabel($slot);
+                    }
 
-                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
-                || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    fastdom.write(function () {
-                        $slot.addClass('ad-slot__fluid250');
-                    });
-                }
+                    size = event.size.join(',');
+                    // is there a callback for this size
+                    if (callbacks[size]) {
+                        callbacks[size](event, $slot);
+                    }
+
+                    if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
+                        fastdom.write(function () {
+                            $slot.parent().css('display', 'flex');
+                        });
+                    } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                        fastdom.write(function () {
+                            $slot.parent().css('display', 'block');
+                        });
+                    }
+
+                    if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                    || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                        fastdom.write(function () {
+                            $slot.addClass('ad-slot__fluid250');
+                        });
+                    }
+                });
             }
         },
         allAdsRendered = function (slotId) {
@@ -442,8 +477,10 @@ define([
         },
         addLabel = function ($slot) {
             fastdom.write(function () {
+                var adSlotClass = (isAdfreeSurvey('variant') || isAdfreeSurvey('simple')) ? 'ad-slot__label ad-slot__survey' : 'ad-slot__label';
+
                 if (shouldRenderLabel($slot)) {
-                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+                    $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
                 }
             });
         },
@@ -460,7 +497,8 @@ define([
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
-                $iFrameParent      = $iFrame.parent();
+                $iFrameParent      = $iFrame.parent(),
+                type               = {};
 
             if (iFrameBody) {
                 _.forEach(breakoutClasses, function (breakoutClass) {
@@ -482,6 +520,11 @@ define([
                                 // evil, but we own the returning js snippet
                                 eval(breakoutContent);
                             }
+
+                            type = {
+                                type: creativeConfig.params.adType || '',
+                                variant: creativeConfig.params.adVariant || ''
+                            };
 
                         } else {
                             fastdom.write(function () {
@@ -506,6 +549,8 @@ define([
                     $iFrame.hide();
                 });
             }
+
+            return type;
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutClasses).
@@ -517,26 +562,34 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot).each(function (iFrame) {
-                // IE needs the iFrame to have loaded before we can interact with it
-                if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                    bean.on(iFrame, 'readystatechange', function (e) {
-                        var updatedIFrame = e.srcElement;
+            return Promise.all(_.map($('iframe', $slot), function (iFrame) {
+                return new Promise(function (resolve) {
+                    // IE needs the iFrame to have loaded before we can interact with it
+                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                        bean.on(iFrame, 'readystatechange', function (e) {
+                            var updatedIFrame = e.srcElement;
 
-                        if (
-                            /*eslint-disable valid-typeof*/
-                            updatedIFrame &&
-                                typeof updatedIFrame.readyState !== 'unknown' &&
-                                updatedIFrame.readyState === 'complete'
-                            /*eslint-enable valid-typeof*/
-                        ) {
-                            breakoutIFrame(updatedIFrame, $slot);
-                            bean.off(updatedIFrame, 'readystatechange');
-                        }
-                    });
-                } else {
-                    breakoutIFrame(iFrame, $slot);
-                }
+                            if (
+                                /*eslint-disable valid-typeof*/
+                                updatedIFrame &&
+                                    typeof updatedIFrame.readyState !== 'unknown' &&
+                                    updatedIFrame.readyState === 'complete'
+                                /*eslint-enable valid-typeof*/
+                            ) {
+                                bean.off(updatedIFrame, 'readystatechange');
+                                resolve(breakoutIFrame(updatedIFrame, $slot));
+                            }
+                        });
+                    } else {
+                        resolve(breakoutIFrame(iFrame, $slot));
+                    }
+                });
+            })).then(function (items) {
+                return _(items)
+                    .chain()
+                    .find(function (item) {
+                        return item.adType !== '';
+                    }).value();
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
@@ -636,5 +689,4 @@ define([
         };
 
     return dfp;
-
 });

@@ -4,8 +4,8 @@ import java.util.concurrent.TimeoutException
 
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.GuardianContentApiError
-import conf.SwitchTrait
 import contentapi.ErrorResponseHandler.isCommercialExpiry
+import conf.switches.SwitchTrait
 import model.{Cached, NoCache}
 import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}

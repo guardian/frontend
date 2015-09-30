@@ -1,5 +1,5 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement

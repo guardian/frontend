@@ -1,6 +1,6 @@
 package controllers
 
-import conf.Switches
+import conf.switches.Switches
 import play.api.test.Helpers.{cookies => playCookies, _}
 import org.scalatest.{BeforeAndAfterEach, DoNotDiscover, Matchers, FlatSpec}
 import test.{ConfiguredTestSuite, TestRequest}

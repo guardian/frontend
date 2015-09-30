@@ -1,6 +1,6 @@
 package common
 
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader

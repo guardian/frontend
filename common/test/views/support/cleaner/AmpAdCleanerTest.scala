@@ -8,12 +8,12 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
 
   val tenChars = "qwertyasdf"
 
-   "AmpAdCleaner" should "add an advert after 700 chars as well as the end one" in {
+   "AmpAdCleaner" should "add an advert after 700 chars" in {
      val doc = s"""<html><body><p>${tenChars * 70}</p><p>${tenChars * 70}</p></body></html>"""
      val document: Document = Jsoup.parse(doc)
      val result: Document = AmpAdCleaner.clean(document)
 
-     result.getElementsByTag("amp-ad").size should be(2)
+     result.getElementsByTag("amp-ad").size should be(1)
 
    }
 
@@ -22,12 +22,12 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
     val document: Document = Jsoup.parse(doc)
     val result: Document = AmpAdCleaner.clean(document)
 
-    result.getElementsByTag("amp-ad").size.should(be(1))
+    result.getElementsByTag("amp-ad").size.should(be(0))
 
   }
 
   "AmpAdCleaner" should "only add 2 ads in total" in {
-    val doc = s"""<html><body>${s"<p>${tenChars * 70}</p>" * 3}</body></html>"""
+    val doc = s"""<html><body>${s"<p>${tenChars * 70}</p>" * 4}</body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = AmpAdCleaner.clean(document)
 
@@ -40,8 +40,35 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
     val document: Document = Jsoup.parse(doc)
     val result: Document = AmpAdCleaner.clean(document)
 
+    result.getElementsByTag("amp-ad").size should be(0)
+
+  }
+
+  "AmpAdCleaner" should "not put an ad directly before something that isn't a p e.g. an image" in {
+    val doc = s"""<html><body><p>${tenChars * 70}</p><p>${tenChars * 29}asdfqwert</p><aside></aside></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = AmpAdCleaner.clean(document)
+
+    result.getElementsByTag("amp-ad").size should be(0)
+
+  }
+
+  "AmpAdCleaner" should "not put an ad directly after something that isn't a p e.g. an image" in {
+    val doc = s"""<html><body><p>${tenChars * 70}</p><aside></aside><p>${tenChars * 19}asdfqwert</p></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = AmpAdCleaner.clean(document)
+
+    result.getElementsByTag("amp-ad").size should be(0)
+
+  }
+
+  "AmpAdCleaner" should "put an ad far enough after something that isn't a p e.g. an image" in {
+    val doc = s"""<html><body><p>${tenChars * 70}</p><aside></aside><p>${tenChars * 20}</p><p>${tenChars * 20}</p></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = AmpAdCleaner.clean(document)
+
     result.getElementsByTag("amp-ad").size should be(1)
 
   }
 
- }
+}

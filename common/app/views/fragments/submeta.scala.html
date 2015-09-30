@@ -1,6 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
-@import conf.Switches.SaveForLaterSwitch
+@import conf.switches.Switches.SaveForLaterSwitch
 
 @toneLink = {
     @if(content.isArticle && !content.isLiveBlog) {
