@@ -12,11 +12,15 @@ object VersionInfo extends Plugin {
   val buildNumber = SettingKey[String]("version-build-number")
   val vcsNumber = SettingKey[String]("version-vcs-number")
 
-  private def isValidRepo(repo: java.io.File) = {
-    val gitRepo = new FileRepositoryBuilder().findGitDir(repo)
-    val hasExpectedRemote = gitRepo.build.getConfig.getString("remote", "origin", "url") == "git@github.com:guardian/frontend.git"
-    gitRepo.build.close()
-    hasExpectedRemote
+  private def isValidRepo(repo: java.io.File): Boolean = {
+    try {
+      val gitRepo = new FileRepositoryBuilder().findGitDir(repo)
+      val hasExpectedRemote = gitRepo.build.getConfig.getString("remote", "origin", "url") == "git@github.com:guardian/frontend.git"
+      gitRepo.build.close()
+      hasExpectedRemote
+    } finally {
+      false
+    }
   }
 
   override val settings = Seq(
