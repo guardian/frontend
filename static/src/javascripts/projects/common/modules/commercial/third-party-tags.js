@@ -5,7 +5,6 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/imr-worldwide',
@@ -16,7 +15,6 @@ define([
     Promise,
     config,
     mediator,
-    commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
     imrWorldwide,
@@ -27,7 +25,7 @@ define([
 
     function init() {
 
-        if (!commercialFeatures.thirdPartyTags) {
+        if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
             return false;
         }
 

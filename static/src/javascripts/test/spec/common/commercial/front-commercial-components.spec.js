@@ -16,23 +16,19 @@ describe('Front Commercial Components', function () {
         },
         $fixturesContainer,
         injector = new Injector(),
-        frontCommercialComponents, config, commercialFeatures;
+        frontCommercialComponents, config;
 
     beforeEach(function (done) {
-        injector.test([
-            'common/modules/commercial/front-commercial-components',
-            'common/modules/commercial/commercial-features',
-            'common/utils/config'
-        ], function () {
+        injector.test(['common/modules/commercial/front-commercial-components', 'common/utils/config'], function () {
             frontCommercialComponents = arguments[0];
-            commercialFeatures = arguments[1];
-            config = arguments[2];
-
+            config = arguments[1];
             config.page = {
                 isFront: true,
                 hasPageSkin: false
             };
-            commercialFeatures.frontCommercialComponents = true;
+            config.switches = {
+                commercialComponents: true
+            };
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             done();
@@ -104,8 +100,15 @@ describe('Front Commercial Components', function () {
         });
     });
 
-    it('it should not display ad slot if commercial-features switch is disabled', function () {
-        commercialFeatures.frontCommercialComponents = false;
+    it('should not display ad slot if commercial-components switch is off', function () {
+        config.switches.commercialComponents = false;
+
+        expect(frontCommercialComponents.init()).toBe(false);
+        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+    });
+
+    it('should not display ad slot if not a front', function () {
+        config.page.isFront = false;
 
         expect(frontCommercialComponents.init()).toBe(false);
         expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);

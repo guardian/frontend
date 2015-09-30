@@ -253,8 +253,19 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-object VideoEncodingUrlCleaner{
+object VideoEncodingUrlCleaner {
   def apply(url: String): String = url.filter(_ != '\n')
+}
+
+object AmpVideoSrcCleaner {
+  def apply(videoSrc: String) = {
+    // All videos need to start with https for AMP.
+    // Temperary code until all videos returned from CAPI are https
+    if (videoSrc.startsWith("http:")) {
+      val (first, last) = videoSrc.splitAt(4);
+      first + "s" + last
+    }
+  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
@@ -316,8 +327,6 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
 
 class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
-  import conf.switches.Switches.TwitterImageFallback
-
   override def clean(document: Document): Document = {
 
     document.getElementsByClass("element-tweet").foreach { tweet =>
@@ -358,15 +367,13 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
             element.empty().attr("class", "js-tweet tweet")
 
-            if (TwitterImageFallback.isSwitchedOn) {
-              tweetImage.foreach { image =>
-                val img = document.createElement("img")
-                img.attr("src", image)
-                img.attr("alt", "")
-                img.attr("rel", "nofollow")
-                img.addClass("js-tweet-main-image tweet-main-image")
-                element.appendChild(img)
-              }
+            tweetImage.foreach { image =>
+              val img = document.createElement("img")
+              img.attr("src", image)
+              img.attr("alt", "")
+              img.attr("rel", "nofollow")
+              img.addClass("js-tweet-main-image tweet-main-image")
+              element.appendChild(img)
             }
 
             element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
