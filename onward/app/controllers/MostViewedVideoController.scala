@@ -19,7 +19,7 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
         )
       }
     } else {
-      NoCache(JsonComponent("html" -> "{}"))
+      Cached(60)(JsonComponent("html" -> "{}"))
     }
   }
 }
