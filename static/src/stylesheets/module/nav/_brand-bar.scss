@@ -238,11 +238,11 @@
 }
 
 .is-not-modern .brand-bar__item--has-control {
-        &:hover,
-        &:focus {
-            .popup {
-                display: block;
-            }
+    &:hover,
+    &:focus {
+        .popup {
+            display: block;
+        }
     }
 }
 
