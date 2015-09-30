@@ -153,7 +153,6 @@ define([
         // get all immediate children
         return getReady().then(function () {
             return new Promise(function (resolve) {
-                if (qwery(bodySelector)[0]) {
                 fastdom.read(function () {
                     bodyBottom = qwery(bodySelector)[0].offsetHeight;
                     paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
@@ -176,7 +175,7 @@ define([
                     }
 
                     resolve(slots.length ? slots[0].element : undefined);
-                });}
+                });
             });
         });
     }
