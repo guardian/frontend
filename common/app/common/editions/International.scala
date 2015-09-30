@@ -3,8 +3,8 @@ package common.editions
 import java.util.Locale
 
 import common._
-import conf.Switches
-import conf.Switches.InternationalEditionBetaSwitch
+import conf.switches.Switches
+import conf.switches.Switches.InternationalEditionBetaSwitch
 import org.joda.time.DateTimeZone
 
 object International extends Edition(

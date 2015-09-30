@@ -1,10 +1,11 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement
     var personPrefersCore = function () {
-        if (window.location.hash === '#core') return true;
+        if (window.location.hash === '#core' || window.location.hash === 'gu.prefs.force-core=on') return true;
+        if (window.location.hash === '#nocore' || window.location.hash === 'gu.prefs.force-core=off') return false;
         try {
             var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
             return /"value":"on"/.test(preference);

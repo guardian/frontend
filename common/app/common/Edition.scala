@@ -2,7 +2,7 @@ package common
 
 import java.util.Locale
 
-import conf.Switches.InternationalEditionBetaSwitch
+import conf.switches.Switches.InternationalEditionBetaSwitch
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader

@@ -1,11 +1,14 @@
 package com.gu
 
 import com.gu.versioninfo.VersionInfo
+import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt._
 import sbt.Keys._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import com.typesafe.sbt.packager.Keys._
+import com.gu.riffraff.artifact.RiffRaffArtifact
+import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import play.twirl.sbt.Import._
 import Dependencies._
 
@@ -100,16 +103,30 @@ trait Prototypes {
   )
 
   def frontendDistSettings(application: String) = List(
-    name in Universal := application,
+    packageName in Universal := application,
     topLevelDirectory in Universal := Some(application),
-    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1))
+    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
+    riffRaffPackageType := (packageBin in Universal).value,
+    riffRaffBuildIdentifier := System.getProperty("build.number", "DEV").replaceAll("\"",""),
+    riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
+    riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
+    riffRaffArtifactPublishPath := application,
+    riffRaffManifestProjectName := s"dotcom:$application",
+    riffRaffPackageName := s"dotcom:$application",
+    riffRaffArtifactResources := Seq(
+      riffRaffPackageType.value -> s"packages/$application/${riffRaffPackageType.value.getName}",
+      baseDirectory.value / "deploy.json" -> "deploy.json"
+    ),
+    artifactName in Universal := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+      artifact.name + "." + artifact.extension
+    }
   )
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
     .settings(frontendCompilationSettings)
 
   def application(applicationName: String) = {
-    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala, RiffRaffArtifact, UniversalPlugin)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
     .settings(frontendClientSideSettings)
@@ -117,5 +134,15 @@ trait Prototypes {
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
     .settings(frontendDistSettings(applicationName))
+  }
+
+  def library(applicationName: String) = {
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
+    .settings(frontendDependencyManagementSettings)
+    .settings(frontendCompilationSettings)
+    .settings(frontendClientSideSettings)
+    .settings(frontendTestSettings)
+    .settings(VersionInfo.settings)
+    .settings(libraryDependencies ++= Seq(commonsIo))
   }
 }

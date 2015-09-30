@@ -1,6 +1,6 @@
 package controllers
 
-import conf.Switches
+import conf.switches.Switches
 import play.api.test.Helpers.{cookies => playCookies, _}
 import org.scalatest.{BeforeAndAfterEach, DoNotDiscover, Matchers, FlatSpec}
 import test.{ConfiguredTestSuite, TestRequest}
@@ -26,11 +26,11 @@ import test.{ConfiguredTestSuite, TestRequest}
 
   it should "set the international cookie if enabled" in {
 
-    val result = controllers.ChangeEditionController.render("intl")(TestRequest())
+    val result = controllers.ChangeEditionController.render("int")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
     GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
-    GU_EDITION.value should be ("INTL")
+    GU_EDITION.value should be ("INT")
 
     header("Location", result).head should endWith ("/international")
   }

@@ -1,3 +1,0 @@
-package controllers.faciatool
-
-object UncachedAssets extends controllers.PublicAssets

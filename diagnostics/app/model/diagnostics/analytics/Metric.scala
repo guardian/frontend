@@ -3,7 +3,7 @@ package model.diagnostics.analytics
 import java.util.concurrent.atomic.AtomicLong
 
 import common.Logging
-import conf.Switches
+import conf.switches.Switches
 
 object Metric extends Logging {
 
@@ -14,7 +14,7 @@ object Metric extends Logging {
   lazy val namespace = "Diagnostics"
 
   // TODO delete bounce-test-present when this goes
-  import conf.Switches.NoBounceIndicator
+  import conf.switches.Switches.NoBounceIndicator
 
   lazy val metrics = Map(
 
@@ -54,20 +54,20 @@ object Metric extends Logging {
     ("ipad-2orMini-after-10", CountMetric(s"ipad-2orMini-after-10")),
     ("ipad-2orMini-after-60", CountMetric(s"ipad-2orMini-after-60")),
 
-    ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
-    ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
-    ("ipad-3orLater-after-10", CountMetric(s"ipad-3orLater-after-10")),
-    ("ipad-3orLater-after-60", CountMetric(s"ipad-3orLater-after-60")),
+    ("ipad-retina-core-opted-in-start", CountMetric(s"ipad-retina-core-opted-in-start")),
+    ("ipad-retina-core-opted-in-after-5", CountMetric(s"ipad-retina-core-opted-in-after-5")),
+    ("ipad-retina-core-opted-in-after-10", CountMetric(s"ipad-retina-core-opted-in-after-10")),
+    ("ipad-retina-core-opted-in-after-60", CountMetric(s"ipad-retina-core-opted-in-after-60")),
 
-    ("ipad-3orLater-core-opted-in-start", CountMetric(s"ipad-3orLater-core-opted-in-start")),
-    ("ipad-3orLater-core-opted-in-after-5", CountMetric(s"ipad-3orLater-core-opted-in-after-5")),
-    ("ipad-3orLater-core-opted-in-after-10", CountMetric(s"ipad-3orLater-core-opted-in-after-10")),
-    ("ipad-3orLater-core-opted-in-after-60", CountMetric(s"ipad-3orLater-core-opted-in-after-60")),
+    ("ipad-retina-core-fronts-control-start", CountMetric(s"ipad-retina-core-fronts-control-start")),
+    ("ipad-retina-core-fronts-control-after-5", CountMetric(s"ipad-retina-core-fronts-control-after-5")),
+    ("ipad-retina-core-fronts-control-after-10", CountMetric(s"ipad-retina-core-fronts-control-after-10")),
+    ("ipad-retina-core-fronts-control-after-60", CountMetric(s"ipad-retina-core-fronts-control-after-60")),
 
-    ("ipad-3orLater-core-fronts-start", CountMetric(s"ipad-3orLater-core-fronts-start")),
-    ("ipad-3orLater-core-fronts-after-5", CountMetric(s"ipad-3orLater-core-fronts-after-5")),
-    ("ipad-3orLater-core-fronts-after-10", CountMetric(s"ipad-3orLater-core-fronts-after-10")),
-    ("ipad-3orLater-core-fronts-after-60", CountMetric(s"ipad-3orLater-core-fronts-after-60")),
+    ("ipad-retina-core-fronts-test-start", CountMetric(s"ipad-retina-core-fronts-test-start")),
+    ("ipad-retina-core-fronts-test-after-5", CountMetric(s"ipad-retina-core-fronts-test-after-5")),
+    ("ipad-retina-core-fronts-test-after-10", CountMetric(s"ipad-retina-core-fronts-test-after-10")),
+    ("ipad-retina-core-fronts-test-after-60", CountMetric(s"ipad-retina-core-fronts-test-after-60")),
 
 //    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
 //    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
@@ -97,5 +97,5 @@ object Metric extends Logging {
   )
 
   //just here so that when you delete this you see this comment and delete the 'iphone' metrics above
-  private lazy val deleteIphoneMetrics = conf.Switches.IphoneConfidence.isSwitchedOn
+  private lazy val deleteIphoneMetrics = conf.switches.Switches.IphoneConfidence.isSwitchedOn
 }

@@ -8,32 +8,54 @@
 .crossword__clues-list {
     margin: 0;
     margin-bottom: $gs-baseline;
+    list-style-type: none;
 }
 
 .crossword__clue {
     position: relative;
-    cursor: pointer;
     @include fs-textSans(4);
     padding: $gs-baseline * .25 $gs-baseline;
-    padding-left: $xword-clue-number-width + $gs-baseline;
     margin: $gs-baseline * .25 0;
-    list-style-type: none;
+    display: block;
 
-    &:before {
-        content: attr(data-number);
-        display: inline-block;
-        min-width: $xword-clue-number-width;
-        margin-left: -$xword-clue-number-width;
-        position: static;
-        font-weight: bold;
-        -webkit-font-smoothing: initial;
+    // Override link styles
+    &:hover {
+        text-decoration: none;
+    }
+
+    &,
+    &:active {
+        color: inherit;
+    }
+}
+
+.crossword__clue__number,
+.crossword__clue__text {
+    display: table-cell;
+}
+
+.crossword__clue__number {
+    font-weight: bold;
+    -webkit-font-smoothing: initial;
+    width: $gs-gutter;
+    padding-right: $gs-gutter / 2;
+
+    .has-grouped-clues & {
+        width: $gs-gutter * 2;
+
+        @include mq(leftCol) {
+            width: $gs-gutter * 3;
+        }
     }
 }
 
 .crossword__clue--selected {
-    font-weight: bold;
     background-color: $xword-focussed-background-colour;
-    color: $xword-focussed-colour;
+
+    > * {
+        font-weight: bold;
+        color: $xword-focussed-colour;
+    }
 }
 
 .crossword__clue--answered {

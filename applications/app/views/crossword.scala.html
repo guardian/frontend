@@ -15,7 +15,7 @@
                 <div class="gs-container">
                     <div class="js-content-main-column">
 
-                        <div class="js-crossword"
+                        <div class="js-crossword @if(crosswordPage.hasGroupedClues) {has-grouped-clues}"
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
                             <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">

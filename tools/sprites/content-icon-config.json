@@ -1,7 +1,0 @@
-{
-    "src":        "../../static/src/images/content/",
-    "imgDest":    "../../static/target/images/content/",
-    "cssDest":    "../../static/src/stylesheets/icons/",
-    "cssSvgName": "_content-icons-svg.scss",
-    "cssPngName": "_content-icons-sprite.scss"
-}

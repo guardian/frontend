@@ -4,6 +4,7 @@ import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
+import conf.switches.Switches
 import controllers.front._
 import layout.{Front, CollectionEssentials, FaciaContainer}
 import model._

@@ -67,11 +67,11 @@ import scala.io.Source
 
       val scoreEvents = rugby.feed.Parser.parseLiveEventsStatsToGetScoreEvents(liveEventsStatsData)
 
-      scoreEvents.size should be(9)
+      scoreEvents.size should be(10)
 
       val tryScoreEvents = scoreEvents.filter(_.`type` == ScoreType.`Try`)
 
-      tryScoreEvents.size should be(4)
+      tryScoreEvents.size should be(5)
 
       val topTryScorer: Seq[ScoreEvent] = tryScoreEvents.filter(_.player.id == "19083")
       topTryScorer.size should be(2)
@@ -80,6 +80,12 @@ import scala.io.Source
 
       topTryScorer.head.player.team.id should be("550")
       topTryScorer.head.player.team.name should be("England")
+
+      val penaltyTry = tryScoreEvents.filter(_.player.id == "0")
+      penaltyTry.size should be (1)
+      penaltyTry.head.player.name should be("Penalty")
+      penaltyTry.head.minute should be ("12")
+      penaltyTry.head.player.team.name should be("England")
     }
 
      "should parse team stats correctly" in {
@@ -106,7 +112,7 @@ import scala.io.Source
       england.lineouts_lost should be(3)
       england.mauls_won should be(4)
       england.mauls_lost should be(1)
-      england.mauls_total should be(5) 
+      england.mauls_total should be(5)
       england.penalties_conceded should be(9)
       england.penalty_conceded_dissent should be(0)
       england.penalty_conceded_delib_knock_on should be(0)
@@ -132,7 +138,7 @@ import scala.io.Source
       england.scrums_won should be(5)
       england.scrums_lost should be(2)
       england.scrums_total should be(7)
-    
+
       val france = matchStat.teams.last
     }
 
@@ -141,7 +147,7 @@ import scala.io.Source
       val tables = rugby.feed.Parser.parseGroupTables(tablesData)
 
       tables.size should be(4)
-      tables.head.name should be("Pool A") 
+      tables.head.name should be("Pool A")
       val fiji = tables.head.teams.head
       fiji.name should be("Fiji")
       fiji.rank should be(1)

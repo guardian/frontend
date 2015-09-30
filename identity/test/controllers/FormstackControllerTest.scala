@@ -4,7 +4,8 @@ import actions.AuthenticatedActions
 import client.Error
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.{StatusFields, User}
-import conf.{FrontendIdentityCookieDecoder, Switches}
+import conf.FrontendIdentityCookieDecoder
+import conf.switches.Switches
 import formstack.{FormstackApi, FormstackForm}
 import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import org.mockito.Matchers

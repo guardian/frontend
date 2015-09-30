@@ -1,0 +1,32 @@
+.gu-compopup {
+    @include f-textSans;
+    @extend %gu-style-box;
+
+    width: 80%;
+    top: ($gs-baseline / 2) * 3 + $gs-row-height / 2;
+    left: auto;
+    right: $gs-baseline / 2;
+    z-index: $zindex-modal;
+    text-align: left;
+    background-color: $gustyle-tone;
+}
+
+.gu-compopup__title {
+    @include font-size(13, 18);
+
+    margin: 0;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.gu-compopup__text {
+    @include font-size(13, 15);
+}
+
+.gu-compopup__link {
+    @include font-size(13, 15);
+
+    font-weight: bold;
+    color: colour(neutral-1);
+    float: left;
+}

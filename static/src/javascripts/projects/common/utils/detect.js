@@ -221,34 +221,6 @@ define([
 
     }
 
-    function getFontFormatSupport(ua) {
-        ua = ua.toLowerCase();
-
-        var browsersThatSupportWoff2 = {
-            'chrome': 36,
-            'firefox': 39
-        };
-
-        var thisBrowserSupportsWoff2 = function (candidacy) {
-            return _.some(browsersThatSupportWoff2, function (supportingVersion, supportingBrowser) {
-                return candidacy[1] === supportingBrowser && parseInt(candidacy[2], 10) >= supportingVersion;
-            });
-        };
-
-        var isNotEdgeBrowser = !/edge\/([0-9]+)/.test(ua);
-        var woff2Candidacy = isNotEdgeBrowser && /(chrome|firefox)\/([0-9]+)/.exec(ua);
-
-        if (!!woff2Candidacy && thisBrowserSupportsWoff2(woff2Candidacy)) {
-            return 'woff2';
-        }
-
-        if (ua.indexOf('android') > -1) {
-            return 'ttf';
-        }
-
-        return 'woff';
-    }
-
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -409,30 +381,6 @@ define([
         return 'WebSocket' in window;
     }
 
-    // Determine if what type of font-hinting we want.
-    // Duplicated in /common/app/views/fragments/javaScriptLaterSteps.scala.html
-    function fontHinting() {
-        var ua = navigator.userAgent,
-            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-            hinting = 'Off',
-            version;
-
-        if (windowsNT) {
-            version = parseFloat(windowsNT[1], 10);
-            // For Windows XP-7
-            if (version >= 5.1 && version <= 6.1) {
-                if (/Chrome/.exec(ua) && version < 6.0) {
-                    // Chrome on windows XP wants auto-hinting
-                    hinting = 'Auto';
-                } else {
-                    // All others use cleartype
-                    hinting = 'Cleartype';
-                }
-            }
-        }
-        return hinting;
-    }
-
     function isModernBrowser() {
         return window.guardian.isModernBrowser;
     }
@@ -468,7 +416,6 @@ define([
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
-        getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
@@ -492,7 +439,6 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
         adblockInUse: adblockInUse(),
         getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled

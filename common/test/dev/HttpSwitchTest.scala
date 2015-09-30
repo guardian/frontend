@@ -1,5 +1,6 @@
 package dev
 
+import conf.switches.{Off, On, Switch}
 import org.scalatest.{Matchers, FlatSpec}
 import conf._
 import org.joda.time.LocalDate

@@ -82,6 +82,16 @@ const getAnagramClueData = (entries, clue) => {
     return clue;
 };
 
+const cluesAreInGroup = (clue, otherClue) => {
+    return _.contains(otherClue.group, clue.id);
+};
+
+const checkClueHasBeenAnswered = (grid, entry) => {
+    return _.every(cellsForEntry(entry), (position) => {
+        return /^[A-Z]$/.test(grid[position.x][position.y].value);
+    });
+};
+
 const isAcross = (clue) => clue.direction === 'across';
 
 const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
@@ -104,6 +114,35 @@ const cellsForClue = (entries, clue) => {
         return cellsForEntry(clue);
     }
 };
+
+const cluesFor = (clueMap, x, y) => {
+    return clueMap[clueMapKey(x, y)];
+};
+
+const getClearableCellsForClue = (grid, clueMap, entries, clue) => {
+    if (clueIsInGroup(clue)) {
+        const entriesForClue = getGroupEntriesForClue(entries, clue.group);
+        return _.uniq(_.flatten(_.map(entriesForClue, (entry) => {
+            return getClearableCellsForEntry(grid, clueMap, entries, entry);
+        })), (cell) => { return [cell.x, cell.y].join(); });
+    } else {
+        return getClearableCellsForEntry(grid, clueMap, entries, clue);
+    }
+};
+
+
+const getClearableCellsForEntry = (grid, clueMap, entries, entry) => {
+    const direction = entry.direction === 'across' ? 'down' : 'across';
+    return _.filter(cellsForEntry(entry), (cell) => {
+        const clues = cluesFor(clueMap, cell.x, cell.y);
+        const otherClue = clues[direction];
+        if (otherClue) {
+            return cluesAreInGroup(entry, otherClue) || !checkClueHasBeenAnswered(grid, otherClue);
+        }
+        return true;
+    });
+};
+
 
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
@@ -202,6 +241,7 @@ export default {
     otherDirection: otherDirection,
     buildGrid: buildGrid,
     clueMapKey: clueMapKey,
+    cluesFor: cluesFor,
     buildClueMap: buildClueMap,
     buildSeparatorMap,
     cellsForEntry: cellsForEntry,
@@ -220,5 +260,8 @@ export default {
     getNumbersForGroupedEntries: getNumbersForGroupedEntries,
     getClueForGroupedEntries: getClueForGroupedEntries,
     getAllSeparatorsForGroup: getAllSeparatorsForGroup,
-    getTtotalLengthOfGroup: getTtotalLengthOfGroup
+    getTtotalLengthOfGroup: getTtotalLengthOfGroup,
+    cluesAreInGroup: cluesAreInGroup,
+    checkClueHasBeenAnswered: checkClueHasBeenAnswered,
+    getClearableCellsForClue: getClearableCellsForClue
 };

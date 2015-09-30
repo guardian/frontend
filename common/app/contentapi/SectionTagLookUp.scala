@@ -1,7 +1,7 @@
 package contentapi
 
 import common.Maps.RichMap
-import conf.Switches
+import conf.switches.Switches
 import Function.const
 
 object SectionTagLookUp {

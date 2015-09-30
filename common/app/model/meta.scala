@@ -149,7 +149,7 @@ object Page {
 
 case class CommercialExpiryPage(override val id: String) extends Page(
   id,
-  section = "info",
+  section = "global",
   webTitle = "This page has been removed",
   analyticsName = "GFE:Gone"
 ) {
