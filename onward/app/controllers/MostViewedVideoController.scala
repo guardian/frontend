@@ -1,9 +1,9 @@
 package controllers
 
-import common.{JsonComponent, Logging, ExecutionContexts}
+import common.{ExecutionContexts, JsonComponent, Logging}
 import feed.MostViewedVideoAgent
-import model.{NoCache, Cached}
-import play.api.mvc.{ Controller, Action }
+import model.Cached
+import play.api.mvc.{Action, Controller}
 
 object MostViewedVideoController extends Controller with Logging with ExecutionContexts {
 
