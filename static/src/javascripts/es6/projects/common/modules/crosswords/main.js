@@ -658,7 +658,7 @@ export default function () {
                 // focussed. When focussing a cell in a new clue, we update the
                 // hash fragment afterwards, in which case we do not want to
                 // reset focus to the first cell.
-                if (newEntry && focussedEntry && isNewEntry) {
+                if (newEntry && (focussedEntry ? isNewEntry : true)) {
                     crosswordComponent.focusFirstCellInClue(newEntry);
                 }
             });
