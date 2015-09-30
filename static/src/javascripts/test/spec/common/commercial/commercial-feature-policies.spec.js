@@ -163,14 +163,25 @@ describe('Commercial features', ()=> {
     });
 
     describe('Non-article pages policy', ()=> {
+        beforeEach(()=> {
+            config.page.contentType = 'Article';
+            config.page.isLiveBlog = false;
+        });
+
         it('hides article MPUs on non-article pages', ()=> {
             config.page.contentType = 'Gallery';
             const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
             expect(switches.articleMPUs).toBe(false);
         });
 
-        it('applies no changes otherwise', ()=> {
+        it('hides article MPUs on live blog articles', ()=> {
             config.page.contentType = 'Article';
+            config.page.isLiveBlog = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
+            expect(switches.articleMPUs).toBe(false);
+        });
+
+        it('applies no changes otherwise', ()=> {
             const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
             expect(switches).toBeUndefined();
         });

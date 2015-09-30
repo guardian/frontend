@@ -62,7 +62,7 @@ define([
     };
 
     policies.nonArticlePages = function () {
-        if (config.page.contentType !== 'Article' && !config.page.isLiveBlog) {
+        if (config.page.contentType !== 'Article' || config.page.isLiveBlog) {
             return {articleMPUs : false};
         }
     };
