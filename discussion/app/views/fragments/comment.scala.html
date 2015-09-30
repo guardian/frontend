@@ -71,9 +71,9 @@
                     data-user-id="@comment.profile.userId"
                     data-recommend-count="@comment.numRecommends"
                     title="@comment.numRecommends recommendations">
-                    <button class="u-button-reset d-comment__recommend-button">
+                    <button class="u-button-reset d-comment__recommend-button rounded-icon">
                         <span class="d-comment__recommend-pulse"></span>
-                        <i></i>
+                        @fragments.inlineSvg("arrow-up-white", "icon")
                     </button>
                     <span class="d-comment__recommend-count js-recommend-count">
                         <span class="d-comment__recommend-count--old">@comment.numRecommends</span>

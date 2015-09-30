@@ -12,7 +12,8 @@ class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
       "group" -> idRequest.groupCode,
       "type" -> idRequest.trackingData.registrationType,
       "skipConfirmation" -> idRequest.skipConfirmation.map(_.toString),
-      "page" -> idRequest.page.map(_.toString)
+      "page" -> idRequest.page.map(_.toString),
+      "INTCMP" -> idRequest.campaignCode.map(_.toString)
     )
     params.flatMap(param => if (param._2.isDefined) Some(param._1 -> param._2.get) else None)
   }

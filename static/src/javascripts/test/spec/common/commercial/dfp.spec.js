@@ -37,20 +37,14 @@ describe('DFP', function () {
             };
         },
         injector = new Injector(),
-        dfp, config, commercialFeatures;
+        dfp, config;
 
     beforeEach(function (done) {
 
-        injector.test([
-            'common/modules/commercial/dfp',
-            'common/utils/config',
-            'common/modules/commercial/dfp-ophan-tracking',
-            'common/modules/commercial/commercial-features'
-        ], function () {
+        injector.test(['common/modules/commercial/dfp', 'common/utils/config', 'common/modules/commercial/dfp-ophan-tracking'], function () {
             dfp = arguments[0];
             config = arguments[1];
             let ophanTracking = arguments[2];
-            commercialFeatures = arguments[3];
 
             config.switches = {
                 commercialComponents: true,
@@ -115,8 +109,6 @@ describe('DFP', function () {
             };
             //jscs:enable disallowEmptyBlocks
 
-            commercialFeatures.dfpAdvertising = true;
-
             done();
         });
     });
@@ -134,11 +126,6 @@ describe('DFP', function () {
 
     it('should return dfp object on init', function () {
         expect(dfp.init()).toBe(dfp);
-    });
-
-    it('should not run if disabled in commercial features', function () {
-        commercialFeatures.dfpAdvertising = false;
-        expect(dfp.init()).toBe(false);
     });
 
     it('should get the slots', function () {

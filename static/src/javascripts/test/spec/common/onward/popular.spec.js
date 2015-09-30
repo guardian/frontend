@@ -12,7 +12,7 @@ describe('Most popular', function () {
         html = '<b>popular</b>',
         server,
         injector = new Injector(),
-        Popular, config, mediator, detect, commercialFeatures;
+        Popular, config, mediator, detect, userAdPreference;
 
     beforeEach(function (done) {
         injector.mock({
@@ -33,15 +33,19 @@ describe('Most popular', function () {
         });
         injector.test([
             'common/modules/onward/popular',
-            'common/modules/commercial/commercial-features',
             'common/utils/config',
             'common/utils/mediator',
-            'common/utils/detect'
+            'common/utils/detect',
+            'common/modules/commercial/user-ad-preference'
         ], function () {
-            [Popular, commercialFeatures, config, mediator, detect] = arguments;
+            Popular = arguments[0];
+            config = arguments[1];
+            mediator = arguments[2];
+            detect = arguments[3];
+            userAdPreference = arguments[4];
 
             config.page.section = 'football';
-            commercialFeatures.popularContentMPU = true;
+            userAdPreference.hideAds = false;
 
             // set up fake server
             server = sinon.fakeServer.create();
@@ -102,9 +106,17 @@ describe('Most popular', function () {
         expect(popular.$mpu).toBeUndefined();
     });
 
-    it('should not render MPU when disabled in commercial-features', function () {
+    it('should not render MPU when user opts out of adverts', function () {
         var popular = new Popular();
-        commercialFeatures.popularContentMPU = false;
+        userAdPreference.hideAds = true;
+
+        popular.prerender();
+        expect(popular.$mpu).toBeUndefined();
+    });
+
+    it('should not render MPU when in the childrens books section', function () {
+        var popular = new Popular();
+        config.page.section = 'childrens-books-site';
 
         popular.prerender();
         expect(popular.$mpu).toBeUndefined();
