@@ -30,21 +30,18 @@ set +u
 if [[ -z $BUILD_NUMBER ]]; then
   BUILD_NUMBER=0
 fi
-if [[ -z $BUILD_VCS_NUMBER ]]; then
-  BUILD_VCS_NUMBER=dev-vcs-build
-fi
 if [[ -z $RIFF_RAFF_ARTIFACT_BUCKET ]]; then
   RIFF_RAFF_ARTIFACT_BUCKET=aws-frontend-teamcity
 fi
 if [[ -z $RIFF_RAFF_BUILD_BUCKET ]]; then
   RIFF_RAFF_BUILD_BUCKET=aws-frontend-teamcity
 fi
-if [[ -z $BUILD_VCS_BRANCH ]]; then
-  BUILD_VCS_BRANCH=dev-branch
-fi
 set -u
 
 BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%S.000Z")
+BUILD_VCS_NUMBER=$(git rev-parse --quiet HEAD)
+ref=$(git symbolic-ref --quiet HEAD)
+BUILD_VCS_BRANCH=${ref#refs/heads/}
 
 sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
     -e "s|<%start_time%>|$BUILD_START_DATE|" \

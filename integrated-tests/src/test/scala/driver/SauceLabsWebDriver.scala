@@ -12,7 +12,7 @@ object SauceLabsWebDriver {
     val capabilities = DesiredCapabilities.firefox()
 
     // this makes the test name appear in the Saucelabs UI
-    val buildNumber = System.getProperty("build.number", "")
+    val buildNumber = System.getenv().getOrDefault("BUILD_NUMBER", "0")
     capabilities.setCapability("name", s"Integrated Tests Suite $buildNumber")
     val domain = s"${Config.stack.userName}:${Config.stack.automateKey}@ondemand.saucelabs.com"
     val url = s"http://$domain:80/wd/hub"
