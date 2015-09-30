@@ -12,20 +12,23 @@ define([
     mediator
 ) {
 
-    var Toggles = function () {
+    var Toggles = function (parent) {
 
         var self = this,
             controls,
             doNotReset = ['popup--search'],
-            readyClass = 'js-toggle-ready';
+            readyClass = 'js-toggle-ready',
+            isSignedIn = $('.js-profile-nav').hasClass('is-signed-in'),
+            component  = parent || document.body;
 
         this.init = function () {
-            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
+            controls = Array.prototype.slice.call(component.querySelectorAll('[data-toggle]'));
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
                     var target = self.getTarget(control);
-                    if (target) {
+
+                    if (target && !(!isSignedIn && control.getAttribute('data-toggle-signed-in') === 'true')) {
                         control.toggleTarget = target;
                         bonzo(control).addClass(readyClass);
                         bean.add(control, 'click', function (e) {

@@ -1,7 +1,8 @@
 package test
 
-import conf.{Switches, Configuration}
-import conf.Switches._
+import conf.Configuration
+import conf.switches.Switches
+import conf.switches.Switches._
 import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
@@ -411,9 +412,6 @@ import collection.JavaConversions._
     }
 
     scenario("Should include the first image of a tweet") {
-
-      Switches.TwitterImageFallback.switchOn()
-
       Given("I am on an article with a embedded Tweet")
       goTo("/world/2015/aug/22/hawker-hunter-plane-crash-shoreham-air-show-reports") { browser =>
         import browser._

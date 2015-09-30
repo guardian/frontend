@@ -8,6 +8,7 @@ var path = require('path');
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var _ = require('lodash');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
@@ -88,11 +89,11 @@ function processBuild(moduleExpression, outName) {
     };
 }
 
-function makeDirectory(bundle) {
+function makeDirectory(dirPath) {
     return new Promise(function (resolve, reject) {
-        mkdirp(path.dirname(path.join(prefixPath, bundle.uri)), function (e) {
+        mkdirp(dirPath, function (e) {
             if (e) return reject(e);
-            resolve(bundle);
+            resolve();
         });
     });
 }
@@ -121,46 +122,52 @@ function writeBundleMapToDisk(bundle) {
     });
 }
 
-function writeConfig() {
-    var bundles = Object.keys(processedBundles).map(function (key) {
-        return processedBundles[key];
-    });
-
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundles, null, '\t') + ' })';
-
-    console.log('writing to %s', configFilePath);
-    fs.writeFile(configFilePath, configFileData, function (e) {
-        if (e) return process.exit(1);
-        process.exit(0);
-    });
-}
-
 function updateBundles(message) {
     processedBundles[message.id] = message.configs;
 }
 
 function writeConfig() {
-    var configs = Object.keys(processedBundles).reduce(function (acc, key) {
-        var bundles = processedBundles[key];
+    var configs = _(processedBundles)
+        .values()
+        .reduce(function (accumulator, object) { return _.merge(accumulator, object); });
 
-        Object.keys(bundles).forEach(function (bundleKey) {
-            acc[bundleKey] = bundles[bundleKey];
-        });
-
-        return acc;
-    }, {});
-
-    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.config({ bundles: ' + JSON.stringify(configs, null, '\t') + ' })';
+    var configFilePath = path.join(prefixPath, 'assets/jspm-assets.map');
+    var configFileData = JSON.stringify(configs, null, '\t');
 
     console.log('writing to %s', configFilePath);
 
-    fs.writeFile(configFilePath, configFileData, function (e) {
-        if (e) return process.exit(1);
-        process.exit(0);
+    return makeDirectory(path.dirname(configFilePath)).then(function () {
+        return new Promise(function (resolve, reject) {
+            fs.writeFile(configFilePath, configFileData, function (e) {
+                if (e) {
+                    reject(e);
+                } else {
+                    resolve();
+                }
+            });
+        });
     });
 }
+
+var createModuleExpressionToFilenameMap = function (bundles) {
+    return Promise.all(bundles.map(function (bundle) {
+        return System.normalize(bundle.id).then(function (absolutePath) {
+            absolutePath = absolutePath.replace('file://', '');
+            var pathRelativeToDir = path.relative(__dirname, absolutePath);
+            return path.relative(jspmBaseUrl, pathRelativeToDir);
+        }).then(function (relativeFilename) {
+            return {
+                expression: bundle.id,
+                relativeFilename: relativeFilename
+            };
+        });
+    })).then(function (modules) {
+        return modules.reduce(function (accumulator, module) {
+            accumulator[module.expression] = module.relativeFilename;
+            return accumulator;
+        }, {});
+    });
+};
 
 if (cluster.isMaster) {
     var split = split(bundleConfigs, numCPUs);
@@ -182,7 +189,10 @@ if (cluster.isMaster) {
             if (cluster.workers[id].isConnected()) return;
         }
 
-        writeConfig();
+        writeConfig().catch(function (err) {
+            console.error(err.stack);
+            process.exit(1);
+        });
     });
 } else {
     process.on('message', function go(message) {
@@ -192,19 +202,24 @@ if (cluster.isMaster) {
 
             return builder.build(moduleExpression, null)
                 .then(processBuild(moduleExpression, outName))
-                .then(makeDirectory)
+                .then(function (bundle) {
+                    return makeDirectory(path.dirname(path.join(prefixPath, bundle.uri)))
+                        .then(function () { return bundle; });
+                })
                 .then(writeBundleToDisk)
                 .then(writeBundleMapToDisk);
         })).then(function (bundles) {
-            var configs = bundles.reduce(function (accumulator, bundle) {
-                accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
-                return accumulator;
-            }, {});
+            return createModuleExpressionToFilenameMap(bundles).then(function (map) {
+                var configs = bundles.reduce(function (accumulator, bundle) {
+                    accumulator[map[bundle.id]] = bundle.uri;
+                    return accumulator;
+                }, {});
 
-            process.send({ id: process.env.num, configs: configs });
-            process.exit(0);
+                process.send({ id: process.env.num, configs: configs });
+                process.exit(0);
+            });
         }).catch(function (err) {
-            console.error(err);
+            console.error(err.stack);
             process.exit(1);
         });
     });

@@ -6,7 +6,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import business.{StocksData, Stocks}
 import scala.concurrent.duration._
-import conf.Switches.StocksWidgetSwitch
+import conf.switches.Switches.StocksWidgetSwitch
 
 object StocksController extends Controller {
   def stocks = Action { implicit request =>

@@ -140,11 +140,14 @@
     .l-header--is-slim & {
         display: none;
     }
+}
 
+.brand-bar__item--edition,
+.is-signed-in.brand-bar__item--profile {
     .is-not-modern & {
         &:hover,
         &:focus {
-            .top-bar__popup--edition {
+            .popup {
                 display: block;
             }
         }

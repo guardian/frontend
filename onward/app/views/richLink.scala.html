@@ -1,5 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 @import conf.Static
 @import conf.Configuration
 
@@ -21,7 +21,7 @@
 
         @if(play.Play.isDev()) {
             <script>
-                @Html(Static.js.systemJsSetupFragment)
+                @Html(Static.systemJs.setupFragment)
 
                 // Our app assumes a normal env
                 window.guardian = {

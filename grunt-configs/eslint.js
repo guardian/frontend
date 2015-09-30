@@ -17,17 +17,6 @@ module.exports = function(grunt, options) {
                 ignorePath: 'static/src/.eslintignore',
                 quiet: true
             }
-        },
-        'facia-tool': {
-            files: [{
-                expand: true,
-                cwd: 'facia-tool/public/js/',
-                src: [
-                    '**/*.js',
-                    '!jspm-config.js',
-                    '!components/**/*.js'
-                ]
-            }]
         }
     };
 };

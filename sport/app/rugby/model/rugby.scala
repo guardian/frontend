@@ -13,9 +13,12 @@ case class Match(
   venue: Option[String],
   competitionName: String,
   status: Status,
-  event: OptaEvent
+  event: OptaEvent,
+  stage: Stage.Value
 ) {
   def hasTeam(teamId: String) = homeTeam.id == teamId || awayTeam.id == teamId
+
+  lazy val hasGroupTable = event.hasGroupTable(stage)
 
   lazy val teamTags: List[String] = model.RugbyContent.teamNameIds.collect {
     case (tag, team) if List(homeTeam.id, awayTeam.id).contains(team) => tag
@@ -41,6 +44,11 @@ case class Match(
   }
 
   val isFixture: Boolean = status == Fixture
+}
+
+object Stage extends Enumeration(1) {
+  type Stage = Value
+  val Group, KnockOut = Value
 }
 
 object Match {
@@ -70,6 +78,7 @@ object ScoreType extends Enumeration {
   val Conversion = Value("Conversion")
   val Penalty = Value("Penalty")
   val DropGoal = Value("Drop goal")
+  val PenaltyTry = Value("Penalty Try")
 }
 
 trait Status
@@ -141,4 +150,22 @@ case class TeamStat(
   scrums_lost:Int,
   scrums_total: Int
 
+)
+
+
+case class GroupTable (
+  name: String,
+  teams: Seq[TeamRank]
+)
+
+case class TeamRank (
+  id: String,
+  name: String,
+  rank: Int,
+  played: Int,
+  won: Int,
+  drawn: Int,
+  lost: Int,
+  pointsdiff: Int,
+  points: Int
 )

@@ -32,6 +32,66 @@ const getPreviousClueInGroup = (entries, clue) => {
     return _.find(entries, { id: newClueId });
 };
 
+const getGroupEntriesForClue = (entries, group) =>  {
+    return _.map(group, (clueId) => {
+        return _.find(entries, { id: clueId });
+    });
+};
+
+const clueIsInGroup = (clue) => clue.group.length !== 1;
+
+const getAllSeparatorsForGroup = (clues) => {
+
+    const k = {};
+
+    _.forEach([',', '-'], (separator) => {
+        let cnt = 0;
+        const flattenedSeparators = _.flatten(
+            _.map(clues, (clue) => {
+                const seps = _.map(clue.separatorLocations[separator], (s) => { return s + cnt; });
+                cnt += clue.length;
+                return seps;
+            })
+        );
+        k[separator] = flattenedSeparators;
+    });
+    return k;
+};
+
+const getClueForGroupedEntries = (clueGroup) => _.first(clueGroup).clue;
+
+const getNumbersForGroupedEntries = (clueGroup) =>  _.first(clueGroup).humanNumber;
+
+const getTtotalLengthOfGroup = (clueGroup) => {
+    const length =  _.reduce(clueGroup, (total, clue) => { let t = total += clue.length; return t; }, 0);
+    return length;
+};
+
+const getAnagramClueData = (entries, clue) => {
+    if (clueIsInGroup(clue)) {
+        const groupEnts = getGroupEntriesForClue(entries, clue.group);
+        return {
+            id: clue.id,
+            number: getNumbersForGroupedEntries(groupEnts),
+            length: getTtotalLengthOfGroup(groupEnts),
+            separatorLocations: getAllSeparatorsForGroup(groupEnts),
+            direction: '',
+            clue: getClueForGroupedEntries(groupEnts)
+        };
+    }
+    return clue;
+};
+
+const cluesAreInGroup = (clue, otherClue) => {
+    return _.contains(otherClue.group, clue.id);
+};
+
+const checkClueHasBeenAnswered = (grid, entry) => {
+    return _.every(cellsForEntry(entry), (position) => {
+        return /^[A-Z]$/.test(grid[position.x][position.y].value);
+    });
+};
+
 const isAcross = (clue) => clue.direction === 'across';
 
 const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
@@ -45,6 +105,44 @@ const cellsForEntry = (entry) => isAcross(entry) ?
         x: entry.position.x,
         y: y
     }));
+
+const cellsForClue = (entries, clue) => {
+    if (clueIsInGroup(clue)) {
+        const entriesForClue = getGroupEntriesForClue(entries, clue.group);
+        return _.flatten(_.map(entriesForClue, (entry) => { return cellsForEntry(entry); }));
+    } else {
+        return cellsForEntry(clue);
+    }
+};
+
+const cluesFor = (clueMap, x, y) => {
+    return clueMap[clueMapKey(x, y)];
+};
+
+const getClearableCellsForClue = (grid, clueMap, entries, clue) => {
+    if (clueIsInGroup(clue)) {
+        const entriesForClue = getGroupEntriesForClue(entries, clue.group);
+        return _.uniq(_.flatten(_.map(entriesForClue, (entry) => {
+            return getClearableCellsForEntry(grid, clueMap, entries, entry);
+        })), (cell) => { return [cell.x, cell.y].join(); });
+    } else {
+        return getClearableCellsForEntry(grid, clueMap, entries, clue);
+    }
+};
+
+
+const getClearableCellsForEntry = (grid, clueMap, entries, entry) => {
+    const direction = entry.direction === 'across' ? 'down' : 'across';
+    return _.filter(cellsForEntry(entry), (cell) => {
+        const clues = cluesFor(clueMap, cell.x, cell.y);
+        const otherClue = clues[direction];
+        if (otherClue) {
+            return cluesAreInGroup(entry, otherClue) || !checkClueHasBeenAnswered(grid, otherClue);
+        }
+        return true;
+    });
+};
+
 
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
@@ -143,15 +241,27 @@ export default {
     otherDirection: otherDirection,
     buildGrid: buildGrid,
     clueMapKey: clueMapKey,
+    cluesFor: cluesFor,
     buildClueMap: buildClueMap,
     buildSeparatorMap,
     cellsForEntry: cellsForEntry,
+    cellsForClue: cellsForClue,
     entryHasCell: entryHasCell,
     gridSize: gridSize,
     mapGrid: mapGrid,
+    getAnagramClueData: getAnagramClueData,
     getLastCellInClue,
     isFirstCellInClue,
     isLastCellInClue,
     getNextClueInGroup,
-    getPreviousClueInGroup
+    getPreviousClueInGroup,
+    clueIsInGroup: clueIsInGroup,
+    getGroupEntriesForClue: getGroupEntriesForClue,
+    getNumbersForGroupedEntries: getNumbersForGroupedEntries,
+    getClueForGroupedEntries: getClueForGroupedEntries,
+    getAllSeparatorsForGroup: getAllSeparatorsForGroup,
+    getTtotalLengthOfGroup: getTtotalLengthOfGroup,
+    cluesAreInGroup: cluesAreInGroup,
+    checkClueHasBeenAnswered: checkClueHasBeenAnswered,
+    getClearableCellsForClue: getClearableCellsForClue
 };

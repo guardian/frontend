@@ -2,12 +2,13 @@ package services
 
 import com.gu.googleauth.UserIdentity
 import com.gu.pandomainauth.model.User
-import conf.{Switches, Configuration}
+import conf.Configuration
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
+import conf.switches.Switches
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
@@ -160,27 +161,6 @@ object S3FrontsApi extends S3 {
   def getSchema = get(s"$location/schema.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
-  def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
-  def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
-  def putCollectionJson(id: String, json: String) = {
-    val putLocation: String = s"$location/collection/$id/collection.json"
-    if (Switches.FaciaToolPutPrivate.isSwitchedOn) {
-      putPrivate(putLocation, json, "application/json")}
-    else {
-      putPublic(putLocation, json, "application/json")}}
-
-  def archive(id: String, json: String, identity: User) = {
-    val now = DateTime.now
-    putPrivate(s"$location/history/collection/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$id/${now}.${identity.email}.json", json, "application/json")
-  }
-
-  def putMasterConfig(json: String) =
-    putPublic(s"$location/config/config.json", json, "application/json")
-
-  def archiveMasterConfig(json: String, identity: User) = {
-    val now = DateTime.now
-    putPublic(s"$location/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
-  }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
     import scala.collection.JavaConversions._

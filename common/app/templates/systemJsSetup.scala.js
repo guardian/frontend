@@ -1,7 +1,7 @@
 @()
 
-@JavaScript(Static.js.systemJsPolyfills)
-@JavaScript(Static.js.systemJs)
+@JavaScript(Static.systemJs.polyfills)
+@JavaScript(Static.systemJs.main)
 
 var baseURL = '@{JavaScript(Configuration.assets.path)}';
 
@@ -21,13 +21,13 @@ System.config({
     }
 });
 
-@JavaScript(Static.js.systemJsAppConfig)
+@JavaScript(Static.systemJs.appConfig)
 
 @if(!play.Play.isDev()) {
-    @JavaScript(Static.js.systemJsBundleConfig)
+    System.config({ bundles: @JavaScript(Static.systemJs.bundleConfig) });
 }
 
-@JavaScript(Static.js.systemJsNormalize)
+@JavaScript(Static.systemJs.normalize)
 
 window.require = System.amdRequire;
 window.define = System.amdDefine;

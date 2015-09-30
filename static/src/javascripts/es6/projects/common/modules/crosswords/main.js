@@ -137,7 +137,7 @@ class Crossword extends React.Component {
 
     insertCharacter (character) {
         const cell = this.state.cellInFocus;
-        if (/[A-Z]/.test(character)) {
+        if (/[A-Z]/.test(character) && character.length === 1) {
             this.setCellValue(cell.x, cell.y, character);
             this.save();
             this.focusNext();
@@ -303,7 +303,7 @@ class Crossword extends React.Component {
     // called when cell is selected (by click or programtically focussed)
     onSelect (x, y) {
         const cellInFocus = this.state.cellInFocus;
-        const clue = this.cluesFor(x, y);
+        const clue = helpers.cluesFor(this.clueMap, x, y);
         const focussedClue = this.clueInFocus();
 
         let newDirection;
@@ -346,15 +346,26 @@ class Crossword extends React.Component {
     }
 
     focusClue (x, y, direction) {
-        const clues = this.cluesFor(x, y);
+        const clues = helpers.cluesFor(this.clueMap, x, y);
+        const clue = clues[direction];
 
-        if (clues && clues[direction]) {
+        if (clues && clue) {
             this.focusHiddenInput(x, y);
 
             this.setState({
                 cellInFocus: { x: x, y: y },
                 directionOfEntry: direction
             });
+
+            // Side effect
+            window.location.hash = clue.id;
+        }
+    }
+
+    focusClueById (entryId) {
+        const entry = _.find(this.props.data.entries, { id: entryId });
+        if (entry) {
+            this.focusClue(entry.position.x, entry.position.y, entry.direction);
         }
     }
 
@@ -362,22 +373,22 @@ class Crossword extends React.Component {
         this.focusHiddenInput(this.state.cellInFocus.x, this.state.cellInFocus.y);
     }
 
-    cluesFor (x, y) {
-        return this.clueMap[helpers.clueMapKey(x, y)];
-    }
-
     clueInFocus () {
         if (this.state.cellInFocus) {
-            const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
+            const cluesForCell = helpers.cluesFor(this.clueMap, this.state.cellInFocus.x, this.state.cellInFocus.y);
             return cluesForCell[this.state.directionOfEntry];
         } else {
             return null;
         }
     }
 
+    allHighlightedClues () {
+        return _.filter(this.props.data.entries, this.clueIsInFocusGroup, this);
+    }
+
     clueIsInFocusGroup (clue) {
         if (this.state.cellInFocus) {
-            const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
+            const cluesForCell = helpers.cluesFor(this.clueMap, this.state.cellInFocus.x, this.state.cellInFocus.y);
             return _.contains(cluesForCell[this.state.directionOfEntry].group, clue.id);
         } else {
             return null;
@@ -387,9 +398,7 @@ class Crossword extends React.Component {
     cluesData () {
         return _.map(this.props.data.entries, (entry) => ({
             entry: entry,
-            hasAnswered: _.every(helpers.cellsForEntry(entry), (position) => {
-                return /^[A-Z]$/.test(this.state.grid[position.x][position.y].value);
-            }),
+            hasAnswered: helpers.checkClueHasBeenAnswered(this.state.grid, entry),
             isSelected: this.clueIsInFocusGroup(entry)
         }));
     }
@@ -435,6 +444,7 @@ class Crossword extends React.Component {
                 grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
                     if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
                         cell.isError = true;
+                        cell.value = '';
                     }
 
                     return cell;
@@ -457,26 +467,23 @@ class Crossword extends React.Component {
     }
 
     onCheat () {
-        this.cheat(this.clueInFocus());
+        _.forEach(this.allHighlightedClues(), this.cheat, this);
         this.save();
     }
 
     onCheck () {
-        this.check(this.clueInFocus());
+        // 'Check this' checks single and grouped clues
+        _.forEach(this.allHighlightedClues(), this.check, this);
         this.save();
     }
 
     onSolution () {
-        _.forEach(this.props.data.entries, (entry) => {
-            this.cheat(entry);
-        });
+        _.forEach(this.props.data.entries, this.cheat, this);
         this.save();
     }
 
     onCheckAll () {
-        _.forEach(this.props.data.entries, (entry) => {
-            this.check(entry);
-        });
+        _.forEach(this.props.data.entries, this.check, this);
         this.save();
     }
 
@@ -492,7 +499,9 @@ class Crossword extends React.Component {
     }
 
     onClearSingle () {
-        const cellsInFocus = helpers.cellsForEntry(this.clueInFocus());
+        // Merge arrays of cells from all highlighted clues
+        //const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+        const cellsInFocus = helpers.getClearableCellsForClue(this.state.grid, this.clueMap, this.props.data.entries, this.clueInFocus());
 
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
@@ -558,7 +567,7 @@ class Crossword extends React.Component {
             : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
-            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+            <AnagramHelper focussedEntry={focussed} entries={this.props.data.entries} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
         return (
@@ -631,7 +640,16 @@ export default function () {
     $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
-            React.render(<Crossword data={crosswordData} />, element);
+            const crosswordComponent = React.render(<Crossword data={crosswordData} />, element);
+
+            const entryId = window.location.hash.replace('#', '');
+            crosswordComponent.focusClueById(entryId);
+
+            window.addEventListener('hashchange', hashEvent => {
+                const idMatch = hashEvent.newURL.match(/#.*/);
+                const newEntryId = idMatch && idMatch[0].replace('#', '');
+                crosswordComponent.focusClueById(newEntryId);
+            });
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }

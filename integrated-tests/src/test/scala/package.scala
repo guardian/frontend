@@ -3,6 +3,7 @@ package integration
 import java.util.concurrent.TimeUnit
 
 import akka.agent.Agent
+import commercial.AdsTest
 import driver.SauceLabsWebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.{By, WebDriver, WebElement}
@@ -53,8 +54,8 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
     super.run(testName, args)
   }
 
-  protected def get(path: String) = {
-    webDriver.get(s"${Config.baseUrl}$path?test=test#gu.prefs.switchOff=adverts&countmein&noads")
+  protected def get(path: String, ads: Boolean = false) = {
+    webDriver.get(s"${Config.baseUrl}$path?test=test#gu.prefs.switch${if (ads) "On" else "Off"}=adverts&countmein&${if (ads) "" else "no"}ads")
     webDriver.navigate().refresh()
   }
 
@@ -68,7 +69,9 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
 }
 
 class IntegratedTestsSuite extends Suites (
+  new AdsTest,
   new MostPopularTest,
   new SslCertTest,
-  new ProfileCommentsTest) with SingleWebDriver {
+  new ProfileCommentsTest
+) with SingleWebDriver {
 }

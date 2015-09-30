@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 import com.google.inject.{Inject, Singleton}
 import utils.{ThirdPartyConditions, RemoteAddress}
 import jobs.TorExitNodeList
-import conf.Switches
+import conf.switches.Switches
 
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
@@ -32,7 +32,8 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
       shortUrl = request.getQueryString("shortUrl"),
       articleId = request.getQueryString("articleId"),
       page = request.getQueryString("page").map(_.toInt),
-      platform = request.getQueryString("platform")
+      platform = request.getQueryString("platform"),
+      campaignCode = request.getQueryString("INTCMP")
     )
   }
 }
@@ -64,4 +65,6 @@ case class IdentityRequest(
   shortUrl: Option[String] = None,
   articleId: Option[String] = None,
   page: Option[Int] = None,
-  platform: Option[String] = None)
+  platform: Option[String] = None,
+  campaignCode: Option[String] = None
+)

@@ -6,6 +6,7 @@ import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
+import conf.switches.Switches
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -15,7 +16,7 @@ import play.api.libs.json.{Json, _}
 import play.api.mvc._
 import views.BodyCleaner
 import views.support._
-import conf.Switches.SoftPurgeWithLongCachingSwitch
+import conf.switches.Switches.SoftPurgeWithLongCachingSwitch
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future

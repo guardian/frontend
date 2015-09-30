@@ -3,7 +3,7 @@ package test
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import services.IndexPagePagination
 import collection.JavaConversions._
-import conf.Switches
+import conf.switches.Switches
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
 @DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {

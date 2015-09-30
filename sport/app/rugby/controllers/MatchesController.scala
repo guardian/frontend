@@ -3,7 +3,7 @@ package rugby.controllers
 import common._
 
 import common.{ExecutionContexts, JsonComponent}
-import conf.Switches.RugbyWorldCupMatchStatsSwitch
+import conf.switches.Switches.{RugbyWorldCupMatchStatsSwitch, RugbyWorldCupTablesSwitch}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
@@ -39,6 +39,7 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
 
       val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch) else None
+      val table = if (RugbyWorldCupTablesSwitch.isSwitchedOn) RugbyStatsJob.getGroupTable(aMatch) else None
 
       val page = MatchPage(aMatch)
       Cached(60){
@@ -48,7 +49,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
             "scoreEvents" -> rugby.views.html.fragments.scoreEvents(aMatch, homeTeamScorers, awayTeamScorers).toString,
             "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
             "nav" -> matchNav.getOrElse(""),
-            "matchStat" -> rugby.views.html.fragments.matchStats(aMatch, matchStat)
+            "matchStat" -> rugby.views.html.fragments.matchStats(aMatch, matchStat),
+            "groupTable" -> rugby.views.html.fragments.groupTable(aMatch, table)
           )
         else
           Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))

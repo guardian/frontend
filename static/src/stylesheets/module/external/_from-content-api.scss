@@ -37,7 +37,7 @@
     }
     > li, // sometimes HTML is malformed on purpose by editors
     > ol,
-    > blockquote > ul,
+    > blockquote ul,
     > ul {
         list-style: none;
     }
@@ -128,12 +128,16 @@
     @include faux-bullet-point;
 }
 
-.from-content-api ul > li,
-.content__standfirst ul > li {
-    @include faux-bullet-point($right-space: 4px);
+.from-content-api ul,
+.content__standfirst ul {
+    list-style: none;
 
-    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
-        display: inline;
+    > li {
+        @include faux-bullet-point($right-space: 4px);
+
+        > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
+            display: inline;
+        }
     }
 }
 

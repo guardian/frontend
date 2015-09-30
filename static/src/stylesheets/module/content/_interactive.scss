@@ -1,4 +1,4 @@
-.content--interactive {
+.js-on.is-modern .content--interactive {
     padding: 0;
 
     .content__headline {
@@ -17,6 +17,7 @@
             max-width: none;
             margin: 0;
         }
+
     }
 
     .meta__numbers {
@@ -150,5 +151,27 @@
         .content__meta-container {
             border: 0;
         }
+    }
+}
+
+.is-not-modern {
+    .content__meta-footer {
+        display: none;
+    }
+
+    .content__head .content__dateline {
+        display: none;
+    }
+
+    .content__main-column--interactive {
+        border-top: 1px dotted colour(neutral-5);
+        padding-top: $gs-baseline/2;
+        min-height: $gs-baseline*20;
+    }
+}
+
+.is-immersive {
+    figure.element {
+        margin: 0;
     }
 }

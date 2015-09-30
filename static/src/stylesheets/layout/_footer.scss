@@ -42,7 +42,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         }
     }
 
-    .is-immersive & {
+    .js-on.is-modern .is-immersive & {
         display: none;
     }
 

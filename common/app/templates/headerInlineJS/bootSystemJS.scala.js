@@ -1,9 +1,7 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 @import conf.Static
 @import conf.Configuration
-
-@JavaScript(Static.js.systemJsSetupFragment)
 
  // Bracket notation for IE8 (import is reserved)
 System['import']('core').then(function () {
@@ -39,7 +37,7 @@ System['import']('core').then(function () {
                                 console.warn('Raven captured error.', data);
                             }
                         }
-                        return @conf.Switches.DiagnosticsLogging.isSwitchedOn &&
+                        return @conf.switches.Switches.DiagnosticsLogging.isSwitchedOn &&
                             Math.random() < 0.2 &&
                             @{!play.Play.isDev()}; @* don't actually notify sentry in dev mode*@
                     }
@@ -120,7 +118,7 @@ System['import']('core').then(function () {
                             app.go();
                         });
                     }
-                    @if(item.section == "crosswords") {
+                    @if(item.section == "crosswords" || item.id == "offline-page") {
                         System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
                             crosswords.default.init();
                         });

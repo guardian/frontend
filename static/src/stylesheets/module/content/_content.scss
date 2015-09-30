@@ -63,6 +63,11 @@
         margin-left: $left-column-wide + $gs-gutter;
     }
 
+    &.content__main-column--single-column {
+        // Unset style from breakpoints
+        margin-left: 0;
+    }
+
     &.content__main-column--media,
     &.content__main-column--gallery,
     &.content__main-column--wide {

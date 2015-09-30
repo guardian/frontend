@@ -38,12 +38,9 @@ define([
 var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
 var shouldMakeTimestampsRelative = function () {
     // Default to true
-    var prefValue = userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
+    return userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
         ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
         : true;
-    return !config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
-        || (config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
-            && prefValue);
 };
 
 var Comments = function(options) {

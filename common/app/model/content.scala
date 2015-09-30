@@ -9,7 +9,7 @@ import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
-import conf.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -55,7 +55,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
   }
   override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
   override lazy val requiresMembershipAccess: Boolean = {
-    conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").contains("true")
@@ -226,7 +226,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
       Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
     } else None
 
-    val cricketMeta = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
+    val cricketMeta = if (isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
       Some(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
     } else None
 
@@ -634,6 +634,19 @@ class Interactive(delegate: contentapi.Content) extends Content(delegate) {
     "twitter:title" -> linkText,
     "twitter:card" -> "summary_large_image"
   )
+
+  lazy val fallbackEl = {
+    val noscriptEls = Jsoup.parseBodyFragment(body.getOrElse("")).getElementsByTag("noscript")
+
+    if (noscriptEls.length > 0) {
+      noscriptEls.html()
+    } else {
+      Jsoup.parseBodyFragment(body.getOrElse("")).getElementsByTag("figure").html()
+    }
+  }
+
+  lazy val figureEl = body.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
+
 }
 
 object Interactive {
@@ -645,8 +658,6 @@ class ImageContent(delegate: contentapi.Content) extends Content(delegate) with 
   override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-
-
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"

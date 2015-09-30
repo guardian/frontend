@@ -2,11 +2,7 @@
 @import common.Edition
 @import views.support.TrailCssClasses.articleToneClass
 
-@if(page.interactive.isImmersive) {
-    @bodyRaw(page.interactive)
-} else {
-    @body(page.interactive)
-}
+@body(page.interactive, page.interactive.isImmersive)
 
 @bodyRaw(interactive: model.Interactive) = {
     @page.interactive.body.map { body =>
@@ -16,7 +12,7 @@
     }
 }
 
-@body(interactive: model.Interactive) = {
+@body(interactive: model.Interactive, isImmersive: Boolean) = {
     <div class="l-side-margins">
         <article class="@RenderClasses(
                 Map(
@@ -39,13 +35,17 @@
 
                 <div class="gs-container" data-test-id="interactive-content-body">
                     <div class="content__main-column content__main-column--interactive">
-                        @bodyRaw(interactive)
+                        @if(!isImmersive) {
+                            @bodyRaw(interactive)
+                        } else {
+                            @HtmlFormat.raw(interactive.fallbackEl)
+                        }
                     </div>
                 </div>
 
                 <div class="gs-container u-cf">
                     <div class="content__main-column content__meta-footer">
-                    @fragments.contentMeta(interactive, showBadge = false)
+                        @fragments.contentMeta(interactive, showBadge = false)
                     </div>
                 </div>
             </div>
@@ -54,4 +54,8 @@
         @fragments.contentFooter(interactive, page.related)
 
     </div>
+
+    @if(isImmersive) {
+        @interactive.figureEl.map(HtmlFormat.raw(_))
+    }
 }
