@@ -7,8 +7,8 @@ define([
     'common/modules/component',
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'common/modules/commercial/user-ad-preference'
 ], function (
     _,
     qwery,
@@ -18,8 +18,8 @@ define([
     Component,
     mediator,
     createAdSlot,
-    commercialFeatures,
-    dfp
+    dfp,
+    userAdPreference
 ) {
 
     function MostPopular() {
@@ -46,7 +46,12 @@ define([
     };
 
     MostPopular.prototype.prerender = function () {
-        if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
+        if (!(
+            config.page.shouldHideAdverts || /* sensitive pages */
+            config.page.section === 'childrens-books-site' ||
+            this.mobileMaximumSlotsReached() ||
+            userAdPreference.hideAds
+        )) {
             this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
                 .append(createAdSlot('mostpop', 'container-inline'));
         } else {

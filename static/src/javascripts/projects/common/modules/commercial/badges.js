@@ -8,10 +8,8 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp',
     'text!common/views/commercial/badge.html'
-
 ], function (
     bonzo,
     fastdom,
@@ -22,7 +20,6 @@ define([
     config,
     template,
     createAdSlot,
-    commercialFeatures,
     dfp,
     badgeTpl
 ) {
@@ -81,7 +78,7 @@ define([
             var sponsoredFrontPromise,
                 sponsoredContainersPromise;
 
-            if (!commercialFeatures.badges) {
+            if (!config.switches.sponsored) {
                 return false;
             }
 
