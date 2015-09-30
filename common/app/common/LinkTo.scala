@@ -123,7 +123,14 @@ class CanonicalLink {
         .sorted.mkString("&")
       if (q.isEmpty) "" else s"?$q"
     }
-    s"$webUrl$queryString"
+    // TODO remove this code when capi's updated to give the correct https status in its webUrls
+    val correctProtocolWebUrl = if (isHttpsSection(request)) {
+      if (!webUrl.startsWith("https")) {
+        val (first, last) = webUrl.splitAt(4);
+        first + "s" + last
+      } else webUrl
+    } else webUrl
+    s"$correctProtocolWebUrl$queryString"
   }
 }
 
