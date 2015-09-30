@@ -2,7 +2,7 @@ package model.commercial.masterclasses
 
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
-import conf.Switches.MasterclassFeedSwitch
+import conf.switches.Switches.MasterclassFeedSwitch
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time.DateTime.now
 import play.api.libs.json.{JsArray, JsValue, Json}

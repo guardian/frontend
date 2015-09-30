@@ -128,8 +128,8 @@ function updateBundles(message) {
 
 function writeConfig() {
     var configs = _(processedBundles)
-        .map()
-        .reduce(function (a, o) { return _.merge(a, o); });
+        .values()
+        .reduce(function (accumulator, object) { return _.merge(accumulator, object); });
 
     var configFilePath = path.join(prefixPath, 'assets/jspm-assets.map');
     var configFileData = JSON.stringify(configs, null, '\t');

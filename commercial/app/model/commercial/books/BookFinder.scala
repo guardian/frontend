@@ -4,7 +4,7 @@ import akka.pattern.CircuitBreaker
 import common.ExecutionContexts.memcachedExecutionContext
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import conf.Switches.BookLookupSwitch
+import conf.switches.Switches.BookLookupSwitch
 import model.commercial.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import play.api.Play.current
 import play.api.libs.concurrent.Akka

@@ -5,7 +5,7 @@ import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
-import conf.Switches._
+import conf.switches.Switches._
 import layout.{WidthsByBreakpoint, ContentWidths}
 import layout.ContentWidths._
 import model._
@@ -194,13 +194,20 @@ case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: Request
     if (isLiveBlog) {
       body.select(".block").foreach { el =>
         val id = el.id()
+        val blockElements = el.select(".block-elements")
+        val noByline = el.attributes().get("data-block-contributor").isEmpty
         el.attr("itemprop", "liveBlogUpdate")
         el.attr("itemscope", "")
         el.attr("itemtype", "http://schema.org/BlogPosting")
         el.select(".block-time.published-time time").foreach { time =>
           time.attr("itemprop", "datePublished")
         }
-        el.select(".block-elements").foreach { body =>
+        el.select(".block-title").foreach { title =>
+          title.attr("itemprop", "headline")
+
+        }
+        if (noByline) blockElements.addClass("block-elements--no-byline")
+        blockElements.foreach { body =>
           body.attr("itemprop", "articleBody")
         }
       }
@@ -217,7 +224,7 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
         if (contributorId.nonEmpty) {
           article.tags.find(_.id == contributorId).map{ contributorTag =>
             val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-            el.getElementsByClass("block-elements").headOption.foreach(_.prepend(html.toString()))
+            el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
           }
         }
       }
@@ -246,8 +253,19 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-object VideoEncodingUrlCleaner{
+object VideoEncodingUrlCleaner {
   def apply(url: String): String = url.filter(_ != '\n')
+}
+
+object AmpVideoSrcCleaner {
+  def apply(videoSrc: String) = {
+    // All videos need to start with https for AMP.
+    // Temperary code until all videos returned from CAPI are https
+    if (videoSrc.startsWith("http:")) {
+      val (first, last) = videoSrc.splitAt(4);
+      first + "s" + last
+    }
+  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
@@ -309,8 +327,6 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
 
 class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
-  import conf.Switches.TwitterImageFallback
-
   override def clean(document: Document): Document = {
 
     document.getElementsByClass("element-tweet").foreach { tweet =>
@@ -351,15 +367,13 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
             element.empty().attr("class", "js-tweet tweet")
 
-            if (TwitterImageFallback.isSwitchedOn) {
-              tweetImage.foreach { image =>
-                val img = document.createElement("img")
-                img.attr("src", image)
-                img.attr("alt", "")
-                img.attr("rel", "nofollow")
-                img.addClass("js-tweet-main-image tweet-main-image")
-                element.appendChild(img)
-              }
+            tweetImage.foreach { image =>
+              val img = document.createElement("img")
+              img.attr("src", image)
+              img.attr("alt", "")
+              img.attr("rel", "nofollow")
+              img.addClass("js-tweet-main-image tweet-main-image")
+              element.appendChild(img)
             }
 
             element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)

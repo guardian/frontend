@@ -1,10 +1,10 @@
 package views.support
 
 import common.Maps.RichMap
-import common.{Edition, InternationalEdition}
+import common.{StaticPage, Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
-import conf.Switches.IdentitySocialOAuthSwitch
+import conf.switches.Switches.IdentitySocialOAuthSwitch
 import model.{CommercialExpiryPage, Content, MetaData}
 import org.joda.time.DateTime
 import play.api.Play
@@ -45,6 +45,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("omitMPUs", JsBoolean(metaData.omitMPUsFromContainers(edition))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
+        case p: StaticPage => true
         case CommercialExpiryPage(_) => true
         case _ => false
       })),

@@ -1,6 +1,6 @@
 @(content: model.Article)(implicit request: RequestHeader)
 
-@import conf.Switches._
+@import conf.switches.Switches._
 
 @if(ChapterHeadingsSwitch.isSwitchedOn && content.chapterHeadings.size > 2) {
     <div class="chapters">

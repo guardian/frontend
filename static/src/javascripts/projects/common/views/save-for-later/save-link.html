@@ -4,6 +4,8 @@
    href="<%= url %>">
     <%= icon %>
     <!-- Not logged in -->
-    <span class="save-for-later__label save-for-later__label--save">Save for later</span>
-    <span class="save-for-later__label save-for-later__label--saved">Article saved</span>
+    <% if (showLabel) { %>
+        <span class="save-for-later__label save-for-later__label--save">Save for later</span>
+        <span class="save-for-later__label save-for-later__label--saved">Article saved</span>
+    <% } %>
 </a>

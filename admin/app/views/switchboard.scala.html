@@ -15,7 +15,7 @@
 <div class="row-fluid">
     <form id="switchboard" action="/dev/switchboard" method="POST">
         <input type="hidden" name="lastModified" value="@lastModified" />
-        @Switches.grouped.map { case (group, switches) =>
+        @conf.switches.Switches.grouped.map { case (group, switches) =>
             <h4>@group</h4>
             <div class="well">
                 @switches.map { switch =>

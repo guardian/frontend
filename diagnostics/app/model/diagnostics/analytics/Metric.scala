@@ -3,7 +3,7 @@ package model.diagnostics.analytics
 import java.util.concurrent.atomic.AtomicLong
 
 import common.Logging
-import conf.Switches
+import conf.switches.Switches
 
 object Metric extends Logging {
 
@@ -14,7 +14,7 @@ object Metric extends Logging {
   lazy val namespace = "Diagnostics"
 
   // TODO delete bounce-test-present when this goes
-  import conf.Switches.NoBounceIndicator
+  import conf.switches.Switches.NoBounceIndicator
 
   lazy val metrics = Map(
 
@@ -97,5 +97,5 @@ object Metric extends Logging {
   )
 
   //just here so that when you delete this you see this comment and delete the 'iphone' metrics above
-  private lazy val deleteIphoneMetrics = conf.Switches.IphoneConfidence.isSwitchedOn
+  private lazy val deleteIphoneMetrics = conf.switches.Switches.IphoneConfidence.isSwitchedOn
 }

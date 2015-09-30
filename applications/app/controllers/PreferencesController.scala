@@ -13,7 +13,7 @@ object PreferencesController extends Controller with common.ExecutionContexts {
 
   def notificationPrefs() = Action { implicit request =>
     Cached(300) {
-      conf.Switches.NotificationsSwitch.isSwitchedOn match {
+      conf.switches.Switches.NotificationsSwitch.isSwitchedOn match {
         case true => Ok(views.html.preferences.notifications(new NotificationPreferencesMetaData()))
         case false => NotFound
       }
