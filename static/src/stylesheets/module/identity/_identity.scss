@@ -155,20 +155,14 @@
 
     .social-signin__icon {
         position: absolute;
+        top: 0;
+        left: 0;
 
         svg {
             float: left;
+            width: 40px;
+            height: 40px;
         }
-    }
-
-    .social-signin__icon--fb {
-        top: 7px;
-        left: 14px;
-    }
-
-    .social-signin__icon--gplus {
-        top: 9px;
-        left: 10px;
     }
 }
 

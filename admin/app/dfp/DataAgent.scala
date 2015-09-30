@@ -1,7 +1,7 @@
 package dfp
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import conf.Switches._
+import conf.switches.Switches._
 
 import org.apache.commons.lang.exception.ExceptionUtils
 import scala.concurrent.Future

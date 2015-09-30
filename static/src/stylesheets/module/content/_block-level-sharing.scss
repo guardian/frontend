@@ -10,9 +10,9 @@
     height: $gs-baseline * 2;
     box-sizing: border-box;
 
-    .i {
-        width: 100% !important;
-        height: 100% !important;
+    .inline-icon svg {
+        width: 23px;
+        height: 23px;
     }
 
     @if $old-ie {
@@ -23,49 +23,59 @@
 .block-share__item--facebook {
     border-color: colour(social-facebook);
     color: colour(social-facebook);
-    .i { @include icon(share-facebook--blue); }
+    .inline-icon {
+        fill: colour(social-facebook);
+    }
 
     &:hover {
         border-color: darken(colour(social-facebook), 15%);
-        .i { @include icon(share-facebook--blue-dark); }
+        .inline-icon {
+            fill: darken(colour(social-facebook), 15%);
+        }
     }
 }
 
 .block-share__item--twitter {
     border-color: colour(social-twitter);
     color: colour(social-twitter);
-    .i { @include icon(share-twitter--blue); }
+    .inline-icon {
+        fill: colour(social-twitter);
+    }
 
     &:hover {
         border-color: darken(colour(social-twitter), 15%);
-        .i { @include icon(share-twitter--blue-dark); }
+        .inline-icon {
+            fill: darken(colour(social-twitter), 15%);
+        }
     }
 }
 
 .block-share__item--gplus {
     border-color: colour(social-gplus);
     color: colour(social-gplus);
-    .i { @include icon(share-gplus--red); }
+    .inline-icon {
+        fill: colour(social-gplus);
+    }
 
     &:hover {
         border-color: darken(colour(social-gplus), 15%);
-        .i { @include icon(share-gplus--red-dark); }
+        .inline-icon {
+            fill: darken(colour(social-gplus), 15%);
+        }
     }
 }
 
 .block-share__item--linkedin {
     border-color: colour(social-linkedin);
     color: colour(social-linkedin);
-    .i {
-        @include icon(share-linkedin--blue);
-        background-size: 58% !important;
-        background-position: center center !important;
+    .inline-icon {
+        fill: colour(social-linkedin);
     }
 
     &:hover {
         border-color: darken(colour(social-linkedin), 15%);
-        .i {
-            @include icon(share-linkedin--blue-dark);
+        .inline-icon {
+            fill: darken(colour(social-linkedin), 15%);
         }
     }
 }
@@ -73,16 +83,18 @@
 .block-share__item--pinterest {
     border-color: colour(social-pinterest);
     color: colour(social-pinterest);
-    .i {
-        @include icon(share-pinterest--red);
-        background-size: 50% !important;
-        background-position: 49% center !important;
+    .inline-icon {
+        fill: colour(social-pinterest);
+    }
+
+    .block-share--article & {
+
     }
 
     &:hover {
         border-color: darken(colour(social-pinterest), 15%);
-        .i {
-            @include icon(share-pinterest--red-dark);
+        .inline-icon {
+            fill: darken(colour(social-pinterest), 15%);
         }
     }
 }
@@ -91,7 +103,6 @@
 .share-modal__item--facebook {
     background-color: colour(social-facebook);
     color: #ffffff;
-    .i { @include icon(share-facebook--white); }
 
     &:hover {
         background-color: darken(colour(social-facebook), 15%);
@@ -101,7 +112,6 @@
 .share-modal__item--twitter {
     background-color: colour(social-twitter);
     color: #ffffff;
-    .i { @include icon(share-twitter--white); }
 
     &:hover {
         background-color: darken(colour(social-twitter), 15%);
@@ -111,7 +121,6 @@
 .share-modal__item--gplus {
     background-color: colour(social-gplus);
     color: #ffffff;
-    .i { @include icon(share-gplus--white); }
 
     &:hover {
         background-color: darken(colour(social-gplus), 15%);
@@ -121,13 +130,18 @@
 .share-modal__item--pinterest {
     background-color: colour(social-pinterest);
     color: #ffffff;
-    .i {
-        @include icon(share-pinterest--white);
-        margin-left: 6px !important;
-    }
 
     &:hover {
         background-color: darken(colour(social-pinterest), 15%);
+    }
+}
+
+.share-modal__item--email {
+    background-color: colour(social-email);
+    color: #ffffff;
+
+    &:hover {
+        background-color: darken(colour(social-email), 15%);
     }
 }
 
@@ -168,13 +182,22 @@
     position: relative;
     border: 0;
 
-    .i {
-        float: left;
+    &.inline-icon__fallback {
+        width: 150px;
+        position: relative;
+    }
+
+    .inline-icon {
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto 0;
         left: 5px;
+        svg {
+            width: 33px;
+            height: 33px;
+            vertical-align: middle;
+        }
     }
 }
 
@@ -231,6 +254,9 @@
 
     .block-share__item {
         transition: opacity .15s linear;
+        .inline-icon {
+            fill: #ffffff;
+        }
     }
 
     .block-share__item--facebook {
@@ -238,10 +264,6 @@
 
         &:hover {
             background-color: colour-hover(social-facebook);
-        }
-
-        .i {
-            @include icon(share-facebook--white);
         }
     }
 
@@ -251,10 +273,6 @@
         &:hover {
             background-color: colour-hover(social-twitter);
         }
-
-        .i {
-            @include icon(share-twitter--white);
-        }
     }
 
     .block-share__item--pinterest {
@@ -262,10 +280,6 @@
 
         &:hover {
             background-color: colour-hover(social-pinterest);
-        }
-
-        .i {
-            @include icon(share-pinterest--white);
         }
     }
 }

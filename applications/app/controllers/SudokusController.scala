@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import conf.Switches
+import conf.switches.Switches
 import play.api.mvc.{Action, Controller}
 import sudoku.{SudokuPage, SudokuApi}
 import views.html.sudoku

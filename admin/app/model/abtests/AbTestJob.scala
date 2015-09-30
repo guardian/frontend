@@ -16,7 +16,7 @@ object AbTestJob extends Logging with ExecutionContexts {
       val tests = result.getMetrics.asScala.map(_.getMetricName.split("-").toList).collect {
                     case test :: variant => (test, variant.mkString("-")) }.groupBy(_._1)
 
-      val switches = conf.Switches.all.filter(_.name.startsWith("ab-")).map(switch => CamelCase.fromHyphenated(switch.name))
+      val switches = conf.switches.Switches.all.filter(_.name.startsWith("ab-")).map(switch => CamelCase.fromHyphenated(switch.name))
 
       val testVariants = switches.foldLeft(Map.empty[String, Seq[String]]) ( (acc, switch ) => {
         if (tests.isDefinedAt(switch)) {
