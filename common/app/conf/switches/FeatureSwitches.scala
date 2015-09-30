@@ -381,7 +381,7 @@ trait FeatureSwitches {
     "international-edition-beta",
     "International edition A/B test on",
     safeState = On,
-    sellByDate = never,
+    sellByDate = new LocalDate(2015, 10, 31),
 
     exposeClientSide = true
   )
