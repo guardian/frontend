@@ -12,38 +12,29 @@ object VersionInfo extends Plugin {
   val buildNumber = SettingKey[String]("version-build-number")
   val vcsNumber = SettingKey[String]("version-vcs-number")
 
-  private def isValidRepo(repo: java.io.File): Boolean = {
+  private def getRepo(repo: java.io.File) = {
     try {
-      val gitRepo = new FileRepositoryBuilder().findGitDir(repo)
-      val hasExpectedRemote = gitRepo.build.getConfig.getString("remote", "origin", "url") == "git@github.com:guardian/frontend.git"
-      gitRepo.build.close()
-      hasExpectedRemote
-    } finally {
-      false
+      Some(new FileRepositoryBuilder().findGitDir(repo))
+    } catch {
+      case _: Throwable => None
     }
   }
 
   override val settings = Seq(
     buildNumber := System.getenv().getOrDefault("BUILD_NUMBER", "DEV"),
     branch <<= baseDirectory( baseDir => {
-      if (isValidRepo(baseDir)) {
-        val gitRepo = new FileRepositoryBuilder().findGitDir(baseDir)
+      getRepo(baseDir).map( gitRepo => {
         val branchName = gitRepo.build.getBranch
         gitRepo.build.close()
         branchName
-      } else {
-        "DEV"
-      }
+      }).getOrElse("DEV")
     }),
     vcsNumber <<= baseDirectory( baseDir => {
-      if (isValidRepo(baseDir)) {
-        val gitRepo = new FileRepositoryBuilder().findGitDir(baseDir)
+      getRepo(baseDir).map( gitRepo => {
         val commitHash = gitRepo.build.resolve("HEAD").getName
         gitRepo.build.close()
         commitHash
-      } else {
-        "DEV"
-      }
+      }).getOrElse("DEV")
     }),
     resourceGenerators in Compile <+= (resourceManaged in Compile, branch, buildNumber, vcsNumber, streams) map buildFile
   )
