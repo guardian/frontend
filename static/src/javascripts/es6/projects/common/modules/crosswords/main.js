@@ -651,15 +651,15 @@ export default function () {
                 const idMatch = hashEvent.newURL.match(/#.*/);
                 const newEntryId = idMatch && idMatch[0].replace('#', '');
 
-                const entry = _.find(crosswordComponent.props.data.entries, { id: newEntryId });
+                const newEntry = _.find(crosswordComponent.props.data.entries, { id: newEntryId });
                 const focussedEntry = crosswordComponent.clueInFocus();
-                const isNewEntry = focussedEntry.id !== entry.id;
+                const isNewEntry = focussedEntry.id !== newEntry.id;
                 // Only focus the first cell in the new clue if it's not already
                 // focussed. When focussing a cell in a new clue, we update the
                 // hash fragment afterwards, in which case we do not want to
                 // reset focus to the first cell.
-                if (entry && focussedEntry && isNewEntry) {
-                    crosswordComponent.focusFirstCellInClue(entry);
+                if (newEntry && focussedEntry && isNewEntry) {
+                    crosswordComponent.focusFirstCellInClue(newEntry);
                 }
             });
         } else {
