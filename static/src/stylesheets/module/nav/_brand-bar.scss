@@ -225,7 +225,8 @@
     }
 }
 
-.is-not-modern .brand-bar__item--has-control {
+.is-not-modern .brand-bar__item--has-control,
+.is-not-modern .is-signed-in.brand-bar__item--profile {
     &:hover,
     &:focus {
         .popup {
