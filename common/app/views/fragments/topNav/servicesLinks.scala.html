@@ -2,7 +2,6 @@
 
 @import conf.switches.Switches._
 @import dev.HttpSwitch
-@import common.InternationalEdition
 @import common.LinkTo
 @import common.Edition
 @import common.editions._
@@ -132,12 +131,12 @@
         <a class="@RenderClasses(Map(
             "brand-bar__item--action" -> true,
             "popup__toggle" -> true,
-            "brand-bar__item--action-beta" -> InternationalEdition.isInternationalEdition(request)
+            "brand-bar__item--action-beta" -> Edition(request).isBeta
         ))"
            data-link-name="topNav : edition" data-toggle="top-bar__popup--edition"
            aria-haspopup="true" aria-controls="guardian-edition-menu">
-        @if(InternationalEdition.isInternationalEdition(request)) {
-            <span class="brand-bar__edition-name">@InternationalEdition.displayName</span>
+        @if(Edition(request).isBeta) {
+            <span class="brand-bar__edition-name">@Edition(request).displayName</span>
             <small class="brand-bar__beta">beta</small>
         } else {
             @Edition(request).displayName

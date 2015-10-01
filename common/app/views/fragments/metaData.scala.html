@@ -1,10 +1,11 @@
 @(item: model.MetaData, amp: Boolean = false)(implicit request: RequestHeader)
-@import common.editions.EditionalisedSections
+
 @import common.{AnalyticsHost, _}
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
 @import play.api.Play
 @import play.api.Play.current
+@import views.support.{SeoThumbnail, StripHtmlTags}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -52,8 +53,8 @@
     ONLY for EDITONALISED sections
     https://support.google.com/webmasters/answer/189077
 *@
-@EditionalisedSections.otherPagesFor(request).map{ link =>
-    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.lang" />
+@Edition.otherPagesFor(request).map{ link =>
+    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
 }
 
 @item.rssPath.map { path =>

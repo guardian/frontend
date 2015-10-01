@@ -2,7 +2,7 @@ package common
 
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.Play
-import common.editions.Uk
+import common.editions.{International, Uk}
 import play.api.mvc.RequestHeader
 import test._
 import play.api.test.FakeRequest
@@ -66,6 +66,18 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("//www.theguardian.com/info")
     TheGuardianLinkTo("/info/foo", edition) should be ("//www.theguardian.com/info/foo")
   }
+
+  it should "correctly editionalise the International front" in {
+    TheGuardianLinkTo("/", International) should be ("http://www.theguardian.com/international")
+  }
+
+  it should "correctly link editionalised sections to the UK version for the International edition" in {
+    // Only the front page is different in the international edition, the others go to UK...
+    TheGuardianLinkTo("/culture", International) should be ("http://www.theguardian.com/uk/culture")
+    TheGuardianLinkTo("/sport", International) should be ("http://www.theguardian.com/uk/sport")
+  }
+
+
 
   object TestCanonicalLink extends CanonicalLink {
     override lazy val secureApp: Boolean = false
