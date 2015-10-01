@@ -349,11 +349,12 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             element.attr("data-​c​ards", "hidden")
             element.attr("layout", "responsive")
             element.attr("width", "486")
+            element.attr("data-conversation","none")
             // temporary fix to give tweets with an image a larger height
             if (elem.firstImage.size > 0) {
-              element.attr("height", "600")
+              element.attr("height", "437")
             } else {
-              element.attr("height", "200")
+              element.attr("height", "179")
             }
           }
         } else {

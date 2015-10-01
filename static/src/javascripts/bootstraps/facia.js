@@ -4,7 +4,6 @@ define([
     // Common libraries
     'common/utils/_',
     'common/utils/$',
-    'common/utils/background',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -28,7 +27,6 @@ define([
     qwery,
     _,
     $,
-    background,
     config,
     detect,
     mediator,
@@ -102,7 +100,7 @@ define([
         },
 
         ready = function () {
-            background(robust.makeBlocks([
+            _.forEach(robust.makeBlocks([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
@@ -114,7 +112,9 @@ define([
                 ['f-weather', modules.showWeather],
                 ['f-live-blog-updates', modules.showLiveblogUpdates],
                 ['f-finished', modules.finished]
-            ]));
+            ]), function (fn) {
+                fn();
+            });
         };
 
     return {
