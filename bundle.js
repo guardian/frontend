@@ -56,7 +56,7 @@ var getHash = function (outputSource) {
 var createBundle = function (bundleConfig) {
     var moduleExpression = bundleConfig[0];
     var outName = bundleConfig[1];
-    return builder.build(moduleExpression, null, {
+    return builder.bundle(moduleExpression, null, {
             minify: true,
             sourceMaps: true,
             sourceMapContents: true })
