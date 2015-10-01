@@ -1,6 +1,6 @@
 We're hiring!
 --------
-Ever thought about joining us?<br/>
+Ever thought about joining us and have the right to work in the UK?<br/>
 http://developers.theguardian.com/join-the-team.html
 
 Frontend
