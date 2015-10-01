@@ -19,6 +19,12 @@
     }
 }
 
+.crossword__controls_autosave_label {
+    @include fs-textSans(3);
+    margin-left: $gs-gutter / 4;
+    font-style: italic;
+}
+
 .crossword__controls__clue .button:last-child {
     margin-right: 0;
 }
