@@ -101,7 +101,6 @@
         font-size: 1rem;
         line-height: 1.25rem;
         margin-top: 0;
-        margin-bottom: 1.5rem;
     }
 
     .contact {
@@ -124,8 +123,12 @@
         margin: 0;
     }
 
-    .caption, .content__standfirst, .byline, .content__dateline, .element-rich-link--not-upgraded a:before, .content__series-label__link, blockquote.quoted {
+    .caption, .content__standfirst, .byline, .content__dateline, .element-rich-link--not-upgraded a:before, .content__series-label__link, blockquote.quoted, .ad-slot--paid-for-badge__header {
         color: #767676;
+    }
+
+    .ad-slot--paid-for-badge__header {
+        margin: 3px 0 0;
     }
 
     .quoted__contents {
@@ -157,7 +160,7 @@
         margin: 0;
     }
 
-    .caption, .content__dateline {
+    .caption, .content__dateline, .ad-slot--paid-for-badge__header {
         font-size: 0.75rem;
         line-height: 1rem;
         font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -166,6 +169,10 @@
     .caption, .content__meta-container {
         border-bottom: 0.0625rem dotted #dfdfdf;
     }
+
+    .content__meta-container {
+        margin-bottom: 12px dotted #dfdfdf;
+    }    
 
     .u-underline {
         text-decoration: none;
