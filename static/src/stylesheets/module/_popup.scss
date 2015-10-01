@@ -95,8 +95,8 @@ $control-offset: 36 + $gs-gutter/2;
 
     &.is-active,
     .is-active > &,
-    .is-not-modern .brand-bar__item--edition:hover &,
-    .is-not-modern .brand-bar__item--profile:hover & {
+    .is-not-modern .brand-bar__item--has-control:hover &,
+    .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
         @include mq(tablet) {
             &:after {
                 border-top: 0;
@@ -126,7 +126,7 @@ $control-offset: 36 + $gs-gutter/2;
     &.is-active,
     .is-active > & {
         &:before {
-            .brand-bar__item--has-control & {
+            .has-popup & {
                 @include mq(tablet) {
                     margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
                 };

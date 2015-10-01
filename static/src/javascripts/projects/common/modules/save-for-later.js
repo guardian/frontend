@@ -83,8 +83,6 @@ define([
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
 
-                    this.updateSavedCount();
-
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         // this user has never saved anything, so create a new
                         // data object and save an introductory article for them
@@ -96,6 +94,8 @@ define([
                     } else {
                         this.userData = resp.savedArticles;
                     }
+
+                    this.updateSavedCount();
 
                     this.prepareFaciaItemLinks(true);
 
@@ -373,15 +373,14 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        // To-do: Restore functionality
-        //var $saveForLaterEl = $(this.classes.profileDropdownLink),
-        //    count = this.userData.articles.length;
-        //
-        //if (count > 0) {
-        //    $saveForLaterEl.attr('data-saved-content-count', count);
-        //} else {
-        //    $saveForLaterEl.removeAttr('data-saved-content-count', count);
-        //}
+        var $saveForLaterEl = $(this.classes.profileDropdownLink),
+            count = (this.userData.articles) ? this.userData.articles.length : 0;
+
+        if (count > 0) {
+            $saveForLaterEl.attr('data-saved-content-count', count);
+        } else {
+            $saveForLaterEl.removeAttr('data-saved-content-count', count);
+        }
     };
 
     SaveForLater.prototype.saveIntroArticle = function () {
