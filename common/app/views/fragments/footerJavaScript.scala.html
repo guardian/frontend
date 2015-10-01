@@ -67,7 +67,7 @@
                     if ($signInLinkElem) {
                         var userId = getUserIdFromCookie();
                         if(userId) {
-                            $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'user/id/' + userId));
+                            $signInLinkElem.removeAttribute('href');
                         } else {
                             $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'public/edit/'));
                         }
