@@ -30,7 +30,7 @@ define([
 
         // riff raff - requires you to be on the guardian network
         ajax({
-            url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend%3A%3A&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
+            url: 'https://riffraff.gutools.co.uk/api/history?projectName=dotcom%3A&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
             type: 'jsonp',
             crossOrigin: true
         }).then(
@@ -40,7 +40,7 @@ define([
                 var latestDeployments = { 'CODE': {}, 'PROD': {}};
                 deployments.response.results.filter(function (deployment) {
 
-                        return /^frontend::/.test(deployment.projectName);
+                        return /^dotcom:/.test(deployment.projectName);
 
                     }).forEach(function(deploy) {
 
@@ -75,7 +75,7 @@ define([
                 function renderDeploys(stage, target) {
                     Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
                         var d  = latestDeployments[stage][deployment];
-                        var nameAbbreviation = d.projectName.substr(10, 4); //start at 10 to drop 'frontend::'
+                        var nameAbbreviation = d.projectName.substr(7, 4); //start at 7 to drop 'dotcom:'
 
                         var link = document.createElement('a');
                         link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;

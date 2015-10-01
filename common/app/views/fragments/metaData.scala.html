@@ -1,11 +1,11 @@
 @(item: model.MetaData, amp: Boolean = false)(implicit request: RequestHeader)
+
 @import common.{AnalyticsHost, _}
-@import common.editions.EditionalisedSections
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
 @import play.api.Play
 @import play.api.Play.current
-@import views.support._
+@import views.support.{SeoThumbnail, StripHtmlTags}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -37,7 +37,7 @@
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
     @if((item.isArticle && !item.isLiveBlog)) {
-        <link rel="amphtml" href="/@item.id/amp">
+        <link rel="amphtml" href="@LinkTo{/@item.id/amp}">
     }
 }
 
@@ -53,8 +53,8 @@
     ONLY for EDITONALISED sections
     https://support.google.com/webmasters/answer/189077
 *@
-@EditionalisedSections.otherPagesFor(request).map{ link =>
-    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.lang" />
+@Edition.otherPagesFor(request).map{ link =>
+    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
 }
 
 @item.rssPath.map { path =>
@@ -62,7 +62,7 @@
 }
 
 @if(!item.shouldGoogleIndex) { <meta name="robots" content="noindex"> }
-<link rel="canonical" href="@item.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request))" />
+<link rel="canonical" href="@LinkTo(item.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, item.webUrl)))" />
 
 <meta name="apple-mobile-web-app-title" content="Guardian" />
 <meta name="application-name" content="The Guardian" />

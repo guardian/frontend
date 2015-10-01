@@ -4,17 +4,26 @@ import java.util.Locale
 
 import common._
 import conf.switches.Switches
+import conf.switches.Switches.InternationalEditionBetaSwitch
 import org.joda.time.DateTimeZone
 
-object Uk extends Edition(
-  id = "UK",
-  displayName = "UK edition",
+object International extends Edition(
+  id = "INT",
+  displayName = "International",
   timezone = DateTimeZone.forID("Europe/London"),
-  locale = Locale.forLanguageTag("en-gb"),
-  homePagePath = "/uk"
+  locale = Locale.forLanguageTag("en"),
+  homePagePath = "/international",
+  editionalisedSections = Seq("") // only the home page
 ){
 
-  implicit val UK = Uk
+  implicit val INT = International
+
+  override def isBeta: Boolean = InternationalEditionBetaSwitch.isSwitchedOn
+
+  // TODO temporary to let us migrate cookies to proper value (i.e. INT)
+  // it is currently INTL
+  override def matchesCookie(cookieValue: String): Boolean = super.matchesCookie(cookieValue) ||
+    "INTL".equalsIgnoreCase(cookieValue)
 
   import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(
@@ -97,7 +106,6 @@ object Uk extends Edition(
     Seq(
       NavItem(home),
       NavItem(uk, ukLocalNav),
-      NavItem(politics),
       NavItem(world, worldLocalNav),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
@@ -124,7 +132,6 @@ object Uk extends Edition(
     NavItem(home),
     NavItem(uk, ukLocalNav),
     NavItem(world, worldLocalNav),
-    NavItem(politics),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),
     NavItem(opinion, Seq(columnists)),
