@@ -44,11 +44,11 @@ define([
                     fastdom.write(function () {
                         $('.js-liveblog-body').prepend(template(subscribeTemplate, {
                             url: window.location,
-                            text: cookies.get('following') ? 'Following story' : 'Follow story'
+                            text: cookies.get(window.location + '-notification') ? 'Following story' : 'Follow story'
                         }));
                     });
                     bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
-                        cookies.add('following', 'true', 100);
+                        cookies.add(window.location + '-notification', 'true', 100);
                     });
                 }
             }
