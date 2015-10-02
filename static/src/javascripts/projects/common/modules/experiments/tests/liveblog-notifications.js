@@ -5,8 +5,7 @@ define([
     'fastdom',
     'text!common/views/ui/notifications-subcribe-link.html',
     'common/utils/cookies',
-    'bean',
-    'common/views/svgs'
+    'bean'
 ], function (
     config,
     $,
@@ -14,8 +13,7 @@ define([
     fastdom,
     subscribeTemplate,
     cookies,
-    bean,
-    svgs
+    bean
 ) {
 
     return function () {
@@ -43,20 +41,14 @@ define([
             {
                 id: 'a',
                 test: function () {
-                    var enabled = cookies.get('notifications-demo-following'),
-                        src = template(subscribeTemplate, {
-                            className: enabled ? '' : 'notifications--disabled',
-                            url: window.location,
-                            text: enabled ? 'Following story' : 'Follow story',
-                            imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
-                            imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer']),
-                            arrow: svgs('arrowWhiteRight')
-                        });
                     fastdom.write(function () {
-                        $('.js-liveblog-body').prepend(src);
+                        $('.js-liveblog-body').prepend(template(subscribeTemplate, {
+                            url: window.location,
+                            text: cookies.get('following') ? 'Following story' : 'Follow story'
+                        }));
                     });
                     bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
-                        cookies.add('notifications-demo-following', 'true', 100);
+                        cookies.add('following', 'true', 100);
                     });
                 }
             }
