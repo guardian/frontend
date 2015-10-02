@@ -67,7 +67,6 @@
                     if ($signInLinkElem) {
                         var userId = getUserIdFromCookie();
                         if(userId) {
-                            $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'user/id/' + userId));
                             $signInLinkElem.addEventListener("click", function(e) {
                                 e.preventDefault();
                             });
