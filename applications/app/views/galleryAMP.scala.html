@@ -1,7 +1,0 @@
-@import model.RelatedContent
-@(gallery: model.Gallery, related: RelatedContent, index: Int)(implicit request: RequestHeader)
-@import conf.switches.Switches._
-
-@mainAMP(gallery){
-    @fragments.galleryBody(gallery, related, index, amp = true)
-}
