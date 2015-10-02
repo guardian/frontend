@@ -738,8 +738,9 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    .is-not-modern & {
+    .is-not-modern .l-footer & {
         min-width: $navigation-toggler-width;
+        font-size: 24px;
     }
 }
 
