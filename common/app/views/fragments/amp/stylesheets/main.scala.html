@@ -80,7 +80,7 @@
     .content__headline {
         color: #333;
         font-size: 1.75rem;
-        font-weight: 400;
+        font-weight: 200;
         line-height: 2rem;
         letter-spacing: -.02rem;
         padding-top: 0.125rem;
@@ -171,11 +171,8 @@
         border-top: 0.0625rem dotted #dfdfdf;
         border-bottom: 0.0625rem dotted #dfdfdf;
         margin-top: 16px;
+        margin-bottom: 0.75rem;
     }
-
-    .content__meta-container {
-        margin-bottom: 12px dotted #dfdfdf;
-    }    
 
     .u-underline {
         text-decoration: none;
@@ -191,6 +188,27 @@
     .logo-wrapper {
         float: right;
         margin: 0.1875rem 0.625rem 0.34rem 0;
+    }
+
+    @* Dropcap styling *@
+    .drop-cap__inner {
+        float: left;
+        display: inline-block;
+        vertical-align: text-top;
+        font-size: 3rem;
+        line-height: 2.5rem;
+    }
+
+    .drop-cap {
+        float: left;
+        display: inline-block;
+        text-transform: uppercase;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 2.5rem;
+        padding-top: 0.0625rem;
+        margin-right: 0.25rem;
     }
 
     @* Bullet Points related styling below *@
