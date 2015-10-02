@@ -1,9 +1,7 @@
 package implicits
 
-import conf.{Configuration, Switches}
-import play.api.http.MediaRange
-import play.api.mvc.RequestHeader
 import common.Edition
+import play.api.mvc.RequestHeader
 
 trait Requests {
 
@@ -30,6 +28,8 @@ trait Requests {
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck")
+
+    lazy val rawQueryStringOption: Option[String] = if (r.rawQueryString.nonEmpty) Some(r.rawQueryString) else None
 
     private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 

@@ -77,7 +77,6 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .popup__toggle {
-
     // disclosure arrow
     &:after {
         content: '';
@@ -96,7 +95,8 @@ $control-offset: 36 + $gs-gutter/2;
 
     &.is-active,
     .is-active > &,
-    .is-not-modern .brand-bar__item--edition:hover & {
+    .is-not-modern .brand-bar__item--has-control:hover &,
+    .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
         @include mq(tablet) {
             &:after {
                 border-top: 0;
@@ -118,8 +118,15 @@ $control-offset: 36 + $gs-gutter/2;
             border-right: $popup-anchor-arrow-size solid transparent;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
             top: $popup-top - $popup-anchor-arrow-size;
+        }
+    }
+}
 
-            .brand-bar__item--has-control & {
+.popup__toggle {
+    &.is-active,
+    .is-active > & {
+        &:before {
+            .has-popup & {
                 @include mq(tablet) {
                     margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
                 };
@@ -163,8 +170,11 @@ $control-offset: 36 + $gs-gutter/2;
 
 .popup__item {
     display: block;
-    border-bottom: 1px solid colour(neutral-5);
     line-height: 36px;
+
+    a {
+        border-bottom: 1px solid colour(neutral-5);
+    }
 
     &:last-child {
         border-bottom: 0;
@@ -197,9 +207,9 @@ $control-offset: 36 + $gs-gutter/2;
 .brand-bar__item--profile {
     // stupid having to reset this, but :not was :not available to all in 2009
     @if ($old-ie == true) {
-        .popup__toggle:before,
+        .popup__toggle:hover:before,
         .popup__toggle:after {
-            display: none;
+            display: none !important;
         }
         &.is-signed-in .popup__toggle {
             display: inline-block;
@@ -208,7 +218,7 @@ $control-offset: 36 + $gs-gutter/2;
         &:not(.is-signed-in) .popup__toggle {
             &:before,
             &:after {
-                display: none;
+                display: none !important;
             }
         }
     }
@@ -226,8 +236,9 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.brand-bar__item--saved-for-later-count {
+.js-on.is-modern .brand-bar__item--saved-for-later:after {
     display: inline-block;
+    content: attr(data-saved-content-count);
     position: relative;
     top: -1px;
     line-height: $gs-baseline;

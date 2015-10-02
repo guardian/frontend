@@ -14,16 +14,9 @@
     @include f-headlineSans;
     @include font-size(21, 26);
 
+    color: colour(neutral-1);
     padding-bottom: $gs-baseline;
     text-align: left;
-    
-    a {
-        color: colour(neutral-1);
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
 }
 
 .gu-text {
@@ -68,6 +61,7 @@
 }
 
 .gu-comcontent {
+    display: block;
     background-color: colour(neutral-8);
     border-top: 1px solid $gustyle-tone;
     padding: 0;
@@ -76,6 +70,12 @@
 
     &:hover {
         background-color: colour(neutral-6);
+        text-decoration: none;
+
+        .gu-image {
+            background-color: #000000;
+            opacity: .9;
+        }
     }
 
     .gu-image-container {

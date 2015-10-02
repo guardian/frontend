@@ -3,9 +3,8 @@ package controllers
 import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
-import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches
+import conf.switches.Switches
 import controllers.front._
 import layout.{Front, CollectionEssentials, FaciaContainer}
 import model._
@@ -27,39 +26,17 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val frontJsonFapi: FrontJsonFapi
 
-  // TODO - these should not be separate endpoints
-  // see comment in routes file...
-  def rootEditionRedirect() = editionRedirect(path = "")
-  def editionRedirect(path: String) = Action.async { implicit request =>
-    if (request.getQueryString("page").isDefined) {
-      applicationsRedirect(path)
-    } else {
-      val edition = Edition(request)
-      val editionBase = InternationalEdition(request)
-        .filter(_.isInternational && path == "") // ONLY the network front
-        .map(_ => InternationalEdition.path)
-        .getOrElse(s"/${edition.id.toLowerCase}")
-
-      val redirectPath = path match {
-        case "" => editionBase
-        case sectionFront => s"$editionBase/$sectionFront"
-      }
-
-      Future.successful(Cached(60)(Redirect(redirectPath)))
-    }
-  }
-
   def applicationsRedirect(path: String)(implicit request: RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
-    Future.apply(InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None))
+    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader) = {
     FaciaToRssRedirectMetric.increment()
-    Future.successful(InternalRedirect.internalRedirect(
+    successful(InternalRedirect.internalRedirect(
       "rss_server",
       path,
-      if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
+      request.rawQueryStringOption.map("?" + _)
     ))
   }
 
@@ -70,26 +47,37 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id)
 
+  // Needed as aliases for reverse routing
+  def renderRootFrontRss() = renderFrontRss(path = "")
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
     log.info(s"Serving RSS Path: $path")
-    if (!ConfigAgent.shouldServeFront(path))
+    if (shouldEditionRedirect(path))
+      redirectTo(s"${Editionalise(path, Edition(request))}/rss")
+    else if (!ConfigAgent.shouldServeFront(path))
       rssRedirect(s"$path/rss")
     else
       renderFrontPressResult(path)
   }
 
+  def rootEditionRedirect() = renderFront(path = "")
   def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (EditionalisedSections.isEditionalised(path) && !request.getQueryString("page").isDefined)
-      redirectToEditionalisedVersion(path)
+    if (shouldEditionRedirect(path))
+      redirectTo(Editionalise(path, Edition(request)))
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
   }
 
-  def redirectToEditionalisedVersion(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(Cached(60)(Found(LinkTo(Editionalise(s"/$path", Edition(request), InternationalEdition.isInternationalEdition(request))))))
+  private def shouldEditionRedirect(path: String)(implicit request: RequestHeader) = {
+    val editionalisedPath = Editionalise(path, Edition(request))
+    (editionalisedPath != path) && request.getQueryString("page").isEmpty
+  }
+
+  def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
+    val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
+    Cached(60)(Found(LinkTo(s"/$path$params")))
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
@@ -105,7 +93,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
     val futureResult = frontJsonFapi.get(path).flatMap {
       case Some(faciaPage) =>
-        Future.successful(
+        successful(
           Cached(faciaPage) {
             if (request.isRss)
               Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
@@ -114,10 +102,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             else if (faciaPage.isExpiredAdvertisementFeature)
               MovedPermanently(expiredAdFeatureUrl)
             else
-              Ok(views.html.front(faciaPage))})
-      case None => Future.successful(Cached(60)(NotFound))}
+              Ok(views.html.front(faciaPage))
+          })
+      case None => successful(Cached(60)(NotFound))}
 
-    futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
   }
 
@@ -137,7 +126,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
     canonicalId.map { collectionId =>
       renderContainerView(collectionId)
-    }.getOrElse(Future.successful(NotFound))
+    }.getOrElse(successful(NotFound))
   }
 
   def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
@@ -174,11 +163,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             (container, index) <- Front.fromPressedPage(pressedPage).containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout}
           yield
-            Future.successful{Cached(pressedPage) {
+            successful{Cached(pressedPage) {
             JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
 
-        maybeResponse getOrElse Future.successful(Cached(60)(NotFound))
-      case None => Future.successful(Cached(60)(NotFound))}}
+        maybeResponse getOrElse successful(Cached(60)(NotFound))
+      case None => successful(Cached(60)(NotFound))}}
 
 
 
@@ -200,7 +189,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
-    }.getOrElse(Future.successful(None))
+    }.getOrElse(successful(None))
 
 
   /* Google news hits this endpoint */
@@ -208,13 +197,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving collection ID: $id")
     getPressedCollection(id).flatMap {
       case Some(collection) =>
-        Future.successful{
+        successful{
           Cached(60) {
             val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
             val webTitle = config.displayName.getOrElse("The Guardian")
-            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}}
-
-      case None => Future.successful(Cached(60)(NotFound))}
+            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}
+        }
+      case None => successful(Cached(60)(NotFound))}
   }
 
 

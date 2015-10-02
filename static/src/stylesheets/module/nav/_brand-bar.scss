@@ -140,15 +140,6 @@
     .l-header--is-slim & {
         display: none;
     }
-
-    .is-not-modern & {
-        &:hover,
-        &:focus {
-            .top-bar__popup--edition {
-                display: block;
-            }
-        }
-    }
 }
 
 .brand-bar__item--jobs {
@@ -230,6 +221,16 @@
             .l-header--is-slim & {
                 display: block;
             }
+        }
+    }
+}
+
+.is-not-modern .brand-bar__item--has-control,
+.is-not-modern .is-signed-in.brand-bar__item--profile {
+    &:hover,
+    &:focus {
+        .popup {
+            display: block;
         }
     }
 }

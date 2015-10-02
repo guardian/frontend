@@ -7,6 +7,8 @@ object Dependencies {
   val identityLibVersion = "3.46"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
+
+  // Check SES works before upgrading this
   val awsVersion = "1.9.16"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"

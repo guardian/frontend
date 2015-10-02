@@ -1,5 +1,5 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import common.{Edition, InternationalEditionVariant, StringEncodings}
+@import common.{Edition, StringEncodings}
 @import conf.Static
 @import views.support.{JavaScriptPage, CamelCase}
 @import play.api.libs.json.Json
@@ -22,7 +22,7 @@ window.guardian = {
     },
     config: @defining(Edition(request)) { edition => {
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage(item).get))),
-        "switches" : { @{JavaScript(conf.Switches.all.filter(_.exposeClientSide).map{ switch =>
+        "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
         "tests": { @JavaScript(mvt.ActiveTests.getJavascriptConfig) },

@@ -2,7 +2,8 @@ package views.support
 
 import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
-import conf.Switches.SaveForLaterSwitch
+import conf.switches.Switches.SaveForLaterSwitch
+import slices.{DynamicSlowMPU, Dynamic}
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob) = {
@@ -64,7 +65,8 @@ object GetClasses {
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
-      lazyLoad = containerDefinition.shouldLazyLoad
+      lazyLoad = containerDefinition.shouldLazyLoad,
+      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU)
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -72,13 +74,14 @@ object GetClasses {
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
-    false,
+    isHeadlines = false,
     ContainerCommercialOptions.empty,
-    false,
-    None,
-    Nil,
+    hasDesktopShowMore = false,
+    container = None,
+    extraClasses = Nil,
     disableHide = true,
-    lazyLoad = false
+    lazyLoad = false,
+    dynamicSlowMpu = false
   )
 
   def forContainer(
@@ -91,7 +94,8 @@ object GetClasses {
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
     disableHide: Boolean = false,
-    lazyLoad: Boolean
+    lazyLoad: Boolean,
+    dynamicSlowMpu: Boolean
   ) = {
     RenderClasses((Seq(
       ("fc-container", true),
@@ -103,6 +107,7 @@ object GetClasses {
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("fc-container--lazy-load", lazyLoad),
       ("js-container--lazy-load", lazyLoad),
+      ("fc-container--dynamic-slow-mpu", dynamicSlowMpu),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         // no toggle for Headlines container as it will be hosting the weather widget instead

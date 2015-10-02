@@ -15,11 +15,6 @@ GET        /humans.txt                                                 controlle
 GET        /rockabox/rockabox_buster.html                              controllers.Assets.at(path="/public", file="rockabox_buster.html")
 GET        /external/eyeblaster/addineyeV2.html                        controllers.Assets.at(path="/public", file="addineyeV2.html")
 
-# Editionalised redirects
-# TODO we should get rid of these. we should not have to add these manually here as routes
-# everything is in place for the fronts, we just have to figure out what to do with RSS
-GET        /                                                           controllers.FaciaController.rootEditionRedirect()
-GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
 
 #Facia Press
 GET        /collection/*id/rss                                         controllers.FaciaController.renderCollectionRss(id)
@@ -28,8 +23,10 @@ GET        /most-relevant-container/*path.json                         controlle
 
 # Editionalised pages
 GET        /*path/show-more/*id.json                                   controllers.FaciaController.renderShowMore(path, id)
+GET        /rss                                                        controllers.FaciaController.renderRootFrontRss()
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)
 GET        /*path/deduped.json                                         controllers.DedupedController.getDedupedForPath(path)
 GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)
+GET        /                                                           controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                      controllers.FaciaController.renderFront(path)

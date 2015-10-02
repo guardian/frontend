@@ -3,7 +3,7 @@
  * but that is too blocking / risky to be put in the `head` of the document
  *@
 
-@import conf.Switches.IdentityProfileNavigationSwitch
+@import conf.switches.Switches.IdentityProfileNavigationSwitch
 @import conf.Configuration
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
@@ -67,7 +67,9 @@
                     if ($signInLinkElem) {
                         var userId = getUserIdFromCookie();
                         if(userId) {
-                            $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'user/id/' + userId));
+                            $signInLinkElem.addEventListener("click", function(e) {
+                                e.preventDefault();
+                            });
                         } else {
                             $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'public/edit/'));
                         }

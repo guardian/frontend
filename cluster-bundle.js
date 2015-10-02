@@ -128,8 +128,8 @@ function updateBundles(message) {
 
 function writeConfig() {
     var configs = _(processedBundles)
-        .map()
-        .reduce(function (a, o) { return _.merge(a, o); });
+        .values()
+        .reduce(function (accumulator, object) { return _.merge(accumulator, object); });
 
     var configFilePath = path.join(prefixPath, 'assets/jspm-assets.map');
     var configFileData = JSON.stringify(configs, null, '\t');
@@ -200,7 +200,7 @@ if (cluster.isMaster) {
             var moduleExpression = config[0];
             var outName = config[1];
 
-            return builder.build(moduleExpression, null)
+            return builder.bundle(moduleExpression, null)
                 .then(processBuild(moduleExpression, outName))
                 .then(function (bundle) {
                     return makeDirectory(path.dirname(path.join(prefixPath, bundle.uri)))

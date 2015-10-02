@@ -4,8 +4,8 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import common.{Edition, JsonMessageQueue, SNSNotification, StopWatch}
-import conf.Switches.FrontPressJobSwitch
-import conf.{Configuration, Switches}
+import conf.switches.Switches.FrontPressJobSwitch
+import conf.Configuration
 import metrics.AllFrontsPressLatencyMetric
 import play.api.libs.json.JsNull
 

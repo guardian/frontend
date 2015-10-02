@@ -2,7 +2,6 @@ package test
 
 import com.gu.facia.client.models.{FrontJson, ConfigJson}
 import common.editions.{Us, Uk}
-import conf.Switches
 import implicits.FakeRequests
 import play.api.test._
 import play.api.test.Helpers._
@@ -25,10 +24,6 @@ import services.ConfigAgent
         fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
-  }
-
-  override def afterEach(): Unit = {
-    Switches.InternationalEditionSwitch.switchOff()
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
@@ -105,7 +100,6 @@ import services.ConfigAgent
 
   it should "understand the international edition" in {
 
-    Switches.InternationalEditionSwitch.switchOn()
 
     val international = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToInternational = FaciaController.renderFront("")(international)
@@ -115,15 +109,9 @@ import services.ConfigAgent
     val redirect = FaciaController.renderFront("")(ukOptInRequest)
     header("Location", redirect).head should endWith ("/uk")
 
-    Switches.InternationalEditionSwitch.switchOff()
-    val international2 = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
-    val redirectToUk2 = FaciaController.renderFront("")(international2)
-    header("Location", redirectToUk2).head should endWith ("/uk")
-
   }
 
   it should "obey when the international edition is set by cookie" in {
-    Switches.InternationalEditionSwitch.switchOn()
 
     val control = FakeRequest("GET", "/").withHeaders(
       "X-GU-Edition" -> "INTL",
@@ -134,9 +122,8 @@ import services.ConfigAgent
     header("Location", redirectToUk).head should endWith ("/international")
   }
 
+   // TODO - last piece of the puzzle
   it should "obey the control group when the international edition is not set by cookie" in {
-    Switches.InternationalEditionSwitch.switchOn()
-
     val control = FakeRequest("GET", "/").withHeaders(
       "X-GU-Edition" -> "INTL",
       "X-GU-International" -> "control"
@@ -146,11 +133,8 @@ import services.ConfigAgent
   }
 
   it should "send international traffic ot the UK version of editionalised sections" in {
-
-    Switches.InternationalEditionSwitch.switchOn()
-
     val international = FakeRequest("GET", "/commentisfree").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
-    val redirectToInternational = FaciaController.editionRedirect("commentisfree")(international)
+    val redirectToInternational = FaciaController.renderFront("commentisfree")(international)
     header("Location", redirectToInternational).head should endWith ("/uk/commentisfree")
   }
 

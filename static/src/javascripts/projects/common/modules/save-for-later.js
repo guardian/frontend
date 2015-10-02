@@ -12,8 +12,7 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html',
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'text!common/views/save-for-later/save-button.html'
 ], function (
     qwery,
     bonzo,
@@ -28,8 +27,7 @@ define([
     identity,
     svgs,
     saveLink,
-    saveButton,
-    profileLinkTmp
+    saveButton
 ) {
 
     function SaveForLater() {
@@ -44,12 +42,14 @@ define([
             itemSaveLink: '.js-save-for-later-link',
             itemSaveLinkHeading: '.save-for-later-link__heading',
             profileDropdownCount: '.brand-bar__item--saved-for-later-count',
-            fcItemIsSaved: 'fc-save-for-later--is-saved'
+            fcItemIsSaved: 'fc-save-for-later--is-saved',
+            profileDropdownLink: '.brand-bar__item--saved-for-later'
         };
         this.attributes = {
             containerItemShortUrl: 'data-loyalty-short-url',
             containerItemDataId: 'data-id'
         };
+
 
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
@@ -82,16 +82,6 @@ define([
             identity.getSavedArticles()
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
-                    var popup = qwery('.popup--profile')[0];
-
-                    fastdom.write(function () {
-                        bonzo(popup).prepend(bonzo.create(
-                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                idUrl: config.page.idUrl
-                            })
-                        ));
-                        this.updateSavedCount();
-                    }.bind(this));
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         // this user has never saved anything, so create a new
@@ -105,6 +95,8 @@ define([
                         this.userData = resp.savedArticles;
                     }
 
+                    this.updateSavedCount();
+
                     this.prepareFaciaItemLinks(true);
 
                     if (this.isContent) {
@@ -113,7 +105,7 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&INTCMP=SFL-SO', {
+                var url = template('<%= idUrl%>/save-content?INTCMP=DOTCOM_ARTICLE_SFL&returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
                     idUrl: config.page.idUrl,
                     returnUrl: encodeURIComponent(document.location.href),
                     shortUrl: shortUrl,
@@ -144,7 +136,8 @@ define([
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
                 position: $saver.attr('data-position'),
-                config: config
+                config: config,
+                showLabel: config.page.contentType !== 'Crossword'
             };
             if (options.url) {
                 $saver.html(template(saveLink,
@@ -380,19 +373,14 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var saveForLaterProfileCount = $(this.classes.profileDropdownCount);
-        var profile = $('.brand-bar__item--profile');
-        var count = this.userData.articles.length;
+        var $saveForLaterEl = $(this.classes.profileDropdownLink),
+            count = (this.userData.articles) ? this.userData.articles.length : 0;
 
-        fastdom.write(function () {
-            if (count > 0) {
-                $('.save-for-later__icon', profile).attr('data-saved-content-count', count);
-                saveForLaterProfileCount.text(count);
-            } else {
-                $('.save-for-later__icon', profile).removeAttr('data-saved-content-count');
-                saveForLaterProfileCount.text('');
-            }
-        });
+        if (count > 0) {
+            $saveForLaterEl.attr('data-saved-content-count', count);
+        } else {
+            $saveForLaterEl.removeAttr('data-saved-content-count', count);
+        }
     };
 
     SaveForLater.prototype.saveIntroArticle = function () {

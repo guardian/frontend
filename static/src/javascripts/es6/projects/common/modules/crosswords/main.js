@@ -345,17 +345,27 @@ class Crossword extends React.Component {
         }
     }
 
+    // Focus corresponding clue for a given cell
     focusClue (x, y, direction) {
         const clues = helpers.cluesFor(this.clueMap, x, y);
+        const clue = clues[direction];
 
-        if (clues && clues[direction]) {
+        if (clues && clue) {
             this.focusHiddenInput(x, y);
 
             this.setState({
                 cellInFocus: { x: x, y: y },
                 directionOfEntry: direction
             });
+
+            // Side effect
+            window.location.hash = clue.id;
         }
+    }
+
+    // Focus first cell in given clue
+    focusFirstCellInClue(entry) {
+        this.focusClue(entry.position.x, entry.position.y, entry.direction);
     }
 
     focusCurrentCell () {
@@ -629,7 +639,29 @@ export default function () {
     $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
-            React.render(<Crossword data={crosswordData} />, element);
+            const crosswordComponent = React.render(<Crossword data={crosswordData} />, element);
+
+            const entryId = window.location.hash.replace('#', '');
+            const entry = _.find(crosswordComponent.props.data.entries, { id: entryId });
+            if (entry) {
+                crosswordComponent.focusFirstCellInClue(entry);
+            }
+
+            window.addEventListener('hashchange', hashEvent => {
+                const idMatch = hashEvent.newURL.match(/#.*/);
+                const newEntryId = idMatch && idMatch[0].replace('#', '');
+
+                const newEntry = _.find(crosswordComponent.props.data.entries, { id: newEntryId });
+                const focussedEntry = crosswordComponent.clueInFocus();
+                const isNewEntry = focussedEntry.id !== newEntry.id;
+                // Only focus the first cell in the new clue if it's not already
+                // focussed. When focussing a cell in a new clue, we update the
+                // hash fragment afterwards, in which case we do not want to
+                // reset focus to the first cell.
+                if (newEntry && (focussedEntry ? isNewEntry : true)) {
+                    crosswordComponent.focusFirstCellInClue(newEntry);
+                }
+            });
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }

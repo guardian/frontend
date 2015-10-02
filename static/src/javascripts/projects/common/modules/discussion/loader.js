@@ -215,8 +215,7 @@ Loader.prototype.initToolbar = function() {
         this.loadComments();
     });
 
-    if (config.switches.discussionCrosswordsOptionalRelativeTimestampSwitch
-        && config.page.section === 'crosswords') {
+    if (config.page.section === 'crosswords') {
         var $timestampsLabel = $('.js-timestamps');
         var updateLabelText = function (prefValue) {
             $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');

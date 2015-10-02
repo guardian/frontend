@@ -1,7 +1,8 @@
 package test
 
-import conf.{Switches, Configuration}
-import conf.Switches._
+import conf.Configuration
+import conf.switches.Switches
+import conf.switches.Switches._
 import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
@@ -411,9 +412,6 @@ import collection.JavaConversions._
     }
 
     scenario("Should include the first image of a tweet") {
-
-      Switches.TwitterImageFallback.switchOn()
-
       Given("I am on an article with a embedded Tweet")
       goTo("/world/2015/aug/22/hawker-hunter-plane-crash-shoreham-air-show-reports") { browser =>
         import browser._
@@ -441,7 +439,7 @@ import collection.JavaConversions._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
         val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f"
-        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
+        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
 
         Then("I should see buttons for my favourite social network")

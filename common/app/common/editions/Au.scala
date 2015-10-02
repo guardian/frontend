@@ -1,7 +1,9 @@
 package common.editions
 
+import java.util.Locale
+
 import common.editions.Uk._
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 import common._
 import contentapi.QueryDefaults
@@ -14,9 +16,9 @@ object Au extends Edition(
   id = "AU",
   displayName = "Australia edition",
   DateTimeZone.forID("Australia/Sydney"),
-  lang = "en-au"
-)
-  with QueryDefaults {
+  locale = Locale.forLanguageTag("en-au"),
+  homePagePath = "/au"
+) with QueryDefaults {
 
   implicit val AU = Au
 
