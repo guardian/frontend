@@ -6,7 +6,6 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
@@ -19,7 +18,6 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogNotifications,
     HighCommercialComponent,
     MembershipMessageUK,
     MembershipMessageUSA,
@@ -27,7 +25,6 @@ define([
 ) {
 
     var TESTS = _.flatten([
-        new LiveblogNotifications(),
         new HighCommercialComponent(),
         new MembershipMessageUK(),
         new MembershipMessageUSA(),
@@ -111,7 +108,7 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [], editionFromCookie;
+            tag = [];
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
@@ -124,18 +121,6 @@ define([
                 tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
-
-        if (config.tests.internationalEditionVariant) {
-            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
-
-            // don't use the edition of the page - we specifically want the cookie version
-            // this allows us to figure out who has "opted out" and "opted into" the test
-            editionFromCookie = cookies.get('GU_EDITION');
-
-            if (editionFromCookie) {
-                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
-            }
-        }
 
         _.forEach(getServerSideTests(), function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
@@ -218,9 +203,7 @@ define([
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        // International Edition is not really a test.
         return _(config.tests)
-            .omit('internationalEditionVariant')
             .pick(function (participating) { return !!participating; })
             .keys()
             .value();

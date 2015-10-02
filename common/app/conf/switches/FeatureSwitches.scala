@@ -15,15 +15,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val InternationalEditionSwitch = Switch(
-    "Feature",
-    "international-edition",
-    "International edition A/B test on",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 10),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -385,5 +376,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+  val InternationalEditionBetaSwitch = Switch(
+    "Feature",
+    "international-edition-beta",
+    "International edition A/B test on",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 10, 31),
+
+    exposeClientSide = true
+  )
+
 
 }

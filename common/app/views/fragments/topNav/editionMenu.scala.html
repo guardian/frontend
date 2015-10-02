@@ -1,6 +1,5 @@
 @()(implicit request: RequestHeader)
 
-@import common.InternationalEdition
 @import common.{Edition, LinkTo}
 @import views.support.RenderClasses
 
@@ -19,7 +18,7 @@
                 title="Switch to the @edition.id edition">
                     @if(edition.isBeta) {
                         <span class="u-h">switch to the </span>
-                        <span class="brand-bar__edition-name">@InternationalEdition.abbreviation</span>
+                        <span class="brand-bar__edition-name">@edition.id</span>
                         <small class="brand-bar__beta">beta</small>
                         <span class="u-h"> edition</span>
                     }else{

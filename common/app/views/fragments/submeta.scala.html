@@ -1,6 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
 @import conf.switches.Switches.SaveForLaterSwitch
+@import common.RichRequestHeader
 
 @toneLink = {
     @if(content.isArticle && !content.isLiveBlog) {
@@ -11,17 +12,18 @@
     }
 }
 
-<div class="submeta">
-    @if(content.keywords.filterNot(_.isSectionTag).nonEmpty) {
-        <hr/>
-        <div data-link-name="keywords" data-component="keywords">
-            @toneLink
-            <h2 class="submeta__head">Topics</h2>
-            @fragments.keywordList(content.keywords, tone = content.tagTone)
-        </div>
-    }
-    @if(content.showBottomSocialButtons) {
-        <hr/>
+@if(!request.isAmp) {
+    <div class="submeta">
+        @if(content.keywords.filterNot(_.isSectionTag).nonEmpty) {
+            <hr/>
+            <div data-link-name="keywords" data-component="keywords">
+                @toneLink
+                <h2 class="submeta__head">Topics</h2>
+                @fragments.keywordList(content.keywords, tone = content.tagTone)
+            </div>
+        }
+        @if(content.showBottomSocialButtons) {
+            <hr/>
             <div class="u-cf">
                 <div data-component="share" class="submeta__share">
                     @fragments.social(content)
@@ -31,7 +33,8 @@
                 }
                 @fragments.syndication(content)
             </div>
-    } else {
-        @fragments.syndication(content)
-    }
-</div>
+        } else {
+            @fragments.syndication(content)
+        }
+    </div>
+}
