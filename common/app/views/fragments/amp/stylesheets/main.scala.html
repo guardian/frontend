@@ -72,7 +72,7 @@
     .content__headline {
         color: #333;
         font-size: 1.75rem;
-        font-weight: 400;
+        font-weight: 200;
         line-height: 2rem;
         letter-spacing: -.02rem;
         padding-top: 0.125rem;
@@ -94,7 +94,6 @@
         font-size: 1rem;
         line-height: 1.25rem;
         margin-top: 0;
-        margin-bottom: 1.5rem;
     }
 
     .contact {
@@ -178,6 +177,27 @@
         margin: 0.1875rem 0.625rem 0.34rem 0;
     }
 
+    @* Dropcap styling *@
+    .drop-cap__inner {
+        float: left;
+        display: inline-block;
+        vertical-align: text-top;
+        font-size: 3rem;
+        line-height: 2.5rem;
+    }
+
+    .drop-cap {
+        float: left;
+        display: inline-block;
+        text-transform: uppercase;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 2.5rem;
+        padding-top: 0.0625rem;
+        margin-right: 0.25rem;
+    }
+
     @* Bullet Points related styling below *@
     .bullet {
         font-size: 0.00625rem;
@@ -207,4 +227,5 @@
     @fragments.amp.stylesheets.richLinks()
     @fragments.amp.stylesheets.ads()
     @fragments.amp.stylesheets.tables()
+    @fragments.amp.stylesheets.fonts()
 </style>
