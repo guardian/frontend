@@ -136,8 +136,7 @@ define([
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
                 position: $saver.attr('data-position'),
-                config: config,
-                showLabel: config.page.contentType !== 'Crossword'
+                config: config
             };
             if (options.url) {
                 $saver.html(template(saveLink,

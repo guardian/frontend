@@ -78,6 +78,10 @@ $sfl-button-height: 30px;
     .save-for-later__button--#{$state} {
         .save-for-later__label--#{$state} {
             display: inline;
+            .meta__extras--crossword & {
+                display: none;
+            }
+
         }
     }
 }
