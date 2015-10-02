@@ -737,6 +737,10 @@ $c-navigation-expandable-background: colour(neutral-1);
             min-width: $navigation-toggler-width;
         }
     }
+
+    .is-not-modern & {
+        min-width: $navigation-toggler-width;
+    }
 }
 
 .navigation-toggle-label__extra {

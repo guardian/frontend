@@ -12,8 +12,9 @@
                         @fragments.nav.topNavigation(metaData, navigation)
                     </div>
                 </div>
-                <a class="navigation-toggle js-navigation-toggle modern-visible" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
-                    <i class="burger-icon"></i>
+                <a class="navigation-toggle js-navigation-toggle" href="#top" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
+                    @fragments.inlineSvg("arrow-up", "icon", List("modern-hidden"))
+                    <i class="burger-icon modern-visible"></i>
                     <span class="navigation-toggle-label navigation-toggle-label--open"
                     aria-haspopup="true" aria-controls="all-sections-popup" aria-label="view all sections">all<span class="navigation-toggle-label__extra"> sections</span></span>
                     <span class="navigation-toggle-label navigation-toggle-label--close" aria-label="close all sections">close</span>
