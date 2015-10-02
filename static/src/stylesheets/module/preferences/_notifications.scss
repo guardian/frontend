@@ -14,12 +14,8 @@
 
 .notifications-preferences-overlay__body {
     max-width: gs-span(6);
-    margin: $gs-baseline auto 0;
+    margin: gs-height(3) auto 0;
     padding: 0 $gs-gutter;
-
-    @include mq(tablet) {
-        margin-top: gs-height(3);
-    }
 }
 
 .notifications-preferences-overlay__cta {
@@ -47,17 +43,12 @@
 }
 
 .notifications-subscribe-link {
-    border-top: 1px solid colour(live-main-1);
+    background-color: #ffffff;
+    border-top: 1px solid colour(neutral-4);
     margin-top: 15px;
-    margin-bottom: $gs-baseline;
     text-align: center;
 
     .button {
         margin: -15px auto 0;
-        @include button-colour(
-            colour(live-main-1),
-            #ffffff,
-            colour(live-main-2)
-        )
     }
 }

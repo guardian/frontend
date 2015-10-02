@@ -3,17 +3,13 @@ define([
     'common/utils/$',
     'common/utils/template',
     'fastdom',
-    'text!common/views/ui/notifications-subcribe-link.html',
-    'common/utils/cookies',
-    'bean'
+    'text!common/views/ui/notifications-subcribe-link.html'
 ], function (
     config,
     $,
     template,
     fastdom,
-    subscribeTemplate,
-    cookies,
-    bean
+    subscribeTemplate
 ) {
 
     return function () {
@@ -41,15 +37,11 @@ define([
             {
                 id: 'a',
                 test: function () {
-                    fastdom.write(function () {
-                        $('.js-liveblog-body').prepend(template(subscribeTemplate, {
-                            url: window.location,
-                            text: cookies.get(window.location + '-notification') ? 'Following story' : 'Follow story'
-                        }));
-                    });
-                    bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
-                        cookies.add(window.location + '-notification', 'true', 100);
-                    });
+                    if (config.page.contentType === 'LiveBlog') {
+                        fastdom.write(function () {
+                            $('.js-update-notification').prepend(template(subscribeTemplate, {url: window.location}));
+                        });
+                    }
                 }
             }
         ];
