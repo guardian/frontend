@@ -158,18 +158,6 @@ object ImgSrc extends Logging {
     }
   }
 
-  def getAmpMetaUrl(imageContainer: ImageContainer): Option[String] = {
-    // must be https
-    getFallbackUrl(imageContainer).map { src =>
-      if (!src.startsWith("https")){
-        val (first, last) = src.splitAt(4)
-        first + "s" + last
-      } else {
-        src
-      }
-    }
-  }
-
   def getFallbackAsset(imageContainer: ImageContainer): Option[ImageAsset] = {
     Item300.elementFor(imageContainer)
   }
