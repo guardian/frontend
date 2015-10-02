@@ -15,26 +15,32 @@ describe('Slice Adverts', function () {
         },
         $fixtureContainer,
         injector = new Injector(),
-        sliceAdverts, config, detect, commercialFeatures;
+        sliceAdverts, config, detect, userAdPreference;
 
     beforeEach(function (done) {
         injector.test([
             'common/modules/commercial/slice-adverts',
-            'common/modules/commercial/commercial-features',
             'common/utils/config',
-            'common/utils/detect'
+            'common/utils/detect',
+            'common/modules/commercial/user-ad-preference'
         ], function () {
-            [sliceAdverts, commercialFeatures, config, detect] = arguments;
+            sliceAdverts = arguments[0];
+            config = arguments[1];
+            detect = arguments[2];
+            userAdPreference = arguments[3];
 
             config.page = {
                 pageId: 'uk/commentisfree'
+            };
+            config.switches = {
+                standardAdverts: true
             };
 
             detect.getBreakpoint = function () {
                 return 'desktop';
             };
 
-            commercialFeatures.sliceAdverts = true;
+            userAdPreference.hideAds = false;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
@@ -135,8 +141,15 @@ describe('Slice Adverts', function () {
         });
     });
 
-    it('should not display ad slot if disabled in commercial-features', function () {
-        commercialFeatures.sliceAdverts = false;
+    it('should not not display ad slot if standard-adverts switch is off', function () {
+        config.switches.standardAdverts = false;
+
+        expect(sliceAdverts.init()).toBe(false);
+        expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+    });
+
+    it('should not display ad slot if user has opted out of advertising', function () {
+        userAdPreference.hideAds = true;
 
         expect(sliceAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);

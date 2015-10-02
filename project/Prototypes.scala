@@ -107,7 +107,7 @@ trait Prototypes {
     topLevelDirectory in Universal := Some(application),
     concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     riffRaffPackageType := (packageBin in Universal).value,
-    riffRaffBuildIdentifier := System.getProperty("build.number", "DEV").replaceAll("\"",""),
+    riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
     riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
     riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
     riffRaffArtifactPublishPath := application,

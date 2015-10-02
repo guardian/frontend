@@ -15,15 +15,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val InternationalEditionSwitch = Switch(
-    "Feature",
-    "international-edition",
-    "International edition A/B test on",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -38,7 +29,7 @@ trait FeatureSwitches {
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 7),
+    sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = false
   )
 
@@ -283,7 +274,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 1),
+    sellByDate = new LocalDate(2015, 12, 1),
     exposeClientSide = false
   )
 
@@ -359,15 +350,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val TwitterImageFallback = Switch(
-    "Feature",
-    "twitter-image-fallback",
-    "If switched on, then the first image of a tweet will be included in the embed - it will only display at mobile breakpoints",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = false
-  )
-
   val DiscussionAllPageSizeSwitch = Switch(
     "Feature",
     "discussion-all-page-size",
@@ -394,5 +376,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+  val InternationalEditionBetaSwitch = Switch(
+    "Feature",
+    "international-edition-beta",
+    "International edition A/B test on",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 10, 31),
+
+    exposeClientSide = true
+  )
+
 
 }

@@ -2,18 +2,16 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/config',
-    'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/create-ad-slot'
 ], function (
     bonzo,
     $,
     config,
-    createAdSlot,
-    commercialFeatures
+    createAdSlot
 ) {
 
     function init() {
-        if (!commercialFeatures.frontCommercialComponents) {
+        if (!config.switches.commercialComponents || !config.page.isFront) {
             return false;
         }
 
@@ -37,7 +35,9 @@ define([
     }
 
     return {
+
         init: init
+
     };
 
 });

@@ -38,7 +38,7 @@ trait PerformanceSwitches {
     "soft-purge-with-long-caching-switch",
     "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 10, 31),
     exposeClientSide = false
   )
 
@@ -212,15 +212,6 @@ trait PerformanceSwitches {
     "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val BackgroundJSSwitch = Switch(
-    "Performance",
-    "background-js",
-    "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 

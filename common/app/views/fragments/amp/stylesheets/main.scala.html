@@ -32,13 +32,22 @@
         font-size: 1rem;
         line-height: 1.35rem;
         font-weight: 300;
-        margin: 12px 0px;
+        margin: 0px 0px 12px;
     }
+
+    cite { 
+        font-style: normal;
+}
+
+    footer {
+        padding-top: 4px;
+}
 
     .from-content-api h2, .from-content-api .block-elements h2 {
         font-size: 1.125rem;
-        line-height: 1.5rem;
+        line-height: 1.4rem;
         font-weight: 900;
+        margin: 12px 0px 0px
     }
 
     .meta__contact-header {
@@ -71,7 +80,7 @@
     .content__headline {
         color: #333;
         font-size: 1.75rem;
-        font-weight: 400;
+        font-weight: 200;
         line-height: 2rem;
         letter-spacing: -.02rem;
         padding-top: 0.125rem;
@@ -93,7 +102,6 @@
         font-size: 1rem;
         line-height: 1.25rem;
         margin-top: 0;
-        margin-bottom: 0.375rem;
     }
 
     .contact {
@@ -116,8 +124,12 @@
         margin: 0;
     }
 
-    .caption, .content__standfirst, .byline, .content__dateline, .element-rich-link--not-upgraded a:before, .content__series-label__link, blockquote.quoted {
+    .caption, .content__standfirst, .byline, .content__dateline, .element-rich-link--not-upgraded a:before, .content__series-label__link, blockquote.quoted, .ad-slot--paid-for-badge__header {
         color: #767676;
+    }
+
+    .ad-slot--paid-for-badge__header {
+        margin: 3px 0 0;
     }
 
     .quoted__contents {
@@ -136,12 +148,12 @@
     }
 
     @* temporarily hiding these for demo *@
-    .inline-expand-image, .meta__extras, .submeta, .content__dateline-lm , .block-share, .witness-cta-wrapper {
+    .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
         display: none;
     }
 
     .caption {
-        padding: 0.5rem 0 1.5rem 0;
+        padding-top: 0.5rem;
     }
 
     .content__dateline {
@@ -149,14 +161,17 @@
         margin: 0;
     }
 
-    .caption, .content__dateline {
+    .caption, .content__dateline, .ad-slot--paid-for-badge__header {
         font-size: 0.75rem;
         line-height: 1rem;
         font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     }
 
-    .caption, .content__meta-container {
+    .content__meta-container {
+        border-top: 0.0625rem dotted #dfdfdf;
         border-bottom: 0.0625rem dotted #dfdfdf;
+        margin-top: 16px;
+        margin-bottom: 0.75rem;
     }
 
     .u-underline {
@@ -202,7 +217,7 @@
         color: transparent;
     }
 
-    .bullet:before {
+    .bullet:before, .tonal__standfirst ul>li:before {
         display: inline-block;
         content: '';
         -webkit-border-radius: 0.375rem;
@@ -213,10 +228,17 @@
         background-color: #bdbdbd;
     }
 
+    .content__standfirst>ul, .content__standfirst>ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
     @fragments.amp.stylesheets.tones()
     @fragments.amp.stylesheets.embeds()
     @fragments.amp.stylesheets.quotes()
     @fragments.amp.stylesheets.richLinks()
     @fragments.amp.stylesheets.ads()
     @fragments.amp.stylesheets.tables()
+    @fragments.amp.stylesheets.social()
 </style>
