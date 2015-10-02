@@ -1,11 +1,20 @@
 @(tags: model.Tags)(implicit request: RequestHeader)
 
 @import views.support.{ImgSrc, Item300}
+@import common.RichRequestHeader
 
 @tags.contributors.headOption.map { profile =>
     @profile.contributorLargeImagePath.map{ src =>
         <div class="byline-img">
+        @if(request.isAmp) {
+            @if(tags.tones.exists(_.isComment)) {
+                <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="180" height="150" />
+            } else {
+                <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="79" height="66" />
+            }
+        } else {
             <img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" />
+        }
         </div>
     }
 }

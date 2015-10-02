@@ -6,7 +6,6 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
@@ -19,7 +18,6 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogNotifications,
     HighCommercialComponent,
     MembershipMessageUK,
     MembershipMessageUSA,
@@ -27,7 +25,6 @@ define([
 ) {
 
     var TESTS = _.flatten([
-        new LiveblogNotifications(),
         new HighCommercialComponent(),
         new MembershipMessageUK(),
         new MembershipMessageUSA(),
