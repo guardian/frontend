@@ -653,7 +653,7 @@ export default function () {
 
                 const newEntry = _.find(crosswordComponent.props.data.entries, { id: newEntryId });
                 const focussedEntry = crosswordComponent.clueInFocus();
-                const isNewEntry = focussedEntry.id !== newEntry.id;
+                const isNewEntry = focussedEntry && focussedEntry.id !== newEntry.id;
                 // Only focus the first cell in the new clue if it's not already
                 // focussed. When focussing a cell in a new clue, we update the
                 // hash fragment afterwards, in which case we do not want to
