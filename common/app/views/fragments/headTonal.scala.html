@@ -51,6 +51,17 @@
                     </div>
                 }
 
+                @content.isbn.map { isbn =>
+                    <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Book">
+                        <meta itemprop="isbn" content="@isbn">
+                        <div itemprop="author" itemscope itemtype="http://schema.org/Person">
+                            <meta itemprop="sameAs" content="http://schema.org/Person@* we can't know *@">
+                            <meta itemprop="name" content=".@* we can't know *@">
+                        </div>
+                        <meta itemprop="name" content=".@* we can't know *@">
+                    </div>
+                }
+
                 @if(showBadge) {
                     @fragments.commercial.badge(content)
                 }
