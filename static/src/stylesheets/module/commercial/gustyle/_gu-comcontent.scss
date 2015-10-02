@@ -77,21 +77,11 @@
             opacity: .9;
         }
     }
-
-    .gu-image-container {
-        max-height: 180px;
-        overflow: hidden;
-    }
-
 }
 
 .gu-display {
     min-height: 400px;
     position: relative;
-
-    .gu-image-container {
-        width: 100%;
-    }
 
     .gu-box {
         position: absolute;
