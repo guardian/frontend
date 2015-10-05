@@ -104,6 +104,9 @@ trait MetaData extends Tags {
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
   // this could be article/front/list, it's a hint to the ios app to start the right engine
+  // it's only set if the content is supported in the apps
+  // TODO temporarily removed as google doesn't give you a choice not to hit the app, and some things are getting pulled in
+  // e.g sport network and crosswords.  Altogether it's abad user experience.
   def iosType: Option[String] = None
 
   def cacheSeconds = 60

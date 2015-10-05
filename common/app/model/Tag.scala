@@ -95,6 +95,4 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
     o.map(value => Map(key -> value)).getOrElse(Map())
 
-  override def iosType = Some("list")
-
 }
