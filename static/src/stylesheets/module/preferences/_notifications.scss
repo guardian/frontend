@@ -14,12 +14,8 @@
 
 .notifications-preferences-overlay__body {
     max-width: gs-span(6);
-    margin: $gs-baseline auto 0;
+    margin: gs-height(3) auto 0;
     padding: 0 $gs-gutter;
-
-    @include mq(tablet) {
-        margin-top: gs-height(3);
-    }
 }
 
 .notifications-preferences-overlay__cta {
@@ -37,106 +33,11 @@
 }
 
 .notifications-preferences-overlay__aside {
-    @include fs-textSans(1);
+    @include fs-data(1);
     padding-top: $gs-baseline * 2;
 
     a {
         color: #ffffff;
         text-decoration: underline;
-    }
-}
-
-.notifications-subscribe-link {
-    border-top: 1px solid colour(live-main-1);
-    margin-top: 15px;
-    margin-bottom: $gs-baseline;
-    text-align: center;
-
-    .button--follow {
-        margin: -15px auto 0;
-        @include button-colour(
-            colour(live-main-1),
-            #ffffff,
-            colour(live-main-2)
-        )
-    }
-
-    &.notifications--disabled {
-        border-top: 1px solid colour(neutral-5);
-        .button--follow {
-            @include button-colour(
-                colour(neutral-5),
-                colour(neutral-2),
-                colour(neutral-4)
-            )
-        }
-    }
-}
-
-.notifications-subscribe-link__message {
-    position: relative;
-    display: none;
-    background-color: colour(live-support-2);
-    color: #ffffff;
-    text-align: left;
-    padding: $gs-baseline $gs-gutter;
-    margin-top: $gs-baseline;
-
-    &:before {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 8px 10px;
-        border-color: transparent transparent colour(live-support-2);
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        margin-left: -8px;
-    }
-
-    h3 {
-        @include fs-header(5);
-    }
-
-    p {
-        @include fs-textSans(1);
-        padding-top: $gs-baseline /2;
-    }
-
-    .notification-explainer {
-        display: block;
-
-        svg {
-            width: 100%;
-        }
-    }
-
-    .inline-arrow-white-right svg {
-        margin-right: -6px;
-        margin-top: -1px;
-    }
-
-    .button--enable {
-        margin-top: $gs-baseline / 2;
-        @include button-colour(
-            colour(live-support-2),
-            #ffffff,
-            #ffffff,
-            $border-color: #ffffff
-        );
-
-        &:hover,
-        &:active,
-        &:focus {
-            color: colour(live-support-2);
-            path {
-                fill: colour(live-support-2);
-            }
-        }
-    }
-
-    .notifications--disabled & {
-        display: block;
     }
 }
