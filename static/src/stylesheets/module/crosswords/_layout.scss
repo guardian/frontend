@@ -57,15 +57,20 @@
     clear: both;
 }
 
+.crossword__clues--wrapper,
+.crossword__clues {
+    height: xword-grid-dimensions(15) + ($gs-baseline * 10);
+}
+
 .crossword__clues {
     width: 100%;
     clear: both;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
 
     @include mq(tablet) {
         clear: none;
         padding-left: $gs-gutter;
-        display: table;
-        table-layout: fixed;
         box-sizing: border-box;
 
         noscript & {
@@ -74,6 +79,30 @@
 
         .crossword__container--accessible & {
             width: initial;
+        }
+    }
+
+    @include mq(desktop) {
+        display: table;
+        table-layout: fixed;
+        height: auto;
+        background: none;
+    }
+}
+
+.crossword__clues__gradient {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
+    display: none;
+
+    @include mq($from: tablet, $until: desktop) {
+        display: block;
+
+        .hide-gradient & {
+            display: none;
         }
     }
 }
