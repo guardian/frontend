@@ -21,7 +21,7 @@ import services.ConfigAgent
   override def beforeAll() {
     ConfigAgent.refreshWith(
       ConfigJson(
-        fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None)),
+        fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
   }
