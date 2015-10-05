@@ -740,6 +740,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     .is-not-modern .l-footer & {
         min-width: $navigation-toggler-width;
+        // Magic number to align the up arrow correctly on core
         font-size: 24px;
     }
 }
