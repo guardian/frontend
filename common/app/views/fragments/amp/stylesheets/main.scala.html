@@ -218,7 +218,7 @@
         color: transparent;
     }
 
-    .bullet:before, .tonal__standfirst ul>li:before {
+    .bullet:before, .tonal__standfirst ul>li:before, .from-content-api ul>li:before {
         display: inline-block;
         content: '';
         -webkit-border-radius: 0.375rem;
@@ -229,7 +229,12 @@
         background-color: #bdbdbd;
     }
 
-    .content__standfirst>ul, .content__standfirst>ol {
+    .from-content-api>ol>li, .from-content-api>ul>li {
+        position: relative;
+        margin-bottom: .8em;
+    }
+
+    .content__standfirst>ul, .content__standfirst>ol, .from-content-api ul {
         margin: 0;
         padding: 0;
         list-style: none;
