@@ -32,6 +32,13 @@ object JspmControlTest extends TestDefinition(
   new LocalDate(2015, 11, 30)
 )
 
+object JspmAMDTest extends TestDefinition(
+  List(Variant8),
+  "jspm-amd-test",
+  "Loads the AMD app using SystemJS",
+  new LocalDate(2015, 11, 30)
+)
+
 
 object ActiveTests extends Tests {
   val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest)
