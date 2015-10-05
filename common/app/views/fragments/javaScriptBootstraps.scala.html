@@ -14,14 +14,14 @@
             @Html(Static.systemJs.main)
 
             // CONFIG
-             System.config({
+            System.config({
                 defaultJSExtensions: true,
                 baseURL: '/',
-                    paths: {
+                paths: {
                     @curlPaths.map { case (module, path) =>
                         '@module': '@Static(path)',
                     }
-                    'core':                     '@Static("javascripts/core.js")',
+                    core:                     '@Static("javascripts/core.js")',
                     'facebook.js':              '//connect.facebook.net/en_US/all.js',
                     'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
                     'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
@@ -44,15 +44,20 @@
                     'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
                     'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
                     'bootstraps/video-player':  '@Static("javascripts/bootstraps/video-player.js")',
-                    'bootstraps/article': '@Static("javascripts/bootstraps/article.js")',
+                    'bootstraps/article':         '@Static("javascripts/bootstraps/article.js")',
                     'bootstraps/liveblog': '@Static("javascripts/bootstraps/liveblog.js")',
                     'bootstraps/trail': '@Static("javascripts/bootstraps/trail.js")',
                     'bootstraps/gallery': '@Static("javascripts/bootstraps/gallery.js")',
                     'bootstraps/profile': '@Static("javascripts/bootstraps/profile.js")'
+                },
+                meta: {
+                    '*': {
+                        format: 'amd'
+                    }
                 }
             });
 
-            window.require = System.amdRequire;
+            window.require = window.requirejs = System.amdRequire;
             window.define = System.amdDefine;
 
             // bootstrap
