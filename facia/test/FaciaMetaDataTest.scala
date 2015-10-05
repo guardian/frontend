@@ -54,7 +54,7 @@ import scala.concurrent.Future
     MetaDataMatcher.ensureOrganisation(result)
   }
 
-  it should "Include webpage metadata" in {
+  it should "not Include webpage metadata" in {
     val result = faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureWebPage(result, articleUrl)
   }
