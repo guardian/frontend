@@ -10,7 +10,7 @@
             // editorial style doesn't allow it in trail text.
             s"$trailText${if (content.isReview) "." else ""}"
         }){ trailText =>
-            <meta name="description" content="@trailText" />
+            <meta itemprop="description" content="@trailText" />
         }
     }
     @content.standfirst.map { s =>
