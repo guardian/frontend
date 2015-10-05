@@ -57,39 +57,19 @@
     clear: both;
 }
 
-.crossword__clues--wrapper,
-.crossword__clues {
-    @include mq(tablet) {
-        height: xword-grid-dimensions(15) + ($gs-baseline * 10);
-    }
-}
-
-.crossword__clues {
-    position: relative;
-    width: 100%;
-    clear: both;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-
-    @include mq(tablet) {
-        clear: none;
-        padding-left: $gs-gutter;
-        box-sizing: border-box;
-
-        noscript & {
-            width: 85%;
-        }
-
-        .crossword__container--accessible & {
-            width: initial;
+// scrollable clues - only on tablets not in accessible view
+.crossword__container--react {
+    & .crossword__clues--wrapper,
+    & .crossword__clues {
+        @include mq(tablet) {
+            height: xword-grid-dimensions(15) + ($gs-baseline * 10);
         }
     }
 
-    @include mq(desktop) {
-        display: table;
-        table-layout: fixed;
-        height: auto;
-        background: none;
+    & .crossword__clues {
+        position: relative;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -107,6 +87,34 @@
         .hide-gradient & {
             display: none;
         }
+    }
+}
+
+.crossword__clues {
+    width: 100%;
+    clear: both;
+
+    @include mq(tablet) {
+        clear: none;
+        padding-left: $gs-gutter;
+        box-sizing: border-box;
+
+        noscript & {
+            width: 85%;
+        }
+
+        .crossword__container--accessible & {
+            display: table;
+            table-layout: fixed;
+            width: initial;
+        }
+    }
+
+    @include mq(desktop) {
+        display: table;
+        table-layout: fixed;
+        height: auto;
+        background: none;
     }
 }
 

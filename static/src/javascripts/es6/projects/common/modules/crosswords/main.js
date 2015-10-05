@@ -570,7 +570,7 @@ class Crossword extends React.Component {
         );
 
         return (
-            <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
+            <div className={`crossword__container crossword__container--${this.props.data.crosswordType} crossword__container--react`}>
                 <div className='crossword__container__game' ref='game'>
                     <div className='crossword__sticky-clue-wrapper' ref='stickyClueWrapper'>
                         <div
