@@ -3,6 +3,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import bean from 'bean';
+import fastdom from 'fastdom';
 
 import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
@@ -70,7 +71,7 @@ export default class Clues extends React.Component {
         const tablet = detect.getBreakpoint() === 'tablet';
 
         if (tablet && (!prev.focussed || prev.focussed.id !== this.props.focussed.id)) {
-            this.scrollIntoView(this.props.focussed);
+            fastdom.read(() => this.scrollIntoView(this.props.focussed));
         }
     }
 
