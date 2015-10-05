@@ -5,6 +5,8 @@ import React from 'react';
 import bean from 'bean';
 
 import _ from 'common/utils/_';
+import detect from 'common/utils/detect';
+import scroller from 'common/utils/scroller';
 
 class Clue extends React.Component {
 
@@ -48,10 +50,11 @@ export default class Clues extends React.Component {
     }
 
     componentDidMount () {
-        const node = React.findDOMNode(this.refs.clues);
-        const height = node.scrollHeight - node.clientHeight;
+        this.$cluesNode = React.findDOMNode(this.refs.clues);
 
-        bean.on(node, 'scroll', e => {
+        const height = this.$cluesNode.scrollHeight - this.$cluesNode.clientHeight;
+
+        bean.on(this.$cluesNode, 'scroll', e => {
             const showGradient = height - e.currentTarget.scrollTop > 20;
 
             if (this.state.showGradient !== showGradient) {
@@ -60,12 +63,34 @@ export default class Clues extends React.Component {
         });
     }
 
+    /**
+     * Scroll clues into view when they're activated (i.e. clicked in the grid)
+     */
+    componentDidUpdate (prev) {
+        if (!prev.focussed || prev.focussed.id !== this.props.focussed.id) {
+            this.scrollIntoView(this.props.focussed);
+        }
+    }
+
+    scrollIntoView (clue) {
+        const buffer = 100;
+        const node = React.findDOMNode(this.refs[clue.id]);
+        const visible = node.offsetTop - buffer > this.$cluesNode.scrollTop &&
+                        node.offsetTop + buffer < this.$cluesNode.scrollTop + this.$cluesNode.clientHeight;
+
+        if (!visible && detect.getBreakpoint() === 'tablet') {
+            const offset = node.offsetTop - (this.$cluesNode.clientHeight / 2);
+            scroller.scrollTo(offset, 250, 'easeOutQuad', this.$cluesNode);
+        }
+    }
+
     render () {
         const headerClass = 'crossword__clues-header';
         const cluesByDirection = (direction) => _.chain(this.props.clues)
             .filter((clue) => clue.entry.direction === direction)
             .map((clue) =>
                 <Clue
+                    ref={clue.entry.id}
                     id={clue.entry.id}
                     key={clue.entry.id}
                     number={clue.entry.number}

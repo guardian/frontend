@@ -627,6 +627,7 @@ class Crossword extends React.Component {
                 />
                 <Clues
                     clues={this.cluesData()}
+                    focussed={focussed}
                     focusClue={this.focusClue}
                     setReturnPosition={this.setReturnPosition}
                 />

@@ -59,10 +59,13 @@
 
 .crossword__clues--wrapper,
 .crossword__clues {
-    height: xword-grid-dimensions(15) + ($gs-baseline * 10);
+    @include mq(tablet) {
+        height: xword-grid-dimensions(15) + ($gs-baseline * 10);
+    }
 }
 
 .crossword__clues {
+    position: relative;
     width: 100%;
     clear: both;
     overflow: scroll;
