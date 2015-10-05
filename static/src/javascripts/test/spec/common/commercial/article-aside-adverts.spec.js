@@ -4,25 +4,9 @@ import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
 
-var config = {
-    switches: {
-        standardAdverts: true
-    },
-    page: {
-        contentType: 'Article'
-    },
-    tests: {
-        mobileTopBannerRemove: false
-    }
-};
-
 var articleAsideAdverts,
-    userAdPreference,
+    commercialFeatures,
     injector = new Injector();
-
-injector.mock({
-    'common/utils/config': config
-});
 
 describe('Article Aside Adverts', function () {
 
@@ -37,24 +21,17 @@ describe('Article Aside Adverts', function () {
         $fixturesContainer;
 
     beforeEach(function (done) {
-        config.switches = {
-            standardAdverts: true
-        };
-        config.page = {
-            contentType: 'Article'
-        };
-
         $fixturesContainer = fixtures.render(fixturesConfig);
 
         injector.test([
             'common/modules/commercial/article-aside-adverts',
-            'common/modules/commercial/user-ad-preference'
+            'common/modules/commercial/commercial-features'
         ], function () {
             articleAsideAdverts = arguments[0];
-            userAdPreference = arguments[1];
+            commercialFeatures = arguments[1];
 
             // Reset dependencies
-            userAdPreference.hideAds = false;
+            commercialFeatures.articleMPUs = true;
 
             done();
         });
@@ -104,22 +81,8 @@ describe('Article Aside Adverts', function () {
         });
     });
 
-    it('should not display ad slot if standard-adverts switch is off', function () {
-        config.switches.standardAdverts = false;
-
-        expect(articleAsideAdverts.init()).toBe(false);
-        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
-    });
-
-    it('should not display ad slot if not on an article', function () {
-        config.page.contentType = 'Gallery';
-
-        expect(articleAsideAdverts.init()).toBe(false);
-        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
-    });
-
-    it('should not display ad slot if user opts out of adverts', function () {
-        userAdPreference.hideAds = true;
+    it('should not display ad slot if disabled in commercial-feature-switches', function () {
+        commercialFeatures.articleMPUs = false;
 
         expect(articleAsideAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
