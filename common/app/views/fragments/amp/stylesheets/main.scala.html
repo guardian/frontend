@@ -1,3 +1,4 @@
+@(metaData: model.MetaData)
 <style amp-custom>
     body {
         font-family: Georgia,serif;
@@ -191,6 +192,10 @@
         margin: 0.1875rem 0.625rem 0.34rem 0;
     }
 
+    .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
+        letter-spacing: -0.02em;
+    }
+
     @* Dropcap styling *@
     .drop-cap__inner {
         float: left;
@@ -247,4 +252,7 @@
     @fragments.amp.stylesheets.ads()
     @fragments.amp.stylesheets.tables()
     @fragments.amp.stylesheets.social()
+    @if(metaData.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
+        @fragments.amp.stylesheets.fonts()
+    }
 </style>
