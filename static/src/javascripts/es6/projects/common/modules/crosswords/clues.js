@@ -67,7 +67,9 @@ export default class Clues extends React.Component {
      * Scroll clues into view when they're activated (i.e. clicked in the grid)
      */
     componentDidUpdate (prev) {
-        if (!prev.focussed || prev.focussed.id !== this.props.focussed.id) {
+        const tablet = detect.getBreakpoint() === 'tablet';
+
+        if (tablet && (!prev.focussed || prev.focussed.id !== this.props.focussed.id)) {
             this.scrollIntoView(this.props.focussed);
         }
     }
@@ -78,7 +80,7 @@ export default class Clues extends React.Component {
         const visible = node.offsetTop - buffer > this.$cluesNode.scrollTop &&
                         node.offsetTop + buffer < this.$cluesNode.scrollTop + this.$cluesNode.clientHeight;
 
-        if (!visible && detect.getBreakpoint() === 'tablet') {
+        if (!visible) {
             const offset = node.offsetTop - (this.$cluesNode.clientHeight / 2);
             scroller.scrollTo(offset, 250, 'easeOutQuad', this.$cluesNode);
         }
