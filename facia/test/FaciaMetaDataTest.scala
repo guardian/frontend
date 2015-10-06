@@ -14,6 +14,7 @@ import services.ConfigAgent
 import test.{TestRequest, ConfiguredTestSuite}
 
 import scala.concurrent.Future
+import scala.util.{Success, Failure}
 
 @DoNotDiscover class FaciaMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll {
 
@@ -75,7 +76,7 @@ import scala.concurrent.Future
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
     topContainer.size should be (10)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/2015/sep/10/billie-holiday-hologram-headed-to-new-yorks-apollo-theatre")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/2015/oct/05/objects-at-an-exhibition-aurora-collon-review")
 
   }
 
