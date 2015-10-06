@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
+    'common/modules/commercial/user-adblock-message',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
@@ -15,6 +16,7 @@ define([
     detect,
     storage,
     template,
+    userAdblockMessage,
     Message,
     ab,
     navigation,
@@ -47,7 +49,7 @@ define([
                 }
             ]);
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1 && !userAdblockMessage.isUserMember) {
             new Message('adblock-message', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant ' + message.id,
