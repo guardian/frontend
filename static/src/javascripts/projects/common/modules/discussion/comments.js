@@ -2,39 +2,33 @@ define([
     'bean',
     'bonzo',
     'qwery',
-
     'common/utils/$',
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/scroller',
-
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/whole-discussion',
     'common/modules/ui/relativedates',
     'common/modules/user-prefs',
-
     'common/views/svgs'
 ], function(
     bean,
     bonzo,
     qwery,
-
     $,
     ajaxPromise,
     config,
     mediator,
     scroller,
-
     Component,
     DiscussionApi,
     CommentBox,
     WholeDiscussion,
     relativedates,
     userPrefs,
-
     svgs
 ) {
 'use strict';
