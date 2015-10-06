@@ -1,6 +1,6 @@
 package controllers.front
 
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent, Groups, LinkSnap}
+import com.gu.facia.api.models._
 import common.{ExecutionContexts, Logging, S3Metrics}
 import conf.Configuration
 import implicits.FaciaContentImplicits._
@@ -20,11 +20,15 @@ trait FapiFrontJsonLite extends ExecutionContexts{
     pressedPage.collections.map(getCollection)
 
   private def getCollection(pressedCollection: PressedCollection): JsValue =
-    Json.obj(
-      "displayName" -> pressedCollection.displayName,
-      "href" -> pressedCollection.href,
-      "id" -> pressedCollection.id,
-      "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent))
+    JsObject(
+      Json.obj(
+        "displayName" -> pressedCollection.displayName,
+        "href" -> pressedCollection.href,
+        "id" -> pressedCollection.id,
+        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent))
+      .fields
+      .filterNot{ case (_, v) => v == JsNull})
+
 
   private def isLinkSnap(faciaContent: FaciaContent) = faciaContent match {
     case _: LinkSnap => true
@@ -39,9 +43,16 @@ trait FapiFrontJsonLite extends ExecutionContexts{
         "shortUrl" -> faciaContent.shortUrl,
         "id" -> faciaContent.maybeContent.map(_.id),
         "group" -> faciaContent.group,
-        "frontPublicationDate" -> faciaContent.maybeFrontPublicationDate)
+        "frontPublicationDate" -> faciaContent.maybeFrontPublicationDate,
+        "supporting" -> getSupporting(faciaContent))
       .fields
       .filterNot{ case (_, v) => v == JsNull})
+  }
+
+  private def getSupporting(faciaContent: FaciaContent): JsValue = faciaContent match {
+    case curatedContent: CuratedContent
+      if curatedContent.supportingContent.nonEmpty => JsArray(curatedContent.supportingContent.map(getContent))
+    case _ => JsNull
   }
 }
 
