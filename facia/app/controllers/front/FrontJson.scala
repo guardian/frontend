@@ -20,11 +20,15 @@ trait FapiFrontJsonLite extends ExecutionContexts{
     pressedPage.collections.map(getCollection)
 
   private def getCollection(pressedCollection: PressedCollection): JsValue =
-    Json.obj(
-      "displayName" -> pressedCollection.displayName,
-      "href" -> pressedCollection.href,
-      "id" -> pressedCollection.id,
-      "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent))
+    JsObject(
+      Json.obj(
+        "displayName" -> pressedCollection.displayName,
+        "href" -> pressedCollection.href,
+        "id" -> pressedCollection.id,
+        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent))
+      .fields
+      .filterNot{ case (_, v) => v == JsNull})
+
 
   private def isLinkSnap(faciaContent: FaciaContent) = faciaContent match {
     case _: LinkSnap => true
