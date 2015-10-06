@@ -267,15 +267,7 @@ define([
                 });
             });
         },
-
-        /**
-         * Public functions
-         */
-        init = function (options) {
-            if (!commercialFeatures.dfpAdvertising) {
-                return false;
-            }
-
+        setupAdvertising = function (options) {
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -310,7 +302,17 @@ define([
 
             // show sponsorship placeholder if adblock detected
             showSponsorshipPlaceholder();
+        },
 
+        /**
+         * Public functions
+         */
+        init = function (options) {
+            if (commercialFeatures.dfpAdvertising) {
+                setupAdvertising(options);
+            } else {
+                $(adSlotSelector).remove();
+            }
             return dfp;
         },
         instantLoad = function () {

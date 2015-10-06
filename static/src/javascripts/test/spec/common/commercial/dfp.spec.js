@@ -136,9 +136,23 @@ describe('DFP', function () {
         expect(dfp.init()).toBe(dfp);
     });
 
-    it('should not run if disabled in commercial features', function () {
-        commercialFeatures.dfpAdvertising = false;
-        expect(dfp.init()).toBe(false);
+    describe('when all DFP advertising is disabled', function () {
+        beforeEach(function () {
+            commercialFeatures.dfpAdvertising = false;
+        });
+
+        it('hides all ad slots', function () {
+            commercialFeatures.dfpAdvertising = false;
+            dfp.init();
+
+            const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
+            expect(remainingAdSlots.length).toBe(0);
+        });
+
+        it('still returns a DFP object', function () {
+            const returnValue = dfp.init();
+            expect(returnValue).toBe(dfp);
+        });
     });
 
     it('should get the slots', function () {
