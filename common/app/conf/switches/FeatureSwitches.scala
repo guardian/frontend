@@ -287,15 +287,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val IPadNothrasherSwitch = Switch(
-    "Feature",
-    "ipad-no-thrashers",
-    "This switch will disable Thrashers on ipads",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   val SplitOlderIPadsSwitch = Switch(
     "Feature",
     "ipad-split-capabilities",
