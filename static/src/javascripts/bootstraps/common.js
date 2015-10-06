@@ -50,7 +50,6 @@ define([
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'text!common/views/international-message.html',
-    'text!common/views/international-control-message.html',
     'bootstraps/identity-common'
 ], function (
     fastdom,
@@ -102,7 +101,6 @@ define([
     pinterest,
     SaveForLater,
     internationalMessage,
-    internationalControlMessage,
     identity
 ) {
     var modules = {
@@ -337,16 +335,10 @@ define([
             },
 
             internationalSignposting: function () {
-                if ('internationalEdition' in config.page) {
-                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        new Message('international-with-survey-new', {
-                            pinOnHide: true
-                        }).show(template(internationalMessage, {}));
-                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
-                        new Message('international', {
-                            pinOnHide: true
-                        }).show(template(internationalControlMessage, {}));
-                    }
+                if (config.page.edition === 'INT' && config.page.pageId === 'international') {
+                    new Message('international-with-survey-new', {
+                        pinOnHide: true
+                    }).show(template(internationalMessage, {}));
                 }
             },
 
