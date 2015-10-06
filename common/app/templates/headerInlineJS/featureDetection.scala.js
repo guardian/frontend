@@ -72,10 +72,6 @@
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
 
-    @if(IPadNothrasherSwitch.isSwitchedOn) {
-        if (navigator.platform === 'iPad') {docClass += ' ipad-no-thrashers'}
-    }
-
     @if(FontKerningSwitch.isSwitchedOn) {
         if (window.location.hash !== '#no-kern') {docClass += ' should-kern'}
     } else {

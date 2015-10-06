@@ -11,7 +11,7 @@
         @fragments.containers.index(
             index.trails,
             ContainerLayout.singletonFromContainerDefinition(
-                slices.TagContainers.allTagPage,
+                slices.TagContainers.allTagPageSlices(index.trails.length),
                 ContainerDisplayConfig.empty,
                 index.trails.map(FaciaContentConvert.frontendContentToFaciaContent)
             ),

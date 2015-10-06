@@ -115,6 +115,16 @@ describe('Outbrain', function () {
 
             expect(sut.load).not.toHaveBeenCalled();
         });
+
+        it('should not load when on network front', function () {
+            spyOn(sut, 'load');
+
+            config.isFront = true;
+
+            sut.init();
+            mediator.emit('modules:commercial:dfp:rendered', eventStub);
+            expect(sut.load).not.toHaveBeenCalled();
+        });
     });
 
     describe('Sections', function () {

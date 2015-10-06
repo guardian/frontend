@@ -3,7 +3,15 @@
 @* live with empty standfirst as it is used to hook things into the page with javascript *@
 <div class="content__standfirst" data-link-name="standfirst" data-component="standfirst">
     @content.trailText.map{ t =>
-        <meta itemprop="description" content="@StripHtmlTags(t)" />
+
+        @defining({
+            val trailText = views.support.StripHtmlTags(t)
+            // description has to end in a full stop in the metadata to match google linked data standards, but
+            // editorial style doesn't allow it in trail text.
+            s"$trailText${if (content.isReview) "." else ""}"
+        }){ trailText =>
+            <meta itemprop="description" content="@trailText" />
+        }
     }
     @content.standfirst.map { s =>
         @defining(Edition(request)) { edition =>

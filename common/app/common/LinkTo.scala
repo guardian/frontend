@@ -1,5 +1,6 @@
 package common
 
+import common.editions.{Au, Us, Uk}
 import conf.Configuration
 import conf.Configuration.environment
 import dev.HttpSwitch
@@ -139,5 +140,16 @@ object CanonicalLink extends CanonicalLink
 object AnalyticsHost extends implicits.Requests {
   def apply()(implicit request: RequestHeader): String =
     if (request.isSecure) "https://hits-secure.theguardian.com" else "http://hits.theguardian.com"
+}
+
+object SubscribeLink {
+  private val subscribeEditions = Map(
+    Us -> "us",
+    Au -> "au"
+  )
+
+  private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")
+
+  def apply(edition: Edition): String = s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
 }
 

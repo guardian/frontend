@@ -10,9 +10,11 @@
         @fragments.metaData(metaData, true)
         <title>@views.support.Title(metaData)</title>
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
-        @fragments.amp.stylesheets.main()
+        @fragments.amp.stylesheets.main(metaData)
         <script src="https://cdn.ampproject.org/v0.js" @if(Play.isDev) { development } async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
+        <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
+        <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
     </head>
     <body>
         <div class="main-body">

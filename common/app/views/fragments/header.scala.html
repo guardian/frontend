@@ -1,6 +1,6 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import conf.switches.Switches._
-@import common.{LinkTo, Edition}
+@import common.{LinkTo, Edition, SubscribeLink}
 @import common.editions._
 @import conf.Configuration
 @import views.support.URLEncode
@@ -66,7 +66,7 @@
                     <div class="brand-bar__item has-popup brand-bar__item--has-control
                                 popup-container brand-bar__item--subscribe"
                          data-component="subscribe">
-                        <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
+                        <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
                         data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                             <span class="control__info">subscribe</span>
