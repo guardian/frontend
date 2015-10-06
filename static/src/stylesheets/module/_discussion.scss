@@ -854,14 +854,6 @@ $comment-recommend-button-size: 19px;
     }
 }
 
-.d-comment__reply-icon {
-    @include icon-button(reply-white, 18px);
-    margin-right: 1px;
-    display: inline-block;
-    background-color: colour(news-default);
-    vertical-align: top;
-}
-
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
