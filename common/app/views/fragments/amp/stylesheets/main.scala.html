@@ -1,3 +1,4 @@
+@(metaData: model.MetaData)
 <style amp-custom>
     body {
         font-family: Georgia,serif;
@@ -14,6 +15,7 @@
         max-width: 600px;
         margin: 0 auto 1.5em auto;
         padding-bottom: 1.5rem;
+        overflow-x: hidden;
     }
 
     @@media (max-width: 600px) {
@@ -101,7 +103,7 @@
     .content__standfirst {
         font-size: 1rem;
         line-height: 1.25rem;
-        margin-top: 0;
+        margin-bottom: 0.375rem;
     }
 
     .contact {
@@ -190,6 +192,10 @@
         margin: 0.1875rem 0.625rem 0.34rem 0;
     }
 
+    .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
+        letter-spacing: -0.02em;
+    }
+
     @* Dropcap styling *@
     .drop-cap__inner {
         float: left;
@@ -217,7 +223,7 @@
         color: transparent;
     }
 
-    .bullet:before, .tonal__standfirst ul>li:before {
+    .bullet:before, .tonal__standfirst ul>li:before, .from-content-api ul>li:before {
         display: inline-block;
         content: '';
         -webkit-border-radius: 0.375rem;
@@ -228,7 +234,12 @@
         background-color: #bdbdbd;
     }
 
-    .content__standfirst>ul, .content__standfirst>ol {
+    .from-content-api>ol>li, .from-content-api>ul>li {
+        position: relative;
+        margin-bottom: .8em;
+    }
+
+    .content__standfirst>ul, .content__standfirst>ol, .from-content-api>ul {
         margin: 0;
         padding: 0;
         list-style: none;
@@ -241,4 +252,7 @@
     @fragments.amp.stylesheets.ads()
     @fragments.amp.stylesheets.tables()
     @fragments.amp.stylesheets.social()
+    @if(metaData.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
+        @fragments.amp.stylesheets.fonts()
+    }
 </style>
