@@ -15,15 +15,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val InternationalEditionSwitch = Switch(
-    "Feature",
-    "international-edition",
-    "International edition A/B test on",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 10),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -38,7 +29,7 @@ trait FeatureSwitches {
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 7),
+    sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = false
   )
 
@@ -296,15 +287,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val IPadNothrasherSwitch = Switch(
-    "Feature",
-    "ipad-no-thrashers",
-    "This switch will disable Thrashers on ipads",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 9, 30),
-    exposeClientSide = true
-  )
-
   val SplitOlderIPadsSwitch = Switch(
     "Feature",
     "ipad-split-capabilities",
@@ -385,5 +367,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+  val InternationalEditionBetaSwitch = Switch(
+    "Feature",
+    "international-edition-beta",
+    "International edition A/B test on",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 10, 31),
+
+    exposeClientSide = true
+  )
+
 
 }

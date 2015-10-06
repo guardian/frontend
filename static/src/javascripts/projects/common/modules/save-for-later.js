@@ -83,8 +83,6 @@ define([
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
 
-                    this.updateSavedCount();
-
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         // this user has never saved anything, so create a new
                         // data object and save an introductory article for them
@@ -97,6 +95,8 @@ define([
                         this.userData = resp.savedArticles;
                     }
 
+                    this.updateSavedCount();
+
                     this.prepareFaciaItemLinks(true);
 
                     if (this.isContent) {
@@ -105,7 +105,7 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&INTCMP=SFL-SO', {
+                var url = template('<%= idUrl%>/save-content?INTCMP=DOTCOM_ARTICLE_SFL&returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
                     idUrl: config.page.idUrl,
                     returnUrl: encodeURIComponent(document.location.href),
                     shortUrl: shortUrl,
@@ -136,8 +136,7 @@ define([
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
                 position: $saver.attr('data-position'),
-                config: config,
-                showLabel: config.page.contentType !== 'Crossword'
+                config: config
             };
             if (options.url) {
                 $saver.html(template(saveLink,
@@ -373,15 +372,14 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        // To-do: Restore functionality
-        //var $saveForLaterEl = $(this.classes.profileDropdownLink),
-        //    count = this.userData.articles.length;
-        //
-        //if (count > 0) {
-        //    $saveForLaterEl.attr('data-saved-content-count', count);
-        //} else {
-        //    $saveForLaterEl.removeAttr('data-saved-content-count', count);
-        //}
+        var $saveForLaterEl = $(this.classes.profileDropdownLink),
+            count = (this.userData.articles) ? this.userData.articles.length : 0;
+
+        if (count > 0) {
+            $saveForLaterEl.attr('data-saved-content-count', count);
+        } else {
+            $saveForLaterEl.removeAttr('data-saved-content-count', count);
+        }
     };
 
     SaveForLater.prototype.saveIntroArticle = function () {

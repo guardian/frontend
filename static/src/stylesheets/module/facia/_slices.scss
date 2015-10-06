@@ -234,7 +234,7 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-#dynamic-mpu-1, #dynamic-mpu-2, #dynamic-mpu-3, #dynamic-mpu-4, #dynamic-mpu-5 {
+.fc-container--dynamic-slow-mpu {
     .ad-slot--container-inline {
         width: gs-span(9);
         background: colour(neutral-8);

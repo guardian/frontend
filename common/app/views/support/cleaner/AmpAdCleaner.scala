@@ -71,15 +71,18 @@ object AmpAdCleaner extends HtmlCleaner {
     }._1
 
     // now if the repel forward and backward is zero (or less) then we can put in an ad
-    propagatedConstraints.sliding(2).foldLeft((Nil: List[Element], 0)){ case ((accu, charsTilAd), List(firstElement, secondElement)) =>
+    Some(propagatedConstraints).filter(_.length > 1).map {
+      _.sliding(2).foldLeft((Nil: List[Element], 0)){
+        case ((accu, charsTilAd), List(firstElement, secondElement)) =>
 
-      if (accu.length < AD_LIMIT && charsTilAd <= 0 && firstElement.after <= 0 && secondElement.before <= 0) {
-        (firstElement.element :: accu, CHARS_BETWEEN_ADS)
-      } else {
-        (accu, charsTilAd - firstElement.length)
-      }
+          if (accu.length < AD_LIMIT && charsTilAd <= 0 && firstElement.after <= 0 && secondElement.before <= 0) {
+            (firstElement.element :: accu, CHARS_BETWEEN_ADS)
+          } else {
+            (accu, charsTilAd - firstElement.length)
+          }
 
-    }._1
+      }._1
+    }.getOrElse(Nil)
 
   }
 

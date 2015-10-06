@@ -24,7 +24,7 @@ describe('Article Body Adverts', function () {
             ]
         },
         injector = new Injector(),
-        articleBodyAdverts, config, detect, spacefinder, userAdPreference;
+        articleBodyAdverts, config, detect, spacefinder, commercialFeatures;
 
     beforeEach(function (done) {
 
@@ -33,24 +33,15 @@ describe('Article Body Adverts', function () {
             'common/utils/config',
             'common/utils/detect',
             'common/modules/article/spacefinder',
-            'common/modules/commercial/user-ad-preference'
+            'common/modules/commercial/commercial-features'
         ], function () {
-            articleBodyAdverts = arguments[0];
-            config = arguments[1];
-            detect = arguments[2];
-            spacefinder = arguments[3];
-            userAdPreference = arguments[4];
+            [articleBodyAdverts, config, detect, spacefinder, commercialFeatures] = arguments;
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             $style = $.create('<style type="text/css"></style>')
                 .html('body:after{ content: "desktop"}')
                 .appendTo('head');
 
-            config.page = {
-                contentType: 'Article',
-                isLiveBlog: false,
-                hasInlineMerchandise: false
-            };
             config.switches = {
                 standardAdverts: true,
                 viewability: true
@@ -78,7 +69,7 @@ describe('Article Body Adverts', function () {
             getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
             spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
-            userAdPreference.hideAds = false;
+            commercialFeatures.articleMPUs = true;
 
             done();
         });
@@ -168,23 +159,8 @@ describe('Article Body Adverts', function () {
             });
     });
 
-    it('should not not display ad slot if standard-adverts switch is off', function () {
-        config.switches.standardAdverts = false;
-        expect(articleBodyAdverts.init()).toBe(false);
-    });
-
-    it('should not display ad slot if not on an article', function () {
-        config.page.contentType = 'Gallery';
-        expect(articleBodyAdverts.init()).toBe(false);
-    });
-
-    it('should not display ad slot if a live blog', function () {
-        config.page.contentType = 'LiveBlog';
-        expect(articleBodyAdverts.init()).toBe(false);
-    });
-
-    it('should not display ad slot if user has opted out of adverts', function () {
-        userAdPreference.hideAds = true;
+    it('should not not display ad slot if turned off in commercial features', function () {
+        commercialFeatures.articleMPUs = false;
         expect(articleBodyAdverts.init()).toBe(false);
     });
 

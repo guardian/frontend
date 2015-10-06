@@ -1,5 +1,7 @@
 package common.editions
 
+import java.util.Locale
+
 import common._
 import conf.switches.Switches
 import org.joda.time.DateTimeZone
@@ -8,7 +10,9 @@ object Uk extends Edition(
   id = "UK",
   displayName = "UK edition",
   timezone = DateTimeZone.forID("Europe/London"),
-  lang = "en-gb"){
+  locale = Locale.forLanguageTag("en-gb"),
+  homePagePath = "/uk"
+){
 
   implicit val UK = Uk
 

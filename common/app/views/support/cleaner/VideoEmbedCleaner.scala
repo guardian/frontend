@@ -7,33 +7,7 @@ import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
 import scala.collection.JavaConversions._
 
-case class VideoEmbedCleaner(article: Article, amp: Boolean) extends HtmlCleaner {
-
-  def cleaningAmpVideos(document: Document): Unit = {
-    document.getElementsByTag("video").foreach(video => {
-      video.tagName("amp-video")
-      video.removeAttr("data-media-id")
-      video.removeAttr("poster")
-
-      // Need to hard code aspect ratio 5:3 for Amp pages.
-      video.attr("width", "5")
-      video.attr("height", "3")
-      // Layout responsive keeps the aspect ratio, but ignores the height and width attributes above
-      video.attr("layout", "responsive")
-      video.attr("controls", "")
-
-      video.getElementsByTag("source").foreach(source => {
-        val videoSrc = source.attr("src")
-        // All videos need to start with https for AMP.
-        // Temperary code until all videos returned from CAPI are https
-        if (!videoSrc.startsWith("https")) {
-          val (first, last) = videoSrc.splitAt(4);
-          val newSrc = first + "s" + last
-          source.attr("src", newSrc)
-        }
-      })
-    })
-  }
+case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def addShareButtons(document: Document): Unit = {
     document.getElementsByClass("element-video").foreach(element => {
@@ -57,7 +31,7 @@ case class VideoEmbedCleaner(article: Article, amp: Boolean) extends HtmlCleaner
     })
   }
 
-  def cleaningVideo(document: Document): Unit = {
+  def cleanVideo(document: Document): Unit = {
     if (!article.isLiveBlog) {
       addShareButtons(document)
     }
@@ -122,14 +96,10 @@ case class VideoEmbedCleaner(article: Article, amp: Boolean) extends HtmlCleaner
       element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
-    if (amp) {
-      cleaningAmpVideos(document)
-    } else {
-      cleaningVideo(document)
+    cleanVideo(document)
 
-      document.getElementsByClass("element-witness--main").foreach { element: Element =>
-        element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
-      }
+    document.getElementsByClass("element-witness--main").foreach { element: Element =>
+      element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
     document

@@ -7,7 +7,9 @@ object Dependencies {
   val identityLibVersion = "3.46"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
-  val awsVersion = "1.10.20"
+
+  // Check SES works before upgrading this
+  val awsVersion = "1.9.16"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -29,8 +31,8 @@ object Dependencies {
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.56"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.56"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.57"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.57"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
