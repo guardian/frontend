@@ -345,10 +345,6 @@ define([
             displayed = true;
         },
         addSlot = function ($adSlot) {
-            if (!commercialFeatures.dfpAdvertising) {
-                throw new Error('DFP advertising is disabled');
-            }
-
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
@@ -369,10 +365,6 @@ define([
             }
         },
         refreshSlot = function ($adSlot) {
-            if (!commercialFeatures.dfpAdvertising) {
-                throw new Error('DFP advertising is disabled');
-            }
-
             var slot = slots[$adSlot.attr('id')].slot;
             if (slot) {
                 googletag.pubads().refresh([slot]);

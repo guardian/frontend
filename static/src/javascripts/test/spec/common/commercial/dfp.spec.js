@@ -151,12 +151,6 @@ describe('DFP', function () {
             const returnValue = dfp.init();
             expect(returnValue).toBe(dfp);
         });
-
-        it('calling methods on the disabled DFP object throws exceptions', function () {
-            dfp.init();
-            expect(dfp.addSlot).toThrowError('DFP advertising is disabled');
-            expect(dfp.refreshSlot).toThrowError('DFP advertising is disabled');
-        });
     });
 
     it('should get the slots', function () {
