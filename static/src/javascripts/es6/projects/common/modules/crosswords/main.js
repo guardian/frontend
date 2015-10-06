@@ -124,22 +124,18 @@ class Crossword extends React.Component {
             this.$gridWrapper = $(React.findDOMNode(this.refs.gridWrapper));
         }
 
-        const setHeight = (height) => {
-            fastdom.write(() => {
-                this.$gridWrapper.css('height', height);
-            });
-        };
-
         if (detect.isBreakpoint({ max: 'tablet' })) {
             fastdom.read(() => {
                 // Our grid is a square, set the height of the grid wrapper
                 // to the width of the grid wrapper
-                setHeight(this.$gridWrapper.offset().width + 'px');
+                fastdom.write(() => {
+                    this.$gridWrapper.css('height', this.$gridWrapper.offset().width + 'px');
+                });
                 this.gridHeightIsSet = true;
             });
         } else if (this.gridHeightIsSet) {
-            // Remove set height if tablet and wider
-            setHeight('inherit');
+            // Remove inline style if tablet and wider
+            this.$gridWrapper.attr('style', '');
         }
 
     }
