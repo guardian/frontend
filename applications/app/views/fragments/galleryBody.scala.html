@@ -1,9 +1,7 @@
-@(gallery: model.Gallery, related: model.RelatedContent, index: Int, amp: Boolean = false)(implicit request: RequestHeader)
+@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 @import views.support.TrailCssClasses.articleToneClass
 @import layout.ContentWidths.GalleryMedia
 @import views.support.ImgSrc
-@import views.support.Gallery
-@import layout.WidthsByBreakpoint
 
 <div class="l-side-margins l-side-margins--media">
 
@@ -21,19 +19,9 @@
                     @fragments.witnessCallToAction(gallery)
                     @fragments.contentMeta(gallery)
                     <ul class="gallery2">
-                        @if(amp){
-                            @defining(Gallery.boundingBox(gallery.largestCrops)) { case (widest, tallest) =>
-                                <amp-carousel width="@widest" height="@tallest">
-                                @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                                    @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
-                                }
-                                </amp-carousel>
-                            }
-                        } else {
-                            @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                                @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
-                            }
-                        }
+                    @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                        @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
+                    }
                     </ul>
                     @fragments.witnessCallToAction(gallery)
                     @fragments.submeta(gallery)
@@ -70,26 +58,12 @@
 
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                @if(amp) { @* TODO refactor this to use the code from img.scala.html as it's mostly duplicated here *@
-                    @imageElement.largestImage.map { largestImage =>
-                        <amp-img src="@ImgSrc.getFallbackUrl(imageElement)"
-                        srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
-                        sizes="@GalleryMedia.Inline.sizes"
-                        layout="responsive"
-                        width="@largestImage.width"
-                        height="@largestImage.height"
-                        class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                        itemprop="contentUrl"
-                        alt="@image.altText.getOrElse("")" />
-                    }
-                } else {
-                    <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                    srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
-                    sizes="@GalleryMedia.Inline.sizes"
-                    src="@ImgSrc.getFallbackUrl(imageElement)"
-                    alt="@image.altText.getOrElse("")"
-                    itemprop="contentUrl" />
-                }
+                <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
+                sizes="@GalleryMedia.Inline.sizes"
+                src="@ImgSrc.getFallbackUrl(imageElement)"
+                alt="@image.altText.getOrElse("")"
+                itemprop="contentUrl" />
 
                 @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen modern-visible"))
             </a>
