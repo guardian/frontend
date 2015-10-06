@@ -66,6 +66,19 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     }
 
     val start = System.currentTimeMillis
+
+    def logReport(loadSummary: LineItemLoadSummary): Unit = {
+      def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
+      log.info(s"Cached line item count was ${loadSummary.prevCount}")
+      for (threshold <- loadSummary.loadThreshold) {
+        log.info(s"Last modified time of cached line items: $threshold")
+      }
+      log.info(s"Added: ${report(loadSummary.recentlyAddedIds)}")
+      log.info(s"Modified: ${report(loadSummary.recentlyModifiedIds)}")
+      log.info(s"Removed: ${report(loadSummary.recentlyRemovedIds)}")
+      log.info(s"Cached line item count now ${loadSummary.current.size}")
+    }
+
     val lineItems = {
       if (Switches.DfpCacheRecentOnly.isSwitchedOn) {
         val loadSummary = loadLineItems(
@@ -73,18 +86,11 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
           hydrator.loadLineItemsModifiedSince,
           hydrator.loadCurrentLineItems()
         )
-        def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
-        log.info(s"Cached line item count was ${loadSummary.prevCount}")
-        for (threshold <- loadSummary.loadThreshold) {
-          log.info(s"Last modified time of cached line items: $threshold")
-        }
-        log.info(s"Added: ${report(loadSummary.recentlyAddedIds)}")
-        log.info(s"Modified: ${report(loadSummary.recentlyModifiedIds)}")
-        log.info(s"Removed: ${report(loadSummary.recentlyRemovedIds)}")
-        log.info(s"Cached line item count now ${loadSummary.current.size}")
+        logReport(loadSummary)
         loadSummary.current
       } else hydrator.loadCurrentLineItems()
     }
+
     val loadDuration = System.currentTimeMillis - start
     log.info(s"Loading line items took $loadDuration ms")
 
@@ -95,26 +101,20 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
                     lineItemsModifiedSince: DateTime => Seq[GuLineItem],
                     allReadyOrDeliveringLineItems: => Seq[GuLineItem]): LineItemLoadSummary = {
 
-    if (cachedLineItems.isEmpty) {
+    def summarizeNewCache: LineItemLoadSummary = LineItemLoadSummary(
+      prevCount = 0,
+      loadThreshold = None,
+      current = allReadyOrDeliveringLineItems,
+      recentlyAddedIds = allReadyOrDeliveringLineItems.map(_.id),
+      recentlyModifiedIds = Nil,
+      recentlyRemovedIds = Nil
+    )
 
-      LineItemLoadSummary(
-        prevCount = allReadyOrDeliveringLineItems.size,
-        loadThreshold = None,
-        current = allReadyOrDeliveringLineItems,
-        recentlyAddedIds = allReadyOrDeliveringLineItems.map(_.id),
-        recentlyModifiedIds = Nil,
-        recentlyRemovedIds = Nil
-      )
-
-    } else {
-
+    def summarizeUpdatedCache: LineItemLoadSummary = {
       val threshold = cachedLineItems.map(_.lastModified).maxBy(_.getMillis)
       val recentlyModified = lineItemsModifiedSince(threshold)
-      val (readyOrDeliveringModified, otherModified) =
-        recentlyModified partition (Seq("READY", "DELIVERING") contains _.status)
 
-      if (recentlyModified.isEmpty) {
-        LineItemLoadSummary(
+      def summarizeUnmodifiedCache: LineItemLoadSummary = LineItemLoadSummary(
           prevCount = cachedLineItems.size,
           loadThreshold = Some(threshold),
           current = cachedLineItems,
@@ -122,10 +122,12 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
           recentlyModifiedIds = Nil,
           recentlyRemovedIds = Nil
         )
-      } else {
 
+      def summarizeModifiedCache: LineItemLoadSummary = {
         def idToLineItem(lineItems: Seq[GuLineItem]) = lineItems.map(item => item.id -> item).toMap
         val cachedIdToLineItem = idToLineItem(cachedLineItems)
+        val (readyOrDeliveringModified, otherModified) =
+          recentlyModified partition (Seq("READY", "DELIVERING") contains _.status)
         val readyOrDeliveringIdToLineItem = idToLineItem(readyOrDeliveringModified)
         val otherModifiedIds = otherModified.map(_.id)
         val added = readyOrDeliveringIdToLineItem -- cachedIdToLineItem.keys
@@ -141,6 +143,18 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
           recentlyRemovedIds = removed.keys
         )
       }
+
+      if (recentlyModified.isEmpty) {
+        summarizeUnmodifiedCache
+      } else {
+        summarizeModifiedCache
+      }
+    }
+
+    if (cachedLineItems.isEmpty) {
+      summarizeNewCache
+    } else {
+      summarizeUpdatedCache
     }
   }
 
