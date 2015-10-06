@@ -1,6 +1,6 @@
 package controllers.front
 
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent, Groups, LinkSnap}
+import com.gu.facia.api.models._
 import common.{ExecutionContexts, Logging, S3Metrics}
 import conf.Configuration
 import implicits.FaciaContentImplicits._
@@ -42,6 +42,12 @@ trait FapiFrontJsonLite extends ExecutionContexts{
         "frontPublicationDate" -> faciaContent.maybeFrontPublicationDate)
       .fields
       .filterNot{ case (_, v) => v == JsNull})
+  }
+
+  private def getSupporting(faciaContent: FaciaContent): JsValue = faciaContent match {
+    case curatedContent: CuratedContent
+      if curatedContent.supportingContent.nonEmpty => JsArray(curatedContent.supportingContent.map(getContent))
+    case _ => JsNull
   }
 }
 
