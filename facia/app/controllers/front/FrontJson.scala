@@ -39,7 +39,8 @@ trait FapiFrontJsonLite extends ExecutionContexts{
         "shortUrl" -> faciaContent.shortUrl,
         "id" -> faciaContent.maybeContent.map(_.id),
         "group" -> faciaContent.group,
-        "frontPublicationDate" -> faciaContent.maybeFrontPublicationDate)
+        "frontPublicationDate" -> faciaContent.maybeFrontPublicationDate,
+        "supporting" -> getSupporting(faciaContent))
       .fields
       .filterNot{ case (_, v) => v == JsNull})
   }
