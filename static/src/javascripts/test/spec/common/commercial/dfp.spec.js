@@ -142,9 +142,7 @@ describe('DFP', function () {
         });
 
         it('hides all ad slots', function () {
-            commercialFeatures.dfpAdvertising = false;
             dfp.init();
-
             const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
             expect(remainingAdSlots.length).toBe(0);
         });
@@ -152,6 +150,12 @@ describe('DFP', function () {
         it('still returns a DFP object', function () {
             const returnValue = dfp.init();
             expect(returnValue).toBe(dfp);
+        });
+
+        it('calling methods on the disabled DFP object throws exceptions', function() {
+            dfp.init();
+            expect(dfp.addSlot).toThrowError('DFP advertising is disabled');
+            expect(dfp.refreshSlot).toThrowError('DFP advertising is disabled');
         });
     });
 
