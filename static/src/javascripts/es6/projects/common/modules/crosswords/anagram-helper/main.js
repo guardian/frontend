@@ -50,6 +50,24 @@ export default class AnagramHelper extends React.Component {
                this.state.clueInput.length > 0;
     }
 
+    shuffleWord (word, entries) {
+        const wordEntries = _.chain(entries)
+            .map(entry => entry.value.toLowerCase())
+            .filter(entry => _.contains(word, entry))
+            .compact()
+            .value()
+            .sort();
+
+        return _.shuffle(_.reduce(word.trim().split('').sort(), (acc, letter) => {
+            const entered = acc.entries[0] === letter.toLowerCase();
+
+            return {
+                letters: acc.letters.concat({ value: letter, entered: entered }),
+                entries: entered ? _.rest(acc.entries) : acc.entries
+            };
+        }, { letters: [], entries: wordEntries }).letters);
+    }
+
     onClueInput (text) {
         if (!/\s|\d/g.test(text)) {
             this.setState({ clueInput: text });
@@ -62,14 +80,12 @@ export default class AnagramHelper extends React.Component {
         /* jscs:enable disallowDanglingUnderscores */
         const clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
         const cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
-
-        const entries = _.map(cells, coords => {
-            return this.props.grid[coords.x][coords.y];
-        });
+        const entries = _.map(cells, coords => this.props.grid[coords.x][coords.y]);
+        const letters = this.shuffleWord(this.state.clueInput, entries);
 
         const inner = this.state.showInput ?
             <ClueInput value={this.state.clueInput} clue={clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
-            <Shuffler entries={entries} word={this.state.clueInput.trim().split('')} />;
+            <Shuffler letters={letters} />;
 
         return (
             <div className='crossword__anagram-helper-outer'>
@@ -92,7 +108,7 @@ export default class AnagramHelper extends React.Component {
                     shuffle
                 </button>
 
-                <CluePreview clue={clue} entries={entries} />
+                <CluePreview clue={clue} entries={entries} letters={letters} />
             </div>
         );
     }

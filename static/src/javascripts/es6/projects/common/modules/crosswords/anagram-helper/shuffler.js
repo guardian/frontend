@@ -4,24 +4,6 @@ import _ from 'common/utils/_';
 const round = x => Math.round(x * 100) / 100;
 
 export default class Shuffler extends React.Component {
-    getLetters () {
-        const entries = _.chain(this.props.entries)
-            .map(entry => entry.value.toLowerCase())
-            .filter(entry => _.contains(this.props.word, entry))
-            .compact()
-            .value()
-            .sort();
-
-        return _.shuffle(_.reduce(this.props.word.sort(), (acc, letter) => {
-            const entered = acc.entries[0] === letter.toLowerCase();
-
-            return {
-                letters: acc.letters.concat({ value: letter, entered: entered }),
-                entries: entered ? _.rest(acc.entries) : acc.entries
-            };
-        }, { letters: [], entries: entries }).letters);
-    }
-
     /**
      * Get coordinates for a letter as percentages.
      *
@@ -43,12 +25,11 @@ export default class Shuffler extends React.Component {
     }
 
     render () {
-        const letters = this.getLetters();
-        const angle = 360 / letters.length;
+        const angle = 360 / this.props.letters.length;
 
         return (
             <div className='crossword__anagram-helper-shuffler'>
-                {_.map(letters, (letter, i) => {
+                {_.map(this.props.letters, (letter, i) => {
                     return (
                         <div
                             className={'crossword__anagram-helper-shuffler__letter ' + (letter.entered ? 'entered' : '')}
