@@ -49,7 +49,6 @@ GET        /sudokus/:id                                                         
 # Gallery paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                controllers.GalleryController.lightboxJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                         controllers.GalleryController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/amp                          controllers.GalleryController.render(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                              controllers.GalleryController.render(path)
 
 # Image Content paths

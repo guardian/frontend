@@ -103,13 +103,13 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     header("Surrogate-Key", result).head should be (expectedSurrogateKey)
   }
 
-  "International users" should "still be in the UK edition" in {
+  "International users" should "be in the International edition" in {
     val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
       .withHeaders(
         "X-GU-Edition" -> "intl"
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"edition\":\"UK\"")
+    contentAsString(result) should include ("\"edition\":\"INT\"")
   }
 
   they can "be in the control variant" in {
@@ -119,7 +119,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
         "X-GU-International" -> "control"
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEditionVariant\" : \"control\"")
+    contentAsString(result) should include ("\"internationalEdition\":\"control\"")
   }
 
   they can "be in the test variant" in {
@@ -129,6 +129,6 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
         "X-GU-International" -> "international"
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEditionVariant\" : \"international\"")
+    contentAsString(result) should include ("\"internationalEdition\":\"international\"")
   }
 }

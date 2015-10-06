@@ -6,15 +6,6 @@ trait ABTestSwitches {
 
   // A/B Tests
 
-  val ABLiveblogNotifications = Switch(
-    "A/B Tests",
-    "ab-liveblog-notifications",
-    "Liveblog notifications",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 1),
-    exposeClientSide = true
-  )
-
   val ABMembershipMessageUk = Switch(
     "A/B Tests",
     "ab-membership-message-uk",

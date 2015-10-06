@@ -1,5 +1,7 @@
 package common.editions
 
+import java.util.Locale
+
 import common._
 import common.editions.Uk._
 import conf.switches.Switches
@@ -11,7 +13,8 @@ object Us extends Edition(
   id = "US",
   displayName = "US edition",
   timezone = DateTimeZone.forID("America/New_York"),
-  lang = "en-us"
+  locale = Locale.forLanguageTag("en-us"),
+  homePagePath = "/us"
 ) with QueryDefaults {
 
   implicit val US = Us

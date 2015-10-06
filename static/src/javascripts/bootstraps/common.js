@@ -5,8 +5,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'common/utils/_',
     'common/utils/$',
-    'common/utils/background',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -17,7 +17,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
-    'common/modules/analytics/headlines-test-analytics',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
@@ -51,15 +50,14 @@ define([
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'text!common/views/international-message.html',
-    'text!common/views/international-control-message.html',
     'bootstraps/identity-common'
 ], function (
     fastdom,
     bean,
     bonzo,
     qwery,
+    _,
     $,
-    background,
     config,
     cookies,
     detect,
@@ -70,7 +68,6 @@ define([
     storage,
     Foresee,
     liveStats,
-    HeadlinesTestAnalytics,
     mediaListener,
     omniture,
     register,
@@ -104,7 +101,6 @@ define([
     pinterest,
     SaveForLater,
     internationalMessage,
-    internationalControlMessage,
     identity
 ) {
     var modules = {
@@ -339,16 +335,10 @@ define([
             },
 
             internationalSignposting: function () {
-                if ('internationalEdition' in config.page) {
-                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        new Message('international-with-survey-new', {
-                            pinOnHide: true
-                        }).show(template(internationalMessage, {}));
-                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
-                        new Message('international', {
-                            pinOnHide: true
-                        }).show(template(internationalControlMessage, {}));
-                    }
+                if (config.page.edition === 'INT' && config.page.pageId === 'international') {
+                    new Message('international-with-survey-new', {
+                        pinOnHide: true
+                    }).show(template(internationalMessage, {}));
                 }
             },
 
@@ -364,16 +354,12 @@ define([
                     var saveForLater = new SaveForLater();
                     saveForLater.init();
                 }
-            },
-
-            headlinesTestAnalytics: function () {
-                HeadlinesTestAnalytics.go();
             }
         };
 
     return {
         init: function () {
-            background(robust.makeBlocks([
+            _.forEach(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
@@ -415,9 +401,10 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
-                ['c-save-for-later', modules.saveForLater],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
-            ]));
+                ['c-save-for-later', modules.saveForLater]
+            ]), function (fn) {
+                fn();
+            });
 
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');

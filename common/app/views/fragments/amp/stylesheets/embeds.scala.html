@@ -22,11 +22,21 @@
 
 figure.element {
     margin: 1rem 0rem;
+    clear: both;
 }
 
 .media__img {
     float: left;
     margin-right: 0.9375rem;
+}
+
+figure.element.element--thumbnail {
+    float: left;
+    clear: left;
+    margin-bottom: 0;
+    width: 7.5rem;
+    margin-right: 1.25rem;
+    margin-top: 0.375rem;
 }
 
 .content__meta-container .byline-img {
@@ -52,7 +62,7 @@ figure.element {
 }
 
 @* Video related styling below *@
-.gu-media-wrapper, amp-video {
+.gu-media-wrapper {
     background: #000000;
 }
 

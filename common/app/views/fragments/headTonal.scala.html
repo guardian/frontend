@@ -48,6 +48,19 @@
                 @content.imdb.map { imdbId =>
                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Movie">
                         <link itemprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
+                        @* we're not the authority on the film name, but just to keep google validator happy
+                        *@<meta itemprop="name" content="Slow West"/>
+                    </div>
+                }
+
+                @content.isbn.map { isbn =>
+                    <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Book">
+                        <meta itemprop="isbn" content="@isbn">
+                        <div itemprop="author" itemscope itemtype="http://schema.org/Person">
+                            <meta itemprop="sameAs" content="http://schema.org/Person@* we can't know *@">
+                            <meta itemprop="name" content=".@* we can't know *@">
+                        </div>
+                        <meta itemprop="name" content=".@* we can't know *@">
                     </div>
                 }
 

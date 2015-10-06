@@ -18,8 +18,8 @@ import scala.collection.JavaConversions._
 
     val alternateLinks = getAlternateLinks(browser)
     alternateLinks.size should be (2)
-    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/us/culture" && link.getAttribute("hreflang") == "en-us") should be (true)
-    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/au/culture" && link.getAttribute("hreflang") == "en-au") should be (true)
+    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/us/culture" && link.getAttribute("hreflang") == "en-US") should be (true)
+    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/au/culture" && link.getAttribute("hreflang") == "en-AU") should be (true)
 
   }
 
@@ -34,8 +34,8 @@ import scala.collection.JavaConversions._
 
     val alternateLinks = getAlternateLinks(browser)
     alternateLinks.size should be (2)
-    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/us/culture" && link.getAttribute("hreflang") == "en-us") should be (true)
-    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/uk/culture" && link.getAttribute("hreflang") == "en-gb") should be (true)
+    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/us/culture" && link.getAttribute("hreflang") == "en-US") should be (true)
+    alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/uk/culture" && link.getAttribute("hreflang") == "en-GB") should be (true)
   }
 
   it should "not add alternate pages to non editionalised sections" in goTo("/books") { browser =>

@@ -1,6 +1,6 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import conf.switches.Switches._
-@import common.{LinkTo, Edition}
+@import common.{LinkTo, Edition, SubscribeLink}
 @import common.editions._
 @import conf.Configuration
 @import views.support.URLEncode
@@ -19,7 +19,7 @@
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register">
-                            <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=HEADER_GU_REG&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
+                            <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=DOTCOM_HEADER_BECOMEMEMBER&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
                                 data-link-name="Register link"
                                 class="brand-bar__item--action">
                                     @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
@@ -30,9 +30,8 @@
                     }
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
-                                    has-popup brand-bar__item--has-control js-profile-nav"
-                             data-component="identity-profile">
-                            <a href="@Configuration.id.url/signin"
+                                    has-popup js-profile-nav"
+                             data-component="identity-profile">                                                                                    <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
                                data-link-name="User profile"
                                data-toggle="popup--profile"
                                data-toggle-signed-in="true"
@@ -50,7 +49,7 @@
                                 <ul class="popup popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
                                     @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
                                         <li class="popup__item">
-                                            <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later" data-saved-content-count="0">
+                                            <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
                                                 Saved for later</a>
                                         </li>
                                     }
@@ -67,7 +66,7 @@
                     <div class="brand-bar__item has-popup brand-bar__item--has-control
                                 popup-container brand-bar__item--subscribe"
                          data-component="subscribe">
-                        <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
+                        <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
                         data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                             <span class="control__info">subscribe</span>
@@ -75,7 +74,7 @@
                     </div>
 
                     @if(SearchSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item has-popup popup-container brand-bar__item--has-control brand-bar__item--search" data-component="search">
+                        <div class="brand-bar__item has-popup popup-container brand-bar__item--search" data-component="search">
                             <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
                                class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
                                aria-haspopup="true">

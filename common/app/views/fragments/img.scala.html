@@ -39,6 +39,10 @@
             <meta itemprop="representativeOfPage" content="true">
         }
 
+        @if(amp) {
+            <meta itemprop="url" content="@ImgSrc.getFallbackUrl(picture)">
+        }
+
         @lightbox{
             @image(picture, widthsByBreakpoint, imageOption, isMain)
         }
