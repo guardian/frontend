@@ -24,9 +24,11 @@
         // define dimensions for the grid. (SVGs use viewBox which require
         // the parent to have dimensions)
         .crossword__container__grid-wrapper {
+            width: 100%;
+            height: $size;
+
             @include mq(tablet) {
                 width: $size;
-                height: $size;
             }
         }
 

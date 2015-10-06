@@ -70,6 +70,10 @@ class Crossword extends React.Component {
         const $game = $(React.findDOMNode(this.refs.game));
         const isIOS = detect.isIOS();
 
+        mediator.on('window:resize', _.debounce(this.setGridHeight.bind(this), 200));
+        mediator.on('window:orientationchange', _.debounce(this.setGridHeight.bind(this), 200));
+        this.setGridHeight();
+
         mediator.on('window:throttledScroll', () => {
             const gridOffset = $grid.offset();
             const gameOffset = $game.offset();
@@ -112,6 +116,32 @@ class Crossword extends React.Component {
         if (!this.state.showAnagramHelper && (this.state.showAnagramHelper !== prevState.showAnagramHelper)) {
             this.focusCurrentCell();
         }
+    }
+
+    setGridHeight() {
+
+        if (!this.$gridWrapper) {
+            this.$gridWrapper = $(React.findDOMNode(this.refs.gridWrapper));
+        }
+
+        const setHeight = (height) => {
+            fastdom.write(() => {
+                this.$gridWrapper.css('height', height);
+            });
+        };
+
+        if (detect.isBreakpoint({ max: 'tablet' })) {
+            fastdom.read(() => {
+                // Our grid is a square, set the height of the grid wrapper
+                // to the width of the grid wrapper
+                setHeight(this.$gridWrapper.offset().width + 'px');
+                this.gridHeightIsSet = true;
+            });
+        } else if (this.gridHeightIsSet) {
+            // Remove set height if tablet and wider
+            setHeight('inherit');
+        }
+
     }
 
     setCellValue (x, y, value) {
@@ -588,7 +618,7 @@ class Crossword extends React.Component {
                             )}
                         </div>
                     </div>
-                    <div className='crossword__container__grid-wrapper'>
+                    <div className='crossword__container__grid-wrapper' ref='gridWrapper'>
                         <Grid
                             rows={this.rows}
                             columns={this.columns}
