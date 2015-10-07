@@ -1,0 +1,134 @@
+.content--immersive {
+
+    &.content {
+        border-top: 0;
+    }
+
+    .content__main {
+        padding: 0;
+    }
+
+    .content__article-body {
+        clear: both;
+    }
+    
+    .js-components-container {
+        display: none;
+    }
+
+// HEADER
+
+    .content__head {
+        position: relative;
+        color: white;
+    }
+
+    .content__wrapper {
+        background-color: rgba(0, 0, 0, .5);
+    }
+
+    .content__logo-container {
+        z-index: 2;
+    }
+
+    .content__logo {
+        fill: white;
+        float: right;
+        width: 160px;
+        height: auto;
+        margin-top: $gs-baseline / 2;
+
+        @include mq(tablet) {
+            fill: #333;
+        }
+    }
+
+    .content__headline,
+    .content__standfirst {
+        max-width: 620px;
+
+        @include mq(leftCol) {
+            margin-left: 160px;
+        }
+
+        @include mq(wide) {
+            margin-left: 240px;
+        }
+    }
+
+    .content__headline {
+        font-size: 2.2rem;
+        font-weight: 200;
+        line-height: 1;
+        padding-top: $gs-baseline / 2;
+        padding-bottom: 1em;
+
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
+    }
+
+    .content__standfirst {
+        position: relative;
+        padding-top: 0.33em;
+        padding-bottom: 1em;
+        margin-bottom: 0;
+        color: white;
+
+        @include mq(desktop) {
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                height: 2px;
+                width: 140px;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        a {
+            color: #f7acbb;
+            border-bottom: 1px solid rgba(#f7acbb, 0.4);
+
+            &:hover {
+                text-decoration: none;
+                border-bottom-color: rgba(#f7acbb, 0.8);
+            }
+        }
+    }
+
+    @include mq($until: desktop) {
+        .content__head--mobile {
+            position: relative;
+            height: 100vh;
+            max-height: 800px; // Temp fix for old iOS devices that don't support 100vh
+            background-image: url('https://i.guim.co.uk/img/media/50ec0d0052fb79b576f607fd46fe4a748728366f/0_0_1400_840/master/1400.jpg?w=1920&q=85&auto=format&sharp=10&s=330c4580dd085312c02c0dc905b5b202');
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .content__wrapper--headline {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    @include mq(desktop) {
+        .content__head--desktop {
+            position: relative;
+            height: 100vh;
+            background-image: url('https://i.guim.co.uk/img/media/50ec0d0052fb79b576f607fd46fe4a748728366f/0_0_1400_840/master/1400.jpg?w=1920&q=85&auto=format&sharp=10&s=330c4580dd085312c02c0dc905b5b202');
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .content__header {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+}
