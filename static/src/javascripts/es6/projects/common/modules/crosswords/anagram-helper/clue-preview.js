@@ -29,7 +29,10 @@ export default class CluePreview extends React.Component {
      * remove anything anything that's already been entered into the grid.
      *
      * With that, we map over the entries, and wherever there's an empty space
-    *  we insert one of the shuffled input characters.
+     * we insert one of the shuffled input characters.
+     *
+     * If the user hasn't yet clicked 'shuffle' (this.props.hasShuffled) just
+     * display the entries as they are, preserving any blank spaces.
      */
     getEntries () {
         const unsolved = this.props.letters.filter(l => !l.entered);
