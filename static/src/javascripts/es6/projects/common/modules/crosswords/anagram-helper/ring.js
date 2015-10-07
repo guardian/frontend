@@ -3,7 +3,7 @@ import _ from 'common/utils/_';
 
 const round = x => Math.round(x * 100) / 100;
 
-export default class Shuffler extends React.Component {
+export default class Ring extends React.Component {
     /**
      * Get coordinates for a letter as percentages.
      *

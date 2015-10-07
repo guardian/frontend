@@ -4,7 +4,7 @@ import svgs from 'common/views/svgs';
 
 import ClueInput from './clue-input';
 import CluePreview from './clue-preview';
-import Shuffler from './shuffler';
+import Ring from './ring';
 import helpers from '../helpers';
 
 export default class AnagramHelper extends React.Component {
@@ -85,7 +85,7 @@ export default class AnagramHelper extends React.Component {
 
         const inner = this.state.showInput ?
             <ClueInput value={this.state.clueInput} clue={clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
-            <Shuffler letters={letters} />;
+            <Ring letters={letters} />;
 
         return (
             <div className='crossword__anagram-helper-outer'>
