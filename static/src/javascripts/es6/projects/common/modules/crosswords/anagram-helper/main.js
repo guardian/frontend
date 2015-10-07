@@ -108,7 +108,7 @@ export default class AnagramHelper extends React.Component {
                     shuffle
                 </button>
 
-                <CluePreview clue={clue} entries={entries} letters={letters} />
+                <CluePreview clue={clue} entries={entries} letters={letters} hasShuffled={!this.state.showInput} />
             </div>
         );
     }
