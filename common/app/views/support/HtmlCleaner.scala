@@ -281,7 +281,6 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
       }
       if (amp && link.hasAttr("style")) {
         link.removeAttr("style")
-        println(link)
       }
     }
 
