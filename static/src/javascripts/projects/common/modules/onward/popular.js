@@ -40,7 +40,7 @@ define([
     };
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {
-        return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1) ? true : false;
+        return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1);
     };
 
     MostPopular.prototype.prerender = function () {
