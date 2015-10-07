@@ -40,22 +40,22 @@ define([
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,50|300,250',
-                'mobile-landscape': '1,1|300,50|320,50|300,250',
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
         },
         inline: {
             sizeMappings: {
-                mobile:             '1,1|300,50',
-                'mobile-landscape': '1,1|300,50|320,50',
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
         },
         mostpop: {
             sizeMappings: {
-                mobile:             '1,1|300,50',
-                'mobile-landscape': '1,1|300,50|320,50',
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
         },
@@ -93,18 +93,6 @@ define([
             }
         }
     };
-
-    if (config.switches.noMobileTopAd && detect.getBreakpoint() === 'mobile') {
-        adSlotDefinitions.inline1.sizeMappings = {
-            mobile: '1,1|300,250'
-        };
-        adSlotDefinitions.inline.sizeMappings = {
-            mobile: '1,1|300,250'
-        };
-        adSlotDefinitions.mostpop.sizeMappings = {
-            mobile: '1,1|300,250'
-        };
-    }
 
     return function (name, types, series, keywords, slotTarget) {
         var attrName,
