@@ -1,4 +1,3 @@
-/* global videojs */
 define([
     'bean',
     'bonzo',
@@ -19,6 +18,7 @@ define([
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
+    'bootstraps/video-player',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -40,6 +40,7 @@ define([
     fullscreener,
     supportedBrowsers,
     techOrder,
+    videojs,
     loadingTmpl
 ) {
 
@@ -84,27 +85,31 @@ define([
     }
 
     function createVideoPlayer(el, options) {
+
         var player = videojs(el, options),
             $el = $(el),
             duration = parseInt($el.attr('data-duration'), 10);
 
-        if (!isNaN(duration)) {
-            player.duration(duration);
-            player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
-        }
+        player.ready(function(){
 
-        // we have some special autoplay rules, so do not want to depend on 'default' autoplay
-        player.guAutoplay = $(el).attr('data-auto-play') === 'true';
+            if (!isNaN(duration)) {
+                player.duration(duration);
+                player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
+            }
 
-        // need to explicitly set the dimensions for the ima plugin.
-        player.height(bonzo(player.el()).parent().dim().height);
-        player.width(bonzo(player.el()).parent().dim().width);
+            // we have some special autoplay rules, so do not want to depend on 'default' autoplay
+            player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
-        if (events.handleInitialMediaError(player)) {
-            player.dispose();
-            options.techOrder = techOrder(el).reverse();
-            player = videojs(el, options);
-        }
+            // need to explicitly set the dimensions for the ima plugin.
+            player.height(bonzo(player.el()).parent().dim().height);
+            player.width(bonzo(player.el()).parent().dim().width);
+
+            if (events.handleInitialMediaError(player)) {
+                player.dispose();
+                options.techOrder = techOrder(el).reverse();
+                player = videojs(el, options);
+            }
+        });
 
         return player;
     }
@@ -355,18 +360,18 @@ define([
         });
     }
 
-    function ready() {
+    function init() {
         if (config.switches.enhancedMediaPlayer) {
-            require(['bootstraps/video-player'], raven.wrap(
+            raven.wrap(
                 { tags: { feature: 'media' } },
                 initPlayer
-            ));
+            )();
         }
         initMoreInSection();
         initMostViewedMedia();
     }
 
     return {
-        init: ready
+        init: init
     };
 });
