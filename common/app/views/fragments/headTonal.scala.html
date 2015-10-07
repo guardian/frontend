@@ -48,8 +48,10 @@
                 @content.imdb.map { imdbId =>
                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Movie">
                         <link itemprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
-                        @* we're not the authority on the film name, but just to keep google validator happy
-                        *@<meta itemprop="name" content="."/>
+                        @defining(content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
+                            @* we're not the authority on the film name, but just to keep google validator happy
+                            *@<meta itemprop="name" content="@tag"/>
+                        }
                     </div>
                 }
 
