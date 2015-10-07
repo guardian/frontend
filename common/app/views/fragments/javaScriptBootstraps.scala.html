@@ -11,6 +11,7 @@
     } else {
         @if(mvt.JspmAMDTest.isParticipating) {
             // systemJS
+            @Html(Static.systemJs.polyfills)
             @Html(Static.systemJs.main)
 
             // CONFIG
@@ -52,16 +53,58 @@
                 },
                 meta: {
                     '*': {
-                        format: 'amd'
+                        scriptLoad: true
                     }
                 }
             });
 
+            var reduce = function (array, fn, accumulator) {
+                for (var i = 0; i <= array.length - 1; i++) {
+                    accumulator = fn(accumulator, array[i]);
+                }
+                return accumulator;
+            };
+
+            (function () {
+                var systemNormalize = System.normalize;
+                System.normalize = function (name, parentName) {
+                    var requireToSystemPluginMap = {
+                        'js': 'system-script'
+                    };
+                    var transformers = [
+                        function reversePluginFormat(name) {
+                            var destructuredName = /(.+?)!(.+)/.exec(name);
+
+                            if (destructuredName) {
+                                var pluginName = destructuredName[1];
+                                var moduleId = destructuredName[2];
+                                var newPluginName = requireToSystemPluginMap[pluginName];
+                                var reversedName = moduleId + '!' + newPluginName;
+
+                                return newPluginName ? reversedName : name;
+                            } else {
+                                return name;
+                            }
+                        }
+                    ];
+
+                    var newName = reduce(transformers, function (name, fn) {
+                        return fn(name);
+                    }, name);
+
+                    return systemNormalize.call(this, newName, parentName);
+                };
+            })();
+
             window.require = window.requirejs = System.amdRequire;
             window.define = System.amdDefine;
 
-            // bootstrap
-            @Html(templates.headerInlineJS.js.bootSystemJSAMD(item).body)
+            System.define('system-script', 'exports.fetch=function(a){return new Promise(function(b,c){function f(a){e.readyState&&"loaded"!==e.readyState&&"complete"!=e.readyState||(h(),b(""))}function g(a){h(),c(a)}function h(){e.detachEvent?e.detachEvent("onreadystatechange",f):(e.removeEventListener("load",f,!1),e.removeEventListener("error",g,!1)),d.removeChild(e)}var d=document.getElementsByTagName("head")[0],e=document.createElement("script");e.async=!0,e.attachEvent?e.attachEvent("onreadystatechange",f):(e.addEventListener("load",f,!1),e.addEventListener("error",g,!1)),e.src=a.address,d.appendChild(e)})};')
+            .then(function () {
+                // bootstrap
+                @Html(templates.headerInlineJS.js.bootSystemJSAMD(item).body)
+            });
+
 
         } else {
             var curl = {
