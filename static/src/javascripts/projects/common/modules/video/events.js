@@ -79,19 +79,15 @@ define([
     }
 
     function bindPrerollEvents(player) {
-        var preRollPlay = false,
         events = {
             end: function () {
-                if (preRollPlay) {
-                    player.trigger(constructEventName('preroll:end', player));
-                }
+                player.trigger(constructEventName('preroll:end', player));
                 player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
             start: function () {
                 var duration = player.duration();
                 if (duration) {
-                    preRollPlay = true;
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
