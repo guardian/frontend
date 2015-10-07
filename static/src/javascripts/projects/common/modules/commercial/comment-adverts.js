@@ -6,11 +6,10 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/identity/api',
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
-    'common/modules/commercial/user-ad-preference'
+    'common/modules/commercial/commercial-features'
 ], function (
     fastdom,
     Promise,
@@ -19,11 +18,10 @@ define([
     config,
     detect,
     mediator,
-    identityApi,
     ab,
     createAdSlot,
     dfp,
-    userAdPreference
+    commercialFeatures
 ) {
     return function (options) {
         var adType,
@@ -41,15 +39,10 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-        if (!config.switches.standardAdverts ||
-            !config.switches.viewability ||
-            !$adSlotContainer.length ||
-            !config.switches.discussion ||
-            !identityApi.isUserLoggedIn() ||
-            (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) || /* Sensitive pages */
-            userAdPreference.hideAds ||
-            (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
-            !config.page.commentable) {
+        if (!$adSlotContainer.length ||
+            !commercialFeatures.commentAdverts ||
+            (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide')
+        ) {
             return false;
         }
 

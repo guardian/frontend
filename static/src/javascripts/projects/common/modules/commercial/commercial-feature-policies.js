@@ -3,12 +3,14 @@ define([
     'common/utils/location',
     'common/utils/config',
     'common/modules/commercial/user-ad-preference',
+    'common/modules/identity/api',
     'common/modules/user-prefs'
 ], function (
     _,
     location,
     config,
     userAdPreference,
+    identityApi,
     userPrefs
 ) {
     var policies = {};
@@ -31,6 +33,7 @@ define([
     };
 
     policies.noadsHash = function () {
+        // This is used for performance testing
         if (location.getHash().match(/[#&]noads(&.*)?$/)) {
             return new CommercialFeatureSwitches(false);
         }
@@ -42,11 +45,20 @@ define([
         }
     };
 
+    policies.signedInUsers = function () {
+        if (identityApi.isUserLoggedIn()) {
+            return {
+                commentAdverts : false
+            };
+        }
+    };
+
     policies.adfreeExperience = function () {
         if (userAdPreference.hideAds) {
             return {
                 articleMPUs : false,
                 sliceAdverts : false,
+                commentAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false
             };
@@ -73,6 +85,12 @@ define([
         }
     };
 
+    policies.pagesWithoutComments = function () {
+        if (!config.page.commentable) {
+            return {commentAdverts : false};
+        }
+    };
+
     policies.switchboard = function () {
         var switches = {};
 
@@ -82,12 +100,19 @@ define([
         if (!config.switches.standardAdverts) {
             switches.articleMPUs = false;
             switches.sliceAdverts = false;
+            switches.commentAdverts = false;
         }
         if (!config.switches.commercialComponents) {
             switches.frontCommercialComponents = false;
         }
         if (!config.switches.sponsored) {
             switches.badges = false;
+        }
+        if (!config.switches.viewability) {
+            switches.commentAdverts = false;
+        }
+        if (!config.switches.discussion) {
+            switches.commentAdverts = false;
         }
 
         return switches;
@@ -97,6 +122,7 @@ define([
         this.dfpAdvertising = enabled;
         this.articleMPUs = enabled;
         this.sliceAdverts = enabled;
+        this.commentAdverts = enabled;
         this.popularContentMPU = enabled;
         this.videoPreRolls = enabled;
         this.frontCommercialComponents = enabled;

@@ -4,7 +4,7 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 describe('Commercial features', ()=> {
-    let commercialFeaturePolicies, config, location, userAdPreference, userPrefs;
+    let commercialFeaturePolicies, config, location, userAdPreference, identityApi, userPrefs;
 
     beforeEach((done)=> {
         injector.test([
@@ -12,9 +12,10 @@ describe('Commercial features', ()=> {
             'common/utils/config',
             'common/utils/location',
             'common/modules/commercial/user-ad-preference',
+            'common/modules/identity/api',
             'common/modules/user-prefs'
         ], function () {
-            [commercialFeaturePolicies, config, location, userAdPreference, userPrefs] = arguments;
+            [commercialFeaturePolicies, config, location, userAdPreference, identityApi, userPrefs] = arguments;
             done();
         });
     });
@@ -113,6 +114,26 @@ describe('Commercial features', ()=> {
         });
     });
 
+    describe('Signed in user policy', ()=> {
+        it('does not show logged in users comment adverts', ()=> {
+            identityApi.isUserLoggedIn = ()=> {
+                return 'true';
+            };
+            const switches = commercialFeaturePolicies.getPolicySwitches().signedInUsers;
+            expect(switches.commentAdverts).toBe(false);
+        });
+
+        it('does not apply changes otherwise', ()=> {
+            it('does not show logged in users comment adverts', ()=> {
+                identityApi.isUserLoggedIn = ()=> {
+                    return 'false';
+                };
+                const switches = commercialFeaturePolicies.getPolicySwitches().signedInUsers;
+                expect(switches).toBeUndefined();
+            });
+        });
+    });
+
     describe('Adfree experience policy', ()=> {
         it('enabling adfree hides some commercial content', ()=> {
             userAdPreference.hideAds = true;
@@ -122,6 +143,7 @@ describe('Commercial features', ()=> {
             expect(switches.sliceAdverts).toBe(false);
             expect(switches.popularContentMPU).toBe(false);
             expect(switches.videoPreRolls).toBe(false);
+            expect(switches.commentAdverts).toBe(false);
         });
 
         it('enabling adfree does not hide other commercial content', ()=> {
@@ -201,35 +223,83 @@ describe('Commercial features', ()=> {
         });
     });
 
+    describe('Pages-without-comments policy', ()=> {
+        it('disables comment adverts if page is not commentable', ()=> {
+            config.page.commentable = false;
+            const switches = commercialFeaturePolicies.getPolicySwitches().pagesWithoutComments;
+            expect(switches.commentAdverts).toBe(false);
+        });
+
+        it('applies no change otherwise', ()=> {
+            config.page.commentable = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().pagesWithoutComments;
+            expect(switches).toBeUndefined();
+        });
+    });
+
     describe('Switchboard policy', ()=> {
-        it('disables badges when sponsored switch is off', ()=> {
-            config.switches.sponsored = false;
-            const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.badges).toBe(false);
+        beforeEach(()=> {
+            config.switches.standardAdverts = true;
         });
 
-        it('disables front commercial components if commercial-components switch is off', ()=> {
-            config.switches.commercialComponents = false;
-            const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.frontCommercialComponents).toBe(false);
+        describe('Video adverts switch', ()=> {
+            it('can turn off video pre-rolls', ()=> {
+                config.switches.videoAdverts = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.videoPreRolls).toBe(false);
+            });
         });
 
-        it('disables article adverts if standard-adverts switch is off', ()=> {
-            config.switches.standardAdverts = false;
-            const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.articleMPUs).toBe(false);
+        describe('Standard-adverts switch', ()=> {
+            it('can turn off articleMPUs', ()=> {
+                config.switches.standardAdverts = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.articleMPUs).toBe(false);
+            });
+
+            it('can turn off comment adverts', ()=> {
+                config.switches.standardAdverts = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.commentAdverts).toBe(false);
+            });
+
+            it('can turn off slice adverts', ()=> {
+                config.switches.standardAdverts = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.sliceAdverts).toBe(false);
+            });
         });
 
-        it('disables slice adverts if standard-adverts switch is off', ()=> {
-            config.switches.standardAdverts = false;
-            const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.sliceAdverts).toBe(false);
+        describe('Commercial components switch', ()=> {
+            it('can turn off front commercial components', ()=> {
+                config.switches.commercialComponents = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.frontCommercialComponents).toBe(false);
+            });
         });
 
-        it('disables video pre-rolls if video-adverts switch is off', ()=> {
-            config.switches.videoAdverts = false;
-            const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.videoPreRolls).toBe(false);
+        describe('Sponsored switch', ()=> {
+            it('can turn off sponsored content badges', ()=> {
+                config.switches.sponsored = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.badges).toBe(false);
+            });
+        });
+
+        describe('Viewability switch', ()=> {
+            it('can turn off comment adverts', ()=> {
+                config.switches.viewability = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.commentAdverts).toBe(false);
+            });
+        });
+
+        describe('Discussion switch', ()=> {
+            it('can turn off comment adverts', ()=> {
+                config.switches.discussion = false;
+                const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
+                expect(switches.commentAdverts).toBe(false);
+            });
         });
     });
 
