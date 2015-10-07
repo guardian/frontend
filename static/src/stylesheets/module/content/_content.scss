@@ -713,6 +713,10 @@
     transform: translate3d(0, 0, 0);
 }
 
+.meta__date-warn .meta__date-warn--message .meta__date-warn--clock {
+    fill: #000;
+}
+
 .meta__twitter,
 .meta__email {
     margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
