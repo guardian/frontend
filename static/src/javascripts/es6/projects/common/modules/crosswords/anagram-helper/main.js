@@ -50,6 +50,18 @@ export default class AnagramHelper extends React.Component {
                this.state.clueInput.length > 0;
     }
 
+    /**
+     * Shuffle the letters in the user's input.
+     *
+     * First, create an array of input characters that have already been entered
+     * into the grid. Then build a new collection of letters, using the first
+     * array to flag letters that are already entered in the puzzle, and
+     * shuffle it.
+     *
+     * @param  {String}   word     word to shuffle
+     * @param  {[Object]} entries  array of entries (i.e. grid cells)
+     * @return {[Object]}          array of shuffled letters
+     */
     shuffleWord (word, entries) {
         const wordEntries = _.chain(entries)
             .map(entry => entry.value.toLowerCase())
