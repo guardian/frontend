@@ -79,53 +79,49 @@ $ima-controls-height: 70px;
     height: 100%;
     box-sizing: border-box;
     text-align: center;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
 
     .vjs-has-started & {
         padding-bottom: $vjs-control-height;
     }
 
-    &:after {
-        display: inline-block;
-        vertical-align: middle;
-        height: 100%;
-        content: '';
-    }
+    .vjs-control-text {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
 
-    > span {
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
-        @include circular;
-        @include video-play-button-size($vjs-small-button-size);
-        @include mq(mobileLandscape) {
-            @include video-play-button-size($vjs-large-button-size);
-        }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 70px;
+        width: 70px;
+        margin-top: -35px;
+        margin-left: -35px;
 
-        background-color: rgba(51, 51, 51, .8);
-
-        .gu-media-wrapper:hover &,
-        .gu-media__fallback:hover & {
-            background-color: colour(media-default);
-        }
-
-        /**
-         * As arrow is made by using borders we need to use magic numbers
-         * to be able to position it to the center of the button circle.
-         */
         &:before {
             content: '';
-            position: absolute;
             display: block;
-            width: 0;
-            height: 0;
+            @include circular;
+            @include video-play-button-size($vjs-small-button-size);
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+            background-color: rgba(51, 51, 51, .8);
+            .gu-media-wrapper:hover &,
+            .gu-media__fallback:hover & {
+                background-color: colour(media-default);
+            }
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 26px;
+            top: $gs-baseline*2;
             border-style: solid;
-            border-width: 1em 0 1em 2.4em;
+            border-width: 11px 0 11px 28px;
             border-color: transparent transparent transparent colour(neutral-7);
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
-            top: 50%;
-            left: 50%;
-            margin-top: -.9em; /* [1] */
-            margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: .2em;
@@ -203,6 +199,10 @@ $ima-controls-height: 70px;
     height: $vjs-control-height;
     transition: bottom .8s;
     transition-delay: 1s;
+
+    &.vjs-hidden {
+        display: none;
+    }
 }
 
 .vjs-control-bar {
@@ -231,14 +231,27 @@ $ima-controls-height: 70px;
     }
 }
 
-.vjs-control-text,
-.vjs-live-controls,
+.vjs-custom-control-spacer,
+.vjs-live-control,
 .vjs-remaining-time,
 .vjs-playback-rate,
 .vjs-subtitles-button,
 .vjs-captions-button,
-.vjs-chapters-button {
+.vjs-chapters-button,
+.vjs-caption-settings {
     display: none;
+}
+
+.vjs-control-text {
+    overflow: hidden !important; // some control texts have pseudo elements for icons, so they cannot use u-h.
+    display: inline-block;
+
+    .vjs-load-progress &,
+    .vjs-play-progress &,
+    .vjs-play-control &,
+    .vjs-time-control & {   // these control texts are free to use u-h.
+        @include u-h;
+    }
 }
 
 .vjs-poster {
@@ -260,6 +273,9 @@ $ima-controls-height: 70px;
     float: left;
     cursor: pointer;
     margin: 7px;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
 }
 
 .vjs-play-control {
@@ -298,22 +314,23 @@ $ima-controls-height: 70px;
 .vjs-fullscreen-control {
     cursor: pointer;
     float: right;
-    box-sizing: border-box;
-    height: $vjs-control-height;
-    width: $vjs-control-height;
-    position: relative;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    margin: $gs-baseline;
+
+    .vjs-control-text {
+        width: $gs-gutter;
+        height: 20px;
+    }
 }
 
 .vjs-fullscreen-control {
-    .vjs-control-content {
-        width: 20px !important;
+    .vjs-control-text:before {
+        content: '';
+        width: $gs-gutter;
         height: 20px !important;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
+
         @include icon(expand-white);
 
         &:hover {
@@ -374,24 +391,28 @@ $ima-controls-height: 70px;
 /* VJS: VOLUME BAR
    ========================================================================== */
 
-.vjs-volume-control {
+.vjs-volume-menu-button {
     float: right;
-    width: $gs-gutter*5;
-    margin-top: $gs-baseline * 1.5;
-    margin-right: 8px;
+    margin: 16px 8px 0;
     position: relative;
     height: 100%;
 }
 
+.vjs-volume-menu-button > .vjs-menu {
+    float: left;
+    cursor: pointer;
+}
+
 .vjs-volume-bar {
     height: $gs-baseline;
-    width: 100%;
+    width: $gs-gutter*5;
+    position: relative;
     cursor: pointer;
 
     &:before {
         content: '';
-        display: block;
-        width: 100%;
+        left: 0;
+        right: 0;
         background-color: colour(neutral-7);
     }
 }
@@ -399,51 +420,52 @@ $ima-controls-height: 70px;
 .vjs-volume-bar:before,
 .vjs-volume-level {
     height: $gs-baseline/6;
-    top: $gs-baseline/3;
+    top: $gs-baseline/2;
     position: absolute;
 }
 
 .vjs-volume-level {
     background-color: colour(media-default);
-}
 
-.vjs-volume-handle {
-    position: absolute;
-    background-color: colour(media-default);
-    height: 11px;
-    width: 2px;
-}
-
-.vjs-mute-control,
-#ima-mute-div {
-    cursor: pointer;
-    float: right;
-    box-sizing: border-box;
-    width: $gs-gutter;
-    margin-right: $gs-gutter/4;
-    margin-top: $gs-baseline * (4/3);
-    text-align: left;
-}
-
-.vjs-mute-control {
-    > div {
-        @include icon(volume-low-white);
+    &:before {
+        position: absolute;
+        background-color: colour(media-default);
+        height: 11px;
+        width: 2px;
+        top: -$gs-baseline/3;
+        right: 0;
+        content: '';
     }
-    &:hover > div {
-        @include icon(volume-low--tone-media);
+}
+
+.vjs-volume-menu-button {
+
+    > .vjs-control-text {
+        float: left;
+        margin-right: $gs-gutter/3;
+        width: $gs-gutter;
+        height: $gs-baseline*1.5;
+
+        &:before {
+            content:'';
+            min-width: $gs-gutter;
+            @include icon(volume-low-white);
+        }
+        &:before:hover {
+            @include icon(volume-low--tone-media);
+        }
     }
 
-    &.vjs-vol-0 > div {
+    &.vjs-vol-0 > .vjs-control-text:before {
         @include icon(volume-mute-white);
     }
-    &.vjs-vol-0:hover > div {
+    &.vjs-vol-0 > .vjs-control-text:before:hover {
         @include icon(volume-mute--tone-media);
     }
-
-    &.vjs-vol-3 > div {
+    &.vjs-vol-3 > .vjs-control-text:before {
         @include icon(volume-high-white);
     }
-    &.vjs-vol-3:hover > div {
+    &.vjs-vol-3 > .vjs-control-text:before:hover {
         @include icon(volume-high--tone-media);
     }
 }
@@ -463,7 +485,6 @@ $ima-controls-height: 70px;
         }
     }
 }
-
 
 /* VJS: OVERLAYS
    ========================================================================== */
@@ -648,7 +669,6 @@ $ima-controls-height: 70px;
     box-sizing: border-box;
     height: $vjs-control-height;
     padding-right: $gs-gutter/2;
-    margin-right: $gs-gutter/2;
     position: relative;
 
     .vjs-control-content {
@@ -970,13 +990,6 @@ $ima-controls-height: 70px;
     left: 0;
     z-index: 3;
 }
-.ima-ad-container--fullscreen {
-    &,
-    > div:first-child {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
 #ima-controls-div {
     display: none;
     position: absolute;
@@ -1005,9 +1018,10 @@ $ima-controls-height: 70px;
     display: block !important;
 }
 #ima-mute-div {
-    position: absolute;
-    right: 159px;
+    margin: $gs-baseline*1.5 $gs-gutter*5 0 8px;
+    cursor: pointer;
     width: 17px !important;
+    float: right;
 }
 #ima-fullscreen-div {
     cursor: pointer;
