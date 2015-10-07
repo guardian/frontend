@@ -9,7 +9,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
-    'common/modules/commercial/commercial-feature-policies'
+    'common/modules/commercial/commercial-features'
 ], function (
     fastdom,
     Promise,
@@ -21,7 +21,7 @@ define([
     ab,
     createAdSlot,
     dfp,
-    commercialFeaturePolicies
+    commercialFeatures
 ) {
     return function (options) {
         var adType,
@@ -40,7 +40,7 @@ define([
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
         if (!$adSlotContainer.length ||
-            !commercialFeaturePolicies.commentAdverts ||
+            !commercialFeatures.commentAdverts ||
             (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide')
         ) {
             return false;

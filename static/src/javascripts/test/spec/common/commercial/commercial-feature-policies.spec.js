@@ -213,7 +213,7 @@ describe('Commercial features', ()=> {
     });
 
     describe('Pages-without-comments policy', ()=> {
-        it('disables comments if page is not commentable', ()=> {
+        it('disables comment adverts if page is not commentable', ()=> {
             config.page.commentable = false;
             const switches = commercialFeaturePolicies.getPolicySwitches().pagesWithoutComments;
             expect(switches.commentAdverts).toBe(false);
