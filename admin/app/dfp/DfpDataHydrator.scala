@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
-import com.google.api.ads.dfp.axis.v201411._
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 import common.dfp._
 import dfp.DfpApiWrapper.DfpSessionException
@@ -256,7 +256,7 @@ class DfpDataHydrator extends Logging {
           description = template.getDescription,
           parameters = template.getVariables map { param =>
             GuCreativeTemplateParameter(
-              param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
+              param.getClass.getSimpleName.stripSuffix("CreativeTemplateVariable"),
               param.getLabel,
               param.getIsRequired,
               Option(param.getDescription)
@@ -267,13 +267,14 @@ class DfpDataHydrator extends Logging {
             val args =
               creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) {
                 case (soFar, arg) =>
-                  val argValue = arg.getBaseCreativeTemplateVariableValueType match {
-                    case "StringCreativeTemplateVariableValue" => Option(arg
-                      .asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
-                    case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication" +
-                      ".com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
-                    case "UrlCreativeTemplateVariableValue" => Option(arg
-                      .asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
+                  val argValue = arg match {
+                    case s: StringCreativeTemplateVariableValue =>
+                      Option(s.getValue) getOrElse ""
+                    case u: UrlCreativeTemplateVariableValue =>
+                      Option(u.getValue) getOrElse ""
+                    case _: AssetCreativeTemplateVariableValue =>
+                      "https://tpc.googlesyndication" +
+                        ".com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
                     case other => "???"
                   }
                   soFar + (arg.getUniqueName -> argValue)

@@ -1,8 +1,8 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder.SUGGESTED_PAGE_LIMIT
-import com.google.api.ads.dfp.axis.v201411._
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder.SUGGESTED_PAGE_LIMIT
+import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 
 import scala.annotation.tailrec
@@ -39,7 +39,7 @@ object DfpApiWrapper extends Logging {
             case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
             case _ => ""
           }
-          log.error(s"API Exception fetching: type '${err.getApiErrorType}', on the field '${err.getFieldPath}', " +
+          log.error(s"API Exception fetching in the field '${err.getFieldPath}', " +
             s"caused by an invalid value '${err.getTrigger}', with the error message '${err.getErrorString}'" +
             reasonMsg)
         }
