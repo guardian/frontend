@@ -1,6 +1,7 @@
 @(metaData: model.MetaData)(body: Html)(implicit request: RequestHeader)
-@import conf.switches.Switches._
-@import common.LinkTo
+@import common.{AnalyticsHost, LinkTo}
+@import conf.Configuration
+@import views.support.OmnitureAnalyticsData
 
 <!doctype html>
 <html AMP>
@@ -17,6 +18,15 @@
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
     </head>
     <body>
+        @defining(s"${request.host}${request.path}") { path =>
+            @defining(
+                s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(metaData, "No Javascript", path, "GoogleAMP")}"
+            ) { omnitureCall =>
+                <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
+                <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
+            }
+        }
+
         <div class="main-body">
             @* @fragments.header(metaData) *@
             <header class="main-header">

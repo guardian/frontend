@@ -132,6 +132,14 @@ class DfpDataHydrator extends Logging {
     loadLineItems(currentLineItems)
   }
 
+  def loadLineItemsModifiedSince(threshold:JodaDateTime): Seq[GuLineItem] = {
+    val recentlyModified = new StatementBuilder()
+      .where("lastModifiedDateTime > :threshold")
+      .withBindVariableValue("threshold", threshold.getMillis)
+
+    loadLineItems(recentlyModified)
+  }
+
   def loadAllAdFeatures(): Seq[GuLineItem] = {
     val allSponsored = new StatementBuilder()
       .where("lineItemType = :sponsoredType AND status != :draftStatus")
@@ -332,6 +340,7 @@ class DfpDataHydrator extends Logging {
       date.getDay,
       time.getHour,
       time.getMinute,
+      time.getSecond,
       DateTimeZone.forID(time.getTimeZoneID))
   }
 

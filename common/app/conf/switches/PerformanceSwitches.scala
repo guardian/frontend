@@ -14,6 +14,15 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val MoreInlineHead = Switch(
+    "Performance",
+    "minify-more-inline-js",
+    "If this switch is on, featureDetection.js, cloudwatchBeacons.js and shouldEnhance.js will be minified by closure",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 10, 16),
+    exposeClientSide = false
+  )
+
   // Performance
   val LazyLoadContainersSwitch = Switch(
     "Performance",

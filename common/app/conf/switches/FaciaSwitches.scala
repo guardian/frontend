@@ -78,4 +78,13 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
+  val FaciaToolAllowConfigForAll = Switch(
+    "Facia",
+    "facia-tool-allow-config-for-all",
+    "If this is switched on, anyone can access the config tool, regardless of permissions service (Leave off)",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }
