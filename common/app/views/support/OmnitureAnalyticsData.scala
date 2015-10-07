@@ -22,7 +22,7 @@ object OmnitureAnalyticsAccount {
 
 object OmnitureAnalyticsData {
 
-  def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
+  def apply(page: MetaData, jsSupport: String, path: String, platform: String = "frontend")(implicit request: RequestHeader): Html = {
     val data = page.metaData map {
       case (key, JsString(s)) => key -> s
       case (key, jValue: JsValue) => key -> Json.stringify(jValue)
@@ -31,7 +31,6 @@ object OmnitureAnalyticsData {
     val pageCode = data.getOrElse("pageCode", "")
     val contentType = data.getOrElse("contentType", "")
     val section = data.getOrElse("section", "")
-    val platform = "frontend"
     val publication = data.getOrElse("publication", "")
     val omnitureEvent = data.getOrElse("omnitureEvent", "")
     val registrationType = data.getOrElse("registrationType", "")
@@ -63,7 +62,6 @@ object OmnitureAnalyticsData {
       ("c25", data.getOrElse("blogs", "")),
       ("c14", data("buildNumber")),
       ("c19", platform),
-      ("v19", platform),
       ("c67", "nextgenServed"),
       ("c30", if (isContent) "content" else "non-content"),
       ("c56", jsSupport),

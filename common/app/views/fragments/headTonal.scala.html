@@ -33,7 +33,7 @@
                 }
 
                 @if(content.hasTonalHeaderIllustration) {
-                    <span class="content__head__illustration hide-on-mobile"><i class="i i-illustration-letters"></i></span>
+                    <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }
 
                 @content.starRating.map { rating =>

@@ -36,6 +36,9 @@ object JsMinifier {
     options.setWarningLevel(DiagnosticGroups.INVALID_CASTS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_USELESS_CODE, CheckLevel.WARNING)
 
+    /* Disable some check */
+    options.setWarningLevel(DiagnosticGroups.ES3, CheckLevel.OFF)
+
     //Aggressive
     //options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
     //options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)
@@ -46,13 +49,13 @@ object JsMinifier {
     options
   }
 
-  private def compileUnsafe(codeToCompile: String, compilationLevel: CompilationLevel): String = {
+  private def compileUnsafe(codeToCompile: String, fileName: String, compilationLevel: CompilationLevel): String = {
     val compiler = new Compiler()
 
     compilationLevel.setOptionsForCompilationLevel(compilerOptions)
 
     val extern: SourceFile = SourceFile.fromCode("extern.js", "")
-    val input: SourceFile = SourceFile.fromCode("input.js", codeToCompile)
+    val input: SourceFile = SourceFile.fromCode(fileName, codeToCompile)
 
     val result: Result = compiler.compile(extern, input, compilerOptions)
 
@@ -66,42 +69,48 @@ object JsMinifier {
     }
   }
 
-  def unsafeCompileWithAdvancedOptimisation(codeToCompile: String): String =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.ADVANCED_OPTIMIZATIONS))
+  def unsafeCompileWithAdvancedOptimisation(codeToCompile: String, fileName: String): String =
+    Try(compileUnsafe(codeToCompile, fileName, CompilationLevel.ADVANCED_OPTIMIZATIONS))
       .filter(_.nonEmpty)
       .get
 
-  def unsafeCompileWithStandardOptimisation(codeToCompile: String): String =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.SIMPLE_OPTIMIZATIONS))
+  def unsafeCompileWithStandardOptimisation(codeToCompile: String, fileName: String): String =
+    Try(compileUnsafe(codeToCompile, fileName, CompilationLevel.SIMPLE_OPTIMIZATIONS))
       .filter(_.nonEmpty)
       .get
 
-  def unsafeCompileWithWhitespaceOptimisation(codeToCompile: String): String =
-    Try(compileUnsafe(codeToCompile, CompilationLevel.WHITESPACE_ONLY))
+  def unsafeCompileWithWhitespaceOptimisation(codeToCompile: String, fileName: String): String =
+    Try(compileUnsafe(codeToCompile, fileName, CompilationLevel.WHITESPACE_ONLY))
       .filter(_.nonEmpty)
       .get
 
   //Default is to compile with Advanced Optimisations
-  val unsafeCompile: String => String = unsafeCompileWithStandardOptimisation
+  val unsafeCompile: (String, String) => String = unsafeCompileWithStandardOptimisation
 
 }
 
 object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
-  def apply(codeToCompile: String)(implicit application: Application): Html = {
-    if (Play.isDev) {
-      Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile))
-    } else {
-      val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
-
-      lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
-        JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile)
+  def withFileNameHint(codeToCompile: String, fileName: String)(implicit application: Application): Html = {
+    if (codeToCompile.trim.nonEmpty) {
+      if (Play.isDev) {
+        Html(JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName))
       } else {
-        JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile)
-      }
+        val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
 
-      Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+        lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
+          JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
+        } else {
+          JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
+        }
+
+        Html(memoizedMap.getOrElseUpdate(md5, compiledCode))
+      }
+    } else {
+      Html(codeToCompile)
     }
   }
+
+  def apply(codeToCompile: String)(implicit application: Application): Html = withFileNameHint(codeToCompile, "input.js")
 }

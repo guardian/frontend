@@ -12,23 +12,24 @@ define([
     // Usage:
     // scroller.scrollToElement(element, 500, 'easeOutQuad'); // 500ms scroll to element using easeOutQuad easing
     // scroller.scrollTo(1250, 250, 'linear'); // 250ms scroll to 1250px using linear gradient
-
-    function scrollTo(offset, duration, easeFn) {
-        var $body = bonzo(document.body),
+    // scroller.scrollTo(100, 250, 'linear', document.querySelector('.container')); // 250ms scroll to 100px of scrollable container
+    //   if you pass in an element, you must also specify an easing function.
+    function scrollTo(offset, duration, easeFn, container) {
+        var $container = bonzo(container || document.body),
             scrollEnd = offset,
-            scrollFrom = $body.scrollTop(),
+            scrollFrom = $container.scrollTop(),
             scrollDist = scrollEnd - scrollFrom,
             ease = easing.create(easeFn || 'easeOutQuad', duration),
             scrollFn = function () {
                 fastdom.write(function () {
-                    $body.scrollTop(scrollFrom + (ease() * scrollDist));
+                    $container.scrollTop(scrollFrom + (ease() * scrollDist));
                 });
             },
             interval = window.setInterval(scrollFn, 15);
         window.setTimeout(function () {
             window.clearInterval(interval);
             fastdom.write(function () {
-                $body.scrollTop(scrollEnd);
+                $container.scrollTop(scrollEnd);
             });
         }, duration);
 
