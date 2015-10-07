@@ -778,6 +778,19 @@
     }
 }
 
+.button--small .inline-twitter-bird svg {
+    height: 12px;
+    width: 14px;
+}
+
+.button--small .inline-twitter-bird.i-left {
+    margin: 2px 3px 0 0;
+
+    @include mq(leftCol) {
+        margin-top: 1px;
+    }
+}
+
 @include mq(leftCol) {
     .meta__email {
         .content__meta-container--email.content__meta-container--twitter & {
