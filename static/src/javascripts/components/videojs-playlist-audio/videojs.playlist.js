@@ -1,4 +1,23 @@
-(function() {
+"use strict";
+(function(factory) {
+    /*!
+     * Custom Universal Module Definition (UMD)
+     *
+     * Video.js will never be a non-browser lib so we can simplify UMD a bunch and
+     * still support requirejs and browserify. This also needs to be closure
+     * compiler compatible, so string keys are used.
+     */
+    if (typeof define === 'function' && define['amd']) {
+        define(['./video'], function (vjs) {
+            factory(vjs)
+        });
+// checking that module is an object too because of umdjs/umd#35
+    } else if (typeof exports === 'object' && typeof module === 'object') {
+        factory(require('video.js'));
+    } else {
+        factory(videojs);
+    }
+})(function(videojs) {
 
  videojs.plugin('playlist', function(options) {
   //this.L="vjs_common_one";
@@ -71,6 +90,7 @@
               player.src([
                   { type: "audio/mp4", src:  src+".m4a" },
                   { type: "audio/webm", src: src+".webm" },
+                  { type: type="video/youtube", src:  src},
                   { type: "audio/ogg", src: src+".ogg" }
                   /*{ type: "audio/mpeg", src:  src+".mp3" },
                   { type: "audio/ogg", src: src+".oga" }*/
@@ -80,6 +100,7 @@
             //console.log("video");
               player.src([                
                 { type: "video/mp4", src:  src+".mp4" },
+                { type: type="video/youtube", src:  src},
                 { type: "video/webm", src: src+".webm" }
                 //{ type: "video/ogv", src: src+".ogv" }
               ]);
@@ -92,7 +113,7 @@
 
         //remove 'currentTrack' CSS class
         for(var i=0; i<trackCount; i++){
-            if(tracks[i].classList.contains('currentTrack')){
+            if (tracks[i].className.indexOf('currentTrack') !== -1) {
                 tracks[i].className=tracks[i].className.replace(/\bcurrentTrack\b/,'nonPlayingTrack');
             }
         }
@@ -111,6 +132,11 @@
       //console.log('options.setTrack index'+index);
       trackSelect(tracks[index]);
       play=true;
+    }
+    if (window.location.hash) {
+      var hash = window.location.hash.substring(9);
+      play = false;
+      trackSelect(tracks[hash]);
     }
 
     var data={
@@ -138,4 +164,4 @@
     return data;
 });
 //return videojsplugin;
-})();
+});
