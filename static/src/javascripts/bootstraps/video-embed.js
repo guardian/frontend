@@ -3,7 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'videojs',
+    'video',
     'videojsembed',
     'common/utils/_',
     'common/utils/$',
