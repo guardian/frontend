@@ -106,7 +106,11 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition )).map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition ))
+          .map(_.content.map(Content(_)))
+          .fallbackTo{
+            log.error(s"Error requesting $url")
+            Future.successful(None)}
       }
 
       Future.sequence(mostRead).map { contentSeq =>
