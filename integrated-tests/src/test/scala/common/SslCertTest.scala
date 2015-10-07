@@ -17,7 +17,7 @@ import sun.security.x509.X509CertImpl
   SSLContext.setDefault(ctx)
 
   // TODO Delete me after this date
-  val tooLate = LocalDate.now.isAfter(new LocalDate(2015, 10, 5))
+  val tooLate = LocalDate.now.isAfter(new LocalDate(2015, 10, 12))
 
   // NOTE - do not include self signed certificates. they do not cut the mustard
   // Also do not include hosts that are unreachable (e.g. inside the firewall)
