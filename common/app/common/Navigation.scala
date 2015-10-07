@@ -242,9 +242,6 @@ trait Navigation {
     SectionLink("football", "fixtures", "Fixtures", "/football/fixtures"),
     SectionLink("football", "clubs", "Clubs", "/football/teams")
   )
-
-  //Guardian labs
-  val guardianLabs = SectionLink("guardian-professional", "guardian labs", "Guardian Labs", "/guardian-labs")
 }
 
 case class BreadcrumbItem(href: String, title: String)
