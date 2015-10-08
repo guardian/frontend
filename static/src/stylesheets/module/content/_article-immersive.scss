@@ -32,14 +32,13 @@
     }
 
     .content__logo {
-        fill: white;
         float: right;
         width: 160px;
         height: auto;
         margin-top: $gs-baseline / 2;
 
-        @include mq(tablet) {
-            fill: #333;
+        svg path {
+            fill: white;
         }
     }
 

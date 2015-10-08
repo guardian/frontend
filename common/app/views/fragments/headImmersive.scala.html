@@ -6,8 +6,8 @@
 <header class="content__head content__head--desktop tonal__head tonal__head--@articleToneClass(content)
     @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="gs-container">
-        Logo
+    <div class="gs-container content__logo-container">
+        @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
     </div>
 
     <div class="content__header">
@@ -22,7 +22,7 @@
         <div class="content__wrapper">
             <div class="gs-container">
                 @if(content.standfirst.isDefined) {
-                    <div class="content__standfirst">@fragments.standfirst(content)</div>
+                    @fragments.standfirst(content)
                 }
             </div>
         </div>
