@@ -40,11 +40,6 @@ System.config({
         'bootstraps/trail': '@Static("javascripts/bootstraps/trail.js")',
         'bootstraps/gallery': '@Static("javascripts/bootstraps/gallery.js")',
         'bootstraps/profile': '@Static("javascripts/bootstraps/profile.js")'
-    },
-    meta: {
-        '*': {
-            scriptLoad: true
-        }
     }
 });
 
