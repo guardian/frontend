@@ -255,7 +255,6 @@ $header-image-size-desktop: 100px;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
-        text-align: left;
     }
 
     @include mq(leftCol) {
