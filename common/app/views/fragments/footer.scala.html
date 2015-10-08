@@ -4,7 +4,7 @@
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
-@import common.editions.{Au, Uk, Us}
+@import common.editions.{Au, Uk, Us, International}
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     <div class="l-footer__primary">
@@ -40,7 +40,21 @@
     <div class="l-footer__secondary gs-container" role="contentinfo">
         <ul class="colophon u-cf">
         @defining(Edition(request)) { currentEdition =>
+            @if(currentEdition == International) {
+                <li class="colophon__item"><a data-link-name="int : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
+                    daily email sign up</a></li>
+                <li class="colophon__item"><a data-link-name="int : footer : facebook" href="https://www.facebook.com/theguardian">
+                    Facebook</a></li>
+                <li class="colophon__item"><a data-link-name="int : footer : twitter" href="https://twitter.com/guardian">
+                    Twitter</a></li>
+            }
             @if(currentEdition == Uk) {
+                <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{world/2013/oct/04/1}">
+                    daily email sign up</a></li>
+                <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
+                    Facebook</a></li>
+                <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
+                    Twitter</a></li>
                 <li class="colophon__item"><a data-link-name="uk : footer : membership" href="https://membership.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_MEMBERSHIP">
                     membership</a></li>
                 <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_JOBS">
@@ -56,6 +70,12 @@
             }
 
             @if(currentEdition == Us) {
+                <li class="colophon__item"><a data-link-name="us : footer : email sign-up" href="http://www.theguardian.com/world/2013/oct/04/1">
+                    daily email sign up</a></li>
+                <li class="colophon__item"><a data-link-name="us : footer : facebook" href="https://www.facebook.com/GuardianUs">
+                    Facebook</a></li>
+                <li class="colophon__item"><a data-link-name="us : footer : twitter" href="https://twitter.com/GuardianUs">
+                    Twitter</a></li>
                 <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
                     jobs</a></li>
                 <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo{/guardian-labs}">
@@ -65,6 +85,12 @@
             }
 
             @if(currentEdition == Au) {
+                <li class="colophon__item"><a data-link-name="au : footer : email sign-up" href="@LinkTo{/info/2015/jan/30/guardian-australia-emails-delivered-to-your-inbox-subscribe-now}">
+                    email sign-up</a></li>
+                <li class="colophon__item"><a data-link-name="au : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
+                    Facebook</a></li>
+                <li class="colophon__item"><a data-link-name="au : footer : twitter" href="https://twitter.com/GuardianAus">
+                    Twitter</a></li>
                 <li class="colophon__item"><a data-link-name="au : footer : advertising" href="@LinkTo{/advertising/guardian-australia-advertising}">
                     advertising</a></li>
                 <li class="colophon__item"><a data-link-name="au : footer : masterclasses" href="@LinkTo{/guardian-masterclasses/guardian-masterclasses-australia}">
@@ -107,8 +133,6 @@
                     information</a></li>
                 <li class="colophon__item"><a data-link-name="au : footer : contact us" href="@LinkTo{/info/2013/may/26/contact-guardian-australia}">
                     contact us</a></li>
-                <li class="colophon__item"><a data-link-name="au : footer : email sign-up" href="@LinkTo{/info/2015/jan/30/guardian-australia-emails-delivered-to-your-inbox-subscribe-now}">
-                    email sign-up</a></li>
             }
             @if(currentEdition != Au) {
                 <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo{/info/complaints-and-corrections}">
