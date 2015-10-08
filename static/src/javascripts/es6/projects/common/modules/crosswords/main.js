@@ -181,7 +181,7 @@ class Crossword extends React.Component {
                 this.focusNextClue();
             }
         } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
-            if (event.keyCode === keycodes.backspace) {
+            if (event.keyCode === keycodes.backspace || event.keyCode === keycodes.delete) {
                 event.preventDefault();
                 if (this.cellIsEmpty(cell.x, cell.y)) {
                     this.focusPrevious();
