@@ -761,6 +761,15 @@
         }
     }
 
+    .button--small .i-left {
+        margin: 2px 4px 0 0;
+    }
+
+    .button--small svg {
+        width: 14px;
+        height: 14px;
+    }
+
     .contact {
         height: 21px;
         display: inline-block;
@@ -775,19 +784,6 @@
         margin-top: $gs-baseline/1.2;
         margin-bottom: $gs-baseline * 3/2;
         display: block;
-    }
-}
-
-.button--small .inline-twitter-bird svg {
-    height: 12px;
-    width: 14px;
-}
-
-.button--small .inline-twitter-bird.i-left {
-    margin: 2px 3px 0 0;
-
-    @include mq(leftCol) {
-        margin-top: 1px;
     }
 }
 
