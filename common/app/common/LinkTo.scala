@@ -25,6 +25,7 @@ trait LinkTo extends Logging {
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   val httpsEnabledSections: Seq[String] = Seq("info")
+  val httpsEnabledSuffix: String = "/amp"
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -64,7 +65,8 @@ trait LinkTo extends Logging {
     }
   }
 
-  private def isHttpsEnabled(editionalisedPath: String) = httpsEnabledSections.exists(editionalisedPath.startsWith)
+  private def isHttpsEnabled(editionalisedPath: String) =
+    httpsEnabledSections.exists(editionalisedPath.startsWith) || editionalisedPath.endsWith(httpsEnabledSuffix)
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
@@ -105,9 +107,10 @@ object LinkTo extends LinkTo {
 
 class CanonicalLink {
 
-  import LinkTo.httpsEnabledSections
+  import LinkTo.{httpsEnabledSections, httpsEnabledSuffix}
 
-  private def isHttpsSection(r: RequestHeader) = httpsEnabledSections.exists(section => r.path.startsWith(s"/$section"))
+  private def isHttpsSection(r: RequestHeader) =
+    httpsEnabledSections.exists(section => r.path.startsWith(s"/$section")) || r.path.endsWith(httpsEnabledSuffix)
 
   lazy val secureApp: Boolean = environment.secure
 
@@ -124,14 +127,7 @@ class CanonicalLink {
         .sorted.mkString("&")
       if (q.isEmpty) "" else s"?$q"
     }
-    // TODO remove this code when capi's updated to give the correct https status in its webUrls
-    val correctProtocolWebUrl = if (isHttpsSection(request)) {
-      if (!webUrl.startsWith("https")) {
-        val (first, last) = webUrl.splitAt(4);
-        first + "s" + last
-      } else webUrl
-    } else webUrl
-    s"$correctProtocolWebUrl$queryString"
+    s"$webUrl$queryString"
   }
 }
 

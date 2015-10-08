@@ -65,6 +65,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TheGuardianLinkTo("/info/hello", edition) should be ("//www.theguardian.com/info/hello")
     TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("//www.theguardian.com/info")
     TheGuardianLinkTo("/info/foo", edition) should be ("//www.theguardian.com/info/foo")
+    TheGuardianLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp", edition) should be ("//www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
   }
 
   it should "correctly editionalise the International front" in {
@@ -127,6 +128,14 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   }
 
   it should "link to https for https sections" in {
-    TestCanonicalLink(TestRequest("/info/foo").withHost("www.theguardian.com"), "http://www.theguardian.com/info/foo") should be ("https://www.theguardian.com/info/foo")
+    {
+      val result = TestCanonicalLink(TestRequest("/info/foo").withHost("www.theguardian.com"), "http://www.theguardian.com/info/foo")
+      result should be("https://www.theguardian.com/info/foo")
+    }
+    {
+      val result = TestCanonicalLink(TestRequest("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp").withHost("www.theguardian.com"), "http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
+      result should be("https://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
+    }
   }
+
 }
