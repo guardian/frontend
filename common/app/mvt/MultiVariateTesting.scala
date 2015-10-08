@@ -41,7 +41,7 @@ object JspmAMDTest extends TestDefinition(
 
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, JspmAMDTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
