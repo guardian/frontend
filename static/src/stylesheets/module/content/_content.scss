@@ -751,7 +751,7 @@
             margin-right: 0;
             background-color: transparent !important;
 
-            svg {
+            .inline-mail svg {
                 margin-top: $gs-baseline/4;
             }
         }
@@ -759,15 +759,6 @@
         @include mq(leftCol, wide) {
             max-width: $left-column;
         }
-    }
-
-    .button--small .i-left {
-        margin: 2px 4px 0 0;
-    }
-
-    .button--small svg {
-        width: 14px;
-        height: 14px;
     }
 
     .contact {
