@@ -2,6 +2,7 @@
 @import common.{AnalyticsHost, LinkTo}
 @import conf.Configuration
 @import views.support.OmnitureAnalyticsData
+@import org.joda.time.DateTime
 
 <!doctype html>
 <html AMP>
@@ -43,6 +44,12 @@
             <cat-ad width=100% height=300>
                     <!-- <script>document.write(…)</script> -->
             </cat-ad>*@
+
+            <footer>
+                <div class="really-serious-copyright">
+                    © @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.
+                </div>
+            </footer>
         </div>
     </body>
 </html>
