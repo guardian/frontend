@@ -713,8 +713,8 @@
     transform: translate3d(0, 0, 0);
 }
 
-.meta__date-warn .meta__date-warn--message .meta__date-warn--clock {
-    fill: #000000;
+.meta__date-warn .meta__date-warn--message .meta__date-warn--clock svg {
+    stroke: colour(neutral-1);
 }
 
 .meta__twitter,
