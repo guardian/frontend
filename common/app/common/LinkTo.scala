@@ -2,8 +2,7 @@ package common
 
 import common.editions.{Au, Us, Uk}
 import conf.Configuration
-import conf.Configuration.environment
-import dev.HttpSwitch
+import implicits.Requests
 import layout.ContentCard
 import model.Trail
 import org.jsoup.Jsoup
@@ -19,54 +18,53 @@ trait LinkTo extends Logging {
 
   lazy val host = Configuration.site.host
 
-  private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
-  private val AbsolutePath = "^/(.+)".r
-  private val RssPath = "^/(.+)(/rss)".r
+  private val ProdURL = "^http://www.theguardian.com/.*$".r
+  private val GuardianUrl = "^(http://www.theguardian.com)?(/.*)?$".r
+  private val RssPath = "^(/.+)?(/rss)".r
+  private val AmpPath = s"^(/.+)(${Requests.AMP_SUFFIX})$$".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   val httpsEnabledSections: Seq[String] = Seq("info")
-  val httpsEnabledSuffix: String = "/amp"
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition).url
-    handleQueryStrings(processedUrl)
-  }
-
-  def handleQueryStrings(url: String)(implicit request: RequestHeader) =
-    HttpSwitch.queryString(url).trim
-
-  case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
-
-  def processUrl(url: String, edition: Edition) = url match {
-    case "http://www.theguardian.com" => ProcessedUrl(urlFor("", edition))
-    case "/" => ProcessedUrl(urlFor("", edition))
-    case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
-    case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
-    case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
-    case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + "/rss")
-    case AbsolutePath(path) => ProcessedUrl(urlFor(path, edition))
-    case otherUrl => ProcessedUrl(otherUrl, true)
-  }
+  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String =
+    processUrl(url.trim, edition).url
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.url))
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.header.url.get(request)
 
-  private def urlFor(path: String, edition: Edition): String = {
-    val editionalisedPath = Editionalise(clean(path), edition)
+  case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
+
+  def processUrl(url: String, edition: Edition) = url match {
+    case url if url.startsWith("//") =>
+      ProcessedUrl(url)
+    case RssPath(path, format) =>
+      ProcessedUrl(urlFor(path, edition) + format)
+    case AmpPath(path, format) =>
+      ProcessedUrl(urlFor(path, edition, secure = true) + format)
+    case GuardianUrl(_, path) =>
+      ProcessedUrl(urlFor(path, edition))
+    case otherUrl =>
+      ProcessedUrl(otherUrl, true)
+  }
+
+  private def urlFor(path: String, edition: Edition, secure: Boolean = false): String = {
+    val pathString = Option(path).getOrElse("")
+    val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
+    val editionalisedPath = Editionalise(clean(id), edition)
     val url = s"$host/$editionalisedPath"
     url match {
-      case AbsoluteGuardianUrl(_) if isHttpsEnabled(editionalisedPath) =>  url.replace("http://", "//")
+      case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
       case _ => url
     }
   }
 
   private def isHttpsEnabled(editionalisedPath: String) =
-    httpsEnabledSections.exists(editionalisedPath.startsWith) || editionalisedPath.endsWith(httpsEnabledSuffix)
+    httpsEnabledSections.exists(editionalisedPath.startsWith)
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
@@ -105,16 +103,10 @@ object LinkTo extends LinkTo {
 
 }
 
+/**
+ * represents the link rel=canonical for any page on the site
+ */
 class CanonicalLink {
-
-  import LinkTo.{httpsEnabledSections, httpsEnabledSuffix}
-
-  private def isHttpsSection(r: RequestHeader) =
-    httpsEnabledSections.exists(section => r.path.startsWith(s"/$section")) || r.path.endsWith(httpsEnabledSuffix)
-
-  lazy val secureApp: Boolean = environment.secure
-
-  def scheme(r: RequestHeader) = if (secureApp || isHttpsSection(r)) "https" else "http"
 
   val significantParams: Seq[String] = Seq(
     "index",

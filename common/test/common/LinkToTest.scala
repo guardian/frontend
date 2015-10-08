@@ -61,11 +61,14 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
-  it should "be protocol relative on https enabled sections" in {
-    TheGuardianLinkTo("/info/hello", edition) should be ("//www.theguardian.com/info/hello")
-    TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("//www.theguardian.com/info")
-    TheGuardianLinkTo("/info/foo", edition) should be ("//www.theguardian.com/info/foo")
-    TheGuardianLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp", edition) should be ("//www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
+  it should "be https on https enabled sections" in {
+    TheGuardianLinkTo("/info/hello", edition) should be ("https://www.theguardian.com/info/hello")
+    TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("https://www.theguardian.com/info")
+    TheGuardianLinkTo("/info/foo", edition) should be ("https://www.theguardian.com/info/foo")
+  }
+
+  it should "be https to amp" in {
+    TheGuardianLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp", edition) should be ("https://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
   }
 
   it should "correctly editionalise the International front" in {
@@ -80,9 +83,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
 
 
-  object TestCanonicalLink extends CanonicalLink {
-    override lazy val secureApp: Boolean = false
-  }
+  object TestCanonicalLink extends CanonicalLink
 
   "CanonicalLink" should "be the gatekeeper for significant parameters" in {
     /*
@@ -127,15 +128,9 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestCanonicalLink(TestRequest("/foo?page=http://www.theguardian.com").withHost("www.somewhere.com"), "http://www.somewhere.com/foo") should be ("http://www.somewhere.com/foo?page=http%3A%2F%2Fwww.theguardian.com")
   }
 
-  it should "link to https for https sections" in {
-    {
-      val result = TestCanonicalLink(TestRequest("/info/foo").withHost("www.theguardian.com"), "http://www.theguardian.com/info/foo")
-      result should be("https://www.theguardian.com/info/foo")
-    }
-    {
-      val result = TestCanonicalLink(TestRequest("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp").withHost("www.theguardian.com"), "http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
-      result should be("https://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp")
-    }
+  it should "link to http explicitly for amp articles" in {
+    val result = TestCanonicalLink(TestRequest("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp").withHost("www.theguardian.com"), "http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
+    result should be("http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
   }
 
 }
