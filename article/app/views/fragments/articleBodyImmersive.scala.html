@@ -27,21 +27,9 @@
 
             @fragments.headImmersive(article)
 
-            @if(article.isFeature && article.hasShowcaseMainElement) {
-                @fragments.mainMedia(article, amp)
-            }
-
             <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
-
-                        <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
-
-                        @if(!(article.isFeature && article.hasShowcaseMainElement)) {
-                            @fragments.mainMedia(article, amp)
-                        }
-
-                        @fragments.witnessCallToAction(article)
 
                         @fragments.contentMeta(article)
 

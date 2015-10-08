@@ -43,18 +43,20 @@ http://developers.theguardian.com/join-the-team.html
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(showAdverts) {
-            @fragments.commercial.topBanner(metaData, edition)
-        }
-
-        @fragments.header(metaData)
-
-        @if(adBelowNav) {
-            @fragments.commercial.topBannerBelowNav()
-        }
-
-        @if(showAdverts) {
-            @fragments.commercial.topBannerMobile(metaData, edition)
+        @if(!(metaData.isImmersive && metaData.isArticle)) {
+            @if(showAdverts) {
+                @fragments.commercial.topBanner(metaData, edition)
+            }
+    
+            @fragments.header(metaData)
+    
+            @if(adBelowNav) {
+                @fragments.commercial.topBannerBelowNav()
+            }
+    
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile(metaData, edition)
+            }
         }
 
         <div id="maincontent" class="js-maincontent" tabindex="0"></div>
