@@ -292,7 +292,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if (config.switches.viewability && (!config.page.hasPageSkin || (config.page.hasPageSkin && detect.getBreakpoint() !== 'wide'))) {
+            if (config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide')) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
