@@ -186,7 +186,7 @@ class Crossword extends React.Component {
                 if (this.cellIsEmpty(cell.x, cell.y)) {
                     this.focusPrevious();
                 } else {
-                    this.setCellValue(cell.x, cell.y, null);
+                    this.setCellValue(cell.x, cell.y, '');
                     this.save();
                 }
             } else if (event.keyCode === keycodes.left) {
