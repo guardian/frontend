@@ -15,7 +15,7 @@ class GuLineItemTest extends FlatSpec with Matchers {
       sponsor = None,
       status = "status",
       costType = "CPM",
-      creativeSizes = Nil,
+      creativePlaceholders = Nil,
       targeting,
       lastModified = DateTime.now())
   }

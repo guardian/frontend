@@ -258,16 +258,16 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v3.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
-    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v4.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpCreativeTemplatesKey = s"$dfpRoot/creative-templates.json"
-    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers.json"
-    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers.json"
-    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers.json"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
+    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers-v1.json"
+    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 

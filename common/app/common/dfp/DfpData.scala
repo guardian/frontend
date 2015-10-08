@@ -202,7 +202,7 @@ case class GuLineItem(id: Long,
                       sponsor: Option[String],
                       status: String,
                       costType: String,
-                      creativeSizes: Seq[AdSize],
+                      creativePlaceholders: Seq[GuCreativePlaceholder],
                       targeting: GuTargeting,
                       lastModified: DateTime) {
 
@@ -240,6 +240,8 @@ case class GuLineItem(id: Long,
         path(2) == "front"
     }
   }
+
+  lazy val creativeSizes = creativePlaceholders map (_.size)
 }
 
 object GuLineItem {
@@ -257,7 +259,7 @@ object GuLineItem {
         "sponsor" -> lineItem.sponsor,
         "status" -> lineItem.status,
         "costType" -> lineItem.costType,
-        "sizes" -> lineItem.creativeSizes,
+        "creativePlaceholders" -> lineItem.creativePlaceholders,
         "targeting" -> lineItem.targeting,
         "lastModified" -> timeFormatter.print(lineItem.lastModified)
       )
@@ -273,10 +275,30 @@ object GuLineItem {
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
       (JsPath \ "costType").read[String] and
-      (JsPath \ "sizes").read[Seq[AdSize]] and
+      (JsPath \ "creativePlaceholders").read[Seq[GuCreativePlaceholder]] and
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
+}
+
+
+case class GuCreativePlaceholder(size: AdSize, targeting: Option[GuTargeting])
+
+object GuCreativePlaceholder {
+
+  implicit val writes: Writes[GuCreativePlaceholder] = new Writes[GuCreativePlaceholder] {
+    def writes(placeholder: GuCreativePlaceholder): JsValue = {
+      Json.obj(
+        "size" -> placeholder.size,
+        "targeting" -> placeholder.targeting
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreativePlaceholder] = (
+    (JsPath \ "size").read[AdSize] and
+      (JsPath \ "targeting").readNullable[GuTargeting]
+    )(GuCreativePlaceholder.apply _)
 }
 
 
