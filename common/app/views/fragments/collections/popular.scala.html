@@ -4,6 +4,7 @@
 @import views.support._
 @import views.html.fragments.items.elements.facia_cards.title
 @import layout.FaciaCardHeader
+@import implicits.FaciaContentImplicits._
 @import TrailCssClasses.articleToneClass
 
 @defining(popular.size > 1){ isTabbed =>
@@ -36,6 +37,7 @@
                             <div class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <span class="headline-list__count">@info.rowNum</span>
                                 @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
+                                @fragments.contentAgeNotice(ContentOldAgeDescriber(trail.maybeContent))
                             </div>
                         </li>
                     }

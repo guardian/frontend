@@ -1,36 +1,9 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(ageMessage: String)(implicit request: RequestHeader)
 
-@import org.joda.time.DateTime
-@import java.util.concurrent.TimeUnit
-
-@defining({
-    val warnLimitDays = 7   // config this!
-    if(content.webPublicationDate.isBefore(DateTime.now().minusDays(warnLimitDays))) {
-        val ageMillis = DateTime.now().getMillis - content.webPublicationDate.getMillis
-        val years = TimeUnit.MILLISECONDS.toDays(ageMillis) / 365
-        val months = TimeUnit.MILLISECONDS.toDays(ageMillis) / 28
-        val weeks = TimeUnit.MILLISECONDS.toDays(ageMillis) / 7
-        val days = TimeUnit.MILLISECONDS.toDays(ageMillis)
-
-        true match {
-            case yrs if years >= 2 => s"$years years old"
-            case yr if years > 0 => s"$years year old"
-            case mnths if months >= 2 => s"$months months old"
-            case mnth if months > 0 => s"$months month old"
-            case wks if weeks >= 2 => s"$weeks weeks old"
-            case wk if weeks > 0 => s"$weeks week old"
-            case _ => s"$days days old"
-        }
-    } else {
-        ""
-    }
-}){ ageMessage =>
-    @if(ageMessage.nonEmpty) {
-        <div class="meta__date-warn">
-            <div class="meta__date-warn--message">
-                @fragments.inlineSvg("clock", "icon", List("meta__date-warn--clock"))
-                This article is <strong>@ageMessage</strong>
-            </div>
-        </div>
-    }
+@if(ageMessage.nonEmpty) {
+    <div class="old-article-message">
+        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+        This article is <strong>@ageMessage old</strong>
+    </div>
 }
+
