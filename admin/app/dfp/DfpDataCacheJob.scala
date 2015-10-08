@@ -6,12 +6,20 @@ import common.{ExecutionContexts, Logging}
 import conf.switches.Switches
 import conf.switches.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
 import scala.concurrent.Future
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
+
+  case class LineItemLoadSummary(prevCount: Int,
+                                 loadThreshold: Option[DateTime],
+                                 current: Seq[GuLineItem],
+                                 recentlyAddedIds: Iterable[Long],
+                                 recentlyModifiedIds: Iterable[Long],
+                                 recentlyRemovedIds: Iterable[Long])
 
   def run(): Future[Unit] = Future {
     if (DfpCachingSwitch.isSwitchedOn) {
@@ -47,7 +55,107 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   }
 
   private def loadLineItems(): DfpDataExtractor = {
-    DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
+    val hydrator = DfpDataHydrator()
+
+    def fetchCachedLineItems(): Seq[GuLineItem] = {
+      val maybeLineItems = for {
+        json <- Store.getDfpLineItemsReport()
+        lineItemReport <- Json.parse(json).asOpt[LineItemReport]
+      } yield lineItemReport.lineItems
+      maybeLineItems getOrElse Nil
+    }
+
+    val start = System.currentTimeMillis
+
+    def logReport(loadSummary: LineItemLoadSummary): Unit = {
+      def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
+      log.info(s"Cached line item count was ${loadSummary.prevCount}")
+      for (threshold <- loadSummary.loadThreshold) {
+        log.info(s"Last modified time of cached line items: $threshold")
+      }
+      log.info(s"Added: ${report(loadSummary.recentlyAddedIds)}")
+      log.info(s"Modified: ${report(loadSummary.recentlyModifiedIds)}")
+      log.info(s"Removed: ${report(loadSummary.recentlyRemovedIds)}")
+      log.info(s"Cached line item count now ${loadSummary.current.size}")
+    }
+
+    val lineItems = {
+      if (Switches.DfpCacheRecentOnly.isSwitchedOn) {
+        val loadSummary = loadLineItems(
+          fetchCachedLineItems(),
+          hydrator.loadLineItemsModifiedSince,
+          hydrator.loadCurrentLineItems()
+        )
+        logReport(loadSummary)
+        loadSummary.current
+      } else hydrator.loadCurrentLineItems()
+    }
+
+    val loadDuration = System.currentTimeMillis - start
+    log.info(s"Loading line items took $loadDuration ms")
+
+    DfpDataExtractor(lineItems)
+  }
+
+  def loadLineItems(cachedLineItems: => Seq[GuLineItem],
+                    lineItemsModifiedSince: DateTime => Seq[GuLineItem],
+                    allReadyOrDeliveringLineItems: => Seq[GuLineItem]): LineItemLoadSummary = {
+
+    def summarizeNewCache: LineItemLoadSummary = LineItemLoadSummary(
+      prevCount = 0,
+      loadThreshold = None,
+      current = allReadyOrDeliveringLineItems,
+      recentlyAddedIds = allReadyOrDeliveringLineItems.map(_.id),
+      recentlyModifiedIds = Nil,
+      recentlyRemovedIds = Nil
+    )
+
+    def summarizeUpdatedCache: LineItemLoadSummary = {
+      val threshold = cachedLineItems.map(_.lastModified).maxBy(_.getMillis)
+      val recentlyModified = lineItemsModifiedSince(threshold)
+
+      def summarizeUnmodifiedCache: LineItemLoadSummary = LineItemLoadSummary(
+          prevCount = cachedLineItems.size,
+          loadThreshold = Some(threshold),
+          current = cachedLineItems,
+          recentlyAddedIds = Nil,
+          recentlyModifiedIds = Nil,
+          recentlyRemovedIds = Nil
+        )
+
+      def summarizeModifiedCache: LineItemLoadSummary = {
+        def idToLineItem(lineItems: Seq[GuLineItem]) = lineItems.map(item => item.id -> item).toMap
+        val cachedIdToLineItem = idToLineItem(cachedLineItems)
+        val (readyOrDeliveringModified, otherModified) =
+          recentlyModified partition (Seq("READY", "DELIVERING") contains _.status)
+        val readyOrDeliveringIdToLineItem = idToLineItem(readyOrDeliveringModified)
+        val otherModifiedIds = otherModified.map(_.id)
+        val added = readyOrDeliveringIdToLineItem -- cachedIdToLineItem.keys
+        val modified = readyOrDeliveringIdToLineItem filterKeys cachedIdToLineItem.keySet.contains
+        val removed = cachedIdToLineItem filterKeys otherModifiedIds.contains
+        val lineItems = cachedIdToLineItem ++ added ++ modified -- removed.keys
+        LineItemLoadSummary(
+          prevCount = cachedLineItems.size,
+          loadThreshold = Some(threshold),
+          lineItems.values.toSeq.sortBy(_.id),
+          recentlyAddedIds = added.keys,
+          recentlyModifiedIds = modified.keys,
+          recentlyRemovedIds = removed.keys
+        )
+      }
+
+      if (recentlyModified.isEmpty) {
+        summarizeUnmodifiedCache
+      } else {
+        summarizeModifiedCache
+      }
+    }
+
+    if (cachedLineItems.isEmpty) {
+      summarizeNewCache
+    } else {
+      summarizeUpdatedCache
+    }
   }
 
   private def write(data: DfpDataExtractor): Unit = {

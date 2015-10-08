@@ -23,9 +23,6 @@ import tools.MatchListFeatureTools
 
         And("I should not see today's live matches")
         assertNotFixture(matches, "Arsenal", "Spurs")
-
-        And("Team form should be shown with matches")
-        $(".football-team__form").size() should be($(".football-match__team").size())
       }
     }
 

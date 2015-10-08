@@ -35,10 +35,10 @@ define([
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
-        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text="<%=text%>"&url=<%=url%>',
+        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
         twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
-        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body="<%=selection%>" <%=url%>',
+        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     updateSelection = function () {

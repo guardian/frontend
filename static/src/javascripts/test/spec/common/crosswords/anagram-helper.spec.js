@@ -1,7 +1,7 @@
 import _ from 'common/utils/_';
-import Shuffler from 'es6/projects/common/modules/crosswords/anagram-helper/shuffler';
+import AnagramHelper from 'es6/projects/common/modules/crosswords/anagram-helper/main';
 
-const fixtures = [
+const cases = [
     {
         entries: ['', '', '', '', 'l', '', 'e'],
         word: 'liberal',
@@ -39,23 +39,12 @@ const fixtures = [
 
 describe('Anagram Helper', function () {
     it('marks the correct letters as entered', function () {
-        const cases = fixtures.map(fixture => {
-            return {
-                instance: new Shuffler({
-                    entries: fixture.entries.map(letter => {
-                        return { value: letter };
-                    }),
-                    word: fixture.word.split('')
-                }),
-
-                expected: fixture.expected
-            };
-        });
-
         const sort = x => x.value + x.entered.toString();
 
         cases.forEach(testCase => {
-            const result = testCase.instance.getLetters();
+            const helper = new AnagramHelper();
+            const entries = testCase.entries.map(e => { return { value: e }; });
+            const result = helper.shuffleWord(testCase.word, entries);
 
             expect(_.sortBy(result, sort)).toEqual(_.sortBy(testCase.expected, sort));
         });
