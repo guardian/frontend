@@ -13,15 +13,8 @@
     .main-body {
         background: #fff;
         max-width: 600px;
-        margin: 0 auto 1.5em auto;
-        padding-bottom: 1.5rem;
+        margin: 0 auto;
         overflow-x: hidden;
-    }
-
-    @@media (max-width: 600px) {
-    .main-body {
-        margin-bottom: 0;
-        }
     }
 
     a {
@@ -37,7 +30,7 @@
         margin: 0px 0px 12px;
     }
 
-    cite { 
+    cite {
         font-style: normal;
 }
 
@@ -252,6 +245,7 @@
     @fragments.amp.stylesheets.ads()
     @fragments.amp.stylesheets.tables()
     @fragments.amp.stylesheets.social()
+    @fragments.amp.stylesheets.footer()
     @if(metaData.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
         @fragments.amp.stylesheets.fonts()
     }
