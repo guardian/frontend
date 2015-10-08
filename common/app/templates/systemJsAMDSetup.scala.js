@@ -48,6 +48,7 @@ System.config({
     }
 });
 
+System.define('system-script', 'exports.fetch=function(a){console.info("passing ", a, " through system-script");return new Promise(function(b,c){function f(a){e.readyState&&"loaded"!==e.readyState&&"complete"!=e.readyState||(h(),b(""))}function g(a){h(),c(a)}function h(){e.detachEvent?e.detachEvent("onreadystatechange",f):(e.removeEventListener("load",f,!1),e.removeEventListener("error",g,!1)),d.removeChild(e)}var d=document.getElementsByTagName("head")[0],e=document.createElement("script");e.async=!0,e.attachEvent?e.attachEvent("onreadystatechange",f):(e.addEventListener("load",f,!1),e.addEventListener("error",g,!1)),e.src=a.address,d.appendChild(e)})};');
 var reduce = function (array, fn, accumulator) {
     for (var i = 0; i <= array.length - 1; i++) {
         accumulator = fn(accumulator, array[i]);
