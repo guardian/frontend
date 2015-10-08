@@ -1,5 +1,4 @@
 .content--immersive {
-
     &.content {
         border-top: 0;
     }
@@ -16,11 +15,10 @@
         display: none;
     }
 
-// HEADER
-
+    // HEADER
     .content__head {
         position: relative;
-        color: white;
+        color: #ffffff;
     }
 
     .content__wrapper {
@@ -33,25 +31,25 @@
 
     .content__logo {
         float: right;
-        width: 160px;
+        width: gs-span(3) + $gs-gutter;
         height: auto;
         margin-top: $gs-baseline / 2;
 
         svg path {
-            fill: white;
+            fill: #ffffff;
         }
     }
 
     .content__headline,
     .content__standfirst {
-        max-width: 620px;
+        max-width: gs-span(8);
 
         @include mq(leftCol) {
-            margin-left: 160px;
+            margin-left: gs-span(2) + $gs-gutter;
         }
 
         @include mq(wide) {
-            margin-left: 240px;
+            margin-left: gs-span(3) + $gs-gutter;
         }
     }
 
@@ -69,29 +67,29 @@
 
     .content__standfirst {
         position: relative;
-        padding-top: 0.33em;
+        padding-top: .33em;
         padding-bottom: 1em;
         margin-bottom: 0;
-        color: white;
+        color: #ffffff;
 
         @include mq(desktop) {
             &:before {
-                content: "";
+                content: '';
                 position: absolute;
                 top: 0;
                 height: 2px;
-                width: 140px;
-                background-color: rgba(255, 255, 255, 0.2);
+                width: gs-span(2);
+                background-color: rgba(255, 255, 255, .2);
             }
         }
 
         a {
-            color: #f7acbb;
-            border-bottom: 1px solid rgba(#f7acbb, 0.4);
+            color: colour(feature-mute);
+            border-bottom: 1px solid rgba(colour(feature-mute), .4);
 
             &:hover {
                 text-decoration: none;
-                border-bottom-color: rgba(#f7acbb, 0.8);
+                border-bottom-color: rgba(colour(feature-mute), .8);
             }
         }
     }
@@ -100,7 +98,7 @@
         .content__head--mobile {
             position: relative;
             height: 100vh;
-            max-height: 800px; // Temp fix for old iOS devices that don't support 100vh
+            max-height: 800px;
             background-image: url('https://i.guim.co.uk/img/media/50ec0d0052fb79b576f607fd46fe4a748728366f/0_0_1400_840/master/1400.jpg?w=1920&q=85&auto=format&sharp=10&s=330c4580dd085312c02c0dc905b5b202');
             background-position: center center;
             background-size: cover;
