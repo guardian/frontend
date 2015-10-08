@@ -371,5 +371,6 @@ class DfpDataHydrator extends Logging {
       DateTimeZone.forID(time.getTimeZoneID))
   }
 
+  //noinspection IfElseToOption
   private def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }
