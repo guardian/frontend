@@ -56,7 +56,7 @@ export default class Clues extends React.Component {
         const height = this.$cluesNode.scrollHeight - this.$cluesNode.clientHeight;
 
         bean.on(this.$cluesNode, 'scroll', e => {
-            const showGradient = height - e.currentTarget.scrollTop > 20;
+            const showGradient = height - e.currentTarget.scrollTop > 25;
 
             if (this.state.showGradient !== showGradient) {
                 this.setState({ showGradient: showGradient });
@@ -68,9 +68,7 @@ export default class Clues extends React.Component {
      * Scroll clues into view when they're activated (i.e. clicked in the grid)
      */
     componentDidUpdate (prev) {
-        const tablet = detect.getBreakpoint() === 'tablet';
-
-        if (tablet && (!prev.focussed || prev.focussed.id !== this.props.focussed.id)) {
+        if (detect.isBreakpoint({ min: 'tablet', max: 'leftCol' }) && (!prev.focussed || prev.focussed.id !== this.props.focussed.id)) {
             fastdom.read(() => this.scrollIntoView(this.props.focussed));
         }
     }
