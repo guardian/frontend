@@ -32,11 +32,11 @@ object MetaDataMatcher extends Matchers  {
     status(result) should be(200)
 
     val script = body.getElementsByAttributeValue("data-schema", "WebPage")
-    script.size() should be(1)
+    script.size() should be(0)
 
-    val appIndexer: JsValue = Json.parse(script.first().html())
-
-    (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
+//    val appIndexer: JsValue = Json.parse(script.first().html())
+//
+//    (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
 
   }
 

@@ -15,7 +15,7 @@ import play.api.test.Helpers._
     MetaDataMatcher.ensureOrganisation(result)
   }
 
-  it should "Include webpage metadata" in {
+  it should "not Include webpage metadata" in {
     val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureWebPage(result, articleUrl)
   }
