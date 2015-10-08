@@ -9,6 +9,7 @@ import play.api.test.Helpers._
 @DoNotDiscover class IndexMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val articleUrl = "money/pensions"
+  var crosswordsUrl = "crosswords"
 
   it should "Include organisation metadata" in {
     val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
@@ -18,6 +19,11 @@ import play.api.test.Helpers._
   it should "Include webpage metadata" in {
     val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureWebPage(result, articleUrl)
+  }
+
+  it should "not include webpage metadata on the crossword index" in {
+    val result = controllers.IndexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
+    MetaDataMatcher.ensureNoIosUrl(result)
   }
 
   it should "Include item list metadata" in {
@@ -33,5 +39,4 @@ import play.api.test.Helpers._
     (itemList \ "itemListElement").as[JsArray].value.size should be(20)
 
   }
-
 }
