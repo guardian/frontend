@@ -31,12 +31,17 @@
 
     .content__logo {
         float: right;
-        width: gs-span(3) + $gs-gutter;
+        width: gs-span(2) + $gs-gutter;
         height: auto;
         margin-top: $gs-baseline / 2;
 
-        svg path {
-            fill: #ffffff;
+        svg {
+            width: 100%;
+            height: auto;
+
+            path {
+                fill: #ffffff;
+            }
         }
     }
 
