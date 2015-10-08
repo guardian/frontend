@@ -3,16 +3,14 @@
         border-top: 0;
     }
 
-    .content__main {
-        padding: 0;
+    .content__meta-container {
+        @include mq(leftCol) {
+            position: absolute !important;
+        }
     }
 
     .content__article-body {
         clear: both;
-    }
-    
-    .js-components-container {
-        display: none;
     }
 
     // HEADER
@@ -104,9 +102,12 @@
             position: relative;
             height: 100vh;
             max-height: 800px;
-            background-image: url('https://i.guim.co.uk/img/media/50ec0d0052fb79b576f607fd46fe4a748728366f/0_0_1400_840/master/1400.jpg?w=1920&q=85&auto=format&sharp=10&s=330c4580dd085312c02c0dc905b5b202');
             background-position: center center;
             background-size: cover;
+        }
+
+        .content__head--desktop {
+            background-image: none !important;
         }
 
         .content__wrapper--headline {
@@ -121,9 +122,12 @@
         .content__head--desktop {
             position: relative;
             height: 100vh;
-            background-image: url('https://i.guim.co.uk/img/media/50ec0d0052fb79b576f607fd46fe4a748728366f/0_0_1400_840/master/1400.jpg?w=1920&q=85&auto=format&sharp=10&s=330c4580dd085312c02c0dc905b5b202');
             background-position: center center;
             background-size: cover;
+        }
+
+        .content__head--mobile {
+            background-image: none !important;
         }
 
         .content__header {

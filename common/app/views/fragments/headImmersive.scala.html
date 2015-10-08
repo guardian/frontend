@@ -2,16 +2,20 @@
 
 @import views.support.TrailCssClasses.articleToneClass
 @import views.support.ContributorLinks
+@import views.support.ImgSrc
+
 
 <header class="content__head content__head--desktop tonal__head tonal__head--@articleToneClass(content)
-    @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
+    @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}"
+        style="background-image: url('@content.mainPicture.map { picture => @ImgSrc.findNearestSrc(picture, Profile(width = Some(1300)))}');">
 
     <div class="gs-container content__logo-container">
         @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
     </div>
 
     <div class="content__header">
-        <div class="content__head--mobile">
+        <div class="content__head--mobile"
+            style="background-image: url('@content.mainPicture.map { picture => @ImgSrc.findNearestSrc(picture, Profile(width = Some(1300)))}');">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
                     <h1 class="content__headline">@Html(content.headline)</h1>
