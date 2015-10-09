@@ -25,15 +25,14 @@ class ContentOldAgeDescriber {
       val weeks = TimeUnit.MILLISECONDS.toDays(ageMillis) / 7
       val days = TimeUnit.MILLISECONDS.toDays(ageMillis)
 
-      true match {
-        case yrs if years >= 2 => s"$years years"
-        case yr if years > 0 => s"$years year"
-        case mnths if months >= 2 => s"$months months"
-        case mnth if months > 0 => s"$months month"
-        case wks if weeks >= 2 => s"$weeks weeks"
-        case wk if weeks > 0 => s"$weeks week"
-        case _ => s"$days days"
-      }
+      if(years >= 2) s"$years years"
+      else if(years > 0) s"$years year"
+      else if(months >= 2) s"$months months"
+      else if(months > 0) s"$months month"
+      else if(weeks >= 2) s"$weeks weeks"
+      else if(weeks > 0) s"$weeks week"
+      else s"$days days"
+
     } else {
       ""
     }
