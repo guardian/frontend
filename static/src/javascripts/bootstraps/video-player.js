@@ -1,5 +1,5 @@
 define([
-    'video',
+    'videojs',
     'videojsads',
     'videojsima',
     'videojspersistvolume',

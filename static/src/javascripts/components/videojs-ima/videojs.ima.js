@@ -16,27 +16,22 @@
  * IMA SDK integration plugin for Video.js. For more information see
  * https://www.github.com/googleads/videojs-ima
  */
-
- "use strict";
-(function(factory) {
-    /*!
-     * Custom Universal Module Definition (UMD)
-     *
-     * Video.js will never be a non-browser lib so we can simplify UMD a bunch and
-     * still support requirejs and browserify. This also needs to be closure
-     * compiler compatible, so string keys are used.
-     */
-    if (typeof define === 'function' && define['amd']) {
-        define(['./video'], function (vjs) {
-            factory(vjs)
-        });
-// checking that module is an object too because of umdjs/umd#35
-    } else if (typeof exports === 'object' && typeof module === 'object') {
-        factory(require('video.js'));
-    } else {
-        factory(videojs);
-    }
-})(function(vjs) {
+ (function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define('videojs-ima', ["videojs"], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require("video.js"));
+  } else {
+    root['videojs-ima'] = factory(videojs);
+  }
+}(this, function(vjs) {
+  'use strict';
   var extend = function(obj) {
     var arg;
     var index;
@@ -578,7 +573,6 @@
         fullscreenDiv.className = 'ima-fullscreen';
         adContainerDiv.style.width = window.screen.width + 'px';
         adContainerDiv.style.height = window.screen.height + 'px';
-        adContainerDiv.className = 'ima-ad-container--fullscreen';
         adsManager.resize(
             window.screen.width,
             window.screen.height,
@@ -587,7 +581,6 @@
         fullscreenDiv.className = 'ima-non-fullscreen';
         adContainerDiv.style.width = player.width() + 'px';
         adContainerDiv.style.height = player.height() + 'px';
-        adContainerDiv.className = '';
         adsManager.resize(
             player.width(),
             player.height(),
@@ -1129,4 +1122,4 @@
   };
 
   vjs.plugin('ima', imaPlugin);
-});
+}));

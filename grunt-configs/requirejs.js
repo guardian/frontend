@@ -23,8 +23,8 @@ module.exports = function(grunt, options) {
                 socketio:             'components/socket.io-client/socket.io',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
-                video:                'components/video.js/video.min',
-                videojsads:           'components/videojs-contrib-ads/videojs.ads',
+                videojs:              'components/video.js/video.min',
+                videojsads:           'components/videojs-contrib-ads/videojs.ads.min',
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
@@ -223,7 +223,12 @@ module.exports = function(grunt, options) {
                     'inlineSvg'
                 ],
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                map:{
+                    '*':{
+                        'video':'videojs'
+                    }
+                }
             }
         },
         videoEmbed : {

@@ -18,8 +18,8 @@
     "requirejs-text": "~2.0.12",
     "when": "3.7.3",
     "video.js": "5.0.0",
-    "videojs-playlist-audio": "guardian/videojs-playlist#29f93f1faf126b45d10a2f4b89141214377c637f",
-    "videojs-contrib-ads": "guardian/videojs-contrib-ads#v3.0.1",
+    "videojs-playlist-audio": "guardian/videojs-playlist#v0.1.0",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#v3.0.0",
     "videojs-persistvolume": "0.1.2",
     "videojs-embed": "0.3.3",
     "videojs-ima": "guardian/videojs-ima#0.2.1"
@@ -38,9 +38,10 @@
       "react": { "bower_components/react/react-with-addons.js": "react.js"},
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "video.js": "bower_components/video.js/dist/video.min.js",
-      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
+      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/dist/videojs.ads.min.js",
       "videojs-ima": "bower_components/videojs-ima/src/videojs.ima.js",
-      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js"
+      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
+      "videojs-embed" : "bower_components/videojs-embed/dist/videojs.embed.js"
     }
   }
 }
