@@ -125,6 +125,15 @@ describe('Outbrain', function () {
             mediator.emit('modules:commercial:dfp:rendered', eventStub);
             expect(sut.load).not.toHaveBeenCalled();
         });
+
+        it("should load when ad block is in use", () => {
+            spyOn(sut, 'load');
+
+            detect.adblockInUse = true;
+
+            sut.init();
+            expect(sut.load).toHaveBeenCalled();
+        });
     });
 
     describe('Sections', function () {
