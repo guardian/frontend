@@ -268,7 +268,7 @@ object AmpVideoSrcCleaner {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -278,6 +278,9 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
         link.attr("data-link-name", dataLinkName)
         link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
+      }
+      if (amp && link.hasAttr("style")) {
+        link.removeAttr("style")
       }
     }
 

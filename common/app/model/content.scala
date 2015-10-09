@@ -344,6 +344,7 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
+  override lazy val isImmersive: Boolean = displayHint.contains("immersive")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = Some(ArticleSchemas(this))

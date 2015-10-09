@@ -2,36 +2,34 @@ define([
     'bean',
     'bonzo',
     'qwery',
-
     'common/utils/$',
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/scroller',
-
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/whole-discussion',
     'common/modules/ui/relativedates',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/views/svgs'
 ], function(
     bean,
     bonzo,
     qwery,
-
     $,
     ajaxPromise,
     config,
     mediator,
     scroller,
-
     Component,
     DiscussionApi,
     CommentBox,
     WholeDiscussion,
     relativedates,
-    userPrefs
+    userPrefs,
+    svgs
 ) {
 'use strict';
 
@@ -243,7 +241,7 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 
                 $btn = $.create(
                     '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
-                        '<i class="i i-plus-blue"></i>' +
+                        svgs('plus', ['icon']) +
                         'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies') +
                     '</button>').attr({
                         'data-link-name': 'Show more replies',

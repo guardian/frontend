@@ -87,7 +87,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
           .pageSize(50)
 
         val maybeSetter = params.setter.fold(withoutSetter) { setter =>
-          withoutSetter.stringParam("tag", s"profile/${setter}")
+          withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
         }
 
         LiveContentApi.getResponse(maybeSetter.showFields("all")).map { response =>

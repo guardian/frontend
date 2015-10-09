@@ -181,12 +181,12 @@ class Crossword extends React.Component {
                 this.focusNextClue();
             }
         } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
-            if (event.keyCode === keycodes.backspace) {
+            if (event.keyCode === keycodes.backspace || event.keyCode === keycodes.delete) {
                 event.preventDefault();
                 if (this.cellIsEmpty(cell.x, cell.y)) {
                     this.focusPrevious();
                 } else {
-                    this.setCellValue(cell.x, cell.y, null);
+                    this.setCellValue(cell.x, cell.y, '');
                     this.save();
                 }
             } else if (event.keyCode === keycodes.left) {
@@ -385,7 +385,7 @@ class Crossword extends React.Component {
             });
 
             // Side effect
-            window.location.hash = clue.id;
+            history.replaceState(undefined, undefined, '#' + clue.id);
         }
     }
 
@@ -674,8 +674,8 @@ export default function () {
                 crosswordComponent.focusFirstCellInClue(entry);
             }
 
-            window.addEventListener('hashchange', hashEvent => {
-                const idMatch = hashEvent.newURL.match(/#.*/);
+            bean.on(element, 'click', $('.crossword__clue'), (e) => {
+                const idMatch = e.currentTarget.hash.match(/#.*/);
                 const newEntryId = idMatch && idMatch[0].replace('#', '');
 
                 const newEntry = _.find(crosswordComponent.props.data.entries, { id: newEntryId });
@@ -688,7 +688,10 @@ export default function () {
                 if (newEntry && (focussedEntry ? isNewEntry : true)) {
                     crosswordComponent.focusFirstCellInClue(newEntry);
                 }
+
+                e.preventDefault();
             });
+
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }

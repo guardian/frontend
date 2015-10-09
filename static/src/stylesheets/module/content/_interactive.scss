@@ -169,6 +169,11 @@
     }
 }
 
+.js-on.is-modern .is-immersive .content--interactive,
+.js-on.is-modern .is-immersive .content--interactive ~ * {
+    display: none;
+}
+
 .is-immersive {
     figure.element {
         margin: 0;
