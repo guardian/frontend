@@ -126,7 +126,7 @@ describe('Outbrain', function () {
             expect(sut.load).not.toHaveBeenCalled();
         });
 
-        it("should load when ad block is in use", () => {
+        it('should load when ad block is in use', () => {
             spyOn(sut, 'load');
 
             detect.adblockInUse = true;
