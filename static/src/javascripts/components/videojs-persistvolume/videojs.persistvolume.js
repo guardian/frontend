@@ -1,22 +1,19 @@
-"use strict";
-(function(factory){
-  /*!
-   * Custom Universal Module Definition (UMD)
-   *
-   * Video.js will never be a non-browser lib so we can simplify UMD a bunch and
-   * still support requirejs and browserify. This also needs to be closure
-   * compiler compatible, so string keys are used.
-   */
-  if (typeof define === 'function' && define['amd']) {
-    define(['./video'], function(vjs){ factory(window, document, vjs) });
-  // checking that module is an object too because of umdjs/umd#35
-  } else if (typeof exports === 'object' && typeof module === 'object') {
-    factory(window, document, require('video.js'));
-  } else {
-    factory(window, document, videojs);
-  }
 
-})(function(window, document, vjs) {
+ (function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define('videojs-persistvolume', ["videojs"], function (a0) {
+      return (factory(window, document, a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(window, document, require("video.js"));
+  } else {
+    root['videojs-persistvolume'] = factory(window, document, videojs);
+  }
+}(this, function(window, document, vjs) {
   //cookie functions from https://developer.mozilla.org/en-US/docs/DOM/document.cookie
   var
   getCookieItem = function(sKey) {
@@ -120,4 +117,4 @@
 
   vjs.plugin("persistvolume", volumePersister);
 
-});
+}));

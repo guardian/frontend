@@ -223,12 +223,7 @@ module.exports = function(grunt, options) {
                     'inlineSvg'
                 ],
                 generateSourceMaps: true,
-                preserveLicenseComments: false,
-                map:{
-                    '*':{
-                        'video':'videojs'
-                    }
-                }
+                preserveLicenseComments: false
             }
         },
         videoEmbed : {
