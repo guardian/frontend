@@ -174,7 +174,7 @@ define([
         showSponsorshipPlaceholder = function () {
             var sponsorshipIdsFound = isSponsorshipContainerTest();
 
-            if (detect.adblockInUse && sponsorshipIdsFound.length) {
+            if (detect.adblockInUse() && sponsorshipIdsFound.length) {
                 fastdom.write(function () {
                     _.forEach(sponsorshipIdsFound, function (value) {
                         var sponsorshipIdFoundEl = $(value),
