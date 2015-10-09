@@ -15,14 +15,7 @@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
-                @if(amp) {
-                    @* AMP doesn't support sameAs *@
-                    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-                        <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
-                    </div>
-                } else {
-                    <link itemprop="sameAs" href="http://www.theguardian.com">
-                }
+                <link itemprop="sameAs" href="http://www.theguardian.com">
             </div>
 
             @fragments.headImmersive(article)
@@ -58,11 +51,5 @@
                 </div>
             </div>
         </article>
-
-        @* Currently AMP documents don't support most of what we do in the footer *@
-        @if(!amp) {
-            @fragments.contentFooter(article, model.related)
-        }
-
     </div>
 }
