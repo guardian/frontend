@@ -90,7 +90,7 @@ define([
             $el = $(el),
             duration = parseInt($el.attr('data-duration'), 10);
 
-        player.ready(function(){
+        player.ready(function () {
 
             if (!isNaN(duration)) {
                 player.duration(duration);

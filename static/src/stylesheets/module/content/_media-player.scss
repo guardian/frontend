@@ -447,7 +447,7 @@ $ima-controls-height: 70px;
         height: $gs-baseline*1.5;
 
         &:before {
-            content:'';
+            content: '';
             min-width: $gs-gutter;
             @include icon(volume-low-white);
         }

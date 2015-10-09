@@ -79,7 +79,7 @@ define([
     }
 
     function bindPrerollEvents(player) {
-        events = {
+        var events = {
             end: function () {
                 player.trigger(constructEventName('preroll:end', player));
                 player.removeClass('vjs-ad-playing--vpaid');
