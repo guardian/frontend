@@ -1,0 +1,140 @@
+.content--immersive {
+    &.content {
+        border-top: 0;
+    }
+
+    .content__meta-container {
+        @include mq(leftCol) {
+            position: absolute !important;
+        }
+    }
+
+    .content__article-body {
+        clear: both;
+    }
+
+    // HEADER
+    .content__head {
+        position: relative;
+        color: #ffffff;
+    }
+
+    .content__wrapper {
+        background-color: rgba(0, 0, 0, .5);
+    }
+
+    .content__logo-container {
+        z-index: 2;
+    }
+
+    .content__logo {
+        float: right;
+        width: gs-span(2) + $gs-gutter;
+        height: auto;
+        margin-top: $gs-baseline / 2;
+
+        svg {
+            width: 100%;
+            height: auto;
+
+            path {
+                fill: #ffffff;
+            }
+        }
+    }
+
+    .content__headline,
+    .content__standfirst {
+        max-width: gs-span(8);
+
+        @include mq(leftCol) {
+            margin-left: gs-span(2) + $gs-gutter;
+        }
+
+        @include mq(wide) {
+            margin-left: gs-span(3) + $gs-gutter;
+        }
+    }
+
+    .content__headline {
+        font-size: 2.2rem;
+        font-weight: 200;
+        line-height: 1;
+        padding-top: $gs-baseline / 2;
+        padding-bottom: 1em;
+
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
+    }
+
+    .content__standfirst {
+        position: relative;
+        padding-top: .33em;
+        padding-bottom: 1em;
+        margin-bottom: 0;
+        color: #ffffff;
+
+        @include mq(desktop) {
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                height: 2px;
+                width: gs-span(2);
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+
+        a {
+            color: colour(feature-mute);
+            border-bottom: 1px solid rgba(colour(feature-mute), .4);
+
+            &:hover {
+                text-decoration: none;
+                border-bottom-color: rgba(colour(feature-mute), .8);
+            }
+        }
+    }
+
+    @include mq($until: desktop) {
+        .content__head--mobile {
+            position: relative;
+            height: 100vh;
+            max-height: 800px;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .content__head--desktop {
+            background-image: none !important;
+        }
+
+        .content__wrapper--headline {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    @include mq(desktop) {
+        .content__head--desktop {
+            position: relative;
+            height: 100vh;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .content__head--mobile {
+            background-image: none !important;
+        }
+
+        .content__header {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+}

@@ -122,7 +122,7 @@ object ImgSrc extends Logging {
     }
   }
 
-  private def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
