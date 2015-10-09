@@ -387,8 +387,8 @@ define([
 
     function adblockInUse() {
         if (!detect.cachedAdblockInUse) {
-            var sacrificialAd = createSacrificialAd();
-            var contentBlocked = isHidden(sacrificialAd);
+            var sacrificialAd = createSacrificialAd(),
+                contentBlocked = isHidden(sacrificialAd);
             sacrificialAd.remove();
             detect.cachedAdblockInUse = contentBlocked;
             return contentBlocked;
