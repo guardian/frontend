@@ -135,7 +135,7 @@ define([
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
 
-        this.s.prop40    = detect.adblockInUse || detect.getFirefoxAdblockPlusInstalled();
+        this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
 
         this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
 
