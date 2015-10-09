@@ -110,8 +110,8 @@ describe('DFP', function () {
                 setTargeting: sinon.spy(function () { return window.googletag; }),
                 enableServices: sinon.spy(),
                 display: sinon.spy(),
-                displayLazyAds: sinon.spy(),
-                displayAds: sinon.spy()
+                displayLazyAds: sinon.spy(function () { return window.googletag; }),
+                displayAds: sinon.spy(function () { return window.googletag; })
             };
             //jscs:disable disallowEmptyBlocks
             ophanTracking.trackPerformance = ()=> {
@@ -224,21 +224,25 @@ describe('DFP', function () {
             };
             config.switches.viewability = true;
             config.page.hasPageSkin = false;
-            dfp.init();
-            window.googletag.cmd.forEach(function (func) { func(); });
-            expect(window.googletag.pubads().displayLazyAds).toHaveBeenCalled();
+            expect(dfp.shouldLazyLoad()).toBe(true);
         });
 
-        xit('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
-            dfp.init();
-            window.googletag.cmd.forEach(function (func) { func(); });
-            expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+        it('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
+            detect.getBreakpoint = function () {
+                return 'desktop';
+            };
+            config.switches.viewability = true;
+            config.page.hasPageSkin = true;
+            expect(dfp.shouldLazyLoad()).toBe(true);
         });
 
-        xit('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
-            dfp.init();
-            window.googletag.cmd.forEach(function (func) { func(); });
-            expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+        it('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
+            config.switches.viewability = true;
+            config.page.hasPageSkin = true;
+            expect(dfp.shouldLazyLoad()).toBe(false);
         });
 
     });
