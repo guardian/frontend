@@ -39,6 +39,14 @@ http://developers.theguardian.com/join-the-team.html
             ("is-immersive", metaData.isImmersive)))"
         itemscope itemtype="http://schema.org/WebPage">
 
+        @defining(request.headers.get("X-GU-Continent")) { continentCode: Option[String] =>
+            @if(continentCode.nonEmpty){
+                @if(continentCode.get == "EU" && request.cookies.get("GU-Cookie-Notice").isEmpty){
+                    @fragments.cookieMessage()
+                }
+            }
+        }
+
         @fragments.message(metaData)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>

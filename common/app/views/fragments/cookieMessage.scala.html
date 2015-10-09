@@ -1,0 +1,22 @@
+@()(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div class="cookie-message js-cookie-message" data-link-name="cookie message" role="dialog" aria-label="cookies" aria-describedby="cookie-message__message">
+    <div class="gs-container">
+        <div class="cookie-message__inner js-cookie-message-inner">
+            <div class="cookie-message__copy js-cookie-message-copy u-cf">
+                This site uses cookies. By continuing to browse this site you are agreeing to our use of cookies.
+                <a href="@LinkTo{https://www.theguardian.com/info/cookies}">
+                    Find out more here
+                </a>
+            </div>
+            <div class="cookie-message__close">
+                <button class="cookie-message__close-btn js-cookie-message-close" data-link-name="hide cookie message">
+                    <span class="u-h">Close</span>
+                    @fragments.inlineSvg("close", "icon", List("inline-close--small"))
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
