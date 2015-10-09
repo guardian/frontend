@@ -31,6 +31,12 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "contentType" -> JsString("Section")
   )
 
-  override def iosType = Some("front")
+  override def iosType: Option[String] = {
+    val t = section match {
+      case "crosswords" => None
+      case _ => Some("front")
+    }
+    t
+  }
 
 }

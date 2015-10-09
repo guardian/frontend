@@ -39,6 +39,20 @@ object MetaDataMatcher extends Matchers  {
 
   }
 
+  def ensureDeepLink(result: Future[Result], expectedLink: String) {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+    val script = body.getElementsByAttributeValue("href", expectedLink)
+    script.size() should be(1)
+  }
+
+  def ensureNoDeepLink(result: Future[Result], nonExistantLink: String) {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+    val script = body.getElementsByAttributeValue("href", nonExistantLink)
+    script.size() should be(0)
+  }
+
   def ensureNoIosUrl(result: Future[Result]): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)

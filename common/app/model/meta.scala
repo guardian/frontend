@@ -101,7 +101,10 @@ trait MetaData extends Tags {
     WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )).getOrElse(Nil))
 
-  def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
+  def iosId(referrer: String): Option[String] = {
+    val sddid: Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
+    sddid
+  }
 
   // this could be article/front/list, it's a hint to the ios app to start the right engine
   def iosType: Option[String] = None
