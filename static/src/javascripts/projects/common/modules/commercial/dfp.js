@@ -291,7 +291,7 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            if (_shouldLazyLoad()) {
+            if (shouldLazyLoad()) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
@@ -674,10 +674,7 @@ define([
                 return keyword.split('/').pop();
             });
         },
-        /**
-         * Used privately but exposed pnly for unit testing
-         * */
-        _shouldLazyLoad = function () {
+        shouldLazyLoad = function () {
             // We do not want lazy loading on pageskins because it messes up the roadblock
             return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
         },
@@ -690,7 +687,8 @@ define([
             addSlot:        addSlot,
             refreshSlot:    refreshSlot,
             getSlots:       getSlots,
-            shouldLazyLoad: _shouldLazyLoad,
+            // Used privately but exposed only for unit testing
+            shouldLazyLoad: shouldLazyLoad,
 
             // testing
             reset: function () {
