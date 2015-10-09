@@ -116,6 +116,9 @@ define([
             if (shouldAutoPlay(player)) {
                 player.play();
             }
+            // Remove both handlers, because this adFailed handler should only happen once.
+            player.off('adtimeout', adFailed);
+            player.off('adserror', adFailed);
         };
 
         player.one('adsready', events.ready);
