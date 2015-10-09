@@ -4,18 +4,22 @@ import model.Content
 import conf.Configuration
 
 object TagContainers {
+
   import ContainerDefinition.{ofSlices => slices}
 
-  val allTagPage = slices(
-    QuarterQuarterQuarterQuarter,
-    TlTlTl,
-    TlTlTl,
-    TlTlTl,
-    TlTlTl,
-    TlTlTl,
-    TlTlTl,
-    TlTlMpu
-  )
+  def allTagPageSlices(n: Int) = n match {
+    case 1 => slices(FullMedia100)
+    case 2 => slices(HalfHalf2)
+    case 3 => slices(TTT)
+    case _ => slices(QuarterQuarterQuarterQuarter,
+      TlTlTl,
+      TlTlTl,
+      TlTlTl,
+      TlTlTl,
+      TlTlTl,
+      TlTlTl,
+      TlTlMpu)
+  }
 
   val tagPage = slices(
     HalfQQ,

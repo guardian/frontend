@@ -80,6 +80,7 @@ export default class Controls extends React.Component {
             <div className='crossword__controls'>
                 <div className='crossword__controls__clue'>{controls.clue}</div>
                 <div className='crossword__controls__grid'>{controls.grid}</div>
+                <div className='crossword__controls_autosave_label'>Crosswords are saved automatically</div>
             </div>
         );
     }

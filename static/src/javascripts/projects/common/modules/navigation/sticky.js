@@ -46,7 +46,7 @@ define([
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
         this.isProfilePage = config.page.section === 'identity';
-        this.isAdblockInUse = detect.adblockInUse;
+        this.isAdblockInUse = detect.adblockInUse();
 
         _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }

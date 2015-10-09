@@ -6,21 +6,21 @@ import org.joda.time.LocalDate
 trait CommercialSwitches {
 
   // Commercial
-  val NoMobileTopAdSwitch = Switch(
-    "Commercial",
-    "no-mobile-top-ad",
-    "On mobile there is no top banner and we are showing only two MPUs",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 30),
-    exposeClientSide = true
-  )
-
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val DfpCacheRecentOnly = Switch(
+    "Commercial",
+    "dfp-cache-recent-only",
+    "Admin will only update cached data with recent changes in DFP.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 4),
     exposeClientSide = false
   )
 
@@ -227,7 +227,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 7),
+    sellByDate = new LocalDate(2015, 10, 21),
     exposeClientSide = false
   )
 

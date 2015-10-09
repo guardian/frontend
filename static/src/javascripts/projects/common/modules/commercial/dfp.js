@@ -17,6 +17,7 @@ define([
     'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
@@ -43,6 +44,7 @@ define([
     sha1,
     StickyMpu,
     buildPageTargeting,
+    commercialFeatures,
     dfpOphanTracking,
     geoMostPopular,
     ab,
@@ -172,7 +174,7 @@ define([
         showSponsorshipPlaceholder = function () {
             var sponsorshipIdsFound = isSponsorshipContainerTest();
 
-            if (detect.adblockInUse && sponsorshipIdsFound.length) {
+            if (detect.adblockInUse() && sponsorshipIdsFound.length) {
                 fastdom.write(function () {
                     _.forEach(sponsorshipIdsFound, function (value) {
                         var sponsorshipIdFoundEl = $(value),
@@ -265,11 +267,7 @@ define([
                 });
             });
         },
-
-        /**
-         * Public functions
-         */
-        init = function (options) {
+        setupAdvertising = function (options) {
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -293,8 +291,7 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We do not want lazy loading on pageskins because it messes up the roadblock
-            if (config.switches.viewability && !config.page.hasPageSkin) {
+            if (shouldLazyLoad()) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
@@ -304,7 +301,17 @@ define([
 
             // show sponsorship placeholder if adblock detected
             showSponsorshipPlaceholder();
+        },
 
+        /**
+         * Public functions
+         */
+        init = function (options) {
+            if (commercialFeatures.dfpAdvertising) {
+                setupAdvertising(options);
+            } else {
+                $(adSlotSelector).remove();
+            }
             return dfp;
         },
         instantLoad = function () {
@@ -667,15 +674,21 @@ define([
                 return keyword.split('/').pop();
             });
         },
+        shouldLazyLoad = function () {
+            // We do not want lazy loading on pageskins because it messes up the roadblock
+            return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
+        },
 
         /**
          * Module
          */
         dfp = {
-            init:        init,
-            addSlot:     addSlot,
-            refreshSlot: refreshSlot,
-            getSlots:    getSlots,
+            init:           init,
+            addSlot:        addSlot,
+            refreshSlot:    refreshSlot,
+            getSlots:       getSlots,
+            // Used privately but exposed only for unit testing
+            shouldLazyLoad: shouldLazyLoad,
 
             // testing
             reset: function () {

@@ -5,6 +5,7 @@ import play.api.mvc.RequestHeader
 
 trait Requests {
 
+  val AMP_SUFFIX = "/amp"
 
 
   implicit class RichRequestHeader(r: RequestHeader) {
@@ -21,9 +22,9 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r.path.endsWith("/amp")
+    lazy val isAmp: Boolean = r.path.endsWith(AMP_SUFFIX)
 
-    lazy val pathWithoutModifiers: String = if (isAmp) r.path.stripSuffix("/amp") else r.path.stripSuffix("/all")
+    lazy val pathWithoutModifiers: String = if (isAmp) r.path.stripSuffix(AMP_SUFFIX) else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 

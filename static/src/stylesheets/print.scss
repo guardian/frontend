@@ -117,10 +117,13 @@ p {
     padding-top: 84px !important;
 }
 
+$logoWidth: 320px;
+$logoHeight: 60px;
+
 .content--article:before {
     display: table;
-    width: 320px !important;
-    height: 60px !important;
+    width: $logoWidth !important;
+    height: $logoHeight !important;
     margin-bottom: 12px !important;
     position: absolute;
     z-index: 10;
@@ -129,22 +132,13 @@ p {
 }
 
 #crossword {
-    .content__main-column {
-        position: absolute;
-        text-align: right !important;
-        top: 60px * .75 !important;
-        right: 0;
-        margin-top: 10px !important;
-        max-width: 300px !important;
-        z-index: 1 !important;
-
-        &, & * {
-            background-color: transparent !important;
-        }
-    }
-
     .content__head {
         padding-top: 0 !important;
+        float: right;
+        max-width: 300px !important;
+        text-align: right;
+        // Gutter between head and crossword grid
+        margin-left: 1em !important;
     }
 
     .content__headline {
@@ -153,9 +147,29 @@ p {
         line-height: initial !important;
     }
 
+    .content__main,
+    .content__main * {
+        background-color: transparent !important;
+    }
+
     &.content--article:before {
-        zoom: 75%;
-        text-align: right !important;;
+        // Hide the logo unless we're sure we can resize it.
+        display: none;
+    }
+
+    // If we can resize the logo, show it. We could use "@support not", but
+    // ironically browsers don't widely support it.
+    @supports (zoom: 100%) {
+        .content__head {
+            margin-top: $logoHeight * .5 !important;
+        }
+
+        &.content--article:before {
+            display: block;
+            zoom: 50%;
+            width: $logoWidth * .5 !important;
+            height: $logoHeight * .5 !important;
+        }
     }
 }
 
@@ -165,8 +179,13 @@ p {
     fill: #ffffff;
 }
 
+.crossword__container__game {
+    // Clearfix
+    overflow: hidden;
+    width: auto !important;
+}
+
 .crossword__container__grid-wrapper {
-    float: left;
     width: 9.75cm !important;
     height: 9.75cm !important;
     margin-bottom: .1cm !important;
@@ -197,11 +216,12 @@ p {
 }
 
 .crossword__clues {
-    clear: both;
     font-size: 11px;
 }
 
 .crossword__clue {
+    // Clearfix
+    overflow: hidden;
     margin-bottom: .08cm !important;
 }
 

@@ -5,7 +5,7 @@ import layout.ContentWidths.MainMedia
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
+import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
 
 object MainMediaWidths {
 
@@ -23,7 +23,7 @@ object MainCleaner {
  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
-        VideoEmbedCleaner(article, amp),
+        if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner
       )
@@ -35,14 +35,13 @@ object BodyCleaner {
     implicit val edition = Edition(request)
     val cleaners = List(
       InBodyElementCleaner,
-      InBodyLinkCleaner("in body link"),
+      InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
       new TweetCleaner(article, amp),
       WitnessCleaner,
       TagLinker(article),
       TableEmbedComplimentaryToP,
       R2VideoCleaner(article),
-      VideoEmbedCleaner(article, amp),
       PictureCleaner(article, amp),
       LiveBlogDateFormatter(article.isLiveBlog),
       LiveBlogLinkedData(article.isLiveBlog),
@@ -57,6 +56,13 @@ object BodyCleaner {
       PullquoteCleaner,
       CmpParamCleaner
     )
-    withJsoup(BulletCleaner(html))((if (amp) AmpAdCleaner :: cleaners else cleaners) :_*)
+    val nonAmpCleaners = List(
+      VideoEmbedCleaner(article)
+    )
+    val ampOnlyCleaners = List(
+      AmpAdCleaner,
+      AmpEmbedCleaner(article)
+    )
+    withJsoup(BulletCleaner(html))((if (amp) ampOnlyCleaners else nonAmpCleaners) ++ cleaners :_*)
   }
 }

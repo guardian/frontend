@@ -75,7 +75,7 @@ define([
             case 'split':
                 this.scrollAmount = bottomScroll + topScroll + '%';
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).css({
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css({
                         'background-repeat': 'no-repeat',
                         'background-position': '50%' + that.scrollAmount
                     });
@@ -84,20 +84,20 @@ define([
             case 'fixed':
                 this.scrollAmount = (scrollY - adSlotTop) + 'px';
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).css('background-position', '50%' + that.scrollAmount);
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + that.scrollAmount);
                 });
                 break;
             case 'fixed matching fluid250':
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).addClass('ad-exp--expand-scrolling-bg-fixed');
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-fixed');
                 });
                 break;
             case 'parallax':
                 this.scrollAmount = Math.ceil((scrollY - adSlotTop) * 0.3 * -1) + 20;
                 this.scrollAmountP = this.scrollAmount + '%';
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).addClass('ad-exp--expand-scrolling-bg-parallax');
-                    $('.ad-exp--expand-scrolling-bg', $(that.$adSlot)).css('background-position', '50%' + that.scrollAmountP);
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-parallax');
+                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + that.scrollAmountP);
                 });
                 break;
         }
@@ -105,12 +105,15 @@ define([
 
     ExpandableV3.prototype.listener = function () {
         var that = this;
-        if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
-            if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
+        if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top + this.openedHeight) {
+            var itemId = $('.ad-slot__content', that.$adSlot).attr('id'),
+                itemIdArray = itemId.split('/');
+
+            if (!storage.local.get('gu.commercial.expandable.' + itemIdArray[1])) {
                 // expires in 1 week
                 var week = 1000 * 60 * 60 * 24 * 7;
                 fastdom.write(function () {
-                    storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
+                    storage.local.set('gu.commercial.expandable.' + itemIdArray[1], true, { expires: Date.now() + week });
                     that.$button.addClass('button-spin');
                     $('.ad-exp__open-chevron').removeClass('chevron-up').addClass('chevron-down');
                     that.$ad.css('height', that.openedHeight);

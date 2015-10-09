@@ -15,10 +15,6 @@
     @include mq(tablet) {
         display: inline-block;
     }
-
-    @include mq(desktop, leftCol) {
-        margin-left: $gs-gutter;
-    }
 }
 
 .football-leagues__list,

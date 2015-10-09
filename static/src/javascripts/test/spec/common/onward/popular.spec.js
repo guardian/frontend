@@ -12,7 +12,7 @@ describe('Most popular', function () {
         html = '<b>popular</b>',
         server,
         injector = new Injector(),
-        Popular, config, mediator, detect, userAdPreference;
+        Popular, config, mediator, detect, commercialFeatures;
 
     beforeEach(function (done) {
         injector.mock({
@@ -33,19 +33,15 @@ describe('Most popular', function () {
         });
         injector.test([
             'common/modules/onward/popular',
+            'common/modules/commercial/commercial-features',
             'common/utils/config',
             'common/utils/mediator',
-            'common/utils/detect',
-            'common/modules/commercial/user-ad-preference'
+            'common/utils/detect'
         ], function () {
-            Popular = arguments[0];
-            config = arguments[1];
-            mediator = arguments[2];
-            detect = arguments[3];
-            userAdPreference = arguments[4];
+            [Popular, commercialFeatures, config, mediator, detect] = arguments;
 
             config.page.section = 'football';
-            userAdPreference.hideAds = false;
+            commercialFeatures.popularContentMPU = true;
 
             // set up fake server
             server = sinon.fakeServer.create();
@@ -59,7 +55,6 @@ describe('Most popular', function () {
     afterEach(function () {
         server.restore();
         fixtures.clean(fixturesConfig.id);
-        config.switches.noMobileTopAd = false;
         detect.getBreakpoint = function () { return 'desktop'; };
     });
 
@@ -100,23 +95,14 @@ describe('Most popular', function () {
     it('should not render MPU when on mobile and 2+ MPUs are already on the page', function () {
         var popular = new Popular();
 
-        config.switches.noMobileTopAd = true;
         detect.getBreakpoint = function () { return 'mobile'; };
         popular.prerender();
         expect(popular.$mpu).toBeUndefined();
     });
 
-    it('should not render MPU when user opts out of adverts', function () {
+    it('should not render MPU when disabled in commercial-features', function () {
         var popular = new Popular();
-        userAdPreference.hideAds = true;
-
-        popular.prerender();
-        expect(popular.$mpu).toBeUndefined();
-    });
-
-    it('should not render MPU when in the childrens books section', function () {
-        var popular = new Popular();
-        config.page.section = 'childrens-books-site';
+        commercialFeatures.popularContentMPU = false;
 
         popular.prerender();
         expect(popular.$mpu).toBeUndefined();

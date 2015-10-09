@@ -47,7 +47,7 @@ define([
                 }
             ]);
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1) {
             new Message('adblock-message', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant ' + message.id,

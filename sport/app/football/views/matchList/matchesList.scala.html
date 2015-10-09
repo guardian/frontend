@@ -43,6 +43,9 @@
                         @MatchStatus(theMatch.matchStatus)
                     }
                 </td>
+                <td class="football-match__crest football-match__crest--home">
+                    <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/60/@{theMatch.homeTeam.id}.png);"></span>
+                </td>
                 <td class="football-match__teams table-column--main">
                     <a href="@LinkTo{@theMatch.smartUrl}" class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
@@ -50,11 +53,6 @@
                                 <span class="team-name__long">@theMatch.homeTeam.name</span>
                             </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
-                            @if(theMatch.isFixture){
-                                <div class="football-team__form team__results--shrink">
-                                    @football.views.html.fragments.teamForm(theMatch.homeTeam.id, competition)
-                                </div>
-                            }
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
@@ -62,11 +60,6 @@
                                 <span class="team-name__long">@theMatch.awayTeam.name</span>
                             </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>
-                            @if(theMatch.isFixture){
-                                <div class="football-team__form team__results--shrink">
-                                    @football.views.html.fragments.teamForm(theMatch.awayTeam.id, competition)
-                                </div>
-                            }
                         </div>
 
                         <div class="football-teams__battleline"></div>
@@ -75,6 +68,9 @@
                             <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
                         }
                     </a>
+                </td>
+                <td class="football-match__crest football-match__crest--home">
+                    <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{theMatch.awayTeam.id}.png);"></span>
                 </td>
             </tr>
         }

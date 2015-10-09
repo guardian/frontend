@@ -200,7 +200,7 @@ if (cluster.isMaster) {
             var moduleExpression = config[0];
             var outName = config[1];
 
-            return builder.build(moduleExpression, null)
+            return builder.bundle(moduleExpression, null)
                 .then(processBuild(moduleExpression, outName))
                 .then(function (bundle) {
                     return makeDirectory(path.dirname(path.join(prefixPath, bundle.uri)))

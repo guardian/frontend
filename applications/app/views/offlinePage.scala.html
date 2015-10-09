@@ -24,6 +24,8 @@
     @fragments.stylesheetLinksEnable()
 
     <script>
+        @* DO NOT COPY. We do not want to couple other things to the jspm test.
+        Crossword related things is the only exception. Please use curl instead. *@
         @Html(Static.systemJs.setupFragment)
 
         @* Service worker only caches the bundles, so the offline page can only ask for those.
