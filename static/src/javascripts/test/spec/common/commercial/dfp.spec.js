@@ -109,9 +109,7 @@ describe('DFP', function () {
                 defineSizeMapping: sinon.spy(function () { return window.googletag; }),
                 setTargeting: sinon.spy(function () { return window.googletag; }),
                 enableServices: sinon.spy(),
-                display: sinon.spy(),
-                displayLazyAds: sinon.spy(function () { return window.googletag; }),
-                displayAds: sinon.spy(function () { return window.googletag; })
+                display: sinon.spy()
             };
             //jscs:disable disallowEmptyBlocks
             ophanTracking.trackPerformance = ()=> {
