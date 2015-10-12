@@ -35,6 +35,7 @@ describe('Outbrain', function () {
             config.page = {
                 section: 'uk-news',
                 isPreview: false,
+                isFront: false,
                 commentable: true
             };
             identity.isUserLoggedIn = function () {
@@ -56,18 +57,22 @@ describe('Outbrain', function () {
     });
 
     describe('Init', function () {
-        var eventStub = {
-            slot: {
-                getSlotId: function () {
-                    return {
-                        getDomId: function () {
-                            return 'dfp-ad--merchandising-high';
-                        }
-                    };
-                }
-            },
-            isEmpty: true
-        };
+        var eventStub;
+
+        beforeEach(function () {
+            eventStub = {
+                slot: {
+                    getSlotId: function () {
+                        return {
+                            getDomId: function () {
+                                return 'dfp-ad--merchandising-high';
+                            }
+                        };
+                    }
+                },
+                isEmpty: true
+            };
+        });
 
         it('should start outbrain component', function () {
             spyOn(sut, 'load');
@@ -120,7 +125,7 @@ describe('Outbrain', function () {
         it('should not load when on network front', function () {
             spyOn(sut, 'load');
 
-            config.isFront = true;
+            config.page.isFront = true;
 
             sut.init();
             mediator.emit('modules:commercial:dfp:rendered', eventStub);

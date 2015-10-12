@@ -101,11 +101,15 @@ define([
                 || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
         },
 
+        identityPolicy: function () {
+            return (!identity.isUserLoggedIn() || !(identity.isUserLoggedIn() && config.page.commentable))
+        },
+
         init: function () {
             if (config.switches.outbrain
                 && !config.page.isFront
                 && !config.page.isPreview
-                && !identity.isUserLoggedIn()
+                && this.identityPolicy()
                 && config.page.section !== 'childrens-books-site') {
                 mediator.on('modules:commercial:dfp:rendered', function (event) {
                     if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
