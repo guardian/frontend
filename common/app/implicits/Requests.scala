@@ -5,6 +5,7 @@ import play.api.mvc.RequestHeader
 
 trait Requests {
 
+  val AMP_SUFFIX = "/amp"
 
 
   implicit class RichRequestHeader(r: RequestHeader) {
@@ -21,9 +22,9 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r.path.endsWith("/amp")
+    lazy val isAmp: Boolean = r.path.endsWith(AMP_SUFFIX)
 
-    lazy val pathWithoutModifiers: String = if (isAmp) r.path.stripSuffix("/amp") else r.path.stripSuffix("/all")
+    lazy val pathWithoutModifiers: String = if (isAmp) r.path.stripSuffix(AMP_SUFFIX) else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
@@ -34,7 +35,7 @@ trait Requests {
     private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
-    lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https")) || isAmp // TODO tidyup - remove isAmp when amp is served over https anyway
+    lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
 
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")

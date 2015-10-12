@@ -11,6 +11,7 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, DateTime}
 import implicits.{ItemResponses, Dates}
 import LiveContentApi.getResponse
+import common.Edition.defaultEdition
 
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
@@ -41,8 +42,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   def all(path: String) = Action.async { request =>
     val edition = Edition(request)
 
-    if (ConfigAgent.shouldServeFront(path) ||
-      ConfigAgent.shouldServeEditionalisedFront(edition, path)) {
+    if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
       IndexController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */

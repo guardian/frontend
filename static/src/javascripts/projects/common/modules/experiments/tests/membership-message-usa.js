@@ -43,7 +43,7 @@ define([
              * - Only show to visitors who have viewed at least 10 pages.
              */
             var alreadyVisited = storage.local.get('alreadyVisited') || 0;
-            return !detect.adblockInUse &&
+            return !detect.adblockInUse() &&
                 detect.getBreakpoint() !== 'mobile' &&
                 config.page.edition === 'US' &&
                 config.page.contentType === 'Article' &&
