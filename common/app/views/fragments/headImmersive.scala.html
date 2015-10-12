@@ -10,7 +10,9 @@
         style="background-image: url('@content.mainPicture.map { picture => @ImgSrc.findNearestSrc(picture, Profile(width = Some(1300)))}');">
 
     <div class="gs-container content__logo-container">
-        @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
+        <a href="@LinkTo{/}">
+            @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
+        </a>
     </div>
 
     <div class="content__header">
