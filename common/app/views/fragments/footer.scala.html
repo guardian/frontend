@@ -49,8 +49,20 @@
                     twitter</a></li>
             }
             @if(currentEdition == Uk) {
-                <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
-                    daily email sign up</a></li>
+                @if(mvt.EmailTextTestControl.isParticipating) {
+                    @* MVT - Test email text - Control *@
+                    <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
+                        daily email sign up</a></li>
+                } else {
+                    @if(mvt.EmailTextTestV1.isParticipating) {
+                        @* MVT - Test email text - Variant 1 *@
+                        <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
+                            guardian today email</a></li>
+                    } else {
+                        <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
+                            daily email sign up</a></li>
+                    }
+                }
                 <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
                     facebook</a></li>
                 <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
