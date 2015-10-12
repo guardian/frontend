@@ -367,15 +367,4 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-  val InternationalEditionBetaSwitch = Switch(
-    "Feature",
-    "international-edition-beta",
-    "International edition A/B test on",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 10, 31),
-
-    exposeClientSide = true
-  )
-
-
 }
