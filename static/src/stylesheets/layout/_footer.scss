@@ -82,6 +82,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     &,
     a {
         color: colour(neutral-4);
+        text-transform: lowercase;
     }
 }
 .colophon {
