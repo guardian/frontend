@@ -36,7 +36,8 @@ http://developers.theguardian.com/join-the-team.html
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
-            ("is-immersive", metaData.isImmersive)))"
+            ("is-immersive", metaData.isImmersive),
+            ("is-immersive-interactive", metaData.isImmersive && metaData.isInteractive)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)

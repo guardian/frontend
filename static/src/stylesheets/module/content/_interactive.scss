@@ -169,9 +169,12 @@
     }
 }
 
-.js-on.is-modern .is-immersive .content--interactive,
-.js-on.is-modern .is-immersive .content--interactive ~ * {
-    display: none;
+.js-on.is-modern .is-immersive-interactive {
+    .content--interactive,
+    .content--interactive ~ *,
+    .l-footer {
+        display: none;
+    }
 }
 
 .is-immersive .content--interactive {
