@@ -101,35 +101,19 @@ import services.ConfigAgent
   it should "understand the international edition" in {
 
 
-    val international = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
+    val international = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INT")
     val redirectToInternational = FaciaController.renderFront("")(international)
     header("Location", redirectToInternational).head should endWith ("/international")
-
-    val ukOptInRequest = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "UK", "X-GU-International" -> "international")
-    val redirect = FaciaController.renderFront("")(ukOptInRequest)
-    header("Location", redirect).head should endWith ("/uk")
-
   }
 
   it should "obey when the international edition is set by cookie" in {
 
     val control = FakeRequest("GET", "/").withHeaders(
-      "X-GU-Edition" -> "INTL",
-      "X-GU-International" -> "control",
+      "X-GU-Edition" -> "INT",
       "X-GU-Edition-From-Cookie" -> "true"
     )
     val redirectToUk = FaciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/international")
-  }
-
-   // TODO - last piece of the puzzle
-  it should "obey the control group when the international edition is not set by cookie" in {
-    val control = FakeRequest("GET", "/").withHeaders(
-      "X-GU-Edition" -> "INTL",
-      "X-GU-International" -> "control"
-    )
-    val redirectToUk = FaciaController.renderFront("")(control)
-    header("Location", redirectToUk).head should endWith ("/uk")
   }
 
   it should "send international traffic ot the UK version of editionalised sections" in {
