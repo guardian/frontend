@@ -671,10 +671,11 @@ $block-height: 71px;
     }
 }
 
-.facia-page .fc-save-for-later:only-child {
+.fc-container .fc-save-for-later:only-child {
     @include mq(tablet) {
         border: 0;
         padding: 0;
+        margin-left: -$gs-gutter / 4;
     }
 }
 
