@@ -42,10 +42,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         }
     }
 
-    .js-on.is-modern .is-immersive & {
-        display: none;
-    }
-
     .control__info {
         display: inline-block;
     }
