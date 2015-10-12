@@ -39,6 +39,7 @@ describe('Outbrain', function () {
             identity.isUserLoggedIn = function () {
                 return false;
             };
+            detect.adblockInUse = false;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
