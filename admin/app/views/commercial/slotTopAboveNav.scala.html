@@ -3,13 +3,13 @@
 
 @commercialMain(env, "Desktop Top-Above-Nav Slot") {
     <h4>Rules:</h4>
-    <p>This slot will by default accommodate an ad of height 250px on network fronts unless there is an ad that:</p>
+    <p>This slot will by default accommodate an ad of height 250px on business fronts unless there is an ad that:</p>
     <ul>
         <li>Has the CPD cost type</li>
-        <li>Targets the business section front ad unit</li>
-        <li>Targets the countries UK, US or Australia</li>
         <li>Targets the responsive size (88x70) in which case the slot will be responsive height by default</li>
         <li>Targets the leaderboard size (728x90) in which case the slot will be leaderboard height by default</li>
+        <li>Targets the business front ad unit directly, either through line-item targeting or creative targeting</li>
+        <li>Geotargets the countries UK, US or Australia</li>
     </ul>
     <p>The ad will also appear on the Code site if it targets a test cookie.</p>
     @commercial.fragments.slot(slotReport)
