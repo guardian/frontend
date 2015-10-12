@@ -268,6 +268,7 @@ case class ContentCard(
     case Some(InlineVideo(_, _, _, Some(_))) => true
     case Some(InlineImage(_)) => true
     case Some(InlineSlideshow(_)) => true
+    case Some(svg@CrosswordSvg(_)) => true
     case _ => false
   }
 
