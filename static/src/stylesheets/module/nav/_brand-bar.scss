@@ -297,39 +297,3 @@
         }
     }
 }
-
-// see .brand-bar__item--action above. This should be removed when we remove the 'beta' bit for International, as it's
-// ugly.
-.brand-bar__item--action-beta {
-    &:focus,
-    &:active {
-        &,
-        .control__info {
-            text-decoration: none;
-
-            .brand-bar__edition-name {
-                text-decoration: underline;
-            }
-        }
-    }
-
-    &:hover {
-        &,
-        .control__info {
-            text-decoration: none;
-
-            .brand-bar__edition-name {
-                text-decoration: underline;
-            }
-        }
-    }
-}
-
-.brand-bar__beta {
-    position: relative;
-    top: -6px;
-    font-weight: bold;
-    color: colour(news-main-2);
-    font-size: 12px;
-    text-decoration: none;
-}

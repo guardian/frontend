@@ -4,7 +4,6 @@ import java.util.Locale
 
 import common._
 import conf.switches.Switches
-import conf.switches.Switches.InternationalEditionBetaSwitch
 import org.joda.time.DateTimeZone
 
 object International extends Edition(
@@ -17,13 +16,6 @@ object International extends Edition(
 ){
 
   implicit val INT = International
-
-  override def isBeta: Boolean = InternationalEditionBetaSwitch.isSwitchedOn
-
-  // TODO temporary to let us migrate cookies to proper value (i.e. INT)
-  // it is currently INTL
-  override def matchesCookie(cookieValue: String): Boolean = super.matchesCookie(cookieValue) ||
-    "INTL".equalsIgnoreCase(cookieValue)
 
   import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(

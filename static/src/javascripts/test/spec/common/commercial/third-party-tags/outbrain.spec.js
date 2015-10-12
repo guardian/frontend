@@ -41,6 +41,7 @@ describe('Outbrain', function () {
             identity.isUserLoggedIn = function () {
                 return false;
             };
+            detect.adblockInUse = false;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
@@ -142,6 +143,21 @@ describe('Outbrain', function () {
 
             sut.init();
             mediator.emit('modules:commercial:dfp:rendered', eventStub);
+            expect(sut.load).toHaveBeenCalled();
+        });
+
+        /*
+            Loading Outbrain is dependent on succefull return of high relevance component
+            from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
+            not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
+            make the call instantly when we detect adBlock in use.
+         */
+        it('should load when ad block is in use', () => {
+            spyOn(sut, 'load');
+
+            detect.adblockInUse = true;
+
+            sut.init();
             expect(sut.load).toHaveBeenCalled();
         });
     });
