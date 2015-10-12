@@ -126,6 +126,12 @@ describe('Outbrain', function () {
             expect(sut.load).not.toHaveBeenCalled();
         });
 
+        /*
+            Loading Outbrain is dependent on succefull return of high relevance component
+            from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
+            not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
+            make the call instantly when we detect adBlock in use.
+         */
         it('should load when ad block is in use', () => {
             spyOn(sut, 'load');
 
