@@ -27,6 +27,9 @@ http://developers.theguardian.com/join-the-team.html
 @defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
     @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
+            @defining(request.headers.get("X-GU-Continent").getOrElse("")) { continentCode =>
+                @defining(continentCode == "EU" && request.cookies.get("GU-EU-COOKIEBANNER").isEmpty){ showEuCookieMessage =>
+
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -36,16 +39,9 @@ http://developers.theguardian.com/join-the-team.html
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
-            ("is-immersive", metaData.isImmersive)))"
+            ("is-immersive", metaData.isImmersive),
+            ("eu-cookie-message", showEuCookieMessage)))"
         itemscope itemtype="http://schema.org/WebPage">
-
-        @defining(request.headers.get("X-GU-Continent")) { continentCode: Option[String] =>
-            @if(continentCode.nonEmpty){
-                @if(continentCode.get == "EU" && request.cookies.get("GU-Cookie-Notice").isEmpty){
-                    @fragments.cookieMessage()
-                }
-            }
-        }
 
         @fragments.message(metaData)
 
@@ -85,6 +81,8 @@ http://developers.theguardian.com/join-the-team.html
 
     </body>
     </html>
+}
+}
 }
 }
 }

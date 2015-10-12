@@ -200,6 +200,35 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
+/* EU cookie policy message
+   ========================================================================== */
+.site-message--cookies {
+    .cookies__copy {
+        margin-bottom: 0;
+        @include font(arial, normal, 11px, 14px);
+        color: colour(neutral-1);
+
+        strong {
+            font-weight: normal;
+        }
+    }
+
+    .cookies__link {
+        float: right;
+        margin-top: $gs-baseline*2;
+        color: #1878fb;
+        @include font(arial, bold, 14px);
+
+        @include mq(tablet) {
+            float: left;
+            margin-left: $gs-gutter*2;
+        }
+    }
+
+}
+
+
+
 /* App onboarding messages
    ========================================================================== */
 .site-message--android,
