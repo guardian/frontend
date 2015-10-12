@@ -30,6 +30,7 @@ object MetaDataMatcher extends Matchers  {
   def ensureWebPage(result: Future[Result], articleUrl: String) {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
+
     val script = body.getElementsByAttributeValue("data-schema", "WebPage")
     script.size() should be(1)
 
@@ -60,4 +61,5 @@ object MetaDataMatcher extends Matchers  {
     val script = body.getElementsByAttributeValue("property", "ad:ios:url")
     script.size() should be(0)
   }
+
 }

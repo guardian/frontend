@@ -28,7 +28,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   lazy val openGraphImage: Option[String] =
-    delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String => if (s.startsWith("//")) s"http:$s" else s }
+    delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String => if (s.startsWith("//")) s"http:$s" else s}
       .orElse(getFootballBadgeUrl)
 
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
@@ -65,12 +65,12 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val richLinkId: Option[String] =
     delegate.references.find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
-      .filter(_.matches( """https?://www\.theguardian\.com/.*"""))
+      .filter(_.matches("""https?://www\.theguardian\.com/.*"""))
 
   lazy val openModuleId: Option[String] =
     delegate.references.find(_.`type` == "open-module")
       .map(_.id.stripPrefix("open-module/"))
-      .filter(_.matches( """https?://open-module\.appspot\.com/view\?id=\d+"""))
+      .filter(_.matches("""https?://open-module\.appspot\.com/view\?id=\d+"""))
 
   override lazy val analyticsName = s"GFE:$section:$name"
 
@@ -92,7 +92,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val podcast: Option[Podcast] = delegate.podcast
 
-  private def optionalMapEntry(key: String, o: Option[String]): Map[String, String] =
+  private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
     o.map(value => Map(key -> value)).getOrElse(Map())
 
   override def iosType = section match {
