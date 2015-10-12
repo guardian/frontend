@@ -34,7 +34,8 @@ describe('Outbrain', function () {
             config.switches.outbrain = true;
             config.page = {
                 section: 'uk-news',
-                isPreview: false
+                isPreview: false,
+                commentable: true
             };
             identity.isUserLoggedIn = function () {
                 return false;
@@ -124,6 +125,19 @@ describe('Outbrain', function () {
             sut.init();
             mediator.emit('modules:commercial:dfp:rendered', eventStub);
             expect(sut.load).not.toHaveBeenCalled();
+        });
+
+        it('should load when user is logged in but there are no comments on the page', function () {
+            identity.isUserLoggedIn = function () {
+                return true;
+            };
+
+            config.page.commentable = false;
+            spyOn(sut, 'load');
+
+            sut.init();
+            mediator.emit('modules:commercial:dfp:rendered', eventStub);
+            expect(sut.load).toHaveBeenCalled();
         });
     });
 
