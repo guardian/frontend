@@ -93,19 +93,14 @@ $ima-controls-height: 70px;
         position: absolute;
         top: 50%;
         left: 50%;
-
-        height: $vjs-small-button-size;
-        width: $vjs-small-button-size;
+        @include video-play-button-size($vjs-small-button-size);
         margin-top: $vjs-small-button-size/-2;
         margin-left: $vjs-small-button-size/-2;
-        font-size: 9px;    //this influences the em-based triangle for the play button.
 
         @include mq(mobileLandscape) {
-            height: $vjs-large-button-size;
-            width: $vjs-large-button-size;
+            @include video-play-button-size($vjs-large-button-size);
             margin-top: $vjs-large-button-size/-2;
             margin-left: $vjs-large-button-size/-2;
-            font-size: 12px;
         }
 
         &:before {
