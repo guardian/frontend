@@ -93,10 +93,20 @@ $ima-controls-height: 70px;
         position: absolute;
         top: 50%;
         left: 50%;
-        height: 70px;
-        width: 70px;
-        margin-top: -35px;
-        margin-left: -35px;
+
+        height: $vjs-small-button-size;
+        width: $vjs-small-button-size;
+        margin-top: $vjs-small-button-size/-2;
+        margin-left: $vjs-small-button-size/-2;
+        font-size: 9px;    //this influences the em-based triangle for the play button.
+
+        @include mq(mobileLandscape) {
+            height: $vjs-large-button-size;
+            width: $vjs-large-button-size;
+            margin-top: $vjs-large-button-size/-2;
+            margin-left: $vjs-large-button-size/-2;
+            font-size: 12px;
+        }
 
         &:before {
             content: '';
@@ -116,10 +126,10 @@ $ima-controls-height: 70px;
         &:after {
             content: '';
             position: absolute;
-            left: 26px;
-            top: $gs-baseline*2;
+            left: 2em;
+            top: 2em;
             border-style: solid;
-            border-width: 11px 0 11px 28px;
+            border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent colour(neutral-7);
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
 
