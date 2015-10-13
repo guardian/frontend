@@ -21,6 +21,7 @@ window.guardian = {
         loaded: false
     },
     config: @defining(Edition(request)) { edition => {
+        "isEu": @Html(s"""${request.headers.get("X-GU-Continent").getOrElse("") == "EU"}"""),
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage(item).get))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
