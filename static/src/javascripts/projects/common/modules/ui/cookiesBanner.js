@@ -14,7 +14,7 @@ define([
     template,
     userPrefs,
     Message
-){
+) {
     /**
      * Rules:
      *
@@ -27,7 +27,7 @@ define([
     var COOKIE_IMPRESSION_KEY = 'GU_EU_COOKIEBANNER',
         cookieVal = cookies.get(COOKIE_IMPRESSION_KEY),
         impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0,
-        link='https://www.theguardian.com/info/cookies',
+        link = 'https://www.theguardian.com/info/cookies',
         txt = '<p class="cookie-message__copy">Welcome to the Guardian. This site uses cookies, read our policy <a href="<%=link%>" class="cookie-message__link">here</a>.</p>',
         opts = {important: true};
 
