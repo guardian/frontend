@@ -281,6 +281,10 @@ $control-offset: 36 + $gs-gutter/2;
         margin-left: 0 - (gs-span(7) + $gs-gutter);
     }
 
+    @include mq(wide) {
+        margin-left: 0 - (gs-span(8) + $gs-gutter);
+    }
+
     // account for google search sizes.
     .search-box {
         margin-bottom: -1px;
