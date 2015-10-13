@@ -164,8 +164,8 @@ object ContentWidths {
       wide =            Some(1300.px))
   }
 
-  object PictureMedia {
-    // PictureMedia does not support hinting/weighting, so does not extend ContentRelation.
+  object ImageContentMedia {
+    // ImageContentMedia does not support hinting/weighting, so does not extend ContentRelation.
     val Inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),

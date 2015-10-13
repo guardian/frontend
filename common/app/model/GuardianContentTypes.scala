@@ -17,6 +17,7 @@ object GuardianContentTypes {
   val Article = "Article"
   val NetworkFront = "Network Front"
   val Section = "Section"
+  // i.e. Pictures
   val ImageContent = "ImageContent"
   val Interactive = "Interactive"
   val Gallery = "Gallery"
