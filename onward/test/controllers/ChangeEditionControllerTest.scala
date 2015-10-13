@@ -13,7 +13,7 @@ import test.{ConfiguredTestSuite, TestRequest}
   "ChangeEditionController" should "redirect to correct page" in {
     val result = controllers.ChangeEditionController.render("uk")(TestRequest())
     status(result) should be(302)
-    header("Location", result) should be (Some("/uk"))
+    header("Location", result) should be (Some("/uk?INTCMP=CE_UK"))
   }
 
   it should "set a preference cookie" in {
@@ -32,7 +32,7 @@ import test.{ConfiguredTestSuite, TestRequest}
     GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
     GU_EDITION.value should be ("INT")
 
-    header("Location", result).head should endWith ("/international")
+    header("Location", result).head should endWith ("/international?INTCMP=CE_INT")
   }
 
   it should "not cache" in {

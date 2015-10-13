@@ -188,6 +188,11 @@
         bottom: $gs-baseline;
         left: $gs-gutter/2;
     }
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: #ffffff;
+    }
     .hide-on-mobile-inline {
         @include mq(leftCol, wide) {
             display: none !important;

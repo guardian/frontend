@@ -292,7 +292,7 @@ trait FeatureSwitches {
     "ipad-split-capabilities",
     "If switched on then this gives older ipads the stripped down front but full articles",
     safeState = On,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 12, 1),
     exposeClientSide = false
   )
 
@@ -367,15 +367,4 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-  val InternationalEditionBetaSwitch = Switch(
-    "Feature",
-    "international-edition-beta",
-    "International edition A/B test on",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 10, 31),
-
-    exposeClientSide = true
-  )
-
-
 }

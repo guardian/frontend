@@ -39,9 +39,22 @@ object JspmAMDTest extends TestDefinition(
   new LocalDate(2015, 11, 30)
 )
 
+object EmailTextTestControl extends TestDefinition(
+  List(Variant1),
+  "email-text-test-control",
+  "Control for testing a different version of the email text in the footer",
+  new LocalDate(2015, 12, 15)
+)
+
+object EmailTextTestV1 extends TestDefinition(
+  List(Variant2),
+  "email-text-test-v1",
+  "Tests a different version of the email text in the footer - Guardian today email",
+  new LocalDate(2015, 12, 15)
+)
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, JspmAMDTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, JspmAMDTest, EmailTextTestControl, EmailTextTestV1)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 

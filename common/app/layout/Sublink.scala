@@ -28,8 +28,8 @@ case class EditionalisedLink(
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
     processUrl(baseUrl, Edition(requestHeader)) match {
-      case ProcessedUrl(url, true) => s"""href="${handleQueryStrings(url)}" rel="nofollow""""
-      case ProcessedUrl(url, false) => s"""href="${handleQueryStrings(url)}""""
+      case ProcessedUrl(url, true) => s"""href="$url" rel="nofollow""""
+      case ProcessedUrl(url, false) => s"""href="$url""""
     }
 }
 
@@ -268,6 +268,7 @@ case class ContentCard(
     case Some(InlineVideo(_, _, _, Some(_))) => true
     case Some(InlineImage(_)) => true
     case Some(InlineSlideshow(_)) => true
+    case Some(CrosswordSvg(_)) => true
     case _ => false
   }
 
