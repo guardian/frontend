@@ -2,7 +2,7 @@ import Injector from 'helpers/injector';
 
 const injector = new Injector();
 
-fdescribe('Maintaining the freshness of a user`s adfree status', ()=> {
+describe('Maintaining the freshness of a user`s adfree status', ()=> {
     const adfreeExpiryStorageKey = 'gu.adfree.user.expiry';
 
     let cookies, config, storage, identity, maintainAdfreeFreshness, renewAdfreeStatus;
@@ -36,6 +36,11 @@ fdescribe('Maintaining the freshness of a user`s adfree status', ()=> {
     });
 
     describe('If the featue is enabled', ()=> {
+        beforeEach(()=> {
+            config.switches = {
+                advertOptOut : true
+            };
+        });
 
         describe('If the user is logged in', ()=> {
             beforeEach(()=> {
