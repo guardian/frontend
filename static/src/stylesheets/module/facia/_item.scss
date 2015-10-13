@@ -636,6 +636,17 @@ $block-height: 71px;
         content: 'saved';
     }
 
+    @include mq(tablet) {
+        &:only-child {
+            border: 0;
+            padding: 0;
+        
+            .inline-icon {
+                margin-left: 0;
+            }
+        }
+    }
+
     @include mq($until: tablet) {
         border-left: 0;
         float: right;
@@ -668,14 +679,6 @@ $block-height: 71px;
             float: left;
             margin-right: $gs-gutter / 4;
         }
-    }
-}
-
-.fc-container .fc-save-for-later:only-child {
-    @include mq(tablet) {
-        border: 0;
-        padding: 0;
-        margin-left: -$gs-gutter / 4;
     }
 }
 
