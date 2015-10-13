@@ -168,6 +168,17 @@ object ContentWidths {
       wide =            Some(1300.px))
   }
 
+  object LiveBlogMedia {
+    val Inline = WidthsByBreakpoint(
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
+      phablet =         Some(620.px),
+      tablet =          Some(700.px),
+      desktop =         Some(620.px),
+      leftCol =         Some(780.px),
+      wide =            Some(620.px))
+  }
+
   object ImageContentMedia {
     // ImageContentMedia does not support hinting/weighting, so does not extend ContentRelation.
     val Inline = WidthsByBreakpoint(

@@ -1,7 +1,7 @@
 package views
 
 import common.Edition
-import layout.ContentWidths.MainMedia
+import layout.ContentWidths.{MainMedia, LiveBlogMedia}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
@@ -10,10 +10,16 @@ import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleane
 object MainMediaWidths {
 
   def apply(article: Article): layout.WidthsByBreakpoint = {
-    (article.hasShowcaseMainElement, article.isFeature) match {
-      case (true, true) => MainMedia.FeatureShowcase
-      case (true, _) => MainMedia.Showcase
-      case _ => MainMedia.Inline
+    if (article.hasShowcaseMainElement) {
+      if (article.isFeature) {
+        MainMedia.FeatureShowcase
+      } else {
+        MainMedia.Showcase
+      }
+    } else if (article.contentType == "LiveBlog") {
+      LiveBlogMedia.Inline
+    } else {
+      MainMedia.Inline
     }
   }
 

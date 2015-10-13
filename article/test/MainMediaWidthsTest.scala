@@ -1,7 +1,7 @@
 package test
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, Asset}
-import layout.ContentWidths.{MainMedia}
+import layout.ContentWidths.{LiveBlogMedia, MainMedia}
 import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.concurrent.Eventually
@@ -52,6 +52,23 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
     val article = new Article(content)
 
     MainMediaWidths(article) shouldEqual MainMedia.Showcase
+  }
+
+  "should return correct widths for a liveblog" in {
+    val content = ApiContent(id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      tags = List(tag("tone/minutebyminute", "tone")),
+      elements = None
+    )
+
+    val article = new Article(content)
+
+    MainMediaWidths(article) shouldEqual LiveBlogMedia.Inline
   }
 
   "should return correct widths for showcase main media in feature content" in {
