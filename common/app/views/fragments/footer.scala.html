@@ -1,4 +1,4 @@
-@(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
+@(page: model.MetaData, showNav: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import conf.Configuration
 @import org.joda.time.DateTime
@@ -21,7 +21,7 @@
                     <span class="control__info">back to top</span>
                 </a>
             </div>
-            @if(showNav) {
+            @if(showNav && !amp) {
                 <div class="l-footer__navigation-wrapper u-cf">
                     @fragments.nav.navigationFooter(page)
                 </div>
@@ -50,12 +50,12 @@
             }
             @if(currentEdition == Uk) {
                 @if(mvt.EmailTextTestControl.isParticipating) {
-                    @* MVT - Test email text - Control *@
+                     MVT - Test email text - Control
                     <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
                         daily email sign up</a></li>
                 } else {
                     @if(mvt.EmailTextTestV1.isParticipating) {
-                        @* MVT - Test email text - Variant 1 *@
+                         MVT - Test email text - Variant 1
                         <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
                             Guardian Today email</a></li>
                     } else {
