@@ -10,10 +10,12 @@
     <div class="l-footer__primary">
         <div id="footer-nav" class="gs-container">
             <div class="brand-bar modern-visible u-cf">
-                <a href="@LinkTo{/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
-                    <span class="u-h">The Guardian</span>
-                    <i class="i i-guardian-logo-160"></i>
-                </a>
+                @if(!amp) {
+                    <a href="@LinkTo {/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo-160"></i>
+                    </a>
+                }
                 <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
                     <span class="rounded-icon control__icon-wrapper">
                         @fragments.inlineSvg("arrow-up", "icon")
@@ -50,12 +52,12 @@
             }
             @if(currentEdition == Uk) {
                 @if(mvt.EmailTextTestControl.isParticipating) {
-                     MVT - Test email text - Control
+                    @* MVT - Test email text - Control *@
                     <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
                         daily email sign up</a></li>
                 } else {
                     @if(mvt.EmailTextTestV1.isParticipating) {
-                         MVT - Test email text - Variant 1
+                         @* MVT - Test email text - Variant 1 *@
                         <li class="colophon__item"><a data-link-name="uk : footer : email sign-up" href="@LinkTo{/world/2013/oct/04/1}">
                             Guardian Today email</a></li>
                     } else {
