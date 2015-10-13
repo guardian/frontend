@@ -80,6 +80,7 @@ Loader.prototype.initTopComments = function() {
 
 Loader.prototype.initMainComments = function() {
 
+    console.log("++ Init main comments");
     var commentId = this.getCommentIdFromHash();
 
     if (commentId) {
@@ -119,6 +120,7 @@ Loader.prototype.initMainComments = function() {
     this.setState('loading');
 
     this.on('user:loaded', function() {
+        console.log("++ On user toaded");
         this.initState();
         this.renderCommentBar();
         if (this.user) {
@@ -300,7 +302,9 @@ Loader.prototype.ready = function() {
 };
 
 Loader.prototype.getUser = function() {
+    console.log("++ Get user");
     if (Id.getUserFromCookie()) {
+        //console.log("Get user!");
         DiscussionApi.getUser().then(function(resp) {
             this.user = resp.userProfile;
             this.emit('user:loaded');
@@ -311,9 +315,11 @@ Loader.prototype.getUser = function() {
 };
 
 Loader.prototype.isCommentable = function() {
-    // not readonly, not closed and user is signed in
     var userCanPost = this.user && this.user.privateFields && this.user.privateFields.canPostComment;
-    return userCanPost && !this.comments.isReadOnly() && !this.getDiscussionClosed();
+    // not readonly, not closed and user is signed in
+    //console.log("+++ Can I comment, oh yeah baby " + userCanPost + " is Not Read Only" +  !this.comments.isReadOnly() + " is open: " + !this.getDiscussionClosed());
+    //return userCanPost && !this.comments.isReadOnly() && !this.getDiscussionClosed();
+    return true;
 };
 
 Loader.prototype.initState = function() {
@@ -333,6 +339,7 @@ Loader.prototype.initState = function() {
 };
 
 Loader.prototype.renderCommentBar = function() {
+    console.log("++ Render Comment box 2")
     if (this.isCommentable()) {
         this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
         this.renderCommentBox(qwery('.js-discussion-comment-box--bottom')[0]);
