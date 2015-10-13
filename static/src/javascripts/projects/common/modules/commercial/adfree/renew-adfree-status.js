@@ -14,6 +14,7 @@ define([
 
     function renew() {
         ajaxPromise({
+            // Endpoint returns cookie, 'gu_adfree_user'
             url : 'https://members-data-api.theguardian.com/user-attributes/me/adfree',
             crossOrigin : true,
             success : handleResponse,
@@ -24,7 +25,7 @@ define([
     function handleResponse(response) {
         var responseData = JSON.parse(response),
             nextCookieExpiry = getNextCookieExpiry(responseData.issuedAt);
-        storage.local.set('gu_adfree_user_expiry', nextCookieExpiry);
+        storage.local.set('gu.adfree.user.expiry', nextCookieExpiry);
     }
 
     function getNextCookieExpiry(cookieIssueTime) {

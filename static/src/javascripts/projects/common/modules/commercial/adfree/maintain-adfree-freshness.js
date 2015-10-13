@@ -25,7 +25,7 @@ define([
     }
 
     function adfreeCookieStale() {
-        var adfreeCookieExpiry = storage.local.get('gu_adfree_user_expiry'),
+        var adfreeCookieExpiry = storage.local.get('gu.adfree.user.expiry'),
             currentTime = new Date().getTime();
         return (adfreeCookieExpiry === null) || (currentTime > adfreeCookieExpiry);
     }

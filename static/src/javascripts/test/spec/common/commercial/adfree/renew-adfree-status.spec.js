@@ -5,7 +5,7 @@ import sinon from 'sinonjs';
 const injector = new Injector();
 
 describe('User ad preference service', ()=> {
-    const adfreeExpiryStorageKey = 'gu_adfree_user_expiry';
+    const adfreeExpiryStorageKey = 'gu.adfree.user.expiry';
 
     let renewAdfreeStatus, storage, adfreeRequest, environmentXHR;
 

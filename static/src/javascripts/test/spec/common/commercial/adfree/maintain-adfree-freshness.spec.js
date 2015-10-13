@@ -3,6 +3,8 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 fdescribe('Maintaining the freshness of a user`s adfree status', ()=> {
+    const adfreeExpiryStorageKey = 'gu.adfree.user.expiry';
+
     let cookies, config, storage, identity, maintainAdfreeFreshness, renewAdfreeStatus;
 
     beforeEach(function (done) {
@@ -45,7 +47,7 @@ fdescribe('Maintaining the freshness of a user`s adfree status', ()=> {
             it('Makes no requests if the user has an up-to-date adfree cookie', ()=> {
                 cookies.add('gu_adfree_user', 'true');
                 const futureTime = new Date().getTime() + 99999;
-                storage.local.set('gu_adfree_user_expiry', futureTime);
+                storage.local.set(adfreeExpiryStorageKey, futureTime);
 
                 maintainAdfreeFreshness();
                 expect(renewAdfreeStatus.renew).not.toHaveBeenCalled();
@@ -54,7 +56,7 @@ fdescribe('Maintaining the freshness of a user`s adfree status', ()=> {
             it('Makes a request if user has out-of-date adfree cookie', ()=> {
                 cookies.add('gu_adfree_user', 'true');
                 const pastTime = new Date().getTime() - 99999;
-                storage.local.set('gu_adfree_user_expiry', pastTime);
+                storage.local.set(adfreeExpiryStorageKey, pastTime);
 
                 maintainAdfreeFreshness();
                 expect(renewAdfreeStatus.renew).toHaveBeenCalled();
@@ -68,7 +70,7 @@ fdescribe('Maintaining the freshness of a user`s adfree status', ()=> {
 
             it('Makes a request if user has valid expiry time but no cookie', ()=> {
                 const futureTime = new Date().getTime() + 99999;
-                storage.local.set('gu_adfree_user_expiry', futureTime);
+                storage.local.set(adfreeExpiryStorageKey, futureTime);
 
                 maintainAdfreeFreshness();
                 expect(renewAdfreeStatus.renew).toHaveBeenCalled();
