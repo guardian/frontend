@@ -3,6 +3,7 @@ package model
 import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.switches.Switches
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
@@ -114,8 +115,13 @@ trait MetaData extends Tags {
     DfpAgent.isSponsored(tags, Some(section), maybeEdition)
   override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
   override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
-  lazy val isExpiredAdvertisementFeature: Boolean =
-    DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
+
+  lazy val isExpiredAdvertisementFeature: Boolean = {
+    if (Switches.RedirectExpiredAdFeatures.isSwitchedOn) {
+      DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
+    } else false
+  }
+
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
 
   def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
@@ -248,13 +254,13 @@ trait Elements {
     showcasePicture.getOrElse(false) || showcaseEmbed.getOrElse(false)
   }
 
-  def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
+  def mainVideo: Option[VideoElement] = videos.find(_.isMain)
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
-  def mainAudio: Option[AudioElement] = audios.find(_.isMain).headOption
+  def mainAudio: Option[AudioElement] = audios.find(_.isMain)
   lazy val hasMainAudio: Boolean = mainAudio.flatMap(_.audioAssets.headOption).isDefined
 
-  def mainEmbed: Option[EmbedElement] = embeds.find(_.isMain).headOption
+  def mainEmbed: Option[EmbedElement] = embeds.find(_.isMain)
   lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embedAssets.headOption).isDefined
 
   lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
