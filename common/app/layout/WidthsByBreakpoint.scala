@@ -175,6 +175,7 @@ object ContentWidths {
       phablet =         Some(620.px),
       tablet =          Some(700.px),
       desktop =         Some(620.px),
+      // This is like `MainMedia.Inline`, but with a different `leftCol` and `wide`.
       leftCol =         Some(780.px),
       wide =            Some(620.px))
   }
@@ -206,10 +207,10 @@ object ContentWidths {
       wide =            Some(1920.px))
   }
 
-  def getWidthsFromContentElement(contentType: String, hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
+  def getWidthsFromContentElement(hinting: ContentHinting, relation: ContentRelation, isLiveBlog: Boolean): WidthsByBreakpoint = {
     relation match {
       case MainMedia => hinting.mainContentWidths
-      case BodyMedia if hinting == ContentWidths.Inline && contentType == "LiveBlog" => LiveBlogMedia.Inline
+      case BodyMedia if hinting == ContentWidths.Inline && isLiveBlog => LiveBlogMedia.Inline
       case _ => hinting.bodyContentWidths
     }
   }

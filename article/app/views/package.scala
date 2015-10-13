@@ -10,16 +10,11 @@ import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleane
 object MainMediaWidths {
 
   def apply(article: Article): layout.WidthsByBreakpoint = {
-    if (article.hasShowcaseMainElement) {
-      if (article.isFeature) {
-        MainMedia.FeatureShowcase
-      } else {
-        MainMedia.Showcase
-      }
-    } else if (article.contentType == "LiveBlog") {
-      LiveBlogMedia.Inline
-    } else {
-      MainMedia.Inline
+    (article.hasShowcaseMainElement, article.isFeature, article.isLiveBlog) match {
+      case (true, true, _) => MainMedia.FeatureShowcase
+      case (true, false, _) => MainMedia.Showcase
+      case (false, _, true) => LiveBlogMedia.Inline
+      case _ => MainMedia.Inline
     }
   }
 
