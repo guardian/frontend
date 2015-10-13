@@ -25,6 +25,7 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
+    'common/modules/commercial/adfree/maintain-adfree-freshness',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
@@ -76,6 +77,7 @@ define([
     simpleMetrics,
     userAdTargeting,
     donotUseAdblock,
+    maintainAdfreeFreshness,
     CommentCount,
     ab,
     AutoSignin,
@@ -348,7 +350,6 @@ define([
                 }
             },
 
-
             saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
@@ -401,7 +402,8 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
-                ['c-save-for-later', modules.saveForLater]
+                ['c-save-for-later', modules.saveForLater],
+                ['c-maintain-adfree-freshness', maintainAdfreeFreshness]
             ]), function (fn) {
                 fn();
             });
