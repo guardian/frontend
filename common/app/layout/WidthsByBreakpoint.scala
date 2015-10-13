@@ -206,10 +206,12 @@ object ContentWidths {
       wide =            Some(1920.px))
   }
 
-  def getWidthsFromContentElement(hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
+  def getWidthsFromContentElement(contentType: String, hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
     relation match {
       case MainMedia => hinting.mainContentWidths
-      case _ => hinting.bodyContentWidths }
+      case BodyMedia if hinting == ContentWidths.Inline && contentType == "LiveBlog" => LiveBlogMedia.Inline
+      case _ => hinting.bodyContentWidths
+    }
   }
 }
 

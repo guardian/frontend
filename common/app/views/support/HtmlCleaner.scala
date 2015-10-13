@@ -102,7 +102,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- container.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
-      val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
+      val widths = ContentWidths.getWidthsFromContentElement(article.contentType, hinting, BodyMedia)
 
       val orientationClass = image.orientation match {
         case Portrait => Some("img--portrait")
