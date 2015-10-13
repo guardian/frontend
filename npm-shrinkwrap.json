@@ -1020,6 +1020,11 @@
       "from": "btoa@1.1.2",
       "resolved": "https://registry.npmjs.org/btoa/-/btoa-1.1.2.tgz"
     },
+    "eslint-plugin-jasmine": {
+      "version": "1.5.0",
+      "from": "eslint-plugin-jasmine@*",
+      "resolved": "https://registry.npmjs.org/eslint-plugin-jasmine/-/eslint-plugin-jasmine-1.5.0.tgz"
+    },
     "eslint-plugin-react": {
       "version": "3.5.0",
       "from": "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-3.5.0.tgz",
