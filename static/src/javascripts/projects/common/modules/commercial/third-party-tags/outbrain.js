@@ -107,7 +107,7 @@ define([
                 && !config.page.isPreview
                 && !identity.isUserLoggedIn()
                 && config.page.section !== 'childrens-books-site') {
-                if (detect.adblockInUse) {
+                if (detect.adblockInUse()) {
                     this.load();
                 } else {
                     mediator.on('modules:commercial:dfp:rendered', function (event) {
