@@ -1,8 +1,10 @@
 define([
     'common/utils/ajax-promise',
+    'common/utils/config',
     'common/utils/storage'
 ], function (
     ajaxPromise,
+    config,
     storage
 ) {
     return {
@@ -13,9 +15,9 @@ define([
     };
 
     function renew() {
+        var endpoint = config.page.userAttributesApiUrl + '/me/adfree';
         ajaxPromise({
-            // Endpoint returns cookie, 'gu_adfree_user'
-            url : 'https://members-data-api.theguardian.com/user-attributes/me/adfree',
+            url : endpoint, // returns cookie 'gu_adfree_user'
             crossOrigin : true,
             success : handleResponse,
             error : function () {}

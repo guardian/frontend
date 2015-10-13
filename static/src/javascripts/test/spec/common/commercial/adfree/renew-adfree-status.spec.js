@@ -6,15 +6,15 @@ const injector = new Injector();
 
 describe('User ad preference service', ()=> {
     const adfreeExpiryStorageKey = 'gu.adfree.user.expiry';
-
-    let renewAdfreeStatus, storage, adfreeRequest, environmentXHR;
+    let renewAdfreeStatus, config, storage, adfreeRequest, environmentXHR;
 
     beforeEach(done => {
         injector.test([
             'common/modules/commercial/adfree/renew-adfree-status',
+            'common/utils/config',
             'common/utils/storage'
         ], function () {
-            [renewAdfreeStatus, storage] = arguments;
+            [renewAdfreeStatus, config, storage] = arguments;
             done();
         });
     });
@@ -31,10 +31,11 @@ describe('User ad preference service', ()=> {
             environmentXHR.restore();
         });
 
-        it('Makes a GET request to the members data API', ()=> {
+        it('Makes a GET request to the configured endpoint URI', ()=> {
+            config.page = {userAttributesApiUrl : 'https://test-domain.com/test'};
             renewAdfreeStatus.renew();
             expect(adfreeRequest.method).toBe('GET');
-            expect(adfreeRequest.url).toBe('https://members-data-api.theguardian.com/user-attributes/me/adfree');
+            expect(adfreeRequest.url).toBe(config.page.userAttributesApiUrl + '/me/adfree');
         });
 
         it('Makes asynchronous requests', ()=> {
