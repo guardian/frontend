@@ -33,4 +33,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMostPopRelContPosition = Switch(
+    "A/B Tests",
+    "ab-most-pop-rel-cont-position",
+    "Switch to show swap the locations of most popular and related content",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
 }

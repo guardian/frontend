@@ -1,6 +1,7 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
+    'bonzo',
     'bean',
     'common/utils/$',
     'common/utils/config',
@@ -16,6 +17,7 @@ define([
     'bootstraps/trail'
 ], function (
     qwery,
+    bonzo,
     bean,
     $,
     config,
@@ -53,6 +55,20 @@ define([
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
+            },
+
+            initMostPopRelContentTest: function() {
+                //switch position of related content and most popular
+                if(ab.getParticipations().MostPopRelContPosition && ab.getParticipations().MostPopRelContPosition.variant === 'switched') {
+                    var moreOnThisStory = qwery('.more-on-this-story'),
+                        $mostPop = $('.js-most-popular-footer'),
+                        onwardEl = (moreOnThisStory.length > 0) ? moreOnThisStory : qwery('.js-onward'),
+                        markOnwardPos = (bonzo(onwardEl).html() !== "") ? bonzo(onwardEl) : $('.js-related'),
+                        markMostPopularPos = $mostPop.next();
+
+                    $mostPop.insertBefore(markOnwardPos);
+                    bonzo(onwardEl).insertBefore(markMostPopularPos);
+                }
             }
         },
 
@@ -62,6 +78,7 @@ define([
             modules.initRightHandComponent();
             modules.initCmpParam();
             modules.initQuizListeners();
+            modules.initMostPopRelContentTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

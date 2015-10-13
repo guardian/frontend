@@ -1,6 +1,7 @@
 define([
     'common/utils/_',
     'qwery',
+    'bonzo',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -12,6 +13,7 @@ define([
 ], function (
     _,
     qwery,
+    bonzo,
     $,
     config,
     detect,
@@ -31,6 +33,18 @@ define([
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !_.contains(sectionsWithoutPopular, config.page.section);
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
+
+        console.log('init');
+
+        var onwardEl = (qwery('.more-on-this-story').length > 0) ? qwery('.more-on-this-story') : qwery('.js-onward');
+
+        onwardEl = (bonzo(onwardEl).html() === "") ? onwardEl : qwery('.js-related');
+
+        var markOnwardPos = bonzo(onwardEl).next(),
+            markMostPopularPos = $('.js-most-popular-footer').next();
+
+        $('.js-most-popular-footer').insertBefore(markOnwardPos);
+        bonzo(onwardEl).insertBefore(markMostPopularPos);
     }
 
     Component.define(MostPopular);
