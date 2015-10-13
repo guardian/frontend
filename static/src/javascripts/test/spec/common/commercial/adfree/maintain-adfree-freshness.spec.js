@@ -35,7 +35,7 @@ describe('Maintaining the freshness of a user`s adfree status', ()=> {
         });
     });
 
-    describe('If the featue is enabled', ()=> {
+    describe('If the feature is enabled', ()=> {
         beforeEach(()=> {
             config.switches = {
                 advertOptOut : true
