@@ -107,11 +107,15 @@ define([
                 && !config.page.isPreview
                 && !identity.isUserLoggedIn()
                 && config.page.section !== 'childrens-books-site') {
-                mediator.on('modules:commercial:dfp:rendered', function (event) {
-                    if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
-                        this.load();
-                    }
-                }.bind(this));
+                if (detect.adblockInUse) {
+                    this.load();
+                } else {
+                    mediator.on('modules:commercial:dfp:rendered', function (event) {
+                        if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+                            this.load();
+                        }
+                    }.bind(this));
+                }
             }
         }
     };

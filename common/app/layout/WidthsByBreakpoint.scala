@@ -154,6 +154,10 @@ object ContentWidths {
       leftCol =         Some(780.px),
       wide =            Some(860.px))
 
+    /**
+     * main image is showcase on a feature article, e.g.
+     * http://www.theguardian.com/politics/2015/may/02/nicola-sturgeon-im-the-boss-now
+     */
     val FeatureShowcase = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
@@ -164,8 +168,8 @@ object ContentWidths {
       wide =            Some(1300.px))
   }
 
-  object PictureMedia {
-    // PictureMedia does not support hinting/weighting, so does not extend ContentRelation.
+  object ImageContentMedia {
+    // ImageContentMedia does not support hinting/weighting, so does not extend ContentRelation.
     val Inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
