@@ -9,7 +9,8 @@ import scala.util.{Success, Try}
 object ThirdPartyConditions {
 
   lazy val thirdPartyConditions: Seq[String] = Seq(
-    "GRS"
+    "GRS",
+    "GTNF"
   )
 
   def validGroupCode(conditions: Seq[String], groupCode: Option[String]): Option[String] = conditions.find(g => g == groupCode.getOrElse(""))
