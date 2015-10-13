@@ -109,5 +109,8 @@
       "babel-runtime": "npm:babel-runtime@5.8.20",
       "core-js": "npm:core-js@1.1.0"
     }
+  },
+  "devDependencies": {
+    "eslint-plugin-jasmine": "^1.5.0"
   }
 }
