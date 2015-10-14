@@ -1,0 +1,72 @@
+/* jscs:disable disallowDanglingUnderscores */
+import Injector from 'helpers/injector';
+import sinon from 'sinonjs';
+
+const injector = new Injector();
+
+describe('Requesting the user`s adfree status', ()=> {
+    const adfreeExpiryStorageKey = 'gu.adfree.user.expiry';
+    let renewAdfreeStatus, config, storage, adfreeRequest, environmentXHR;
+
+    beforeEach(done => {
+        injector.test([
+            'common/modules/commercial/adfree/renew-adfree-status',
+            'common/utils/config',
+            'common/utils/storage'
+        ], function () {
+            [renewAdfreeStatus, config, storage] = arguments;
+            done();
+        });
+    });
+
+    describe('Making the request', ()=> {
+        beforeEach(()=> {
+            environmentXHR = sinon.useFakeXMLHttpRequest();
+            environmentXHR.onCreate = xhr => {
+                adfreeRequest = xhr;
+            };
+        });
+
+        afterEach(()=> {
+            environmentXHR.restore();
+        });
+
+        it('Makes a GET request to the configured endpoint URI', ()=> {
+            config.page = {userAttributesApiUrl : 'https://test-domain.com/test'};
+            renewAdfreeStatus.renew();
+            expect(adfreeRequest.method).toBe('GET');
+            expect(adfreeRequest.url).toBe(config.page.userAttributesApiUrl + '/me/adfree');
+        });
+
+        it('Makes asynchronous requests', ()=> {
+            renewAdfreeStatus.renew();
+            expect(adfreeRequest.async).toBe(true);
+        });
+    });
+
+    describe('Handling the response', ()=> {
+        const now = new Date().getTime();
+        const response = {
+            adfree : true,
+            issuedAt : now
+        };
+        const serializedResponse = JSON.stringify(response);
+
+        beforeEach(()=> {
+            storage.local.remove(adfreeExpiryStorageKey);
+        });
+
+        it('Adds an adfree status expiry time to localstorage', ()=> {
+            renewAdfreeStatus._handleResponse(serializedResponse);
+            const storedExpiryDate = storage.local.get(adfreeExpiryStorageKey);
+            expect(storedExpiryDate).toEqual(jasmine.any(Number));
+        });
+
+        it('That expiry time is in the future', ()=> {
+            renewAdfreeStatus._handleResponse(serializedResponse);
+            const storedExpiryDate = storage.local.get(adfreeExpiryStorageKey);
+            expect(storedExpiryDate > now).toBeTruthy();
+        });
+    });
+
+});
