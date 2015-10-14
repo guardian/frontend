@@ -60,14 +60,16 @@ define([
             initMostPopRelContentTest: function() {
                 //switch position of related content and most popular
                 if(ab.getParticipations().MostPopRelContPosition && ab.getParticipations().MostPopRelContPosition.variant === 'switched') {
-                    var moreOnThisStory = qwery('.more-on-this-story'),
-                        $mostPop = $('.js-most-popular-footer'),
-                        onwardEl = (moreOnThisStory.length > 0) ? moreOnThisStory : qwery('.js-onward'),
-                        markOnwardPos = (bonzo(onwardEl).html() !== "") ? bonzo(onwardEl) : $('.js-related'),
+                    var $mostPop = $('.js-most-popular-footer'),
+                        $onwardEl = $('.related'),
+                        markOnwardPos = $onwardEl.next();
                         markMostPopularPos = $mostPop.next();
 
                     $mostPop.insertBefore(markOnwardPos);
-                    bonzo(onwardEl).insertBefore(markMostPopularPos);
+                    $mostPop.attr('data-link-name', $mostPop.attr('data-link-name') + ' most-popular-ab1');
+
+                    $onwardEl.insertBefore(markMostPopularPos);
+                    $onwardEl.attr('data-link-name', 'onward-ab1');
                 }
             }
         },

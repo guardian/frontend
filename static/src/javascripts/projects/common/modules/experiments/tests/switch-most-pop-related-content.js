@@ -3,7 +3,7 @@ define([
 ) {
     return function () {
         this.id = 'MostPopRelContPosition';
-        this.start = '2015-10-14';
+        this.start = '2015-10-15';
         this.expiry = '2015-11-15';
         this.author = 'Josh Holder';
         this.description = 'Switches the location of the most popular and related content containers';
@@ -11,7 +11,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'The number of onward journeys increases';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = '';
+        this.dataLinkNames = 'onward-ab1, popular-ab1';
         this.idealOutcome = '';
 
         this.canRun = function () {
