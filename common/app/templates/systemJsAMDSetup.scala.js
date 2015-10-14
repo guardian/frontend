@@ -34,7 +34,7 @@ System.config({
         'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
         'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
         'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
-        'bootstraps/video-player':  '@Static("javascripts/bootstraps/video-player.js")',
+        'bootstraps/media':  '@Static("javascripts/bootstraps/media.js")',
         'bootstraps/article':         '@Static("javascripts/bootstraps/article.js")',
         'bootstraps/liveblog': '@Static("javascripts/bootstraps/liveblog.js")',
         'bootstraps/trail': '@Static("javascripts/bootstraps/trail.js")',
