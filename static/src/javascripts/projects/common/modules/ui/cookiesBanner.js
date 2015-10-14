@@ -30,7 +30,7 @@ define([
         impressions = 0;
 
     function canShow() {
-        if(config.isEu) {
+        if (config.isEu) {
             var cookieVal = cookies.get(COOKIE_MESSAGE_KEY);
             impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0;
             return impressions == 0;
