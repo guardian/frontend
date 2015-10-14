@@ -32,6 +32,7 @@ define([
         link = 'https://www.theguardian.com/info/cookies',
         txt = '<p class="cookie-message__copy">Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.</p>',
         opts = {important: true},
+        cookieLifeDays = 365,
         msg = new Message('cookies');
 
     function canShow() {
@@ -39,12 +40,11 @@ define([
     }
 
     function showMessage() {
+        msg.acknowledge = function() {
+            cookies.add(COOKIE_ACKNOWLEDGE_KEY, impressions + 1, cookieLifeDays);
+            msg.hide();
+        };
         msg.show(txt, opts);
-    }
-
-    function acknowledge() {
-        cookies.add(COOKIE_ACKNOWLEDGE_KEY, impressions + 1);
-        msg.hide();
     }
 
     function init() {
