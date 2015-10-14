@@ -23,14 +23,12 @@ import play.api.test.Helpers._
 
   it should "Include app deep link" in {
     val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
-    var expectedLink = s"ios-app://$appId/gnmguardian/$articleUrl?contenttype=list&source=google"
-    MetaDataMatcher.ensureDeepLink(result, expectedLink)
+    MetaDataMatcher.ensureDeepLink(result)
   }
 
   it should "Not include app deep link on the crosswords index" in {
     val result = controllers.IndexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
-    var expectedNonExistantLink = s"ios-app://$appId/gnmguardian/$articleUrl?contenttype=front&source=google"
-    MetaDataMatcher.ensureNoDeepLink(result, expectedNonExistantLink)
+    MetaDataMatcher.ensureNoDeepLink(result)
   }
 
   it should "not include webpage metadata on the crossword index" in {

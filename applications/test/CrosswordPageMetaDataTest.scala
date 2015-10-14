@@ -14,7 +14,6 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
   it should "not include the app deep link" in {
     val result = controllers.CrosswordsController.crossword("cryptic", 26697)(TestRequest(crosswordUrl))
-    var expectedNonExistantLink = s"ios-app://$appId/gnmguardian/$crosswordUrl?contenttype=article&source=google"
-    MetaDataMatcher.ensureNoDeepLink(result, expectedNonExistantLink)
+    MetaDataMatcher.ensureNoDeepLink(result)
   }
 }
