@@ -249,4 +249,13 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val ABMembershipMessageUk = Switch(
+    "Commercial",
+    "membership-messages",
+    "Display a message to regular readers promoting Membership",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
 }

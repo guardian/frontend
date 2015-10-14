@@ -72,8 +72,8 @@ define([
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_B',
                     messageText: '“The Guardian enjoys rare freedom and independence. Support our journalism” – Ewen MacAskill',
+                    linkHref: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_B',
                     linkText: 'Find out more',
                     arrowWhiteRight: svgs('arrowWhiteRight')
                 }));
