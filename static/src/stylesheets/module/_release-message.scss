@@ -204,15 +204,23 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
    ========================================================================== */
 .site-message--cookies {
     .cookie-message__copy {
-        p {
-            padding-left: 3px;
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
         }
+
+        @include mq(desktop) {
+            padding: 0;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
         a {
             color: #ffffff;
             text-decoration: underline;
         }
     }
-    .site-message__close {
+    .site-message__media .inline-icon {
         display: none;
     }
 }
