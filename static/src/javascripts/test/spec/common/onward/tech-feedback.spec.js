@@ -1,6 +1,6 @@
 import TechFeedback from 'common/modules/onward/tech-feedback';
 
-fdescribe('Tech-feedback', function () {
+describe('Tech-feedback', function () {
 
     it('should exist', function () {
         expect(TechFeedback).toBeDefined();

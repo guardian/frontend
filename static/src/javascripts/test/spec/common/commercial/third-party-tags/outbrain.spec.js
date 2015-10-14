@@ -39,7 +39,7 @@ describe('Outbrain', function () {
             identity.isUserLoggedIn = function () {
                 return false;
             };
-            detect.adblockInUse = false;
+            detect.adblockInUse = () => false;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
@@ -136,7 +136,7 @@ describe('Outbrain', function () {
         it('should load when ad block is in use', () => {
             spyOn(sut, 'load');
 
-            detect.adblockInUse = true;
+            detect.adblockInUse = () => true;
 
             sut.init();
             expect(sut.load).toHaveBeenCalled();

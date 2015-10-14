@@ -42,7 +42,7 @@ define([
              * - Only show on Article pages
              * - Only show to visitors who have viewed at least 10 pages.
              */
-            var alreadyVisited = storage.local.get('alreadyVisited') || 0;
+            var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
             return !detect.adblockInUse() &&
                 detect.getBreakpoint() !== 'mobile' &&
                 config.page.edition === 'US' &&

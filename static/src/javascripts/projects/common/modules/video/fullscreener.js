@@ -35,7 +35,7 @@ define([
 
         //initialise omniture tracking for fullscreen event
         player.on('fullscreenchange', function () {
-            if (this.isFullScreen()) {
+            if (this.isFullscreen()) {
                 player.trigger('player:fullscreen');
             }
         });

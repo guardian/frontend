@@ -29,7 +29,7 @@ trait ABTestSwitches {
     "ab-disable-ads-survey",
     "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 15),
+    sellByDate = new LocalDate(2015, 10, 27),
     exposeClientSide = true
   )
 
