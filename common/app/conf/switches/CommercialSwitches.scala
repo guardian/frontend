@@ -249,7 +249,7 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val ABMembershipMessageUk = Switch(
+  val MembershipMessages = Switch(
     "Commercial",
     "membership-messages",
     "Display a message to regular readers promoting Membership",

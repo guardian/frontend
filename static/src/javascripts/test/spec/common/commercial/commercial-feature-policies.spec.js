@@ -4,17 +4,18 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 describe('Commercial features', ()=> {
-    let commercialFeaturePolicies, config, location, userAdPreference, userPrefs;
+    let commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs;
 
     beforeEach((done)=> {
         injector.test([
             'common/modules/commercial/commercial-feature-policies',
             'common/utils/config',
+            'common/utils/detect',
             'common/utils/location',
             'common/modules/commercial/user-ad-preference',
             'common/modules/user-prefs'
         ], function () {
-            [commercialFeaturePolicies, config, location, userAdPreference, userPrefs] = arguments;
+            [commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs] = arguments;
             done();
         });
     });
@@ -94,6 +95,48 @@ describe('Commercial features', ()=> {
             };
             const switches = commercialFeaturePolicies.getPolicySwitches().noadsHash;
             expect(switches).toBeUndefined();
+        });
+    });
+
+    describe('Membership messages policy', ()=> {
+        it('displays message when all required conditions are true', () => {
+            detect.adblockInUse = () => false;
+            detect.getBreakpoint = () => 'desktop';
+            config.page.contentType = 'Article';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(true);
+            });
+        });
+
+        it('Does not display messages when adBlock is enabled', ()=> {
+            detect.adblockInUse = () => true;
+            detect.getBreakpoint = () => 'desktop';
+            config.page.contentType = 'Article';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
+        });
+
+        it('Does not display messages on mobile', ()=> {
+            detect.adblockInUse = () => false;
+            detect.getBreakpoint = () => 'mobile';
+            config.page.contentType = 'Article';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
+        });
+
+        it('Does not display messages on non-article content', ()=> {
+            detect.adblockInUse = () => false;
+            detect.getBreakpoint = () => 'mobile';
+            config.page.contentType = 'LiveBlog';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
         });
     });
 

@@ -1,41 +1,31 @@
 define([
     'common/utils/config',
-    'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/identity/api',
     'common/modules/ui/message',
     'text!common/views/membership-message.html',
-    'common/views/svgs'
+    'common/views/svgs',
+    'common/modules/commercial/commercial-features'
 ], function (
     config,
-    detect,
     storage,
     template,
-    idApi,
     Message,
     messageTemplate,
-    svgs
+    svgs,
+    commercialFeatures
 ) {
 
-    function canRun() {
-        /**
-         * - Exclude adblock users to avoid conflicts with similar adblock Supporter message
-         * - Exclude mobile/small-screen devices
-         * - Only show for UK edition
-         * - Only show on Article pages
-         * - Only show to visitors who have viewed more than 10 pages.
-         */
+    function canShowUkMessage() {
         var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
-        return config.switches.membershipMessages &&
-            !detect.adblockInUse() &&
-            detect.getBreakpoint() !== 'mobile' &&
+        return (
+            commercialFeatures.membershipMessages &&
             config.page.edition === 'UK' &&
-            config.page.contentType === 'Article' &&
-            alreadyVisited > 10;
+            alreadyVisited > 10
+        );
     }
 
-    function showUkMessage() {
+    function ukMessage() {
         new Message('membership-message-uk', {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
@@ -52,8 +42,8 @@ define([
     }
 
     function init() {
-        if (canRun()) {
-            showUkMessage();
+        if (canShowUkMessage()) {
+            ukMessage();
         }
     }
 
