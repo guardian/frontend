@@ -26,25 +26,27 @@ define([
      * Show only on FIRST page view
      * Persist close state
      */
-    var COOKIE_ACKNOWLEDGE_KEY = 'GU_EU_COOKIE_ACK',
-        cookieVal = cookies.get(COOKIE_ACKNOWLEDGE_KEY),
-        impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0,
-        link = 'https://www.theguardian.com/info/cookies',
-        txt = '<p class="cookie-message__copy">Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.</p>',
-        opts = {important: true},
-        cookieLifeDays = 365,
-        msg = new Message('cookies');
+    var COOKIE_MESSAGE_KEY = 'GU_EU_COOKIES',
+        impressions = 0;
 
     function canShow() {
-        return config.isEu && impressions == 0;
+        if(config.isEu) {
+            var cookieVal = cookies.get(COOKIE_MESSAGE_KEY);
+            impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0;
+            return impressions == 0;
+        } else {
+            return false
+        }
     }
 
     function showMessage() {
-        msg.acknowledge = function() {
-            cookies.add(COOKIE_ACKNOWLEDGE_KEY, impressions + 1, cookieLifeDays);
-            msg.hide();
-        };
+        var link = 'https://www.theguardian.com/info/cookies',
+            txt = '<p class="cookie-message__copy">Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.</p>',
+            opts = {important: true},
+            cookieLifeDays = 365;
+        msg = new Message('cookies');
         msg.show(txt, opts);
+        cookies.add(COOKIE_MESSAGE_KEY, impressions + 1, cookieLifeDays);
     }
 
     function init() {
