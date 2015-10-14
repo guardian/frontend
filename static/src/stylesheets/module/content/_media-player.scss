@@ -669,6 +669,9 @@ $ima-controls-height: 70px;
 }
 
 .vjs-embed-button {
+    @include mq($until: desktop) {
+        display: none;
+    }
     cursor: pointer;
     float: right;
     box-sizing: border-box;
