@@ -79,19 +79,15 @@ define([
     }
 
     function bindPrerollEvents(player) {
-        var preRollPlay = false,
-        events = {
+        var events = {
             end: function () {
-                if (preRollPlay) {
-                    player.trigger(constructEventName('preroll:end', player));
-                }
+                player.trigger(constructEventName('preroll:end', player));
                 player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
             start: function () {
                 var duration = player.duration();
                 if (duration) {
-                    preRollPlay = true;
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
                     player.one('durationchange', events.start);
@@ -114,14 +110,22 @@ define([
                     player.play();
                 }
             }
+        },
+        adFailed = function () {
+            bindContentEvents(player);
+            if (shouldAutoPlay(player)) {
+                player.play();
+            }
+            // Remove both handlers, because this adFailed handler should only happen once.
+            player.off('adtimeout', adFailed);
+            player.off('adserror', adFailed);
         };
+
         player.one('adsready', events.ready);
 
-        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
-        player.one('adtimeout', function () {
-            player.trigger('adscanceled');
-            bindContentEvents(player);
-        });
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking.
+        player.one('adtimeout', adFailed);
+        player.one('adserror', adFailed);
     }
 
     function kruxTracking(player, event) {
@@ -240,14 +244,16 @@ define([
 
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);
-                    this.one(constructEventName('content:play', this), function () {
-                        $('.js-ads-skip', this.el()).hide();
-                        window.clearInterval(intervalId);
-                    });
+
+                },
+                end: function () {
+                    $('.js-ads-skip', this.el()).hide();
+                    window.clearInterval(intervalId);
                 }
             };
 
         this.one(constructEventName('preroll:play', this), events.init.bind(this));
+        this.one(constructEventName('preroll:end', this), events.end.bind(this));
     }
 
     function beaconError(err) {

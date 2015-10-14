@@ -96,8 +96,12 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
-    .vjs-big-play-button > span {
+    .vjs-big-play-button > .vjs-control-text {
         @include video-play-button-size($vjs-large-button-size);
+
+        &:before {
+            @include video-play-button-size($vjs-large-button-size);
+        }
     }
 
     &.fc-item--has-sublinks-3:not(.fc-item--has-cutout) {
