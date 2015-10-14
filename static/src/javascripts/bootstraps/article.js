@@ -1,7 +1,6 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
-    'bonzo',
     'bean',
     'common/utils/$',
     'common/utils/config',
@@ -17,7 +16,6 @@ define([
     'bootstraps/trail'
 ], function (
     qwery,
-    bonzo,
     bean,
     $,
     config,

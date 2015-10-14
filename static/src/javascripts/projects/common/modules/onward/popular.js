@@ -1,7 +1,6 @@
 define([
     'common/utils/_',
     'qwery',
-    'bonzo',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -13,7 +12,6 @@ define([
 ], function (
     _,
     qwery,
-    bonzo,
     $,
     config,
     detect,
