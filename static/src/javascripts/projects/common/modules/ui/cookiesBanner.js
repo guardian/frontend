@@ -35,7 +35,7 @@ define([
             impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0;
             return impressions == 0;
         } else {
-            return false
+            return false;
         }
     }
 
@@ -43,8 +43,8 @@ define([
         var link = 'https://www.theguardian.com/info/cookies',
             txt = '<p class="cookie-message__copy">Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.</p>',
             opts = {important: true},
-            cookieLifeDays = 365;
-        msg = new Message('cookies');
+            cookieLifeDays = 365,
+            msg = new Message('cookies');
         msg.show(txt, opts);
         cookies.add(COOKIE_MESSAGE_KEY, impressions + 1, cookieLifeDays);
     }
