@@ -64,6 +64,9 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
 
+# Short urls with campaign codes
+GET        /p/$shortCode<[\w]+>/:campaignCode                                   controllers.ShortUrlsCampaignController.fetchCampaignAndRedirect(shortCode, campaignCode)
+
 # Index pages for tags
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      controllers.IndexController.renderTrails(path)
