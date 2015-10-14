@@ -57,12 +57,12 @@ define([
                 });
             },
 
-            initMostPopRelContentTest: function() {
+            initMostPopRelContentTest: function () {
                 //switch position of related content and most popular
-                if(ab.getParticipations().MostPopRelContPosition && ab.getParticipations().MostPopRelContPosition.variant === 'switched') {
+                if (ab.getParticipations().MostPopRelContPosition && ab.getParticipations().MostPopRelContPosition.variant === 'switched') {
                     var $mostPop = $('.js-most-popular-footer'),
                         $onwardEl = $('.related'),
-                        markOnwardPos = $onwardEl.next();
+                        markOnwardPos = $onwardEl.next(),
                         markMostPopularPos = $mostPop.next();
 
                     $mostPop.insertBefore(markOnwardPos);
