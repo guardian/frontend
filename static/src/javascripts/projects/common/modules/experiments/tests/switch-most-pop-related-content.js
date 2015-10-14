@@ -15,7 +15,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return guardian.config.page.contentType === 'Article';
+            return window.guardian.config.page.contentType === 'Article';
         };
 
         this.variants = [
