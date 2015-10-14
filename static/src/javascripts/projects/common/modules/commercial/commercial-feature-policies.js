@@ -2,12 +2,14 @@ define([
     'common/utils/_',
     'common/utils/location',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/commercial/user-ad-preference',
     'common/modules/user-prefs'
 ], function (
     _,
     location,
     config,
+    detect,
     userAdPreference,
     userPrefs
 ) {
@@ -53,6 +55,17 @@ define([
         }
     };
 
+    policies.membershipMessages = function () {
+        if (!detect.adblockInUse() &&
+            detect.getBreakpoint() !== 'mobile' &&
+            config.page.contentType === 'Article'
+        ) {
+            return {
+                membershipMessages : true
+            };
+        }
+    };
+
     policies.identityPages = function () {
         if (config.page.contentType === 'Identity' ||
             config.page.section === 'identity' // needed for pages under the profile subdomain
@@ -88,6 +101,9 @@ define([
         }
         if (!config.switches.sponsored) {
             switches.badges = false;
+        }
+        if (!config.switches.membershipMessages) {
+            switches.membershipMessages = false;
         }
 
         return switches;

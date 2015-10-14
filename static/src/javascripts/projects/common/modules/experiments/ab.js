@@ -7,7 +7,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adfree-survey'
 ], function (
@@ -19,14 +18,12 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
-    MembershipMessageUK,
     MembershipMessageUSA,
     AddfreeSurvey
 ) {
 
     var TESTS = _.flatten([
         new HighCommercialComponent(),
-        new MembershipMessageUK(),
         new MembershipMessageUSA(),
         new AddfreeSurvey()
     ]);
