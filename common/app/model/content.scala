@@ -303,7 +303,10 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
 
   def showFooterContainers = false
 
-  override def iosType = Some("article")
+  override def iosType = contentType match {
+    case "Crossword" => None
+    case _ => Some("Article")
+  }
 }
 
 object Content {
