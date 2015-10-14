@@ -88,10 +88,9 @@ define([
             // Ophan
             require(['ophan/ng'], function (ophan) {
                 ophan.record({
-                    ads: [{
-                        slot: 'outbrain',
+                    outbrain: {
                         widgetId: widgetCode
-                    }]
+                    }
                 });
             });
         },
