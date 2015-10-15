@@ -141,6 +141,15 @@
 
 /* Body
    ========================================================================== */
+    .drop-cap {
+        height: 7.25em;
+
+        .drop-cap__inner {
+            font-size: 9.5rem;
+            line-height: 8rem;
+        }
+    }
+
     .element-pullquote {
         position: relative;
         width: auto;
