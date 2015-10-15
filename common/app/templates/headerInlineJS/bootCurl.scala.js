@@ -99,8 +99,8 @@ require([
         images.listen();
 
         if (guardian.isModernBrowser) {
-            alreadyVisted = storage.local.get('alreadyVisited') || 0;
-            storage.local.set('alreadyVisited', alreadyVisted + 1);
+            alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
+            storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
         }
 
         // Preference pages are served via HTTPS for service worker support.

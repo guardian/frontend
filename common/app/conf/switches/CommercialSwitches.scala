@@ -248,6 +248,15 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val MembershipMessages = Switch(
+    "Commercial",
+    "membership-messages",
+    "Display a message to regular readers promoting Membership",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
   val RedirectExpiredAdFeatures = Switch(
     "Commercial",
     "redirect-expired-ad-features",
