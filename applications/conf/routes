@@ -65,7 +65,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
 
 # Short urls with campaign codes
-GET        /p/$shortCode<[\w]+>/:campaignCode                                   controllers.ShortUrlsCampaignController.fetchCampaignAndRedirect(shortCode, campaignCode)
+GET        /$shortCode<p/[\w]+>                                                 controllers.ShortUrlsCampaignController.redirectShortUrl(shortCode)
+GET        /$shortCode<p/[\w]+>/:campaignCode                                   controllers.ShortUrlsCampaignController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
 # Index pages for tags
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)
