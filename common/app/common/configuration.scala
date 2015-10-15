@@ -308,7 +308,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
-      "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
