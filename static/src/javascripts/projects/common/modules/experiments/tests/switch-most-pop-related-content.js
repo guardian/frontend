@@ -13,7 +13,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'The number of onward journeys increases';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'onward-ab1, popular-ab1';
+        this.dataLinkNames = 'onward-ab-switch-mp-rl, popular-ab-switch-mp-rl';
         this.idealOutcome = '';
 
         this.canRun = function () {
@@ -36,10 +36,10 @@ define([
                         markMostPopularPos = $mostPop.next();
 
                     $mostPop.insertBefore(markOnwardPos);
-                    $mostPop.attr('data-link-name', $mostPop.attr('data-link-name') + ' most-popular-ab1');
+                    $mostPop.attr('data-link-name', $mostPop.attr('data-link-name') + ' most-popular-ab-switch-mp-rl');
 
                     $onwardEl.insertBefore(markMostPopularPos);
-                    $onwardEl.attr('data-link-name', 'onward-ab1');
+                    $onwardEl.attr('data-link-name', 'onward-ab-switch-mp-rl');
                 }
             }
         ];
