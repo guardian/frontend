@@ -33,9 +33,7 @@ define([
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/thrasher-benefit-icon',
-    'inlineSvg!svgs/commercial/thrasher-benefit-icon-simple',
     'inlineSvg!svgs/commercial/survey-overlay',
-    'inlineSvg!svgs/commercial/survey-overlay-simple',
     'inlineSvg!svgs/commercial/survey-new'
 ], function (
     _,
@@ -68,9 +66,7 @@ define([
     externalLink,
     membershipLogo,
     thrasherBenefit,
-    thrasherBenefitSimple,
     surveyOverlay,
-    surveyOverlaySimple,
     surveyNew
 ) {
     var svgs = {
@@ -105,8 +101,7 @@ define([
         surveyOverlay: surveyOverlay,
         surveyOverlaySimple: surveyOverlaySimple,
         surveyNew: surveyNew,
-        thrasherBenefit: thrasherBenefit,
-        thrasherBenefitSimple: thrasherBenefitSimple
+        thrasherBenefit: thrasherBenefit
     };
 
     return function (name, classes, title) {

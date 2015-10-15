@@ -337,7 +337,7 @@
     }
 }
 
-.adfree-thrasher {
+.live-events-thrasher {
     position: relative;
     width: 100%;
     background-color: #aad7f0;
@@ -487,7 +487,7 @@
 }
 
 .has-page-skin {
-    .adfree-thrasher {
+    .live-events-thrasher {
         @include mq(wide) {
             .thrasher-content__header {
                 margin-right: 0;
@@ -500,135 +500,6 @@
             }
         }
 
-    }
-}
-
-.adfree-thrasher-simple {
-    position: relative;
-    width: 100%;
-    background-color: #1b3d75;
-    color: #ffffff;
-    margin-bottom: $gs-baseline;
-
-    .fc-container__inner {
-        background-color: #01558b;
-    }
-
-    .thrasher-glogo {
-        position: absolute;
-        right: 20px;
-        bottom: 10px;
-
-        svg {
-            width: 26px;
-            height: 26px;
-            fill: #ffffff;
-        }
-    }
-
-    .inline-icon {
-        fill: #000000;
-    }
-
-    .thrasher-content {
-        @include clearfix;
-        margin: 30px 0;
-    }
-
-    .thrasher-link {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    .thrasher-content__header {
-        @include mq(desktop) {
-            float: right;
-            @include clearfix;
-            margin: 0;
-        }
-    }
-
-    .thrasher-content__header--logo {
-        text-align: center;
-
-        @include mq(desktop) {
-            float: left;
-            text-align: left;
-        }
-
-        @include mq(wide) {
-            margin-left: $gs-gutter*2;
-        }
-
-        svg {
-            width: 200px;
-            height: 100px;
-        }
-    }
-
-    .inline-thrasher-benefit-icon-simple {
-        svg {
-            width: 250px;
-            height: 120px;
-        }
-    }
-
-    .thrasher-content__header--text {
-        @include fs-headline(4);
-        line-height: 1.2;
-        font-weight: bold;
-        text-align: left;
-        margin: $gs-baseline 0 $gs-baseline*2;
-        padding: 0 $gs-gutter;
-
-        @include mq(mobileLandscape) {
-            @include fs-headline(5);
-            line-height: 1.2;
-            font-weight: bold;
-        }
-
-        @include mq(tablet) {
-            margin: $gs-baseline*2 0;
-            text-align: center;
-        }
-
-        @include mq(desktop) {
-            float: left;
-            padding: 0;
-            text-align: left;
-            @include fs-headline(6);
-            font-weight: bold;
-            margin-right: $gs-column-width*3;
-        }
-
-        @include mq(1140px) {
-            margin-right: $gs-column-width*4;
-        }
-
-        @include mq(wide) {
-            margin-right: $gs-column-width*5;
-        }
-
-        span {
-            display: block;
-            color: #42c5e0;
-        }
-
-    }
-}
-
-.has-page-skin {
-    .adfree-thrasher-simple {
-        @include mq(wide) {
-            .thrasher-content__header--text {
-                margin: $gs-baseline*2 $gs-column-width*3 $gs-baseline*2 0;
-            }
-        }
     }
 }
 

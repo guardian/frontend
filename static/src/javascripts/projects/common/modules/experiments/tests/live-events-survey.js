@@ -1,31 +1,27 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/modules/adfree-thrasher',
-    'common/modules/adfree-survey',
-    'common/modules/adfree-thrasher-simple',
-    'common/modules/adfree-survey-simple'
+    'common/modules/live-events-thrasher',
+    'common/modules/live-events-survey'
 ], function (
     $,
     config,
-    AdfreeThrasher,
-    AdfreeSurvey,
-    AdfreeThrasherSimple,
-    AdfreeSurveySimple
+    LiveEventsThrasher,
+    LiveEventsSurvey
 ) {
     return function () {
 
-        this.id = 'DisableAdsSurvey';
+        this.id = 'LiveEventsSurvey';
         this.start = '2015-09-24';
         this.expiry = '2015-10-27';
         this.author = 'Zofia Korcz';
-        this.description = 'Survey to test if users will be interested in paying for the Guardian with no ads';
-        this.audience = 0.075;
-        this.audienceOffset = 0.8;
-        this.successMeasure = 'Users will be interested in paying for the non-ads Guardian';
+        this.description = 'Survey to test if users will be interested in paying for the Guardian with free live streaming events';
+        this.audience = 0.1;
+        this.audienceOffset = 0.3;
+        this.successMeasure = 'Users will be interested in paying for the Guardian with free live streaming events';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'adfree trash read more, hide ads hide adslot: {slot size}, survey overlay take part, survey overlay hide survey message, adfree survey page take part in survey, adfree survey page read more about the guardian app, adfree survey page read more about the guardian members, adfree survey page register email, adfree trash simple read more, hide ads simple hide adslot: {slot size}, survey overlay simple take part, survey overlay simple hide survey message, adfree survey simple page take part in survey, adfree survey simple page read more about the guardian app, adfree survey simple page register email';
-        this.idealOutcome = 'Users will be interested in paying a lot for the non-ads Guardian';
+        this.idealOutcome = 'Users will be interested in paying for the Guardian with free live streaming events';
 
         this.canRun = function () {
             return true;
@@ -37,8 +33,8 @@ define([
                 test: function () {
                     var $container;
 
-                    //attach hidden survey overlay, it will be triggered by a 'Remove ads' label or thrasher
-                    new AdfreeSurvey().attach();
+                    //attach hidden survey overlay, it will be triggered by a thrasher
+                    new LiveEventsSurvey().attach();
 
                     if (config.page.isFront) {
                         $container = $('.js-container--first');
@@ -47,28 +43,7 @@ define([
                     }
 
                     if ($container) {
-                        new AdfreeThrasher({
-                            $container: $container
-                        }).show();
-                    }
-                }
-            },
-            {
-                id: 'simple',
-                test: function () {
-                    var $container;
-
-                    //attach hidden survey overlay, it will be triggered by a 'Remove ads' label or thrasher
-                    new AdfreeSurveySimple().attach();
-
-                    if (config.page.isFront) {
-                        $container = $('.js-container--first');
-                    } else if (config.page.contentType === 'Article') {
-                        $container = $('.fc-container').last();
-                    }
-
-                    if ($container) {
-                        new AdfreeThrasherSimple({
+                        new LiveEventsThrasher({
                             $container: $container
                         }).show();
                     }

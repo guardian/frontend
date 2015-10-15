@@ -13,12 +13,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABDisableAdsSurvey = Switch(
+  val ABLiveEventsSurvey = Switch(
     "A/B Tests",
-    "ab-disable-ads-survey",
-    "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
+    "ab-live-events-survey",
+    "Survey to test if users will be interested in paying for the Guardian with free live streaming events",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 27),
+    sellByDate = new LocalDate(2015, 11, 3),
     exposeClientSide = true
   )
 

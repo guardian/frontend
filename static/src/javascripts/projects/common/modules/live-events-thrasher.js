@@ -5,7 +5,7 @@ define([
     'common/utils/_',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adfree-thrasher-simple.html'
+    'text!common/views/commercial/live-events-thrasher.html'
 ], function (
     bean,
     fastdom,
@@ -21,9 +21,11 @@ define([
 
         this.thrasherTmpl = template(adfreeThrasherTemplate,
             {
-                surveyHeader: 'Experience the Guardian <span>without advertising</span>',
+                surveyHeader: 'Stream all Guardian Live events right from your home',
                 marque36icon: svgs('marque36icon'),
-                thrasherBenefitSimple: svgs('thrasherBenefitSimple')
+                membershipLogo: svgs('membershipLogo'),
+                thrasherBenefit: svgs('thrasherBenefit'),
+                surveyNew: svgs('surveyNew')
             });
     };
 
