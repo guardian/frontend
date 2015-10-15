@@ -203,7 +203,16 @@
 
         .caption {
             padding-left: $gs-gutter;
+        }
+    }
 
+    .ad-slot--inline {
+        @include mq(desktop) {
+            margin-right: -320px;
+        }
+
+        @include mq(wide) {
+            margin-right: -400px;
         }
     }
 }
