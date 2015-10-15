@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "offline-page",
     "Offline page",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 16),
+    sellByDate = new LocalDate(2015, 11, 26),
     exposeClientSide = true
   )
 
