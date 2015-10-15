@@ -203,18 +203,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /* EU cookie policy message
    ========================================================================== */
 .site-message--cookies {
-    .cookie-message__copy {
-        @include mq(tablet) {
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
-        }
-
-        @include mq(desktop) {
-            padding: 0;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
+    .site-message__copy {
+        margin-right: $gs-gutter*2;
         a {
             color: #ffffff;
             text-decoration: underline;

@@ -41,7 +41,7 @@ define([
 
     function showMessage() {
         var link = 'https://www.theguardian.com/info/cookies',
-            txt = '<p class="cookie-message__copy">Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.</p>',
+            txt = 'Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>',
             opts = {important: true},
             cookieLifeDays = 365,
             msg = new Message('cookies');
