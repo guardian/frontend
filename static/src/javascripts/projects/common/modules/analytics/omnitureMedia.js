@@ -1,12 +1,14 @@
 /* global guardian, s */
 define([
+    'qwery',
     'common/utils/_',
     'common/utils/config',
-    'qwery'
+    'common/modules/analytics/omniture'
 ], function (
+    qwery,
     _,
     config,
-    qwery
+    omniture
 ) {
 
     function OmnitureMedia(player) {
@@ -39,7 +41,15 @@ define([
                 'video:fullscreen': 'event96',
                 // extra events with no set ordering
                 duration: 'event57'
-            };
+            },
+            trackingVars = [
+                // these tracking vars are specific to media events.
+                'evar11',   // embedded or on platform
+                'prop41',   // preroll milestone
+                'prop43',   // media type
+                'prop44',   // media id
+                'evar74',   // ad or content
+                'evar61'];  // restricted
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -71,7 +81,7 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9,channel';
+            s.linkTrackVars = omniture.getStandardProps() + ',' + _(trackingVars).join(',');
             s.linkTrackEvents = _.values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
@@ -86,8 +96,8 @@ define([
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
-            s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61,channel';
-            s.Media.trackEvents = 'event17,event18,event19,event20,event21,event22,event23,event57,event59,event64,event96,event97,event98';
+            s.Media.trackVars = omniture.getStandardProps() + ',' + _(trackingVars).join(',');
+            s.Media.trackEvents = _.values(events).join(',');
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 

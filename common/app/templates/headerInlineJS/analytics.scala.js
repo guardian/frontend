@@ -159,7 +159,7 @@ try {
 
         var checkForPageViewInterval = setInterval(function () {
             @*
-                s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
+                s_i_guardiangu-network is a globally defined Image() object created by Omniture
                 It does not sit in the DOM tree, and seems to be the only surefire way
                 to check if the intial beacon has been successfully sent
             *@
