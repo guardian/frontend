@@ -309,6 +309,8 @@ GET            /series/*path.json                                               
 # Applications (must come before wildcard)
 GET            /offline-page                                                                                                     controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
+GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)
@@ -348,9 +350,7 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>     
 
 
 # Applications
-GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /$path<international>                                                                                             controllers.FaciaController.renderFront(path)
-GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                              controllers.IndexController.renderTrailsJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                                   controllers.IndexController.renderTrails(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                                     controllers.IndexController.renderJson(path)

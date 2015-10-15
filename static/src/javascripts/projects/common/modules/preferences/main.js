@@ -79,15 +79,8 @@ define([
                 React.render(React.createElement(SummaryTagsSettings), placeholder);
             };
 
-        switch (config.page.pageId) {
-            case 'preferences/notifications':
-                initialiseNotificationPreferences();
-                break;
-            case 'preferences':
-                if (placeholder) {
-                    initialiseSummaryTagsSettings();
-                }
-                break;
+        if (placeholder) {
+            initialiseSummaryTagsSettings();
         }
     };
 });
