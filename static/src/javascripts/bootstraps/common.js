@@ -49,6 +49,7 @@ define([
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
+    'common/modules/commercial/membership-messages',
     'text!common/views/international-message.html',
     'bootstraps/identity-common'
 ], function (
@@ -100,6 +101,7 @@ define([
     breakingNews,
     pinterest,
     SaveForLater,
+    membershipMessages,
     internationalMessage,
     identity
 ) {
@@ -354,6 +356,10 @@ define([
                     var saveForLater = new SaveForLater();
                     saveForLater.init();
                 }
+            },
+
+            showMembershipMessages: function () {
+                membershipMessages.init();
             }
         };
 
@@ -401,7 +407,8 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
-                ['c-save-for-later', modules.saveForLater]
+                ['c-save-for-later', modules.saveForLater],
+                ['c-show-membership-messages', modules.showMembershipMessages]
             ]), function (fn) {
                 fn();
             });

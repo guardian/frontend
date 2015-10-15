@@ -42,6 +42,10 @@ define([
         this.addHandlers();
     }
 
+    Omniture.prototype.getStandardProps = function () {
+        return standardProps;
+    };
+
     Omniture.prototype.addHandlers = function () {
         mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
 

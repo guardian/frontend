@@ -30,7 +30,7 @@ case class OmnitureReportDescription(
   dateTo: String,
   dateFrom: String,
   metrics: Seq[OmnitureMetric],
-  reportSuiteID: String = OmnitureReportDescription.reportSuiteFrontend,
+  reportSuiteID: String = OmnitureReportDescription.reportSuiteNetwork,
   segment_id: Option[String] = None
 )
 object OmnitureReportDescription {
@@ -38,7 +38,6 @@ object OmnitureReportDescription {
   implicit val writeMetric = Json.writes[OmnitureMetric]
   implicit val writeDescription = Json.writes[OmnitureReportDescription]
 
-  val reportSuiteFrontend = "guardiangu-frontend" // Friendly name: Next Gen Web
   val reportSuiteNetwork  = "guardiangu-network"  // Friendly name: Guardian Network
 }
 

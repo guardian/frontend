@@ -27,7 +27,6 @@ GET        /embed/video/*path                                                   
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
-GET        /preferences/notifications                                           controllers.PreferencesController.notificationPrefs()
 
 GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut

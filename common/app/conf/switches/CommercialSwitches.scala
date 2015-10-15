@@ -5,7 +5,6 @@ import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
-  // Commercial
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -249,4 +248,21 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val MembershipMessages = Switch(
+    "Commercial",
+    "membership-messages",
+    "Display a message to regular readers promoting Membership",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
+  val RedirectExpiredAdFeatures = Switch(
+    "Commercial",
+    "redirect-expired-ad-features",
+    "Redirect expired ad features to a special expiry page.",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 11, 11),
+    exposeClientSide = false
+  )
 }
