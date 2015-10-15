@@ -1,5 +1,7 @@
 define([
+    'common/utils/$'
 ], function (
+    $
 ) {
     return function () {
         this.id = 'MostPopRelContPosition';
@@ -28,7 +30,16 @@ define([
             {
                 id: 'switched',
                 test: function () {
+                    var $mostPop = $('.js-most-popular-footer'),
+                        $onwardEl = $('.related'),
+                        markOnwardPos = $onwardEl.next(),
+                        markMostPopularPos = $mostPop.next();
 
+                    $mostPop.insertBefore(markOnwardPos);
+                    $mostPop.attr('data-link-name', $mostPop.attr('data-link-name') + ' most-popular-ab1');
+
+                    $onwardEl.insertBefore(markMostPopularPos);
+                    $onwardEl.attr('data-link-name', 'onward-ab1');
                 }
             }
         ];

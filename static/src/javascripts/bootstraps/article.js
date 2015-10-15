@@ -53,22 +53,6 @@ define([
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
-            },
-
-            initMostPopRelContentTest: function () {
-                //switch position of related content and most popular
-                if (ab.getParticipations().MostPopRelContPosition && ab.getParticipations().MostPopRelContPosition.variant === 'switched') {
-                    var $mostPop = $('.js-most-popular-footer'),
-                        $onwardEl = $('.related'),
-                        markOnwardPos = $onwardEl.next(),
-                        markMostPopularPos = $mostPop.next();
-
-                    $mostPop.insertBefore(markOnwardPos);
-                    $mostPop.attr('data-link-name', $mostPop.attr('data-link-name') + ' most-popular-ab1');
-
-                    $onwardEl.insertBefore(markMostPopularPos);
-                    $onwardEl.attr('data-link-name', 'onward-ab1');
-                }
             }
         },
 
@@ -78,7 +62,6 @@ define([
             modules.initRightHandComponent();
             modules.initCmpParam();
             modules.initQuizListeners();
-            modules.initMostPopRelContentTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
