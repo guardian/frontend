@@ -20,7 +20,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
     Cached(3600) {
-      if (conf.switches.Switches.NotificationsSwitch.isSwitchedOn || conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
+      if (conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
         Ok(templates.js.serviceWorker())
       } else {
         NotFound

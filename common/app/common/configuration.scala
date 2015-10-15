@@ -428,10 +428,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
-
-  object pushNotifications {
-    val host = configuration.getStringProperty("push_notifications.host").getOrElse("//")
-  }
 }
 
 object ManifestData {
