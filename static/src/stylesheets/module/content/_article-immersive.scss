@@ -146,11 +146,11 @@
         width: auto;
         margin-left: 0;
         padding: 0;
-        padding-top: 0.33em;
+        padding-top: .33em;
         margin-bottom: 2rem;
 
         &:before {
-            content: "";
+            content: '';
             position: absolute;
             top: 0;
             height: 2px;
@@ -185,6 +185,25 @@
 
         .inline-quote.closing {
             display: none;
+        }
+    }
+
+    figure.element--showcase {
+        @include mq(desktop) {
+            margin-left: -($gs-gutter);
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter * 2);
+        }
+
+        @include mq(wide) {
+            margin-left: -(gs-span(3) + $gs-gutter * 2);
+        }
+
+        .caption {
+            padding-left: $gs-gutter;
+
         }
     }
 }
