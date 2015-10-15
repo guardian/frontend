@@ -13,7 +13,8 @@
         clear: both;
     }
 
-    // HEADER
+/* Header
+   ========================================================================== */
     .content__head {
         position: relative;
         color: #ffffff;
@@ -135,6 +136,55 @@
             bottom: 0;
             left: 0;
             right: 0;
+        }
+    }
+
+/* Body
+   ========================================================================== */
+    .element-pullquote {
+        position: relative;
+        width: auto;
+        margin-left: 0;
+        padding: 0;
+        padding-top: 0.33em;
+        margin-bottom: 2rem;
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            height: 2px;
+            width: 140px;
+            background-color: colour(neutral-7);
+        }
+
+        .inline-quote {
+            margin-bottom: $gs-baseline / 4;
+        }
+
+        .inline-quote svg {
+            fill: colour(neutral-3);
+            width: 2.425rem;
+        }
+
+        blockquote p,
+        cite {
+            font-family: $f-serif-headline;
+            font-weight: 200;
+            font-size: 1.75rem;
+            line-height: 1.1;
+        }
+
+        blockquote p {
+            color: colour(feature-default);
+        }
+
+        cite {
+            color: colour(neutral-1) !important; // important to override super specific tonal classes
+        }
+
+        .inline-quote.closing {
+            display: none;
         }
     }
 }
