@@ -83,11 +83,11 @@ define([
             return {
                 articleBodyAdverts : false,
                 articleAsideAdverts : false
-            }
+            };
         } else if (isLiveBlog) {
             return {
                 articleBodyAdverts : false
-            }
+            };
         }
     };
 
