@@ -78,6 +78,7 @@
         }
     }
 
+    .football-match__crest,
     .football-team__form {
         display: none;
     }
@@ -139,6 +140,9 @@
         }
         .team__info {
             @include fs-headline(6, true)
+        }
+        .football-match__crest {
+            display: block;
         }
     }
 

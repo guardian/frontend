@@ -88,10 +88,9 @@ define([
             // Ophan
             require(['ophan/ng'], function (ophan) {
                 ophan.record({
-                    ads: [{
-                        slot: 'outbrain',
+                    outbrain: {
                         widgetId: widgetCode
-                    }]
+                    }
                 });
             });
         },
@@ -111,7 +110,7 @@ define([
                 && !config.page.isPreview
                 && this.identityPolicy()
                 && config.page.section !== 'childrens-books-site') {
-                if (detect.adblockInUse) {
+                if (detect.adblockInUse()) {
                     this.load();
                 } else {
                     mediator.on('modules:commercial:dfp:rendered', function (event) {

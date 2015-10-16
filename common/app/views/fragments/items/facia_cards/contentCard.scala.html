@@ -56,7 +56,7 @@ data-test-id="facia-card"
                     </div>
                 @fallback.map { fallbackImage =>
                     <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
-                        <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
+                        <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
                         @itemImage(
                             fallbackImage.imageContainer,
                             inlineImage = containerIndex == 0 && index < 4,

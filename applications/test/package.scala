@@ -22,6 +22,7 @@ class ApplicationsTestSuite extends Suites (
   new ImageContentControllerTest,
   new ImageContentTemplateTest,
   new IndexControllerTest,
+  new CrosswordPageMetaDataTest,
   new IndexMetaDataTest,
   new InteractiveControllerTest,
   new InteractiveTemplateTest,

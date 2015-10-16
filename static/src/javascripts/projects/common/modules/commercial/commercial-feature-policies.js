@@ -2,12 +2,14 @@ define([
     'common/utils/_',
     'common/utils/location',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/commercial/user-ad-preference',
     'common/modules/user-prefs'
 ], function (
     _,
     location,
     config,
+    detect,
     userAdPreference,
     userPrefs
 ) {
@@ -45,10 +47,22 @@ define([
     policies.adfreeExperience = function () {
         if (userAdPreference.hideAds) {
             return {
-                articleMPUs : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false
+            };
+        }
+    };
+
+    policies.membershipMessages = function () {
+        if (!detect.adblockInUse() &&
+            detect.getBreakpoint() !== 'mobile' &&
+            config.page.contentType === 'Article'
+        ) {
+            return {
+                membershipMessages : true
             };
         }
     };
@@ -62,8 +76,18 @@ define([
     };
 
     policies.nonArticlePages = function () {
-        if (config.page.contentType !== 'Article' || config.page.isLiveBlog) {
-            return {articleMPUs : false};
+        var isArticle = config.page.contentType === 'Article',
+            isLiveBlog = config.page.isLiveBlog;
+
+        if (!isArticle && !isLiveBlog) {
+            return {
+                articleBodyAdverts : false,
+                articleAsideAdverts : false
+            };
+        } else if (isLiveBlog) {
+            return {
+                articleBodyAdverts : false
+            };
         }
     };
 
@@ -80,7 +104,8 @@ define([
             switches.videoPreRolls = false;
         }
         if (!config.switches.standardAdverts) {
-            switches.articleMPUs = false;
+            switches.articleBodyAdverts = false;
+            switches.articleAsideAdverts = false;
             switches.sliceAdverts = false;
         }
         if (!config.switches.commercialComponents) {
@@ -89,13 +114,17 @@ define([
         if (!config.switches.sponsored) {
             switches.badges = false;
         }
+        if (!config.switches.membershipMessages) {
+            switches.membershipMessages = false;
+        }
 
         return switches;
     };
 
     function CommercialFeatureSwitches(enabled) {
         this.dfpAdvertising = enabled;
-        this.articleMPUs = enabled;
+        this.articleBodyAdverts = enabled;
+        this.articleAsideAdverts = enabled;
         this.sliceAdverts = enabled;
         this.popularContentMPU = enabled;
         this.videoPreRolls = enabled;

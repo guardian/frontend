@@ -121,7 +121,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object omniture {
-    lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-frontend,guardiangu-network")
+    lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-network")
     lazy val ampAccount = configuration.getStringProperty("guardian.page.omnitureAmpAccount").getOrElse("guardiangudev-code")
   }
 
@@ -427,10 +427,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object pngResizer {
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
-  }
-
-  object pushNotifications {
-    val host = configuration.getStringProperty("push_notifications.host").getOrElse("//")
   }
 }
 
