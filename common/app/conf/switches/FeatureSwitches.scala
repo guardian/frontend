@@ -33,15 +33,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val NotificationsSwitch = Switch(
-    "Feature",
-    "notifications",
-    "Notifications",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 15),
-    exposeClientSide = true
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch(
     "Feature",
     "html-5-media-compatibility-check",
