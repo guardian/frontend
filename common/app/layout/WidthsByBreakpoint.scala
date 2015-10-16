@@ -215,7 +215,8 @@ object ContentWidths {
       case Inline => relation.inline
       case Supporting => relation.supporting
       case Showcase => relation.showcase
-      case thumbnail => relation.thumbnail
+      case Thumbnail => relation.thumbnail
+      case _ => unused
     }
   }
 }
