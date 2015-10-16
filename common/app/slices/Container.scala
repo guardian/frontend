@@ -27,8 +27,14 @@ object Container extends Logging {
   def fromConfig(collectionConfig: CollectionConfig) =
     resolve(collectionConfig.collectionType)
 
-  def fromPressedCollection(pressedCollection: PressedCollection): Container =
-    resolve(pressedCollection.collectionType)
+  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean): Container = {
+    val container = resolve(pressedCollection.collectionType)
+    container match {
+      case Fixed(definition) if omitMPU =>
+        Fixed(definition.copy(slices = definition.slicesWithoutMPU))
+      case _ => container
+    }
+  }
 
   def showToggle(container: Container) = container match {
     case NavList | NavMediaList => false

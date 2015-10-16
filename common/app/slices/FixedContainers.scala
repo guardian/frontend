@@ -1,7 +1,7 @@
 package slices
 
-import model.Content
 import conf.Configuration
+import model.Content
 
 object TagContainers {
 
@@ -82,7 +82,8 @@ object FixedContainers {
     ("fixed/small/slow-IV", fixedSmallSlowIV),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
     ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),
-    ("fixed/small/slow-V-mpu", slices(TTlMpu)),
+    ("fixed/small/slow-V-mpu", slices(Seq(TTlMpu),
+      slicesWithoutMpu = Seq(QuarterQuarterQuarterQuarter))),
     ("fixed/small/slow-VI", fixedSmallSlowVI),
     ("fixed/small/fast-VIII", slices(QuarterQuarterQlQl)),
     ("fixed/small/fast-X", slices(QuarterQlQlQl)),
