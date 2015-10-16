@@ -1,14 +1,12 @@
 package jobs
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import services.{ CloudWatch, Fastly }
-import scala.concurrent.Await
-import scala.concurrent.duration._
 import scala.collection.mutable
 import conf.Configuration
 import org.joda.time.DateTime
 
-object FastlyCloudwatchLoadJob extends Logging {
+object FastlyCloudwatchLoadJob extends ExecutionContexts with Logging {
   // Samples in CloudWatch are additive so we want to limit duplicate reporting.
   // We do not want to corrupt the past either, so set a default value (the most
   // recent 15 minutes of results are unstable).
@@ -17,8 +15,7 @@ object FastlyCloudwatchLoadJob extends Logging {
 
   def run() {
     log.info("Loading statistics from Fastly to CloudWatch.")
-    try {
-      val statistics = Await.result(Fastly(), 1.minute)
+    Fastly().map { statistics =>
 
       val fresh = statistics filter { statistic =>
         latestTimestampsSent(statistic.key) < statistic.timestamp
@@ -35,8 +32,6 @@ object FastlyCloudwatchLoadJob extends Logging {
       timestampsSent mapValues { _.max } foreach { case (key, value) =>
         latestTimestampsSent.update(key, value)
       }
-    } catch {
-      case e: Exception => log.error(s"Error with loading Fastly API statistics ${e.getMessage}")
     }
   }
 }
