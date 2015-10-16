@@ -18,8 +18,8 @@ define([
     var AdfreeSurvey = function () {
         this.bannerTmpl = template(adfreeSurveyTemplate,
             {
-                surveyHeader: 'Advert free experience on the Guardian site and apps',
-                surveyText: 'From <em>£5 a month</em> join exclusive Guardian events, get a quality ad free experience of our site and apps plus support our journalism.',
+                surveyHeader: 'Live stream all the Guardian Live events',
+                surveyText: 'From <em>£5 a month</em> join exclusive Guardian events, watch the debates that shape our stories and support our journalism.',
                 linkText: 'Join Guardian Members',
                 alreadyMember: 'Already a member?',
                 alreadyMemberLink: '/commercial/ad-free-survey',

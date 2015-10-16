@@ -99,7 +99,6 @@ define([
         externalLink: externalLink,
         membershipLogo: membershipLogo,
         surveyOverlay: surveyOverlay,
-        surveyOverlaySimple: surveyOverlaySimple,
         surveyNew: surveyNew,
         thrasherBenefit: thrasherBenefit
     };
