@@ -69,7 +69,7 @@ describe('Article Body Adverts', function () {
             getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
             spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
-            commercialFeatures.articleMPUs = true;
+            commercialFeatures.articleBodyAdverts = true;
 
             done();
         });
@@ -194,7 +194,7 @@ describe('Article Body Adverts', function () {
     });
 
     it('should not not display ad slot if turned off in commercial features', function () {
-        commercialFeatures.articleMPUs = false;
+        commercialFeatures.articleBodyAdverts = false;
         expect(articleBodyAdverts.init()).toBe(false);
     });
 

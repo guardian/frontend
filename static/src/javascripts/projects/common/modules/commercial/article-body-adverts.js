@@ -87,7 +87,7 @@ define([
         init = function () {
             var rules, lenientRules, inlineMercPromise;
 
-            if (!commercialFeatures.articleMPUs) {
+            if (!commercialFeatures.articleBodyAdverts) {
                 return false;
             }
 

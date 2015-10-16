@@ -47,7 +47,8 @@ define([
     policies.adfreeExperience = function () {
         if (userAdPreference.hideAds) {
             return {
-                articleMPUs : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false
@@ -75,8 +76,18 @@ define([
     };
 
     policies.nonArticlePages = function () {
-        if (config.page.contentType !== 'Article' || config.page.isLiveBlog) {
-            return {articleMPUs : false};
+        var isArticle = config.page.contentType === 'Article',
+            isLiveBlog = config.page.isLiveBlog;
+
+        if (!isArticle && !isLiveBlog) {
+            return {
+                articleBodyAdverts : false,
+                articleAsideAdverts : false
+            };
+        } else if (isLiveBlog) {
+            return {
+                articleBodyAdverts : false
+            };
         }
     };
 
@@ -93,7 +104,8 @@ define([
             switches.videoPreRolls = false;
         }
         if (!config.switches.standardAdverts) {
-            switches.articleMPUs = false;
+            switches.articleBodyAdverts = false;
+            switches.articleAsideAdverts = false;
             switches.sliceAdverts = false;
         }
         if (!config.switches.commercialComponents) {
@@ -111,7 +123,8 @@ define([
 
     function CommercialFeatureSwitches(enabled) {
         this.dfpAdvertising = enabled;
-        this.articleMPUs = enabled;
+        this.articleBodyAdverts = enabled;
+        this.articleAsideAdverts = enabled;
         this.sliceAdverts = enabled;
         this.popularContentMPU = enabled;
         this.videoPreRolls = enabled;

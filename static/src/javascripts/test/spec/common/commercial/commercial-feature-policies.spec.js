@@ -161,7 +161,7 @@ describe('Commercial features', ()=> {
             userAdPreference.hideAds = true;
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
 
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
             expect(switches.sliceAdverts).toBe(false);
             expect(switches.popularContentMPU).toBe(false);
             expect(switches.videoPreRolls).toBe(false);
@@ -211,17 +211,30 @@ describe('Commercial features', ()=> {
             config.page.isLiveBlog = false;
         });
 
-        it('hides article MPUs on non-article pages', ()=> {
+        it('hides body MPUs on non-article pages', ()=> {
             config.page.contentType = 'Gallery';
             const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
         });
 
-        it('hides article MPUs on live blog articles', ()=> {
+        it('hides body MPUs on live blog articles', ()=> {
             config.page.contentType = 'Article';
             config.page.isLiveBlog = true;
             const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
+        });
+
+        it('hides aside MPUs on non-article pages', ()=> {
+            config.page.contentType = 'Gallery';
+            const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
+            expect(switches.articleAsideAdverts).toBe(false);
+        });
+
+        it('does not hide aside MPUs on live blog articles', ()=> {
+            config.page.contentType = 'Article';
+            config.page.isLiveBlog = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
+            expect(switches.articleAsideAdverts).toBeUndefined();
         });
 
         it('applies no changes otherwise', ()=> {
@@ -260,7 +273,7 @@ describe('Commercial features', ()=> {
         it('disables article adverts if standard-adverts switch is off', ()=> {
             config.switches.standardAdverts = false;
             const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
         });
 
         it('disables slice adverts if standard-adverts switch is off', ()=> {
