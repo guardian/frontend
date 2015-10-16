@@ -150,6 +150,19 @@
         }
     }
 
+    .section-rule {
+        display: block;
+        width: gs-span(2);
+        height: 2px;
+        margin-top: $gs-baseline * 4;
+        margin-bottom: $gs-baseline / 4;
+        background-color: colour(neutral-7);
+    }
+
+    .element + .section-rule {
+        margin-top: 0;
+    }
+
     .element-pullquote {
         position: relative;
         width: auto;
@@ -163,7 +176,7 @@
             position: absolute;
             top: 0;
             height: 2px;
-            width: 140px;
+            width: gs-span(2);
             background-color: colour(neutral-7);
         }
 
