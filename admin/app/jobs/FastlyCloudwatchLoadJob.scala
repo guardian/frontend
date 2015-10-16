@@ -17,22 +17,26 @@ object FastlyCloudwatchLoadJob extends Logging {
 
   def run() {
     log.info("Loading statistics from Fastly to CloudWatch.")
-    val statistics = Await.result(Fastly(), 1.minute)
+    try {
+      val statistics = Await.result(Fastly(), 1.minute)
 
-    val fresh = statistics filter { statistic =>
-      latestTimestampsSent(statistic.key) < statistic.timestamp
-    }
+      val fresh = statistics filter { statistic =>
+        latestTimestampsSent(statistic.key) < statistic.timestamp
+      }
 
-    log.info("Uploading %d new metric data points" format fresh.size)
-    Configuration.environment.stage.toUpperCase match {
-      case "PROD" => CloudWatch.put("Fastly", fresh)
-      case _ => log.info("DISABLED: Metrics uploaded in PROD only to limit duplication.")
-    }
+      log.info("Uploading %d new metric data points" format fresh.size)
+      Configuration.environment.stage.toUpperCase match {
+        case "PROD" => CloudWatch.put("Fastly", fresh)
+        case _ => log.info("DISABLED: Metrics uploaded in PROD only to limit duplication.")
+      }
 
-    val groups = fresh groupBy { _.key }
-    val timestampsSent = groups mapValues { _ map { _.timestamp } }
-    timestampsSent mapValues { _.max } foreach { case (key, value) =>
-      latestTimestampsSent.update(key, value)
+      val groups = fresh groupBy { _.key }
+      val timestampsSent = groups mapValues { _ map { _.timestamp } }
+      timestampsSent mapValues { _.max } foreach { case (key, value) =>
+        latestTimestampsSent.update(key, value)
+      }
+    } catch {
+      case e: Exception => log.error(s"Error with loading Fastly API statistics ${e.getMessage}")
     }
   }
 }
