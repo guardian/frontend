@@ -11,10 +11,10 @@ object MainMediaWidths {
 
   def apply(article: Article): layout.WidthsByBreakpoint = {
     (article.hasShowcaseMainElement, article.isFeature, article.isLiveBlog) match {
-      case (true, true, _) => MainMedia.FeatureShowcase
-      case (true, false, _) => MainMedia.Showcase
-      case (false, _, true) => LiveBlogMedia.Inline
-      case _ => MainMedia.Inline
+      case (true, true, _) => MainMedia.featureShowcase
+      case (true, false, _) => MainMedia.showcase
+      case (false, _, true) => LiveBlogMedia.inline
+      case _ => MainMedia.inline
     }
   }
 

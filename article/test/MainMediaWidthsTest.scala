@@ -23,7 +23,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
 
     val article = new Article(content)
 
-    MainMediaWidths(article) shouldEqual MainMedia.Inline
+    MainMediaWidths(article) shouldEqual MainMedia.inline
   }
 
   "should return correct widths for showcase main media" in {
@@ -51,7 +51,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
 
     val article = new Article(content)
 
-    MainMediaWidths(article) shouldEqual MainMedia.Showcase
+    MainMediaWidths(article) shouldEqual MainMedia.showcase
   }
 
   "should return correct widths for a liveblog" in {
@@ -68,7 +68,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
 
     val article = new Article(content)
 
-    MainMediaWidths(article) shouldEqual LiveBlogMedia.Inline
+    MainMediaWidths(article) shouldEqual LiveBlogMedia.inline
   }
 
   "should return correct widths for showcase main media in feature content" in {
@@ -96,7 +96,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
 
     val article = new Article(content)
 
-    MainMediaWidths(article) shouldEqual MainMedia.FeatureShowcase
+    MainMediaWidths(article) shouldEqual MainMedia.featureShowcase
   }
 
   private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {

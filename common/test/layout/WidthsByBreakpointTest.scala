@@ -10,11 +10,11 @@ class WidthsByBreakpointTest extends FreeSpec with ShouldMatchers with Eventuall
     "getWidthsFromContentElement" - {
       "inline" - {
         "return correct widths for main media" in {
-          ContentWidths.getWidthsFromContentElement(Inline, MainMedia) shouldEqual MainMedia.Inline
+          ContentWidths.getWidthsFromContentElement(Inline, MainMedia) shouldEqual MainMedia.inline
         }
 
         "return correct widths for body media" in {
-          ContentWidths.getWidthsFromContentElement(Inline, BodyMedia) shouldEqual BodyMedia.Inline
+          ContentWidths.getWidthsFromContentElement(Inline, BodyMedia) shouldEqual BodyMedia.inline
         }
       }
 
@@ -24,17 +24,17 @@ class WidthsByBreakpointTest extends FreeSpec with ShouldMatchers with Eventuall
         }
 
         "return correct widths for body media" in {
-          ContentWidths.getWidthsFromContentElement(Supporting, BodyMedia) shouldEqual BodyMedia.Supporting
+          ContentWidths.getWidthsFromContentElement(Supporting, BodyMedia) shouldEqual BodyMedia.supporting
         }
       }
 
       "showcase" - {
         "return correct widths for main media" in {
-          ContentWidths.getWidthsFromContentElement(Showcase, MainMedia) shouldEqual MainMedia.Showcase
+          ContentWidths.getWidthsFromContentElement(Showcase, MainMedia) shouldEqual MainMedia.showcase
         }
 
         "return correct widths for body media" in {
-          ContentWidths.getWidthsFromContentElement(Showcase, BodyMedia) shouldEqual BodyMedia.Showcase
+          ContentWidths.getWidthsFromContentElement(Showcase, BodyMedia) shouldEqual BodyMedia.showcase
         }
       }
 
@@ -44,7 +44,7 @@ class WidthsByBreakpointTest extends FreeSpec with ShouldMatchers with Eventuall
         }
 
         "return correct widths for body media" in {
-          ContentWidths.getWidthsFromContentElement(Thumbnail, BodyMedia) shouldEqual BodyMedia.Thumbnail
+          ContentWidths.getWidthsFromContentElement(Thumbnail, BodyMedia) shouldEqual BodyMedia.thumbnail
         }
       }
     }
