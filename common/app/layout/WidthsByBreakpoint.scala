@@ -103,7 +103,7 @@ object ContentWidths {
     val className: Option[String]
   )
 
-  private val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
+  val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
 
   object Inline     extends ContentHinting (MainMedia.Inline,     BodyMedia.Inline,     None)
   object Supporting extends ContentHinting (unused,               BodyMedia.Supporting, Some("element--supporting"))
