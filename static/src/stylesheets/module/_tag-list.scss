@@ -31,11 +31,15 @@
     }
 }
 
+.more-tags {
+    display: none;
+
+    &.is-available {
+        display: inline;
+    }
+}
+
 .show-more-tags {
     vertical-align: bottom;
     display: inline-block;
-}
-
-.more-tags { //fix for IE8/9 bug
-    display: inline;
 }
