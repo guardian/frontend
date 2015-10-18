@@ -1,4 +1,4 @@
-@(route: views.SocialSigninRoutes, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+@(route: views.SocialSigninRoutes, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, email: Option[String] = None)(implicit request: RequestHeader)
 
 @import conf.switches.Switches.IdentitySocialOAuthSwitch
 @import utils.ThirdPartyConditions
