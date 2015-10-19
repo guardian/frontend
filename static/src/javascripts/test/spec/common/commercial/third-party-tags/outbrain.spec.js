@@ -12,8 +12,8 @@ var fixturesConfig = {
     $fixtureContainer,
     config,
     mediator,
-    identity,
     detect,
+    commercialFeatures,
     sut, // System under test
     injector = new Injector();
 
@@ -23,13 +23,9 @@ describe('Outbrain', function () {
             'common/modules/commercial/third-party-tags/outbrain',
             'common/utils/mediator',
             'common/utils/config',
-            'common/modules/identity/api',
-            'common/utils/detect'], function () {
-            sut      = arguments[0];
-            mediator = arguments[1];
-            config   = arguments[2];
-            identity = arguments[3];
-            detect   = arguments[4];
+            'common/utils/detect',
+            'common/modules/commercial/commercial-features'], function () {
+            [sut, mediator, config, detect, commercialFeatures] = arguments;
 
             config.switches.outbrain = true;
             config.page = {
@@ -38,9 +34,7 @@ describe('Outbrain', function () {
                 isFront: false,
                 commentable: true
             };
-            identity.isUserLoggedIn = function () {
-                return false;
-            };
+            commercialFeatures.outbrain = true;
             detect.adblockInUse = () => false;
 
             $fixtureContainer = fixtures.render(fixturesConfig);
@@ -75,7 +69,7 @@ describe('Outbrain', function () {
             };
         });
 
-        it('should start outbrain component', function () {
+        it('should start outbrain component when policies are true', function () {
             spyOn(sut, 'load');
 
             sut.init();
@@ -83,67 +77,14 @@ describe('Outbrain', function () {
             expect(sut.load).toHaveBeenCalled();
         });
 
-        it('should not load when children books site', function () {
-            config.page.section = 'childrens-books-site';
+        it('should not start outbrain component when policies are false', function () {
             spyOn(sut, 'load');
+
+            commercialFeatures.outbrain = false;
 
             sut.init();
             mediator.emit('modules:commercial:dfp:rendered', eventStub);
             expect(sut.load).not.toHaveBeenCalled();
-        });
-
-        it('should not load when user is logged in', function () {
-            identity.isUserLoggedIn = function () {
-                return true;
-            };
-            spyOn(sut, 'load');
-
-            sut.init();
-            mediator.emit('modules:commercial:dfp:rendered', eventStub);
-            expect(sut.load).not.toHaveBeenCalled();
-        });
-
-        it('should not load when isPreview', function () {
-            config.page.isPreview = true;
-            spyOn(sut, 'load');
-
-            sut.init();
-            mediator.emit('modules:commercial:dfp:rendered', eventStub);
-            expect(sut.load).not.toHaveBeenCalled();
-        });
-
-        it('should not load when merchandising-high component is not empty', function () {
-            spyOn(sut, 'load');
-
-            eventStub.isEmpty = false;
-
-            sut.init();
-            mediator.emit('modules:commercial:dfp:rendered', eventStub);
-
-            expect(sut.load).not.toHaveBeenCalled();
-        });
-
-        it('should not load when on network front', function () {
-            spyOn(sut, 'load');
-
-            config.page.isFront = true;
-
-            sut.init();
-            mediator.emit('modules:commercial:dfp:rendered', eventStub);
-            expect(sut.load).not.toHaveBeenCalled();
-        });
-
-        it('should load when user is logged in but there are no comments on the page', function () {
-            identity.isUserLoggedIn = function () {
-                return true;
-            };
-
-            config.page.commentable = false;
-            spyOn(sut, 'load');
-
-            sut.init();
-            mediator.emit('modules:commercial:dfp:rendered', eventStub);
-            expect(sut.load).toHaveBeenCalled();
         });
 
         /*

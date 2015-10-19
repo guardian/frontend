@@ -6,7 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/identity/api',
+    'common/modules/commercial/commercial-features',
     'text!common/views/commercial/outbrain.html'
 ], function (
     fastdom,
@@ -16,7 +16,7 @@ define([
     detect,
     mediator,
     template,
-    identity,
+    commercialFeatures,
     outbrainTpl
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
@@ -100,16 +100,8 @@ define([
                 || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
         },
 
-        identityPolicy: function () {
-            return (!identity.isUserLoggedIn() || !(identity.isUserLoggedIn() && config.page.commentable));
-        },
-
         init: function () {
-            if (config.switches.outbrain
-                && !config.page.isFront
-                && !config.page.isPreview
-                && this.identityPolicy()
-                && config.page.section !== 'childrens-books-site') {
+            if (commercialFeatures.outbrain) {
                 if (detect.adblockInUse()) {
                     this.load();
                 } else {

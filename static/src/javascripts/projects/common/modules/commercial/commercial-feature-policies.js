@@ -4,6 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/user-ad-preference',
+    'common/modules/identity/api',
     'common/modules/user-prefs'
 ], function (
     _,
@@ -11,6 +12,7 @@ define([
     config,
     detect,
     userAdPreference,
+    identity,
     userPrefs
 ) {
     var policies = {};
@@ -97,6 +99,16 @@ define([
         }
     };
 
+    policies.outbrain = function () {
+        if (!config.switches.outbrain
+                || config.page.isFront
+                || config.page.isPreview
+                || (identity.isUserLoggedIn() && config.page.commentable)
+                || config.page.section === 'childrens-books-site') {
+            return {outbrain : false};
+        }
+    };
+
     policies.switchboard = function () {
         var switches = {};
 
@@ -131,6 +143,7 @@ define([
         this.frontCommercialComponents = enabled;
         this.thirdPartyTags = enabled;
         this.badges = enabled;
+        this.outbrain = enabled;
     }
 
     function getPolicySwitches() {
