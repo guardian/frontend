@@ -62,7 +62,7 @@ define([
 
                     // Require omniture inline to avoid circular dependency
                     // (ab requires this file, this file requires omniture, omniture requires ab)
-                    require(['common/modules/analytics/omniture'], function(omniture){
+                    require(['common/modules/analytics/omniture'], function (omniture) {
                         omniture.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
                     });
                 }
