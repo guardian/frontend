@@ -233,7 +233,9 @@
         }
 
         .caption {
-            padding-left: $gs-gutter;
+            @include mq(desktop) {
+                padding-left: $gs-gutter;
+            }
 
             @include mq(leftCol) {
                 position: absolute;
