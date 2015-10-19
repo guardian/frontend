@@ -3,6 +3,7 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/live-events-thrasher.html'
@@ -11,6 +12,7 @@ define([
     fastdom,
     $,
     _,
+    config,
     template,
     svgs,
     adfreeThrasherTemplate
@@ -24,7 +26,7 @@ define([
                 surveyHeader: 'Stream all Guardian Live events right from your home',
                 marque36icon: svgs('marque36icon'),
                 membershipLogo: svgs('membershipLogo'),
-                thrasherBenefit: svgs('thrasherBenefit'),
+                liveStreamingSurvey: config.images.commercial.liveStreamingSurvey,
                 surveyNew: svgs('surveyNew')
             });
     };
