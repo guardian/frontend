@@ -13,7 +13,8 @@
         clear: both;
     }
 
-    // HEADER
+/* Header
+   ========================================================================== */
     .content__head {
         position: relative;
         color: #ffffff;
@@ -135,6 +136,124 @@
             bottom: 0;
             left: 0;
             right: 0;
+        }
+    }
+
+/* Body
+   ========================================================================== */
+    .drop-cap {
+        height: 7.25em;
+
+        .drop-cap__inner {
+            font-size: 9.5em;
+            line-height: .83; // To optically align to top of five lines of text
+        }
+    }
+
+    .section-rule {
+        display: block;
+        width: gs-span(2);
+        height: 2px;
+        margin: 0;
+        border: 0;
+        margin-top: $gs-baseline * 4;
+        margin-bottom: $gs-baseline / 4;
+        background-color: colour(neutral-7);
+    }
+
+    .element + .section-rule {
+        margin-top: 0;
+    }
+
+    .element-pullquote {
+        position: relative;
+        width: auto;
+        margin-left: 0;
+        padding: 0;
+        padding-top: .33em;
+        margin-bottom: 2rem;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 2px;
+            width: gs-span(2);
+            background-color: colour(neutral-7);
+        }
+
+        .inline-quote {
+            margin-bottom: $gs-baseline / 4;
+        }
+
+        .inline-quote svg {
+            fill: colour(neutral-3);
+            width: 2.425rem;
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            font-family: $f-serif-headline;
+            font-weight: 200;
+            font-size: 1.75rem;
+            line-height: 1.1;
+        }
+
+        .pullquote-paragraph {
+            color: colour(feature-default);
+        }
+
+        .pullquote-cite {
+            color: colour(neutral-1) !important; // important to override super specific tonal classes
+        }
+
+        .inline-quote.closing {
+            display: none;
+        }
+    }
+
+    figure.element--showcase {
+        @include mq(desktop) {
+            margin-left: -($gs-gutter);
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter * 2);
+            margin-bottom: $gs-baseline - 2px; // 2px is to compensate for x-height of type
+        }
+
+        @include mq(wide) {
+            margin-left: -(gs-span(3) + $gs-gutter * 2);
+        }
+
+        .caption {
+            @include mq(desktop) {
+                padding-left: $gs-gutter;
+            }
+
+            @include mq(leftCol) {
+                position: absolute;
+                width: gs-span(2);
+                padding-top: $gs-baseline;
+            }
+
+            @include mq(wide) {
+                width: gs-span(3);
+            }
+        }
+
+        .block-share {
+            display: none !important; // To override hide on mobile
+        }
+    }
+
+    .ad-slot--inline {
+        @include mq(desktop) {
+            margin-right: -(gs-span(4) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            margin-right: -(gs-span(5) + $gs-gutter);
         }
     }
 }

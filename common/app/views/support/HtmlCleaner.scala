@@ -70,6 +70,8 @@ object PullquoteCleaner extends HtmlCleaner {
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
       element.append(closingQuoteSvg)
+      element.getElementsByTag("p").addClass("pullquote-paragraph")
+      element.getElementsByTag("cite").addClass("pullquote-cite")
     }
 
     document
@@ -500,6 +502,16 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
         }
         case _ =>
       }
+    }
+
+    document.getElementsByTag("h2").foreach{ h2 =>
+        if (h2.text() == "* * *") {
+            h2.tagName("hr").addClass("section-rule").html("")
+            val next = h2.nextElementSibling()
+            if (next.nodeName() == "p") {
+                next.html(setDropCap(next))
+            } 
+        }
     }
     document
   }
