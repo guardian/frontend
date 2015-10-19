@@ -11,14 +11,6 @@
 
     .content__article-body {
         clear: both;
-
-        > p a {
-            color: colour(feature-default);
-
-            &:hover {
-                border-bottom-color: rgba(colour(feature-default), .4);
-            }
-        }
     }
 
 /* Header
