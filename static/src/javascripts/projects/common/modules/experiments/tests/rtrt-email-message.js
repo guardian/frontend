@@ -38,11 +38,11 @@ define([
         this.start = '2015-10-15';
         this.expiry = '2015-11-15';
         this.author = 'Gareth Trufitt';
-        this.description = 'Test likelihood of email sign-up with 3 visits to the home page vs showing to all visitors on article pages';
+        this.description = 'Test likelihood of email sign-up with 3 visits to the home page vs showing to all visitors on all pages';
         this.audience = 0.01;
         this.audienceOffset = 0;
-        this.successMeasure = 'Loyal users shown the email sign-up message are more likely to sign up';
-        this.audienceCriteria = 'Users on article pages';
+        this.successMeasure = 'Loyal users shown the email sign-up message higher on the loyalty curve are more likely to sign up';
+        this.audienceCriteria = 'Users who match the segment defined in Krux';
         this.dataLinkNames = '';
         this.idealOutcome = 'Users will sign up to email';
 
