@@ -70,6 +70,8 @@ object PullquoteCleaner extends HtmlCleaner {
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
       element.append(closingQuoteSvg)
+      element.getElementsByTag("p").addClass("pullquote-paragraph")
+      element.getElementsByTag("cite").addClass("pullquote-cite")
     }
 
     document

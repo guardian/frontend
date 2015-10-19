@@ -191,19 +191,19 @@
             width: 2.425rem;
         }
 
-        blockquote p,
-        cite {
+        .pullquote-paragraph,
+        .pullquote-cite {
             font-family: $f-serif-headline;
             font-weight: 200;
             font-size: 1.75rem;
             line-height: 1.1;
         }
 
-        blockquote p {
+        .pullquote-paragraph {
             color: colour(feature-default);
         }
 
-        cite {
+        .pullquote-cite {
             color: colour(neutral-1) !important; // important to override super specific tonal classes
         }
 
