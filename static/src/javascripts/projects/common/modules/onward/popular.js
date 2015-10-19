@@ -36,7 +36,8 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        this.fetch(qwery('.js-popular-trails'), 'html');
+        $('.js-most-popular-footer').html('');
+        this.fetch(qwery('.js-most-popular-footer'), 'html');
     };
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {
