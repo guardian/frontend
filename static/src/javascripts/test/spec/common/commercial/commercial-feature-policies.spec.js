@@ -4,7 +4,7 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 describe('Commercial features', ()=> {
-    let commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs;
+    let commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs, identity;
 
     beforeEach((done)=> {
         injector.test([

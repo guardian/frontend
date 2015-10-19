@@ -12,8 +12,8 @@ var fixturesConfig = {
     $fixtureContainer,
     config,
     mediator,
-    identity,
     detect,
+    commercialFeatures,
     sut, // System under test
     injector = new Injector();
 
