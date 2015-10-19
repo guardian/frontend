@@ -19,7 +19,7 @@ trait PerformanceSwitches {
     "minify-more-inline-js",
     "If this switch is on, featureDetection.js, cloudwatchBeacons.js and shouldEnhance.js will be minified by closure",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 16),
+    sellByDate = new LocalDate(2015, 10, 30),
     exposeClientSide = false
   )
 
