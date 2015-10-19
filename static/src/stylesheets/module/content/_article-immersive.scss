@@ -11,6 +11,14 @@
 
     .content__article-body {
         clear: both;
+
+        a {
+            color: colour(feature-default);
+
+            &:hover {
+                border-bottom-color: rgba(colour(feature-default), .4);
+            }
+        }
     }
 
 /* Header
@@ -217,6 +225,7 @@
 
         @include mq(leftCol) {
             margin-left: -(gs-span(2) + $gs-gutter * 2);
+            margin-bottom: $gs-baseline - 2px; // 2px is to compensate for x-height of type
         }
 
         @include mq(wide) {
@@ -225,6 +234,20 @@
 
         .caption {
             padding-left: $gs-gutter;
+
+            @include mq(leftCol) {
+                position: absolute;
+                width: gs-span(2);
+                padding-top: $gs-baseline;
+            }
+
+            @include mq(wide) {
+                width: gs-span(3);
+            }
+        }
+
+        .block-share {
+            display: none !important; // To override hide on mobile
         }
     }
 
