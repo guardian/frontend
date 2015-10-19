@@ -4,7 +4,7 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 describe('Commercial features', ()=> {
-    let commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs;
+    let commercialFeaturePolicies, config, detect, location, userFeatures, userPrefs;
 
     beforeEach((done)=> {
         injector.test([
@@ -12,10 +12,10 @@ describe('Commercial features', ()=> {
             'common/utils/config',
             'common/utils/detect',
             'common/utils/location',
-            'common/modules/commercial/user-ad-preference',
+            'common/modules/commercial/adfree/user-features',
             'common/modules/user-prefs'
         ], function () {
-            [commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs] = arguments;
+            [commercialFeaturePolicies, config, detect, location, userFeatures, userPrefs] = arguments;
             done();
         });
     });
@@ -158,7 +158,7 @@ describe('Commercial features', ()=> {
 
     describe('Adfree experience policy', ()=> {
         it('enabling adfree hides some commercial content', ()=> {
-            userAdPreference.hideAds = true;
+            userFeatures.isAdfree = ()=> true;
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
 
             expect(switches.articleBodyAdverts).toBe(false);
@@ -168,7 +168,7 @@ describe('Commercial features', ()=> {
         });
 
         it('enabling adfree does not hide other commercial content', ()=> {
-            userAdPreference.hideAds = true;
+            userFeatures.isAdfree = ()=> true;
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
 
             expect(switches.dfpAdvertising).not.toBe(false);
@@ -178,7 +178,7 @@ describe('Commercial features', ()=> {
         });
 
         it('applies no changes when adfree is disabled', ()=> {
-            userAdPreference.hideAds = false;
+            userFeatures.isAdfree = ()=> false;
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
             expect(switches).toBeUndefined();
         });

@@ -1,0 +1,58 @@
+@()
+
+@* This script must come after the pre-flight shims *@
+
+<script>
+(function applyAdFree(){
+    /**
+     * Determine if user has 'adfree' view, and apply appropriate body classes before rendering.
+     */
+
+    var ADFREE_COOKIE_KEY = 'gu_adfree_user',
+        USER_SIGNIN_COOKIE = 'GU_U',
+        commercial = guardian.config.commercial;
+
+    if (showAdfreeView()) {
+        addClass(document.documentElement, 'adfree');
+        commercial.showingAdfree = true;
+    } else {
+        commercial.showingAdfree = false;
+    }
+
+    function showAdfreeView() {
+        if (featureDisabled() || userLoggedOut()) {
+            return false;
+        } else {
+            var adfreeUser = readCookie(ADFREE_COOKIE_KEY);
+            // If the cookie is ambiguous or null, err on the side of caution and hold off showing ads
+            return adfreeUser !== 'false';
+        }
+    }
+
+    function featureDisabled() {
+        return guardian.config.switches.advertOptOut === false;
+    }
+
+    function userLoggedOut() {
+        return readCookie(USER_SIGNIN_COOKIE) === null;
+    }
+
+    function readCookie(name) {
+        var cookies, i, cookieString, cookieParts;
+
+        cookies = document.cookie.split(';');
+        for (i = 0; i < cookies.length; i++) {
+            cookieString = cookies[i];
+            cookieParts = cookieString.split('=');
+            if (cookieParts[0].trim() === name) {
+                return cookieParts[1].trim();
+            }
+        }
+        return null;
+    }
+
+    function addClass(el, className) {
+        el.className += ' ' + className;
+    }
+}());
+</script>
