@@ -32,6 +32,18 @@ define([
                 linkText: 'Sign up',
                 linkName: 'rtrt : message : email sign-up button',
                 arrowWhiteRight: svgs('arrowWhiteRight')
+            },
+            createMessage = function (kruxSegmentId) {
+                // If a segment Id is passed and the user is in the segment, show the message
+                // and fire off an omniture tracking call
+                if (kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) {
+                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+                    // Omniture is a global var
+                    window.s.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
+                } else if (!kruxSegmentId) {
+                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+                }
+
             };
 
         this.id = 'RtrtEmailMessage';
@@ -50,28 +62,24 @@ define([
             return true;
         };
 
-        this.variants = [{
-            id: 'targeted',
-            test: function () {
-                var kruxSegmentId = 'o901c5kja',
-                    userIsInSegment = _.contains(krux.getSegments(), kruxSegmentId);
-
-                // If user is in our segment
-                if (userIsInSegment) {
-                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-
-                    // Omniture is a global var
-                    s.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
-
+        this.variants = [
+            {
+                id: 'targeted-loyal-A',
+                test: function () {
+                    createMessage('XXXXXXXX');
                 }
+            },
+            {
+                id: 'targeted-loyal-B',
+                test: function () {
+                    createMessage('XXXXXXXX');
+                }
+            },
+            {
+                id: 'all',
+                test: createMessage
             }
-        },
-        {
-            id: 'all',
-            test: function () {
-                new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-            }
-        }];
+        ];
 
     };
 
