@@ -48,6 +48,7 @@ define([
                 'prop41',   // preroll milestone
                 'prop43',   // media type
                 'prop44',   // media id
+                'evar44',   // media id
                 'evar74',   // ad or content
                 'evar61'];  // restricted
 
