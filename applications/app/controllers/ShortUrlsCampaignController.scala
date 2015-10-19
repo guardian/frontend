@@ -1,6 +1,6 @@
 package controllers
 
-import common.Logging
+import common.{LinkTo, Logging}
 import common.`package`._
 import conf.LiveContentApi
 import model.Cached
@@ -37,7 +37,7 @@ object ShortUrlsCampaignController extends Controller with Logging {
   private def redirectUrl(shortUrl: String, queryString: Map[String, Seq[String]])(implicit request: RequestHeader) = {
     LiveContentApi.getResponse(LiveContentApi.item(shortUrl)).map { response =>
       response.content.map(_.id).map { id =>
-        Redirect(s"/$id", queryString)
+        Redirect(LinkTo(s"/$id"), queryString)
       }.getOrElse(NotFound)
     }.recover(convertApiExceptionsWithoutEither).map(Cached(60))
   }
