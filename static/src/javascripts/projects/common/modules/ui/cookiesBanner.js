@@ -26,13 +26,16 @@ define([
      * Show only on FIRST page view
      * Persist close state
      */
-    var COOKIE_MESSAGE_KEY = 'GU_EU_COOKIES',
+    var EU_COOKIE_KEY = 'GU_EU',
+        EU_COOKIE_MESSAGE_KEY = 'GU_EU_COOKIE_MESSAGE',
         impressions = 0;
 
     function canShow() {
-        if (config.isEu) {
-            var cookieVal = cookies.get(COOKIE_MESSAGE_KEY);
-            impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0;
+        var euUserCookie = cookies.get(EU_COOKIE_KEY),
+            euMessageCookie = cookies.get(EU_COOKIE_MESSAGE_KEY);
+
+        if (euUserCookie) {
+            impressions = euMessageCookie && !isNaN(euMessageCookie) ? parseInt(euMessageCookie, 10) : 0;
             return impressions == 0;
         } else {
             return false;
@@ -46,7 +49,7 @@ define([
             cookieLifeDays = 365,
             msg = new Message('cookies');
         msg.show(txt, opts);
-        cookies.add(COOKIE_MESSAGE_KEY, impressions + 1, cookieLifeDays);
+        cookies.add(EU_COOKIE_MESSAGE_KEY, impressions + 1, cookieLifeDays);
     }
 
     function init() {
