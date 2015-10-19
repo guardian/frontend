@@ -13,7 +13,7 @@
         <title>@views.support.Title(metaData)</title>
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
         @fragments.amp.stylesheets.main(metaData)
-        <script src="https://cdn.ampproject.org/v0.js" @if(Play.isDev) { development } async></script>
+        <script src="https://cdn.ampproject.org/v0.js" async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
@@ -29,25 +29,16 @@
         }
 
         <div class="main-body">
-            @* @fragments.header(metaData) *@
+
             <header class="main-header">
-                <a href="@LinkTo{/}" class="logo-wrapper">
+                <a href="@LinkTo{/}" class="logo-wrapper" name="top">
                     @fragments.inlineSvg("guardian-logo-160", "logo")
                 </a>
             </header>
-            @body
-            @* <h1>Sample document</h1>
-            <p>
-                Some text
-                <amp-img src=sample.jpg width=300 height=300 layout="responsive"/>
-            </p>
-            <cat-ad width=100% height=300>
-                    <!-- <script>document.write(…)</script> -->
-            </cat-ad>*@
 
-            <footer>
-                © @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.
-            </footer>
+            @body
+
+            @fragments.footer(metaData, amp = true)
         </div>
     </body>
 </html>

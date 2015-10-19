@@ -22,7 +22,7 @@ define([
     svgs
 ) {
     function init() {
-        var alreadyVisted = storage.local.get('alreadyVisited') || 0,
+        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0,
             adblockLink = 'https://membership.theguardian.com/',
             message = _.sample([
                 {
@@ -47,7 +47,7 @@ define([
                 }
             ]);
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1) {
             new Message('adblock-message', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant ' + message.id,

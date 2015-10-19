@@ -1,4 +1,18 @@
-(function() {
+ (function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define('videojs-playlist', ["videojs"], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require("video.js"));
+  } else {
+    root['videojs-playlist'] = factory(videojs);
+  }
+}(this, function(videojs) {
 
  videojs.plugin('playlist', function(options) {
   //this.L="vjs_common_one";
@@ -71,6 +85,7 @@
               player.src([
                   { type: "audio/mp4", src:  src+".m4a" },
                   { type: "audio/webm", src: src+".webm" },
+                  { type: type="video/youtube", src:  src},
                   { type: "audio/ogg", src: src+".ogg" }
                   /*{ type: "audio/mpeg", src:  src+".mp3" },
                   { type: "audio/ogg", src: src+".oga" }*/
@@ -80,6 +95,7 @@
             //console.log("video");
               player.src([                
                 { type: "video/mp4", src:  src+".mp4" },
+                { type: type="video/youtube", src:  src},
                 { type: "video/webm", src: src+".webm" }
                 //{ type: "video/ogv", src: src+".ogv" }
               ]);
@@ -92,7 +108,7 @@
 
         //remove 'currentTrack' CSS class
         for(var i=0; i<trackCount; i++){
-            if(tracks[i].classList.contains('currentTrack')){
+            if (tracks[i].className.indexOf('currentTrack') !== -1) {
                 tracks[i].className=tracks[i].className.replace(/\bcurrentTrack\b/,'nonPlayingTrack');
             }
         }
@@ -111,6 +127,11 @@
       //console.log('options.setTrack index'+index);
       trackSelect(tracks[index]);
       play=true;
+    }
+    if (window.location.hash) {
+      var hash = window.location.hash.substring(9);
+      play = false;
+      trackSelect(tracks[hash]);
     }
 
     var data={
@@ -138,4 +159,4 @@
     return data;
 });
 //return videojsplugin;
-})();
+}));

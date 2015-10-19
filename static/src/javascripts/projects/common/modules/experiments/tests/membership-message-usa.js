@@ -42,8 +42,8 @@ define([
              * - Only show on Article pages
              * - Only show to visitors who have viewed at least 10 pages.
              */
-            var alreadyVisited = storage.local.get('alreadyVisited') || 0;
-            return !detect.adblockInUse &&
+            var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+            return !detect.adblockInUse() &&
                 detect.getBreakpoint() !== 'mobile' &&
                 config.page.edition === 'US' &&
                 config.page.contentType === 'Article' &&
@@ -58,8 +58,8 @@ define([
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_A',
                     messageText: 'Support open, independent journalism. Become a Supporter from just £5/$8 per month',
+                    linkHref: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_A',
                     linkText: 'Find out more',
                     arrowWhiteRight: svgs('arrowWhiteRight')
                 }));
@@ -72,8 +72,8 @@ define([
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(messageTemplate, {
-                    supporterLink: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_B',
                     messageText: '“The Guardian enjoys rare freedom and independence. Support our journalism” – Ewen MacAskill',
+                    linkHref: 'https://membership.theguardian.com/us/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_USA_B',
                     linkText: 'Find out more',
                     arrowWhiteRight: svgs('arrowWhiteRight')
                 }));

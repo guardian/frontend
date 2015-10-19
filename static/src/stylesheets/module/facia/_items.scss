@@ -122,14 +122,6 @@
         .fc-item__avatar__media {
             right: - $gs-gutter;
         }
-
-        .vjs-big-play-button > span {
-            @include video-play-button-size($vjs-small-button-size);
-
-            @include mq(mobileLandscape) {
-                @include video-play-button-size($vjs-large-button-size);
-            }
-        }
     }
 }
 

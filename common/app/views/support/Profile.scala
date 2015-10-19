@@ -17,9 +17,9 @@ sealed trait ElementProfile {
   def compression: Int
 
   def elementFor(image: ImageContainer): Option[ImageAsset] = {
-    val sortedCorps = image.imageCrops.sortBy(_.width)
+    val sortedCrops = image.imageCrops.sortBy(-_.width)
     width.flatMap{ desiredWidth =>
-      sortedCorps.find(_.width >= desiredWidth)
+      sortedCrops.find(_.width >= desiredWidth)
     }.orElse(image.largestImage)
   }
 
@@ -122,7 +122,7 @@ object ImgSrc extends Logging {
     }
   }
 
-  private def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }

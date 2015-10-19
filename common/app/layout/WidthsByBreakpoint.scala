@@ -98,54 +98,57 @@ object FaciaWidths {
 object ContentWidths {
 
   sealed class ContentHinting (
-    val mainContentWidths: WidthsByBreakpoint,
-    val bodyContentWidths: WidthsByBreakpoint,
     val className: Option[String]
   )
 
-  private val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
+  val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
 
-  object Inline     extends ContentHinting (MainMedia.Inline,     BodyMedia.Inline,     None)
-  object Supporting extends ContentHinting (unused,               BodyMedia.Supporting, Some("element--supporting"))
-  object Showcase   extends ContentHinting (MainMedia.Showcase,   BodyMedia.Showcase,   Some("element--showcase"))
-  object Thumbnail  extends ContentHinting (unused,               BodyMedia.Thumbnail,  Some("element--thumbnail"))
+  object Inline     extends ContentHinting (None)
+  object Supporting extends ContentHinting (Some("element--supporting"))
+  object Showcase   extends ContentHinting (Some("element--showcase"))
+  object Thumbnail  extends ContentHinting (Some("element--thumbnail"))
 
-  sealed trait ContentRelation
+  sealed trait ContentRelation {
+    def inline: WidthsByBreakpoint
+    def supporting: WidthsByBreakpoint = unused
+    def showcase: WidthsByBreakpoint = unused
+    def thumbnail: WidthsByBreakpoint = unused
+  }
 
   object BodyMedia extends ContentRelation {
-    val Inline = WidthsByBreakpoint(
+    override val inline = WidthsByBreakpoint(
       mobile =          Some(445.px),
       mobileLandscape = Some(605.px),
       phablet =         Some(620.px)) // tablet, desktop, leftCol and wide are also 620px
 
-    val Supporting = WidthsByBreakpoint(
+    override val supporting = WidthsByBreakpoint(
       mobile =          Some(445.px),
       mobileLandscape = Some(605.px),
       phablet =         Some(620.px), // tablet is also 620px
       desktop =         Some(300.px), // leftCol is also 300px
       wide =            Some(380.px))
 
-    val Showcase = WidthsByBreakpoint(
+    override val showcase = WidthsByBreakpoint(
       mobile =          Some(445.px),
       mobileLandscape = Some(605.px),
       phablet =         Some(620.px), // tablet and desktop are also 620px
       leftCol =         Some(780.px),
       wide =            Some(860.px))
 
-    val Thumbnail = WidthsByBreakpoint(
+    override val thumbnail = WidthsByBreakpoint(
       mobile =          Some(120.px), // mobileLandscape and tablet are also 120px
       tablet =          Some(140.px)) // desktop, leftCol and wide are also 140px
   }
 
   object MainMedia extends ContentRelation {
-    val Inline = WidthsByBreakpoint(
+    override val inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
       phablet =         Some(620.px),
       tablet =          Some(700.px),
       desktop =         Some(620.px)) // leftCol and wide are also 620px
 
-    val Showcase = WidthsByBreakpoint(
+    override val showcase = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
       phablet =         Some(620.px),
@@ -154,7 +157,11 @@ object ContentWidths {
       leftCol =         Some(780.px),
       wide =            Some(860.px))
 
-    val FeatureShowcase = WidthsByBreakpoint(
+    /**
+     * main image is showcase on a feature article, e.g.
+     * http://www.theguardian.com/politics/2015/may/02/nicola-sturgeon-im-the-boss-now
+     */
+    val featureShowcase = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
       phablet =         Some(725.px),
@@ -164,9 +171,21 @@ object ContentWidths {
       wide =            Some(1300.px))
   }
 
-  object PictureMedia {
-    // PictureMedia does not support hinting/weighting, so does not extend ContentRelation.
-    val Inline = WidthsByBreakpoint(
+  object LiveBlogMedia extends ContentRelation {
+    override val inline = WidthsByBreakpoint(
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
+      phablet =         Some(620.px),
+      tablet =          Some(700.px),
+      desktop =         Some(620.px),
+      // This is like `MainMedia.Inline`, but with a different `leftCol` and `wide`.
+      leftCol =         Some(780.px),
+      wide =            Some(620.px))
+  }
+
+  object ImageContentMedia {
+    // ImageContentMedia does not support hinting/weighting, so does not extend ContentRelation.
+    val inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
       phablet =         Some(685.px),
@@ -175,13 +194,13 @@ object ContentWidths {
   }
 
   object GalleryMedia {
-    val Inline = WidthsByBreakpoint(
+    val inline = WidthsByBreakpoint(
       mobile          = Some(445.px),
       mobileLandscape = Some(610.px),
       phablet =         Some(620.px),
       tablet =          Some(700.px)) // desktop, leftCol, and wide are also 700px
 
-    val Lightbox = WidthsByBreakpoint(
+    val lightbox = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
       phablet =         Some(725.px),
@@ -192,9 +211,13 @@ object ContentWidths {
   }
 
   def getWidthsFromContentElement(hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
-    relation match {
-      case MainMedia => hinting.mainContentWidths
-      case _ => hinting.bodyContentWidths }
+    hinting match {
+      case Inline => relation.inline
+      case Supporting => relation.supporting
+      case Showcase => relation.showcase
+      case Thumbnail => relation.thumbnail
+      case _ => unused
+    }
   }
 }
 

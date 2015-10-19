@@ -230,10 +230,10 @@ $control-offset: 36 + $gs-gutter/2;
     left: 30px;
     display: none;
     fill: colour(news-main-2);
+}
 
-    &[data-saved-content-count] {
-        display: inline;
-    }
+.has-saved-articles .save-for-later__icon {
+    display: inline;
 }
 
 .js-on.is-modern .brand-bar__item--saved-for-later:after {
@@ -279,6 +279,10 @@ $control-offset: 36 + $gs-gutter/2;
     @include mq(leftCol) {
         left: 50%;
         margin-left: 0 - (gs-span(7) + $gs-gutter);
+    }
+
+    @include mq(wide) {
+        margin-left: 0 - (gs-span(8) + $gs-gutter);
     }
 
     // account for google search sizes.

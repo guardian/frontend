@@ -5,6 +5,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/date-formats',
+    'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
@@ -19,6 +20,7 @@ define([
     config,
     cookies,
     dateFormats,
+    deferToAnalytics,
     detect,
     mediator,
     storage,
@@ -39,6 +41,10 @@ define([
         this.pageviewSent = false;
         this.addHandlers();
     }
+
+    Omniture.prototype.getStandardProps = function () {
+        return standardProps;
+    };
 
     Omniture.prototype.addHandlers = function () {
         mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
@@ -135,7 +141,7 @@ define([
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
 
-        this.s.prop40    = detect.adblockInUse || detect.getFirefoxAdblockPlusInstalled();
+        this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
 
         this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
 

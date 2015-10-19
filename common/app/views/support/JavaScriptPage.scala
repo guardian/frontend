@@ -60,8 +60,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("idWebAppUrl", JsString(
         if (IdentitySocialOAuthSwitch.isSwitchedOn) Configuration.id.oauthUrl
         else Configuration.id.webappUrl
-      )),
-      ("pushNotificationsHost", JsString(Configuration.pushNotifications.host))
+      ))
     ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil)
       ++ metaData.sponsorshipTag.map{tag => Map("sponsorshipTag" -> JsString(tag.name))}.getOrElse(Nil))
   }
