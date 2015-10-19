@@ -13,9 +13,10 @@ describe('Commercial features', ()=> {
             'common/utils/detect',
             'common/utils/location',
             'common/modules/commercial/user-ad-preference',
+            'common/modules/identity/api',
             'common/modules/user-prefs'
         ], function () {
-            [commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs] = arguments;
+            [commercialFeaturePolicies, config, detect, location, userAdPreference, identity, userPrefs] = arguments;
             done();
         });
     });
@@ -286,6 +287,48 @@ describe('Commercial features', ()=> {
             config.switches.videoAdverts = false;
             const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
             expect(switches.videoPreRolls).toBe(false);
+        });
+    });
+
+    describe('Outbrain policy', ()=> {
+        beforeEach(()=> {
+            config.switches.outbrain = true;
+            config.page.isFront = false;
+            config.page.isPreview = false;
+            config.page.section = '';
+            identity.isUserLoggedIn = () => false;
+            config.page.commentable = false;
+        });
+
+        it('disables outbrain when outrain switch is off', ()=> {
+            config.switches.outbrain = false;
+            const switches = commercialFeaturePolicies.getPolicySwitches().outbrain;
+            expect(switches.outbrain).toBe(false);
+        });
+
+        it('disables outbrain on front pages', ()=> {
+            config.page.isFront = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().outbrain;
+            expect(switches.outbrain).toBe(false);
+        });
+
+        it('disables outbrain on preview pages', ()=> {
+            config.page.isPreview = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().outbrain;
+            expect(switches.outbrain).toBe(false);
+        });
+
+        it('disables outbrain on childrens books site', ()=> {
+            config.page.section = 'childrens-books-site';
+            const switches = commercialFeaturePolicies.getPolicySwitches().outbrain;
+            expect(switches.outbrain).toBe(false);
+        });
+
+        it('disables outbrain for logged in users on commetable articles', ()=> {
+            identity.isUserLoggedIn = () => true;
+            config.page.commentable = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().outbrain;
+            expect(switches.outbrain).toBe(false);
         });
     });
 
