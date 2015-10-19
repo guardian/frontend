@@ -10,7 +10,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
-import scala.concurrent.Future
+import scala.concurrent.{Future, blocking}
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
@@ -25,7 +25,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     if (DfpCachingSwitch.isSwitchedOn) {
       log.info("Refreshing data cache")
       val start = System.currentTimeMillis
-      val data = loadLineItems()
+      val data = blocking(loadLineItems())
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
