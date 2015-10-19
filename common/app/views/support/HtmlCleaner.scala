@@ -503,7 +503,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 
     document.getElementsByTag("h2").foreach{ h2 =>
         if (h2.text() == "* * *") {
-            h2.tagName("div").addClass("section-rule").html("")
+            h2.tagName("hr").addClass("section-rule").html("")
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
                 next.html(setDropCap(next))
