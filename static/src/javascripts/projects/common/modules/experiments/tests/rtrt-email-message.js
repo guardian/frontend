@@ -60,11 +60,9 @@ define([
                 if (userIsInSegment) {
                     new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
 
-                    // Require omniture inline to avoid circular dependency
-                    // (ab requires this file, this file requires omniture, omniture requires ab)
-                    require(['common/modules/analytics/omniture'], function (omniture) {
-                        omniture.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
-                    });
+                    // Omniture is a global var
+                    s.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
+
                 }
             }
         },
