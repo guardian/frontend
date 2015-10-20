@@ -21,7 +21,7 @@ define([
      * Rules:
      *
      * 4 visits within the last month
-     * 3 impressions
+     * Less than 4 impressions
      * Persist close state
      */
     var COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER',
