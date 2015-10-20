@@ -346,13 +346,8 @@
 
     .fc-container__inner {
         background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI5ODBweCIgaGVpZ2h0PSIxNzBweCIgdmlld0JveD0iMCAwIDU1NS42IDk2Ljg1NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTU1LjYgOTYuODU2IiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjQkM0MDdGIiBwb2ludHM9IjQuMTQzLDk2Ljc5OSAwLDM1LjA5IDU0NS42NDEsMCA1NTUuNiw5Ni44NTYgIi8+PHBvbHlnb24gZmlsbD0iI0ZDRUI0MCIgcG9pbnRzPSIzODcuODIsOTYuODU2IDUxOS44OTMsNzUuOTA3IDUyMy44ODEsOTYuODU2ICIvPjwvc3ZnPg==);
-        background-position: 50% 100%;
+        background-position: 100% 100%;
         background-repeat: no-repeat;
-        //background-size: 150% 55%;
-
-        @include mq(tablet) {
-            background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI5ODBweCIgaGVpZ2h0PSIxNzBweCIgdmlld0JveD0iMCAwIDU1NS42IDk2Ljg1NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTU1LjYgOTYuODU2IiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjQkM0MDdGIiBwb2ludHM9IjQuMTQzLDk2Ljc5OSAwLDM1LjA5IDU0NS42NDEsMCA1NTUuNiw5Ni44NTYgIi8+PHBvbHlnb24gZmlsbD0iI0ZDRUI0MCIgcG9pbnRzPSIzODcuODIsOTYuODU2IDUxOS44OTMsNzUuOTA3IDUyMy44ODEsOTYuODU2ICIvPjwvc3ZnPg==);
-        }
 
         @include mq(desktop) {
             background-size: 100% 90%;
@@ -360,6 +355,7 @@
 
         @include mq(wide) {
             background-size: auto auto;
+            background-position: 50% 100%;
         }
     }
 
@@ -419,13 +415,15 @@
         position: absolute;
         top: 10px;
 
-        @include mq(tablet) {
+       /* @include mq(tablet) {
             top: auto;
             bottom: 5px;
-        }
+        } */
 
         @include mq(desktop) {
             margin-left: 0;
+            top: auto;
+            bottom: 5px;
         }
 
         @include mq(wide) {
@@ -441,9 +439,9 @@
     .thrasher-content__header {
         margin: 20px 0 0 20px;
 
-        @include mq(tablet) {
+       /* @include mq(tablet) {
             margin-bottom: 65px;
-        }
+        }*/
         @include mq(desktop) {
             float: right;
             @include clearfix;
