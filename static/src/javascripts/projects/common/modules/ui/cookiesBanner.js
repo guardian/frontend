@@ -26,35 +26,18 @@ define([
      * Show only on FIRST page view
      * Persist close state
      */
-    var EU_COOKIE_KEY = 'GU_EU',
-        EU_COOKIE_MESSAGE_KEY = 'GU_EU_COOKIE_MESSAGE',
-        impressions = 0;
-
-    function canShow() {
-        var euUserCookie = cookies.get(EU_COOKIE_KEY),
-            euMessageCookie = cookies.get(EU_COOKIE_MESSAGE_KEY);
-
-        if (euUserCookie) {
-            impressions = euMessageCookie && !isNaN(euMessageCookie) ? parseInt(euMessageCookie, 10) : 0;
-            return impressions == 0;
-        } else {
-            return false;
-        }
-    }
-
-    function showMessage() {
-        var link = 'https://www.theguardian.com/info/cookies',
-            txt = 'Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.',
-            opts = {important: true},
-            cookieLifeDays = 365,
-            msg = new Message('cookies');
-        msg.show(txt, opts);
-        cookies.add(EU_COOKIE_MESSAGE_KEY, impressions + 1, cookieLifeDays);
-    }
-
     function init() {
-        if (canShow()) {
-            showMessage();
+        var EU_COOKIE_MSG = 'GU_EU_MSG',
+            euMessageCookie = cookies.get(EU_COOKIE_MSG);
+
+        if (euMessageCookie && euMessageCookie === "unseen") {
+            var link = 'https://www.theguardian.com/info/cookies',
+                txt = 'Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.',
+                opts = {important: true},
+                cookieLifeDays = 365,
+                msg = new Message('cookies');
+            msg.show(txt, opts);
+            cookies.add(EU_COOKIE_MSG, "seen", cookieLifeDays);
         }
     }
 
