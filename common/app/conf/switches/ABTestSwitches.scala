@@ -31,4 +31,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABInjectHeadlinesTest = Switch(
+    "A/B Tests",
+    "ab-inject-headlines-test",
+    "Switch to show swap the locations of most popular and related content",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
 }
