@@ -4,17 +4,18 @@ import Injector from 'helpers/injector';
 const injector = new Injector();
 
 describe('Commercial features', ()=> {
-    let commercialFeaturePolicies, config, location, userAdPreference, userPrefs;
+    let commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs;
 
     beforeEach((done)=> {
         injector.test([
             'common/modules/commercial/commercial-feature-policies',
             'common/utils/config',
+            'common/utils/detect',
             'common/utils/location',
             'common/modules/commercial/user-ad-preference',
             'common/modules/user-prefs'
         ], function () {
-            [commercialFeaturePolicies, config, location, userAdPreference, userPrefs] = arguments;
+            [commercialFeaturePolicies, config, detect, location, userAdPreference, userPrefs] = arguments;
             done();
         });
     });
@@ -97,6 +98,48 @@ describe('Commercial features', ()=> {
         });
     });
 
+    describe('Membership messages policy', ()=> {
+        it('displays message when all required conditions are true', () => {
+            detect.adblockInUse = () => false;
+            detect.getBreakpoint = () => 'desktop';
+            config.page.contentType = 'Article';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(true);
+            });
+        });
+
+        it('Does not display messages when adBlock is enabled', ()=> {
+            detect.adblockInUse = () => true;
+            detect.getBreakpoint = () => 'desktop';
+            config.page.contentType = 'Article';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
+        });
+
+        it('Does not display messages on mobile', ()=> {
+            detect.adblockInUse = () => false;
+            detect.getBreakpoint = () => 'mobile';
+            config.page.contentType = 'Article';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
+        });
+
+        it('Does not display messages on non-article content', ()=> {
+            detect.adblockInUse = () => false;
+            detect.getBreakpoint = () => 'mobile';
+            config.page.contentType = 'LiveBlog';
+            const switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
+            _.forOwn(switches, (featureSwitch)=> {
+                expect(featureSwitch).toBe(false);
+            });
+        });
+    });
+
     describe('UserPrefs policy', ()=> {
         it('hides all features when userPrefs has "adverts" opt out', ()=> {
             userPrefs.switchOff('adverts');
@@ -118,7 +161,7 @@ describe('Commercial features', ()=> {
             userAdPreference.hideAds = true;
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
 
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
             expect(switches.sliceAdverts).toBe(false);
             expect(switches.popularContentMPU).toBe(false);
             expect(switches.videoPreRolls).toBe(false);
@@ -168,17 +211,30 @@ describe('Commercial features', ()=> {
             config.page.isLiveBlog = false;
         });
 
-        it('hides article MPUs on non-article pages', ()=> {
+        it('hides body MPUs on non-article pages', ()=> {
             config.page.contentType = 'Gallery';
             const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
         });
 
-        it('hides article MPUs on live blog articles', ()=> {
+        it('hides body MPUs on live blog articles', ()=> {
             config.page.contentType = 'Article';
             config.page.isLiveBlog = true;
             const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
+        });
+
+        it('hides aside MPUs on non-article pages', ()=> {
+            config.page.contentType = 'Gallery';
+            const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
+            expect(switches.articleAsideAdverts).toBe(false);
+        });
+
+        it('does not hide aside MPUs on live blog articles', ()=> {
+            config.page.contentType = 'Article';
+            config.page.isLiveBlog = true;
+            const switches = commercialFeaturePolicies.getPolicySwitches().nonArticlePages;
+            expect(switches.articleAsideAdverts).toBeUndefined();
         });
 
         it('applies no changes otherwise', ()=> {
@@ -217,7 +273,7 @@ describe('Commercial features', ()=> {
         it('disables article adverts if standard-adverts switch is off', ()=> {
             config.switches.standardAdverts = false;
             const switches = commercialFeaturePolicies.getPolicySwitches().switchboard;
-            expect(switches.articleMPUs).toBe(false);
+            expect(switches.articleBodyAdverts).toBe(false);
         });
 
         it('disables slice adverts if standard-adverts switch is off', ()=> {

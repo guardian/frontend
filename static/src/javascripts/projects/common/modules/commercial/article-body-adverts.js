@@ -66,10 +66,6 @@ define([
         });
     }
 
-    function inMobileAdsTest() {
-        return config.switches.noMobileTopAd && detect.getBreakpoint() === 'mobile';
-    }
-
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
@@ -91,7 +87,7 @@ define([
         init = function () {
             var rules, lenientRules, inlineMercPromise;
 
-            if (!commercialFeatures.articleMPUs) {
+            if (!commercialFeatures.articleBodyAdverts) {
                 return false;
             }
 
@@ -108,7 +104,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (config.switches.viewability && !inMobileAdsTest()) {
+            if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);

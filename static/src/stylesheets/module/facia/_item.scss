@@ -236,8 +236,12 @@ $fc-item-gutter: $gs-gutter / 4;
         margin-bottom: 0;
     }
 
-    .vjs-big-play-button > span {
+    .vjs-big-play-button > .vjs-control-text {
         @include video-play-button-size($vjs-small-button-size);
+
+        &:before {
+            @include video-play-button-size($vjs-small-button-size);
+        }
     }
 }
 
@@ -671,10 +675,14 @@ $block-height: 71px;
     }
 }
 
-.facia-page .fc-save-for-later:only-child {
+.fc-save-for-later:only-child {
     @include mq(tablet) {
         border: 0;
         padding: 0;
+        
+        .inline-icon {
+            margin-left: 0;
+        }
     }
 }
 

@@ -33,7 +33,7 @@
                 }
 
                 @if(content.hasTonalHeaderIllustration) {
-                    <span class="content__head__illustration hide-on-mobile"><i class="i i-illustration-letters"></i></span>
+                    <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }
 
                 @content.starRating.map { rating =>
@@ -48,8 +48,10 @@
                 @content.imdb.map { imdbId =>
                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Movie">
                         <link itemprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
-                        @* we're not the authority on the film name, but just to keep google validator happy
-                        *@<meta itemprop="name" content="Slow West"/>
+                        @defining(content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
+                            @* we're not the authority on the film name, but just to keep google validator happy
+                            *@<meta itemprop="name" content="@tag"/>
+                        }
                     </div>
                 }
 

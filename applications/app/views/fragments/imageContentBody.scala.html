@@ -1,6 +1,7 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
 @import conf.switches.Switches._
 @import views.support.TrailCssClasses.articleToneClass
+@import layout.ContentWidths.ImageContentMedia
 
 @defining(page.image) { image =>
 
@@ -16,7 +17,8 @@
                     @image.mainPicture.map { picture =>
                         @fragments.img(
                             picture,
-                            lightboxIndex = if(image.isMainMediaLightboxable) Some(1) else None
+                            lightboxIndex = if(image.isMainMediaLightboxable) Some(1) else None,
+                            widthsByBreakpoint = ImageContentMedia.inline
                         )
                     }
 

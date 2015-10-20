@@ -70,6 +70,8 @@ object PullquoteCleaner extends HtmlCleaner {
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
       element.append(closingQuoteSvg)
+      element.getElementsByTag("p").addClass("pullquote-paragraph")
+      element.getElementsByTag("cite").addClass("pullquote-cite")
     }
 
     document
@@ -102,7 +104,8 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- container.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
-      val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
+      val relation = if (article.isLiveBlog) { LiveBlogMedia } else { BodyMedia }
+      val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
 
       val orientationClass = image.orientation match {
         case Portrait => Some("img--portrait")
@@ -268,7 +271,7 @@ object AmpVideoSrcCleaner {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -278,6 +281,9 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
         link.attr("data-link-name", dataLinkName)
         link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
+      }
+      if (amp && link.hasAttr("style")) {
+        link.removeAttr("style")
       }
     }
 
@@ -496,6 +502,16 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
         }
         case _ =>
       }
+    }
+
+    document.getElementsByTag("h2").foreach{ h2 =>
+        if (h2.text() == "* * *") {
+            h2.tagName("hr").addClass("section-rule").html("")
+            val next = h2.nextElementSibling()
+            if (next.nodeName() == "p") {
+                next.html(setDropCap(next))
+            } 
+        }
     }
     document
   }

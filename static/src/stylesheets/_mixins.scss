@@ -171,7 +171,13 @@
 @mixin video-play-button-size($size) {
     width: $size;
     height: $size;
-    font-size: $size/6 // play triangle is em based so this scales it;
+
+    // Specify font-size to influence the em-based triangle for the play button.
+    @if ($size <= $vjs-small-button-size) {
+        font-size: 9px;
+    } @else {
+        font-size: 12px;
+    }
 }
 
 // note that if using this in a media query, the fallback needs to

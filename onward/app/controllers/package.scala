@@ -8,6 +8,6 @@ package object controllers {
     case 4 => FixedContainers.fixedSmallSlowIV
     case 5 => FixedContainers.slowSeriesV
     case 6 => FixedContainers.fixedMediumSlowVI
-    case _ => FixedContainers.fixedMediumSlowVII
+    case _ => FixedContainers.fixedSmallSlowIV
   }
 }

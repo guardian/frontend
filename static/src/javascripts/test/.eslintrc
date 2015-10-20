@@ -1,4 +1,7 @@
 {
+    "plugins": [
+        "jasmine"
+    ],
     "env": {
         "jasmine": true
     },

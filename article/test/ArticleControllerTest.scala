@@ -106,7 +106,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
   "International users" should "be in the International edition" in {
     val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
       .withHeaders(
-        "X-GU-Edition" -> "intl"
+        "X-GU-Edition" -> "int"
       )
     val result = route(app, request).head
     contentAsString(result) should include ("\"edition\":\"INT\"")

@@ -24,9 +24,11 @@
         // define dimensions for the grid. (SVGs use viewBox which require
         // the parent to have dimensions)
         .crossword__container__grid-wrapper {
+            width: 100%;
+            height: $size;
+
             @include mq(tablet) {
                 width: $size;
-                height: $size;
             }
         }
 
@@ -61,15 +63,17 @@
 .crossword__container--react {
     & .crossword__clues--wrapper,
     & .crossword__clues {
-        @include mq(tablet) {
+        @include mq($from: tablet, $until: leftCol) {
             height: xword-grid-dimensions(15) + ($gs-baseline * 10);
         }
     }
 
-    & .crossword__clues {
-        position: relative;
-        overflow: scroll;
-        -webkit-overflow-scrolling: touch;
+    @include mq($from: tablet, $until: leftCol) {
+        & .crossword__clues {
+            position: relative;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
     }
 }
 
@@ -81,7 +85,7 @@
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
     display: none;
 
-    @include mq($from: tablet, $until: desktop) {
+    @include mq($from: tablet, $until: leftCol) {
         display: block;
 
         .hide-gradient & {
@@ -110,7 +114,7 @@
         }
     }
 
-    @include mq(desktop) {
+    @include mq(leftCol) {
         display: table;
         table-layout: fixed;
         height: auto;
