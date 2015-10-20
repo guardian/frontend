@@ -228,9 +228,13 @@ define([
 
         this.setScrollDirection(scrollY);
 
+        var $appBanner = $('.site-message--ios, .site-message--android');
+        var appBannerHeight = $appBanner.height();
+
         // Header is slim and navigation is shown on the scroll up
         // Unless meganav is opened
-        if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
+        if ((scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) + appBannerHeight)
+            && !this.config.isNavigationLocked) {
             fastdom.write(function () {
                 this.$els.header.css({
                     position:  'fixed',
@@ -245,7 +249,7 @@ define([
                 this.$els.bannerDesktop.css({
                     position: 'absolute',
                     width: '100%',
-                    top: this.headerBigHeight
+                    top: this.headerBigHeight + appBannerHeight
                 });
 
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
@@ -261,13 +265,13 @@ define([
             if (!this.config.isNavigationLocked && config.page.contentType !== 'Interactive') {
                 this.showNavigation(scrollY);
             }
-        } else if (scrollY >= this.headerBigHeight) {
+        } else if (scrollY >= this.headerBigHeight + appBannerHeight) {
             fastdom.write(function () {
                 // Add is not sticky anymore
                 this.$els.bannerDesktop.css({
                     position: 'absolute',
                     width: '100%',
-                    top: this.headerBigHeight,
+                    top: this.headerBigHeight + appBannerHeight,
                     'z-index': '1019' // Sticky z-index +1 so banner is over sticky header
                 });
 
@@ -302,32 +306,60 @@ define([
             }
         } else {
             fastdom.write(function () {
-                // Make sure that we show slim nav when page loaded with anchor
-                this.$els.bannerDesktop.css({
-                    position:  'fixed',
-                    top:       0,
-                    width:     '100%',
-                    'z-index': '1019',
-                    'backface-visibility': 'hidden'
-                });
-                //Header is slim only on interactives page
-                if (config.page.contentType !== 'Interactive') {
-                    this.$els.header.removeClass('l-header--is-slim');
-                }
+                // Only apply sticky when scrolled past the site message, if there is one
+                if (window.scrollY > appBannerHeight) {
+                    // Make sure that we show slim nav when page loaded with anchor
+                    this.$els.bannerDesktop.css({
+                        position:  'fixed',
+                        top:       0,
+                        width:     '100%',
+                        'z-index': '1019',
+                        'backface-visibility': 'hidden'
+                    });
+                    //Header is slim only on interactives page
+                    if (config.page.contentType !== 'Interactive') {
+                        this.$els.header.removeClass('l-header--is-slim');
+                    }
 
-                this.$els.header.css({
-                    position:  'relative',
-                    width:     '100%',
-                    'margin-top': bannerHeight,
-                    '-webkit-transform': 'translateY(0%)',
-                    '-ms-transform': 'translateY(0%)',
-                    'transform': 'translateY(0%)',
-                    'z-index': '1018'
-                });
+                    this.$els.header.css({
+                        position:  'relative',
+                        width:     '100%',
+                        'margin-top': bannerHeight,
+                        '-webkit-transform': 'translateY(0%)',
+                        '-ms-transform': 'translateY(0%)',
+                        'transform': 'translateY(0%)',
+                        'z-index': '1018'
+                    });
 
-                this.$els.main.css('margin-top', 0);
-                if (this.isSensitivePage) {
-                    this.$els.navigation.css('display', 'block');
+                    this.$els.main.css('margin-top', 0);
+                    if (this.isSensitivePage) {
+                        this.$els.navigation.css('display', 'block');
+                    }
+                } else {
+                    // Reset
+                    this.$els.bannerDesktop.css({
+                        position: '',
+                        top: '',
+                        width: '',
+                        'z-index': '',
+                        'backface-visibility': ''
+                    });
+
+                    this.$els.header.css({
+                        position: '',
+                        width: '',
+                        'margin-top': '',
+                        '-webkit-transform': '',
+                        '-ms-transform': '',
+                        'transform': '',
+                        'z-index': ''
+                    });
+
+                    this.$els.main.css('margin-top', '');
+
+                    if (this.isSensitivePage) {
+                        this.$els.navigation.css('display', '');
+                    }
                 }
             }.bind(this));
 
