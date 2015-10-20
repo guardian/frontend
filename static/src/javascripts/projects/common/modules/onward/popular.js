@@ -39,8 +39,10 @@ define([
 
     MostPopular.prototype.init = function () {
         if (ab.getParticipations().MostPopAsFaciaCards && ab.getParticipations().MostPopAsFaciaCards.variant === 'variant') {
-            $('.js-most-popular-footer').html('');
+            var $mostPopFooter = $('.js-most-popular-footer');
+            $mostPopFooter.html('');
             this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');
+            $('.js-most-popular-footer').attr('data-link-name', $mostPopFooter.attr('data-link-name') + ' most-popular-as-facia-cards');
         } else {
             this.fetch(qwery('.js-popular-trails'), 'html');
         }
