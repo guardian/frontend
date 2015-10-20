@@ -1,6 +1,7 @@
-<p class="site-message__message" id="site-message__message">
-    <span class="js-site-message__narrow"><%=messageTextNarrow%></span>
-    <span class="js-site-message__wide is-hidden"><%=messageTextWide%></span>
+<p class="site-message__message js-site-message__message" id="site-message__message"
+   data-site-message-wide="<%=messageTextWide%>"
+   data-site-message-narrow="<%=messageTextNarrow%>">
+    <%=messageTextNarrow%>
 </p>
 <ul class="site-message__actions u-unstyled">
     <li class="site-message__actions__item">

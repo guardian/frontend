@@ -55,8 +55,7 @@ define([
         }
         $('.js-site-message-copy').html(message);
 
-        this.$siteMessageNarrow = $('.js-site-message__narrow');
-        this.$siteMessageWide = $('.js-site-message__wide');
+        this.$siteMessage = $('.js-site-message__message');
 
         // Check and show the width based message
         this.updateMessageOnWidth();
@@ -115,19 +114,19 @@ define([
     };
 
     Message.prototype.updateMessageOnWidth = function () {
-        if (this.widthBasedMessage && this.$siteMessageNarrow.length && this.$siteMessageWide.length) {
-            (detect.isBreakpoint({ max: 'tablet' })) ? this.showNarrowMessage() : this.showWideMessage();
+        var narrowDataAttr = 'site-message-narrow',
+            wideDataAttr = 'site-message-wide';
+
+        if (this.widthBasedMessage && this.$siteMessage.length) {
+            this.updateMessageFromData((detect.isBreakpoint({ max: 'tablet' })) ? narrowDataAttr : wideDataAttr);
         }
     };
 
-    Message.prototype.showNarrowMessage = function () {
-        this.$siteMessageWide.addClass('is-hidden');
-        this.$siteMessageNarrow.removeClass('is-hidden');
-    };
-
-    Message.prototype.showWideMessage = function () {
-        this.$siteMessageNarrow.addClass('is-hidden');
-        this.$siteMessageWide.removeClass('is-hidden');
+    Message.prototype.updateMessageFromData = function (dataAttr) {
+        var message = this.$siteMessage.data(dataAttr);
+        if (message) {
+            this.$siteMessage.text(message);
+        }
     };
 
     return Message;
