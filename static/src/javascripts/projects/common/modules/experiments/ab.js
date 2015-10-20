@@ -9,7 +9,8 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adfree-survey',
-    'common/modules/experiments/tests/switch-most-pop-related-content'
+    'common/modules/experiments/tests/switch-most-pop-related-content',
+    'common/modules/experiments/tests/onward-container-names'
 ], function (
     reportError,
     _,
@@ -21,14 +22,16 @@ define([
     HighCommercialComponent,
     MembershipMessageUSA,
     AddfreeSurvey,
-    SwitchMostPopAndRelatedContent
+    SwitchMostPopAndRelatedContent,
+    OnwardContainerNames
 ) {
 
     var TESTS = _.flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
         new AddfreeSurvey(),
-        new SwitchMostPopAndRelatedContent()
+        new SwitchMostPopAndRelatedContent(),
+        new OnwardContainerNames()
     ]);
 
     var participationsKey = 'gu.ab.participations';
