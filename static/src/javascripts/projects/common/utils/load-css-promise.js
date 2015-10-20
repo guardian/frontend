@@ -1,15 +1,11 @@
 define(['Promise'], function (Promise) {
-    var loadCssThen = function (fn) {
+    return new Promise(function (resolve) {
         if (window.guardian.css.loaded) {
             // CSS has loaded, go
-            fn();
+            resolve();
         } else {
             // Push a listener for when the JS loads
-            window.guardian.css.loadedListeners.push(fn);
+            window.guardian.css.loadedListeners.push(resolve);
         }
-    };
-
-    return new Promise(function (resolve) {
-        loadCssThen(resolve);
     });
 })
