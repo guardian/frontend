@@ -19,7 +19,7 @@ window.guardian = {
     ),
     css: {
         loaded: false,
-        loadedListeners: []
+        onLoadQueue: []
     },
     config: @defining(Edition(request)) { edition => {
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage(item).get))),

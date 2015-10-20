@@ -5,7 +5,7 @@ define(['Promise'], function (Promise) {
             resolve();
         } else {
             // Push a listener for when the JS loads
-            window.guardian.css.loadedListeners.push(resolve);
+            window.guardian.css.onLoadQueue.push(resolve);
         }
     });
-})
+});

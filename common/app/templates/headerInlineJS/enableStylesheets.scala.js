@@ -13,9 +13,9 @@
                 // Set flag for when the CSS loads before the JS
                 window.guardian.css.loaded = true;
                 // Execute listeners for when the JS loads before the CSS
-                var loadedListeners = window.guardian.css.loadedListeners;
-                for (var i = loadedListeners.length - 1; i >= 0; i--) {
-                    loadedListeners[i]();
+                var onLoadQueue = window.guardian.css.onLoadQueue;
+                for (var i = onLoadQueue.length - 1; i >= 0; i--) {
+                    onLoadQueue[i]();
                 }
                 return true;
             }
