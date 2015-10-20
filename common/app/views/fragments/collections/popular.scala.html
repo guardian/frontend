@@ -12,22 +12,23 @@
             <div class="tabs u-cf">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
-                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum"><a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
+                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
+                            <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
                         </li>
                     }
                 </ol>
                 <div class="tabs__content js-tabs-content">
-                }
+        }
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
-            @if(isTabbed){
-                role="tabpanel"
-                aria-labelledby="tabs-popular-@info.rowNum-tab"
-            }
-            data-link-name="@section.heading"
-            data-link-context="most-read/@section.section">
+                @if(isTabbed){
+                    role="tabpanel"
+                    aria-labelledby="tabs-popular-@info.rowNum-tab"
+                }
+                data-link-name="@section.heading"
+                data-link-context="most-read/@section.section">
 
                 <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
@@ -42,11 +43,11 @@
             </div>
         }
 
-    <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
+            <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
 
         @if(isTabbed) {
-        </div>
-        </div>
+                </div>
+            </div>
         }
 
     </div>
