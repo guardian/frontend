@@ -1,10 +1,12 @@
 define([
+    'common/utils/_',
     'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
     'common/utils/storage',
     'common/modules/identity/api'
 ], function (
+    _,
     ajaxPromise,
     cookies,
     config,
@@ -65,7 +67,7 @@ define([
             url : config.page.userAttributesApiUrl + '/me/features',
             crossOrigin : true,
             error : function () {}
-        }).then(persistResponse);
+        }).then(persistResponse, _.noop);
     }
 
     function persistResponse(JsonResponse) {
