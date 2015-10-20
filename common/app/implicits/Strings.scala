@@ -24,6 +24,9 @@ trait Strings {
     lazy val urlEncoded = URLEncoder.encode(s, "utf-8")
     lazy val javascriptEscaped = StringEscapeUtils.escapeJavaScript(s)
     lazy val encodeURIComponent = {
+      // This can be used to encode parts of a URI, eg. "example-component/uk?parameter=unsafe-chars-such-as ://+ must-be-encoded#fragment"
+      // The fragment part is optional.
+      // Use encodeURI below for full URI strings like "http://theguardian.com/path with spaces".
       URLEncoder.encode(s, "UTF-8")
         .replaceAll("\\+", "%20")
         .replaceAll("\\%21", "!")
@@ -31,6 +34,15 @@ trait Strings {
         .replaceAll("\\%28", "(")
         .replaceAll("\\%29", ")")
         .replaceAll("\\%7E", "~")
+    }
+    lazy val encodeURI = {
+      // For a URI like this, [scheme:][//authority][path][?query][#fragment]
+      // The URI syntax rfc2396 does not permit encoding the [scheme:] and [//authority] components of the URI with % escape characters.
+
+      // This helper uses Jersey's implementation of UriBuilder to encode the path, query and fragment legally.
+      // We can't use java.net.URLEncoder here, it does not encode rfc2396 compliant urls (it actually encodes to application/x-www-form-urlencoded).
+      val uri = javax.ws.rs.core.UriBuilder.fromPath(s).build()
+      uri.toString
     }
   }
 

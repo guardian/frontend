@@ -76,27 +76,30 @@ object TrailsToRss extends implicits.Collections {
       val readMore = s""" <a href="${trail.webUrl}">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
+      val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).flatMap { i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
-      }.flatten.toSeq.distinctBy(_.url)
+      }.distinctBy(_.url)
 
-      val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
-        // create image
-        val image = new MediaContent(new UrlReference(i.url.get))
-        image.setHeight(i.height)
-        image.setWidth(i.width)
-        i.mimeType.map(image.setType)
-        // create image's metadata
+      val modules: Seq[MediaEntryModuleImpl] = for {
+        image <- images
+        url <- image.url
+      } yield {
+        // create media
+        val media = new MediaContent(new UrlReference(url.encodeURI))
+        media.setHeight(image.height)
+        media.setWidth(image.width)
+        image.mimeType.foreach(media.setType)
+        // create media's metadata
         val imageMetadata = new Metadata()
-        i.caption.map({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        i.credit.map{ creditName =>
+        image.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        image.credit.foreach{ creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
-        image.setMetadata(imageMetadata)
-        // create image module
+        media.setMetadata(imageMetadata)
+        // create media module
         val module = new MediaEntryModuleImpl()
-        module.setMediaContents(Seq(image).toArray)
+        module.setMediaContents(Seq(media).toArray)
         module
       }
 
@@ -180,23 +183,26 @@ object TrailsToRss extends implicits.Collections {
         i.imageCrops.filter(c => c.width == 140 || c.width == 460 )
       }.distinctBy(_.url)
 
-      val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
+      val modules: Seq[MediaEntryModuleImpl] = for {
+        image <- images
+        url <- image.url
+      } yield {
         // create image
-        val image = new MediaContent(new UrlReference(i.url.get))
-        image.setHeight(i.height)
-        image.setWidth(i.width)
-        i.mimeType.foreach(image.setType)
+        val media = new MediaContent(new UrlReference(url.encodeURI))
+        media.setHeight(image.height)
+        media.setWidth(image.width)
+        image.mimeType.foreach(media.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        i.credit.foreach { creditName =>
+        image.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        image.credit.foreach { creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
-        image.setMetadata(imageMetadata)
+        media.setMetadata(imageMetadata)
         // create image module
         val module = new MediaEntryModuleImpl()
-        module.setMediaContents(Seq(image).toArray)
+        module.setMediaContents(Seq(media).toArray)
         module
       }
 
