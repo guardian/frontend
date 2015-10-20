@@ -7,11 +7,11 @@ define([
         this.expiry = '2015-11-20';
         this.author = 'John Duffell';
         this.description = 'renames the related content container';
-        this.audience = 0.025;
+        this.audience = 0.6;
         this.audienceOffset = 0.4;
         this.successMeasure = 'The number of onward journeys';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = '';//TODO
+        this.dataLinkNames = '';
         this.idealOutcome = 'the clicks should be significantly higher for one of the buckets';
 
         this.canRun = function () {
@@ -24,31 +24,11 @@ define([
                 test: function () {}
             },
             {
-                id: 'You might like ...',
+                id: 'test:You might like ...',
                 test: function () {}
             },
             {
-                id: 'Related stories',
-                test: function () {}
-            },
-            {
-                id: 'More like this',
-                test: function () {}
-            },
-            {
-                id: 'Connected stories',
-                test: function () {}
-            },
-            {
-                id: 'Explore further',
-                test: function () {}
-            },
-            {
-                id: 'Read further',
-                test: function () {}
-            },
-            {
-                id: 'Join the dots',
+                id: 'test:',
                 test: function () {}
             }
         ];
