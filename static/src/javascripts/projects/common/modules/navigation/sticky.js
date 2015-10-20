@@ -70,7 +70,7 @@ define([
         this.$els.window           = $(window);
 
         fastdom.read(function () {
-            this.headerBigHeight     = this.$els.navHeader.dim().height;
+            this.headerBigHeight     = this.$els.navHeader.height();
             this.navigationClassList = this.$els.navigation.attr('class');
         }.bind(this));
 
@@ -223,7 +223,7 @@ define([
             scrollY = window.pageYOffset;
 
         if (!this.isSensitivePage) {
-            bannerHeight = this.$els.bannerDesktop.dim().height || 128;
+            bannerHeight = this.$els.bannerDesktop.height() || 128;
         }
 
         this.setScrollDirection(scrollY);
@@ -375,7 +375,7 @@ define([
     };
 
     StickyHeader.prototype.updatePositionProfile = function () {
-        var headerHeight = this.$els.header.dim().height;
+        var headerHeight = this.$els.header.height();
         fastdom.write(function () {
             this.$els.header.css({
                 position:  'fixed',
@@ -390,7 +390,7 @@ define([
     };
 
     StickyHeader.prototype.updatePositionAdblock = function () {
-        var headerHeight = this.$els.header.dim().height,
+        var headerHeight = this.$els.header.height(),
             scrollY      = window.pageYOffset;
 
         this.setScrollDirection(scrollY);
@@ -440,7 +440,7 @@ define([
     };
 
     StickyHeader.prototype.updatePositionApple = function () {
-        var bannerHeight = this.$els.bannerBelowNav.dim().height || 336,
+        var bannerHeight = this.$els.bannerBelowNav.height() || 336,
             scrollY      = window.pageYOffset;
 
         this.setScrollDirection(scrollY);
@@ -517,7 +517,7 @@ define([
     };
 
     StickyHeader.prototype.updatePositionMobile = function () {
-        var bannerHeight      = this.$els.bannerMobile.dim().height,
+        var bannerHeight      = this.$els.bannerMobile.height(),
             scrollY           = window.pageYOffset,
             smartBannerHeight = smartAppBanner.getMessageHeight();
 
