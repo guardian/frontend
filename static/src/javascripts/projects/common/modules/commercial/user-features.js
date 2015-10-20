@@ -1,14 +1,14 @@
 define([
+    'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
     'common/utils/storage',
-    'common/modules/commercial/adfree/update-user-features',
     'common/modules/identity/api'
 ], function (
+    ajaxPromise,
     cookies,
     config,
     storage,
-    updateUserFeatures,
     identity
 ) {
     var PERSISTENCE_KEYS = {
@@ -16,9 +16,15 @@ define([
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry'
     };
 
+    function isAdfree() {
+        // Defer to the value set by the preflight scripts
+        // They need to determine how the page will appear before it starts rendering
+        return config.commercial ? config.commercial.showingAdfree : false;
+    }
+
     function refresh() {
         if (featureEnabled() && identity.isUserLoggedIn() && needNewFeatureData()) {
-            updateUserFeatures.update();
+            updateUserFeatures();
         }
         if (!featureEnabled() || haveDataAfterSignout()) {
             cleanupOldData();
@@ -54,10 +60,19 @@ define([
         cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     }
 
-    function isAdfree() {
-        // Defer to the value set by the preflight scripts
-        // They need to determine how the page will appear before it starts rendering
-        return config.commercial ? config.commercial.showingAdfree : false;
+    function updateUserFeatures() {
+        ajaxPromise({
+            url : config.page.userAttributesApiUrl + '/me/features',
+            crossOrigin : true,
+            error : function () {}
+        }).then(persistResponse);
+    }
+
+    function persistResponse(JsonResponse) {
+        var expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 1);
+        cookies.add(PERSISTENCE_KEYS.ADFREE_COOKIE, JsonResponse.adFree);
+        cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     }
 
     return {

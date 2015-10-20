@@ -10,7 +10,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
-    'common/modules/commercial/adfree/user-features'
+    'common/modules/commercial/user-features'
 ], function (
     fastdom,
     Promise,

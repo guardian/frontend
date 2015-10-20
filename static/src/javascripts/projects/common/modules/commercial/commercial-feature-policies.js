@@ -3,7 +3,7 @@ define([
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/adfree/user-features',
+    'common/modules/commercial/user-features',
     'common/modules/user-prefs'
 ], function (
     _,
