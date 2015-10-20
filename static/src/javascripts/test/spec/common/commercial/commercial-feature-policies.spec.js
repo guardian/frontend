@@ -12,7 +12,7 @@ describe('Commercial features', ()=> {
             'common/utils/config',
             'common/utils/detect',
             'common/utils/location',
-            'common/modules/commercial/adfree/user-features',
+            'common/modules/commercial/user-features',
             'common/modules/user-prefs'
         ], function () {
             [commercialFeaturePolicies, config, detect, location, userFeatures, userPrefs] = arguments;
