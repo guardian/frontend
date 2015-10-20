@@ -8,7 +8,8 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'common/modules/experiments/ab'
 ], function (
     _,
     qwery,
@@ -19,7 +20,8 @@ define([
     mediator,
     createAdSlot,
     commercialFeatures,
-    dfp
+    dfp,
+    ab
 ) {
 
     function MostPopular() {
@@ -36,8 +38,12 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        $('.js-most-popular-footer').html('');
-        this.fetch(qwery('.js-most-popular-footer'), 'html');
+        if (ab.getParticipations().MostPopAsFaciaCards && ab.getParticipations().MostPopAsFaciaCards.variant === 'variant') {
+            $('.js-most-popular-footer').html('');
+            this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');
+        } else {
+            this.fetch(qwery('.js-popular-trails'), 'html');
+        }
     };
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {
