@@ -115,6 +115,8 @@ object ContainerCommercialOptions {
     sponsorshipTag = None,
     sponsorshipType = None
   )
+
+  def mostPopular(omitMPU: Boolean) = empty.copy(omitMPU = omitMPU)
 }
 
 case class ContainerCommercialOptions(
@@ -122,7 +124,8 @@ case class ContainerCommercialOptions(
   isAdvertisementFeature: Boolean,
   isFoundationSupported: Boolean,
   sponsorshipTag: Option[SponsorshipTag],
-  sponsorshipType: Option[String]
+  sponsorshipType: Option[String],
+  omitMPU: Boolean = false
 ) {
   val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
 }
@@ -170,7 +173,8 @@ object FaciaContainer {
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials,
     containerLayout: Option[ContainerLayout],
-    componentId: Option[String]
+    componentId: Option[String],
+    omitMPU: Boolean = false
   ): FaciaContainer = FaciaContainer(
     index,
     config.id,
@@ -184,7 +188,7 @@ object FaciaContainer {
     config.config.showLatestUpdate,
     // popular containers should never be sponsored
     container match {
-      case MostPopular => ContainerCommercialOptions.empty
+      case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description.map(DescriptionMetaHeader.apply(_)),
@@ -464,7 +468,8 @@ object Front extends implicits.Collections {
             pressedCollection.collectionConfigWithId,
             collectionEssentials.copy(items = newItems),
             None,
-            None
+            None,
+            omitMPU
           ))
         }
     }

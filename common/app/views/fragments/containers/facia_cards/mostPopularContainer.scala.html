@@ -1,7 +1,7 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
-
 @import common.LinkTo
 @import model.MostPopular
+@import views.support.MostPopular.numItemsToShow
 
 <div class="fc-container__header js-container__header">
     @containerDefinition.displayName.map { title =>
@@ -22,7 +22,7 @@
     MostPopular(
         containerDefinition.displayName.getOrElse("popular"),
         "popular",
-        containerDefinition.contentItems.slice(0, 10)
+        containerDefinition.contentItems.take(numItemsToShow(containerDefinition))
     ),
     MostPopular(
         "across the guardian",
@@ -30,6 +30,6 @@
         Nil
     )
 )){ popular =>
-    @fragments.collections.popular(popular)
+    @fragments.collections.popular(popular, Some(containerDefinition))
 }
 </div>

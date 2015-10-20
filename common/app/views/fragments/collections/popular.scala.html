@@ -1,10 +1,10 @@
-@(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
-
+@(popular: Seq[model.MostPopular], containerDefinition: Option[layout.FaciaContainer] = None)(implicit request: RequestHeader)
 @import common.Localisation
-@import views.support._
-@import views.html.fragments.items.elements.facia_cards.title
 @import layout.FaciaCardHeader
+@import views.html.fragments.items.elements.facia_cards.title
+@import views.support._
 @import TrailCssClasses.articleToneClass
+@import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular" data-test-id="popular-in">
@@ -22,8 +22,8 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
-                 @if(isTabbed){
+                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} @tabsPaneCssClass(containerDefinition) u-cf"
+                @if(isTabbed){
                      role="tabpanel"
                      aria-labelledby="tabs-popular-@info.rowNum-tab"
                  }
@@ -43,7 +43,9 @@
             </div>
         }
 
+        @if(showMPU(containerDefinition)) {
             <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
+        }
 
         @if(isTabbed) {
                 </div>
