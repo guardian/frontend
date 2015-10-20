@@ -22,13 +22,13 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
-                @if(isTabbed){
-                    role="tabpanel"
-                    aria-labelledby="tabs-popular-@info.rowNum-tab"
-                }
-                data-link-name="@section.heading"
-                data-link-context="most-read/@section.section">
+                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
+                 @if(isTabbed){
+                     role="tabpanel"
+                     aria-labelledby="tabs-popular-@info.rowNum-tab"
+                 }
+                 data-link-name="@section.heading"
+                 data-link-context="most-read/@section.section">
 
                 <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
