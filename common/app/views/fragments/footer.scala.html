@@ -40,9 +40,34 @@
     </div>
 
     <div class="l-footer__secondary gs-container" role="contentinfo">
-        @if(!amp) {
-            <ul class="colophon u-cf">
-            @defining(Edition(request)) { currentEdition =>
+        <ul class="colophon u-cf">
+        @defining(Edition(request)) { currentEdition =>
+            @if(amp) {
+                @if(currentEdition == Uk) {
+                    <li class="colophon__item"><a data-link-name="uk : footer : contact us" href="@LinkTo {/help/contact-us}">
+                        contact us</a></li>
+                    <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_JOBS">
+                        jobs</a></li>
+                }
+                @if(currentEdition == Us) {
+                    <li class="colophon__item"><a data-link-name="us : footer : contact us" href="@LinkTo {/info/about-guardian-us/contact}">
+                        contact us</a></li>
+                    <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
+                        jobs</a></li>
+                }
+                @if(currentEdition == Au) {
+                    <li class="colophon__item"><a data-link-name="au : footer : contact us" href="@LinkTo {/info/2013/may/26/contact-guardian-australia}">
+                        contact us</a></li>
+                    <li class="colophon__item"><a data-link-name="au : footer : vacancies" href="@LinkTo {/info/2014/aug/11/guardian-australia-vacancies}">
+                        vacancies</a></li>
+                }
+                <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
+                    terms &amp; conditions</a></li>
+                @if(currentEdition != Au) {
+                    <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
+                        complaints &amp; corrections</a></li>
+                }
+            } else {
                 @if(currentEdition == International) {
                     <li class="colophon__item"><a data-link-name="int : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
                         daily email sign up</a></li>
@@ -117,8 +142,10 @@
                     <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_AU_GU_JOBS">
                         UK jobs</a></li>
                 }
-            <li class="colophon__item"><a data-link-name="all topics" href="@LinkTo {/index/subjects/a}">all topics</a></li>
-            <li class="colophon__item"><a data-link-name="all contributors" href="@LinkTo {/index/contributors}">all contributors</a></li>
+                <li class="colophon__item"><a data-link-name="all topics" href="@LinkTo {/index/subjects/a}">
+                    all topics</a></li>
+                <li class="colophon__item"><a data-link-name="all contributors" href="@LinkTo {/index/contributors}">
+                    all contributors</a></li>
 
                 @if(currentEdition == Uk) {
                     <li class="colophon__item"><a data-link-name="uk : footer : about us" href="@LinkTo {/info}">
@@ -127,11 +154,11 @@
                         contact us</a></li>
                 }
 
-            <li class="colophon__item">
-                <a data-link-name="tech feedback" class="js-tech-feedback-report" href="@LinkTo {/info/tech-feedback}">
-                    solve technical issue
-                </a>
-            </li>
+                <li class="colophon__item">
+                    <a data-link-name="tech feedback" class="js-tech-feedback-report" href="@LinkTo {/info/tech-feedback}">
+                        solve technical issue
+                    </a>
+                </li>
 
                 @if(currentEdition == Us) {
                     <li class="colophon__item"><a data-link-name="us : footer : about us" href="@LinkTo {/info/about-guardian-us}">
@@ -153,14 +180,16 @@
                     <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
                         complaints &amp; corrections</a></li>
                 }
-            <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">terms &amp; conditions</a></li>
-            <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">privacy policy</a></li>
-            <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">cookie policy</a></li>
+                <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
+                    terms &amp; conditions</a></li>
+                <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
+                    privacy policy</a></li>
+                <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">cookie policy</a></li>
                 <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">
                     securedrop</a></li>
             }
-            </ul>
         }
+        </ul>
         <div class="l-footer__misc">
             <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
         </div>
