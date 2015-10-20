@@ -13,10 +13,6 @@ define([
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry'
     };
 
-    return {
-        update : updateUserFeatures
-    };
-
     function updateUserFeatures() {
         ajaxPromise({
             url : config.page.userAttributesApiUrl + '/me/features',
@@ -30,4 +26,8 @@ define([
         cookies.add(PERSISTENCE_KEYS.ADFREE_COOKIE, JsonResponse.adFree);
         cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     }
+
+    return {
+        update : updateUserFeatures
+    };
 });
