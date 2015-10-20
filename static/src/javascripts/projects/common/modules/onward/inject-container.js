@@ -23,7 +23,7 @@ define([
             crossOrigin: true
         }).then(function (resp) {
             if (resp.html) {
-                fastdom.write(function() {
+                fastdom.write(function () {
                     var $related = $('.js-related');
                     $related.before(resp.html);
                     $related.css({

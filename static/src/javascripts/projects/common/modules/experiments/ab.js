@@ -10,7 +10,7 @@ define([
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adfree-survey',
     'common/modules/experiments/tests/switch-most-pop-related-content',
-    'common/modules/experiments/tests/inject-headlines-test',
+    'common/modules/experiments/tests/inject-headlines-test'
 ], function (
     reportError,
     _,
