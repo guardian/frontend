@@ -16,7 +16,7 @@
             'common/utils/$',
             'common/utils/ajax',
             'common/modules/identity/api'
-        ], function($, ajax, id) {
+        ], function($, ajax, identity) {
 
             var membershipUrl = "@Configuration.id.membershipUrl",
                 membershipAccess = "@membershipAccess",
@@ -27,26 +27,26 @@
                 window.location.href = membershipAuthUrl;
             }
 
-            if (id.isUserLoggedIn()) {
-		    ajax({
-		        url: membershipUrl + '/user/me',
-		        type: 'json',
-		        crossOrigin: true,
-		        withCredentials: true
-		    }).then(function (resp) {
-		        // Check the users access matches the content
-		        var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
-		        if (canViewContent) {
-		            $('body').removeClass('has-membership-access-requirement');
-		        } else {
-		            redirect();
-		        }
-		    }).fail(function() {
-		        // If the request fails assume non-member
-		        redirect();
-		    });
-            } else { 
+            if (identity.isUserLoggedIn()) {
+                ajax({
+                    url: membershipUrl + '/user/me',
+                    type: 'json',
+                    crossOrigin: true,
+                    withCredentials: true
+                }).then(function (resp) {
+                    // Check the users access matches the content
+                    var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
+                    if (canViewContent) {
+                        $('body').removeClass('has-membership-access-requirement');
+                    } else {
+                        redirect();
+                    }
+                }).fail(function() {
+                    // If the request fails assume non-member
                     redirect();
+                });
+            } else {
+                redirect();
             }
 
         });
