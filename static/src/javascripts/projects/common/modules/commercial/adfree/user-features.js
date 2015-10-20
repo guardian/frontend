@@ -54,12 +54,14 @@ define([
         cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     }
 
+    function isAdfree() {
+        // Defer to the value set by the preflight scripts
+        // They need to determine how the page will appear before it starts rendering
+        return config.commercial ? config.commercial.showingAdfree : false;
+    }
+
     return {
         refresh : refresh,
-        isAdfree : function getAdfree() {
-            // Defer to the value set by the preflight scripts
-            // They need to determine how the page will appear before it starts rendering
-            return config.commercial ? config.commercial.showingAdfree : false;
-        }
+        isAdfree : isAdfree
     };
 });
