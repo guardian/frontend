@@ -1,7 +1,5 @@
 define([
-    'common/utils/$'
 ], function (
-    $
 ) {
     return function () {
         this.id = 'OnwardNames';

@@ -97,12 +97,12 @@ define([
                         register.end(componentName);
 
                         /* TODO remove after ab test*/
-                        if (ab.getTestVariantId('OnwardNames') !== 'control') (function () {
+                        if (ab.getTestVariantId('OnwardNames') !== 'control') {(function () {
                             var heading = $('.js-ab-onward-names-related');
                             if (heading) {
                                 heading.text(ab.getTestVariantId('OnwardNames'));
                             }
-                        })();
+                        })();}
 
                     },
                     error: function () {
