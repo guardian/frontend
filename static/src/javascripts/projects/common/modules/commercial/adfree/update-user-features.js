@@ -16,7 +16,8 @@ define([
     function updateUserFeatures() {
         ajaxPromise({
             url : config.page.userAttributesApiUrl + '/me/features',
-            crossOrigin : true
+            crossOrigin : true,
+            error : function () {}
         }).then(persistResponse);
     }
 
