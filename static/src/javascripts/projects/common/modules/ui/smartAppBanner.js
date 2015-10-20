@@ -1,4 +1,5 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/cookies',
     'common/utils/detect',
@@ -7,6 +8,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/ui/message'
 ], function (
+    fastdom,
     $,
     cookies,
     detect,
@@ -58,7 +60,16 @@ define([
             fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
 
         msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
+
         cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
+
+        fastdom.read(function () {
+            var $banner = $('.site-message--ios, .site-message--android');
+            var bannerHeight = $banner.dim().height;
+            if (window.scrollY !== 0) {
+                window.scrollTo(window.scrollX, window.scrollY + bannerHeight);
+            }
+        });
     }
 
     function init() {
