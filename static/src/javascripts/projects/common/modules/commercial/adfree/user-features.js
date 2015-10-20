@@ -43,7 +43,7 @@ define([
 
     function featuresDataIsOld() {
         var featuresExpiryCookie = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE),
-            featuresExpiryTime = new Date(featuresExpiryCookie).getTime(),
+            featuresExpiryTime = parseInt(featuresExpiryCookie, 10),
             timeNow = new Date().getTime();
         return timeNow >= featuresExpiryTime;
     }
