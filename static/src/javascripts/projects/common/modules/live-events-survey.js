@@ -3,6 +3,7 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/adfree-survey.html'
@@ -11,6 +12,7 @@ define([
     fastdom,
     $,
     _,
+    config,
     template,
     svgs,
     adfreeSurveyTemplate
@@ -27,7 +29,9 @@ define([
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
-                surveyOverlay: svgs('surveyOverlay'),
+                overlayEvent1: config.images.commercial.overlayEvent1,
+                overlayEvent2: config.images.commercial.overlayEvent2,
+                overlayEvent3: config.images.commercial.overlayEvent3,
                 surveyNew: svgs('surveyNew'),
                 membershipLogo: svgs('membershipLogo')
             });
