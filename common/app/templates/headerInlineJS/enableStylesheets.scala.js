@@ -12,10 +12,10 @@
                 styleSheet.media = "screen";
                 // Set flag for when the CSS loads before the JS
                 window.guardian.css.loaded = true;
-                // Execute listeners for when the JS loads before the CSS
-                var onLoadQueue = window.guardian.css.onLoadQueue;
-                for (var i = onLoadQueue.length - 1; i >= 0; i--) {
-                    onLoadQueue[i]();
+                // Execute callback for when the JS loads before the CSS
+                var onLoad = window.guardian.css.onLoad;
+                if (onLoad) {
+                    onLoad();
                 }
                 return true;
             }
