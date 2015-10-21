@@ -45,9 +45,6 @@
 @* polyfill, feature detect etc before we try and use the stylesheets *@
 @fragments.javaScriptPreFlight(metaData)
 
-@* apply dynamic styles to the document before the browser starts painting it *@
-@fragments.preRenderJavaScript()
-
 @* try and load fonts before we use the stylesheets *@
 @fragments.fonts()
 
