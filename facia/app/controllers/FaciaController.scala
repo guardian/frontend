@@ -4,9 +4,8 @@ import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.switches.Switches
 import controllers.front._
-import layout.{Front, CollectionEssentials, FaciaContainer}
+import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
@@ -158,9 +157,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
+        val containers = Front.fromPressedPage(pressedPage, Edition(request)).containers
         val maybeResponse =
           for {
-            (container, index) <- Front.fromPressedPage(pressedPage).containers.zipWithIndex.find(_._1.dataId == collectionId)
+            (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout}
           yield
             successful{Cached(pressedPage) {

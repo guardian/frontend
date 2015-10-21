@@ -23,7 +23,7 @@ define([
 ) {
     function init() {
         var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com/',
+            adblockLink = 'https://membership.theguardian.com/supporter',
             message = _.sample([
                 {
                     id: 'monthly',
@@ -53,7 +53,7 @@ define([
                 siteMessageLinkName: 'adblock message variant ' + message.id,
                 siteMessageCloseBtn: 'hide'
             }).show(template(messageTemplate, {
-                supporterLink: adblockLink + '?INTCMP=adb-mv-' + message.id,
+                linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
                 messageText: message.messageText,
                 linkText: message.linkText,
                 arrowWhiteRight: svgs('arrowWhiteRight')
