@@ -485,7 +485,7 @@
 
     .thrasher-content__header--logo {
         text-align: center;
-        line-height: 0.6;
+        line-height: .6;
 
         @include mq(desktop) {
             float: left;

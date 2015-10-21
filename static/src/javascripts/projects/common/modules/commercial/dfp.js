@@ -22,8 +22,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
-    'common/modules/identity/api',
-    'common/views/svgs'
+    'common/modules/identity/api'
 ], function (
     bean,
     bonzo,
@@ -47,8 +46,7 @@ define([
     geoMostPopular,
     ab,
     beacon,
-    id,
-    svgs
+    id
 ) {
     /**
      * Right, so an explanation as to how this works...

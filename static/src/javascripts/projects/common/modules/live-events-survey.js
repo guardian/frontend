@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adfree-survey.html'
+    'text!common/views/commercial/live-events-survey.html'
 ], function (
     bean,
     fastdom,
