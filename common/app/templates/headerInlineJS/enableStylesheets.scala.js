@@ -13,10 +13,7 @@
                 // Set flag for when the CSS loads before the JS
                 window.guardian.css.loaded = true;
                 // Execute callback for when the JS loads before the CSS
-                var onLoad = window.guardian.css.onLoad;
-                if (onLoad) {
-                    onLoad();
-                }
+                try { window.guardian.css.onLoad(); } catch(e) {};
                 return true;
             }
         }
