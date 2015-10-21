@@ -3,14 +3,12 @@
         border-top: 0;
     }
 
-    .content__meta-container {
-        @include mq(leftCol) {
-            position: absolute !important;
-        }
-    }
-
     .content__article-body {
         clear: both;
+    }
+
+    .content__main {
+        padding-top: $gs-baseline / 2;
     }
 
 /* Header
@@ -136,6 +134,52 @@
             bottom: 0;
             left: 0;
             right: 0;
+        }
+    }
+
+/* Meta
+    ========================================================================== */
+    .content__meta-container--immersive {
+        position: relative;
+        width: auto;
+        padding-bottom: $gs-baseline;
+        border-bottom: colour(neutral-7) solid 1px;
+
+        .meta__section-label,
+        .content__series-label {
+            display: inline-block;
+        }
+
+        .meta__labels {
+            @include mq(leftCol) {
+                position: absolute;
+                left: 0;
+            }
+        }
+
+        .content__dateline {
+            min-height: 0;
+            border: 0;
+            padding: 0;
+            display: inline-block;
+
+            @include mq(leftCol) {
+                margin-left: gs-span(3) + $gs-gutter;
+            }
+        }
+
+        .meta-numbers {
+            display: inline-block;
+        }
+
+        .meta__number {
+            @include fs-textSans(3);
+            color: colour(neutral-2);
+
+            .inline-icon {
+                fill: colour(neutral-2);
+                margin-right: 2px;
+            }
         }
     }
 
