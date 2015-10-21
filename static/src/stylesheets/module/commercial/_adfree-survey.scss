@@ -131,22 +131,33 @@
         }
     }
 
+    .survey-text__subheader {
+        @include fs-bodyCopy(1);
+        color: guss-colour(features-main-2, $pasteup-palette);
+        margin-bottom: 10px;
+    }
+
     .survey-icons {
-        text-align: center;
         margin-bottom: 20px;
-       // display: none;
 
         @include mq(tablet) {
-            /*display: block;*/
             @include clearfix;
         }
 
+        .survey-icons__image {
+            display: none;
+
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+
         .survey-icons__event {
-            width: $gs-column-width*1.5;
-            padding: 0 5px;
+            padding-right: 8px;
 
             @include mq(tablet) {
                 float: left;
+                width: $gs-column-width*1.5;
             }
 
             .survey-icons__date {
@@ -440,7 +451,7 @@
         position: absolute;
         top: 10px;
 
-        @include mq(desktop) {
+        @include mq(leftCol) {
             margin-left: 0;
             top: auto;
             bottom: 5px;
