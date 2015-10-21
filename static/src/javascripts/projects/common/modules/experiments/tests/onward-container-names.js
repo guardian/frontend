@@ -24,7 +24,7 @@ define([
                 test: function () {}
             },
             {
-                id: 'test:You might like ...',
+                id: 'test:You might like &hellip;',
                 test: function () {}
             },
             {
