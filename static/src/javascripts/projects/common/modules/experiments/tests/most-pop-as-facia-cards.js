@@ -7,8 +7,8 @@ define([
         this.expiry = '2015-11-21';
         this.author = 'Josh Holder';
         this.description = 'Styles the most popular container as facia cards';
-        this.audience = 0.1;
-        this.audienceOffset = 0.1;
+        this.audience = 0.2;
+        this.audienceOffset = 0.025;
         this.successMeasure = 'The number of onward journeys increases';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'popular-container-as-facia-cards';
