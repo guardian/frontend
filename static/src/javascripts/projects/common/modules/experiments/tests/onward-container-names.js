@@ -7,8 +7,8 @@ define([
         this.expiry = '2015-11-20';
         this.author = 'John Duffell';
         this.description = 'renames the related content container';
-        this.audience = 0.6;
-        this.audienceOffset = 0.4;
+        this.audience = 0.8;
+        this.audienceOffset = 0.2;
         this.successMeasure = 'The number of onward journeys';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -28,7 +28,11 @@ define([
                 test: function () {}
             },
             {
-                id: 'test:',
+                id: 'test:Suggested articles',
+                test: function () {}
+            },
+            {
+                id: 'test:Keep reading',
                 test: function () {}
             }
         ];
