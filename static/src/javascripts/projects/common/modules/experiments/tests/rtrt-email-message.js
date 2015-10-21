@@ -54,7 +54,7 @@ define([
         this.author = 'Gareth Trufitt';
         this.description = 'Test likelihood of email sign-up with 10 visits to the Guardian vs any network front visitor vs showing to all visitors on all pages';
         this.audience = 0.01;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.99;
         this.successMeasure = 'Loyal users shown the email sign-up message higher on the loyalty curve are more likely to sign up';
         this.audienceCriteria = 'Users who match the segments defined in Krux';
         this.dataLinkNames = '';
