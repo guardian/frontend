@@ -1,0 +1,41 @@
+@(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
+@import conf.switches.Switches._
+
+@byline(content: model.Content) = {
+    @content match {
+        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v) }
+        case c          => { @fragments.meta.byline(c.byline, c) }
+    }
+}
+
+<div class="content__meta-container content__meta-container--immersive js-content-meta u-cf">
+
+    <div class="meta__section-label">
+        <a class="meta__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
+    </div>
+
+    @content.blogOrSeriesTag.map { series =>
+    <div class="content__series-label">
+        <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+    </div>
+    }
+
+    @if(!content.shouldHidePublicationDate) {
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, content.isLiveBlog, content.isLive)
+    }
+
+    <div class="meta__extras">
+        <div class="meta__social" data-component="share">
+            @fragments.social(content, "top")
+        </div>
+        <div class="meta__numbers modern-visible">
+            <div class="u-h meta__number js-sharecount">
+            </div>
+            <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
+            </div>
+        </div>
+        @if(SaveForLaterSwitch.isSwitchedOn) {
+            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+        }
+    </div>
+</div>
