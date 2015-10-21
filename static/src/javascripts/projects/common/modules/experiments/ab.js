@@ -10,6 +10,8 @@ define([
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adfree-survey',
     'common/modules/experiments/tests/switch-most-pop-related-content',
+    'common/modules/experiments/tests/rtrt-email-message',
+    'common/modules/experiments/tests/most-pop-as-facia-cards',
     'common/modules/experiments/tests/onward-container-names'
 ], function (
     reportError,
@@ -23,7 +25,10 @@ define([
     MembershipMessageUSA,
     AddfreeSurvey,
     SwitchMostPopAndRelatedContent,
+    RtrtEmailMessage,
+    MostPopAsFaciaCards,
     OnwardContainerNames
+
 ) {
 
     var TESTS = _.flatten([
@@ -31,6 +36,8 @@ define([
         new MembershipMessageUSA(),
         new AddfreeSurvey(),
         new SwitchMostPopAndRelatedContent(),
+        new RtrtEmailMessage(),
+        new MostPopAsFaciaCards(),
         new OnwardContainerNames()
     ]);
 

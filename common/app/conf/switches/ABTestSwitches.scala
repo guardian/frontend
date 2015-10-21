@@ -31,6 +31,24 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABRtrtEmailMessage = Switch(
+    "A/B Tests",
+    "ab-rtrt-email-message",
+    "Switch to show the Right Place Right Time email message with segmentation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 15),
+    exposeClientSide = true
+  )
+
+  val ABMostPopAsFaciaCards = Switch(
+    "A/B Tests",
+    "ab-most-pop-as-facia-cards",
+    "Style the most popular container as facia cards",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
   val ABOnwardNames = Switch(
     "A/B Tests",
     "ab-onward-names",

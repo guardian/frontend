@@ -27,6 +27,7 @@ http://developers.theguardian.com/join-the-team.html
 @defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
     @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
+
     <body
         id="top"
         class="@RenderClasses(Map(
