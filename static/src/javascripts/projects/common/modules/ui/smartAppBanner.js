@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
+    'common/utils/load-css-promise',
     'common/modules/user-prefs',
     'common/modules/ui/message'
 ], function (
@@ -14,6 +15,7 @@ define([
     detect,
     storage,
     template,
+    loadCssPromise,
     userPrefs,
     Message
 ) {
@@ -55,20 +57,22 @@ define([
     }
 
     function showMessage() {
-        var platform = (detect.isIOS()) ? 'ios' : 'android',
-            msg = new Message(platform),
-            fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
+        loadCssPromise.then(function () {
+            var platform = (detect.isIOS()) ? 'ios' : 'android',
+                msg = new Message(platform),
+                fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
+            msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
 
-        cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
+            cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
 
-        fastdom.read(function () {
-            var $banner = $('.site-message--ios, .site-message--android');
-            var bannerHeight = $banner.dim().height;
-            if (window.scrollY !== 0) {
-                window.scrollTo(window.scrollX, window.scrollY + bannerHeight);
-            }
+            fastdom.read(function () {
+                var $banner = $('.site-message--ios, .site-message--android');
+                var bannerHeight = $banner.dim().height;
+                if (window.scrollY !== 0) {
+                    window.scrollTo(window.scrollX, window.scrollY + bannerHeight);
+                }
+            });
         });
     }
 

@@ -312,6 +312,9 @@ GET            /service-worker.js                                               
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 
+GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsCampaignController.redirectShortUrl(shortCode)
+GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsCampaignController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                          controllers.AllIndexController.allOn(path, day, month, year)
