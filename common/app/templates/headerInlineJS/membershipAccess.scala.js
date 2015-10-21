@@ -14,8 +14,9 @@
 
         require([
             'common/utils/$',
-            'common/utils/ajax'
-        ], function($, ajax) {
+            'common/utils/ajax',
+            'common/modules/identity/api'
+        ], function($, ajax, identity) {
 
             var membershipUrl = "@Configuration.id.membershipUrl",
                 membershipAccess = "@membershipAccess",
@@ -26,23 +27,28 @@
                 window.location.href = membershipAuthUrl;
             }
 
-            ajax({
-                url: membershipUrl + '/user/me',
-                type: 'json',
-                crossOrigin: true,
-                withCredentials: true
-            }).then(function (resp) {
-                // Check the users access matches the content
-                var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
-                if (canViewContent) {
-                    $('body').removeClass('has-membership-access-requirement');
-                } else {
+            if (identity.isUserLoggedIn()) {
+                ajax({
+                    url: membershipUrl + '/user/me',
+                    type: 'json',
+                    crossOrigin: true,
+                    withCredentials: true
+                }).then(function (resp) {
+                    // Check the users access matches the content
+                    var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
+                    if (canViewContent) {
+                        $('body').removeClass('has-membership-access-requirement');
+                    } else {
+                        redirect();
+                    }
+                }).fail(function() {
+                    // If the request fails assume non-member
                     redirect();
-                }
-            }).fail(function() {
-                // If the request fails assume non-member
+                });
+            } else {
                 redirect();
-            });
+            }
+
         });
     }(window));
 }

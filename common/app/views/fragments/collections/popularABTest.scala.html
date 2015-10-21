@@ -1,0 +1,15 @@
+@(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
+
+@import layout.FaciaContainer
+@import views.html.fragments.containers
+@import com.gu.facia.api.models.FaciaContent
+
+@container(stories: Seq[FaciaContent], title: String, dataId: String, href: Option[String]) = {
+    @containers.facia_cards.container(
+        FaciaContainer.forMostPopular(dataId, stories, title, href)
+    )(request)
+}
+
+@popular.headOption.map { content =>
+    @container(content.trails, "popular " + content.heading, "most-popular-as-facia-cards", href = None)
+}

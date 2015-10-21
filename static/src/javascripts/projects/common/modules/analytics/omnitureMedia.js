@@ -44,12 +44,13 @@ define([
             },
             trackingVars = [
                 // these tracking vars are specific to media events.
-                'evar11',   // embedded or on platform
+                'eVar11',   // embedded or on platform
                 'prop41',   // preroll milestone
                 'prop43',   // media type
                 'prop44',   // media id
-                'evar74',   // ad or content
-                'evar61'];  // restricted
+                'eVar44',   // media id
+                'eVar74',   // ad or content
+                'eVar61'];  // restricted
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;

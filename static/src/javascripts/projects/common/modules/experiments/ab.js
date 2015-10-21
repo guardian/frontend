@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/adfree-survey',
     'common/modules/experiments/tests/switch-most-pop-related-content',
-    'common/modules/experiments/tests/rtrt-email-message'
+    'common/modules/experiments/tests/rtrt-email-message',
+    'common/modules/experiments/tests/most-pop-as-facia-cards'
 ], function (
     reportError,
     _,
@@ -23,7 +24,9 @@ define([
     MembershipMessageUSA,
     AddfreeSurvey,
     SwitchMostPopAndRelatedContent,
-    RtrtEmailMessage
+    RtrtEmailMessage,
+    MostPopAsFaciaCards
+
 ) {
 
     var TESTS = _.flatten([
@@ -31,7 +34,8 @@ define([
         new MembershipMessageUSA(),
         new AddfreeSurvey(),
         new SwitchMostPopAndRelatedContent(),
-        new RtrtEmailMessage()
+        new RtrtEmailMessage(),
+        new MostPopAsFaciaCards()
     ]);
 
     var participationsKey = 'gu.ab.participations';

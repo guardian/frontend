@@ -12,8 +12,16 @@ object ContainerDefinition {
 
   def ofSlices(slices: Slice*) = ContainerDefinition(
     slices,
-    RestrictTo(6),
-    Set.empty
+    slicesWithoutMPU = slices,
+    mobileShowMore = RestrictTo(6),
+    customCssClasses = Set.empty
+  )
+
+  def ofSlices(slices: Seq[Slice], slicesWithoutMpu: Seq[Slice]) = ContainerDefinition(
+    slices,
+    slicesWithoutMpu,
+    mobileShowMore = RestrictTo(6),
+    customCssClasses = Set.empty
   )
 
   def fromContainer(container: Container, items: Seq[FaciaContent]) = container match {
@@ -52,6 +60,7 @@ object ContainerDefinition {
 
 case class ContainerDefinition(
   slices: Seq[Slice],
+  slicesWithoutMPU: Seq[Slice],
   mobileShowMore: MobileShowMore,
   customCssClasses: Set[String]
 ) {

@@ -10,7 +10,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
-import scala.concurrent.Future
+import scala.concurrent.{Future, blocking}
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
@@ -25,7 +25,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     if (DfpCachingSwitch.isSwitchedOn) {
       log.info("Refreshing data cache")
       val start = System.currentTimeMillis
-      val data = loadLineItems()
+      val data = blocking(loadLineItems())
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
@@ -46,7 +46,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       _ <- PlacementAgent.refresh()
     } {
       DfpAdFeatureCacheJob.run()
-      val data = loadLineItems()
+      val data = blocking(loadLineItems())
       val paidForTags = PaidForTag.fromLineItems(data.lineItems)
       CapiLookupAgent.refresh(paidForTags) map {
         _ => write(data)
@@ -183,17 +183,19 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         data.topBelowNavSlotTakeovers))))
       Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
 
-      log.info("Storing creative template data...")
-      val cachedCreativeTemplates = Store.getDfpCreativeTemplates
-      val creativeTemplateThreshold = lastModified(cachedCreativeTemplates)
-      val recentCreativeTemplates =
-        DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
-      val creativeTemplatesToCache = merge(cachedCreativeTemplates, recentCreativeTemplates)
-      if (creativeTemplatesToCache != cachedCreativeTemplates) {
-        Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
-        log.info("Stored creative template data")
-      } else {
-        log.info("No change in creative template data")
+      if (Switches.DfpCacheCreativeTemplates.isSwitchedOn) {
+        log.info("Storing creative template data...")
+        val cachedCreativeTemplates = Store.getDfpCreativeTemplates
+        val creativeTemplateThreshold = lastModified(cachedCreativeTemplates)
+        val recentCreativeTemplates =
+          DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
+        val creativeTemplatesToCache = merge(cachedCreativeTemplates, recentCreativeTemplates)
+        if (creativeTemplatesToCache != cachedCreativeTemplates) {
+          Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
+          log.info("Stored creative template data")
+        } else {
+          log.info("No change in creative template data")
+        }
       }
     }
   }

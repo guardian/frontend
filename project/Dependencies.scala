@@ -69,6 +69,8 @@ object Dependencies {
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
   val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
   val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
+  val jerseyCore = "com.sun.jersey" % "jersey-core" % "1.19"
+  val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

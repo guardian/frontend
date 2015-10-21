@@ -35,6 +35,8 @@ $ima-controls-height: 70px;
 
 .element-video {
     position: relative;
+    // Force this container to wrap around the floated rich link
+    overflow: hidden;
 }
 
 .gu-video-embed-html {
