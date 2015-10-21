@@ -32,7 +32,7 @@ define([
 
         if (euMessageCookie && euMessageCookie === 'unseen') {
             var link = 'https://www.theguardian.com/info/cookies',
-                txt = 'Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>.',
+                txt = 'Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>',
                 opts = {important: true},
                 cookieLifeDays = 365,
                 msg = new Message('cookies');
