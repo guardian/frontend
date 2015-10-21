@@ -2,7 +2,7 @@ package layout
 
 import scalaz.syntax.std.option._
 
-sealed trait Breakpoint {
+trait Breakpoint {
   val minWidth: Option[Int]
 }
 
