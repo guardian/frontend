@@ -21,4 +21,8 @@ import play.api.test.Helpers._
 
   }
 
+  it should "Include an old article message" in {
+    val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(TestRequest(articleUrl))
+    MetaDataMatcher.ensureOldArticleMessage(result, articleUrl)
+  }
 }

@@ -1,5 +1,6 @@
 @(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
 @import conf.switches.Switches._
+@import views.support.ContentOldAgeDescriber
 
 @byline(content: model.Content) = {
     @content match {
@@ -28,6 +29,7 @@
         <div class="meta__social" data-component="share">
             @fragments.social(content, "top")
         </div>
+        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
             </div>
