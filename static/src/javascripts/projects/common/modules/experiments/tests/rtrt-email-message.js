@@ -5,7 +5,8 @@ define([
     'text!common/views/general-message.html',
     'common/views/svgs',
     'common/utils/_',
-    'common/modules/commercial/third-party-tags/krux'
+    'common/modules/commercial/third-party-tags/krux',
+    'common/modules/identity/api'
 ], function (
     config,
     template,
@@ -13,7 +14,8 @@ define([
     messageTemplate,
     svgs,
     _,
-    krux
+    krux,
+    Id
 ) {
 
     var messageId = 'rtrt-email-message';
@@ -50,34 +52,34 @@ define([
         this.start = '2015-10-15';
         this.expiry = '2015-11-15';
         this.author = 'Gareth Trufitt';
-        this.description = 'Test likelihood of email sign-up with 3 visits to the home page vs showing to all visitors on all pages';
+        this.description = 'Test likelihood of email sign-up with 10 visits to the Guardian vs any network front visitor vs showing to all visitors on all pages';
         this.audience = 0.01;
         this.audienceOffset = 0;
         this.successMeasure = 'Loyal users shown the email sign-up message higher on the loyalty curve are more likely to sign up';
-        this.audienceCriteria = 'Users who match the segment defined in Krux';
+        this.audienceCriteria = 'Users who match the segments defined in Krux';
         this.dataLinkNames = '';
-        this.idealOutcome = 'Users will sign up to email';
+        this.idealOutcome = 'Users who are more loyal will sign up to email';
 
         this.canRun = function () {
-            return true;
+            return !Id.isUserLoggedIn(); // Only show to non-logged-in users, as testing email sign-up
         };
 
         this.variants = [
             {
                 id: 'targeted-loyal-A',
                 test: function () {
-                    createMessage('XXXXXXXX');
+                    createMessage('p2lq8cs6r'); // 10 visits or more to the Guardian
                 }
             },
             {
                 id: 'targeted-loyal-B',
                 test: function () {
-                    createMessage('XXXXXXXX');
+                    createMessage('p2lryefg7'); // A visitor currently on the network front
                 }
             },
             {
                 id: 'all',
-                test: createMessage
+                test: createMessage // Any visitor, any page
             }
         ];
 
