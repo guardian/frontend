@@ -43,6 +43,8 @@
         });
     };
 
+    // The JSON contains the HTML and asset versions. We cache the assets at
+    // their specified URLs and the page HTML as '/offline-page'.
     var updateCache = function () {
         // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
         return fetch('/offline-page.json').then(function (jsonResponse) {
