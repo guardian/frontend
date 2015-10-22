@@ -311,6 +311,7 @@ GET            /offline-page.json                                               
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
+GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsCampaignController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsCampaignController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
@@ -359,7 +360,6 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                  
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                                     controllers.IndexController.renderJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                          controllers.IndexController.render(path)
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
-GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 
 # Articles
 GET            /*path.json                                                                                                       controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
