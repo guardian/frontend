@@ -23,10 +23,10 @@
     </div>
 
     @if(!content.shouldHidePublicationDate) {
-        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, content.isLiveBlog, content.isLive)
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, false, content.isLiveBlog, content.isLive)
     }
 
-    <div class="meta-numbers">
+    <div class="meta__numbers">
         <div class="u-h meta__number meta__number--sharecount js-sharecount js-sharecount-immersive"></div>
         <div class="u-h meta__number meta__number--commentcount" data-discussion-id="@content.discussionId" data-commentcount-format="contentImmersive" data-discussion-closed="@{!content.isCommentable}"></div>
     </div>

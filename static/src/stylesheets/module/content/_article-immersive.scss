@@ -145,37 +145,103 @@
         padding-bottom: $gs-baseline;
         border-bottom: colour(neutral-7) solid 1px;
 
+        .meta__labels {
+            display: block;
+            padding-bottom: $gs-baseline;
+            border-bottom: colour(neutral-6) dotted 1px;
+            margin-bottom: $gs-baseline / 4;
+
+            @include mq(leftCol) {
+                margin-top: -3px;
+                position: absolute;
+                left: 0;
+                padding-bottom: 0;
+            }
+        }
+
         .meta__section-label,
         .content__series-label {
             display: inline-block;
+            @include fs-header(1);
+
+            @include mq(leftCol, wide) {
+                display: block;
+            }
         }
 
-        .meta__labels {
-            @include mq(leftCol) {
-                position: absolute;
-                left: 0;
-            }
+        .content__series-label {
+            float: none;
+        }
+
+        .meta__section-label__link {
+            color: colour(feature-default);
+        }
+
+        .content__series-label__link {
+            font-size: inherit;
+            line-height: inherit;
+            font-weight: 400;
         }
 
         .content__dateline {
             min-height: 0;
             border: 0;
             padding: 0;
-            display: inline-block;
+            padding-right: $gs-gutter / 2 - 4px;
+            @include fs-textSans(3);
 
             @include mq(leftCol) {
+                margin-left: gs-span(2) + $gs-gutter;
+            }
+
+            @include mq(wide) {
                 margin-left: gs-span(3) + $gs-gutter;
             }
         }
 
-        .meta-numbers {
+        .content__dateline-wpd {
+            color: colour(neutral-2);
+            cursor: text;
+
+            &:hover,
+            &:focus {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+
+        .content__dateline,
+        .meta__numbers {
             display: inline-block;
+            vertical-align: top;
+        }
+
+        .content__dateline + .meta__numbers,
+        .meta__number + .meta__number {
+            position: relative;
+            border: 0;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 2px;
+                height: 1em;
+                width: 1px;
+                background-color: colour(neutral-6);
+            }
+        }
+
+        .meta__numbers {
+            height: auto;
+            padding: 0;
         }
 
         .meta__number {
             @include fs-textSans(3);
             color: colour(neutral-2);
-            border: 0 !important;
+            padding-left: $gs-gutter / 2;
+            float: left;
 
             .inline-icon {
                 float: left;
@@ -184,15 +250,26 @@
         }
 
         .meta__number--commentcount {
+            padding-left: $gs-gutter / 2 !important;
+
             .inline-icon {
-                margin-top: 3px;
+                margin-top: 4px;
                 margin-right: 2px;
             }
         }
 
         .meta__number--sharecount {
+            padding-right: 8px;
+
+            .sharecount__value--short {
+                display: inline-block;
+                font: inherit;
+                color: inherit;
+            }
+
             .inline-icon {
                 fill: colour(neutral-2);
+                margin-top: 1px;
                 margin-right: 4px;
             }
         }
