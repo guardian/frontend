@@ -49,4 +49,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABOnwardNames = Switch(
+    "A/B Tests",
+    "ab-onward-names",
+    "Switch to enable alternative name for related content",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 20),
+    exposeClientSide = true
+  )
+
 }
