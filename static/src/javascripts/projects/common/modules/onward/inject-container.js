@@ -7,13 +7,15 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/utils/mediator'
 ], function (
     fastdom,
     $,
     _,
     ajax,
-    images
+    images,
+    mediator
 ) {
     var containerUrlTemplate = '/container/use-layout/{containerId}.json';
 
@@ -30,6 +32,7 @@ define([
                         display: 'none'
                     });
                     images.upgradePictures();
+                    mediator.emit('ab-briefing-loaded');
                 });
             }
         });
