@@ -23,7 +23,7 @@ define([
     return function () {
 
         var messageOptions = {
-                siteMessageLinkName: 'rtrt : message : email sign-up',
+                siteMessageLinkName: 'rtrt | message | email sign-up',
                 siteMessageCloseBtn: 'hide',
                 widthBasedMessage: true
             },
@@ -32,7 +32,7 @@ define([
                 messageTextWide: 'Get the day\'s top news and commentary delivered to your inbox each morning in our Guardian Today email',
                 messageTextNarrow: 'Get the day\'s top news and commentary delivered to your inbox each morning',
                 linkText: 'Sign up',
-                linkName: 'rtrt : message : email sign-up button',
+                linkName: 'email sign-up button',
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function (kruxSegmentId) {
@@ -61,7 +61,8 @@ define([
         this.idealOutcome = 'Users who are more loyal will sign up to email';
 
         this.canRun = function () {
-            return !Id.isUserLoggedIn(); // Only show to non-logged-in users, as testing email sign-up
+            return window.location.pathName !== '/world/2013/oct/04/1'
+                    && !Id.isUserLoggedIn(); // Only show to non-logged-in users, as testing email sign-up
         };
 
         this.variants = [
@@ -74,7 +75,7 @@ define([
             {
                 id: 'targeted-loyal-B',
                 test: function () {
-                    createMessage('p2lryefg7'); // A visitor currently on the network front
+                    createMessage('o901c5kja'); // A visitor currently on the network front
                 }
             },
             {
