@@ -3,12 +3,12 @@ define([
 ) {
     return function () {
         this.id = 'OnwardNames';
-        this.start = '2015-10-20';
+        this.start = '2015-10-22';
         this.expiry = '2015-11-20';
         this.author = 'John Duffell';
-        this.description = 'renames the related content container';
-        this.audience = 0.8;
-        this.audienceOffset = 0.2;
+        this.description = 'renames the related content container for 2 weeks';
+        this.audience = 0.4;
+        this.audienceOffset = 0.6;
         this.successMeasure = 'The number of onward journeys';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
