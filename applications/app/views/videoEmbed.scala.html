@@ -5,41 +5,6 @@
 @import conf.Static
 @import conf.Configuration
 
-@bootCurl() = {
-    <script>
-        var curl = {
-            baseUrl: '@{Configuration.assets.path}javascripts',
-            apiName: 'require',
-            paths: {
-                core: '@Static("javascripts/core.js")',
-                text: 'text', // noop
-                inlineSvg: 'inlineSvg', // noop
-                'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
-                'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
-            }
-        };
-
-        @Html(Static.js.curl)
-
-        require(['bootstraps/video-embed'], function(bootstrap) {
-            bootstrap.init();
-        });
-    </script>
-}
-
-@bootSystemJs() = {
-    <script>
-        @Html(Static.systemJs.setupFragment)
-
-        // Bracket notation for IE8 (import is reserved)
-        System['import']('core').then(function () {
-            System['import']('bootstraps/video-embed').then(function (bootstrap) {
-                bootstrap.init();
-            });
-        });
-    </script>
-}
-
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">
     <head>
@@ -139,11 +104,25 @@
 
                 @fragments.omnitureScript(None)
 
-                @if(mvt.JspmTest.isParticipating) {
-                    @bootSystemJs()
-                } else {
-                    @bootCurl()
-                }
+                <script>
+                    var curl = {
+                        baseUrl: '@{Configuration.assets.path}javascripts',
+                        apiName: 'require',
+                        paths: {
+                            core: '@Static("javascripts/core.js")',
+                            text: 'text', // noop
+                            inlineSvg: 'inlineSvg', // noop
+                            'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
+                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
+                        }
+                    };
+
+                    @Html(Static.js.curl)
+
+                    require(['bootstraps/video-embed'], function(bootstrap) {
+                        bootstrap.init();
+                    });
+                </script>
             }
         }
     </body>
