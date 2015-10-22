@@ -175,10 +175,25 @@
         .meta__number {
             @include fs-textSans(3);
             color: colour(neutral-2);
+            border: 0 !important;
 
             .inline-icon {
-                fill: colour(neutral-2);
+                float: left;
+                display: block;
+            }
+        }
+
+        .meta__number--commentcount {
+            .inline-icon {
+                margin-top: 3px;
                 margin-right: 2px;
+            }
+        }
+
+        .meta__number--sharecount {
+            .inline-icon {
+                fill: colour(neutral-2);
+                margin-right: 4px;
             }
         }
     }
