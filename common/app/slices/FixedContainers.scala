@@ -54,7 +54,7 @@ object FixedContainers {
   val fixedMediumSlowVI = slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter)
   val fixedMediumSlowVII = slices(HalfQQ, QuarterQuarterQuarterQuarter)
   val fixedMediumSlowVIII = slices(Seq(TTMpu, TlTlTl), slicesWithoutMpu = Seq(TTT, TlTlTl))
-  val fixedMediumSlowXIIMpu = slices(TTT, TlTlMpu)
+  val fixedMediumSlowXIIMpu = slices(Seq(TTT, TlTlMpu), slicesWithoutMpu = Seq(TTT, TlTlTl))
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
 
