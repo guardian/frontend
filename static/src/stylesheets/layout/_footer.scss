@@ -145,8 +145,8 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         @include mq(tablet) {
             display: block;
             margin-bottom: $gs-baseline;
-            width: 80%;
-            max-width: $gs-gutter * 10;
+            width: 70%;
+            max-width: $gs-gutter * 9;
         }
     }
 }
