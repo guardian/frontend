@@ -32,7 +32,7 @@ GET        /crosswords/optin                                                    
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
 # Web App paths
-GET        /offline-page                                                        controllers.WebAppController.offlinePage()
+GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
