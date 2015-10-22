@@ -102,10 +102,14 @@
         .content__head--mobile {
             position: relative;
             height: 100vh;
-            height: -webkit-calc(100vh - 48px); // To compensate for mobile Safari viewport height issue.
             max-height: 800px;
             background-position: center center;
             background-size: cover;
+
+            // Query is to target Safari only
+            @media screen and (min-color-index:0) and (-webkit-min-device-pixel-ratio:0) {
+                height: -webkit-calc(100vh - 48px); // To compensate for mobile Safari viewport height issue.
+            }
         }
 
         .content__head--desktop {
