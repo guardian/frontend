@@ -25,7 +25,7 @@ define([
     svgs,
     commentCountTemplate,
     commentCountContentTemplate,
-    commentCountContentImmersiveTemplate 
+    commentCountContentImmersiveTemplate
 ) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',

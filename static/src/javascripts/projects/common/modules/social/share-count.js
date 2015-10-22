@@ -47,7 +47,7 @@ define([
     }
 
     function addToShareCount(val) {
-        if($shareCountEls.hasClass("js-sharecount-immersive")) {
+        if ($shareCountEls.hasClass('js-sharecount-immersive')) {
             shareCountTemplate = template(shareCountImmersiveTemplate, {
                 icon: svgs('share')
             });
