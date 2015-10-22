@@ -40,8 +40,10 @@ define([
                 // and fire off an omniture tracking call
                 if (kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) {
                     new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-                    // Omniture is a global var
-                    window.s.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
+                    // We nee the omniture library
+                    require('common/modules/analytics/omniture', function(omniture){
+                        omniture.trackLinkImmediate('rtrt | message | email sign-up | message for segment ' + kruxSegmentId + ' shown');
+                    });
                 } else if (!kruxSegmentId) {
                     new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
                 }
@@ -75,7 +77,7 @@ define([
             {
                 id: 'targeted-loyal-B',
                 test: function () {
-                    createMessage('o901c5kja'); // A visitor currently on the network front
+                    createMessage('p2lryefg7'); // A visitor currently on the network front
                 }
             },
             {
