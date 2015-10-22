@@ -78,18 +78,30 @@
         return new RegExp('^' + getISODate() + '-').test(key);
     };
 
+    var doesRequestAcceptHtml = function (request) {
+        return request.headers.get('Accept')
+            .split(',')
+            .some(function (type) { return type === 'text/html'; });
+    };
+
+    var isCacheUpdated = function () {
+        return caches.keys().then(function (keys) {
+            return keys.some(keyMatchesTodaysCache);
+        });
+    };
+
     self.addEventListener('install', function (event) {
         event.waitUntil(updateCache());
     });
 
     this.addEventListener('fetch', function (event) {
-        caches.keys().then(function (keys) {
-            var isUpdated = keys.some(keyMatchesTodaysCache);
-
-            if (!isUpdated) {
-                updateCache().then(deleteOldCaches);
-            }
-        });
+        if (doesRequestAcceptHtml(event.request)) {
+            isCacheUpdated().then(function (isUpdated) {
+                if (!isUpdated) {
+                    updateCache().then(deleteOldCaches);
+                }
+            });
+        }
 
         event.respondWith(
             fetch(event.request)
@@ -97,7 +109,13 @@
                     // If a request is cached, respond with that. Otherwise respond
                     // with the shell, whose subresources will be in the cache.
                     return caches.match(event.request).then(function (response) {
-                        return response || caches.match('/offline-page');
+                        if (response) {
+                            return response;
+                        } else {
+                            if (doesRequestAcceptHtml(event.request)) {
+                                return caches.match('/offline-page');
+                            }
+                        }
                     })
                 })
         );
