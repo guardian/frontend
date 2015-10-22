@@ -6,9 +6,10 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
-    'common/modules/experiments/ab',
     'common/modules/lazyload',
-    'common/modules/ui/expandable'
+    'common/modules/ui/expandable',
+    'common/modules/experiments/ab',
+    'common/modules/onward/inject-container'
 ], function (
     bonzo,
     qwery,
@@ -17,9 +18,10 @@ define([
     config,
     mediator,
     register,
-    ab,
     LazyLoad,
-    Expandable
+    Expandable,
+    ab,
+    injectContainer
 ) {
 
     var opts;
@@ -64,56 +66,66 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-
         } else if (fetchRelated) {
-            container = document.body.querySelector('.js-related');
+            if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
+                injectContainer.injectContainer('uk-alpha/news/regular-stories');
+                mediator.once('ab-briefing-loaded', function () {
+                    var $headlines = $('#headlines'),
+                        $treat = $('#headlines .treats__treat');
+                    $('#headlines .fc-container__header__title span').html('Your morning briefing');
+                    $headlines.attr('data-link-name', $headlines.attr('data-link-name') + ' morning-briefing-ab');
+                    $treat.attr('data-link-name', $treat.attr('data-link-name') + ' | morning-briefing-ab-treat');
+                });
+            } else {
+                container = document.body.querySelector('.js-related');
 
-            if (container) {
-                popularInTag = this.popularInTagOverride();
-                componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
-                register.begin(componentName);
+                if (container) {
+                    popularInTag = this.popularInTagOverride();
+                    componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
+                    register.begin(componentName);
 
-                container.setAttribute('data-component', componentName);
+                    container.setAttribute('data-component', componentName);
 
-                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
-                if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
-                        return 'exclude-tag=' + tag;
-                    }).join('&');
-                }
-
-                new LazyLoad({
-                    url: relatedUrl,
-                    container: container,
-                    success: function () {
-                        var relatedContainer = container.querySelector('.related-content');
-
-                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
-                        // upgrade images
-                        mediator.emit('modules:related:loaded', container);
-                        mediator.emit('page:new-content', container);
-                        mediator.emit('ui:images:upgradePictures', container);
-                        register.end(componentName);
-
-                        /* TODO remove after ab test*/
-                        if (ab.getTestVariantId('OnwardNames') &&
-                            ab.testCanBeRun('OnwardNames') &&
-                            ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
-                            (function () {
-                                var heading = $('.js-ab-onward-names-related');
-                                if (heading) {
-                                    heading.text(ab.getTestVariantId('OnwardNames').substr(5));
-                                }
-                            })();
-                        }
-
-                    },
-                    error: function () {
-                        bonzo(container).remove();
-                        register.error(componentName);
+                    if (opts.excludeTags && opts.excludeTags.length) {
+                        relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
+                            return 'exclude-tag=' + tag;
+                        }).join('&');
                     }
-                }).load();
+
+                    new LazyLoad({
+                        url: relatedUrl,
+                        container: container,
+                        success: function () {
+                            var relatedContainer = container.querySelector('.related-content');
+
+                            new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
+                            // upgrade images
+                            mediator.emit('modules:related:loaded', container);
+                            mediator.emit('page:new-content', container);
+                            mediator.emit('ui:images:upgradePictures', container);
+                            register.end(componentName);
+
+                            /* TODO remove after ab test*/
+                            if (ab.getTestVariantId('OnwardNames') &&
+                                ab.testCanBeRun('OnwardNames') &&
+                                ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
+                                (function () {
+                                    var heading = $('.js-ab-onward-names-related');
+                                    if (heading) {
+                                        heading.text(ab.getTestVariantId('OnwardNames').substr(5));
+                                    }
+                                })();
+                            }
+
+                        },
+                        error: function () {
+                            bonzo(container).remove();
+                            register.error(componentName);
+                        }
+                    }).load();
+                }
             }
         } else {
             $('.js-related').addClass('u-h');
