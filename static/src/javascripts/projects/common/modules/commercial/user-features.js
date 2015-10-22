@@ -24,7 +24,7 @@ define([
         if (config.commercial.showingAdfree === undefined) {
             return false;
         } else {
-            return config.commercial.showingAdfree
+            return config.commercial.showingAdfree;
         }
     }
 
