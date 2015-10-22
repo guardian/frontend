@@ -158,7 +158,7 @@ describe('Commercial features', ()=> {
 
     describe('Adfree experience policy', ()=> {
         it('enabling adfree hides some commercial content', ()=> {
-            userFeatures.isAdfree = ()=> true;
+            userFeatures.isAdfree = function () {return true};
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
 
             expect(switches.articleBodyAdverts).toBe(false);
@@ -168,7 +168,7 @@ describe('Commercial features', ()=> {
         });
 
         it('enabling adfree does not hide other commercial content', ()=> {
-            userFeatures.isAdfree = ()=> true;
+            userFeatures.isAdfree = function () {return true};
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
 
             expect(switches.dfpAdvertising).not.toBe(false);
@@ -178,7 +178,7 @@ describe('Commercial features', ()=> {
         });
 
         it('applies no changes when adfree is disabled', ()=> {
-            userFeatures.isAdfree = ()=> false;
+            userFeatures.isAdfree = function () {return false};
             const switches = commercialFeaturePolicies.getPolicySwitches().adfreeExperience;
             expect(switches).toBeUndefined();
         });
