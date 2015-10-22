@@ -8,6 +8,13 @@ define([
     _
 ) {
 
+    // Warning: side effect. This patches the bonzo module for use everywhere
+    bonzo.aug({
+        height: function () {
+            return this.dim().height;
+        }
+    });
+
     function $(selector, context) {
         return bonzo(qwery(selector, context));
     }

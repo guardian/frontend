@@ -24,3 +24,12 @@ object DynamicSlowMPU extends DynamicContainer {
       case None    => Seq(TTlMpu)
     }
 }
+
+
+object DynamicSlowMPUABTest extends DynamicContainer {
+  override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] =
+    Some(QuarterQuarterQuarterQuarter, stories.drop(4))
+
+  override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] =
+    Seq(TlTlMpu)
+}

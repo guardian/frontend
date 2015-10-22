@@ -10,7 +10,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
-    'common/modules/commercial/user-ad-preference'
+    'common/modules/commercial/user-features'
 ], function (
     fastdom,
     Promise,
@@ -23,7 +23,7 @@ define([
     ab,
     createAdSlot,
     dfp,
-    userAdPreference
+    userFeatures
 ) {
     return function (options) {
         var adType,
@@ -47,7 +47,7 @@ define([
             !config.switches.discussion ||
             !identityApi.isUserLoggedIn() ||
             (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) || /* Sensitive pages */
-            userAdPreference.hideAds ||
+            userFeatures.isAdfree() ||
             (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
             !config.page.commentable) {
             return false;
