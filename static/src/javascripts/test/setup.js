@@ -12,7 +12,7 @@ window.guardian = {
 // Omniture variables expected on the page
 
 /*eslint-disable camelcase*/
-window.s_account = 'guardiangu-frontend,guardiangu-network';
+window.s_account = 'guardiangu-network';
 /*eslint-enable camelcase*/
 
 /*eslint-disable no-unused-vars*/

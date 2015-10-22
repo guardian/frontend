@@ -1,8 +1,10 @@
 @()
 @import conf.switches.Switches._
 
+/**
+ * Choose how the browser should render the page before any painting begins.
+ */
 (function (documentElement, window, navigator) {
-    // feature detection
     var docClass = documentElement.className;
 
     function cssToDOM(name) {
@@ -76,6 +78,13 @@
         if (window.location.hash !== '#no-kern') {docClass += ' should-kern'}
     } else {
         if (window.location.hash === '#kern') {docClass += ' should-kern'}
+    }
+
+    @if(AdFreeExperience.isSwitchedOn) {
+        var adfreeClass = @JavaScript(templates.headerInlineJS.js.applyAdfreeRenderCondition().body);
+        if (adfreeClass) {
+            docClass += ' ' + adfreeClass;
+        }
     }
 
     // MINIMISE DOM THRASHING…

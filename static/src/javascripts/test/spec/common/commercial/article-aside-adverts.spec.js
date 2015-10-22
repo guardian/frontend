@@ -31,7 +31,7 @@ describe('Article Aside Adverts', function () {
             commercialFeatures = arguments[1];
 
             // Reset dependencies
-            commercialFeatures.articleMPUs = true;
+            commercialFeatures.articleAsideAdverts = true;
 
             done();
         });
@@ -82,7 +82,7 @@ describe('Article Aside Adverts', function () {
     });
 
     it('should not display ad slot if disabled in commercial-feature-switches', function () {
-        commercialFeatures.articleMPUs = false;
+        commercialFeatures.articleAsideAdverts = false;
 
         expect(articleAsideAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);

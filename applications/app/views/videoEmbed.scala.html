@@ -1,7 +1,7 @@
 @(page: EmbedPage)(implicit request: RequestHeader)
 
 @import model.{Video, VideoPlayer}
-@import views.support.{Video640}
+@import views.support.Video640
 @import conf.Static
 @import conf.Configuration
 
@@ -121,7 +121,7 @@
                     var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
 
                     @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
-                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-frontend,guardiangu-network' : 'guardiangu-thirdpartyapps';
+                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
 
                     window.s_account = sAccount;
 

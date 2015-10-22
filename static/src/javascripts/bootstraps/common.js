@@ -25,6 +25,7 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
+    'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
@@ -41,6 +42,7 @@ define([
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/message',
+    'common/modules/ui/cookiesBanner',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
@@ -77,6 +79,7 @@ define([
     simpleMetrics,
     userAdTargeting,
     donotUseAdblock,
+    userFeatures,
     CommentCount,
     ab,
     AutoSignin,
@@ -93,6 +96,7 @@ define([
     Dropdowns,
     fauxBlockLink,
     Message,
+    cookiesBanner,
     RelativeDates,
     smartAppBanner,
     Tabs,
@@ -370,6 +374,7 @@ define([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
+                ['c-cookies-banner', cookiesBanner.init],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
@@ -408,7 +413,8 @@ define([
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
-                ['c-show-membership-messages', modules.showMembershipMessages]
+                ['c-show-membership-messages', modules.showMembershipMessages],
+                ['c-user-features', userFeatures.refresh]
             ]), function (fn) {
                 fn();
             });

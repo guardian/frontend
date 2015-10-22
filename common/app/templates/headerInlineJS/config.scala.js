@@ -50,6 +50,9 @@ window.guardian = {
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
                 }
             }
+        },
+        "commercial": {
+            "showingAdfree" : undefined
         }
     }}
 };

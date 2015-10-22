@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "offline-page",
     "Offline page",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 16),
+    sellByDate = new LocalDate(2015, 11, 26),
     exposeClientSide = true
   )
 
@@ -31,15 +31,6 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = false
-  )
-
-  val NotificationsSwitch = Switch(
-    "Feature",
-    "notifications",
-    "Notifications",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 15),
-    exposeClientSide = true
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(

@@ -16,7 +16,7 @@
     </appender>
 
     <!-- DFP API logging -->
-    <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="WARN"/>
+    <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="OFF"/>
     <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
 
     <root level="INFO">
