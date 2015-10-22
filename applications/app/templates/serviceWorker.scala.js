@@ -84,18 +84,24 @@
             .some(function (type) { return type === 'text/html'; });
     };
 
+    var isCacheUpdated = function () {
+        return caches.keys().then(function (keys) {
+            return keys.some(keyMatchesTodaysCache);
+        });
+    };
+
     self.addEventListener('install', function (event) {
         event.waitUntil(updateCache());
     });
 
     this.addEventListener('fetch', function (event) {
-        caches.keys().then(function (keys) {
-            var isUpdated = keys.some(keyMatchesTodaysCache);
-
-            if (!isUpdated) {
-                updateCache().then(deleteOldCaches);
-            }
-        });
+        if (doesRequestAcceptHtml(event.request)) {
+            isCacheUpdated().then(function (isUpdated) {
+                if (!isUpdated) {
+                    updateCache().then(deleteOldCaches);
+                }
+            });
+        }
 
         event.respondWith(
             fetch(event.request)
