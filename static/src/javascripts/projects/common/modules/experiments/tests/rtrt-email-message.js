@@ -41,7 +41,7 @@ define([
                 if (kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) {
                     new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
                     // We nee the omniture library
-                    require('common/modules/analytics/omniture', function(omniture){
+                    require('common/modules/analytics/omniture', function (omniture) {
                         omniture.trackLinkImmediate('rtrt | message | email sign-up | message for segment ' + kruxSegmentId + ' shown');
                     });
                 } else if (!kruxSegmentId) {
