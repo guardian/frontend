@@ -307,7 +307,7 @@ GET            /commercial/magento/books                                        
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
-GET            /offline-page                                                                                                     controllers.WebAppController.offlinePage()
+GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
@@ -328,6 +328,7 @@ GET         /rss                                                                
 GET         /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>              controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /*path/deduped.json                                                                                      controllers.DedupedController.getDedupedForPath(path)
+GET         /container/use-layout/*id.json                                                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 GET         /most-relevant-container/*path.json                                                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 

@@ -38,7 +38,7 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        if (ab.getParticipations().MostPopAsFaciaCards && ab.getParticipations().MostPopAsFaciaCards.variant === 'variant') {
+        if (ab.getParticipations().MostPopAsFaciaCards && ab.getParticipations().MostPopAsFaciaCards.variant === 'variant' && ab.testCanBeRun('MostPopAsFaciaCards')) {
             var $mostPopFooter = $('.js-most-popular-footer');
             $mostPopFooter.html('');
             this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');

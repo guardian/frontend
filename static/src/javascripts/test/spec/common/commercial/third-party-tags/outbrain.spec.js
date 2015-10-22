@@ -36,7 +36,8 @@ describe('Outbrain', function () {
                 section: 'uk-news',
                 isPreview: false,
                 isFront: false,
-                commentable: true
+                commentable: true,
+                edition: 'UK'
             };
             identity.isUserLoggedIn = function () {
                 return false;
@@ -152,10 +153,19 @@ describe('Outbrain', function () {
             not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
             make the call instantly when we detect adBlock in use.
          */
-        it('should load when ad block is in use', () => {
+        it('should load instantly when ad block is in use', () => {
             spyOn(sut, 'load');
 
             detect.adblockInUse = () => true;
+
+            sut.init();
+            expect(sut.load).toHaveBeenCalled();
+        });
+
+        it('should load instantly when international edition', () => {
+            spyOn(sut, 'load');
+
+            config.page.edition = 'INT';
 
             sut.init();
             expect(sut.load).toHaveBeenCalled();
