@@ -118,7 +118,10 @@ define([
 
             if (config.switches.offlinePage) {
                 // Will fail on non-{HTTPS,localhost} pages
-                navigator.serviceWorker.register('/service-worker.js');
+                var navigator = window.navigator;
+                if (navigator && navigator.serviceWorker) {
+                    navigator.serviceWorker.register('/service-worker.js');
+                }
 
                 if (config.page.pageId === 'offline-page') {
                     var $button = $('.js-open-crossword-btn');
