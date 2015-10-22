@@ -39,7 +39,7 @@ trait ImageContainer extends Element {
   lazy val masterImage: Option[ImageAsset] = allImages.find(_.isMaster)
 
   // The image crop with the largest width.
-  lazy val largestImage: Option[ImageAsset] = masterImage.orElse(imageCrops.headOption)
+  lazy val largestImage: Option[ImageAsset] = masterImage.orElse(imageCrops.sortBy(-_.width).headOption)
 
   // all landscape images get 4:3 aspect autocrops generated at widths of 1024 and 2048. portrait images are never
   // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly

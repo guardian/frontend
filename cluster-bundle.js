@@ -43,7 +43,7 @@ var bundleConfigs = [
     ['bootstraps/admin - core', 'admin'],
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
     // ['bootstraps/admin', 'admin'],
-    ['bootstraps/video-player - core', 'video-player'],
+    ['bootstraps/media - core', 'media'],
     ['bootstraps/video-embed - core', 'video-embed'],
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
     // ['bootstraps/video-embed', 'video-embed'],
@@ -53,6 +53,12 @@ var bundleConfigs = [
 ];
 
 var processedBundles = {};
+
+var bundleOptions = {
+    minify: true,
+    sourceMaps: true,
+    sourceMapContents: true
+};
 
 // from http://stackoverflow.com/questions/8188548/splitting-a-js-array-into-n-arrays
 function split(a, n) {
@@ -69,12 +75,6 @@ var getHash = function (outputSource) {
         .update(outputSource)
         .digest('hex');
 };
-
-builder.config({
-    minify: true,
-    sourceMaps: true,
-    sourceMapContents: true
-});
 
 function processBuild(moduleExpression, outName) {
     return function (bundle) {
@@ -200,7 +200,7 @@ if (cluster.isMaster) {
             var moduleExpression = config[0];
             var outName = config[1];
 
-            return builder.bundle(moduleExpression, null)
+            return builder.bundle(moduleExpression, null, bundleOptions)
                 .then(processBuild(moduleExpression, outName))
                 .then(function (bundle) {
                     return makeDirectory(path.dirname(path.join(prefixPath, bundle.uri)))

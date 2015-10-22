@@ -4,7 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/commercial/user-adblock-message',
+    'common/modules/commercial/user-features',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
@@ -16,7 +16,7 @@ define([
     detect,
     storage,
     template,
-    userAdblockMessage,
+    userFeatures,
     Message,
     ab,
     navigation,
@@ -24,8 +24,8 @@ define([
     svgs
 ) {
     function init() {
-        var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com/',
+        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0,
+            adblockLink = 'https://membership.theguardian.com/supporter',
             message = _.sample([
                 {
                     id: 'monthly',
@@ -49,13 +49,13 @@ define([
                 }
             ]);
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted > 1 && !userAdblockMessage.isUserMember) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1 && !userFeatures.isPayingMember()) {
             new Message('adblock-message', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant ' + message.id,
                 siteMessageCloseBtn: 'hide'
             }).show(template(messageTemplate, {
-                supporterLink: adblockLink + '?INTCMP=adb-mv-' + message.id,
+                linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
                 messageText: message.messageText,
                 linkText: message.linkText,
                 arrowWhiteRight: svgs('arrowWhiteRight')

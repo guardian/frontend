@@ -10,6 +10,9 @@ import scala.concurrent.Future
 
 object MetaDataMatcher extends Matchers  {
 
+  lazy val appId = "409128287"
+  val iosDomain = "ios-app://"
+
   def ensureOrganisation(result: Future[Result]) {
     status(result) should be(200)
     val stringResult = contentAsString(result)
@@ -38,6 +41,28 @@ object MetaDataMatcher extends Matchers  {
 
     (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
 
+  }
+
+  def ensureDeepLink(result: Future[Result]) {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+    val script = body.getElementsByAttributeValueStarting("href", iosDomain)
+    script.size() should be(1)
+  }
+
+  def ensureNoDeepLink(result: Future[Result]) {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+    val script = body.getElementsByAttributeValueStarting("href", iosDomain)
+    script.size() should be(0)
+  }
+
+  def ensureNoIosUrl(result: Future[Result]): Unit = {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+
+    val script = body.getElementsByAttributeValue("property", "ad:ios:url")
+    script.size() should be(0)
   }
 
 }

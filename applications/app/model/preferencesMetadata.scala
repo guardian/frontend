@@ -13,15 +13,3 @@ class PreferencesMetaData extends MetaData {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("isPreferencesPage" -> JsBoolean(true))
 }
-
-class NotificationPreferencesMetaData extends MetaData {
-  override def id: String = "preferences/notifications"
-
-  override def section: String = "Index"
-
-  override def analyticsName: String = "Notification Preferences"
-
-  override def webTitle: String = "Notification Preferences"
-
-  override lazy val metaData: Map[String, JsValue] = super.metaData + ("isPreferencesPage" -> JsBoolean(true))
-}

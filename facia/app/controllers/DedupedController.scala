@@ -1,7 +1,7 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
-import controllers.front.{FrontJsonFapiLive, FrontJsonFapi}
+import common.{Edition, ExecutionContexts, Logging}
+import controllers.front.{FrontJsonFapi, FrontJsonFapiLive}
 import layout.Front
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -13,7 +13,8 @@ trait DedupedController extends Controller with Logging with ExecutionContexts {
   def getDedupedForPath(path: String) = Action.async { request =>
     frontJsonFapi.get(path).map {
       case Some(pressedFront) =>
-        val ((_, _, dedupedFrontResult), _) = Front.fromPressedPageWithDeduped(pressedFront)
+        val ((_, _, dedupedFrontResult), _) =
+          Front.fromPressedPageWithDeduped(pressedFront, Edition(request))
         Ok(Json.toJson(dedupedFrontResult))
       case None => NotFound
     }

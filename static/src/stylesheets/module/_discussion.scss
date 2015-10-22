@@ -684,9 +684,10 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-show-more-replies__button.button--show-more {
     padding-left: $gs-baseline * 2;
-    .i {
-        height: $gs-baseline * 1.5;
-        width: $gs-baseline * 1.5;
+    svg {
+        fill: colour(guardian-brand);
+        height: 16px;
+        width: 16px;
         left: 4px;
     }
 }
@@ -852,14 +853,6 @@ $comment-recommend-button-size: 19px;
     .inline-reply svg {
         vertical-align: middle;
     }
-}
-
-.d-comment__reply-icon {
-    @include icon-button(reply-white, 18px);
-    margin-right: 1px;
-    display: inline-block;
-    background-color: colour(news-default);
-    vertical-align: top;
 }
 
 .d-comment__action--report {

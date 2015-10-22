@@ -70,6 +70,10 @@ class Crossword extends React.Component {
         const $game = $(React.findDOMNode(this.refs.game));
         const isIOS = detect.isIOS();
 
+        mediator.on('window:resize', _.debounce(this.setGridHeight.bind(this), 200));
+        mediator.on('window:orientationchange', _.debounce(this.setGridHeight.bind(this), 200));
+        this.setGridHeight();
+
         mediator.on('window:throttledScroll', () => {
             const gridOffset = $grid.offset();
             const gameOffset = $game.offset();
@@ -114,6 +118,28 @@ class Crossword extends React.Component {
         }
     }
 
+    setGridHeight() {
+
+        if (!this.$gridWrapper) {
+            this.$gridWrapper = $(React.findDOMNode(this.refs.gridWrapper));
+        }
+
+        if (detect.isBreakpoint({ max: 'tablet' })) {
+            fastdom.read(() => {
+                // Our grid is a square, set the height of the grid wrapper
+                // to the width of the grid wrapper
+                fastdom.write(() => {
+                    this.$gridWrapper.css('height', this.$gridWrapper.offset().width + 'px');
+                });
+                this.gridHeightIsSet = true;
+            });
+        } else if (this.gridHeightIsSet) {
+            // Remove inline style if tablet and wider
+            this.$gridWrapper.attr('style', '');
+        }
+
+    }
+
     setCellValue (x, y, value) {
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
@@ -155,12 +181,12 @@ class Crossword extends React.Component {
                 this.focusNextClue();
             }
         } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
-            if (event.keyCode === keycodes.backspace) {
+            if (event.keyCode === keycodes.backspace || event.keyCode === keycodes.delete) {
                 event.preventDefault();
                 if (this.cellIsEmpty(cell.x, cell.y)) {
                     this.focusPrevious();
                 } else {
-                    this.setCellValue(cell.x, cell.y, null);
+                    this.setCellValue(cell.x, cell.y, '');
                     this.save();
                 }
             } else if (event.keyCode === keycodes.left) {
@@ -359,7 +385,7 @@ class Crossword extends React.Component {
             });
 
             // Side effect
-            window.location.hash = clue.id;
+            history.replaceState(undefined, undefined, '#' + clue.id);
         }
     }
 
@@ -570,7 +596,7 @@ class Crossword extends React.Component {
         );
 
         return (
-            <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
+            <div className={`crossword__container crossword__container--${this.props.data.crosswordType} crossword__container--react`}>
                 <div className='crossword__container__game' ref='game'>
                     <div className='crossword__sticky-clue-wrapper' ref='stickyClueWrapper'>
                         <div
@@ -588,7 +614,7 @@ class Crossword extends React.Component {
                             )}
                         </div>
                     </div>
-                    <div className='crossword__container__grid-wrapper'>
+                    <div className='crossword__container__grid-wrapper' ref='gridWrapper'>
                         <Grid
                             rows={this.rows}
                             columns={this.columns}
@@ -627,6 +653,7 @@ class Crossword extends React.Component {
                 />
                 <Clues
                     clues={this.cluesData()}
+                    focussed={focussed}
                     focusClue={this.focusClue}
                     setReturnPosition={this.setReturnPosition}
                 />
@@ -647,8 +674,8 @@ export default function () {
                 crosswordComponent.focusFirstCellInClue(entry);
             }
 
-            window.addEventListener('hashchange', hashEvent => {
-                const idMatch = hashEvent.newURL.match(/#.*/);
+            bean.on(element, 'click', $('.crossword__clue'), (e) => {
+                const idMatch = e.currentTarget.hash.match(/#.*/);
                 const newEntryId = idMatch && idMatch[0].replace('#', '');
 
                 const newEntry = _.find(crosswordComponent.props.data.entries, { id: newEntryId });
@@ -661,7 +688,10 @@ export default function () {
                 if (newEntry && (focussedEntry ? isNewEntry : true)) {
                     crosswordComponent.focusFirstCellInClue(newEntry);
                 }
+
+                e.preventDefault();
             });
+
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }

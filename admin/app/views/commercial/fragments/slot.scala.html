@@ -9,7 +9,7 @@
         <div class="large sub-line-item">@{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>)</div>
         <div class="sub-line-item">Sizes: @for(size <- lineItem.creativeSizes){@{size.width}x@{size.height} }</div>
         <div class="sub-line-item">Starts: @printUniversalTime(lineItem.startTime)</div>
-        <div>Ends: @printUniversalTime(lineItem.endTime.get)</div>
+        <div>@for(endTime <- lineItem.endTime) {Ends: @printUniversalTime(endTime)}</div>
         @if(lineItem.targeting.adUnits.nonEmpty) {
             @if(lineItem.targeting.adUnits.size == 1) {
                 <div class="sub-line-item">Ad Unit: @{lineItem.targeting.adUnits.map(_.path.mkString("/"))}</div>

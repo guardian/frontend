@@ -88,10 +88,9 @@ define([
             // Ophan
             require(['ophan/ng'], function (ophan) {
                 ophan.record({
-                    ads: [{
-                        slot: 'outbrain',
+                    outbrain: {
                         widgetId: widgetCode
-                    }]
+                    }
                 });
             });
         },
@@ -101,17 +100,29 @@ define([
                 || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
         },
 
+        identityPolicy: function () {
+            return (!identity.isUserLoggedIn() || !(identity.isUserLoggedIn() && config.page.commentable));
+        },
+
+        hasHighRelevanceComponent: function () {
+            return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
+        },
+
         init: function () {
             if (config.switches.outbrain
                 && !config.page.isFront
                 && !config.page.isPreview
-                && !identity.isUserLoggedIn()
+                && this.identityPolicy()
                 && config.page.section !== 'childrens-books-site') {
-                mediator.on('modules:commercial:dfp:rendered', function (event) {
-                    if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
-                        this.load();
-                    }
-                }.bind(this));
+                if (this.hasHighRelevanceComponent()) {
+                    this.load();
+                } else {
+                    mediator.on('modules:commercial:dfp:rendered', function (event) {
+                        if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+                            this.load();
+                        }
+                    }.bind(this));
+                }
             }
         }
     };

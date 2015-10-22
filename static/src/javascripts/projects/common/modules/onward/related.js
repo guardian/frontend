@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
+    'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/expandable'
 ], function (
@@ -16,6 +17,7 @@ define([
     config,
     mediator,
     register,
+    ab,
     LazyLoad,
     Expandable
 ) {
@@ -93,6 +95,19 @@ define([
                         mediator.emit('page:new-content', container);
                         mediator.emit('ui:images:upgradePictures', container);
                         register.end(componentName);
+
+                        /* TODO remove after ab test*/
+                        if (ab.getTestVariantId('OnwardNames') &&
+                            ab.testCanBeRun('OnwardNames') &&
+                            ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
+                            (function () {
+                                var heading = $('.js-ab-onward-names-related');
+                                if (heading) {
+                                    heading.text(ab.getTestVariantId('OnwardNames').substr(5));
+                                }
+                            })();
+                        }
+
                     },
                     error: function () {
                         bonzo(container).remove();
