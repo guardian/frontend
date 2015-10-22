@@ -78,6 +78,12 @@
         return new RegExp('^' + getISODate() + '-').test(key);
     };
 
+    var doesRequestAcceptHtml = function (request) {
+        return request.headers.get('Accept')
+            .split(',')
+            .some(function (type) { return type === 'text/html'; });
+    };
+
     self.addEventListener('install', function (event) {
         event.waitUntil(updateCache());
     });
@@ -97,7 +103,13 @@
                     // If a request is cached, respond with that. Otherwise respond
                     // with the shell, whose subresources will be in the cache.
                     return caches.match(event.request).then(function (response) {
-                        return response || caches.match('/offline-page');
+                        if (response) {
+                            return response;
+                        } else {
+                            if (doesRequestAcceptHtml(event.request)) {
+                                return caches.match('/offline-page');
+                            }
+                        }
                     })
                 })
         );
