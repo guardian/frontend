@@ -21,7 +21,11 @@ define([
     function isAdfree() {
         // Defer to the value set by the preflight scripts
         // They need to determine how the page will appear before it starts rendering
-        return config.commercial ? config.commercial.showingAdfree : false;
+        if (config.commercial.showingAdfree === undefined) {
+            return false;
+        } else {
+            return config.commercial.showingAdfree
+        }
     }
 
     function refresh() {
