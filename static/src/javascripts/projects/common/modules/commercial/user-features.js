@@ -21,7 +21,9 @@ define([
     function isAdfree() {
         // Defer to the value set by the preflight scripts
         // They need to determine how the page will appear before it starts rendering
-        if (config.commercial.showingAdfree === undefined) {
+
+        // This field might not be added if the feature switch is off
+        if (config.commercial === undefined || config.commercial.showingAdfree === undefined) {
             return false;
         } else {
             return config.commercial.showingAdfree;
