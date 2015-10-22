@@ -41,10 +41,10 @@ define([
     }
 
     function isPayingMember() {
-        if (cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== undefined && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false') {
-            return cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) && !featuresDataIsOld();
+        if (cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) === null) {
+            return true;
         } else {
-            return false;
+            return !featuresDataIsOld() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) === 'true';
         }
     }
 
