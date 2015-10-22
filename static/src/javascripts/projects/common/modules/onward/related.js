@@ -68,7 +68,7 @@ define([
             }).init();
 
         } else if (fetchRelated) {
-            if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant') {
+            if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
                 console.log(injectContainer);
                 injectContainer.injectContainer('uk-alpha/news/regular-stories');
                 mediator.once('ab-briefing-loaded', function() {
