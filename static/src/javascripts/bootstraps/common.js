@@ -234,18 +234,19 @@ define([
             // However, this means it's VITAL that all writes in callbacks are delegated to fastdom
             throttledScrollEvent: function () {
                 var running = false;
-                window.addEventListener('scroll', function () {
+                var emit = function () {
                     if (!running) {
                         running = true;
-                        // Use fastdom to avoid forced synchronous layout:
-                        // https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts
-                        // *Fastdom guarantees that reads will come before writes*
                         fastdom.read(function () {
                             mediator.emitEvent('window:throttledScroll');
                             running = false;
                         });
                     }
-                });
+                };
+                callback = 'requestIdleCallback' in window ? function() {
+                    requestIdleCallback(emit);
+                } : emit;
+                window.addEventListener('scroll', callback);
             },
 
             checkIframe: function () {
