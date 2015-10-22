@@ -69,10 +69,11 @@ define([
 
         } else if (fetchRelated) {
             if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
-                console.log(injectContainer);
                 injectContainer.injectContainer('uk-alpha/news/regular-stories');
                 mediator.once('ab-briefing-loaded', function() {
+                    var $headlines = $('#headlines');
                     $('#headlines .fc-container__header__title span').html('Your morning briefing');
+                    $headlines.attr('data-link-name', $headlines.attr('data-link-name') + ' morning-briefing-ab');
                 });
             } else {
                 container = document.body.querySelector('.js-related');

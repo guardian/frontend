@@ -1,7 +1,3 @@
-/*
- Module: history-containers.js
- Description: Inject personalised containers based on reading history
- */
 define([
     'fastdom',
     'common/utils/$',
