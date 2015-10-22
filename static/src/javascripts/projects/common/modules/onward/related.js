@@ -66,7 +66,6 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-
         } else if (fetchRelated) {
             if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
                 injectContainer.injectContainer('uk-alpha/news/regular-stories');
@@ -99,31 +98,32 @@ define([
                         success: function () {
                             var relatedContainer = container.querySelector('.related-content');
 
-                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
-                        // upgrade images
-                        mediator.emit('modules:related:loaded', container);
-                        mediator.emit('page:new-content', container);
-                        mediator.emit('ui:images:upgradePictures', container);
-                        register.end(componentName);
+                            new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
+                            // upgrade images
+                            mediator.emit('modules:related:loaded', container);
+                            mediator.emit('page:new-content', container);
+                            mediator.emit('ui:images:upgradePictures', container);
+                            register.end(componentName);
 
-                        /* TODO remove after ab test*/
-                        if (ab.getTestVariantId('OnwardNames') &&
-                            ab.testCanBeRun('OnwardNames') &&
-                            ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
-                            (function () {
-                                var heading = $('.js-ab-onward-names-related');
-                                if (heading) {
-                                    heading.text(ab.getTestVariantId('OnwardNames').substr(5));
-                                }
-                            })();
+                            /* TODO remove after ab test*/
+                            if (ab.getTestVariantId('OnwardNames') &&
+                                ab.testCanBeRun('OnwardNames') &&
+                                ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
+                                (function () {
+                                    var heading = $('.js-ab-onward-names-related');
+                                    if (heading) {
+                                        heading.text(ab.getTestVariantId('OnwardNames').substr(5));
+                                    }
+                                })();
+                            }
+
+                        },
+                        error: function () {
+                            bonzo(container).remove();
+                            register.error(componentName);
                         }
-
-                    },
-                    error: function () {
-                        bonzo(container).remove();
-                        register.error(componentName);
-                    }
-                }).load();
+                    }).load();
+                }
             }
         } else {
             $('.js-related').addClass('u-h');
