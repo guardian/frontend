@@ -106,7 +106,8 @@ object ContainerCommercialOptions {
     DfpAgent.isAdvertisementFeature(config),
     DfpAgent.isFoundationSupported(config),
     DfpAgent.sponsorshipTag(config),
-    DfpAgent.sponsorshipType(config)
+    DfpAgent.sponsorshipType(config),
+    omitMPU = false
   )
 
   val empty = ContainerCommercialOptions(
@@ -114,7 +115,8 @@ object ContainerCommercialOptions {
     isAdvertisementFeature = false,
     isFoundationSupported = false,
     sponsorshipTag = None,
-    sponsorshipType = None
+    sponsorshipType = None,
+    omitMPU = false
   )
 
   def mostPopular(omitMPU: Boolean) = empty.copy(omitMPU = omitMPU)
@@ -126,7 +128,7 @@ case class ContainerCommercialOptions(
   isFoundationSupported: Boolean,
   sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String],
-  omitMPU: Boolean = false
+  omitMPU: Boolean
 ) {
   val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
 }
