@@ -20,7 +20,7 @@ define([
             return window.guardian.config.page.contentType === 'Article' &&
                    window.guardian.config.page.edition === 'UK' &&
                    d.getHours() >= 6 && d.getHours() < 11 &&
-                   ['uk-news','politics','world'].indexOf(window.guardian.config.page.section) > -1;
+                   ['uk-news', 'politics', 'world'].indexOf(window.guardian.config.page.section) > -1;
         };
 
         this.variants = [
