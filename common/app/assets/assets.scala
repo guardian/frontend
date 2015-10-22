@@ -28,7 +28,7 @@ class AssetMap(base: String, assetMap: String) {
     }
   }
 
-  private def assets(): Map[String, Asset] = {
+  def assets(): Map[String, Asset] = {
 
     // Use the grunt-generated asset map in Dev.
     val json: String = if (Play.current.mode == Mode.Dev) {
@@ -38,9 +38,10 @@ class AssetMap(base: String, assetMap: String) {
       val url = AssetFinder(assetMap)
       IOUtils.toString(url)
     }
-    val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
-
-    val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
+    val paths: Map[String, String] = Json.parse(json).validate[Map[String, String]] match {
+      case JsSuccess(m, _) => m
+      case JsError(_) => Map.empty
+    }
 
     paths mapValues { path => Asset(base + path) }
   }
@@ -48,8 +49,8 @@ class AssetMap(base: String, assetMap: String) {
   private lazy val memoizedAssets = assets()
 }
 
-class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMap)
+class Assets(base: String, assetMapPath: String = "assets/assets.map") extends Logging {
+  val lookup = new AssetMap(base, assetMapPath)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
@@ -157,15 +158,12 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
     lazy val setupFragment: String = templates.js.systemJsSetup().body
 
-    private val jspmAssetMap: Map[String, String] =
-      Json.parse(contents("assets/jspm-assets.map")).validate[Map[String, String]] match {
-        case JsSuccess(m, _) => m
-        case JsError(_) => Map.empty
-      }
+    private val jspmAssetMap: Map[String, Asset] =
+      new AssetMap(base, "assets/jspm-assets.map").assets()
 
     private val bundleConfigMap: Map[String, List[String]] =
       jspmAssetMap.map { case (source, destination) =>
-        (destination.replaceFirst(".js$", ""), List(source.replaceFirst("^javascripts/", "").replaceFirst(".js$", "")))
+        (destination.asModulePath, List(source.replaceFirst("^javascripts/", "").replaceFirst(".js$", "")))
       }
 
     val bundleConfig: String = Json.toJson(bundleConfigMap).toString()
