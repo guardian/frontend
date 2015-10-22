@@ -63,7 +63,7 @@ define([
         this.idealOutcome = 'Users who are more loyal will sign up to email';
 
         this.canRun = function () {
-            return window.location.pathName !== '/world/2013/oct/04/1'
+            return window.location.pathname !== '/world/2013/oct/04/1'
                     && !Id.isUserLoggedIn(); // Only show to non-logged-in users, as testing email sign-up
         };
 
