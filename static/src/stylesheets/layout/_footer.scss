@@ -160,11 +160,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 }
 
-.footer__follow-us__title {
-    @include fs-header(3);
-    color: colour(neutral-7);
-}
-
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * 1.5;
