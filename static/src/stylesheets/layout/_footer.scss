@@ -144,7 +144,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     .button {
-        width: 32px;
+        border-color: colour(neutral-2);
+
+        &:hover {
+            border-color: colour(neutral-4);
+        }
 
         @include mq(tablet) {
             display: block;
