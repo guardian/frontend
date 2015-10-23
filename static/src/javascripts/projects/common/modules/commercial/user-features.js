@@ -58,15 +58,15 @@ define([
     }
 
     function hasAllFeaturesData() {
-        return  cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) &&
-                cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) &&
-                cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+        return cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) &&
+            cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) &&
+            cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
 
     function hasAnyFeaturesData() {
-        return  cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) ||
-                cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) ||
-                cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+        return cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) ||
+            cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) ||
+            cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
 
     function featuresDataIsOld() {
