@@ -78,15 +78,19 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     &,
     a {
         color: colour(neutral-4);
-        text-transform: lowercase;
     }
 }
+
 .colophon {
+    padding-top: $gs-baseline * 2;
+    padding-bottom: $gs-baseline * .5;
+}
+
+.colophon__list {
     @include fs-bodyHeading(1);
     list-style: none;
     margin: 0;
-    padding-top: $gs-baseline * 2;
-    padding-bottom: $gs-baseline * .5;
+
     @include mq($until: tablet) {
         @include columns(2);
     }
@@ -102,11 +106,63 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     a {
         display: inline-block;
         padding-bottom: $gs-baseline;
+        text-transform: lowercase;
     }
-
 }
+
 .colophon__item {
     box-sizing: border-box;
+}
+
+.footer__follow-us {
+    margin-bottom: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    border-bottom: 1px solid colour(neutral-2);
+
+    @include mq(tablet) {
+        float: left;
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    @include mq(tablet, desktop) {
+        width: 33%;
+    }
+
+    @include mq(desktop, wide) {
+        width: 25%;
+    }
+
+    @include mq(wide) {
+        width: 20%;
+    }
+
+    .button {
+        font-size: .875rem;
+        width: 32px;
+
+        @include mq(tablet) {
+            display: block;
+            margin-bottom: $gs-baseline;
+            width: 70%;
+            max-width: $gs-gutter * 9;
+        }
+    }
+}
+
+.footer__follow-us__item {
+    display: none;
+    text-transform: lowercase;
+
+    @include mq(tablet) {
+        display: inline;
+    }
+}
+
+.footer__follow-us__title {
+    @include fs-header(3);
+    color: colour(neutral-7);
 }
 
 .l-footer__misc {
