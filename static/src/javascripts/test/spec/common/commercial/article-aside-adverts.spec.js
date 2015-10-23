@@ -6,6 +6,7 @@ import Injector from 'helpers/injector';
 
 var articleAsideAdverts,
     commercialFeatures,
+    config,
     injector = new Injector();
 
 describe('Article Aside Adverts', function () {
@@ -25,10 +26,16 @@ describe('Article Aside Adverts', function () {
 
         injector.test([
             'common/modules/commercial/article-aside-adverts',
-            'common/modules/commercial/commercial-features'
+            'common/modules/commercial/commercial-features',
+            'common/utils/config'
         ], function () {
             articleAsideAdverts = arguments[0];
             commercialFeatures = arguments[1];
+            config = arguments[2];
+
+            config.hasTone = function () {
+                return false;
+            }
 
             // Reset dependencies
             commercialFeatures.articleAsideAdverts = true;
@@ -83,6 +90,15 @@ describe('Article Aside Adverts', function () {
 
     it('should not display ad slot if disabled in commercial-feature-switches', function () {
         commercialFeatures.articleAsideAdverts = false;
+
+        expect(articleAsideAdverts.init()).toBe(false);
+        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+    });
+
+    it('should not display ad slot on Match Reports page', function () {
+        config.hasTone = function () {
+            return true;
+        }
 
         expect(articleAsideAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
