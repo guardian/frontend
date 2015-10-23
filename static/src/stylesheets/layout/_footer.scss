@@ -159,12 +159,8 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 }
 
 .footer__follow-us__item {
-    display: none;
+    display: inline;
     text-transform: lowercase;
-
-    @include mq(tablet) {
-        display: inline;
-    }
 }
 
 .l-footer__misc {
