@@ -11,19 +11,19 @@
         <style>
             @content.mainPicture.map { picture => 
                 .content__head--mobile {
-                    background-image: url('@ImgSrc.findNearestSrc(picture, Profile(width = Some(500)))');
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
                 }
                 @@media (min-width: @{layout.Phablet.minWidth}px) {
                     .content__head--mobile {
-                        background-image: url('@ImgSrc.findNearestSrc(picture, Profile(width = Some(700)))');
+                        background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
                     }
                 }
                 .content__head--desktop {
-                    background-image: url('@ImgSrc.findNearestSrc(picture, Profile(width = Some(1200)))');
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
                 }
                 @@media (min-width: @{layout.Wide.minWidth}px) {
                     .content__head--desktop {
-                        background-image: url('@ImgSrc.findNearestSrc(picture, Profile(width = Some(2000)))');
+                        background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
                     }
                 }
                 
