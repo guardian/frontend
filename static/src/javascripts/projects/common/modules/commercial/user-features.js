@@ -41,11 +41,8 @@ define([
     }
 
     function isPayingMember() {
-        if (cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) === null) {
-            return true;
-        } else {
-            return !featuresDataIsOld() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) === 'true';
-        }
+        // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
+        return identity.isUserLoggedIn() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false';
     }
 
     function featureEnabled() {
@@ -53,15 +50,23 @@ define([
     }
 
     function needNewFeatureData() {
-        return !hasFeaturesData() || featuresDataIsOld();
+        return !hasAllFeaturesData() || featuresDataIsOld();
     }
 
     function haveDataAfterSignout() {
-        return (!identity.isUserLoggedIn() && hasFeaturesData());
+        return (!identity.isUserLoggedIn() && hasAnyFeaturesData());
     }
 
-    function hasFeaturesData() {
-        return cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) && cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+    function hasAllFeaturesData() {
+        return  cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) &&
+                cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) &&
+                cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+    }
+
+    function hasAnyFeaturesData() {
+        return  cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) ||
+                cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) ||
+                cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
 
     function featuresDataIsOld() {
