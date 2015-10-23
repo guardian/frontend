@@ -1,3 +1,4 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
     'common/utils/_',
     'common/utils/ajax-promise',
@@ -13,7 +14,18 @@ define([
     storage,
     identity
 ) {
-    var PERSISTENCE_KEYS = {
+    var userFeatures, PERSISTENCE_KEYS;
+
+    userFeatures = {
+        refresh : refresh,
+        isAdfree : isAdfree,
+
+        /* Test methods */
+        _updateUserFeatures : updateUserFeatures,
+        _persistResponse : persistResponse
+    };
+
+    PERSISTENCE_KEYS = {
         ADFREE_COOKIE : 'gu_adfree_user',
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry'
     };
@@ -32,7 +44,7 @@ define([
 
     function refresh() {
         if (featureEnabled() && identity.isUserLoggedIn() && needNewFeatureData()) {
-            updateUserFeatures();
+            userFeatures._updateUserFeatures();
         }
         if (!featureEnabled() || haveDataAfterSignout()) {
             cleanupOldData();
@@ -73,7 +85,7 @@ define([
             url : config.page.userAttributesApiUrl + '/me/features',
             crossOrigin : true,
             error : function () {}
-        }).then(persistResponse, _.noop);
+        }).then(userFeatures._persistResponse, _.noop);
     }
 
     function persistResponse(JsonResponse) {
@@ -83,8 +95,6 @@ define([
         cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     }
 
-    return {
-        refresh : refresh,
-        isAdfree : isAdfree
-    };
+    return userFeatures;
 });
+/* jscs:enable disallowDanglingUnderscores */
