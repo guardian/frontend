@@ -78,7 +78,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     &,
     a {
         color: colour(neutral-4);
-        text-transform: lowercase;
     }
 }
 
@@ -107,6 +106,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     a {
         display: inline-block;
         padding-bottom: $gs-baseline;
+        text-transform: lowercase;
     }
 }
 
@@ -153,6 +153,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .footer__follow-us__item {
     display: none;
+    text-transform: lowercase;
 
     @include mq(tablet) {
         display: inline;
@@ -162,7 +163,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .footer__follow-us__title {
     @include fs-header(3);
     color: colour(neutral-7);
-    text-transform: initial;
 }
 
 .l-footer__misc {
