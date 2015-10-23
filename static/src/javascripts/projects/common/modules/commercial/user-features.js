@@ -96,7 +96,7 @@ define([
         expiryDate.setDate(expiryDate.getDate() + 1);
         cookies.add(PERSISTENCE_KEYS.ADFREE_COOKIE, JsonResponse.adFree);
         cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
-        cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, JsonResponse.adblockMessage);
+        cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     }
 
     return {
