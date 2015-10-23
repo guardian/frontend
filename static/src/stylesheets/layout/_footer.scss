@@ -88,19 +88,23 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .colophon__list {
     @include fs-bodyHeading(1);
+    @include columns(2, $gs-gutter);
     list-style: none;
     margin: 0;
 
-    @include mq($until: tablet) {
-        @include columns(2);
+    @include mq(tablet) {
+        @include columns(3, $gs-gutter);
+        width: 75%;
     }
 
-    @include mq(tablet, wide) {
-        @include columns(3);
+    @include mq(desktop) {
+        width: gs-span(9);
+        padding-left: $gs-gutter;
     }
 
-    @include mq(wide) {
-        @include columns(4);
+    @include mq(leftCol) {
+        @include columns(4, $gs-gutter);
+        width: gs-span(12);
     }
 
     a {
@@ -124,29 +128,28 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         border: 0;
         margin: 0;
         padding: 0;
-    }
-
-    @include mq(tablet, desktop) {
-        width: 33%;
-    }
-
-    @include mq(desktop, wide) {
         width: 25%;
     }
 
+    @include mq(desktop) {
+        width: gs-span(3);
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(2);
+    }
+
     @include mq(wide) {
-        width: 20%;
+        width: gs-span(3);
     }
 
     .button {
-        font-size: .875rem;
         width: 32px;
 
         @include mq(tablet) {
             display: block;
             margin-bottom: $gs-baseline;
-            width: 70%;
-            max-width: $gs-gutter * 9;
+            width: gs-span(2);
         }
     }
 }

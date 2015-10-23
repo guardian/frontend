@@ -44,44 +44,44 @@
             <div class="footer__follow-us">
                 @currentEdition match {
                     case Uk => {
-                        <a class="button button--tertiary" data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
+                        <a class="button button--tertiary button--small" data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
                             @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary" data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
+                        <a class="button button--tertiary button--small" data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
                             @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
 
                         @if(mvt.EmailTextTestV1.isParticipating) {
-                            <a class="button button--tertiary" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
+                            <a class="button button--tertiary button--small" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
                                 @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Guardian Today email</span></a>
                         } else {
-                            <a class="button button--tertiary" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
+                            <a class="button button--tertiary button--small" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
                                 @fragments.inlineSvg("share-email", "icon", Seq("i","i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
                         }
                     }
 
                     case Us => {
-                        <a class="button button--tertiary" data-link-name="us : footer : facebook" href="https://www.facebook.com/GuardianUs">
+                        <a class="button button--tertiary button--small" data-link-name="us : footer : facebook" href="https://www.facebook.com/GuardianUs">
                             @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary" data-link-name="us : footer : twitter" href="https://twitter.com/GuardianUs">
+                        <a class="button button--tertiary button--small" data-link-name="us : footer : twitter" href="https://twitter.com/GuardianUs">
                             @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-                        <a class="button button--tertiary" data-link-name="us : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
+                        <a class="button button--tertiary button--small" data-link-name="us : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
                             @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
                     }
 
                     case Au => {
-                        <a class="button button--tertiary" data-link-name="au : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
+                        <a class="button button--tertiary button--small" data-link-name="au : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
                             @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary" data-link-name="au : footer : twitter" href="https://twitter.com/GuardianAus">
+                        <a class="button button--tertiary button--small" data-link-name="au : footer : twitter" href="https://twitter.com/GuardianAus">
                             @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-                        <a class="button button--tertiary" data-link-name="au : footer : email sign-up" href="@LinkTo {/info/2015/jan/30/guardian-australia-emails-delivered-to-your-inbox-subscribe-now}">
+                        <a class="button button--tertiary button--small" data-link-name="au : footer : email sign-up" href="@LinkTo {/info/2015/jan/30/guardian-australia-emails-delivered-to-your-inbox-subscribe-now}">
                             @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">email sign up</span></a>
                     }
 
                     case International => {
-                        <a class="button button--tertiary" data-link-name="int : footer : facebook" href="https://www.facebook.com/theguardian">
+                        <a class="button button--tertiary button--small" data-link-name="int : footer : facebook" href="https://www.facebook.com/theguardian">
                             @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary" data-link-name="int : footer : twitter" href="https://twitter.com/guardian">
+                        <a class="button button--tertiary button--small" data-link-name="int : footer : twitter" href="https://twitter.com/guardian">
                             @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-                        <a class="button button--tertiary" data-link-name="int : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
+                        <a class="button button--tertiary button--small" data-link-name="int : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
                             @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
                     }
                 }
