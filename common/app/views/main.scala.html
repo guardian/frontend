@@ -27,6 +27,7 @@ http://developers.theguardian.com/join-the-team.html
 @defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
     @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
+
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -36,28 +37,31 @@ http://developers.theguardian.com/join-the-team.html
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
-            ("is-immersive", metaData.isImmersive)))"
+            ("is-immersive", metaData.isImmersive),
+            ("is-immersive-interactive", metaData.isImmersive && metaData.isInteractive)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(showAdverts) {
-            @fragments.commercial.topBanner(metaData, edition)
+        @if(!(metaData.isImmersive && metaData.isArticle)) {
+            @if(showAdverts) {
+                @fragments.commercial.topBanner(metaData, edition)
+            }
+    
+            @fragments.header(metaData)
+    
+            @if(adBelowNav) {
+                @fragments.commercial.topBannerBelowNav()
+            }
+    
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile(metaData, edition)
+            }
+
+            <div id="maincontent" class="js-maincontent" tabindex="0"></div>
         }
-
-        @fragments.header(metaData)
-
-        @if(adBelowNav) {
-            @fragments.commercial.topBannerBelowNav()
-        }
-
-        @if(showAdverts) {
-            @fragments.commercial.topBannerMobile(metaData, edition)
-        }
-
-        <div id="maincontent" class="js-maincontent" tabindex="0"></div>
 
         @if(BreakingNewsSwitch.isSwitchedOn) {
             <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"

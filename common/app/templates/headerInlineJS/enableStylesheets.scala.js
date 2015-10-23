@@ -10,6 +10,10 @@
             var sheet = documentStyleSheets[i];
             if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
                 styleSheet.media = "screen";
+                // Set flag for when the CSS loads before the JS
+                window.guardian.css.loaded = true;
+                // Execute callback for when the JS loads before the CSS
+                try { window.guardian.css.onLoad(); } catch(e) {};
                 return true;
             }
         }

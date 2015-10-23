@@ -8,7 +8,8 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'common/modules/experiments/ab'
 ], function (
     _,
     qwery,
@@ -19,7 +20,8 @@ define([
     mediator,
     createAdSlot,
     commercialFeatures,
-    dfp
+    dfp,
+    ab
 ) {
 
     function MostPopular() {
@@ -36,13 +38,18 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        this.fetch(qwery('.js-popular-trails'), 'html');
+        if (ab.getParticipations().MostPopAsFaciaCards && ab.getParticipations().MostPopAsFaciaCards.variant === 'variant' && ab.testCanBeRun('MostPopAsFaciaCards')) {
+            var $mostPopFooter = $('.js-most-popular-footer');
+            $mostPopFooter.html('');
+            this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');
+            $('.js-most-popular-footer').attr('data-link-name', $mostPopFooter.attr('data-link-name') + ' most-popular-as-facia-cards');
+        } else {
+            this.fetch(qwery('.js-popular-trails'), 'html');
+        }
     };
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {
-        return (detect.getBreakpoint() === 'mobile'
-            && config.switches.noMobileTopAd
-            && $('.ad-slot--inline').length > 1) ? true : false;
+        return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1);
     };
 
     MostPopular.prototype.prerender = function () {

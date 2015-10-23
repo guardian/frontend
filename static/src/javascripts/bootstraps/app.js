@@ -9,7 +9,6 @@ define([
     'common/utils/mediator',
     'common/utils/user-timing',
     'bootstraps/common',
-    'bootstraps/media',
     'bootstraps/sport'
 ], function (
     fastdom,
@@ -22,7 +21,6 @@ define([
     mediator,
     userTiming,
     common,
-    media,
     sport
 ) {
 
@@ -74,7 +72,9 @@ define([
             }
 
             if (config.isMedia || qwery('video, audio').length) {
-                bootstrapContext('media', media);
+                require(['bootstraps/media'], function (media) {
+                    bootstrapContext('media', media);
+                });
             }
 
             if (config.page.contentType === 'Gallery') {
@@ -118,7 +118,10 @@ define([
 
             if (config.switches.offlinePage) {
                 // Will fail on non-{HTTPS,localhost} pages
-                navigator.serviceWorker.register('/service-worker.js');
+                var navigator = window.navigator;
+                if (navigator && navigator.serviceWorker) {
+                    navigator.serviceWorker.register('/service-worker.js');
+                }
 
                 if (config.page.pageId === 'offline-page') {
                     var $button = $('.js-open-crossword-btn');

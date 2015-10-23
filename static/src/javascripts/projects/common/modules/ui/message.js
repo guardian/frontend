@@ -3,13 +3,17 @@ define([
     'bean',
     'common/utils/storage',
     'common/modules/user-prefs',
-    'common/utils/_'
+    'common/utils/_',
+    'common/utils/mediator',
+    'common/utils/detect'
 ], function (
     $,
     bean,
     storage,
     userPrefs,
-    _
+    _,
+    mediator,
+    detect
 ) {
 
     /**
@@ -29,6 +33,7 @@ define([
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
         this.prefs = 'messages';
+        this.widthBasedMessage = opts.widthBasedMessage || false;
 
         this.$footerMessage = $('.js-footer-message');
     };
@@ -49,6 +54,12 @@ define([
             return false;
         }
         $('.js-site-message-copy').html(message);
+
+        this.$siteMessage = $('.js-site-message__message');
+
+        // Check and show the width based message
+        this.updateMessageOnWidth();
+        mediator.on('window:resize', _.debounce(this.updateMessageOnWidth, 200).bind(this));
 
         if (this.siteMessageLinkName) {
             siteMessage.attr('data-link-name', this.siteMessageLinkName);
@@ -100,6 +111,22 @@ define([
     Message.prototype.acknowledge = function () {
         this.remember();
         this.hide();
+    };
+
+    Message.prototype.updateMessageOnWidth = function () {
+        var narrowDataAttr = 'site-message-narrow',
+            wideDataAttr = 'site-message-wide';
+
+        if (this.widthBasedMessage && this.$siteMessage.length) {
+            this.updateMessageFromData((detect.isBreakpoint({ max: 'tablet' })) ? narrowDataAttr : wideDataAttr);
+        }
+    };
+
+    Message.prototype.updateMessageFromData = function (dataAttr) {
+        var message = this.$siteMessage.data(dataAttr);
+        if (message) {
+            this.$siteMessage.text(message);
+        }
     };
 
     return Message;

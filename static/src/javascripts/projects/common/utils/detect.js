@@ -386,10 +386,15 @@ define([
     }
 
     function adblockInUse() {
-        var sacrificialAd = createSacrificialAd();
-        var contentBlocked = isHidden(sacrificialAd);
-        sacrificialAd.remove();
-        return contentBlocked;
+        if (!detect.cachedAdblockInUse) {
+            var sacrificialAd = createSacrificialAd(),
+                contentBlocked = isHidden(sacrificialAd);
+            sacrificialAd.remove();
+            detect.cachedAdblockInUse = contentBlocked;
+            return contentBlocked;
+        }
+
+        return detect.cachedAdblockInUse;
 
         function isHidden(bonzoElement) {
             return bonzoElement.css('display') === 'none';
@@ -440,7 +445,7 @@ define([
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse(),
+        adblockInUse: adblockInUse,
         getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled
     };
     return detect;

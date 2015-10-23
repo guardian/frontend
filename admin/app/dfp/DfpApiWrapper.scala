@@ -56,7 +56,8 @@ object DfpApiWrapper extends Logging {
     val service = serviceRegistry.lineItemService
     fetch(statementBuilder) { statement =>
       val page = service.getLineItemsByStatement(statement)
-      Page(page.getResults, page.getTotalResultSetSize)
+      val results = Option(page.getResults).getOrElse(Array.empty)
+      Page(results, page.getTotalResultSetSize)
     }
   }
 

@@ -69,7 +69,7 @@ describe('Article Body Adverts', function () {
             getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
             spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
-            commercialFeatures.articleMPUs = true;
+            commercialFeatures.articleBodyAdverts = true;
 
             done();
         });
@@ -149,6 +149,40 @@ describe('Article Body Adverts', function () {
             });
     });
 
+    it('should call "getParaWithSpace" max 2 times when not viewability and on max tablet', function (done) {
+        config.switches.viewability = false;
+        detect.isBreakpoint = () => true;
+
+        articleBodyAdverts.init()
+            .then(function () {
+                expect(getParaWithSpaceStub.callCount).toEqual(2);
+                done();
+            });
+    });
+
+    it('should call "getParaWithSpace" max 2 times when not viewability and on desktop', function (done) {
+        config.switches.viewability = false;
+        detect.isBreakpoint = () => false;
+
+        articleBodyAdverts.init()
+            .then(function () {
+                expect(getParaWithSpaceStub.callCount).toEqual(1);
+                done();
+            });
+    });
+
+    it('should call "getParaWithSpace" max 2 times when not on mobile', function (done) {
+        config.switches.viewability = true;
+        detect.getBreakpoint = () => 'mobile';
+        detect.isBreakpoint = () => true;
+
+        articleBodyAdverts.init()
+            .then(function () {
+                expect(getParaWithSpaceStub.callCount).toEqual(2);
+                done();
+            });
+    });
+
     it('should call "getParaWithSpace" max 10 times', function (done) {
         config.switches.viewability = true;
 
@@ -160,7 +194,7 @@ describe('Article Body Adverts', function () {
     });
 
     it('should not not display ad slot if turned off in commercial features', function () {
-        commercialFeatures.articleMPUs = false;
+        commercialFeatures.articleBodyAdverts = false;
         expect(articleBodyAdverts.init()).toBe(false);
     });
 

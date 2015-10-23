@@ -37,6 +37,11 @@
     font-size: 24px;
 }
 
+.crossword__anagram-helper-shuffler__letter,
+.crossword__anagram-helper__cell {
+    text-transform: uppercase;
+}
+
 .crossword__anagram-helper__clue-input {
     width: 100%;
     background: none;
@@ -66,8 +71,7 @@
     height: $xword-cell-width;
     line-height: $xword-cell-width;
     border: 1px solid colour(neutral-3);
-    border-left: 1px solid colour(neutral-3);;
-
+    border-left: 1px solid colour(neutral-3);
 
     @include mq($until: mobileLandscape) {
         width: $xword-cell-width-small;

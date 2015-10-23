@@ -57,12 +57,14 @@
 }
 
 .team-crest {
-    height: 12px;
+    height: 22px;
     margin-right: $gs-gutter/4;
     width: 22px;
-    background-size: 22px 12px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
     display: inline-block;
-    vertical-align: text-bottom;
+    vertical-align: top;
 }
 
 // This is everything on the standalone pages

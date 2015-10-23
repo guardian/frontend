@@ -105,11 +105,14 @@ x x x x x x x x x x x x x x x x x x
         flex-basis: auto;
     }
 
-    .vjs-big-play-button > span {
-        @include video-play-button-size($vjs-small-button-size);
+    .vjs-big-play-button > .vjs-control-text {
 
         @include mq(desktop) {
             @include video-play-button-size($vjs-large-button-size);
+
+            &:before {
+                @include video-play-button-size($vjs-large-button-size);
+            }
         }
     }
 }

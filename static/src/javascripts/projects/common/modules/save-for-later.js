@@ -41,9 +41,9 @@ define([
             itemMeta: '.js-item__meta',
             itemSaveLink: '.js-save-for-later-link',
             itemSaveLinkHeading: '.save-for-later-link__heading',
-            profileDropdownCount: '.brand-bar__item--saved-for-later-count',
             fcItemIsSaved: 'fc-save-for-later--is-saved',
-            profileDropdownLink: '.brand-bar__item--saved-for-later'
+            profileDropdownLink: '.brand-bar__item--saved-for-later',
+            identityProfileItem: '.js-profile-nav'
         };
         this.attributes = {
             containerItemShortUrl: 'data-loyalty-short-url',
@@ -53,7 +53,6 @@ define([
 
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
-        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
         _.bindAll(this,
             'save',
@@ -373,12 +372,15 @@ define([
 
     SaveForLater.prototype.updateSavedCount = function () {
         var $saveForLaterEl = $(this.classes.profileDropdownLink),
+            $profileDropdownItem = $(this.classes.identityProfileItem),
             count = (this.userData.articles) ? this.userData.articles.length : 0;
 
         if (count > 0) {
             $saveForLaterEl.attr('data-saved-content-count', count);
+            $profileDropdownItem.addClass('has-saved-articles');
         } else {
             $saveForLaterEl.removeAttr('data-saved-content-count', count);
+            $profileDropdownItem.removeClass('has-saved-articles');
         }
     };
 

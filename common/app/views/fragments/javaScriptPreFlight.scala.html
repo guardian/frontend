@@ -25,9 +25,9 @@
     @Html(templates.headerInlineJS.js.analytics().body)
 
     @if(Switches.MoreInlineHead.isSwitchedOn) {
-        @InlineJs.withFileNameHint(templates.headerInlineJS.js.featureDetection().body, "featureDetection.js")
+        @InlineJs.withFileNameHint(templates.headerInlineJS.js.applyRenderConditions().body, "applyRenderConditions.js")
     } else {
-        @Html(templates.headerInlineJS.js.featureDetection().body)
+        @Html(templates.headerInlineJS.js.applyRenderConditions().body)
     }
 
     @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@

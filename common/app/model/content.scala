@@ -303,7 +303,10 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
 
   def showFooterContainers = false
 
-  override def iosType = Some("article")
+  override def iosType = contentType match {
+    case "Crossword" => None
+    case _ => Some("Article")
+  }
 }
 
 object Content {
@@ -339,6 +342,7 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
+  override lazy val isImmersive: Boolean = displayHint.contains("immersive")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = Some(ArticleSchemas(this))
@@ -605,8 +609,8 @@ trait Lightboxable extends Content {
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
         "src" -> JsString(Item700.bestFor(container).getOrElse("")),
-        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.Lightbox)),
-        "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
+        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.lightbox)),
+        "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
         "role" -> JsString(img.role.toString)
       ))

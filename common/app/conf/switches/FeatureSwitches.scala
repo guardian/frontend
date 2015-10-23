@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "offline-page",
     "Offline page",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 16),
+    sellByDate = new LocalDate(2015, 11, 26),
     exposeClientSide = true
   )
 
@@ -31,15 +31,6 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 7),
     exposeClientSide = false
-  )
-
-  val NotificationsSwitch = Switch(
-    "Feature",
-    "notifications",
-    "Notifications",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 15),
-    exposeClientSide = true
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(
@@ -292,7 +283,7 @@ trait FeatureSwitches {
     "ipad-split-capabilities",
     "If switched on then this gives older ipads the stripped down front but full articles",
     safeState = On,
-    sellByDate = new LocalDate(2015, 9, 30),
+    sellByDate = new LocalDate(2015, 12, 1),
     exposeClientSide = false
   )
 
@@ -367,15 +358,4 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-  val InternationalEditionBetaSwitch = Switch(
-    "Feature",
-    "international-edition-beta",
-    "International edition A/B test on",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 10, 31),
-
-    exposeClientSide = true
-  )
-
-
 }

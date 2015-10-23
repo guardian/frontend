@@ -25,6 +25,7 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
+    'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
@@ -41,6 +42,7 @@ define([
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/message',
+    'common/modules/ui/cookiesBanner',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
@@ -49,6 +51,7 @@ define([
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
+    'common/modules/commercial/membership-messages',
     'text!common/views/international-message.html',
     'bootstraps/identity-common'
 ], function (
@@ -76,6 +79,7 @@ define([
     simpleMetrics,
     userAdTargeting,
     donotUseAdblock,
+    userFeatures,
     CommentCount,
     ab,
     AutoSignin,
@@ -92,6 +96,7 @@ define([
     Dropdowns,
     fauxBlockLink,
     Message,
+    cookiesBanner,
     RelativeDates,
     smartAppBanner,
     Tabs,
@@ -100,6 +105,7 @@ define([
     breakingNews,
     pinterest,
     SaveForLater,
+    membershipMessages,
     internationalMessage,
     identity
 ) {
@@ -126,7 +132,10 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive') && config.page.contentType !== 'Crossword') {
+                if (config.switches.viewability
+                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && config.page.contentType !== 'Crossword'
+                    && config.page.pageId !== 'offline-page') {
                     sticky.init();
                 }
             },
@@ -354,6 +363,10 @@ define([
                     var saveForLater = new SaveForLater();
                     saveForLater.init();
                 }
+            },
+
+            showMembershipMessages: function () {
+                membershipMessages.init();
             }
         };
 
@@ -364,6 +377,7 @@ define([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
+                ['c-cookies-banner', cookiesBanner.init],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
@@ -401,7 +415,9 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
-                ['c-save-for-later', modules.saveForLater]
+                ['c-save-for-later', modules.saveForLater],
+                ['c-show-membership-messages', modules.showMembershipMessages],
+                ['c-user-features', userFeatures.refresh]
             ]), function (fn) {
                 fn();
             });

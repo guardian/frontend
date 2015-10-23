@@ -23,12 +23,12 @@ module.exports = function(grunt, options) {
                 socketio:             'components/socket.io-client/socket.io',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
-                videojs:              'components/videojs/video',
-                videojsads:           'components/videojs-contrib-ads/videojs.ads',
+                videojs:              'components/video.js/video.min',
+                videojsads:           'components/videojs-contrib-ads/videojs.ads.min',
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                videojsplaylist:      'components/videojs-playlist-audio',
+                videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
@@ -212,29 +212,24 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
         },
-        video : {
+        admin: {
             options: {
-                name: 'bootstraps/video-player',
-                out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
+                name: 'bootstraps/admin',
+                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
-                    videojs: {
-                        exports: 'videojs'
-                    },
-                    videojsads: {
-                        deps: ['videojs']
-                    },
-                    videojsima: {
-                        deps: ['videojs']
-                    },
-                    videojsplaylist: {
-                        deps: ['videojs']
-                    },
-                    videojsembed: {
-                        deps: ['videojs']
+                    omniture: {
+                        exports: 's'
                     }
-                },
-                wrapShim: true,
+                }
+            }
+        },
+        media: {
+            options: {
+                name: 'bootstraps/media',
+                out: options.staticTargetDir + 'javascripts/bootstraps/media.js',
                 exclude: [
+                    'core',
+                    'bootstraps/app',
                     'text',
                     'inlineSvg'
                 ],
@@ -246,14 +241,6 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/video-embed',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-embed.js',
-                shim: {
-                    videojs: {
-                        exports: 'videojs'
-                    },
-                    videojsembed: {
-                        deps: ['videojs']
-                    }
-                },
                 exclude: [
                     'text',
                     'inlineSvg'

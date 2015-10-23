@@ -3,7 +3,7 @@
   "version": "0.1.0 ",
   "dependencies": {
     "mediaelement": "~2.16.1",
-    "video-js-swf" : "videojs/video-js-swf#4c0f3450e3df8632647e326dbff9d7a6ade1d9a8",
+    "video-js-swf" : "videojs/video-js-swf#5.0.0-rc1",
     "video-js-vpaid": "guardian/video-js-vpaid#ce2d0c21603d45d1a00bc6c8d43dfd88532a1b5c"
   },
   "install": {

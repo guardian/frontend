@@ -74,6 +74,10 @@
     .football-team__score {
         right: ($gs-gutter/4)+1;
     }
+
+    .team-crest {
+        float: left;
+    }
 }
 
 .football-match__team--away {
@@ -83,6 +87,10 @@
 
     .football-team__score {
         left: ($gs-gutter/4)+1;
+    }
+
+    .team-crest {
+        float: right;
     }
 }
 

@@ -37,7 +37,7 @@ describe('DFP', function () {
             };
         },
         injector = new Injector(),
-        dfp, config, commercialFeatures;
+        dfp, config, detect, commercialFeatures;
 
     beforeEach(function (done) {
 
@@ -45,12 +45,14 @@ describe('DFP', function () {
             'common/modules/commercial/dfp',
             'common/utils/config',
             'common/modules/commercial/dfp-ophan-tracking',
-            'common/modules/commercial/commercial-features'
+            'common/modules/commercial/commercial-features',
+            'common/utils/detect'
         ], function () {
             dfp = arguments[0];
             config = arguments[1];
             let ophanTracking = arguments[2];
             commercialFeatures = arguments[3];
+            detect = arguments[4];
 
             config.switches = {
                 commercialComponents: true,
@@ -136,9 +138,21 @@ describe('DFP', function () {
         expect(dfp.init()).toBe(dfp);
     });
 
-    it('should not run if disabled in commercial features', function () {
-        commercialFeatures.dfpAdvertising = false;
-        expect(dfp.init()).toBe(false);
+    describe('when all DFP advertising is disabled', function () {
+        beforeEach(function () {
+            commercialFeatures.dfpAdvertising = false;
+        });
+
+        it('hides all ad slots', function () {
+            dfp.init();
+            const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
+            expect(remainingAdSlots.length).toBe(0);
+        });
+
+        it('still returns a DFP object', function () {
+            const returnValue = dfp.init();
+            expect(returnValue).toBe(dfp);
+        });
     });
 
     it('should get the slots', function () {
@@ -198,6 +212,37 @@ describe('DFP', function () {
         dfp.init();
         window.googletag.cmd.forEach(function (func) { func(); });
         expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
+    });
+
+    describe('pageskin loading', function () {
+
+        it('should lazy load ads when there is no pageskin', function () {
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
+            config.switches.viewability = true;
+            config.page.hasPageSkin = false;
+            expect(dfp.shouldLazyLoad()).toBe(true);
+        });
+
+        it('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
+            detect.getBreakpoint = function () {
+                return 'desktop';
+            };
+            config.switches.viewability = true;
+            config.page.hasPageSkin = true;
+            expect(dfp.shouldLazyLoad()).toBe(true);
+        });
+
+        it('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
+            config.switches.viewability = true;
+            config.page.hasPageSkin = true;
+            expect(dfp.shouldLazyLoad()).toBe(false);
+        });
+
     });
 
     describe('keyword targeting', function () {

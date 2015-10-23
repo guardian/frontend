@@ -7,9 +7,13 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/membership-message-uk',
     'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/adfree-survey'
+    'common/modules/experiments/tests/adfree-survey',
+    'common/modules/experiments/tests/switch-most-pop-related-content',
+    'common/modules/experiments/tests/rtrt-email-message',
+    'common/modules/experiments/tests/most-pop-as-facia-cards',
+    'common/modules/experiments/tests/onward-container-names',
+    'common/modules/experiments/tests/inject-headlines-test'
 ], function (
     reportError,
     _,
@@ -19,16 +23,24 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
-    MembershipMessageUK,
     MembershipMessageUSA,
-    AddfreeSurvey
+    AddfreeSurvey,
+    SwitchMostPopAndRelatedContent,
+    RtrtEmailMessage,
+    MostPopAsFaciaCards,
+    OnwardContainerNames,
+    InjectHeadlinesTest
 ) {
 
     var TESTS = _.flatten([
         new HighCommercialComponent(),
-        new MembershipMessageUK(),
         new MembershipMessageUSA(),
-        new AddfreeSurvey()
+        new AddfreeSurvey(),
+        new SwitchMostPopAndRelatedContent(),
+        new RtrtEmailMessage(),
+        new MostPopAsFaciaCards(),
+        new OnwardContainerNames(),
+        new InjectHeadlinesTest()
     ]);
 
     var participationsKey = 'gu.ab.participations';

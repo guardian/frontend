@@ -1,3 +1,5 @@
+@import conf.switches.Switches.OfflinePageSwitch
+
 @()
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
@@ -5,123 +7,118 @@
 /*global self*/
 /*global clients*/
 
-//
-// Offline page
-//
+@if(OfflinePageSwitch.isSwitchedOn) {
 
-var staticCacheName = 'static';
+    //
+    // Offline page
+    //
 
-var getISODate = function () { return new Date().toISOString().split('T')[0]; };
+    var staticCacheName = 'static';
 
-var updateCache = function () {
-    return caches.open([getISODate(), staticCacheName].join('-')).then(function (cache) {
-        return cache.addAll([
-            '/offline-page',
-            '@Static("stylesheets/head.content.css")',
-            '@Static("stylesheets/content.css")',
-            '@Static("stylesheets/print.css")',
-            // Crossword pages use jspm
-            '@StaticJspm("javascripts/core.js")',
-            '@StaticJspm("javascripts/bootstraps/app.js")',
-            '@StaticJspm("javascripts/es6/bootstraps/crosswords.js")'
-        ]);
-    });
-};
+    var getISODate = function () {
+        return new Date().toISOString().split('T')[0];
+    };
 
-var deleteOldCaches = function () {
-    return caches.keys().then(function (keys) {
-        return Promise.all(
-            keys.map(function (key) {
-                if (!keyMatchesTodaysCache(key)) {
-                    return caches.delete(key);
-                }
-            })
-        );
-    })
-};
+    var fetchAll = function (inputs) {
+        return Promise.all(inputs.map(function (input) {
+            return fetch(input);
+        }));
+    };
 
-var keyMatchesTodaysCache = function (key) {
-    return new RegExp('^' + getISODate() + '-').test(key);
-};
+    var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
+        var cacheName = [getISODate(), staticCacheName].join('-');
+        return caches.open(cacheName).then(function (cache) {
+            return jsonResponse.clone().json().then(function (jsonResponseJson) {
+                var pageRequest = new Request('/offline-page');
+                var pageResponse = new Response(jsonResponseJson.html, { headers: { 'Content-Type': 'text/html' } });
+                return Promise.all([
+                    cache.put(pageRequest, pageResponse)
+                ].concat(
+                    assetResponses.map(function (assetResponse) {
+                        var assetRequest = new Request(assetResponse.url);
+                        return cache.put(assetRequest, assetResponse);
+                    })
+                ));
+            });
+        });
+    };
 
-self.addEventListener('install', function (event) {
-    event.waitUntil(updateCache());
-});
+    // The JSON contains the HTML and asset versions. We cache the assets at
+    // their specified URLs and the page HTML as '/offline-page'.
+    var updateCache = function () {
+        // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
+        return fetch('/offline-page.json').then(function (jsonResponse) {
+            if (jsonResponse.ok) {
+                return jsonResponse.clone().json().then(function (json) {
+                    return fetchAll(json.assets).then(function (assetResponses) {
+                        var allAssetResponsesOk = assetResponses.every(function (response) { return response.ok; });
 
-this.addEventListener('fetch', function (event) {
-    caches.keys().then(function (keys) {
-        var isUpdated = keys.some(keyMatchesTodaysCache);
+                        if (allAssetResponsesOk) {
+                            return cachePageAndAssetResponses(jsonResponse, assetResponses);
+                        }
+                    });
+                });
+            }
+        });
+    };
 
-        if (!isUpdated) {
-            updateCache().then(deleteOldCaches);
-        }
-    });
-
-    event.respondWith(
-        fetch(event.request)
-            .catch(function () {
-                // If a request is cached, respond with that. Otherwise respond
-                // with the shell, whose subresources will be in the cache.
-                return caches.match(event.request).then(function (response) {
-                    return response || caches.match('/offline-page');
+    var deleteOldCaches = function () {
+        return caches.keys().then(function (keys) {
+            return Promise.all(
+                keys.map(function (key) {
+                    if (!keyMatchesTodaysCache(key)) {
+                        return caches.delete(key);
+                    }
                 })
-            })
-    );
-});
+            );
+        })
+    };
 
-//
-// Push notifications
-//
+    var keyMatchesTodaysCache = function (key) {
+        return new RegExp('^' + getISODate() + '-').test(key);
+    };
 
-var findInArray = function (array, fn) {
-    for (var i = array.length - 1; i >= 0; i--) {
-        var value = array[i];
-        if (fn(value)) return value;
-    }
-};
+    var doesRequestAcceptHtml = function (request) {
+        return request.headers.get('Accept')
+            .split(',')
+            .some(function (type) { return type === 'text/html'; });
+    };
 
-// Warning: reassignment!
-var notificationData;
+    var isCacheUpdated = function () {
+        return caches.keys().then(function (keys) {
+            return keys.some(keyMatchesTodaysCache);
+        });
+    };
 
-self.addEventListener('push', function (event) {
-    event.waitUntil(
-        fetch('@{JavaScript(Configuration.pushNotifications.host + "/?url=http://push-api-web.gutools.co.uk/messages/web/latest")}')
-            .then(function (x) { return x.json(); })
-            .then(function (data) {
-                // Warning: reassign !
-                notificationData = {
-                    title: data.message,
-                    url: data.link,
-                    body: '',
-                    tag: 'breaking-news',
-                    icon: '@{JavaScript(Static("images/favicons/152x152.png").path)}'
-                };
+    self.addEventListener('install', function (event) {
+        event.waitUntil(updateCache());
+    });
 
-                return self.registration.showNotification(notificationData.title, {
-                    body: notificationData.body,
-                    icon: notificationData.icon,
-                    tag: notificationData.tag
-                });
-            })
-    );
-});
+    this.addEventListener('fetch', function (event) {
+        if (doesRequestAcceptHtml(event.request)) {
+            isCacheUpdated().then(function (isUpdated) {
+                if (!isUpdated) {
+                    updateCache().then(deleteOldCaches);
+                }
+            });
+        }
 
-self.addEventListener('notificationclick', function (event) {
-    // Android doesn't close the notification when you click on it
-    // See: http://crbug.com/463146
-    event.notification.close();
-
-    var url = notificationData.url;
-
-    // Focus if already open
-    event.waitUntil(
-        clients.matchAll({ type: 'window' })
-            .then(function (clientList) {
-                var matchingClient = findInArray(clientList, function (client) {
-                    return new URL(client.url).pathname === url;
-                });
-                return matchingClient ? matchingClient.focus() : clients.openWindow(url);
-            })
-    );
-});
+        event.respondWith(
+            fetch(event.request)
+                .catch(function () {
+                    // If a request is cached, respond with that. Otherwise respond
+                    // with the shell, whose subresources will be in the cache.
+                    return caches.match(event.request).then(function (response) {
+                        if (response) {
+                            return response;
+                        } else {
+                            if (doesRequestAcceptHtml(event.request)) {
+                                return caches.match('/offline-page');
+                            }
+                        }
+                    })
+                })
+        );
+    });
+}
 

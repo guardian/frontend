@@ -66,6 +66,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
   lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
+  lazy val appId = "409128287"
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 

@@ -1,0 +1,57 @@
+
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import views.BodyCleaner
+@import views.support.TrailCssClasses.articleToneClass
+
+@defining(model.article) { article =>
+    <div class="l-side-margins">
+        <article id="article" data-test-id="article-root"
+            class="content content--article content--immersive tonal tonal--@articleToneClass(article) section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+            @if(article.isAdvertisementFeature){content--advertisement-feature}
+            @if(article.isFeature && article.hasShowcaseMainElement){has-feature-showcase-element}"
+            itemscope itemtype="@article.schemaType" role="main">
+            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
+            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="The Guardian">
+                <link itemprop="sameAs" href="http://www.theguardian.com">
+            </div>
+
+            @fragments.headImmersive(article)
+
+            <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
+
+                        @fragments.contentMeta(article)
+
+                        @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
+                            <hr class="content__hr hide-until-leftcol" />
+                        }
+
+                        @fragments.chapterHeadings(article)
+
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
+                            data-test-id="article-review-body">
+                            @BodyCleaner(article, article.body, amp = amp)
+                        </div>
+
+                        @fragments.witnessCallToAction(article)
+
+                        @fragments.submeta(article)
+
+                        <div class="after-article js-after-article"></div>
+                    </div>
+
+                    <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+                        <div class="ad-slot-container js-ad-slot-container"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        @fragments.contentFooter(article, model.related)
+
+    </div>
+}

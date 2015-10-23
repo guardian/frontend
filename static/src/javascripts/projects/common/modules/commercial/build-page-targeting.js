@@ -85,7 +85,7 @@ define([
             }
         },
         getVisitedValue = function () {
-            var alreadyVisited = storage.local.get('alreadyVisited') || 0,
+            var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0,
                 visitedValue;
 
             if (alreadyVisited > 4) {
