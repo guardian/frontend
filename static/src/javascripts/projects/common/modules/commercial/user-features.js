@@ -15,7 +15,8 @@ define([
 ) {
     var PERSISTENCE_KEYS = {
         ADFREE_COOKIE : 'gu_adfree_user',
-        USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry'
+        USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
+        PAYING_MEMBER_COOKIE : 'gu_paying_member'
     };
 
     function isAdfree() {
@@ -39,20 +40,33 @@ define([
         }
     }
 
+    function isPayingMember() {
+        // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
+        return identity.isUserLoggedIn() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false';
+    }
+
     function featureEnabled() {
-        return config.switches.advertOptOut;
+        return config.switches.advertOptOut || config.switches.adblock;
     }
 
     function needNewFeatureData() {
-        return !hasFeaturesData() || featuresDataIsOld();
+        return !hasAllFeaturesData() || featuresDataIsOld();
     }
 
     function haveDataAfterSignout() {
-        return (!identity.isUserLoggedIn() && hasFeaturesData());
+        return (!identity.isUserLoggedIn() && hasAnyFeaturesData());
     }
 
-    function hasFeaturesData() {
-        return cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) && cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+    function hasAllFeaturesData() {
+        return cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) &&
+            cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) &&
+            cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+    }
+
+    function hasAnyFeaturesData() {
+        return cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE) ||
+            cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE) ||
+            cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
 
     function featuresDataIsOld() {
@@ -66,6 +80,7 @@ define([
         // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
         cookies.remove(PERSISTENCE_KEYS.ADFREE_COOKIE);
         cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+        cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
 
     function updateUserFeatures() {
@@ -81,10 +96,12 @@ define([
         expiryDate.setDate(expiryDate.getDate() + 1);
         cookies.add(PERSISTENCE_KEYS.ADFREE_COOKIE, JsonResponse.adFree);
         cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
+        cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     }
 
     return {
         refresh : refresh,
-        isAdfree : isAdfree
+        isAdfree : isAdfree,
+        isPayingMember : isPayingMember
     };
 });

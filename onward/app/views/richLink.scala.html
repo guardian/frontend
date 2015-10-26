@@ -19,24 +19,25 @@
             </style>
         }
 
-        @if(play.Play.isDev()) {
-            <script>
-                @Html(Static.systemJs.setupFragment)
+        <script type="text/javascript">
+            var curl = {
+                baseUrl: '@{Configuration.assets.path}javascripts',
+                apiName: 'require',
+                paths: {
+                    core:                      '@Static("javascripts/core.js")',
+                    'bootstraps/dev':          '@Static("javascripts/bootstraps/dev.js")'
+                }
+            };
 
-                // Our app assumes a normal env
-                window.guardian = {
-                    config: {
-                        switches: { },
-                        page: { }
-                    }
-                };
+            @Html(Static.js.curl)
 
-                // Bracket notation for IE8 (import is reserved)
-                System['import']('core').then(function () {
-                    System['import']('bootstraps/dev').then(function (devmode) { devmode.init(); });
-                });
-            </script>
-        }
+            require([
+                'core',
+                'domReady!'
+            ], function() {
+                require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+            });
+        </script>
 
    </head>
    <body width="30%">

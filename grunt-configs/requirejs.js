@@ -212,6 +212,17 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
         },
+        admin: {
+            options: {
+                name: 'bootstraps/admin',
+                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
+                shim: {
+                    omniture: {
+                        exports: 's'
+                    }
+                }
+            }
+        },
         media: {
             options: {
                 name: 'bootstraps/media',

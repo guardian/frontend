@@ -78,35 +78,89 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     &,
     a {
         color: colour(neutral-4);
-        text-transform: lowercase;
     }
 }
+
 .colophon {
-    @include fs-bodyHeading(1);
-    list-style: none;
-    margin: 0;
     padding-top: $gs-baseline * 2;
     padding-bottom: $gs-baseline * .5;
-    @include mq($until: tablet) {
-        @include columns(2);
+}
+
+.colophon__list {
+    @include fs-bodyHeading(1);
+    @include columns(2, $gs-gutter);
+    list-style: none;
+    margin: 0;
+
+    @include mq(tablet) {
+        @include columns(3, $gs-gutter);
+        width: 75%;
     }
 
-    @include mq(tablet, wide) {
-        @include columns(3);
+    @include mq(desktop) {
+        width: gs-span(9);
+        padding-left: $gs-gutter;
     }
 
-    @include mq(wide) {
-        @include columns(4);
+    @include mq(leftCol) {
+        @include columns(4, $gs-gutter);
+        width: gs-span(12);
     }
 
     a {
         display: inline-block;
         padding-bottom: $gs-baseline;
+        text-transform: lowercase;
     }
-
 }
+
 .colophon__item {
     box-sizing: border-box;
+}
+
+.footer__follow-us {
+    margin-bottom: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    border-bottom: 1px solid colour(neutral-2);
+
+    @include mq(tablet) {
+        float: left;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+    }
+
+    @include mq(desktop) {
+        width: gs-span(3);
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(2);
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+
+    .button {
+        border-color: colour(neutral-2);
+
+        &:hover {
+            border-color: colour(neutral-4);
+        }
+
+        @include mq(tablet) {
+            display: block;
+            margin-bottom: $gs-baseline;
+            width: gs-span(2);
+        }
+    }
+}
+
+.footer__follow-us__item {
+    display: inline;
+    text-transform: lowercase;
 }
 
 .l-footer__misc {

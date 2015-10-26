@@ -60,7 +60,7 @@
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
-        padding-bottom: 1em;
+        padding-bottom: 1.5rem;
 
         @include mq(desktop) {
             font-size: 3.25rem;
@@ -70,7 +70,7 @@
     .content__standfirst {
         position: relative;
         padding-top: .33em;
-        padding-bottom: 1em;
+        padding-bottom: 1rem;
         margin-bottom: 0;
         color: #ffffff;
 
