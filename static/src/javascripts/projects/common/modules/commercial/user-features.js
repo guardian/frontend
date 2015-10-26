@@ -87,6 +87,7 @@ define([
         ajaxPromise({
             url : config.page.userAttributesApiUrl + '/me/features',
             crossOrigin : true,
+            withCredentials : true,
             error : function () {}
         }).then(persistResponse, _.noop);
     }
