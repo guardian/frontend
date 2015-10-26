@@ -32,7 +32,7 @@ define([
             $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
-        if (!commercialFeatures.articleAsideAdverts || colIsHidden || config.hasTone('Match reports')) {
+        if (!commercialFeatures.articleAsideAdverts || colIsHidden) {
             return false;
         }
 

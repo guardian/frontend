@@ -257,6 +257,21 @@ describe('Commercial features', ()=> {
         });
     });
 
+    describe('Page tone policy', ()=> {
+        it('does not load commercial components on Match reports tone', ()=> {
+            config.hasTone = () => true;
+
+            const switches = commercialFeaturePolicies.getPolicySwitches().tonePolicy;
+            expect(switches.articleAsideAdverts).toBe(false);
+        });
+
+        it('applies no changes otherwise', ()=> {
+            config.hasTone = () => false;
+            const switches = commercialFeaturePolicies.getPolicySwitches().tonePolicy;
+            expect(switches).toBeUndefined();
+        });
+    });
+
     describe('Switchboard policy', ()=> {
         it('disables badges when sponsored switch is off', ()=> {
             config.switches.sponsored = false;
