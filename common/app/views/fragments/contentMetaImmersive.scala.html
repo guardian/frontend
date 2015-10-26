@@ -31,15 +31,12 @@
         <div class="u-h meta__number meta__number--commentcount" data-discussion-id="@content.discussionId" data-commentcount-format="contentImmersive" data-discussion-closed="@{!content.isCommentable}"></div>
     </div>
 
-
-<!--
-    <div class="meta__extras">
-        <div class="meta__social" data-component="share">
-            @fragments.social(content, "top")
-        </div>
-        @if(SaveForLaterSwitch.isSwitchedOn) {
-            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
-        }
+    <div class="meta__social" data-component="share">
+        @fragments.social(content, "top")
     </div>
+<!--
+    @if(SaveForLaterSwitch.isSwitchedOn) {
+        <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+    }
 -->
 </div>
