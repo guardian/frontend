@@ -187,28 +187,48 @@ describe('The user features service:', function () {
     });
 
     describe('Storing new feature data', function () {
+        var serverResponse;
+
         beforeEach(function () {
             deleteAllFeaturesData();
+
+            serverResponse = {
+                adFree : true,
+                adblockMessage : false
+            };
+
             // Unspy method to test it
             userFeatures._persistResponse.and.callThrough();
         });
 
         it('Puts the adfree state in a cookie, so that the server can scrub it on logout', function () {
-            userFeatures._persistResponse({adFree : true});
+            serverResponse.adFree = true;
+            userFeatures._persistResponse(serverResponse);
             expect(cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE)).toBe('true');
 
-            userFeatures._persistResponse({adFree : false});
+            serverResponse.adFree = false;
+            userFeatures._persistResponse(serverResponse);
             expect(cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE)).toBe('false');
         });
 
+        it('Records whether the user has a paying relationship with the Guardian', function () {
+            serverResponse.adblockMessage = true;
+            userFeatures._persistResponse(serverResponse);
+            expect(cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('false');
+
+            serverResponse.adblockMessage = false;
+            userFeatures._persistResponse(serverResponse);
+            expect(cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('true');
+        });
+
         it('Puts an expiry date in an accompanying cookie', function () {
-            userFeatures._persistResponse({adFree : true});
+            userFeatures._persistResponse(serverResponse);
             var expiryDate = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
             expect(expiryDate).not.toBeNull();
         });
 
         it('The expiry date can be parsed into a Unix epoch', function () {
-            userFeatures._persistResponse({adFree : true});
+            userFeatures._persistResponse(serverResponse);
             var expiryDateString = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
             expect(isNaN(expiryDateString)).toBe(false);
         });
@@ -216,7 +236,7 @@ describe('The user features service:', function () {
         it('The expiry date is in the future', function () {
             var expiryDateString, expiryDateEpoch, currentTimeEpoch;
 
-            userFeatures._persistResponse({adFree : true});
+            userFeatures._persistResponse(serverResponse);
 
             expiryDateString = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
             expiryDateEpoch = parseInt(expiryDateString, 10);
