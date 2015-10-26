@@ -10,7 +10,7 @@ object Container extends Logging {
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
-    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU)),
+    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
@@ -32,6 +32,8 @@ object Container extends Logging {
     container match {
       case Fixed(definition) if omitMPU =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))
+      case Dynamic(DynamicSlowMPU(_)) if omitMPU =>
+        Dynamic(DynamicSlowMPU(omitMPU = true))
       case _ => container
     }
   }
