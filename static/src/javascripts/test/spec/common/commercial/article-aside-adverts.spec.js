@@ -35,7 +35,7 @@ describe('Article Aside Adverts', function () {
 
             config.hasTone = function () {
                 return false;
-            }
+            };
 
             // Reset dependencies
             commercialFeatures.articleAsideAdverts = true;
@@ -98,7 +98,7 @@ describe('Article Aside Adverts', function () {
     it('should not display ad slot on Match Reports page', function () {
         config.hasTone = function () {
             return true;
-        }
+        };
 
         expect(articleAsideAdverts.init()).toBe(false);
         expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
