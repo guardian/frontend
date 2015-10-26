@@ -1,3 +1,4 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
     'common/utils/_',
     'common/utils/ajax-promise',
@@ -115,3 +116,4 @@ define([
 
     return userFeatures;
 });
+/* jscs:enable */
