@@ -1,27 +1,40 @@
-import _ from 'common/utils/_';
-import storage from 'common/utils/storage';
+define([
+    'common/utils/_',
+    'common/utils/storage'
+], function (
+    _,
+    storage
+) {
+    var localStorage = storage.local;
 
-const localStorage = storage.local;
+    var localStorageKey = function (id) {
+        return 'crosswords.' + id;
+    };
 
-const localStorageKey = (id) => 'crosswords.' + id;
+    function saveGridState(id, grid) {
+        /**
+         * Take only the entries from the grid. Other state information like what cells are highlighted ought not
+         * to be persisted.
+         */
+        var entries = _.map(grid, function (row) {
+            return _.map(row, function (cell) {
+                return cell.value;
+            });
+        });
 
-function saveGridState(id, grid) {
-    /**
-     * Take only the entries from the grid. Other state information like what cells are highlighted ought not
-     * to be persisted.
-     */
-    const entries = _.map(grid, (row) => _.map(row, (cell) => cell.value));
-
-    try {
-        return localStorage.set(localStorageKey(id), entries);
-    } catch (e) {
-        return false;
+        try {
+            return localStorage.set(localStorageKey(id), entries);
+        } catch (e) {
+            return false;
+        }
     }
-}
 
-const loadGridState = (id) => localStorage.get(localStorageKey(id));
+    var loadGridState = function (id) {
+        return localStorage.get(localStorageKey(id));
+    };
 
-export default {
-    'saveGridState': saveGridState,
-    'loadGridState': loadGridState
-};
+    return {
+        'saveGridState': saveGridState,
+        'loadGridState': loadGridState
+    };
+});

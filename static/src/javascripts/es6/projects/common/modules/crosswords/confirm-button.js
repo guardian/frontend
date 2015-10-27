@@ -1,38 +1,57 @@
-import React from 'react';
-import classNames from 'classnames';
+define([
+    'react',
+    'classnames',
+    'common/utils/_'
+], function (
+    React,
+    classNames,
+    _
+) {
+    var ConfirmButton = React.createClass({
+        getInitialState: function () {
+            this.timeout = this.props.timeout || 2000;
+            return {
+                confirming: false
+            };
+        },
 
-export default class ConfirmButton extends React.Component {
-    constructor (props) {
-        super(props);
-        this.timeout = this.props.timeout || 2000;
-        this.state = { confirming: false };
-    }
+        confirm: function () {
+            if (this.state.confirming) {
+                this.setState({
+                    confirming: false
+                });
+                this.props.onClick();
+            } else {
+                this.setState({
+                    confirming: true
+                });
+                setTimeout(function () {
+                    this.setState({
+                        confirming: false
+                    });
+                }, this.timeout);
+            }
+        },
 
-    confirm () {
-        if (this.state.confirming) {
-            this.setState({ confirming: false });
-            this.props.onClick();
-        } else {
-            this.setState({ confirming: true });
-            setTimeout(() => this.setState({ confirming: false }), this.timeout);
+        render: function () {
+            var inner = this.state.confirming ?
+                'Confirm ' + this.props.text.toLowerCase() : this.props.text;
+
+            var className = classNames({
+                [this.props.className]: true,
+                'crossword__controls__button--confirm': this.state.confirming
+            });
+
+            return React.createElement(
+                "button",
+                _.assign({}, this.props, {
+                    onClick: this.confirm.bind(this),
+                    className: className
+                }, this),
+                inner
+            );
         }
-    }
+    });
 
-    render () {
-        const inner = this.state.confirming ?
-            'Confirm ' + this.props.text.toLowerCase() : this.props.text;
-
-        const className = classNames({
-            [this.props.className]: true,
-            'crossword__controls__button--confirm': this.state.confirming
-        });
-
-        return (
-            <button {...this.props}
-                onClick={this.confirm.bind(this)}
-                className={className}>
-                {inner}
-            </button>
-        );
-    }
-}
+    return ConfirmButton;
+});
