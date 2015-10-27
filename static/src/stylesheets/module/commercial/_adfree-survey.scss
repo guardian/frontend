@@ -1,53 +1,3 @@
-.ad-slot--remove {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    z-index: 1;
-    cursor: pointer;
-    color: #6e6e6e;
-    font-family: $f-sans-serif-text;
-    @include font-size(12, 20);
-
-    .inline-icon {
-        fill: #6e6e6e;
-
-        svg {
-            width: 10px;
-            height: 10px;
-        }
-    }
-
-    .ad-slot--hide-ads {
-        display: inline-block;
-        padding-right: 4px;
-        color: #6e6e6e;
-    }
-
-    .ad-slot--top-above-nav &,
-    .ad-slot--merchandising-high &,
-    .ad-slot--merchandising & {
-        top: 0;
-        right: percentage(1/2);
-    }
-
-    .ad-slot--merchandising-high &,
-    .ad-slot--merchandising & {
-        top: 4px;
-    }
-
-    .ad-slot--gallery-inline & {
-        color: colour(neutral-3);
-
-        .inline-icon {
-            fill: colour(neutral-3);
-        }
-
-        .ad-slot--hide-ads {
-            color: colour(neutral-3);
-        }
-    }
-}
-
 .survey-close {
     position: absolute;
     cursor: pointer;
@@ -543,8 +493,8 @@
     }
 }
 
-.adfreesurvey-wrapper {
-    .adfreesurvey-wrapper-inner {
+.live-events-survey-wrapper {
+    .live-events-survey-wrapper-inner {
         margin: 0 auto;
         width: auto;
         padding: 0 $gs-gutter $gs-gutter;
@@ -662,14 +612,6 @@
             }
         }
 
-    }
-
-    &.adfreesurvey-simple-wrapper {
-        .adfreesurvey-wrapper-inner--footer {
-            @include mq(tablet) {
-                width: $gs-column-width*8;
-            }
-        }
     }
 
 }

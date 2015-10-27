@@ -12,8 +12,8 @@ define([
     return function () {
 
         this.id = 'LiveEventsSurvey';
-        this.start = '2015-10-22';
-        this.expiry = '2015-11-03';
+        this.start = '2015-10-22';.
+        this.expiry = '2015-11-10';
         this.author = 'Zofia Korcz';
         this.description = 'Survey to test if users will be interested in paying for the Guardian with free live streaming events';
         this.audience = 0.1;
