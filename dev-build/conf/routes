@@ -280,7 +280,6 @@ GET            /commercial/capi-single                                          
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/ad-free-survey                                                                                        controllers.commercial.StaticPageController.renderAdFreeSurveyPage()
-GET            /commercial/ad-free-survey-simple                                                                                 controllers.commercial.StaticPageController.renderAdFreeSurveySimplePage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
