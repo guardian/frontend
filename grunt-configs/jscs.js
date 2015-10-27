@@ -7,6 +7,9 @@ module.exports = function () {
             config: '.jscsrc'
         },
 
+        self: [
+            'Gruntfile.js'
+        ],
         'static/test/javascripts': {
             files: [{
                 expand: true,
