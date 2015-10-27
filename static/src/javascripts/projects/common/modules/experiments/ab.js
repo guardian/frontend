@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/most-pop-as-facia-cards',
     'common/modules/experiments/tests/onward-container-names',
+    'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/live-events-survey'
 ], function (
     reportError,
@@ -27,6 +28,7 @@ define([
     RtrtEmailMessage,
     MostPopAsFaciaCards,
     OnwardContainerNames,
+    InjectHeadlinesTest,
     LiveEventsSurvey
 ) {
 
@@ -37,6 +39,7 @@ define([
         new RtrtEmailMessage(),
         new MostPopAsFaciaCards(),
         new OnwardContainerNames(),
+        new InjectHeadlinesTest(),
         new LiveEventsSurvey()
     ]);
 

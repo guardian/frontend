@@ -21,7 +21,10 @@ class DfpDataHydrator extends Logging {
   private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
       try {
-        val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder)
+        val dfpLineItems =
+          DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder) filterNot {
+            _.getIsArchived
+          }
 
         val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
         val allAdUnits = AdUnitAgent.get.data
@@ -148,6 +151,26 @@ class DfpDataHydrator extends Logging {
       .withBindVariableValue("draftStatus", ComputedStatus.DRAFT.toString)
 
     loadLineItems(allSponsored) filter { lineItem =>
+      lineItem.targeting.customTargetSets exists { targetSet =>
+        targetSet.targets exists (_.isAdvertisementFeatureSlot)
+      }
+    }
+  }
+
+  def loadAdFeatures(expiredSince: JodaDateTime, expiringBefore: JodaDateTime): Seq[GuLineItem] = {
+    val statement = new StatementBuilder()
+      .where(
+        "LineItemType = :sponsored AND " +
+          "Status != :draft AND " +
+          "EndDateTime > :startTime AND " +
+          "EndDateTime < :endTime"
+      )
+      .withBindVariableValue("sponsored", LineItemType.SPONSORSHIP.toString)
+      .withBindVariableValue("draft", ComputedStatus.DRAFT.toString)
+      .withBindVariableValue("startTime", expiredSince.getMillis)
+      .withBindVariableValue("endTime", expiringBefore.getMillis)
+
+    loadLineItems(statement) filter { lineItem =>
       lineItem.targeting.customTargetSets exists { targetSet =>
         targetSet.targets exists (_.isAdvertisementFeatureSlot)
       }

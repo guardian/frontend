@@ -528,6 +528,11 @@
         @include mq(mobile, $until: leftCol) {
             max-height: 60px;
         }
+        @include mq($from: leftCol) {
+            .has-page-skin & {
+                max-height: 60px;
+            }
+        }
     }
 
     @include mq(leftCol) {
@@ -551,6 +556,16 @@
             margin-top: $gs-row-height/4;
         }
     }
+    @include mq($from: leftCol) {
+        .has-page-skin & {
+            float: right;
+            clear: right;
+            width: $left-column + $gs-gutter;
+            min-height: 90px;
+            margin: 0;
+            padding: 2px 0 $gs-baseline;
+        }
+    }
     @include mq(tablet, $until: leftCol) {
         float: right;
         clear: right;
@@ -559,16 +574,6 @@
     @include mq(wide) {
         width: $left-column-wide;
 
-        .has-page-skin & {
-            margin-left: 50%;
-            width: auto;
-            float: none;
-            margin-top: -$gs-row-height;
-
-            .ad-slot--paid-for-badge__link {
-                float: right;
-            }
-        }
         .has-page-skin .fc-container--has-toggle & {
             margin-right: gs-span(1);
         }

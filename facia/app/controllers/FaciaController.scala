@@ -44,7 +44,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
-  def renderContainerJson(id: String) = renderContainer(id)
+  def renderContainerJson(id: String) = renderContainer(id, false)
+
+  def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
 
   // Needed as aliases for reverse routing
   def renderRootFrontRss() = renderFrontRss(path = "")
@@ -111,9 +113,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
 
-  def renderContainer(id: String) = MemcachedAction { implicit request =>
+  def renderContainer(id: String, preserveLayout: Boolean = false) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    renderContainerView(id)
+    renderContainerView(id, preserveLayout)
   }
 
   def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
@@ -130,16 +132,23 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
 
-  private def renderContainerView(collectionId: String)(implicit request: RequestHeader): Future[Result] = {
+  private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Rendering container view for collection id $collectionId")
     getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
           val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
 
+          val containerLayout = {
+            if (preserveLayout)
+              Container.resolve(collection.collectionType)
+            else
+              Fixed(FixedContainers.fixedMediumFastXII)
+          }
+
           val containerDefinition = FaciaContainer(
             1,
-            Fixed(FixedContainers.fixedMediumFastXII),
+            containerLayout,
             CollectionConfigWithId(collectionId, config),
             CollectionEssentials.fromPressedCollection(collection)
           )
