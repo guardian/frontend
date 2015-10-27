@@ -480,7 +480,7 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
 
   private def setDropCap(p: Element): String = {
     val html = p.html
@@ -505,7 +505,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
     }
 
     document.getElementsByTag("h2").foreach{ h2 =>
-        if (h2.text() == "* * *") {
+        if (h2.text() == "* * *" && isImmersive) {
             h2.tagName("hr").addClass("section-rule").html("")
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
