@@ -87,6 +87,7 @@ define([
         ajaxPromise({
             url : config.page.userAttributesApiUrl + '/me/features',
             crossOrigin : true,
+            withCredentials : true,
             error : function () {}
         }).then(persistResponse, _.noop);
     }
@@ -96,7 +97,7 @@ define([
         expiryDate.setDate(expiryDate.getDate() + 1);
         cookies.add(PERSISTENCE_KEYS.ADFREE_COOKIE, JsonResponse.adFree);
         cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
-        cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, JsonResponse.adblockMessage);
+        cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     }
 
     return {

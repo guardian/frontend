@@ -62,7 +62,7 @@
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
-        padding-bottom: 1em;
+        padding-bottom: 1.5rem;
 
         @include mq(desktop) {
             font-size: 3.25rem;
@@ -72,7 +72,7 @@
     .content__standfirst {
         position: relative;
         padding-top: .33em;
-        padding-bottom: 1em;
+        padding-bottom: 1rem;
         margin-bottom: 0;
         color: #ffffff;
 
@@ -105,11 +105,6 @@
             max-height: 800px;
             background-position: center center;
             background-size: cover;
-
-            // Query is to target Safari only
-            @media screen and (min-color-index:0) and (-webkit-min-device-pixel-ratio:0) {
-                height: -webkit-calc(100vh - 48px); // To compensate for mobile Safari viewport height issue.
-            }
         }
 
         .content__head--desktop {
