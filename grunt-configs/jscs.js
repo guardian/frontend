@@ -7,8 +7,11 @@ module.exports = function () {
             config: '.jscsrc'
         },
 
-        self: [
+        'Gruntfile.js': [
             'Gruntfile.js'
+        ],
+        'grunt-configs': [
+            'grunt-configs/**/*.js'
         ],
         'static/test/javascripts': {
             files: [{

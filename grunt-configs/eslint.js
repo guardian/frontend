@@ -1,8 +1,11 @@
 'use strict';
 module.exports = function () {
     return {
-        self: [
+        'Gruntfile.js': [
             'Gruntfile.js'
+        ],
+        'grunt-configs': [
+            'grunt-configs/**/*.js'
         ],
         'static/test/javascripts': {
             files: [{
