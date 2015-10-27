@@ -190,6 +190,9 @@ class DfpDataHydrator extends Logging {
 
     dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
 
+      val exampleAssetUrl =
+        "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+
       val templatesQuery = new StatementBuilder()
         .where("status = :status and type = :type")
         .withBindVariableValue("status", CreativeTemplateStatus.ACTIVE.getValue)
@@ -236,8 +239,7 @@ class DfpDataHydrator extends Logging {
                     case u: UrlCreativeTemplateVariableValue =>
                       Option(u.getValue) getOrElse ""
                     case _: AssetCreativeTemplateVariableValue =>
-                      "https://tpc.googlesyndication" +
-                        ".com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+                      exampleAssetUrl
                     case other => "???"
                   }
                   soFar + (arg.getUniqueName -> argValue)
