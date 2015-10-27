@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function () {
     return {
         allFiles: [
             'static/src/stylesheets'

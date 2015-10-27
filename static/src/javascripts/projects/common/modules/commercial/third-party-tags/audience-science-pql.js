@@ -52,7 +52,9 @@ define([
                 segments = _(_.pairs(storedSegments[section]))
                     .filter(function (placement) {
                         //keyword `default` written in dot notation throws an exception IE8
+                        // jscs:disable requireDotNotation
                         return placement[1]['default']; //eslint-disable-line
+                        // jscs:enable requireDotNotation
                     })
                     .map(function (placement) {
                         return ['pq_' + placement[0], 'T'];
