@@ -10,7 +10,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
-import scala.concurrent.{Future, blocking}
+import scala.concurrent.Future
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
@@ -25,7 +25,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     if (DfpCachingSwitch.isSwitchedOn) {
       log.info("Refreshing data cache")
       val start = System.currentTimeMillis
-      val data = blocking(loadLineItems())
+      val data = loadLineItems()
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
@@ -46,7 +46,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       _ <- PlacementAgent.refresh()
     } {
       DfpAdFeatureCacheJob.run()
-      val data = blocking(loadLineItems())
+      val data = loadLineItems()
       val paidForTags = PaidForTag.fromLineItems(data.lineItems)
       CapiLookupAgent.refresh(paidForTags) map {
         _ => write(data)
