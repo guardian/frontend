@@ -1,84 +1,29 @@
-module.exports = function(grunt, options) {
+module.exports = function () {
     return {
+        // Folder specific config lives in here instead of `.jscsrc` because we
+        // you can't currently extend `.jscsrc` files:
+        // https://github.com/jscs-dev/node-jscs/issues/1106
         options: {
             config: '.jscsrc'
         },
-        es6: {
+
+        'static/test/javascripts': {
+            files: [{
+                expand: true,
+                cwd: 'static/test/javascripts',
+                src: ['**/*.js']
+            }]
+        },
+        'static/src': {
             options: {
+                // Because we can't extend, we assume the whole project is ES6
                 esnext: true,
                 esprima: 'esprima-fb'
             },
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/es6',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        'es6-tests': {
-            options: {
-                esnext: true
-            },
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/tests',
-                src: [
-                    '**/*.js',
-                    '!components/**/*.js'
-                ]
-            }]
-        },
-        test: {
-            options: {
-                esnext: true
-            },
-            files: [{
-                expand: true,
-                cwd: 'static/test/javascripts',
-                src: [
-                    '**/*.js',
-                    '!components/**/*.js'
-                ]
-            }]
-        },
-        common: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/common',
-                src: [
-                    '**/*.js',
-                    '!modules/discussion/comment-box.js',
-                    '!modules/discussion/comments.js',
-                    '!modules/discussion/loader.js'
-                ]
-            }]
-        },
-        facia: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/facia',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        membership: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/membership',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        bootstraps: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/bootstraps',
-                src: [
-                    '**/*.js'
-                ]
+                cwd: 'static/src',
+                src: ['**/*.js']
             }]
         }
     };
