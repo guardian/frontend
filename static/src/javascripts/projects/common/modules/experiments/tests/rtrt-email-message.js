@@ -6,7 +6,8 @@ define([
     'common/views/svgs',
     'common/utils/_',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/utils/mediator'
 ], function (
     config,
     template,
@@ -15,7 +16,8 @@ define([
     svgs,
     _,
     krux,
-    Id
+    Id,
+    mediator
 ) {
 
     var messageId = 'rtrt-email-message';
@@ -35,7 +37,8 @@ define([
                 linkName: 'email sign-up button',
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
-            createMessage = function (kruxSegmentId) {
+            kruxSegmentId = null,
+            createMessage = function () {
                 var messageShown = false,
                     omnitureEvent = '';
 
@@ -76,18 +79,22 @@ define([
             {
                 id: 'targeted-loyal-A',
                 test: function () {
-                    createMessage('p2lq8cs6r'); // 10 visits or more to the Guardian
+                    kruxSegmentId = 'p2lq8cs6r';
+                    mediator.once('modules:ui:cookiesBanner:notShown', createMessage); // 10 visits or more to the Guardian
                 }
             },
             {
                 id: 'targeted-loyal-B',
                 test: function () {
-                    createMessage('p2lryefg7'); // A visitor currently on the network front
+                    kruxSegmentId = 'p2lryefg7';
+                    mediator.once('modules:ui:cookiesBanner:notShown', createMessage); // A visitor currently on the network front
                 }
             },
             {
                 id: 'all',
-                test: createMessage // Any visitor, any page
+                test: function () {
+                    mediator.once('modules:ui:cookiesBanner:notShown', createMessage); // Any visitor, any page
+                }
             }
         ];
 
