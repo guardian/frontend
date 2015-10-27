@@ -5,6 +5,7 @@ import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
+import conf.Configuration
 import conf.switches.Switches._
 import layout.{WidthsByBreakpoint, ContentWidths}
 import layout.ContentWidths._
@@ -271,18 +272,36 @@ object AmpVideoSrcCleaner {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replicate: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+  import implicits.CollectionsOps._
+
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
-    links.foreach { link =>
-      if (link.tagName == "a") {
-        link.attr("href", LinkTo(link.attr("href"), edition))
-        link.attr("data-link-name", dataLinkName)
-        link.attr("data-component", dataLinkName.replace(" ", "-"))
-        link.addClass("u-underline")
+    val anchorLinks = links.filter(_.tagName == "a")
+    anchorLinks.foreach { link =>
+      link.attr("href", LinkTo(link.attr("href"), edition))
+      link.attr("data-link-name", dataLinkName)
+      link.attr("data-component", dataLinkName.replace(" ", "-"))
+      link.addClass("u-underline")
+    }
+
+    if (replicate) {
+      val guLinks = anchorLinks.filter(_.attr("href").startsWith(Configuration.site.host)).distinctBy(_.attr("href"))
+      if (!guLinks.isEmpty) {
+        body.getElementsByTag("body").headOption.map { articleBody =>
+          val linksDiv = articleBody.appendElement("div").addClass("element-replicated-links").addClass("js-replicated-links")
+          linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned in this page")
+          guLinks.foreach { link =>
+            val div = linksDiv.appendElement("div").addClass("element-rich-link--not-upgraded")
+            div.appendElement("a").attr("href", link.attr("href")).addClass("js-replicated-link").text(link.text())
+          }
+        }
       }
-      if (amp && link.hasAttr("style")) {
+    }
+
+    if (amp) {
+      links.filter(_.hasAttr("style")).foreach { link =>
         link.removeAttr("style")
       }
     }
@@ -510,7 +529,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
                 next.html(setDropCap(next))
-            } 
+            }
         }
     }
     document
