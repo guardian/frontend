@@ -23,7 +23,7 @@ export default class ClueInput extends React.Component {
         }
     }
 
-    render() {
+    render () {
         return (
             <input type='text'
                 className='crossword__anagram-helper__clue-input'

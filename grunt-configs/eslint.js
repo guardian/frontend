@@ -1,16 +1,17 @@
 'use strict';
 module.exports = function () {
     return {
-        self: [
+        'Gruntfile.js': [
             'Gruntfile.js'
+        ],
+        'grunt-configs': [
+            'grunt-configs/**/*.js'
         ],
         'static/test/javascripts': {
             files: [{
                 expand: true,
                 cwd: 'static/test/javascripts',
-                src: [
-                    '**/*.js'
-                ]
+                src: ['**/*.js']
             }],
             options: {
                 // https://github.com/eslint/eslint/issues/2824
@@ -22,9 +23,7 @@ module.exports = function () {
             files: [{
                 expand: true,
                 cwd: 'static/src',
-                src: [
-                    '**/*.js'
-                ]
+                src: ['**/*.js']
             }],
             options: {
                 // https://github.com/eslint/eslint/issues/2824

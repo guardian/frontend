@@ -37,7 +37,7 @@ define([
     ABTestReport.prototype.componentClass = 'abtest-report';
     ABTestReport.prototype.useBem = true;
 
-    ABTestReport.prototype.renderChart = function() {
+    ABTestReport.prototype.renderChart = function () {
         if (this.chart) {
             new google.visualization.LineChart(this.getElem('chart'))
                 .draw(google.visualization.arrayToDataTable(this.chart.data), {
@@ -64,7 +64,7 @@ define([
         }
     };
 
-    ABTestReport.prototype.prerender = function() {
+    ABTestReport.prototype.prerender = function () {
 
         this.elem.className += this.config.active ? ' abtest-item--active' : ' abtest-item--expired';
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
@@ -72,12 +72,12 @@ define([
 
     };
 
-    ABTestReport.prototype.ready = function() {
+    ABTestReport.prototype.ready = function () {
         if (this.chart) {
             var redraw = this.renderChart.bind(this);
             redraw();
             var timerid;
-            bean.on(window, 'resize', function() {
+            bean.on(window, 'resize', function () {
                 if (timerid) { window.clearTimeout(timerid); }
                 timerid = window.setTimeout(redraw, 150);
             });
