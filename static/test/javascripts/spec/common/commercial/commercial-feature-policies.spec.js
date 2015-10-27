@@ -266,16 +266,16 @@ define([
             });
         });
 
-        describe('Page tone policy', ()=> {
-            it('does not load commercial components on Match reports tone', ()=> {
-                config.hasTone = () => true;
+        describe('Page tone policy', function () {
+            it('does not load commercial components on Match reports tone', function () {
+                config.hasTone = function () { return true; };
 
                 const switches = commercialFeaturePolicies.getPolicySwitches().tonePolicy;
                 expect(switches.articleAsideAdverts).toBe(false);
             });
 
-            it('applies no changes otherwise', ()=> {
-                config.hasTone = () => false;
+            it('applies no changes otherwise', function () {
+                config.hasTone = function () { return false; };
                 const switches = commercialFeaturePolicies.getPolicySwitches().tonePolicy;
                 expect(switches).toBeUndefined();
             });
