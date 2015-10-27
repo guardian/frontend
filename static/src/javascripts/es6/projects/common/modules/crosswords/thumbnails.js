@@ -28,12 +28,12 @@ define([
 
                 if (enteredText) {
                     var el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    var _top = helpers.gridSize(row);
+                    var top = helpers.gridSize(row);
                     var left = helpers.gridSize(column);
 
                     bonzo(el).attr({
                         x: left + textXOffset,
-                        y: _top + textYOffset,
+                        y: top + textYOffset,
                         'class': 'crossword__cell-text'
                     }).text(enteredText);
 
@@ -78,8 +78,3 @@ define([
         makeTextCells: makeTextCells
     };
 })
-
-
-
-
-
