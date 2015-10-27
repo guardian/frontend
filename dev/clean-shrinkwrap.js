@@ -19,7 +19,8 @@ function cleanModule(module, name) {
 
   // keep `resolve` properties for git dependencies, delete otherwise
   delete module.from;
-  if (!(module.resolved && module.resolved.match(/^git(\+[a-z]+)?:\/\//))) {
+  if (!(module.resolved
+        && (module.resolved.match(/^git(\+[a-z]+)?:\/\//) || module.resolved.match(/^https?:\/\/github.com\//)))) {
     delete module.resolved;
   }
 

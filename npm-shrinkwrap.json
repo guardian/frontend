@@ -2088,6 +2088,7 @@
                 },
                 "emitter": {
                   "version": "1.0.1",
+                  "resolved": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
                   "dependencies": {
                     "indexof": {
                       "version": "0.0.1"
@@ -2109,7 +2110,8 @@
                       "version": "1.0.3",
                       "dependencies": {
                         "global": {
-                          "version": "2.0.1"
+                          "version": "2.0.1",
+                          "resolved": "https://github.com/component/global/archive/v2.0.1.tar.gz"
                         }
                       }
                     },
@@ -2131,7 +2133,8 @@
                       }
                     },
                     "xmlhttprequest": {
-                      "version": "1.5.0"
+                      "version": "1.5.0",
+                      "resolved": "https://github.com/LearnBoost/node-XMLHttpRequest/archive/0f36d0b5ebc03d85f860d42a64ae9791e1daa433.tar.gz"
                     },
                     "engine.io-parser": {
                       "version": "1.0.6",
@@ -2225,6 +2228,7 @@
                     },
                     "emitter": {
                       "version": "1.0.1",
+                      "resolved": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
                       "dependencies": {
                         "indexof": {
                           "version": "0.0.1"
