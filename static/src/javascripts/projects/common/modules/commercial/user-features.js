@@ -1,3 +1,4 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
     'common/utils/_',
     'common/utils/ajax-promise',
@@ -13,11 +14,33 @@ define([
     storage,
     identity
 ) {
-    var PERSISTENCE_KEYS = {
+    var userFeatures, PERSISTENCE_KEYS;
+
+    userFeatures = {
+        refresh : refresh,
+        isAdfree : isAdfree,
+        isPayingMember : isPayingMember,
+
+        /* Test methods */
+        _requestNewData : requestNewData,
+        _deleteOldData : deleteOldData,
+        _persistResponse : persistResponse
+    };
+
+    PERSISTENCE_KEYS = {
         ADFREE_COOKIE : 'gu_adfree_user',
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
         PAYING_MEMBER_COOKIE : 'gu_paying_member'
     };
+
+    function refresh() {
+        if (featuresEnabled() && identity.isUserLoggedIn() && needNewFeatureData()) {
+            userFeatures._requestNewData();
+        }
+        if (!featuresEnabled() || haveDataAfterSignout()) {
+            userFeatures._deleteOldData();
+        }
+    }
 
     function isAdfree() {
         // Defer to the value set by the preflight scripts
@@ -31,21 +54,12 @@ define([
         }
     }
 
-    function refresh() {
-        if (featureEnabled() && identity.isUserLoggedIn() && needNewFeatureData()) {
-            updateUserFeatures();
-        }
-        if (!featureEnabled() || haveDataAfterSignout()) {
-            cleanupOldData();
-        }
-    }
-
     function isPayingMember() {
         // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
         return identity.isUserLoggedIn() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false';
     }
 
-    function featureEnabled() {
+    function featuresEnabled() {
         return config.switches.advertOptOut || config.switches.adblock;
     }
 
@@ -76,14 +90,14 @@ define([
         return timeNow >= featuresExpiryTime;
     }
 
-    function cleanupOldData() {
+    function deleteOldData() {
         // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
         cookies.remove(PERSISTENCE_KEYS.ADFREE_COOKIE);
         cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
         cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     }
 
-    function updateUserFeatures() {
+    function requestNewData() {
         ajaxPromise({
             url : config.page.userAttributesApiUrl + '/me/features',
             crossOrigin : true,
@@ -100,9 +114,6 @@ define([
         cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     }
 
-    return {
-        refresh : refresh,
-        isAdfree : isAdfree,
-        isPayingMember : isPayingMember
-    };
+    return userFeatures;
 });
+/* jscs:enable */
