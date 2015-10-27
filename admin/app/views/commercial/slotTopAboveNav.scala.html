@@ -1,7 +1,7 @@
 @import common.dfp.LineItemReport
 @(env: String, slotReport: LineItemReport)
 
-@commercialMain(env, "Desktop Top-Above-Nav Slot") {
+@views.html.commercial.commercialMain(env, "Desktop Top-Above-Nav Slot") {
     <h4>Rules:</h4>
     <p>This slot will by default accommodate an ad of height 250px on business fronts unless there is an ad that:</p>
     <ul>
@@ -12,5 +12,5 @@
         <li>Geotargets the countries UK, US or Australia</li>
     </ul>
     <p>The ad will also appear on the Code site if it targets a test cookie.</p>
-    @commercial.fragments.slot(slotReport)
+    @views.html.commercial.fragments.slot(slotReport)
 }
