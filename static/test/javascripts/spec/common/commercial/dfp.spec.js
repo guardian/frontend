@@ -282,7 +282,7 @@ define([
                 fastdom.defer(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     window.googletag.pubads().listener(makeFakeEvent(slotId));
-                    fastdom.defer(function () {
+                    fastdom.defer(10, function () {
                         expect($('.ad-slot__label', $slot[0]).text()).toBe('Advertisement');
                         done();
                     });
@@ -307,7 +307,7 @@ define([
                     window.googletag.pubads().listener(fakeEvent);
                     window.googletag.pubads().listener(fakeEvent);
 
-                    fastdom.defer(function () {
+                    fastdom.defer(10, function () {
                         expect($('.ad-slot__label', $slot[0]).length).toBe(1);
                         done();
                     });
