@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function () {
     return {
         spriteGeneration: {
             command: 'find . -name \'*.json\' -exec node spricon.js {} \\;',
@@ -58,7 +58,7 @@ module.exports = function(grunt, options) {
         },
 
         updateCanIUse: {
-          command: 'npm update caniuse-db'
+            command: 'npm update caniuse-db'
         }
     };
 };

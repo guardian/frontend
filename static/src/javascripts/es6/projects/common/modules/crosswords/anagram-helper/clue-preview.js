@@ -3,7 +3,7 @@ import _ from 'common/utils/_';
 
 export default class CluePreview extends React.Component {
 
-    letterHasBoundary(separators, letterIndex) {
+    letterHasBoundary (separators, letterIndex) {
         return _.some(separators, function (separator) {
             return separator === letterIndex;
         });

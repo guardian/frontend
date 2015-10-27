@@ -9,14 +9,22 @@
 
 @if(expired.nonEmpty) {
     <div>
-        <p>These ad feature logos have expired recently:</p>
+        @if(expired.size == 1) {
+            <p>This ad feature logo has expired recently:</p>
+        } else {
+            <p>These ad feature logos have expired recently:</p>
+        }
         <ul>@for(lineItem <- expired) {@showLineItem(lineItem)}</ul>
     </div>
 }
 
 @if(expiring.nonEmpty) {
     <div>
-        <p>These ad feature logos will be expiring soon:</p>
+        @if(expired.size == 1) {
+            <p>This ad feature logo will be expiring soon:</p> \
+        } else {
+            <p>These ad feature logos will be expiring soon:</p>
+        }
         <ul>@for(lineItem <- expiring) {@showLineItem(lineItem)}</ul>
         <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships#advertisement-feature-series</p>
     </div>
