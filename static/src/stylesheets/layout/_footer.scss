@@ -153,7 +153,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         @include mq(tablet) {
             display: block;
             margin-bottom: $gs-baseline;
-            width: gs-span(2);
+            width: 150px; // required to fit longer text
         }
     }
 }
