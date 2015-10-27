@@ -1,0 +1,36 @@
+$form-primary-colour: #ffffff;
+
+.email-sub__form {
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
+}
+
+.email-sub__submit-input {
+    border-color: $form-primary-colour;
+    color: $form-primary-colour;
+}
+
+.email-sub__text-input {
+    border: 1px solid $form-primary-colour;
+    color: red;// TODO update this
+    display: inline-block;
+    @include fs-textSans(3);
+    padding: 8px 8px 7px;
+    font-size: 16px;
+    line-height: 1.4;
+    outline: none;
+    @include border-radius(3);
+    width: 100%;
+    -webkit-appearance: none;
+
+    &:focus {
+        border-color: green; //TODO update this
+    }
+
+    @include mq(tablet) {
+        font-size: 14px;
+    }
+}
+
+.email-sub__small {
+    color: red; // TODO: Replace this
+}

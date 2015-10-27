@@ -38,6 +38,16 @@
         </div>
     </div>
 
+    <div class="l-footer__rtrt">
+        <div class="gs-container">
+            @fragments.email.emailSignUp(
+                "footer",
+                "Catch up when you wake up with <span class=\"email-sub__heading-emph\">The Guardian Today Email</span>",
+                "Subscribe to our daily email and recieve the most important headlines in your inbox each morning. <a href=\"/\">View example</a>"
+            )
+        </div>
+    </div>
+
     <div class="l-footer__secondary gs-container" role="contentinfo">
         <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
