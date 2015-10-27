@@ -3,20 +3,20 @@ define([
     'bonzo',
     'common/utils/_',
     'bean'
-], function(
+], function (
     $,
     bonzo,
     _,
     bean
 ) {
     function initialise() {
-        $('.browser-table').each(function() {
+        $('.browser-table').each(function () {
             var node  = $(this),
                 rows  = this.querySelectorAll('tbody tr'),
                 total = node.data('total');
 
             // Format large numbers
-            bonzo(this.querySelectorAll('.format-number')).each(function() {
+            bonzo(this.querySelectorAll('.format-number')).each(function () {
                 var value  = this.getAttribute('data-value'),
                     perc   = (value / total * 100).toFixed(2),
                     output = numberWithCommas(value)
@@ -26,11 +26,11 @@ define([
             });
 
             // Do basic filtering on the table
-            bean.on(this.querySelector('.search-query'), 'keyup', _.debounce(function() {
+            bean.on(this.querySelector('.search-query'), 'keyup', _.debounce(function () {
                 var filter = new RegExp(this.value, 'i'),
                     filteredTotal = 0;
 
-                bonzo(rows).each(function() {
+                bonzo(rows).each(function () {
                     var rowValue = this.children[1].innerHTML.toLowerCase();
 
                     if (filter.test(rowValue)) {

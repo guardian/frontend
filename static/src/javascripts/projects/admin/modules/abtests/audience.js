@@ -9,7 +9,7 @@ define([
 ], function (
     _,
     Component,
-    audienceItem
+    AudienceItem
 ) {
 
     function Audience(config) {
@@ -26,18 +26,18 @@ define([
     Audience.prototype.componentClass = 'audience-breakdown';
     Audience.prototype.useBem = true;
 
-    Audience.prototype.prerender = function() {
+    Audience.prototype.prerender = function () {
 
         var testsContainer = this.getElem('tests');
 
-        this.config.tests.forEach(function(test) {
+        this.config.tests.forEach(function (test) {
             /*eslint-disable new-cap*/
-            new audienceItem({test: test}).render(testsContainer);
+            new AudienceItem({test: test}).render(testsContainer);
             /*eslint-enable new-cap*/
         });
     };
 
-    Audience.prototype.ready = function() {
+    Audience.prototype.ready = function () {
 
     };
 

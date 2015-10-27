@@ -7,7 +7,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/url'
-], function(
+], function (
     qwery,
     bean,
     bonzo,
@@ -33,13 +33,13 @@ define([
         ajax({
             url: '/ophan/ads/render-time?' + urlUtils.constructQuery({ platform: 'next-gen', hours: getHours() }),
             type: 'json'
-        }).then(function(nextGenData) {
+        }).then(function (nextGenData) {
             ajax({
                 url: '/ophan/ads/render-time?' + urlUtils.constructQuery({ platform: 'r2', hours: getHours() }),
                 type: 'json'
-            }).then(function(r2Data) {
+            }).then(function (r2Data) {
                 var r2Buckets = r2Data.buckets,
-                    graphData = [['Time', 'Next Gen', 'R2']].concat(nextGenData.buckets.map(function(bucket) {
+                    graphData = [['Time', 'Next Gen', 'R2']].concat(nextGenData.buckets.map(function (bucket) {
                         var r2Bucket = _.where(r2Buckets, {time: bucket.time});
                         return [
                             new Date(bucket.time),
@@ -57,12 +57,12 @@ define([
                         hAxis: {format: 'HH:mm'}
                     });
 
-            }).always(function() {
+            }).always(function () {
                 $adsRenderTime.removeClass('ajax-loading');
-            }).fail(function() {
+            }).fail(function () {
                 $adsRenderTime.addClass('ajax-failed');
             });
-        }).fail(function() {
+        }).fail(function () {
             $adsRenderTime
                 .removeClass('ajax-loading')
                 .addClass('ajax-failed');
@@ -80,8 +80,8 @@ define([
                     hours: getHours()
                 }),
                 type: 'json'
-            }).then(function(data) {
-                var graphData = [['Time', 'Next-Gen']].concat(data.buckets.map(function(bucket) {
+            }).then(function (data) {
+                var graphData = [['Time', 'Next-Gen']].concat(data.buckets.map(function (bucket) {
                     return [
                         new Date(bucket.time),
                         Math.max(bucket.avgTimeToRenderEnded / 1000, 0)
@@ -97,15 +97,15 @@ define([
                         hAxis: {format: 'HH:mm'},
                         trendlines: {0: {color: 'green'}}
                     });
-            }).always(function() {
+            }).always(function () {
                 $adRenderTime.removeClass('ajax-loading');
-            }).fail(function() {
+            }).fail(function () {
                 $adRenderTime.addClass('ajax-failed');
             });
         }
 
         // Update filter
-        qwery('.ad-render-filter__time .dropdown-menu a').forEach(function(opt) {
+        qwery('.ad-render-filter__time .dropdown-menu a').forEach(function (opt) {
             var $opt = bonzo(opt);
             if ($opt.attr('href') === '?hours=' + getHours()) {
                 $opt.parent().addClass('active');
@@ -129,7 +129,7 @@ define([
             'right',
             'merchandising-high',
             'merchandising'
-        ].forEach(function(adSlotName, i) {
+        ].forEach(function (adSlotName, i) {
                 $.create('<option></option>')
                     .val(adSlotName)
                     .text(adSlotName)
@@ -141,7 +141,7 @@ define([
             .append($label)
             .prependTo(qwery('.render-time--ad')[0]);
 
-        bean.on($select[0], 'change', function(e) {
+        bean.on($select[0], 'change', function (e) {
             var adSlot = e.target.value;
             window.history.pushState({}, '', '?ad-slot=' + adSlot + '&hours=' + getHours());
             $('#render-time--ad__graph').html('');
