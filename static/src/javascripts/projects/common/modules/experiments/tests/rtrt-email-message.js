@@ -23,7 +23,7 @@ define([
     return function () {
 
         var messageOptions = {
-                siteMessageLinkName: 'rtrt : message : email sign-up',
+                siteMessageLinkName: 'rtrt | message | email sign-up',
                 siteMessageCloseBtn: 'hide',
                 widthBasedMessage: true
             },
@@ -32,7 +32,7 @@ define([
                 messageTextWide: 'Get the day\'s top news and commentary delivered to your inbox each morning in our Guardian Today email',
                 messageTextNarrow: 'Get the day\'s top news and commentary delivered to your inbox each morning',
                 linkText: 'Sign up',
-                linkName: 'rtrt : message : email sign-up button',
+                linkName: 'email sign-up button',
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function (kruxSegmentId) {
@@ -40,8 +40,10 @@ define([
                 // and fire off an omniture tracking call
                 if (kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) {
                     new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-                    // Omniture is a global var
-                    window.s.trackLink(this, 'Email sign-up message for segment ' + kruxSegmentId + ' shown');
+                    // We nee the omniture library
+                    require('common/modules/analytics/omniture', function (omniture) {
+                        omniture.trackLinkImmediate('rtrt | message | email sign-up | message for segment ' + kruxSegmentId + ' shown');
+                    });
                 } else if (!kruxSegmentId) {
                     new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
                 }
@@ -61,7 +63,8 @@ define([
         this.idealOutcome = 'Users who are more loyal will sign up to email';
 
         this.canRun = function () {
-            return !Id.isUserLoggedIn(); // Only show to non-logged-in users, as testing email sign-up
+            return window.location.pathname !== '/world/2013/oct/04/1'
+                    && !Id.isUserLoggedIn(); // Only show to non-logged-in users, as testing email sign-up
         };
 
         this.variants = [

@@ -73,6 +73,8 @@ object FixedContainers {
 
   val footballTeamFixtures = slices(TTT)
 
+  val HeadlinesABTest = slices(HalfQuarterQl2Ql4)
+
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
   val all: Map[String, ContainerDefinition] = Map(
@@ -109,7 +111,7 @@ object DynamicContainers {
     ("dynamic/fast", DynamicFast),
     ("dynamic/slow", DynamicSlow),
     ("dynamic/package", DynamicPackage),
-    ("dynamic/slow-mpu", DynamicSlowMPU)
+    ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false))
   )
 
   def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {

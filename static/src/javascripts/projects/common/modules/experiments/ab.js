@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/switch-most-pop-related-content',
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/most-pop-as-facia-cards',
-    'common/modules/experiments/tests/onward-container-names'
+    'common/modules/experiments/tests/onward-container-names',
+    'common/modules/experiments/tests/inject-headlines-test'
 ], function (
     reportError,
     _,
@@ -27,8 +28,8 @@ define([
     SwitchMostPopAndRelatedContent,
     RtrtEmailMessage,
     MostPopAsFaciaCards,
-    OnwardContainerNames
-
+    OnwardContainerNames,
+    InjectHeadlinesTest
 ) {
 
     var TESTS = _.flatten([
@@ -38,7 +39,8 @@ define([
         new SwitchMostPopAndRelatedContent(),
         new RtrtEmailMessage(),
         new MostPopAsFaciaCards(),
-        new OnwardContainerNames()
+        new OnwardContainerNames(),
+        new InjectHeadlinesTest()
     ]);
 
     var participationsKey = 'gu.ab.participations';
