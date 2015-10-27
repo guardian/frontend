@@ -28,7 +28,8 @@ define([
      */
     function init() {
         if (config.switches.euCookieMsg) {
-            if (config.page.edition === 'UK' || config.page.edition === 'INT') {
+            var geoContinentCookie = cookies.get('GU_geo_continent');
+            if (geoContinentCookie && geoContinentCookie.toUpperCase() === 'EU') {
                 var EU_COOKIE_MSG = 'GU_EU_MSG',
                     euMessageCookie = cookies.get(EU_COOKIE_MSG);
                 if (!euMessageCookie || euMessageCookie != 'seen') {
