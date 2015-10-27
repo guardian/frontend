@@ -65,6 +65,7 @@
     "phantomjs": "1.9.18",
     "q": "1.0.1",
     "shoe": "0.0.11",
+    "sorted-object": "^1.0.0",
     "svgo": "0.4.5",
     "time-grunt": "1.2.0"
   },
