@@ -1,6 +1,6 @@
 define([
     'common/utils/_'
-], function(
+], function (
     _
 ) {
     function translate(load) {
@@ -9,7 +9,7 @@ define([
         var prefix = 'inline-',
             data = _.rest(relativeModuleId.split('/')),
             fileName = data.pop(),
-            typesClasses = _.map(data, function(imageType) {
+            typesClasses = _.map(data, function (imageType) {
                 return prefix + imageType;
             }).join(' ');
 
