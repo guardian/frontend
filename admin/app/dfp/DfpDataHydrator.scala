@@ -21,21 +21,11 @@ class DfpDataHydrator extends Logging {
   private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
       try {
-<<<<<<< HEAD
-        val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder)
-=======
         val dfpLineItems =
           DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder) filterNot {
             _.getIsArchived
           }
 
-        val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
-        val allAdUnits = AdUnitAgent.get.data
-        val placementAdUnits = PlacementAgent.get.data
-        val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
-        val allCustomTargetingValues = CustomTargetingValueAgent.get.data
-
->>>>>>> master
         dfpLineItems map { dfpLineItem =>
 
           val sponsor = for {
