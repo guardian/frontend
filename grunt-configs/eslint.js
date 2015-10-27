@@ -8,9 +8,7 @@ module.exports = function () {
             files: [{
                 expand: true,
                 cwd: 'static/test/javascripts',
-                src: [
-                    '**/*.js'
-                ]
+                src: ['**/*.js']
             }],
             options: {
                 // https://github.com/eslint/eslint/issues/2824
@@ -22,9 +20,7 @@ module.exports = function () {
             files: [{
                 expand: true,
                 cwd: 'static/src',
-                src: [
-                    '**/*.js'
-                ]
+                src: ['**/*.js']
             }],
             options: {
                 // https://github.com/eslint/eslint/issues/2824
