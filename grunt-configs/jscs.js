@@ -16,15 +16,29 @@ module.exports = function(grunt, options) {
                 ]
             }]
         },
+        'es6-tests': {
+            options: {
+                esnext: true
+            },
+            files: [{
+                expand: true,
+                cwd: 'static/src/javascripts/tests',
+                src: [
+                    '**/*.js',
+                    '!components/**/*.js'
+                ]
+            }]
+        },
         test: {
             options: {
                 esnext: true
             },
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/test',
+                cwd: 'static/test/javascripts',
                 src: [
-                    '**/*.js'
+                    '**/*.js',
+                    '!components/**/*.js'
                 ]
             }]
         },
