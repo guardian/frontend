@@ -4,7 +4,7 @@ define([
     'common/utils/proximity-loader',
     'common/modules/onward/onward-content',
     'common/utils/mediator',
-    'es6/projects/common/modules/crosswords/thumbnails'
+    './thumbnails'
 ], function (
     qwery,
     config,

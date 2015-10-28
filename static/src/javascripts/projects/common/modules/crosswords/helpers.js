@@ -1,6 +1,6 @@
 define([
     'common/utils/_',
-    'es6/projects/common/modules/crosswords/constants'
+    './constants'
 ], function (
     _,
     constants
