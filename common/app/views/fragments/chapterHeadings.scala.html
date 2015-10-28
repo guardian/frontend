@@ -7,7 +7,7 @@
         <h3 class="chapters__heading">Chapter guide</h3>
         <ol class="chapters__list">
             @content.chapterHeadings.map { case (linkId, linkText) =>
-                <li class="chapters__link"><a href="#@linkId">@linkText</a></li>
+                <li class="chapters__link"><a class="tone-colour" href="#@linkId">@linkText</a></li>
             }
         </ol>
     </div>
