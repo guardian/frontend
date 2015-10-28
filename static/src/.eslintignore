@@ -1,6 +1,5 @@
 **/stylesheets/**/*.js
 **/systemjs-config.js
-**/systemjs-bundle-config.js
 **/jspm_packages/**/*.js
 **/javascripts/bower_components/**/*.js
 **/javascripts/components/**/*.js
