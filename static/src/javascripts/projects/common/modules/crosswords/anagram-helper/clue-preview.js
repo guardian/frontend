@@ -85,7 +85,7 @@ define([
                         entry.value
                     );
                     return span;
-                }).bind(this))
+                }), this)
             );
         }
     });

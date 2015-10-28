@@ -44,7 +44,7 @@ define([
                             key: i
                         }, letter.value
                     );
-                }).bind(this))
+                }), this)
             );
         }
     });

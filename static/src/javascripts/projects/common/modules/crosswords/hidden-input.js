@@ -21,10 +21,6 @@ define([
             };
         },
 
-        componentDidMount: function () {
-            this.handleChange = this.handleChange.bind(this);
-        },
-
         componentDidUpdate: function () {
             if (detect.isBreakpoint({
                     max: 'mobile'

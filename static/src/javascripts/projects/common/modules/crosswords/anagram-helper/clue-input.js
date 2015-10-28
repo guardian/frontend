@@ -34,8 +34,8 @@ define([
                 placeholder: 'Enter letters',
                 maxLength: this.props.clue.length,
                 value: this.props.value,
-                onChange: this.onInputChange.bind(this),
-                onKeyDown: this.onKeyDown.bind(this)
+                onChange: this.onInputChange,
+                onKeyDown: this.onKeyDown
             });
         }
     });

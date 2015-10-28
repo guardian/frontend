@@ -17,10 +17,6 @@ define([
 ) {
     var Clue = React.createClass({
 
-        componentDidMount: function () {
-            this.onClick = this.onClick.bind(this);
-        },
-
         onClick: function () {
             this.props.setReturnPosition();
         },
@@ -122,10 +118,10 @@ define([
                             isSelected: clue.isSelected,
                             focusClue: function () {
                                 this.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
-                            }.bind(this),
+                            },
                             setReturnPosition: function () {
                                 this.props.setReturnPosition(window.scrollY);
-                            }.bind(this)
+                            }
                         });
                     });
             }.bind(this);

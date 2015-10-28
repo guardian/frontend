@@ -23,14 +23,6 @@ define([
             };
         },
 
-        componentDidMount: function () {
-            _.bindAll(this,
-                'reset',
-                'shuffle',
-                'onClueInput'
-            );
-        },
-
         componentWillReceiveProps: function (next) {
             // reset on clue change
             if (next.clue !== this.props.focussedEntry) {
@@ -118,7 +110,7 @@ define([
             var cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
             var entries = _.map(cells, function (coords) {
                 return this.props.grid[coords.x][coords.y];
-            }.bind(this));
+            }, this);
             var letters = this.shuffleWord(this.state.clueInput, entries);
 
             var inner = this.state.showInput ?
@@ -140,7 +132,7 @@ define([
                 }, inner),
                 React.createElement('button', {
                     className: 'button button--large button--tertiary crossword__anagram-helper-close',
-                    onClick: this.props.close.bind(this),
+                    onClick: this.props.close,
                     dangerouslySetInnerHTML: closeIcon
                 }),
                 React.createElement('button', {

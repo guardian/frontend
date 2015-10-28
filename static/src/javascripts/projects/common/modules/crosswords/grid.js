@@ -96,7 +96,7 @@ define([
 
                     if (cellProps.isEditable) {
                         cells.push(React.createElement(Cell, _.assign({}, cellProps, {
-                            handleSelect: this.handleSelect.bind(this),
+                            handleSelect: this.handleSelect,
                             x: x,
                             y: y,
                             key: 'cell_' + x + '_' + y,
@@ -106,10 +106,10 @@ define([
 
                         separators = separators.concat(_.map(this.getSeparators(x, y), function (separator, direction) {
                             return this.createSeparator(x, y, separator, direction);
-                        }.bind(this)));
+                        }, this));
                     }
-                }.bind(this));
-            }.bind(this));
+                }, this);
+            }, this);
 
             return React.createElement(
                 'svg', {

@@ -11,10 +11,6 @@ define([
 ) {
     var Cell = React.createClass({
 
-        componentDidMount: function () {
-            this.onClick = this.onClick.bind(this);
-        },
-
         onClick: function (event) {
             event.preventDefault();
             this.props.handleSelect(this.props.x, this.props.y);

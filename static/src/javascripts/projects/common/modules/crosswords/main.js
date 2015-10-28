@@ -60,25 +60,8 @@ define([
             var $game = $(React.findDOMNode(this.refs.game));
             var isIOS = detect.isIOS();
 
-            _.bindAll(this,
-                'onCheat',
-                'onSolution',
-                'onCheck',
-                'onCheckAll',
-                'onClearAll',
-                'onClearSingle',
-                'onToggleAnagramHelper',
-                'onSelect',
-                'onKeyDown',
-                'onClickHiddenInput',
-                'focusClue',
-                'insertCharacter',
-                'setReturnPosition',
-                'goToReturnPosition'
-            );
-
-            mediator.on('window:resize', _.debounce(this.setGridHeight.bind(this), 200));
-            mediator.on('window:orientationchange', _.debounce(this.setGridHeight.bind(this), 200));
+            mediator.on('window:resize', _.debounce(this.setGridHeight, 200));
+            mediator.on('window:orientationchange', _.debounce(this.setGridHeight, 200));
             this.setGridHeight();
 
             mediator.on('window:throttledScroll', function () {
@@ -440,7 +423,7 @@ define([
                     hasAnswered: helpers.checkClueHasBeenAnswered(this.state.grid, entry),
                     isSelected: this.clueIsInFocusGroup(entry)
                 };
-            }.bind(this));
+            }, this);
         },
 
         save: function () {
@@ -476,7 +459,7 @@ define([
                     var cell = this.state.grid[coords.x][coords.y];
                     var solution = cellAndSolution[1];
                     return (/^[A-Z]$/.test(cell.value) && cell.value !== solution);
-                }.bind(this)), function (cellAndSolution) {
+                }, this), function (cellAndSolution) {
                     return cellAndSolution[0];
                 });
 

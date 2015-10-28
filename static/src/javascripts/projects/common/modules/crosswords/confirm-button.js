@@ -47,7 +47,7 @@ define([
             return React.createElement(
                 'button',
                 _.assign({}, this.props, {
-                    onClick: this.confirm.bind(this),
+                    onClick: this.confirm,
                     className: className
                 }, this),
                 inner
