@@ -296,7 +296,7 @@ define([
         },
         lazyLoad = function () {
             if (slots.length === 0) {
-                mediator.off('window:throttledScroll');
+                mediator.off('window:throttledScroll', lazyLoad);
             } else {
                 var scrollTop    = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
