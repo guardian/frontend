@@ -480,6 +480,17 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
+case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("a").foreach{ a => 
+        a.addClass("in-body-link--immersive")
+      }
+    }
+    document
+  }
+}
+
 case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 
   private def setDropCap(p: Element): String = {
