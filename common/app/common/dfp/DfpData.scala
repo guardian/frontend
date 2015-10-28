@@ -3,6 +3,7 @@ package common.dfp
 import java.net.URLEncoder
 
 import common.Edition
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
@@ -99,7 +100,16 @@ object CustomTargetSet {
 }
 
 
-case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String)
+case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String) {
+
+  private def targetsCountry(name: String) = locationType == "COUNTRY" && name == name
+
+  lazy val targetsUk = targetsCountry("United Kingdom")
+
+  lazy val targetsUs = targetsCountry("United States")
+
+  lazy val targetsAustralia = targetsCountry("Australia")
+}
 
 object GeoTarget {
 
@@ -169,6 +179,15 @@ case class GuTargeting(adUnits: Seq[GuAdUnit],
   val hasAdTestTargetting: Boolean = adTestValue.isDefined
 
   val targetsR2Only: Boolean = customTargetSets exists (_.targetsR2Only)
+
+  def targetsSectionFrontDirectly(sectionId: String): Boolean = {
+    adUnits.exists { adUnit =>
+      val path = adUnit.path
+      path.length == 3 &&
+        path(1) == sectionId &&
+        path(2) == "front"
+    }
+  }
 }
 
 object GuTargeting {
@@ -202,7 +221,7 @@ case class GuLineItem(id: Long,
                       sponsor: Option[String],
                       status: String,
                       costType: String,
-                      creativeSizes: Seq[AdSize],
+                      creativePlaceholders: Seq[GuCreativePlaceholder],
                       targeting: GuTargeting,
                       lastModified: DateTime) {
 
@@ -232,14 +251,24 @@ case class GuLineItem(id: Long,
     }
   }
 
-  def targetsSectionFrontDirectly(sectionId: String): Boolean = {
-    targeting.adUnits.exists { adUnit =>
-      val path = adUnit.path
-      path.length == 3 &&
-        path(1) == sectionId &&
-        path(2) == "front"
+  lazy val isSuitableForTopAboveNavSlot: Boolean = {
+
+    val placeholder = creativePlaceholders find { placeholder =>
+      placeholder.size == leaderboardSize || placeholder.size == responsiveSize
     }
+
+    costType == "CPD" &&
+      placeholder.nonEmpty && (
+      targeting.targetsSectionFrontDirectly("business") ||
+        placeholder.exists(_.targetsSectionFrontDirectly("business"))
+      ) &&
+      targeting.geoTargetsIncluded.exists { geoTarget =>
+        geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
+      } &&
+      startTime.isBefore(DateTime.now.plusDays(1))
   }
+
+  lazy val creativeSizes = creativePlaceholders map (_.size)
 }
 
 object GuLineItem {
@@ -257,7 +286,7 @@ object GuLineItem {
         "sponsor" -> lineItem.sponsor,
         "status" -> lineItem.status,
         "costType" -> lineItem.costType,
-        "sizes" -> lineItem.creativeSizes,
+        "creativePlaceholders" -> lineItem.creativePlaceholders,
         "targeting" -> lineItem.targeting,
         "lastModified" -> timeFormatter.print(lineItem.lastModified)
       )
@@ -273,10 +302,35 @@ object GuLineItem {
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
       (JsPath \ "costType").read[String] and
-      (JsPath \ "sizes").read[Seq[AdSize]] and
+      (JsPath \ "creativePlaceholders").read[Seq[GuCreativePlaceholder]] and
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
+}
+
+
+case class GuCreativePlaceholder(size: AdSize, targeting: Option[GuTargeting]) {
+
+  def targetsSectionFrontDirectly(sectionId: String): Boolean = {
+    targeting.exists(_.targetsSectionFrontDirectly("business"))
+  }
+}
+
+object GuCreativePlaceholder {
+
+  implicit val writes: Writes[GuCreativePlaceholder] = new Writes[GuCreativePlaceholder] {
+    def writes(placeholder: GuCreativePlaceholder): JsValue = {
+      Json.obj(
+        "size" -> placeholder.size,
+        "targeting" -> placeholder.targeting
+      )
+    }
+  }
+
+  implicit val reads: Reads[GuCreativePlaceholder] = (
+    (JsPath \ "size").read[AdSize] and
+      (JsPath \ "targeting").readNullable[GuTargeting]
+    )(GuCreativePlaceholder.apply _)
 }
 
 

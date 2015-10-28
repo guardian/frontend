@@ -36,18 +36,23 @@ define([
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function (kruxSegmentId) {
-                // If a segment Id is passed and the user is in the segment, show the message
-                // and fire off an omniture tracking call
-                if (kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) {
-                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-                    // We nee the omniture library
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | message | email sign-up | message for segment ' + kruxSegmentId + ' shown');
-                    });
-                } else if (!kruxSegmentId) {
-                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+                var messageShown = false,
+                    omnitureEvent = '';
+
+                // If a segment Id is passed and the user is in the segment
+                // or there is no kruxSegmentId passed in
+                // show the message
+                if ((kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) || !kruxSegmentId) {
+                    messageShown = new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+                    omnitureEvent = !kruxSegmentId ? 'message for all users shown' : 'message for segment ' + kruxSegmentId + ' shown' ;
                 }
 
+                // If the message was shown then pull in omniture and fire off an event
+                if (messageShown) {
+                    require('common/modules/analytics/omniture', function (omniture) {
+                        omniture.trackLinkImmediate('rtrt | message | email sign-up | ' + omnitureEvent);
+                    });
+                }
             };
 
         this.id = 'RtrtEmailMessage';
