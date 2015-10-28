@@ -121,9 +121,9 @@ define([
                             },
                             setReturnPosition: function () {
                                 this.props.setReturnPosition(window.scrollY);
-                            }
+                            }.bind(this)
                         });
-                    });
+                    }, this);
             }.bind(this);
 
             return React.createElement(
