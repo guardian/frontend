@@ -694,7 +694,6 @@ define([
                 React.createElement(Clues, {
                     clues: this.cluesData(),
                     focussed: focussed,
-                    focusClue: this.focusClue,
                     setReturnPosition: this.setReturnPosition
                 })
             );

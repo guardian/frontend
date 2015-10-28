@@ -116,9 +116,6 @@ define([
                             clue: clue.entry.clue,
                             hasAnswered: clue.hasAnswered,
                             isSelected: clue.isSelected,
-                            focusClue: function () {
-                                this.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
-                            },
                             setReturnPosition: function () {
                                 this.props.setReturnPosition(window.scrollY);
                             }.bind(this)
