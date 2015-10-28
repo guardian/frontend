@@ -73,10 +73,10 @@ define([
         shuffleWord: function (word, entries) {
             var wordEntries = _.chain(entries)
                 .map(function (entry) {
-                    return entry.value.toLowerCase()
+                    return entry.value.toLowerCase();
                 })
                 .filter(function (entry) {
-                    return _.contains(word, entry)
+                    return _.contains(word, entry);
                 })
                 .compact()
                 .value()
@@ -115,7 +115,7 @@ define([
             var clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
             var cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
             var entries = _.map(cells, function (coords) {
-                return this.props.grid[coords.x][coords.y]
+                return this.props.grid[coords.x][coords.y];
             }.bind(this));
             var letters = this.shuffleWord(this.state.clueInput, entries);
 

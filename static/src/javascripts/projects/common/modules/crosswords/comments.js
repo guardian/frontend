@@ -14,5 +14,5 @@ define([
                 new DiscussionLoader().attachTo(el);
             }
         }
-    }
+    };
 });

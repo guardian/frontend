@@ -52,10 +52,11 @@ define([
             var top = helpers.gridSize(y);
             var left = helpers.gridSize(x);
             var borderWidth = 1;
+            var width, height;
 
             if (direction === 'across') {
-                var width = constants.cellSize / 4;
-                var height = 1;
+                width = constants.cellSize / 4;
+                height = 1;
                 return React.createElement('rect', {
                     x: left - borderWidth / 2 - width / 2,
                     y: top + constants.cellSize / 2 + height / 2,
@@ -63,8 +64,8 @@ define([
                     height: height
                 });
             } else if (direction === 'down') {
-                var width = 1;
-                var height = constants.cellSize / 4;
+                width = 1;
+                height = constants.cellSize / 4;
                 return React.createElement('rect', {
                     x: left + constants.cellSize / 2 + width / 2,
                     y: top - borderWidth / 2 - height / 2,

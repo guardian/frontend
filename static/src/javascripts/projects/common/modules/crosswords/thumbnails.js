@@ -77,4 +77,4 @@ define([
         init: init,
         makeTextCells: makeTextCells
     };
-})
+});

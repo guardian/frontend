@@ -8,4 +8,4 @@ define(function () {
         down: 40,
         'delete': 46
     };
-})
+});

@@ -6,7 +6,7 @@ define([
     _
 ) {
     var round = function (x) {
-        return Math.round(x * 100) / 100
+        return Math.round(x * 100) / 100;
     };
     var Ring = React.createClass({
         /**

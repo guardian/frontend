@@ -37,13 +37,15 @@ define([
             var inner = this.state.confirming ?
                 'Confirm ' + this.props.text.toLowerCase() : this.props.text;
 
-            var className = classNames({
-                [this.props.className]: true,
-                'crossword__controls__button--confirm': this.state.confirming
-            });
+            var classes = {};
+            var className = classNames((
+                classes['crossword__controls__button--confirm'] = this.state.confirming,
+                classes[this.props.className] = true,
+                classes
+            ));
 
             return React.createElement(
-                "button",
+                'button',
                 _.assign({}, this.props, {
                     onClick: this.confirm.bind(this),
                     className: className

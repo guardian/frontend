@@ -290,18 +290,18 @@ define([
         clueMapKey: clueMapKey,
         cluesFor: cluesFor,
         buildClueMap: buildClueMap,
-        buildSeparatorMap,
+        buildSeparatorMap: buildSeparatorMap,
         cellsForEntry: cellsForEntry,
         cellsForClue: cellsForClue,
         entryHasCell: entryHasCell,
         gridSize: gridSize,
         mapGrid: mapGrid,
         getAnagramClueData: getAnagramClueData,
-        getLastCellInClue,
-        isFirstCellInClue,
-        isLastCellInClue,
-        getNextClueInGroup,
-        getPreviousClueInGroup,
+        getLastCellInClue: getLastCellInClue,
+        isFirstCellInClue: isFirstCellInClue,
+        isLastCellInClue: isLastCellInClue,
+        getNextClueInGroup: getNextClueInGroup,
+        getPreviousClueInGroup: getPreviousClueInGroup,
         clueIsInGroup: clueIsInGroup,
         getGroupEntriesForClue: getGroupEntriesForClue,
         getNumbersForGroupedEntries: getNumbersForGroupedEntries,
@@ -312,4 +312,4 @@ define([
         checkClueHasBeenAnswered: checkClueHasBeenAnswered,
         getClearableCellsForClue: getClearableCellsForClue
     };
-})
+});

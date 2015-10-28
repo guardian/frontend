@@ -16,5 +16,5 @@ define([
             initComments();
             initSeries();
         }
-    }
-})
+    };
+});

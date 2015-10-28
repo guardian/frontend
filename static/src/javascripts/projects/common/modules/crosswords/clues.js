@@ -86,7 +86,7 @@ define([
                     max: 'leftCol'
                 }) && (!prev.focussed || prev.focussed.id !== this.props.focussed.id)) {
                 fastdom.read(function () {
-                    this.scrollIntoView(this.props.focussed)
+                    this.scrollIntoView(this.props.focussed);
                 }.bind(this));
             }
         },
