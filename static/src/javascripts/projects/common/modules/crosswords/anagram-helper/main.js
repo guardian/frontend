@@ -123,10 +123,10 @@ define([
 
             var inner = this.state.showInput ?
                 React.createElement(ClueInput, {
-                    value: undefined.state.clueInput,
+                    value: this.state.clueInput,
                     clue: clue,
-                    onChange: undefined.onClueInput,
-                    onEnter: undefined.shuffle
+                    onChange: this.onClueInput,
+                    onEnter: this.shuffle
                 }) :
                 React.createElement(Ring, {
                     letters: letters
@@ -140,22 +140,22 @@ define([
                 }, inner),
                 React.createElement('button', {
                     className: 'button button--large button--tertiary crossword__anagram-helper-close',
-                    onClick: undefined.props.close.bind(undefined),
+                    onClick: this.props.close.bind(this),
                     dangerouslySetInnerHTML: closeIcon
                 }),
                 React.createElement('button', {
-                    className: 'button button--large ' + (!undefined.state.clueInput && 'button--tertiary'),
-                    onClick: undefined.reset
+                    className: 'button button--large ' + (!this.state.clueInput && 'button--tertiary'),
+                    onClick: this.reset
                 }, 'start again'),
                 React.createElement('button', {
-                    className: 'button button--large ' + (!undefined.canShuffle() && 'button--tertiary'),
-                    onClick: undefined.shuffle
+                    className: 'button button--large ' + (!this.canShuffle() && 'button--tertiary'),
+                    onClick: this.shuffle
                 }, 'shuffle'),
                 React.createElement(CluePreview, {
                     clue: clue,
                     entries: entries,
                     letters: letters,
-                    hasShuffled: !undefined.state.showInput
+                    hasShuffled: !this.state.showInput
                 })
             );
         }

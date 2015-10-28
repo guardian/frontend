@@ -132,7 +132,7 @@ define([
 
             return React.createElement(
                 'div', {
-                    className: 'crossword__clues--wrapper ' + (undefined.state.showGradient ? '' : 'hide-gradient')
+                    className: 'crossword__clues--wrapper ' + (this.state.showGradient ? '' : 'hide-gradient')
                 },
                 React.createElement(
                     'div', {

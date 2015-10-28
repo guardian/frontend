@@ -45,14 +45,14 @@ define([
             if (hasFocus && hasSolutions) {
                 controls.clue.unshift(React.createElement('button', {
                     className: buttonClassName + ' ' + buttonCurrentClassName,
-                    onClick: undefined.props.onClearSingle,
+                    onClick: this.props.onClearSingle,
                     key: 'clear-single'
                 }, 'Clear this'));
 
                 controls.clue.unshift(React.createElement(
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
-                        onClick: undefined.props.onCheat,
+                        onClick: this.props.onCheat,
                         key: 'cheat'
                     },
                     'Reveal this'
@@ -60,7 +60,7 @@ define([
                 controls.clue.unshift(React.createElement(
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
-                        onClick: undefined.props.onCheck,
+                        onClick: this.props.onCheck,
                         key: 'check'
                     },
                     'Check this'
@@ -70,7 +70,7 @@ define([
                 controls.clue.push(React.createElement(
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
-                        onClick: undefined.props.onToggleAnagramHelper,
+                        onClick: this.props.onToggleAnagramHelper,
                         key: 'anagram'
                     },
                     'Anagram helper'

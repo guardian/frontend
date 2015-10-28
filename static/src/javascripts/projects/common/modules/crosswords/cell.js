@@ -50,7 +50,7 @@ define([
             }
 
             return React.createElement('g', {
-                    onClick: undefined.onClick
+                    onClick: this.onClick
                 }, React.createElement('rect', {
                     x: left,
                     y: top,
@@ -58,8 +58,8 @@ define([
                     height: constants.cellSize,
                     className: classNames({
                         'crossword__cell': true,
-                        'crossword__cell--focussed': undefined.props.isFocussed,
-                        'crossword__cell--highlighted': undefined.props.isHighlighted
+                        'crossword__cell--focussed': this.props.isFocussed,
+                        'crossword__cell--highlighted': this.props.isHighlighted
                     })
                 }),
                 cellNumber,

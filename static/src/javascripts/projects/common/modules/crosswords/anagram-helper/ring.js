@@ -36,7 +36,7 @@ define([
                 'div', {
                     className: 'crossword__anagram-helper-shuffler'
                 },
-                _.map(undefined.props.letters, (function (letter, i) {
+                _.map(this.props.letters, (function (letter, i) {
                     return React.createElement(
                         'div', {
                             className: 'crossword__anagram-helper-shuffler__letter ' + (letter.entered ? 'entered' : ''),
