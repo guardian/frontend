@@ -96,7 +96,7 @@ define([
 
                     if (cellProps.isEditable) {
                         cells.push(React.createElement(Cell, _.assign({}, cellProps, {
-                            handleSelect: this.handleSelect.bind(this, x, y),
+                            handleSelect: this.handleSelect.bind(this),
                             x: x,
                             y: y,
                             key: 'cell_' + x + '_' + y,

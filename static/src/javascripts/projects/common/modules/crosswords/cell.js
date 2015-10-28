@@ -17,7 +17,7 @@ define([
 
         onClick: function (event) {
             event.preventDefault();
-            this.props.handleSelect();
+            this.props.handleSelect(this.props.x, this.props.y);
         },
 
         render: function () {
