@@ -230,8 +230,6 @@ define([
 
             player.persistvolume({namespace: 'gu.vjs'});
 
-            console.log('player');
-
             deferToAnalytics(function () {
 
                 events.initOmnitureTracking(player);
@@ -241,10 +239,8 @@ define([
                 if (mediaType === 'video') {
 
                     player.fullscreener();
-                    console.log(commercialFeatures.videoPreRolls, !blockVideoAds, !config.page.hasMultipleVideosInPage);
 
                     if (commercialFeatures.videoPreRolls && !blockVideoAds && !config.page.hasMultipleVideosInPage) {
-                        console.log('inside');
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
