@@ -176,6 +176,21 @@ define([
                 });
             }
         },
+        shouldFilterAdvert = function ($adSlot) {
+            return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
+
+            function isVisuallyHidden() {
+                return $css($adSlot, 'display') === 'none';
+            }
+
+            function isDisabledMobileBanner() {
+                return isMobileBannerTest() && $adSlot.hasClass('ad-slot--top');
+            }
+
+            function isDisabledCommercialFeature() {
+                return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
+            }
+        },
 
         /**
          * Loop through each slot detected on the page and define it based on the data
@@ -188,7 +203,7 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
+                    if (shouldFilterAdvert($adSlot)) {
                         fastdom.write(function () {
                             $adSlot.remove();
                         });
