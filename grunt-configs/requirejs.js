@@ -38,7 +38,7 @@ module.exports = function (grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components|es6|test$/i
+            fileExclusionRegExp: /^bower_components|test$/i
         },
         common: {
             options: {
