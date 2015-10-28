@@ -21,10 +21,6 @@ module.exports = function () {
             }]
         },
         'static/src': {
-            options: {
-                // Because we can't extend, we assume the whole project is ES6
-                esnext: true,
-            },
             files: [{
                 expand: true,
                 cwd: 'static/src',
