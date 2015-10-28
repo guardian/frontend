@@ -99,7 +99,7 @@ object InlineJs {
       } else {
         val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
 
-        lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
+        lazy val compiledCode = if (Switches.ClosureCompilerStandardOptimisation.isSwitchedOn) {
           JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
         } else {
           JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
