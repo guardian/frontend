@@ -101,10 +101,6 @@
     .content__head--desktop {
         height: 100vh;
         max-height: 800px;
-
-        @include mq(desktop) {
-            max-height: auto;
-        }
     }
 
     .content__header {
@@ -133,15 +129,6 @@
             height: 100%;
         }
 
-        .content__wrapper--headline {
-/*
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-*/
-        }
-
         .content__wrapper--standfirst {
             display: table-row-group;
             height: 1px;
@@ -153,6 +140,7 @@
             position: relative;
             background-position: center center;
             background-size: cover;
+            max-height: auto;
         }
 
         .content__head--mobile {
