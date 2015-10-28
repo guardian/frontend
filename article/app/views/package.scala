@@ -50,7 +50,7 @@ object BodyCleaner {
       LiveBlogLinkedData(article.isLiveBlog),
       BloggerBylineImage(article),
       LiveBlogShareButtons(article),
-      DropCaps(article.isComment || article.isFeature),
+      DropCaps(article.isComment || article.isFeature, article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner,
       MembershipEventCleaner,
