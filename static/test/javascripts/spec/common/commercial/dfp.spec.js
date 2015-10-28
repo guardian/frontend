@@ -223,6 +223,28 @@ define([
             expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
         });
 
+        it('should expose ads IDs', function () {
+            var fakeEventOne = makeFakeEvent('dfp-ad-slot1'),
+                fakeEventTwo = makeFakeEvent('dfp-ad-slot2');
+            
+            fakeEventOne.creativeId = '1';
+            fakeEventOne.lineItemId = '12';
+            fakeEventTwo.creativeId = '2';
+            fakeEventTwo.lineItemId = '22';
+
+            dfp.init();
+
+            window.googletag.cmd.forEach(function (func) { func(); });
+            window.googletag.pubads().listener(fakeEventOne);
+            window.googletag.pubads().listener(fakeEventTwo);
+
+            var result = dfp.getCreativeIDs();
+
+            expect(result.length).toBe(2);
+            expect(result[0]).toEqual({creativeId: '1', lineItemId: '12'});
+            expect(result[1]).toEqual({creativeId: '2', lineItemId: '22'});
+        });
+
         describe('pageskin loading', function () {
 
             it('should lazy load ads when there is no pageskin', function () {

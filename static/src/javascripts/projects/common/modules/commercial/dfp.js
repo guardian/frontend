@@ -78,6 +78,7 @@ define([
         rendered             = false,
         slots                = {},
         slotsToRefresh       = [],
+        slotIDs              = [],
         hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
         breakoutClasses      = [
             'breakout__html',
@@ -406,6 +407,12 @@ define([
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
+                // Store ads IDs for technical feedback
+                slotIDs.push({
+                    creativeId: event.creativeId,
+                    lineItemId: event.lineItemId
+                });
+
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
                 $adSlotContent = $('#' + slotId + ' div');
@@ -652,6 +659,10 @@ define([
             return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
         },
 
+        getCreativeIDs = function () {
+            return slotIDs;
+        },
+
         /**
          * Module
          */
@@ -662,6 +673,7 @@ define([
             getSlots:       getSlots,
             // Used privately but exposed only for unit testing
             shouldLazyLoad: shouldLazyLoad,
+            getCreativeIDs: getCreativeIDs,
 
             // testing
             reset: function () {
