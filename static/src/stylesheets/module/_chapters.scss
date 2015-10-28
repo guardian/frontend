@@ -1,11 +1,17 @@
 .chapters {
     margin-bottom: $gs-baseline;
+
+    .content__main-column & {
+        @include mq(desktop) {
+            display: none;
+        }
+    }
 }
 
 .chapters__heading {
     @include fs-header(1);
     border-top: 1px solid colour(neutral-6);
-    border-bottom: 1px solid colour(neutral-6);
+    border-bottom: 1px dotted colour(neutral-5);
     padding: $gs-baseline/4 0 $gs-baseline;
     margin-bottom: $gs-baseline/2;
 }
@@ -19,8 +25,15 @@
     }
 }
 
+.chapters__list-item:last-of-type {
+    .chapters__link {
+        border-left-color: transparent;
+    }
+}
+
 .chapters__link {
     position: relative;
+    display: block;
     padding-left: 1em;
     border-left: 1px solid colour(neutral-6);
     padding-bottom: $gs-baseline / 2;
@@ -37,18 +50,14 @@
         border-radius: 50%;
     }
 
-    &:last-of-type {
-        border-left: 0;
-    }
-
     &:hover {
         &:before {
             background-color: colour(neutral-2);
         }
     }
+}
 
-    a {
-        position: relative;
-        top: -3px;
-    }
+.chapters__link-text {
+    position: relative;
+    top: -3px;
 }

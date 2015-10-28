@@ -45,6 +45,8 @@
 
                         @fragments.contentMeta(article)
 
+                        @fragments.chapterHeadings(article)
+
                         @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
