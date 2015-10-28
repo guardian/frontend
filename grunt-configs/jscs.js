@@ -24,7 +24,6 @@ module.exports = function () {
             options: {
                 // Because we can't extend, we assume the whole project is ES6
                 esnext: true,
-                esprima: 'esprima-fb'
             },
             files: [{
                 expand: true,
