@@ -15,7 +15,7 @@ class DfpDataCacheJobTest extends FlatSpec with Matchers {
       sponsor = None,
       status = if (completed) "COMPLETED" else "READY",
       costType = "CPM",
-      creativeSizes = Nil,
+      creativePlaceholders = Nil,
       targeting = GuTargeting(adUnits = Nil,
         geoTargetsIncluded = Nil,
         geoTargetsExcluded = Nil,
