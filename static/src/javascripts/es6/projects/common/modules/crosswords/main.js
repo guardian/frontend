@@ -118,7 +118,7 @@ class Crossword extends React.Component {
         }
     }
 
-    setGridHeight() {
+    setGridHeight () {
 
         if (!this.$gridWrapper) {
             this.$gridWrapper = $(React.findDOMNode(this.refs.gridWrapper));
@@ -390,7 +390,7 @@ class Crossword extends React.Component {
     }
 
     // Focus first cell in given clue
-    focusFirstCellInClue(entry) {
+    focusFirstCellInClue (entry) {
         this.focusClue(entry.position.x, entry.position.y, entry.direction);
     }
 

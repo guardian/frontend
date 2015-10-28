@@ -77,6 +77,9 @@ define([
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
         }
         if (this.type === 'modal') { this.bindModalListeners(); }
+
+        // Tell the calling function that our message is shown
+        return true;
     };
 
     Message.prototype.bindModalListeners = function () {

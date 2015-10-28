@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         options: {
             baseUrl: 'static/src/javascripts',
@@ -145,7 +145,7 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
-        "image-content": {
+        'image-content': {
             options: {
                 name: 'bootstraps/image-content',
                 out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
@@ -172,8 +172,8 @@ module.exports = function(grunt, options) {
         football: {
             options: {
                 name: 'bootstraps/football',
-                    out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
-                    exclude: [
+                out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
+                exclude: [
                     'core',
                     'bootstraps/app',
                     'text',

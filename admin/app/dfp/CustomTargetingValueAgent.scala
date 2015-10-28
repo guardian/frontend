@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 
 import scala.util.Try
 

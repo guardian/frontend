@@ -15,8 +15,6 @@ System.config({
     "membership/*": "javascripts/projects/membership/*",
     "bundles/*": "bundles/*",
     "test/*": "javascripts/test/*",
-    "helpers/*": "javascripts/test/helpers/*",
-    "fixtures/*": "javascripts/test/fixtures/*",
     "es6/*": "javascripts/es6/*",
     "bootstraps/*": "javascripts/bootstraps/*",
     "vendor/*": "javascripts/vendor/*",
@@ -41,7 +39,6 @@ System.config({
     "enhancer": "github:guardian/enhancer@0.1.3",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
-    "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
     "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
     "picturefill": "common/utils/picturefill",
@@ -49,7 +46,6 @@ System.config({
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.13.2",
     "reqwest": "github:ded/reqwest@1.1.5",
-    "sinonjs": "bower:sinonjs@1.10.2",
     "socketio": "github:Automattic/socket.io-client@1.1.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
@@ -63,10 +59,6 @@ System.config({
     "videojsplaylist": "github:guardian/videojs-playlist@0.1.0",
     "when": "github:cujojs/when@3.7.3",
     "zxcvbn": "github:dropbox/zxcvbn@v1.0",
-    "bower:jasmine-sinon@0.4.0": {
-      "jasmine": "bower:jasmine@2.0.4",
-      "sinonjs": "bower:sinonjs@1.10.2"
-    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
