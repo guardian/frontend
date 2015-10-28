@@ -6,7 +6,8 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/modules/user-prefs',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/utils/mediator'
 ], function (
     config,
     $,
@@ -15,7 +16,8 @@ define([
     storage,
     template,
     userPrefs,
-    Message
+    Message,
+    mediator
 ) {
     /**
      * Rules:
@@ -36,12 +38,15 @@ define([
                         txt = 'Welcome to the Guardian. This site uses cookies, read our policy <a href="' + link + '" class="cookie-message__link">here</a>',
                         opts = {important: true},
                         cookieLifeDays = 365,
-                        msg = new Message('cookies');
-                    msg.show(txt, opts);
+                        msg = new Message('cookies', opts);
+                    msg.show(txt);
                     cookies.add(EU_COOKIE_MSG, 'seen', cookieLifeDays);
+                    return true;
                 }
             }
         }
+
+        mediator.emit('modules:ui:cookiesBanner:notShown');
     }
 
     return {
