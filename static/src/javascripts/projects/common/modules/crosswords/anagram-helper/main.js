@@ -17,16 +17,18 @@ define([
 ) {
     var AnagramHelper = React.createClass({
         getInitialState: function () {
+            return {
+                clueInput: '',
+                showInput: true
+            };
+        },
+
+        componentDidMount: function () {
             _.bindAll(this,
                 'reset',
                 'shuffle',
                 'onClueInput'
             );
-
-            return {
-                clueInput: '',
-                showInput: true
-            };
         },
 
         componentWillReceiveProps: function (next) {

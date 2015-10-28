@@ -14,6 +14,7 @@ define([
     Cell
 ) {
     var Grid = React.createClass({
+
         handleSelect: function (x, y) {
             this.props.onSelect(x, y);
         },

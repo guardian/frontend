@@ -45,6 +45,21 @@ define([
             this.rows = dimensions.rows;
             this.clueMap = helpers.buildClueMap(this.props.data.entries);
 
+            return {
+                grid: helpers.buildGrid(dimensions.rows, dimensions.cols, this.props.data.entries, persistence.loadGridState(this.props.data.id)),
+                cellInFocus: null,
+                directionOfEntry: null,
+                showAnagramHelper: false
+            };
+        },
+
+        componentDidMount: function () {
+            // Sticky clue
+            var $stickyClueWrapper = $(React.findDOMNode(this.refs.stickyClueWrapper));
+            var $grid = $(React.findDOMNode(this.refs.grid));
+            var $game = $(React.findDOMNode(this.refs.game));
+            var isIOS = detect.isIOS();
+
             _.bindAll(this,
                 'onCheat',
                 'onSolution',
@@ -61,21 +76,6 @@ define([
                 'setReturnPosition',
                 'goToReturnPosition'
             );
-
-            this.state = {
-                grid: helpers.buildGrid(dimensions.rows, dimensions.cols, this.props.data.entries, persistence.loadGridState(this.props.data.id)),
-                cellInFocus: null,
-                directionOfEntry: null,
-                showAnagramHelper: false
-            };
-        },
-
-        componentDidMount: function () {
-            // Sticky clue
-            var $stickyClueWrapper = $(React.findDOMNode(this.refs.stickyClueWrapper));
-            var $grid = $(React.findDOMNode(this.refs.grid));
-            var $game = $(React.findDOMNode(this.refs.game));
-            var isIOS = detect.isIOS();
 
             mediator.on('window:resize', _.debounce(this.setGridHeight.bind(this), 200));
             mediator.on('window:orientationchange', _.debounce(this.setGridHeight.bind(this), 200));

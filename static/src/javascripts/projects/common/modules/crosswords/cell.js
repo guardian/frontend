@@ -11,7 +11,7 @@ define([
 ) {
     var Cell = React.createClass({
 
-        getInitialState: function () {
+        componentDidMount: function () {
             this.onClick = this.onClick.bind(this);
         },
 

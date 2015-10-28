@@ -17,7 +17,7 @@ define([
 ) {
     var Clue = React.createClass({
 
-        getInitialState: function () {
+        componentDidMount: function () {
             this.onClick = this.onClick.bind(this);
         },
 

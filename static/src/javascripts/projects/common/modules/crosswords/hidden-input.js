@@ -16,10 +16,13 @@ define([
     var HiddenInput = React.createClass({
 
         getInitialState: function () {
-            this.handleChange = this.handleChange.bind(this);
             return {
                 value: this.props.value
             };
+        },
+
+        componentDidMount: function () {
+            this.handleChange = this.handleChange.bind(this);
         },
 
         componentDidUpdate: function () {
