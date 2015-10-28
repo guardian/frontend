@@ -120,7 +120,7 @@
                         return caches.match('/offline-page');
                     })
             );
-        // In dev, all requests come from one server (by default)
+        @* In dev, all requests come from one server (by default) *@
         } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
             // Default fetch behaviour
             // Cache first for all other requests
