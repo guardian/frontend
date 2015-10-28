@@ -125,9 +125,9 @@
             // Default fetch behaviour
             // Cache first for all other requests
             event.respondWith(
-                caches.match(event.request)
+                caches.match(request)
                     .then(function (response) {
-                        return response || fetch(event.request);
+                        return response || fetch(request);
                     })
             );
         }
