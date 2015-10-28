@@ -1,4 +1,5 @@
 {
+    "esnext": true,
     "preset": "crockford",
     "disallowQuotedKeysInObjects": null,
     "requireMultipleVarDecl": null,
