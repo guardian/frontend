@@ -1251,6 +1251,123 @@
     "btoa": {
       "version": "1.1.2"
     },
+    "check-dependencies": {
+      "version": "0.11.0",
+      "dependencies": {
+        "bluebird": {
+          "version": "2.10.2"
+        },
+        "bower-config": {
+          "version": "0.6.1",
+          "dependencies": {
+            "graceful-fs": {
+              "version": "2.0.3"
+            },
+            "mout": {
+              "version": "0.9.1"
+            },
+            "optimist": {
+              "version": "0.6.1",
+              "dependencies": {
+                "wordwrap": {
+                  "version": "0.0.3"
+                },
+                "minimist": {
+                  "version": "0.0.10"
+                }
+              }
+            },
+            "osenv": {
+              "version": "0.0.3"
+            }
+          }
+        },
+        "chalk": {
+          "version": "1.1.1",
+          "dependencies": {
+            "ansi-styles": {
+              "version": "2.1.0"
+            },
+            "escape-string-regexp": {
+              "version": "1.0.3"
+            },
+            "has-ansi": {
+              "version": "2.0.0",
+              "dependencies": {
+                "ansi-regex": {
+                  "version": "2.0.0"
+                }
+              }
+            },
+            "strip-ansi": {
+              "version": "3.0.0",
+              "dependencies": {
+                "ansi-regex": {
+                  "version": "2.0.0"
+                }
+              }
+            },
+            "supports-color": {
+              "version": "2.0.0"
+            }
+          }
+        },
+        "findup-sync": {
+          "version": "0.3.0",
+          "dependencies": {
+            "glob": {
+              "version": "5.0.15",
+              "dependencies": {
+                "inflight": {
+                  "version": "1.0.4",
+                  "dependencies": {
+                    "wrappy": {
+                      "version": "1.0.1"
+                    }
+                  }
+                },
+                "inherits": {
+                  "version": "2.0.1"
+                },
+                "minimatch": {
+                  "version": "3.0.0",
+                  "dependencies": {
+                    "brace-expansion": {
+                      "version": "1.1.1",
+                      "dependencies": {
+                        "balanced-match": {
+                          "version": "0.2.1"
+                        },
+                        "concat-map": {
+                          "version": "0.0.1"
+                        }
+                      }
+                    }
+                  }
+                },
+                "once": {
+                  "version": "1.3.2",
+                  "dependencies": {
+                    "wrappy": {
+                      "version": "1.0.1"
+                    }
+                  }
+                },
+                "path-is-absolute": {
+                  "version": "1.0.0"
+                }
+              }
+            }
+          }
+        },
+        "minimist": {
+          "version": "1.2.0"
+        },
+        "semver": {
+          "version": "5.0.3"
+        }
+      }
+    },
     "eslint-plugin-jasmine": {
       "version": "1.5.0"
     },
