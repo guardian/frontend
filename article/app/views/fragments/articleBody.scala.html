@@ -49,8 +49,6 @@
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
-                        @fragments.chapterHeadings(article)
-
                         <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
                             data-test-id="article-review-body">
                             @BodyCleaner(article, article.body, amp = amp)
@@ -64,6 +62,7 @@
                     </div>
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+                        @fragments.chapterHeadings(article)
                         <div class="ad-slot-container js-ad-slot-container"></div>
                         <div class="js-components-container"></div>
                     </div>
