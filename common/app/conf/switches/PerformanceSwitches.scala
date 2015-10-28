@@ -5,21 +5,12 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
-  val MinifyInlineJsSwitch = Switch(
+  val InlineJSStandardOptimisation = Switch(
     "Performance",
-    "minify-inline-js",
-    "If this switch is on, InlineJs output will be minified by closure compiler",
-    safeState = Off,
+    "inline-standard-optimisation",
+    "If this switch is on, the inline JS will be compressed using closure compiler's standard optimisation instead of whitespace only",
+    safeState = On,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MoreInlineHead = Switch(
-    "Performance",
-    "minify-more-inline-js",
-    "If this switch is on, applyRenderConditions.js, cloudwatchBeacons.js and shouldEnhance.js will be minified by closure",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 30),
     exposeClientSide = false
   )
 

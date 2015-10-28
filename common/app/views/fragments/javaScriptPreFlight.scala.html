@@ -15,28 +15,18 @@
 
     @* NOTE the order of these is important  *@
     @Html(templates.headerInlineJS.js.polyfills().body)
-    @if(Switches.MoreInlineHead.isSwitchedOn) {
-        @InlineJs.withFileNameHint(templates.headerInlineJS.js.shouldEnhance(item).body, "shouldEnhance.js")
-    } else {
-        @Html(templates.headerInlineJS.js.shouldEnhance(item).body)
-    }
+
+    @InlineJs.withFileNameHint(templates.headerInlineJS.js.shouldEnhance(item).body, "shouldEnhance.js")
+
     @Html(templates.headerInlineJS.js.config(item).body)
 
     @Html(templates.headerInlineJS.js.analytics().body)
 
-    @if(Switches.MoreInlineHead.isSwitchedOn) {
-        @InlineJs.withFileNameHint(templates.headerInlineJS.js.applyRenderConditions().body, "applyRenderConditions.js")
-    } else {
-        @Html(templates.headerInlineJS.js.applyRenderConditions().body)
-    }
+    @InlineJs.withFileNameHint(templates.headerInlineJS.js.applyRenderConditions().body, "applyRenderConditions.js")
 
     @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
-    @if(Switches.MoreInlineHead.isSwitchedOn) {
-        @InlineJs.withFileNameHint(templates.headerInlineJS.js.cloudwatchBeacons(item).body, "cloudwatchBeacons.js")
-    } else {
-        @Html(templates.headerInlineJS.js.cloudwatchBeacons(item).body)
-    }
+    @InlineJs.withFileNameHint(templates.headerInlineJS.js.cloudwatchBeacons(item).body, "cloudwatchBeacons.js")
 
 </script>
 
