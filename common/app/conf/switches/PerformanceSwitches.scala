@@ -5,10 +5,10 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
-  val ClosureCompilerStandardOptimisation = Switch(
+  val InlineJSStandardOptimisation = Switch(
     "Performance",
-    "closure-compiler-standard",
-    "If this switch is on, the closure compiler will use standard optimisation instead of whitespace only",
+    "inline-standard-optimisation",
+    "If this switch is on, the inline JS will be compressed using closure compiler's standard optimisation instead of whitespace only",
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
