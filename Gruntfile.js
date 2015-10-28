@@ -1,5 +1,13 @@
 'use strict';
 /* global module: false, process: false */
+
+var dependencyTest = require('check-dependencies').sync();
+
+if (dependencyTest.status !== 0) {
+    console.error(dependencyTest.error.join('\n')); // eslint-disable-line no-console
+    process.exit(dependencyTest.status);
+}
+
 var megalog = require('megalog');
 
 module.exports = function (grunt) {
