@@ -266,6 +266,21 @@ define([
             });
         });
 
+        describe('Page tone policy', function () {
+            it('does not load commercial components on Match reports tone', function () {
+                config.hasTone = function () { return true; };
+
+                var switches = commercialFeaturePolicies.getPolicySwitches().tonePolicy;
+                expect(switches.articleAsideAdverts).toBe(false);
+            });
+
+            it('applies no changes otherwise', function () {
+                config.hasTone = function () { return false; };
+                var switches = commercialFeaturePolicies.getPolicySwitches().tonePolicy;
+                expect(switches).toBeUndefined();
+            });
+        });
+
         describe('Switchboard policy', function () {
             it('disables badges when sponsored switch is off', function () {
                 config.switches.sponsored = false;

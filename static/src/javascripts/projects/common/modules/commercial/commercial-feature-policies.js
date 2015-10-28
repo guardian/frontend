@@ -97,6 +97,12 @@ define([
         }
     };
 
+    policies.tonePolicy = function () {
+        if (config.hasTone('Match reports')) {
+            return {articleAsideAdverts : false};
+        }
+    };
+
     policies.switchboard = function () {
         var switches = {};
 
