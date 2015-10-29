@@ -10,6 +10,7 @@ import model.Cached
 object ArchiveController extends Controller with Logging with ExecutionContexts {
 
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+  private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
   private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
   private val GoogleBot = """.*(Googlebot).*""".r
   private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
@@ -54,6 +55,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       case R1ArtifactUrl(path, artifactOrContextId, extension) =>
         val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
         Some(normalisedUrl)
+      case ShortUrl(path) =>
+        Some(path)
       case _ => None
     }
   }

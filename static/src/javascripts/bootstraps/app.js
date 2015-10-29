@@ -117,10 +117,11 @@ define([
             }
 
             if (config.switches.offlinePage) {
-                // Will fail on non-{HTTPS,localhost} pages
-                var navigator = window.navigator;
-                if (navigator && navigator.serviceWorker) {
-                    navigator.serviceWorker.register('/service-worker.js');
+                if (window.location.protocol === 'https:') {
+                    var navigator = window.navigator;
+                    if (navigator && navigator.serviceWorker) {
+                        navigator.serviceWorker.register('/service-worker.js');
+                    }
                 }
 
                 if (config.page.pageId === 'offline-page') {

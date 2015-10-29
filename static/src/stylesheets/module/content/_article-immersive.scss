@@ -105,11 +105,6 @@
             max-height: 800px;
             background-position: center center;
             background-size: cover;
-
-            // Query is to target Safari only
-            @media screen and (min-color-index:0) and (-webkit-min-device-pixel-ratio:0) {
-                height: -webkit-calc(100vh - 48px); // To compensate for mobile Safari viewport height issue.
-            }
         }
 
         .content__head--desktop {
@@ -164,6 +159,14 @@
         margin-top: $gs-baseline * 4;
         margin-bottom: $gs-baseline / 4;
         background-color: colour(neutral-7);
+    }
+
+    .in-body-link--immersive {
+        color: colour(feature-default);
+
+        &:hover {
+            border-bottom-color: rgba(colour(feature-default), .4);
+        }
     }
 
     .element + .section-rule {

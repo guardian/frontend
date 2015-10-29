@@ -6,7 +6,8 @@ define([
     'common/views/svgs',
     'common/utils/_',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/utils/mediator'
 ], function (
     config,
     template,
@@ -15,7 +16,8 @@ define([
     svgs,
     _,
     krux,
-    Id
+    Id,
+    mediator
 ) {
 
     var messageId = 'rtrt-email-message';
@@ -36,18 +38,25 @@ define([
                 arrowWhiteRight: svgs('arrowWhiteRight')
             },
             createMessage = function (kruxSegmentId) {
-                // If a segment Id is passed and the user is in the segment, show the message
-                // and fire off an omniture tracking call
-                if (kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) {
-                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-                    // We nee the omniture library
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | message | email sign-up | message for segment ' + kruxSegmentId + ' shown');
-                    });
-                } else if (!kruxSegmentId) {
-                    new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
-                }
+                var messageShown = false,
+                    omnitureEvent = '';
 
+                return function () {
+                    // If a segment Id is passed and the user is in the segment
+                    // or there is no kruxSegmentId passed in
+                    // show the message
+                    if ((kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) || !kruxSegmentId) {
+                        messageShown = new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+                        omnitureEvent = !kruxSegmentId ? 'message for all users shown' : 'message for segment ' + kruxSegmentId + ' shown' ;
+                    }
+
+                    // If the message was shown then pull in omniture and fire off an event
+                    if (messageShown) {
+                        require('common/modules/analytics/omniture', function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | message | email sign-up | ' + omnitureEvent);
+                        });
+                    }
+                };
             };
 
         this.id = 'RtrtEmailMessage';
@@ -71,18 +80,20 @@ define([
             {
                 id: 'targeted-loyal-A',
                 test: function () {
-                    createMessage('p2lq8cs6r'); // 10 visits or more to the Guardian
+                    mediator.once('modules:ui:cookiesBanner:notShown', createMessage('p2lq8cs6r')); // 10 visits or more to the Guardian
                 }
             },
             {
                 id: 'targeted-loyal-B',
                 test: function () {
-                    createMessage('p2lryefg7'); // A visitor currently on the network front
+                    mediator.once('modules:ui:cookiesBanner:notShown', createMessage('p2lryefg7')); // A visitor currently on the network front
                 }
             },
             {
                 id: 'all',
-                test: createMessage // Any visitor, any page
+                test: function () {
+                    mediator.once('modules:ui:cookiesBanner:notShown', createMessage()); // Any visitor, any page
+                }
             }
         ];
 

@@ -6,6 +6,15 @@ import org.joda.time.LocalDate
 trait FeatureSwitches {
 
   // Features
+  val EuCookieMessageSwitch = Switch(
+    "Feature",
+    "eu-cookie-msg",
+    "Show the EU cookies message footer? On: yes, Off: no.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 11),
+    exposeClientSide = true
+  )
+
   val OfflinePageSwitch = Switch(
     "Feature",
     "offline-page",

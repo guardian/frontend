@@ -3,6 +3,7 @@
 @import _root_.dfp.printUniversalTime
 @import common.dfp.GuLineItem
 @import tools.DfpLink
+@import views.commercial.LineItemSupport.targetedAdUnits
 
 @lineItemTemplate(lineItem: GuLineItem) = {
     <li class="line-item">
@@ -10,11 +11,11 @@
         <div class="sub-line-item">Sizes: @for(size <- lineItem.creativeSizes){@{size.width}x@{size.height} }</div>
         <div class="sub-line-item">Starts: @printUniversalTime(lineItem.startTime)</div>
         <div>@for(endTime <- lineItem.endTime) {Ends: @printUniversalTime(endTime)}</div>
-        @if(lineItem.targeting.adUnits.nonEmpty) {
-            @if(lineItem.targeting.adUnits.size == 1) {
-                <div class="sub-line-item">Ad Unit: @{lineItem.targeting.adUnits.map(_.path.mkString("/"))}</div>
+        @if(targetedAdUnits(lineItem).nonEmpty) {
+            @if(targetedAdUnits(lineItem).size == 1) {
+                <div class="sub-line-item">Ad Unit: @{targetedAdUnits(lineItem)}</div>
             } else {
-                <div class="sub-line-item">Ad Units: @{lineItem.targeting.adUnits.map(_.path.mkString("/")).mkString(", ")}</div>
+                <div class="sub-line-item">Ad Units: @{targetedAdUnits(lineItem).mkString(", ")}</div>
             }
         }
         @if(lineItem.targeting.geoTargetsIncluded.nonEmpty) {
