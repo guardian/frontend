@@ -50,6 +50,7 @@ GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateC
 
 GET        /embed/card/*path.json                     controllers.RichLinkController.render(path)
 GET        /embed/card/*path                          controllers.RichLinkController.renderHtml(path)
+GET        /embed/headline/*path.json                 controllers.ReplicatedLinkController.render(path)
 
 # For tests
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)

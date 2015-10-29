@@ -110,6 +110,7 @@ GET            /video/end-slate/series/*seriesId.json                           
 GET            /video/end-slate/section/*sectionId.json                                                                          controllers.VideoEndSlateController.renderSection(sectionId)
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
+GET            /embed/headline/*path.json                                                                                        controllers.ReplicatedLinkController.render(path)
 # User tech feedback
 GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)

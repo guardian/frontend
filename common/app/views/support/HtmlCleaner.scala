@@ -266,7 +266,7 @@ object AmpVideoSrcCleaner {
     // All videos need to start with https for AMP.
     // Temperary code until all videos returned from CAPI are https
     if (videoSrc.startsWith("http:")) {
-      val (first, last) = videoSrc.splitAt(4);
+      val (first, last) = videoSrc.splitAt(4)
       first + "s" + last
     }
   }
@@ -278,7 +278,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
-    val anchorLinks = links.filter(_.tagName == "a")
+    val anchorLinks = links.filter(_.tagName == "a").toList
     anchorLinks.foreach { link =>
       link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
@@ -287,16 +287,11 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     }
 
     if (replicate) {
-      val guLinks = anchorLinks.filter(_.attr("href").startsWith(Configuration.site.host)).distinctBy(_.attr("href"))
-      if (!guLinks.isEmpty) {
-        body.getElementsByTag("body").headOption.map { articleBody =>
-          val linksDiv = articleBody.appendElement("div").addClass("element-replicated-links").addClass("js-replicated-links")
-          linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned in this page")
-          guLinks.foreach { link =>
-            val div = linksDiv.appendElement("div").addClass("element-rich-link--not-upgraded")
-            div.appendElement("a").attr("href", link.attr("href")).addClass("js-replicated-link").text(link.text())
+      replicatedLinks(body, anchorLinks) map {
+        case (articleBody, linksDiv) =>
+          putMentionedBefore(articleBody) map { mentionedBefore =>
+            mentionedBefore.before(linksDiv)
           }
-        }
       }
     }
 
@@ -319,6 +314,40 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
 
     body
   }
+
+  def replicatedLinks(document: Document, anchorLinks: List[Element]): Option[(Element, Element)] = {
+    val guLinks = getGULinks(anchorLinks)
+    if (guLinks.nonEmpty) {
+      document.getElementsByTag("body").headOption.map { articleBody =>
+        val linksDiv = document.createElement("div").addClass("element-replicated-links").addClass("js-replicated-links")
+        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned on this page")
+        guLinks.foreach { link =>
+          val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
+          div.appendElement("a").attr("href", link.attr("href")).addClass("js-replicated-link").text(link.text())
+        }
+        (articleBody, linksDiv)
+      }
+    } else {
+      None
+    }
+  }
+
+  def getGULinks(anchorLinks: List[Element]): List[Element] = {
+    anchorLinks
+      //.filter(_.attr("href").startsWith(Configuration.site.host))
+      .distinctBy(_.attr("href"))
+  }
+
+  /*
+  find the best place to put the mentioned... links in the article
+   */
+  def putMentionedBefore(element: Element): Option[Element] = {
+    Some(element.children)
+      .map(_.filter(_.text.endsWith(".")))
+      .filter(_.size >= 2)
+      .map(_.last)
+  }
+
 }
 
 case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {

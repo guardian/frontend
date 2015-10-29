@@ -7,6 +7,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
+    'common/modules/article/replicated-links',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
@@ -22,6 +23,7 @@ define([
     detect,
     mediator,
     urlutils,
+    replicatedLinks,
     richLinks,
     membershipEvents,
     openModule,
@@ -64,6 +66,7 @@ define([
             modules.initQuizListeners();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
+            replicatedLinks.upgradeLinks();
             membershipEvents.upgradeEvents();
             openModule.init();
             mediator.emit('page:article:ready');
