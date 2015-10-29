@@ -31,18 +31,12 @@ module.exports = function (grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                (options.isDev ? {
+                },{
                     expand: true,
-                    cwd: options.staticSrcDir + 'javascripts',
-                    src: [
+                    cwd: options.isDev ? options.staticSrcDir + 'javascripts' : options.requirejsDir,
+                    src: options.isDev ? [
                         'bootstraps/**/*.js'
-                    ],
-                    dest: options.staticTargetDir + 'javascripts'
-                } : {
-                    expand: true,
-                    cwd: options.requirejsDir,
-                    src: [
+                    ] : [
                         'core.js',
                         'core.js.map',
                         'bootstraps/app.js',
@@ -52,7 +46,7 @@ module.exports = function (grunt, options) {
                         'components/curl/curl-domReady.js'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
-                })
+                }
             ]
         },
         css: {
