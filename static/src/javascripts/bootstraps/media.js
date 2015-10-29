@@ -240,6 +240,7 @@ define([
 
                     player.fullscreener();
 
+                    //The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
                     if (commercialFeatures.videoPreRolls && !blockVideoAds && !config.page.hasMultipleVideosInPage) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
