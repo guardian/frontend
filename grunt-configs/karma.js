@@ -12,6 +12,9 @@ module.exports = function (grunt, options) {
         },
         membership: {
             configFile: options.testConfDir + 'membership.js'
+        },
+        es6: {
+            configFile: 'static/src/javascripts/test/conf/settings-es6.js'
         }
     };
 };
