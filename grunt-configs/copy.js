@@ -32,7 +32,14 @@ module.exports = function (grunt, options) {
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
                 },
-                {
+                (options.isDev ? {
+                    expand: true,
+                    cwd: options.staticSrcDir + 'javascripts',
+                    src: [
+                        'bootstraps/**/*.js'
+                    ],
+                    dest: options.staticTargetDir + 'javascripts'
+                } : {
                     expand: true,
                     cwd: options.requirejsDir,
                     src: [
@@ -45,7 +52,7 @@ module.exports = function (grunt, options) {
                         'components/curl/curl-domReady.js'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
-                }
+                })
             ]
         },
         css: {

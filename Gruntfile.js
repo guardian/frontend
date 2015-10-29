@@ -99,7 +99,11 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
+        if (!options.isDev) {
+            grunt.task.run(['concurrent:requireJS']);
+        }
+
+        grunt.task.run(['copy:javascript']);
 
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
