@@ -176,14 +176,14 @@ npm install
 Install additional dependencies:
 ```
 bundle
-grunt install
+make install
 ```
 
 npm and bundle are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```
-grunt compile
+make build
 ```
 
 ### Run the app
@@ -331,16 +331,11 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 
 ###Client-side development mode
 
-There is a `grunt watch` task available to build and watch for development
-changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
-so @mattosborn created a script called [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode).
-
-`grunt csdevmode` also pushes stylesheets to all connected browsers:
-no need to reload a page to preview your changes, just like with Livereload.
+There is a `make watch` task available to build and watch for development
+changes.
 
 ```bash
-grunt compile --dev
-grunt csdevmode
+make watch
 ```
 
 ## Useful information and hints
@@ -398,4 +393,3 @@ Further documentation notes and useful items can be found in [docs](docs).
 - [sbteclipse](https://github.com/typesafehub/sbteclipse)
 - [sbt-idea](https://github.com/mpeltonen/sbt-idea)
 - [magenta](https://github.com/guardian/deploy)
-- [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode)
