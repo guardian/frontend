@@ -7,7 +7,7 @@ import conf.LiveContentApi
 import model.Cached
 import play.api.mvc.{RequestHeader, Action, Controller}
 
-object ShortUrlsCampaignController extends Controller with Logging with ExecutionContexts {
+object ShortUrlsController extends Controller with Logging with ExecutionContexts {
 
   def redirectShortUrl(shortUrl: String) = Action.async { implicit request =>
     log.info(s"Redirecting short url $shortUrl")
