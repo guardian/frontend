@@ -22,7 +22,8 @@
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#v3.0.0",
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.3",
     "videojs-embed": "0.3.3",
-    "videojs-ima": "guardian/videojs-ima#0.2.1"
+    "videojs-ima": "guardian/videojs-ima#0.2.1",
+    "classnames": "~2.2.0"
   },
   "install": {
     "path": "components",
