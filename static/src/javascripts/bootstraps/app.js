@@ -56,12 +56,6 @@ define([
                 });
             }
 
-            if (config.page.contentType === 'Crossword') {
-                require(['bootstraps/crosswords'], function (crosswords) {
-                    bootstrapContext('crosswords', crosswords);
-                });
-            }
-
             if (config.page.contentType === 'LiveBlog') {
                 require(['bootstraps/liveblog', 'bootstraps/image-content'], function (liveBlog, imageContent) {
                     bootstrapContext('liveBlog', liveBlog);

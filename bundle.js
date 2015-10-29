@@ -19,7 +19,7 @@ var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
     ['core + system-script + domready', 'core'],
-    ['bootstraps/crosswords - core', 'crosswords'],
+    ['es6/bootstraps/crosswords - core', 'crosswords'],
     ['bootstraps/accessibility - core - bootstraps/app - bootstraps/facia', 'accessibility'],
     ['bootstraps/app - core', 'app'],
     ['bootstraps/commercial - core', 'commercial'],
