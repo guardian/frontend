@@ -14,8 +14,8 @@ switch (process.argv[2]) {
         notify(
             '`watch`        watch and automatically reload all JS/SCSS (use port 3000)\n' +
             '\n' +
-            '`build`        compile all assets for production \n' +
-            '`build-dev`    compile all assets for development \n' +
+            '`compile`      compile all assets for production \n' +
+            '`compile-dev`  compile all assets for development \n' +
             '\n' +
             '`install`      install all 3rd party dependencies \n' +
             '`reinstall`    uninstall then install all 3rd party dependencies \n' +
