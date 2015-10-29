@@ -12,9 +12,9 @@ compile-dev:
 install: install-application install-dev
 	@node dev/message.js install
 
-reinstall: clean install
+reinstall: uninstall install
 
-clean: clean-application clean-dev
+uninstall: uninstall-application uninstall-dev
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 test:
@@ -41,7 +41,7 @@ install-application:
 	@npm install
 	@echo '…done.'
 
-clean-application:
+uninstall-application:
 	@rm -rf node_modules
 
 install-dev:
@@ -52,5 +52,5 @@ install-dev:
 	@cd dev && npm install
 	@echo '…done.'
 
-clean-dev:
+uninstall-dev:
 	@rm -rf dev/node_modules

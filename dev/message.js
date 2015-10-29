@@ -19,8 +19,8 @@ switch (process.argv[2]) {
             '`compile-dev`  Compile all assets for development. \n' +
             '\n' +
             '`install`      Install all 3rd party dependencies. \n' +
-            '`clean`        Uninstall all 3rd party dependencies. \n' +
-            '`reinstall`    Alias for `make clean install`. \n' +
+            '`uninstall`    Uninstall all 3rd party dependencies. \n' +
+            '`reinstall`    Alias for `make uninstall install`. \n' +
             '\n' +
             '`shrinkwrap`   Shrinkwrap NPM packages. \n' +
             '\n' +
