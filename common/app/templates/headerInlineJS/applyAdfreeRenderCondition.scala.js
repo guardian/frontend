@@ -9,7 +9,6 @@
         } else {
             var adfreeUser = readCookie('gu_adfree_user');
             // If the user doesn't have the cookie yet, we keep displaying ads until we know their status
-            console.log(adfreeUser, typeof adfreeUser);
             return adfreeUser === 'true';
         }
     }
