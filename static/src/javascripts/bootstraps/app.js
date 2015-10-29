@@ -56,7 +56,7 @@ define([
                 });
             }
 
-            if (config.page.contentType === 'Crossword') {
+            if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-page') {
                 require(['bootstraps/crosswords'], function (crosswords) {
                     bootstrapContext('crosswords', crosswords);
                 });
