@@ -1,5 +1,4 @@
-default:
-	@node dev/message.js describeMakefile
+default: help
 
 watch: build-dev
 	@cd dev && make watch
@@ -26,6 +25,9 @@ validate:
 
 
 # internal targets
+
+help:
+	@node dev/message.js describeMakefile
 
 install-npm:
 	@echo 'Removing any unused application packages…'
