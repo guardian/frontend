@@ -14,7 +14,7 @@ define([
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/live-events-survey',
-    'common/modules/experiments/tests/nissan-topad'
+    'common/modules/experiments/tests/large-top-ad'
 ], function (
     reportError,
     _,
@@ -31,7 +31,7 @@ define([
     OnwardContainerNames,
     InjectHeadlinesTest,
     LiveEventsSurvey,
-    NissanTopAd
+    LargeTopAd
 ) {
 
     var TESTS = _.flatten([
@@ -43,7 +43,7 @@ define([
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
         new LiveEventsSurvey(),
-        new NissanTopAd()
+        new LargeTopAd()
     ]);
 
     var participationsKey = 'gu.ab.participations';
