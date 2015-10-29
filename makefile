@@ -3,25 +3,38 @@
 # feel free to use it, but it may change/disappear
 
 default:
-	grunt compile
+	@node dev/message.js describeMakefile
+
+prod-build:
+	@grunt compile
+
+dev-build:
+	@grunt compile --dev
 
 clean:
-	rm -rf node_modules
+	@echo "Removed node_modules."
 
-install:
-	npm prune && npm install
-	cd dev && make install
+install: install-npm install-dev
 
-reinstall:
-	$(MAKE) clean
-	$(MAKE) install
+install-npm:
+	@npm prune && npm install
+
+clean-npm:
+	@rm -rf node_modules
+
+install-dev:
+	@cd dev && npm prune && npm install
+
+clean-dev:
+	@rm -rf dev/node_modules
+
+reinstall: clean install
 
 test:
-	grunt test --dev
+	@grunt test --dev
 
 validate:
-	grunt validate
+	@grunt validate
 
-watch:
-	grunt compile --dev
-	cd dev && make watch
+watch: dev-build
+	@cd dev && make watch
