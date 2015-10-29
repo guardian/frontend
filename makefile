@@ -1,6 +1,6 @@
 default: help
 
-watch: build-dev
+watch: compile-dev
 	@cd dev && make watch
 
 compile:
