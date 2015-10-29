@@ -1,4 +1,5 @@
 .chapters {
+    position: relative;
     margin-bottom: $gs-baseline;
 
     .content__main-column & {
@@ -16,12 +17,31 @@
     margin-bottom: $gs-baseline/2;
 }
 
+.chapters__button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: $gs-baseline * 3;
+}
+
+.chapters__toggle-icon {
+    float: right;
+    fill: colour(neutral-2);
+}
+
 .chapters__list {
     margin: $gs-baseline/3 0 0 .429em;
     list-style: none;
+    display: none;
 
-    @include mq(tablet) {
-        column-count: 2;
+    @include mq(desktop) {
+        display: block;
+    }
+
+    .is-expanded & {
+        display: block;
     }
 }
 
