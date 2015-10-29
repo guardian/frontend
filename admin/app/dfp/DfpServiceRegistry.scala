@@ -3,7 +3,7 @@ package dfp
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.factory.DfpServices
-import com.google.api.ads.dfp.axis.v201411._
+import com.google.api.ads.dfp.axis.v201508._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}

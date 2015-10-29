@@ -95,7 +95,9 @@
     });
 
     this.addEventListener('fetch', function (event) {
-        if (doesRequestAcceptHtml(event.request)) {
+        var request = event.request;
+
+        if (doesRequestAcceptHtml(request)) {
             isCacheUpdated().then(function (isUpdated) {
                 if (!isUpdated) {
                     updateCache().then(deleteOldCaches);
@@ -103,22 +105,32 @@
             });
         }
 
-        event.respondWith(
-            fetch(event.request)
-                .catch(function () {
-                    // If a request is cached, respond with that. Otherwise respond
-                    // with the shell, whose subresources will be in the cache.
-                    return caches.match(event.request).then(function (response) {
-                        if (response) {
-                            return response;
-                        } else {
-                            if (doesRequestAcceptHtml(event.request)) {
-                                return caches.match('/offline-page');
-                            }
-                        }
+        var url = new URL(request.url);
+        var isRootRequest = url.host === self.location.host;
+        // To workaround a bug in Chrome which results in broken HTTPS->HTTP
+        // redirects, we only handle root requests if they match a HTTPS
+        // endpoint
+        // https://github.com/guardian/frontend/issues/10936
+        var isRequestToHttpsSection = url.pathname.match(/^\/info($|\/.*$)/);
+        if (isRootRequest && isRequestToHttpsSection && doesRequestAcceptHtml(request)) {
+            // HTML pages fallback to offline page
+            event.respondWith(
+                fetch(request)
+                    .catch(function () {
+                        return caches.match('/offline-page');
                     })
-                })
-        );
+            );
+        @* In dev, all requests come from one server (by default) *@
+        } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
+            // Default fetch behaviour
+            // Cache first for all other requests
+            event.respondWith(
+                caches.match(request)
+                    .then(function (response) {
+                        return response || fetch(request);
+                    })
+            );
+        }
     });
 }
 

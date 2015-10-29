@@ -1,5 +1,16 @@
 'use strict';
 /* global module: false, process: false */
+
+var task = process.argv[2];
+if (task !== 'install') {
+    var dependencyTest = require('check-dependencies').sync();
+
+    if (dependencyTest.status !== 0) {
+        console.error(dependencyTest.error.join('\n')); // eslint-disable-line no-console
+        process.exit(dependencyTest.status);
+    }
+}
+
 var megalog = require('megalog');
 
 module.exports = function (grunt) {
@@ -7,7 +18,6 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
     var options = {
-        useCluster: (grunt.option('cluster') !== undefined) ? Boolean(grunt.option('cluster')) : false,
         isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
@@ -92,19 +102,8 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        if (!options.isDev) {
-            if (options.useCluster) {
-                grunt.task.run('shell:jspmClusterBundleStatic');
-            } else {
-                grunt.task.run('shell:jspmBundleStatic');
-            }
-        }
-
-        if (options.isDev) {
-            grunt.task.run('replace:jspmSourceMaps');
-        }
-
         grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
+
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
@@ -127,16 +126,11 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'uglify:conf']);
+    grunt.registerTask('install', ['install:npm']);
     grunt.registerTask('install:npm', ['shell:npmInstall']);
 
     grunt.registerTask('prepare', function () {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');
-    });
-
-    grunt.registerTask('jspmInstall', function () {
-        megalog.error('`grunt jspmInstall` has been removed.\n\nUse `grunt install:jspm` instead… ');
     });
 
     /**

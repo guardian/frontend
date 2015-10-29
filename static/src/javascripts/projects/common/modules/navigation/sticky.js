@@ -8,7 +8,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/experiments/ab',
-    'common/modules/ui/smartAppBanner'
+    'common/modules/ui/smartAppBanner',
+    'common/modules/commercial/commercial-features'
 ], function (
     bean,
     qwery,
@@ -19,7 +20,8 @@ define([
     detect,
     mediator,
     ab,
-    smartAppBanner
+    smartAppBanner,
+    commercialFeatures
 ) {
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
@@ -44,7 +46,7 @@ define([
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
+        this.noTopBanner = !commercialFeatures.topBannerAd;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse();
 
@@ -178,7 +180,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    if (this.isSensitivePage) {
+                    if (this.noTopBanner) {
                         this.$els.navigation.css('display', 'block');
                     } else {
                         this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
@@ -200,7 +202,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    if (this.isSensitivePage) {
+                    if (this.noTopBanner) {
                         this.$els.navigation.css('display', 'none');
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
@@ -222,7 +224,7 @@ define([
         var bannerHeight = 0,
             scrollY = window.pageYOffset;
 
-        if (!this.isSensitivePage) {
+        if (!this.noTopBanner) {
             bannerHeight = this.$els.bannerDesktop.height() || 128;
         }
 
@@ -332,7 +334,7 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
-                    if (this.isSensitivePage) {
+                    if (this.noTopBanner) {
                         this.$els.navigation.css('display', 'block');
                     }
                 } else {
@@ -357,7 +359,7 @@ define([
 
                     this.$els.main.css('margin-top', '');
 
-                    if (this.isSensitivePage) {
+                    if (this.noTopBanner) {
                         this.$els.navigation.css('display', '');
                     }
                 }

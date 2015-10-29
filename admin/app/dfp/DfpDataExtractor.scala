@@ -1,7 +1,7 @@
 package dfp
 
 import common.Edition
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.dfp.AdSize.responsiveSize
 import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
 import org.joda.time.DateTime
 
@@ -38,21 +38,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   }
 
   val topAboveNavSlotTakeovers: Seq[GuLineItem] = dateSort {
-    lineItems filter { lineItem =>
-      lineItem.costType == "CPD" &&
-        lineItem.targetsSectionFrontDirectly("business") &&
-        lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
-          geoTarget.locationType == "COUNTRY" && (
-            geoTarget.name == "United Kingdom" ||
-              geoTarget.name == "United States" ||
-              geoTarget.name == "Australia"
-            )
-        } &&
-        lineItem.creativeSizes.exists { size =>
-          size == leaderboardSize || size == responsiveSize
-        } &&
-        lineItem.startTime.isBefore(DateTime.now.plusDays(1))
-    }
+    lineItems filter (_.isSuitableForTopAboveNavSlot)
   }
 
   val topBelowNavSlotTakeovers: Seq[GuLineItem] = dateSort {

@@ -112,27 +112,27 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   "DropCap" should "add the dropcap span to the first letter of the first paragraph" in {
-    val body = withJsoup(bodyWithoutInlines)(DropCaps(true)).body.trim
+    val body = withJsoup(bodyWithoutInlines)(DropCaps(true, false)).body.trim
     body should include ("""<span class="drop-cap__inner">""")
   }
 
   it should "not add the dropcap span when the paragraph is does not begin with a letter" in {
-    val body = withJsoup(bodyWithMarkup)(DropCaps(true)).body.trim
+    val body = withJsoup(bodyWithMarkup)(DropCaps(true, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
-  it should "not add the dropcap span when the paragraph is which begins with a word of less than two letters" in {
-    val body = withJsoup(bodyStartsWithTwoLetters)(DropCaps(true)).body.trim
+  it should "not add the dropcap span when the paragraph is which begins with a word of less than one Letter" in {
+    val body = withJsoup(bodyStartsWithOneLetter)(DropCaps(true, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
   it should "not add the dropcap span when first body element is not a paragraph" in {
-    val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true)).body.trim
+    val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
   it should "not add the dropcap span when when the article is not a feature" in {
-    val body = withJsoup(bodyWithoutInlines)(DropCaps(false)).body.trim
+    val body = withJsoup(bodyWithoutInlines)(DropCaps(false, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
@@ -263,10 +263,10 @@ class TemplatesTest extends FlatSpec with Matchers {
       </body>
     """
 
-  val bodyStartsWithTwoLetters =
+  val bodyStartsWithOneLetter =
     """
       <body>
-        <p>It was before Twitter, Whisper and Snapchat there was the Blog – the platform that made it possible for non-techies to publish on the internet. And if you grew up in the 90s, chances are you probably had one at some point – a Livejournal, a Blogger, a Wordpress or Diaryland. </p> <p>This year, the Blog turns 20. To mark the anniversary of the medium, we asked three blogging pioneers to look back on the transformation of the medium over the past two decades, and share their thoughts on new platforms like Snapchat and Twitter.</p> <p><strong>Dave Winer</strong> is an American <a href=\"http://en.wikipedia.org/wiki/Dave_Winer\">software developer</a>, entrepreneur and writer in New York City. He is noted for his contributions to outliners, scripting, content management and web services, as well as blogging and podcasting. He writes regularly at <a href=\"scripting.com\">Scripting News</a>, which he started in 1997.</p> <p><strong>Meg Hourihan</strong> has lived and worked on the web for nearly twenty years. As the co-founder of <a href=\"http://blogger.com/\">Blogger.com</a>, she lead the development of the seminal blogging tool acquired by Google in 2004. As the New York City-based mother of two young children, she regrets that she doesn't update <a href=\"http://www.megnut.com/\">www.megnut.com</a> nearly as much as she used to.</p> <p><strong>Justin Hall</strong> is a writer and entrepreneur. In 1994, Hall began publishing Justin's Links from the Underground, an early personal web site. In 2007 Hall lead a team making PMOG – a massively multiplayer online game layered on top of web surfing. Today Justin lives in San Francisco and publishes personal videos at <a href=\"http://links.net/\">http://links.net/</a>.</p>
+        <p>I am Twitter, Whisper and Snapchat there was the Blog – the platform that made it possible for non-techies to publish on the internet. And if you grew up in the 90s, chances are you probably had one at some point – a Livejournal, a Blogger, a Wordpress or Diaryland. </p> <p>This year, the Blog turns 20. To mark the anniversary of the medium, we asked three blogging pioneers to look back on the transformation of the medium over the past two decades, and share their thoughts on new platforms like Snapchat and Twitter.</p> <p><strong>Dave Winer</strong> is an American <a href=\"http://en.wikipedia.org/wiki/Dave_Winer\">software developer</a>, entrepreneur and writer in New York City. He is noted for his contributions to outliners, scripting, content management and web services, as well as blogging and podcasting. He writes regularly at <a href=\"scripting.com\">Scripting News</a>, which he started in 1997.</p> <p><strong>Meg Hourihan</strong> has lived and worked on the web for nearly twenty years. As the co-founder of <a href=\"http://blogger.com/\">Blogger.com</a>, she lead the development of the seminal blogging tool acquired by Google in 2004. As the New York City-based mother of two young children, she regrets that she doesn't update <a href=\"http://www.megnut.com/\">www.megnut.com</a> nearly as much as she used to.</p> <p><strong>Justin Hall</strong> is a writer and entrepreneur. In 1994, Hall began publishing Justin's Links from the Underground, an early personal web site. In 2007 Hall lead a team making PMOG – a massively multiplayer online game layered on top of web surfing. Today Justin lives in San Francisco and publishes personal videos at <a href=\"http://links.net/\">http://links.net/</a>.</p>
         <h2><strong>Who were you when you first started blogging? What was going on in your life?</strong></h2> <p><strong>DW:</strong> I was 39 when I started blogging. My life was more or less empty – I had sold my company, was well-off financially, and had just broken up in a long-term relationship. I was looking for something to do, and a friend, Sally Atkins, urged me to learn about the web. It was everything I had been looking for.<strong> If my life hadn't been empty I never would have spotted it so early.</strong></p> <p><strong>MH:</strong> I was 27. I’d started <a href=\"http://en.wikipedia.org/wiki/Pyra_Labs\">Pyra</a> (out of which came Blogger) six months earlier and I was in love with everything about the web and programming. My friends were too. The web was an open place where we shared everything. <strong>The web is no longer the small village where I grew up; it’s a megalopolis.</strong> I have two kids now, and though I feel the urge to share and write, I don’t make the time. The web is a part of me and who I am, but I don’t need to be online anymore. Actually it dawns on me that like Dave, I was lonely, and it helped me connect with people who liked the web and writing and computers. Now I like being offline for a week in the woods, alone!</p> <p><strong>JH:</strong> I started writing on the web in 1994 when I was 19 years old. I was fascinated by sex, psychedelic drugs and uptempo music with anarchic lyrics. I was attending Swarthmore College near Philadelphia, and I spent my summers in San Francisco getting closer to the heart of the web content machine. My headlong enthusiasm for the internet in those early days lead me to a number of similar folks who ended up inexorably altering my life. I grew through their friendship and mentoring, I studied their community-building ethic, and I flourished amidst their encouragement of eccentricity. </p>
       </body>
     """

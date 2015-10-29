@@ -27,7 +27,15 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |          "sponsor": "KIA",
       |          "status": "OK",
       |          "costType": "CPM",
-      |          "sizes":[{"width":300,"height":600}],
+      |          "creativePlaceholders": [
+      |            {
+      |              "size": {
+      |                "width": 300,
+      |                "height": 600
+      |              },
+      |              "targeting": null
+      |            }
+      |          ],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -92,7 +100,15 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |          "sponsor": "Unilever",
       |          "status": "OK",
       |          "costType": "CPM",
-      |          "sizes":[{"width":300,"height":600}],
+      |          "creativePlaceholders": [
+      |            {
+      |              "size": {
+      |                "width": 300,
+      |                "height": 600
+      |              },
+      |              "targeting": null
+      |            }
+      |          ],
       |          "targeting": {
       |            "adUnits": [
       |
@@ -146,7 +162,15 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |          "sponsor": "Unilever",
       |          "status": "OK",
       |          "costType": "CPM",
-      |          "sizes":[{"width":300,"height":600}],
+      |          "creativePlaceholders": [
+      |            {
+      |              "size": {
+      |                "width": 300,
+      |                "height": 600
+      |              },
+      |              "targeting": null
+      |            }
+      |          ],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -205,7 +229,15 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |          "sponsor": "Arizona State University",
       |          "status": "OK",
       |          "costType": "CPM",
-      |          "sizes":[{"width":300,"height":600}],
+      |          "creativePlaceholders": [
+      |            {
+      |              "size": {
+      |                "width": 300,
+      |                "height": 600
+      |              },
+      |              "targeting": null
+      |            }
+      |          ],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -265,7 +297,15 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |          "sponsor": "Fujitsu & Symantec",
       |          "status": "OK",
       |          "costType": "CPM",
-      |          "sizes":[{"width":300,"height":600}],
+      |          "creativePlaceholders": [
+      |            {
+      |              "size": {
+      |                "width": 300,
+      |                "height": 600
+      |              },
+      |              "targeting": null
+      |            }
+      |          ],
       |          "targeting": {
       |            "adUnits": [
       |
@@ -319,7 +359,15 @@ class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
       |          "sponsor": "SHELTER LONDON",
       |          "status": "OK",
       |          "costType": "CPM",
-      |          "sizes":[{"width":300,"height":600}],
+      |          "creativePlaceholders": [
+      |            {
+      |              "size": {
+      |                "width": 300,
+      |                "height": 600
+      |              },
+      |              "targeting": null
+      |            }
+      |          ],
       |          "targeting": {
       |            "adUnits": [
       |              {

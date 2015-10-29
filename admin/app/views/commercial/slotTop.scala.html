@@ -1,7 +1,7 @@
 @import common.dfp.LineItemReport
 @(env: String, slotReport: LineItemReport)
 
-@commercialMain(env, "Mobile Top Slot") {
+@views.html.commercial.commercialMain(env, "Mobile Top Slot") {
     <h4>Rules:</h4>
     <p>This slot will only open if there is an ad that:</p>
     <ul>
@@ -12,5 +12,5 @@
         <li>Targets the countries UK, US or Australia</li>
     </ul>
     <p>The ad will also appear on the Code site if it targets a test cookie.</p>
-    @commercial.fragments.slot(slotReport)
+    @views.html.commercial.fragments.slot(slotReport)
 }
