@@ -11,10 +11,14 @@
 
 .chapters__heading {
     @include fs-header(1);
-    border-top: 1px solid colour(neutral-6);
+    padding-bottom: $gs-baseline;
     border-bottom: 1px dotted colour(neutral-5);
-    padding: $gs-baseline/4 0 $gs-baseline;
     margin-bottom: $gs-baseline/2;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline/4;
+        border-top: 1px solid colour(neutral-6);
+    }
 }
 
 .chapters__button {
@@ -24,6 +28,7 @@
     right: 0;
     width: 100%;
     height: $gs-baseline * 3;
+    outline: 0;
 }
 
 .chapters__toggle-icon {
