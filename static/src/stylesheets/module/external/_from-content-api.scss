@@ -116,6 +116,10 @@
 .from-content-api pre {
     // Unset from `.from-content-api`
     word-wrap: normal;
+    background-color: #f6f9fb;
+    border: 1px solid #d3e1ea;
+    padding: $gs-baseline*.75 $gs-gutter*.75;
+    border-radius: 4px;
 }
 
 
