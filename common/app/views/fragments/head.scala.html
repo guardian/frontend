@@ -1,4 +1,4 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@(metaData: model.MetaData, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
 @import conf.switches.Switches._
 @import conf.Static
 @import conf.Configuration
@@ -52,4 +52,4 @@
 @fragments.stylesheetLinksEnable()
 
 @* load the app *@
-@fragments.javaScriptBootstraps(metaData, curlPaths)
+@fragments.javaScriptBootstraps(metaData)

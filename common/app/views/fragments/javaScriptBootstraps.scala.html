@@ -1,5 +1,4 @@
-@(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
-@import conf.switches.Switches._
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 
@@ -42,9 +41,6 @@
             }
         } else {
             paths: {
-                @curlPaths.map { case (module, path) =>
-                    '@module': '@Static(path)',
-                }
                 core:                       '@Static("javascripts/core.js")',
                 'facebook.js':              '//connect.facebook.net/en_US/all.js',
                 'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
