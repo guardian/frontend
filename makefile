@@ -9,12 +9,12 @@ compile:
 compile-dev:
 	@grunt compile-assets --dev
 
-install: install-npm install-dev
+install: install-application install-dev
 	@node dev/message.js install
 
 reinstall: clean install
 
-clean: clean-npm clean-dev
+clean: clean-application clean-dev
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 test:
@@ -29,7 +29,7 @@ validate:
 help:
 	@node dev/message.js describeMakefile
 
-install-npm:
+install-application:
 	@echo 'Removing any unused application packages…'
 	@npm prune
 	@echo '…done.'
@@ -37,7 +37,7 @@ install-npm:
 	@npm install
 	@echo '…done.'
 
-clean-npm:
+clean-application:
 	@rm -rf node_modules
 
 install-dev:
