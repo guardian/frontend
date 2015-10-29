@@ -67,8 +67,14 @@ define([
 
                 injectContainer.injectContainer(frontUrl);
                 mediator.once('ab-briefing-loaded', function () {
+                    var parent = $(".facia-page");
+                    parent.addClass("ab-front-injected");
+                    $('.js-tabs-content', parent).addClass('tabs__content--no-border');
+                    $('.js-tabs', parent).addClass('u-h');
 
-                });
+                    this.prerender(true);
+                    this.ready();
+                }.bind(this));
             } else {
                 this.fetch(qwery('.js-popular-trails'), 'html');
             }
@@ -79,10 +85,10 @@ define([
         return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1);
     };
 
-    MostPopular.prototype.prerender = function () {
+    MostPopular.prototype.prerender = function (inInjectFrontTest) {
         if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
-            this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
-                .append(createAdSlot('mostpop', 'container-inline'));
+            var $mpuEl = (inInjectFrontTest) ? $('#most-popular .js-fc-slice-mpu-candidate', this.elem) : $('.js-fc-slice-mpu-candidate', this.elem);
+            this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
         } else {
             this.$mpu = undefined;
         }

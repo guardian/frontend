@@ -8,8 +8,7 @@ define([
     'common/modules/analytics/register',
     'common/modules/lazyload',
     'common/modules/ui/expandable',
-    'common/modules/experiments/ab',
-    'common/modules/onward/inject-container'
+    'common/modules/experiments/ab'
 ], function (
     bonzo,
     qwery,
@@ -20,8 +19,7 @@ define([
     register,
     LazyLoad,
     Expandable,
-    ab,
-    injectContainer
+    ab
 ) {
 
     var opts;

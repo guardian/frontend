@@ -14,8 +14,6 @@ define([
         this.dataLinkNames = 'morning-briefing-ab';
         this.idealOutcome = '';
 
-        var d = new Date();
-
         this.canRun = function () {
             return true;
         };
