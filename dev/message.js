@@ -12,17 +12,20 @@ function notify(message, options, type) {
 switch (process.argv[2]) {
     case 'describeMakefile':
         notify(
-            '`watch`        watch and automatically reload all JS/SCSS (use port 3000)\n' +
+            '`watch`        Watch and automatically reload all JS/SCSS.\n' +
+            '             Uses port 3000 insead of 9000.\n' +
             '\n' +
-            '`compile`      compile all assets for production \n' +
-            '`compile-dev`  compile all assets for development \n' +
+            '`compile`      Compile all assets for production. \n' +
+            '`compile-dev`  Compile all assets for development. \n' +
             '\n' +
-            '`install`      install all 3rd party dependencies \n' +
-            '`reinstall`    uninstall then install all 3rd party dependencies \n' +
-            '`clean`        uninstall all 3rd party dependencies \n' +
+            '`install`      Install all 3rd party dependencies. \n' +
+            '`clean`        Uninstall all 3rd party dependencies. \n' +
+            '`reinstall`    Alias for `make clean install`. \n' +
             '\n' +
-            '`test`         run the JS test suite \n' +
-            '`validate`     lint all assets', {
+            '`shrinkwrap`   Shrinkwrap NPM packages. \n' +
+            '\n' +
+            '`test`         Run the JS test suite. \n' +
+            '`validate`     Lint all assets.', {
             heading: 'Frontend make options'
         }, 'info');
         break;
@@ -31,6 +34,13 @@ switch (process.argv[2]) {
         notify(
             'All 3rd party dependencies have been installed.', {
             heading: 'make install'
+        }, 'info');
+        break;
+
+    case 'shrinkwrap':
+        notify(
+            'NPM packages have been shrinkwrapped.', {
+            heading: 'make shrinkwrap'
         }, 'info');
         break;
 }

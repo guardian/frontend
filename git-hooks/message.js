@@ -9,6 +9,6 @@ switch (process.argv[2]) {
     break;
 
   case 'shrinkwrap':
-    megalog.error('This commit changes `package.json`, but doesn\'t include `npm-shrinkwrap.json`.\n\nIf you\'re updating npm packages, please run `npm shrinkwrap && node dev/clean-shrinkwrap.js` to write the new dependencies to `npm-shrinkwrap.json` and add that file before committing.');
+    megalog.error('You have changes to `package.json` but havn’t updated `npm-shrinkwrap.json`.\n\nPlease run `make shrinkwrap` and commit the changes to `npm-shrinkwrap.json`.');
     break;
 }

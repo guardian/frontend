@@ -23,6 +23,10 @@ test:
 validate:
 	@grunt validate
 
+shrinkwrap:
+	@npm shrinkwrap && node dev/clean-shrinkwrap.js
+	@node dev/message.js shrinkwrap
+
 
 # internal targets
 
