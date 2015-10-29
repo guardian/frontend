@@ -159,9 +159,6 @@ define([
             showRelativeDates: function () {
                 var dates = RelativeDates;
                 dates.init();
-                mediator.on('fragment:ready:dates', function (el) {
-                    dates.init(el);
-                });
             },
 
             initClickstream: function () {

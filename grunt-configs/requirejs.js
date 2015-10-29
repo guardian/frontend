@@ -262,18 +262,6 @@ module.exports = function (grunt, options) {
                 preserveLicenseComments: false
             }
         },
-        dev: {
-            options: {
-                name: 'bootstraps/dev',
-                out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text',
-                    'inlineSvg'
-                ]
-            }
-        },
         creatives: {
             options: {
                 name: 'bootstraps/creatives',
