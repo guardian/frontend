@@ -116,8 +116,9 @@
 .from-content-api pre {
     // Unset from `.from-content-api`
     word-wrap: normal;
-    background-color: #f6f9fb;
-    border: 1px solid #d3e1ea;
+    $x: lighten(colour(guardian-brand-light), 30%);
+    background-color: $x;
+    border: 1px solid darken($x, 10%);
     padding: $gs-baseline*.75 $gs-gutter*.75;
     border-radius: 4px;
 }
