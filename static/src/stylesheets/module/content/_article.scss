@@ -57,3 +57,11 @@
         display: none;
     }
 }
+
+//For an AB test where we inject the network front instead of most popular. To be removed afterwards
+.content-footer {
+    .l-side-margins:after,
+    .l-side-margins:before {
+        background: none;
+    }
+}

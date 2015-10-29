@@ -13,18 +13,17 @@ define([
     images,
     mediator
 ) {
-    var containerUrlTemplate = '/container/use-layout/{containerId}.json';
 
-    function injectContainer(containerId) {
+    function injectContainer(containerUrl) {
         return ajax({
-            url: containerUrlTemplate.replace('{containerId}', containerId),
+            url: containerUrl,
             crossOrigin: true
         }).then(function (resp) {
             if (resp.html) {
                 fastdom.write(function () {
-                    var $related = $('.js-related');
-                    $related.before(resp.html);
-                    $related.css({
+                    var $pop= $('.js-most-popular-footer');
+                    $pop.before(resp.html);
+                    $pop.css({
                         display: 'none'
                     });
                     images.upgradePictures();

@@ -9,7 +9,8 @@ define([
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/onward/inject-container'
 ], function (
     _,
     qwery,
@@ -21,7 +22,8 @@ define([
     createAdSlot,
     commercialFeatures,
     dfp,
-    ab
+    ab,
+    injectContainer
 ) {
 
     function MostPopular() {
@@ -44,7 +46,32 @@ define([
             this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');
             $('.js-most-popular-footer').attr('data-link-name', $mostPopFooter.attr('data-link-name') + ' most-popular-as-facia-cards');
         } else {
-            this.fetch(qwery('.js-popular-trails'), 'html');
+            if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
+
+                var frontUrl;
+
+                switch(config.page.edition) {
+                    case 'UK':
+                        frontUrl = '/uk.json';
+                        break;
+                    case 'US':
+                        frontUrl = '/us.json';
+                        break;
+                    case 'AU':
+                        frontUrl = '/au.json';
+                        break;
+                    case 'INT':
+                        frontUrl = '/international.json';
+                        break;
+                }
+
+                injectContainer.injectContainer(frontUrl);
+                mediator.once('ab-briefing-loaded', function () {
+
+                });
+            } else {
+                this.fetch(qwery('.js-popular-trails'), 'html');
+            }
         }
     };
 
