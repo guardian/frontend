@@ -67,4 +67,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABNissanTopAd = Switch(
+    "A/B Tests",
+    "nissan-topad",
+    "Testing the difference of user behaviour based on large top ad format",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
 }

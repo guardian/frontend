@@ -13,7 +13,8 @@ define([
     'common/modules/experiments/tests/most-pop-as-facia-cards',
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
-    'common/modules/experiments/tests/live-events-survey'
+    'common/modules/experiments/tests/live-events-survey',
+    'common/modules/experiments/tests/nissan-topad'
 ], function (
     reportError,
     _,
@@ -29,7 +30,8 @@ define([
     MostPopAsFaciaCards,
     OnwardContainerNames,
     InjectHeadlinesTest,
-    LiveEventsSurvey
+    LiveEventsSurvey,
+    NissanTopAd
 ) {
 
     var TESTS = _.flatten([
@@ -40,7 +42,8 @@ define([
         new MostPopAsFaciaCards(),
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
-        new LiveEventsSurvey()
+        new LiveEventsSurvey(),
+        new NissanTopAd()
     ]);
 
     var participationsKey = 'gu.ab.participations';
