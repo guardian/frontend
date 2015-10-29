@@ -1,12 +1,27 @@
-.email-sub__header {
-    background-color: #ffffff;
-}
+.email-sub__ { // Email subscription component namespace
 
-.email-sub-heading__emph {
-    color: guss-colour(guardian-brand, $pasteup-palette);
-}
+    &header {
+        background-color: $form-primary-colour;
+        font-family: $f-serif-headline;
+    }
 
-.email-sub__description {
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
-}
+    &heading {
+        line-height: 35px;
 
+        &-emph {
+            color: guss-colour(guardian-brand, $pasteup-palette);
+        }
+    }
+
+    &description {
+        border-top: 3px solid $form-secondary-colour;
+        color: $form-primary-colour;
+        background-color: guss-colour(guardian-brand, $pasteup-palette);
+        padding-top: 10px;
+
+        &-emph {
+            display: block;
+            font-weight: bold;
+        }
+    }
+}

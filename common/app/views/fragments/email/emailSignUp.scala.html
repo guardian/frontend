@@ -1,26 +1,27 @@
-@(componentClass: String, formHeading: String, formDescription: String, labelText: String = "Email sign-up", submitText: String = "Submit")
+@(  componentClass: String,
+    formHeading: String,
+    formDescription: String,
+    labelText: String = "Your Email Address",
+    submitText: String = "Subscribe",
+    smallText: String = "No spam ever. Unsubscribe in one click.")
 
 @formId = @{ componentClass + "-email-sub-form" }
 @inputId = @{ componentClass + "-email-sub-input" }
 
-@wrapperClass = @{"email-sub" + " email-sub--" + componentClass }
-@headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass }
+@wrapperClass = @{"email-sub js-email-sub" + " email-sub--" + componentClass }
 @formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
 
 <div class="@wrapperClass">
-    <div class="@headerClass">
-        <h2 class="email-sub__heading">@Html(formHeading)</h2>
-        @if(formDescription) {
-            <div class="email-sub__description">@Html(formDescription)</div>
-        }
-    </div>
+    @if(formHeading) {
+        @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription)
+    }
 
     <form action="/test/action" method="post" id="@formId" class="@formClass">
-        <div class="email-sub__inline-label">
-            <label class="email-sub__label" for="@inputId">@labelText</label>
-            <input class="email-sub__text-input" name="@inputId" id="@inputId" />
+        <div class="email-sub__inline-label js-email-sub__inline-label">
+            <label class="email-sub__label js-email-sub__label" for="@inputId">@labelText</label>
+            <input class="email-sub__text-input js-email-sub__text-input" type="text" name="@inputId" id="@inputId" />
         </div>
-        <button type="submit" class="email-sub__submit-input button button--tertiary button--small">@submitText</button>
-        <small class="email-sub__small">No spam ever. Unsubscribe in one click.</small>
+        <button type="submit" class="email-sub__submit-input button button--tertiary button--large">@submitText</button>
+        <small class="email-sub__small">@smallText</small>
     </form>
 </div>

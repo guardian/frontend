@@ -1,0 +1,19 @@
+@import 'vars';
+@import 'form';
+@import 'header';
+
+// Footer specific layout styles
+.email-sub--footer {
+    .email-sub__heading,
+    .email-sub__description,
+    .email-sub__form {
+        box-sizing: border-box;
+        padding-right: $gs-gutter * .5;
+        padding-left: $gs-gutter * .5;
+
+        @include mq(mobileLandscape) {
+            padding-right: $gs-gutter;
+            padding-left: $gs-gutter;
+        }
+    }
+}

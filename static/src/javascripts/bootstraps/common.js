@@ -52,6 +52,7 @@ define([
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
+    'common/modules/email/email-ui',
     'text!common/views/international-message.html',
     'bootstraps/identity-common'
 ], function (
@@ -106,6 +107,7 @@ define([
     pinterest,
     SaveForLater,
     membershipMessages,
+    emailUi,
     internationalMessage,
     identity
 ) {
@@ -367,6 +369,10 @@ define([
 
             showMembershipMessages: function () {
                 membershipMessages.init();
+            },
+
+            initEmailUi: function () {
+                emailUi.init();
             }
         };
 
@@ -417,6 +423,7 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
+                ['c-email', modules.initEmailUi],
                 ['c-user-features', userFeatures.refresh]
             ]), function (fn) {
                 fn();

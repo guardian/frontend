@@ -1,36 +1,75 @@
-$form-primary-colour: #ffffff;
+.email-sub__ { // Email subscription component namespace
 
-.email-sub__form {
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
-}
+    &form {
+        background-color: guss-colour(guardian-brand, $pasteup-palette);
+        font-family: $f-sans-serif-text;
+        padding: 20px;
 
-.email-sub__submit-input {
-    border-color: $form-primary-colour;
-    color: $form-primary-colour;
-}
-
-.email-sub__text-input {
-    border: 1px solid $form-primary-colour;
-    color: red;// TODO update this
-    display: inline-block;
-    @include fs-textSans(3);
-    padding: 8px 8px 7px;
-    font-size: 16px;
-    line-height: 1.4;
-    outline: none;
-    @include border-radius(3);
-    width: 100%;
-    -webkit-appearance: none;
-
-    &:focus {
-        border-color: green; //TODO update this
+        * {
+            box-sizing: border-box;
+        }
     }
 
-    @include mq(tablet) {
-        font-size: 14px;
+    &label {
+        color: $form-primary-colour;
     }
-}
 
-.email-sub__small {
-    color: red; // TODO: Replace this
+    &label--is-hidden {
+        visibility: hidden;
+    }
+
+    &text-input {
+        border: 1px solid $form-secondary-colour;
+        @include border-radius(1000px);
+        color: guss-colour(neutral-2, $pasteup-palette);
+        display: inline-block;
+        @include fs-textSans(3);
+        font-size: 16px;
+        padding: 8px 15px 7px;
+        line-height: 1.4;
+        outline: none;
+        width: 100%;
+
+        &:focus {
+            border-color: $form-primary-colour; //TODO update this
+        }
+
+        @include mq(tablet) {
+            font-size: 14px;
+        }
+    }
+
+    // Set with JS so we can use a real label
+    // instead of abusing the placeholder attr
+    // but displays correctly if JS doesn't load
+    &inline-label--enabled {
+        .email-sub__label {
+            color: guss-colour(neutral-2, $pasteup-palette);
+            line-height: 1.4;
+            padding: 8px 15px 7px;
+            position: absolute;
+        }
+    }
+
+    &submit-input {
+        border-color: $form-secondary-colour;
+        color: $form-primary-colour;
+        width: 100%;
+
+        &:focus,
+        &:hover {
+            border-color: $form-primary-colour;
+        }
+    }
+
+    &text-input,
+    &submit-input {
+        margin-bottom: 14.5px;
+    }
+
+    &small {
+        color: $form-secondary-colour;
+        display: block;
+        text-align: center;
+    }
 }
