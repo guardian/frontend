@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         options: {
             baseUrl: 'static/src/javascripts',
@@ -19,6 +19,7 @@ module.exports = function(grunt, options) {
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
+                classnames:           'components/classnames/index',
                 reqwest:              'components/reqwest/reqwest',
                 socketio:             'components/socket.io-client/socket.io',
                 stripe:               'vendor/stripe/stripe.min',
@@ -37,7 +38,7 @@ module.exports = function(grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components|es6|test$/i
+            fileExclusionRegExp: /^bower_components|test$/i
         },
         common: {
             options: {
@@ -77,6 +78,18 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/article',
                 out: options.staticTargetDir + 'javascripts/bootstraps/article.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        crosswords: {
+            options: {
+                name: 'bootstraps/crosswords',
+                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
                 exclude: [
                     'core',
                     'bootstraps/app',
@@ -145,7 +158,7 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
-        "image-content": {
+        'image-content': {
             options: {
                 name: 'bootstraps/image-content',
                 out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
@@ -172,8 +185,8 @@ module.exports = function(grunt, options) {
         football: {
             options: {
                 name: 'bootstraps/football',
-                    out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
-                    exclude: [
+                out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
+                exclude: [
                     'core',
                     'bootstraps/app',
                     'text',
@@ -247,18 +260,6 @@ module.exports = function(grunt, options) {
                 ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false
-            }
-        },
-        dev: {
-            options: {
-                name: 'bootstraps/dev',
-                out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text',
-                    'inlineSvg'
-                ]
             }
         },
         creatives: {

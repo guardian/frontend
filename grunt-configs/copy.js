@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         'javascript': {
             files: [
@@ -97,7 +97,7 @@ module.exports = function(grunt, options) {
             files: [{
                 expand: true,
                 cwd: options.staticHashDir + 'assets',
-                src: ['**/assets.map', '**/jspm-assets.map'],
+                src: ['**/assets.map'],
                 dest: 'common/conf/assets'
             }]
         },

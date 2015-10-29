@@ -161,6 +161,14 @@
         background-color: colour(neutral-7);
     }
 
+    .in-body-link--immersive {
+        color: colour(feature-default);
+
+        &:hover {
+            border-bottom-color: rgba(colour(feature-default), .4);
+        }
+    }
+
     .element + .section-rule {
         margin-top: 0;
     }

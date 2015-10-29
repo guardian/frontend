@@ -528,7 +528,18 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
+case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("a").foreach{ a => 
+        a.addClass("in-body-link--immersive")
+      }
+    }
+    document
+  }
+}
+
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
 
   private def setDropCap(p: Element): String = {
     val html = p.html
@@ -553,7 +564,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
     }
 
     document.getElementsByTag("h2").foreach{ h2 =>
-        if (h2.text() == "* * *") {
+        if (h2.text() == "* * *" && isImmersive) {
             h2.tagName("hr").addClass("section-rule").html("")
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {

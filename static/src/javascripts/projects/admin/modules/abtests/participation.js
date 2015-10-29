@@ -26,7 +26,7 @@ define([
     Participation.prototype.componentClass = 'participation';
     Participation.prototype.useBem = true;
 
-    Participation.prototype.prerender = function() {
+    Participation.prototype.prerender = function () {
         var test = this.config.test,
             origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin,
             examplePath = (test.examplePath || '/uk') + '#ab-' + test.id;
@@ -35,7 +35,7 @@ define([
 
         var linksContainer = this.getElem('links');
 
-        test.variants.forEach(function(variant) {
+        test.variants.forEach(function (variant) {
             new ParticipationItem({test: test.id, examplePath: examplePath, variant: variant.id}).render(linksContainer);
         });
     };

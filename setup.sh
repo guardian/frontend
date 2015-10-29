@@ -98,16 +98,6 @@ install_grunt() {
   fi
 }
 
-install_jspm() {
-  if ! installed jspm; then
-    npm -g install jspm
-  fi
-
- npm -g install jspm-bower-endpoint
- jspm registry config github
- jspm registry create bower jspm-bower-endpoint
-}
-
 install_ruby() {
   if linux && ! installed ruby; then
     sudo apt-get install -y ruby1.9.1-full
@@ -165,7 +155,6 @@ main() {
   install_node
   install_gcc
   install_grunt
-  install_jspm
   install_ruby
   install_bundler
   install_libpng

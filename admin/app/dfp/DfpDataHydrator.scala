@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
-import com.google.api.ads.dfp.axis.v201411._
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 import common.dfp._
 import dfp.DfpApiWrapper.DfpSessionException
@@ -26,16 +26,10 @@ class DfpDataHydrator extends Logging {
             _.getIsArchived
           }
 
-        val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
-        val allAdUnits = AdUnitAgent.get.data
-        val placementAdUnits = PlacementAgent.get.data
-        val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
-        val allCustomTargetingValues = CustomTargetingValueAgent.get.data
-
         dfpLineItems map { dfpLineItem =>
 
           val sponsor = for {
-            sponsorFieldId <- optSponsorFieldId
+            sponsorFieldId <- CustomFieldAgent.get.data.get("Sponsor")
             customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
             sponsor <- customFieldValues.collect {
               case fieldValue: CustomFieldValue
@@ -44,72 +38,18 @@ class DfpDataHydrator extends Logging {
             }.headOption
           } yield sponsor
 
-          val dfpTargeting = dfpLineItem.getTargeting
-
-          val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map {
-            adUnits =>
-              adUnits.flatMap { adUnit =>
-                allAdUnits get adUnit.getAdUnitId
-              }.toSeq
-          } getOrElse Nil
-
-          val adUnitsDerivedFromPlacements = {
-            Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map {
-              placementIds =>
-
-                def adUnitsInPlacement(id: Long) = {
-                  placementAdUnits get id map {
-                    _ flatMap allAdUnits.get
-                  } getOrElse Nil
-                }
-
-                placementIds.flatMap(adUnitsInPlacement).toSeq
-
-            } getOrElse Nil
-          }
-
-          val adUnits =
-            (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
-
-          def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
-            Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
-              Option(locations(geoTargeting)) map { locations =>
-                locations.map { location =>
-                  GeoTarget(
-                    location.getId,
-                    optJavaInt(location.getCanonicalParentId),
-                    location.getType,
-                    location.getDisplayName
-                  )
-                }.toSeq
-              }
-            } getOrElse Nil
-          }
-          val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
-          val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
-
-          val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
-            buildCustomTargetSets(customTargeting,
-              allCustomTargetingKeys,
-              allCustomTargetingValues)
-          } getOrElse Nil
-
           GuLineItem(
             id = dfpLineItem.getId,
             name = dfpLineItem.getName,
             startTime = toJodaTime(dfpLineItem.getStartDateTime),
-            endTime = if (dfpLineItem.getUnlimitedEndDateTime) None
-            else Some(toJodaTime(dfpLineItem
-              .getEndDateTime)),
+            endTime = {
+              if (dfpLineItem.getUnlimitedEndDateTime) None
+              else Some(toJodaTime(dfpLineItem.getEndDateTime))
+            },
             isPageSkin = isPageSkin(dfpLineItem),
             sponsor = sponsor,
-            creativeSizes = dfpLineItem.getCreativePlaceholders.map { placeholder =>
-              AdSize(placeholder.getSize.getWidth.toInt, placeholder.getSize.getHeight.toInt)
-            }.toList.sortBy(size => (size.width, size.height)),
-            targeting = GuTargeting(adUnits,
-              geoTargetsIncluded,
-              geoTargetsExcluded,
-              customTargetSets),
+            creativePlaceholders = buildCreativePlaceholders(dfpLineItem),
+            targeting = buildTargeting(dfpLineItem.getTargeting),
             status = dfpLineItem.getStatus.toString,
             costType = dfpLineItem.getCostType.toString,
             lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
@@ -250,6 +190,9 @@ class DfpDataHydrator extends Logging {
 
     dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
 
+      val exampleAssetUrl =
+        "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+
       val templatesQuery = new StatementBuilder()
         .where("status = :status and type = :type")
         .withBindVariableValue("status", CreativeTemplateStatus.ACTIVE.getValue)
@@ -279,7 +222,7 @@ class DfpDataHydrator extends Logging {
           description = template.getDescription,
           parameters = template.getVariables map { param =>
             GuCreativeTemplateParameter(
-              param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
+              param.getClass.getSimpleName.stripSuffix("CreativeTemplateVariable"),
               param.getLabel,
               param.getIsRequired,
               Option(param.getDescription)
@@ -290,13 +233,13 @@ class DfpDataHydrator extends Logging {
             val args =
               creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) {
                 case (soFar, arg) =>
-                  val argValue = arg.getBaseCreativeTemplateVariableValueType match {
-                    case "StringCreativeTemplateVariableValue" => Option(arg
-                      .asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
-                    case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication" +
-                      ".com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
-                    case "UrlCreativeTemplateVariableValue" => Option(arg
-                      .asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
+                  val argValue = arg match {
+                    case s: StringCreativeTemplateVariableValue =>
+                      Option(s.getValue) getOrElse ""
+                    case u: UrlCreativeTemplateVariableValue =>
+                      Option(u.getValue) getOrElse ""
+                    case _: AssetCreativeTemplateVariableValue =>
+                      exampleAssetUrl
                     case other => "???"
                   }
                   soFar + (arg.getUniqueName -> argValue)
@@ -356,6 +299,93 @@ class DfpDataHydrator extends Logging {
     }.toSeq
   }
 
+  private def buildTargeting(dfpTargeting: Targeting): GuTargeting = {
+
+    val adUnits: Seq[GuAdUnit] = {
+      val maybeAdUnits = for {
+        inventoryTargeting <- Option(dfpTargeting.getInventoryTargeting)
+      } yield {
+          val allAdUnits = AdUnitAgent.get.data
+
+          def adUnitsFromIds(adUnitIds: Seq[String]): Seq[GuAdUnit] = for {
+            adUnitId <- adUnitIds
+            adUnits <- allAdUnits.get(adUnitId)
+          } yield adUnits
+
+          val directAdUnits =
+            adUnitsFromIds(toSeq(inventoryTargeting.getTargetedAdUnits) map (_.getAdUnitId))
+
+          val adUnitsDerivedFromPlacements = {
+            val placementAdUnits = PlacementAgent.get.data
+            val adUnits = for {
+              placementId <- toSeq(inventoryTargeting.getTargetedPlacementIds)
+              adUnitIds <- placementAdUnits.get(placementId)
+            } yield adUnitsFromIds(adUnitIds)
+            adUnits.flatten
+          }
+
+          (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
+        }
+
+      maybeAdUnits getOrElse Nil
+    }
+
+    def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
+      Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
+        Option(locations(geoTargeting)) map { locations =>
+          locations.map { location =>
+            GeoTarget(
+              location.getId,
+              optJavaInt(location.getCanonicalParentId),
+              location.getType,
+              location.getDisplayName
+            )
+          }.toSeq
+        }
+      } getOrElse Nil
+    }
+    val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
+    val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
+
+    val customTargetSets = {
+      val maybeTargetSets = for (customTargeting <- Option(dfpTargeting.getCustomTargeting)) yield {
+        val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
+        val allCustomTargetingValues = CustomTargetingValueAgent.get.data
+        buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
+      }
+      maybeTargetSets getOrElse Nil
+    }
+
+    GuTargeting(
+      adUnits,
+      geoTargetsIncluded,
+      geoTargetsExcluded,
+      customTargetSets
+    )
+  }
+
+  private def buildCreativePlaceholders(lineItem: LineItem): Seq[GuCreativePlaceholder] = {
+
+    def creativeTargeting(name: String): Option[GuTargeting] = {
+      for (targeting <- toSeq(lineItem.getCreativeTargetings) find (_.getName == name)) yield {
+        buildTargeting(targeting.getTargeting)
+      }
+    }
+
+    val placeholders = for (placeholder <- lineItem.getCreativePlaceholders) yield {
+      val size = placeholder.getSize
+      val targeting = Option(placeholder.getTargetingName).flatMap(creativeTargeting)
+      GuCreativePlaceholder(AdSize(size.getWidth, size.getHeight), targeting)
+    }
+
+    placeholders sortBy { placeholder =>
+      val size = placeholder.size
+      (size.width, size.height)
+    }
+  }
+
+  private def toSeq[A](as: Array[A]): Seq[A] = Option(as) map (_.toSeq) getOrElse Nil
+
   private def toJodaTime(time: DateTime): JodaDateTime = {
     val date = time.getDate
     new JodaDateTime(date.getYear,
@@ -367,5 +397,6 @@ class DfpDataHydrator extends Logging {
       DateTimeZone.forID(time.getTimeZoneID))
   }
 
+  //noinspection IfElseToOption
   private def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }
