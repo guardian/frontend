@@ -37,9 +37,9 @@ define([
                 url: '/embed/headline' + matches[1] + '.json',
                 crossOrigin: true
             }).then(function (resp) {
-                if (resp.html) {
+                if (resp.headline) {
                     fastdom.write(function () {
-                        $(a).text(resp.html)
+                        $(a).text(resp.headline)
                             .removeClass('element-replicated-link--not-upgraded')
                             .addClass('element-replicated-link--upgraded');
                         mediator.emit('replicated-link:loaded', el);
