@@ -24,17 +24,26 @@
     @fragments.stylesheetLinksEnable()
 
     <script>
-        @* DO NOT COPY. We do not want to couple other things to the jspm test.
-        Crossword related things is the only exception. Please use curl instead. *@
-        @Html(Static.systemJs.setupFragment)
+        @* Service worker only caches the bundles, so the offline page can only ask for those. *@
+        var curl = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                core:                       '@Static("javascripts/core.js")',
+                'facebook.js':              '//connect.facebook.net/en_US/all.js',
+                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                text:                       'text', // noop
+                inlineSvg:                  'inlineSvg', // noop
 
-        @* Service worker only caches the bundles, so the offline page can only ask for those.
-        For production, we rely on bundles from systemJsSetup *@
-        @if(play.Play.isDev()) {
-            System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
-        }
+                core:                       '@Static("javascripts/core.js")',
+                'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
+                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
+            }
+        };
 
-        @Html(templates.headerInlineJS.js.bootSystemJS(offlinePage).body)
+        @Html(Static.js.curl)
+
+        @Html(templates.headerInlineJS.js.bootCurl(offlinePage).body)
     </script>
 </head>
     <body

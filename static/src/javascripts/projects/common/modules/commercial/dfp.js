@@ -251,7 +251,6 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                // .js must be added: https://github.com/systemjs/systemjs/issues/528
                 require(['js!googletag.js']);
             }
 

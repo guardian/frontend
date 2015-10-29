@@ -8,8 +8,4 @@ echo "Npm installation."
 npm prune --production
 npm install --production
 
-./node_modules/.bin/jspm registry create bower jspm-bower-endpoint -y
-./node_modules/.bin/jspm config registries.github.auth $JSPM_GITHUB_AUTH
-./node_modules/.bin/jspm registry export github
-
-./grunt-tc clean install:jspm
+./grunt-tc clean
