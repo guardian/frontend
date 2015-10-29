@@ -10,7 +10,8 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/discussion/comment-count.html',
-    'text!common/views/discussion/comment-count--content.html'
+    'text!common/views/discussion/comment-count--content.html',
+    'text!common/views/discussion/comment-count--content-immersive.html'
 ], function (
     bonzo,
     fastdom,
@@ -23,12 +24,14 @@ define([
     template,
     svgs,
     commentCountTemplate,
-    commentCountContentTemplate
+    commentCountContentTemplate,
+    commentCountContentImmersiveTemplate
 ) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
-            content: commentCountContentTemplate
+            content: commentCountContentTemplate,
+            contentImmersive: commentCountContentImmersiveTemplate
         },
         defaultTemplate = commentCountTemplate;
 
