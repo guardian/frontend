@@ -319,11 +319,18 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     val guLinks = getGULinks(anchorLinks)
     if (guLinks.nonEmpty) {
       document.getElementsByTag("body").headOption.map { articleBody =>
-        val linksDiv = document.createElement("div").addClass("element-replicated-links").addClass("js-replicated-links")
+        val linksDiv = document.createElement("div")
+          .addClass("element-replicated-links")
+          .addClass("element-replicated-links--not-in-test")
+          .addClass("js-replicated-links")
         linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned on this page")
         guLinks.foreach { link =>
           val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
-          div.appendElement("a").attr("href", link.attr("href")).addClass("js-replicated-link").text(link.text())
+          div.appendElement("a")
+            .attr("href", link.attr("href"))
+            .addClass("js-replicated-link")
+            .text(link.text())
+            .attr("data-link-name", "replicated link")
         }
         (articleBody, linksDiv)
       }
@@ -531,7 +538,7 @@ case class Summary(amount: Int) extends HtmlCleaner {
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
-      document.getElementsByTag("a").foreach{ a => 
+      document.getElementsByTag("a").foreach{ a =>
         a.addClass("in-body-link--immersive")
       }
     }

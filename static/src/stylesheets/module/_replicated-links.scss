@@ -1,19 +1,11 @@
+.element-replicated-links--not-in-test {
+    display: none;
+}
+
 .element-replicated-links {
     border-top: 1px dotted colour(neutral-3);
     border-bottom: 1px dotted colour(neutral-3);
     margin-bottom: $gs-baseline / 1.5;
-
-    @include mq(mobileLandscape) {
-        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0;
-    }
-
-    span {
-        display: none;
-    }
-
-    p {
-        margin: 0;
-    }
 
     a {
         @include fs-headline(2);
@@ -30,15 +22,6 @@
 
     }
 
-    &.element-rich-link--tag {
-        // only display tag based rich links when they are fully upgraded (as we have no link text)
-        // not using `display: none` here so spacefinder still sees it
-        height: 0;
-        width: 0;
-        margin: 0;
-        border: 0;
-        overflow: hidden;
-    }
 }
 
 .element-replicated-links__title {

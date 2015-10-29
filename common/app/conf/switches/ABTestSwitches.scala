@@ -58,4 +58,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABReplicatedLinks = Switch(
+    "A/B Tests",
+    "ab-replicated-links",
+    "Switch to enable onward in body links repeated in a block near the bottom of the article",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 20),
+    exposeClientSide = true
+  )
+
 }
