@@ -9,8 +9,36 @@
         apiName: 'require',
         @if(play.Play.isDev()) {
             paths: {
+                admin:        'projects/admin',
+                common:       'projects/common',
+                facia:        'projects/facia',
+                membership:   'projects/membership',
+
+                bean:         'components/bean/bean',
+                bonzo:        'components/bonzo/bonzo',
+                react:        'components/react/react',
+                classnames:   'components/classnames/index',
+                enhancer:     'components/enhancer/enhancer',
+                EventEmitter: 'components/eventEmitter/EventEmitter',
+                fastclick:    'components/fastclick/fastclick',
+                fastdom:      'components/fastdom/index',
+                fence:        'components/fence/fence',
+                lodash:       'components/lodash',
+                picturefill:  'projects/common/utils/picturefill',
+                Promise:      'components/when/Promise',
+                qwery:        'components/qwery/qwery',
+                raven:        'components/raven-js/raven',
+                reqwest:      'components/reqwest/reqwest',
+                socketio:     'components/socket.io-client/socket.io',
+                'facebook.js':'//connect.facebook.net/en_US/all.js',
+                'foresee.js': 'vendor/foresee/20150703/foresee-trigger.js',
                 'googletag.js': '@{Configuration.javascript.config("googletagJsUrl")}',
-                'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}'
+                'ophan/ng':   '@{Configuration.javascript.config("ophanJsUrl")}',
+                svgs:         '../inline-svgs',
+
+                // plugins
+                text:         'components/requirejs-text/text',
+                inlineSvg:    'projects/common/utils/inlineSvg'
             }
         } else {
             paths: {
@@ -32,9 +60,7 @@
                 'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
                 'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
                 'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
-                @if(item.isFront) {
-                    'bootstraps/facia':     '@Static("javascripts/bootstraps/facia.js")',
-                }
+                'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
                 'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
                 'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
                 'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
@@ -52,11 +78,6 @@
 
     @Html(Static.js.curl)
 
-    @if(play.Play.isDev()) {
-        require(['dev-config'], function () {
-            @Html(templates.headerInlineJS.js.bootCurl(item).body)
-        });
-    } else {
-        @Html(templates.headerInlineJS.js.bootCurl(item).body)
-    }
+    @Html(templates.headerInlineJS.js.bootCurl(item).body)
+
 </script>
