@@ -5,7 +5,7 @@ var megalog = require('megalog');
  */
 switch (process.argv[2]) {
   case 'update':
-    megalog.info('Dependencies have been updated.\n\nRun `grunt install`.');
+    megalog.info('Dependencies have been updated.\n\nRun `make install`.');
     break;
 
   case 'shrinkwrap':
