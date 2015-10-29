@@ -19,6 +19,7 @@ module.exports = function (grunt, options) {
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
+                classnames:           'components/classnames/index',
                 reqwest:              'components/reqwest/reqwest',
                 socketio:             'components/socket.io-client/socket.io',
                 stripe:               'vendor/stripe/stripe.min',
@@ -77,6 +78,18 @@ module.exports = function (grunt, options) {
             options: {
                 name: 'bootstraps/article',
                 out: options.staticTargetDir + 'javascripts/bootstraps/article.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        crosswords: {
+            options: {
+                name: 'bootstraps/crosswords',
+                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
                 exclude: [
                     'core',
                     'bootstraps/app',

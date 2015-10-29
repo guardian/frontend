@@ -4,7 +4,7 @@
 @import conf.Configuration
 
 <script>
-    @if(mvt.JspmTest.isParticipating || item.section == "crosswords") {
+    @if(mvt.JspmTest.isParticipating) {
         @Html(Static.systemJs.setupFragment)
 
         @Html(templates.headerInlineJS.js.bootSystemJS(item).body)
