@@ -51,7 +51,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  private def normalise(path: String, zeros: String = ""): String = {
+  def normalise(path: String, zeros: String = ""): String = {
     val normalised = path match {
       case R1ArtifactUrl(path, artifactOrContextId, extension) =>
         val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
@@ -63,12 +63,12 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     s"http://${normalised.getOrElse(path)}"
   }
 
-  private def linksToItself(path: String, destination: String): Boolean = path match {
+  def linksToItself(path: String, destination: String): Boolean = path match {
     case PathPattern(_, r1path) => destination contains r1path
     case _ => false
   }
 
-  private def retainShortUrlCampaign(path: String)(destination: Destination): Destination = {
+  def retainShortUrlCampaign(path: String)(destination: Destination): Destination = {
     // if the path is a short url with a campaign, and the destination doesn't have a campaign, pass it through the redirect.
     val shortUrlWithCampaign = """.*www\.theguardian\.com/p/[\w\d]+/([\w\d]+)$""".r
     val urlWithCampaignParam = """.*www\.theguardian\.com.*?.*CMP=.*$""".r
