@@ -2,6 +2,7 @@ package common
 
 import common.editions.{Au, Us, Uk}
 import conf.Configuration
+import conf.switches.Switches
 import implicits.Requests
 import layout.ContentCard
 import model.Trail
@@ -127,7 +128,12 @@ object CanonicalLink extends CanonicalLink
 
 object AnalyticsHost extends implicits.Requests {
   def apply()(implicit request: RequestHeader): String =
-    "https://hits-secure.theguardian.com"
+    if (Switches.SecureOmniture.isSwitchedOn ||
+      request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))) {
+      "https://hits-secure.theguardian.com"
+    } else {
+      "http://hits.theguardian.com"
+    }
 }
 
 object SubscribeLink {
