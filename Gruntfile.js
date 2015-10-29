@@ -54,9 +54,9 @@ module.exports = function (grunt) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
 
-    // Default task
+    // Default task - used by grunt-tc
     grunt.registerTask('default', function () {
-        grunt.task.run(['shell:install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+        grunt.task.run(['shell:installNpm', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
     });
 
     /**
@@ -118,7 +118,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
-    grunt.registerTask('compile', [
+    grunt.registerTask('compile-assets', [
         'compile:css',
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
@@ -126,6 +126,10 @@ module.exports = function (grunt) {
         'asset_hash',
         'compile:conf'
     ]);
+
+    grunt.registerTask('compile', function () {
+        megalog.error('`grunt compile` has been removed.\n\nUse `make compile` instead.');
+    });
 
     grunt.registerTask('install', function () {
         megalog.error('`grunt install` has been removed.\n\nUse `make install` instead.');

@@ -183,7 +183,7 @@ npm and bundle are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```
-make build
+make compile
 ```
 
 ### Run the app

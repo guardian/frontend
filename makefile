@@ -3,11 +3,11 @@ default: help
 watch: build-dev
 	@cd dev && make watch
 
-build:
-	@grunt compile
+compile:
+	@grunt compile-assets
 
-build-dev:
-	@grunt compile --dev
+compile-dev:
+	@grunt compile-assets --dev
 
 install: install-npm install-dev
 	@node dev/message.js install
