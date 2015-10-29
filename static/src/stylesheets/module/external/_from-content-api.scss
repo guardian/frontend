@@ -54,8 +54,12 @@
             @include fs-header(2, true);
         }
     }
-    > ol > li,
-    > ul > li {
+    > ul ul,
+    > ol ol {
+        margin-left: $gs-gutter;
+    }
+    > ol li,
+    > ul li {
         position: relative;
         margin-bottom: .8em;
     }
