@@ -2,6 +2,10 @@
     position: relative;
     margin-bottom: $gs-baseline;
 
+    @include mq($until: desktop) {
+        margin-top: -($gs-baseline/1.5);
+    }
+
     .content__main-column & {
         @include mq(desktop) {
             display: none;
@@ -11,9 +15,7 @@
 
 .chapters__heading {
     @include fs-header(1);
-    padding-bottom: $gs-baseline;
-    border-bottom: 1px dotted colour(neutral-5);
-    margin-bottom: $gs-baseline/2;
+    margin-bottom: $gs-baseline * 1.5;
 
     @include mq(desktop) {
         padding-top: $gs-baseline/4;
@@ -32,12 +34,18 @@
 }
 
 .chapters__toggle-icon {
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
     fill: colour(neutral-2);
+
+    .is-expanded & {
+        transform: rotate(180deg);
+    }
 }
 
 .chapters__list {
-    margin: $gs-baseline/3 0 0 .429em;
+    margin: 0;
     list-style: none;
     display: none;
 
@@ -50,8 +58,11 @@
     }
 }
 
-.chapters__list-item:last-of-type {
-    .chapters__link {
+.chapters__list-item {
+    padding-top: 4px;
+    border-top: 1px dotted colour(neutral-5);
+
+    &:last-of-type .chapters-link {
         border-left-color: transparent;
     }
 }
@@ -59,25 +70,24 @@
 .chapters__link {
     position: relative;
     display: block;
-    padding-left: 1em;
-    border-left: 1px solid colour(neutral-6);
-    padding-bottom: $gs-baseline / 2;
+    padding-left: 1.25em;
+    padding-bottom: $gs-baseline;
     @include fs-textSans(3);
 
     &:before {
         content: '';
         position: absolute;
-        left: -.429em;
+        left: 0;
         top: 0;
-        width: .857em;
-        height: .857em;
-        background-color: colour(neutral-3);
-        border-radius: 50%;
+        width: .714em;
+        height: .714em;
+        border: 1px solid colour(neutral-3);
+        border-radius: 100%;
     }
 
     &:hover {
         &:before {
-            background-color: colour(neutral-2);
+            background-color: colour(neutral-3);
         }
     }
 }
