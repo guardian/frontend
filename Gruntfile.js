@@ -56,7 +56,7 @@ module.exports = function (grunt) {
 
     // Default task
     grunt.registerTask('default', function () {
-        grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+        grunt.task.run(['shell:install', 'clean', 'validate', 'compile', 'test', 'analyse']);
     });
 
     /**
@@ -127,8 +127,9 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('install', ['install:npm']);
-    grunt.registerTask('install:npm', ['shell:npmInstall']);
+    grunt.registerTask('install', function () {
+        megalog.error('`grunt install` has been removed.\n\nUse `make install` instead.');
+    });
 
     grunt.registerTask('prepare', function () {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');

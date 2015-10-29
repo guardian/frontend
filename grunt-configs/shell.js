@@ -24,8 +24,8 @@ module.exports = function () {
                      'static/abtests.json'
         },
 
-        npmInstall: {
-            command: 'npm prune && npm install'
+        install: {
+            command: 'make install'
         },
 
         updateCanIUse: {
