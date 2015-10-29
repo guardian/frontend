@@ -33,10 +33,8 @@ module.exports = function (grunt, options) {
                     dest: options.staticHashDir + 'javascripts/vendor'
                 },{
                     expand: true,
-                    cwd: options.isDev ? options.staticSrcDir + 'javascripts' : options.requirejsDir,
-                    src: options.isDev ? [
-                        'bootstraps/**/*.js'
-                    ] : [
+                    cwd: options.requirejsDir,
+                    src: [
                         'core.js',
                         'core.js.map',
                         'bootstraps/app.js',
