@@ -3,7 +3,8 @@
     margin-bottom: $gs-baseline;
 
     @include mq($until: desktop) {
-        margin-top: -($gs-baseline/1.5);
+        margin-top: -($gs-baseline / 1.5);
+        border-bottom: 1px dotted colour(neutral-6);
     }
 
     .content__main-column & {
@@ -15,10 +16,11 @@
 
 .chapters__heading {
     @include fs-header(1);
-    margin-bottom: $gs-baseline * 1.5;
+    padding-bottom: $gs-baseline * 1.5;
+    margin: 0;
 
     @include mq(desktop) {
-        padding-top: $gs-baseline/4;
+        padding-top: $gs-baseline / 4;
         border-top: 1px solid colour(neutral-6);
     }
 }
@@ -49,6 +51,10 @@
     list-style: none;
     display: none;
 
+    @include mq(tablet, desktop) {
+        column-count: 2;
+    }
+
     @include mq(desktop) {
         display: block;
     }
@@ -59,40 +65,13 @@
 }
 
 .chapters__list-item {
-    padding-top: 4px;
+    padding-top: $gs-baseline / 4;
     border-top: 1px dotted colour(neutral-5);
-
-    &:last-of-type .chapters-link {
-        border-left-color: transparent;
-    }
 }
 
 .chapters__link {
     position: relative;
     display: block;
-    padding-left: 1.25em;
     padding-bottom: $gs-baseline;
     @include fs-textSans(3);
-
-    &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: .714em;
-        height: .714em;
-        border: 1px solid colour(neutral-3);
-        border-radius: 100%;
-    }
-
-    &:hover {
-        &:before {
-            background-color: colour(neutral-3);
-        }
-    }
-}
-
-.chapters__link-text {
-    position: relative;
-    top: -3px;
 }
