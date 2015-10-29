@@ -33,6 +33,9 @@ define([
                 var props = {
                     page: window.location,
                     width: window.innerWidth,
+                    ads: _(dfp.getCreativeIDs()).reduce(function (adsArray, ad) { 
+                        adsArray.push(ad.creativeId); return adsArray; 
+                    }, [])
                 };
                 var body = objToHash(_.extend(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
