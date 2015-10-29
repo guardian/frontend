@@ -32,9 +32,8 @@ define([
                 var oldHref = link.attr('href');
                 var props = {
                     page: window.location,
-                    width: window.innerWidth
+                    width: window.innerWidth,
                 };
-                console.log('Probe DFP: ', dfp.getCreativeIDs());
                 var body = objToHash(_.extend(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
             };
