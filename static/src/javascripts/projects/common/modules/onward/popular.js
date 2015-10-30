@@ -8,8 +8,7 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp',
-    'common/modules/experiments/ab'
+    'common/modules/commercial/dfp'
 ], function (
     _,
     qwery,
@@ -20,8 +19,7 @@ define([
     mediator,
     createAdSlot,
     commercialFeatures,
-    dfp,
-    ab
+    dfp
 ) {
 
     function MostPopular() {
