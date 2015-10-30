@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
-    'common/modules/experiments/tests/live-events-survey'
+    'common/modules/experiments/tests/live-events-survey',
+    'common/modules/experiments/tests/large-top-ad'
 ], function (
     reportError,
     _,
@@ -25,7 +26,8 @@ define([
     RtrtEmailMessage,
     OnwardContainerNames,
     InjectHeadlinesTest,
-    LiveEventsSurvey
+    LiveEventsSurvey,
+    LargeTopAd
 ) {
 
     var TESTS = _.flatten([
@@ -34,7 +36,8 @@ define([
         new RtrtEmailMessage(),
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
-        new LiveEventsSurvey()
+        new LiveEventsSurvey(),
+        new LargeTopAd()
     ]);
 
     var participationsKey = 'gu.ab.participations';
