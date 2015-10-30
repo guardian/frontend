@@ -131,7 +131,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('compile', function () {
-        megalog.error('`grunt compile` has been removed.\n\nUse `make compile` instead.');
+        megalog.error('`grunt compile` has been removed.\n\nUse `make compile` or `make compile-dev` instead.\n\nIf you’re developing, you might want to use `make watch`. Run `make` for more details.');
     });
 
     grunt.registerTask('install', function () {
