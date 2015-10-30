@@ -40,45 +40,38 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        if (ab.getParticipations().MostPopAsFaciaCards && ab.getParticipations().MostPopAsFaciaCards.variant === 'variant' && ab.testCanBeRun('MostPopAsFaciaCards')) {
-            var $mostPopFooter = $('.js-most-popular-footer');
-            $mostPopFooter.html('');
-            this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');
-            $('.js-most-popular-footer').attr('data-link-name', $mostPopFooter.attr('data-link-name') + ' most-popular-as-facia-cards');
-        } else {
-            if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
-                var frontUrl;
+        if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
+            var frontUrl;
 
-                switch (config.page.edition) {
-                    case 'UK':
-                        frontUrl = '/uk.json';
-                        break;
-                    case 'US':
-                        frontUrl = '/us.json';
-                        break;
-                    case 'AU':
-                        frontUrl = '/au.json';
-                        break;
-                    case 'INT':
-                        frontUrl = '/international.json';
-                        break;
-                }
-
-                injectContainer.injectContainer(frontUrl, '.js-most-popular-footer', 'ab-network-front-loaded');
-
-                mediator.once('ab-network-front-loaded', function () {
-                    var $parent = $('.facia-page');
-                    $parent.addClass('ab-front-injected');
-                    $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
-                    $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
-                    $('.js-tabs', $parent).addClass('u-h');
-
-                    this.prerender(true);
-                    this.ready();
-                }.bind(this));
-            } else {
-                this.fetch(qwery('.js-popular-trails'), 'html');
+            switch (config.page.edition) {
+                case 'UK':
+                    frontUrl = '/uk.json';
+                    break;
+                case 'US':
+                    frontUrl = '/us.json';
+                    break;
+                case 'AU':
+                    frontUrl = '/au.json';
+                    break;
+                case 'INT':
+                    frontUrl = '/international.json';
+                    break;
             }
+
+            injectContainer.injectContainer(frontUrl, '.js-most-popular-footer', 'ab-network-front-loaded');
+
+            mediator.once('ab-network-front-loaded', function () {
+                var $parent = $('.facia-page');
+                $parent.addClass('ab-front-injected');
+                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
+                $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
+                $('.js-tabs', $parent).addClass('u-h');
+
+                this.prerender(true);
+                this.ready();
+            }.bind(this));
+        } else {
+            this.fetch(qwery('.js-popular-trails'), 'html');
         }
     };
 

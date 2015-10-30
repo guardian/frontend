@@ -212,16 +212,6 @@ object FaciaContainer {
       componentId = None
     ).withTimeStamps
   }
-
-  def forMostPopular(dataId: String, items: Seq[FaciaContent], title: String, href: Option[String] = None) = {
-    FaciaContainer(
-      index = 2,
-      container = Dynamic(DynamicSlowMPUABTest),
-      config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.empty)),
-      collectionEssentials = CollectionEssentials(items take 10, Nil, Some(title), href, None, None),
-      componentId = None
-    ).withTimeStamps
-  }
 }
 
 case class FaciaContainer(

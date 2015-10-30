@@ -31,15 +31,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMostPopAsFaciaCards = Switch(
-    "A/B Tests",
-    "ab-most-pop-as-facia-cards",
-    "Style the most popular container as facia cards",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
-    exposeClientSide = true
-  )
-
   val ABOnwardNames = Switch(
     "A/B Tests",
     "ab-onward-names",
@@ -55,6 +46,15 @@ trait ABTestSwitches {
     "Switch to inject the headlines container instead of related content in the world, uk-news and politics sections between the hours of 6am-11am on the UK edition",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
+  val ABLargeTopAd = Switch(
+    "A/B Tests",
+    "ab-large-top-ad",
+    "Testing the difference of user behaviour based on large top ad format",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 31),
     exposeClientSide = true
   )
 
