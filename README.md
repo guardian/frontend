@@ -251,7 +251,7 @@ If it is owned by root, then take ownership of it
 The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
 ###phantomjs permissions errors (OSX)
-If you get an error about not having permissions to execute phantomjs during `grunt compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
+If you get an error about not having permissions to execute phantomjs during `make compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
 
 ###File handles - "Too many files open"
 

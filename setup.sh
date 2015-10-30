@@ -133,7 +133,7 @@ install_dependencies() {
 }
 
 compile() {
-  make install build
+  make install compile
 }
 
 report() {
