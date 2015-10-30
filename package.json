@@ -41,8 +41,6 @@
     "jasmine-core": "^2.3.2",
     "jit-grunt": "0.9.1",
     "jsonfile": "2.0.0",
-    "jspm": "0.16.10",
-    "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.10",
     "karma-coffee-preprocessor": "0.2.1",
@@ -50,7 +48,6 @@
     "karma-firefox-launcher": "0.1.6",
     "karma-html2js-preprocessor": "0.1.0",
     "karma-jasmine": "0.3.5",
-    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.6",
     "karma-phantomjs-launcher": "0.1.4",
     "karma-phantomjs-shim": "^1.0.0",
     "karma-requirejs": "0.2.2",
@@ -71,43 +68,5 @@
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
-  },
-  "jspm": {
-    "directories": {
-      "baseURL": "static/src",
-      "lib": "static/src"
-    },
-    "configFile": "static/src/systemjs-config.js",
-    "dependencies": {
-      "EventEmitter": "github:Olical/EventEmitter@~4.2.6",
-      "bean": "npm:bean@^1.0.15",
-      "bonzo": "npm:bonzo@^1.4.0",
-      "classnames": "npm:classnames@^1.2.0",
-      "domready": "npm:domready@^1.0.8",
-      "enhancer": "github:guardian/enhancer@0.1.3",
-      "fastdom": "github:wilsonpage/fastdom@^0.8.6",
-      "fence": "github:guardian/fence@~0.2.11",
-      "lodash": "npm:lodash@~2.4.1",
-      "qwery": "npm:qwery@^3.4.2",
-      "raven": "github:getsentry/raven-js@~1.1.16",
-      "react": "npm:react@^0.13.2",
-      "reqwest": "github:ded/reqwest@1.1.5",
-      "socketio": "github:socketio/socket.io-client@1.1.0",
-      "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.10",
-      "text": "github:systemjs/plugin-text@^0.0.2",
-      "videojs": "github:videojs/video.js@5.0.0",
-      "videojsads": "github:guardian/videojs-contrib-ads@3.0.0",
-      "videojsembed": "github:guardian/videojs-embed@0.3.3",
-      "videojsima": "github:guardian/videojs-ima@0.2.1",
-      "videojspersistvolume": "github:guardian/videojs-persistvolume@0.1.3",
-      "videojsplaylist": "github:guardian/videojs-playlist@0.1.0",
-      "when": "github:cujojs/when@^3.7.3",
-      "zxcvbn": "github:dropbox/zxcvbn@v1.0"
-    },
-    "devDependencies": {
-      "babel": "npm:babel-core@5.8.22",
-      "babel-runtime": "npm:babel-runtime@5.8.20",
-      "core-js": "npm:core-js@1.1.0"
-    }
   }
 }
