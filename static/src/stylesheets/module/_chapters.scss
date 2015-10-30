@@ -48,6 +48,10 @@
     .is-expanded & {
         transform: rotate(180deg);
     }
+
+    svg {
+        display: block;
+    }
 }
 
 .chapters__list {
