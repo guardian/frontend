@@ -31,8 +31,7 @@ module.exports = function (grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
+                },{
                     expand: true,
                     cwd: options.requirejsDir,
                     src: [
