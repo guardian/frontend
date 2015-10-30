@@ -1,19 +1,85 @@
 .chapters {
-    background-color: colour(neutral-8);
-    border-top: 3px solid colour(news-main-2);
-    margin-left: 0;
-    padding: $gs-baseline/2 $gs-gutter/2;
+    position: relative;
     margin-bottom: $gs-baseline;
 
-    ol {
-        margin: $gs-baseline/3 0 0;
+    @include mq($until: desktop) {
+        margin-top: -($gs-baseline / 1.5);
+        border-bottom: 1px dotted colour(neutral-6);
+    }
 
-        @include mq(tablet) {
-            column-count: 2;
+    .content__main-column & {
+        @include mq(desktop) {
+            display: none;
+        }
+
+        .is-not-modern & {
+            display: none;
         }
     }
 }
 
 .chapters__heading {
-    @include fs-header(2);
+    @include fs-header(1);
+    padding-bottom: $gs-baseline * 1.5;
+    margin: 0;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 4;
+        border-top: 1px solid colour(neutral-6);
+    }
+}
+
+.chapters__button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: $gs-baseline * 3;
+    outline: 0;
+}
+
+.chapters__toggle-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    fill: colour(neutral-2);
+
+    .is-expanded & {
+        transform: rotate(180deg);
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+.chapters__list {
+    margin: 0;
+    list-style: none;
+    display: none;
+
+    @include mq(tablet, desktop) {
+        column-count: 2;
+    }
+
+    @include mq(desktop) {
+        display: block;
+    }
+
+    .is-expanded & {
+        display: block;
+    }
+}
+
+.chapters__list-item {
+    padding-top: $gs-baseline / 4;
+    border-top: 1px dotted colour(neutral-5);
+}
+
+.chapters__link {
+    position: relative;
+    display: block;
+    padding-bottom: $gs-baseline;
+    @include fs-textSans(3);
 }
