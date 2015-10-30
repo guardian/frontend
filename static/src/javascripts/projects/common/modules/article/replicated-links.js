@@ -24,7 +24,7 @@ define([
     function upgradeLink(el) {
         var a = $('a', el),
             href = a.attr('href'),
-            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
+            matches = href.match(/^(?:https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
             return ajax({
