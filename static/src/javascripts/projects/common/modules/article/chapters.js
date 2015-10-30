@@ -12,7 +12,6 @@ define([
 
         bindEvents: function () {
             bean.on(document.body, 'click', '.js-toggle-chapters', function (e) {
-                e.preventDefault();
                 this.toggleChapters();
             }.bind(this));
         },
