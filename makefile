@@ -1,7 +1,9 @@
 default: help
 
 watch: compile-dev
-	@cd dev && make watch
+	@./node_modules/grunt-sass/node_modules/node-sass/bin/node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true & \
+		gulp --cwd ./dev watch:css & \
+		./node_modules/browser-sync/bin/browser-sync.js start --config ./dev/bs-config.js
 
 compile:
 	@grunt compile-assets
@@ -9,12 +11,19 @@ compile:
 compile-dev:
 	@grunt compile-assets --dev
 
-install: install-application install-dev
-	@node dev/message.js install
+install:
+	@echo 'Removing any unused 3rd party dependencies…'
+	@npm prune
+	@echo '…done.'
+	@echo 'Installing 3rd party dependencies…'
+	@npm install
+	@echo '…done.'
+	@node tools/messages.js install
 
 reinstall: uninstall install
 
-uninstall: uninstall-application uninstall-dev
+uninstall:
+	@rm -rf node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 test:
@@ -31,33 +40,10 @@ validate-js:
 	@grunt validate:js
 
 shrinkwrap:
-	@npm shrinkwrap && node dev/clean-shrinkwrap.js
-	@node dev/message.js shrinkwrap
+	@npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
+	@node tools/messages.js did-shrinkwrap
 
 
 # internal targets
-
 help:
-	@node dev/message.js describeMakefile
-
-install-application:
-	@echo 'Removing any unused application packages…'
-	@npm prune
-	@echo '…done.'
-	@echo 'Installing application packages…'
-	@npm install
-	@echo '…done.'
-
-uninstall-application:
-	@rm -rf node_modules
-
-install-dev:
-	@echo 'Removing any unused dev packages…'
-	@cd dev && npm prune
-	@echo '…done.'
-	@echo 'Installing dev packages…'
-	@cd dev && npm install
-	@echo '…done.'
-
-uninstall-dev:
-	@rm -rf dev/node_modules
+	@node tools/messages.js describeMakefile

@@ -40,10 +40,22 @@ switch (process.argv[2]) {
         }, 'info');
         break;
 
-    case 'shrinkwrap':
+    case 'should-shrinkwrap':
+        notify('Run `make shrinkwrap` and include the changes to `/npm-shrinkwrap.json` in your commit.', {
+            heading: 'Dependencies have changed'
+        }, 'error');
+        break;
+
+    case 'did-shrinkwrap':
         notify(
             'NPM packages have been shrinkwrapped.', {
             heading: 'make shrinkwrap'
+        }, 'info');
+        break;
+
+    case 'dependency-update':
+        notify('Run `make install`.', {
+            heading: 'Dependencies have changed'
         }, 'info');
         break;
 }

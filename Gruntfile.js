@@ -59,7 +59,7 @@ module.exports = function (grunt) {
 
     // Default task - used by grunt-tc
     grunt.registerTask('default', function () {
-        grunt.task.run(['shell:installNpm', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
+        grunt.task.run(['shell:install', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
     });
 
     /**

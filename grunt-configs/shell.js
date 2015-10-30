@@ -24,8 +24,8 @@ module.exports = function () {
                      'static/abtests.json'
         },
 
-        installNpm: {
-            command: 'make install-application'
+        install: {
+            command: 'make install'
         },
 
         updateCanIUse: {
