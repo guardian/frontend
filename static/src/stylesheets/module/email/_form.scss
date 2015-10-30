@@ -19,24 +19,8 @@
     }
 
     &text-input {
-        border: 1px solid $form-secondary-colour;
-        @include border-radius(1000px);
-        color: guss-colour(neutral-2, $pasteup-palette);
-        display: inline-block;
-        @include fs-textSans(3);
-        font-size: 16px;
-        padding: 8px 15px 7px;
-        line-height: 1.4;
-        outline: none;
-        width: 100%;
-
-        &:focus {
-            border-color: $form-primary-colour; //TODO update this
-        }
-
-        @include mq(tablet) {
-            font-size: 14px;
-        }
+        // TODO This probably doesn't make sense as a mixin...
+        @include rounded-input($form-secondary-colour, $form-primary-colour, guss-colour(neutral-2, $pasteup-palette))
     }
 
     // Set with JS so we can use a real label

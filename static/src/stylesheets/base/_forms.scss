@@ -1,0 +1,20 @@
+@mixin rounded-input($borderColour, $borderColourFocus, $textColour) {
+    border: 1px solid $borderColour;
+    @include border-radius(1000px);
+    color: $textColour;
+    display: inline-block;
+    @include fs-textSans(3);
+    font-size: 16px;
+    padding: 8px 15px 7px;
+    line-height: 1.4;
+    outline: none;
+    width: 100%;
+
+    &:focus {
+        border-color: $borderColourFocus;
+    }
+
+    @include mq(tablet) {
+        font-size: 14px;
+    }
+}
