@@ -1,11 +1,14 @@
 'use strict';
 /* global module: false, process: false */
 
-var dependencyTest = require('check-dependencies').sync();
+var task = process.argv[2];
+if (task !== 'install') {
+    var dependencyTest = require('check-dependencies').sync();
 
-if (dependencyTest.status !== 0) {
-    console.error(dependencyTest.error.join('\n')); // eslint-disable-line no-console
-    process.exit(dependencyTest.status);
+    if (dependencyTest.status !== 0) {
+        console.error(dependencyTest.error.join('\n')); // eslint-disable-line no-console
+        process.exit(dependencyTest.status);
+    }
 }
 
 var megalog = require('megalog');
@@ -15,7 +18,6 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
     var options = {
-        useCluster: (grunt.option('cluster') !== undefined) ? Boolean(grunt.option('cluster')) : false,
         isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
@@ -100,22 +102,15 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        if (!options.isDev) {
-            if (options.useCluster) {
-                grunt.task.run('shell:jspmClusterBundleStatic');
-            } else {
-                grunt.task.run('shell:jspmBundleStatic');
-            }
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'uglify:javascript']);
+
+        if (isOnlyTask(this) && !fullCompile) {
+            grunt.task.run('asset_hash');
         }
 
-        if (options.isDev) {
-            grunt.task.run('replace:jspmSourceMaps');
-        }
-
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
-        if (!options.isDev) {
-            grunt.task.run('uglify:javascript');
-        }
+    });
+    grunt.registerTask('develop:js', function (fullCompile) {
+        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -128,23 +123,18 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'compile:css',
-        'compile:js',
+        (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
         'asset_hash',
         'compile:conf'
     ]);
 
-    grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'uglify:conf']);
+    grunt.registerTask('install', ['install:npm']);
     grunt.registerTask('install:npm', ['shell:npmInstall']);
 
     grunt.registerTask('prepare', function () {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');
-    });
-
-    grunt.registerTask('jspmInstall', function () {
-        megalog.error('`grunt jspmInstall` has been removed.\n\nUse `grunt install:jspm` instead… ');
     });
 
     /**

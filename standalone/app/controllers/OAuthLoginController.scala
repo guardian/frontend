@@ -51,7 +51,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
   // TODO - this is only while in transition from http to https for preview
   // no copy and paste for use elsewhere, simply go full https
   private def checkIsSecure(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
-    if (request.isSecure){
+    if (request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))){
       val oldRedirect = config.redirectUrl
       config.copy(redirectUrl = oldRedirect.replace("http://", "https://"))
     } else {

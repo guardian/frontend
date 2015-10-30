@@ -123,21 +123,6 @@ Ubuntu/Mac:
 sudo npm -g install grunt-cli
 ```
 
-#### JSPM (package management)
-
-Ubuntu/Mac:
-```
-sudo npm -g install jspm
-jspm registry config github
-```
-
-It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
-Now create a registry instance.
-```
-npm -g install jspm-bower-endpoint # jspm >= 0.15.0
-jspm registry create bower jspm-bower-endpoint
-```
-
 #### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
 Ubuntu:
@@ -194,7 +179,7 @@ bundle
 grunt install
 ```
 
-npm, bundle, and jspm are also run by `install-dependencies.sh`.
+npm and bundle are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```

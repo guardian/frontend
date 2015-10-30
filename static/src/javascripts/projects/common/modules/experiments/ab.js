@@ -8,7 +8,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/switch-most-pop-related-content',
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/most-pop-as-facia-cards',
     'common/modules/experiments/tests/onward-container-names',
@@ -24,7 +23,6 @@ define([
     mvtCookie,
     HighCommercialComponent,
     MembershipMessageUSA,
-    SwitchMostPopAndRelatedContent,
     RtrtEmailMessage,
     MostPopAsFaciaCards,
     OnwardContainerNames,
@@ -35,7 +33,6 @@ define([
     var TESTS = _.flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
-        new SwitchMostPopAndRelatedContent(),
         new RtrtEmailMessage(),
         new MostPopAsFaciaCards(),
         new OnwardContainerNames(),

@@ -8,8 +8,8 @@
             return false;
         } else {
             var adfreeUser = readCookie('gu_adfree_user');
-            // If the cookie is ambiguous or null, err on the side of caution and hold off showing ads
-            return adfreeUser !== 'false';
+            // If the user doesn't have the cookie yet, we keep displaying ads until we know their status
+            return adfreeUser === 'true';
         }
     }
 

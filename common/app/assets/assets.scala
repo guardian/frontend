@@ -22,7 +22,11 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      assets()(path)
+      if (path.startsWith("javascripts")) {
+        Asset(path)
+      } else {
+        assets()(path)
+      }
     } else {
       memoizedAssets(path)
     }
@@ -146,27 +150,6 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
-  }
-
-  object systemJs {
-    private def contents(path: String): String = IOUtils.toString(AssetFinder(path))
-
-    val main: String = contents("assets/system.src.js")
-    val polyfills: String = contents("assets/system-polyfills.src.js")
-    val appConfig: String = contents("assets/systemjs-config.js")
-    val normalize: String = contents("assets/systemjs-normalize.js")
-
-    lazy val setupFragment: String = templates.js.systemJsSetup().body
-
-    private val jspmAssetMap: Map[String, Asset] =
-      new AssetMap(base, "assets/jspm-assets.map").assets()
-
-    private val bundleConfigMap: Map[String, List[String]] =
-      jspmAssetMap.map { case (source, destination) =>
-        (destination.asModulePath, List(source.replaceFirst("^javascripts/", "").replaceFirst(".js$", "")))
-      }
-
-    val bundleConfig: String = Json.toJson(bundleConfigMap).toString()
   }
 }
 
