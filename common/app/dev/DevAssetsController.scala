@@ -5,6 +5,7 @@ import java.io.File
 import play.api.libs.MimeTypes
 import play.api.mvc._
 import play.api.libs.iteratee.Enumerator
+import play.Play
 
 object DevAssetsController extends Controller with ExecutionContexts {
 
@@ -16,7 +17,9 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
     val hashFile = new File(s"static/hash/$path")
 
-    val resolved = if (hashFile.exists()) {
+    val resolved = if (Play.isDev && path.startsWith("javascripts")) {
+      new File(s"static/src/$path").toURI.toURL
+    } else if (hashFile.exists()) {
       hashFile.toURI.toURL
     } else {
       new File(s"static/src/$path").toURI.toURL
