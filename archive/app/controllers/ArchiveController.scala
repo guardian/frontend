@@ -64,7 +64,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
-    case PathPattern(_, r1path) => destination contains r1path
+    case PathPattern(_, r1path) => destination.endsWith(r1path)
     case _ => false
   }
 
