@@ -146,16 +146,17 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         log.info(s"404,${RequestLog(request)}")
     }
 
-  private def lookupPath(path: String) = destinationFor(path).map { _.flatMap {
-    case services.Redirect(location) if !linksToItself(path, location) =>
-      val locationWithCampaign = retainShortUrlCampaign(path, location)
-      logDestination(path, "redirect", locationWithCampaign)
-      Some(Cached(300)(Redirect(locationWithCampaign, 301)))
-    case Archive(archivePath) =>
-      // http://wiki.nginx.org/X-accel
-      logDestination(path, "archive", archivePath)
-      Some(Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath")))
-    case _ => None
-  }}
+  private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}
+
+  def processLookupDestination(path: String) : PartialFunction[Destination, Result] = {
+      case services.Redirect(location) if !linksToItself(path, location) =>
+        val locationWithCampaign = retainShortUrlCampaign(path, location)
+        logDestination(path, "redirect", locationWithCampaign)
+        Cached(300)(Redirect(locationWithCampaign, 301))
+      case Archive(archivePath) =>
+        // http://wiki.nginx.org/X-accel
+        logDestination(path, "archive", archivePath)
+        Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
+  }
 
 }

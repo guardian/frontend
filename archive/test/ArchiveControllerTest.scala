@@ -187,15 +187,29 @@ import scala.concurrent.Future
   }
 
   it should "redirect short urls with campaign codes" in {
-    val shortRedirect = services.Redirect("http://www.theguardian.com/p/new")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirect)
+
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new")
     result should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
     val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirectWithCMP)
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
     result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
+  }
+
+  it should "check that a lookup which specifies a Redirect doesn't match the original path" in {
+    // This check needs to be in place to ensure we don't create redirect loops.
+    val databaseSaysRedirect = services.Redirect("http://www.theguardian.com/redirect/path-to-content")
+    val result = controllers.ArchiveController.processLookupDestination("www.theguardian.com/redirect/path-to-content").lift(databaseSaysRedirect)
+    result should be (None)
+  }
+
+  it should "not perform a redirect loop check on Archive objects" in {
+    // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
+    val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")
+    val result = controllers.ArchiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
+    result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
   }
 
   private def location(result: Future[Result]): String = header("Location", result).head
