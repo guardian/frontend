@@ -9,10 +9,10 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/rtrt-email-message',
-    'common/modules/experiments/tests/most-pop-as-facia-cards',
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
-    'common/modules/experiments/tests/live-events-survey'
+    'common/modules/experiments/tests/live-events-survey',
+    'common/modules/experiments/tests/large-top-ad'
 ], function (
     reportError,
     _,
@@ -24,20 +24,20 @@ define([
     HighCommercialComponent,
     MembershipMessageUSA,
     RtrtEmailMessage,
-    MostPopAsFaciaCards,
     OnwardContainerNames,
     InjectHeadlinesTest,
-    LiveEventsSurvey
+    LiveEventsSurvey,
+    LargeTopAd
 ) {
 
     var TESTS = _.flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
         new RtrtEmailMessage(),
-        new MostPopAsFaciaCards(),
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
-        new LiveEventsSurvey()
+        new LiveEventsSurvey(),
+        new LargeTopAd()
     ]);
 
     var participationsKey = 'gu.ab.participations';

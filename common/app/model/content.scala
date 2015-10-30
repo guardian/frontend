@@ -367,6 +367,13 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
+  lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(body).body().children().select("video[class=gu-video]").size()
+
+  lazy val hasMultipleVideosInPage: Boolean = mainVideoCanonicalPath match {
+    case Some(_) => numberOfVideosInTheBody > 0
+    case None => numberOfVideosInTheBody > 1
+  }
+
   lazy val mainVideoCanonicalPath: Option[String] = Jsoup.parseBodyFragment(main).body.getElementsByClass("element-video").headOption.map { v =>
     new URL(v.attr("data-canonical-url")).getPath.stripPrefix("/")
   }
@@ -382,7 +389,6 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   override def metaData: Map[String, JsValue] = {
     val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
-
     super.metaData ++ Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(isLiveBlog)),
@@ -390,7 +396,8 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
       ("inBodyExternalLinkCount", JsNumber(linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(shouldHideAdverts)),
       ("hasInlineMerchandise", JsBoolean(hasInlineMerchandise)),
-      ("lightboxImages", lightbox)
+      ("lightboxImages", lightbox),
+      ("hasMultipleVideosInPage", JsBoolean(hasMultipleVideosInPage))
     ) ++ bookReviewIsbn
   }
 
