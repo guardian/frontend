@@ -14,20 +14,20 @@ define([
     mediator
 ) {
 
-    function injectContainer(containerUrl) {
+    function injectContainer(containerUrl, containerSelector, containerName) {
         return ajax({
             url: containerUrl,
             crossOrigin: true
         }).then(function (resp) {
             if (resp.html) {
                 fastdom.write(function () {
-                    var $pop= $('.js-most-popular-footer');
-                    $pop.before(resp.html);
-                    $pop.css({
+                    var $el = $(containerSelector);
+                    $el.before(resp.html);
+                    $el.css({
                         display: 'none'
                     });
                     images.upgradePictures();
-                    mediator.emit('ab-briefing-loaded');
+                    mediator.emit(containerName);
                 });
             }
         });

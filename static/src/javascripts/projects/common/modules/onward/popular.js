@@ -46,8 +46,7 @@ define([
             this.fetch(qwery('.js-most-popular-footer'), 'ABhtml');
             $('.js-most-popular-footer').attr('data-link-name', $mostPopFooter.attr('data-link-name') + ' most-popular-as-facia-cards');
         } else {
-            if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
-
+            if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
                 var frontUrl;
 
                 switch(config.page.edition) {
@@ -65,8 +64,9 @@ define([
                         break;
                 }
 
-                injectContainer.injectContainer(frontUrl);
-                mediator.once('ab-briefing-loaded', function () {
+                injectContainer.injectContainer(frontUrl, '.js-most-popular-footer', 'ab-network-front-loaded');
+
+                mediator.once('ab-network-front-loaded', function () {
                     var $parent = $('.facia-page');
                     $parent.addClass('ab-front-injected');
                     $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
