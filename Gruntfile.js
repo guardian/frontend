@@ -102,11 +102,15 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'uglify:javascript']);
 
-        if (!options.isDev) {
-            grunt.task.run('uglify:javascript');
+        if (isOnlyTask(this) && !fullCompile) {
+            grunt.task.run('asset_hash');
         }
+
+    });
+    grunt.registerTask('develop:js', function (fullCompile) {
+        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -119,7 +123,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'compile:css',
-        'compile:js',
+        (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
         'asset_hash',
