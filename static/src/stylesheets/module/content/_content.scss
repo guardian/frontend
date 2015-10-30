@@ -568,24 +568,17 @@
     padding-top: 1px;
     margin-right: 4px;
 
+    @include mq(tablet) {
+        margin-right: 5px;
+        height: 3*get-line-height(bodyCopy, 2);
+    }
+
     .drop-cap__inner {
         display: inline-block;
         vertical-align: text-top;
         @include font-size(52px, 40px);
-    }
-}
 
-.drop-cap--wide {
-    @include mq(tablet) {
-        float: left;
-        display: inline-block;
-        text-transform: uppercase;
-        @include f-headline;
-        font-weight: 200;
-        margin-right: 5px;
-        height: 3*get-line-height(bodyCopy, 2);
-
-        .drop-cap__inner {
+        @include mq(tablet) {
             @include font-size(84px, 68px);
         }
     }

@@ -1,4 +1,4 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@(metaData: model.MetaData, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 @import views.support.OmnitureAnalyticsData
@@ -26,4 +26,4 @@
 @fragments.stylesheetLinksEnable()
 
 @* load the app *@
-@fragments.javaScriptBootstraps(metaData, curlPaths)
+@fragments.javaScriptBootstraps(metaData)
