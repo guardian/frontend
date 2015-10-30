@@ -407,9 +407,7 @@ define([
                 removeLabel($slot);
             } else {
                 // Store ads IDs for technical feedback
-                creativeIDs.push({
-                    creativeId: event.creativeId
-                });
+                creativeIDs.push(event.creativeId);
 
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);

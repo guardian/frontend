@@ -35,9 +35,7 @@ define([
                 var props = {
                     page: window.location,
                     width: window.innerWidth,
-                    ads: _(dfp.getCreativeIDs()).reduce(function (adsArray, ad) {
-                        adsArray.push(ad.creativeId); return adsArray;
-                    }, []),
+                    ads: _.map(dfp.getCreativeIDs(), 'creativeID'),
                     ophanId: config.ophan.pageViewId
                 };
                 var body = objToHash(_.extend(props, storedValues));

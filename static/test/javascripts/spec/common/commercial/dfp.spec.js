@@ -227,9 +227,7 @@ define([
             var fakeEventOne = makeFakeEvent('dfp-ad-slot1'),
                 fakeEventTwo = makeFakeEvent('dfp-ad-slot2');
             fakeEventOne.creativeId = '1';
-            fakeEventOne.lineItemId = '12';
             fakeEventTwo.creativeId = '2';
-            fakeEventTwo.lineItemId = '22';
 
             dfp.init();
 
@@ -240,8 +238,8 @@ define([
             var result = dfp.getCreativeIDs();
 
             expect(result.length).toBe(2);
-            expect(result[0]).toEqual({creativeId: '1', lineItemId: '12'});
-            expect(result[1]).toEqual({creativeId: '2', lineItemId: '22'});
+            expect(result[0]).toEqual('1');
+            expect(result[1]).toEqual('2');
         });
 
         describe('pageskin loading', function () {
