@@ -18,6 +18,9 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
+# Email paths
+GET        /email                                                               controllers.EmailController.renderPage()
+
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)
 GET        /index/contributors                                                  controllers.TagIndexController.contributors()

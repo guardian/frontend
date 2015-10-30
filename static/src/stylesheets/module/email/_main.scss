@@ -17,3 +17,23 @@
         }
     }
 }
+
+// TODO Move extentions to relevant pages
+
+@include mq(tablet) {
+    .email-sub--landing {
+        display: flex;
+    }
+
+    .email-sub__header--landing {
+        flex: 2;
+    }
+
+    .email-sub__form--landing {
+        flex: 1;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+}

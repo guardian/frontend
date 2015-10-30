@@ -31,6 +31,9 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
+# Email paths
+GET            /email                                                                                                            controllers.EmailController.renderPage()
+
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 

@@ -16,12 +16,14 @@
         @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription)
     }
 
-    <form action="/test/action" method="post" id="@formId" class="@formClass">
-        <div class="email-sub__inline-label js-email-sub__inline-label">
-            <label class="email-sub__label js-email-sub__label" for="@inputId">@labelText</label>
-            <input class="email-sub__text-input js-email-sub__text-input" type="text" name="@inputId" id="@inputId" />
+    <form action="/email" method="post" id="@formId" class="@formClass">
+        <div class="email-sub__form-wrapper">
+            <div class="email-sub__inline-label js-email-sub__inline-label">
+                <label class="email-sub__label js-email-sub__label" for="@inputId">@labelText</label>
+                <input class="email-sub__text-input js-email-sub__text-input" type="text" name="@inputId" id="@inputId" />
+            </div>
+            <button type="submit" class="email-sub__submit-input button button--tertiary button--large">@submitText</button>
+            <small class="email-sub__small">@smallText</small>
         </div>
-        <button type="submit" class="email-sub__submit-input button button--tertiary button--large">@submitText</button>
-        <small class="email-sub__small">@smallText</small>
     </form>
 </div>
