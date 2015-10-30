@@ -78,7 +78,7 @@ define([
         rendered             = false,
         slots                = {},
         slotsToRefresh       = [],
-        slotIDs              = [],
+        creativeIDs          = [],
         hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
         breakoutClasses      = [
             'breakout__html',
@@ -407,9 +407,8 @@ define([
                 removeLabel($slot);
             } else {
                 // Store ads IDs for technical feedback
-                slotIDs.push({
-                    creativeId: event.creativeId,
-                    lineItemId: event.lineItemId
+                creativeIDs.push({
+                    creativeId: event.creativeId
                 });
 
                 // remove any placeholder ad content
@@ -659,7 +658,7 @@ define([
         },
 
         getCreativeIDs = function () {
-            return slotIDs;
+            return creativeIDs;
         },
 
         /**
