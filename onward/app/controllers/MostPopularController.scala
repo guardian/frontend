@@ -37,7 +37,6 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.collections.popular(popular),
-            "ABhtml" -> views.html.fragments.collections.popularABTest(popular),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
