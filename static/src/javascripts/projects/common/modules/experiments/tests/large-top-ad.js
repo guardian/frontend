@@ -1,4 +1,8 @@
-define([], function () {
+define([
+    'common/utils/config'
+], function (
+    config
+) {
     return function () {
         this.id = 'LargeTopAd';
         this.start = '2015-10-27';
@@ -13,7 +17,7 @@ define([], function () {
         this.idealOutcome = 'We can tell if the top large ad format is desirable in the future or what cost it has to the engagement.';
 
         this.canRun = function () {
-            return window.guardian.config.page.edition === 'US';
+            return config.page.edition === 'US';
         };
 
         this.variants = [
