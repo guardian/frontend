@@ -67,10 +67,11 @@ define([
 
                 injectContainer.injectContainer(frontUrl);
                 mediator.once('ab-briefing-loaded', function () {
-                    var parent = $(".facia-page");
-                    parent.addClass("ab-front-injected");
-                    $('.js-tabs-content', parent).addClass('tabs__content--no-border');
-                    $('.js-tabs', parent).addClass('u-h');
+                    var $parent = $('.facia-page');
+                    $parent.addClass('ab-front-injected');
+                    $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
+                    $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
+                    $('.js-tabs', $parent).addClass('u-h');
 
                     this.prerender(true);
                     this.ready();
