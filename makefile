@@ -23,6 +23,13 @@ test:
 validate:
 	@grunt validate
 
+validate-sass:
+	@grunt validate:sass
+	@grunt validate:css
+
+validate-js:
+	@grunt validate:js
+
 shrinkwrap:
 	@npm shrinkwrap && node dev/clean-shrinkwrap.js
 	@node dev/message.js shrinkwrap
