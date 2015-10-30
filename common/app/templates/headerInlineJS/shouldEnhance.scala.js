@@ -21,7 +21,7 @@
     // For usage stats see http://david-smith.org/iosversionstats/
     //
     // NOTE: this moves people into a category where they do not get important things such as commenting
-    var isOlderDevice = function () {
+    var isOlderIOSDevice = function () {
         // This is NOT what we want to be doing long term. It is a stopgap measure only...
         var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
 
@@ -32,7 +32,11 @@
         return false;
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderDevice() && !(@item.isFront && window.serveCoreFronts);
+    var isRetinaIpad = function() {
+        return (navigator.platform === 'iPad' && window.devicePixelRatio === 2);
+    };
+
+    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isRetinaIpad());
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 

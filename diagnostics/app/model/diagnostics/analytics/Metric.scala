@@ -59,20 +59,15 @@ object Metric extends Logging {
     ("ipad-retina-core-opted-in-after-10", CountMetric(s"ipad-retina-core-opted-in-after-10")),
     ("ipad-retina-core-opted-in-after-60", CountMetric(s"ipad-retina-core-opted-in-after-60")),
 
-    ("ipad-retina-core-fronts-control-start", CountMetric(s"ipad-retina-core-fronts-control-start")),
-    ("ipad-retina-core-fronts-control-after-5", CountMetric(s"ipad-retina-core-fronts-control-after-5")),
-    ("ipad-retina-core-fronts-control-after-10", CountMetric(s"ipad-retina-core-fronts-control-after-10")),
-    ("ipad-retina-core-fronts-control-after-60", CountMetric(s"ipad-retina-core-fronts-control-after-60")),
+    ("ipad-retina-universal-fronts-start", CountMetric(s"ipad-retina-universal-fronts-start")),
+    ("ipad-retina-universal-fronts-after-5", CountMetric(s"ipad-retina-universal-fronts-after-5")),
+    ("ipad-retina-universal-fronts-after-10", CountMetric(s"ipad-retina-universal-fronts-after-10")),
+    ("ipad-retina-universal-fronts-after-60", CountMetric(s"ipad-retina-universal-fronts-after-60")),
 
-    ("ipad-retina-core-fronts-test-start", CountMetric(s"ipad-retina-core-fronts-test-start")),
-    ("ipad-retina-core-fronts-test-after-5", CountMetric(s"ipad-retina-core-fronts-test-after-5")),
-    ("ipad-retina-core-fronts-test-after-10", CountMetric(s"ipad-retina-core-fronts-test-after-10")),
-    ("ipad-retina-core-fronts-test-after-60", CountMetric(s"ipad-retina-core-fronts-test-after-60")),
-
-//    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
-//    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
-//    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
-//    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
+    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
+    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
+    ("windows7-chrome-start", CountMetric(s"windows7-chrome-start")),
+    ("windows7-chrome-after-5", CountMetric(s"windows7-chrome-after-5")),
 
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen")),
