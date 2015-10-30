@@ -2,6 +2,7 @@ define([
     'fastdom',
     'qwery',
     'Promise',
+    'common/modules/experiments/ab',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax-promise',
@@ -12,6 +13,7 @@ define([
     fastdom,
     qwery,
     Promise,
+    ab,
     _,
     $,
     ajax,
@@ -44,12 +46,13 @@ define([
     }
 
     function upgradeLinks() {
-        if (ab.getTestVariantId('ReplicatedLinks') &&
-            ab.testCanBeRun('ReplicatedLinks') &&
-            ab.getTestVariantId('ReplicatedLinks') === 'variant') {
+        // TODO commented out while Zef styles it
+        //if (ab.getTestVariantId('ReplicatedLinks') &&
+        //    ab.testCanBeRun('ReplicatedLinks') &&
+        //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
             $('.js-replicated-links').removeClass('element-replicated-links--not-in-test');
             $('.element-replicated-link--not-upgraded').each(upgradeLink);
-        }
+        //}
     }
 
     return {
