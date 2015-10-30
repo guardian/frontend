@@ -49,7 +49,7 @@ define([
             if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
                 var frontUrl;
 
-                switch(config.page.edition) {
+                switch (config.page.edition) {
                     case 'UK':
                         frontUrl = '/uk.json';
                         break;
