@@ -11,6 +11,10 @@
         @include mq(desktop) {
             display: none;
         }
+
+        .is-not-modern & {
+            display: none;
+        }
     }
 }
 
