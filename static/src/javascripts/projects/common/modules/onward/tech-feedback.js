@@ -3,6 +3,7 @@ define([
     'fastdom',
     'common/utils/_',
     'common/utils/$',
+    'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/dfp'
 ], function (
@@ -10,6 +11,7 @@ define([
     fastdom,
     _,
     $,
+    config,
     detect,
     dfp
 ) {
@@ -35,7 +37,8 @@ define([
                     width: window.innerWidth,
                     ads: _(dfp.getCreativeIDs()).reduce(function (adsArray, ad) { 
                         adsArray.push(ad.creativeId); return adsArray; 
-                    }, [])
+                    }, []),
+                    ophanId: config.ophan.pageViewId
                 };
                 var body = objToHash(_.extend(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
