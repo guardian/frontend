@@ -32,7 +32,7 @@ define([
             siteMessageCloseBtn: 'hide'
         }).show(template(messageTemplate, {
             messageText: [
-                'Thank you for reading The Guardian.',
+                'Thank you for reading the Guardian.',
                 'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
             ].join(' '),
             linkHref: 'https://membership.theguardian.com/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_UK',
