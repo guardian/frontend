@@ -9,6 +9,6 @@ switch (process.argv[2]) {
     break;
 
   case 'shrinkwrap':
-    megalog.error('You have changes to `package.json` but havn’t updated `npm-shrinkwrap.json`.\n\nPlease run `make shrinkwrap` and commit the changes to `npm-shrinkwrap.json`.');
+    megalog.error('You have changes to `package.json` but haven’t updated `npm-shrinkwrap.json`.\n\nPlease run `make shrinkwrap` and commit the changes to `npm-shrinkwrap.json`.');
     break;
 }
