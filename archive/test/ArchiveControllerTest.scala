@@ -188,14 +188,14 @@ import scala.concurrent.Future
 
   it should "redirect short urls with campaign codes" in {
     val shortRedirect = services.Redirect("http://www.theguardian.com/p/new")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw")(shortRedirect)
-    result.location should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirect)
+    result should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
     val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw")(shortRedirectWithCMP)
-    result.location should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirectWithCMP)
+    result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
   }
 
   private def location(result: Future[Result]): String = header("Location", result).head
