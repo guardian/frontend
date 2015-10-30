@@ -35,8 +35,8 @@ define([
                 var props = {
                     page: window.location,
                     width: window.innerWidth,
-                    ads: _(dfp.getCreativeIDs()).reduce(function (adsArray, ad) { 
-                        adsArray.push(ad.creativeId); return adsArray; 
+                    ads: _(dfp.getCreativeIDs()).reduce(function (adsArray, ad) {
+                        adsArray.push(ad.creativeId); return adsArray;
                     }, []),
                     ophanId: config.ophan.pageViewId
                 };

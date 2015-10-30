@@ -226,7 +226,6 @@ define([
         it('should expose ads IDs', function () {
             var fakeEventOne = makeFakeEvent('dfp-ad-slot1'),
                 fakeEventTwo = makeFakeEvent('dfp-ad-slot2');
-            
             fakeEventOne.creativeId = '1';
             fakeEventOne.lineItemId = '12';
             fakeEventTwo.creativeId = '2';
