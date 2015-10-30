@@ -34,9 +34,6 @@ trait Requests {
 
     private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
-    // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
-    lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
-
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
 

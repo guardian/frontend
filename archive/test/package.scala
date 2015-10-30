@@ -12,4 +12,7 @@ object `package` {
 }
 
 class ArchiveTestSuite extends Suites (
-  new ArchiveControllerTest ) with SingleServerSuite
+  new ArchiveControllerTest ) with SingleServerSuite {
+
+  override lazy val port: Int = conf.HealthCheck.testPort
+}

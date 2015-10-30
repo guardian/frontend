@@ -315,8 +315,8 @@ GET            /2015-06-24-manifest.json                                        
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 
-GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsCampaignController.redirectShortUrl(shortCode)
-GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsCampaignController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
+GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)

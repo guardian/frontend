@@ -129,6 +129,7 @@ define([
 
     function CommercialFeatureSwitches(enabled) {
         this.dfpAdvertising = enabled;
+        this.topBannerAd = enabled;
         this.articleBodyAdverts = enabled;
         this.articleAsideAdverts = enabled;
         this.sliceAdverts = enabled;
