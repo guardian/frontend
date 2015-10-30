@@ -25,7 +25,7 @@ module.exports = function () {
         },
 
         installNpm: {
-            command: 'make install-npm'
+            command: 'make install-application'
         },
 
         updateCanIUse: {
