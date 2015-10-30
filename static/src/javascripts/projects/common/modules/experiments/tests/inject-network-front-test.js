@@ -15,7 +15,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return !guardian.config.page.isFront;
+            return !window.guardian.config.page.isFront;
         };
 
         this.variants = [
