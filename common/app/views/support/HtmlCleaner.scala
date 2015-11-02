@@ -103,7 +103,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.largestImage
     }{
-      val hinting = findBreakpointWidths(figure)
+      val hinting = findBreakpointWidths(figure, article.isImmersive)
       val relation = if (article.isLiveBlog) { LiveBlogMedia } else { BodyMedia }
       val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
 
@@ -160,12 +160,13 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     fullyMatchedImage.orElse(imageContainers.headOption)
   }
 
-  def findBreakpointWidths(figure: Element): ContentHinting = {
+  def findBreakpointWidths(figure: Element, isImmersive: Boolean): ContentHinting = {
 
     figure.classNames().map(Some(_)) match {
       case classes if classes.contains(Supporting.className) => Supporting
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
+      case classes if classes.contains(Immersive.className) && isImmersive => Immersive
       case _ => Inline
     }
   }

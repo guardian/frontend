@@ -107,6 +107,7 @@ object ContentWidths {
   object Supporting extends ContentHinting (Some("element--supporting"))
   object Showcase   extends ContentHinting (Some("element--showcase"))
   object Thumbnail  extends ContentHinting (Some("element--thumbnail"))
+  object Immersive  extends ContentHinting (Some("element--immersive"))
 
   sealed trait ContentRelation {
     def inline: WidthsByBreakpoint
