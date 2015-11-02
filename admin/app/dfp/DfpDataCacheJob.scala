@@ -79,15 +79,13 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     }
 
     val lineItems = {
-      if (Switches.DfpCacheRecentOnly.isSwitchedOn) {
-        val loadSummary = loadLineItems(
-          fetchCachedLineItems(),
-          hydrator.loadLineItemsModifiedSince,
-          hydrator.loadCurrentLineItems()
-        )
-        logReport(loadSummary)
-        loadSummary.current
-      } else hydrator.loadCurrentLineItems()
+      val loadSummary = loadLineItems(
+        fetchCachedLineItems(),
+        hydrator.loadLineItemsModifiedSince,
+        hydrator.loadCurrentLineItems()
+      )
+      logReport(loadSummary)
+      loadSummary.current
     }
 
     val loadDuration = System.currentTimeMillis - start
