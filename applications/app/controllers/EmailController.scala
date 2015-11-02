@@ -6,7 +6,7 @@ import play.api.Play.current
 import play.api.data._
 import play.api.data.validation.Constraints.emailAddress
 import play.api.data.Forms._
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 import model.MetaData
@@ -28,7 +28,7 @@ object EmailForm {
   val postUrl = "https://3b1d4pkpvi.execute-api.eu-west-1.amazonaws.com/dev/email"
   val listId  = 12345
 
-  def submit(form: EmailForm) = {
+  def submit(form: EmailForm): Future[WSResponse] = {
     WS.url(postUrl).post(Json.obj(
       "email"  -> form.email,
       "listId" -> listId
@@ -37,7 +37,6 @@ object EmailForm {
 }
 
 object EmailController extends Controller with ExecutionContexts {
-
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress)
