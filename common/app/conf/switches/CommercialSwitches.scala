@@ -28,7 +28,7 @@ trait CommercialSwitches {
     "dfp-cache-creative-templates",
     "Admin will cache DFP creative templates.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 4),
+    sellByDate = new LocalDate(2015, 11, 18),
     exposeClientSide = false
   )
 
