@@ -25,11 +25,8 @@
                 if ((device === 'ipad' && model === 'retina')) {
                     if (coreOptedIn()) {
                         return id + '-core-opted-in';
-                    }
-                    if (window.serveCoreFronts) {
-                        return id + '-core-fronts-test';
                     } else {
-                        return id + '-core-fronts-control';
+                        return id + '-universal-fronts';
                     }
                 }
                 return id;
@@ -88,23 +85,21 @@
                 logDevice('4', 'iphone');
             }
         }
-@* KILL THESE WHILE THE IPAD CORE TEST IS RUNNING TO SAVE £££s ON AWS BEACON COSTS
-        (REMEMBER TO UPDATE diagnostics/app/model/diagnostics/analytics/Metric.scala IF RE-ENABLING)
+
         // This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
-        //if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')) {
-        //    var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
-        //
-        //    if (isNexus5) {
-        //        logDevice('nexus5', 'android');
-        //    }
-        //}
-        //
-        //// Send AWS beacons for Windows7 Chrome & Opera users (user agent is almost identical). This is so we have a indicator of loss on something which we are confident is stable
-        //if (navigator.platform === 'Win32') {
-        //    if ((/Windows NT 6.1; WOW64/.test(navigator.userAgent)) && (/Chrome/.test(navigator.userAgent))) {
-        //        logDevice('chrome', 'windows7');
-        //    }
-        //}
-*@
+        if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')) {
+            var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
+
+            if (isNexus5) {
+                logDevice('nexus5', 'android');
+            }
+        }
+
+        // Send AWS beacons for Windows7 Chrome & Opera users (user agent is almost identical). This is so we have a indicator of loss on something which we are confident is stable
+        if (navigator.platform === 'Win32') {
+            if ((/Windows NT 6.1; WOW64/.test(navigator.userAgent)) && (/Chrome/.test(navigator.userAgent))) {
+                logDevice('chrome', 'windows7');
+            }
+        }
     })(window, navigator);
 }

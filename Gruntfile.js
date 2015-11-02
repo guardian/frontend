@@ -57,9 +57,9 @@ module.exports = function (grunt) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
 
-    // Default task
+    // Default task - used by grunt-tc
     grunt.registerTask('default', function () {
-        grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+        grunt.task.run(['shell:install', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
     });
 
     /**
@@ -102,11 +102,15 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'uglify:javascript']);
 
-        if (!options.isDev) {
-            grunt.task.run('uglify:javascript');
+        if (isOnlyTask(this) && !fullCompile) {
+            grunt.task.run('asset_hash');
         }
+
+    });
+    grunt.registerTask('develop:js', function (fullCompile) {
+        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -117,17 +121,22 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
-    grunt.registerTask('compile', [
+    grunt.registerTask('compile-assets', [
         'compile:css',
-        'compile:js',
+        (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
         'asset_hash',
         'compile:conf'
     ]);
 
-    grunt.registerTask('install', ['install:npm']);
-    grunt.registerTask('install:npm', ['shell:npmInstall']);
+    grunt.registerTask('compile', function () {
+        megalog.error('`grunt compile` has been removed.\n\nUse `make compile` or `make compile-dev` instead.\n\nIf you’re developing, you might want to use `make watch`. Run `make` for more details.');
+    });
+
+    grunt.registerTask('install', function () {
+        megalog.error('`grunt install` has been removed.\n\nUse `make install` instead.');
+    });
 
     grunt.registerTask('prepare', function () {
         megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');

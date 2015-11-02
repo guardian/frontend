@@ -29,12 +29,13 @@ requirejs.config({
         qwery:        'components/qwery/qwery',
         raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
-        omniture:     '/base/static/src/javascripts/vendor/omniture',
-        stripe:       '/base/static/src/javascripts/vendor/stripe/stripe.min',
+        // Test specific paths
+        omniture:     'vendor/omniture',
+        stripe:       'vendor/stripe/stripe.min',
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
-        svgs:         '/base/common/conf/assets/inline-svgs',
+        svgs:         '../inline-svgs',
         // plugins
         text:         'components/requirejs-text/text',
         inlineSvg:    'projects/common/utils/inlineSvg'

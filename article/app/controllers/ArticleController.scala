@@ -3,10 +3,10 @@ package controllers
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
+import conf.switches.Switches.SoftPurgeWithLongCachingSwitch
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -16,7 +16,6 @@ import play.api.libs.json.{Json, _}
 import play.api.mvc._
 import views.BodyCleaner
 import views.support._
-import conf.switches.Switches.SoftPurgeWithLongCachingSwitch
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -153,11 +152,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       case article: Article => ArticlePage(article, RelatedContent(article, response))
     }
 
-    if (content.exists(_.article.isExpiredAdvertisementFeature)) {
-      Right(MovedPermanently(expiredAdFeatureUrl))
-    } else {
-      ModelOrResult(content, response)
-    }
+    ModelOrResult(content, response)
   }
 
 }
