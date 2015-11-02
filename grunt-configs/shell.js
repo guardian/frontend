@@ -28,35 +28,6 @@ module.exports = function () {
             command: 'npm prune && npm install'
         },
 
-        jspmInstallStatic: {
-            command: './jspm install && ./jspm dl-loader && ./jspm clean',
-            options: {
-                execOptions: {
-                    cwd: './node_modules/.bin'
-                }
-            }
-        },
-
-        jspmBundleStatic: {
-            command:
-                'node ./bundle',
-            options: {
-                execOptions: {
-                    cwd: '.'
-                }
-            }
-        },
-
-        jspmClusterBundleStatic: {
-            command:
-                'node ./cluster-bundle',
-            options: {
-                execOptions: {
-                    cwd: '.'
-                }
-            }
-        },
-
         updateCanIUse: {
             command: 'npm update caniuse-db'
         }

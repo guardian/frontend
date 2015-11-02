@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
-import conf.{StaticJspm, Static, LiveContentApi}
+import conf.{Static, LiveContentApi}
 import crosswords.CrosswordData
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
@@ -57,9 +57,9 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
             Static("stylesheets/head.content.css"),
             Static("stylesheets/content.css"),
             Static("stylesheets/print.css"),
-            StaticJspm("javascripts/core.js"),
-            StaticJspm("javascripts/bootstraps/app.js"),
-            StaticJspm("javascripts/es6/bootstraps/crosswords.js")
+            Static("javascripts/core.js"),
+            Static("javascripts/bootstraps/app.js"),
+            Static("javascripts/bootstraps/crosswords.js")
           ).map(asset => JsString(asset.toString)))
         ))))
       }

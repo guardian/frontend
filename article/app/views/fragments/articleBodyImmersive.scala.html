@@ -24,7 +24,7 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMetaImmersive(article)
 
                         @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />

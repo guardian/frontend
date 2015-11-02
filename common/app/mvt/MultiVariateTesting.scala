@@ -18,27 +18,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object JspmTest extends TestDefinition(
-  List(Variant0),
-  "jspm-test",
-  "Tests our new JSPM jsavscript configuration",
-  new LocalDate(2015, 11, 30)
-)
-
-object JspmControlTest extends TestDefinition(
-  List(Variant7),
-  "jspm-control",
-  "A control test/variant to compare with the JspmTest",
-  new LocalDate(2015, 11, 30)
-)
-
-object JspmAMDTest extends TestDefinition(
-  List(Variant8),
-  "jspm-amd-test",
-  "Loads the AMD app using SystemJS",
-  new LocalDate(2015, 11, 30)
-)
-
 object EmailTextTestControl extends TestDefinition(
   List(Variant1),
   "email-text-test-control",
@@ -54,7 +33,7 @@ object EmailTextTestV1 extends TestDefinition(
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, JspmAMDTest, EmailTextTestControl, EmailTextTestV1)
+  val tests: Seq[TestDefinition] = List(EmailTextTestControl, EmailTextTestV1)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 

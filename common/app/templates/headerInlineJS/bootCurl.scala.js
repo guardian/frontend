@@ -116,10 +116,6 @@ require([
         }
 
         if (guardian.isModernBrowser) {
-            @if(play.Play.isDev()) {
-                require(['bootstraps/dev'], function (devmode) { devmode.init(); });
-            }
-
             require(['bootstraps/app'], function(bootstrap) {
                 bootstrap.go();
             });

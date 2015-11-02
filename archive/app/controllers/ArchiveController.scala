@@ -1,11 +1,12 @@
 package controllers
 
+import campaigns.ShortCampaignCodes
 import common._
 import play.api.mvc._
-import services.{Archive, DynamoDB, Googlebot404Count}
-import java.net.URLDecoder
+import services.{Archive, DynamoDB, Googlebot404Count, Destination}
+import java.net.{URI, URLDecoder}
 import model.Cached
-
+import scala.concurrent.Future
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
 
@@ -50,8 +51,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  def normalise(path: String, zeros: String = ""): Option[String] = {
-    path match {
+  def normalise(path: String, zeros: String = ""): String = {
+    val normalised = path match {
       case R1ArtifactUrl(path, artifactOrContextId, extension) =>
         val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
         Some(normalisedUrl)
@@ -59,16 +60,36 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         Some(path)
       case _ => None
     }
+    s"http://${normalised.getOrElse(path)}"
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
-    case PathPattern(_, r1path) => destination contains r1path
+    case PathPattern(_, r1path) => destination.endsWith(r1path)
     case _ => false
   }
 
-  private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
-      linksToItself(path, destination.location)
-  })
+  def retainShortUrlCampaign(path: String, redirectLocation: String ): String = {
+    // if the path is a short url with a campaign, and the destination doesn't have a campaign, pass it through the redirect.
+    val shortUrlWithCampaign = """.*www\.theguardian\.com/p/[\w\d]+/([\w\d]+)$""".r
+    val urlWithCampaignParam = """.*www\.theguardian\.com.*?.*CMP=.*$""".r
+
+    val destinationHasCampaign = redirectLocation match {
+      case shortUrlWithCampaign(_) => true
+      case urlWithCampaignParam() => true
+      case _ => false
+    }
+
+    path match {
+      case shortUrlWithCampaign(campaign) if !destinationHasCampaign => {
+        val uri = javax.ws.rs.core.UriBuilder.fromPath(redirectLocation)
+        ShortCampaignCodes.getFullCampaign(campaign).foreach(uri.replaceQueryParam("CMP", _))
+        uri.build().toString
+      }
+      case _ => redirectLocation
+    }
+  }
+
+  private def destinationFor(path: String): Future[Option[Destination]] = DynamoDB.destinationFor(normalise(path))
 
   private object Combiner {
     def unapply(path: String): Option[String] = {
@@ -125,14 +146,17 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         log.info(s"404,${RequestLog(request)}")
     }
 
-  private def lookupPath(path: String) = destinationFor(s"http://${normalise(path).getOrElse(path)}").map { _.map {
-    case services.Redirect(url) =>
-      logDestination(path, "redirect", url)
-      Cached(300)(Redirect(url, 301))
-    case Archive(archivePath) =>
-      // http://wiki.nginx.org/X-accel
-      logDestination(path, "archive", archivePath)
-      Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
-  }}
+  private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}
+
+  def processLookupDestination(path: String) : PartialFunction[Destination, Result] = {
+      case services.Redirect(location) if !linksToItself(path, location) =>
+        val locationWithCampaign = retainShortUrlCampaign(path, location)
+        logDestination(path, "redirect", locationWithCampaign)
+        Cached(300)(Redirect(locationWithCampaign, 301))
+      case Archive(archivePath) =>
+        // http://wiki.nginx.org/X-accel
+        logDestination(path, "archive", archivePath)
+        Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
+  }
 
 }
