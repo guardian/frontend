@@ -114,6 +114,7 @@ object ContentWidths {
     def supporting: WidthsByBreakpoint = unused
     def showcase: WidthsByBreakpoint = unused
     def thumbnail: WidthsByBreakpoint = unused
+    def immersive: WidthsByBreakpoint = unused
   }
 
   object BodyMedia extends ContentRelation {
@@ -135,6 +136,15 @@ object ContentWidths {
       phablet =         Some(620.px), // tablet and desktop are also 620px
       leftCol =         Some(780.px),
       wide =            Some(860.px))
+
+    override val immersive = WidthsByBreakpoint(
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
+      phablet =         Some(725.px),
+      tablet =          Some(965.px),
+      desktop =         Some(1125.px),
+      leftCol =         Some(1140.px),
+      wide =            Some(1300.px))
 
     override val thumbnail = WidthsByBreakpoint(
       mobile =          Some(120.px), // mobileLandscape and tablet are also 120px
@@ -217,6 +227,7 @@ object ContentWidths {
       case Supporting => relation.supporting
       case Showcase => relation.showcase
       case Thumbnail => relation.thumbnail
+      case Immersive => relation.immersive
       case _ => unused
     }
   }
