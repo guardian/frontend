@@ -6,6 +6,12 @@
 @import layout._
 
 <header class="content__head content__head--desktop tonal__head tonal__head--@articleToneClass(article)">
+    <div class="gs-container content__logo-container">
+        <a href="@LinkTo{/}">
+            @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
+        </a>
+    </div>
+
     @if(article.hasMainEmbed || article.elements("main").isEmpty) {
         @MainCleaner(article, article.main, false)
     } else {
@@ -30,12 +36,6 @@
             }
         </style>
     }
-
-    <div class="gs-container content__logo-container">
-        <a href="@LinkTo{/}">
-            @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
-        </a>
-    </div>
 
     <div class="content__header">
         <div class="content__head--mobile">

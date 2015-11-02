@@ -11,8 +11,8 @@
         padding-top: $gs-baseline / 2;
     }
 
-/* Header
-   ========================================================================== */
+/*  Header
+    ========================================================================== */
     .content__head {
         position: relative;
         color: #ffffff;
@@ -146,7 +146,27 @@
         }
     }
 
-/* Meta
+    .content__head .element-embed {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        .fenced {
+            min-height: 100%;
+            max-height: 100%;
+            opacity: 0;
+            transition: 0.5s opacity ease-out;
+        }
+
+        .fenced-rendered {
+            opacity: 1;
+        }
+    }
+
+/*  Meta
     ========================================================================== */
     .content__meta-container--immersive {
         position: relative;
@@ -340,8 +360,8 @@
         }
     }
 
-/* Body
-   ========================================================================== */
+/*  Body
+    ========================================================================== */
     .drop-cap {
         height: 7.25em;
 
