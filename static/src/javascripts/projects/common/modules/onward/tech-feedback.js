@@ -3,13 +3,17 @@ define([
     'fastdom',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/detect'
+    'common/utils/config',
+    'common/utils/detect',
+    'common/modules/commercial/dfp'
 ], function (
     bean,
     fastdom,
     _,
     $,
-    detect
+    config,
+    detect,
+    dfp
 ) {
 
     function objToString(obj) {
@@ -30,7 +34,9 @@ define([
                 var oldHref = link.attr('href');
                 var props = {
                     page: window.location,
-                    width: window.innerWidth
+                    width: window.innerWidth,
+                    ads: dfp.getCreativeIDs().join(' '),
+                    ophanId: config.ophan.pageViewId
                 };
                 var body = objToHash(_.extend(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
