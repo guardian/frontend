@@ -20,8 +20,6 @@
     "grunt-contrib-copy": "0.6.0",
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-uglify": "0.9.1",
-    "grunt-contrib-watch": "0.6.1",
-    "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
     "grunt-eslint": "^17.2.0",
     "grunt-frequency-graph": "^0.1.6",

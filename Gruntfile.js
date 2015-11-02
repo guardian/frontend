@@ -11,8 +11,6 @@ if (task !== 'install') {
     }
 }
 
-var megalog = require('megalog');
-
 module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
@@ -60,6 +58,29 @@ module.exports = function (grunt) {
     // Default task - used by grunt-tc
     grunt.registerTask('default', function () {
         grunt.task.run(['shell:install', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
+    });
+
+    /**
+     * Deprecated/retired tasks
+     */
+    grunt.registerTask('compile', function () {
+        require('megalog').error('`grunt compile` has been removed.\n\nUse `make compile` or `make compile-dev` instead.\n\nIf you’re developing, you might want to use `make watch`. Run `make` for more details.');
+    });
+
+    grunt.registerTask('install', function () {
+        require('megalog').error('`grunt install` has been removed.\n\nUse `make install` instead.');
+    });
+
+    grunt.registerTask('prepare', function () {
+        require('megalog').error('`grunt prepare` has been removed.\n\nUse `make install` instead… ');
+    });
+
+    grunt.registerTask('watch', function () {
+        require('megalog').error('`grunt watch` has been removed.\n\nUse `make watch` instead… ');
+    });
+
+    grunt.registerTask('csdevmode', function () {
+        require('megalog').error('`grunt csdevmode` has been removed.\n\nUse `make watch` instead… ');
     });
 
     /**
@@ -129,18 +150,6 @@ module.exports = function (grunt) {
         'asset_hash',
         'compile:conf'
     ]);
-
-    grunt.registerTask('compile', function () {
-        megalog.error('`grunt compile` has been removed.\n\nUse `make compile` or `make compile-dev` instead.\n\nIf you’re developing, you might want to use `make watch`. Run `make` for more details.');
-    });
-
-    grunt.registerTask('install', function () {
-        megalog.error('`grunt install` has been removed.\n\nUse `make install` instead.');
-    });
-
-    grunt.registerTask('prepare', function () {
-        megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');
-    });
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task
