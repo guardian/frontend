@@ -20,6 +20,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET        /email                                                               controllers.EmailController.renderPage()
+POST       /email                                                               controllers.EmailController.submit()
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)

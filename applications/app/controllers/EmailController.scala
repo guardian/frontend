@@ -21,8 +21,11 @@ class emailLandingPage() extends MetaData {
 
 case class EmailPage (interactive: Interactive, related: RelatedContent)
 
+case class EmailSubmission(email: String)
+
 object EmailController extends Controller with ExecutionContexts {
-  val postUrl = "http://requestb.in/1jvf07s1"
+  val listId  = 12345
+  val postUrl = "https://3b1d4pkpvi.execute-api.eu-west-1.amazonaws.com/dev/email"
 
   def renderPage() = Action { implicit request =>
     val emailLandingHtml = views.html.emailLanding(new emailLandingPage())
@@ -37,23 +40,19 @@ object EmailController extends Controller with ExecutionContexts {
     )
 
     form.bindFromRequest.fold(
-      _ => Future(Ok(s"error")),
+      err => Future(Ok(s"$err")),
 
       form => {
         val json = Json.obj(
-          "address" -> form.address,
-          "listId" -> form.listId
+          "email"  -> form.email,
+          "listId" -> listId
         )
 
         WS.url(postUrl).post(json).map(res => res.status match {
           case 200 => Ok(s"OK: $res")
-          case _ => Ok(s"Didn't work: $res")
+          case _   => InternalServerError(s"${res.json}")
         })
       }
     )
   }
-}
-
-case class EmailSubmission(address: String) {
-  val listId = "xxx"
 }
