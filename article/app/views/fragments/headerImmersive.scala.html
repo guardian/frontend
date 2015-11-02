@@ -1,15 +1,26 @@
-@(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(article: model.Article, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.articleToneClass
 @import views.support.ContributorLinks
 @import views.support.ImgSrc
 @import layout._
 
-<header class="content__head content__head--desktop tonal__head tonal__head--@articleToneClass(content)
-    @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
+<header class="content__head content__head--desktop tonal__head tonal__head--@articleToneClass(article)">
+    <div class="gs-container content__logo-container">
+        <a href="@LinkTo{/}">
+            @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
+        </a>
+    </div>
 
+    @if(article.hasMainEmbed || article.elements("main").isEmpty) {
+        @MainCleaner(article, article.main, false)
+        <div class="content__loading">
+            <span class="content__loading-animation is-updating"></span>
+            <span class="u-h">Loading header</span>
+        </div>
+    } else {
         <style>
-            @content.mainPicture.map { picture => 
+            @article.mainPicture.map { picture => 
                 .content__head--mobile {
                     background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
                 }
@@ -26,29 +37,23 @@
                         background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
                     }
                 }
-                
             }
         </style>
-
-    <div class="gs-container content__logo-container">
-        <a href="@LinkTo{/}">
-            @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
-        </a>
-    </div>
+    }
 
     <div class="content__header">
         <div class="content__head--mobile">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
-                    <h1 class="content__headline">@Html(content.headline)</h1>
+                    <h1 class="content__headline">@Html(article.headline)</h1>
                 </div>
             </div>
         </div>
 
         <div class="content__wrapper content__wrapper--standfirst">
             <div class="gs-container">
-                @if(content.standfirst.isDefined) {
-                    @fragments.standfirst(content)
+                @if(article.standfirst.isDefined) {
+                    @fragments.standfirst(article)
                 }
             </div>
         </div>
