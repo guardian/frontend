@@ -9,7 +9,7 @@ define([
     'common/utils/template',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/dfp-api',
     'text!common/views/commercial/badge.html'
 
 ], function (

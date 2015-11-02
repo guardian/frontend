@@ -22,7 +22,7 @@ define([
                 'common/modules/commercial/create-ad-slot': function () {
                     return '<div class="ad-slot"></div>';
                 },
-                'common/modules/commercial/dfp': {
+                'common/modules/commercial/dfp-api': {
                     addSlot: function () {},
                     createAdSlot: function () {
                         return '<div class="ad-slot"></div>';
