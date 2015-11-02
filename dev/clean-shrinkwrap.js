@@ -30,12 +30,12 @@ function cleanModule(module, name) {
 }
 
 
-console.log('Reading npm-shrinkwrap.json');
+console.log('- reading npm-shrinkwrap.json');
 var shrinkwrapPath = path.join(__dirname, '..', 'npm-shrinkwrap.json');
 var shrinkwrap = require(shrinkwrapPath);
 
-console.log('Cleaning shrinkwrap object');
+console.log('- cleaning it');
 cleanModule(shrinkwrap, shrinkwrap.name);
 
-console.log('Writing cleaned to', shrinkwrapPath);
+console.log('- saving it to', shrinkwrapPath);
 fs.writeFileSync(shrinkwrapPath, JSON.stringify(sorted(shrinkwrap), null, 2) + "\n");

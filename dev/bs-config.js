@@ -27,6 +27,7 @@ module.exports = {
         "cwd": "../"
     },
     "files": [
+        "static/src/javascripts/*.js",
         "static/src/javascripts/**/*.js",
         "static/hash/stylesheets/*.css"
     ],
