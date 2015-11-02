@@ -56,7 +56,7 @@ import scala.concurrent.Future
     location(result) should be ("http://www.theguardian.com/arts/pictures/0,")
   }
 
-  it should "test a redirect doesn't not link to itself" in {
+  it should "test a redirect doesn't link to itself" in {
     val path = "www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
     val dest = "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
     controllers.ArchiveController.linksToItself(path, dest) should be (true)
