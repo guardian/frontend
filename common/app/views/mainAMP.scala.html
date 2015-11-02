@@ -21,7 +21,7 @@
     <body>
         @defining(s"${request.host}${request.path}") { path =>
             @defining({
-                val params = OmnitureAnalyticsData(metaData, "No Javascript", path, "GoogleAMP", Map(("r", "$DOCUMENT_REFERRER")))
+                val params = OmnitureAnalyticsData(metaData, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
                 val omnitureAccount = Configuration.javascript.pageData("guardian.page.omnitureAccount")
                 s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
             }) { omnitureCall =>
