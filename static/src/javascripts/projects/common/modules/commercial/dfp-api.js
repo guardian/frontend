@@ -1,3 +1,6 @@
+// Be wary of renaming this file; some titles, like 'dfp.js',
+// can trigger adblocker rules, and make the module fail to load.
+
 /* global googletag: false */
 define([
     'bean',
