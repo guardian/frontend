@@ -1,5 +1,5 @@
 // Be wary of renaming this file; some titles, like 'dfp.js',
-// can trigger adblocker rules, and make the module fail to load.
+// can trigger adblocker rules, and make the module fail to load in dev.
 
 /* global googletag: false */
 define([
