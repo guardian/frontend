@@ -24,37 +24,8 @@ module.exports = function () {
                      'static/abtests.json'
         },
 
-        npmInstall: {
-            command: 'npm prune && npm install'
-        },
-
-        jspmInstallStatic: {
-            command: './jspm install && ./jspm dl-loader && ./jspm clean',
-            options: {
-                execOptions: {
-                    cwd: './node_modules/.bin'
-                }
-            }
-        },
-
-        jspmBundleStatic: {
-            command:
-                'node ./bundle',
-            options: {
-                execOptions: {
-                    cwd: '.'
-                }
-            }
-        },
-
-        jspmClusterBundleStatic: {
-            command:
-                'node ./cluster-bundle',
-            options: {
-                execOptions: {
-                    cwd: '.'
-                }
-            }
+        install: {
+            command: 'make install'
         },
 
         updateCanIUse: {

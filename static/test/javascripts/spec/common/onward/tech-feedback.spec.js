@@ -33,5 +33,18 @@ define(['common/modules/onward/tech-feedback'], function (TechFeedback) {
             expect(values).toEqual({'http://www.theguardian.com': 'http://www.theguardian.com'});
         });
 
+        it('should be able to get ads creative IDs', function () {
+
+            var t = new TechFeedback();
+            var values = t.getValuesFromHash('#ads=67729052367%2C71293284447');
+            expect(values).toEqual({'ads': '67729052367,71293284447'});
+        });
+
+        it('should be able to get Ophan viewId', function () {
+
+            var t = new TechFeedback();
+            var values = t.getValuesFromHash('#ophanId=igdn1xckorpgh5z5ucdv');
+            expect(values).toEqual({'ophanId': 'igdn1xckorpgh5z5ucdv'});
+        });
     });
 });

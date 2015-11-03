@@ -22,17 +22,7 @@
         @* start trying to use the stylesheets *@
         @fragments.stylesheetLinksEnable()
 
-        <script>
-            @Html(Static.systemJs.setupFragment)
-
-            @* Service worker only caches the bundles, so the offline page can only ask for those.
-            For production, we rely on bundles from systemJsSetup *@
-            @if(play.Play.isDev()) {
-                System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
-            }
-
-            @Html(templates.headerInlineJS.js.bootSystemJS(adFreeSurvey).body)
-        </script>
+        @fragments.javaScriptBootstraps(adFreeSurvey)
     </head>
     <body
     id="top"

@@ -60,7 +60,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/modules/commercial/dfp': {
+                'common/modules/commercial/dfp-api': {
                     addSlot: function () {}
                 }
             });

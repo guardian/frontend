@@ -38,7 +38,7 @@ trait FeatureSwitches {
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 7),
+    sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
   )
 
