@@ -20,8 +20,6 @@
     "grunt-contrib-copy": "0.6.0",
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-uglify": "0.9.1",
-    "grunt-contrib-watch": "0.6.1",
-    "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
     "grunt-eslint": "^17.2.0",
     "grunt-frequency-graph": "^0.1.6",
@@ -65,6 +63,20 @@
     "sorted-object": "^1.0.0",
     "svgo": "0.4.5",
     "time-grunt": "1.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer-core": "^5.2.1",
+    "babel-core": "^5.0.0",
+    "browser-sync": "^2.8.2",
+    "gulp": "^3.9.0",
+    "gulp-load-tasks": "^0.8.3",
+    "gulp-postcss": "^5.1.6",
+    "gulp-sass": "^2.0.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.3.4",
+    "postcss-pxtorem": "^2.3.0",
+    "require-dir": "^0.3.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

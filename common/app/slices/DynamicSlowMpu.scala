@@ -4,11 +4,12 @@ case class DynamicSlowMPU(omitMPU: Boolean) extends DynamicContainer {
   override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
     val BigsAndStandards(bigs, _) = bigsAndStandards(stories)
     val isFirstBoosted = stories.headOption.exists(_.isBoosted)
+    val isSecondBoosted = stories.lift(1).exists(_.isBoosted)
 
     if (bigs.length == 3) {
       Some((HalfQQ, stories.drop(3)))
     } else if (bigs.length == 2) {
-      Some((if (isFirstBoosted) ThreeQuarterQuarter else HalfHalf, stories.drop(2)))
+      Some(if (isFirstBoosted) ThreeQuarterQuarter else if (isSecondBoosted) QuarterThreeQuarter else HalfHalf, stories.drop(2))
     } else if (bigs.length == 1) {
       Some(if (isFirstBoosted) ThreeQuarterQuarter else HalfHalf, stories.drop(2))
     } else if (bigs.isEmpty) {

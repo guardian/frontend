@@ -1,8 +1,10 @@
+// Be wary of renaming this file; some titles, like 'dfp.js',
+// can trigger adblocker rules, and make the module fail to load in dev.
+
 /* global googletag: false */
 define([
     'bean',
     'bonzo',
-    'fastdom',
     'qwery',
     'Promise',
     'raven',
@@ -15,6 +17,7 @@ define([
     'common/utils/url',
     'common/utils/user-timing',
     'common/utils/sha1',
+    'common/utils/fastdom-idle',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -26,7 +29,6 @@ define([
 ], function (
     bean,
     bonzo,
-    fastdom,
     qwery,
     Promise,
     raven,
@@ -39,6 +41,7 @@ define([
     urlUtils,
     userTiming,
     sha1,
+    idleFastdom,
     StickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -78,6 +81,7 @@ define([
         rendered             = false,
         slots                = {},
         slotsToRefresh       = [],
+        creativeIDs          = [],
         hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
         breakoutClasses      = [
             'breakout__html',
@@ -108,7 +112,7 @@ define([
             '300,1050': function () {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                    fastdom.write(function () {
+                    idleFastdom.write(function () {
                         bonzo(geoMostPopular.elem).remove();
                     });
                 });
@@ -161,7 +165,7 @@ define([
             var sponsorshipIdsFound = isSponsorshipContainerTest();
 
             if (detect.adblockInUse() && sponsorshipIdsFound.length) {
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     _.forEach(sponsorshipIdsFound, function (value) {
                         var sponsorshipIdFoundEl = $(value),
                             sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
@@ -176,6 +180,21 @@ define([
                 });
             }
         },
+        shouldFilterAdvert = function ($adSlot) {
+            return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
+
+            function isVisuallyHidden() {
+                return $css($adSlot, 'display') === 'none';
+            }
+
+            function isDisabledMobileBanner() {
+                return isMobileBannerTest() && $adSlot.hasClass('ad-slot--top');
+            }
+
+            function isDisabledCommercialFeature() {
+                return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
+            }
+        },
 
         /**
          * Loop through each slot detected on the page and define it based on the data
@@ -188,8 +207,8 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
-                        fastdom.write(function () {
+                    if (shouldFilterAdvert($adSlot)) {
+                        idleFastdom.write(function () {
                             $adSlot.remove();
                         });
                         return false;
@@ -405,10 +424,13 @@ define([
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
+                // Store ads IDs for technical feedback
+                creativeIDs.push(event.creativeId);
+
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
                 $adSlotContent = $('#' + slotId + ' div');
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
                 });
@@ -426,18 +448,18 @@ define([
                     }
 
                     if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                        fastdom.write(function () {
+                        idleFastdom.write(function () {
                             $slot.parent().css('display', 'flex');
                         });
                     } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                        fastdom.write(function () {
+                        idleFastdom.write(function () {
                             $slot.parent().css('display', 'block');
                         });
                     }
 
                     if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                     || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                        fastdom.write(function () {
+                        idleFastdom.write(function () {
                             $slot.addClass('ad-slot__fluid250');
                         });
                     }
@@ -455,7 +477,7 @@ define([
             }
         },
         addLabel = function ($slot) {
-            fastdom.write(function () {
+            idleFastdom.write(function () {
                 var adSlotClass = 'ad-slot__label';
 
                 if (shouldRenderLabel($slot)) {
@@ -464,7 +486,7 @@ define([
             });
         },
         removeLabel = function ($slot) {
-            fastdom.write(function () {
+            idleFastdom.write(function () {
                 $('.ad-slot__label', $slot).remove();
             });
         },
@@ -506,14 +528,14 @@ define([
                             };
 
                         } else {
-                            fastdom.write(function () {
+                            idleFastdom.write(function () {
                                 $iFrameParent.append(breakoutContent);
                                 $breakoutEl.remove();
                             });
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
-                                    fastdom.write(function () {
+                                    idleFastdom.write(function () {
                                         bonzo(responsiveAd).addClass('ad--responsive--open');
                                     });
                                 }, 50);
@@ -524,7 +546,7 @@ define([
                 });
             }
             if (shouldRemoveIFrame) {
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     $iFrame.hide();
                 });
             }
@@ -651,6 +673,10 @@ define([
             return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
         },
 
+        getCreativeIDs = function () {
+            return creativeIDs;
+        },
+
         /**
          * Module
          */
@@ -661,6 +687,7 @@ define([
             getSlots:       getSlots,
             // Used privately but exposed only for unit testing
             shouldLazyLoad: shouldLazyLoad,
+            getCreativeIDs: getCreativeIDs,
 
             // testing
             reset: function () {

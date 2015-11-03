@@ -8,7 +8,7 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/dfp-api',
     'common/modules/experiments/ab',
     'common/modules/onward/inject-container'
 ], function (

@@ -3,7 +3,6 @@ package controllers
 import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
@@ -100,8 +99,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
               Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
             else if (request.isJson)
               JsonFront(faciaPage)
-            else if (faciaPage.isExpiredAdvertisementFeature)
-              MovedPermanently(expiredAdFeatureUrl)
             else
               Ok(views.html.front(faciaPage))
           })

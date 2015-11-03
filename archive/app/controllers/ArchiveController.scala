@@ -4,7 +4,7 @@ import campaigns.ShortCampaignCodes
 import common._
 import play.api.mvc._
 import services.{Archive, DynamoDB, Googlebot404Count, Destination}
-import java.net.{URI, URLDecoder}
+import java.net.URLDecoder
 import model.Cached
 import scala.concurrent.Future
 
@@ -12,7 +12,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
-  private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
+  private val PathPattern = """www.theguardian.com/(.*)""".r
+  private val R1Redirect = """www\.theguardian\.com/[\w\d-]+(.*/[0|1]?,[\d]*,-?\d+,[\d]*.*)""".r
   private val GoogleBot = """.*(Googlebot).*""".r
   private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
   private val CombinerSectionRss = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
@@ -64,7 +65,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
-    case PathPattern(_, r1path) => destination contains r1path
+    case R1Redirect(r1path) => destination.endsWith(r1path)
+    case PathPattern(relativepath) => destination.endsWith(relativepath)
     case _ => false
   }
 
