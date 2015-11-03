@@ -51,7 +51,7 @@ define([
         beforeEach(function (done) {
 
             injector.require([
-                'common/modules/commercial/dfp',
+                'common/modules/commercial/dfp-api',
                 'common/utils/config',
                 'common/modules/commercial/dfp-ophan-tracking',
                 'common/modules/commercial/commercial-features',
