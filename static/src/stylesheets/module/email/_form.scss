@@ -54,6 +54,7 @@
             line-height: 2;
             padding: 8px 15px 7px;
             position: absolute;
+            pointer-events: none; // Ensure the text input cursor is shown
         }
     }
 
@@ -111,11 +112,13 @@
 
             &submit-input {
                 background-color: #767676;
+                border: 1px solid #767676;
             }
 
             &small {
                 clear: left;
                 color: $form-primary-colour;
+                font-size: 12px;
             }
 
             @include mq($until: tablet) {
