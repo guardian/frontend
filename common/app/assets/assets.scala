@@ -25,7 +25,7 @@ class AssetMap(base: String, assetMap: String) {
       if (path.startsWith("javascripts")) {
         Asset(path)
       } else {
-        assets()(path)
+        assets().getOrElse(path, throw AssetNotFoundException(path))
       }
     } else {
       memoizedAssets(path)
@@ -163,5 +163,5 @@ object AssetFinder {
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
   override val getMessage: String =
-    s"Cannot find asset $assetPath. You probably need to run 'grunt compile'."
+    s"Cannot find asset $assetPath. You probably need to run 'make compile'."
 }

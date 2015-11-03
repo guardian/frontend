@@ -56,7 +56,7 @@ import scala.concurrent.Future
     location(result) should be ("http://www.theguardian.com/arts/pictures/0,")
   }
 
-  it should "test a redirect doesn't not link to itself" in {
+  it should "test a redirect doesn't link to itself" in {
     val path = "www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
     val dest = "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
     controllers.ArchiveController.linksToItself(path, dest) should be (true)
@@ -187,15 +187,29 @@ import scala.concurrent.Future
   }
 
   it should "redirect short urls with campaign codes" in {
-    val shortRedirect = services.Redirect("http://www.theguardian.com/p/new")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw")(shortRedirect)
-    result.location should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
+
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new")
+    result should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
     val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw")(shortRedirectWithCMP)
-    result.location should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
+    result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
+  }
+
+  it should "check that a lookup which specifies a Redirect doesn't match the original path" in {
+    // This check needs to be in place to ensure we don't create redirect loops.
+    val databaseSaysRedirect = services.Redirect("http://www.theguardian.com/redirect/path-to-content")
+    val result = controllers.ArchiveController.processLookupDestination("www.theguardian.com/redirect/path-to-content").lift(databaseSaysRedirect)
+    result should be (None)
+  }
+
+  it should "not perform a redirect loop check on Archive objects" in {
+    // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
+    val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")
+    val result = controllers.ArchiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
+    result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
   }
 
   private def location(result: Future[Result]): String = header("Location", result).head

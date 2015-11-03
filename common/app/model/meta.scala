@@ -3,7 +3,6 @@ package model
 import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import conf.switches.Switches
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
@@ -115,12 +114,6 @@ trait MetaData extends Tags {
     DfpAgent.isSponsored(tags, Some(section), maybeEdition)
   override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
   override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
-
-  lazy val isExpiredAdvertisementFeature: Boolean = {
-    if (Switches.RedirectExpiredAdFeatures.isSwitchedOn) {
-      DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
-    } else false
-  }
 
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
 

@@ -1,3 +1,6 @@
+// Be wary of renaming this file; some titles, like 'dfp.js',
+// can trigger adblocker rules, and make the module fail to load in dev.
+
 /* global googletag: false */
 define([
     'bean',
@@ -78,6 +81,7 @@ define([
         rendered             = false,
         slots                = {},
         slotsToRefresh       = [],
+        creativeIDs          = [],
         hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
         breakoutClasses      = [
             'breakout__html',
@@ -176,6 +180,21 @@ define([
                 });
             }
         },
+        shouldFilterAdvert = function ($adSlot) {
+            return isVisuallyHidden() || isDisabledMobileBanner() || isDisabledCommercialFeature();
+
+            function isVisuallyHidden() {
+                return $css($adSlot, 'display') === 'none';
+            }
+
+            function isDisabledMobileBanner() {
+                return isMobileBannerTest() && $adSlot.hasClass('ad-slot--top');
+            }
+
+            function isDisabledCommercialFeature() {
+                return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
+            }
+        },
 
         /**
          * Loop through each slot detected on the page and define it based on the data
@@ -188,7 +207,7 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
+                    if (shouldFilterAdvert($adSlot)) {
                         fastdom.write(function () {
                             $adSlot.remove();
                         });
@@ -405,6 +424,9 @@ define([
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
+                // Store ads IDs for technical feedback
+                creativeIDs.push(event.creativeId);
+
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
                 $adSlotContent = $('#' + slotId + ' div');
@@ -651,6 +673,10 @@ define([
             return config.switches.viewability && !(config.page.hasPageSkin && detect.getBreakpoint() === 'wide');
         },
 
+        getCreativeIDs = function () {
+            return creativeIDs;
+        },
+
         /**
          * Module
          */
@@ -661,6 +687,7 @@ define([
             getSlots:       getSlots,
             // Used privately but exposed only for unit testing
             shouldLazyLoad: shouldLazyLoad,
+            getCreativeIDs: getCreativeIDs,
 
             // testing
             reset: function () {

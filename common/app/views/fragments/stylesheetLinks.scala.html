@@ -75,7 +75,7 @@
         @Html(Static.css.head(projectName))
     </style>
 }
-@fragments.stylesheetLink(Static.css.projectCss(projectName), projectName.getOrElse("global"))
+@fragments.stylesheetLink(Static.css.projectCss(projectName))
 <!--<![endif]-->
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
