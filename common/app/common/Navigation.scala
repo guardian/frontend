@@ -220,8 +220,8 @@ trait Navigation {
   val speedy = SectionLink("crosswords", "speedy", "Speedy", "/crosswords/series/speedy")
   val everyman = SectionLink("crosswords", "everyman", "Everyman", "/crosswords/series/everyman")
 
-  // R1 Azed, without azed slip series. This should be updated when we know how CAPI will deal with azed.
-  val azed = SectionLink("crosswords", "azed", "Azed", "/crossword/azed")
+  // R1 Azeds have been re-created as NGW content with a new landing page
+  val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")
 
   // Today's paper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
