@@ -3,6 +3,7 @@ define([
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/storage',
     'common/modules/commercial/user-features',
     'common/modules/user-prefs'
 ], function (
@@ -10,6 +11,7 @@ define([
     location,
     config,
     detect,
+    storage,
     userFeatures,
     userPrefs
 ) {
@@ -64,6 +66,31 @@ define([
             return {
                 membershipMessages : true
             };
+        }
+    };
+
+    policies.showAdblockMessages = function () {
+        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
+
+        if (detect.getBreakpoint() !== 'mobile' &&
+            detect.adblockInUse() &&
+            config.switches.adblock &&
+            alreadyVisted > 1
+        ) {
+            if (!userFeatures.isPayingMember()) {
+                return {
+                    showAdblockMessages : true
+                }
+            } else {
+                return {
+                    showAdblockMessages : false,
+                    memberWithAdblock : true
+                }
+            }
+        } else {
+            return {
+                showAdblockMessages : false
+            }
         }
     };
 

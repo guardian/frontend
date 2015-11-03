@@ -12,7 +12,7 @@ define([
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/live-events-survey',
-    'common/modules/experiments/tests/large-top-ad'
+    'common/modules/experiments/tests/large-top-slot'
 ], function (
     reportError,
     _,
