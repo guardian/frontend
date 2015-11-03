@@ -247,7 +247,7 @@ define([
                         });
                     }
                 };
-                var callback = location.hash === '#idle' && 'requestIdleCallback' in window ? function () {
+                var callback = userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window ? function () {
                     window.requestIdleCallback(emit);
                 } : emit;
                 window.addEventListener('scroll', callback);

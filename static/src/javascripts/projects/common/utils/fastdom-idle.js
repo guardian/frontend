@@ -1,7 +1,13 @@
-define(['fastdom'], function (fastdom) {
+define([
+    'fastdom',
+    'common/modules/user-prefs'
+], function (
+    fastdom,
+    userPrefs
+) {
 
     function idleFastdom(action, callback) {
-        if (location.hash === '#idle' && 'requestIdleCallback' in window) {
+        if (userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window) {
             window.requestIdleCallback(function () {
                 fastdom[action](callback);
             });
