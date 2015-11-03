@@ -5,7 +5,7 @@ import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.concurrent.Future
 
-@DoNotDiscover class ArchiveControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+class ArchiveControllerTest extends FlatSpec with Matchers with SingleServerSuite {
 
   it should "return a normalised r1 path" in {
     val tests = List(
@@ -196,13 +196,6 @@ import scala.concurrent.Future
     val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
     val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
     result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
-  }
-
-  it should "check that a lookup which specifies a Redirect doesn't match the original path" in {
-    // This check needs to be in place to ensure we don't create redirect loops.
-    val databaseSaysRedirect = services.Redirect("http://www.theguardian.com/redirect/path-to-content")
-    val result = controllers.ArchiveController.processLookupDestination("www.theguardian.com/redirect/path-to-content").lift(databaseSaysRedirect)
-    result should be (None)
   }
 
   it should "not perform a redirect loop check on Archive objects" in {
