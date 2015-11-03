@@ -4,7 +4,7 @@
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement
     var personPrefersCore = function () {
-        var locationHash = window.location.hash
+        var locationHash = window.location.hash;
         if (locationHash === '#featuresoff' || locationHash === '#core' || locationHash === '#gu.prefs.force-core=on') return true;
         if (locationHash === '#featureson' || locationHash === '#nocore' || locationHash === '#gu.prefs.force-core=off') return false;
         try {
