@@ -140,6 +140,8 @@ object ContentWidths {
     override val thumbnail = WidthsByBreakpoint(
       mobile =          Some(120.px), // mobileLandscape and tablet are also 120px
       tablet =          Some(140.px)) // desktop, leftCol and wide are also 140px
+
+    override val immersive = BodyMedia.inline
   }
 
   object MainMedia extends ContentRelation {

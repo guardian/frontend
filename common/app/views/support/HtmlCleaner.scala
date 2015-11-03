@@ -103,8 +103,15 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.largestImage
     }{
-      val hinting = findBreakpointWidths(figure, article.isImmersive)
-      val relation = if (article.isLiveBlog) { LiveBlogMedia } else if (article.isImmersive) { ImmersiveMedia } else { BodyMedia }
+      val hinting = findBreakpointWidths(figure)
+      val relation = if (article.isLiveBlog) {
+        LiveBlogMedia
+      } else if (article.isImmersive) {
+        ImmersiveMedia
+      } else {
+        BodyMedia
+      }
+
       val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
 
       val orientationClass = image.orientation match {
@@ -160,13 +167,13 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     fullyMatchedImage.orElse(imageContainers.headOption)
   }
 
-  def findBreakpointWidths(figure: Element, isImmersive: Boolean): ContentHinting = {
+  def findBreakpointWidths(figure: Element): ContentHinting = {
 
     figure.classNames().map(Some(_)) match {
       case classes if classes.contains(Supporting.className) => Supporting
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
-      case classes if classes.contains(Immersive.className) && isImmersive => Immersive
+      case classes if classes.contains(Immersive.className) => Immersive
       case _ => Inline
     }
   }
@@ -484,7 +491,7 @@ case class Summary(amount: Int) extends HtmlCleaner {
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
-      document.getElementsByTag("a").foreach{ a => 
+      document.getElementsByTag("a").foreach{ a =>
         a.addClass("in-body-link--immersive")
       }
     }
@@ -521,7 +528,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
                 next.html(setDropCap(next))
-            } 
+            }
         }
     }
     document
