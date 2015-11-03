@@ -459,6 +459,54 @@
         }
     }
 
+    figure.element--immersive {
+        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter / 2;
+
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+
+        @include mq(tablet) {
+            margin-right: -(gs-span(1) + $gs-gutter * 2);
+        }
+
+        @include mq(desktop) {
+            margin-right: -(gs-span(4) + $gs-gutter * 2);
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter * 2);
+        }
+
+        @include mq(wide) {
+            margin-left: -(gs-span(3) + $gs-gutter * 2);
+            margin-right: -(gs-span(5) + $gs-gutter *2);
+        }
+
+        .caption {
+            margin-left: $gs-gutter / 2;
+            margin-right: $gs-gutter / 2;
+
+            @include mq(mobileLandscape) {
+                margin-left: $gs-gutter;
+                margin-right: $gs-gutter;
+            }
+
+            @include mq(desktop) {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        .block-share {
+            @include mq(tablet) {
+                margin-right: $gs-gutter;
+            }
+        }
+    }
+
     figure.element--showcase {
         @include mq(desktop) {
             margin-left: -($gs-gutter);
@@ -466,11 +514,17 @@
 
         @include mq(leftCol) {
             margin-left: -(gs-span(2) + $gs-gutter * 2);
-            margin-bottom: $gs-baseline - 2px; // 2px is to compensate for x-height of type
         }
 
         @include mq(wide) {
             margin-left: -(gs-span(3) + $gs-gutter * 2);
+        }
+    }
+
+    figure.element--showcase,
+    figure.element--immersive {
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline - 2px; // 2px is to compensate for x-height of type
         }
 
         .caption {
