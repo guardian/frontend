@@ -5,7 +5,7 @@ import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.concurrent.Future
 
-class ArchiveControllerTest extends FlatSpec with Matchers with SingleServerSuite {
+@DoNotDiscover class ArchiveControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "return a normalised r1 path" in {
     val tests = List(
