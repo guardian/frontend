@@ -3,14 +3,14 @@ define([
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/user-ad-preference',
+    'common/modules/commercial/user-features',
     'common/modules/user-prefs'
 ], function (
     _,
     location,
     config,
     detect,
-    userAdPreference,
+    userFeatures,
     userPrefs
 ) {
     var policies = {};
@@ -45,8 +45,9 @@ define([
     };
 
     policies.adfreeExperience = function () {
-        if (userAdPreference.hideAds) {
+        if (userFeatures.isAdfree()) {
             return {
+                topBannerAd : false,
                 articleBodyAdverts : false,
                 articleAsideAdverts : false,
                 sliceAdverts : false,
@@ -97,6 +98,12 @@ define([
         }
     };
 
+    policies.tonePolicy = function () {
+        if (config.hasTone('Match reports')) {
+            return {articleAsideAdverts : false};
+        }
+    };
+
     policies.switchboard = function () {
         var switches = {};
 
@@ -123,6 +130,7 @@ define([
 
     function CommercialFeatureSwitches(enabled) {
         this.dfpAdvertising = enabled;
+        this.topBannerAd = enabled;
         this.articleBodyAdverts = enabled;
         this.articleAsideAdverts = enabled;
         this.sliceAdverts = enabled;

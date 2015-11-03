@@ -1,5 +1,4 @@
 #!/bin/bash
 
-npm install
+make install
 bundle
-./node_modules/.bin/jspm install

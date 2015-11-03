@@ -19,25 +19,6 @@
             </style>
         }
 
-        @if(play.Play.isDev()) {
-            <script>
-                @Html(Static.systemJs.setupFragment)
-
-                // Our app assumes a normal env
-                window.guardian = {
-                    config: {
-                        switches: { },
-                        page: { }
-                    }
-                };
-
-                // Bracket notation for IE8 (import is reserved)
-                System['import']('core').then(function () {
-                    System['import']('bootstraps/dev').then(function (devmode) { devmode.init(); });
-                });
-            </script>
-        }
-
    </head>
    <body width="30%">
         @fragments.richLinkBody(content)

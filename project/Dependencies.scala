@@ -27,12 +27,12 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val contentApiClient = "com.gu" %% "content-api-client" % "6.10"
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.0.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.4.1"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.59"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.59"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.60"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.60"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
@@ -69,6 +69,8 @@ object Dependencies {
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
   val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
   val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
+  val jerseyCore = "com.sun.jersey" % "jersey-core" % "1.19"
+  val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"
