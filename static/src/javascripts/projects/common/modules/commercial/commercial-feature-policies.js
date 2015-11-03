@@ -80,17 +80,17 @@ define([
             if (!userFeatures.isPayingMember()) {
                 return {
                     showAdblockMessages : true
-                }
+                };
             } else {
                 return {
                     showAdblockMessages : false,
                     memberWithAdblock : true
-                }
+                };
             }
         } else {
             return {
                 showAdblockMessages : false
-            }
+            };
         }
     };
 

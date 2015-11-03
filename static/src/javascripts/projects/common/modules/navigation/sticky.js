@@ -9,8 +9,7 @@ define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner',
-    'common/modules/commercial/commercial-features',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/commercial-features'
 ], function (
     bean,
     qwery,
@@ -22,8 +21,7 @@ define([
     mediator,
     ab,
     smartAppBanner,
-    commercialFeatures,
-    userFeatures
+    commercialFeatures
 ) {
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
