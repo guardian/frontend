@@ -8,7 +8,7 @@ import play.api.data.validation.Constraints.emailAddress
 import play.api.data.Forms._
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Result, Action, Controller}
 import model.MetaData
 
 import scala.concurrent.Future
@@ -49,11 +49,29 @@ object EmailController extends Controller with ExecutionContexts {
 
   def submit() = Action.async { implicit request =>
     emailForm.bindFromRequest.fold(
-      formWithErrors => Future(InternalServerError("Invalid email address")),
+      formWithErrors => {
+        val result = FailedToSubscribe("Invalid email address")
+
+        Future(render {
+          case Accepts.Html() => BadRequest(views.html.emailLanding(emailLandingPage, Some(result)))
+          case Accepts.Json() => BadRequest(result.message)
+        })
+      },
 
       form => EmailForm.submit(form).map(res => res.status match {
-        case 200 => Ok(s"OK: $res")
-        case _   => InternalServerError(s"${res.json}")
+        case 200 | 201 => render {
+          case Accepts.Html() => Created(views.html.emailLanding(emailLandingPage, Some(Subscribed)))
+          case Accepts.Json() => Created(Json.obj("email" -> form.email))
+        }
+
+        case _  => {
+          val result = FailedToSubscribe("Something bad happened")
+
+          render {
+            case Accepts.Html() => InternalServerError(views.html.emailLanding(emailLandingPage, Some(result)))
+            case Accepts.Json() => InternalServerError(result.message)
+          }
+        }
       })
     )
   }
