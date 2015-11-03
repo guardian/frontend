@@ -99,7 +99,6 @@ define([
 
     function init() {
         if (commercialFeatures.showAdblockMessages) {
-        //if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1 && !userFeatures.isPayingMember()) {
             showAdblockMessage();
             showAdblockBanner();
         }
