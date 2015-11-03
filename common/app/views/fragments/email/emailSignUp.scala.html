@@ -13,7 +13,7 @@
 
 <div class="@wrapperClass">
     @if(formHeading) {
-        @fragments.emailSignUpHeader(componentClass, formHeading, formDescription)
+        @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription)
     }
 
     <form action="/email" method="post" id="@formId" class="@formClass">
