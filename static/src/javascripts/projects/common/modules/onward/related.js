@@ -68,14 +68,7 @@ define([
             }).init();
         } else if (fetchRelated) {
             if (ab.getParticipations().InjectHeadlinesTest && ab.getParticipations().InjectHeadlinesTest.variant === 'variant' && ab.testCanBeRun('InjectHeadlinesTest')) {
-                injectContainer.injectContainer('uk-alpha/news/regular-stories');
-                mediator.once('ab-briefing-loaded', function () {
-                    var $headlines = $('#headlines'),
-                        $treat = $('#headlines .treats__treat');
-                    $('#headlines .fc-container__header__title span').html('Your morning briefing');
-                    $headlines.attr('data-link-name', $headlines.attr('data-link-name') + ' morning-briefing-ab');
-                    $treat.attr('data-link-name', $treat.attr('data-link-name') + ' | morning-briefing-ab-treat');
-                });
+                console.log('foo');
             } else {
                 container = document.body.querySelector('.js-related');
 
@@ -86,7 +79,7 @@ define([
 
                     container.setAttribute('data-component', componentName);
 
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+                    relatedUrl = '/container/essential-read.json';
 
                     if (opts.excludeTags && opts.excludeTags.length) {
                         relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {

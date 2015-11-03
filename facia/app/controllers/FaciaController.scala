@@ -127,6 +127,33 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }.getOrElse(successful(NotFound))
   }
 
+  def renderEssentialRead() = MemcachedAction { implicit request =>
+    log.info(s"Serving essential read")
+
+    def collectionId = "uk-alpha/news/regular-stories"
+
+    getPressedCollection(collectionId).map { collectionOption =>
+      collectionOption.map { collection =>
+        Cached(60) {
+          val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
+
+          val containerDefinition = FaciaContainer(
+            1,
+            EssentialRead,
+            CollectionConfigWithId(collectionId, config),
+            CollectionEssentials.fromPressedCollection(collection)
+          )
+
+          val html = container(containerDefinition, FrontProperties.empty)
+          if (request.isJson)
+            JsonCollection(html, collection)
+          else
+            NotFound
+        }
+      }.getOrElse(ServiceUnavailable)
+    }
+  }
+
   def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
@@ -174,7 +201,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
         maybeResponse getOrElse successful(Cached(60)(NotFound))
       case None => successful(Cached(60)(NotFound))}}
-
 
 
   private object JsonCollection{

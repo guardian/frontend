@@ -1,0 +1,38 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+    @import common.LinkTo
+    @import model.InlineImage
+    @import views.html.fragments.items.elements.facia_cards.itemImage
+    @import views.html.fragments.containers.facia_cards.containerHeader
+    @import implicits.FaciaContentImplicits._
+    @import model.SupportedUrl
+
+    @import views.html.fragments.items.elements.facia_cards.title
+    @import layout.FaciaCardHeader
+
+    <div class="fc-container__header js-container__header">
+        <div class="fc-container__header__title">
+            <span tabindex="0">
+                essential read
+            </span>
+        </div>
+    </div>
+
+    <div class="fc-container__body">
+        <div class="fc-slice-wrapper">
+            <ul class="u-unstyled">
+                @containerDefinition.items.take(5).zipWithIndex.map { case (item, index) =>
+                    <li class="">
+                        @if(index == 0) {
+                            @InlineImage.fromFaciaContent(item).map { imageContainer =>
+                                @itemImage(imageContainer.imageContainer)
+                            }
+                        }
+                        @title(FaciaCardHeader.fromTrail(item, None), 1, 1, "headline-list__body")
+                        @Html(item.body.getOrElse(""))
+                        <hr/>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>

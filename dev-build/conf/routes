@@ -322,15 +322,16 @@ GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate     
 GET            /$path<.+>/all                                                                                                    controllers.AllIndexController.all(path)
 
 # Facia
-GET         /                                                                                                        controllers.FaciaController.rootEditionRedirect()
-GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>  controllers.FaciaController.renderFrontPressSpecial(path)
-GET         /rss                                                                                                     controllers.FaciaController.renderRootFrontRss()
-GET         /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>              controllers.FaciaController.renderFrontPress(path)
-GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
-GET         /*path/deduped.json                                                                                      controllers.DedupedController.getDedupedForPath(path)
-GET         /container/use-layout/*id.json                                                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
-GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
-GET         /most-relevant-container/*path.json                                                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
+GET            /                                                                                                                 controllers.FaciaController.rootEditionRedirect()
+GET            /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET            /rss                                                                                                              controllers.FaciaController.renderRootFrontRss()
+GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
+GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
+GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
+GET            /container/essential-read.json                                                                                    controllers.FaciaController.renderEssentialRead()
+GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
+GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
+GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)
 
 
 # Editionalised pages

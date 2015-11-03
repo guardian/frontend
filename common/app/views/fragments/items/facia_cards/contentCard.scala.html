@@ -167,6 +167,6 @@ data-test-id="facia-card"
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
 
-        <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
+        <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">Foo@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 </div>

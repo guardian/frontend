@@ -1,0 +1,17 @@
+@(popular: Seq[model.MostPopular], containerDefinition: Option[layout.FaciaContainer] = None)(implicit request: RequestHeader)
+@import common.Localisation
+@import layout.FaciaCardHeader
+@import views.html.fragments.items.elements.facia_cards._
+@import views.support._
+@import TrailCssClasses.articleToneClass
+@import implicits.FaciaContentImplicits._
+
+<div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular" data-test-id="popular-in">
+    @popular.zipWithRowInfo.map{ case (section, info) =>
+        @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+            <b>@info.rowNum.@title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")</b>
+            @Html(FaciaContentImplicit(trail).body.getOrElse(""))
+            <hr/>
+        }
+    }
+</div>
