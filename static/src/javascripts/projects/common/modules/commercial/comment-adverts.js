@@ -9,7 +9,7 @@ define([
     'common/modules/identity/api',
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/dfp-api',
     'common/modules/commercial/user-features'
 ], function (
     fastdom,
