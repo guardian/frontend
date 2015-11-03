@@ -1,4 +1,30 @@
+// TODO These mixins are here while we run the A/B test as the styles are custom to the email form but if they become perm then
+// they should be made reusable
+
+@mixin rounded-input--inline-button() {
+    &text-input {
+        border-right: 0;
+        @include border-radius(1000px 0 0 1000px);
+        float: left;
+        width: 65%;
+    }
+
+    &submit-input {
+        font-size: 12px;
+        @include border-radius(0 1000px 1000px 0);
+        border-left: 0;
+        float: left;
+        margin-right: 0;
+        padding-left: 10px;
+        width: 35%;
+    }
+}
+
 .email-sub__ { // Email subscription component namespace
+
+    /**
+     * Base Styles
+     */
 
     &form {
         background-color: guss-colour(guardian-brand, $pasteup-palette);
@@ -11,16 +37,12 @@
     }
 
     &label {
+        @include fs-textSans(3);
         color: $form-primary-colour;
-    }
 
-    &label--is-hidden {
-        visibility: hidden;
-    }
-
-    &text-input {
-        // TODO This probably doesn't make sense as a mixin...
-        @include rounded-input($form-secondary-colour, $form-primary-colour, guss-colour(neutral-2, $pasteup-palette))
+        &--is-hidden {
+            visibility: hidden;
+        }
     }
 
     // Set with JS so we can use a real label
@@ -29,10 +51,21 @@
     &inline-label--enabled {
         .email-sub__label {
             color: guss-colour(neutral-2, $pasteup-palette);
-            line-height: 1.4;
+            line-height: 2;
             padding: 8px 15px 7px;
             position: absolute;
         }
+    }
+
+    &text-input {
+        border: 1px solid $form-primary-colour;
+        color: guss-colour(neutral-2, $pasteup-palette);
+        display: inline-block;
+        @include fs-textSans(3);
+        line-height: 2;
+        outline: none;
+        padding: 8px 15px 7px;
+        width: 100%;
     }
 
     &submit-input {
@@ -55,5 +88,92 @@
         color: $form-secondary-colour;
         display: block;
         text-align: center;
+    }
+
+    /**
+     * Modifications
+     */
+
+    // FOOTER MODS
+    &form--footer {
+        background-color: transparent;
+        margin-bottom: $gs-baseline;
+        padding: 0 20px 0 0;
+
+        .email-sub__ { // Namespace
+
+            &text-input,
+            &label,
+            &submit-input {
+                @include fs-textSans(1);
+                line-height: 1.6;
+            }
+
+            &submit-input {
+                background-color: #767676;
+            }
+
+            &small {
+                clear: left;
+                color: $form-primary-colour;
+            }
+
+            @include mq($until: tablet) {
+                @include rounded-input--inline-button();
+            }
+
+            @include mq(tablet, desktop) {
+                &text-input {
+                    @include border-radius(1000px);
+                }
+
+                &submit-input {
+                    background-color: transparent;
+                    margin-right: 0;
+                    width: 100%;
+                }
+            }
+
+            @include mq(desktop) {
+                @include rounded-input--inline-button();
+            }
+
+        }
+
+    }
+
+    // LANDING PAGE MODS
+    &form--landing {
+        @include mq(tablet) {
+            flex: 1;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .email-sub__ { // Namespace
+            &text-input {
+                border-color: $form-secondary-colour;
+                @include border-radius(1000px);
+
+                &:focus {
+                    border-color: $form-primary-colour;
+                }
+            }
+        }
+    }
+
+    &header--landing {
+        @include mq(tablet) {
+            flex: 2;
+        }
+    }
+}
+
+// TODO Fallbacks x-browser
+@include mq(tablet) {
+    .email-sub--landing {
+        display: flex;
     }
 }

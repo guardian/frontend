@@ -1,39 +1,3 @@
 @import 'vars';
 @import 'form';
 @import 'header';
-
-// Footer specific layout styles
-.email-sub--footer {
-    .email-sub__heading,
-    .email-sub__description,
-    .email-sub__form {
-        box-sizing: border-box;
-        padding-right: $gs-gutter * .5;
-        padding-left: $gs-gutter * .5;
-
-        @include mq(mobileLandscape) {
-            padding-right: $gs-gutter;
-            padding-left: $gs-gutter;
-        }
-    }
-}
-
-// TODO Move extentions to relevant pages
-
-@include mq(tablet) {
-    .email-sub--landing {
-        display: flex;
-    }
-
-    .email-sub__header--landing {
-        flex: 2;
-    }
-
-    .email-sub__form--landing {
-        flex: 1;
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-}
