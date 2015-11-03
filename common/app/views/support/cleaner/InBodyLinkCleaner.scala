@@ -63,7 +63,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
         linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned on this page")
         guLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).foreach { case (link, index) =>
           val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
-          div.appendElement("span")
+          div.appendElement("sup")
           .addClass("element-replicated-link__number")
           .text(s"$index")
           val a = div.appendElement("a")

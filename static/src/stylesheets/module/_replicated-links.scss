@@ -3,21 +3,28 @@
 }
 
 .element-replicated-links {
-    border-top: 1px dotted colour(neutral-3);
-    border-bottom: 1px dotted colour(neutral-3);
-    margin-bottom: $gs-baseline / 1.5;
+    @include fs-textSans(1);
+    border-left: $gs-gutter/3 solid colour(neutral-4);
+    padding: $gs-gutter/2 0 $gs-gutter/2 $gs-gutter/2;
+    margin-bottom: $gs-baseline;
 
     a {
-        @include fs-headline(2);
-        font-weight: 500;
-        display: block;
-        padding: 0;
-        color: colour(neutral-1);
-        border: 0;
         padding-bottom: $gs-baseline;
 
+        .element-replicated-link__domain {
+            color: colour(neutral-2);
+        }
+
+        :first-letter {
+            text-transform: uppercase;
+        }
+
         &:hover {
-            text-decoration: underline !important;
+            text-decoration: underline;
+
+            .element-replicated-link__domain {
+                text-decoration: none;
+            }
         }
 
     }
@@ -25,11 +32,14 @@
 }
 
 .element-replicated-links__title {
-    @include fs-textSans(1);
-    color: colour(neutral-2);
-    padding: $gs-baseline/4 0 $gs-baseline;
+    @include fs-headline(2);
+    font-weight: 800;
+    color: colour(neutral-1);
+    padding: $gs-baseline/4 0 0;
 }
 
 .element-replicated-link {
-    padding-left: $gs-baseline;
+    font-size: .9rem;
+    position: relative;
+    margin-bottom: $gs-baseline / 2;
 }
