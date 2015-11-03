@@ -42,7 +42,6 @@ define([
         $componentsContainer = $('.js-components-container', '.js-secondary-column');
         $adSlotContainer = $(opts.adSlotContainerSelector);
 
-        console.log('****************** doing aside ad ****************');
         return new Promise(function (resolve) {
             idleFastdom.read(function () {
                 if (
