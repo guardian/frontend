@@ -1,22 +1,24 @@
 define([
-    'fastdom',
     'Promise',
     'common/utils/_',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
+    'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
-    fastdom,
     Promise,
     _,
     $,
     $css,
     config,
+    idleFastdom,
     createAdSlot,
     commercialFeatures
 ) {
+
+
     function init(options) {
         var $mainCol, adType,
             opts = _.defaults(
@@ -40,8 +42,9 @@ define([
         $componentsContainer = $('.js-components-container', '.js-secondary-column');
         $adSlotContainer = $(opts.adSlotContainerSelector);
 
+        console.log('****************** doing aside ad ****************');
         return new Promise(function (resolve) {
-            fastdom.read(function () {
+            idleFastdom.read(function () {
                 if (
                     !$mainCol.length ||
                     (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
@@ -54,7 +57,7 @@ define([
                     adType = 'right-small';
                 }
 
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
                         $componentsContainer.addClass('u-h');
                     }
