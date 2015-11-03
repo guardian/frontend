@@ -42,13 +42,13 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     )
   )
 
-  def renderForm(returnUrl: Option[String]) = authenticatedActions.authAction.apply { implicit request =>
+  def renderForm(returnUrl: Option[String]) = authenticatedActions.authActionWithUser { implicit request =>
     val filledForm = form.bindFromFlash.getOrElse(form.fill(""))
 
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
 
-    NoCache(Ok(views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, Some(request.user.primaryEmailAddress))))
+    NoCache(Ok(views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, Option(request.user.primaryEmailAddress))))
   }
 
   def processForm = authenticatedActions.authActionWithUser.async { implicit request =>
