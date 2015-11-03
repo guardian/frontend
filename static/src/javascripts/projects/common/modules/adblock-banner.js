@@ -45,7 +45,6 @@ define([
                 marque54icon: svgs('marque54icon')
             });
 
-
         fastdom.write(function () {
             $('.top-banner-ad-container--desktop').after(bannerTmpl);
         });
