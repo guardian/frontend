@@ -15,6 +15,7 @@ import play.api.libs.json.Writes
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
+import views.support.cleaner.InBodyLinkCleaner
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
 import implicits.FaciaContentImplicits._

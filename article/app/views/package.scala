@@ -6,7 +6,7 @@ import layout.ContentWidths.{Inline, Showcase, MainMedia, LiveBlogMedia}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
+import views.support.cleaner._
 
 object MainMediaWidths {
 
@@ -67,6 +67,6 @@ object BodyCleaner {
       AmpAdCleaner,
       AmpEmbedCleaner(article)
     )
-    withJsoup(BulletCleaner(html))((if (amp) ampOnlyCleaners else nonAmpCleaners) ++ cleaners :_*)
+    withJsoup(BulletCleaner(html))(cleaners ++ (if (amp) ampOnlyCleaners else nonAmpCleaners) :_*)
   }
 }

@@ -10,6 +10,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import test.TestRequest
+import views.support.cleaner.InBodyLinkCleaner
 
 import scala.collection.JavaConversions._
 import scala.xml.XML

@@ -1,18 +1,16 @@
 package views.support
 
-import java.net.URL
 import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
-import conf.Configuration
 import conf.switches.Switches._
-import layout.{WidthsByBreakpoint, ContentWidths}
+import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{TextNode, Element, Document}
+import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 
 import scala.collection.JavaConversions._
@@ -270,91 +268,6 @@ object AmpVideoSrcCleaner {
       first + "s" + last
     }
   }
-}
-
-case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replicate: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
-  import implicits.CollectionsOps._
-
-  def clean(body: Document): Document = {
-    val links = body.getElementsByAttribute("href")
-
-    val anchorLinks = links.filter(_.tagName == "a").toList
-    anchorLinks.foreach { link =>
-      link.attr("href", LinkTo(link.attr("href"), edition))
-      link.attr("data-link-name", dataLinkName)
-      link.attr("data-component", dataLinkName.replace(" ", "-"))
-      link.addClass("u-underline")
-    }
-
-    if (replicate) {
-      replicatedLinks(body, anchorLinks) map {
-        case (articleBody, linksDiv) =>
-          putMentionedBefore(articleBody) map { mentionedBefore =>
-            mentionedBefore.before(linksDiv)
-          }
-      }
-    }
-
-    if (amp) {
-      links.filter(_.hasAttr("style")).foreach { link =>
-        link.removeAttr("style")
-      }
-    }
-
-    // Prevent text in non clickable anchors from looking like links
-    // <a name="foo">bar</a> -> <a name="foo"></a>bar
-    val anchors = body.getElementsByAttribute("name")
-
-    anchors.foreach { anchor =>
-      if (anchor.tagName == "a") {
-        val text = anchor.ownText()
-        anchor.empty().after(text)
-      }
-    }
-
-    body
-  }
-
-  def replicatedLinks(document: Document, anchorLinks: List[Element]): Option[(Element, Element)] = {
-    val guLinks = getGULinks(anchorLinks)
-    if (guLinks.nonEmpty) {
-      document.getElementsByTag("body").headOption.map { articleBody =>
-        val linksDiv = document.createElement("div")
-          .addClass("element-replicated-links")
-          .addClass("element-replicated-links--not-in-test")
-          .addClass("js-replicated-links")
-        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned on this page")
-        guLinks.foreach { link =>
-          val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
-          div.appendElement("a")
-            .attr("href", link.attr("href"))
-            .addClass("js-replicated-link")
-            .text(link.text())
-            .attr("data-link-name", "replicated link")
-        }
-        (articleBody, linksDiv)
-      }
-    } else {
-      None
-    }
-  }
-
-  def getGULinks(anchorLinks: List[Element]): List[Element] = {
-    anchorLinks
-      //.filter(_.attr("href").startsWith(Configuration.site.host))
-      .distinctBy(_.attr("href"))
-  }
-
-  /*
-  find the best place to put the mentioned... links in the article
-   */
-  def putMentionedBefore(element: Element): Option[Element] = {
-    Some(element.children)
-      .map(_.filter(_.text.endsWith(".")))
-      .filter(_.size >= 2)
-      .map(_.last)
-  }
-
 }
 
 case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
