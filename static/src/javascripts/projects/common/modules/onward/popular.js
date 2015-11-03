@@ -8,7 +8,7 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp-api'
 ], function (
     _,
     qwery,

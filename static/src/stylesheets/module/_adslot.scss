@@ -120,14 +120,14 @@
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
