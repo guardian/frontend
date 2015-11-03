@@ -26,6 +26,9 @@ object ThirdPartyConditions {
     s"/agree/${groupCode}"
   }
 
+  def emailOpt(email: Option[String]): Option[(String, String)] =
+    email.map(Some("loginHint", _)).getOrElse(None)
+
   def agreeUrlOpt(idRequest: IdentityRequest, idUrlBuilder: IdentityUrlBuilder): Option[String] = {
     idRequest.groupCode match {
       case Some(groupCode) => Some(idUrlBuilder.buildUrl(agreeUrl(groupCode), idRequest.copy(groupCode = None), ("skipThirdPartyLandingPage", "true")))
@@ -38,6 +41,10 @@ object ThirdPartyConditions {
       case Some(returnUrl) => Some(("returnUrl", returnUrl))
       case _ => None
     }
+  }
+
+  def optParams(idRequest: IdentityRequest, idUrlBuilder: IdentityUrlBuilder, email: Option[String] = None): Seq[(String, String)] = {
+    Seq(agreeUrlParamOpt(idRequest, idUrlBuilder), emailOpt(email)).flatten
   }
 
 }
