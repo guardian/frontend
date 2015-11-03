@@ -66,17 +66,17 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
           div.appendElement("span")
           .addClass("element-replicated-link__number")
           .text(s"$index")
-          div.appendElement("a")
+          val a = div.appendElement("a")
             .attr("href", link.attr("href"))
             .addClass("js-replicated-link")
             .text(link.text())
             .attr("data-link-name", "replicated link")
           UrlParser.externalDomain(link.attr("href")) map { domain =>
-            div.appendElement("span")
+            a.appendElement("span")
               .addClass("element-replicated-link__domain")
             .text(domain)
           }
-          val number = document.createElement("span")
+          val number = document.createElement("sup")
             .addClass("element-replicated-link__pointer")
             .text(s"$index")
           link.after(number)
@@ -113,15 +113,13 @@ object UrlParser extends RegexParsers {
 
   def userHint: Parser[String] = proto ~> domain <~ path
 
-  def externalDomain(url: String, ourRoot: String = Configuration.site.host): Option[String] ={println(s"url: $url $ourRoot")
-    val x = Some(url)
-      .filterNot(href => href.startsWith(ourRoot) || href.startsWith(ourRoot.split(":")(1)))
+  def externalDomain(url: String, ourRoot: String = Configuration.site.host): Option[String] =
+    Some(url)
+      .filterNot(href => ourRoot.nonEmpty && (href.startsWith(ourRoot) || href.startsWith(ourRoot.split(":")(1))))
       .map(url => UrlParser.parse(UrlParser.userHint, url))
       .flatMap {
       case Success(matched, _) => Some(matched)
       case a => None
     }
-  println(s"x: $x")
-  x}
 
 }
