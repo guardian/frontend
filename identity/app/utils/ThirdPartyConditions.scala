@@ -26,7 +26,7 @@ object ThirdPartyConditions {
     s"/agree/${groupCode}"
   }
 
-  def emailOpt(email: Option[String]): Option[(String, String)] =
+  def loginHintOpt(email: Option[String]): Option[(String, String)] =
     email.map(Some("loginHint", _)).getOrElse(None)
 
   def agreeUrlOpt(idRequest: IdentityRequest, idUrlBuilder: IdentityUrlBuilder): Option[String] = {
@@ -44,7 +44,7 @@ object ThirdPartyConditions {
   }
 
   def optParams(idRequest: IdentityRequest, idUrlBuilder: IdentityUrlBuilder, email: Option[String] = None): Seq[(String, String)] = {
-    Seq(agreeUrlParamOpt(idRequest, idUrlBuilder), emailOpt(email)).flatten
+    Seq(agreeUrlParamOpt(idRequest, idUrlBuilder), loginHintOpt(email)).flatten
   }
 
 }
