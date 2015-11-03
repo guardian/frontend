@@ -104,7 +104,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- container.largestImage
     }{
       val hinting = findBreakpointWidths(figure, article.isImmersive)
-      val relation = if (article.isLiveBlog) { LiveBlogMedia } else { BodyMedia }
+      val relation = if (article.isLiveBlog) { LiveBlogMedia } else if (article.isImmersive) { ImmersiveMedia } else { BodyMedia }
       val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
 
       val orientationClass = image.orientation match {
