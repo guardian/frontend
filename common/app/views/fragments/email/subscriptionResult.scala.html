@@ -1,0 +1,16 @@
+@(result: SubscriptionResult)
+
+@import model.{SubscriptionResult, Subscribed, FailedToSubscribe}
+
+@result match {
+    case Subscribed => {
+        <h1>You've subscribed!</h1>
+        <p>Thank you! You are now subscribed to receive the Guardian Today email.</p>
+    }
+
+    case FailedToSubscribe(message) => {
+        <h1>Subscription error</h1>
+        <p>Sorry, something went wrong with your request. Please try again or contact userhelp@@theguardian.com.</p>
+        <small>@message</small>
+    }
+}
