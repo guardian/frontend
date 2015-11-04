@@ -1,14 +1,11 @@
 package rugby.controllers
 
-import common._
-
-import common.{ExecutionContexts, JsonComponent}
+import common.{ExecutionContexts, JsonComponent, _}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
+import rugby.feed.CapiFeed
 import rugby.jobs.RugbyStatsJob
-import rugby.model.{ScoreType, Match}
-import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.model.Match
 
 
@@ -25,10 +22,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
 
   def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
-    val matchFixture = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
-    val matchOpt =  RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
-      .map ( m => m.copy( venue = matchFixture.flatMap(_.venue)))
-      .orElse(matchFixture)
+    val matchOpt = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+
     val currentPage = request.getParameter("page")
 
     matchOpt.map { aMatch =>
