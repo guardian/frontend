@@ -1,4 +1,5 @@
 define([
+    'bean',
     'fastdom',
     'qwery',
     'Promise',
@@ -10,6 +11,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
+    bean,
     fastdom,
     qwery,
     Promise,
@@ -48,8 +50,14 @@ define([
         //if (ab.getTestVariantId('ReplicatedLinks') &&
         //    ab.testCanBeRun('ReplicatedLinks') &&
         //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
-        $('.js-replicated-links').removeClass('element-replicated-links--not-in-test');
+        var container = $('.js-replicated-links');
+        container.removeClass('element-replicated-links--not-in-test')
+            .addClass('element-replicated-links--contracted');
         $('.js-replicated-link').each(upgradeLink);
+        bean.on(qwery('.js-replicated-links-more')[0], 'click', function (e) {
+            container.removeClass('element-replicated-links--contracted');
+            $('.js-replicated-links-more').addClass("element-replicated-links__more--hidden")
+        });
         //}
     }
 
