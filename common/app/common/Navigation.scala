@@ -94,11 +94,6 @@ trait Navigation {
   val sportblog = SectionLink("sport", "sport blog", "Sport blog", "/sport/blog")
   val cycling = SectionLink("sport", "cycling", "Cycling", "/sport/cycling")
   val rugbyunion = SectionLink("sport", "rugby union", "Rugby union", "/sport/rugby-union")
-
-  import Switches.RugbyWorldCupswitch
-  // TODO delete when switch goes
-  val rugbyWorldCup = SectionLink("sport", "rugby world cup", "Rugby world cup 2015", "/sport/rugby-world-cup-2015")
-
   val rugbyLeague = SectionLink("sport", "rugby league", "Rugby union", "/sport/rugbyleague")
   val motorsport = SectionLink("sport", "motor sport", "Motor sport", "/sport/motorsports")
   val tennis = SectionLink("sport", "tennis", "Tennis", "/sport/tennis")

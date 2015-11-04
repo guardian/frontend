@@ -206,15 +206,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val RugbyWorldCupswitch = Switch(
-    "Feature",
-    "rugby-world-cup",
-    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val WeatherSwitch = Switch(
     "Feature",
     "weather",
@@ -303,6 +294,15 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val RugbyScoresSwitch = Switch(
+    "Feature",
+    "rugby-world-cup",
+    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   val StocksWidgetSwitch = Switch(
