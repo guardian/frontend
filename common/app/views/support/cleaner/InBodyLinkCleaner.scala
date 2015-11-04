@@ -24,7 +24,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     }
 
     if (replicate) {
-      replicatedLinks(body, anchorLinks) map {
+      replicatedLinks(body) map {
         case (articleBody, linksDiv) =>
           putMentionedBefore(articleBody) map { mentionedBefore =>
             mentionedBefore.before(linksDiv)
@@ -52,16 +52,16 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     body
   }
 
-  def replicatedLinks(document: Document, anchorLinks: List[Element]): Option[(Element, Element)] = {
-    val guLinks = getGULinks(anchorLinks)
-    if (guLinks.nonEmpty) {
+  def replicatedLinks(document: Document): Option[(Element, Element)] = {
+    val bodyLinks = getBodyLinks(document)
+    if (bodyLinks.nonEmpty) {
       document.getElementsByTag("body").headOption.map { articleBody =>
         val linksDiv = document.createElement("div")
           .addClass("element-replicated-links")
           .addClass("element-replicated-links--not-in-test")
           .addClass("js-replicated-links")
-        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned in this article")
-        guLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).foreach { case (link, index) =>
+        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Keep reading")
+        bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).foreach { case (link, index) =>
           val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
           div.appendElement("sup")
           .addClass("element-replicated-link__number")
@@ -94,11 +94,18 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     }
   }
 
-  def getGULinks(anchorLinks: List[Element]): List[Element] = {
-    anchorLinks
-      //.filter(_.attr("href").startsWith(Configuration.site.host))
-      .distinctBy(_.attr("href"))
-  }
+  def getBodyLinks(document: Document): List[Element] =
+    document.getElementsByTag("body").headOption.toList.flatMap { body =>
+      body.children()
+        .filter(_.tagName() == "p")
+        .flatMap { p =>
+        p.getElementsByAttribute("href")
+          .filter(_.tagName == "a")
+          //.filter(_.attr("href").startsWith(Configuration.site.host))
+          .distinctBy(_.attr("href"))
+      }
+
+    }
 
   /*
   find the best place to put the mentioned... links in the article

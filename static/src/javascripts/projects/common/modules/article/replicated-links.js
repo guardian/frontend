@@ -50,8 +50,8 @@ define([
         //if (ab.getTestVariantId('ReplicatedLinks') &&
         //    ab.testCanBeRun('ReplicatedLinks') &&
         //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
-            $('.js-replicated-links').removeClass('element-replicated-links--not-in-test');
-            $('.element-replicated-link--not-upgraded').each(upgradeLink);
+        $('.js-replicated-links').removeClass('element-replicated-links--not-in-test');
+        $('.element-replicated-link--not-upgraded').each(upgradeLink);
         //}
     }
 
