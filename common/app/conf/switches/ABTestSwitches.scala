@@ -58,4 +58,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABInjectNetworkFrontTest = Switch(
+    "A/B Tests",
+    "ab-inject-network-front-test",
+    "Switch to inject the network front instead of most popular on all content pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
 }

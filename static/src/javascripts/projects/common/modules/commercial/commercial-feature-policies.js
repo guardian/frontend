@@ -49,6 +49,7 @@ define([
     policies.adfreeExperience = function () {
         if (userFeatures.isAdfree()) {
             return {
+                topBannerAd : false,
                 articleBodyAdverts : false,
                 articleAsideAdverts : false,
                 sliceAdverts : false,

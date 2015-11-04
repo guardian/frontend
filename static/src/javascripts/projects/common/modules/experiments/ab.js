@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
+    'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/live-events-survey',
     'common/modules/experiments/tests/large-top-slot'
 ], function (
@@ -26,6 +27,7 @@ define([
     RtrtEmailMessage,
     OnwardContainerNames,
     InjectHeadlinesTest,
+    InjectNetworkFrontTest,
     LiveEventsSurvey,
     LargeTopAd
 ) {
@@ -36,6 +38,7 @@ define([
         new RtrtEmailMessage(),
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
+        new InjectNetworkFrontTest(),
         new LiveEventsSurvey(),
         new LargeTopAd()
     ]);

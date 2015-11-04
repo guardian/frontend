@@ -1,24 +1,24 @@
 define([
-    'fastdom',
     'Promise',
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/fastdom-idle',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp-api',
     'common/modules/commercial/user-features'
 ], function (
-    fastdom,
     Promise,
     _,
     $,
     config,
     detect,
     mediator,
+    idleFastdom,
     identityApi,
     ab,
     createAdSlot,
@@ -54,13 +54,13 @@ define([
         }
 
         mediator.once('modules:comments:renderComments:rendered', function () {
-            fastdom.read(function () {
+            idleFastdom.read(function () {
                 //if comments container is lower than 280px
                 if ($commentMainColumn.dim().height < 280) {
                     return false;
                 }
 
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     $commentMainColumn.addClass('discussion__ad-wrapper');
 
                     if (!config.page.isLiveBlog) {
