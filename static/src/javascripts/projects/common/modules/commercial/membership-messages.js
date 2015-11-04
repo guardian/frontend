@@ -5,7 +5,8 @@ define([
     'common/modules/ui/message',
     'text!common/views/membership-message.html',
     'common/views/svgs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/user-features'
 ], function (
     config,
     storage,
@@ -13,7 +14,8 @@ define([
     Message,
     messageTemplate,
     svgs,
-    commercialFeatures
+    commercialFeatures,
+    userFeatures
 ) {
 
     function canShowUkMessage() {
@@ -21,7 +23,8 @@ define([
         return (
             commercialFeatures.membershipMessages &&
             config.page.edition === 'UK' &&
-            alreadyVisited > 10
+            alreadyVisited > 10 &&
+            !userFeatures.isPayingMember()
         );
     }
 
