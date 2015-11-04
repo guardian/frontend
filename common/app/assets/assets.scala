@@ -22,13 +22,17 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      assets()(path)
+      if (path.startsWith("javascripts")) {
+        Asset(path)
+      } else {
+        assets().getOrElse(path, throw AssetNotFoundException(path))
+      }
     } else {
       memoizedAssets(path)
     }
   }
 
-  private def assets(): Map[String, Asset] = {
+  def assets(): Map[String, Asset] = {
 
     // Use the grunt-generated asset map in Dev.
     val json: String = if (Play.current.mode == Mode.Dev) {
@@ -38,9 +42,10 @@ class AssetMap(base: String, assetMap: String) {
       val url = AssetFinder(assetMap)
       IOUtils.toString(url)
     }
-    val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
-
-    val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
+    val paths: Map[String, String] = Json.parse(json).validate[Map[String, String]] match {
+      case JsSuccess(m, _) => m
+      case JsError(_) => Map.empty
+    }
 
     paths mapValues { path => Asset(base + path) }
   }
@@ -48,8 +53,8 @@ class AssetMap(base: String, assetMap: String) {
   private lazy val memoizedAssets = assets()
 }
 
-class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMap)
+class Assets(base: String, assetMapPath: String = "assets/assets.map") extends Logging {
+  val lookup = new AssetMap(base, assetMapPath)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
@@ -146,30 +151,6 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
   }
-
-  object systemJs {
-    private def contents(path: String): String = IOUtils.toString(AssetFinder(path))
-
-    val main: String = contents("assets/system.src.js")
-    val polyfills: String = contents("assets/system-polyfills.src.js")
-    val appConfig: String = contents("assets/systemjs-config.js")
-    val normalize: String = contents("assets/systemjs-normalize.js")
-
-    lazy val setupFragment: String = templates.js.systemJsSetup().body
-
-    private val jspmAssetMap: Map[String, String] =
-      Json.parse(contents("assets/jspm-assets.map")).validate[Map[String, String]] match {
-        case JsSuccess(m, _) => m
-        case JsError(_) => Map.empty
-      }
-
-    private val bundleConfigMap: Map[String, List[String]] =
-      jspmAssetMap.map { case (source, destination) =>
-        (destination.replaceFirst(".js$", ""), List(source.replaceFirst("^javascripts/", "").replaceFirst(".js$", "")))
-      }
-
-    val bundleConfig: String = Json.toJson(bundleConfigMap).toString()
-  }
 }
 
 object AssetFinder {
@@ -182,5 +163,5 @@ object AssetFinder {
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
   override val getMessage: String =
-    s"Cannot find asset $assetPath. You probably need to run 'grunt compile'."
+    s"Cannot find asset $assetPath. You probably need to run 'make compile'."
 }

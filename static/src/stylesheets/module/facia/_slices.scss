@@ -231,6 +231,11 @@ Hence why a greater depth of selector specificity is needed.
             width: (100% / 3) * 2;
             min-height: 300px;
         }
+
+        .tabs__pane--without-mpu {
+            width: (100% / 3) * 3;
+            min-height: 300px;
+        }
     }
 }
 

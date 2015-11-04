@@ -2,5 +2,18 @@
     "preset": "crockford",
     "disallowQuotedKeysInObjects": null,
     "requireMultipleVarDecl": null,
-    "requireBlocksOnNewline": null
+    "requireBlocksOnNewline": null,
+    "requireVarDeclFirst": null,
+    "excludeFiles": [
+        "static/src/javascripts/projects/common/modules/discussion/comment-box.js",
+        "static/src/javascripts/projects/common/modules/discussion/comments.js",
+        "static/src/javascripts/projects/common/modules/discussion/loader.js",
+        "static/src/stylesheets/**/*.js",
+        "static/src/javascripts/bower_components/**/*.js",
+        "static/src/javascripts/components/**/*.js",
+        "static/src/javascripts/vendor/**/*.js",
+        "static/src/javascripts/projects/common/utils/atob.js",
+        "static/src/javascripts/projects/common/utils/picturefill.js",
+        "static/test/javascripts/components/**/*.js"
+    ]
 }

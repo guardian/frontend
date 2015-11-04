@@ -123,21 +123,6 @@ Ubuntu/Mac:
 sudo npm -g install grunt-cli
 ```
 
-#### JSPM (package management)
-
-Ubuntu/Mac:
-```
-sudo npm -g install jspm
-jspm registry config github
-```
-
-It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
-Now create a registry instance.
-```
-npm -g install jspm-bower-endpoint # jspm >= 0.15.0
-jspm registry create bower jspm-bower-endpoint
-```
-
 #### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
 Ubuntu:
@@ -191,14 +176,14 @@ npm install
 Install additional dependencies:
 ```
 bundle
-grunt install
+make install
 ```
 
-npm, bundle, and jspm are also run by `install-dependencies.sh`.
+npm and bundle are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```
-grunt compile
+make compile
 ```
 
 ### Run the app
@@ -266,7 +251,7 @@ If it is owned by root, then take ownership of it
 The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
 ###phantomjs permissions errors (OSX)
-If you get an error about not having permissions to execute phantomjs during `grunt compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
+If you get an error about not having permissions to execute phantomjs during `make compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
 
 ###File handles - "Too many files open"
 
@@ -346,16 +331,11 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 
 ###Client-side development mode
 
-There is a `grunt watch` task available to build and watch for development
-changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
-so @mattosborn created a script called [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode).
-
-`grunt csdevmode` also pushes stylesheets to all connected browsers:
-no need to reload a page to preview your changes, just like with Livereload.
+There is a `make watch` task available to build and watch for development
+changes.
 
 ```bash
-grunt compile --dev
-grunt csdevmode
+make watch
 ```
 
 ## Useful information and hints
@@ -413,4 +393,3 @@ Further documentation notes and useful items can be found in [docs](docs).
 - [sbteclipse](https://github.com/typesafehub/sbteclipse)
 - [sbt-idea](https://github.com/mpeltonen/sbt-idea)
 - [magenta](https://github.com/guardian/deploy)
-- [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode)

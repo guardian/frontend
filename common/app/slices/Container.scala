@@ -10,7 +10,7 @@ object Container extends Logging {
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
-    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU)),
+    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
@@ -27,8 +27,16 @@ object Container extends Logging {
   def fromConfig(collectionConfig: CollectionConfig) =
     resolve(collectionConfig.collectionType)
 
-  def fromPressedCollection(pressedCollection: PressedCollection): Container =
-    resolve(pressedCollection.collectionType)
+  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean): Container = {
+    val container = resolve(pressedCollection.collectionType)
+    container match {
+      case Fixed(definition) if omitMPU =>
+        Fixed(definition.copy(slices = definition.slicesWithoutMPU))
+      case Dynamic(DynamicSlowMPU(_)) if omitMPU =>
+        Dynamic(DynamicSlowMPU(omitMPU = true))
+      case _ => container
+    }
+  }
 
   def showToggle(container: Container) = container match {
     case NavList | NavMediaList => false

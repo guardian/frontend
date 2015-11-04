@@ -223,6 +223,9 @@ Show more button:
     @include fs-textSans(1);
     line-height: $gs-baseline * 2 - 2px;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .button--xsmall {
     @include button-height($base-size * 3);

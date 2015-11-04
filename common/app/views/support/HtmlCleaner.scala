@@ -70,6 +70,8 @@ object PullquoteCleaner extends HtmlCleaner {
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
       element.append(closingQuoteSvg)
+      element.getElementsByTag("p").addClass("pullquote-paragraph")
+      element.getElementsByTag("cite").addClass("pullquote-cite")
     }
 
     document
@@ -102,7 +104,15 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- container.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
-      val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
+      val relation = if (article.isLiveBlog) {
+        LiveBlogMedia
+      } else if (article.isImmersive) {
+        ImmersiveMedia
+      } else {
+        BodyMedia
+      }
+
+      val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
 
       val orientationClass = image.orientation match {
         case Portrait => Some("img--portrait")
@@ -163,6 +173,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       case classes if classes.contains(Supporting.className) => Supporting
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
+      case classes if classes.contains(Immersive.className) => Immersive
       case _ => Inline
     }
   }
@@ -477,13 +488,23 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
+case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("a").foreach{ a =>
+        a.addClass("in-body-link--immersive")
+      }
+    }
+    document
+  }
+}
+
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
 
   private def setDropCap(p: Element): String = {
     val html = p.html
-    if ( html.length > 200 && html.matches("^[\"a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 ) {
-      val classes = if (html.length > 325) "drop-cap drop-cap--wide" else "drop-cap"
-      s"""<span class="${classes}"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
+    if ( html.length > 200 && html.matches("^[\"a-zA-Z].*") && html.split("\\s+").head.length >= 2 ) {
+      s"""<span class="drop-cap"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
     } else {
       html
     }
@@ -499,6 +520,16 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
         }
         case _ =>
       }
+    }
+
+    document.getElementsByTag("h2").foreach{ h2 =>
+        if (h2.text() == "* * *" && isImmersive) {
+            h2.tagName("hr").addClass("section-rule").html("")
+            val next = h2.nextElementSibling()
+            if (next.nodeName() == "p") {
+                next.html(setDropCap(next))
+            }
+        }
     }
     document
   }

@@ -32,7 +32,7 @@ GET        /crosswords/optin                                                    
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
 # Web App paths
-GET        /offline-page                                                        controllers.WebAppController.offlinePage()
+GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
@@ -62,6 +62,10 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        
 # Interactive paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
+
+# Short urls with campaign codes
+GET        /$shortCode<p/[\w]+>                                                 controllers.ShortUrlsController.redirectShortUrl(shortCode)
+GET        /$shortCode<p/[\w]+>/:campaignCode                                   controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
 # Index pages for tags
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)

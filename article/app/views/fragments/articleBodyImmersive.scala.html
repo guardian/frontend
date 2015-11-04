@@ -18,13 +18,13 @@
                 <link itemprop="sameAs" href="http://www.theguardian.com">
             </div>
 
-            @fragments.headImmersive(article)
+            @fragments.headerImmersive(article)
 
             <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
 
-                        @fragments.contentMeta(article)
+                        @fragments.contentMetaImmersive(article)
 
                         @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
@@ -46,7 +46,6 @@
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
                         <div class="ad-slot-container js-ad-slot-container"></div>
-                        <div class="js-components-container"></div>
                     </div>
                 </div>
             </div>

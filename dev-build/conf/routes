@@ -280,7 +280,6 @@ GET            /commercial/capi-single                                          
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/ad-free-survey                                                                                        controllers.commercial.StaticPageController.renderAdFreeSurveyPage()
-GET            /commercial/ad-free-survey-simple                                                                                 controllers.commercial.StaticPageController.renderAdFreeSurveySimplePage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
@@ -307,10 +306,14 @@ GET            /commercial/magento/books                                        
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
-GET            /offline-page                                                                                                     controllers.WebAppController.offlinePage()
+GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
+GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
+
+GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
+GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)
@@ -325,6 +328,7 @@ GET         /rss                                                                
 GET         /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>              controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /*path/deduped.json                                                                                      controllers.DedupedController.getDedupedForPath(path)
+GET         /container/use-layout/*id.json                                                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 GET         /most-relevant-container/*path.json                                                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
@@ -356,7 +360,6 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                  
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                                     controllers.IndexController.renderJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                          controllers.IndexController.render(path)
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
-GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 
 # Articles
 GET            /*path.json                                                                                                       controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])

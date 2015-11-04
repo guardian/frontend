@@ -57,3 +57,29 @@
         display: none;
     }
 }
+
+//For an AB test where we inject the network front instead of most popular. To be removed afterwards
+.content-footer {
+    .l-side-margins:after,
+    .l-side-margins:before {
+        background: none;
+    }
+}
+
+.ab-front-injected {
+    .button--show-more {
+        display: none;
+    }
+
+    .fc-container--first .fc-container__inner {
+        border-top: 1px solid colour(news-main-2);
+    }
+
+    .fc-container--first .fc-container__header__title {
+        border: 0;
+    }
+
+    .fc-container--has-show-more .treats__container {
+        bottom: $gs-baseline;
+    }
+}

@@ -2,7 +2,6 @@ package model
 
 import common.Edition
 import common.dfp.DfpAgent
-import conf.switches.Switches
 
 trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
   val keywordIds: Seq[String]
@@ -29,10 +28,4 @@ trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
   override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
-
-  override lazy val isExpiredAdvertisementFeature: Boolean = {
-    if (Switches.RedirectExpiredAdFeatures.isSwitchedOn) {
-      DfpAgent.isExpiredAdvertisementFeatureFront(id, keywordIds, Some(id))
-    } else false
-  }
 }

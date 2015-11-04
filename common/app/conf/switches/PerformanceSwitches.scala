@@ -5,21 +5,12 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
-  val MinifyInlineJsSwitch = Switch(
+  val InlineJSStandardOptimisation = Switch(
     "Performance",
-    "minify-inline-js",
-    "If this switch is on, InlineJs output will be minified by closure compiler",
-    safeState = Off,
+    "inline-standard-optimisation",
+    "If this switch is on, the inline JS will be compressed using closure compiler's standard optimisation instead of whitespace only",
+    safeState = On,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MoreInlineHead = Switch(
-    "Performance",
-    "minify-more-inline-js",
-    "If this switch is on, featureDetection.js, cloudwatchBeacons.js and shouldEnhance.js will be minified by closure",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 16),
     exposeClientSide = false
   )
 
@@ -47,7 +38,7 @@ trait PerformanceSwitches {
     "soft-purge-with-long-caching-switch",
     "If this switch is on then articles will get a longer cache time, but we will soft purge them from the CDN",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 31),
+    sellByDate = new LocalDate(2015, 11, 15),
     exposeClientSide = false
   )
 
@@ -239,15 +230,6 @@ trait PerformanceSwitches {
     "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
     safeState = On,
     sellByDate = new LocalDate(2016, 1, 10),
-    exposeClientSide = true
-  )
-
-  val ServeCoreFrontsToSomeIpadsSwitch = Switch(
-    "Performance",
-    "ipad-core-fronts",
-    "Serve core fronts to a random percentage of crash-prone ipad users",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 31),
     exposeClientSide = true
   )
 

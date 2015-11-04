@@ -1,30 +1,49 @@
-# trying this out under-the-radar as a framework-agnostic
-# build/install etc commands for frontend.
-# feel free to use it, but it may change/disappear
+default: help
 
-default:
-	grunt compile
+watch: compile-dev
+	@./node_modules/grunt-sass/node_modules/node-sass/bin/node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true & \
+		./node_modules/.bin/gulp --cwd ./dev watch:css & \
+		./node_modules/browser-sync/bin/browser-sync.js start --config ./dev/bs-config.js
 
-clean:
-	rm -rf static/src/jspm_packages
-	rm -rf node_modules
+compile:
+	@grunt compile-assets
+
+compile-dev:
+	@grunt compile-assets --dev
 
 install:
-	npm prune && npm install
-	cd node_modules/.bin && ./jspm install && ./jspm dl-loader && ./jspm clean
-	grunt uglify:conf
-	cd dev && make install
+	@echo 'Removing any unused 3rd party dependencies…'
+	@npm prune
+	@echo '…done.'
+	@echo 'Installing 3rd party dependencies…'
+	@npm install
+	@echo '…done.'
+	@node tools/messages.js install
 
-reinstall:
-	$(MAKE) clean
-	$(MAKE) install
+reinstall: uninstall install
+
+uninstall:
+	@rm -rf node_modules
+	@echo 'All 3rd party dependencies have been uninstalled.'
 
 test:
-	grunt test --dev
+	@grunt test --dev
 
 validate:
-	grunt validate
+	@grunt validate
 
-watch:
-	grunt compile --dev
-	cd dev && make watch
+validate-sass:
+	@grunt validate:sass
+	@grunt validate:css
+
+validate-js:
+	@grunt validate:js
+
+shrinkwrap:
+	@npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
+	@node tools/messages.js did-shrinkwrap
+
+
+# internal targets
+help:
+	@node tools/messages.js describeMakefile

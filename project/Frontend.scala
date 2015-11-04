@@ -48,7 +48,9 @@ object Frontend extends Build with Prototypes {
       ws,
       faciaFapiScalaClient,
       dispatchTest,
-      closureCompiler
+      closureCompiler,
+      jerseyCore,
+      jerseyClient
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
