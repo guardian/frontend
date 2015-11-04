@@ -34,8 +34,6 @@ define([
                 if (resp.html) {
                     fastdom.write(function () {
                         $(a).html(resp.html);
-                        el.removeClass('element-replicated-link--not-upgraded')
-                            .addClass('element-replicated-link--upgraded');
                         mediator.emit('replicated-link:loaded', el);
                     });
                 }
@@ -51,7 +49,7 @@ define([
         //    ab.testCanBeRun('ReplicatedLinks') &&
         //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
         $('.js-replicated-links').removeClass('element-replicated-links--not-in-test');
-        $('.element-replicated-link--not-upgraded').each(upgradeLink);
+        $('.js-replicated-link').each(upgradeLink);
         //}
     }
 

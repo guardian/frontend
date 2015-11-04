@@ -6,8 +6,7 @@ import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import play.api.mvc.RequestHeader
-import views.fragments.inbody.LinkInfo
-import views.support.HtmlCleaner
+import views.support.{LinkInfo, HtmlCleaner}
 
 import scala.collection.JavaConversions._
 import scala.util.parsing.combinator._
