@@ -54,9 +54,9 @@ define([
         container.removeClass('element-replicated-links--not-in-test')
             .addClass('element-replicated-links--contracted');
         $('.js-replicated-link').each(upgradeLink);
-        bean.on(qwery('.js-replicated-links-more')[0], 'click', function (e) {
+        bean.on(qwery('.js-replicated-links-more')[0], 'click', function () {
             container.removeClass('element-replicated-links--contracted');
-            $('.js-replicated-links-more').addClass("element-replicated-links__more--hidden")
+            $('.js-replicated-links-more').addClass('element-replicated-links__more--hidden');
         });
         //}
     }
