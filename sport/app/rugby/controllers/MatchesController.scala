@@ -3,7 +3,7 @@ package rugby.controllers
 import common._
 
 import common.{ExecutionContexts, JsonComponent}
-import conf.switches.Switches.{RugbyWorldCupMatchStatsSwitch, RugbyWorldCupTablesSwitch}
+import conf.switches.Switches.{RugbyWorldCupMatchStatsSwitch}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
@@ -39,7 +39,7 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
 
       val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch) else None
-      val table = if (RugbyWorldCupTablesSwitch.isSwitchedOn) RugbyStatsJob.getGroupTable(aMatch) else None
+      val table = RugbyStatsJob.getGroupTable(aMatch)
 
       val page = MatchPage(aMatch)
       Cached(60){
