@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/commercial/adblock-rules',
+    'common/modules/commercial/adblock-messages',
     'common/modules/adblock-banner',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
@@ -19,7 +19,7 @@ define([
     detect,
     storage,
     template,
-    adblockRules,
+    adblockMsg,
     AdblockBanner,
     Message,
     ab,
@@ -98,7 +98,8 @@ define([
     }
 
     function init() {
-        if (adblockRules.isNonMemberWithAdblock()) {
+        // Show messages only if adblock is used by non paying member
+        if (adblockMsg.showAdblockMsg()) {
             showAdblockMessage();
             showAdblockBanner();
         }

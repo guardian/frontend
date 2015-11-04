@@ -15,16 +15,16 @@ define([
         return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1;
     }
 
-    function isMemberWithAdblock() {
+    function noAdblockMsg() {
         return sharedRules() && userFeatures.isPayingMember();
     }
 
-    function isNonMemberWithAdblock() {
+    function showAdblockMsg() {
         return sharedRules() && !userFeatures.isPayingMember();
     }
 
     return {
-        isMemberWithAdblock: isMemberWithAdblock,
-        isNonMemberWithAdblock: isNonMemberWithAdblock
+        noAdblockMsg: noAdblockMsg,
+        showAdblockMsg: showAdblockMsg
     };
 });

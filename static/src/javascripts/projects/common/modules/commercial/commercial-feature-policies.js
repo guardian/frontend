@@ -3,7 +3,6 @@ define([
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/storage',
     'common/modules/commercial/user-features',
     'common/modules/user-prefs'
 ], function (
@@ -11,7 +10,6 @@ define([
     location,
     config,
     detect,
-    storage,
     userFeatures,
     userPrefs
 ) {
