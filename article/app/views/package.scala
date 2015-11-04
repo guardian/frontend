@@ -38,7 +38,7 @@ object BodyCleaner {
     implicit val edition = Edition(request)
     val cleaners = List(
       InBodyElementCleaner,
-      InBodyLinkCleaner("in body link", amp, replicate = true),
+      InBodyLinkCleaner("in body link", amp, replicate = true, date = Some(article.webPublicationDate)),
       BlockNumberCleaner,
       new TweetCleaner(article, amp),
       WitnessCleaner,
