@@ -93,9 +93,10 @@ define([
             rules = getRules();
 
             if (config.page.hasInlineMerchandise) {
-                adNames.unshift(['im', 'im']);
-
                 inlineMercPromise = spacefinder.getParaWithSpace(getInlineMerchRules()).then(function (space) {
+                    if (space) {
+                        adNames.unshift(['im', 'im']);
+                    }
                     return insertAdAtP(space);
                 });
             } else {
