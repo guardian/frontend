@@ -49,7 +49,7 @@ object EmailController extends Controller with ExecutionContexts {
 
   def submit() = Action.async { implicit request =>
     emailForm.bindFromRequest.fold(
-      formWithErrors => Future(InternalServerError("Invalid email address")),
+      formWithErrors => Future(BadRequest("Invalid email address")),
 
       form => EmailForm.submit(form).map(res => res.status match {
         case 200 => Ok(s"OK: $res")
