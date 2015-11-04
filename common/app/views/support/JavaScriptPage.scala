@@ -57,10 +57,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
         case _ => false
       })),
       ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship)),
-      ("idWebAppUrl", JsString(
-        if (IdentitySocialOAuthSwitch.isSwitchedOn) Configuration.id.oauthUrl
-        else Configuration.id.webappUrl
-      ))
+      ("idWebAppUrl", JsString(Configuration.id.oauthUrl))
     ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil)
       ++ metaData.sponsorshipTag.map{tag => Map("sponsorshipTag" -> JsString(tag.name))}.getOrElse(Nil))
   }
