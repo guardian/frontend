@@ -416,26 +416,24 @@
         position: relative;
         width: auto;
         margin-left: 0;
+        margin-bottom: $gs-baseline / 2;
+        border-top: 1px solid colour(neutral-7);
+        border-bottom: 1px solid colour(neutral-7);
         padding: 0;
-        padding-top: .33em;
-        margin-bottom: 2rem;
-
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            height: 2px;
-            width: gs-span(2);
-            background-color: colour(neutral-7);
-        }
+        padding-top: .2em;
+        padding-bottom: $gs-baseline * 3;
 
         .inline-quote {
-            margin-bottom: $gs-baseline / 4;
+            margin: ($gs-baseline / 4) 0;
+            height: auto;
+            width: auto;
+            line-height: 1;
         }
 
         .inline-quote svg {
             fill: colour(neutral-3);
-            width: 2.425rem;
+            width: 2.5em;
+            height: 1.4em;
         }
 
         .pullquote-paragraph,
@@ -456,6 +454,80 @@
 
         .inline-quote.closing {
             display: none;
+        }
+    }
+
+    .element-pullquote.element--showcase,
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            padding: 0;
+            border: 0;
+
+            .inline-quote {
+                position: absolute;
+                top: -1px;
+            }
+
+            .pullquote-paragraph {
+                text-indent: 1.7em;
+            }
+        }
+    }
+
+    .element-pullquote.element--showcase {
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline * 3;
+        }
+
+        @include mq(desktop) {
+            margin-right: -(gs-span(2));
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(1) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            margin-left: -(gs-span(2) + $gs-gutter);
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 3em;
+                height: 1.8em;
+            }
+        }
+
+        .pullquote-paragraph {
+            @include mq(tablet) {
+                text-indent: 1.6em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 2.25em;
+            }
+        }
+    }
+
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            width: gs-span(4);
+            padding-right: $gs-gutter;
+            border: 0;
+            margin-right: $gs-gutter;
+            margin-bottom: $gs-baseline * 3;
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            width: gs-span(5) + $gs-gutter;
+            margin-left: -(gs-span(3) + $gs-gutter);
         }
     }
 
