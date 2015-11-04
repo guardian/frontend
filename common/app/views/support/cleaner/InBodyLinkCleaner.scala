@@ -60,7 +60,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
           .addClass("element-replicated-links")
           .addClass("element-replicated-links--not-in-test")
           .addClass("js-replicated-links")
-        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned on this page")
+        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Mentioned in this article")
         guLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).foreach { case (link, index) =>
           val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
           div.appendElement("sup")
@@ -68,13 +68,19 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
           .text(s"$index")
           val a = div.appendElement("a")
             .attr("href", link.attr("href"))
-            .addClass("js-replicated-link")
-            .text(link.text())
             .attr("data-link-name", "replicated link")
           UrlParser.externalDomain(link.attr("href")) map { domain =>
             a.appendElement("span")
               .addClass("element-replicated-link__domain")
-            .text(domain)
+              .text(domain)
+            a.appendElement("em")
+              .text(link.text())
+              .addClass("element-replicated-link__text")
+          } getOrElse {
+            a.appendElement("span")
+              .addClass("js-replicated-link")
+              .text(link.text())
+              .addClass("element-replicated-link__headline")
           }
           val number = document.createElement("sup")
             .addClass("element-replicated-link__pointer")

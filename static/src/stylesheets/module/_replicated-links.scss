@@ -5,7 +5,7 @@
 .element-replicated-links {
     @include fs-textSans(1);
     border-left: $gs-gutter/3 solid colour(neutral-4);
-    padding: $gs-gutter/2 0 $gs-gutter/2 $gs-gutter/2;
+    padding: 0 0 $gs-baseline/4 $gs-gutter;
     margin-bottom: $gs-baseline;
 
     a {
@@ -13,6 +13,7 @@
 
         .element-replicated-link__domain {
             color: colour(neutral-2);
+            font-size: 14px;
         }
 
         :first-letter {
@@ -28,18 +29,32 @@
         }
 
     }
-
 }
 
 .element-replicated-links__title {
     @include fs-headline(2);
     font-weight: 800;
     color: colour(neutral-1);
-    padding: $gs-baseline/4 0 0;
 }
 
 .element-replicated-link {
-    font-size: .9rem;
+    font-size: 15px;
     position: relative;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline/2;
+}
+
+.element-replicated-link__number {
+    position: absolute;
+    top: 0;
+    left: -$gs-gutter;
+    width: $gs-gutter;
+    text-align: right; 
+    color: colour(neutral-2);
+    background: red;
+}
+
+.element-replicated-link__pointer{
+    @include fs-textSans(1);
+    color: colour(neutral-2);
+    margin-left: $gs-gutter/8;
 }
