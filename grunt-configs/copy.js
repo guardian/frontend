@@ -37,6 +37,8 @@ module.exports = function (grunt, options) {
                     src: [
                         'core.js',
                         'core.js.map',
+                        'universal.js',
+                        'universal.js.map',
                         'bootstraps/app.js',
                         'bootstraps/app.js.map',
                         'bootstraps/commercial.js',

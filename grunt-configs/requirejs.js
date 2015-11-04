@@ -49,8 +49,16 @@ module.exports = function (grunt, options) {
                 },
                 modules: [
                     {
+                        name: 'universal',
+                        exclude: [
+                            'text',
+                            'inlineSvg'
+                        ]
+                    },
+                    {
                         name: 'core',
                         exclude: [
+                            'universal',
                             'text',
                             'inlineSvg'
                         ]
@@ -58,6 +66,7 @@ module.exports = function (grunt, options) {
                     {
                         name: 'bootstraps/app',
                         exclude: [
+                            'universal',
                             'core',
                             'text',
                             'inlineSvg'
@@ -66,6 +75,7 @@ module.exports = function (grunt, options) {
                     {
                         name: 'bootstraps/commercial',
                         exclude: [
+                            'universal',
                             'core',
                             'text',
                             'inlineSvg'
@@ -79,6 +89,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/article',
                 out: options.staticTargetDir + 'javascripts/bootstraps/article.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -91,6 +102,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/crosswords',
                 out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -103,6 +115,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/liveblog',
                 out: options.staticTargetDir + 'javascripts/bootstraps/liveblog.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -115,6 +128,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/gallery',
                 out: options.staticTargetDir + 'javascripts/bootstraps/gallery.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -127,6 +141,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/trail',
                 out: options.staticTargetDir + 'javascripts/bootstraps/trail.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -139,6 +154,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/profile',
                 out: options.staticTargetDir + 'javascripts/bootstraps/profile.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -151,6 +167,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/sudoku',
                 out: options.staticTargetDir + 'javascripts/bootstraps/sudoku.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -163,6 +180,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/image-content',
                 out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -175,6 +193,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/facia',
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -187,6 +206,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/football',
                 out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -199,6 +219,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/preferences',
                 out: options.staticTargetDir + 'javascripts/bootstraps/preferences.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -211,6 +232,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/membership',
                 out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'vendor/stripe/stripe.min',
@@ -241,6 +263,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/media',
                 out: options.staticTargetDir + 'javascripts/bootstraps/media.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'text',
@@ -267,6 +290,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/creatives',
                 out: options.staticTargetDir + 'javascripts/bootstraps/creatives.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'bootstraps/commercial',
@@ -280,6 +304,7 @@ module.exports = function (grunt, options) {
                 name: 'bootstraps/accessibility',
                 out: options.staticTargetDir + 'javascripts/bootstraps/accessibility.js',
                 exclude: [
+                    'universal',
                     'core',
                     'bootstraps/app',
                     'bootstraps/facia',
