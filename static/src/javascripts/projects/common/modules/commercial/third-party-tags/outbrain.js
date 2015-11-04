@@ -100,13 +100,21 @@ define([
                 || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
         },
 
+        identityPolicy: function () {
+            return (!identity.isUserLoggedIn() || !(identity.isUserLoggedIn() && config.page.commentable));
+        },
+
+        hasHighRelevanceComponent: function () {
+            return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
+        },
+
         init: function () {
             if (config.switches.outbrain
                 && !config.page.isFront
                 && !config.page.isPreview
-                && !identity.isUserLoggedIn()
+                && this.identityPolicy()
                 && config.page.section !== 'childrens-books-site') {
-                if (detect.adblockInUse()) {
+                if (this.hasHighRelevanceComponent()) {
                     this.load();
                 } else {
                     mediator.on('modules:commercial:dfp:rendered', function (event) {

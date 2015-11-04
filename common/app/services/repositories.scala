@@ -3,7 +3,6 @@ package services
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import contentapi.{QueryDefaults, SectionTagLookUp, SectionsLookUp}
@@ -129,11 +128,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-      if (page.exists(_.page.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(page, response, maybeSection)
-      }
+
+      ModelOrResult(page, response, maybeSection)
     }
 
     promiseOfResponse.recover({

@@ -3,14 +3,14 @@ define([
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/user-ad-preference',
+    'common/modules/commercial/user-features',
     'common/modules/user-prefs'
 ], function (
     _,
     location,
     config,
     detect,
-    userAdPreference,
+    userFeatures,
     userPrefs
 ) {
     var policies = {};
@@ -45,9 +45,11 @@ define([
     };
 
     policies.adfreeExperience = function () {
-        if (userAdPreference.hideAds) {
+        if (userFeatures.isAdfree()) {
             return {
-                articleMPUs : false,
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
                 sliceAdverts : false,
                 popularContentMPU : false,
                 videoPreRolls : false
@@ -75,14 +77,30 @@ define([
     };
 
     policies.nonArticlePages = function () {
-        if (config.page.contentType !== 'Article' || config.page.isLiveBlog) {
-            return {articleMPUs : false};
+        var isArticle = config.page.contentType === 'Article',
+            isLiveBlog = config.page.isLiveBlog;
+
+        if (!isArticle && !isLiveBlog) {
+            return {
+                articleBodyAdverts : false,
+                articleAsideAdverts : false
+            };
+        } else if (isLiveBlog) {
+            return {
+                articleBodyAdverts : false
+            };
         }
     };
 
     policies.nonFrontPages = function () {
         if (!config.page.isFront) {
             return {frontCommercialComponents : false};
+        }
+    };
+
+    policies.tonePolicy = function () {
+        if (config.hasTone('Match reports')) {
+            return {articleAsideAdverts : false};
         }
     };
 
@@ -93,7 +111,8 @@ define([
             switches.videoPreRolls = false;
         }
         if (!config.switches.standardAdverts) {
-            switches.articleMPUs = false;
+            switches.articleBodyAdverts = false;
+            switches.articleAsideAdverts = false;
             switches.sliceAdverts = false;
         }
         if (!config.switches.commercialComponents) {
@@ -111,7 +130,9 @@ define([
 
     function CommercialFeatureSwitches(enabled) {
         this.dfpAdvertising = enabled;
-        this.articleMPUs = enabled;
+        this.topBannerAd = enabled;
+        this.articleBodyAdverts = enabled;
+        this.articleAsideAdverts = enabled;
         this.sliceAdverts = enabled;
         this.popularContentMPU = enabled;
         this.videoPreRolls = enabled;

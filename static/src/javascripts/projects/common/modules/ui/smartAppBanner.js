@@ -1,17 +1,21 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
+    'common/utils/load-css-promise',
     'common/modules/user-prefs',
     'common/modules/ui/message'
 ], function (
+    fastdom,
     $,
     cookies,
     detect,
     storage,
     template,
+    loadCssPromise,
     userPrefs,
     Message
 ) {
@@ -19,7 +23,7 @@ define([
      * Rules:
      *
      * 4 visits within the last month
-     * 3 impressions
+     * Less than 4 impressions
      * Persist close state
      */
     var COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER',
@@ -53,12 +57,23 @@ define([
     }
 
     function showMessage() {
-        var platform = (detect.isIOS()) ? 'ios' : 'android',
-            msg = new Message(platform),
-            fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
+        loadCssPromise.then(function () {
+            var platform = (detect.isIOS()) ? 'ios' : 'android',
+                msg = new Message(platform),
+                fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
-        cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
+            msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
+
+            cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
+
+            fastdom.read(function () {
+                var $banner = $('.site-message--ios, .site-message--android');
+                var bannerHeight = $banner.dim().height;
+                if (window.scrollY !== 0) {
+                    window.scrollTo(window.scrollX, window.scrollY + bannerHeight);
+                }
+            });
+        });
     }
 
     function init() {

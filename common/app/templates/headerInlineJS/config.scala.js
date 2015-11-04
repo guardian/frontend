@@ -31,7 +31,11 @@ window.guardian = {
             "commercial": {
                 "brandedComponentJobs": "@Static("images/commercial/branded-component-jobs.png")",
                 "brandedComponentSoulmatesM": "@Static("images/commercial/soulmates-male.jpg")",
-                "brandedComponentSoulmatesF": "@Static("images/commercial/soulmates-female.jpg")"
+                "brandedComponentSoulmatesF": "@Static("images/commercial/soulmates-female.jpg")",
+                "liveStreamingSurvey": "@Static("images/commercial/live-streaming-survey.png")",
+                "overlayEvent1": "@Static("images/commercial/overlay-event1.png")",
+                "overlayEvent2": "@Static("images/commercial/overlay-event2.png")",
+                "overlayEvent3": "@Static("images/commercial/overlay-event3.png")"
             }
         },
         "stylesheets": {
@@ -46,6 +50,9 @@ window.guardian = {
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
                 }
             }
+        },
+        "commercial": {
+            "showingAdfree" : undefined
         }
     }}
 };

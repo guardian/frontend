@@ -54,8 +54,12 @@
             @include fs-header(2, true);
         }
     }
-    > ol > li,
-    > ul > li {
+    > ul ul,
+    > ol ol {
+        margin-left: $gs-gutter;
+    }
+    > ol li,
+    > ul li {
         position: relative;
         margin-bottom: .8em;
     }
@@ -116,6 +120,11 @@
 .from-content-api pre {
     // Unset from `.from-content-api`
     word-wrap: normal;
+    $x: lighten(colour(guardian-brand-light), 30%);
+    background-color: $x;
+    border: 1px solid darken($x, 10%);
+    padding: $gs-baseline*.75 $gs-gutter*.75;
+    border-radius: 4px;
 }
 
 

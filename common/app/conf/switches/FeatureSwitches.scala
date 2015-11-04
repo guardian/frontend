@@ -6,6 +6,15 @@ import org.joda.time.LocalDate
 trait FeatureSwitches {
 
   // Features
+  val EuCookieMessageSwitch = Switch(
+    "Feature",
+    "eu-cookie-msg",
+    "Show the EU cookies message footer? On: yes, Off: no.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 11),
+    exposeClientSide = true
+  )
+
   val OfflinePageSwitch = Switch(
     "Feature",
     "offline-page",
@@ -29,17 +38,8 @@ trait FeatureSwitches {
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 7),
+    sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
-  )
-
-  val NotificationsSwitch = Switch(
-    "Feature",
-    "notifications",
-    "Notifications",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 15),
-    exposeClientSide = true
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(

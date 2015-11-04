@@ -69,7 +69,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
         1,
         Fixed(visuallyPleasingContainerForStories(series.trails.length)),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails map FaciaContentConvert.frontendContentToFaciaContent take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(series.trails map FaciaContentConvert.frontendContentToFaciaContent take 4, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps
        .copy(customHeader = header),

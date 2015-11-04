@@ -649,24 +649,18 @@ $c-soulmates-high: colour(neutral-1);
         box-sizing: content-box;
 
         @include mq(tablet) {
-            float: right;
+            float: left;
             overflow: visible;
             width: gs-span(6) - $gs-baseline*4;
         }
 
         @include mq(desktop) {
             width: gs-span(8) - $gs-baseline*8;
-            margin-right: $gs-baseline*4;
-        }
-
-        @include mq(leftCol) {
-            margin-right: $gs-gutter*3;
         }
 
         @include mq(wide) {
             width: gs-span(8) - $gs-baseline*4;
             padding: $gs-baseline*2;
-            margin-right: 0;
 
             .has-page-skin & {
                 padding: $gs-baseline 18px;
@@ -825,12 +819,22 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq(tablet) {
             width: gs-span(3);
-            float: left;
+            float: right;
         }
 
         @include mq($from: desktop) {
             width: gs-span(4);
+            margin-right: $gs-baseline*4;
         }
+
+        @include mq(leftCol) {
+            margin-right: $gs-baseline*5;
+        }
+
+        @include mq($from: wide) {
+            margin-right: 0;
+        }
+
 
     }
 

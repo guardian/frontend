@@ -56,6 +56,12 @@ define([
                 });
             }
 
+            if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-page') {
+                require(['bootstraps/crosswords'], function (crosswords) {
+                    bootstrapContext('crosswords', crosswords);
+                });
+            }
+
             if (config.page.contentType === 'LiveBlog') {
                 require(['bootstraps/liveblog', 'bootstraps/image-content'], function (liveBlog, imageContent) {
                     bootstrapContext('liveBlog', liveBlog);
@@ -117,8 +123,12 @@ define([
             }
 
             if (config.switches.offlinePage) {
-                // Will fail on non-{HTTPS,localhost} pages
-                navigator.serviceWorker.register('/service-worker.js');
+                if (window.location.protocol === 'https:') {
+                    var navigator = window.navigator;
+                    if (navigator && navigator.serviceWorker) {
+                        navigator.serviceWorker.register('/service-worker.js');
+                    }
+                }
 
                 if (config.page.pageId === 'offline-page') {
                     var $button = $('.js-open-crossword-btn');

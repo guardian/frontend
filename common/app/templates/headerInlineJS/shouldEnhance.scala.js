@@ -4,8 +4,9 @@
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement
     var personPrefersCore = function () {
-        if (window.location.hash === '#core' || window.location.hash === '#gu.prefs.force-core=on') return true;
-        if (window.location.hash === '#nocore' || window.location.hash === '#gu.prefs.force-core=off') return false;
+        var locationHash = window.location.hash;
+        if (locationHash === '#featuresoff' || locationHash === '#core' || locationHash === '#gu.prefs.force-core=on') return true;
+        if (locationHash === '#featureson' || locationHash === '#nocore' || locationHash === '#gu.prefs.force-core=off') return false;
         try {
             var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
             return /"value":"on"/.test(preference);
@@ -21,7 +22,7 @@
     // For usage stats see http://david-smith.org/iosversionstats/
     //
     // NOTE: this moves people into a category where they do not get important things such as commenting
-    var isOlderDevice = function () {
+    var isOlderIOSDevice = function () {
         // This is NOT what we want to be doing long term. It is a stopgap measure only...
         var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
 
@@ -32,7 +33,11 @@
         return false;
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderDevice() && !(@item.isFront && window.serveCoreFronts);
+    var isRetinaIpad = function() {
+        return (navigator.platform === 'iPad' && window.devicePixelRatio === 2);
+    };
+
+    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isRetinaIpad());
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 

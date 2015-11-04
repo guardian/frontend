@@ -103,7 +103,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def register(user: User, trackingParameters: TrackingData, returnUrl: Option[String] = None): Future[Response[User]] = {
     val userData = write(user)
     val params = buildParams(tracking = Some(trackingParameters), extra = returnUrl.map(url => Iterable("returnUrl" -> url)))
-    val headers = buildHeaders(extra = trackingParameters.ipAddress.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)))
+    val headers = buildHeaders(extra = trackingParameters.ipAddress.map(ip => Iterable("X-Forwarded-For" -> ip)))
     val response = http.POST(apiUrl("user"), Some(userData), params, headers)
     response map extractUser
   }

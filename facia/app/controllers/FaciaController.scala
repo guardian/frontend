@@ -3,10 +3,8 @@ package controllers
 import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.switches.Switches
 import controllers.front._
-import layout.{Front, CollectionEssentials, FaciaContainer}
+import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
@@ -45,7 +43,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
-  def renderContainerJson(id: String) = renderContainer(id)
+  def renderContainerJson(id: String) = renderContainer(id, false)
+
+  def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
 
   // Needed as aliases for reverse routing
   def renderRootFrontRss() = renderFrontRss(path = "")
@@ -99,8 +99,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
               Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
             else if (request.isJson)
               JsonFront(faciaPage)
-            else if (faciaPage.isExpiredAdvertisementFeature)
-              MovedPermanently(expiredAdFeatureUrl)
             else
               Ok(views.html.front(faciaPage))
           })
@@ -112,9 +110,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
 
-  def renderContainer(id: String) = MemcachedAction { implicit request =>
+  def renderContainer(id: String, preserveLayout: Boolean = false) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    renderContainerView(id)
+    renderContainerView(id, preserveLayout)
   }
 
   def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
@@ -131,16 +129,23 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
 
-  private def renderContainerView(collectionId: String)(implicit request: RequestHeader): Future[Result] = {
+  private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Rendering container view for collection id $collectionId")
     getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
           val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
 
+          val containerLayout = {
+            if (preserveLayout)
+              Container.resolve(collection.collectionType)
+            else
+              Fixed(FixedContainers.fixedMediumFastXII)
+          }
+
           val containerDefinition = FaciaContainer(
             1,
-            Fixed(FixedContainers.fixedMediumFastXII),
+            containerLayout,
             CollectionConfigWithId(collectionId, config),
             CollectionEssentials.fromPressedCollection(collection)
           )
@@ -158,9 +163,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
+        val containers = Front.fromPressedPage(pressedPage, Edition(request)).containers
         val maybeResponse =
           for {
-            (container, index) <- Front.fromPressedPage(pressedPage).containers.zipWithIndex.find(_._1.dataId == collectionId)
+            (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout}
           yield
             successful{Cached(pressedPage) {

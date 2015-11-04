@@ -42,6 +42,7 @@
 
     @include mq($until: leftCol) {
         padding-bottom: $gs-baseline/2;
+        padding-right: $gs-gutter * 2;
     }
     @include mq(leftCol) {
         width: $left-column + $gs-gutter;
@@ -188,6 +189,9 @@
         bottom: $gs-baseline;
         left: $gs-gutter/2;
     }
+    @include mq($until: mobileLandscape) {
+        width: $base-size * 6;
+    }
     &:hover,
     &:focus,
     &:active {
@@ -196,11 +200,6 @@
     .hide-on-mobile-inline {
         @include mq(leftCol, wide) {
             display: none !important;
-        }
-    }
-    .i-right {
-        @include mq($until: mobileLandscape) {
-            float: none;
         }
     }
 }
