@@ -215,15 +215,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val RugbyWorldCupFriendlies = Switch(
-    "Feature",
-    "rugby-world-cup-friendlies-for-pre-prod",
-    "If this switch is on rugby world cup scores will be load in Friendlies too (only use in CODE)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 6),
-    exposeClientSide = false
-  )
-
   val WeatherSwitch = Switch(
     "Feature",
     "weather",

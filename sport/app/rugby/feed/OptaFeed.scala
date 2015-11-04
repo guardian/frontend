@@ -32,10 +32,7 @@ case class RugbyOptaFeedException(message: String) extends RuntimeException(mess
 
 object OptaFeed extends ExecutionContexts with Logging {
 
-  private def events =
-    if(Configuration.environment.isNonProd && conf.switches.Switches.RugbyWorldCupFriendlies.isSwitchedOn) List(WarmupWorldCup2015, WorldCup2015)
-    else List(WorldCup2015)
-
+  private def events = List(WorldCup2015)
 
   private val xmlContentType = ("Accept", "application/xml")
 
