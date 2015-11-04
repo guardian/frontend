@@ -7,6 +7,7 @@
     border-left: $gs-gutter/3 solid colour(neutral-4);
     padding: 0 0 $gs-baseline/4 $gs-gutter;
     margin-bottom: $gs-baseline;
+    overflow: auto;
 
     @include mq($until: mobileLandscape) {
         margin-left: -$gs-gutter/2;
@@ -27,10 +28,12 @@
     a {
         padding: $gs-baseline/2 0;
 
-        &:hover {
+        &:hover,
+        &:focus {
             text-decoration: none;
 
-            .element-replicated-link__domain {
+            .element-replicated-link__domain,
+            .element-replicated-link__headline {
                 text-decoration: underline;
             }
         }
@@ -44,7 +47,7 @@
 .element-replicated-link__number {
     position: absolute;
     top: $gs-baseline/3;
-    left: -$gs-gutter - 2px;
+    left: -$gs-gutter - 3px;
     width: $gs-gutter;
     text-align: right; 
     color: colour(neutral-2);
@@ -61,5 +64,5 @@
 .element-replicated-link__pointer {
     @include fs-textSans(1);
     color: colour(neutral-2);
-    margin-left: $gs-gutter/8;
+    margin-left: $gs-gutter/10;
 }
