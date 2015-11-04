@@ -1,20 +1,20 @@
 define([
-    'fastdom',
     'Promise',
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fastdom-idle',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
-    fastdom,
     Promise,
     _,
     $,
     config,
     detect,
+    idleFastdom,
     spacefinder,
     createAdSlot,
     commercialFeatures
@@ -75,7 +75,7 @@ define([
 
                 ads.push($ad);
                 return new Promise(function (resolve) {
-                    fastdom.write(function () {
+                    idleFastdom.write(function () {
                         $ad.insertBefore(para);
                         resolve(null);
                     });

@@ -1,12 +1,12 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'Promise',
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-api',
@@ -14,13 +14,13 @@ define([
 
 ], function (
     bonzo,
-    fastdom,
     qwery,
     Promise,
     _,
     $,
     config,
     template,
+    idleFastdom,
     createAdSlot,
     commercialFeatures,
     dfp,
@@ -69,7 +69,7 @@ define([
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
 
             return new Promise(function (resolve) {
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     $('.js-container__header', container)
                         .after($adSlot);
 
