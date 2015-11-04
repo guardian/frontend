@@ -16,17 +16,17 @@ define([
      * @param {Function} testFunc A callback function that should return boolean describing whether we
      * should perform the add or remove class
      */
-    function updateClass (type, $el, cssClass, testFunc) {
-        return function() {
+    function updateClass(type, $el, cssClass, testFunc) {
+        return function () {
             // If we pass a boolean for test, then check if we should update the class
             var updateClass = (testFunc !== undefined) ? testFunc() : true;
 
             if (updateClass) {
-                fastdom.write(function() {
+                fastdom.write(function () {
                     $el[(type === 'add') ? 'addClass' : 'removeClass'](cssClass);
                 });
             }
-        }
+        };
     }
 
     return {
@@ -41,11 +41,11 @@ define([
                 updateClass('add', $el, 'email-sub__inline-label--enabled')();
 
                 // Check if the input val is empty and if not, hide the label
-                if ($input.val() !== '') { updateClass('add', $label, hiddenLabelClass)() }
+                if ($input.val() !== '') { updateClass('add', $label, hiddenLabelClass)(); }
 
                 // Bind to focus and blur handlers to update class based on input
                 bean.on($input[0], 'focus', updateClass('add', $label, hiddenLabelClass));
-                bean.on($input[0], 'blur', updateClass('remove', $label, hiddenLabelClass, function(){
+                bean.on($input[0], 'blur', updateClass('remove', $label, hiddenLabelClass, function () {
                     return $input.val() === '';
                 }));
             });

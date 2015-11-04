@@ -20,6 +20,10 @@
     }
 }
 
+.email-sub {
+    overflow: hidden; // Check for clearfix
+}
+
 .email-sub__ { // Email subscription component namespace
 
     /**
@@ -33,6 +37,10 @@
 
         * {
             box-sizing: border-box;
+        }
+
+        &--is-hidden {
+            display: none;
         }
     }
 
