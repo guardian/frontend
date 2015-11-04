@@ -8,48 +8,54 @@
     padding: 0 0 $gs-baseline/4 $gs-gutter;
     margin-bottom: $gs-baseline;
 
-    a {
-        padding-bottom: $gs-baseline;
-
-        .element-replicated-link__domain {
-            color: colour(neutral-2);
-            font-size: 14px;
-        }
-
-        :first-letter {
-            text-transform: uppercase;
-        }
-
-        &:hover {
-            text-decoration: underline;
-
-            .element-replicated-link__domain {
-                text-decoration: none;
-            }
-        }
-
+    @include mq($until: mobileLandscape) {
+        margin-left: -$gs-gutter/2;
     }
 }
 
 .element-replicated-links__title {
-    @include fs-headline(2);
-    font-weight: 800;
+    @include fs-header(1);
     color: colour(neutral-1);
+    margin-bottom: $gs-baseline;
 }
 
 .element-replicated-link {
     font-size: 15px;
     position: relative;
     margin-bottom: $gs-baseline/2;
+
+    a {
+        padding: $gs-baseline/2 0;
+
+        &:hover {
+            text-decoration: none;
+
+            .element-replicated-link__domain {
+                text-decoration: underline;
+            }
+        }
+
+        &.element-replicated-link--upgraded:hover {
+            text-decoration: underline;
+        }    
+    }
 }
 
 .element-replicated-link__number {
     position: absolute;
-    top: 0;
-    left: -$gs-gutter;
+    top: $gs-baseline/3;
+    left: -$gs-gutter - 2px;
     width: $gs-gutter;
     text-align: right; 
     color: colour(neutral-2);
+}
+
+.element-replicated-link__text {
+    @include fs-bodyCopy(1);
+    color: colour(neutral-2);
+    font-style: italic;
+    padding-left: $gs-gutter/6;
+    quotes: "\201C" "\201D";
 }
 
 .element-replicated-link__pointer {

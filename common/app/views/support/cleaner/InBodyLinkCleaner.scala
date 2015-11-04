@@ -73,7 +73,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
             a.appendElement("span")
               .addClass("element-replicated-link__domain")
               .text(domain)
-            a.appendElement("em")
+            a.appendElement("q")
               .text(link.text())
               .addClass("element-replicated-link__text")
           } getOrElse {
