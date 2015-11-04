@@ -35,6 +35,10 @@
         }
     }
 
+    @include mq(mobile) {
+        float: none;
+    }
+
     + .fc-slice__item {
         @include vertical-item-separator;
     }

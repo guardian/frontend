@@ -1,24 +1,24 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'Promise',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     Promise,
     $,
     _,
     config,
     detect,
+    idleFastdom,
     createAdSlot,
     userPrefs,
     commercialFeatures
@@ -71,7 +71,7 @@ define([
                             .addClass('ad-slot--not-mobile');
 
                     return new Promise(function (resolve) {
-                        fastdom.write(function () {
+                        idleFastdom.write(function () {
                             // add a tablet+ ad to the slice
                             if (detect.getBreakpoint() !== 'mobile') {
                                 $adSlice
