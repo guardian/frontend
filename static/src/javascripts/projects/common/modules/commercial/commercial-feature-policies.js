@@ -69,31 +69,6 @@ define([
         }
     };
 
-    policies.showAdblockMessages = function () {
-        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
-
-        if (detect.getBreakpoint() !== 'mobile' &&
-            detect.adblockInUse() &&
-            config.switches.adblock &&
-            alreadyVisted > 1
-        ) {
-            if (!userFeatures.isPayingMember()) {
-                return {
-                    showAdblockMessages : true
-                };
-            } else {
-                return {
-                    showAdblockMessages : false,
-                    memberWithAdblock : true
-                };
-            }
-        } else {
-            return {
-                showAdblockMessages : false
-            };
-        }
-    };
-
     policies.identityPages = function () {
         if (config.page.contentType === 'Identity' ||
             config.page.section === 'identity' // needed for pages under the profile subdomain

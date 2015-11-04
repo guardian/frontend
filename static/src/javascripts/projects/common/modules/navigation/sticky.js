@@ -9,6 +9,7 @@ define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner',
+    'common/modules/commercial/adblock-rules',
     'common/modules/commercial/commercial-features'
 ], function (
     bean,
@@ -21,6 +22,7 @@ define([
     mediator,
     ab,
     smartAppBanner,
+    adblockRules,
     commercialFeatures
 ) {
     function StickyHeader() {
@@ -86,7 +88,7 @@ define([
             }
         }
 
-        if (commercialFeatures.showAdblockMessages) {
+        if (adblockRules.isNonMemberWithAdblock()) {
             fastdom.write(function () {
                 fastdom.read(function () {
                     this.$els.bannerDesktop = $('.js-adblock-sticky');
@@ -126,7 +128,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (commercialFeatures.memberWithAdblock) {
+        } else if (adblockRules.isMemberWithAdblock()) {
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';

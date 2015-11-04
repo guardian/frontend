@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/adblock-rules',
     'common/modules/adblock-banner',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
@@ -19,7 +19,7 @@ define([
     detect,
     storage,
     template,
-    commercialFeatures,
+    adblockRules,
     AdblockBanner,
     Message,
     ab,
@@ -98,7 +98,7 @@ define([
     }
 
     function init() {
-        if (commercialFeatures.showAdblockMessages) {
+        if (adblockRules.isNonMemberWithAdblock()) {
             showAdblockMessage();
             showAdblockBanner();
         }
