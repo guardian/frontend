@@ -16,12 +16,6 @@ sealed trait OptaEvent {
   def hasGroupTable(stage: Stage.Value): Boolean
 }
 
-case object WarmupWorldCup2015 extends OptaEvent {
-  override val competition = "3"
-  override val season = "2016"
-  override def hasGroupTable(stage: Stage.Value) = false
-}
-
 case object WorldCup2015 extends OptaEvent {
   override val competition = "210"
   override val season = "2016"
