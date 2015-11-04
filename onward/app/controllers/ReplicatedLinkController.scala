@@ -34,10 +34,11 @@ object ReplicatedLinkController extends Controller with Paging with Logging with
   }
 
   private def renderContent(content: Content)(implicit request: RequestHeader) = {
-    if (!request.isJson) NoCache(Ok(content.headline))
+    val html = s"""<span class="element-replicated-link__headline">${content.headline}</span>"""
+    if (!request.isJson) NoCache(Ok(html))
     else Cached(900) {
       JsonComponent(
-         "headline" -> content.headline
+         "html" -> html
       )
     }
   }

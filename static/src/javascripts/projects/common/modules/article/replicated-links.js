@@ -31,11 +31,9 @@ define([
                 url: '/embed/headline' + matches[1] + '.json',
                 crossOrigin: true
             }).then(function (resp) {
-                if (resp.headline) {
+                if (resp.html) {
                     fastdom.write(function () {
-                        $(a).text(resp.headline)
-                            .removeClass('element-replicated-link--not-upgraded')
-                            .addClass('element-replicated-link--upgraded');
+                        $(a).html(resp.html);
                         mediator.emit('replicated-link:loaded', el);
                     });
                 }
@@ -51,7 +49,7 @@ define([
         //    ab.testCanBeRun('ReplicatedLinks') &&
         //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
         $('.js-replicated-links').removeClass('element-replicated-links--not-in-test');
-        $('.element-replicated-link--not-upgraded').each(upgradeLink);
+        $('.js-replicated-link').each(upgradeLink);
         //}
     }
 

@@ -1,0 +1,24 @@
+@import views.support.LinkInfo
+@(bodyLink: LinkInfo)(implicit request: RequestHeader)
+
+@import views.support.RenderClasses
+
+<div
+    class="@RenderClasses(Map(
+        "js-replicated-link" -> true
+    ))"
+    data-timestamp="@bodyLink.date"
+>
+
+    @bodyLink.index.map { index =>
+        <sup class="element-replicated-link__number">@index</sup>
+    }
+    <a href="@bodyLink.href" data-link-name="replicated link">
+        @* when the guardian ones are found client side, the contents of the a are replaced with a span element-replicated-link__headline *@
+        @bodyLink.domain.map { domain =>
+            <span class="element-replicated-link__domain">@domain</span>
+        }
+        <q class="element-replicated-link__text">@bodyLink.text</q>
+    </a>
+
+</div>

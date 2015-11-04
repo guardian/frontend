@@ -2,14 +2,16 @@ package views.support.cleaner
 
 import common.{Edition, LinkTo}
 import conf.Configuration
+import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import play.api.mvc.RequestHeader
-import views.support.HtmlCleaner
+import views.support.{LinkInfo, HtmlCleaner}
 
 import scala.collection.JavaConversions._
 import scala.util.parsing.combinator._
 
-case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replicate: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replicate: Boolean = false, date: Option[DateTime] = None)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   import implicits.CollectionsOps._
 
   def clean(body: Document): Document = {
@@ -55,39 +57,16 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
   def replicatedLinks(document: Document): Option[(Element, Element)] = {
     val bodyLinks = getBodyLinks(document)
     if (bodyLinks.nonEmpty) {
-      document.getElementsByTag("body").headOption.map { articleBody =>
-        val linksDiv = document.createElement("div")
-          .addClass("element-replicated-links")
-          .addClass("element-replicated-links--not-in-test")
-          .addClass("js-replicated-links")
-        linksDiv.appendElement("p").addClass("element-replicated-links__title").text("Keep reading")
-        bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).foreach { case (link, index) =>
-          val div = linksDiv.appendElement("div").addClass("element-replicated-link").addClass("element-replicated-link--not-upgraded")
-          div.appendElement("sup")
-          .addClass("element-replicated-link__number")
-          .text(s"$index")
-          val a = div.appendElement("a")
-            .attr("href", link.attr("href"))
-            .attr("data-link-name", "replicated link")
-          UrlParser.externalDomain(link.attr("href")) map { domain =>
-            a.appendElement("span")
-              .addClass("element-replicated-link__domain")
-              .text(domain)
-            a.appendElement("q")
-              .text(link.text())
-              .addClass("element-replicated-link__text")
-          } getOrElse {
-            a.appendElement("span")
-              .addClass("js-replicated-link")
-              .text(link.text())
-              .addClass("element-replicated-link__headline")
-          }
+      document.getElementsByTag("body").headOption.flatMap(articleBody => date.map((_, articleBody)))map { case (date, articleBody) =>
+        val links: List[LinkInfo] = bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).map { case (link, index) =>
           val number = document.createElement("sup")
             .addClass("element-replicated-link__pointer")
             .text(s"$index")
           link.after(number)
+          LinkInfo(Some(index), date.getMillis, UrlParser.externalDomain(link.attr("href")), link.attr("href"), link.text)
         }
-        (articleBody, linksDiv)
+          var rendered = views.html.fragments.inbody.links(links).toString
+        (articleBody, Jsoup.parseBodyFragment(rendered).body().child(0))
       }
     } else {
       None
@@ -118,6 +97,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
   }
 
 }
+
 
 object UrlParser extends RegexParsers {
   def proto: Parser[Unit] = """([a-z]+:)?""".r ^^ { _ => () }
