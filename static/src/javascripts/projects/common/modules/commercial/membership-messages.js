@@ -29,7 +29,9 @@ define([
     }
 
     function ukMessage() {
-        new Message('membership-message-uk', {
+        // Previously this was called membership-message-uk. To redisplay it to users who have
+        // already closed it, we appended '-redisplayed' to the name.
+        new Message('membership-message-uk-redisplayed', {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide'
