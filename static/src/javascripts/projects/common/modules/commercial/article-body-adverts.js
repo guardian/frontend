@@ -31,12 +31,11 @@ define([
         };
     }
 
-    function getLenientRules() {
-        var lenientRules = _.cloneDeep(getRules());
-        // more lenient rules, closer to the top start of the article
-        lenientRules.minAbove = 300;
-        lenientRules.selectors[' > h2'].minAbove = 20;
-        return lenientRules;
+    function getInlineMerchRules() {
+        var newRules = _.cloneDeep(getRules());
+        newRules.minAbove = 300;
+        newRules.selectors[' > h2'].minAbove = 20;
+        return newRules;
     }
 
     function getLongArticleRules() {
@@ -85,19 +84,18 @@ define([
             }
         },
         init = function () {
-            var rules, lenientRules, inlineMercPromise;
+            var rules, inlineMercPromise;
 
             if (!commercialFeatures.articleBodyAdverts) {
                 return false;
             }
 
             rules = getRules();
-            lenientRules = getLenientRules();
 
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
 
-                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
+                inlineMercPromise = spacefinder.getParaWithSpace(getInlineMerchRules()).then(function (space) {
                     return insertAdAtP(space);
                 });
             } else {
@@ -137,7 +135,7 @@ define([
         init: init,
         // rules exposed for spacefinder debugging
         getRules: getRules,
-        getLenientRules: getLenientRules,
+        getLenientRules: getInlineMerchRules,
 
         reset: function () {
             ads = [];
