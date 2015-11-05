@@ -3,12 +3,14 @@ define([
     'qwery',
     'common/utils/_',
     'common/utils/config',
-    'common/modules/analytics/omniture'
+    'common/modules/analytics/omniture',
+    'common/modules/experiments/ab'
 ], function (
     qwery,
     _,
     config,
-    omniture
+    omniture,
+    ab
 ) {
 
     function OmnitureMedia(player) {
@@ -87,6 +89,9 @@ define([
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
+
+            s.list1 = ab.makeOmnitureTag();
+
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -104,6 +109,8 @@ define([
 
             s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
+
+            s.list1 = ab.makeOmnitureTag();
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 
