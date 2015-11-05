@@ -16,7 +16,7 @@ define([
     }
 
     function noAdblockMsg() {
-        return sharedRules() && userFeatures.isPayingMember();
+        return (sharedRules() && userFeatures.isPayingMember()) || !sharedRules();
     }
 
     function showAdblockMsg() {

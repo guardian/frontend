@@ -166,6 +166,7 @@ define([
             audienceScienceGateway.getSegments = function () {
                 return {};
             };
+            storage.local.set('gu.alreadyVisited', 0);
 
             var opts = {
                 window: {
