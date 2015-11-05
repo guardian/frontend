@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'helpers/injector',
     'lodash/objects/forOwn'
 ], function (
-    _,
     Injector,
     forOwn) {
     var injector = new Injector();

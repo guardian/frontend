@@ -1,12 +1,10 @@
 define([
     'qwery',
-    'common/utils/_',
     'helpers/fixtures',
     'helpers/injector',
     'lodash/objects/merge'
 ], function (
     qwery,
-    _,
     fixtures,
     Injector,
     merge) {

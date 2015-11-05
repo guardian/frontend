@@ -1,14 +1,12 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
     'facia/modules/ui/container-show-more',
     'lodash/arrays/intersection',
     'lodash/objects/keys'
 ], function (
     bonzo,
     qwery,
-    _,
     containerShowMore,
     intersection,
     keys) {

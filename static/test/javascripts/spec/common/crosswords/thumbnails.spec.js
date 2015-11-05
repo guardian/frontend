@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'common/utils/_',
     'common/modules/crosswords/helpers',
     'common/modules/crosswords/thumbnails',
     'lodash/collections/map',
@@ -8,7 +7,6 @@ define([
     'lodash/collections/every'
 ], function (
     bonzo,
-    _,
     helpers,
     thumbs,
     map,

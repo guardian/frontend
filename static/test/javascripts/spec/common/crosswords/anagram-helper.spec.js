@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'common/modules/crosswords/anagram-helper/main',
     'lodash/collections/sortBy'
 ], function (
-    _,
     AnagramHelper,
     sortBy) {
     var cases = [{

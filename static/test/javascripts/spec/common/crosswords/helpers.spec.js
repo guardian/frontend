@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'common/modules/crosswords/helpers',
     'lodash/collections/every'
 ], function (
-    _,
     helpers,
     every) {
     var entryFixture = {
