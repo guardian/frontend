@@ -42,6 +42,7 @@
         }
     }
 
+    .content__series-label,
     .content__headline,
     .content__standfirst {
         max-width: gs-span(8);
@@ -55,6 +56,18 @@
         }
     }
 
+    .content__series-label {
+        @include fs-header(1);
+        display: block;
+        float: none;
+        padding-top: $gs-baseline / 2;
+        margin-bottom: 0;
+    }
+
+    .content__series-label__link {
+        color: white;
+    }
+
     .content__headline {
         @include fs-headline(5);
         font-weight: 200;
@@ -65,6 +78,10 @@
         @include mq(desktop) {
             font-size: 3.25rem;
         }
+    }
+
+    .content__series-label + .content__headline {
+        padding-top: 0;
     }
 
     .content__standfirst {
