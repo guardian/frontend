@@ -1,7 +1,6 @@
 /* global s */
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/analytics/omniture',
@@ -9,7 +8,6 @@ define([
     'lodash/functions/debounce'
 ], function (
     bonzo,
-    _,
     $,
     mediator,
     omniture,

@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
@@ -7,7 +6,6 @@ define([
     'common/modules/user-prefs',
     'lodash/objects/mapValues'
 ], function (
-    _,
     location,
     config,
     detect,

@@ -4,10 +4,8 @@
  Description: Wrapper around localStorage functionality
  */
 define([
-    'common/utils/_',
     'lodash/objects/isUndefined'
 ], function (
-    _,
     isUndefined) {
 
     var w = window,

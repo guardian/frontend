@@ -2,7 +2,6 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator',
     'lodash/functions/throttle'
@@ -10,7 +9,6 @@ define([
     bonzo,
     fastdom,
     qwery,
-    _,
     detect,
     mediator,
     throttle) {

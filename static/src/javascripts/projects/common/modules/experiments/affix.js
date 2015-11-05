@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/mediator',
     'fastdom',
     'lodash/functions/bindAll',
@@ -9,7 +8,6 @@ define([
 ], function (
     bean,
     bonzo,
-    _,
     mediator,
     fastdom,
     bindAll,

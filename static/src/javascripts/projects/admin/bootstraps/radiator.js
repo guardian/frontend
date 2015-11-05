@@ -2,7 +2,6 @@
 define([
     'common/utils/ajax',
     'common/utils/$',
-    'common/utils/_',
     'lodash/collections/groupBy',
     'lodash/arrays/flatten',
     'lodash/collections/pluck',
@@ -14,7 +13,6 @@ define([
 ], function (
     ajax,
     $,
-    _,
     groupBy,
     flatten,
     pluck,

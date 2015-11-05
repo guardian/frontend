@@ -1,12 +1,10 @@
 define([
     'common/utils/$',
     'bonzo',
-    'common/utils/_',
     'lodash/collections/filter'
 ], function (
     $,
     bonzo,
-    _,
     filter) {
     var $rhc = $('.js-components-container');
 

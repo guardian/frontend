@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
@@ -12,7 +11,6 @@ define([
     'common/views/svgs',
     'lodash/collections/sample'
 ], function (
-    _,
     config,
     detect,
     storage,

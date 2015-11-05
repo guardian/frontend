@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -11,7 +10,6 @@ define([
     'common/modules/commercial/dfp',
     'lodash/collections/contains'
 ], function (
-    _,
     qwery,
     $,
     config,

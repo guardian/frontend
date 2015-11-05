@@ -8,12 +8,10 @@
 define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
-    'common/utils/_',
     'lodash/collections/where'
 ], function (
     mediator,
     ab,
-    _,
     where) {
     var register = [],
         startTime = Date.now();

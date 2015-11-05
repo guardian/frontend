@@ -1,10 +1,8 @@
 define([
-    'common/utils/_',
     'common/utils/ajax',
     'bonzo',
     'lodash/objects/assign'
 ], function (
-    _,
     ajax,
     bonzo,
     assign) {

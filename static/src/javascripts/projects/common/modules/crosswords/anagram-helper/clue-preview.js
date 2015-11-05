@@ -1,11 +1,9 @@
 define([
     'react',
-    'common/utils/_',
     'lodash/collections/some',
     'lodash/collections/map'
 ], function (
     React,
-    _,
     some,
     map) {
     var CluePreview = React.createClass({

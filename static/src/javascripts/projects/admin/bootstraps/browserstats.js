@@ -1,13 +1,11 @@
 define([
     'common/utils/$',
     'bonzo',
-    'common/utils/_',
     'bean',
     'lodash/functions/debounce'
 ], function (
     $,
     bonzo,
-    _,
     bean,
     debounce) {
     function initialise() {

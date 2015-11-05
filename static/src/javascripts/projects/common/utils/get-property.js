@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'lodash/collections/reduce',
     'lodash/objects/has'
 ], function (
-    _,
     reduce,
     has) {
 

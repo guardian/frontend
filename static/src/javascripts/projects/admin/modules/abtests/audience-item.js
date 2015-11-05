@@ -3,13 +3,11 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'common/utils/_',
     'common/modules/component',
     'bonzo',
     'lodash/objects/assign',
     'lodash/objects/clone'
 ], function (
-    _,
     Component,
     bonzo,
     assign,

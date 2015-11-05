@@ -4,12 +4,10 @@
  */
 define([
     'common/utils/report-error',
-    'common/utils/_',
     'lodash/collections/forEach',
     'lodash/collections/map'
 ], function (
     reportError,
-    _,
     forEach,
     map) {
     var catchErrors = function (fn) {

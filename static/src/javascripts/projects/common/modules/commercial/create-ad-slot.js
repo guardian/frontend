@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -9,7 +8,6 @@ define([
     'lodash/objects/isArray',
     'lodash/objects/pairs'
 ], function (
-    _,
     $,
     config,
     detect,

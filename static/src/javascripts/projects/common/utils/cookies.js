@@ -1,8 +1,6 @@
 define([
-    'common/utils/_',
     'lodash/collections/forEach'
 ], function (
-    _,
     forEach) {
 
     var documentObject;

@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -9,7 +8,6 @@ define([
     'lodash/functions/bindAll'
 ], function (
     bonzo,
-    _,
     $,
     config,
     mediator,

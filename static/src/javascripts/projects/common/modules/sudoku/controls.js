@@ -1,12 +1,10 @@
 /* eslint-disable new-cap */
 define([
-    'common/utils/_',
     'react',
     'common/modules/sudoku/constants',
     'lodash/collections/map',
     'lodash/arrays/range'
 ], function (
-    _,
     React,
     constants,
     map,

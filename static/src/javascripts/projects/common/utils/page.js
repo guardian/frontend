@@ -1,13 +1,11 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/utils/_',
     'lodash/objects/assign',
     'lodash/collections/find'
 ], function (
     $,
     config,
-    _,
     assign,
     find) {
 

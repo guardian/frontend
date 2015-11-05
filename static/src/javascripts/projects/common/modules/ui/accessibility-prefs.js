@@ -1,10 +1,8 @@
 define([
-    'common/utils/_',
     'common/utils/$',
     'common/modules/user-prefs',
     'lodash/collections/forEach'
 ], function (
-    _,
     $,
     userPrefs,
     forEach) {

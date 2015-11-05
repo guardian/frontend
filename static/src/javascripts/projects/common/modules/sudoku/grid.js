@@ -1,6 +1,5 @@
 /*eslint-disable new-cap*/
 define([
-    'common/utils/_',
     'react',
     'common/modules/sudoku/cell',
     'common/modules/sudoku/controls',
@@ -16,7 +15,6 @@ define([
     'lodash/collections/contains',
     'lodash/arrays/without'
 ], function (
-    _,
     React,
     Cell,
     Controls,

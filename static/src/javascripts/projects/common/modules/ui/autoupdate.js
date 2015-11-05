@@ -5,7 +5,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -18,7 +17,6 @@ define([
 ], function (
     bean,
     bonzo,
-    _,
     $,
     ajax,
     config,

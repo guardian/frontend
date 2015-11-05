@@ -1,7 +1,6 @@
 define([
     'classnames',
     'react',
-    'common/utils/_',
     './helpers',
     './constants',
     './cell',
@@ -12,7 +11,6 @@ define([
 ], function (
     classNames,
     React,
-    _,
     helpers,
     constants,
     Cell,

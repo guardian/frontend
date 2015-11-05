@@ -8,7 +8,6 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/_',
     'lodash/collections/toArray'
 ], function (
     bonzo,
@@ -16,7 +15,6 @@ define([
     qwery,
     $,
     mediator,
-    _,
     toArray) {
     function Filter(context) {
         this.context = context;

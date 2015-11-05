@@ -3,7 +3,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/ajax',
     'lodash/objects/assign',
     'lodash/objects/clone'
@@ -11,7 +10,6 @@ define([
     bean,
     bonzo,
     qwery,
-    _,
     ajax,
     assign,
     clone) {

@@ -1,6 +1,5 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/_',
     'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
@@ -8,7 +7,6 @@ define([
     'common/modules/identity/api',
     'lodash/utilities/noop'
 ], function (
-    _,
     ajaxPromise,
     cookies,
     config,

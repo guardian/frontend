@@ -1,7 +1,6 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -10,7 +9,6 @@ define([
 ], function (
     bean,
     fastdom,
-    _,
     $,
     config,
     detect,

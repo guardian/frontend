@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'common/utils/storage',
     'lodash/collections/map'
 ], function (
-    _,
     storage,
     map) {
     var localStorage = storage.local;

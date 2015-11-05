@@ -1,11 +1,9 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/ajax',
     'lodash/collections/map',
     'lodash/objects/isArray'
 ], function (
-    _,
     config,
     ajax,
     map,

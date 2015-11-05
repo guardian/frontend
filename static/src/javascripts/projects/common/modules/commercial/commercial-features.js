@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'common/modules/commercial/commercial-feature-policies',
     'lodash/objects/forOwn'
 ], function (
-    _,
     commercialFeaturePolicies,
     forOwn) {
     function init() {

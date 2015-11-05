@@ -1,12 +1,10 @@
 define([
     'bean',
-    'common/utils/_',
     'common/utils/$',
     'common/modules/identity/api',
     'lodash/objects/assign'
 ], function (
     bean,
-    _,
     $,
     idApi,
     assign) {

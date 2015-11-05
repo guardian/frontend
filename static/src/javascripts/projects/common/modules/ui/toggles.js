@@ -2,14 +2,12 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/mediator',
     'lodash/collections/contains'
 ], function (
     bean,
     bonzo,
     $,
-    _,
     mediator,
     contains) {
 

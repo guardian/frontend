@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/url',
@@ -11,7 +10,6 @@ define([
 ], function (
     bean,
     bonzo,
-    _,
     $,
     config,
     url,

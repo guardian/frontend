@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'common/utils/storage',
     'lodash/objects/defaults'
 ], function (
-    _,
     storage,
     defaults) {
 

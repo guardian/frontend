@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -11,7 +10,6 @@ define([
 ], function (
     bean,
     bonzo,
-    _,
     $,
     mediator,
     storage,

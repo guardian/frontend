@@ -1,14 +1,12 @@
 define([
     'bean',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/detect',
     'common/utils/config',
     'lodash/collections/some'
 ], function (
     bean,
     $,
-    _,
     detect,
     config,
     some) {

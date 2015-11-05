@@ -1,13 +1,11 @@
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/mediator',
     'fastdom',
     'lodash/collections/filter',
     'lodash/functions/debounce'
 ], function (
     bonzo,
-    _,
     mediator,
     fastdom,
     filter,

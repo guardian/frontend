@@ -1,7 +1,6 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/date-formats',
@@ -20,7 +19,6 @@ define([
     'lodash/collections/map'
 ], function (
     $,
-    _,
     config,
     cookies,
     dateFormats,

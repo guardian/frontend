@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'bean',
     'bonzo',
     'fastdom',
@@ -8,7 +7,6 @@ define([
     'lodash/collections/map',
     'lodash/objects/isEqual'
 ], function (
-    _,
     bean,
     bonzo,
     fastdom,

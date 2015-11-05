@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
@@ -7,7 +6,6 @@ define([
     'common/modules/component',
     'lodash/arrays/union'
 ], function (
-    _,
     config,
     mediator,
     register,

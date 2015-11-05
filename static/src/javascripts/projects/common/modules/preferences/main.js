@@ -1,6 +1,5 @@
 define([
     'react',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/modules/onward/history',
@@ -8,7 +7,6 @@ define([
     'lodash/objects/isEmpty'
 ], function (
     React,
-    _,
     $,
     config,
     history,

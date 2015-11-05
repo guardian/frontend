@@ -5,11 +5,9 @@
  * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
  */
 define([
-    'common/utils/_',
     'common/utils/$',
     'lodash/objects/assign'
 ], function (
-    _,
     $,
     assign) {
     /**

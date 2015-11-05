@@ -4,7 +4,6 @@
  Description: Displays information about a single test
  */
 define([
-    'common/utils/_',
     'common/modules/component',
     'admin/modules/abtests/participation',
     'bonzo',
@@ -13,7 +12,6 @@ define([
     'lodash/objects/assign',
     'lodash/objects/clone'
 ], function (
-    _,
     Component,
     Participation,
     bonzo,

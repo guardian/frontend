@@ -1,7 +1,6 @@
 define([
     'fastdom',
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
@@ -11,7 +10,6 @@ define([
 ], function (
     fastdom,
     Promise,
-    _,
     $,
     $css,
     config,

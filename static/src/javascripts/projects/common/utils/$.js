@@ -1,12 +1,10 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
     'lodash/collections/forEach'
 ], function (
     bonzo,
     qwery,
-    _,
     forEach) {
 
     // Warning: side effect. This patches the bonzo module for use everywhere

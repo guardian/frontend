@@ -1,7 +1,6 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -12,7 +11,6 @@ define([
 ], function (
     fastdom,
     $,
-    _,
     config,
     detect,
     mediator,

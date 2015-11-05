@@ -1,11 +1,9 @@
 define([
-    'common/utils/_',
     'common/utils/mediator',
     'lodash/objects/assign',
     'lodash/functions/bindAll',
     'lodash/functions/debounce'
 ], function (
-    _,
     mediator,
     assign,
     bindAll,

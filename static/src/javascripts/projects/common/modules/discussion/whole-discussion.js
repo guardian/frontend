@@ -4,7 +4,6 @@ define([
     'qwery',
     'Promise',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax-promise',
     'lodash/collections/forEach',
     'lodash/arrays/range'
@@ -14,7 +13,6 @@ define([
     qwery,
     Promise,
     $,
-    _,
     ajaxPromise,
     forEach,
     range) {

@@ -1,12 +1,10 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'lodash/objects/assign'
 ], function (
     bean,
     bonzo,
-    _,
     assign) {
 
     function PasswordStrength(el, config) {

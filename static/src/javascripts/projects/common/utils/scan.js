@@ -1,9 +1,7 @@
 define([
-    'common/utils/_',
     'lodash/collections/reduce',
     'lodash/arrays/last'
 ], function (
-    _,
     reduce,
     last) {
     return function (xs, f, z) {

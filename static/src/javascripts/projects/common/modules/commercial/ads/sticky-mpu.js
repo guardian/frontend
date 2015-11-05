@@ -1,14 +1,12 @@
 define([
     'qwery',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/modules/ui/sticky',
     'lodash/objects/defaults'
 ], function (
     qwery,
     $,
-    _,
     config,
     Sticky,
     defaults) {

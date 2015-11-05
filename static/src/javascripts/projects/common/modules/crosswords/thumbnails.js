@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'bonzo',
     'qwery',
     'common/utils/ajax',
@@ -11,7 +10,6 @@ define([
     'lodash/arrays/range',
     'lodash/collections/forEach'
 ], function (
-    _,
     bonzo,
     qwery,
     ajax,

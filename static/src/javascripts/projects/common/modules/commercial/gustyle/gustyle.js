@@ -1,7 +1,6 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
@@ -10,7 +9,6 @@ define([
 ], function (
     fastdom,
     $,
-    _,
     template,
     Toggles,
     svgs,

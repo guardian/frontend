@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -18,7 +17,6 @@ define([
     'lodash/objects/pick',
     'lodash/objects/isArray'
 ], function (
-    _,
     config,
     cookies,
     detect,

@@ -1,12 +1,10 @@
 define([
     'react',
     'classnames',
-    'common/utils/_',
     'lodash/objects/assign'
 ], function (
     React,
     classNames,
-    _,
     assign) {
     var ConfirmButton = React.createClass({
         getInitialState: function () {

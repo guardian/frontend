@@ -1,6 +1,5 @@
 define([
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/template',
@@ -11,7 +10,6 @@ define([
     'lodash/collections/map'
 ], function (
     $,
-    _,
     ajax,
     config,
     template,

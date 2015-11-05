@@ -1,6 +1,5 @@
 define([
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -9,7 +8,6 @@ define([
     'lodash/functions/bindAll'
 ], function (
     fastdom,
-    _,
     $,
     detect,
     mediator,

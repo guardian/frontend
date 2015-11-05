@@ -5,14 +5,12 @@
 define([
     'Promise',
     'qwery',
-    'common/utils/_',
     'common/modules/component',
     'common/utils/mediator',
     'lodash/functions/once'
 ], function (
     Promise,
     qwery,
-    _,
     Component,
     mediator,
     once) {

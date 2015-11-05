@@ -1,13 +1,11 @@
 define([
     'bean',
-    'common/utils/_',
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'lodash/objects/merge',
     'lodash/collections/map'
 ], function (
     bean,
-    _,
     mediator,
     ab,
     merge,

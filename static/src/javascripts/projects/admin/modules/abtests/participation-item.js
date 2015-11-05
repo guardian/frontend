@@ -3,11 +3,9 @@
  Description: Displays opt-in link for a variant
  */
 define([
-    'common/utils/_',
     'common/modules/component',
     'lodash/objects/assign'
 ], function (
-    _,
     Component,
     assign) {
 

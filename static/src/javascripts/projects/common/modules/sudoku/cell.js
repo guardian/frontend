@@ -1,13 +1,11 @@
 define([
     'react',
-    'common/utils/_',
     'common/modules/sudoku/constants',
     'common/modules/sudoku/utils',
     'lodash/arrays/compact',
     'lodash/collections/map'
 ], function (
     React,
-    _,
     constants,
     utils,
     compact,

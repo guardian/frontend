@@ -3,7 +3,6 @@
 // This file is only required by core, and so has a long cache time.
 
 define([
-    'common/utils/_',
     'inlineSvg!svgs/icon/comment-16',
     'inlineSvg!svgs/icon/marque-36',
     'inlineSvg!svgs/icon/marque-54',
@@ -38,7 +37,6 @@ define([
     'inlineSvg!svgs/commercial/survey-new',
     'lodash/objects/isArray'
 ], function (
-    _,
     commentCount16icon,
     marque36icon,
     marque54icon,
