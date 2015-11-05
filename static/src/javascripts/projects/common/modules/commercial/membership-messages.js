@@ -49,7 +49,7 @@ define([
                 'Thank you for reading the Guardian.',
                 'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
             ].join(' '),
-            linkHref: 'https://membership.theguardian.com/supporter?INTCMP='+campaignCode,
+            linkHref: 'https://membership.theguardian.com/supporter?INTCMP=' + campaignCode,
             linkText: 'Join',
             arrowWhiteRight: svgs('arrowWhiteRight')
         }));
