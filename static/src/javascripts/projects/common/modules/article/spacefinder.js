@@ -79,7 +79,7 @@ define([
             contentMeta;
 
         // enforce minAbove and minBelow rules
-        filtered = filtered.filter(function (p) {
+        filtered = filtered.and(filter, function (p) {
             var farEnoughFromTopOfBody = p.top >= rules.minAbove,
                 farEnoughFromBottomOfBody = p.top + rules.minBelow <= bodyHeight,
                 valid = farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
@@ -95,7 +95,7 @@ define([
         // enforce content meta rule
         if (rules.clearContentMeta) {
             contentMeta = _mapElementToDimensions(qwery('.js-content-meta')[0]);
-            filtered = filtered.filter(function (p) {
+            filtered = filtered.and(filter, function (p) {
                 var valid = p.top > (contentMeta.bottom + rules.clearContentMeta);
                 if (debug && !valid) { _debugErrPara(p.element, 'too close to content meta'); }
                 return valid;
@@ -104,9 +104,9 @@ define([
 
         // enforce selector rules
         chain(rules.selectors).and(forOwn, function (params, selector) {
-            var relevantElems = chain(qwery(bodySelector + selector)).and(map, _mapElementToDimensions);
+            var relevantElems = chain(qwery(bodySelector + selector)).and(map, _mapElementToDimensions).value();
 
-            filtered = filtered.filter(function (p) {
+            filtered = filtered.and(filter, function (p) {
                 var valid = _testElems(p, relevantElems, params);
                 if (debug && !valid) {
                     _debugErrPara(p.element, 'too close to selector (' + selector + ')');
@@ -168,14 +168,14 @@ define([
 
                     if (debug) { // reset any previous debug messages
                         fastdom.write(function () {
-                            bonzo(paraElems.pluck('element').valueOf())
+                            bonzo(paraElems.and(pluck, 'element').valueOf())
                                 .attr('data-spacefinder-msg', '')
                                 .removeClass('spacefinder--valid')
                                 .removeClass('spacefinder--error');
                         });
                     }
 
-                    slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+                    slots = _enforceRules(paraElems.value(), rules, bodyBottom, debug);
 
                     if (debug) {
                         fastdom.write(function () {

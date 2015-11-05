@@ -297,7 +297,7 @@ define([
                     var imagesHtml = chain(this.images).and(
                         map,
                         function (img, i) { return this.generateImgHTML(img, i + 1); }.bind(this)
-                    ).join('');
+                    ).join('').value();
 
                     this.$contentEl.html(imagesHtml);
 

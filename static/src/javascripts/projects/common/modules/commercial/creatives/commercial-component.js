@@ -42,7 +42,7 @@ define([
                     return map(values, function (value) {
                         return [key, '=', encodeURIComponent(value)].join('');
                     }).join('&');
-                }).join('&');
+                }).join('&').value();
         },
         getKeywords = function () {
             var keywords = (config.page.keywordIds) ?

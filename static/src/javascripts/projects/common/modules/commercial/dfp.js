@@ -597,7 +597,7 @@ define([
                     }
                 });
             })).then(function (items) {
-                return chain(items).chain().and(find, function (item) {
+                return chain(items).and(find, function (item) {
                         return item.adType !== '';
                     }).value();
             });
@@ -608,7 +608,7 @@ define([
         getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
             return chain(detect.breakpoints).and(initial, function (breakpointInfo) {
                     return breakpointInfo.name !== breakpoint;
-                }).and(intersection, slotBreakpoints).and(last);
+                }).and(intersection, slotBreakpoints).and(last).value();
         },
         shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
             // get the slots breakpoints

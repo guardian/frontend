@@ -337,7 +337,7 @@ define([
                 return breakpoint.name !== c.min;
             }).and(initial, function (breakpoint) {
                 return breakpoint.name !== c.max;
-            }).and(pluck, 'name').and(contains, currentBreakpoint);
+            }).and(pluck, 'name').and(contains, currentBreakpoint).value();
     }
 
     // Page Visibility

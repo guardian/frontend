@@ -286,7 +286,7 @@ define([
             map[d.key][d.direction] = d.separator;
 
             return map;
-        }, {});
+        }, {}).value();
     };
 
     var entryHasCell = function (entry, x, y) {

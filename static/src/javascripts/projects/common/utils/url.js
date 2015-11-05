@@ -53,7 +53,7 @@ define([
                             value = value.join(',');
                         }
                         return [queryParts[0], '=', value].join('');
-                    }).join('&');
+                    }).join('&').value();
             },
 
             getPath: function (url) {
