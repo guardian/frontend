@@ -2,13 +2,14 @@ define([
     'qwery',
     'common/utils/_',
     'helpers/fixtures',
-    'helpers/injector'
+    'helpers/injector',
+    'lodash/objects/merge'
 ], function (
     qwery,
     _,
     fixtures,
-    Injector
-) {
+    Injector,
+    merge) {
     xdescribe('Commercial component loader', function () {
 
         var adSlot, server,
@@ -171,7 +172,7 @@ define([
 
                 server.respondWith(testConfig.url, [200, {}, '{ "html": "" }']);
 
-                var params = _.merge({ type: testConfig.type }, testConfig.options);
+                var params = merge({ type: testConfig.type }, testConfig.options);
                 new CommercialComponent(adSlot, params).create();
             });
         });

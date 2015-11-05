@@ -2,13 +2,18 @@ define([
     'bonzo',
     'common/utils/_',
     'common/modules/crosswords/helpers',
-    'common/modules/crosswords/thumbnails'
+    'common/modules/crosswords/thumbnails',
+    'lodash/collections/map',
+    'lodash/collections/contains',
+    'lodash/collections/every'
 ], function (
     bonzo,
     _,
     helpers,
-    thumbs
-) {
+    thumbs,
+    map,
+    contains,
+    every) {
     var fixture = [
         ['', '', '', 'H', ''],
         ['', '', '', 'I', ''],
@@ -16,7 +21,7 @@ define([
     ];
 
     function getLetters(cells) {
-        return _.map(cells, function (cell) {
+        return map(cells, function (cell) {
             return bonzo(cell).text();
         });
     }
@@ -31,17 +36,17 @@ define([
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
 
-                expect(_.contains(letters, 'H')).toBe(true);
-                expect(_.contains(letters, 'I')).toBe(true);
-                expect(_.contains(letters, 'R')).toBe(true);
+                expect(contains(letters, 'H')).toBe(true);
+                expect(contains(letters, 'I')).toBe(true);
+                expect(contains(letters, 'R')).toBe(true);
             });
 
             it('should not create any empty text nodes', function () {
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
 
-                expect(_.contains(letters, '')).toBe(false);
-                expect(_.contains(letters, null)).toBe(false);
+                expect(contains(letters, '')).toBe(false);
+                expect(contains(letters, null)).toBe(false);
             });
 
             it('should not create any nodes outside of the thumbnail borders', function () {
@@ -49,7 +54,7 @@ define([
                     gridHeight = helpers.gridSize(fixture[0].length),
                     cells = thumbs.makeTextCells(fixture);
 
-                expect(_.every(cells, function (cell) {
+                expect(every(cells, function (cell) {
                     var $cell = bonzo(cell),
                         x = $cell.attr('x'),
                         y = $cell.attr('y');

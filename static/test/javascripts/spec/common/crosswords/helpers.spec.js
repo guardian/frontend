@@ -1,10 +1,11 @@
 define([
     'common/utils/_',
-    'common/modules/crosswords/helpers'
+    'common/modules/crosswords/helpers',
+    'lodash/collections/every'
 ], function (
     _,
-    helpers
-) {
+    helpers,
+    every) {
     var entryFixture = {
         group: ['2-across'],
         position: {
@@ -56,7 +57,7 @@ define([
 
             describe('buildGrid', function () {
                 it('should build a grid with the correct number of rows', function () {
-                    expect(_.every(helpers.buildGrid(5, 6, []), function (column) {
+                    expect(every(helpers.buildGrid(5, 6, []), function (column) {
                         return column.length === 5;
                     })).toBe(true);
                 });
@@ -68,8 +69,8 @@ define([
                 it('should set entries to not editable by default', function () {
                     var grid = helpers.buildGrid(5, 6, []);
 
-                    expect(_.every(grid, function (column) {
-                        return _.every(column, function (cell) {
+                    expect(every(grid, function (column) {
+                        return every(column, function (cell) {
                             return cell.isEditable === false;
                         });
                     })).toBe(true);

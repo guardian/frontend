@@ -1,10 +1,11 @@
 define([
     'common/utils/_',
-    'helpers/injector'
+    'helpers/injector',
+    'lodash/objects/forOwn'
 ], function (
     _,
-    Injector
-) {
+    Injector,
+    forOwn) {
     var injector = new Injector();
 
     describe('Commercial features', function () {
@@ -32,7 +33,7 @@ define([
         describe('Default ad policy', function () {
             it('everything is enabled by default', function () {
                 var switches = commercialFeaturePolicies.getPolicySwitches().defaultAds;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(true);
                 });
             });
@@ -42,7 +43,7 @@ define([
             it('hides all features on a sensitive page', function () {
                 config.page.shouldHideAdverts = true;
                 var switches = commercialFeaturePolicies.getPolicySwitches().sensitiveContent;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -50,7 +51,7 @@ define([
             it('hides all features on pages in the childrens\' book site', function () {
                 config.page.section = 'childrens-books-site';
                 var switches = commercialFeaturePolicies.getPolicySwitches().sensitiveContent;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -68,7 +69,7 @@ define([
                 config.page.isSSL = true;
                 config.page.section = 'news';
                 var switches = commercialFeaturePolicies.getPolicySwitches().sslContent;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -93,7 +94,7 @@ define([
                     return '#noads';
                 };
                 var switches = commercialFeaturePolicies.getPolicySwitches().noadsHash;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -113,7 +114,7 @@ define([
                 detect.getBreakpoint = function () { return 'desktop'; };
                 config.page.contentType = 'Article';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(true);
                 });
             });
@@ -123,7 +124,7 @@ define([
                 detect.getBreakpoint = function () { return 'desktop'; };
                 config.page.contentType = 'Article';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -133,7 +134,7 @@ define([
                 detect.getBreakpoint = function () { return 'mobile'; };
                 config.page.contentType = 'Article';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -143,7 +144,7 @@ define([
                 detect.getBreakpoint = function () { return 'mobile'; };
                 config.page.contentType = 'LiveBlog';
                 var switches = commercialFeaturePolicies.getPolicySwitches().membershipMessages;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
@@ -153,7 +154,7 @@ define([
             it('hides all features when userPrefs has "adverts" opt out', function () {
                 userPrefs.switchOff('adverts');
                 var switches = commercialFeaturePolicies.getPolicySwitches().userPrefs;
-                _.forOwn(switches, function (featureSwitch) {
+                forOwn(switches, function (featureSwitch) {
                     expect(featureSwitch).toBe(false);
                 });
             });
