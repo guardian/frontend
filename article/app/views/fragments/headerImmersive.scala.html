@@ -13,11 +13,11 @@
     </div>
 
     @if(article.hasMainEmbed || article.elements("main").isEmpty) {
-        @MainCleaner(article, article.main, false)
         <div class="content__loading">
             <span class="content__loading-animation is-updating"></span>
             <span class="u-h">Loading header</span>
         </div>
+        @MainCleaner(article, article.main, false)
     } else {
         <style>
             @article.mainPicture.map { picture =>
