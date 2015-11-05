@@ -219,7 +219,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
   private def conditionalMetaData: Map[String, JsValue] = {
-    val rugbyMeta = if (isRugbyMatch) {
+    val rugbyMeta = if (isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
       val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
       val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)

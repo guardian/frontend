@@ -55,17 +55,13 @@ object Us extends Edition(
     energy,
     pollution
   )
-  import Switches.RugbyWorldCupswitch
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(us),
       NavItem(world, worldLocalNav),
       NavItem(opinion),
-      NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl,
-        // TODO delete and replace with nothing
-        rugbyWorldCup)
-      ),
+      NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
       NavItem(soccer, footballNav),
       NavItem(technology),
       NavItem(arts, cultureLocalNav),

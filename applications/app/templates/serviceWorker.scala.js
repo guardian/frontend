@@ -108,11 +108,12 @@
         var url = new URL(request.url);
         var isRootRequest = url.host === self.location.host;
         // To workaround a bug in Chrome which results in broken HTTPS->HTTP
-        // redirects, we only handle root requests if they match a HTTPS
-        // endpoint
+        // redirects, we only handle root requests if they match the developer
+        // blog. The info section often hosts holding pages which will could
+        // eventually redirect to a HTTP page.
         // https://github.com/guardian/frontend/issues/10936
-        var isRequestToHttpsSection = url.pathname.match(/^\/info($|\/.*$)/);
-        if (isRootRequest && isRequestToHttpsSection && doesRequestAcceptHtml(request)) {
+        var isRequestToDeveloperBlog = url.pathname.match(/^\/info\/developer-blog($|\/.*$)/);
+        if (isRootRequest && isRequestToDeveloperBlog && doesRequestAcceptHtml(request)) {
             // HTML pages fallback to offline page
             event.respondWith(
                 fetch(request)

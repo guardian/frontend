@@ -16,12 +16,6 @@ sealed trait OptaEvent {
   def hasGroupTable(stage: Stage.Value): Boolean
 }
 
-case object WarmupWorldCup2015 extends OptaEvent {
-  override val competition = "3"
-  override val season = "2016"
-  override def hasGroupTable(stage: Stage.Value) = false
-}
-
 case object WorldCup2015 extends OptaEvent {
   override val competition = "210"
   override val season = "2016"
@@ -32,10 +26,7 @@ case class RugbyOptaFeedException(message: String) extends RuntimeException(mess
 
 object OptaFeed extends ExecutionContexts with Logging {
 
-  private def events =
-    if(Configuration.environment.isNonProd && conf.switches.Switches.RugbyWorldCupFriendlies.isSwitchedOn) List(WarmupWorldCup2015, WorldCup2015)
-    else List(WorldCup2015)
-
+  private def events = List(WorldCup2015)
 
   private val xmlContentType = ("Accept", "application/xml")
 
