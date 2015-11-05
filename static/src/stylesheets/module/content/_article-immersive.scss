@@ -70,11 +70,12 @@
     .content__standfirst {
         position: relative;
         padding-top: .33em;
-        padding-bottom: .5rem;
         margin-bottom: 0;
         color: #ffffff;
 
         @include mq(desktop) {
+            padding-bottom: 1rem;
+
             &:before {
                 content: '';
                 position: absolute;
