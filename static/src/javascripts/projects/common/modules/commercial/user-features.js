@@ -34,10 +34,10 @@ define([
     };
 
     function refresh() {
-        if (featuresEnabled() && identity.isUserLoggedIn() && needNewFeatureData()) {
+        if (identity.isUserLoggedIn() && needNewFeatureData()) {
             userFeatures._requestNewData();
         }
-        if (!featuresEnabled() || haveDataAfterSignout()) {
+        if (haveDataAfterSignout()) {
             userFeatures._deleteOldData();
         }
     }
@@ -55,12 +55,9 @@ define([
     }
 
     function isPayingMember() {
+        // Does NOT check if data has expired
         // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
         return identity.isUserLoggedIn() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false';
-    }
-
-    function featuresEnabled() {
-        return config.switches.advertOptOut || config.switches.adblock;
     }
 
     function needNewFeatureData() {
