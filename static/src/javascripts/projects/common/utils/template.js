@@ -3,6 +3,6 @@ define([
 ], function (
     template) {
 
-    return template.bind(_);
+    return template;
 
 });
