@@ -1,7 +1,8 @@
 @import model.SubscriptionResult
 @(page: model.MetaData, result: Option[SubscriptionResult] = None)(implicit request: RequestHeader)
 
-@main(page){ }{
-    @fragments.emailLandingBody(result)
+@mainFragment(page){ }{
+    @fragments.email.emailSignUp(
+        "footer"
+    )
 }
-

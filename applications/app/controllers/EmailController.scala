@@ -47,6 +47,10 @@ object EmailController extends Controller with ExecutionContexts {
     Ok(views.html.emailLanding(emailLandingPage))
   }
 
+  def renderForm() = Action { implicit request =>
+    Ok(views.html.emailFragment(emailLandingPage))
+  }
+
   def submit() = Action.async { implicit request =>
     emailForm.bindFromRequest.fold(
       formWithErrors => {

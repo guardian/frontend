@@ -1,0 +1,11 @@
+@(metaData: model.MetaData, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+
+<!doctype html>
+<head>
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/email.css")" />
+</head>
+<html>
+    <body>
+        @body
+    </body>
+</html>
