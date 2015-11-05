@@ -56,7 +56,7 @@
     }
 
     .content__headline {
-        font-size: 2.2rem;
+        @include fs-headline(5);
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
@@ -70,7 +70,7 @@
     .content__standfirst {
         position: relative;
         padding-top: .33em;
-        padding-bottom: 1rem;
+        padding-bottom: .5rem;
         margin-bottom: 0;
         color: #ffffff;
 
