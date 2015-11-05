@@ -4,15 +4,16 @@ define([
     'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'lodash/functions/memoize'
 ], function (
     fastdom,
     $,
     _,
     detect,
     mediator,
-    ab
-    ) {
+    ab,
+    memoize) {
 
     var selectorTopEl = '.social--top',
         selectorBottomEl = '.social--bottom',
@@ -22,8 +23,8 @@ define([
 
         deadzone = 100,
 
-        topEl = _.memoize(function () { return $(selectorTopEl)[0]; }),
-        bottomEl = _.memoize(function () { return $(selectorBottomEl)[0]; }),
+        topEl = memoize(function () { return $(selectorTopEl)[0]; }),
+        bottomEl = memoize(function () { return $(selectorBottomEl)[0]; }),
 
         inited = false,
         revealed = false;

@@ -8,7 +8,8 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-v4.html'
+    'text!common/views/commercial/creatives/fluid250-v4.html',
+    'lodash/objects/merge'
 ], function (
     bean,
     bonzo,
@@ -19,8 +20,8 @@ define([
     mediator,
     storage,
     template,
-    fluid250Tpl
-) {
+    fluid250Tpl,
+    merge) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
@@ -88,7 +89,7 @@ define([
                     '<div class="ad-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: 50% 0; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             };
 
-        $.create(template(fluid250Tpl, { data: _.merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
+        $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');

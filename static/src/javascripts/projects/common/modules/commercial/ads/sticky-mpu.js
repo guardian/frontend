@@ -3,19 +3,20 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
-    'common/modules/ui/sticky'
+    'common/modules/ui/sticky',
+    'lodash/objects/defaults'
 ], function (
     qwery,
     $,
     _,
     config,
-    Sticky
-) {
+    Sticky,
+    defaults) {
 
     var mpuHeight = 275,
         StickyMpu = function ($adSlot, options) {
             this.$adSlot = $adSlot;
-            this.opts    = _.defaults(options || {}, {
+            this.opts    = defaults(options || {}, {
                 top: 0
             });
         };

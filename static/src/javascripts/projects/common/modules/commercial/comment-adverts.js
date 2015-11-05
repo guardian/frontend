@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/ab',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/user-features',
+    'lodash/objects/defaults'
 ], function (
     fastdom,
     Promise,
@@ -23,11 +24,11 @@ define([
     ab,
     createAdSlot,
     dfp,
-    userFeatures
-) {
+    userFeatures,
+    defaults) {
     return function (options) {
         var adType,
-            opts = _.defaults(
+            opts = defaults(
                 options || {},
                 {
                     adSlotContainerSelector: '.js-discussion__ad-slot',

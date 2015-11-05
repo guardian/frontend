@@ -12,7 +12,9 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'text!common/views/breaking-news.html'
+    'text!common/views/breaking-news.html',
+    'lodash/collections/forEach',
+    'lodash/objects/isArray'
 ], function (
     bean,
     bonzo,
@@ -27,8 +29,9 @@ define([
     relativeDates,
     omniture,
     svgs,
-    alertHtml
-) {
+    alertHtml,
+    forEach,
+    isArray) {
     var alertWithinSeconds = 1200, // 20 minutes
         supportedSections = {
             'sport': 'sport',
@@ -44,7 +47,7 @@ define([
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
-        _.forEach(articleIds, function (articleID) {
+        forEach(articleIds, function (articleID) {
             cleanedIDs[articleID] = hiddenIds[articleID] || false;
         });
         return cleanedIDs;
@@ -63,7 +66,7 @@ define([
         }).then(
             function (resp) {
                 var collections = (resp.collections || [])
-                    .filter(function (collection) { return _.isArray(collection.content) && collection.content.length; })
+                    .filter(function (collection) { return isArray(collection.content) && collection.content.length; })
                     .map(function (collection) {
                         // collection.href is string or null
                         collection.href = (collection.href || '').toLowerCase();
@@ -106,7 +109,7 @@ define([
                     marque36icon = svgs('marque36icon');
                     closeIcon = svgs('closeCentralIcon');
 
-                    _.forEach(alerts, function (article) {
+                    forEach(alerts, function (article) {
                         var el;
 
                         article.marque36icon = marque36icon;

@@ -6,7 +6,8 @@ define([
     'common/utils/$css',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/defaults'
 ], function (
     fastdom,
     Promise,
@@ -15,11 +16,11 @@ define([
     $css,
     config,
     createAdSlot,
-    commercialFeatures
-) {
+    commercialFeatures,
+    defaults) {
     function init(options) {
         var $mainCol, adType,
-            opts = _.defaults(
+            opts = defaults(
                 options || {},
                 {
                     columnSelector: '.js-secondary-column',

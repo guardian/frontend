@@ -7,7 +7,8 @@ define([
     'text!common/views/commercial/creatives/branded-component-jobs.html',
     'text!common/views/commercial/creatives/branded-component-membership.html',
     'text!common/views/commercial/creatives/branded-component-soulmates.html',
-    'common/utils/_'
+    'common/utils/_',
+    'lodash/objects/defaults'
 ], function (
     qwery,
     $,
@@ -17,8 +18,8 @@ define([
     brandedComponentJobsTpl,
     brandedComponentMembershipTpl,
     brandedComponentSoulmatesTpl,
-    _
-) {
+    _,
+    defaults) {
 
     var templates = {
             jobs: {
@@ -51,7 +52,7 @@ define([
         BrandedComponent = function ($adSlot, params, options) {
             this.$adSlot = $adSlot;
             this.params  = params;
-            this.opts = _.defaults(options || {}, {
+            this.opts = defaults(options || {}, {
                 force: false
             });
         };

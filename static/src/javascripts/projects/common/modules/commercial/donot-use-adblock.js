@@ -9,7 +9,8 @@ define([
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
     'text!common/views/membership-message.html',
-    'common/views/svgs'
+    'common/views/svgs',
+    'lodash/collections/sample'
 ], function (
     _,
     config,
@@ -21,12 +22,12 @@ define([
     ab,
     navigation,
     messageTemplate,
-    svgs
-) {
+    svgs,
+    sample) {
     function init() {
         var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0,
             adblockLink = 'https://membership.theguardian.com/supporter',
-            message = _.sample([
+            message = sample([
                 {
                     id: 'monthly',
                     messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter from just £5 per month',

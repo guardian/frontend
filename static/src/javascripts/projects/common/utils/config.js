@@ -6,12 +6,15 @@
 define([
     'common/utils/_',
     'common/utils/pad',
-    'common/utils/url'
+    'common/utils/url',
+    'lodash/objects/assign',
+    'lodash/collections/contains'
 ], function (
     _,
     pad,
-    urlUtils
-) {
+    urlUtils,
+    assign,
+    contains) {
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -26,7 +29,7 @@ define([
         return Math.floor(Math.random() * 36).toString(36);
     })};
 
-    return _.extend({
+    return assign({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
         },
@@ -64,7 +67,7 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: _.contains(['Video', 'Audio'], config.page.contentType)
+        isMedia: contains(['Video', 'Audio'], config.page.contentType)
 
     }, config);
 });

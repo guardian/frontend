@@ -10,7 +10,9 @@ define([
     'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'text!common/views/ui/video-ads-skip-overlay.html',
+    'lodash/arrays/indexOf',
+    'lodash/functions/throttle'
 ], function (
     bean,
     qwery,
@@ -22,8 +24,9 @@ define([
     template,
     OmnitureMedia,
     history,
-    adsSkipOverlayTmpl
-) {
+    adsSkipOverlayTmpl,
+    indexOf,
+    throttle) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
         QUARTILES = [25, 50, 75],
@@ -134,7 +137,7 @@ define([
         ///music/video/2015/aug/31/vmas-2015-highlights-video
 
 
-        if (config.switches.kruxVideoTracking && config.switches.krux && $(player.el()).attr('data-media-id') && _.indexOf(desiredVideos, $(player.el()).attr('data-media-id')) !== -1) {
+        if (config.switches.kruxVideoTracking && config.switches.krux && $(player.el()).attr('data-media-id') && indexOf(desiredVideos, $(player.el()).attr('data-media-id')) !== -1) {
             if (event === 'videoPlaying') {
                 //Krux is a global object loaded by krux.js file
 
@@ -180,7 +183,7 @@ define([
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
-                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
+                player.on('timeupdate', throttle(events.timeupdate, 1000));
                 player.one('ended', events.end);
 
                 if (shouldAutoPlay(player)) {

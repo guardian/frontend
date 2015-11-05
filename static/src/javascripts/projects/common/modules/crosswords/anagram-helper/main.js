@@ -5,7 +5,12 @@ define([
     './clue-input',
     './clue-preview',
     './ring',
-    '../helpers'
+    '../helpers',
+    'lodash/collections/contains',
+    'lodash/collections/shuffle',
+    'lodash/collections/reduce',
+    'lodash/arrays/rest',
+    'lodash/collections/map'
 ], function (
     React,
     _,
@@ -13,8 +18,12 @@ define([
     ClueInput,
     CluePreview,
     Ring,
-    helpers
-) {
+    helpers,
+    contains,
+    shuffle,
+    reduce,
+    rest,
+    map) {
     var AnagramHelper = React.createClass({
         getInitialState: function () {
             return {
@@ -70,13 +79,13 @@ define([
                     return entry.value.toLowerCase();
                 })
                 .filter(function (entry) {
-                    return _.contains(word, entry);
+                    return contains(word, entry);
                 })
                 .compact()
                 .value()
                 .sort();
 
-            return _.shuffle(_.reduce(word.trim().split('').sort(), function (acc, letter) {
+            return shuffle(reduce(word.trim().split('').sort(), function (acc, letter) {
                 var entered = acc.entries[0] === letter.toLowerCase();
 
                 return {
@@ -84,7 +93,7 @@ define([
                         value: letter,
                         entered: entered
                     }),
-                    entries: entered ? _.rest(acc.entries) : acc.entries
+                    entries: entered ? rest(acc.entries) : acc.entries
                 };
             }, {
                 letters: [],
@@ -108,7 +117,7 @@ define([
             /* jscs:enable disallowDanglingUnderscores */
             var clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
             var cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
-            var entries = _.map(cells, function (coords) {
+            var entries = map(cells, function (coords) {
                 return this.props.grid[coords.x][coords.y];
             }, this);
             var letters = this.shuffleWord(this.state.clueInput, entries);

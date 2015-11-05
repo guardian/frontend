@@ -3,22 +3,25 @@ define([
     'bonzo',
     'common/utils/_',
     'common/utils/mediator',
-    'fastdom'
+    'fastdom',
+    'lodash/functions/bindAll',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     _,
     mediator,
-    fastdom
-) {
+    fastdom,
+    bindAll,
+    debounce) {
 
     var Affix = function (options) {
 
-        _.bindAll(this, 'checkPosition', 'calculateContainerPositioning');
+        bindAll(this, 'checkPosition', 'calculateContainerPositioning');
 
         bean.on(window, 'click', this.checkPosition);
         mediator.addListener('window:throttledScroll', this.checkPosition);
-        mediator.addListener('window:resize', _.debounce(function () {
+        mediator.addListener('window:resize', debounce(function () {
             fastdom.write(this.calculateContainerPositioning);
         }, 200));
 

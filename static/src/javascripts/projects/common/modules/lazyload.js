@@ -1,12 +1,13 @@
 define([
     'common/utils/_',
     'common/utils/ajax',
-    'bonzo'
+    'bonzo',
+    'lodash/objects/assign'
 ], function (
     _,
     ajax,
-    bonzo
-) {
+    bonzo,
+    assign) {
 
     var LazyLoad = function (options) {
 
@@ -30,7 +31,7 @@ define([
                 beforeInsert: function (html) { return html; },
                 force: false
             },
-            opts = _.assign(defaultOpts, options || {});
+            opts = assign(defaultOpts, options || {});
 
         this.load = function () {
 

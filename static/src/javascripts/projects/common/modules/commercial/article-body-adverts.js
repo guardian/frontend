@@ -7,7 +7,8 @@ define([
     'common/utils/detect',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/cloneDeep'
 ], function (
     fastdom,
     Promise,
@@ -17,8 +18,8 @@ define([
     detect,
     spacefinder,
     createAdSlot,
-    commercialFeatures
-) {
+    commercialFeatures,
+    cloneDeep) {
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -32,7 +33,7 @@ define([
     }
 
     function getLenientRules() {
-        var lenientRules = _.cloneDeep(getRules());
+        var lenientRules = cloneDeep(getRules());
         // more lenient rules, closer to the top start of the article
         lenientRules.minAbove = 300;
         lenientRules.selectors[' > h2'].minAbove = 20;
@@ -40,7 +41,7 @@ define([
     }
 
     function getLongArticleRules() {
-        var newRules = _.cloneDeep(getRules());
+        var newRules = cloneDeep(getRules());
 
         newRules.selectors[' .ad-slot'] = {
             minAbove: 1300,

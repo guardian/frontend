@@ -1,10 +1,11 @@
 define([
     'common/utils/_',
-    'common/utils/storage'
+    'common/utils/storage',
+    'lodash/objects/defaults'
 ], function (
     _,
-    storage
-) {
+    storage,
+    defaults) {
 
     var storagePrefix = 'gu.prefs.',
         store         = {
@@ -13,42 +14,42 @@ define([
         };
 
     function set(name, value, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         store[opts.type].set(storagePrefix + name, value);
     }
 
     function get(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         return store[opts.type].get(storagePrefix + name);
     }
 
     function remove(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         store[opts.type].remove(storagePrefix + name);
     }
 
     function switchOn(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         store[opts.type].set(storagePrefix + 'switch.' + name, true);
     }
 
     function switchOff(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         store[opts.type].set(storagePrefix + 'switch.' + name, false);
     }
 
     function removeSwitch(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         store[opts.type].remove(storagePrefix + 'switch.' + name);
     }
 
     function isOn(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         return store[opts.type].get(storagePrefix + 'switch.' + name) === true;
     }
 
     function isOff(name, options) {
-        var opts = _.defaults(options || {}, { type: 'local' });
+        var opts = defaults(options || {}, { type: 'local' });
         return store[opts.type].get(storagePrefix + 'switch.' + name) === false;
     }
 

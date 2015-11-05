@@ -25,7 +25,8 @@ define([
     'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/user-prefs',
-    'facia/modules/onwards/search-tool'
+    'facia/modules/onwards/search-tool',
+    'lodash/collections/contains'
 ], function (
     bean,
     qwery,
@@ -39,8 +40,8 @@ define([
     template,
     omniture,
     userPrefs,
-    SearchTool
-    ) {
+    SearchTool,
+    contains) {
 
     var $holder        = null,
         searchTool     = null,
@@ -56,7 +57,7 @@ define([
         },
 
         isNetworkFront: function () {
-            return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId);
+            return contains(['uk', 'us', 'au', 'international'], config.page.pageId);
         },
 
         /**

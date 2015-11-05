@@ -7,7 +7,8 @@ define([
     'common/utils/_',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/identity/api',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/collections/contains'
 ], function (
     config,
     template,
@@ -17,8 +18,8 @@ define([
     _,
     krux,
     Id,
-    mediator
-) {
+    mediator,
+    contains) {
 
     var messageId = 'rtrt-email-message';
 
@@ -45,7 +46,7 @@ define([
                     // If a segment Id is passed and the user is in the segment
                     // or there is no kruxSegmentId passed in
                     // show the message
-                    if ((kruxSegmentId && _.contains(krux.getSegments(), kruxSegmentId)) || !kruxSegmentId) {
+                    if ((kruxSegmentId && contains(krux.getSegments(), kruxSegmentId)) || !kruxSegmentId) {
                         messageShown = new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
                         omnitureEvent = !kruxSegmentId ? 'message for all users shown' : 'message for segment ' + kruxSegmentId + ' shown' ;
                     }

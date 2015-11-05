@@ -9,7 +9,13 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'text!facia/views/liveblog-block.html'
+    'text!facia/views/liveblog-block.html',
+    'lodash/arrays/compact',
+    'lodash/objects/isUndefined',
+    'lodash/collections/forEach',
+    'lodash/functions/debounce',
+    'lodash/collections/filter',
+    'lodash/objects/isEmpty'
 ], function (
     bonzo,
     _,
@@ -21,8 +27,13 @@ define([
     mediator,
     detect,
     fastdomPromise,
-    blockTemplate
-) {
+    blockTemplate,
+    compact,
+    isUndefined,
+    forEach,
+    debounce,
+    filter,
+    isEmpty) {
     var animateDelayMs = 2000,
         animateAfterScrollDelayMs = 500,
         refreshSecs = 30,
@@ -57,15 +68,15 @@ define([
             ariaHidden: !block.isNew,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
-            text: _.compact([block.title, block.body.slice(0, 500)]).join('. '),
+            text: compact([block.title, block.body.slice(0, 500)]).join('. '),
             index: index + 1
         });
     }
 
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
-        var fakeUpdate = _.isUndefined(oldBlockDate);
+        var fakeUpdate = isUndefined(oldBlockDate);
 
-        _.forEach(targets, function (element) {
+        forEach(targets, function (element) {
             var hasNewBlock = false,
                 wrapperClasses = [
                     'fc-item__liveblog-blocks__inner',
@@ -106,7 +117,7 @@ define([
             var animateOnScroll;
 
             if (!didAnimate) {
-                animateOnScroll = _.debounce(function () {
+                animateOnScroll = debounce(function () {
                     maybeAnimateBlocks(el, true).then(function (didAnimate) {
                         if (didAnimate) {
                             mediator.off('window:throttledScroll', animateOnScroll);
@@ -138,7 +149,7 @@ define([
     }
 
     function sanitizeBlocks(blocks) {
-        return _.filter(blocks, function (block) {
+        return filter(blocks, function (block) {
             return block.id && block.publishedDateTime && block.body && block.body.length >= 10;
         });
     }
@@ -160,10 +171,10 @@ define([
         .then(function (elementsById) {
             var oldBlockDates;
 
-            if (!_.isEmpty(elementsById)) {
+            if (!isEmpty(elementsById)) {
                 oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
-                _.forEach(elementsById, function (elements, articleId) {
+                forEach(elementsById, function (elements, articleId) {
                     ajax({
                         url: '/' + articleId + '.json?rendered=false',
                         type: 'json',

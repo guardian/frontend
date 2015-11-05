@@ -1,16 +1,19 @@
 define([
     'common/utils/_',
     'common/utils/config',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'lodash/collections/map',
+    'lodash/objects/isArray'
 ], function (
     _,
     config,
-    ajax
-) {
+    ajax,
+    map,
+    isArray) {
     var canBeacon = !!navigator.sendBeacon;
 
     function buildCounts(keys) {
-        return _.map(_.isArray(keys) ? keys : [keys], function (key) {
+        return map(isArray(keys) ? keys : [keys], function (key) {
             return 'c=' + key;
         }).join('&');
     }

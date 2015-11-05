@@ -2,13 +2,16 @@ define([
     'bonzo',
     'common/utils/_',
     'common/utils/mediator',
-    'fastdom'
+    'fastdom',
+    'lodash/collections/filter',
+    'lodash/functions/debounce'
 ], function (
     bonzo,
     _,
     mediator,
-    fastdom
-) {
+    fastdom,
+    filter,
+    debounce) {
 
     var items = [],
         scroll = {top: 0, bottom: 0},
@@ -16,7 +19,7 @@ define([
         doProximityLoading = function () {
             scroll.top = window.pageYOffset;
             scroll.bottom = scroll.top + bonzo.viewport().height;
-            items = _.filter(items, function (item) {
+            items = filter(items, function (item) {
                 if (item.conditionFn()) {
                     item.loadFn();
                 } else {
@@ -28,7 +31,7 @@ define([
             }
         };
 
-    doProximityLoadingDebounced = _.debounce(doProximityLoading, 2000); // used on load for edge-case where user doesn't scroll
+    doProximityLoadingDebounced = debounce(doProximityLoading, 2000); // used on load for edge-case where user doesn't scroll
 
     function addItem(conditionFn, loadFn) {
         // calls `loadFn` when `conditionFn` is true

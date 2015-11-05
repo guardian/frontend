@@ -5,7 +5,8 @@ define([
     'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/config',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'lodash/collections/find'
 ], function (
     fastDom,
     $,
@@ -13,8 +14,8 @@ define([
     ajax,
     mediator,
     config,
-    ab
-) {
+    ab,
+    find) {
     var tests = [
             {variant: 'curated', containerId: '1ce8-6c50-425f-9d32'},
             {variant: 'news',    containerId: 'b073-c5d7-c8a9-1e32'}
@@ -48,7 +49,7 @@ define([
         var test;
 
         if (config.page.section === 'film') {
-            test = _.find(tests, function (test) {
+            test = find(tests, function (test) {
                 return ab.shouldRunTest('FilmContainers', test.variant);
             });
 

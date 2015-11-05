@@ -1,10 +1,11 @@
 define([
     'react',
-    'common/utils/_'
+    'common/utils/_',
+    'lodash/collections/map'
 ], function (
     React,
-    _
-) {
+    _,
+    map) {
     var round = function (x) {
         return Math.round(x * 100) / 100;
     };
@@ -36,7 +37,7 @@ define([
                 'div', {
                     className: 'crossword__anagram-helper-shuffler'
                 },
-                _.map(this.props.letters, (function (letter, i) {
+                map(this.props.letters, (function (letter, i) {
                     return React.createElement(
                         'div', {
                             className: 'crossword__anagram-helper-shuffler__letter ' + (letter.entered ? 'entered' : ''),

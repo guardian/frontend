@@ -7,14 +7,15 @@ define([
     'qwery',
     'common/utils/_',
     'common/modules/component',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/functions/once'
 ], function (
     Promise,
     qwery,
     _,
     Component,
-    mediator
-) {
+    mediator,
+    once) {
 
     var promise = new Promise(function (resolve, reject) {
         mediator.on('modules:onward:geo-most-popular:ready', resolve);
@@ -40,7 +41,7 @@ define([
 
     return {
 
-        render: _.once(function () {
+        render: once(function () {
             new GeoMostPopular().fetch(qwery('.js-components-container'), 'rightHtml');
             return promise;
         }),

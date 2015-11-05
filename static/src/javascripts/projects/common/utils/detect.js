@@ -8,12 +8,19 @@
 define([
     'common/utils/_',
     'common/utils/mediator',
-    'common/utils/$'
+    'common/utils/$',
+    'lodash/arrays/last',
+    'lodash/arrays/findIndex',
+    'lodash/objects/defaults',
+    'lodash/arrays/first'
 ], function (
     _,
     mediator,
-    $
-) {
+    $,
+    last,
+    findIndex,
+    defaults,
+    first) {
 
     var supportsPushState,
         getUserAgent,
@@ -291,11 +298,11 @@ define([
     function getBreakpoint(includeTweakpoint) {
         var viewportWidth = detect.getViewport().width,
             index,
-            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
+            breakpoint = last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
             })).name;
         if (!includeTweakpoint) {
-            index = _.findIndex(breakpoints, function (b) {
+            index = findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
             breakpoint = _(breakpoints)
@@ -311,11 +318,11 @@ define([
     }
 
     function isBreakpoint(criteria) {
-        var c = _.defaults(
+        var c = defaults(
                 criteria,
                 {
-                    min: _.first(breakpoints).name,
-                    max: _.last(breakpoints).name
+                    min: first(breakpoints).name,
+                    max: last(breakpoints).name
                 }
             ),
             currentBreakpoint = getBreakpoint(true);

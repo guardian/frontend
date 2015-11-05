@@ -12,7 +12,16 @@ define([
     'common/utils/url',
     'common/modules/experiments/ab',
     'text!common/views/history/tag.html',
-    'text!common/views/history/mega-nav.html'
+    'text!common/views/history/mega-nav.html',
+    'lodash/objects/isObject',
+    'lodash/objects/isNumber',
+    'lodash/collections/find',
+    'lodash/collections/forEach',
+    'lodash/collections/some',
+    'lodash/objects/keys',
+    'lodash/objects/assign',
+    'lodash/collections/reduce',
+    'lodash/objects/isArray'
 ], function (
     fastdom,
     $,
@@ -23,8 +32,16 @@ define([
     url,
     ab,
     viewTag,
-    viewMegaNav
-) {
+    viewMegaNav,
+    isObject,
+    isNumber,
+    find,
+    forEach,
+    some,
+    keys,
+    assign,
+    reduce,
+    isArray) {
     var editions = [
             'uk',
             'us',
@@ -93,7 +110,7 @@ define([
         if (!summaryCache) {
             summaryCache = storage.local.get(storageKeySummary);
 
-            if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
+            if (!isObject(summaryCache) || !isObject(summaryCache.tags) || !isNumber(summaryCache.periodEnd)) {
                 summaryCache = {
                     periodEnd: today,
                     tags: {},
@@ -112,7 +129,7 @@ define([
     }
 
     function isRevisit(pageId) {
-        return (_.find(getHistory(), function (page) {
+        return (find(getHistory(), function (page) {
             return (page[0] === pageId);
         }) || [])[1] > 1;
     }
@@ -124,7 +141,7 @@ define([
         if (updateBy !== 0) {
             summary.periodEnd = newToday;
 
-            _.each(summary.tags, function (record, tid) {
+            forEach(summary.tags, function (record, tid) {
                 var result = _.chain(buckets)
                     .map(function (bucket) {
                         var visits = _.chain(record[bucket.indexInRecord])
@@ -139,7 +156,7 @@ define([
                     })
                     .value();
 
-                if (_.some(result, function (r) { return r.length; })) {
+                if (some(result, function (r) { return r.length; })) {
                     summary.tags[tid] = [record[0]].concat(result);
                 } else {
                     delete summary.tags[tid];
@@ -152,8 +169,8 @@ define([
 
     function getPopular(opts) {
         var tags = getSummary().tags,
-            tids = _.keys(tags),
-            op = _.extend({
+            tids = keys(tags),
+            op = assign({
                 number: 100,
                 weights: {},
                 thresholds: {}
@@ -165,7 +182,7 @@ define([
         return _.chain(tids)
             .map(function (tid) {
                 var record = tags[tid],
-                    rank = _.reduce(buckets, function (rank, bucket) {
+                    rank = reduce(buckets, function (rank, bucket) {
                         return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type], op.thresholds[bucket.type]);
                     }, 0);
 
@@ -208,7 +225,7 @@ define([
         weight = weight || 1;
         minimum = minimum || 1;
 
-        result = _.reduce(visits, function (tally, day) {
+        result = reduce(visits, function (tally, day) {
             var dayOffset = day[0],
                 dayVisits = day[1];
 
@@ -252,7 +269,7 @@ define([
         if (!pageConfig.isFront) {
             history = getHistory()
                 .filter(function (item) {
-                    var isArr = _.isArray(item),
+                    var isArr = isArray(item),
                         found = isArr && (item[0] === pageId);
 
                     foundCount = found ? item[1] : foundCount;
@@ -285,14 +302,14 @@ define([
                     visits,
                     today;
 
-                _.forEach(buckets, function (bucket) {
+                forEach(buckets, function (bucket) {
                     record[bucket.indexInRecord] = record[bucket.indexInRecord] || [];
                 });
 
                 record[0] = tname;
 
                 visits = record[isFront ? 2 : 1];
-                today = _.find(visits, function (day) { return day[0] === 0; });
+                today = find(visits, function (day) { return day[0] === 0; });
 
                 if (today) {
                     today[1] = today[1] + 1;

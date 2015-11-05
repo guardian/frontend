@@ -2,12 +2,15 @@
 define([
     'common/utils/_',
     'react',
-    'common/modules/sudoku/constants'
+    'common/modules/sudoku/constants',
+    'lodash/collections/map',
+    'lodash/arrays/range'
 ], function (
     _,
     React,
-    constants
-) {
+    constants,
+    map,
+    range) {
     var Button = React.createClass({
         render: function () {
             return React.DOM.g({
@@ -40,7 +43,7 @@ define([
                 buttonOffset = function (n) {
                     return n * (constants.buttonSize + constants.buttonMargin);
                 },
-                numberButtons = _.map(_.range(9), function (n) {
+                numberButtons = map(range(9), function (n) {
                     var col = n % buttonsPerRow,
                         row = Math.floor(n / buttonsPerRow),
                         buttonX = x + buttonOffset(col),

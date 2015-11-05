@@ -3,13 +3,14 @@ define([
     'qwery',
     'common/utils/_',
     'common/utils/config',
-    'common/modules/analytics/omniture'
+    'common/modules/analytics/omniture',
+    'lodash/objects/values'
 ], function (
     qwery,
     _,
     config,
-    omniture
-) {
+    omniture,
+    values) {
 
     function OmnitureMedia(player) {
 
@@ -83,7 +84,7 @@ define([
                 s.prop41 = 'PrerollMilestone';
             }
             s.linkTrackVars = omniture.getStandardProps() + ',' + _(trackingVars).join(',');
-            s.linkTrackEvents = _.values(events).join(',');
+            s.linkTrackEvents = values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
@@ -98,7 +99,7 @@ define([
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
             s.Media.trackVars = omniture.getStandardProps() + ',' + _(trackingVars).join(',');
-            s.Media.trackEvents = _.values(events).join(',');
+            s.Media.trackEvents = values(events).join(',');
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 

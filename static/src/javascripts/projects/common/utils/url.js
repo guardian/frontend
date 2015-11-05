@@ -1,12 +1,13 @@
 define([
     'common/utils/_',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/objects/isArray'
 ], function (
     _,
     detect,
-    mediator
-) {
+    mediator,
+    isArray) {
 
     var supportsPushState = detect.hasPushStateSupport(),
         model = {
@@ -54,7 +55,7 @@ define([
                     .pairs()
                     .map(function (queryParts) {
                         var value = queryParts[1];
-                        if (_.isArray(value)) {
+                        if (isArray(value)) {
                             value = value.join(',');
                         }
                         return [queryParts[0], '=', value].join('');

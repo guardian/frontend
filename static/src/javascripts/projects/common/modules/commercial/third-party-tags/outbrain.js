@@ -7,7 +7,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
-    'text!common/views/commercial/outbrain.html'
+    'text!common/views/commercial/outbrain.html',
+    'lodash/collections/contains'
 ], function (
     fastdom,
     $,
@@ -17,8 +18,8 @@ define([
     mediator,
     template,
     identity,
-    outbrainTpl
-) {
+    outbrainTpl,
+    contains) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
     return {
@@ -32,7 +33,7 @@ define([
                 widgetCodeImage,
                 widgetCodeText;
 
-            breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
+            breakpoint = (contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
                 desktop: {
                     image: {
@@ -97,7 +98,7 @@ define([
 
         getSection: function () {
             return config.page.section.toLowerCase().match('news')
-                || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
+                || contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
         },
 
         identityPolicy: function () {

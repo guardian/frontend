@@ -2,12 +2,27 @@
 define([
     'common/utils/ajax',
     'common/utils/$',
-    'common/utils/_'
+    'common/utils/_',
+    'lodash/collections/groupBy',
+    'lodash/arrays/flatten',
+    'lodash/collections/pluck',
+    'lodash/arrays/first',
+    'lodash/arrays/last',
+    'lodash/collections/forEach',
+    'lodash/collections/reduce',
+    'lodash/objects/values'
 ], function (
     ajax,
     $,
-    _
-) {
+    _,
+    groupBy,
+    flatten,
+    pluck,
+    first,
+    last,
+    forEach,
+    reduce,
+    values) {
     function initialise() {
         var pingdom = document.getElementById('pingdom');
         ajax({
@@ -112,25 +127,25 @@ define([
         }).then(
             function (data) {
 
-                var todayData = _.groupBy(_.flatten(_.pluck(data.seriesData, 'data')),
+                var todayData = groupBy(flatten(pluck(data.seriesData, 'data')),
                     function (entry) { return entry.dateTime; }
                 );
 
                 // Remove first & last Ophan entries, as they always seem slightly off
                 var keys =  Object.keys(todayData);
-                delete todayData[_.first(keys)];
-                delete todayData[_.last(keys)];
+                delete todayData[first(keys)];
+                delete todayData[last(keys)];
 
                 // Build Graph
                 var graphData = [['time', 'pageviews']];
 
-                _.forEach(todayData, function (viewsBreakdown, timestamp) {
+                forEach(todayData, function (viewsBreakdown, timestamp) {
                     var epoch = parseInt(timestamp, 10),
                         time  = new Date(epoch),
                         hours = ('0' + time.getHours()).slice(-2),
                         mins  = ('0' + time.getMinutes()).slice(-2),
                         formattedTime = hours + ': ' + mins,
-                        totalViews = _.reduce(viewsBreakdown, function (memo, entry) { return entry.count + memo; }, 0);
+                        totalViews = reduce(viewsBreakdown, function (memo, entry) { return entry.count + memo; }, 0);
 
                     graphData.push([formattedTime, totalViews]);
                 });
@@ -152,7 +167,7 @@ define([
                     });
 
                 // Average pageviews now
-                var lastOphanEntry = _.reduce(_.last(_.values(todayData)),
+                var lastOphanEntry = reduce(last(values(todayData)),
                     function (memo, entry) { return entry.count + memo; }, 0);
                 var viewsPerSecond = Math.round(lastOphanEntry / 60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');

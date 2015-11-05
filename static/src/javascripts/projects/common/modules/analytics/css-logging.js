@@ -7,7 +7,12 @@ define([
     'common/utils/url',
     'common/utils/scan',
     'common/utils/mediator',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'lodash/objects/values',
+    'lodash/collections/sortBy',
+    'lodash/utilities/random',
+    'lodash/objects/isUndefined',
+    'lodash/functions/debounce'
 ], function (
     Promise,
     _,
@@ -17,8 +22,12 @@ define([
     url,
     scan,
     mediator,
-    beacon
-) {
+    beacon,
+    values,
+    sortBy,
+    random,
+    isUndefined,
+    debounce) {
     var sample = 500,
         rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
         rxSeparator = new RegExp(/\s*,\s*/g),
@@ -28,7 +37,7 @@ define([
 
     function getRules(s) {
         var rules = s ? s.cssRules || s.rules : null;
-        return rules ? _.values(rules) : s;
+        return rules ? values(rules) : s;
     }
 
     function getSplitSelectors(ruleObj) {
@@ -45,7 +54,7 @@ define([
     }
 
     function canonicalOrder(s) {
-        return _.sortBy(s.split('.')).join('.');
+        return sortBy(s.split('.')).join('.');
     }
 
     function getAllSelectors(all) {
@@ -67,7 +76,7 @@ define([
             return rules;
         } else {
             len = rules.length;
-            rand = _.random(0, len);
+            rand = random(0, len);
             return rules.slice(rand, rand + sample).concat(rand + sample < len ? [] : rules.slice(0, (rand + sample) % len));
         }
     }
@@ -76,7 +85,7 @@ define([
         return _.chain(document.styleSheets)
             .filter(function (sheet) {
                 return sheet &&
-                    _.values(sheet.rules || sheet.cssRules).length > 0 &&
+                    values(sheet.rules || sheet.cssRules).length > 0 &&
                     sheet.ownerNode &&
                     sheet.ownerNode.nodeName === 'STYLE' &&
                     sheet.ownerNode.className.indexOf(classNameLoggable) > -1;
@@ -120,7 +129,7 @@ define([
             beacon.postJson('/css', JSON.stringify({
                 selectors: _.chain(getAllSelectors(all))
                     .reduce(function (isUsed, s) {
-                        if (_.isUndefined(isUsed[s])) {
+                        if (isUndefined(isUsed[s])) {
                             isUsed[s] = !!document.querySelector(s);
                         }
                         return isUsed;
@@ -133,11 +142,11 @@ define([
     }
 
     function makeSender(all) {
-        return _.debounce(function (clickSpec) {
+        return debounce(function (clickSpec) {
             if (!clickSpec || clickSpec.samePage) {
                 setTimeout(function () {
                     sendReport(all);
-                }, all ? 0 : _.random(0, 3000));
+                }, all ? 0 : random(0, 3000));
             }
         }, 500);
     }
@@ -147,7 +156,7 @@ define([
 
         all = all || window.location.hash === '#csslogging';
 
-        if (all || _.random(1, 2500) === 1) {
+        if (all || random(1, 2500) === 1) {
             sender = makeSender(all);
             sender();
 

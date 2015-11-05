@@ -5,7 +5,8 @@ define([
     'common/utils/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
-    'text!common/views/commercial/gustyle/label.html'
+    'text!common/views/commercial/gustyle/label.html',
+    'lodash/objects/merge'
 ], function (
     fastdom,
     $,
@@ -13,8 +14,8 @@ define([
     template,
     Toggles,
     svgs,
-    labelTpl
-) {
+    labelTpl,
+    merge) {
     var Gustyle = function ($slot, params) {
         this.$slot = $slot;
         this.params  = params;
@@ -37,7 +38,7 @@ define([
 
         fastdom.write(function () {
             this.$slot.addClass('gu-style');
-            this.$slot.prepend($.create(template(labelTpl, { data: _.merge(templateOptions) })));
+            this.$slot.prepend($.create(template(labelTpl, { data: merge(templateOptions) })));
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();

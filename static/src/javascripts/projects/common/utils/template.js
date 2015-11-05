@@ -1,9 +1,10 @@
 define([
-    'common/utils/_'
+    'common/utils/_',
+    'lodash/utilities/template'
 ], function (
-    _
-) {
+    _,
+    template) {
 
-    return _.template.bind(_);
+    return template.bind(_);
 
 });

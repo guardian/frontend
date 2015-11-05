@@ -4,18 +4,21 @@ define([
     'bonzo',
     'fastdom',
     'Promise',
-    'qwery'
+    'qwery',
+    'lodash/collections/map',
+    'lodash/objects/isEqual'
 ], function (
     _,
     bean,
     bonzo,
     fastdom,
     Promise,
-    qwery
-) {
+    qwery,
+    map,
+    isEqual) {
     var keyPressHistory = [],
         cheatCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
-        tones = _.map([
+        tones = map([
             'special-report',
             'live',
             'dead',
@@ -38,7 +41,7 @@ define([
             var onKeyDown = function (event) {
                 keyPressHistory.push(event.keyCode);
 
-                if (_.isEqual(cheatCode.slice(0, keyPressHistory.length), keyPressHistory)) {
+                if (isEqual(cheatCode.slice(0, keyPressHistory.length), keyPressHistory)) {
                     if (keyPressHistory.length === cheatCode.length) {
                         resolve();
                         bean.off(document, 'keydown', onKeyDown);
@@ -61,7 +64,7 @@ define([
     }
 
     function startToneDisco() {
-        var $items = _.map(qwery('.js-fc-item'), bonzo);
+        var $items = map(qwery('.js-fc-item'), bonzo);
         setInterval(function () {
             fastdom.write(function () {
                 $items.forEach(function ($item) {

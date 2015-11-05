@@ -9,7 +9,9 @@ define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/collections/contains',
+    'lodash/functions/bindAll'
 ], function (
     bean,
     qwery,
@@ -21,8 +23,9 @@ define([
     mediator,
     ab,
     smartAppBanner,
-    commercialFeatures
-) {
+    commercialFeatures,
+    contains,
+    bindAll) {
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
 
@@ -43,14 +46,14 @@ define([
             firstLoadDepth: 500,
             isNavigationLocked: false
         };
-        this.isMobile = _.contains(this.breakpoint, 'mobile');
-        this.isTablet = _.contains(this.breakpoint, 'tablet');
+        this.isMobile = contains(this.breakpoint, 'mobile');
+        this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.noTopBanner = !commercialFeatures.topBannerAd;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse();
 
-        _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
+        bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
 
     StickyHeader.prototype.init = function () {

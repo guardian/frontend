@@ -5,7 +5,9 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/_',
-    'common/utils/ajax-promise'
+    'common/utils/ajax-promise',
+    'lodash/collections/forEach',
+    'lodash/arrays/range'
 ], function (
     bean,
     bonzo,
@@ -13,8 +15,9 @@ define([
     Promise,
     $,
     _,
-    ajaxPromise
-) {
+    ajaxPromise,
+    forEach,
+    range) {
     // This size effectively determines how many calls this module needs to make.
     // Number of ajax calls = number of comments / comments per page
     var commentsPerPage = 50,
@@ -49,7 +52,7 @@ define([
                 queue = items,
                 workers = 0;
 
-            _.forEach(initialItems, start);
+            forEach(initialItems, start);
         });
     }
 
@@ -79,7 +82,7 @@ define([
         }
 
         // Return a collection of the indices of the remaining pages.
-        return _.range(2, this.lastPage + 1);
+        return range(2, this.lastPage + 1);
     };
 
     // Caches a bonzo object/array of comments, so that they can be re-assembled when the load is complete.

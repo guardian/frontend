@@ -22,7 +22,18 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/functions/once',
+    'lodash/objects/forOwn',
+    'lodash/collections/forEach',
+    'lodash/objects/keys',
+    'lodash/functions/debounce',
+    'lodash/objects/defaults',
+    'lodash/collections/contains',
+    'lodash/arrays/uniq',
+    'lodash/arrays/flatten',
+    'lodash/collections/every',
+    'lodash/collections/map'
 ], function (
     bean,
     bonzo,
@@ -46,8 +57,18 @@ define([
     geoMostPopular,
     ab,
     beacon,
-    id
-) {
+    id,
+    once,
+    forOwn,
+    forEach,
+    keys,
+    debounce,
+    defaults,
+    contains,
+    uniq,
+    flatten,
+    every,
+    map) {
     /**
      * Right, so an explanation as to how this works...
      *
@@ -117,7 +138,7 @@ define([
         },
         renderStartTime = null,
 
-        recordFirstAdRendered = _.once(function () {
+        recordFirstAdRendered = once(function () {
             beacon.beaconCounts('ad-render');
         }),
 
@@ -136,7 +157,7 @@ define([
         },
 
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -149,7 +170,7 @@ define([
             var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
                 sponsorshipIdsReturned = [];
 
-            _.forEach(sponsorshipIds, function (value) {
+            forEach(sponsorshipIds, function (value) {
                 if ($(value).length) {
                     sponsorshipIdsReturned.push(value);
                 }
@@ -163,7 +184,7 @@ define([
 
             if (detect.adblockInUse() && sponsorshipIdsFound.length) {
                 fastdom.write(function () {
-                    _.forEach(sponsorshipIdsFound, function (value) {
+                    forEach(sponsorshipIdsFound, function (value) {
                         var sponsorshipIdFoundEl = $(value),
                             sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
                             sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
@@ -221,7 +242,7 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(_.keys(slots).shift());
+            googletag.display(keys(slots).shift());
             displayed = true;
         },
         displayLazyAds = function () {
@@ -232,7 +253,7 @@ define([
             instantLoad();
             lazyLoad();
         },
-        windowResize = _.debounce(
+        windowResize = debounce(
             function () {
                 // refresh on resize
                 hasBreakpointChanged(refresh);
@@ -242,7 +263,7 @@ define([
             mediator.on('window:resize', windowResize);
         },
         setupAdvertising = function (options) {
-            var opts = _.defaults(options || {}, {
+            var opts = defaults(options || {}, {
                 resizeTimeout: 2000
             });
 
@@ -289,7 +310,7 @@ define([
         },
         instantLoad = function () {
             _(slots).keys().forEach(function (slot) {
-                if (_.contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
                     loadSlot(slot);
                 }
             });
@@ -358,8 +379,8 @@ define([
                 id             = $adSlot.attr('id'),
                 sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = _.uniq(
-                    _.flatten(sizeMapping, true, function (map) {
+                size           = uniq(
+                    flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
                     function (size) {
@@ -453,7 +474,7 @@ define([
                 slots[slotId].isRendered = true;
             }
 
-            if (_.every(slots, 'isRendered')) {
+            if (every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
                 mediator.emit('modules:commercial:dfp:alladsrendered');
             }
@@ -484,7 +505,7 @@ define([
                 type               = {};
 
             if (iFrameBody) {
-                _.forEach(breakoutClasses, function (breakoutClass) {
+                forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
                         var creativeConfig,
                             $breakoutEl     = bonzo(breakoutEl),
@@ -545,7 +566,7 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return Promise.all(_.map($('iframe', $slot), function (iFrame) {
+            return Promise.all(map($('iframe', $slot), function (iFrame) {
                 return new Promise(function (resolve) {
                     // IE needs the iFrame to have loaded before we can interact with it
                     if (iFrame.readyState && iFrame.readyState !== 'complete') {
@@ -618,8 +639,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return _.map(attr.split('|'), function (size) {
-                return _.map(size.split(','), Number);
+            return map(attr.split('|'), function (size) {
+                return map(size.split(','), Number);
             });
         },
         /**
@@ -635,7 +656,7 @@ define([
         defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            _.forEach(detect.breakpoints, function (breakpointInfo) {
+            forEach(detect.breakpoints, function (breakpointInfo) {
                 // turn breakpoint name into attribute style (lowercase, hyphenated)
                 var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
@@ -646,7 +667,7 @@ define([
             return mapping.build();
         },
         parseKeywords = function (keywords) {
-            return _.map((keywords || '').split(','), function (keyword) {
+            return map((keywords || '').split(','), function (keyword) {
                 return keyword.split('/').pop();
             });
         },

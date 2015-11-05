@@ -12,7 +12,9 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/twitter',
-    'common/modules/live/notification-bar'
+    'common/modules/live/notification-bar',
+    'lodash/objects/assign',
+    'lodash/collections/toArray'
 ], function (
     bean,
     bonzo,
@@ -23,8 +25,9 @@ define([
     detect,
     mediator,
     twitter,
-    NotificationBar
-) {
+    NotificationBar,
+    assign,
+    toArray) {
     /*
         @param {Object} options hash of configuration options:
             path             : {String}              Endpoint path to ajax request,
@@ -35,7 +38,7 @@ define([
     */
     function Autoupdate(opts) {
 
-        var options = _.assign({
+        var options = assign({
             'activeClass':      'is-active',
             'btnClass':         '.js-auto-update',
             'manipulationType': 'html',
@@ -76,10 +79,10 @@ define([
 
                 if (manipulation === 'prepend') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = _.toArray(resultHtml.children);
+                    elementsToAdd = toArray(resultHtml.children);
                 } else if (manipulation === 'append') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = _.toArray(resultHtml.children).reverse();
+                    elementsToAdd = toArray(resultHtml.children).reverse();
                 }
 
                 $attachTo[manipulation](elementsToAdd);

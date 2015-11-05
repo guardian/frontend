@@ -8,7 +8,10 @@ define([
     'Promise',
     'common/utils/_',
     'common/utils/config',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/collections/filter',
+    'lodash/collections/map',
+    'lodash/collections/pluck'
 ], function (
     $,
     fastdom,
@@ -18,8 +21,10 @@ define([
     Promise,
     _,
     config,
-    mediator
-) {
+    mediator,
+    filter,
+    map,
+    pluck) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',
         // minAbove and minBelow are measured in px from the top of the paragraph element being tested
@@ -109,11 +114,11 @@ define([
     }
 
     function onImagesLoaded() {
-        var notLoaded = _.filter($('.js-article__body img'), function (img) {
+        var notLoaded = filter($('.js-article__body img'), function (img) {
             return !img.complete;
         });
 
-        return Promise.all(_.map(notLoaded, function (img) {
+        return Promise.all(map(notLoaded, function (img) {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, 5000);
                 bean.on(img, 'load', resolve);
@@ -170,7 +175,7 @@ define([
 
                     if (debug) {
                         fastdom.write(function () {
-                            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
+                            bonzo(pluck(slots, 'element')).addClass('spacefinder--valid');
                         });
                     }
 

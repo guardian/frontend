@@ -3,14 +3,17 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
-    'common/modules/onward/history'
+    'common/modules/onward/history',
+    'lodash/collections/reduce',
+    'lodash/objects/isEmpty'
 ], function (
     React,
     _,
     $,
     config,
-    history
-) {
+    history,
+    reduce,
+    isEmpty) {
     return function () {
         var placeholder = document.getElementById('preferences-history-tags'),
 
@@ -52,7 +55,7 @@ define([
                         },
                         render: function () {
                             var self = this,
-                                tags = _.reduce(this.state.popular, function (obj, tag) {
+                                tags = reduce(this.state.popular, function (obj, tag) {
                                     obj[tag[0]] = React.DOM.span({className: 'button button--small button--tag button--secondary'},
                                         React.DOM.button({
                                             onClick: self.handleRemove.bind(self, tag[0]),
@@ -66,7 +69,7 @@ define([
                                 }, {}),
                                 helperText;
 
-                            if (_.isEmpty(tags)) {
+                            if (isEmpty(tags)) {
                                 helperText = '(You don\'t have any recently visited topics.)';
                             } else {
                                 helperText = 'Remove individual topics by clicking \'X\' or switch off the functionality below. We respect your privacy and your shortcuts will never be made public.';

@@ -9,7 +9,9 @@ define([
     'common/utils/detect',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/defaults',
+    'lodash/collections/contains'
 ], function (
     bonzo,
     fastdom,
@@ -21,8 +23,9 @@ define([
     detect,
     createAdSlot,
     userPrefs,
-    commercialFeatures
-) {
+    commercialFeatures,
+    defaults,
+    contains) {
     var adNames = ['inline1', 'inline2', 'inline3'],
         init = function (options) {
             if (!commercialFeatures.sliceAdverts) {
@@ -30,7 +33,7 @@ define([
             }
 
             var container, containerId, $adSlice, isFrontFirst,
-                opts = _.defaults(
+                opts = defaults(
                     options || {},
                     {
                         containerSelector: '.fc-container',
@@ -50,7 +53,7 @@ define([
                 containerId  = bonzo(container).data('id');
                 $adSlice     = $(opts.sliceSelector, container);
                 // don't display ad in the first container on the fronts
-                isFrontFirst = _.contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+                isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed') && !config.page.omitMPUs) {
                     adSlices.push($adSlice.first());

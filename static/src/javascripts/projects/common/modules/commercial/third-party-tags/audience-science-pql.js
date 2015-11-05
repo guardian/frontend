@@ -2,13 +2,16 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/url'
+    'common/utils/url',
+    'lodash/functions/once',
+    'lodash/objects/pairs'
 ], function (
     _,
     config,
     storage,
-    urlUtils
-) {
+    urlUtils,
+    once,
+    pairs) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql',
         storageKey = 'gu.ads.audsci-gateway',
@@ -25,7 +28,7 @@ define([
         init = function () {
             section = sectionPlacements[config.page.section] ? config.page.section : 'default';
         },
-        load = _.once(function () {
+        load = once(function () {
             if (config.switches.audienceScienceGateway) {
                 var placements = sectionPlacements[section],
                     query = urlUtils.constructQuery({
@@ -49,7 +52,7 @@ define([
             var segments = {},
                 storedSegments = storage.local.get(storageKey);
             if (config.switches.audienceScienceGateway && storedSegments) {
-                segments = _(_.pairs(storedSegments[section]))
+                segments = _(pairs(storedSegments[section]))
                     .filter(function (placement) {
                         //keyword `default` written in dot notation throws an exception IE8
                         // jscs:disable requireDotNotation

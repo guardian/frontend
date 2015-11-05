@@ -20,7 +20,9 @@ define([
     'text!common/views/content/endslate.html',
     'text!common/views/content/loader.html',
     'text!common/views/content/share-button.html',
-    'text!common/views/content/share-button-mobile.html'
+    'text!common/views/content/share-button-mobile.html',
+    'lodash/collections/map',
+    'lodash/functions/throttle'
 ], function (
     bean,
     bonzo,
@@ -43,8 +45,9 @@ define([
     endslateTpl,
     loaderTpl,
     shareButtonTpl,
-    shareButtonMobileTpl
-) {
+    shareButtonMobileTpl,
+    map,
+    throttle) {
 
     function GalleryLightbox() {
 
@@ -156,8 +159,8 @@ define([
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: _.map(shareItems, template.bind(null, shareButtonTpl)).join(''),
-            shareButtonsMobile: _.map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
+            shareButtons: map(shareItems, template.bind(null, shareButtonTpl)).join(''),
+            shareButtonsMobile: map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
         });
     };
 
@@ -181,7 +184,7 @@ define([
             this.translateContent(this.index, dx, updateTime);
         }.bind(this);
 
-        bean.on(this.$swipeContainer[0], 'touchmove', _.throttle(touchMove, updateTime, {trailing: false}));
+        bean.on(this.$swipeContainer[0], 'touchmove', throttle(touchMove, updateTime, {trailing: false}));
 
         bean.on(this.$swipeContainer[0], 'touchend', function () {
             var direction;

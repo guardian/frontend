@@ -4,11 +4,14 @@
  */
 define([
     'common/utils/report-error',
-    'common/utils/_'
+    'common/utils/_',
+    'lodash/collections/forEach',
+    'lodash/collections/map'
 ], function (
     reportError,
-    _
-) {
+    _,
+    forEach,
+    map) {
     var catchErrors = function (fn) {
         var error;
         try {
@@ -37,7 +40,7 @@ define([
     };
 
     var catchErrorsAndLogAll = function (modules) {
-        _.forEach(modules, function (pair) {
+        forEach(modules, function (pair) {
             var name = pair[0];
             var fn = pair[1];
             catchErrorsAndLog(name, fn);
@@ -45,7 +48,7 @@ define([
     };
 
     function makeBlocks(codeBlocks) {
-        return _.map(codeBlocks, function (record) {
+        return map(codeBlocks, function (record) {
             return catchErrorsAndLog.bind(this, record[0], record[1]);
         });
     }

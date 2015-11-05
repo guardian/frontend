@@ -11,7 +11,9 @@ define([
     'common/views/svgs',
     'text!common/views/discussion/comment-count.html',
     'text!common/views/discussion/comment-count--content.html',
-    'text!common/views/discussion/comment-count--content-immersive.html'
+    'text!common/views/discussion/comment-count--content-immersive.html',
+    'lodash/collections/groupBy',
+    'lodash/collections/forEach'
 ], function (
     bonzo,
     fastdom,
@@ -25,8 +27,9 @@ define([
     svgs,
     commentCountTemplate,
     commentCountContentTemplate,
-    commentCountContentImmersiveTemplate
-) {
+    commentCountContentImmersiveTemplate,
+    groupBy,
+    forEach) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
@@ -38,7 +41,7 @@ define([
     function getElementsIndexedById(context) {
         var elements = qwery('[' + attributeName + ']', context);
 
-        return _.groupBy(elements, function (el) {
+        return groupBy(elements, function (el) {
             return bonzo(el).attr(attributeName);
         });
     }
@@ -59,7 +62,7 @@ define([
 
     function renderCounts(counts, indexedElements) {
         counts.forEach(function (c) {
-            _.forEach(indexedElements[c.id], function (node) {
+            forEach(indexedElements[c.id], function (node) {
                 var format,
                     $node = bonzo(node),
                     url = $node.attr('data-discussion-url') || getContentUrl(node),

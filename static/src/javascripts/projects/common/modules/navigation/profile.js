@@ -6,7 +6,8 @@ define([
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/objects/assign'
 ], function (
     bean,
     bonzo,
@@ -15,15 +16,15 @@ define([
     _,
     ajax,
     mediator,
-    id
-) {
+    id,
+    assign) {
 
     /**
      * @param {Object} config
      * @constructor
      */
     function Profile(options) {
-        this.opts = _.assign(this.opts, options);
+        this.opts = assign(this.opts, options);
         this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);

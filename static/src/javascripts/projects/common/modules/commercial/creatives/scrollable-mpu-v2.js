@@ -5,7 +5,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/commercial/creatives/scrollable-mpu-v2.html'
+    'text!common/views/commercial/creatives/scrollable-mpu-v2.html',
+    'lodash/functions/bindAll'
 ], function (
     fastdom,
     _,
@@ -13,8 +14,8 @@ define([
     detect,
     mediator,
     template,
-    scrollableMpuTpl
-) {
+    scrollableMpuTpl,
+    bindAll) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
@@ -23,7 +24,7 @@ define([
         this.$adSlot = $adSlot;
         this.params  = params;
 
-        _.bindAll(this, 'updateBgPosition');
+        bindAll(this, 'updateBgPosition');
     };
 
     /**

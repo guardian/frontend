@@ -11,7 +11,8 @@ define([
     'common/utils/template',
     'common/modules/article/spacefinder',
     'common/modules/ui/images',
-    'text!common/views/content/richLinkTag.html'
+    'text!common/views/content/richLinkTag.html',
+    'lodash/collections/contains'
 ], function (
     fastdom,
     qwery,
@@ -25,8 +26,8 @@ define([
     template,
     spacefinder,
     imagesModule,
-    richLinkTagTmpl
-) {
+    richLinkTagTmpl,
+    contains) {
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
@@ -71,7 +72,7 @@ define([
                 .map(function (el) { return $(el).attr('href'); }),
             testIfDuplicate = function (richLinkHref) {
                 // Tag-targeted rich links can be absolute
-                return _.contains(config.page.richLink, richLinkHref);
+                return contains(config.page.richLink, richLinkHref);
             },
             isDuplicate = richLinkHrefs.some(testIfDuplicate),
             isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent;

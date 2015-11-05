@@ -5,15 +5,18 @@
 define([
     'common/utils/_',
     'common/modules/component',
-    'admin/modules/abtests/audience-item'
+    'admin/modules/abtests/audience-item',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
     _,
     Component,
-    AudienceItem
-) {
+    AudienceItem,
+    assign,
+    clone) {
 
     function Audience(config) {
-        this.config = _.extend(_.clone(this.config), config);
+        this.config = assign(clone(this.config), config);
     }
 
     Component.define(Audience);
