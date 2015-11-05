@@ -4,7 +4,6 @@ define([
     'picturefill',
 
     // utilities
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
