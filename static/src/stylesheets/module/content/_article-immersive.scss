@@ -208,6 +208,7 @@
         position: relative;
         width: auto;
         border-bottom: colour(neutral-7) solid 1px;
+        border-top: 0;
 
         @include mq(leftCol) {
             padding-bottom: $gs-baseline;
