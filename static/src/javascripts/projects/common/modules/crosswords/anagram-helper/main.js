@@ -133,15 +133,18 @@ define([
                 React.createElement('button', {
                     className: 'button button--large button--tertiary crossword__anagram-helper-close',
                     onClick: this.props.close,
-                    dangerouslySetInnerHTML: closeIcon
+                    dangerouslySetInnerHTML: closeIcon,
+                    'data-link-name': 'Crosswords | Anagram Helper | Close'
                 }),
                 React.createElement('button', {
                     className: 'button button--large ' + (!this.state.clueInput && 'button--tertiary'),
-                    onClick: this.reset
+                    onClick: this.reset,
+                    'data-link-name': 'Crosswords | Anagram Helper | Start Again'
                 }, 'start again'),
                 React.createElement('button', {
                     className: 'button button--large ' + (!this.canShuffle() && 'button--tertiary'),
-                    onClick: this.shuffle
+                    onClick: this.shuffle,
+                    'data-link-name': 'Crosswords | Anagram Helper | Shuffle'
                 }, 'shuffle'),
                 React.createElement(CluePreview, {
                     clue: clue,

@@ -23,6 +23,7 @@ define([
                 className: buttonClassName + ' ' + buttonGenericClassName,
                 onClick: this.props.onClearAll,
                 key: 'clear',
+                'data-link-name': 'Crosswords | Clear all',
                 text: 'Clear all'
             }));
 
@@ -31,12 +32,14 @@ define([
                     className: buttonClassName + ' ' + buttonGenericClassName,
                     onClick: this.props.onSolution,
                     key: 'solution',
+                    'data-link-name': 'Crosswords | Reveal all',
                     text: 'Reveal all'
                 }));
                 controls.grid.unshift(React.createElement(ConfirmButton, {
                     className: buttonClassName + ' ' + buttonGenericClassName,
                     onClick: this.props.onCheckAll,
                     key: 'checkAll',
+                    'data-link-name': 'Crosswords | Check all',
                     text: 'Check all'
                 }));
             }
@@ -46,14 +49,16 @@ define([
                 controls.clue.unshift(React.createElement('button', {
                     className: buttonClassName + ' ' + buttonCurrentClassName,
                     onClick: this.props.onClearSingle,
-                    key: 'clear-single'
+                    key: 'clear-single',
+                    'data-link-name': 'Crosswords | Clear this'
                 }, 'Clear this'));
 
                 controls.clue.unshift(React.createElement(
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
                         onClick: this.props.onCheat,
-                        key: 'cheat'
+                        key: 'cheat',
+                        'data-link-name': 'Crosswords | Reveal this'
                     },
                     'Reveal this'
                 ));
@@ -61,7 +66,8 @@ define([
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
                         onClick: this.props.onCheck,
-                        key: 'check'
+                        key: 'check',
+                        'data-link-name': 'Crosswords | Check this'
                     },
                     'Check this'
                 ));
@@ -71,7 +77,8 @@ define([
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
                         onClick: this.props.onToggleAnagramHelper,
-                        key: 'anagram'
+                        key: 'anagram',
+                        'data-link-name': 'Crosswords | Anagram'
                     },
                     'Anagram helper'
                 ));
