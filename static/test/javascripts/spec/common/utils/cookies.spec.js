@@ -20,7 +20,7 @@ define(
                         var name = value.split('=')[0];
                         this.value = chain(this.value.split('|')).and(remove, function (cookie) {
                                 return cookie.split('=')[0] !== name;
-                            }).push(value).join('|');
+                            }).push(value).join('|').value();
                     },
 
                     domain: 'www.theguardian.com'
