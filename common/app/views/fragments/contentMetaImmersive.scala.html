@@ -9,19 +9,6 @@
 }
 
 <div class="content__meta-container content__meta-container--immersive js-content-meta u-cf">
-
-    <div class="meta__labels">
-        <div class="meta__section-label">
-            <a class="meta__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
-        </div>
- 
-        @content.blogOrSeriesTag.map { series =>
-        <div class="content__series-label">
-            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
-        </div>
-        }
-    </div>
-
     @if(!content.shouldHidePublicationDate) {
         @fragments.meta.dateline(content.webPublicationDate, content.lastModified, false, content.isLiveBlog, content.isLive)
     }
