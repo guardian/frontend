@@ -14,7 +14,6 @@ module.exports = function (grunt, options) {
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
                 lodash:               'components/lodash-amd',
-                'old-lodash':         'components/lodash',
                 picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/when/Promise',
                 qwery:                'components/qwery/qwery',

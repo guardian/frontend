@@ -6,7 +6,6 @@
     "eventEmitter": "~4.2.6",
     "fastdom": "0.8.5",
     "lodash-amd": "~2.4.1",
-    "lodash": "~2.4.1",
     "fence": "~0.2.11",
     "bonzo": "~2.0.0",
     "curl": "~0.8.9",
@@ -35,7 +34,6 @@
         }
       ],
       "lodash-amd": "bower_components/lodash-amd/compat/**",
-      "lodash": { "bower_components/lodash/dist/lodash.compat.js": "dist/lodash.compat.js"},
       "when": "bower_components/when/es6-shim/Promise.js",
       "react": { "bower_components/react/react-with-addons.js": "react.js"},
       "video.js": "bower_components/video.js/dist/video.min.js",
