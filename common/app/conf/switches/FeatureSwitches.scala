@@ -302,7 +302,7 @@ trait FeatureSwitches {
     "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = false
   )
 
   val StocksWidgetSwitch = Switch(
