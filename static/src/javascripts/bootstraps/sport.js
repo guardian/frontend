@@ -165,9 +165,7 @@ define([
 
     function init()  {
         cricket();
-        if (config.switches.rugbyWorldCup) {
-            rugby();
-        }
+        rugby();
     }
 
     return {
