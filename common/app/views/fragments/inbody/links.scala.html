@@ -11,10 +11,14 @@
 
     <p class="element-replicated-links__title">Keep reading</p>
 
-    @bodyLinks.map { bodyLink =>
-        @link(bodyLink)
-    }
+    <div class="element-replicated-links__links js-replicated-links__links">
 
-    <a class="js-replicated-links-more element-replicated-links__more">More...</a>
+        @bodyLinks.map { bodyLink =>
+            @link(bodyLink)
+        }
+
+    </div>
+
+    <a class="js-replicated-links-more element-replicated-links__more element-replicated-links__more--hidden">More...</a>
 
 </div>

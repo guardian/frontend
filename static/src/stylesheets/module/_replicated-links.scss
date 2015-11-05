@@ -14,6 +14,11 @@
     }
 }
 
+.element-replicated-links__links--contracted {
+    max-height: 150px;
+    overflow-y: hidden;
+}
+
 .element-replicated-links__title {
     @include fs-header(1);
     color: colour(neutral-1);
@@ -40,7 +45,7 @@
 
         &.element-replicated-link--upgraded:hover {
             text-decoration: underline;
-        }    
+        }
     }
 }
 
@@ -49,7 +54,7 @@
     top: $gs-baseline/3;
     left: -$gs-gutter - 3px;
     width: $gs-gutter;
-    text-align: right; 
+    text-align: right;
     color: colour(neutral-2);
 }
 
@@ -63,4 +68,8 @@
     @include fs-textSans(1);
     color: colour(neutral-2);
     margin-left: $gs-gutter/10;
+}
+
+.element-replicated-links__more--hidden {
+    display: none;
 }

@@ -50,14 +50,19 @@ define([
         //if (ab.getTestVariantId('ReplicatedLinks') &&
         //    ab.testCanBeRun('ReplicatedLinks') &&
         //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
-        var container = $('.js-replicated-links');
-        container.removeClass('element-replicated-links--not-in-test')
-            .addClass('element-replicated-links--contracted');
+        var container = $('.js-replicated-links'),
+            links = $('.js-replicated-links__links', links);
+        container.removeClass('element-replicated-links--not-in-test');
+        if (links.height() > 150) {
+            var more = $('.js-replicated-links-more');
+            links.addClass('element-replicated-links__links--contracted');
+            more.removeClass('element-replicated-links__more--hidden');
+            bean.on(more[0], 'click', function () {
+                links.removeClass('element-replicated-links__links--contracted');
+                more.addClass('element-replicated-links__more--hidden');
+            });
+        }
         $('.js-replicated-link').each(upgradeLink);
-        bean.on(qwery('.js-replicated-links-more')[0], 'click', function () {
-            container.removeClass('element-replicated-links--contracted');
-            $('.js-replicated-links-more').addClass('element-replicated-links__more--hidden');
-        });
         //}
     }
 
