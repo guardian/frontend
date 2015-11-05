@@ -1,6 +1,6 @@
 We're hiring!
 --------
-Ever thought about joining us?
+Ever thought about joining us?<br/>
 http://developers.theguardian.com/join-the-team.html
 
 Frontend
@@ -223,8 +223,8 @@ git clone git@github.com:guardian/frontend.git
 Install to your IDE from http://editorconfig.org/#download
 
 ###IntelliJ metadata
-To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins.  It supports SBT and Play.
-Then load IntelliJ, then click Import project and import the directory as an SBT project.  Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
+To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins. It supports SBT and Play.
+Then load IntelliJ, then click Import project and import the directory as an SBT project. Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
@@ -285,7 +285,7 @@ Now you should be able to compile and run. Yay.
 
 ###"No route to host" or "Unsupported major.minor version 52.0"
 
-If you get no route to host, it means you are not using the 1.8 jre.  Type `java -version` to check.  You may need
+If you get no route to host, it means you are not using the 1.8 jre. Type `java -version` to check. You may need
 to close and reopen your terminal if you installed 1.8 recently.
 
 You may also see `java.lang.UnsupportedClassVersionError: play/runsupport/classloader/ApplicationClassLoaderProvider : Unsupported major.minor version 52.0` which is described in the [Play 2.4 migration guide](https://www.playframework.com/documentation/2.4.x/Migration24#Java-8-support).
