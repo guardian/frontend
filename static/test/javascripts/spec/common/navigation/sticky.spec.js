@@ -15,11 +15,6 @@ define(['common/modules/navigation/sticky'], function (sut) {
                 expect(sut.getUpdateMethod()).toEqual('updatePositionMobile');
             });
 
-            it('should return updatePositionAdblock for adblock', function () {
-                sut.isAdblockInUse = true;
-                expect(sut.getUpdateMethod()).toEqual('updatePositionAdblock');
-            });
-
             it('should return updatePositionApple for when Apple campaing is on', function () {
                 sut.isAppleCampaign = true;
                 expect(sut.getUpdateMethod()).toEqual('updatePositionApple');
