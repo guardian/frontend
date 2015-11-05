@@ -1,13 +1,13 @@
 define([
-    'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator',
-    'lodash/objects/isArray'
-], function (
-    _,
-    detect,
-    mediator,
-    isArray) {
+    'lodash/objects/isArray',
+    'lodash/arrays/zipObject',
+    'lodash/collections/map',
+    'lodash/arrays/compact',
+    'common/utils/chain',
+    'lodash/objects/pairs'
+], function (detect, mediator, isArray, zipObject, map, compact, chain, pairs) {
 
     var supportsPushState = detect.hasPushStateSupport(),
         model = {
@@ -16,13 +16,9 @@ define([
             // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
             getUrlVars: function (options) {
                 var opts = options || {};
-                return _((opts.query || model.getCurrentQueryString()).split('&'))
-                    .compact()
-                    .map(function (query) {
+                return chain((opts.query || model.getCurrentQueryString()).split('&')).and(compact).and(map, function (query) {
                         return query.indexOf('=') > -1 ? query.split('=') : [query, true];
-                    })
-                    .zipObject()
-                    .valueOf();
+                    }).and(zipObject).valueOf();
             },
 
             // returns "foo=bar&fizz=buzz" (eg. no ? symbol)
@@ -51,9 +47,7 @@ define([
 
             // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
             constructQuery: function (query) {
-                return _(query)
-                    .pairs()
-                    .map(function (queryParts) {
+                return chain(query).and(pairs).and(map, function (queryParts) {
                         var value = queryParts[1];
                         if (isArray(value)) {
                             value = value.join(',');

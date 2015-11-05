@@ -4,7 +4,6 @@ define([
     'common/utils/$',
     'fastdom',
     'qwery',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
@@ -14,14 +13,17 @@ define([
     'common/views/svgs',
     'text!common/views/breaking-news.html',
     'lodash/collections/forEach',
-    'lodash/objects/isArray'
+    'lodash/objects/isArray',
+    'lodash/collections/filter',
+    'lodash/arrays/flatten',
+    'common/utils/chain',
+    'lodash/arrays/first'
 ], function (
     bean,
     bonzo,
     $,
     fastdom,
     qwery,
-    _,
     ajax,
     config,
     storage,
@@ -31,7 +33,11 @@ define([
     svgs,
     alertHtml,
     forEach,
-    isArray) {
+    isArray,
+    filter,
+    flatten,
+    chain,
+    first) {
     var alertWithinSeconds = 1200, // 20 minutes
         supportedSections = {
             'sport': 'sport',
@@ -75,17 +81,14 @@ define([
                     edition = (page.edition || '').toLowerCase(),
                     section = supportedSections[page.section],
 
-                    articles = _.chain([
+                    articles = chain([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
-                    ])
-                    .flatten()
-                    .filter(function (article) {
+                    ]).and(flatten).and(filter, function (article) {
                         var alertTime = article.frontPublicationDate;
                         return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
-                    })
-                    .value(),
+                    }).value(),
 
                     articleIds = articles.map(function (article) { return article.id; }),
                     alertDelay = 3000,
@@ -99,10 +102,7 @@ define([
                 // update stored IDs with current batch, so we know we've seen these
                 storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                alerts = _.chain(articles)
-                    .filter(function (article) { return hiddenIds[article.id] !== true; })
-                    .first(maxSimultaneousAlerts)
-                    .value();
+                alerts = chain(articles).and(filter, function (article) { return hiddenIds[article.id] !== true; }).and(first, maxSimultaneousAlerts).value();
 
                 if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));

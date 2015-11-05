@@ -4,17 +4,14 @@
  Common functions to simplify access to page data
  */
 define([
-    'common/utils/_',
     'common/utils/pad',
     'common/utils/url',
     'lodash/objects/assign',
-    'lodash/collections/contains'
-], function (
-    _,
-    pad,
-    urlUtils,
-    assign,
-    contains) {
+    'lodash/collections/contains',
+    'lodash/collections/map',
+    'lodash/collections/filter',
+    'common/utils/chain'
+], function (pad, urlUtils, assign, contains, map, filter, chain) {
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -37,14 +34,11 @@ define([
             return (this.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
-            return _(this.page.references || [])
-                .filter(function (reference) {
+            return chain(this.page.references || []).and(filter, function (reference) {
                     return typeof reference[name] !== 'undefined';
-                })
-                .map(function (reference) {
+                }).and(map, function (reference) {
                     return reference[name];
-                })
-                .valueOf();
+                }).valueOf();
         },
         referenceOfType: function (name) {
             return this.referencesOfType(name)[0];

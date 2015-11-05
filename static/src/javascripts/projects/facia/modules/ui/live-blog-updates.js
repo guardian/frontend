@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/storage',
@@ -15,10 +14,11 @@ define([
     'lodash/collections/forEach',
     'lodash/functions/debounce',
     'lodash/collections/filter',
-    'lodash/objects/isEmpty'
+    'lodash/objects/isEmpty',
+    'lodash/collections/map',
+    'common/utils/chain'
 ], function (
     bonzo,
-    _,
     $,
     ajax,
     storage,
@@ -33,7 +33,9 @@ define([
     forEach,
     debounce,
     filter,
-    isEmpty) {
+    isEmpty,
+    map,
+    chain) {
     var animateDelayMs = 2000,
         animateAfterScrollDelayMs = 500,
         refreshSecs = 30,
@@ -82,18 +84,14 @@ define([
                     'fc-item__liveblog-blocks__inner',
                     'u-faux-block-link__promote'
                 ],
-                blocksHtml = _.chain(blocks)
-                    .slice(0, 2)
-                    .map(function (block, index) {
+                blocksHtml = chain(blocks).slice(0, 2).and(map, function (block, index) {
                         if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
                             block.isNew = true;
                             hasNewBlock = true;
                             wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
                         }
                         return renderBlock(articleId, block, index);
-                    })
-                    .slice(0, hasNewBlock ? 2 : 1)
-                    .value(),
+                    }).slice(0, hasNewBlock ? 2 : 1).value(),
 
                 el = bonzo.create(
                     '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'

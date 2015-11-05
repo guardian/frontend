@@ -3,7 +3,6 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
@@ -13,13 +12,16 @@ define([
     'text!common/views/discussion/comment-count--content.html',
     'text!common/views/discussion/comment-count--content-immersive.html',
     'lodash/collections/groupBy',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'lodash/collections/sortBy',
+    'lodash/arrays/uniq',
+    'lodash/objects/keys',
+    'common/utils/chain'
 ], function (
     bonzo,
     fastdom,
     qwery,
     $,
-    _,
     ajax,
     formatters,
     mediator,
@@ -29,7 +31,11 @@ define([
     commentCountContentTemplate,
     commentCountContentImmersiveTemplate,
     groupBy,
-    forEach) {
+    forEach,
+    sortBy,
+    uniq,
+    keys,
+    chain) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
@@ -47,12 +53,7 @@ define([
     }
 
     function getContentIds(indexedElements) {
-        return _.chain(indexedElements)
-                    .keys()
-                    .uniq()
-                    .sortBy()
-                    .join(',')
-                    .value();
+        return chain(indexedElements).and(keys).and(uniq).and(sortBy).join(',').value();
     }
 
     function getContentUrl(node) {

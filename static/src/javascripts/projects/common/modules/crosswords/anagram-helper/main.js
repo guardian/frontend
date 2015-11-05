@@ -1,6 +1,5 @@
 define([
     'react',
-    'common/utils/_',
     'common/views/svgs',
     './clue-input',
     './clue-preview',
@@ -10,10 +9,12 @@ define([
     'lodash/collections/shuffle',
     'lodash/collections/reduce',
     'lodash/arrays/rest',
-    'lodash/collections/map'
+    'lodash/collections/map',
+    'lodash/arrays/compact',
+    'lodash/collections/filter',
+    'common/utils/chain'
 ], function (
     React,
-    _,
     svgs,
     ClueInput,
     CluePreview,
@@ -23,7 +24,10 @@ define([
     shuffle,
     reduce,
     rest,
-    map) {
+    map,
+    compact,
+    filter,
+    chain) {
     var AnagramHelper = React.createClass({
         getInitialState: function () {
             return {
@@ -74,16 +78,11 @@ define([
          * @return {[Object]}          array of shuffled letters
          */
         shuffleWord: function (word, entries) {
-            var wordEntries = _.chain(entries)
-                .map(function (entry) {
+            var wordEntries = chain(entries).and(map, function (entry) {
                     return entry.value.toLowerCase();
-                })
-                .filter(function (entry) {
+                }).and(filter, function (entry) {
                     return contains(word, entry);
-                })
-                .compact()
-                .value()
-                .sort();
+                }).and(compact).value().sort();
 
             return shuffle(reduce(word.trim().split('').sort(), function (acc, letter) {
                 var entered = acc.entries[0] === letter.toLowerCase();

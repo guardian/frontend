@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     './constants',
     'lodash/arrays/findIndex',
     'lodash/collections/find',
@@ -13,9 +12,9 @@ define([
     'lodash/arrays/range',
     'lodash/arrays/uniq',
     'lodash/collections/filter',
-    'lodash/collections/some'
+    'lodash/collections/some',
+    'common/utils/chain'
 ], function (
-    _,
     constants,
     findIndex,
     find,
@@ -29,7 +28,8 @@ define([
     range,
     uniq,
     filter,
-    some) {
+    some,
+    chain) {
     var getLastCellInClue = function (clue) {
         var ax = {
             'true': 'x',
@@ -266,7 +266,7 @@ define([
 
     /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
     var buildSeparatorMap = function (clues) {
-        return _(clues).map(function (clue) {
+        return chain(clues).and(map, function (clue) {
             return map(clue.separatorLocations, function (locations, separator) {
                 return locations.map(function (location) {
                     var key = isAcross(clue) ? clueMapKey(clue.position.x + location, clue.position.y) : clueMapKey(clue.position.x, clue.position.y + location);
@@ -278,7 +278,7 @@ define([
                     };
                 });
             });
-        }).flatten().reduce(function (map, d) {
+        }).and(flatten).and(reduce, function (map, d) {
             if (map[d.key] === undefined) {
                 map[d.key] = {};
             }

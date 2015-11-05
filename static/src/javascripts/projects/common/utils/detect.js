@@ -6,21 +6,31 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/utils/_',
     'common/utils/mediator',
     'common/utils/$',
     'lodash/arrays/last',
     'lodash/arrays/findIndex',
     'lodash/objects/defaults',
-    'lodash/arrays/first'
+    'lodash/arrays/first',
+    'lodash/collections/findLast',
+    'common/utils/chain',
+    'lodash/collections/contains',
+    'lodash/collections/pluck',
+    'lodash/arrays/initial',
+    'lodash/arrays/rest'
 ], function (
-    _,
     mediator,
     $,
     last,
     findIndex,
     defaults,
-    first) {
+    first,
+    findLast,
+    chain,
+    contains,
+    pluck,
+    initial,
+    rest) {
 
     var supportsPushState,
         getUserAgent,
@@ -305,12 +315,9 @@ define([
             index = findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
-            breakpoint = _(breakpoints)
-                .first(index + 1)
-                .findLast(function (b) {
+            breakpoint = chain(breakpoints).and(first, index + 1).and(findLast, function (b) {
                     return !b.isTweakpoint;
-                })
-                .valueOf()
+                }).valueOf()
                 .name;
         }
 
@@ -326,15 +333,11 @@ define([
                 }
             ),
             currentBreakpoint = getBreakpoint(true);
-        return _(breakpoints)
-            .rest(function (breakpoint) {
+        return chain(breakpoints).and(rest, function (breakpoint) {
                 return breakpoint.name !== c.min;
-            })
-            .initial(function (breakpoint) {
+            }).and(initial, function (breakpoint) {
                 return breakpoint.name !== c.max;
-            })
-            .pluck('name')
-            .contains(currentBreakpoint);
+            }).and(pluck, 'name').and(contains, currentBreakpoint);
     }
 
     // Page Visibility

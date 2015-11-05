@@ -4,28 +4,30 @@ define([
     'qwery',
     'Promise',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features',
     'lodash/objects/defaults',
-    'lodash/collections/contains'
+    'lodash/collections/contains',
+    'lodash/collections/map',
+    'common/utils/chain'
 ], function (
     bonzo,
     fastdom,
     qwery,
     Promise,
     $,
-    _,
     config,
     detect,
     createAdSlot,
     userPrefs,
     commercialFeatures,
     defaults,
-    contains) {
+    contains,
+    map,
+    chain) {
     var adNames = ['inline1', 'inline2', 'inline3'],
         init = function (options) {
             if (!commercialFeatures.sliceAdverts) {
@@ -64,9 +66,7 @@ define([
                 }
             }
 
-            return Promise.all(_(adSlices)
-                .slice(0, adNames.length)
-                .map(function ($adSlice, index) {
+            return Promise.all(chain(adSlices).slice(0, adNames.length).and(map, function ($adSlice, index) {
                     var adName        = adNames[index],
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--mobile'),
@@ -89,8 +89,7 @@ define([
                             resolve(null);
                         });
                     });
-                })
-                .valueOf()
+                }).valueOf()
             ).then(function () {
                 return adSlices;
             });

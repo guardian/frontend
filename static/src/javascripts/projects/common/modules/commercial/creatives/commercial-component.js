@@ -7,7 +7,6 @@ define([
     'bonzo',
     'raven',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/lazyload',
@@ -16,13 +15,14 @@ define([
     'lodash/collections/map',
     'lodash/objects/pick',
     'lodash/collections/size',
-    'lodash/objects/merge'
+    'lodash/objects/merge',
+    'lodash/objects/pairs',
+    'common/utils/chain'
 ], function (
     bean,
     bonzo,
     raven,
     $,
-    _,
     config,
     mediator,
     LazyLoad,
@@ -31,12 +31,12 @@ define([
     map,
     pick,
     size,
-    merge) {
+    merge,
+    pairs,
+    chain) {
 
     var constructQuery = function (params) {
-            return _(params)
-                .pairs()
-                .map(function (param) {
+            return chain(params).and(pairs).and(map, function (param) {
                     var key    = param[0],
                         values = isArray(param[1]) ? param[1] : [param[1]];
                     return map(values, function (value) {

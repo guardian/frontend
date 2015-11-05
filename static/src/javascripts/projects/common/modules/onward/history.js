@@ -5,7 +5,6 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/template',
     'common/utils/storage',
@@ -21,11 +20,17 @@ define([
     'lodash/objects/keys',
     'lodash/objects/assign',
     'lodash/collections/reduce',
-    'lodash/objects/isArray'
+    'lodash/objects/isArray',
+    'lodash/collections/map',
+    'common/utils/chain',
+    'lodash/arrays/compact',
+    'lodash/collections/pluck',
+    'lodash/arrays/last',
+    'lodash/collections/sortBy',
+    'lodash/collections/reduceRight'
 ], function (
     fastdom,
     $,
-    _,
     config,
     template,
     storage,
@@ -41,7 +46,14 @@ define([
     keys,
     assign,
     reduce,
-    isArray) {
+    isArray,
+    map,
+    chain,
+    compact,
+    pluck,
+    last,
+    sortBy,
+    reduceRight) {
     var editions = [
             'uk',
             'us',
@@ -142,19 +154,14 @@ define([
             summary.periodEnd = newToday;
 
             forEach(summary.tags, function (record, tid) {
-                var result = _.chain(buckets)
-                    .map(function (bucket) {
-                        var visits = _.chain(record[bucket.indexInRecord])
-                            .map(function (day) {
+                var result = chain(buckets).and(map, function (bucket) {
+                        var visits = chain(record[bucket.indexInRecord]).and(map, function (day) {
                                 var newAge = day[0] + updateBy;
                                 return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, day[1]] : false;
-                            })
-                            .compact()
-                            .value();
+                            }).and(compact).value();
 
                         return (visits.length > 1 || (visits.length === 1 && visits[0][0] < forgetUniquesAfter)) ? visits : [];
-                    })
-                    .value();
+                    }).value();
 
                 if (some(result, function (r) { return r.length; })) {
                     summary.tags[tid] = [record[0]].concat(result);
@@ -179,8 +186,7 @@ define([
         tids = op.whitelist ? tids.filter(function (tid) { return op.whitelist.indexOf(tid) > -1; }) : tids;
         tids = op.blacklist ? tids.filter(function (tid) { return op.blacklist.indexOf(tid) === -1; }) : tids;
 
-        return _.chain(tids)
-            .map(function (tid) {
+        return chain(tids).and(map, function (tid) {
                 var record = tags[tid],
                     rank = reduce(buckets, function (rank, bucket) {
                         return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type], op.thresholds[bucket.type]);
@@ -190,13 +196,7 @@ define([
                     idAndName: [tid, record[0]],
                     rank: rank
                 };
-            })
-            .compact()
-            .sortBy('rank')
-            .last(op.number)
-            .reverse()
-            .pluck('idAndName')
-            .value();
+            }).and(compact).and(sortBy, 'rank').and(last, op.number).reverse().and(pluck, 'idAndName').value();
     }
 
     function getPopularFiltered(opts) {
@@ -286,8 +286,7 @@ define([
             page = collapsePath(pageConfig.pageId),
             isFront = false;
 
-        _.chain(pageMeta)
-            .reduceRight(function (tagMeta, tag) {
+        chain(pageMeta).and(reduceRight, function (tagMeta, tag) {
                 var tid = collapsePath(firstCsv(pageConfig[tag.tid])),
                     tname = tid && firstCsv(pageConfig[tag.tname]);
 
@@ -296,8 +295,7 @@ define([
                 }
                 isFront = isFront || tid === page;
                 return tagMeta;
-            }, {})
-            .each(function (tname, tid) {
+            }, {}).and(forEach, function (tname, tid) {
                 var record = summary.tags[tid] || [],
                     visits,
                     today;

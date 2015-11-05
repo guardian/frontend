@@ -1,6 +1,5 @@
 define([
     'common/utils/report-error',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/mediator',
@@ -19,10 +18,11 @@ define([
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'lodash/objects/pick',
+    'common/utils/chain'
 ], function (
     reportError,
-    _,
     config,
     cookies,
     mediator,
@@ -41,7 +41,9 @@ define([
     some,
     filter,
     map,
-    find) {
+    find,
+    pick,
+    chain) {
 
     var TESTS = flatten([
         new HighCommercialComponent(),
@@ -225,10 +227,7 @@ define([
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        return _(config.tests)
-            .pick(function (participating) { return !!participating; })
-            .keys()
-            .value();
+        return chain(config.tests).and(pick, function (participating) { return !!participating; }).and(keys).value();
     }
 
     var ab = {
@@ -248,14 +247,11 @@ define([
         },
 
         forceSegment: function (testId, variant) {
-            _(getActiveTests())
-                .filter(function (test) {
+            chain(getActiveTests()).and(filter, function (test) {
                     return (test.id === testId);
-                })
-                .forEach(function (test) {
+                }).and(forEach, function (test) {
                     addParticipation(test, variant);
-                })
-                .valueOf();
+                }).valueOf();
         },
 
         segmentUser: function () {
@@ -300,17 +296,14 @@ define([
             }
 
             var eventTag = event.tag;
-            return eventTag && _(getActiveTests())
-                .filter(function (test) {
+            return eventTag && chain(getActiveTests()).and(filter, function (test) {
                     var testEvents = test.events;
                     return testEvents && some(testEvents, function (testEvent) {
                         return startsWith(eventTag, testEvent);
                     });
-                })
-                .map(function (test) {
+                }).and(map, function (test) {
                     return test.id;
-                })
-                .valueOf();
+                }).valueOf();
         },
 
         getAbLoggableObject: function () {

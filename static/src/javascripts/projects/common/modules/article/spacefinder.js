@@ -6,12 +6,14 @@ define([
     'bonzo',
     'bean',
     'Promise',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
     'lodash/collections/filter',
     'lodash/collections/map',
-    'lodash/collections/pluck'
+    'lodash/collections/pluck',
+    'lodash/collections/every',
+    'common/utils/chain',
+    'lodash/objects/forOwn'
 ], function (
     $,
     fastdom,
@@ -19,12 +21,14 @@ define([
     bonzo,
     bean,
     Promise,
-    _,
     config,
     mediator,
     filter,
     map,
-    pluck) {
+    pluck,
+    every,
+    chain,
+    forOwn) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',
         // minAbove and minBelow are measured in px from the top of the paragraph element being tested
@@ -48,7 +52,7 @@ define([
         },
         // test one element vs an array of other elements for the given rules
         _testElems = function (para, others, rules) {
-            return _(others).every(function (other) {
+            return chain(others).and(every, function (other) {
                 return _testElem(para, other, rules);
             }).valueOf();
         };
@@ -71,7 +75,7 @@ define([
 
     function _enforceRules(slots, rules, bodyHeight, debug) {
 
-        var filtered = _(slots),
+        var filtered = chain(slots),
             contentMeta;
 
         // enforce minAbove and minBelow rules
@@ -99,8 +103,8 @@ define([
         }
 
         // enforce selector rules
-        _(rules.selectors).forOwn(function (params, selector) {
-            var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
+        chain(rules.selectors).and(forOwn, function (params, selector) {
+            var relevantElems = chain(qwery(bodySelector + selector)).and(map, _mapElementToDimensions);
 
             filtered = filtered.filter(function (p) {
                 var valid = _testElems(p, relevantElems, params);
@@ -160,7 +164,7 @@ define([
             return new Promise(function (resolve) {
                 fastdom.read(function () {
                     bodyBottom = qwery(bodySelector)[0].offsetHeight;
-                    paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+                    paraElems = chain(qwery(bodySelector + ' > p')).and(map, _mapElementToDimensions);
 
                     if (debug) { // reset any previous debug messages
                         fastdom.write(function () {

@@ -8,7 +8,6 @@ define([
     'raven',
     'common/utils/$',
     'common/utils/$css',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -33,7 +32,15 @@ define([
     'lodash/arrays/uniq',
     'lodash/arrays/flatten',
     'lodash/collections/every',
-    'lodash/collections/map'
+    'lodash/collections/map',
+    'lodash/arrays/zipObject',
+    'lodash/collections/filter',
+    'common/utils/chain',
+    'lodash/objects/omit',
+    'lodash/collections/find',
+    'lodash/arrays/last',
+    'lodash/arrays/intersection',
+    'lodash/arrays/initial'
 ], function (
     bean,
     bonzo,
@@ -43,7 +50,6 @@ define([
     raven,
     $,
     $css,
-    _,
     config,
     detect,
     mediator,
@@ -68,7 +74,15 @@ define([
     uniq,
     flatten,
     every,
-    map) {
+    map,
+    zipObject,
+    filter,
+    chain,
+    omit,
+    find,
+    last,
+    intersection,
+    initial) {
     /**
      * Right, so an explanation as to how this works...
      *
@@ -204,12 +218,9 @@ define([
          * attributes on the element.
          */
         defineSlots = function () {
-            slots = _(qwery(adSlotSelector))
-                .map(function (adSlot) {
+            slots = chain(qwery(adSlotSelector)).and(map, function (adSlot) {
                     return bonzo(adSlot);
-                })
-                // filter out (and remove) hidden ads
-                .filter(function ($adSlot) {
+                }).and(filter, function ($adSlot) {
                     if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
                         fastdom.write(function () {
                             $adSlot.remove();
@@ -218,15 +229,12 @@ define([
                     } else {
                         return true;
                     }
-                })
-                .map(function ($adSlot) {
+                }).and(map, function ($adSlot) {
                     return [$adSlot.attr('id'), {
                         isRendered: false,
                         slot: defineSlot($adSlot)
                     }];
-                })
-                .zipObject()
-                .valueOf();
+                }).and(zipObject).valueOf();
         },
         setPublisherProvidedId = function () {
             var user = id.getUserFromCookie();
@@ -309,7 +317,7 @@ define([
             return dfp;
         },
         instantLoad = function () {
-            _(slots).keys().forEach(function (slot) {
+            chain(slots).and(keys).and(forEach, function (slot) {
                 if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
                     loadSlot(slot);
                 }
@@ -324,7 +332,7 @@ define([
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
 
-                _(slots).keys().forEach(function (slot) {
+                chain(slots).and(keys).and(forEach, function (slot) {
                     // if the position of the ad is above the viewport - offset (half screen size)
                     if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
                         loadSlot(slot);
@@ -334,7 +342,7 @@ define([
         },
         loadSlot = function (slot) {
             googletag.display(slot);
-            slots = _(slots).omit(slot).value();
+            slots = chain(slots).and(omit, slot).value();
             displayed = true;
         },
         addSlot = function ($adSlot) {
@@ -589,9 +597,7 @@ define([
                     }
                 });
             })).then(function (items) {
-                return _(items)
-                    .chain()
-                    .find(function (item) {
+                return chain(items).chain().and(find, function (item) {
                         return item.adType !== '';
                     }).value();
             });
@@ -600,20 +606,15 @@ define([
             return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         },
         getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
-            return _(detect.breakpoints)
-                .initial(function (breakpointInfo) {
+            return chain(detect.breakpoints).and(initial, function (breakpointInfo) {
                     return breakpointInfo.name !== breakpoint;
-                })
-                .intersection(slotBreakpoints)
-                .last();
+                }).and(intersection, slotBreakpoints).and(last);
         },
         shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
             // get the slots breakpoints
-            var slotBreakpoints = _(detect.breakpoints)
-                .filter(function (breakpointInfo) {
+            var slotBreakpoints = chain(detect.breakpoints).and(filter, function (breakpointInfo) {
                     return slotInfo.$adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
-                })
-                .valueOf(),
+                }).valueOf(),
                 // have we changed breakpoints
                 slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
             return slotBreakpoint &&
@@ -621,15 +622,11 @@ define([
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
-                _(slotsToRefresh)
-                    // only refresh if the slot needs to
-                    .filter(function (slotInfo) {
+                chain(slotsToRefresh).and(filter, function (slotInfo) {
                         return shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint);
-                    })
-                    .map(function (slotInfo) {
+                    }).and(map, function (slotInfo) {
                         return slotInfo.slot;
-                    })
-                    .valueOf()
+                    }).valueOf()
             );
         },
         /** A breakpoint can have various sizes assigned to it. You can assign either on
