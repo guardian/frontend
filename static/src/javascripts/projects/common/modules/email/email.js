@@ -54,7 +54,8 @@ define([
             replaceContent: function (isSuccess, $form) {
                 var submissionMessage = {
                         statusClass: (isSuccess) ? '--success' : '--failure',
-                        submissionMessage: (isSuccess) ? 'great success' : 'All is broken'
+                        submissionHeadline: (isSuccess) ? 'Thank you for subscribing' : 'Something went wrong',
+                        submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.'
                     },
                     submissionHtml = template(successHtml, submissionMessage);
 
