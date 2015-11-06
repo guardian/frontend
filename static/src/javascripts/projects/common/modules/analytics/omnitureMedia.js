@@ -14,7 +14,7 @@ define([
 ) {
 
     function OmnitureMedia(player) {
-
+        
         function getAttribute(attributeName) {
             return player.el().getAttribute(attributeName);
         }
@@ -44,6 +44,7 @@ define([
                 // extra events with no set ordering
                 duration: 'event57'
             },
+            abTestParticipation = ab.makeOmnitureTag(),
             trackingVars = [
                 // these tracking vars are specific to media events.
                 'eVar11',   // embedded or on platform
@@ -90,7 +91,7 @@ define([
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
 
-            s.list1 = ab.makeOmnitureTag();
+            s.list1 = abTestParticipation;
 
         };
 
@@ -110,7 +111,7 @@ define([
             s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
-            s.list1 = ab.makeOmnitureTag();
+            s.list1 = abTestParticipation;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 
