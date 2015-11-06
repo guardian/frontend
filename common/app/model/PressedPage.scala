@@ -100,7 +100,7 @@ case class PressedPage(id: String,
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
-    "og:image" -> Configuration.facebook.imageFallback) ++
+    "og:image" -> Configuration.images.fallbackLogo) ++
     optionalMapEntry("og:description", description)  ++
     optionalMapEntry("og:image", frontProperties.imageUrl)
 
