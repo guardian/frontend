@@ -5,8 +5,8 @@
 .element-replicated-links {
     @include fs-textSans(1);
     border-left: $gs-gutter/3 solid colour(neutral-4);
-    padding: 0 0 $gs-baseline/4 $gs-gutter;
     margin-bottom: $gs-baseline;
+    position: relative;
     overflow: auto;
 
     @include mq($until: mobileLandscape) {
@@ -14,14 +14,32 @@
     }
 }
 
+.element-replicated-links__links {
+    padding-left: $gs-gutter;
+}
+
 .element-replicated-links__links--contracted {
     max-height: 150px;
     overflow-y: hidden;
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: $gs-baseline * 4;
+        pointer-events: none;
+        z-index: 1;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
+    }   
 }
 
 .element-replicated-links__title {
     @include fs-header(1);
     color: colour(neutral-1);
+    padding-left: $gs-gutter;
     margin-bottom: $gs-baseline;
 }
 
@@ -36,6 +54,10 @@
         &:hover,
         &:focus {
             text-decoration: none;
+
+            .element-replicated-link__text {
+                color: colour(neutral-1);
+            }
 
             .element-replicated-link__domain,
             .element-replicated-link__headline {
@@ -68,6 +90,12 @@
     @include fs-textSans(1);
     color: colour(neutral-2);
     margin-left: $gs-gutter/10;
+}
+
+.js-replicated-links-more {
+    padding-left: $gs-gutter;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .element-replicated-links__more--hidden {
