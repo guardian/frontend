@@ -9,6 +9,7 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp-api',
     'common/modules/commercial/front-commercial-components',
+    'common/modules/commercial/front-large',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags'
 ], function (
@@ -22,6 +23,7 @@ define([
     badges,
     dfp,
     frontCommercialComponents,
+    frontLarge,
     sliceAdverts,
     thirdPartyTags
 ) {
@@ -30,6 +32,7 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
+        ['cm-frontLarge', frontLarge.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-badges', badges.init]
     ];

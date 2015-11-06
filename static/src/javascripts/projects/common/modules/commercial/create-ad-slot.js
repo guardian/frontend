@@ -91,6 +91,11 @@ define([
             sizeMappings: {
                 mobile:  '1,1|300,250'
             }
+        },
+        "front-large": {
+            sizeMappings: {
+                desktop: '1,1|88,70|728,90|940,230|900,250|970,250'
+            }
         }
     };
 
