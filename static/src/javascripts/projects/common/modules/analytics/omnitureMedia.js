@@ -14,7 +14,7 @@ define([
 ) {
 
     function OmnitureMedia(player) {
-        
+
         function getAttribute(attributeName) {
             return player.el().getAttribute(attributeName);
         }
