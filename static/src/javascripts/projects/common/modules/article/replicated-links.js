@@ -1,5 +1,6 @@
 define([
     'bean',
+    'bonzo',
     'fastdom',
     'qwery',
     'Promise',
@@ -12,6 +13,7 @@ define([
     'common/utils/mediator'
 ], function (
     bean,
+    bonzo,
     fastdom,
     qwery,
     Promise,
@@ -47,9 +49,24 @@ define([
 
     function upgradeLinks() {
         // TODO commented out while Zef styles it
-        //if (ab.getTestVariantId('ReplicatedLinks') &&
-        //    ab.testCanBeRun('ReplicatedLinks') &&
-        //    ab.getTestVariantId('ReplicatedLinks') === 'variant') {
+        if (true || (ab.getTestVariantId('ReplicatedLinks') &&
+            ab.testCanBeRun('ReplicatedLinks') &&
+            ab.getTestVariantId('ReplicatedLinks') === 'variant')) {
+            $('.js-replicated-link').each(upgradeLink);
+        }
+    }
+
+    function mergeLinks(container, related) {
+        var sorted;
+        container.append(related);
+        console.log('container', container[0].children);
+        sorted = _.sortBy(container[0].children, function (value) {
+            console.log('timestamp', bonzo(value).attr('data-timestamp'));
+            return bonzo(value).attr('data-timestamp');
+        });
+        container.empty();
+        container.append(sorted);
+        // TODO fastdom
         var container = $('.js-replicated-links'),
             links = $('.js-replicated-links__links', links);
         container.removeClass('element-replicated-links--not-in-test');
@@ -62,11 +79,31 @@ define([
                 more.addClass('element-replicated-links__more--hidden');
             });
         }
-        $('.js-replicated-link').each(upgradeLink);
-        //}
+        mediator.emit('replicated-link:related:loaded');
+    }
+
+    // get /embed/related/article.json
+    function addRelated() {
+        var url = '/embed/related/' + config.page.pageId + '.json',
+            container = $('.js-replicated-links__links');
+        if (container.length) {
+            return ajax({
+                url: url,
+                crossOrigin: true
+            }).then(function (resp) {
+                var respDiv;
+                if (resp.html) {
+                    respDiv = bonzo(bonzo.create(resp.html));
+                    fastdom.write(function () {mergeLinks(container, respDiv)});
+                }
+            });
+        } else {
+            return Promise.resolve(null);
+        }
     }
 
     return {
-        upgradeLinks: upgradeLinks
+        upgradeLinks: upgradeLinks,
+        addRelated: addRelated
     };
 });
