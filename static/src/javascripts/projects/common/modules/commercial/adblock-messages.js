@@ -9,18 +9,24 @@ define([
     storage,
     userFeatures
 ) {
-    function sharedRules() {
-        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
+    /*function sharedRules() {
+        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
 
-        return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1;
-    }
+        return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisited > 1;
+    }*/
 
     function noAdblockMsg() {
-        return (sharedRules() && userFeatures.isPayingMember()) || !sharedRules();
+        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+
+        return detect.adblockInUse() && detect.getBreakpoint() !== 'mobile' && (
+                alreadyVisited <= 1 ||
+                !config.switches.adblock ||
+                (config.switches.adblock && alreadyVisited > 1 && userFeatures.isPayingMember()));
     }
 
     function showAdblockMsg() {
-        return sharedRules() && !userFeatures.isPayingMember();
+        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+        return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisited > 1 && !userFeatures.isPayingMember();
     }
 
     return {

@@ -26,7 +26,7 @@ define([
         });
 
         describe('If adblock banners and messages should be shown', function () {
-            it('should not show adblock messages for users who are for the first time', function () {
+            it('should not show adblock messages for the first time users', function () {
                 storage.local.set('gu.alreadyVisited', 0);
                 config.switches.adblock = true;
                 detect.adblockInUse = function () {
@@ -35,12 +35,34 @@ define([
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
-                userFeatures.isPayingMember = function () {
+
+                expect(adblockMessage.noAdblockMsg()).toBe(true);
+            });
+
+            it('should not show adblock messages when the adblock switch is off', function () {
+                storage.local.set('gu.alreadyVisited', 10);
+                config.switches.adblock = false;
+                detect.adblockInUse = function () {
                     return true;
                 };
+                detect.getBreakpoint = function () {
+                    return 'desktop';
+                };
 
-                console.log(adblockMessage.noAdblockMsg());
                 expect(adblockMessage.noAdblockMsg()).toBe(true);
+            });
+
+            it('should not show adblock messages for non adblock users', function () {
+                storage.local.set('gu.alreadyVisited', 10);
+                config.switches.adblock = true;
+                detect.adblockInUse = function () {
+                    return false;
+                };
+                detect.getBreakpoint = function () {
+                    return 'desktop';
+                };
+
+                expect(adblockMessage.showAdblockMsg()).toBe(false);
             });
 
             it('should not show adblock messages for paying members', function () {
