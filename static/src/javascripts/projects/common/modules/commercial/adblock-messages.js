@@ -9,12 +9,6 @@ define([
     storage,
     userFeatures
 ) {
-    /*function sharedRules() {
-        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
-
-        return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisited > 1;
-    }*/
-
     function noAdblockMsg() {
         var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
 
