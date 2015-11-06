@@ -4,9 +4,11 @@ package controllers
 import common._
 import containers.Containers
 import model._
-import play.api.mvc.{ RequestHeader, Controller }
+import play.api.mvc.{Result, RequestHeader, Controller}
+import play.twirl.api.Html
 import services._
 import performance.MemcachedAction
+import views.support.LinkInfo
 import scala.concurrent.duration._
 
 object RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
@@ -19,13 +21,9 @@ object RelatedController extends Controller with Related with Containers with Lo
   )
 
   def renderHtml(path: String) = render(path)
+
   def render(path: String) = MemcachedAction { implicit request =>
-    val edition = Edition(request)
-    val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
-    related(edition, path, excludeTags) map {
-      case Nil => JsonNotFound()
-      case trails => renderRelated(trails.sortBy(-_.webPublicationDate.getMillis))
-    }
+    renderUsingCallback(trails => renderRelated(trails.sortBy(-_.webPublicationDate.getMillis)), path)
   }
 
   private def renderRelated(trails: Seq[Content])(implicit request: RequestHeader) = Cached(30.minutes) {
@@ -41,4 +39,23 @@ object RelatedController extends Controller with Related with Containers with Lo
       Ok(views.html.relatedContent(page, relatedTrails))
     }
   }
+
+  def renderLinks(path: String) = MemcachedAction { implicit request =>
+    renderUsingCallback(trails => Cached(30.minutes)(JsonComponent("html" -> views.html.fragments.inbody.linkList(linkInfo(trails.take(4)), true))), path)
+  }
+
+  def linkInfo(trails: Seq[Content]) =
+    trails.map { trail =>
+      LinkInfo(None, trail.webPublicationDate.getMillis, None, trail.webUrl, trail.headline)
+    }
+
+  def renderUsingCallback(renderCallback: Seq[Content] => Result, path: String)(implicit request: RequestHeader) = {
+    val edition = Edition(request)
+    val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
+    related(edition, path, excludeTags) map {
+      case Nil => JsonNotFound()
+      case trails => renderCallback(trails)
+    }
+  }
+
 }
