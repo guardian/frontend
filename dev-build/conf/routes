@@ -111,6 +111,7 @@ GET            /video/end-slate/section/*sectionId.json                         
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
 GET            /embed/headline/*path.json                                                                                        controllers.ReplicatedLinkController.render(path)
+GET            /embed/related/*path.json                                                                                         controllers.RelatedController.renderLinks(path)
 # User tech feedback
 GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)

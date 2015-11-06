@@ -65,7 +65,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
           link.after(number)
           LinkInfo(Some(index), date.getMillis, UrlParser.externalDomain(link.attr("href")), link.attr("href"), link.text)
         }
-          var rendered = views.html.fragments.inbody.links(links).toString
+        val rendered = views.html.fragments.inbody.links(links).toString
         (articleBody, Jsoup.parseBodyFragment(rendered).body().child(0))
       }
     } else {

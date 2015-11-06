@@ -14,6 +14,7 @@ define([
     'common/utils/detect',
     'common/modules/commercial/comment-adverts',
     'common/modules/discussion/loader',
+    'common/modules/experiments/ab',
     'common/modules/identity/api',
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
@@ -34,6 +35,7 @@ define([
     detect,
     commentAdverts,
     DiscussionLoader,
+    ab,
     identityApi,
     Onward,
     Popular,
@@ -63,22 +65,44 @@ define([
 
     function initRelated() {
         if (!(config.page.seriesId || config.page.blogIds)) {
-            insertOrProximity('.js-related', function () {
-                var opts = {
-                    excludeTags: []
-                };
+            // TODO commented out while Zef styles it
+            if (true || (ab.getTestVariantId('ReplicatedLinks') &&
+                ab.testCanBeRun('ReplicatedLinks') &&
+                ab.getTestVariantId('ReplicatedLinks') === 'variant')) {
+                insertOrProximity('.js-replicated-links', function () {
+                    var opts = {
+                        excludeTags: []
+                    };
 
-                // exclude ad features from non-ad feature content
-                if (config.page.sponsorshipType !== 'advertisement-features') {
-                    opts.excludeTags.push('tone/advertisement-features');
-                }
-                // don't want to show professional network content on videos or interactives
-                if ('contentType' in config.page &&
-                    contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
-                    opts.excludeTags.push('guardian-professional/guardian-professional');
-                }
-                new Related(opts).renderRelatedComponent();
-            });
+                    // exclude ad features from non-ad feature content
+                    if (config.page.sponsorshipType !== 'advertisement-features') {
+                        opts.excludeTags.push('tone/advertisement-features');
+                    }
+                    // don't want to show professional network content on videos or interactives
+                    if ('contentType' in config.page &&
+                        contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
+                        opts.excludeTags.push('guardian-professional/guardian-professional');
+                    }
+                    new Related(opts).renderRelatedComponent();
+                });
+            } else {
+                insertOrProximity('.js-related', function () {
+                    var opts = {
+                        excludeTags: []
+                    };
+
+                    // exclude ad features from non-ad feature content
+                    if (config.page.sponsorshipType !== 'advertisement-features') {
+                        opts.excludeTags.push('tone/advertisement-features');
+                    }
+                    // don't want to show professional network content on videos or interactives
+                    if ('contentType' in config.page &&
+                        contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
+                        opts.excludeTags.push('guardian-professional/guardian-professional');
+                    }
+                    new Related(opts).renderRelatedComponent();
+                });
+            }
         }
     }
 
