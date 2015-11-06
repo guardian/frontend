@@ -59,17 +59,15 @@ define([
     function mergeLinks(container, related) {
         var sorted;
         container.append(related);
-        console.log('container', container[0].children);
         sorted = _.sortBy(container[0].children, function (value) {
-            console.log('timestamp', bonzo(value).attr('data-timestamp'));
             return bonzo(value).attr('data-timestamp');
         });
         container.empty();
         container.append(sorted);
         // TODO fastdom
-        var container = $('.js-replicated-links'),
+        var container2 = $('.js-replicated-links'),
             links = $('.js-replicated-links__links', links);
-        container.removeClass('element-replicated-links--not-in-test');
+        container2.removeClass('element-replicated-links--not-in-test');
         if (links.height() > 150) {
             var more = $('.js-replicated-links-more');
             links.addClass('element-replicated-links__links--contracted');
@@ -94,7 +92,7 @@ define([
                 var respDiv;
                 if (resp.html) {
                     respDiv = bonzo(bonzo.create(resp.html));
-                    fastdom.write(function () {mergeLinks(container, respDiv)});
+                    fastdom.write(function () {mergeLinks(container, respDiv);});
                 }
             });
         } else {
