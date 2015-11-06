@@ -33,7 +33,7 @@ object EmailTextTestV1 extends TestDefinition(
 )
 
 object TopBannerPosition extends TestDefinition(
-  List(Variant3),
+  List(Variant4),
   "top-banner-position",
   "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
   new LocalDate(2016, 1, 25)
