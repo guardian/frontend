@@ -69,12 +69,19 @@ define([
             links = $('.js-replicated-links__links', links);
         container2.removeClass('element-replicated-links--not-in-test');
         if (links.height() > 150) {
-            var more = $('.js-replicated-links-more');
+            var more = $('.js-replicated-links-more'),
+                less = $('.js-replicated-links-less');
             links.addClass('element-replicated-links__links--contracted');
             more.removeClass('element-replicated-links__more--hidden');
             bean.on(more[0], 'click', function () {
                 links.removeClass('element-replicated-links__links--contracted');
                 more.addClass('element-replicated-links__more--hidden');
+                less.removeClass('element-replicated-links__more--hidden');
+            });
+            bean.on(less[0], 'click', function () {
+                links.addClass('element-replicated-links__links--contracted');
+                less.addClass('element-replicated-links__more--hidden');
+                more.removeClass('element-replicated-links__more--hidden');
             });
         }
         mediator.emit('replicated-link:related:loaded');
