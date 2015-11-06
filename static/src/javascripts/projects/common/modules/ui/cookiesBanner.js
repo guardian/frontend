@@ -41,12 +41,13 @@ define([
                     msg = new Message('cookies', opts);
                 msg.show(txt);
                 cookies.add(EU_COOKIE_MSG, 'seen', cookieLifeDays);
+                mediator.emit('modules:ui:cookiesBanner:shown');
                 return true;
             } else {
-                mediator.emit('modules:ui:cookiesBanner:notShown');
+                mediator.emit('modules:ui:cookiesBanner:notShown:seenBefore');
             }
         } else {
-            mediator.emit('modules:ui:cookiesBanner:notShown');
+            mediator.emit('modules:ui:cookiesBanner:notShown:notInEU');
         }
     }
 
