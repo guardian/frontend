@@ -196,7 +196,13 @@ define([
                     idAndName: [tid, record[0]],
                     rank: rank
                 };
-            }).and(compact).and(sortBy, 'rank').and(last, op.number).reverse().and(pluck, 'idAndName').value();
+            })
+            .and(compact)
+            .and(sortBy, 'rank')
+            .and(last, op.number)
+            .reverse()
+            .and(pluck, 'idAndName')
+            .value();
     }
 
     function getPopularFiltered(opts) {
