@@ -1,17 +1,17 @@
-package controllers
+package services
 
-import common._
-import conf.LiveContentApi._
+import common.{ExecutionContexts, Edition}
 import conf.{Configuration, LiveContentApi}
+import conf.LiveContentApi._
+import model.{Video, Content}
+import org.joda.time.{DateTimeZone, DateTime}
 import implicits.Dates.DateTime2ToCommonDateFormats
-import model._
-import org.joda.time.{DateTime, DateTimeZone}
-import play.api.mvc.{Action, Controller}
 import views.support.Naked
 
 import scala.concurrent.Future
+import scala.xml.NodeSeq
 
-object VideoSiteMapController extends Controller with Logging with ExecutionContexts {
+object VideoSiteMap extends ExecutionContexts {
 
   private case class UrlSet(urls: Seq[Url]){
     def xml() = {
@@ -51,7 +51,7 @@ object VideoSiteMapController extends Controller with Logging with ExecutionCont
     }
   }
 
-  private def getLatestContentForSitemap: Future[Seq[Url]] = {
+  def getLatestContent: Future[NodeSeq] = {
 
     val query = LiveContentApi.search(Edition.defaultEdition)
       .pageSize(200)
@@ -72,7 +72,7 @@ object VideoSiteMapController extends Controller with Logging with ExecutionCont
     }
 
     responses.map { paginatedResults =>
-      for {
+      val urls = for {
         resp <- paginatedResults
         item <- resp.results.map(Content.apply).collect({ case video:Video => video })
       } yield {
@@ -94,14 +94,8 @@ object VideoSiteMapController extends Controller with Logging with ExecutionCont
           tags = keywordTags ++ sectionTag,
           category = item.section)
       }
-    }
-  }
 
-  def renderSiteMap() = Action.async { implicit request =>
-    getLatestContentForSitemap.map { urls =>
-      Cached(60) {
-        Ok(UrlSet(urls take 1000).xml()).as("text/xml; charset=utf-8")
-      }
+      UrlSet(urls take 1000).xml()
     }
   }
 }

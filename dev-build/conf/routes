@@ -306,8 +306,8 @@ GET            /commercial/magento/books                                        
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
-GET            /sitemaps/news.xml                                                                                                controllers.NewsSiteMapController.renderSiteMap()
-GET            /sitemaps/video.xml                                                                                               controllers.VideoSiteMapController.renderSiteMap()
+GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
+GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()

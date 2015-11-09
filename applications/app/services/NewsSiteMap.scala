@@ -1,17 +1,16 @@
-package controllers
+package services
 
-import common._
+import common.{ExecutionContexts, Edition}
 import conf.{Configuration, LiveContentApi}
 import conf.LiveContentApi._
-import implicits.Dates.DateTime2ToCommonDateFormats
-import model._
+import model.Content
 import org.joda.time.{DateTimeZone, DateTime}
-import play.api.mvc.{Action, Controller}
+import implicits.Dates.DateTime2ToCommonDateFormats
 
 import scala.concurrent.Future
+import scala.xml.NodeSeq
 
-object NewsSiteMapController extends Controller with Logging with ExecutionContexts {
-
+object NewsSiteMap extends ExecutionContexts {
   private case class UrlSet(urls: Seq[Url]){
     def xml() = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -51,7 +50,7 @@ object NewsSiteMapController extends Controller with Logging with ExecutionConte
     }
   }
 
-  private def getLatestContentForSitemap: Future[Seq[Url]] = {
+  def getLatestContent: Future[NodeSeq] = {
 
     val query = LiveContentApi.search(Edition.defaultEdition)
       .pageSize(200)
@@ -72,7 +71,7 @@ object NewsSiteMapController extends Controller with Logging with ExecutionConte
     }
 
     responses.map { paginatedResults =>
-      for {
+      val urls = for {
         resp <- paginatedResults
         item <- resp.results.map(Content.apply)
       } yield {
@@ -98,14 +97,8 @@ object NewsSiteMapController extends Controller with Logging with ExecutionConte
           webPublicationDate = item.webPublicationDate,
           imageUrl = imageUrl)
       }
-    }
-  }
 
-  def renderSiteMap() = Action.async { implicit request =>
-    getLatestContentForSitemap.map { urls =>
-      Cached(60) {
-        Ok(UrlSet(urls take 1000).xml()).as("text/xml; charset=utf-8")
-      }
+      UrlSet(urls take 1000).xml()
     }
   }
 }
