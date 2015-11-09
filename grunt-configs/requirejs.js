@@ -13,7 +13,7 @@ module.exports = function (grunt, options) {
                 EventEmitter:         'components/eventEmitter/EventEmitter',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
-                lodash:               'components/lodash',
+                lodash:               'components/lodash-amd',
                 picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/when/Promise',
                 qwery:                'components/qwery/qwery',

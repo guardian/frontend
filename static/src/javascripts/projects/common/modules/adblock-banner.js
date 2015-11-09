@@ -1,18 +1,15 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/adblock-sticky-message.html'
 ], function (
     fastdom,
     $,
-    _,
     template,
     svgs,
-    adblockStickyMessage
-) {
+    adblockStickyMessage) {
 
     /**
      * Message which is shown at the top of the page to the adblock users.
