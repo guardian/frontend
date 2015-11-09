@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLiveEventsSurvey = Switch(
-    "A/B Tests",
-    "ab-live-events-survey",
-    "Survey to test if users will be interested in paying for the Guardian with free live streaming events",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 10),
-    exposeClientSide = true
-  )
-
   val ABRtrtEmailMessage = Switch(
     "A/B Tests",
     "ab-rtrt-email-message",

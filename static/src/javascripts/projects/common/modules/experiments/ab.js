@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/inject-network-front-test',
-    'common/modules/experiments/tests/live-events-survey',
     'common/modules/experiments/tests/large-top-slot'
 ], function (
     reportError,
@@ -39,7 +38,6 @@ define([
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
         new InjectNetworkFrontTest(),
-        new LiveEventsSurvey(),
         new LargeTopAd()
     ]);
 
