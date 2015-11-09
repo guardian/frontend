@@ -2,7 +2,6 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
@@ -11,12 +10,14 @@ define([
     'common/utils/to-array',
     'common/utils/proximity-loader',
     'common/modules/ui/relativedates',
-    'facia/modules/ui/football-snaps'
+    'facia/modules/ui/football-snaps',
+    'lodash/functions/once',
+    'lodash/collections/find',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
     ajax,
     detect,
@@ -25,13 +26,15 @@ define([
     toArray,
     proximityLoader,
     relativeDates,
-    FootballSnaps
-) {
+    FootballSnaps,
+    once,
+    find,
+    debounce) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
         snapIframes = [],
-        bindIframeMsgReceiverOnce = _.once(function () {
+        bindIframeMsgReceiverOnce = once(function () {
             bean.on(window, 'message', function (event) {
-                var iframe = _.find(snapIframes, function (iframe) { return iframe.contentWindow === event.source; }),
+                var iframe = find(snapIframes, function (iframe) { return iframe.contentWindow === event.source; }),
                     message;
                 if (iframe) {
                     message = JSON.parse(event.data);
@@ -147,7 +150,7 @@ define([
             }
 
             if (!detect.isIOS) {
-                mediator.on('window:resize', _.debounce(function () {
+                mediator.on('window:resize', debounce(function () {
                     addCss(el, true);
                 }, 200));
             }

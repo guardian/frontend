@@ -1,24 +1,47 @@
 define([
     'Promise',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/url',
     'common/utils/scan',
     'common/utils/mediator',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'lodash/objects/values',
+    'lodash/collections/sortBy',
+    'lodash/utilities/random',
+    'lodash/objects/isUndefined',
+    'lodash/functions/debounce',
+    'lodash/collections/map',
+    'lodash/arrays/uniq',
+    'lodash/arrays/compact',
+    'lodash/arrays/flatten',
+    'common/utils/chain',
+    'lodash/collections/filter',
+    'lodash/collections/forEach',
+    'lodash/collections/reduce'
 ], function (
     Promise,
-    _,
     config,
     ajax,
     detect,
     url,
     scan,
     mediator,
-    beacon
-) {
+    beacon,
+    values,
+    sortBy,
+    random,
+    isUndefined,
+    debounce,
+    map,
+    uniq,
+    compact,
+    flatten,
+    chain,
+    filter,
+    forEach,
+    reduce) {
     var sample = 500,
         rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
         rxSeparator = new RegExp(/\s*,\s*/g),
@@ -28,7 +51,7 @@ define([
 
     function getRules(s) {
         var rules = s ? s.cssRules || s.rules : null;
-        return rules ? _.values(rules) : s;
+        return rules ? values(rules) : s;
     }
 
     function getSplitSelectors(ruleObj) {
@@ -45,43 +68,31 @@ define([
     }
 
     function canonicalOrder(s) {
-        return _.sortBy(s.split('.')).join('.');
+        return sortBy(s.split('.')).join('.');
     }
 
     function getAllSelectors(all) {
         var rand,
             len,
-            rules = _.chain(getInlineStylesheets())
-                .map(getRules)
-                .flatten()
-                .map(getRules) // 2nd pass for rules nested in media queries
-                .flatten()
-                .map(getSplitSelectors)
-                .flatten()
-                .compact()
-                .uniq()
-                .map(canonicalise)
-                .value();
+            rules = chain(getInlineStylesheets()).and(map, getRules).and(flatten).and(map, getRules).and(flatten).and(map, getSplitSelectors).and(flatten).and(compact).and(uniq).and(map, canonicalise).value();
 
         if (all) {
             return rules;
         } else {
             len = rules.length;
-            rand = _.random(0, len);
+            rand = random(0, len);
             return rules.slice(rand, rand + sample).concat(rand + sample < len ? [] : rules.slice(0, (rand + sample) % len));
         }
     }
 
     function getInlineStylesheets() {
-        return _.chain(document.styleSheets)
-            .filter(function (sheet) {
+        return chain(document.styleSheets).and(filter, function (sheet) {
                 return sheet &&
-                    _.values(sheet.rules || sheet.cssRules).length > 0 &&
+                    values(sheet.rules || sheet.cssRules).length > 0 &&
                     sheet.ownerNode &&
                     sheet.ownerNode.nodeName === 'STYLE' &&
                     sheet.ownerNode.className.indexOf(classNameLoggable) > -1;
-            })
-            .value();
+            }).value();
     }
 
     function reloadSheetInline(sheet) {
@@ -98,19 +109,15 @@ define([
 
     function reloadSheetsInline() {
         return Promise.all(
-            _.chain(document.styleSheets)
-            .filter(function (sheet) {
+            chain(document.styleSheets).and(filter, function (sheet) {
                 return sheet &&
                     sheet.href &&
                     sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/) &&
                     (!sheet.media || sheet.media.mediaText !== 'print') &&
                     sheet.ownerNode.className.indexOf(classNameInlined) === -1;
-            })
-            .forEach(function (sheet) {
+            }).and(forEach, function (sheet) {
                 sheet.ownerNode.className += ' ' + classNameInlined;
-            })
-            .map(reloadSheetInline)
-            .value()
+            }).and(map, reloadSheetInline).value()
         );
     }
 
@@ -118,14 +125,12 @@ define([
         reloadSheetsInline()
         .then(function () {
             beacon.postJson('/css', JSON.stringify({
-                selectors: _.chain(getAllSelectors(all))
-                    .reduce(function (isUsed, s) {
-                        if (_.isUndefined(isUsed[s])) {
+                selectors: chain(getAllSelectors(all)).and(reduce, function (isUsed, s) {
+                        if (isUndefined(isUsed[s])) {
                             isUsed[s] = !!document.querySelector(s);
                         }
                         return isUsed;
-                    }, {})
-                    .value(),
+                    }, {}).value(),
                 contentType: config.page.contentType || 'unknown',
                 breakpoint: detect.getBreakpoint() || 'unknown'
             }), all);
@@ -133,11 +138,11 @@ define([
     }
 
     function makeSender(all) {
-        return _.debounce(function (clickSpec) {
+        return debounce(function (clickSpec) {
             if (!clickSpec || clickSpec.samePage) {
                 setTimeout(function () {
                     sendReport(all);
-                }, all ? 0 : _.random(0, 3000));
+                }, all ? 0 : random(0, 3000));
             }
         }, 500);
     }
@@ -147,7 +152,7 @@ define([
 
         all = all || window.location.hash === '#csslogging';
 
-        if (all || _.random(1, 2500) === 1) {
+        if (all || random(1, 2500) === 1) {
             sender = makeSender(all);
             sender();
 

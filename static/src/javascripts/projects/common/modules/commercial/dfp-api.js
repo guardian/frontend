@@ -10,7 +10,6 @@ define([
     'raven',
     'common/utils/$',
     'common/utils/$css',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -25,7 +24,26 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/functions/once',
+    'lodash/objects/forOwn',
+    'lodash/collections/forEach',
+    'lodash/objects/keys',
+    'lodash/functions/debounce',
+    'lodash/objects/defaults',
+    'lodash/collections/contains',
+    'lodash/arrays/uniq',
+    'lodash/arrays/flatten',
+    'lodash/collections/every',
+    'lodash/collections/map',
+    'lodash/arrays/zipObject',
+    'lodash/collections/filter',
+    'common/utils/chain',
+    'lodash/objects/omit',
+    'lodash/collections/find',
+    'lodash/arrays/last',
+    'lodash/arrays/intersection',
+    'lodash/arrays/initial'
 ], function (
     bean,
     bonzo,
@@ -34,7 +52,6 @@ define([
     raven,
     $,
     $css,
-    _,
     config,
     detect,
     mediator,
@@ -49,8 +66,26 @@ define([
     geoMostPopular,
     ab,
     beacon,
-    id
-) {
+    id,
+    once,
+    forOwn,
+    forEach,
+    keys,
+    debounce,
+    defaults,
+    contains,
+    uniq,
+    flatten,
+    every,
+    map,
+    zipObject,
+    filter,
+    chain,
+    omit,
+    find,
+    last,
+    intersection,
+    initial) {
     /**
      * Right, so an explanation as to how this works...
      *
@@ -120,7 +155,7 @@ define([
         },
         renderStartTime = null,
 
-        recordFirstAdRendered = _.once(function () {
+        recordFirstAdRendered = once(function () {
             beacon.beaconCounts('ad-render');
         }),
 
@@ -139,7 +174,7 @@ define([
         },
 
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -152,7 +187,7 @@ define([
             var sponsorshipIds = ['#dfp-ad--adbadge', '#dfp-ad--spbadge', '#dfp-ad--fobadge', '#dfp-ad--adbadge1', '#dfp-ad--spbadge1', '#dfp-ad--fobadge1', '#dfp-ad--adbadge2', '#dfp-ad--spbadge2', '#dfp-ad--fobadge2', '#dfp-ad--adbadge3', '#dfp-ad--spbadge3', '#dfp-ad--fobadge3', '#dfp-ad--adbadge4', '#dfp-ad--spbadge4', '#dfp-ad--fobadge4', '#dfp-ad--adbadge5', '#dfp-ad--spbadge5', '#dfp-ad--fobadge5'],
                 sponsorshipIdsReturned = [];
 
-            _.forEach(sponsorshipIds, function (value) {
+            forEach(sponsorshipIds, function (value) {
                 if ($(value).length) {
                     sponsorshipIdsReturned.push(value);
                 }
@@ -166,7 +201,7 @@ define([
 
             if (detect.adblockInUse() && sponsorshipIdsFound.length) {
                 idleFastdom.write(function () {
-                    _.forEach(sponsorshipIdsFound, function (value) {
+                    forEach(sponsorshipIdsFound, function (value) {
                         var sponsorshipIdFoundEl = $(value),
                             sponsorshipIdClasses = sponsorshipIdFoundEl.attr('class').replace('ad-slot ', ''),
                             sponsorshipBadge = '<div class="' + sponsorshipIdClasses + '">' + sponsorshipIdFoundEl.html() + '</div>';
@@ -201,12 +236,10 @@ define([
          * attributes on the element.
          */
         defineSlots = function () {
-            slots = _(qwery(adSlotSelector))
-                .map(function (adSlot) {
+            slots = chain(qwery(adSlotSelector)).and(map, function (adSlot) {
                     return bonzo(adSlot);
-                })
                 // filter out (and remove) hidden ads
-                .filter(function ($adSlot) {
+                }).and(filter, function ($adSlot) {
                     if (shouldFilterAdvert($adSlot)) {
                         idleFastdom.write(function () {
                             $adSlot.remove();
@@ -215,15 +248,12 @@ define([
                     } else {
                         return true;
                     }
-                })
-                .map(function ($adSlot) {
+                }).and(map, function ($adSlot) {
                     return [$adSlot.attr('id'), {
                         isRendered: false,
                         slot: defineSlot($adSlot)
                     }];
-                })
-                .zipObject()
-                .valueOf();
+                }).and(zipObject).valueOf();
         },
         setPublisherProvidedId = function () {
             var user = id.getUserFromCookie();
@@ -239,7 +269,7 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(_.keys(slots).shift());
+            googletag.display(keys(slots).shift());
             displayed = true;
         },
         displayLazyAds = function () {
@@ -250,7 +280,7 @@ define([
             instantLoad();
             lazyLoad();
         },
-        windowResize = _.debounce(
+        windowResize = debounce(
             function () {
                 // refresh on resize
                 hasBreakpointChanged(refresh);
@@ -260,7 +290,7 @@ define([
             mediator.on('window:resize', windowResize);
         },
         setupAdvertising = function (options) {
-            var opts = _.defaults(options || {}, {
+            var opts = defaults(options || {}, {
                 resizeTimeout: 2000
             });
 
@@ -306,8 +336,8 @@ define([
             return dfp;
         },
         instantLoad = function () {
-            _(slots).keys().forEach(function (slot) {
-                if (_.contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+            chain(slots).and(keys).and(forEach, function (slot) {
+                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
                     loadSlot(slot);
                 }
             });
@@ -321,7 +351,7 @@ define([
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
 
-                _(slots).keys().forEach(function (slot) {
+                chain(slots).and(keys).and(forEach, function (slot) {
                     // if the position of the ad is above the viewport - offset (half screen size)
                     if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
                         loadSlot(slot);
@@ -331,7 +361,7 @@ define([
         },
         loadSlot = function (slot) {
             googletag.display(slot);
-            slots = _(slots).omit(slot).value();
+            slots = chain(slots).and(omit, slot).value();
             displayed = true;
         },
         addSlot = function ($adSlot) {
@@ -376,8 +406,8 @@ define([
                 id             = $adSlot.attr('id'),
                 sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = _.uniq(
-                    _.flatten(sizeMapping, true, function (map) {
+                size           = uniq(
+                    flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
                     function (size) {
@@ -471,7 +501,7 @@ define([
                 slots[slotId].isRendered = true;
             }
 
-            if (_.every(slots, 'isRendered')) {
+            if (every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
                 mediator.emit('modules:commercial:dfp:alladsrendered');
             }
@@ -502,7 +532,7 @@ define([
                 type               = {};
 
             if (iFrameBody) {
-                _.forEach(breakoutClasses, function (breakoutClass) {
+                forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
                         var creativeConfig,
                             $breakoutEl     = bonzo(breakoutEl),
@@ -563,7 +593,7 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return Promise.all(_.map($('iframe', $slot), function (iFrame) {
+            return Promise.all(map($('iframe', $slot), function (iFrame) {
                 return new Promise(function (resolve) {
                     // IE needs the iFrame to have loaded before we can interact with it
                     if (iFrame.readyState && iFrame.readyState !== 'complete') {
@@ -586,9 +616,7 @@ define([
                     }
                 });
             })).then(function (items) {
-                return _(items)
-                    .chain()
-                    .find(function (item) {
+                return chain(items).and(find, function (item) {
                         return item.adType !== '';
                     }).value();
             });
@@ -597,20 +625,15 @@ define([
             return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         },
         getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
-            return _(detect.breakpoints)
-                .initial(function (breakpointInfo) {
+            return chain(detect.breakpoints).and(initial, function (breakpointInfo) {
                     return breakpointInfo.name !== breakpoint;
-                })
-                .intersection(slotBreakpoints)
-                .last();
+                }).and(intersection, slotBreakpoints).and(last).value();
         },
         shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
             // get the slots breakpoints
-            var slotBreakpoints = _(detect.breakpoints)
-                .filter(function (breakpointInfo) {
+            var slotBreakpoints = chain(detect.breakpoints).and(filter, function (breakpointInfo) {
                     return slotInfo.$adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
-                })
-                .valueOf(),
+                }).valueOf(),
                 // have we changed breakpoints
                 slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
             return slotBreakpoint &&
@@ -618,15 +641,11 @@ define([
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
-                _(slotsToRefresh)
-                    // only refresh if the slot needs to
-                    .filter(function (slotInfo) {
+                chain(slotsToRefresh).and(filter, function (slotInfo) {
                         return shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint);
-                    })
-                    .map(function (slotInfo) {
+                    }).and(map, function (slotInfo) {
                         return slotInfo.slot;
-                    })
-                    .valueOf()
+                    }).valueOf()
             );
         },
         /** A breakpoint can have various sizes assigned to it. You can assign either on
@@ -636,8 +655,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return _.map(attr.split('|'), function (size) {
-                return _.map(size.split(','), Number);
+            return map(attr.split('|'), function (size) {
+                return map(size.split(','), Number);
             });
         },
         /**
@@ -653,7 +672,7 @@ define([
         defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            _.forEach(detect.breakpoints, function (breakpointInfo) {
+            forEach(detect.breakpoints, function (breakpointInfo) {
                 // turn breakpoint name into attribute style (lowercase, hyphenated)
                 var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
@@ -664,7 +683,7 @@ define([
             return mapping.build();
         },
         parseKeywords = function (keywords) {
-            return _.map((keywords || '').split(','), function (keyword) {
+            return map((keywords || '').split(','), function (keyword) {
                 return keyword.split('/').pop();
             });
         },

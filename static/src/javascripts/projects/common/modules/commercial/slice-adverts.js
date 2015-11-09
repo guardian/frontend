@@ -3,26 +3,31 @@ define([
     'qwery',
     'Promise',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/defaults',
+    'lodash/collections/contains',
+    'lodash/collections/map',
+    'common/utils/chain'
 ], function (
     bonzo,
     qwery,
     Promise,
     $,
-    _,
     config,
     detect,
     idleFastdom,
     createAdSlot,
     userPrefs,
-    commercialFeatures
-) {
+    commercialFeatures,
+    defaults,
+    contains,
+    map,
+    chain) {
     var adNames = ['inline1', 'inline2', 'inline3'],
         init = function (options) {
             if (!commercialFeatures.sliceAdverts) {
@@ -30,7 +35,7 @@ define([
             }
 
             var container, containerId, $adSlice, isFrontFirst,
-                opts = _.defaults(
+                opts = defaults(
                     options || {},
                     {
                         containerSelector: '.fc-container',
@@ -50,7 +55,7 @@ define([
                 containerId  = bonzo(container).data('id');
                 $adSlice     = $(opts.sliceSelector, container);
                 // don't display ad in the first container on the fronts
-                isFrontFirst = _.contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+                isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed') && !config.page.omitMPUs) {
                     adSlices.push($adSlice.first());
@@ -61,9 +66,7 @@ define([
                 }
             }
 
-            return Promise.all(_(adSlices)
-                .slice(0, adNames.length)
-                .map(function ($adSlice, index) {
+            return Promise.all(chain(adSlices).slice(0, adNames.length).and(map, function ($adSlice, index) {
                     var adName        = adNames[index],
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--mobile'),
@@ -86,8 +89,7 @@ define([
                             resolve(null);
                         });
                     });
-                })
-                .valueOf()
+                }).valueOf()
             ).then(function () {
                 return adSlices;
             });

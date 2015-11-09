@@ -1,21 +1,34 @@
 /*eslint-disable new-cap*/
 define([
-    'common/utils/_',
     'react',
     'common/modules/sudoku/cell',
     'common/modules/sudoku/controls',
     'common/modules/sudoku/constants',
     'common/modules/sudoku/flatMap',
-    'common/modules/sudoku/utils'
+    'common/modules/sudoku/utils',
+    'lodash/collections/map',
+    'lodash/arrays/range',
+    'lodash/collections/forEach',
+    'lodash/objects/assign',
+    'lodash/functions/bind',
+    'lodash/utilities/constant',
+    'lodash/collections/contains',
+    'lodash/arrays/without'
 ], function (
-    _,
     React,
     Cell,
     Controls,
     constants,
     flatMap,
-    utils
-) {
+    utils,
+    map,
+    range,
+    forEach,
+    assign,
+    bind,
+    constant,
+    contains,
+    without) {
     return React.createClass({
         getInitialState: function () {
             return {
@@ -33,19 +46,19 @@ define([
         },
 
         highlightDuplicatesInRange: function (cells) {
-            var cellsByValue = _.map(_.range(9), function () {
+            var cellsByValue = map(range(9), function () {
                 return [];
             });
 
-            _.forEach(cells, function (cell) {
+            forEach(cells, function (cell) {
                 if (cell.value) {
                     cellsByValue[cell.value - 1].push(cell);
                 }
             });
 
-            _.forEach(cellsByValue, function (cells) {
+            forEach(cellsByValue, function (cells) {
                 if (cells.length > 1) {
-                    _.forEach(cells, function (cell) {
+                    forEach(cells, function (cell) {
                         cell.isError = true;
                     });
                 }
@@ -56,44 +69,44 @@ define([
             var self = this, rows, columns, squares;
 
             this.mapCells(function (cell) {
-                return _.extend({}, cell, {
+                return assign({}, cell, {
                     isError: false
                 });
             });
 
-            rows = _.map(_.range(9), function (y) {
-                return _.map(_.range(9), function (x) {
+            rows = map(range(9), function (y) {
+                return map(range(9), function (x) {
                     return self.getCell(x, y);
                 });
             });
 
-            columns = _.map(_.range(9), function (x) {
-                return _.map(_.range(9), function (y) {
+            columns = map(range(9), function (x) {
+                return map(range(9), function (y) {
                     return self.getCell(x, y);
                 });
             });
 
-            squares = flatMap(_.range(3), function (x) {
-                return _.map(_.range(3), function (y) {
-                    return flatMap(_.range(3), function (dx) {
-                        return _.map(_.range(3), function (dy) {
+            squares = flatMap(range(3), function (x) {
+                return map(range(3), function (y) {
+                    return flatMap(range(3), function (dx) {
+                        return map(range(3), function (dy) {
                             return self.getCell(x * 3 + dx, y * 3 + dy);
                         });
                     });
                 });
             });
 
-            _.forEach(rows.concat(columns, squares), _.bind(this.highlightDuplicatesInRange, this));
+            forEach(rows.concat(columns, squares), bind(this.highlightDuplicatesInRange, this));
         },
 
         updateCellStatesAndRender: function () {
             var focus = this.state.focus,
-                isHighlighted = focus ? utils.highlights(focus.x, focus.y) : _.constant(false),
+                isHighlighted = focus ? utils.highlights(focus.x, focus.y) : constant(false),
                 focussedCell = this.getFocussedCell(),
                 valueInFocus = focussedCell ? focussedCell.value : null;
 
             this.mapCells(function (cell) {
-                return _.extend({}, cell, {
+                return assign({}, cell, {
                     isHighlighted: isHighlighted(cell.x, cell.y),
                     isSameValue: cell.value && cell.value === valueInFocus,
                     isFocussed: focus && cell.x === focus.x && cell.y === focus.y
@@ -110,8 +123,8 @@ define([
             if (focussed.isEditable) {
                 focussed.value = null;
 
-                if (_.contains(focussed.jottings, n)) {
-                    focussed.jottings = _.without(focussed.jottings, n);
+                if (contains(focussed.jottings, n)) {
+                    focussed.jottings = without(focussed.jottings, n);
                 } else {
                     focussed.jottings.push(n);
                 }
@@ -155,7 +168,7 @@ define([
         },
 
         mapCells: function (f) {
-            this.state.cells = _.map(this.state.cells, f);
+            this.state.cells = map(this.state.cells, f);
             this.forceUpdate();
         },
 
@@ -204,8 +217,8 @@ define([
 
         render: function () {
             var self = this,
-                cells = _.map(this.state.cells, function (cell) {
-                    var data = _.extend({}, cell, {
+                cells = map(this.state.cells, function (cell) {
+                    var data = assign({}, cell, {
                         key: cell.x + '_' + cell.y,
                         onClick: self.focusCell
                     });

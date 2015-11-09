@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -11,9 +10,10 @@ define([
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
     'text!common/views/membership-message.html',
-    'common/views/svgs'
+    'common/views/svgs',
+    'lodash/collections/sample',
+    'lodash/utilities/random'
 ], function (
-    _,
     $,
     config,
     detect,
@@ -25,11 +25,12 @@ define([
     ab,
     navigation,
     messageTemplate,
-    svgs
-) {
+    svgs,
+    sample,
+    random) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
-            message = _.sample([
+            message = sample([
                 {
                     id: 'monthly',
                     messageText: 'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way? Become a Supporter from just £5 per month',
@@ -94,7 +95,7 @@ define([
                 imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
             }];
 
-        new AdblockBanner(variations[_.random(variations.length - 1)]).show();
+        new AdblockBanner(variations[random(variations.length - 1)]).show();
     }
 
     function init() {

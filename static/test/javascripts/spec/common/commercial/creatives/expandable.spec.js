@@ -35,8 +35,8 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
             new Expandable(qwery('.expandable-ad-slot', $fixturesContainer), {}).create();
             fastdom.defer(function () {
-                expect(qwery('.ad-exp--expand').length).toBe(1);
-                expect(qwery('.ad-exp__close-button').length).toBe(1);
+                expect(qwery('.ad-exp--expand', $fixturesContainer).length).toBe(1);
+                expect(qwery('.ad-exp__close-button', $fixturesContainer).length).toBe(1);
                 done();
             });
         });

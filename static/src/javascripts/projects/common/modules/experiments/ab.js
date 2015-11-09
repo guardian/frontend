@@ -1,6 +1,5 @@
 define([
     'common/utils/report-error',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/mediator',
@@ -13,10 +12,18 @@ define([
     'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/live-events-survey',
-    'common/modules/experiments/tests/large-top-slot'
+    'common/modules/experiments/tests/large-top-slot',
+    'lodash/arrays/flatten',
+    'lodash/collections/forEach',
+    'lodash/objects/keys',
+    'lodash/collections/some',
+    'lodash/collections/filter',
+    'lodash/collections/map',
+    'lodash/collections/find',
+    'lodash/objects/pick',
+    'common/utils/chain'
 ], function (
     reportError,
-    _,
     config,
     cookies,
     mediator,
@@ -29,10 +36,18 @@ define([
     InjectHeadlinesTest,
     InjectNetworkFrontTest,
     LiveEventsSurvey,
-    LargeTopAd
-) {
+    LargeTopAd,
+    flatten,
+    forEach,
+    keys,
+    some,
+    filter,
+    map,
+    find,
+    pick,
+    chain) {
 
-    var TESTS = _.flatten([
+    var TESTS = flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
         new RtrtEmailMessage(),
@@ -72,11 +87,11 @@ define([
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
         var participations = getParticipations();
-        _.forEach(_.keys(participations), function (k) {
+        forEach(keys(participations), function (k) {
             if (typeof (config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
-                var testExists = _.some(TESTS, function (element) {
+                var testExists = some(TESTS, function (element) {
                     return element.id === k;
                 });
 
@@ -88,7 +103,7 @@ define([
     }
 
     function getActiveTests() {
-        return _.filter(TESTS, function (test) {
+        return filter(TESTS, function (test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
             if (expired) {
                 removeParticipation(test);
@@ -99,7 +114,7 @@ define([
     }
 
     function getExpiredTests() {
-        return _.filter(TESTS, function (test) {
+        return filter(TESTS, function (test) {
             return (new Date() - new Date(test.expiry)) > 0;
         });
     }
@@ -112,7 +127,7 @@ define([
     }
 
     function getTest(id) {
-        var test = _.filter(TESTS, function (test) {
+        var test = filter(TESTS, function (test) {
             return (test.id === id);
         });
         return (test) ? test[0] : '';
@@ -122,19 +137,19 @@ define([
         var participations = getParticipations(),
             tag = [];
 
-        _.forEach(_.keys(participations), function (k) {
+        forEach(keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
 
-        _.forEach(_.keys(config.tests), function (k) {
+        forEach(keys(config.tests), function (k) {
             if (k.toLowerCase().match(/^cm/)) {
                 tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
 
-        _.forEach(getServerSideTests(), function (testName) {
+        forEach(getServerSideTests(), function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
         });
 
@@ -172,7 +187,7 @@ define([
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            variantIds = _.map(test.variants, function (variant) {
+            variantIds = map(test.variants, function (variant) {
                 return variant.id;
             });
             testVariantId = mvtCookieId % variantIds.length;
@@ -208,17 +223,14 @@ define([
     }
 
     function getVariant(test, variantId) {
-        return _.find(test.variants, function (variant) {
+        return find(test.variants, function (variant) {
             return variant.id === variantId;
         });
     }
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        return _(config.tests)
-            .pick(function (participating) { return !!participating; })
-            .keys()
-            .value();
+        return chain(config.tests).and(pick, function (participating) { return !!participating; }).and(keys).value();
     }
 
     var ab = {
@@ -232,20 +244,17 @@ define([
         },
 
         segment: function () {
-            _.forEach(getActiveTests(), function (test) {
+            forEach(getActiveTests(), function (test) {
                 allocateUserToTest(test);
             });
         },
 
         forceSegment: function (testId, variant) {
-            _(getActiveTests())
-                .filter(function (test) {
+            chain(getActiveTests()).and(filter, function (test) {
                     return (test.id === testId);
-                })
-                .forEach(function (test) {
+                }).and(forEach, function (test) {
                     addParticipation(test, variant);
-                })
-                .valueOf();
+                }).valueOf();
         },
 
         segmentUser: function () {
@@ -253,7 +262,7 @@ define([
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
                 tokens = window.location.hash.replace('#ab-', '').split(',');
-                _.forEach(tokens, function (token) {
+                forEach(tokens, function (token) {
                     var abParam, test, variant;
                     abParam = token.split('=');
                     test = abParam[0];
@@ -268,16 +277,16 @@ define([
         },
 
         run: function () {
-            _.forEach(getActiveTests(), function (test) {
+            forEach(getActiveTests(), function (test) {
                 run(test);
             });
         },
 
         isEventApplicableToAnActiveTest: function (event) {
-            var participations = _.keys(getParticipations());
-            return _.some(participations, function (id) {
+            var participations = keys(getParticipations());
+            return some(participations, function (id) {
                 var listOfEventStrings = getTest(id).events;
-                return _.some(listOfEventStrings, function (ev) {
+                return some(listOfEventStrings, function (ev) {
                     return event.indexOf(ev) === 0;
                 });
             });
@@ -290,24 +299,21 @@ define([
             }
 
             var eventTag = event.tag;
-            return eventTag && _(getActiveTests())
-                .filter(function (test) {
+            return eventTag && chain(getActiveTests()).and(filter, function (test) {
                     var testEvents = test.events;
-                    return testEvents && _.some(testEvents, function (testEvent) {
+                    return testEvents && some(testEvents, function (testEvent) {
                         return startsWith(eventTag, testEvent);
                     });
-                })
-                .map(function (test) {
+                }).and(map, function (test) {
                     return test.id;
-                })
-                .valueOf();
+                }).valueOf();
         },
 
         getAbLoggableObject: function () {
             var abLogObject = {};
 
             try {
-                _.forEach(getActiveTests(), function (test) {
+                forEach(getActiveTests(), function (test) {
                     if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariantId(test.id);
                         if (variant && variant !== 'notintest') {
@@ -315,7 +321,7 @@ define([
                         }
                     }
                 });
-                _.forEach(getServerSideTests(), function (testName) {
+                forEach(getServerSideTests(), function (testName) {
                     abLogObject['ab' + testName] = 'inTest';
                 });
             } catch (error) {
@@ -345,7 +351,7 @@ define([
          */
         testCanBeRun: function (test) {
             if (typeof test === 'string') {
-                return testCanBeRun(_.find(TESTS, function (t) {
+                return testCanBeRun(find(TESTS, function (t) {
                     return t.id === test;
                 }));
             }

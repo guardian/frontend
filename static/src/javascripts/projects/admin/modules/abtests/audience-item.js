@@ -3,17 +3,18 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'common/utils/_',
     'common/modules/component',
-    'bonzo'
+    'bonzo',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
-    _,
     Component,
-    bonzo
-) {
+    bonzo,
+    assign,
+    clone) {
 
     function AudienceItem(config) {
-        this.config = _.extend(_.clone(this.config), config);
+        this.config = assign(clone(this.config), config);
     }
 
     Component.define(AudienceItem);
