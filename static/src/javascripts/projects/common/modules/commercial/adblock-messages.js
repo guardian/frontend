@@ -9,18 +9,41 @@ define([
     storage,
     userFeatures
 ) {
-    function noAdblockMsg() {
+    function adblockInUse() {
+        return detect.adblockInUse();
+    }
+
+    function notMobile() {
+        return detect.getBreakpoint() !== 'mobile';
+    }
+
+    function isPayingMember() {
+        return userFeatures.isPayingMember();
+    }
+
+    function visitedMoreThanOnce() {
         var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
 
-        return detect.adblockInUse() && detect.getBreakpoint() !== 'mobile' && (
-                alreadyVisited <= 1 ||
-                !config.switches.adblock ||
-                (config.switches.adblock && alreadyVisited > 1 && userFeatures.isPayingMember()));
+        return alreadyVisited > 1;
+    }
+
+    function isAdblocSwitchOn() {
+        return config.switches.adblock;
+    }
+
+    function noAdblockMsg() {
+        return adblockInUse() && notMobile() && (
+                !visitedMoreThanOnce() ||
+                !isAdblocSwitchOn() ||
+                (isAdblocSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
     }
 
     function showAdblockMsg() {
-        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
-        return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisited > 1 && !userFeatures.isPayingMember();
+        return isAdblocSwitchOn() &&
+                adblockInUse() &&
+                !isPayingMember() &&
+                visitedMoreThanOnce() &&
+                notMobile();
     }
 
     return {

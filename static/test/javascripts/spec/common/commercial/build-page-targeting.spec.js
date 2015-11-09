@@ -88,6 +88,7 @@ define([
                             asg2: 'value-two'
                         };
                     };
+                    storage.local.set('gu.alreadyVisited', 0);
                     done();
                 });
         });
@@ -166,7 +167,6 @@ define([
             audienceScienceGateway.getSegments = function () {
                 return {};
             };
-            storage.local.set('gu.alreadyVisited', 0);
 
             var opts = {
                 window: {
