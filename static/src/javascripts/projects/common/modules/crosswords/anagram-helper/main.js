@@ -125,7 +125,8 @@ define([
                 });
 
             return React.createElement('div', {
-                    className: 'crossword__anagram-helper-outer'
+                    className: 'crossword__anagram-helper-outer',
+                    'data-link-name': 'Anagram Helper'
                 },
                 React.createElement('div', {
                     className: 'crossword__anagram-helper-inner'
@@ -133,15 +134,18 @@ define([
                 React.createElement('button', {
                     className: 'button button--large button--tertiary crossword__anagram-helper-close',
                     onClick: this.props.close,
-                    dangerouslySetInnerHTML: closeIcon
+                    dangerouslySetInnerHTML: closeIcon,
+                    'data-link-name': 'Close'
                 }),
                 React.createElement('button', {
                     className: 'button button--large ' + (!this.state.clueInput && 'button--tertiary'),
-                    onClick: this.reset
+                    onClick: this.reset,
+                    'data-link-name': 'Start Again'
                 }, 'start again'),
                 React.createElement('button', {
                     className: 'button button--large ' + (!this.canShuffle() && 'button--tertiary'),
-                    onClick: this.shuffle
+                    onClick: this.shuffle,
+                    'data-link-name': 'Shuffle'
                 }, 'shuffle'),
                 React.createElement(CluePreview, {
                     clue: clue,
