@@ -27,19 +27,19 @@ define([
         return alreadyVisited > 1;
     }
 
-    function isAdblocSwitchOn() {
+    function isAdblockSwitchOn() {
         return config.switches.adblock;
     }
 
     function noAdblockMsg() {
         return adblockInUse() && notMobile() && (
                 !visitedMoreThanOnce() ||
-                !isAdblocSwitchOn() ||
-                (isAdblocSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
+                !isAdblockSwitchOn() ||
+                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
     }
 
     function showAdblockMsg() {
-        return isAdblocSwitchOn() &&
+        return isAdblockSwitchOn() &&
                 adblockInUse() &&
                 !isPayingMember() &&
                 visitedMoreThanOnce() &&
