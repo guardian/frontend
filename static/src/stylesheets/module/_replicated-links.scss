@@ -5,6 +5,7 @@
 .element-replicated-links {
     @include fs-textSans(1);
     border-left: $gs-gutter/3 solid colour(neutral-4);
+    padding-bottom: $gs-baseline/2;
     margin-bottom: $gs-baseline;
     position: relative;
     overflow: auto;
@@ -16,6 +17,7 @@
 
 .element-replicated-links__links {
     padding-left: $gs-gutter;
+    margin-bottom: $gs-baseline;
 }
 
 .element-replicated-links__links--contracted {
@@ -29,7 +31,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        height: $gs-baseline * 4;
+        height: $gs-baseline * 3;
         pointer-events: none;
         z-index: 1;
         background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
@@ -92,7 +94,7 @@
     margin-left: $gs-gutter/10;
 }
 
-.js-replicated-links-more {
+.element-replicated-links__more {
     padding-left: $gs-gutter;
     display: block;
     font-size: 14px;
