@@ -74,7 +74,17 @@ define([
     function getAllSelectors(all) {
         var rand,
             len,
-            rules = chain(getInlineStylesheets()).and(map, getRules).and(flatten).and(map, getRules).and(flatten).and(map, getSplitSelectors).and(flatten).and(compact).and(uniq).and(map, canonicalise).value();
+            rules = chain(getInlineStylesheets())
+                .and(map, getRules)
+                .and(flatten)
+                .and(map, getRules) // 2nd pass for rules nested in media queries
+                .and(flatten)
+                .and(map, getSplitSelectors)
+                .and(flatten)
+                .and(compact)
+                .and(uniq)
+                .and(map, canonicalise)
+                .value();
 
         if (all) {
             return rules;

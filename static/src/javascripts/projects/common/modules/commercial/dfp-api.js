@@ -641,7 +641,9 @@ define([
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
-                chain(slotsToRefresh).and(filter, function (slotInfo) {
+                chain(slotsToRefresh)
+                    // only refresh if the slot needs to
+                    .and(filter, function (slotInfo) {
                         return shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint);
                     }).and(map, function (slotInfo) {
                         return slotInfo.slot;

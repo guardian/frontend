@@ -230,7 +230,10 @@ define([
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        return chain(config.tests).and(pick, function (participating) { return !!participating; }).and(keys).value();
+        return chain(config.tests)
+            .and(pick, function (participating) { return !!participating; })
+            .and(keys)
+            .value();
     }
 
     var ab = {

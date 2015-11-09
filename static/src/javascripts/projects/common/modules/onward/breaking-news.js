@@ -102,7 +102,10 @@ define([
                 // update stored IDs with current batch, so we know we've seen these
                 storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                alerts = chain(articles).and(filter, function (article) { return hiddenIds[article.id] !== true; }).and(first, maxSimultaneousAlerts).value();
+                alerts = chain(articles)
+                    .and(filter, function (article) { return hiddenIds[article.id] !== true; })
+                    .and(first, maxSimultaneousAlerts)
+                    .value();
 
                 if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
