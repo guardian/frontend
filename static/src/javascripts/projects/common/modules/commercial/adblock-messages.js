@@ -9,18 +9,41 @@ define([
     storage,
     userFeatures
 ) {
-    function sharedRules() {
-        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
+    function adblockInUse() {
+        return detect.adblockInUse();
+    }
 
-        return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1;
+    function notMobile() {
+        return detect.getBreakpoint() !== 'mobile';
+    }
+
+    function isPayingMember() {
+        return userFeatures.isPayingMember();
+    }
+
+    function visitedMoreThanOnce() {
+        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+
+        return alreadyVisited > 1;
+    }
+
+    function isAdblockSwitchOn() {
+        return config.switches.adblock;
     }
 
     function noAdblockMsg() {
-        return sharedRules() && userFeatures.isPayingMember();
+        return adblockInUse() && notMobile() && (
+                !visitedMoreThanOnce() ||
+                !isAdblockSwitchOn() ||
+                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
     }
 
     function showAdblockMsg() {
-        return sharedRules() && !userFeatures.isPayingMember();
+        return isAdblockSwitchOn() &&
+                adblockInUse() &&
+                !isPayingMember() &&
+                visitedMoreThanOnce() &&
+                notMobile();
     }
 
     return {
