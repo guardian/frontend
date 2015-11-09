@@ -36,7 +36,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
 
     new Job[DataCache[Long, String]] {
       val name = "DFP-TargetingValues-Update"
-      val interval = 30
+      val interval = 1
       def run() = CustomTargetingValueAgent.refresh()
     },
 
