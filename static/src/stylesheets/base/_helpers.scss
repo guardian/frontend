@@ -6,7 +6,7 @@
     @include u-h;
 }
 
-.hide-until-mobileLandscape {
+.hide-until-mobile-landscape {
     @include mq($until: mobileLandscape) {
         display: none !important;
     }
