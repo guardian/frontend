@@ -18,7 +18,8 @@
                     @if(Edition(request) == Uk) {
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
-                                    popup-container has-popup js-profile-register">
+                                    popup-container has-popup js-profile-register
+                                    hide-until-mobileLandscape">
                             <a href="@Configuration.id.membershipUrl?INTCMP=DOTCOM_HEADER_BECOMEMEMBER"
                                 data-link-name="Register link"
                                 class="brand-bar__item--action">
@@ -64,7 +65,7 @@
                     }
 
                     <div class="brand-bar__item has-popup brand-bar__item--has-control
-                                popup-container brand-bar__item--subscribe"
+                                popup-container brand-bar__item--subscribe desktop-only hide-on-slim-header"
                          data-component="subscribe">
                         <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
                         data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
