@@ -8,7 +8,9 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-api'
+    'common/modules/commercial/dfp-api',
+    'common/modules/experiments/ab',
+    'common/modules/onward/inject-container'
 ], function (
     _,
     qwery,
@@ -19,7 +21,9 @@ define([
     mediator,
     createAdSlot,
     commercialFeatures,
-    dfp
+    dfp,
+    ab,
+    injectContainer
 ) {
 
     function MostPopular() {
@@ -36,17 +40,49 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        this.fetch(qwery('.js-popular-trails'), 'html');
+        if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
+            var frontUrl;
+
+            switch (config.page.edition) {
+                case 'UK':
+                    frontUrl = '/uk.json';
+                    break;
+                case 'US':
+                    frontUrl = '/us.json';
+                    break;
+                case 'AU':
+                    frontUrl = '/au.json';
+                    break;
+                case 'INT':
+                    frontUrl = '/international.json';
+                    break;
+            }
+
+            injectContainer.injectContainer(frontUrl, '.js-most-popular-footer', 'ab-network-front-loaded');
+
+            mediator.once('ab-network-front-loaded', function () {
+                var $parent = $('.facia-page');
+                $parent.addClass('ab-front-injected');
+                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
+                $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
+                $('.js-tabs', $parent).addClass('u-h');
+
+                this.prerender(true);
+                this.ready();
+            }.bind(this));
+        } else {
+            this.fetch(qwery('.js-popular-trails'), 'html');
+        }
     };
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {
         return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1);
     };
 
-    MostPopular.prototype.prerender = function () {
+    MostPopular.prototype.prerender = function (inInjectFrontTest) {
         if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
-            this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
-                .append(createAdSlot('mostpop', 'container-inline'));
+            var $mpuEl = (inInjectFrontTest) ? $('#most-popular .js-fc-slice-mpu-candidate', this.elem) : $('.js-fc-slice-mpu-candidate', this.elem);
+            this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
         } else {
             this.$mpu = undefined;
         }

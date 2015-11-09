@@ -29,7 +29,7 @@ define([
                     this.setState({
                         confirming: false
                     });
-                }, this.timeout);
+                }.bind(this), this.timeout);
             }
         },
 

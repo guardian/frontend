@@ -1,20 +1,20 @@
 define([
-    'fastdom',
     'Promise',
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fastdom-idle',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
-    fastdom,
     Promise,
     _,
     $,
     config,
     detect,
+    idleFastdom,
     spacefinder,
     createAdSlot,
     commercialFeatures
@@ -31,12 +31,11 @@ define([
         };
     }
 
-    function getLenientRules() {
-        var lenientRules = _.cloneDeep(getRules());
-        // more lenient rules, closer to the top start of the article
-        lenientRules.minAbove = 300;
-        lenientRules.selectors[' > h2'].minAbove = 20;
-        return lenientRules;
+    function getInlineMerchRules() {
+        var newRules = _.cloneDeep(getRules());
+        newRules.minAbove = 300;
+        newRules.selectors[' > h2'].minAbove = 20;
+        return newRules;
     }
 
     function getLongArticleRules() {
@@ -75,7 +74,7 @@ define([
 
                 ads.push($ad);
                 return new Promise(function (resolve) {
-                    fastdom.write(function () {
+                    idleFastdom.write(function () {
                         $ad.insertBefore(para);
                         resolve(null);
                     });
@@ -85,19 +84,19 @@ define([
             }
         },
         init = function () {
-            var rules, lenientRules, inlineMercPromise;
+            var rules, inlineMercPromise;
 
             if (!commercialFeatures.articleBodyAdverts) {
                 return false;
             }
 
             rules = getRules();
-            lenientRules = getLenientRules();
 
             if (config.page.hasInlineMerchandise) {
-                adNames.unshift(['im', 'im']);
-
-                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
+                inlineMercPromise = spacefinder.getParaWithSpace(getInlineMerchRules()).then(function (space) {
+                    if (space) {
+                        adNames.unshift(['im', 'im']);
+                    }
                     return insertAdAtP(space);
                 });
             } else {
@@ -137,7 +136,7 @@ define([
         init: init,
         // rules exposed for spacefinder debugging
         getRules: getRules,
-        getLenientRules: getLenientRules,
+        getLenientRules: getInlineMerchRules,
 
         reset: function () {
             ads = [];
