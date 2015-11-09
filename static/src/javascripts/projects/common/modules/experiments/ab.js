@@ -27,7 +27,6 @@ define([
     OnwardContainerNames,
     InjectHeadlinesTest,
     InjectNetworkFrontTest,
-    LiveEventsSurvey,
     LargeTopAd
 ) {
 
