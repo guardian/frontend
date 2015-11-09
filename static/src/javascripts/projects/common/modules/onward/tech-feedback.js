@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/dfp-api',
     'lodash/collections/reduce',
     'lodash/objects/assign'
 ], function (

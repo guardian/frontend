@@ -14,21 +14,12 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val DfpCacheRecentOnly = Switch(
-    "Commercial",
-    "dfp-cache-recent-only",
-    "Admin will only update cached data with recent changes in DFP.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 4),
-    exposeClientSide = false
-  )
-
   val DfpCacheCreativeTemplates = Switch(
     "Commercial",
     "dfp-cache-creative-templates",
     "Admin will cache DFP creative templates.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 4),
+    sellByDate = new LocalDate(2015, 11, 18),
     exposeClientSide = false
   )
 
@@ -235,7 +226,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 11),
+    sellByDate = new LocalDate(2015, 12, 16),
     exposeClientSide = false
   )
 

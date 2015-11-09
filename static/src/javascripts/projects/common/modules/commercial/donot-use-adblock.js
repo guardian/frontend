@@ -1,30 +1,35 @@
 define([
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/commercial/user-features',
+    'common/modules/commercial/adblock-messages',
+    'common/modules/adblock-banner',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
     'text!common/views/membership-message.html',
     'common/views/svgs',
-    'lodash/collections/sample'
+    'lodash/collections/sample',
+    'lodash/utilities/random'
 ], function (
+    $,
     config,
     detect,
     storage,
     template,
-    userFeatures,
+    adblockMsg,
+    AdblockBanner,
     Message,
     ab,
     navigation,
     messageTemplate,
     svgs,
-    sample) {
-    function init() {
-        var alreadyVisted = storage.local.get('gu.alreadyVisited') || 0,
-            adblockLink = 'https://membership.theguardian.com/supporter',
+    sample,
+    random) {
+    function showAdblockMessage() {
+        var adblockLink = 'https://membership.theguardian.com/supporter',
             message = sample([
                 {
                     id: 'monthly',
@@ -48,17 +53,56 @@ define([
                 }
             ]);
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse() && config.switches.adblock && alreadyVisted > 1 && !userFeatures.isPayingMember()) {
-            new Message('adblock-message', {
-                pinOnHide: false,
-                siteMessageLinkName: 'adblock message variant ' + message.id,
-                siteMessageCloseBtn: 'hide'
-            }).show(template(messageTemplate, {
-                linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
-                messageText: message.messageText,
-                linkText: message.linkText,
-                arrowWhiteRight: svgs('arrowWhiteRight')
-            }));
+        new Message('adblock-message', {
+            pinOnHide: false,
+            siteMessageLinkName: 'adblock message variant ' + message.id,
+            siteMessageCloseBtn: 'hide'
+        }).show(template(messageTemplate, {
+            linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
+            messageText: message.messageText,
+            linkText: message.linkText,
+            arrowWhiteRight: svgs('arrowWhiteRight')
+        }));
+    }
+
+    function showAdblockBanner() {
+        var variations = [{
+                supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
+                quoteText: 'Become a Guardian Member and support independent journalism',
+                quoteAuthor: 'George Monbiot',
+                customCssClass: 'monbiot',
+                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/7/9/1436429159376/George-Monbiot-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=903233b032379d7529d7337b8c26bcc9'
+            },
+            {
+                supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_MUIR',
+                quoteText: 'Support and become part of the Guardian',
+                quoteAuthor: 'Hugh Muir',
+                customCssClass: 'muir',
+                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2014/3/13/1394733739000/HughMuir.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=c1eeb35230ad2a215ec9de76b3eb69fb'
+            },
+            {
+                supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_TOYNBEE',
+                quoteText: 'If you read the Guardian, join the Guardian',
+                quoteAuthor: 'Polly Toynbee',
+                customCssClass: 'toynbee',
+                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png?w=300&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=abf0ce1a1a7935e82612b330322f5fa4'
+            },
+            {
+                supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=ADBLOCK_BANNER_MACASKILL',
+                quoteText: 'The Guardian enjoys rare freedom and independence. Support our journalism',
+                quoteAuthor: 'Ewen MacAskill',
+                customCssClass: 'macaskill',
+                imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
+            }];
+
+        new AdblockBanner(variations[random(variations.length - 1)]).show();
+    }
+
+    function init() {
+        // Show messages only if adblock is used by non paying member
+        if (adblockMsg.showAdblockMsg()) {
+            showAdblockMessage();
+            showAdblockBanner();
         }
     }
 

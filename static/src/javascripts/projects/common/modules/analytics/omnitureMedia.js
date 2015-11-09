@@ -4,8 +4,9 @@ define([
     'common/utils/config',
     'common/modules/analytics/omniture',
     'lodash/objects/values',
-    'common/utils/chain'
-], function (qwery, config, omniture, values, chain) {
+    'common/utils/chain',
+    'common/modules/experiments/ab'
+], function (qwery, config, omniture, values, chain, ab) {
 
     function OmnitureMedia(player) {
 
@@ -38,6 +39,7 @@ define([
                 // extra events with no set ordering
                 duration: 'event57'
             },
+            abTestParticipation = ab.makeOmnitureTag(),
             trackingVars = [
                 // these tracking vars are specific to media events.
                 'eVar11',   // embedded or on platform
@@ -83,6 +85,9 @@ define([
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
+
+            s.list1 = abTestParticipation;
+
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -100,6 +105,8 @@ define([
 
             s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
+
+            s.list1 = abTestParticipation;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 

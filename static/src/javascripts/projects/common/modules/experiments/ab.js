@@ -10,8 +10,9 @@ define([
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
+    'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/live-events-survey',
-    'common/modules/experiments/tests/large-top-ad',
+    'common/modules/experiments/tests/large-top-slot',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -33,6 +34,7 @@ define([
     RtrtEmailMessage,
     OnwardContainerNames,
     InjectHeadlinesTest,
+    InjectNetworkFrontTest,
     LiveEventsSurvey,
     LargeTopAd,
     flatten,
@@ -51,6 +53,7 @@ define([
         new RtrtEmailMessage(),
         new OnwardContainerNames(),
         new InjectHeadlinesTest(),
+        new InjectNetworkFrontTest(),
         new LiveEventsSurvey(),
         new LargeTopAd()
     ]);

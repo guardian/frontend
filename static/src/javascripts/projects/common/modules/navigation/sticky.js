@@ -8,6 +8,7 @@ define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner',
+    'common/modules/commercial/adblock-messages',
     'common/modules/commercial/commercial-features',
     'lodash/collections/contains',
     'lodash/functions/bindAll'
@@ -21,6 +22,7 @@ define([
     mediator,
     ab,
     smartAppBanner,
+    adblockMsg,
     commercialFeatures,
     contains,
     bindAll) {
@@ -49,7 +51,6 @@ define([
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.noTopBanner = !commercialFeatures.topBannerAd;
         this.isProfilePage = config.page.section === 'identity';
-        this.isAdblockInUse = detect.adblockInUse();
 
         bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
@@ -87,6 +88,16 @@ define([
             }
         }
 
+        // If non paying member uses adblock
+        // the adblock banner should behave like standard top banner
+        if (adblockMsg.showAdblockMsg()) {
+            fastdom.write(function () {
+                fastdom.read(function () {
+                    this.$els.bannerDesktop = $('.js-adblock-sticky');
+                }.bind(this));
+            }.bind(this));
+        }
+
         // Get the name of the method to run after scroll
         this.updateMethod = this.getUpdateMethod();
 
@@ -119,7 +130,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (this.isAdblockInUse) {
+        } else if (adblockMsg.noAdblockMsg()) { // if paying member uses adblock, dont show the messages
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';

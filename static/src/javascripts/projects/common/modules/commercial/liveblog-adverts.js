@@ -5,7 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/dfp-api',
     'lodash/collections/contains',
     'lodash/functions/debounce',
     'lodash/functions/once'

@@ -1,7 +1,5 @@
 @(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], optCapiAdFeature: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@import com.gu.facia.api.utils.{Video, Audio, Gallery}
-
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
     <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising commercial-dfp-multi @optSponsorType" data-link-name="merchandising | capi | multiple @optOmnitureId">
         <div class="fc-container__inner">
@@ -80,7 +78,7 @@
 @insertItemMediaIcon(item : model.Content) = @{
     item match {
         case _: Video => fragments.inlineSvg("video-icon", "icon")
-        case _: Audio => fragments.inlineSvg("volume-high ", "icon")
+        case _: Audio => fragments.inlineSvg("volume-high", "icon")
         case _: Gallery => fragments.inlineSvg("camera", "icon")
         case _ => ""
     }
