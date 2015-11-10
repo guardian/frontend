@@ -5,6 +5,6 @@
 @if(FontSwitch.isSwitchedOn) {
     @fragments.fontDefinitions()
     <script>
-        @InlineJs(templates.headerInlineJS.js.loadFonts().body)
+        @InlineJs(templates.inlineJS.blocking.js.loadFonts().body)
     </script>
 }

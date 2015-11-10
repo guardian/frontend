@@ -9,6 +9,6 @@ not 'x'. Once it's loaded (appears in `window.document.styleSheets`),  `media` i
 *@
 @if(AsyncCss.isSwitchedOn) {
     <script>
-        @Html(templates.headerInlineJS.js.enableStylesheets().body)
+        @Html(templates.inlineJS.blocking.js.enableStylesheets().body)
     </script>
 }

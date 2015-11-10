@@ -14,19 +14,19 @@
 <script id="gu">
 
     @* NOTE the order of these is important  *@
-    @Html(templates.headerInlineJS.js.polyfills().body)
+    @Html(templates.inlineJS.blocking.js.polyfills().body)
 
-    @InlineJs.withFileNameHint(templates.headerInlineJS.js.shouldEnhance(item).body, "shouldEnhance.js")
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(item).body, "shouldEnhance.js")
 
-    @Html(templates.headerInlineJS.js.config(item).body)
+    @Html(templates.inlineJS.blocking.js.config(item).body)
 
-    @Html(templates.headerInlineJS.js.analytics().body)
+    @Html(templates.inlineJS.blocking.js.analytics().body)
 
-    @InlineJs.withFileNameHint(templates.headerInlineJS.js.applyRenderConditions().body, "applyRenderConditions.js")
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js")
 
     @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
-    @InlineJs.withFileNameHint(templates.headerInlineJS.js.cloudwatchBeacons(item).body, "cloudwatchBeacons.js")
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(item).body, "cloudwatchBeacons.js")
 
 </script>
 
