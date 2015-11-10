@@ -8,7 +8,6 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/rtrt-email-message',
-    'common/modules/experiments/tests/onward-container-names',
     'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/large-top-slot',
@@ -31,7 +30,6 @@ define([
     HighCommercialComponent,
     MembershipMessageUSA,
     RtrtEmailMessage,
-    OnwardContainerNames,
     InjectHeadlinesTest,
     InjectNetworkFrontTest,
     LargeTopAd,
@@ -49,7 +47,6 @@ define([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
         new RtrtEmailMessage(),
-        new OnwardContainerNames(),
         new InjectHeadlinesTest(),
         new InjectNetworkFrontTest(),
         new LargeTopAd()
