@@ -3,7 +3,8 @@
     formDescription: String = "",
     labelText: String = "Your email address",
     submitText: String = "Subscribe",
-    smallText: String = "No spam ever. Unsubscribe in one click.")
+    smallText: String = "No spam ever. Unsubscribe in one click.",
+    formImage: String = "")
 
 @formId = @{ componentClass + "-email-sub-form" }
 @inputId = @{ componentClass + "-email-sub-input" }
@@ -13,7 +14,7 @@
 
 <div class="@wrapperClass">
     @if(formHeading) {
-        @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription)
+        @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription, formImage)
     }
 
     <form action="/email" method="post" id="@formId" class="@formClass">
