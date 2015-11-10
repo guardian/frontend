@@ -1,4 +1,5 @@
 @(metaData: model.MetaData, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
+@import conf.switches.Switches._
 
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -10,7 +11,11 @@
     @fragments.stylesheets(projectName)
 
     @* start trying to use the stylesheets *@
-    @fragments.stylesheetsEnable()
+    @if(AsyncCss.isSwitchedOn) {
+        <script>
+            @Html(templates.inlineJS.blocking.js.enableStylesheets().body)
+        </script>
+    }
 </head>
 <body id="top">
 

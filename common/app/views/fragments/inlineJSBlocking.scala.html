@@ -10,32 +10,31 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-    @Html(templates.inlineJS.blocking.js.polyfills().body)
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js")
-    @Html(templates.inlineJS.blocking.js.config(metaData).body)
-    @Html(templates.inlineJS.blocking.js.analytics().body)
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js")
+    @Html(templates.inlineJS.blocking.js.polyfills().body);
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js");
+    @Html(templates.inlineJS.blocking.js.guardianConfig(metaData).body);
+    @Html(templates.inlineJS.blocking.js.analytics().body);
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js");
 
-    @* try and load fonts before we use the stylesheets *@
+    // try and load fonts before we use the stylesheets
     @if(FontSwitch.isSwitchedOn) {
-        @InlineJs(templates.inlineJS.blocking.js.loadFonts().body)
+        @InlineJs(templates.inlineJS.blocking.js.loadFonts().body);
     }
 
-    @*
-    The css is loaded by the `link`s in stylesheets.scala.html, but with media of "only x".
+    /*
+    This borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+    The css is loaded by `link`s (in stylesheets.scala.html), but with media of "only x".
     This means the browser requests it, but doesn't block rendering on it, since this media is
     not 'x'. Once it's loaded (appears in `window.document.styleSheets`),  `media` is set to
     `screen` so the browser uses it.
-    *@
+    */
     @if(AsyncCss.isSwitchedOn) {
-        <script>
-            @Html(templates.inlineJS.blocking.js.enableStylesheets().body)
-        </script>
+        @Html(templates.inlineJS.blocking.js.enableStylesheets().body);
     }
 
-    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+    // Not the usual type of thing we do, but I want this separate to our "normal" javascript.
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js")
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js");
 </script>
 
 <!--[if lte IE 9]>
@@ -46,4 +45,8 @@
 <![endif]-->
 
 @* load the app *@
-@fragments.javaScriptBootstraps(metaData)
+<script>
+    @Html(templates.inlineJS.blocking.js.curlConfig(metaData).body);
+    @Html(Static.js.curl);
+    @Html(templates.inlineJS.blocking.js.bootEnhanced(metaData).body);
+</script>

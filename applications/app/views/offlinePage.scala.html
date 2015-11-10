@@ -15,7 +15,10 @@
     @fragments.stylesheets(None)
 
     @* load the app *@
-    @fragments.javaScriptBootstraps(offlinePage, isOffline = true)
+    <script>
+    @Html(templates.inlineJS.blocking.js.curlConfig(offlinePage, isOffline = true).body)
+    @Html(Static.js.curl)
+    @Html(templates.inlineJS.blocking.js.bootEnhanced(offlinePage).body)
     </script>
 </head>
     <body
