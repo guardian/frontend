@@ -1,6 +1,7 @@
 define([
     'common/utils/formInlineLabels',
     'bean',
+    'qwery',
     'common/utils/$',
     'common/utils/ajax-promise',
     'fastdom',
@@ -11,6 +12,7 @@ define([
 ], function (
     formInlineLabels,
     bean,
+    qwery,
     $,
     ajax,
     fastdom,
@@ -80,28 +82,45 @@ define([
                         $wrapper.css('min-height', wrapperHeight);
                     };
 
-                if (reset) {
-                    fastdom.write(resetHeight);
-                } else {
-                    fastdom.read(getHeight);
-                    fastdom.write(setHeight);
+                return function () {
+                    if (reset) {
+                        fastdom.write(resetHeight);
+                    } else {
+                        fastdom.read(getHeight);
+                        fastdom.write(setHeight);
+                    }
+                }
+            },
+            setIframeHeight: function (iFrameEl) {
+                return function () {
+                    iFrameEl.height = "";
+                    iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + "px";
                 }
             }
         };
 
     return {
-        init: function () {
-            formInlineLabels.init(classes.inlineLabel);
+        // eg: rootEl can be a specific container or an iframe contentDocument
+        init: function (rootEl) {
+            var isIframed = rootEl && rootEl.tagName === "IFRAME",
+                thisRootEl = (isIframed) ? rootEl.contentDocument : rootEl || document;
 
-            $('.' + classes.wrapper).each(function (el) {
+            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
+                formInlineLabels.init(el);
+            });
+
+            $('.' + classes.wrapper, thisRootEl).each(function (el) {
                 formSubmission.bindSubmit($('.' + classes.form, el));
 
                 // Ensure the height of the wrapper stays the same when submitting
-                ui.freezeHeight($(el));
-                mediator.on('window:resize', _.debounce(function () {
-                    ui.freezeHeight($(el), true);
-                }, 500));
+                ui.freezeHeight($(el)).apply();
+                mediator.on('window:resize', _.debounce(ui.freezeHeight($(el), true), 500));
             });
+
+            if (isIframed) {
+                ui.setIframeHeight(rootEl).apply();
+                mediator.on('window:resize', _.debounce(ui.setIframeHeight(rootEl), 500));
+            }
         }
     };
 });

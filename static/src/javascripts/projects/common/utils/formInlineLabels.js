@@ -30,25 +30,23 @@ define([
     }
 
     return {
-        init: function (labelClass) {
-            $('.' + labelClass).each(function (el) {
-                var $el = $(el),
-                    $input = $('.js-email-sub__text-input', el),
-                    $label = $('.js-email-sub__label', el),
-                    hiddenLabelClass = 'email-sub__label--is-hidden';
+        init: function (el) {
+            var $el = $(el),
+                $input = $('.js-email-sub__text-input', el),
+                $label = $('.js-email-sub__label', el),
+                hiddenLabelClass = 'email-sub__label--is-hidden';
 
-                // Add the js only styling class for inline label enabled
-                updateClass('add', $el, 'email-sub__inline-label--enabled')();
+            // Add the js only styling class for inline label enabled
+            updateClass('add', $el, 'email-sub__inline-label--enabled')();
 
-                // Check if the input val is empty and if not, hide the label
-                if ($input.val() !== '') { updateClass('add', $label, hiddenLabelClass)(); }
+            // Check if the input val is empty and if not, hide the label
+            if ($input.val() !== '') { updateClass('add', $label, hiddenLabelClass)(); }
 
-                // Bind to focus and blur handlers to update class based on input
-                bean.on($input[0], 'focus', updateClass('add', $label, hiddenLabelClass));
-                bean.on($input[0], 'blur', updateClass('remove', $label, hiddenLabelClass, function () {
-                    return $input.val() === '';
-                }));
-            });
+            // Bind to focus and blur handlers to update class based on input
+            bean.on($input[0], 'focus', updateClass('add', $label, hiddenLabelClass));
+            bean.on($input[0], 'blur', updateClass('remove', $label, hiddenLabelClass, function () {
+                return $input.val() === '';
+            }));
         }
     };
 });
