@@ -78,13 +78,8 @@ define([
 
                 relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
-                    if (opts.excludeTags && opts.excludeTags.length) {
-                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                            return 'exclude-tag=' + tag;
-                        }).join('&');
-                    }
                 if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
                         return 'exclude-tag=' + tag;
                     }).join('&');
                 }
