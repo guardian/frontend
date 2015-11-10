@@ -12,7 +12,7 @@
 <script id="gu">
     @Html(templates.inlineJS.blocking.js.polyfills().body);
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js");
-    @Html(templates.inlineJS.blocking.js.guardianConfig(metaData).body);
+    @Html(templates.inlineJS.blocking.js.config(metaData).body);
     @Html(templates.inlineJS.blocking.js.analytics().body);
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js");
 
@@ -37,7 +37,6 @@
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js");
 
     // load the app
-    @Html(templates.inlineJS.blocking.js.curlConfig(metaData).body);
-    @Html(Static.js.curl);
+    @Html(templates.inlineJS.blocking.js.curl(metaData).body);
     @Html(templates.inlineJS.blocking.js.bootEnhanced(metaData).body);
 </script>

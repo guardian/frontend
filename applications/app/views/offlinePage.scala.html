@@ -16,8 +16,7 @@
 
     @* load the app *@
     <script>
-    @Html(templates.inlineJS.blocking.js.curlConfig(offlinePage, isOffline = true).body)
-    @Html(Static.js.curl)
+    @Html(templates.inlineJS.blocking.js.curl(offlinePage, isOffline = true).body);
     @Html(templates.inlineJS.blocking.js.bootEnhanced(offlinePage).body)
     </script>
 </head>

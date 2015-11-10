@@ -77,3 +77,5 @@ var curl = {
         }
     }
 };
+
+@JavaScript(Static.js.curl);
