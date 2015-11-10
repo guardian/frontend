@@ -30,6 +30,7 @@ import scala.util.Try
 class Content protected (val delegate: contentapi.Content) extends Trail with MetaData with ShareLinks {
 
   lazy val publication: String = fields.getOrElse("publication", "")
+  lazy val newspapaerPageNumber: Option[Int] = fields.get("newspaperPageNumber").flatMap(s => Try(s.toInt).toOption)
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
   lazy val internalPageCode: String = delegate.safeFields("internalPageCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
