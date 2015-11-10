@@ -6,7 +6,7 @@ define([
     'common/utils/ajax-promise',
     'fastdom',
     'common/utils/mediator',
-    'common/utils/_',
+    'lodash/functions/debounce',
     'common/utils/template',
     'text!common/views/email/submissionResponse.html'
 ], function (
@@ -17,7 +17,7 @@ define([
     ajax,
     fastdom,
     mediator,
-    _,
+    debounce,
     template,
     successHtml
 ) {
@@ -114,12 +114,12 @@ define([
 
                 // Ensure the height of the wrapper stays the same when submitting
                 ui.freezeHeight($(el)).apply();
-                mediator.on('window:resize', _.debounce(ui.freezeHeight($(el), true), 500));
+                mediator.on('window:resize', debounce(ui.freezeHeight($(el), true), 500));
             });
 
             if (isIframed) {
                 ui.setIframeHeight(rootEl).apply();
-                mediator.on('window:resize', _.debounce(ui.setIframeHeight(rootEl), 500));
+                mediator.on('window:resize', debounce(ui.setIframeHeight(rootEl), 500));
             }
         }
     };
