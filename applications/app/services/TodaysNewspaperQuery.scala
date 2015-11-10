@@ -98,7 +98,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId.getOrElse(""), CollectionConfig.empty.copy(displayName = displayName)),
       CollectionEssentials(trails, Nil, displayName, dataId, None, None)
-    )
+    ).copy(hasShowMoreEnabled = false)
   }
 
   private def getNewspaperPageNumber(content: ApiContent) = content.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
