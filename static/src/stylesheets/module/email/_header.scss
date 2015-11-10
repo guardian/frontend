@@ -1,16 +1,7 @@
 .email-sub__ { // Email subscription component namespace
 
-    &header {
-        background-color: $form-primary-colour;
-        font-family: $f-serif-headline;
-    }
-
-    &heading {
-        line-height: 35px;
-
-        &-emph {
-            color: guss-colour(guardian-brand, $pasteup-palette);
-        }
+    &heading-emph {
+        color: guss-colour(guardian-brand, $pasteup-palette);
     }
 
     &description {
@@ -22,6 +13,30 @@
         &-emph {
             display: block;
             font-weight: bold;
+        }
+    }
+
+    // LANDING PAGE MODS
+    &header--landing {
+        background-color: $form-primary-colour;
+        font-family: $f-serif-headline;
+
+        .email-sub__ {
+            &heading {
+                line-height: 35px;
+            }
+        }
+    }
+
+    // FOOTER MODS
+    &header--footer {
+        .email-sub__ {
+            &heading {
+                color: #fff;
+                font-family: $f-sans-serif-text;
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
         }
     }
 }
