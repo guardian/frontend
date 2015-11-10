@@ -29,7 +29,7 @@ define([
          */
         this.insertAtFirstSpace = function insertAtFirstSpace(rules, writer, debug) {
             lastInsertion = lastInsertion.then(function insertNextContent() {
-                return spacefinder.getParaWithSpace(rules, debug).then(function applyParaToWriter(para){
+                return spacefinder.getParaWithSpace(rules, debug).then(function applyParaToWriter(para) {
                     if (para) {
                         return promiseInsertion(para);
                     } else {
@@ -40,7 +40,7 @@ define([
 
             function promiseInsertion(para) {
                 return new Promise(function (resolve) {
-                    fastdom.write(function(){
+                    fastdom.write(function () {
                         try {
                             writer(para);
                             resolve(true);
@@ -54,6 +54,6 @@ define([
             }
 
             return lastInsertion;
-        }
+        };
     }
 });
