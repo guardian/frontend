@@ -1,14 +1,14 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/url'
-], function (
-    _,
-    config,
-    storage,
-    urlUtils
-) {
+    'common/utils/url',
+    'lodash/functions/once',
+    'lodash/objects/pairs',
+    'lodash/arrays/zipObject',
+    'lodash/collections/map',
+    'lodash/collections/filter',
+    'common/utils/chain'
+], function (config, storage, urlUtils, once, pairs, zipObject, map, filter, chain) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql',
         storageKey = 'gu.ads.audsci-gateway',
@@ -25,7 +25,7 @@ define([
         init = function () {
             section = sectionPlacements[config.page.section] ? config.page.section : 'default';
         },
-        load = _.once(function () {
+        load = once(function () {
             if (config.switches.audienceScienceGateway) {
                 var placements = sectionPlacements[section],
                     query = urlUtils.constructQuery({
@@ -49,18 +49,14 @@ define([
             var segments = {},
                 storedSegments = storage.local.get(storageKey);
             if (config.switches.audienceScienceGateway && storedSegments) {
-                segments = _(_.pairs(storedSegments[section]))
-                    .filter(function (placement) {
+                segments = chain(pairs(storedSegments[section])).and(filter, function (placement) {
                         //keyword `default` written in dot notation throws an exception IE8
                         // jscs:disable requireDotNotation
                         return placement[1]['default']; //eslint-disable-line
                         // jscs:enable requireDotNotation
-                    })
-                    .map(function (placement) {
+                    }).and(map, function (placement) {
                         return ['pq_' + placement[0], 'T'];
-                    })
-                    .zipObject()
-                    .valueOf();
+                    }).and(zipObject).valueOf();
                 // set up the global asiPlacements var in case dfp returns before asg
                 window.asiPlacements = storedSegments[section];
             }

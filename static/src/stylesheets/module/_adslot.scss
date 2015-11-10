@@ -546,11 +546,6 @@
         padding-top: 2px;
         border-top: 1px dotted colour(neutral-5);
 
-        .commercial-dfp-multi & {
-            position: absolute;
-            bottom: $gs-gutter;
-        }
-
         .ad-slot--paid-for-badge__link {
             float: none;
             margin-top: $gs-row-height/4;

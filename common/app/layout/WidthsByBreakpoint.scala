@@ -107,12 +107,14 @@ object ContentWidths {
   object Supporting extends ContentHinting (Some("element--supporting"))
   object Showcase   extends ContentHinting (Some("element--showcase"))
   object Thumbnail  extends ContentHinting (Some("element--thumbnail"))
+  object Immersive  extends ContentHinting (Some("element--immersive"))
 
   sealed trait ContentRelation {
     def inline: WidthsByBreakpoint
     def supporting: WidthsByBreakpoint = unused
     def showcase: WidthsByBreakpoint = unused
     def thumbnail: WidthsByBreakpoint = unused
+    def immersive: WidthsByBreakpoint = unused
   }
 
   object BodyMedia extends ContentRelation {
@@ -138,6 +140,8 @@ object ContentWidths {
     override val thumbnail = WidthsByBreakpoint(
       mobile =          Some(120.px), // mobileLandscape and tablet are also 120px
       tablet =          Some(140.px)) // desktop, leftCol and wide are also 140px
+
+    override val immersive = BodyMedia.inline
   }
 
   object MainMedia extends ContentRelation {
@@ -169,6 +173,29 @@ object ContentWidths {
       desktop =         Some(1125.px),
       leftCol =         Some(1140.px),
       wide =            Some(1300.px))
+  }
+
+  object ImmersiveMedia extends ContentRelation {
+    override val inline = BodyMedia.inline
+    override val supporting = BodyMedia.supporting
+    override val thumbnail = BodyMedia.thumbnail
+
+    override val immersive = WidthsByBreakpoint(
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
+      phablet =         Some(725.px),
+      tablet =          Some(965.px),
+      desktop =         Some(1125.px),
+      leftCol =         Some(1140.px),
+      wide =            Some(1300.px))
+
+    override val showcase = WidthsByBreakpoint(
+      mobile =          Some(445.px),
+      mobileLandscape = Some(605.px),
+      phablet =         Some(620.px), // tablet is also 620px
+      desktop =         Some(640.px),
+      leftCol =         Some(800.px),
+      wide =            Some(880.px))
   }
 
   object LiveBlogMedia extends ContentRelation {
@@ -216,6 +243,7 @@ object ContentWidths {
       case Supporting => relation.supporting
       case Showcase => relation.showcase
       case Thumbnail => relation.thumbnail
+      case Immersive => relation.immersive
       case _ => unused
     }
   }

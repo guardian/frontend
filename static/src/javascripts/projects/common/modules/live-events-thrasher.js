@@ -2,7 +2,6 @@ define([
     'bean',
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
@@ -11,12 +10,10 @@ define([
     bean,
     fastdom,
     $,
-    _,
     config,
     template,
     svgs,
-    adfreeThrasherTemplate
-) {
+    adfreeThrasherTemplate) {
     var AdfreeThrasher = function (options) {
         var opts = options || {};
         this.$container = opts.$container;

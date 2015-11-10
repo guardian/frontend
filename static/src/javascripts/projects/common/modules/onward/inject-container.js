@@ -1,7 +1,6 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/modules/ui/images',
@@ -9,7 +8,6 @@ define([
 ], function (
     fastdom,
     $,
-    _,
     ajax,
     config,
     images,

@@ -1,10 +1,9 @@
 define([
-    'common/utils/_',
-    'common/modules/commercial/commercial-feature-policies'
+    'common/modules/commercial/commercial-feature-policies',
+    'lodash/objects/forOwn'
 ], function (
-    _,
-    commercialFeaturePolicies
-) {
+    commercialFeaturePolicies,
+    forOwn) {
     function init() {
         var commercialFeatures = getFeatureSwitches();
         commercialFeatures.reset = init; // Exposed for testing
@@ -17,8 +16,8 @@ define([
         var activeSwitches = {};
         var switchesForPolicies = commercialFeaturePolicies.getPolicySwitches();
 
-        _.forOwn(switchesForPolicies, function mergeSwitches(policySwitchSet) {
-            _.forOwn(policySwitchSet, function (switchValue, switchKey) {
+        forOwn(switchesForPolicies, function mergeSwitches(policySwitchSet) {
+            forOwn(policySwitchSet, function (switchValue, switchKey) {
                 var activeValue = activeSwitches[switchKey];
                 if (activeValue !== false) {
                     // A policy can only override a true or undefined switch

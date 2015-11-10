@@ -1,25 +1,27 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
     'common/modules/ui/expandable',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'lodash/arrays/intersection',
+    'lodash/collections/map'
 ], function (
     bonzo,
     qwery,
-    _,
     $,
     config,
     mediator,
     register,
     LazyLoad,
     Expandable,
-    ab
+    ab,
+    intersection,
+    map
 ) {
 
     var opts;
@@ -47,7 +49,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : _.intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
@@ -76,6 +78,11 @@ define([
 
                 relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
+                    if (opts.excludeTags && opts.excludeTags.length) {
+                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                            return 'exclude-tag=' + tag;
+                        }).join('&');
+                    }
                 if (opts.excludeTags && opts.excludeTags.length) {
                     relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
                         return 'exclude-tag=' + tag;
@@ -94,18 +101,6 @@ define([
                         mediator.emit('page:new-content', container);
                         mediator.emit('ui:images:upgradePictures', container);
                         register.end(componentName);
-
-                        /* TODO remove after ab test*/
-                        if (ab.getTestVariantId('OnwardNames') &&
-                            ab.testCanBeRun('OnwardNames') &&
-                            ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
-                            (function () {
-                                var heading = $('.js-ab-onward-names-related');
-                                if (heading) {
-                                    heading.text(ab.getTestVariantId('OnwardNames').substr(5));
-                                }
-                            })();
-                        }
 
                     },
                     error: function () {

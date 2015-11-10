@@ -34,79 +34,48 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Refreshing the features data', function () {
 
-            describe('If a downstream feature is enabled', function () {
+            describe('If user signed in', function () {
                 beforeEach(function () {
-                    config.switches = {advertOptOut : true};
+                    identityApi.isUserLoggedIn = function () {return true;};
                 });
 
-                describe('If user signed in', function () {
-                    beforeEach(function () {
-                        identityApi.isUserLoggedIn = function () {return true;};
-                    });
-
-                    it('Performs an update if the user has missing data', function () {
-                        deleteAllFeaturesData();
-                        userFeatures.refresh();
-                        expect(userFeatures._requestNewData).toHaveBeenCalled();
-                    });
-
-                    it('Performs an update if the user has expired data', function () {
-                        setAllFeaturesData({isExpired: true});
-                        userFeatures.refresh();
-                        expect(userFeatures._requestNewData).toHaveBeenCalled();
-                    });
-
-                    it('Does not delete the data just because it has expired', function () {
-                        setAllFeaturesData({isExpired: true});
-                        userFeatures.refresh();
-                        expect(userFeatures._deleteOldData).not.toHaveBeenCalled();
-                    });
-
-                    it('Does not perform update if user has fresh feature data', function () {
-                        setAllFeaturesData({isExpired: false});
-                        userFeatures.refresh();
-                        expect(userFeatures._requestNewData).not.toHaveBeenCalled();
-                    });
+                it('Performs an update if the user has missing data', function () {
+                    deleteAllFeaturesData();
+                    userFeatures.refresh();
+                    expect(userFeatures._requestNewData).toHaveBeenCalled();
                 });
 
-                describe('If user signed out', function () {
-                    beforeEach(function () {
-                        identityApi.isUserLoggedIn = function () {return false;};
-                    });
+                it('Performs an update if the user has expired data', function () {
+                    setAllFeaturesData({isExpired: true});
+                    userFeatures.refresh();
+                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                });
 
-                    it('Does not perform update, even if feature data missing', function () {
-                        deleteAllFeaturesData();
-                        userFeatures.refresh();
-                        expect(userFeatures._requestNewData).not.toHaveBeenCalled();
-                    });
+                it('Does not delete the data just because it has expired', function () {
+                    setAllFeaturesData({isExpired: true});
+                    userFeatures.refresh();
+                    expect(userFeatures._deleteOldData).not.toHaveBeenCalled();
+                });
 
-                    it('Deletes leftover feature data', function () {
-                        setAllFeaturesData({isExpired: false});
-                        userFeatures.refresh();
-                        expect(userFeatures._deleteOldData).toHaveBeenCalled();
-                    });
+                it('Does not perform update if user has fresh feature data', function () {
+                    setAllFeaturesData({isExpired: false});
+                    userFeatures.refresh();
+                    expect(userFeatures._requestNewData).not.toHaveBeenCalled();
                 });
             });
 
-            describe('If no downstream features enabled', function () {
-                // We want to short-circuit the request if no features actually depend on the data
-
+            describe('If user signed out', function () {
                 beforeEach(function () {
-                    config.switches = {
-                        advertOptOut : false,
-                        adblock : false
-                    };
+                    identityApi.isUserLoggedIn = function () {return false;};
                 });
 
-                it('Does not perform update, even if a signed in user needs more feature data', function () {
-                    identityApi.isUserLoggedIn = function () {return true;};
+                it('Does not perform update, even if feature data missing', function () {
                     deleteAllFeaturesData();
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).not.toHaveBeenCalled();
                 });
 
-                it('Cleans up any outstanding feature data, even for signed in users', function () {
-                    identityApi.isUserLoggedIn = function () {return true;};
+                it('Deletes leftover feature data', function () {
                     setAllFeaturesData({isExpired: false});
                     userFeatures.refresh();
                     expect(userFeatures._deleteOldData).toHaveBeenCalled();

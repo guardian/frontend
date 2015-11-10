@@ -34,7 +34,9 @@
 }
 
 .headline-list__count {
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: gs-span(1);
     color: colour(neutral-4);
     @include font($f-serif-headline, 200, 44px);
@@ -53,6 +55,11 @@
 
     .fc-item__title {
         margin-top: -1 * ($gs-baseline / 3);
+        margin-left: gs-span(1);
+
+        @include mq(mobile) {
+            margin-left: gs-span(1) - $gs-gutter / 2;
+        }
     }
 
     .inline-icon {

@@ -2,15 +2,14 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/collections/contains'
 ], function (
     bean,
     bonzo,
     $,
-    _,
-    mediator
-) {
+    mediator,
+    contains) {
 
     var Toggles = function (parent) {
 
@@ -42,7 +41,7 @@ define([
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
-                return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
+                return !(omitEl === control || contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
         };
 

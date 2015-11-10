@@ -1,19 +1,18 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/_',
     'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
     'common/utils/storage',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/utilities/noop'
 ], function (
-    _,
     ajaxPromise,
     cookies,
     config,
     storage,
-    identity
-) {
+    identity,
+    noop) {
     var userFeatures, PERSISTENCE_KEYS;
 
     userFeatures = {
@@ -34,10 +33,10 @@ define([
     };
 
     function refresh() {
-        if (featuresEnabled() && identity.isUserLoggedIn() && needNewFeatureData()) {
+        if (identity.isUserLoggedIn() && needNewFeatureData()) {
             userFeatures._requestNewData();
         }
-        if (!featuresEnabled() || haveDataAfterSignout()) {
+        if (haveDataAfterSignout()) {
             userFeatures._deleteOldData();
         }
     }
@@ -55,12 +54,9 @@ define([
     }
 
     function isPayingMember() {
+        // Does NOT check if data has expired
         // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
         return identity.isUserLoggedIn() && cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false';
-    }
-
-    function featuresEnabled() {
-        return config.switches.advertOptOut || config.switches.adblock;
     }
 
     function needNewFeatureData() {
@@ -103,7 +99,7 @@ define([
             crossOrigin : true,
             withCredentials : true,
             error : function () {}
-        }).then(persistResponse, _.noop);
+        }).then(persistResponse, noop);
     }
 
     function persistResponse(JsonResponse) {
