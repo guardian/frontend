@@ -97,38 +97,38 @@
         color: $form-secondary-colour;
         display: block;
     }
-}
 
-.email-sub__message {
-    color: #fff;
-    padding-left: 35px;
-    position: relative;
+    &message {
+        color: #fff;
+        padding-left: 35px;
+        position: relative;
 
-    &:before {
-        @include icon(close-icon-white-small);
-        content: '';
-        position: absolute;
-        height: 30px;
-        width: 30px;
-        bottom: 0;
-        left: 0;
-        top: 0;
-        margin: auto;
-    }
+        &:before {
+            @include icon(close-icon-white-small);
+            content: '';
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            bottom: 0;
+            left: 0;
+            top: 0;
+            margin: auto;
+        }
 
-    &__headline,
-    &__description {
-        font-family: $f-sans-serif-text;
-    }
+        &__headline,
+        &__description {
+            font-family: $f-sans-serif-text;
+        }
 
-    &__headline {
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 0;
-    }
+        &__headline {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
 
-    &__description {
-        font-size: 12px;
+        &__description {
+            font-size: 12px;
+        }
     }
 }
 

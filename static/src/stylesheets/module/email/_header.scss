@@ -21,8 +21,7 @@
         background-color: $form-primary-colour;
         font-family: $f-serif-headline;
 
-        .email-sub__ {
-            &heading {
+        .email-sub__heading {
                 line-height: 35px;
             }
         }
@@ -30,8 +29,7 @@
 
     // FOOTER MODS
     &header--footer {
-        .email-sub__ {
-            &heading {
+        .email-sub__heading {
                 color: #fff;
                 font-family: $f-sans-serif-text;
                 font-size: 14px;
