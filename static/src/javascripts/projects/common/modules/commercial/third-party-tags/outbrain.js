@@ -8,7 +8,7 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'text!common/views/commercial/outbrain.html',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     $,
