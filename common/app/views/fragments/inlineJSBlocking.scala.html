@@ -1,13 +1,49 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
+@import conf.switches.Switches._
+@import common.InlineJs
 
-@* polyfill, feature detect etc before we try and use the stylesheets *@
-@fragments.javaScriptPreFlight(metaData)
+<!--[if lt IE 9]>
+    <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
+<![endif]-->
 
-@* try and load fonts before we use the stylesheets *@
-@fragments.fonts()
+@fragments.omnitureScript(Some(metaData))
 
-@* start trying to use the stylesheets *@
-@fragments.stylesheetsEnable()
+@* NOTE the order of these includes is important  *@
+<script id="gu">
+    @Html(templates.inlineJS.blocking.js.polyfills().body)
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js")
+    @Html(templates.inlineJS.blocking.js.config(metaData).body)
+    @Html(templates.inlineJS.blocking.js.analytics().body)
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js")
+
+    @* try and load fonts before we use the stylesheets *@
+    @if(FontSwitch.isSwitchedOn) {
+        @InlineJs(templates.inlineJS.blocking.js.loadFonts().body)
+    }
+
+    @*
+    The css is loaded by the `link`s in stylesheets.scala.html, but with media of "only x".
+    This means the browser requests it, but doesn't block rendering on it, since this media is
+    not 'x'. Once it's loaded (appears in `window.document.styleSheets`),  `media` is set to
+    `screen` so the browser uses it.
+    *@
+    @if(AsyncCss.isSwitchedOn) {
+        <script>
+            @Html(templates.inlineJS.blocking.js.enableStylesheets().body)
+        </script>
+    }
+
+    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+    @* also delete iPhoneConfidenceCheck inside of facia.js *@
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js")
+</script>
+
+<!--[if lte IE 9]>
+    <script>
+        // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+        guardian.config.page.ajaxUrl = guardian.config.page.ajaxUrl.replace(/^https:/, '');
+    </script>
+<![endif]-->
 
 @* load the app *@
 @fragments.javaScriptBootstraps(metaData)

@@ -1,9 +1,0 @@
-@()
-@import conf.switches.Switches._
-@import common.InlineJs
-
-@if(FontSwitch.isSwitchedOn) {
-    <script>
-        @InlineJs(templates.inlineJS.blocking.js.loadFonts().body)
-    </script>
-}
