@@ -29,7 +29,7 @@ import conf.Configuration
         Then("the Omniture webbug should record my visit")
         val webbug = findFirst("#omnitureNoScript img")
 
-        webbug.getAttribute("src") should startWith("http://hits.theguardian.com/b/ss/guardiangu-network-dev/1/H.25.3/")
+        webbug.getAttribute("src") should startWith("https://hits-secure.theguardian.com/b/ss/guardiangu-network-dev/1/H.25.3/")
 
         // test a few token properties in the web bug
         webbug.getAttribute("src") should include("c11=sport")
