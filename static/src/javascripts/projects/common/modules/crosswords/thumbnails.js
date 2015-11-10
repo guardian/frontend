@@ -1,20 +1,25 @@
 define([
-    'common/utils/_',
     'bonzo',
     'qwery',
     'common/utils/ajax',
     'fastdom',
     './helpers',
-    './persistence'
+    './persistence',
+    'lodash/arrays/flatten',
+    'lodash/collections/map',
+    'lodash/arrays/range',
+    'lodash/collections/forEach'
 ], function (
-    _,
     bonzo,
     qwery,
     ajax,
     fastdom,
     helpers,
-    persistence
-) {
+    persistence,
+    flatten,
+    map,
+    range,
+    forEach) {
     var textXOffset = 10;
     var textYOffset = 21;
 
@@ -22,8 +27,8 @@ define([
         var columns = savedState.length;
         var rows = savedState[0].length;
 
-        return _.flatten(_.map(_.range(columns), function (column) {
-            return _.map(_.range(rows), function (row) {
+        return flatten(map(range(columns), function (column) {
+            return map(range(rows), function (row) {
                 var enteredText = savedState[column][row];
 
                 if (enteredText) {
@@ -49,7 +54,7 @@ define([
         var thumbnails = qwery('.js-crossword-thumbnail');
 
         if (thumbnails.length) {
-            _.forEach(thumbnails, function (elem) {
+            forEach(thumbnails, function (elem) {
                 var $elem = bonzo(elem);
                 var savedState = persistence.loadGridState($elem.attr('data-crossword-id'));
 

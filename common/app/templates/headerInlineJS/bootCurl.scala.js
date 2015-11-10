@@ -116,7 +116,7 @@ require([
         }
 
         if (guardian.isModernBrowser) {
-            require(['bootstraps/app'], function(bootstrap) {
+            require(['bootstraps/enhanced'], function(bootstrap) {
                 bootstrap.go();
             });
         }

@@ -1,14 +1,15 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
-    'facia/modules/ui/container-show-more'
+    'facia/modules/ui/container-show-more',
+    'lodash/arrays/intersection',
+    'lodash/objects/keys'
 ], function (
     bonzo,
     qwery,
-    _,
-    containerShowMore
-) {
+    containerShowMore,
+    intersection,
+    keys) {
     describe('Container Show More', function () {
         var $container;
 
@@ -33,7 +34,7 @@ define([
         it('should be able to group elements by id', function () {
             var grouped = containerShowMore.itemsByArticleId($container);
 
-            expect(_.intersection(_.keys(grouped), ['loldongs', 'corgi', 'geekpie']).length === 3).toBeTruthy();
+            expect(intersection(keys(grouped), ['loldongs', 'corgi', 'geekpie']).length === 3).toBeTruthy();
         });
 
         it('should de-duplicate items loaded in', function () {

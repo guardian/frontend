@@ -1,31 +1,29 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-api',
-    'text!common/views/commercial/badge.html'
-
+    'text!common/views/commercial/badge.html',
+    'lodash/collections/map'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     Promise,
-    _,
     $,
     config,
     template,
+    idleFastdom,
     createAdSlot,
     commercialFeatures,
     dfp,
-    badgeTpl
-) {
+    badgeTpl,
+    map) {
     var badgesConfig = {
             sponsoredfeatures: {
                 count:      0,
@@ -69,7 +67,7 @@ define([
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
 
             return new Promise(function (resolve) {
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     $('.js-container__header', container)
                         .after($adSlot);
 
@@ -85,7 +83,7 @@ define([
                 return false;
             }
 
-            sponsoredFrontPromise = Promise.all(_.map($('.js-sponsored-front'), function (front) {
+            sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), function (front) {
                 var $front = bonzo(front);
 
                 return renderAd(
@@ -98,7 +96,7 @@ define([
             }));
 
             sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                return Promise.all(_.map($('.js-sponsored-container'), function (container) {
+                return Promise.all(map($('.js-sponsored-container'), function (container) {
                     if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                         var $container = bonzo(container);
 

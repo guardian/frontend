@@ -3,7 +3,6 @@ define([
     'bonzo',
     'bean',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/config',
@@ -12,13 +11,17 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html'
+    'text!common/views/save-for-later/save-button.html',
+    'lodash/functions/bindAll',
+    'lodash/objects/assign',
+    'lodash/collections/forEach',
+    'lodash/collections/filter',
+    'lodash/collections/some'
 ], function (
     qwery,
     bonzo,
     bean,
     fastdom,
-    _,
     $,
     detect,
     config,
@@ -27,8 +30,12 @@ define([
     identity,
     svgs,
     saveLink,
-    saveButton
-) {
+    saveButton,
+    bindAll,
+    assign,
+    forEach,
+    filter,
+    some) {
 
     function SaveForLater() {
         this.classes = {
@@ -54,7 +61,7 @@ define([
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
 
-        _.bindAll(this,
+        bindAll(this,
             'save',
             'delete',
             'onSaveArticle',
@@ -139,7 +146,7 @@ define([
             };
             if (options.url) {
                 $saver.html(template(saveLink,
-                    _.assign({ url: options.url }, templateData))
+                    assign({ url: options.url }, templateData))
                 );
             } else {
                 $saver.html(template(saveButton, templateData));
@@ -157,7 +164,7 @@ define([
     SaveForLater.prototype.getElementsIndexedById = function (context) {
         var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
 
-        return _.forEach(elements, function (el) {
+        return forEach(elements, function (el) {
             return bonzo(el).attr(this.attributes.containerItemShortUrl);
         }.bind(this));
     };
@@ -192,7 +199,7 @@ define([
     SaveForLater.prototype.renderFaciaItemLinks = function (signedIn, context) {
         var elements = this.getElementsIndexedById(context);
 
-        _.forEach(elements, function (item) {
+        forEach(elements, function (item) {
             var $item = $(item),
                 $itemSaveLink = $(this.classes.itemSaveLink, item),
                 shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
@@ -245,7 +252,7 @@ define([
     };
 
     SaveForLater.prototype.delete = function (pageId, shortUrl, onDelete) {
-        this.userData.articles = _.filter(this.userData.articles, function (article) {
+        this.userData.articles = filter(this.userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
         });
 
@@ -365,7 +372,7 @@ define([
     };
 
     SaveForLater.prototype.getSavedArticle = function (shortUrl) {
-        return _.some(this.userData.articles, function (article) {
+        return some(this.userData.articles, function (article) {
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };

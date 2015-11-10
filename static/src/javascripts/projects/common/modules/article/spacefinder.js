@@ -6,9 +6,14 @@ define([
     'bonzo',
     'bean',
     'Promise',
-    'common/utils/_',
     'common/utils/config',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/collections/filter',
+    'lodash/collections/map',
+    'lodash/collections/pluck',
+    'lodash/collections/every',
+    'common/utils/chain',
+    'lodash/objects/forOwn'
 ], function (
     $,
     fastdom,
@@ -16,10 +21,14 @@ define([
     bonzo,
     bean,
     Promise,
-    _,
     config,
-    mediator
-) {
+    mediator,
+    filter,
+    map,
+    pluck,
+    every,
+    chain,
+    forOwn) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',
         // minAbove and minBelow are measured in px from the top of the paragraph element being tested
@@ -43,7 +52,7 @@ define([
         },
         // test one element vs an array of other elements for the given rules
         _testElems = function (para, others, rules) {
-            return _(others).every(function (other) {
+            return chain(others).and(every, function (other) {
                 return _testElem(para, other, rules);
             }).valueOf();
         };
@@ -66,11 +75,11 @@ define([
 
     function _enforceRules(slots, rules, bodyHeight, debug) {
 
-        var filtered = _(slots),
+        var filtered = chain(slots),
             contentMeta;
 
         // enforce minAbove and minBelow rules
-        filtered = filtered.filter(function (p) {
+        filtered = filtered.and(filter, function (p) {
             var farEnoughFromTopOfBody = p.top >= rules.minAbove,
                 farEnoughFromBottomOfBody = p.top + rules.minBelow <= bodyHeight,
                 valid = farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
@@ -86,7 +95,7 @@ define([
         // enforce content meta rule
         if (rules.clearContentMeta) {
             contentMeta = _mapElementToDimensions(qwery('.js-content-meta')[0]);
-            filtered = filtered.filter(function (p) {
+            filtered = filtered.and(filter, function (p) {
                 var valid = p.top > (contentMeta.bottom + rules.clearContentMeta);
                 if (debug && !valid) { _debugErrPara(p.element, 'too close to content meta'); }
                 return valid;
@@ -94,10 +103,10 @@ define([
         }
 
         // enforce selector rules
-        _(rules.selectors).forOwn(function (params, selector) {
-            var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
+        chain(rules.selectors).and(forOwn, function (params, selector) {
+            var relevantElems = chain(qwery(bodySelector + selector)).and(map, _mapElementToDimensions).value();
 
-            filtered = filtered.filter(function (p) {
+            filtered = filtered.and(filter, function (p) {
                 var valid = _testElems(p, relevantElems, params);
                 if (debug && !valid) {
                     _debugErrPara(p.element, 'too close to selector (' + selector + ')');
@@ -109,11 +118,11 @@ define([
     }
 
     function onImagesLoaded() {
-        var notLoaded = _.filter($('.js-article__body img'), function (img) {
+        var notLoaded = filter($('.js-article__body img'), function (img) {
             return !img.complete;
         });
 
-        return Promise.all(_.map(notLoaded, function (img) {
+        return Promise.all(map(notLoaded, function (img) {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, 5000);
                 bean.on(img, 'load', resolve);
@@ -155,22 +164,22 @@ define([
             return new Promise(function (resolve) {
                 fastdom.read(function () {
                     bodyBottom = qwery(bodySelector)[0].offsetHeight;
-                    paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+                    paraElems = chain(qwery(bodySelector + ' > p')).and(map, _mapElementToDimensions);
 
                     if (debug) { // reset any previous debug messages
                         fastdom.write(function () {
-                            bonzo(paraElems.pluck('element').valueOf())
+                            bonzo(paraElems.and(pluck, 'element').valueOf())
                                 .attr('data-spacefinder-msg', '')
                                 .removeClass('spacefinder--valid')
                                 .removeClass('spacefinder--error');
                         });
                     }
 
-                    slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+                    slots = _enforceRules(paraElems.value(), rules, bodyBottom, debug);
 
                     if (debug) {
                         fastdom.write(function () {
-                            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
+                            bonzo(pluck(slots, 'element')).addClass('spacefinder--valid');
                         });
                     }
 

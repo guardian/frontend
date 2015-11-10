@@ -5,7 +5,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -54,13 +53,13 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'text!common/views/international-message.html',
-    'bootstraps/identity-common'
+    'bootstraps/identity-common',
+    'lodash/collections/forEach'
 ], function (
     fastdom,
     bean,
     bonzo,
     qwery,
-    _,
     $,
     config,
     cookies,
@@ -109,8 +108,8 @@ define([
     membershipMessages,
     email,
     internationalMessage,
-    identity
-) {
+    identity,
+    forEach) {
     var modules = {
             initialiseTopNavItems: function () {
                 var profile,
@@ -240,18 +239,19 @@ define([
             // However, this means it's VITAL that all writes in callbacks are delegated to fastdom
             throttledScrollEvent: function () {
                 var running = false;
-                window.addEventListener('scroll', function () {
+                var emit = function () {
                     if (!running) {
                         running = true;
-                        // Use fastdom to avoid forced synchronous layout:
-                        // https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts
-                        // *Fastdom guarantees that reads will come before writes*
                         fastdom.read(function () {
                             mediator.emitEvent('window:throttledScroll');
                             running = false;
                         });
                     }
-                });
+                };
+                var callback = userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window ? function () {
+                    window.requestIdleCallback(emit);
+                } : emit;
+                window.addEventListener('scroll', callback);
             },
 
             checkIframe: function () {
@@ -379,7 +379,7 @@ define([
 
     return {
         init: function () {
-            _.forEach(robust.makeBlocks([
+            forEach(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],

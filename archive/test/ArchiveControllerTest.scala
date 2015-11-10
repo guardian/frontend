@@ -198,13 +198,6 @@ import scala.concurrent.Future
     result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
   }
 
-  it should "check that a lookup which specifies a Redirect doesn't match the original path" in {
-    // This check needs to be in place to ensure we don't create redirect loops.
-    val databaseSaysRedirect = services.Redirect("http://www.theguardian.com/redirect/path-to-content")
-    val result = controllers.ArchiveController.processLookupDestination("www.theguardian.com/redirect/path-to-content").lift(databaseSaysRedirect)
-    result should be (None)
-  }
-
   it should "not perform a redirect loop check on Archive objects" in {
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
     val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")

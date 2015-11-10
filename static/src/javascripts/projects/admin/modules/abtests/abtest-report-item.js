@@ -4,23 +4,24 @@
  Description: Displays information about a single test
  */
 define([
-    'common/utils/_',
     'common/modules/component',
     'admin/modules/abtests/participation',
     'bonzo',
     'qwery',
-    'bean'
+    'bean',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
-    _,
     Component,
     Participation,
     bonzo,
     qwery,
-    bean
-) {
+    bean,
+    assign,
+    clone) {
 
     function ABTestReportItem(config) {
-        this.config = _.extend(_.clone(this.config), config);
+        this.config = assign(clone(this.config), config);
         if (window.abCharts) {
             this.chart = window.abCharts['ab' + this.config.test.id];
         }

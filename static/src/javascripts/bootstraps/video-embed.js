@@ -5,7 +5,6 @@ define([
     'qwery',
     'videojs',
     'videojsembed',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -17,14 +16,14 @@ define([
     'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html'
+    'text!common/views/media/titlebar.html',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     qwery,
     videojs,
     videojsembed,
-    _,
     $,
     config,
     deferToAnalytics,
@@ -36,8 +35,8 @@ define([
     fullscreener,
     svgs,
     loadingTmpl,
-    titlebarTmpl
-    ) {
+    titlebarTmpl,
+    debounce) {
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -158,7 +157,7 @@ define([
                 }
             });
 
-            mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+            mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
 
             // built in vjs-user-active is buggy so using custom implementation
             player.on('mousemove', function () {

@@ -1,18 +1,15 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/commercial/adblock-sticky-message.html'
 ], function (
     fastdom,
     $,
-    _,
     template,
     svgs,
-    adblockStickyMessage
-) {
+    adblockStickyMessage) {
 
     /**
      * Message which is shown at the top of the page to the adblock users.
@@ -37,7 +34,7 @@ define([
                 supporterLink: this.supporterLink,
                 quoteText: this.quoteText,
                 quoteAuthor: this.quoteAuthor,
-                messageText: 'We notice you\'re using an ad-blocker. Become a supporter from just £5 per month to ensure quality journalism is available to all.',
+                messageText: 'Become a supporter from just £5 per month to ensure quality journalism is available to all.',
                 linkText: 'Find out more',
                 imageAuthor: this.imageAuthor,
                 customCssClass: this.customCssClass,

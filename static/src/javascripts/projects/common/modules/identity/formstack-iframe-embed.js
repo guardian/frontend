@@ -15,15 +15,14 @@
 
 define([
     'bean',
-    'common/utils/_',
     'common/utils/$',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/objects/assign'
 ], function (
     bean,
-    _,
     $,
-    idApi
-) {
+    idApi,
+    assign) {
 
     function Formstack(el, formstackId, config) {
 
@@ -31,7 +30,7 @@ define([
             dom = {},
             formId = formstackId.split('-')[0];
 
-        config = _.assign({
+        config = assign({
             idClasses: {
                 form: 'form',
                 field: 'form-field',
