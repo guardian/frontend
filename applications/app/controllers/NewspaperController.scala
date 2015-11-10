@@ -10,7 +10,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   //todo rename to today?
   //todo this response needs caching
   def index() = Action.async { implicit request =>
-    val page = model.Page(request.path, "todo", "Todo", "Todo")
+    val page = model.Page(request.path, "News", "Main section | News | The Guardian", "Newspaper books Main Section")
 
     val paper = TodaysNewspaperQuery.fetchTodaysPaper
 
@@ -21,5 +21,4 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 }
 
-//todo add metadata
 case class TodayNewspaper(page: MetaData, bookSections: Seq[FaciaContainer])
