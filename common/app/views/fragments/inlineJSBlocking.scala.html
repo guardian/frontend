@@ -10,9 +10,9 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.polyfills().body, "polyfills.js");
+    @Html(templates.inlineJS.blocking.js.polyfills().body);
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js");
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.config(metaData).body, "config.js");
+    @Html(templates.inlineJS.blocking.js.config(metaData).body);
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.analytics().body, "analytics.js");
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js");
 
