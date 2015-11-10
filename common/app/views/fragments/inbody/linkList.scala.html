@@ -12,9 +12,6 @@
     data-timestamp="@bodyLink.date"
     >
 
-        @bodyLink.index.map { index =>
-            <sup class="element-replicated-link__number">@index</sup>
-        }
         <a href="@bodyLink.href" data-link-name="replicated link">
             @bodyLink.domain.map{ domain =>
                 <span class="element-replicated-link__domain">@domain</span>
