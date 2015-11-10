@@ -18,7 +18,7 @@ define([
 
         this.canRun = function () {
             return !config.page.isFront &&
-                   !(config.page.contentType === "LiveBlog" || config.page.contentType === "Interactive") &&
+                   !(config.page.contentType === 'LiveBlog' || config.page.contentType === 'Interactive') &&
                    // following check rules out any iPhones older than an iPhone 5 as they may be likely to crash
                    !(navigator.platform === 'iPhone' && screen.width === 320 && screen.height === 480) &&
                    // as are iPads
