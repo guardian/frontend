@@ -59,14 +59,10 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     val bodyLinks = getBodyLinks(document)
     if (bodyLinks.nonEmpty) {
       date map { date =>
-        val links: List[LinkInfo] = bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).map { case (link, index) =>
-          val number = document.createElement("sup")
-            .addClass("element-replicated-link__pointer")
-            .text(s"$index")
-          link.after(number) // side effect
+        val (internalLinks, externalLinks): (List[LinkInfo], List[LinkInfo]) = bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).map { case (link, index) =>
           LinkInfo(Some(index), date.getMillis, UrlParser.externalDomain(link.attr("href")), link.attr("href"), link.text)
-        }
-        val rendered = views.html.fragments.inbody.links(links).toString
+        }.partition(_.domain.isEmpty)
+        val rendered = views.html.fragments.inbody.links(internalLinks, externalLinks).toString
         Jsoup.parseBodyFragment(rendered).body().child(0)
       }
     } else {

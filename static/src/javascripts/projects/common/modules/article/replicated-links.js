@@ -102,7 +102,7 @@ define([
     // get /embed/related/article.json
     function addRelated() {
         var url = '/embed/related/' + config.page.pageId + '.json',
-            container = $('.js-replicated-links__links');
+            container = $('.js-replicated-links__internal');
         if (container.length) {
             return ajax({
                 url: url,

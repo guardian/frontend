@@ -1,5 +1,5 @@
 @import views.support.LinkInfo
-@(bodyLinks: List[LinkInfo])(implicit request: RequestHeader)
+@(internalLinks: List[LinkInfo], externalLinks: List[LinkInfo])(implicit request: RequestHeader)
 
 @import views.support.RenderClasses
 
@@ -13,7 +13,16 @@
 
     <div class="element-replicated-links__links js-replicated-links__links">
 
-        @linkList(bodyLinks, false)
+        @if(internalLinks.nonEmpty) {
+            <div class="js-replicated-links__internal">
+                @linkList(internalLinks, false, "internal")
+            </div>
+        }
+
+        @if(externalLinks.nonEmpty) {
+            <p class="element-replicated-links__sources">Sources:</p>
+            @linkList(externalLinks, false, "external")
+        }
 
     </div>
 
