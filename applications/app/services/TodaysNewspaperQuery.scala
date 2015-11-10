@@ -31,16 +31,28 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
 
     LiveContentApi.getResponse(item).map { resp =>
 
+      //filter out the first page results to make a Front Page container
+      val (firstPageContent, otherContent) = resp.results.partition(p => p.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt) == Some(1))
 
-      val unorderedBookSections = createBookSections(resp.results)
+      val firstPageContainer = {
+        val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
+        bookSectionContainer("front-page", Some("Front Page"), content, 0)
+
+      }
+
+      val unorderedBookSections = createBookSections(otherContent)
       val orderedBookSections = orderBookSectionsByPageNumber(unorderedBookSections)
 
-      orderedBookSections.map { list =>
+      val bookSectionContainers = orderedBookSections.map { list =>
         val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer(list.tag.id, Some(list.tag.webTitle), content, orderedBookSections.indexOf(list))
+        bookSectionContainer(list.tag.id, Some(list.tag.webTitle), content, orderedBookSections.indexOf(list) + 1)
       }
+
+      firstPageContainer :: bookSectionContainers
     }
   }
+
+
 
   private def createBookSections(contentList: List[ApiContent]): List[BookSectionContent] = {
     val tagWithContent: List[TagWithContent] = contentList.flatMap { content =>
