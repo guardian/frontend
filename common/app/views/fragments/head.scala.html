@@ -16,14 +16,5 @@
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName)
 
-@* polyfill, feature detect etc before we try and use the stylesheets *@
-@fragments.javaScriptPreFlight(metaData)
-
-@* try and load fonts before we use the stylesheets *@
-@fragments.fonts()
-
-@* start trying to use the stylesheets *@
-@fragments.stylesheetLinksEnable()
-
-@* load the app *@
-@fragments.javaScriptBootstraps(metaData)
+@* inline JS - blocking *@
+@fragments.inlineJSBlocking(metaData)

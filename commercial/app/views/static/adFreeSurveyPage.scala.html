@@ -13,16 +13,8 @@
         @* get the stylesheets downloading ASAP *@
         @fragments.stylesheets(None)
 
-        @* polyfill, feature detect etc before we try and use the stylesheets *@
-        @fragments.javaScriptPreFlight(adFreeSurvey)
-
-        @* try and load fonts before we use the stylesheets *@
-        @fragments.fonts()
-
-        @* start trying to use the stylesheets *@
-        @fragments.stylesheetLinksEnable()
-
-        @fragments.javaScriptBootstraps(adFreeSurvey)
+        @* inline JS - blocking *@
+        @fragments.inlineJSBlocking(adFreeSurvey)
     </head>
     <body
     id="top"

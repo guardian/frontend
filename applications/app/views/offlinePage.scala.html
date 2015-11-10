@@ -14,37 +14,8 @@
     @* get the stylesheets downloading ASAP *@
     @fragments.stylesheets(None)
 
-    @* polyfill, feature detect etc before we try and use the stylesheets *@
-    @fragments.javaScriptPreFlight(offlinePage)
-
-    @* try and load fonts before we use the stylesheets *@
-    @fragments.fonts()
-
-    @* start trying to use the stylesheets *@
-    @fragments.stylesheetLinksEnable()
-
-    <script>
-        @* Service worker only caches the bundles, so the offline page can only ask for those. *@
-        var curl = {
-            baseUrl: '@{Configuration.assets.path}javascripts',
-            apiName: 'require',
-            paths: {
-                core:                       '@Static("javascripts/core.js")',
-                'facebook.js':              '//connect.facebook.net/en_US/all.js',
-                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-                text:                       'text', // noop
-                inlineSvg:                  'inlineSvg', // noop
-
-                core:                       '@Static("javascripts/core.js")',
-                'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
-                'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
-                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
-            }
-        };
-
-        @Html(Static.js.curl)
-
-        @Html(templates.inlineJS.blocking.js.bootCurl(offlinePage).body)
+    @* load the app *@
+    @fragments.javaScriptBootstraps(offlinePage, isOffline = true)
     </script>
 </head>
     <body

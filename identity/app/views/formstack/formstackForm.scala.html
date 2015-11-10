@@ -7,20 +7,10 @@
     <title>@Html(metaData.webTitle)</title>
 
     @* get the stylesheets downloading ASAP *@
-
-    @* polyfill, feature detect etc before we try and use the stylesheets *@
-    @fragments.javaScriptPreFlight(metaData)
-
-    @* try and load fonts before we use the stylesheets *@
-    @fragments.fonts()
-
-    @* start trying to use the stylesheets *@
-    @fragments.stylesheetLinksEnable()
-
-    @* load the app *@
-    @fragments.javaScriptBootstraps(metaData)
     @fragments.stylesheets(projectName)
 
+    @* inline JS - blocking *@
+    @fragments.inlineJSBlocking(metaData)
 </head>
 <body id="top">
 
