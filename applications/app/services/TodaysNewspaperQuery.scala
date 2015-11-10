@@ -20,7 +20,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
   def fetchTodaysPaper: Future[List[FaciaContainer]] = {
     val today = DateTime.now(DateTimeZone.UTC)
 
-    val item = LiveContentApi.item("publication/theguardian")
+    val item = LiveContentApi.item("theguardian/mainsection")
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
