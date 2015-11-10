@@ -1,5 +1,5 @@
 @import views.support.LinkInfo
-@(bodyLinks: Seq[LinkInfo], enhanced: Boolean)(implicit request: RequestHeader)
+@(bodyLinks: Seq[LinkInfo], enhanced: Boolean, suffix: String)(implicit request: RequestHeader)
 
 @import views.support.RenderClasses
 
@@ -7,7 +7,7 @@
     <div
     class="@RenderClasses(Map(
         "js-replicated-link" -> true,
-        "element-replicated-link" -> true
+        s"element-replicated-link__$suffix" -> true
     ))"
     data-timestamp="@bodyLink.date"
     >
@@ -16,14 +16,15 @@
             <sup class="element-replicated-link__number">@index</sup>
         }
         <a href="@bodyLink.href" data-link-name="replicated link">
-            @* when the guardian ones are found client side, the contents of the a are replaced with a span element-replicated-link__headline *@
-            @bodyLink.domain.map { domain =>
+            @bodyLink.domain.map{ domain =>
                 <span class="element-replicated-link__domain">@domain</span>
-            }
-            @if(enhanced) {
-                <span class="element-replicated-link__headline">@bodyLink.text</span>
-            } else {
-                <q class="element-replicated-link__text">@bodyLink.text</q>
+            }.getOrElse {
+                @if(enhanced) {
+                    <span class="element-replicated-link__headline">@bodyLink.text</span>
+                } else {
+                    @* when the guardian ones are found client side, the contents of the a are replaced with a span element-replicated-link__headline *@
+                    <q class="element-replicated-link__text">@bodyLink.text</q>
+                }
             }
         </a>
 

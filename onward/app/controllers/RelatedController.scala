@@ -41,7 +41,7 @@ object RelatedController extends Controller with Related with Containers with Lo
   }
 
   def renderLinks(path: String) = MemcachedAction { implicit request =>
-    renderUsingCallback(trails => Cached(30.minutes)(JsonComponent("html" -> views.html.fragments.inbody.linkList(linkInfo(trails.take(4)), true))), path)
+    renderUsingCallback(trails => Cached(30.minutes)(JsonComponent("html" -> views.html.fragments.inbody.linkList(linkInfo(trails.take(4)), true, "internal"))), path)
   }
 
   def linkInfo(trails: Seq[Content]) =

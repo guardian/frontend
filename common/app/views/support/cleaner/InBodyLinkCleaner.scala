@@ -26,11 +26,12 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     }
 
     if (replicate) {
-      replicatedLinks(body) map {
-        case (articleBody, linksDiv) =>
-          putMentionedBefore(articleBody) map { mentionedBefore =>
+      body.getElementsByTag("body").headOption.map { articleBody =>
+        putMentionedBefore(articleBody) map { mentionedBefore =>
+          replicatedLinks(body) map { linksDiv =>
             mentionedBefore.before(linksDiv)
           }
+        }
       }
     }
 
@@ -54,19 +55,15 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false, replica
     body
   }
 
-  def replicatedLinks(document: Document): Option[(Element, Element)] = {
+  def replicatedLinks(document: Document): Option[Element] = {
     val bodyLinks = getBodyLinks(document)
     if (bodyLinks.nonEmpty) {
-      document.getElementsByTag("body").headOption.flatMap(articleBody => date.map((_, articleBody)))map { case (date, articleBody) =>
-        val links: List[LinkInfo] = bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).map { case (link, index) =>
-          val number = document.createElement("sup")
-            .addClass("element-replicated-link__pointer")
-            .text(s"$index")
-          link.after(number)
+      date map { date =>
+        val (internalLinks, externalLinks): (List[LinkInfo], List[LinkInfo]) = bodyLinks.zipWithIndex.map(t => (t._1, t._2 + 1)).map { case (link, index) =>
           LinkInfo(Some(index), date.getMillis, UrlParser.externalDomain(link.attr("href")), link.attr("href"), link.text)
-        }
-        val rendered = views.html.fragments.inbody.links(links).toString
-        (articleBody, Jsoup.parseBodyFragment(rendered).body().child(0))
+        }.partition(_.domain.isEmpty)
+        val rendered = views.html.fragments.inbody.links(internalLinks, externalLinks).toString
+        Jsoup.parseBodyFragment(rendered).body().child(0)
       }
     } else {
       None
