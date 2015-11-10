@@ -3,7 +3,6 @@ define([
     'bonzo',
     'qwery',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -29,7 +28,6 @@ define([
     bonzo,
     qwery,
     fastdom,
-    _,
     $,
     config,
     detect,
@@ -49,8 +47,7 @@ define([
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust
-) {
+    robust) {
     'use strict';
 
     var modules,

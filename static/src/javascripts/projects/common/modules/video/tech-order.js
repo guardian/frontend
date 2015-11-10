@@ -1,12 +1,11 @@
 define([
     'common/utils/$',
-    'common/utils/_',
-    'common/utils/config'
-], function (
-    $,
-    _,
-    config
-) {
+    'common/utils/config',
+    'lodash/collections/contains',
+    'lodash/arrays/compact',
+    'lodash/collections/map',
+    'common/utils/chain'
+], function ($, config, contains, compact, map, chain) {
 
     var codecs = {
         'video/m3u8': 'video/m3u8; codecs="avc1.42C01e, mp4a.40.2"',
@@ -24,13 +23,9 @@ define([
     }
 
     function hasProbableHtml5Source(el) {
-        return _.chain(getMediaSources(el))
-            .map(function (type) {
+        return chain(getMediaSources(el)).and(map, function (type) {
                 return el.canPlayType(type);
-            })
-            .compact()
-            .contains('probably')
-            .value();
+            }).and(compact).and(contains, 'probably').value();
     }
 
     return function priority(el) {

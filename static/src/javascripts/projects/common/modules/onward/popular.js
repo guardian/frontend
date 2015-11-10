@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -10,9 +9,9 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-api',
     'common/modules/experiments/ab',
-    'common/modules/onward/inject-container'
+    'common/modules/onward/inject-container',
+    'lodash/collections/contains'
 ], function (
-    _,
     qwery,
     $,
     config,
@@ -23,8 +22,8 @@ define([
     commercialFeatures,
     dfp,
     ab,
-    injectContainer
-) {
+    injectContainer,
+    contains) {
 
     function MostPopular() {
         // This is not going to evolve into a random list of sections. If anyone wants more than these 2 then
@@ -33,7 +32,7 @@ define([
         // Don't even come ask...
         var sectionsWithoutPopular = ['info', 'global'];
         mediator.emit('register:begin', 'popular-in-section');
-        this.hasSection = config.page && config.page.section && !_.contains(sectionsWithoutPopular, config.page.section);
+        this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
     }
 

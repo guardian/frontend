@@ -3,19 +3,18 @@ define([
     'qwery',
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/url'
+    'common/utils/url',
+    'lodash/collections/where'
 ], function (
     qwery,
     bean,
     bonzo,
-    _,
     $,
     ajax,
-    urlUtils
-) {
+    urlUtils,
+    where) {
 
     function getHours() {
         var hours =  /[?&]hours=([^&]*)/.exec(window.location.search);
@@ -40,7 +39,7 @@ define([
             }).then(function (r2Data) {
                 var r2Buckets = r2Data.buckets,
                     graphData = [['Time', 'Next Gen', 'R2']].concat(nextGenData.buckets.map(function (bucket) {
-                        var r2Bucket = _.where(r2Buckets, {time: bucket.time});
+                        var r2Bucket = where(r2Buckets, {time: bucket.time});
                         return [
                             new Date(bucket.time),
                             Math.max(bucket.avgTimeToRenderEnded / 1000, 0),

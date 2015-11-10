@@ -25,6 +25,10 @@ body {
     }
 }
 
+::selection {
+    background: rgba(colour(news-main-2), .4);
+}
+
 /**
  * Breakpoint definition for JS - see https://github.com/JoshBarr/on-media-query
  */

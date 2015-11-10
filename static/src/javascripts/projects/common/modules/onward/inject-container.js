@@ -1,14 +1,12 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/modules/ui/images',
     'common/utils/mediator'
 ], function (
     fastdom,
     $,
-    _,
     ajax,
     images,
     mediator

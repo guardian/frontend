@@ -4,7 +4,6 @@ define([
     'enhancer',
     'fastdom',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/contains',
@@ -24,7 +23,6 @@ define([
     enhancer,
     fastdom,
     qwery,
-    _,
     $,
     config,
     contains,
@@ -39,8 +37,7 @@ define([
     Popular,
     Related,
     TonalComponent,
-    shareCount
-) {
+    shareCount) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
             insert();

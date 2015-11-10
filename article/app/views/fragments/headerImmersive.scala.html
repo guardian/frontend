@@ -13,14 +13,14 @@
     </div>
 
     @if(article.hasMainEmbed || article.elements("main").isEmpty) {
-        @MainCleaner(article, article.main, false)
         <div class="content__loading">
             <span class="content__loading-animation is-updating"></span>
             <span class="u-h">Loading header</span>
         </div>
+        @MainCleaner(article, article.main, false)
     } else {
         <style>
-            @article.mainPicture.map { picture => 
+            @article.mainPicture.map { picture =>
                 .content__head--mobile {
                     background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
                 }
@@ -45,6 +45,11 @@
         <div class="content__head--mobile">
             <div class="content__wrapper content__wrapper--headline">
                 <div class="gs-container">
+                    @article.blogOrSeriesTag.map { series =>
+                    <h3 class="content__series-label">
+                        <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+                    </h3>
+                    }
                     <h1 class="content__headline">@Html(article.headline)</h1>
                 </div>
             </div>
