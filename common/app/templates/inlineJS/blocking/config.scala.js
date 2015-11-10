@@ -56,3 +56,10 @@ window.guardian = {
         }
     }}
 };
+
+// http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+/*@@cc_on
+@@if (@@_jscript_version < 10)
+    guardian.config.page.ajaxUrl = guardian.config.page.ajaxUrl.replace(/^https:/, '');
+@@end
+@@*/

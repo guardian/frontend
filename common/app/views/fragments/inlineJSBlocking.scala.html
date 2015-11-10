@@ -35,17 +35,8 @@
     // should this be the usual type of thing we do?
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js");
-</script>
 
-<!--[if lte IE 9]>
-    <script>
-        // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
-        guardian.config.page.ajaxUrl = guardian.config.page.ajaxUrl.replace(/^https:/, '');
-    </script>
-<![endif]-->
-
-@* load the app *@
-<script>
+    // load the app
     @Html(templates.inlineJS.blocking.js.curlConfig(metaData).body);
     @Html(Static.js.curl);
     @Html(templates.inlineJS.blocking.js.bootEnhanced(metaData).body);
