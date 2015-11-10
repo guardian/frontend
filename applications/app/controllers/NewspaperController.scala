@@ -2,13 +2,12 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
-import model.MetaData
+import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import services.TodaysNewspaperQuery
 
 object NewspaperController extends Controller with Logging with ExecutionContexts {
 
-  //todo this response needs caching
   def today() = Action.async { implicit request =>
     val page = model.Page(request.path, "News", "Main section | News | The Guardian", "Newspaper books Main Section")
 
@@ -16,7 +15,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
     val todaysPaper = paper.map(p => TodayNewspaper(page, p))
 
-    for( tp <- todaysPaper) yield Ok(views.html.todaysNewspaper(tp))
+    for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.todaysNewspaper(tp)))
 
   }
 }
