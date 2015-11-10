@@ -25,28 +25,29 @@ object PublicationController extends Controller with ExecutionContexts with Item
       .toDateTime
   }
 
-  def publishedOn(path: String, day: String, month: String, year: String, tag: String) = Action.async { implicit request =>
+  def publishedOn(publication: String, day: String, month: String, year: String, tag: String) = Action.async { implicit request =>
     val reqDate = requestedDate(s"$year/$month/$day")
-
-    loadPublishedContent(path, reqDate, tag).map { _.map { index =>
+    loadPublishedContent(publication, reqDate, tag).map { _.map { index =>
       val contentOnRequestedDate = index.trails.filter(_.webPublicationDate.sameDay(reqDate))
 
       if (contentOnRequestedDate.nonEmpty) {
-        val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
-        Ok(views.html.newspaperPages(model, PreviousAndNext(None, None)))
+        // if we want to unwrap CAPI results here - the next two lines are a start!
+        //val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
+        //Ok(views.html.newspaperPages(model, PreviousAndNext(None, None)))
+        Found(s"/$publication/$tag/${urlFormat(reqDate)}/all")
       } else {
         NotFound
       }
-    }.getOrElse(NotFound)}.map(Cached(300)(_))
+    }.getOrElse(NotFound)}.map(Cached(1)(_))
   }
 
-  private def loadPublishedContent(path: String, date: DateTime, tag: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val lookupKey = path + "/" + tag
+  private def loadPublishedContent(publication: String, date: DateTime, tag: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
+    val lookupKey = publication + "/" + tag
     val result = getResponse(LiveContentApi.item(lookupKey, Edition(request))
       .fromDate(date)
       .toDate(date.plusDays(1).minusSeconds(1))
       .useDate("newspaper-edition")
-    ).map{ item =>
+    ).map { item =>
       item.tag.map( tag =>
         IndexPage(Tag(tag), item.results.map(Content(_)), date)
       )

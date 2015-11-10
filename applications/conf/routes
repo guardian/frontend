@@ -43,7 +43,7 @@ GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate         
 GET        /$path<.+>/all                                                       controllers.AllIndexController.all(path)
 
 # Newspaper pages paths
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/*tag            controllers.PublicationController.publishedOn(path, day, month, year, tag)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tag<.+>        controllers.PublicationController.publishedOn(path, day, month, year, tag)
 
 # Sudokus
 GET        /sudokus/:id                                                         controllers.SudokusController.render(id)
