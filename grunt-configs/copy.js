@@ -37,10 +37,10 @@ module.exports = function (grunt, options) {
                     src: [
                         'core.js',
                         'core.js.map',
-                        'universal.js',
-                        'universal.js.map',
-                        'bootstraps/app.js',
-                        'bootstraps/app.js.map',
+                        'bootstraps/standard.js',
+                        'bootstraps/standard.js.map',
+                        'bootstraps/enhanced.js',
+                        'bootstraps/enhanced.js.map',
                         'bootstraps/commercial.js',
                         'bootstraps/commercial.js.map',
                         'components/curl/curl-domReady.js'
