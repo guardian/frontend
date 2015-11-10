@@ -32,16 +32,15 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
     LiveContentApi.getResponse(item).map { resp =>
 
       //filter out the first page results to make a Front Page container
-      val (firstPageContent, otherContent) = resp.results.partition(p => p.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt) == Some(1))
+      val (firstPageContent, otherContent) = resp.results.partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
         bookSectionContainer("front-page", Some("Front Page"), content, 0)
-
       }
 
       val unorderedBookSections = createBookSections(otherContent)
-      val orderedBookSections = orderBookSectionsByPageNumber(unorderedBookSections)
+      val orderedBookSections = orderByPageNumber(unorderedBookSections)
 
       val bookSectionContainers = orderedBookSections.map { list =>
         val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
@@ -63,16 +62,16 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
     tagWithContent.groupBy(_.tag).map( bookSectionContent => BookSectionContent(bookSectionContent._1, bookSectionContent._2.map(_.content))).toList
   }
 
-  private def orderBookSectionsByPageNumber(unorderedBookSections: List[BookSectionContent]): List[BookSectionContent] = {
+  private def orderByPageNumber(unorderedBookSections: List[BookSectionContent]): List[BookSectionContent] = {
 
     //order content for each book section
     val orderedContentForBookSection: List[BookSectionContent] = unorderedBookSections.map { bookSection =>
-      bookSection.copy(content = getResultsOrderByNewspaperNumber(bookSection.content))
+      bookSection.copy(content = orderContentByPageNumber(bookSection.content))
     }
 
     //order booksections by first content item in each booksection
     val pageNumberToFaciaContainer: List[(Int, BookSectionContent)] = orderedContentForBookSection.flatMap { bookSection =>
-      val pageNumberOpt = bookSection.content.headOption.flatMap(c => c.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt))
+      val pageNumberOpt = bookSection.content.headOption.flatMap(content => getNewspaperPageNumber(content))
       pageNumberOpt.map(_ -> bookSection)
 
     }
@@ -80,10 +79,9 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
   }
 
 
-  private def getResultsOrderByNewspaperNumber(unorderedContent: List[ApiContent]): List[ApiContent] = {
-    val pageNumberToContent: List[(Int, ApiContent)] = unorderedContent.flatMap { c =>
-      val pageNumberOpt = c.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
-      pageNumberOpt.map(_ -> c)
+  private def orderContentByPageNumber(unorderedContent: List[ApiContent]): List[ApiContent] = {
+    val pageNumberToContent: List[(Int, ApiContent)] = unorderedContent.flatMap { content =>
+      getNewspaperPageNumber(content).map(_ -> content)
     }
     pageNumberToContent.sortBy(_._1).map(_._2)
   }
@@ -102,4 +100,6 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
       CollectionEssentials(trails, Nil, displayName, Some(dataId), None, None)
     )
   }
+
+  private def getNewspaperPageNumber(content: ApiContent) = content.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
 }
