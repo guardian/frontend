@@ -7,7 +7,6 @@
     <title>@Html(metaData.webTitle)</title>
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheetLinks(projectName)
 
     @* polyfill, feature detect etc before we try and use the stylesheets *@
     @fragments.javaScriptPreFlight(metaData)
@@ -20,6 +19,7 @@
 
     @* load the app *@
     @fragments.javaScriptBootstraps(metaData)
+    @fragments.stylesheets(projectName)
 
 </head>
 <body id="top">

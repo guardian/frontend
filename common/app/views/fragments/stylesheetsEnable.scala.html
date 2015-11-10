@@ -2,7 +2,7 @@
 @import conf.switches.Switches._
 
 @*
-The css is loaded by the `link`s in stylesheetLinks.scala.html, but with media of "only x".
+The css is loaded by the `link`s in stylesheets.scala.html, but with media of "only x".
 This means the browser requests it, but doesn't block rendering on it, since this media is
 not 'x'. Once it's loaded (appears in `window.document.styleSheets`),  `media` is set to
 `screen` so the browser uses it.
