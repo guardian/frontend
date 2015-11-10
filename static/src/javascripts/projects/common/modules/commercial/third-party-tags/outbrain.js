@@ -7,7 +7,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
-    'text!common/views/commercial/outbrain.html'
+    'text!common/views/commercial/outbrain.html',
+    'common/modules/experiments/ab',
 ], function (
     fastdom,
     $,
@@ -17,7 +18,8 @@ define([
     mediator,
     template,
     identity,
-    outbrainTpl
+    outbrainTpl,
+    ab
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
@@ -113,6 +115,7 @@ define([
                 && !config.page.isFront
                 && !config.page.isPreview
                 && this.identityPolicy()
+                && !(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))
                 && config.page.section !== 'childrens-books-site') {
                 if (this.hasHighRelevanceComponent()) {
                     this.load();

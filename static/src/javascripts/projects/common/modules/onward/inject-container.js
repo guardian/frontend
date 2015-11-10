@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',
+    'common/utils/config',
     'common/modules/ui/images',
     'common/utils/mediator'
 ], function (
@@ -10,6 +11,7 @@ define([
     $,
     _,
     ajax,
+    config,
     images,
     mediator
 ) {
@@ -22,10 +24,12 @@ define([
             if (resp.html) {
                 fastdom.write(function () {
                     var $el = $(containerSelector);
-                    $el.before(resp.html);
-                    $el.css({
-                        display: 'none'
-                    });
+                    $el.after(resp.html);
+                    if (!(config.page && config.page.hasStoryPackage)) {
+                        $el.css({
+                            display: 'none'
+                        });
+                    }
                     images.upgradePictures();
                     mediator.emit(containerName);
                 });

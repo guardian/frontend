@@ -82,4 +82,9 @@
     .fc-container--has-show-more .treats__container {
         bottom: $gs-baseline;
     }
+
+    .fc-container--lazy-load {
+        display: block !important;
+    }
 }
+
