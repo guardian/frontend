@@ -43,8 +43,7 @@
 
             @defining(Edition(request)) { currentEdition =>
             <div class="footer__follow-us">
-                <iframe src="/email-form" frameborder="0"></iframe>
-                @fragments.email.emailSignUp("footer")
+                <iframe src="/email-form" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden"></iframe>
 
                 @currentEdition match {
                     case Uk => {
