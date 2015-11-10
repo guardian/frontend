@@ -25,8 +25,8 @@ case class EmailPage (interactive: Interactive, related: RelatedContent)
 case class EmailForm(email: String)
 
 object EmailForm {
-  val postUrl = "https://3b1d4pkpvi.execute-api.eu-west-1.amazonaws.com/dev/email"
-  val listId  = 12345
+  val postUrl = "https://l2y0m1o3nk.execute-api.eu-west-1.amazonaws.com/code/email"
+  val listId  = 3485
 
   def submit(form: EmailForm): Future[WSResponse] = {
     WS.url(postUrl).post(Json.obj(
