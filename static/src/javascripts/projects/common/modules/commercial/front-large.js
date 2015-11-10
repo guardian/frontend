@@ -18,7 +18,7 @@ define([
         }
 
         var containerIndex = 0,
-            $adSlotWrapper = $.create('<div class="fc-container top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--above-nav"></div>'),
+            $adSlotWrapper = $.create('<div class="fc-container large-top top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--above-nav"></div>'),
             $adSlot        = bonzo(createAdSlot('top-above-nav', 'top-above-nav')),
             $containers    = $('.fc-container');
 
