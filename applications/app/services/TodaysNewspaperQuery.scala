@@ -36,7 +36,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer("front-page", Some("Front Page"), content, 0)
+        bookSectionContainer(None, Some("Front Page"), content, 0)
       }
 
       val unorderedBookSections = createBookSections(otherContent)
@@ -44,7 +44,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
 
       val bookSectionContainers = orderedBookSections.map { list =>
         val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer(list.tag.id, Some(list.tag.webTitle), content, orderedBookSections.indexOf(list) + 1)
+        bookSectionContainer(Some(list.tag.id), Some(list.tag.webTitle), content, orderedBookSections.indexOf(list) + 1)
       }
 
       firstPageContainer :: bookSectionContainers
@@ -86,7 +86,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
     pageNumberToContent.sortBy(_._1).map(_._2)
   }
 
-  private def bookSectionContainer(dataId: String, displayName: Option[String], trails: Seq[FaciaContent], index: Int): FaciaContainer = {
+  private def bookSectionContainer(dataId: Option[String], displayName: Option[String], trails: Seq[FaciaContent], index: Int): FaciaContainer = {
     val containerDefinition = trails.length match {
       case 1 => FixedContainers.fixedSmallSlowI
       case 2 => FixedContainers.fixedSmallSlowII
@@ -96,8 +96,8 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
     FaciaContainer(
       index,
       Fixed(containerDefinition),
-      CollectionConfigWithId(dataId, CollectionConfig.empty.copy(displayName = displayName)),
-      CollectionEssentials(trails, Nil, displayName, Some(dataId), None, None)
+      CollectionConfigWithId(dataId.getOrElse(""), CollectionConfig.empty.copy(displayName = displayName)),
+      CollectionEssentials(trails, Nil, displayName, dataId, None, None)
     )
   }
 
