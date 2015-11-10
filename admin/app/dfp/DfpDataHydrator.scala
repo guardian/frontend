@@ -20,6 +20,14 @@ class DfpDataHydrator extends Logging {
 
   private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
+
+      def loadTargetingValue(id: Long): String = {
+        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", id)
+        val values =
+          DfpApiWrapper.fetchCustomTargetingValues(serviceRegistry, stmtBuilder)
+        values.map(_.getName).head
+      }
+
       try {
         val dfpLineItems =
           DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder) filterNot {
@@ -48,8 +56,8 @@ class DfpDataHydrator extends Logging {
             },
             isPageSkin = isPageSkin(dfpLineItem),
             sponsor = sponsor,
-            creativePlaceholders = buildCreativePlaceholders(dfpLineItem),
-            targeting = buildTargeting(dfpLineItem.getTargeting),
+            creativePlaceholders = buildCreativePlaceholders(dfpLineItem, loadTargetingValue),
+            targeting = buildTargeting(dfpLineItem.getTargeting, loadTargetingValue),
             status = dfpLineItem.getStatus.toString,
             costType = dfpLineItem.getCostType.toString,
             lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
@@ -257,10 +265,12 @@ class DfpDataHydrator extends Logging {
 
   private def buildCustomTargetSets(customCriteriaSet: CustomCriteriaSet,
                                     targetingKeys: Map[Long, String],
-                                    targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
+                                    targetingValues: Map[Long, String],
+                                    lookUpTargetingValue: Long => String): Seq[CustomTargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[CustomTargetSet] = {
-      val targets = crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))
+      val targets =
+        crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))
       if (targets.isEmpty) {
         None
       } else {
@@ -269,14 +279,22 @@ class DfpDataHydrator extends Logging {
     }
 
     def buildTarget(crit: CustomCriteria): Option[CustomTarget] = {
-      targetingKeys.get(crit.getKeyId) map {
-        keyName => CustomTarget(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
+      targetingKeys.get(crit.getKeyId) map { keyName =>
+        CustomTarget(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
       }
     }
 
     def buildValueNames(valueIds: Array[Long]): Seq[String] = {
+
+      def lookUpValue(id: Long): String = {
+        log.info(s"Looking up targeting value $id ...")
+        val targetValue = lookUpTargetingValue(id)
+        log.info(s"Found targeting value $id=$targetValue")
+        targetValue
+      }
+
       valueIds map { id =>
-        targetingValues.getOrElse(id, "*** unknown ***")
+        targetingValues.getOrElse(id, lookUpValue(id))
       }
     }
 
@@ -285,7 +303,8 @@ class DfpDataHydrator extends Logging {
     }.toSeq
   }
 
-  private def buildTargeting(dfpTargeting: Targeting): GuTargeting = {
+  private def buildTargeting(dfpTargeting: Targeting,
+                             lookUpTargetingValue: Long => String): GuTargeting = {
 
     val adUnits: Seq[GuAdUnit] = {
       val maybeAdUnits = for {
@@ -337,7 +356,12 @@ class DfpDataHydrator extends Logging {
       val maybeTargetSets = for (customTargeting <- Option(dfpTargeting.getCustomTargeting)) yield {
         val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
         val allCustomTargetingValues = CustomTargetingValueAgent.get.data
-        buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
+        buildCustomTargetSets(
+          customTargeting,
+          allCustomTargetingKeys,
+          allCustomTargetingValues,
+          lookUpTargetingValue
+        )
       }
       maybeTargetSets getOrElse Nil
     }
@@ -350,11 +374,13 @@ class DfpDataHydrator extends Logging {
     )
   }
 
-  private def buildCreativePlaceholders(lineItem: LineItem): Seq[GuCreativePlaceholder] = {
+  private def buildCreativePlaceholders(lineItem: LineItem,
+                                        lookUpTargetingValue: Long => String):
+  Seq[GuCreativePlaceholder] = {
 
     def creativeTargeting(name: String): Option[GuTargeting] = {
       for (targeting <- toSeq(lineItem.getCreativeTargetings) find (_.getName == name)) yield {
-        buildTargeting(targeting.getTargeting)
+        buildTargeting(targeting.getTargeting, lookUpTargetingValue)
       }
     }
 

@@ -1,17 +1,12 @@
 /* global guardian, s */
 define([
     'qwery',
-    'common/utils/_',
     'common/utils/config',
     'common/modules/analytics/omniture',
+    'lodash/objects/values',
+    'common/utils/chain',
     'common/modules/experiments/ab'
-], function (
-    qwery,
-    _,
-    config,
-    omniture,
-    ab
-) {
+], function (qwery, config, omniture, values, chain, ab) {
 
     function OmnitureMedia(player) {
 
@@ -85,8 +80,8 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = omniture.getStandardProps() + ',' + _(trackingVars).join(',');
-            s.linkTrackEvents = _.values(events).join(',');
+            s.linkTrackVars = omniture.getStandardProps() + ',' + chain(trackingVars).join(',');
+            s.linkTrackEvents = values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
@@ -103,8 +98,8 @@ define([
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
-            s.Media.trackVars = omniture.getStandardProps() + ',' + _(trackingVars).join(',');
-            s.Media.trackEvents = _.values(events).join(',');
+            s.Media.trackVars = omniture.getStandardProps() + ',' + chain(trackingVars).join(',');
+            s.Media.trackEvents = values(events).join(',');
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 

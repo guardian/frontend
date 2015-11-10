@@ -3,15 +3,12 @@ define([
     'bonzo',
     'qwery',
     'raven',
-
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
-
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
@@ -19,14 +16,14 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/identity/api',
-    'common/modules/user-prefs'
-], function(
+    'common/modules/user-prefs',
+    'lodash/objects/isNumber'
+], function (
     bean,
     bonzo,
     qwery,
     raven,
     $,
-    _,
     ajaxPromise,
     config,
     detect,
@@ -39,8 +36,8 @@ define([
     CommentBox,
     Comments,
     Id,
-    userPrefs
-) {
+    userPrefs,
+    isNumber) {
 
 var Loader = function() {
     register.begin('discussion');
@@ -127,7 +124,7 @@ Loader.prototype.initMainComments = function() {
             var userPageSize = userPrefs.get('discussion.pagesize'),
                 pageSize = defaultPagesize;
 
-            if (_.isNumber(userPageSize)) {
+            if (isNumber(userPageSize)) {
                 pageSize = userPageSize;
             } else {
                 if (userPageSize === 'All') {

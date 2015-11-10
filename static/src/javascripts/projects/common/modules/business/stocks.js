@@ -1,24 +1,25 @@
 define([
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/business/stock-value.html',
-    'text!common/views/business/stocks.html'
+    'text!common/views/business/stocks.html',
+    'lodash/collections/contains',
+    'lodash/collections/map'
 ], function (
     $,
-    _,
     ajax,
     config,
     template,
     svgs,
     stockValueTemplate,
-    stocksTemplate
-) {
+    stocksTemplate,
+    contains,
+    map) {
     function isBusinessFront() {
-        return _.contains(['uk/business', 'us/business', 'au/business'], config.page.pageId);
+        return contains(['uk/business', 'us/business', 'au/business'], config.page.pageId);
     }
 
     function getStocksData() {
@@ -33,7 +34,7 @@ define([
     function deltaString(n) { return n > 0 ? '+' + n : '' + n; }
 
     function renderData(data) {
-        var stockValues = _.map(data.stocks, function (stockValue) {
+        var stockValues = map(data.stocks, function (stockValue) {
             return template(stockValueTemplate, {
                 name: stockValue.name,
                 deltaClass: 'stocks__stock-value--' + stockValue.trend,

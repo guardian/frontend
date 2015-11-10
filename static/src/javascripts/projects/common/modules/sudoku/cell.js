@@ -1,14 +1,15 @@
 define([
     'react',
-    'common/utils/_',
     'common/modules/sudoku/constants',
-    'common/modules/sudoku/utils'
+    'common/modules/sudoku/utils',
+    'lodash/arrays/compact',
+    'lodash/collections/map'
 ], function (
     React,
-    _,
     constants,
-    utils
-) {
+    utils,
+    compact,
+    map) {
     return React.createClass({
         onClick: function (event) {
             this.props.onClick(this.props.x, this.props.y);
@@ -26,7 +27,7 @@ define([
                 jottingY = function (n) {
                     return y + constants.jottingYOffset + Math.floor((n - 1) / 3) * constants.jottingHeight;
                 },
-                innerCells = _.compact([
+                innerCells = compact([
                     React.DOM.rect({
                         key: 'background',
                         x: x,
@@ -42,7 +43,7 @@ define([
                         className: 'sudoku__cell-text',
                         onClick: this.onClick
                     }, value) : null
-                ]).concat(_.map(this.props.jottings, function (n) {
+                ]).concat(map(this.props.jottings, function (n) {
                     return React.DOM.text({
                         key: 'jotting_' + n,
                         x: jottingX(n),

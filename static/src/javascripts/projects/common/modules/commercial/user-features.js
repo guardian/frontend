@@ -1,19 +1,18 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/_',
     'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
     'common/utils/storage',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/utilities/noop'
 ], function (
-    _,
     ajaxPromise,
     cookies,
     config,
     storage,
-    identity
-) {
+    identity,
+    noop) {
     var userFeatures, PERSISTENCE_KEYS;
 
     userFeatures = {
@@ -100,7 +99,7 @@ define([
             crossOrigin : true,
             withCredentials : true,
             error : function () {}
-        }).then(persistResponse, _.noop);
+        }).then(persistResponse, noop);
     }
 
     function persistResponse(JsonResponse) {

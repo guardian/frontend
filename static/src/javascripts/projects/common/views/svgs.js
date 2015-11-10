@@ -3,7 +3,6 @@
 // This file is only required by core, and so has a long cache time.
 
 define([
-    'common/utils/_',
     'inlineSvg!svgs/icon/comment-16',
     'inlineSvg!svgs/icon/marque-36',
     'inlineSvg!svgs/icon/marque-54',
@@ -35,9 +34,9 @@ define([
     'inlineSvg!svgs/logo/membership-logo',
     'inlineSvg!svgs/commercial/thrasher-benefit-icon',
     'inlineSvg!svgs/commercial/survey-overlay',
-    'inlineSvg!svgs/commercial/survey-new'
+    'inlineSvg!svgs/commercial/survey-new',
+    'lodash/objects/isArray'
 ], function (
-    _,
     commentCount16icon,
     marque36icon,
     marque54icon,
@@ -69,8 +68,8 @@ define([
     membershipLogo,
     thrasherBenefit,
     surveyOverlay,
-    surveyNew
-) {
+    surveyNew,
+    isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
@@ -111,7 +110,7 @@ define([
 
         // Only mess with classes if we actually need to.
         if (classes) {
-            if (_.isArray(classes)) {
+            if (isArray(classes)) {
                 svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
                 // Some environments don't support or don't always expose the console object

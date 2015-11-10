@@ -1,24 +1,23 @@
 define([
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/fastdom-idle',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/cloneDeep'
 ], function (
     Promise,
-    _,
     $,
     config,
     detect,
     idleFastdom,
     spacefinder,
     createAdSlot,
-    commercialFeatures
-) {
+    commercialFeatures,
+    cloneDeep) {
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -32,14 +31,14 @@ define([
     }
 
     function getInlineMerchRules() {
-        var newRules = _.cloneDeep(getRules());
+        var newRules = cloneDeep(getRules());
         newRules.minAbove = 300;
         newRules.selectors[' > h2'].minAbove = 20;
         return newRules;
     }
 
     function getLongArticleRules() {
-        var newRules = _.cloneDeep(getRules());
+        var newRules = cloneDeep(getRules());
 
         newRules.selectors[' .ad-slot'] = {
             minAbove: 1300,
