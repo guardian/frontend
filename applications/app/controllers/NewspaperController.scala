@@ -9,7 +9,7 @@ import services.TodaysNewspaperQuery
 object NewspaperController extends Controller with Logging with ExecutionContexts {
 
   def today() = Action.async { implicit request =>
-    val page = model.Page(request.path, "News", "Main section | News | The Guardian", "Newspaper books Main Section")
+    val page = model.Page(request.path, "News", "Main section | News | The Guardian", "GFE: Newspaper books Main Section")
 
     val paper = TodaysNewspaperQuery.fetchTodaysPaper
 
