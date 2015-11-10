@@ -22,19 +22,17 @@
         font-family: $f-serif-headline;
 
         .email-sub__heading {
-                line-height: 35px;
-            }
+            line-height: 35px;
         }
     }
 
     // FOOTER MODS
     &header--footer {
         .email-sub__heading {
-                color: #fff;
-                font-family: $f-sans-serif-text;
-                font-size: 14px;
-                margin-bottom: 12px;
-            }
+            color: #fff;
+            font-family: $f-sans-serif-text;
+            font-size: 14px;
+            margin-bottom: 12px;
         }
     }
 }
