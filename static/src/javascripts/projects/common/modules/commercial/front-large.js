@@ -13,18 +13,16 @@ define([
 ) {
 
     function init() {
-        if (!config.tests.topBannerPosition && !config.page.isFront) {
+        if (typeof config.tests.topBannerPosition === 'undefined' || !config.page.isFront) {
             return false;
         }
 
-        var containerIndex,
-            $adSlotWrapper = $.create('<div class="fc-container"></div>'),
-            $adSlot        = bonzo(createAdSlot('front-large', 'front-large')),
+        var containerIndex = 0,
+            $adSlotWrapper = $.create('<div class="fc-container top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--above-nav"></div>'),
+            $adSlot        = bonzo(createAdSlot('top-above-nav', 'top-above-nav')),
             $containers    = $('.fc-container');
 
         if ($containers.length >= 2) {
-            containerIndex = 0;
-
             return $adSlotWrapper
                 .append($adSlot)
                 .insertAfter($containers[containerIndex]);
