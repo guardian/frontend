@@ -18,12 +18,15 @@
 .element-replicated-links__links {
     padding-left: $gs-gutter;
     margin-bottom: $gs-baseline;
+    max-height: 900px;
+    transition: max-height .4s ease-out;
 }
 
 .element-replicated-links__links--contracted {
     max-height: 150px;
-    overflow-y: hidden;
+    overflow: hidden;
     position: relative;
+    transition: max-height .4s ease-in;
 
     &:before {
         content: '';
