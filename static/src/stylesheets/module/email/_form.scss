@@ -121,6 +121,11 @@
             &submit-input {
                 background-color: #767676;
                 border: 1px solid #767676;
+
+                &:hover,
+                &:focus {
+                    border-color: #dcdcdc;
+                }
             }
 
             &small {
