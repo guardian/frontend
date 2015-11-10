@@ -315,7 +315,7 @@ GET            /embed/video/*path                                               
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
-GET            /theguardian                                                                                                      controllers.NewspaperController.index()
+GET            /theguardian                                                                                                      controllers.NewspaperController.today()
 
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)

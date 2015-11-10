@@ -46,7 +46,7 @@ GET        /$path<.+>/all                                                       
 GET        /sudokus/:id                                                         controllers.SudokusController.render(id)
 
 # Guardian newspaper page
-GET        /theguardian                                                         controllers.NewspaperController.index()
+GET        /theguardian                                                         controllers.NewspaperController.today()
 
 # Gallery paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                controllers.GalleryController.lightboxJson(path)
