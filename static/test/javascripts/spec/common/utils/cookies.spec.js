@@ -1,10 +1,8 @@
 define([
-    'common/utils/_',
-    'common/utils/cookies'
-], function (
-    _,
-    cookies
-) {
+    'common/utils/cookies',
+    'lodash/arrays/remove',
+    'common/utils/chain'
+], function (cookies, remove, chain) {
     describe('Cookies', function () {
 
         var clock,
@@ -22,12 +20,9 @@ define([
 
                 set cookie(value) {
                     var name = value.split('=')[0];
-                    this.value = _(this.value.split('|'))
-                        .remove(function (cookie) {
+                    this.value = chain(this.value.split('|')).and(remove, function (cookie) {
                             return cookie.split('=')[0] !== name;
-                        })
-                        .push(value)
-                        .join('|');
+                        }).push(value).join('|').value();
                 },
 
                 domain: 'www.theguardian.com'

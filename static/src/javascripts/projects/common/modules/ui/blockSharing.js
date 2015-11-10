@@ -2,15 +2,12 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$'
 ], function (
     bean,
     bonzo,
     qwery,
-    _,
-    $
-    ) {
+    $) {
 
     var truncateBlockShareIcons = function (blockShareEl) {
         var truncated = qwery('> *', blockShareEl).slice(2);

@@ -2,23 +2,22 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/expandable.html'
+    'text!common/views/commercial/creatives/expandable.html',
+    'lodash/functions/bindAll'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
     mediator,
     storage,
     template,
-    expandableTpl
-) {
+    expandableTpl,
+    bindAll) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
@@ -30,7 +29,7 @@ define([
         this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
         this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
 
-        _.bindAll(this, 'listener');
+        bindAll(this, 'listener');
     };
 
     Expandable.prototype.listener = function () {

@@ -1,8 +1,7 @@
 define([
-    'common/utils/_'
+    'lodash/collections/forEach'
 ], function (
-    _
-) {
+    forEach) {
 
     var documentObject;
 
@@ -12,7 +11,7 @@ define([
     }
 
     function cleanUp(names) {
-        _.forEach(names, function (name) {
+        forEach(names, function (name) {
             remove(name);
         });
     }
@@ -67,7 +66,7 @@ define([
             nameEq = name + '=',
             cookies = getDocument().cookie.split(';');
 
-        _.forEach(cookies, function (cookie) {
+        forEach(cookies, function (cookie) {
             while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1, cookie.length);
             }

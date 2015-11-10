@@ -5,18 +5,14 @@
 define([
     'Promise',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
     'common/modules/onward/history',
-    'common/modules/ui/images'
-], function (
-    Promise,
-    $,
-    _,
-    ajax,
-    history,
-    images
-) {
+    'common/modules/ui/images',
+    'lodash/arrays/first',
+    'lodash/arrays/compact',
+    'lodash/collections/map',
+    'common/utils/chain'
+], function (Promise, $, ajax, history, images, first, compact, map, chain) {
     // Maximum number of favourite containers to inject
     var maxContainers = 3,
         // Favourite containers will be injected /before/ this container
@@ -84,13 +80,9 @@ define([
                 return pair[0];
             });
 
-        return _(favouriteTags).
-            map(function (tag) {
+        return chain(favouriteTags).and(map, function (tag) {
                 return frontsTopContainers[tag];
-            }).
-            compact().
-            take(limitContainers).
-            value();
+            }).and(compact).and(first, limitContainers).value();
     }
 
     function fetchContainerHtml(containerId) {

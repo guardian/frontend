@@ -2,23 +2,22 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
-    'bootstraps/trail'
+    'bootstraps/trail',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     qwery,
-    _,
     $,
     config,
     mediator,
     Component,
-    trail
-) {
+    trail,
+    debounce) {
     var verticallyResponsiveImages = function () {
             var setHeight = function () {
                 if (!bonzo(document.body).hasClass('has-overlay')) {
@@ -36,8 +35,8 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:resize': _.debounce(setHeight, 200),
-                'window:orientationchange': _.debounce(setHeight, 200),
+                'window:resize': debounce(setHeight, 200),
+                'window:orientationchange': debounce(setHeight, 200),
                 'ui:images:vh': setHeight
             });
         },

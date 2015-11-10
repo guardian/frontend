@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -9,11 +8,12 @@ define([
     'common/modules/lazyload',
     'common/modules/ui/expandable',
     'common/modules/experiments/ab',
-    'common/modules/onward/inject-container'
+    'common/modules/onward/inject-container',
+    'lodash/arrays/intersection',
+    'lodash/collections/map'
 ], function (
     bonzo,
     qwery,
-    _,
     $,
     config,
     mediator,
@@ -21,8 +21,9 @@ define([
     LazyLoad,
     Expandable,
     ab,
-    injectContainer
-) {
+    injectContainer,
+    intersection,
+    map) {
 
     var opts;
 
@@ -49,7 +50,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : _.intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
@@ -89,7 +90,7 @@ define([
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
                     if (opts.excludeTags && opts.excludeTags.length) {
-                        relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
+                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
                             return 'exclude-tag=' + tag;
                         }).join('&');
                     }

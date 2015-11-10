@@ -1,8 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    // Common libraries
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -10,7 +8,6 @@ define([
     'common/utils/robust',
     'common/utils/storage',
     'common/utils/to-array',
-    // Modules
     'common/modules/accessibility/helpers',
     'common/modules/experiments/ab',
     'common/modules/business/stocks',
@@ -21,11 +18,12 @@ define([
     'facia/modules/ui/live-blog-updates',
     'facia/modules/ui/snaps',
     'facia/modules/ui/sponsorship',
-    'facia/modules/onwards/weather'
+    'facia/modules/onwards/weather',
+    'lodash/functions/partial',
+    'lodash/collections/forEach'
 ], function (
     bonzo,
     qwery,
-    _,
     $,
     config,
     detect,
@@ -43,8 +41,9 @@ define([
     liveblogUpdates,
     snaps,
     sponsorship,
-    weather
-) {
+    weather,
+    partial,
+    forEach) {
 
     var modules = {
             showSnaps: function () {
@@ -67,7 +66,7 @@ define([
                     };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
-                    'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
+                    'modules:geomostpopular:ready': partial(containerToggleAdd, '.js-popular-trails')
                 });
             },
 
@@ -100,7 +99,7 @@ define([
         },
 
         ready = function () {
-            _.forEach(robust.makeBlocks([
+            forEach(robust.makeBlocks([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],

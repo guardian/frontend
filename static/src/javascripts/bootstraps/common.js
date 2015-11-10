@@ -5,7 +5,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -53,13 +52,13 @@ define([
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
     'text!common/views/international-message.html',
-    'bootstraps/identity-common'
+    'bootstraps/identity-common',
+    'lodash/collections/forEach'
 ], function (
     fastdom,
     bean,
     bonzo,
     qwery,
-    _,
     $,
     config,
     cookies,
@@ -107,8 +106,8 @@ define([
     SaveForLater,
     membershipMessages,
     internationalMessage,
-    identity
-) {
+    identity,
+    forEach) {
     var modules = {
             initialiseTopNavItems: function () {
                 var profile,
@@ -370,7 +369,7 @@ define([
 
     return {
         init: function () {
-            _.forEach(robust.makeBlocks([
+            forEach(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],

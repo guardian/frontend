@@ -4,7 +4,6 @@ define([
     'fastdom',
     'raven',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
@@ -19,14 +18,14 @@ define([
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'bootstraps/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     fastdom,
     raven,
     $,
-    _,
     config,
     deferToAnalytics,
     detect,
@@ -41,8 +40,8 @@ define([
     supportedBrowsers,
     techOrder,
     videojs,
-    loadingTmpl
-) {
+    loadingTmpl,
+    debounce) {
 
     function getAdUrl() {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
@@ -282,7 +281,7 @@ define([
             });
         });
 
-        mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+        mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
 
         // built in vjs-user-active is buggy so using custom implementation
         player.on('mousemove', function () {
