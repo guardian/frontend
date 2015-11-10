@@ -32,7 +32,7 @@
         @Html(templates.inlineJS.blocking.js.enableStylesheets().body);
     }
 
-    // Not the usual type of thing we do, but I want this separate to our "normal" javascript.
+    // should this be the usual type of thing we do?
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
     @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js");
 </script>
