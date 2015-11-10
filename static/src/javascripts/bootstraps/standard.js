@@ -13,4 +13,4 @@
 
 define([], function () {
 
-})
+});
