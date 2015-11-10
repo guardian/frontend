@@ -89,20 +89,20 @@ define([
                         fastdom.read(getHeight);
                         fastdom.write(setHeight);
                     }
-                }
+                };
             },
             setIframeHeight: function (iFrameEl) {
                 return function () {
-                    iFrameEl.height = "";
-                    iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + "px";
-                }
+                    iFrameEl.height = '';
+                    iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
+                };
             }
         };
 
     return {
         // eg: rootEl can be a specific container or an iframe contentDocument
         init: function (rootEl) {
-            var isIframed = rootEl && rootEl.tagName === "IFRAME",
+            var isIframed = rootEl && rootEl.tagName === 'IFRAME',
                 thisRootEl = (isIframed) ? rootEl.contentDocument : rootEl || document;
 
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
