@@ -101,7 +101,6 @@ define([
     }
 
     return {
-        upgradeRichLink: upgradeRichLink,
         upgradeRichLinks: upgradeRichLinks,
         insertTagRichLink: insertTagRichLink,
         getSpacefinderRules: getSpacefinderRules
