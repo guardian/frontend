@@ -1,13 +1,13 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
     'common/utils/$',
-    'fastdom',
+    'common/utils/fastdom-idle',
     'Promise',
     'raven',
     'common/modules/article/spacefinder'
 ], function (
     $,
-    fastdom,
+    idleFastdom,
     Promise,
     raven,
     spacefinder
@@ -40,7 +40,7 @@ define([
 
             function promiseInsertion(para) {
                 return new Promise(function (resolve) {
-                    fastdom.write(function () {
+                    idleFastdom.write(function () {
                         try {
                             writer(para);
                             resolve(true);
