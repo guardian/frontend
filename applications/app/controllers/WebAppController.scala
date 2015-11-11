@@ -58,7 +58,8 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
             Static("stylesheets/content.css"),
             Static("stylesheets/print.css"),
             Static("javascripts/core.js"),
-            Static("javascripts/bootstraps/app.js"),
+            Static("javascripts/bootstraps/standard.js"),
+            Static("javascripts/bootstraps/enhanced.js"),
             Static("javascripts/bootstraps/crosswords.js")
           ).map(asset => JsString(asset.toString)))
         ))))

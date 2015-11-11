@@ -116,13 +116,13 @@ require([
         }
 
         if (guardian.isModernBrowser) {
-            require(['bootstraps/app'], function(bootstrap) {
+            require(['bootstraps/enhanced'], function(bootstrap) {
                 bootstrap.go();
             });
         }
 
     });
 
-    @JavaScript(templates.headerInlineJS.js.membershipAccess(item).body)
+    @JavaScript(templates.inlineJS.blocking.js.membershipAccess(item).body)
 
 });

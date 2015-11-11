@@ -74,8 +74,11 @@
                             $signInLinkElem.setAttribute('href', $signInLinkElem.getAttribute('href').replace('signin', 'public/edit/'));
                         }
                     }
-                    var $register = document.getElementsByClassName('js-profile-register')[0];
-                    $register.parentElement.removeChild($register);
+                    var $register = document.getElementsByClassName('js-profile-register');
+                    if ($register.length) {
+                        $register = $register[0];
+                        $register.parentElement.removeChild($register);
+                    }
                 }
             }
             insertUserName();
