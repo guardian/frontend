@@ -49,7 +49,7 @@ define([
                 containerGap = 1,
                 prefs        = userPrefs.get('container-states');
 
-            // pull out ad slices which are have at least x containers between them
+            // pull out ad slices which have at least x containers between them
             while (index < containers.length) {
                 container    = containers[index];
                 containerId  = bonzo(container).data('id');
@@ -57,11 +57,10 @@ define([
                 // don't display ad in the first container on the fronts
                 isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
-                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed') && !config.page.omitMPUs) {
+                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
                 } else {
-                    $(container).addClass('omitted-mpus');
                     index++;
                 }
             }
