@@ -1,0 +1,10 @@
+@(paper: controllers.TodayNewspaper)(implicit request: RequestHeader)
+
+@main(paper.page) { } {
+
+    @for(bookSection <- paper.bookSections) {
+
+        @fragments.containers.facia_cards.container(bookSection)
+
+    }
+}
