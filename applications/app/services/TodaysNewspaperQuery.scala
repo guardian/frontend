@@ -13,8 +13,10 @@ import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
 
 import scala.concurrent.Future
 
-case class TagWithContent(tag: Tag, content: ApiContent)
 case class BookSectionContent(tag: Tag, content: List[ApiContent])
+case class ContentByPage(page: Int, content: ApiContent)
+case class TagWithContent(tag: Tag, content: ApiContent)
+case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionContent)
 
 object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
 
@@ -75,20 +77,18 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
     }
 
     //order booksections by first content item in each booksection
-    val pageNumberToFaciaContainer: List[(Int, BookSectionContent)] = orderedContentForBookSection.flatMap { bookSection =>
+    val pageNumberToFaciaContainer: List[BookSectionContentByPage] = orderedContentForBookSection.flatMap { bookSection =>
       val pageNumberOpt = bookSection.content.headOption.flatMap(content => getNewspaperPageNumber(content))
-      pageNumberOpt.map(_ -> bookSection)
-
+      pageNumberOpt.map(BookSectionContentByPage(_, bookSection))
     }
-    pageNumberToFaciaContainer.sortBy(_._1).map(_._2)
+    pageNumberToFaciaContainer.sortBy(_.page).map(_.booksectionContent)
   }
 
-
   private def orderContentByPageNumber(unorderedContent: List[ApiContent]): List[ApiContent] = {
-    val pageNumberToContent: List[(Int, ApiContent)] = unorderedContent.flatMap { content =>
-      getNewspaperPageNumber(content).map(_ -> content)
+    val pageNumberToContent: List[ContentByPage] = unorderedContent.flatMap { content =>
+      getNewspaperPageNumber(content).map(ContentByPage(_, content))
     }
-    pageNumberToContent.sortBy(_._1).map(_._2)
+    pageNumberToContent.sortBy(_.page).map(_.content)
   }
 
   private def bookSectionContainer(dataId: Option[String], containerName: Option[String],
