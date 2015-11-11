@@ -82,11 +82,6 @@ define([
         },
 
         tracking: function (widgetCode) {
-            var s = window.s;
-            // Omniture
-            s.link2 = 'outbrain';
-            s.tl(true, 'o', 'outbrain');
-
             // Ophan
             require(['ophan/ng'], function (ophan) {
                 ophan.record({
