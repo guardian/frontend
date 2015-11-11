@@ -49,4 +49,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABVideoPreroll = Switch(
+    "A/B Tests",
+    "ab-video-preroll",
+    "A test to see if a UK or INT audience will be interested in video pre-rolls",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 11),
+    exposeClientSide = true
+  )
+
 }
