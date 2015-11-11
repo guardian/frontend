@@ -3,7 +3,6 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'common/utils/_',
     'fastdom',
     'common/utils/config',
     'common/utils/mediator',
@@ -15,14 +14,12 @@ define([
     qwery,
     bonzo,
     bean,
-    _,
     fastdom,
     config,
     mediator,
     template,
     svgs,
-    deleteButtonAllTmp
-) {
+    deleteButtonAllTmp) {
     return function SavedForLater() {
         this.init = function () {
             var self = this,

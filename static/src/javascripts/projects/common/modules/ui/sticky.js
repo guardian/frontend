@@ -1,29 +1,30 @@
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
-    'fastdom'
+    'fastdom',
+    'lodash/objects/defaults',
+    'lodash/functions/bindAll'
 ], function (
     bonzo,
-    _,
     $,
     config,
     mediator,
-    fastdom
-) {
+    fastdom,
+    defaults,
+    bindAll) {
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
     var Sticky = function (element, options) {
         this.$element = bonzo(element);
         this.$parent  = this.$element.parent();
-        this.opts     = _.defaults(options || {}, {
+        this.opts     = defaults(options || {}, {
             top: 0
         });
 
-        _.bindAll(this, 'updatePosition');
+        bindAll(this, 'updatePosition');
     };
 
     Sticky.prototype.init = function () {

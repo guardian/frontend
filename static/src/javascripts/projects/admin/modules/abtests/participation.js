@@ -3,17 +3,16 @@
  Description: Displays opt-in and opt-out links for a test
  */
 define([
-    'common/utils/_',
     'common/modules/component',
-    'admin/modules/abtests/participation-item'
+    'admin/modules/abtests/participation-item',
+    'lodash/objects/assign'
 ], function (
-    _,
     Component,
-    ParticipationItem
-) {
+    ParticipationItem,
+    assign) {
 
     function Participation(config) {
-        this.config = _.extend(this.config, config);
+        this.config = assign(this.config, config);
     }
 
     Component.define(Participation);

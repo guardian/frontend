@@ -1,20 +1,33 @@
 define([
     'react',
-    'common/utils/_',
     'common/views/svgs',
     './clue-input',
     './clue-preview',
     './ring',
-    '../helpers'
+    '../helpers',
+    'lodash/collections/contains',
+    'lodash/collections/shuffle',
+    'lodash/collections/reduce',
+    'lodash/arrays/rest',
+    'lodash/collections/map',
+    'lodash/arrays/compact',
+    'lodash/collections/filter',
+    'common/utils/chain'
 ], function (
     React,
-    _,
     svgs,
     ClueInput,
     CluePreview,
     Ring,
-    helpers
-) {
+    helpers,
+    contains,
+    shuffle,
+    reduce,
+    rest,
+    map,
+    compact,
+    filter,
+    chain) {
     var AnagramHelper = React.createClass({
         getInitialState: function () {
             return {
@@ -65,18 +78,13 @@ define([
          * @return {[Object]}          array of shuffled letters
          */
         shuffleWord: function (word, entries) {
-            var wordEntries = _.chain(entries)
-                .map(function (entry) {
+            var wordEntries = chain(entries).and(map, function (entry) {
                     return entry.value.toLowerCase();
-                })
-                .filter(function (entry) {
-                    return _.contains(word, entry);
-                })
-                .compact()
-                .value()
-                .sort();
+                }).and(filter, function (entry) {
+                    return contains(word, entry);
+                }).and(compact).value().sort();
 
-            return _.shuffle(_.reduce(word.trim().split('').sort(), function (acc, letter) {
+            return shuffle(reduce(word.trim().split('').sort(), function (acc, letter) {
                 var entered = acc.entries[0] === letter.toLowerCase();
 
                 return {
@@ -84,7 +92,7 @@ define([
                         value: letter,
                         entered: entered
                     }),
-                    entries: entered ? _.rest(acc.entries) : acc.entries
+                    entries: entered ? rest(acc.entries) : acc.entries
                 };
             }, {
                 letters: [],
@@ -108,7 +116,7 @@ define([
             /* jscs:enable disallowDanglingUnderscores */
             var clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
             var cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);
-            var entries = _.map(cells, function (coords) {
+            var entries = map(cells, function (coords) {
                 return this.props.grid[coords.x][coords.y];
             }, this);
             var letters = this.shuffleWord(this.state.clueInput, entries);
@@ -125,7 +133,8 @@ define([
                 });
 
             return React.createElement('div', {
-                    className: 'crossword__anagram-helper-outer'
+                    className: 'crossword__anagram-helper-outer',
+                    'data-link-name': 'Anagram Helper'
                 },
                 React.createElement('div', {
                     className: 'crossword__anagram-helper-inner'
@@ -133,15 +142,18 @@ define([
                 React.createElement('button', {
                     className: 'button button--large button--tertiary crossword__anagram-helper-close',
                     onClick: this.props.close,
-                    dangerouslySetInnerHTML: closeIcon
+                    dangerouslySetInnerHTML: closeIcon,
+                    'data-link-name': 'Close'
                 }),
                 React.createElement('button', {
                     className: 'button button--large ' + (!this.state.clueInput && 'button--tertiary'),
-                    onClick: this.reset
+                    onClick: this.reset,
+                    'data-link-name': 'Start Again'
                 }, 'start again'),
                 React.createElement('button', {
                     className: 'button button--large ' + (!this.canShuffle() && 'button--tertiary'),
-                    onClick: this.shuffle
+                    onClick: this.shuffle,
+                    'data-link-name': 'Shuffle'
                 }, 'shuffle'),
                 React.createElement(CluePreview, {
                     clue: clue,

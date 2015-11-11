@@ -38,12 +38,11 @@
         </div>
     </div>
 
-    <div class="l-footer__secondary l-footer__secondary--has-email gs-container" role="contentinfo">
+    <div class="l-footer__secondary js-footer__secondary l-footer__secondary--no-email gs-container" role="contentinfo">
         <div class="colophon u-cf">
 
             @defining(Edition(request)) { currentEdition =>
             <div class="footer__follow-us">
-                @fragments.email.emailSignUp("footer")
 
                 @currentEdition match {
                     case Uk => {
@@ -52,6 +51,14 @@
                             @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
                         <a class="button button--tertiary button--small" data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
                             @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
+
+                        @if(mvt.EmailTextTestV1.isParticipating) {
+                            <a class="button button--tertiary button--small js-button--email" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
+                                @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Guardian Today email</span></a>
+                        } else {
+                            <a class="button button--tertiary button--small js-button--email" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
+                                @fragments.inlineSvg("share-email", "icon", Seq("i","i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
+                        }
 
                     }
 

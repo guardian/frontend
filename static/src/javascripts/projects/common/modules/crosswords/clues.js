@@ -3,18 +3,12 @@ define([
     'react',
     'bean',
     'fastdom',
-    'common/utils/_',
     'common/utils/detect',
-    'common/utils/scroller'
-], function (
-    classNames,
-    React,
-    bean,
-    fastdom,
-    _,
-    detect,
-    scroller
-) {
+    'common/utils/scroller',
+    'lodash/collections/map',
+    'lodash/collections/filter',
+    'common/utils/chain'
+], function (classNames, React, bean, fastdom, detect, scroller, map, filter, chain) {
     var Clue = React.createClass({
 
         onClick: function () {
@@ -102,11 +96,9 @@ define([
         render: function () {
             var headerClass = 'crossword__clues-header';
             var cluesByDirection = function (direction) {
-                return _.chain(this.props.clues)
-                    .filter(function (clue) {
+                return chain(this.props.clues).and(filter, function (clue) {
                         return clue.entry.direction === direction;
-                    })
-                    .map(function (clue) {
+                    }).and(map, function (clue) {
                         return React.createElement(Clue, {
                             ref: clue.entry.id,
                             id: clue.entry.id,

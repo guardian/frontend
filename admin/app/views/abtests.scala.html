@@ -19,6 +19,9 @@
 
     <div class="abtests-active">
         <h3>Active tests</h3>
+        <p>Note: Our a/b tests have a <i>canRun()</i> method that checks if the test should run on the current pageview.</p>
+        <p>This is independent of whether you are in a test or not.</p>
+        <p>Tests that "can't Run", will not appear as an active test on a pageview!</p>
         @fragments.abTestReport()
     </div>
 

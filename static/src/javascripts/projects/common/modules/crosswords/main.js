@@ -5,7 +5,6 @@ define([
     'fastdom',
     'classnames',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/scroller',
@@ -16,7 +15,15 @@ define([
     './grid',
     './helpers',
     './keycodes',
-    './persistence'
+    './persistence',
+    'lodash/functions/debounce',
+    'lodash/collections/filter',
+    'lodash/collections/contains',
+    'lodash/collections/map',
+    'lodash/collections/some',
+    'lodash/arrays/zip',
+    'lodash/collections/forEach',
+    'lodash/collections/find'
 ], function (
     React,
     bonzo,
@@ -24,7 +31,6 @@ define([
     fastdom,
     classNames,
     $,
-    _,
     mediator,
     detect,
     scroller,
@@ -35,8 +41,15 @@ define([
     Grid,
     helpers,
     keycodes,
-    persistence
-) {
+    persistence,
+    debounce,
+    filter,
+    contains,
+    map,
+    some,
+    zip,
+    forEach,
+    find) {
     var Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;
@@ -60,8 +73,8 @@ define([
             var $game = $(React.findDOMNode(this.refs.game));
             var isIOS = detect.isIOS();
 
-            mediator.on('window:resize', _.debounce(this.setGridHeight, 200));
-            mediator.on('window:orientationchange', _.debounce(this.setGridHeight, 200));
+            mediator.on('window:resize', debounce(this.setGridHeight, 200));
+            mediator.on('window:orientationchange', debounce(this.setGridHeight, 200));
             this.setGridHeight();
 
             mediator.on('window:throttledScroll', function () {
@@ -404,20 +417,20 @@ define([
         },
 
         allHighlightedClues: function () {
-            return _.filter(this.props.data.entries, this.clueIsInFocusGroup, this);
+            return filter(this.props.data.entries, this.clueIsInFocusGroup, this);
         },
 
         clueIsInFocusGroup: function (clue) {
             if (this.state.cellInFocus) {
                 var cluesForCell = helpers.cluesFor(this.clueMap, this.state.cellInFocus.x, this.state.cellInFocus.y);
-                return _.contains(cluesForCell[this.state.directionOfEntry].group, clue.id);
+                return contains(cluesForCell[this.state.directionOfEntry].group, clue.id);
             } else {
                 return null;
             }
         },
 
         cluesData: function () {
-            return _.map(this.props.data.entries, function (entry) {
+            return map(this.props.data.entries, function (entry) {
                 return {
                     entry: entry,
                     hasAnswered: helpers.checkClueHasBeenAnswered(this.state.grid, entry),
@@ -436,7 +449,7 @@ define([
             if (entry.solution) {
                 this.setState({
                     grid: helpers.mapGrid(this.state.grid, function (cell, x, y) {
-                        if (_.some(cells, function (c) {
+                        if (some(cells, function (c) {
                                 return c.x === x && c.y === y;
                             })) {
                             var n = entry.direction === 'across' ? x - entry.position.x : y - entry.position.y;
@@ -454,7 +467,7 @@ define([
             var cells = helpers.cellsForEntry(entry);
 
             if (entry.solution) {
-                var badCells = _.map(_.filter(_.zip(cells, entry.solution), function (cellAndSolution) {
+                var badCells = map(filter(zip(cells, entry.solution), function (cellAndSolution) {
                     var coords = cellAndSolution[0];
                     var cell = this.state.grid[coords.x][coords.y];
                     var solution = cellAndSolution[1];
@@ -465,7 +478,7 @@ define([
 
                 this.setState({
                     grid: helpers.mapGrid(this.state.grid, function (cell, gridX, gridY) {
-                        if (_.some(badCells, function (bad) {
+                        if (some(badCells, function (bad) {
                                 return bad.x === gridX && bad.y === gridY;
                             })) {
                             cell.isError = true;
@@ -479,7 +492,7 @@ define([
                 setTimeout(function () {
                     this.setState({
                         grid: helpers.mapGrid(this.state.grid, function (cell, gridX, gridY) {
-                            if (_.some(badCells, function (bad) {
+                            if (some(badCells, function (bad) {
                                     return bad.x === gridX && bad.y === gridY;
                                 })) {
                                 cell.isError = false;
@@ -494,23 +507,23 @@ define([
         },
 
         onCheat: function () {
-            _.forEach(this.allHighlightedClues(), this.cheat, this);
+            forEach(this.allHighlightedClues(), this.cheat, this);
             this.save();
         },
 
         onCheck: function () {
             // 'Check this' checks single and grouped clues
-            _.forEach(this.allHighlightedClues(), this.check, this);
+            forEach(this.allHighlightedClues(), this.check, this);
             this.save();
         },
 
         onSolution: function () {
-            _.forEach(this.props.data.entries, this.cheat, this);
+            forEach(this.props.data.entries, this.cheat, this);
             this.save();
         },
 
         onCheckAll: function () {
-            _.forEach(this.props.data.entries, this.check, this);
+            forEach(this.props.data.entries, this.check, this);
             this.save();
         },
 
@@ -532,7 +545,7 @@ define([
 
             this.setState({
                 grid: helpers.mapGrid(this.state.grid, function (cell, gridX, gridY) {
-                    if (_.some(cellsInFocus, function (c) {
+                    if (some(cellsInFocus, function (c) {
                             return c.x === gridX && c.y === gridY;
                         })) {
                         cell.value = '';
@@ -590,7 +603,7 @@ define([
             var focussed = this.clueInFocus();
             var isHighlighted = function isHighlighted(x, y) {
                 return focussed ? focussed.group.some(function (id) {
-                    var entry = _.find(this.props.data.entries, {
+                    var entry = find(this.props.data.entries, {
                         id: id
                     });
                     return helpers.entryHasCell(entry, x, y);
@@ -606,7 +619,8 @@ define([
 
             return React.createElement(
                 'div', {
-                    className: 'crossword__container crossword__container--' + this.props.data.crosswordType + ' crossword__container--react'
+                    className: 'crossword__container crossword__container--' + this.props.data.crosswordType + ' crossword__container--react',
+                    'data-link-name': 'Crosswords'
                 },
                 React.createElement(
                     'div', {
@@ -710,7 +724,7 @@ define([
                     }), element);
 
                     var entryId = window.location.hash.replace('#', '');
-                    var entry = _.find(crosswordComponent.props.data.entries, {
+                    var entry = find(crosswordComponent.props.data.entries, {
                         id: entryId
                     });
                     if (entry) {
@@ -721,7 +735,7 @@ define([
                         var idMatch = e.currentTarget.hash.match(/#.*/);
                         var newEntryId = idMatch && idMatch[0].replace('#', '');
 
-                        var newEntry = _.find(crosswordComponent.props.data.entries, {
+                        var newEntry = find(crosswordComponent.props.data.entries, {
                             id: newEntryId
                         });
                         var focussedEntry = crosswordComponent.clueInFocus();

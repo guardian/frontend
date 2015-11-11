@@ -1,20 +1,19 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/functions/throttle'
 ], function (
     bean,
     fastdom,
-    _,
     $,
     config,
     detect,
-    mediator
-) {
+    mediator,
+    throttle) {
     var Search = function () {
 
         var searchLoader,
@@ -29,7 +28,7 @@ define([
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
-            searchLoader = _.throttle(function () {
+            searchLoader = throttle(function () {
                 self.load();
             });
 

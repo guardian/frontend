@@ -33,6 +33,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailController.renderPage()
+GET            /email-form                                                                                                       controllers.EmailController.renderForm()
 POST           /email                                                                                                            controllers.EmailController.submit()
 
 # Business data

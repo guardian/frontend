@@ -3,18 +3,19 @@ define([
     'bean',
     'common/utils/storage',
     'common/modules/user-prefs',
-    'common/utils/_',
     'common/utils/mediator',
-    'common/utils/detect'
+    'common/utils/detect',
+    'lodash/functions/debounce',
+    'lodash/arrays/uniq'
 ], function (
     $,
     bean,
     storage,
     userPrefs,
-    _,
     mediator,
-    detect
-) {
+    detect,
+    debounce,
+    uniq) {
 
     /**
      * Message provides a common means of flash messaging a user in the UI.
@@ -59,7 +60,7 @@ define([
 
         // Check and show the width based message
         this.updateMessageOnWidth();
-        mediator.on('window:resize', _.debounce(this.updateMessageOnWidth, 200).bind(this));
+        mediator.on('window:resize', debounce(this.updateMessageOnWidth, 200).bind(this));
 
         if (this.siteMessageLinkName) {
             siteMessage.attr('data-link-name', this.siteMessageLinkName);
@@ -108,7 +109,7 @@ define([
     Message.prototype.remember = function () {
         var messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
-        userPrefs.set(this.prefs, _.uniq(messageStates));
+        userPrefs.set(this.prefs, uniq(messageStates));
     };
 
     Message.prototype.acknowledge = function () {

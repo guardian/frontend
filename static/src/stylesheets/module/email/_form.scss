@@ -20,11 +20,19 @@
     }
 }
 
+.email-sub {
+    @include clearfix();
+}
+
 .email-sub__ { // Email subscription component namespace
 
     /**
      * Base Styles
      */
+
+    &iframe {
+        width: 100%;
+    }
 
     &form {
         background-color: guss-colour(guardian-brand, $pasteup-palette);
@@ -33,6 +41,10 @@
 
         * {
             box-sizing: border-box;
+        }
+
+        &--is-hidden {
+            display: none;
         }
     }
 
@@ -88,12 +100,46 @@
     &small {
         color: $form-secondary-colour;
         display: block;
-        text-align: center;
     }
 
-    /**
-     * Modifications
-     */
+    &message {
+        color: #fff;
+        padding-left: 35px;
+        position: relative;
+
+        &:before {
+            @include icon(close-icon-white-small);
+            content: '';
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            bottom: 0;
+            left: 0;
+            top: 0;
+            margin: auto;
+        }
+
+        &__headline,
+        &__description {
+            font-family: $f-sans-serif-text;
+        }
+
+        &__headline {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        &__description {
+            font-size: 12px;
+        }
+    }
+}
+
+/**
+* Modifications
+*/
+.email-sub__ {
 
     // FOOTER MODS
     &form--footer {
@@ -113,6 +159,11 @@
             &submit-input {
                 background-color: #767676;
                 border: 1px solid #767676;
+
+                &:hover,
+                &:focus {
+                    border-color: #dcdcdc;
+                }
             }
 
             &small {
@@ -163,6 +214,10 @@
                 &:focus {
                     border-color: $form-primary-colour;
                 }
+            }
+
+            &small {
+                text-align: center;
             }
         }
     }

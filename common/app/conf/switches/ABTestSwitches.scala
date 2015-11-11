@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLiveEventsSurvey = Switch(
-    "A/B Tests",
-    "ab-live-events-survey",
-    "Survey to test if users will be interested in paying for the Guardian with free live streaming events",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 10),
-    exposeClientSide = true
-  )
-
   val ABRtrtEmailMessage = Switch(
     "A/B Tests",
     "ab-rtrt-email-message",
@@ -31,12 +22,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABOnwardNames = Switch(
+  val ABRtrtEmailFormInlineFooter = Switch(
     "A/B Tests",
-    "ab-onward-names",
-    "Switch to enable alternative name for related content",
+    "ab-rtrt-email-form-inline-footer",
+    "Switch to show the email form inline in the footer",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 20),
+    sellByDate = new LocalDate(2015, 12, 15),
     exposeClientSide = true
   )
 
@@ -55,6 +46,15 @@ trait ABTestSwitches {
     "Testing the difference of user behaviour based on large top ad format",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 31),
+    exposeClientSide = true
+  )
+
+  val ABInjectNetworkFrontTest = Switch(
+    "A/B Tests",
+    "ab-inject-network-front-test",
+    "Switch to inject the network front instead of most popular on all content pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = true
   )
 
