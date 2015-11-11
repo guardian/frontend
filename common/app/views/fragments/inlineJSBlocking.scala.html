@@ -10,33 +10,39 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-    @Html(templates.inlineJS.blocking.js.polyfills().body);
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js");
-    @Html(templates.inlineJS.blocking.js.config(metaData).body);
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.analytics().body, "analytics.js");
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js");
+    // polyfills
+    @Html(templates.inlineJS.blocking.js.polyfills().body)
+
+    // determine whether to run enhanced JS
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.shouldEnhance(metaData).body, "shouldEnhance.js")
+
+    // page config
+    @Html(templates.inlineJS.blocking.js.config(metaData).body)
+
+    // analytics code
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.analytics().body, "analytics.js")
+
+    // apply render conditions
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.applyRenderConditions().body, "applyRenderConditions.js")
 
     // try and load fonts before we use the stylesheets
     @if(FontSwitch.isSwitchedOn) {
-        @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.loadFonts().body, "loadFonts.js");
+        @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.loadFonts().body, "loadFonts.js")
     }
 
-    /*
-    This borrows *heavily* from https://github.com/filamentgroup/loadCSS.
-    The css is loaded by `link`s (in stylesheets.scala.html), but with media of "only x".
-    This means the browser requests it, but doesn't block rendering on it, since this media is
-    not 'x'. Once it's loaded (appears in `window.document.styleSheets`),  `media` is set to
-    `screen` so the browser uses it.
-    */
     @if(AsyncCss.isSwitchedOn) {
-        @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.enableStylesheets().body, "enableStylesheets.js");
+        // enable non-blocking stylesheets
+        // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+        @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.enableStylesheets().body, "enableStylesheets.js")
     }
 
-    // should this be the usual type of thing we do?
     @* also delete iPhoneConfidenceCheck inside of facia.js *@
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js");
+    // cloudwatch beacons
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js")
 
-    // load the app
-    @Html(templates.inlineJS.blocking.js.curl(metaData).body);
-    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.bootEnhanced(metaData).body, "bootEnhanced.js");
+    // curl
+    @Html(templates.inlineJS.blocking.js.curl(metaData).body)
+
+    // load the enhanced JS
+    @InlineJs.withFileNameHint(templates.inlineJS.blocking.js.bootEnhanced(metaData).body, "bootEnhanced.js")
 </script>
