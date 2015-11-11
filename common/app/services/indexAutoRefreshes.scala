@@ -16,6 +16,9 @@ trait IndexListingsLifecycle extends GlobalSettings {
     KeywordSectionIndexAutoRefresh.start()
     KeywordAlphaIndexAutoRefresh.start()
     ContributorAlphaIndexAutoRefresh.start()
+    NewspaperBookIndexAutoRefresh.start()
+    NewspaperBookSectionIndexAutoRefresh.start()
+
   }
 }
 
@@ -39,6 +42,22 @@ object ContributorAlphaIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie("contributors")
+    }
+  }
+}
+
+object NewspaperBookIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
+  override protected def refresh(): Future[TagIndexListings] = Future {
+    blocking {
+      TagIndexesS3.getListingOrDie("newspaper_books")
+    }
+  }
+}
+
+object NewspaperBookSectionIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
+  override protected def refresh(): Future[TagIndexListings] = Future {
+    blocking {
+      TagIndexesS3.getListingOrDie("newspaper_book_sections")
     }
   }
 }

@@ -47,6 +47,18 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
     }
   }
 
+  def rebuildNewspaperBooksAndBookSections() = {
+    val newspaperBooks = ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book")
+    val newspaperBookSections = ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section")
+
+    (newspaperBooks andThen newspaperBookSections).run(Enumeratee.zip(bySection, byWebTitle)) map { case (booksMap, sectionsMap) =>
+      blocking {
+        saveToS3("newspaper_books", toPages(booksMap)(alphaTitle, asciiLowerWebTitle))
+        saveToS3("newspaper_book_sections", toPages(sectionsMap)(ValidSections(_), asciiLowerWebTitle))
+      }
+    }
+  }
+
   def rebuildContributorIndex() = {
     ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
       blocking {
@@ -66,6 +78,11 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   }
 
   def run() {
-    rebuildKeywordIndexes().withErrorLogging andThen { case _ => rebuildContributorIndex().withErrorLogging }
+    rebuildKeywordIndexes().withErrorLogging andThen {
+      case _ => rebuildContributorIndex().withErrorLogging andThen {
+        case _ => rebuildNewspaperBooksAndBookSections().withErrorLogging
+      }
+    }
   }
+
 }

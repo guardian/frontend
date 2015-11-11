@@ -8,9 +8,8 @@ import model.{Cached, Content, Tag}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, Controller, RequestHeader}
-import services.IndexPage
-
 import scala.concurrent.Future
+import services._
 
 object PublicationController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
@@ -37,18 +36,36 @@ object PublicationController extends Controller with ExecutionContexts with Item
       tagHead
     }
 
-    loadPublishedContent(publication, reqDate, tag).map { _.map { index =>
-      val contentOnRequestedDate = index.trails.filter(_.webPublicationDate.sameDay(reqDate))
+    if (isBookOrBookSection(tag)) {
+      loadPublishedContent(publication, reqDate, tag).map { _.map { index =>
+        val contentOnRequestedDate = index.trails.filter(_.webPublicationDate.sameDay(reqDate))
 
-      if (contentOnRequestedDate.nonEmpty) {
-        // if we want to unwrap CAPI results here - the next two lines are a start!
-        //val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
-        //Ok(views.html.newspaperPages(model, PreviousAndNext(None, None)))
-        Found(s"/$publication/$tag/${urlFormat(reqDate)}/all")
-      } else {
-        NotFound
-      }
-    }.getOrElse(NotFound)}.map(Cached(1)(_))
+        if (contentOnRequestedDate.nonEmpty) {
+          // if we want to unwrap CAPI results here - the next two lines are a start!
+          //val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
+          //Ok(views.html.newspaperPages(model, PreviousAndNext(None, None)))
+          Found(s"/$publication/$tag/${urlFormat(reqDate)}/all")
+        } else {
+          NotFound
+        }
+      }.getOrElse(NotFound)}.map(Cached(1)(_))
+    } else {
+      Future(NotFound)    // this should redirect to the article endpoint or controller
+    }
+
+  }
+
+  private def isBookOrBookSection(tag: String) = {
+    val isBook = NewspaperBookIndexAutoRefresh.get.map{book =>
+      book.pages.filter(_.id == tag)
+    }.nonEmpty
+
+    val isBookSection = NewspaperBookSectionIndexAutoRefresh.get.map{bookSection =>
+      bookSection.pages.filter(_.id == tag)
+    }.nonEmpty
+
+    isBook || isBookSection
+
   }
 
   private def loadPublishedContent(publication: String, date: DateTime, tag: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
