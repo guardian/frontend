@@ -6,8 +6,9 @@
     @import views.html.fragments.containers.facia_cards.containerHeader
     @import implicits.FaciaContentImplicits._
     @import model.SupportedUrl
+    @import views.support.Seq2zipWithRowInfo
 
-    @import views.html.fragments.items.elements.facia_cards.title
+    @import views.html.fragments.items.elements.facia_cards.titleForEssentialRead
     @import layout.FaciaCardHeader
 
     <div class="fc-container__header js-container__header">
@@ -17,25 +18,23 @@
             </span>
         </div>
         <div class="fc-container__header__description">
-            If you read nothing else today, read this
+            If you read nothing else today, read these
         </div>
     </div>
 
     <div class="fc-container__body">
         <div class="fc-slice-wrapper">
             <ul class="u-unstyled">
-                @containerDefinition.items.take(5).zipWithIndex.map { case (item, index) =>
-                    <li class="">
-                        @if(index == 0) {
-                            @InlineImage.fromFaciaContent(item).map { imageContainer =>
-                                @itemImage(imageContainer.imageContainer)
-                            }
-                        }
-                        @title(FaciaCardHeader.fromTrail(item, None), 1, 1, "headline-list__body")
-                        @Html(item.body.getOrElse(""))
-                        <hr/>
-                    </li>
+            @containerDefinition.items.take(5).zipWithRowInfo.map { case (item, info) =>
+            <li class="">
+                @if(info.rowNum == 1) {
+                    @InlineImage.fromFaciaContent(item).map { imageContainer =>
+                        @itemImage(imageContainer.imageContainer)
+                    }
                 }
+                @info.rowNum @titleForEssentialRead(FaciaCardHeader.fromTrail(item, None), 1, 1, "headline-list__body", item.keywords.head.webTitle)
+            </li>
+            }
             </ul>
         </div>
     </div>

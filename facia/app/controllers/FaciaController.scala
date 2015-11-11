@@ -130,7 +130,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderEssentialRead() = MemcachedAction { implicit request =>
     log.info(s"Serving essential read")
 
-    def collectionId = "uk-alpha/news/regular-stories"
+    def collectionId = "84e4005f-63fe-4b03-a8cc-10a864564853"
 
     getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
