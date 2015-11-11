@@ -33,11 +33,11 @@
         return false;
     };
 
-    var isRetinaIpad = function() {
-        return (navigator.platform === 'iPad' && window.devicePixelRatio === 2);
+    var isIpad = function() {
+        return (navigator.platform === 'iPad');
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isRetinaIpad());
+    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isIpad());
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 
