@@ -5,7 +5,7 @@
 .element-replicated-links {
     @include fs-textSans(1);
     border-left: $gs-gutter/3 solid colour(neutral-4);
-    padding-bottom: $gs-baseline/2;
+    padding: 0 0 $gs-baseline/2 $gs-gutter/2;
     margin-bottom: $gs-baseline;
     position: relative;
     overflow: auto;
@@ -16,17 +16,14 @@
 }
 
 .element-replicated-links__links {
-    padding-left: $gs-gutter;
     margin-bottom: $gs-baseline;
-    max-height: 900px;
-    transition: max-height .4s ease-out;
+    font-size: 15px;
 }
 
 .element-replicated-links__links--contracted {
     max-height: 150px;
     overflow: hidden;
     position: relative;
-    transition: max-height .4s ease-in;
 
     &:before {
         content: '';
@@ -44,61 +41,41 @@
 .element-replicated-links__title {
     @include fs-header(1);
     color: colour(neutral-1);
-    padding-left: $gs-gutter;
     margin-bottom: $gs-baseline;
 }
 
-.element-replicated-link {
-    font-size: 15px;
-    position: relative;
-    margin-bottom: $gs-baseline/2;
+.element-replicated-link__internal {
+    margin-bottom: $gs-baseline/1.5;
 
     a {
         padding: $gs-baseline/2 0;
+    }
+}
 
-        &:hover,
-        &:focus {
-            text-decoration: none;
+.element-replicated-links__sources {
+    margin: $gs-baseline 0 0;
+    display: inline-block;
+}
 
-            .element-replicated-link__text {
-                color: colour(neutral-1);
-            }
+.element-replicated-link__external {
+    display: inline-block;    
 
-            .element-replicated-link__domain,
-            .element-replicated-link__headline {
-                text-decoration: underline;
-            }
+    &:nth-last-child(n+2) {
+        &:after {
+            content: ',';
         }
+    }
 
-        &.element-replicated-link--upgraded:hover {
-            text-decoration: underline;
+    a {
+        font-size: 0;
+
+        span {
+            font-size: 15px;
         }
     }
 }
 
-.element-replicated-link__number {
-    position: absolute;
-    top: $gs-baseline/3;
-    left: -$gs-gutter - 3px;
-    width: $gs-gutter;
-    text-align: right;
-    color: colour(neutral-2);
-}
-
-.element-replicated-link__text {
-    @include fs-bodyCopy(1);
-    color: colour(neutral-2);
-    font-style: italic;
-}
-
-.element-replicated-link__pointer {
-    @include fs-textSans(1);
-    color: colour(neutral-2);
-    margin-left: $gs-gutter/10;
-}
-
 .element-replicated-links__more {
-    padding-left: $gs-gutter;
     display: block;
     font-size: 14px;
     font-weight: bold;
