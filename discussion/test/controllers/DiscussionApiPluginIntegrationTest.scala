@@ -22,7 +22,7 @@ import play.api.libs.ws.WS
     var headersReceived: Map[String,String] = Map.empty
     val testUrl = "http://test-url"
 
-    override protected val apiRoot = Configuration.discussion.apiRoot
+    override protected val apiRoot = Configuration.discussion.secureApiRoot
     override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
   }
 

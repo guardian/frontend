@@ -57,7 +57,7 @@ object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
 class DiscussionApiStub extends DiscussionApi {
   import play.api.Play.current
   protected val clientHeaderValue: String =""
-  protected val apiRoot = conf.Configuration.discussion.apiRoot
+  protected val apiRoot = conf.Configuration.discussion.secureApiRoot
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
   override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
