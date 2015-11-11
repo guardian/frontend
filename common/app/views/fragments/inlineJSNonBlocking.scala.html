@@ -5,10 +5,12 @@
 
 @import conf.switches.Switches.IdentityProfileNavigationSwitch
 @import conf.Configuration
+@import templates.inlineJS.nonBlocking.js._
+
 <script>
 // non-blocking JS to improve the perceived rendereding speed
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load
-    @InlineJs.withFileNameHint(templates.inlineJS.nonBlocking.js.getUsername().body, "getUsername.js")
+    @InlineJs(getUsername().body, "getUsername.js")
 }
 </script>
