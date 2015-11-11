@@ -22,7 +22,7 @@ define([
          * Uses fastdom to avoid performance issues with synchronous DOM actions, but queues async behaviour safely
          *
          * @param rules - a spacefinder ruleset
-         * @param writer - function for writing the desired content to a candidate paragraph
+         * @param writer - function, takes a para element and injects a container for the new content synchronously
          * @param debug - flag to enable debugging in spacefinder
          *
          * @returns {Promise} - resolves when insertion attempt completed
