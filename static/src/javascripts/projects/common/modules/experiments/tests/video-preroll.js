@@ -14,7 +14,7 @@ define([
         this.successMeasure = 'We will see clear difference between user behavior';
         this.audienceCriteria = 'Users not in AU nor US edition';
         this.dataLinkNames = '';
-        this.idealOutcome = 'British and international audience will be interested in video pre-rolls.';
+        this.idealOutcome = 'UK and INT audience will be interested in video pre-rolls.';
 
         this.canRun = function () {
             return config.page.edition === 'UK' || config.page.edition === 'INT';
