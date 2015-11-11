@@ -291,6 +291,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
+
+    lazy val showMpuInAllContainersPageId =
+      configuration.getStringProperty("commercial.showMpuInAllContainersPageId")
   }
 
   object open {
