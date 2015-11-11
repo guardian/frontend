@@ -1,8 +1,6 @@
 define([
-    'common/utils/_',
     'helpers/injector'
 ], function (
-    _,
     Injector
 ) {
     var injector = new Injector();
