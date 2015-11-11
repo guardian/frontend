@@ -1,7 +1,7 @@
 package views.support
 
 import common.Maps.RichMap
-import common.{Edition, InternationalEdition, StaticPage}
+import common.{Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
 import model.{CommercialExpiryPage, Content, MetaData}
@@ -36,7 +36,6 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       "hasBelowTopNavSlot" -> JsBoolean(metaData.hasAdInBelowTopNavSlot(edition)),
       "shouldHideAdverts" -> JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
-        case p: StaticPage => true
         case CommercialExpiryPage(_) => true
         case _ => false
       }),
