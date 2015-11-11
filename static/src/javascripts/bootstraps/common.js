@@ -369,11 +369,7 @@ define([
             },
 
             initEmail: function () {
-                // In page
                 email.init();
-
-                // iframed - Pass the iframe element as root
-                email.init(document.getElementById('footer__email-form'));
             }
         };
 

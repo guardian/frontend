@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/rtrt-email-message',
+    'common/modules/experiments/tests/rtrt-email-form-inline-footer',
     'common/modules/experiments/tests/inject-headlines-test',
     'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/large-top-slot',
@@ -30,6 +31,7 @@ define([
     HighCommercialComponent,
     MembershipMessageUSA,
     RtrtEmailMessage,
+    RtrtEmailFormInlineFooter,
     InjectHeadlinesTest,
     InjectNetworkFrontTest,
     LargeTopAd,
@@ -47,6 +49,7 @@ define([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
         new RtrtEmailMessage(),
+        new RtrtEmailFormInlineFooter(),
         new InjectHeadlinesTest(),
         new InjectNetworkFrontTest(),
         new LargeTopAd()

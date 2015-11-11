@@ -22,6 +22,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABRtrtEmailFormInlineFooter = Switch(
+    "A/B Tests",
+    "ab-rtrt-email-form-inline-footer",
+    "Switch to show the email form inline in the footer",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 15),
+    exposeClientSide = true
+  )
+
   val ABInjectHeadlinesTest = Switch(
     "A/B Tests",
     "ab-inject-headlines-test",

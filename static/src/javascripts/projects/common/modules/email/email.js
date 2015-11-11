@@ -103,7 +103,7 @@ define([
         // eg: rootEl can be a specific container or an iframe contentDocument
         init: function (rootEl) {
             var isIframed = rootEl && rootEl.tagName === 'IFRAME',
-                thisRootEl = (isIframed) ? rootEl.contentDocument : rootEl || document;
+                thisRootEl = (isIframed) ? rootEl.contentDocument.body : rootEl || document;
 
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
                 formInlineLabels.init(el);

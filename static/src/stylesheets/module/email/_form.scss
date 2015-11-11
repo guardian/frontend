@@ -30,6 +30,10 @@
      * Base Styles
      */
 
+    &iframe {
+        width: 100%;
+    }
+
     &form {
         background-color: guss-colour(guardian-brand, $pasteup-palette);
         font-family: $f-sans-serif-text;
