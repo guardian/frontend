@@ -1,4 +1,4 @@
-@(item: model.MetaData, isOffline: Boolean = false)(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 
@@ -45,35 +45,34 @@ var curl = {
             inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
             core:                       '@Static("javascripts/core.js")',
-            'facebook.js':              '//connect.facebook.net/en_US/all.js',
-            'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-            text:                       'text', // noop
-            inlineSvg:                  'inlineSvg', // noop
             'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
             'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
-            'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
+            'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
+            'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
+            'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
+            'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
+            'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+            'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
+            'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
+            'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
+            'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
+            'bootstraps/media':         '@Static("javascripts/bootstraps/media.js")',
+            'bootstraps/article':       '@Static("javascripts/bootstraps/article.js")',
+            'bootstraps/liveblog':      '@Static("javascripts/bootstraps/liveblog.js")',
+            'bootstraps/trail':         '@Static("javascripts/bootstraps/trail.js")',
+            'bootstraps/gallery':       '@Static("javascripts/bootstraps/gallery.js")',
+            'bootstraps/profile':       '@Static("javascripts/bootstraps/profile.js")',
+            'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
+            'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
+            stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
+            zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+            'facebook.js':              '//connect.facebook.net/en_US/all.js',
+            'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
 
-            @if(!isOffline) {,
-                'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
-                'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
-                'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
-                'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
-                'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
-                'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
-                'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
-                'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
-                'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
-                'bootstraps/media':         '@Static("javascripts/bootstraps/media.js")',
-                'bootstraps/article':       '@Static("javascripts/bootstraps/article.js")',
-                'bootstraps/liveblog':      '@Static("javascripts/bootstraps/liveblog.js")',
-                'bootstraps/trail':         '@Static("javascripts/bootstraps/trail.js")',
-                'bootstraps/gallery':       '@Static("javascripts/bootstraps/gallery.js")',
-                'bootstraps/profile':       '@Static("javascripts/bootstraps/profile.js")',
-                'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
-                'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
-                stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
-                zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")'
-            }
+            // plugins
+            text:                       'text', // noop
+            inlineSvg:                  'inlineSvg' // noop
         }
     }
 };
