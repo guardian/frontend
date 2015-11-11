@@ -26,13 +26,18 @@ case class EmailForm(email: String)
 
 object EmailForm {
   val postUrl = "https://l2y0m1o3nk.execute-api.eu-west-1.amazonaws.com/code/email"
-  val listId  = 3485
+  val listTriggers = Map(
+    3485 -> 2529
+  )
 
-  def submit(form: EmailForm): Future[WSResponse] = {
-    WS.url(postUrl).post(Json.obj(
-      "email"  -> form.email,
-      "listId" -> listId
-    ))
+  def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
+    listTriggers.get(listId).map { triggerId =>
+      WS.url(postUrl).post(Json.obj(
+        "email" -> form.email,
+        "listId" -> listId,
+        "triggerId" -> triggerId
+      ))
+    }
   }
 }
 
@@ -48,6 +53,8 @@ object EmailController extends Controller with ExecutionContexts {
   }
 
   def submit() = Action.async { implicit request =>
+    val listId = 3485
+
     emailForm.bindFromRequest.fold(
       formWithErrors => {
         val result = FailedToSubscribe("Invalid email address")
@@ -58,21 +65,32 @@ object EmailController extends Controller with ExecutionContexts {
         })
       },
 
-      form => EmailForm.submit(form).map(res => res.status match {
-        case 200 | 201 => render {
-          case Accepts.Html() => Created(views.html.emailLanding(emailLandingPage, Some(Subscribed)))
-          case Accepts.Json() => Created(Json.obj("email" -> form.email))
-        }
+      form => EmailForm.submit(form, listId) match {
+        case Some(future) => future.map(_.status match {
+          case 200 | 201 => render {
+            case Accepts.Html() => Created(views.html.emailLanding(emailLandingPage, Some(Subscribed)))
+            case Accepts.Json() => Created(Json.obj("email" -> form.email))
+          }
 
-        case _  => {
-          val result = FailedToSubscribe("Something bad happened")
+          case _ => {
+            val result = FailedToSubscribe("Something bad happened")
 
-          render {
+            render {
+              case Accepts.Html() => InternalServerError(views.html.emailLanding(emailLandingPage, Some(result)))
+              case Accepts.Json() => InternalServerError(result.message)
+            }
+          }
+        })
+
+        case _ => {
+          val result = FailedToSubscribe("Unable to find listId")
+
+          Future(render {
             case Accepts.Html() => InternalServerError(views.html.emailLanding(emailLandingPage, Some(result)))
             case Accepts.Json() => InternalServerError(result.message)
-          }
+          })
         }
       })
-    )
   }
 }
+
