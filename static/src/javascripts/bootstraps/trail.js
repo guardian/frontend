@@ -114,7 +114,6 @@ define([
 
                 $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
                 $('.js-tabs', $parent).addClass('u-h');
-                mediator.emit('modules:popular:loaded', this.elem);
             }.bind(this));
         }
     }
