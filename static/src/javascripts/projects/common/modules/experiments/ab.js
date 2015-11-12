@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/large-top-slot',
+    'common/modules/experiments/tests/video-preroll',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -32,6 +33,7 @@ define([
     InjectHeadlinesTest,
     InjectNetworkFrontTest,
     LargeTopAd,
+    VideoPreroll,
     flatten,
     forEach,
     keys,
@@ -47,7 +49,8 @@ define([
         new MembershipMessageUSA(),
         new RtrtEmailMessage(),
         new InjectNetworkFrontTest(),
-        new LargeTopAd()
+        new LargeTopAd(),
+        new VideoPreroll()
     ]);
 
     var participationsKey = 'gu.ab.participations';

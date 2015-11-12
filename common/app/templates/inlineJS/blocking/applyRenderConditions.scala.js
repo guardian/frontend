@@ -81,7 +81,7 @@
     }
 
     @if(AdFreeExperience.isSwitchedOn) {
-        var adfreeClass = @JavaScript(templates.headerInlineJS.js.applyAdfreeRenderCondition().body);
+        var adfreeClass = @JavaScript(templates.inlineJS.blocking.js.applyAdfreeRenderCondition().body);
         if (adfreeClass) {
             docClass += ' ' + adfreeClass;
         }
