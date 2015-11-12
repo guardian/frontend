@@ -199,23 +199,22 @@
 }
 
 // LANDING PAGE LAYOUT MODS
-@if($browser-supports-flexbox) {
-    .email-sub {
-        @include mq(tablet) {
-            &--landing {
-                @include flex-display();
-            }
+.email-sub {
+    @include mq(tablet) {
+        &--landing {
+            @include flex-display();
+        }
 
-            &__form--landing {
-                @include flex-display();
-                @include flex-direction(column);
-                align-content: center;
-                justify-content: center;
-            }
+        &__form--landing {
+            @include flex-display();
+            @include flex-direction(column);
+            align-content: center;
+            justify-content: center;
+        }
 
-            &__header--landing {
-                @include flex($flex-grow: 2);
-            }
+        &__header--landing {
+            @include flex($flex-grow: 2);
         }
     }
 }
+

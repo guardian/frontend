@@ -1,36 +1,10 @@
-@(metaData: model.MetaData, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: model.MetaData)(head: Html)(body: Html)(implicit request: RequestHeader)
 
 <!doctype html>
 <head>
-    @*
-    Email specific stylesheet during A/B test to reduce bloating content or facia css when including in iframe
-    When removing iframe, we should probably use the current project (facia, content) css to make use of the cache
-    *@
-
-    @*
-    - Include IE < 9 [(lt IE 9)]
-    - Exclude IE Mobile [&(!IEMobile)]
-    *@
-    <!--[if (lt IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.email.css")" />
-    <![endif]-->
-
-    @*
-    - Include IE 9 [(IE 9)]
-    - Exclude IE Mobile [&(!IEMobile)]
-    *@
-    <!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.email.css")" />
-    <![endif]-->
-
-    @*
-    - Include all browsers [<!-->]
-    - Exclude IE < 10 [(gt IE 9)]
-    - Include IE Mobile [|(IEMobile)]
-    *@
-    <!--[if (gt IE 9)|(IEMobile)]><!-->
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/email.css")" />
-    <!--<![endif]-->
+    <style class="js-loggable">
+    @Html(Static.css.head(Some("email")))
+    </style>
 
     @fragments.fonts()
 
