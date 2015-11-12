@@ -156,12 +156,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
     futureOfCollections.map { collections =>
         Cached(60) {
-          val config = collectionIds.headOption.flatMap { collectionIds => ConfigAgent.getConfig(collectionIds) }.getOrElse(CollectionConfig.empty)
+          val config = CollectionConfig.empty.copy(
+            displayName = Some("the essential read")
+          )
 
           val containerDefinition = FaciaContainer(
             1,
             EssentialRead,
-            CollectionConfigWithId(collectionIds.head, config),
+            CollectionConfigWithId("", config), // Empty string for essential read AB test
             CollectionEssentials.fromMultiplePressedCollections(collections)
           )
 
