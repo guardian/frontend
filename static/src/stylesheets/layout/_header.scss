@@ -43,6 +43,33 @@ $c-guardian-services-action: #ffffff;
     .show-on-slim-header {
         display: block !important;
     }
+
+    .l-header__wrap {
+        width: 100%;
+        position: relative;
+        z-index: $zindex-sticky;
+        background: colour(guardian-brand);
+    }
+
+    .navigation--fixed {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+    }
+
+    .navigation--moving {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    .navigation--hidden {
+        display: none;
+        position: fixed;
+        top: -24px;
+    }
 }
 
 .logo-wrapper {

@@ -171,7 +171,10 @@ define([
 
     StickyHeader.prototype.setScrollDirection = function (scrollY) {
         this.config.direction = (scrollY > this.config.prevScroll) ? 'down' : 'up';
-        this.config.prevScroll = scrollY;
+        console.log(scrollY, this.config.prevScroll);
+        this.config.dist = scrollY - this.config.prevScroll;
+        console.log(this.config.dist);
+        this.config.prevScroll = scrollY;     
     };
 
     StickyHeader.prototype.shouldShowNavigation = function (scrollY) {
@@ -188,20 +191,62 @@ define([
 
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
-            fastdom.write(function () {
-                if (this.isTablet || this.isMobile) {
-                    this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
-                } else {
-                    if (this.noTopBanner) {
-                        this.$els.navigation.css('display', 'block');
+            fastdom.read(function () {
+                var already = parseInt(this.$els.navigation.css('top'));
+                fastdom.write(function () {
+                    this.$els.navigation.removeClass('navigation--hidden').addClass('navigation--moving');
+
+                    var dist = Math.abs(this.config.dist) * 0.7;
+                    //console.log(dist, scrollY, this.config.prevScroll);
+                    if (already >= 48) {
+                        this.$els.navigation.removeClass('navigation--moving').addClass('navigation--fixed').css('top', 48);
                     } else {
-                        this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                        this.$els.navigation.removeClass('navigation--fixed').addClass('navigation--moving');
+                        
+                        var newPosition = (already + dist >= 48) ? 48 : already + dist;
+                        this.$els.navigation.css('top', newPosition);
                     }
-                }
+                    /*if (this.isTablet || this.isMobile) {
+                        this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
+                    } else {
+                        if (this.noTopBanner) {
+                            this.$els.navigation.css('display', 'block');
+                        } else {
+                            this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                        }
+                    }*/
+                }.bind(this));
             }.bind(this));
         } else {
+            fastdom.read(function () {
+                var already = parseInt(this.$els.navigation.css('top'));
+                fastdom.write(function () {
+                    this.$els.navigation.removeClass('navigation--fixed').addClass('navigation--moving');
+
+                    var dist = Math.abs(this.config.dist) * 0.7;
+                    //console.log(dist, scrollY, this.config.prevScroll);
+                    if (already <= -24) {
+                        this.$els.navigation.removeClass('navigation--moving').addClass('navigation--hidden').css('top', 48);
+                    } else {
+                        this.$els.navigation.removeClass('navigation--fixed').addClass('navigation--moving');
+                        
+                        var newPosition = (already + dist <= -24) ? -24 : already + dist;
+                        console.log('New position: ', newPosition);
+                        this.$els.navigation.css('top', newPosition);
+                    }
+                    /*if (this.isTablet || this.isMobile) {
+                        this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
+                    } else {
+                        if (this.noTopBanner) {
+                            this.$els.navigation.css('display', 'block');
+                        } else {
+                            this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                        }
+                    }*/
+                }.bind(this));
+            }.bind(this));
             // If user is scrolling down and navigation is visible reset bounce distance
-            if (this.config.showNavigation) {
+            /*if (this.config.showNavigation) {
                 // Reset distance bouncing
                 this.config.distance = 0;
 
@@ -209,9 +254,10 @@ define([
                 if (this.$els.navHeader.hasClass('navigation-container--expanded')) {
                     bean.fire(qwery('.js-navigation-toggle')[0], 'click');
                 }
-            }
+            }*/
             fastdom.write(function () {
-                if (this.isTablet || this.isMobile) {
+                this.$els.navigation.removeClass('navigation--sticky');
+                /*if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
                     if (this.noTopBanner) {
@@ -219,7 +265,7 @@ define([
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
                     }
-                }
+                }*/
             }.bind(this));
         }
     };
@@ -411,6 +457,7 @@ define([
         // Header is slim and navigation is shown on the scroll up
         if (scrollY >= headerHeight) {
             fastdom.write(function () {
+                this.$els.navigation.addClass('navigation--hidden');
                 this.$els.header.css({
                     position:  'fixed',
                     top:       0,
@@ -436,6 +483,7 @@ define([
             fastdom.write(function () {
                 // Header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
+                this.$els.navigation.removeClass('navigation--hidden');
                 this.$els.header.css({
                     position:  'static',
                     width:     '100%',
