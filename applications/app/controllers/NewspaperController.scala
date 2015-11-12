@@ -28,6 +28,10 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
     for( tp <- paper) yield Cached(900)(Ok(views.html.newspaperPage(tp)))
   }
+
+  def allOn(day: String, month: String, year: String) = Action {
+    Cached(300)(MovedPermanently(s"/theguardian/$year/$month/$day"))
+  }
 }
 
 case class TodayNewspaper(page: MetaData, bookSections: Seq[FaciaContainer])
