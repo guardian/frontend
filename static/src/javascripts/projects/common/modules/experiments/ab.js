@@ -9,6 +9,7 @@ define([
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/inject-network-front-test',
+    'common/modules/experiments/tests/most-popular-default',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
     'lodash/arrays/flatten',
@@ -31,6 +32,7 @@ define([
     MembershipMessageUSA,
     RtrtEmailMessage,
     InjectNetworkFrontTest,
+    MostPopularDefaultTest,
     LargeTopAd,
     VideoPreroll,
     flatten,
@@ -48,6 +50,7 @@ define([
         new MembershipMessageUSA(),
         new RtrtEmailMessage(),
         new InjectNetworkFrontTest(),
+        new MostPopularDefaultTest(),
         new LargeTopAd(),
         new VideoPreroll()
     ]);
