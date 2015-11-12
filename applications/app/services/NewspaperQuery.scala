@@ -114,6 +114,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       case 1 => FixedContainers.fixedSmallSlowI
       case 2 => FixedContainers.fixedSmallSlowII
       case 3 => ContainerDefinition.ofSlices(TTT)
+      case 5 => FixedContainers.fixedSmallSlowVThird
       case _ => FixedContainers.fixedMediumFastXII }
 
     FaciaContainer(
