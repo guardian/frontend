@@ -7,7 +7,7 @@
 @import com.gu.facia.api.models.FaciaContent
 
 @headline() = {
-    <span class="@labelCssClasses fc-item__headline"><span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span></span>
+    <span class="essential-read__headline">@RemoveOuterParaHtml(header.headline)</span>
 }
 
 @articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
@@ -15,10 +15,10 @@
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {
         case Some(kicker) if snapType != Some(FrontendLatestSnap) => {
-            @articleLink{<span class="">@Html(kicker.kickerHtml)</span> @headline()}
+            @articleLink{<span class="essential-read__kicker">@Html(kicker.kickerHtml)</span> @headline()}
         }
         case _ => {
-            @articleLink{<span class="">@topTagWebTitle</span> @headline()}
+            @articleLink{<span class="essential-read__kicker">@topTagWebTitle</span> @headline()}
         }
     }
 }

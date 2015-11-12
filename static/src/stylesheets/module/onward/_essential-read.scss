@@ -1,0 +1,49 @@
+section#the-essential-read {
+    background-color: colour(guardian-brand);
+
+    .fc-container__header__title {
+        color: #fff;
+        font-weight: 300;
+        @include font($f-serif-headline, 200, 36px);
+    }
+
+    .fc-container__header__description {
+        color: colour(guardian-brand-light);
+    }
+
+    .essential-read__number {
+        float: left;
+        width: $gs-gutter * 2;
+        @include font($f-serif-headline, 200, 42px);
+        color: colour(guardian-brand-light);
+    }
+
+    .essential-read__item {
+        float: left;
+        width: 320px;
+        height: $gs-baseline * 6;
+    }
+
+    .essential-read__item-wrapper {
+        width: 320px;
+    }
+
+    .essential-read__text {
+        width: 280px;
+        float: left;
+    }
+
+    .essential-read__headline {
+        color: #fff;
+        @include font($f-serif-headline, 400, 16px);
+        line-height: 20px;
+        padding-top: 2px;
+        display: block;
+    }
+
+    .essential-read__kicker {
+        @include font($f-serif-headline, 700, 16px);
+        color: colour(guardian-brand-light);
+        display: block;
+    }
+}

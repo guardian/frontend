@@ -23,17 +23,20 @@
 
     <div class="fc-container__body">
         <div class="fc-slice-wrapper">
-            <ul class="u-unstyled">
-            @containerDefinition.items.take(5).zipWithRowInfo.map { case (item, info) =>
-            <li class="">
-                @if(info.rowNum == 1) {
-                    @InlineImage.fromFaciaContent(item).map { imageContainer =>
-                        @itemImage(imageContainer.imageContainer)
+            <ul class="u-unstyled essential-read__item-wrapper">
+                @containerDefinition.items.take(5).zipWithRowInfo.map { case (item, info) =>
+                    @if(info.rowNum == 1) {
+                        @InlineImage.fromFaciaContent(item).map { imageContainer =>
+                            @itemImage(imageContainer.imageContainer)
+                        }
                     }
+                    <li class="essential-read__item">
+                        <div class="essential-read__number">@info.rowNum</div>
+                        <div class="essential-read__text">
+                            @titleForEssentialRead(FaciaCardHeader.fromTrail(item, None), 1, 1, "headline-list__body", item.keywords.head.webTitle)
+                        </div>
+                    </li>
                 }
-                @info.rowNum @titleForEssentialRead(FaciaCardHeader.fromTrail(item, None), 1, 1, "headline-list__body", item.keywords.head.webTitle)
-            </li>
-            }
             </ul>
         </div>
     </div>
