@@ -7,7 +7,7 @@ define([
 
     function getShortDomain() {
         // Trim subdomains for prod (www.theguardian), code (m.code.dev-theguardian) and dev (dev.theguardian, m.thegulocal)
-        return getDocument().domain.replace(/^(www|dev|m)\./, '.');
+        return getDocument().domain.replace(/^(www|m.code|dev|m)\./, '.');
     }
 
     function cleanUp(names) {
