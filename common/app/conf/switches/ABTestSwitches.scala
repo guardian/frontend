@@ -58,4 +58,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMostPopularDefaultTest = Switch(
+    "A/B Tests",
+    "ab-most-popular-default-test",
+    "Switch to change the default of most popular container to show across the guardian first instead of section",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 17),
+    exposeClientSide = true
+  )
 }
