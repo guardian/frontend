@@ -73,7 +73,7 @@ define([
                 test: function () {
                     updateFooter();
                     $('.footer__follow-us').prepend(
-                        makeABChanges(getIframe()[0], {headline: 'daily email sign up', removeComforter: true})
+                        makeABChanges(getIframe()[0], {headline: 'daily email sign up'})
                     );
                 }
             }
