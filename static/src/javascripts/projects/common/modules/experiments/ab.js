@@ -30,7 +30,6 @@ define([
     HighCommercialComponent,
     MembershipMessageUSA,
     RtrtEmailMessage,
-    InjectHeadlinesTest,
     InjectNetworkFrontTest,
     LargeTopAd,
     VideoPreroll,
