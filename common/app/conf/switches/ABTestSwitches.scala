@@ -22,15 +22,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABOnwardNames = Switch(
-    "A/B Tests",
-    "ab-onward-names",
-    "Switch to enable alternative name for related content",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 20),
-    exposeClientSide = true
-  )
-
   val ABInjectHeadlinesTest = Switch(
     "A/B Tests",
     "ab-inject-headlines-test",
@@ -64,6 +55,15 @@ trait ABTestSwitches {
     "Switch to change the default of most popular container to show across the guardian first instead of section",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 17),
+    exposeClientSide = true
+  )
+
+  val ABVideoPreroll = Switch(
+    "A/B Tests",
+    "ab-video-preroll",
+    "A test to see if a UK or INT audience will be interested in video pre-rolls",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 11),
     exposeClientSide = true
   )
 }
