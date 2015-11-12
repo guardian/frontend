@@ -21,7 +21,7 @@ object emailLandingPage extends MetaData {
   lazy val webTitle: String = "Email Landing Page"
 }
 
-case class EmailPage (interactive: Interactive, related: RelatedContent)
+case class EmailPage(interactive: Interactive, related: RelatedContent)
 
 case class EmailForm(email: String)
 
