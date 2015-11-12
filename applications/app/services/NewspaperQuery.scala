@@ -21,7 +21,7 @@ case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionCo
 object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
-  val FRONT_PAGE_DISPLAY_NAME = "Front Page"
+  val FRONT_PAGE_DISPLAY_NAME = "front page"
 
   def fetchTodaysPaper: Future[List[FaciaContainer]] =
     bookSectionContainers(DateTime.now(DateTimeZone.UTC))
@@ -39,7 +39,6 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
     bookSectionContainers(date)
   }
-
 
   private def bookSectionContainers(date: DateTime): Future[List[FaciaContainer]] = {
 
@@ -70,7 +69,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
       val bookSectionContainers = orderedBookSections.map { list =>
         val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer(Some(list.tag.id), Some(list.tag.webTitle), None, content, orderedBookSections.indexOf(list) + 1)
+        bookSectionContainer(Some(list.tag.id), Some(lowercaseDisplayName(list.tag.webTitle)), None, content, orderedBookSections.indexOf(list) + 1)
       }
 
       firstPageContainer :: bookSectionContainers
@@ -126,4 +125,6 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   }
 
   private def getNewspaperPageNumber(content: ApiContent) = content.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
+
+  def lowercaseDisplayName(s: String) = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
 }
