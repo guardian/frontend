@@ -76,7 +76,7 @@ define([
 
                 container.setAttribute('data-component', componentName);
 
-                relatedUrl = '/container/essential-read.json';
+                relatedUrl = '/container/essential-read/automated/uk.json';
 
                 if (opts.excludeTags && opts.excludeTags.length) {
                     relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
