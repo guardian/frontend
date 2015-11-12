@@ -11,6 +11,24 @@ body {
         padding: 0;
     }
 
+    &text-input,
+    &submit-input {
+        @include border-radius(1000px)
+    }
+
+    &submit-input {
+        // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
+        font-family: $f-sans-serif-text;
+        font-weight: bold;
+        height: 36px;
+        padding: 0 12px;
+
+        &:focus,
+        &:hover {
+            outline: 0;
+        }
+    }
+
     // When we are in an iframe, our widths are based on the iframe so we need to set
     // our media queries explicitly to match what the element width is (hey there, element queries)
 
@@ -39,3 +57,5 @@ body {
     }
 
 }
+
+

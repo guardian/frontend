@@ -35,8 +35,8 @@
     }
 
     &form {
-        background-color: guss-colour(guardian-brand, $pasteup-palette);
         font-family: $f-sans-serif-text;
+        font-size: 14px;
         padding: 20px;
 
         * {
@@ -49,7 +49,6 @@
     }
 
     &label {
-        @include fs-textSans(3);
         color: $form-primary-colour;
 
         &--is-hidden {
@@ -67,8 +66,7 @@
         .email-sub__label {
             color: guss-colour(neutral-2, $pasteup-palette);
             line-height: 3;
-            left: 0;
-            padding: 0 15px;
+            left: 15px;
             position: absolute;
             pointer-events: none; // Ensure the text input cursor is shown
         }
@@ -77,19 +75,14 @@
     &text-input {
         border: 1px solid $form-primary-colour;
         color: guss-colour(neutral-2, $pasteup-palette);
-        display: inline-block;
         height: 3em;
-        @include fs-textSans(3);
-        line-height: 2;
         outline: none;
-        padding: 8px 15px 7px;
-        width: 100%;
+        padding: 8px 15px;
     }
 
     &submit-input {
         border-color: $form-secondary-colour;
         color: $form-primary-colour;
-        width: 100%;
 
         &:focus,
         &:hover {
@@ -99,7 +92,8 @@
 
     &text-input,
     &submit-input {
-        margin-bottom: 14.5px;
+        margin-bottom: 15px;
+        width: 100%;
     }
 
     &small {
@@ -148,15 +142,14 @@
 
     // FOOTER MODS
     &form--footer {
-        background-color: transparent;
         margin-bottom: $gs-baseline;
-        padding: 0 20px 0 0;
+        padding: 0 20px;
 
         .email-sub__ { // Namespace
 
             &label,
             &submit-input,
-            &text-input  {
+            &text-input {
                 font-size: 12px;
             }
 
@@ -166,17 +159,16 @@
             }
 
             &submit-input {
-                background-color: #767676;
-                border: 1px solid #767676;
+                background-color: guss-colour(neutral-2, $pasteup-palette);
+                border: 1px solid guss-colour(neutral-2, $pasteup-palette);
 
                 &:hover,
                 &:focus {
-                    border-color: #dcdcdc;
+                    border-color: guss-colour(neutral-4, $pasteup-palette);
                 }
             }
 
             &small {
-                clear: left;
                 color: $form-primary-colour;
                 font-size: 12px;
             }
@@ -187,13 +179,7 @@
 
     // LANDING PAGE MODS
     &form--landing {
-        @include mq(tablet) {
-            flex: 1;
-            display: flex;
-            align-content: center;
-            justify-content: center;
-            flex-direction: column;
-        }
+        background-color: guss-colour(guardian-brand, $pasteup-palette);
 
         .email-sub__ { // Namespace
             &text-input {
@@ -210,17 +196,26 @@
             }
         }
     }
-
-    &header--landing {
-        @include mq(tablet) {
-            flex: 2;
-        }
-    }
 }
 
-// TODO Fallbacks x-browser
-@include mq(tablet) {
-    .email-sub--landing {
-        display: flex;
+// LANDING PAGE LAYOUT MODS
+@if($browser-supports-flexbox) {
+    .email-sub {
+        @include mq(tablet) {
+            &--landing {
+                @include flex-display();
+            }
+
+            &__form--landing {
+                @include flex-display();
+                @include flex-direction(column);
+                align-content: center;
+                justify-content: center;
+            }
+
+            &__header--landing {
+                @include flex($flex-grow: 2);
+            }
+        }
     }
 }
