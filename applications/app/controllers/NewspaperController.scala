@@ -4,19 +4,29 @@ import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
-import services.TodaysNewspaperQuery
+import services.NewspaperQuery
 
 object NewspaperController extends Controller with Logging with ExecutionContexts {
 
+  private val section = "News"
+  private val description = "Main section | News | The Guardian"
+
   def today() = Action.async { implicit request =>
-    val page = model.Page(request.path, "News", "Main section | News | The Guardian", "GFE: Newspaper books Main Section")
 
-    val paper = TodaysNewspaperQuery.fetchTodaysPaper
+    val page = model.Page(request.path, section, description, "GFE: Newspaper books Main Section today")
 
-    val todaysPaper = paper.map(p => TodayNewspaper(page, p))
+    val todaysPaper = NewspaperQuery.fetchTodaysPaper.map(p => TodayNewspaper(page, p))
 
-    for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.todaysNewspaper(tp)))
+    for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.newspaperPage(tp)))
 
+  }
+
+  def forDate(day: String, month: String, year: String) = Action.async { implicit request =>
+    val page = model.Page(request.path, section, description, "GFE: Newspaper books Main Section for past date")
+
+    val paper = NewspaperQuery.fetchPaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
+
+    for( tp <- paper) yield Cached(900)(Ok(views.html.newspaperPage(tp)))
   }
 }
 

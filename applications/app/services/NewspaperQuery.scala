@@ -18,32 +18,49 @@ case class ContentByPage(page: Int, content: ApiContent)
 case class TagWithContent(tag: Tag, content: ApiContent)
 case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionContent)
 
-object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
+object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
-  def fetchTodaysPaper: Future[List[FaciaContainer]] = {
-    val today = {
-      val now = DateTime.now(DateTimeZone.UTC)
-      if(now.getDayOfWeek() == DateTimeConstants.SUNDAY) now.minusDays(1) else now
-    }
 
-    val item = LiveContentApi.item("theguardian/mainsection")
+  def fetchTodaysPaper: Future[List[FaciaContainer]] =
+    bookSectionContainers(DateTime.now(DateTimeZone.UTC))
+
+
+  def fetchPaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+    val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
+
+    val date = dateFormatUTC
+      .parseDateTime(s"$year/$month/$day")
+      .withTimeAtStartOfDay()
+      .plusDays(1)
+      .minusSeconds(1)
+      .toDateTime
+
+    bookSectionContainers(date)
+  }
+
+
+  private def bookSectionContainers(date: DateTime): Future[List[FaciaContainer]] = {
+
+    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+
+    val itemQuery = LiveContentApi.item("theguardian/mainsection")
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
       .showTags("newspaper-book-section")
       .pageSize(200)
-      .fromDate(today.withTimeAtStartOfDay())
-      .toDate(today)
+      .fromDate(newspaperDate.withTimeAtStartOfDay())
+      .toDate(newspaperDate)
 
-    LiveContentApi.getResponse(item).map { resp =>
+    LiveContentApi.getResponse(itemQuery).map { resp =>
 
       //filter out the first page results to make a Front Page container
       val (firstPageContent, otherContent) = resp.results.partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer(None, Some(s"Front Page"), Some(today.toString(dateForFrontPagePattern)), content, 0)
+        bookSectionContainer(None, Some(s"Front Page"), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0)
       }
 
       val unorderedBookSections = createBookSections(otherContent)
@@ -57,8 +74,6 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
       firstPageContainer :: bookSectionContainers
     }
   }
-
-
 
   private def createBookSections(contentList: List[ApiContent]): List[BookSectionContent] = {
     val tagWithContent: List[TagWithContent] = contentList.flatMap { content =>
