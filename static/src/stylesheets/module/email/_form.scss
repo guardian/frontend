@@ -61,10 +61,14 @@
     // instead of abusing the placeholder attr
     // but displays correctly if JS doesn't load
     &inline-label--enabled {
+        position: relative;
+        width: 100%;
+
         .email-sub__label {
             color: guss-colour(neutral-2, $pasteup-palette);
-            line-height: 2;
-            padding: 8px 15px 7px;
+            line-height: 3;
+            left: 0;
+            padding: 0 15px;
             position: absolute;
             pointer-events: none; // Ensure the text input cursor is shown
         }
@@ -74,6 +78,7 @@
         border: 1px solid $form-primary-colour;
         color: guss-colour(neutral-2, $pasteup-palette);
         display: inline-block;
+        height: 3em;
         @include fs-textSans(3);
         line-height: 2;
         outline: none;
@@ -103,7 +108,7 @@
     }
 
     &message {
-        color: #fff;
+        color: #ffffff;
         padding-left: 35px;
         position: relative;
 
@@ -149,11 +154,15 @@
 
         .email-sub__ { // Namespace
 
-            &text-input,
+            &label,
+            &submit-input,
+            &text-input  {
+                font-size: 12px;
+            }
+
             &label,
             &submit-input {
-                @include fs-textSans(1);
-                line-height: 1.6;
+                line-height: 3;
             }
 
             &submit-input {
@@ -170,26 +179,6 @@
                 clear: left;
                 color: $form-primary-colour;
                 font-size: 12px;
-            }
-
-            @include mq($until: tablet) {
-                @include rounded-input--inline-button();
-            }
-
-            @include mq(tablet, desktop) {
-                &text-input {
-                    @include border-radius(1000px);
-                }
-
-                &submit-input {
-                    background-color: transparent;
-                    margin-right: 0;
-                    width: 100%;
-                }
-            }
-
-            @include mq(desktop) {
-                @include rounded-input--inline-button();
             }
 
         }
