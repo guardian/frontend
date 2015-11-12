@@ -4,12 +4,13 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import implicits.{Dates, ItemResponses}
-import model.{Cached, Content, Tag}
+import model.{Content, Tag}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, Controller, RequestHeader}
-import scala.concurrent.Future
 import services._
+
+import scala.concurrent.Future
 
 object PublicationController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
@@ -26,45 +27,37 @@ object PublicationController extends Controller with ExecutionContexts with Item
                   day: String,
                   month: String,
                   year: String,
-                  tag: String) = Action.async { implicit request =>
+                  tagTail: String) = Action.async { implicit request =>
 
     val reqDate = requestedDate(s"$year/$month/$day")
+    val tag = publication + "/" + tagTail
+    val newspaperBookTagSource = "newspaper_books"
+    val newspaperBookSectionTagSource = "newspaper_book_sections"
 
-    if (isBookOrBookSection(tag)) {
-      loadPublishedContent(publication, reqDate, tag).map { _.map { index =>
-        val contentOnRequestedDate = index.trails.filter(_.webPublicationDate.sameDay(reqDate))
-
-        if (contentOnRequestedDate.nonEmpty) {
-          // if we want to unwrap CAPI results here - the next two lines are a start!
-          //val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
-          //Ok(views.html.newspaperPages(model, PreviousAndNext(None, None)))
-          Found(s"/$publication/$tag/${urlFormat(reqDate)}/all")
-        } else {
-          NotFound
-        }
-      }.getOrElse(NotFound)}.map(Cached(1)(_))
+    if (tagExists(newspaperBookTagSource, tag) || tagExists(newspaperBookSectionTagSource, tag)) {
+      Future(Found(s"/$tag/${urlFormat(reqDate)}/all"))
     } else {
       Future(NotFound)    // this should redirect to the article endpoint or controller
     }
 
   }
 
-  private def isBookOrBookSection(tag: String) = {
-    val isBook = NewspaperBookIndexAutoRefresh.get.map{book =>
-      book.pages.filter(_.id == tag)
-    }.nonEmpty
+  private def tagExists(tagSource: String, tag: String) = {
+    val guTags = (TagIndexesS3.getIndex(tagSource, "theguardian") match {
+      case Right(tagPage) => tagPage.tags
+      case _ => Seq.empty
+    }).collect { case guTag if guTag.id == tag => guTag }
 
-    val isBookSection = NewspaperBookSectionIndexAutoRefresh.get.map{bookSection =>
-      bookSection.pages.filter(_.id == tag)
-    }.nonEmpty
+    val obsTags = (TagIndexesS3.getIndex(tagSource, "theobserver") match {
+      case Right(tagPage) => tagPage.tags
+      case _ => Seq.empty
+    }).collect { case obsTag if obsTag.id == tag => obsTag }
 
-    isBook || isBookSection
-
+    guTags.nonEmpty || obsTags.nonEmpty
   }
 
-  private def loadPublishedContent(publication: String, date: DateTime, tag: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val lookupKey = publication + "/" + tag
-    val result = getResponse(LiveContentApi.item(lookupKey, Edition(request))
+  private def loadPublishedContent(tag: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
+    val result = getResponse(LiveContentApi.item(tag, Edition(request))
       .fromDate(date)
       .toDate(date.plusDays(1).minusSeconds(1))
       .useDate("newspaper-edition")

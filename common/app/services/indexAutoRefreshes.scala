@@ -1,7 +1,7 @@
 package services
 
 import common.AutoRefresh
-import model.TagIndexListings
+import model.{TagIndexPage, TagIndexListings}
 import play.api.{Application, GlobalSettings}
 
 import scala.concurrent.ExecutionContext.Implicits.global
