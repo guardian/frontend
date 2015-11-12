@@ -88,6 +88,15 @@ object CollectionEssentials {
     None
   )
 
+  def fromMultiplePressedCollections(collections: Seq[PressedCollection]) = CollectionEssentials(
+    collections.flatMap(_.curated.take(2)),
+    Nil,
+    None,
+    None,
+    None,
+    None
+  )
+
   val empty = CollectionEssentials(Nil, Nil, None, None, None, None)
 }
 

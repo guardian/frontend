@@ -130,27 +130,36 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderEssentialRead() = MemcachedAction { implicit request =>
     log.info(s"Serving essential read")
 
-    def collectionId = "84e4005f-63fe-4b03-a8cc-10a864564853"
+    def collectionIds = Seq("uk-alpha/news/regular-stories", "6aefcaf1-dbec-4058-a7b8-a925d4163831", "uk-alpha/contributors/feature-stories")
 
-    getPressedCollection(collectionId).map { collectionOption =>
-      collectionOption.map { collection =>
+    val pressedCollections: Seq[Future[PressedCollection]] = collectionIds.map { collectionId =>
+      getPressedCollection(collectionId).flatMap {
+        _ match {
+          case None => Future.failed(new RuntimeException(s"Collection doesn't exist $collectionId"))
+          case Some(x) => Future.successful(x)
+        }
+      }
+    }
+
+    val futuresOfCollections = Future.sequence(pressedCollections)
+
+    futuresOfCollections.map { collections =>
         Cached(60) {
-          val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
+          val config = collectionIds.headOption.flatMap { collectionIds => ConfigAgent.getConfig(collectionIds) }.getOrElse(CollectionConfig.empty)
 
           val containerDefinition = FaciaContainer(
             1,
             EssentialRead,
-            CollectionConfigWithId(collectionId, config),
-            CollectionEssentials.fromPressedCollection(collection)
+            CollectionConfigWithId(collectionIds.head, config),
+            CollectionEssentials.fromMultiplePressedCollections(collections)
           )
 
           val html = container(containerDefinition, FrontProperties.empty)
           if (request.isJson)
-            JsonCollection(html, collection)
+            JsonCollection(html)
           else
             NotFound
         }
-      }.getOrElse(ServiceUnavailable)
     }
   }
 
@@ -179,7 +188,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
           val html = container(containerDefinition, FrontProperties.empty)
           if (request.isJson)
-            JsonCollection(html, collection)
+            JsonCollection(html)
           else
             NotFound
         }
@@ -204,7 +213,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
 
   private object JsonCollection{
-    def apply(html: Html, collection: PressedCollection)(implicit request: RequestHeader) = JsonComponent(
+    def apply(html: Html)(implicit request: RequestHeader) = JsonComponent(
       "html" -> html
     )
   }
@@ -222,7 +231,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
-
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
