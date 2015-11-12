@@ -50,7 +50,7 @@ GET        /$path<.+>/all                                                       
 
 # multi-part tags
 # e.g. /theguardian/2015/nov/04/g2/features
-GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tagHead<.+>/$tagTail<.+>    controllers.PublicationController.publishedOn(publication, day, month, year, tagHead, tagTail)
+# GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tagHead<.+>/$tagTail<.+>    controllers.PublicationController.publishedOn(publication, day, month, year, tagHead, tagTail)
 # single-part tag
 # e.g. /theguardian/2015/nov/03/mainsection
 GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tag<.+>                     controllers.PublicationController.publishedOn(publication, day, month, year, tag)

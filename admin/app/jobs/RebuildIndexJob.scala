@@ -51,10 +51,10 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
     val newspaperBooks = ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book")
     val newspaperBookSections = ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section")
 
-    (newspaperBooks andThen newspaperBookSections).run(Enumeratee.zip(bySection, byWebTitle)) map { case (booksMap, sectionsMap) =>
+    (newspaperBooks andThen newspaperBookSections).run(Enumeratee.zip(byPublication, byPublication)) map { case (booksMap, bookSectionsMap) =>
       blocking {
         saveToS3("newspaper_books", toPages(booksMap)(alphaTitle, asciiLowerWebTitle))
-        saveToS3("newspaper_book_sections", toPages(sectionsMap)(ValidSections(_), asciiLowerWebTitle))
+        saveToS3("newspaper_book_sections", toPages(bookSectionsMap)(alphaTitle, asciiLowerWebTitle))
       }
     }
   }

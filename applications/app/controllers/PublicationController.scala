@@ -26,15 +26,9 @@ object PublicationController extends Controller with ExecutionContexts with Item
                   day: String,
                   month: String,
                   year: String,
-                  tagHead: String,
-                  tagTail: String = "") = Action.async { implicit request =>
+                  tag: String) = Action.async { implicit request =>
 
     val reqDate = requestedDate(s"$year/$month/$day")
-    val tag = if (tagTail.nonEmpty) {
-      tagHead + "/" + tagTail
-    } else {
-      tagHead
-    }
 
     if (isBookOrBookSection(tag)) {
       loadPublishedContent(publication, reqDate, tag).map { _.map { index =>
