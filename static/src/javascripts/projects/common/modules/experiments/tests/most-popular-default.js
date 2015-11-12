@@ -4,7 +4,7 @@ define([
     return function () {
         this.id = 'MostPopularDefaultTest';
         this.start = '2015-11-12';
-        this.expiry = '2015-11-17';
+        this.expiry = '2015-11-20';
         this.author = 'Natalia Baltazar';
         this.description = 'Change the default of most popular container to show `across the guardian` first instead of the section';
         this.audience = 0.04;
