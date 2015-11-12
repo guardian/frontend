@@ -22,15 +22,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABInjectHeadlinesTest = Switch(
-    "A/B Tests",
-    "ab-inject-headlines-test",
-    "Switch to inject the headlines container instead of related content in the world, uk-news and politics sections between the hours of 6am-11am on the UK edition",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
-    exposeClientSide = true
-  )
-
   val ABLargeTopAd = Switch(
     "A/B Tests",
     "ab-large-top-ad",
@@ -49,6 +40,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMostPopularDefaultTest = Switch(
+    "A/B Tests",
+    "ab-most-popular-default-test",
+    "Switch to change the default of most popular container to show across the guardian first instead of section",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 20),
+    exposeClientSide = true
+  )
+
   val ABVideoPreroll = Switch(
     "A/B Tests",
     "ab-video-preroll",
@@ -57,5 +57,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2015, 12, 11),
     exposeClientSide = true
   )
-
 }

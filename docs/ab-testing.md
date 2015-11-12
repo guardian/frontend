@@ -19,7 +19,7 @@ There are six steps in the test lifecycle:-
 
 A switch allows you to stop and start the AB test outside of a normal software release cycle.
 
-Inside, `common/app/conf/switches.scala` you want to create a Switch like this,
+Inside, `./common/app/conf/switches/ABTestSwitches.scala` you want to create a Switch like this,
 
 ```
 val ABFontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
@@ -36,7 +36,7 @@ You will notice here that the switches we use to run our AB testing are the same
 
 A test is simply a JavaScript AMD module written to some conventions.
 
-Tests live in `./common/app/assets/javascripts/modules/experiments/tests/`, so create a file in there.
+Tests live in `./static/src/javascripts/projects/common/modules/experiments/tests/`, so create a file in there.
 
 ```
 define(['bonzo'], function (bonzo) {
@@ -128,7 +128,7 @@ if (ab.testCanBeRun('FaciaSlideshow') &&
 }
 ```
 The ```ab``` module is defined in ```'common/modules/experiments/ab'```.
-        
+
 ## Running the test
 
 Release the test in to the wild just means deploying the frontend software, so you

@@ -6,6 +6,7 @@
     "babel": "5.8.21",
     "btoa": "1.1.2",
     "check-dependencies": "^0.11.0",
+    "eslint": "^1.9.0",
     "eslint-plugin-jasmine": "^1.5.0",
     "eslint-plugin-react": "^3.5.0",
     "esprima": "1.2.2",
