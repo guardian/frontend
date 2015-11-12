@@ -1,6 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
+import conf.Configuration
 import model._
 import play.api.Play.current
 import play.api.data._
@@ -25,14 +26,13 @@ case class EmailPage (interactive: Interactive, related: RelatedContent)
 case class EmailForm(email: String)
 
 object EmailForm {
-  val postUrl = "https://l2y0m1o3nk.execute-api.eu-west-1.amazonaws.com/code/email"
   val listTriggers = Map(
     3485 -> 2529
   )
 
   def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
     listTriggers.get(listId).map { triggerId =>
-      WS.url(postUrl).post(Json.obj(
+      WS.url(Configuration.emailSignup.url).post(Json.obj(
         "email" -> form.email,
         "listId" -> listId,
         "triggerId" -> triggerId
