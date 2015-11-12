@@ -26,7 +26,15 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
     val paper = NewspaperQuery.fetchPaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
 
-    for( tp <- paper) yield Cached(900)(Ok(views.html.newspaperPage(tp)))
+    for( tp <- paper) yield {
+      if(noContentForListExists(tp.bookSections)) Found(s"/theguardian")
+      else Cached(900)(Ok(views.html.newspaperPage(tp)))
+    }
+  }
+
+  def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
+    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == NewspaperQuery.FRONT_PAGE_DISPLAY_NAME)
+    frontContainer.flatMap(_.contentItems).isEmpty && otherContainer.flatMap(_.contentItems).isEmpty
   }
 
   def allOn(day: String, month: String, year: String) = Action {

@@ -21,6 +21,7 @@ case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionCo
 object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
+  val FRONT_PAGE_DISPLAY_NAME = "Front Page"
 
   def fetchTodaysPaper: Future[List[FaciaContainer]] =
     bookSectionContainers(DateTime.now(DateTimeZone.UTC))
@@ -60,7 +61,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer(None, Some(s"Front Page"), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0)
+
+        bookSectionContainer(None, Some(FRONT_PAGE_DISPLAY_NAME), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0)
       }
 
       val unorderedBookSections = createBookSections(otherContent)
