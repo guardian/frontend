@@ -31,11 +31,7 @@ window.guardian = {
             "commercial": {
                 "brandedComponentJobs": "@Static("images/commercial/branded-component-jobs.png")",
                 "brandedComponentSoulmatesM": "@Static("images/commercial/soulmates-male.jpg")",
-                "brandedComponentSoulmatesF": "@Static("images/commercial/soulmates-female.jpg")",
-                "liveStreamingSurvey": "@Static("images/commercial/live-streaming-survey.png")",
-                "overlayEvent1": "@Static("images/commercial/overlay-event1.png")",
-                "overlayEvent2": "@Static("images/commercial/overlay-event2.png")",
-                "overlayEvent3": "@Static("images/commercial/overlay-event3.png")"
+                "brandedComponentSoulmatesF": "@Static("images/commercial/soulmates-female.jpg")"
             }
         },
         "stylesheets": {
@@ -56,3 +52,10 @@ window.guardian = {
         }
     }}
 };
+
+// http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+/*@@cc_on
+@@if (@@_jscript_version <= 9)
+    guardian.config.page.ajaxUrl = guardian.config.page.ajaxUrl.replace(/^https:/, '');
+@@end
+@@*/
