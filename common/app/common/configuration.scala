@@ -6,8 +6,8 @@ import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.gu.conf.ConfigurationFactory
-import conf.{Static, Configuration}
 import conf.switches.Switches
+import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current
@@ -234,6 +234,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val secureApiRoot = configuration.getMandatoryStringProperty("discussion.secureApiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
@@ -247,11 +248,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
-    lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
+    lazy val masterclasses_url =
+      configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
-    lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
+    lazy val traveloffers_url =
+      configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+    lazy val guMerchandisingAdvertiserId =
+      configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
     private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
 
@@ -287,6 +291,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
+
+    lazy val showMpuInAllContainersPageId =
+      configuration.getStringProperty("commercial.showMpuInAllContainersPageId")
   }
 
   object open {
@@ -306,6 +313,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idApiUrl" -> id.apiRoot,
       "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
+      ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
