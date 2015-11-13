@@ -1,6 +1,6 @@
 package dfp
 
-import common.dfp.GuAdUnit
+import common.dfp.{GuAdUnit, GuCreativeTemplate}
 import common.{AkkaAsync, ExecutionContexts, Jobs}
 import play.api.{Application, GlobalSettings}
 
@@ -56,6 +56,12 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
       val name: String = "DFP-Ad-Units-Update"
       val interval: Int = 60
       def run(): Future[Unit] = DfpAdUnitCacheJob.run()
+    },
+
+    new Job[Seq[GuCreativeTemplate]] {
+      val name: String = "DFP-Creative-Templates-Update"
+      val interval: Int = 15
+      def run() = CreativeTemplateAgent.refresh()
     }
 
   )
@@ -72,6 +78,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
 
     AkkaAsync {
       DfpDataCacheJob.refreshAllDfpData()
+      CreativeTemplateAgent.refresh()
     }
   }
 

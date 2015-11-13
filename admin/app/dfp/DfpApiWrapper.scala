@@ -8,6 +8,7 @@ import common.Logging
 import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
 
+// This is being replaced by SessionWrapper
 object DfpApiWrapper extends Logging {
 
   sealed case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
