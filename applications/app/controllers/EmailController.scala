@@ -86,7 +86,7 @@ object EmailController extends Controller with ExecutionContexts {
           }
         })
 
-        case _ => {
+        case None => {
           val result = FailedToSubscribe("Unable to find listId")
 
           Future(render {
