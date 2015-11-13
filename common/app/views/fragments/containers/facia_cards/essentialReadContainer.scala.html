@@ -1,10 +1,9 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
-    @import common.LinkTo
     @import model.InlineImage
     @import views.html.fragments.items.elements.facia_cards.itemImage
+
     @import implicits.FaciaContentImplicits._
-    @import model.SupportedUrl
     @import views.support.Seq2zipWithRowInfo
 
     @import views.html.fragments.items.elements.facia_cards.titleForEssentialRead
@@ -17,7 +16,7 @@
             </span>
         </div>
         <div class="fc-container__header__description">
-            If you read nothing else today, read these
+            If you read nothing else, read these
         </div>
     </div>
 
