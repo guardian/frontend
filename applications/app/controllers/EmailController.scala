@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import model._
 import play.api.Play.current
@@ -49,7 +49,7 @@ object EmailForm {
   }
 }
 
-object EmailController extends Controller with ExecutionContexts {
+object EmailController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress)
@@ -74,6 +74,8 @@ object EmailController extends Controller with ExecutionContexts {
   }
 
   def submit() = Action.async { implicit request =>
+    val listId = listIds.testList
+
     def respond(result: SubscriptionResult): Result = {
       render {
         case Accepts.Html() => result match {
@@ -93,15 +95,24 @@ object EmailController extends Controller with ExecutionContexts {
     emailForm.bindFromRequest.fold(
       formWithErrors => Future.successful(respond(InvalidEmail)),
 
-      form => EmailForm.submit(form, listIds.testList) match {
+      form => EmailForm.submit(form, listId) match {
         case Some(future) => future.map(_.status match {
           case 200 | 201 => respond(Subscribed)
-          case _         => respond(OtherError)
+          case status    => {
+            log.error(s"Error posting to ExactTarget: HTTP $status")
+            respond(OtherError)
+          }
         }) recover {
-          case _ => respond(OtherError)
+          case e: Exception => {
+            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            respond(OtherError)
+          }
         }
 
-        case None => Future.successful(respond(OtherError))
+        case None => {
+          log.error(s"Unable to find a trigger for list ID $listId")
+          Future.successful(respond(OtherError))
+        }
       })
   }
 }
