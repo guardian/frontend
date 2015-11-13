@@ -87,14 +87,21 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 }
 
 .colophon__list {
+    @include clearfix();
     @include fs-bodyHeading(1);
-    @include columns(2, $gs-gutter);
     list-style: none;
     margin: 0;
 
+    @include mq($until: tablet) {
+        @include columns(2, $gs-gutter);
+    }
+
     @include mq(tablet) {
-        @include columns(3, $gs-gutter);
         width: 75%;
+    }
+
+    @include mq($from: tablet, $until: leftCol) {
+        @include columns(3, $gs-gutter);
     }
 
     @include mq(desktop) {
@@ -102,23 +109,27 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-left: $gs-gutter;
     }
 
-    @include mq(leftCol) {
-        @include columns(4, $gs-gutter);
-        width: gs-span(12);
+    // no-email is out of A/B test
+    .l-footer__secondary--no-email & {
+        @include mq(leftCol) {
+            @include columns(4, $gs-gutter);
+            width: gs-span(12);
+        }
     }
 
-    // TODO A/B test
     // has-email is in A/B test
-    // no-email is out of A/B test
     .l-footer__secondary--has-email & {
-        @include mq(leftCol) {
-            width: gs-span(10);
+        @include mq($from: leftCol, $until: wide) {
             @include columns(3, $gs-gutter);
         }
 
+        @include mq(leftCol) {
+            width: gs-span(10);
+        }
+
         @include mq(wide) {
-            width: gs-span(12);
             @include columns(4, $gs-gutter);
+            width: gs-span(11);
         }
     }
 
@@ -152,6 +163,10 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
     .l-footer__secondary--has-email & {
         @include mq(leftCol) {
+            width: gs-span(3);
+        }
+
+        @include mq(wide) {
             width: gs-span(4);
         }
     }
