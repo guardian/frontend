@@ -31,7 +31,7 @@ body {
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
 @include mq($until: 174px) {
-    .email-sub__{
+    .email-sub__ {
         @include rounded-input--inline-button();
     }
 }
