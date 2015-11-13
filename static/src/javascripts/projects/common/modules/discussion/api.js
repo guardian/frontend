@@ -18,8 +18,7 @@ define([
      */
     var Api = {
         root: config.page.discussionApiRoot,
-        proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
-        secureProxyRoot: toHTTPS(proxyRoot),
+        proxyRoot: (config.switches.discussionProxy ? toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') : root),
         clientHeader: config.page.discussionApiClientHeader
     };
 
@@ -31,7 +30,7 @@ define([
      */
     Api.send = function (endpoint, method, data, useProxy) {
         var shouldUseProxy = useProxy || false;
-        var root = (method === 'post' || shouldUseProxy) ? Api.secureProxyRoot : Api.root;
+        var root = (method === 'post' || shouldUseProxy) ? Api.proxyRoot : Api.root;
         data = data || {};
 
         var request = ajax({
