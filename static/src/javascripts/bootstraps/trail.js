@@ -18,7 +18,9 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/social/share-count'
+    'common/modules/social/share-count',
+    'common/modules/onward/inject-container',
+    'common/modules/experiments/ab'
 ], function (
     enhancer,
     fastdom,
@@ -37,7 +39,10 @@ define([
     Popular,
     Related,
     TonalComponent,
-    shareCount) {
+    shareCount,
+    injectContainer,
+    ab
+) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
             insert();
@@ -76,6 +81,40 @@ define([
                 }
                 new Related(opts).renderRelatedComponent();
             });
+        }
+
+        if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
+            var frontUrl;
+
+            switch (config.page.edition) {
+                case 'UK':
+                    frontUrl = '/uk.json';
+                    break;
+                case 'US':
+                    frontUrl = '/us.json';
+                    break;
+                case 'AU':
+                    frontUrl = '/au.json';
+                    break;
+                case 'INT':
+                    frontUrl = '/international.json';
+                    break;
+            }
+
+            if (config.page.seriesId || config.page.blogIds) {
+                $('.onward').insertBefore(qwery('.js-related'));
+            }
+
+            injectContainer.injectContainer(frontUrl, '.related', 'ab-network-front-loaded');
+
+            mediator.once('ab-network-front-loaded', function () {
+                var $parent = $('.facia-page');
+                $parent.addClass('ab-front-injected');
+                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
+
+                $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
+                $('.js-tabs', $parent).addClass('u-h');
+            }.bind(this));
         }
     }
 

@@ -34,7 +34,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
   }
 
 
-  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
+  protected def withCrossword(crosswordType: String)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
       val maybeCrossword = for {
         content <- response.results.headOption
@@ -49,7 +49,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def offlinePage() = Action.async { implicit request =>
     if (conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
-      withCrossword("quick", 14127) { crossword =>
+      withCrossword("quick") { crossword =>
         val crosswordHtml = views.html.offlinePage(new OfflinePage(CrosswordData.fromCrossword(crossword)))
         Cached(60)(JsonComponent(JsObject(Map(
           "html" -> JsString(crosswordHtml.body),

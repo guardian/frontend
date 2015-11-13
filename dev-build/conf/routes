@@ -93,6 +93,7 @@ GET            /most-read.json                                                  
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
+GET            /ab-most-read/*path.json                                                                                          controllers.MostPopularController.renderAbTest(path)
 
 GET            /top-stories.json                                                                                                 controllers.TopStoriesController.renderTopStories()
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
@@ -285,7 +286,6 @@ GET            /commercial/capi-single.json                                     
 GET            /commercial/capi-single                                                                                           controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
-GET            /commercial/ad-free-survey                                                                                        controllers.commercial.StaticPageController.renderAdFreeSurveyPage()
 
 # Commercial Admin
 GET            /admin/commercial                                                                                                 controllers.admin.CommercialController.renderCommercialMenu()
@@ -320,6 +320,8 @@ GET            /embed/video/*path                                               
 
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+
+GET            /theguardian                                                                                                      controllers.NewspaperController.today()
 
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)

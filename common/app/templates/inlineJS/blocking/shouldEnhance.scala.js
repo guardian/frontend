@@ -23,21 +23,19 @@
     //
     // NOTE: this moves people into a category where they do not get important things such as commenting
     var isOlderIOSDevice = function () {
-        // This is NOT what we want to be doing long term. It is a stopgap measure only...
-        var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
 
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
             // I'm intentionally being a bit over zealous in the detection department here
-            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent) || olderIPadOnFront;
+            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
         }
         return false;
     };
 
-    var isRetinaIpad = function() {
-        return (navigator.platform === 'iPad' && window.devicePixelRatio === 2);
+    var isIpad = function() {
+        return (navigator.platform === 'iPad');
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isRetinaIpad());
+    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isIpad());
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 

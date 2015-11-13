@@ -123,6 +123,6 @@ require([
 
     });
 
-    @JavaScript(templates.headerInlineJS.js.membershipAccess(item).body)
+    @JavaScript(templates.inlineJS.blocking.js.membershipAccess(item).body)
 
 });
