@@ -311,10 +311,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__image-container {
     display: none;
-    // Override u-responsive-ratio
-    // Circumvents Chrome bug with positioning, overflow: hidden and columns
-    // https://code.google.com/p/chromium/issues/detail?id=527709
-    overflow: visible;
 }
 
 .fc-item__slideshow {
