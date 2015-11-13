@@ -56,8 +56,8 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     val emptyTemplates = CreativeTemplateAgent.get
     val creatives = Store.getDfpTemplateCreatives
     val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
-      soFar :+ template.copy(creatives = creatives.filter(_.templateId == template.id))
-    }
+      soFar :+ template.copy(creatives = creatives.filter(_.templateId == template.id).sortBy(_.name))
+    }.sortBy(_.name)
     NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
