@@ -30,7 +30,7 @@ define([
         this.breakpoint = detect.getBreakpoint();
 
         // temporarily disable on mobile
-        if ((this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) || $('.adfreesurvey-wrapper').length) {
+        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
             return;
         }
 
@@ -57,7 +57,7 @@ define([
 
     StickyHeader.prototype.init = function () {
         // temporarily disable on mobile
-        if ((this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) || $('.adfreesurvey-wrapper').length) {
+        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
             return;
         }
 

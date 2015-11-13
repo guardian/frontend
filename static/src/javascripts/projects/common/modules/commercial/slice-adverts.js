@@ -28,7 +28,7 @@ define([
     contains,
     map,
     chain) {
-    var adNames = ['inline1', 'inline2', 'inline3'],
+    var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3,
         init = function (options) {
             if (!commercialFeatures.sliceAdverts) {
                 return false;
@@ -49,7 +49,7 @@ define([
                 containerGap = 1,
                 prefs        = userPrefs.get('container-states');
 
-            // pull out ad slices which are have at least x containers between them
+            // pull out ad slices which have at least x containers between them
             while (index < containers.length) {
                 container    = containers[index];
                 containerId  = bonzo(container).data('id');
@@ -57,17 +57,21 @@ define([
                 // don't display ad in the first container on the fronts
                 isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
-                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed') && !config.page.omitMPUs) {
+                if (config.page.showMpuInAllContainers) {
                     adSlices.push($adSlice.first());
-                    index += (containerGap + 1);
-                } else {
-                    $(container).addClass('omitted-mpus');
                     index++;
+                } else {
+                    if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
+                        adSlices.push($adSlice.first());
+                        index += (containerGap + 1);
+                    } else {
+                        index++;
+                    }
                 }
             }
 
-            return Promise.all(chain(adSlices).slice(0, adNames.length).and(map, function ($adSlice, index) {
-                    var adName        = adNames[index],
+            return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
+                    var adName        = 'inline' + (index + 1),
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--mobile'),
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))

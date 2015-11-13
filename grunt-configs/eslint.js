@@ -1,6 +1,9 @@
 'use strict';
 module.exports = function () {
     return {
+        options: {
+            rulePaths: ['./dev/eslint-rules']
+        },
         'Gruntfile.js': [
             'Gruntfile.js'
         ],

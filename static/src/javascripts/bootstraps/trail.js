@@ -20,10 +20,7 @@ define([
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
     'common/modules/onward/inject-container',
-    'common/modules/experiments/ab',
-    'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp-api'
+    'common/modules/experiments/ab'
 ], function (
     enhancer,
     fastdom,
@@ -44,10 +41,7 @@ define([
     TonalComponent,
     shareCount,
     injectContainer,
-    ab,
-    createAdSlot,
-    commercialFeatures,
-    dfp
+    ab
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -118,21 +112,8 @@ define([
                 $parent.addClass('ab-front-injected');
                 $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
 
-                if (commercialFeatures.popularContentMPU && !(detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1)) {
-                    var $mpuEl = $('#most-popular .js-fc-slice-mpu-candidate', this.elem);
-                    this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
-                } else {
-                    this.$mpu = undefined;
-                }
-
-                if (this.$mpu) {
-                    dfp.addSlot($('#most-popular .ad-slot', this.$mpu));
-                    this.$mpu.removeClass('fc-slice__item--no-mpu');
-                }
-
                 $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
                 $('.js-tabs', $parent).addClass('u-h');
-                mediator.emit('modules:popular:loaded', this.elem);
             }.bind(this));
         }
     }

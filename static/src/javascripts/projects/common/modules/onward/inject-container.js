@@ -21,8 +21,10 @@ define([
         }).then(function (resp) {
             if (resp.html) {
                 fastdom.write(function () {
-                    var $el = $(containerSelector);
-                    $el.after(resp.html);
+                    var $el = $(containerSelector),
+                        htmlToInject = resp.html.replace(/js-ad-slot ad-slot ad-slot--dfp/g, '');
+
+                    $el.after(htmlToInject.replace(/js-fc-slice-mpu-candidate/g, ''));
                     if (!(config.page && config.page.hasStoryPackage)) {
                         $el.css({
                             display: 'none'
