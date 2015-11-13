@@ -43,7 +43,8 @@ object EmailForm {
       WS.url(Configuration.emailSignup.url).post(Json.obj(
         "email" -> form.email,
         "listId" -> listId,
-        "triggerId" -> triggerId
+        "triggerId" -> triggerId,
+        "emailGroup" -> "email-footer-test"
       ))
     }
   }
