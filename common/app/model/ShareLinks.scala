@@ -12,8 +12,12 @@ case class ShareLink (
   href: String
 )
 
-trait ShareLinks { self: Content =>
-
+case class ShareLinks(
+  tags: Tags,
+  fields: Fields,
+  elementShareOrder: List[String] = List("facebook", "twitter", "pinterestBlock"),
+  pageShareOrder: List[String] = List("facebook", "twitter", "email", "pinterestPage", "linkedin", "gplus", "whatsapp")
+) {
   private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String, webLinkUrl: String, title: String): Option[ShareLink] = {
 
     def shareCampaignUrl(campaign: String, elementId: Option[String]) = {
@@ -25,7 +29,7 @@ trait ShareLinks { self: Content =>
     lazy val link = shareCampaignUrl("sbl", elementId).urlEncoded
     lazy val twitter = shareCampaignUrl("stw", elementId).urlEncoded
     lazy val whatsapp = shareCampaignUrl("swa", elementId)
-    lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
+    lazy val webTitleAsciiEncoding = fields.webTitle.encodeURIComponent
 
     lazy val fullMediaPath: Option[String] = {
       mediaPath.map { originalPath => if(originalPath.startsWith("//")) { "http:" + originalPath } else { originalPath } }
@@ -41,7 +45,7 @@ trait ShareLinks { self: Content =>
         )
 
       case "twitter"  =>
-        val text = if (this.isClimateChangeSeries) {
+        val text = if (tags.isClimateChangeSeries) {
           s"${title.encodeURIComponent} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
         } else {
           title.encodeURIComponent
@@ -58,12 +62,14 @@ trait ShareLinks { self: Content =>
     }
   }
 
-  protected lazy val elementShareOrder = List("facebook", "twitter", "pinterestBlock")
-  protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "linkedin", "gplus", "whatsapp")
-
-  def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String = shortUrl, webLinkUrl: String = webUrl, title: String = webTitle): Seq[ShareLink] =
+  def elementShares(
+    elementId: Option[String] = None,
+    mediaPath: Option[String] = None,
+    shortLinkUrl: String = fields.shortUrl,
+    webLinkUrl: String = fields.webUrl,
+    title: String = fields.webTitle): Seq[ShareLink] =
     elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, shortLinkUrl, webLinkUrl, title))
 
-  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, shortLinkUrl = shortUrl, webLinkUrl = webUrl, title = webTitle))
+  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, shortLinkUrl = fields.shortUrl, webLinkUrl = fields.webUrl, title = fields.webTitle))
 }
 
