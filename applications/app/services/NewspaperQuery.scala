@@ -32,9 +32,6 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
     val date = dateFormatUTC
       .parseDateTime(s"$year/$month/$day")
-      .withTimeAtStartOfDay()
-      .plusDays(1)
-      .minusSeconds(1)
       .toDateTime
 
     bookSectionContainers(date)
