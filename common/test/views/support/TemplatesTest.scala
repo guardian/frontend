@@ -131,6 +131,26 @@ class TemplatesTest extends FlatSpec with Matchers {
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
+  it should "add the dropcap span when the paragraph begins with a single prime" in {
+    val body = "'Hello"
+    body should include ("""<span class="drop-cap__inner">'H</span>""")
+  }
+
+  it should "add the dropcap span when the paragraph begins with a double prime" in {
+    val body = """"Hello"""
+    body should include ("""<span class="drop-cap__inner">"H</span>""")
+  }
+
+  it should "add the dropcap span when the paragraph begins with a single quote mark" in {
+    val body = "‘Hello"
+    body should include ("""<span class="drop-cap__inner">‘H</span>""")
+  }
+
+  it should "add the dropcap span when the paragraph begins with a double quote mark" in {
+    val body = "“Hello"
+    body should include ("""<span class="drop-cap__inner">“H</span>""")
+  }
+
   "RowInfo" should "add row info to a sequence" in {
 
     val items = Seq("a", "b", "c", "d")
