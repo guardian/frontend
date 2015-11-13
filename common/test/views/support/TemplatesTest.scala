@@ -121,11 +121,6 @@ class TemplatesTest extends FlatSpec with Matchers {
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
-  it should "not add the dropcap span when the paragraph is which begins with a word of less than one Letter" in {
-    val body = withJsoup(bodyStartsWithOneLetter)(DropCaps(true, false)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
-  }
-
   it should "not add the dropcap span when first body element is not a paragraph" in {
     val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
