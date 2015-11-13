@@ -132,13 +132,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
     def collectionIds: Seq[String] = contentSource match {
       case "curated" =>
+        def limit = 2;
         edition match {
           case "uk" => Seq("uk-alpha/people-in-the-news/feature-stories")
           case _ => Seq("eaf2df82-f7b4-4d96-a681-db52be53c798")
         }
       case "automated" =>
         edition match {
-          case "uk" => Seq("uk-alpha/news/regular-stories", "uk-alpha/contributors/feature-stories", "6aefcaf1-dbec-4058-a7b8-a925d4163831")
+          case "uk" => Seq("uk-alpha/news/regular-stories", "6aefcaf1-dbec-4058-a7b8-a925d4163831", "uk-alpha/contributors/feature-stories")
           case _ => Seq("84e4005f-63fe-4b03-a8cc-10a864564853", "8852-9cf6-d938-01fb", "f9ede09e-8bcc-448f-8080-4d3e51a3e24b")
         }
     }
@@ -160,11 +161,17 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             displayName = Some("the essential read")
           )
 
+          val collectionEssentials = if (contentSource == "curated") {
+            CollectionEssentials.fromMultiplePressedCollections(collections)
+          } else {
+            CollectionEssentials.fromMultiplePressedCollections(collections, 2)
+          }
+
           val containerDefinition = FaciaContainer(
             1,
             EssentialRead,
             CollectionConfigWithId("", config), // Empty string for essential read AB test
-            CollectionEssentials.fromMultiplePressedCollections(collections)
+            collectionEssentials
           )
 
           val html = container(containerDefinition, FrontProperties.empty)

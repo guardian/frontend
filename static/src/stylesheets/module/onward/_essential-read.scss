@@ -36,10 +36,12 @@ section#the-essential-read {
 
     .essential-read__item {
         float: left;
-        height: $gs-baseline * 6;
+        min-height: $gs-baseline * 6;
         position: relative;
         margin-left: $gs-gutter/2;
         margin-right: $gs-gutter/2;
+        width: 90%;
+        width: calc(100% - 20px);
 
         &:not(:first-of-type) {
             padding-top: $gs-baseline/3;
@@ -57,14 +59,18 @@ section#the-essential-read {
             }
         }
 
-        @include mq(wide) {
-            width: 320px;
+        @include mq(mobileLandscape) {
             margin: 0;
+            width: 100%;
+        }
+
+        @include mq(tablet) {
+            width: 320px;
         }
     }
 
     .essential-read__item-wrapper {
-        @include mq(wide) {
+        @include mq(tablet) {
             width: 320px;
             margin-top: -10px;
         }
@@ -80,6 +86,7 @@ section#the-essential-read {
         line-height: 20px;
         padding-top: 2px;
         display: block;
+        margin-left: $gs-gutter*2;
     }
 
     .essential-read__kicker {
@@ -104,11 +111,18 @@ section#the-essential-read {
         width: 100%;
         margin-bottom: $gs-baseline/2;
 
-        @include mq(wide) {
+        @include mq(tablet) {
             position: absolute;
             right: 0;
-            width: 580px;
             margin-bottom: 0;
+        }
+
+        @include mq(tablet) {
+            width: 340px;
+        }
+
+        @include mq(desktop) {
+            width: 580px;
         }
 
         .fc-item__image-container {

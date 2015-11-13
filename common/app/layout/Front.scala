@@ -88,8 +88,8 @@ object CollectionEssentials {
     None
   )
 
-  def fromMultiplePressedCollections(collections: Seq[PressedCollection]) = CollectionEssentials(
-    collections.flatMap(_.curated.take(2)),
+  def fromMultiplePressedCollections(collections: Seq[PressedCollection], itemLimit: Int = 5) = CollectionEssentials(
+    collections.flatMap(_.curated.take(itemLimit)),
     Nil,
     None,
     None,
