@@ -63,7 +63,7 @@ object EmailController extends Controller with ExecutionContexts {
       formWithErrors => {
         val result = FailedToSubscribe("Invalid email address")
 
-        Future(render {
+        Future.successful(render {
           case Accepts.Html() => BadRequest(views.html.emailLanding(emailLandingPage, Some(result)))
           case Accepts.Json() => BadRequest(result.message)
         })
@@ -89,7 +89,7 @@ object EmailController extends Controller with ExecutionContexts {
         case None => {
           val result = FailedToSubscribe("Unable to find listId")
 
-          Future(render {
+          Future.successful(render {
             case Accepts.Html() => InternalServerError(views.html.emailLanding(emailLandingPage, Some(result)))
             case Accepts.Json() => InternalServerError(result.message)
           })
