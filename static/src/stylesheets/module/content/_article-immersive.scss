@@ -596,6 +596,10 @@
         }
     }
 
+    .element--showcase + * {
+        clear: both;
+    }
+
     .ad-slot--inline {
         @include mq(desktop) {
             margin-right: -(gs-span(4) + $gs-gutter);
