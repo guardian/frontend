@@ -503,7 +503,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
 
   private def setDropCap(p: Element): String = {
     val html = p.html
-    if ( html.length > 200 && html.matches("^[\"a-zA-Z].*") && html.split("\\s+").head.length >= 2 ) {
+    if ( html.length > 200 && html.matches("^[\"a-zA-Z].*") ) {
       s"""<span class="drop-cap"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
     } else {
       html
