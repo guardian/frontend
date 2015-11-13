@@ -1,38 +1,36 @@
-.email-sub__ { // Email subscription component namespace
+.email-sub__heading-emph {
+    color: guss-colour(guardian-brand, $pasteup-palette);
+}
 
-    &heading-emph {
-        color: guss-colour(guardian-brand, $pasteup-palette);
-    }
+.email-sub__description {
+    border-top: 3px solid $form-secondary-colour;
+    color: $form-primary-colour;
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
+    padding-top: 10px;
+}
 
-    &description {
-        border-top: 3px solid $form-secondary-colour;
-        color: $form-primary-colour;
-        background-color: guss-colour(guardian-brand, $pasteup-palette);
-        padding-top: 10px;
+.email-sub__description-emph {
+    display: block;
+    font-weight: bold;
+}
 
-        &-emph {
-            display: block;
-            font-weight: bold;
-        }
-    }
+// LANDING PAGE MODS
+.email-sub__header--landing {
+    background-color: $form-primary-colour;
+    font-family: $f-serif-headline;
 
-    // LANDING PAGE MODS
-    &header--landing {
-        background-color: $form-primary-colour;
-        font-family: $f-serif-headline;
-
-        .email-sub__heading {
-            line-height: 35px;
-        }
-    }
-
-    // FOOTER MODS
-    &header--footer {
-        .email-sub__heading {
-            color: #ffffff;
-            font-family: $f-sans-serif-text;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
+    .email-sub__heading {
+        line-height: 35px;
     }
 }
+
+// FOOTER MODS
+.email-sub__header--footer {
+    .email-sub__heading {
+        color: #ffffff;
+        font-family: $f-sans-serif-text;
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+}
+

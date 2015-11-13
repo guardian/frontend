@@ -24,197 +24,184 @@
     @include clearfix();
 }
 
-.email-sub__ { // Email subscription component namespace
+.email-sub__iframe {
+    width: 100%;
+}
 
-    /**
-     * Base Styles
-     */
+.email-sub__form {
+    font-family: $f-sans-serif-text;
+    font-size: 14px;
+    padding: 20px;
 
-    &iframe {
-        width: 100%;
+    * {
+        box-sizing: border-box;
     }
 
-    &form {
-        font-family: $f-sans-serif-text;
-        font-size: 14px;
-        padding: 20px;
-
-        * {
-            box-sizing: border-box;
-        }
-
-        &--is-hidden {
-            display: none;
-        }
-    }
-
-    &label {
-        color: $form-primary-colour;
-
-        &--is-hidden {
-            visibility: hidden;
-        }
-    }
-
-    // Set with JS so we can use a real label
-    // instead of abusing the placeholder attr
-    // but displays correctly if JS doesn't load
-    &inline-label--enabled {
-        position: relative;
-        width: 100%;
-
-        .email-sub__label {
-            color: guss-colour(neutral-2, $pasteup-palette);
-            line-height: 3;
-            left: 15px;
-            position: absolute;
-            pointer-events: none; // Ensure the text input cursor is shown
-        }
-    }
-
-    &text-input {
-        border: 1px solid $form-primary-colour;
-        color: guss-colour(neutral-2, $pasteup-palette);
-        height: 3em;
-        outline: none;
-        padding: 8px 15px;
-    }
-
-    &submit-input {
-        border-color: $form-secondary-colour;
-        color: $form-primary-colour;
-
-        &:focus,
-        &:hover {
-            border-color: $form-primary-colour;
-        }
-    }
-
-    &text-input,
-    &submit-input {
-        margin-bottom: 15px;
-        width: 100%;
-    }
-
-    &small {
-        color: $form-secondary-colour;
-        display: block;
-    }
-
-    &message {
-        color: #ffffff;
-        padding-left: 35px;
-        position: relative;
-
-        &:before {
-            @include icon(close-icon-white-small);
-            content: '';
-            position: absolute;
-            height: 30px;
-            width: 30px;
-            bottom: 0;
-            left: 0;
-            top: 0;
-            margin: auto;
-        }
-
-        &__headline,
-        &__description {
-            font-family: $f-sans-serif-text;
-        }
-
-        &__headline {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
-
-        &__description {
-            font-size: 12px;
-        }
+    &--is-hidden {
+        display: none;
     }
 }
+
+.email-sub__label {
+    color: $form-primary-colour;
+
+    &--is-hidden {
+        visibility: hidden;
+    }
+}
+
+// Set with JS so we can use a real label
+// instead of abusing the placeholder attr
+// but displays correctly if JS doesn't load
+.email-sub__inline-label--enabled {
+    position: relative;
+    width: 100%;
+
+    .email-sub__label {
+        color: guss-colour(neutral-2, $pasteup-palette);
+        line-height: 3;
+        left: 15px;
+        position: absolute;
+        pointer-events: none; // Ensure the text input cursor is shown
+    }
+}
+
+.email-sub__text-input {
+    border: 1px solid $form-primary-colour;
+    color: guss-colour(neutral-2, $pasteup-palette);
+    height: 3em;
+    outline: none;
+    padding: 8px 15px;
+}
+
+.email-sub__submit-input {
+    border-color: $form-secondary-colour;
+    color: $form-primary-colour;
+
+    &:focus,
+    &:hover {
+        border-color: $form-primary-colour;
+    }
+}
+
+.email-sub__text-input,
+.email-sub__submit-input {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.email-sub__small {
+    color: $form-secondary-colour;
+    display: block;
+}
+
+.email-sub__message {
+    color: #ffffff;
+    padding-left: 35px;
+    position: relative;
+
+    &:before {
+        @include icon(close-icon-white-small);
+        content: '';
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        bottom: 0;
+        left: 0;
+        top: 0;
+        margin: auto;
+    }
+}
+
+.email-sub__message__headline,
+.email-sub__message__description {
+    font-family: $f-sans-serif-text;
+}
+
+.email-sub__message__headline {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.email-sub__message__description {
+    font-size: 12px;
+}
+
+
 
 /**
 * Modifications
 */
-.email-sub__ {
 
     // FOOTER MODS
-    &form--footer {
-        margin-bottom: $gs-baseline;
-        padding: 0 20px;
+.email-sub__form--footer {
+    margin-bottom: $gs-baseline;
+    padding: 0 20px;
 
-        .email-sub__ { // Namespace
-
-            &label,
-            &submit-input,
-            &text-input {
-                font-size: 12px;
-            }
-
-            &label,
-            &submit-input {
-                line-height: 3;
-            }
-
-            &submit-input {
-                background-color: guss-colour(neutral-2, $pasteup-palette);
-                border: 1px solid guss-colour(neutral-2, $pasteup-palette);
-
-                &:hover,
-                &:focus {
-                    border-color: guss-colour(neutral-4, $pasteup-palette);
-                }
-            }
-
-            &small {
-                color: $form-primary-colour;
-                font-size: 12px;
-            }
-
-        }
-
+    .email-sub__label,
+    .email-sub__submit-input,
+    .email-sub__text-input {
+        font-size: 12px;
     }
+
+    .email-sub__label,
+    .email-sub__submit-input {
+        line-height: 3;
+    }
+
+    .email-sub__submit-input {
+        background-color: guss-colour(neutral-2, $pasteup-palette);
+        border: 1px solid guss-colour(neutral-2, $pasteup-palette);
+
+        &:hover,
+        &:focus {
+            border-color: guss-colour(neutral-4, $pasteup-palette);
+        }
+    }
+
+    .email-sub__small {
+        color: $form-primary-colour;
+        font-size: 12px;
+    }
+}
 
     // LANDING PAGE MODS
-    &form--landing {
-        background-color: guss-colour(guardian-brand, $pasteup-palette);
+.email-sub__form--landing {
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
 
-        .email-sub__ { // Namespace
-            &text-input {
-                border-color: $form-secondary-colour;
-                @include border-radius(1000px);
 
-                &:focus {
-                    border-color: $form-primary-colour;
-                }
-            }
+    .email-sub__text-input {
+        border-color: $form-secondary-colour;
+        @include border-radius(1000px);
 
-            &small {
-                text-align: center;
-            }
+        &:focus {
+            border-color: $form-primary-colour;
         }
     }
+
+    .email-sub__small {
+        text-align: center;
+    }
+
 }
 
 // LANDING PAGE LAYOUT MODS
-.email-sub {
-    @include mq(tablet) {
-        &--landing {
-            @include flex-display();
-        }
+@include mq(tablet) {
+    .email-sub--landing {
+        @include flex-display();
+    }
 
-        &__form--landing {
-            @include flex-display();
-            @include flex-direction(column);
-            align-content: center;
-            justify-content: center;
-        }
+    .email-sub__form--landing {
+        @include flex-display();
+        @include flex-direction(column);
+        align-content: center;
+        justify-content: center;
+    }
 
-        &__header--landing {
-            @include flex($flex-grow: 2);
-        }
+    .email-sub__header--landing {
+        @include flex($flex-grow: 2);
     }
 }
+
 
