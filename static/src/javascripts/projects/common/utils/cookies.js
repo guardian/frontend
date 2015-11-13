@@ -6,8 +6,8 @@ define([
     var documentObject;
 
     function getShortDomain() {
-        // Remove www (and dev bit, for localhost set up with dev.theguardian.com domain)
-        return getDocument().domain.replace(/^(www|dev)\./, '.');
+        // Trim subdomains for prod (www.theguardian), code (m.code.dev-theguardian) and dev (dev.theguardian, m.thegulocal)
+        return getDocument().domain.replace(/^(www|m\.code|dev|m)\./, '.');
     }
 
     function cleanUp(names) {
