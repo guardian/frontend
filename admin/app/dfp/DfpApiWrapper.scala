@@ -116,26 +116,6 @@ object DfpApiWrapper extends Logging {
     }
   }
 
-  def fetchCreativeTemplates(serviceRegistry: DfpServiceRegistry,
-                             statementBuilder: StatementBuilder): Seq[CreativeTemplate] = {
-    val service = serviceRegistry.creativeTemplateService
-    fetch(statementBuilder) { statement =>
-      val page = service.getCreativeTemplatesByStatement(statement)
-      Page(page.getResults, page.getTotalResultSetSize)
-    }
-  }
-
-  def fetchTemplateCreatives(serviceRegistry: DfpServiceRegistry,
-                             statementBuilder: StatementBuilder): Map[Long, Seq[TemplateCreative]] = {
-    val service = serviceRegistry.creativeService
-    val creatives = fetch(statementBuilder) { statement =>
-      val page = service.getCreativesByStatement(statement)
-      Page(page.getResults, page.getTotalResultSetSize)
-    }
-    creatives collect { case creative: TemplateCreative => creative} groupBy (_
-      .getCreativeTemplateId)
-  }
-
   class DfpApprovalException(message: String) extends RuntimeException
   class DfpSessionException extends RuntimeException
 
