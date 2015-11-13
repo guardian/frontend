@@ -51,8 +51,8 @@ trait Store extends Logging with Dates {
   def putCachedTravelOffersFeed(everything: String) {
     S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
-  def putCreativeTemplates(templates: String) {
-    S3.putPublic(dfpCreativeTemplatesKey, templates, defaultJsonEncoding)
+  def putDfpTemplateCreatives(creatives: String) {
+    S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
@@ -78,11 +78,11 @@ trait Store extends Logging with Dates {
     case _ => None
   }
 
-  def getDfpCreativeTemplates: Seq[GuCreativeTemplate] = {
-    val templates = for (doc <- S3.get(dfpCreativeTemplatesKey)) yield {
-      Json.parse(doc).as[Seq[GuCreativeTemplate]]
+  def getDfpTemplateCreatives: Seq[GuCreative] = {
+    val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
+      Json.parse(doc).as[Seq[GuCreative]]
     }
-    templates getOrElse Nil
+    creatives getOrElse Nil
   }
 
   object commercial {

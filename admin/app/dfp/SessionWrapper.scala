@@ -11,6 +11,7 @@ import conf.{AdminConfiguration, Configuration}
 import dfp.ApiHelper.fetch
 import dfp.DfpServiceRegistry._
 
+import scala.collection.JavaConversions._
 import scala.util.control.NonFatal
 
 // This will replace DfpApiWrapper
@@ -32,8 +33,20 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def logAround[T](loadingType: String, stmtBuilder: StatementBuilder)
                   (doLoad: => Seq[T]): Seq[T] = {
+    val qry = stmtBuilder.buildQuery()
+    val params = stmtBuilder.getBindVariableMap.map { case (k, rawValue) =>
+      k -> (
+        rawValue match {
+          case t: TextValue => s""""${t.getValue}""""
+          case n: NumberValue => n.getValue
+          case b: BooleanValue => b.getValue
+          case other => other.toString
+        }
+        )
+    }.toMap
+    val baseMessage = s"""Loading $loadingType with statement "$qry" and params $params"""
     try {
-      log.info(s"Loading $loadingType with statement '${stmtBuilder.buildQuery()}' ...")
+      log.info(s"$baseMessage ...")
       val start = System.currentTimeMillis()
       val loaded = doLoad
       val duration = System.currentTimeMillis() - start
@@ -41,8 +54,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
       loaded
     } catch {
       case NonFatal(e) =>
-        val qry = stmtBuilder.buildQuery()
-        log.error(s"Loading $loadingType with statement $qry failed: ${e.getMessage}")
+        log.error(s"$baseMessage failed: ${e.getMessage}")
         Nil
     }
   }

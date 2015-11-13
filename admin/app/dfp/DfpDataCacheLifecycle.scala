@@ -62,6 +62,12 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
       val name: String = "DFP-Creative-Templates-Update"
       val interval: Int = 15
       def run() = CreativeTemplateAgent.refresh()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-Template-Creatives-Cache"
+      val interval: Int = 2
+      def run() = DfpTemplateCreativeCacheJob.run()
     }
 
   )
@@ -79,6 +85,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
     AkkaAsync {
       DfpDataCacheJob.refreshAllDfpData()
       CreativeTemplateAgent.refresh()
+      DfpTemplateCreativeCacheJob.run()
     }
   }
 

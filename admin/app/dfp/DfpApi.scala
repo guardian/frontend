@@ -6,6 +6,7 @@ import common.dfp.{GuCreative, GuCreativeTemplate, GuCreativeTemplateParameter}
 import dfp.ApiHelper.toJodaTime
 import org.joda.time.DateTime
 
+// this is replacing DfpDataHydrator
 object DfpApi {
 
   def loadActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
@@ -34,10 +35,13 @@ object DfpApi {
     val templates = for (session <- SessionWrapper()) yield {
       session.creativeTemplates(
         new StatementBuilder()
-          .where("status = :active and type = :userDefined")
-          .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
-          .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
-      ) map toGuCreativeTemplate
+        .where("status = :active and type = :userDefined")
+        .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
+        .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
+      ) filterNot { template =>
+        val name = template.getName.toLowerCase
+        name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
+      } map toGuCreativeTemplate
     }
 
     templates getOrElse Nil
@@ -45,18 +49,37 @@ object DfpApi {
 
   def loadCreativeTemplatesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
 
-    def toGuCreative(dfpCreative: Creative) = GuCreative(
-      id = dfpCreative.getId,
-      name = dfpCreative.getName,
-      lastModified = toJodaTime(dfpCreative.getLastModifiedDateTime),
-      args = Map.empty
-    )
+    def toGuCreative(dfpCreative: TemplateCreative) = {
+
+      def arg(variableValue: BaseCreativeTemplateVariableValue): (String, String) = {
+        val exampleAssetUrl =
+          "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+        val argValue = variableValue match {
+          case s: StringCreativeTemplateVariableValue =>
+            Option(s.getValue) getOrElse ""
+          case u: UrlCreativeTemplateVariableValue =>
+            Option(u.getValue) getOrElse ""
+          case _: AssetCreativeTemplateVariableValue =>
+            exampleAssetUrl
+          case other => "???"
+        }
+        variableValue.getUniqueName -> argValue
+      }
+
+      GuCreative(
+        id = dfpCreative.getId,
+        name = dfpCreative.getName,
+        lastModified = toJodaTime(dfpCreative.getLastModifiedDateTime),
+        args = Option(dfpCreative.getCreativeTemplateVariableValues).map(_.map(arg)).map(_.toMap).getOrElse(Map.empty),
+        templateId = dfpCreative.getCreativeTemplateId
+      )
+    }
 
     val creatives = for (session <- SessionWrapper()) yield {
       session.creatives(
         new StatementBuilder()
-          .where("lastModifiedDateTime > :threshold")
-          .withBindVariableValue("threshold", threshold.getMillis)
+        .where("lastModifiedDateTime > :threshold")
+        .withBindVariableValue("threshold", threshold.getMillis)
       ) collect {
         case tc: TemplateCreative => tc
       } map toGuCreative
