@@ -26,9 +26,16 @@ case class EmailPage(interactive: Interactive, related: RelatedContent)
 
 case class EmailForm(email: String)
 
+object listIds {
+  val testList = 3485
+}
+
 object EmailForm {
+  /**
+    * Associate lists to trigger IDs in ExactTarget. In our case these have a 1:1 relationship.
+    */
   val listTriggers = Map(
-    3485 -> 2529
+    listIds.testList -> 2529
   )
 
   def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
@@ -67,8 +74,6 @@ object EmailController extends Controller with ExecutionContexts {
   }
 
   def submit() = Action.async { implicit request =>
-    val listId = 3485
-
     def respond(result: SubscriptionResult): Result = {
       render {
         case Accepts.Html() => result match {
@@ -88,7 +93,7 @@ object EmailController extends Controller with ExecutionContexts {
     emailForm.bindFromRequest.fold(
       formWithErrors => Future.successful(respond(InvalidEmail)),
 
-      form => EmailForm.submit(form, listId) match {
+      form => EmailForm.submit(form, listIds.testList) match {
         case Some(future) => future.map(_.status match {
           case 200 | 201 => respond(Subscribed)
           case _         => respond(OtherError)
