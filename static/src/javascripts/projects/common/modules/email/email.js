@@ -41,7 +41,10 @@ define([
                     return ajax({
                         url: url,
                         method: 'post',
-                        data: data
+                        data: data,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
                     }).then(this.submissionResult(true, $form), this.submissionResult(false, $form));
                 }.bind(this);
 

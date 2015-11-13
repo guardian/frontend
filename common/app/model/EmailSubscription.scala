@@ -2,4 +2,5 @@ package model
 
 sealed trait SubscriptionResult
 case object Subscribed extends SubscriptionResult
-case class FailedToSubscribe(message: String) extends SubscriptionResult
+case object InvalidEmail extends SubscriptionResult
+case object OtherError extends SubscriptionResult
