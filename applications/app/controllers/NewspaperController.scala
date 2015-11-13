@@ -8,12 +8,13 @@ import services.NewspaperQuery
 
 object NewspaperController extends Controller with Logging with ExecutionContexts {
 
-  private val section = "News"
+  private val pageId = "theguardian"
+  private val section = "todayspaper"
   private val description = "Main section | News | The Guardian"
 
   def today() = Action.async { implicit request =>
 
-    val page = model.Page(request.path, section, description, "GFE: Newspaper books Main Section today")
+    val page = model.Page(pageId, section, description, "GFE: Newspaper books Main Section today")
 
     val todaysPaper = NewspaperQuery.fetchTodaysPaper.map(p => TodayNewspaper(page, p))
 
@@ -22,7 +23,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 
   def forDate(day: String, month: String, year: String) = Action.async { implicit request =>
-    val page = model.Page(request.path, section, description, "GFE: Newspaper books Main Section for past date")
+    val page = model.Page(pageId, section, description, "GFE: Newspaper books Main Section for past date")
 
     val paper = NewspaperQuery.fetchPaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
 
