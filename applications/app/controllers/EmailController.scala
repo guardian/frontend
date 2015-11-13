@@ -13,6 +13,7 @@ import play.api.mvc.{Result, Action, Controller}
 import model.MetaData
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 object emailLandingPage extends MetaData {
   lazy val id: String = "email-landing-page"
@@ -25,9 +26,16 @@ case class EmailPage(interactive: Interactive, related: RelatedContent)
 
 case class EmailForm(email: String)
 
+object listIds {
+  val testList = 3485
+}
+
 object EmailForm {
+  /**
+    * Associate lists to trigger IDs in ExactTarget. In our case these have a 1:1 relationship.
+    */
   val listTriggers = Map(
-    3485 -> 2529
+    listIds.testList -> 2529
   )
 
   def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
@@ -56,45 +64,44 @@ object EmailController extends Controller with ExecutionContexts {
     Ok(views.html.emailFragment(emailLandingPage))
   }
 
+  def subscriptionResult(result: String) = Action { implicit request =>
+    Cached(7.days)(result match {
+      case "success" => Ok(views.html.emailLanding(emailLandingPage, Some(Subscribed)))
+      case "invalid" => Ok(views.html.emailLanding(emailLandingPage, Some(InvalidEmail)))
+      case "error"   => Ok(views.html.emailLanding(emailLandingPage, Some(OtherError)))
+      case _         => NotFound
+    })
+  }
+
   def submit() = Action.async { implicit request =>
-    val listId = 3485
+    def respond(result: SubscriptionResult): Result = {
+      render {
+        case Accepts.Html() => result match {
+          case Subscribed   => SeeOther("/email/success")
+          case InvalidEmail => SeeOther("/email/invalid")
+          case OtherError   => SeeOther("/email/error")
+        }
+
+        case Accepts.Json() => result match {
+          case Subscribed   => Created("Subscribed")
+          case InvalidEmail => BadRequest("Invalid email")
+          case OtherError   => InternalServerError("Internal error")
+        }
+      }
+    }
 
     emailForm.bindFromRequest.fold(
-      formWithErrors => {
-        val result = FailedToSubscribe("Invalid email address")
+      formWithErrors => Future.successful(respond(InvalidEmail)),
 
-        Future.successful(render {
-          case Accepts.Html() => BadRequest(views.html.emailLanding(emailLandingPage, Some(result)))
-          case Accepts.Json() => BadRequest(result.message)
-        })
-      },
-
-      form => EmailForm.submit(form, listId) match {
+      form => EmailForm.submit(form, listIds.testList) match {
         case Some(future) => future.map(_.status match {
-          case 200 | 201 => render {
-            case Accepts.Html() => Created(views.html.emailLanding(emailLandingPage, Some(Subscribed)))
-            case Accepts.Json() => Created(Json.obj("email" -> form.email))
-          }
-
-          case _ => {
-            val result = FailedToSubscribe("Something bad happened")
-
-            render {
-              case Accepts.Html() => InternalServerError(views.html.emailLanding(emailLandingPage, Some(result)))
-              case Accepts.Json() => InternalServerError(result.message)
-            }
-          }
-        })
-
-        case None => {
-          val result = FailedToSubscribe("Unable to find listId")
-
-          Future.successful(render {
-            case Accepts.Html() => InternalServerError(views.html.emailLanding(emailLandingPage, Some(result)))
-            case Accepts.Json() => InternalServerError(result.message)
-          })
+          case 200 | 201 => respond(Subscribed)
+          case _         => respond(OtherError)
+        }) recover {
+          case _ => respond(OtherError)
         }
+
+        case None => Future.successful(respond(OtherError))
       })
   }
 }
-

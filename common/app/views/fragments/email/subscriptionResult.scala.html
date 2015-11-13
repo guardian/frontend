@@ -1,6 +1,6 @@
 @(result: SubscriptionResult)
 
-@import model.{SubscriptionResult, Subscribed, FailedToSubscribe}
+@import model.{SubscriptionResult, Subscribed, InvalidEmail, OtherError}
 
 @result match {
     case Subscribed => {
@@ -8,9 +8,13 @@
         <p>Thank you! You are now subscribed to receive the Guardian Today email.</p>
     }
 
-    case FailedToSubscribe(message) => {
+    case InvalidEmail => {
+        <h1>Invalid email address</h1>
+        <p>Sorry, we couldn't verify that email address. Please try again or contact userhelp@@theguardian.com.</p>
+    }
+
+    case OtherError => {
         <h1>Subscription error</h1>
-        <p>Sorry, something went wrong with your request. Please try again or contact userhelp@@theguardian.com.</p>
-        <small>@message</small>
+        <p>Sorry, there was a problem with your subscription request. Please try again or contact userhelp@@theguardian.com.</p>
     }
 }
