@@ -14,15 +14,10 @@ define([
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
-    var root = (document.location.protocol === 'https:')
-            ? config.page.secureDiscussionApiRoot
-            : config.page.discussionApiRoot,
-        Api = {
-            root: root,
-            // TODO get rid of discussion proxy completely when we're changed over to https
-            proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
-            clientHeader: config.page.discussionApiClientHeader
-        };
+    var Api = {
+        secureRoot: config.page.secureDiscussionApiRoot,
+        clientHeader: config.page.discussionApiClientHeader
+    };
 
     /**
      * @param {string} endpoint
@@ -31,11 +26,8 @@ define([
      * @return {Reqwest} a promise
      */
     Api.send = function (endpoint, method, data) {
-        var root = (method === 'post' && document.location.protocol === 'http:') ? Api.proxyRoot : Api.root;
+        var root = Api.secureRoot
         data = data || {};
-        if (cookies.get('GU_U')) {
-            data.GU_U = cookies.get('GU_U');
-        }
 
         var request = ajax({
             url: root + endpoint,
