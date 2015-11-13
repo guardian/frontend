@@ -596,8 +596,8 @@
         }
     }
 
-    .element--showcase + * {
-        clear: both;
+    .element--showcase {
+        float: none;
     }
 
     .ad-slot--inline {
