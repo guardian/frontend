@@ -16,11 +16,12 @@ define([
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
-    var Api = {
-        root: config.page.discussionApiRoot,
-        proxyRoot: (config.switches.discussionProxy ? toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') : root),
-        clientHeader: config.page.discussionApiClientHeader
-    };
+    var root = config.page.discussionApiRoot,
+        Api = {
+            root: root,
+            proxyRoot: (config.switches.discussionProxy ? toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') : root),
+            clientHeader: config.page.discussionApiClientHeader
+        };
 
     /**
      * @param {string} endpoint
