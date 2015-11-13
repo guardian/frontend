@@ -8,7 +8,7 @@ define([
     config
 ) {
 
-    var toHTTPS = function(url) {
+    var toHTTPS = function (url) {
         return url.replace(/^http:\/\//i, 'https://');
     };
 
