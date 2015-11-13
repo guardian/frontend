@@ -8,12 +8,18 @@ define([
     config
 ) {
 
+    var toHTTPS = function(url) {
+        return url.replace(/^http:\/\//i, 'https://');
+    };
+
     /**
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
     var Api = {
         root: config.page.discussionApiRoot,
+        proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
+        secureProxyRoot: toHTTPS(proxyRoot),
         clientHeader: config.page.discussionApiClientHeader
     };
 
@@ -23,8 +29,9 @@ define([
      * @param {Object.<string.*>} data
      * @return {Reqwest} a promise
      */
-    Api.send = function (endpoint, method, data) {
-        var root = Api.root;
+    Api.send = function (endpoint, method, data, useProxy) {
+        var shouldUseProxy = useProxy || false;
+        var root = (method === 'post' || shouldUseProxy) ? Api.secureProxyRoot : Api.root;
         data = data || {};
 
         var request = ajax({
@@ -108,7 +115,7 @@ define([
      */
     Api.getUser = function (id) {
         var endpoint = '/profile/' + (!id ? 'me' : id);
-        return Api.send(endpoint, 'get');
+        return Api.send(endpoint, 'get', null, true);
     };
 
     return Api;
