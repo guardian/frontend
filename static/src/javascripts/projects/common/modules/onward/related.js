@@ -9,8 +9,7 @@ define([
     'common/modules/ui/expandable',
     'common/modules/experiments/ab',
     'lodash/arrays/intersection',
-    'lodash/collections/map',
-    'common/modules/onward/inject-container'
+    'lodash/collections/map'
 ], function (
     bonzo,
     qwery,
@@ -22,8 +21,7 @@ define([
     Expandable,
     ab,
     intersection,
-    map,
-    injectContainer
+    map
 ) {
 
     var opts;
