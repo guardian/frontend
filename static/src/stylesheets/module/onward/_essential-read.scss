@@ -77,7 +77,15 @@ section#the-essential-read {
     }
 
     .essential-read__text {
+        &:hover {
+            .essential-read__headline {
+                text-decoration: underline;
+            }
 
+            .essential-read__number {
+                color: darken(colour(guardian-brand-light), 35%);
+            }
+        }
     }
 
     .essential-read__headline {
