@@ -48,7 +48,6 @@ case class Content(
   elements: Elements,
   fields: Fields,
   sharelinks: ShareLinks,
-
   publication: String,
   internalPageCode: String,
   contributorBio: Option[String],
@@ -74,16 +73,13 @@ case class Content(
   twitterPropertiesOverrides: Map[String, String] = Map()
 ) {
 
-
-  lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(fields.id)
+  lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
   lazy val showByline = resolvedMetaData.showByline
-
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
   lazy val isSeries: Boolean = tags.series.nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = tags.keywords.filter(tag => !tag.isSectionTag)
-
   lazy val shortUrlId = fields.shortUrl.replace("http://gu.com", "")
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlPath)
@@ -135,8 +131,8 @@ case class Content(
   lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(fields.section))) {
-      fields.section
+    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
+      metadata.section
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
       case _ => ""
@@ -145,7 +141,7 @@ case class Content(
 
   lazy val sectionLabelName : String = {
     if(this.showSectionNotTag) trail.sectionName else tags.tags.find(_.isKeyword) match {
-      case Some(tag) => tag.webTitle
+      case Some(tag) => tag.metadata.webTitle
       case _ => ""
     }
   }
@@ -181,7 +177,6 @@ case class Content(
     conditionalConfig ++
     javascriptConfig ++
     javascriptConfigOverrides
-
 
   private def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
@@ -222,13 +217,13 @@ case class Content(
   }
 
   def getOpenGraph: Map[String, String] = Map(
-    "og:title" -> fields.webTitle,
+    "og:title" -> metadata.webTitle,
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
     "og:image" -> openGraphImage
   ) ++ opengraphPropertiesOverrides
 
   def getTwitterProperties: Map[String, String] = Map(
-    "twitter:app:url:googleplay" -> fields.webUrl.replace("http", "guardian"),
+    "twitter:app:url:googleplay" -> metadata.webUrl.replace("http", "guardian"),
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList ++ twitterPropertiesOverrides
 }
@@ -236,7 +231,7 @@ case class Content(
 object Content {
 
   def apply(apiContent: contentapi.Content): ContentType = {
-    val content = constructContent(apiContent)
+    val content = make(apiContent)
 
     apiContent match {
       case article if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
@@ -248,107 +243,15 @@ object Content {
     }
   }
 
-  private def constructCommercial(tags: Tags, fields: Fields, apiContent: contentapi.Content) = {
-    val section = Some(fields.section)
+  private[model] def make(apiContent: contentapi.Content) = {
 
-    model.Commercial(
-      tags = tags,
-      fields = fields,
-      isInappropriateForSponsorship = apiContent.safeFields.get("isInappropriateForSponsorship").exists(_.toBoolean),
-      sponsorshipTag = DfpAgent.sponsorshipTag(tags.tags, section),
-      isFoundationSupported = DfpAgent.isFoundationSupported(tags.tags, section),
-      isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags.tags, section),
-      hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags.tags),
-      hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
-      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags))
-  }
-
-  private def constructFields(apiContent: contentapi.Content) = {
-    Fields (
-      description = apiContent.safeFields.get("trailText"),
-      trailText = apiContent.safeFields.get("trailText"), // alias for description
-      id = apiContent.id,
-      section = apiContent.sectionId.getOrElse(""),
-      webTitle = apiContent.webTitle,
-      url = SupportedUrl(apiContent),
-      linkText = apiContent.webTitle,
-      shortUrl = apiContent.safeFields("shortUrl"),
-      standfirst = apiContent.safeFields.get("standfirst"),
-      main = apiContent.safeFields.getOrElse("main",""),
-      body = apiContent.safeFields.getOrElse("body",""),
-      lastModified = apiContent.safeFields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now),
-      displayHint = apiContent.safeFields.get("displayHint").getOrElse("")
-    )
-  }
-
-  private def constructElements(apiContent: contentapi.Content) = {
-    Elements(apiContent.elements
-      .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
-      .getOrElse(Nil))
-  }
-
-  private def constructMetaData(tags: Tags, fields: Fields, trail: Trail, apiContent: contentapi.Content) = {
-    MetaData(
-      tags = tags,
-      fields = fields,
-      membershipAccess = apiContent.safeFields.get("membershipAccess"),
-      analyticsName = s"GFE:${fields.section}:${fields.id.substring(fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = fields.section,
-      cacheSeconds = {
-        if (trail.isLive) 5
-        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 10
-        else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 30
-        else 300
-      }
-
-    )
-  }
-
-  private def constructTrail(
-    tags: Tags,
-    fields: Fields,
-    commercial: Commercial,
-    elements: Elements,
-    apiContent: contentapi.Content) = {
-    Trail(
-      webPublicationDate = apiContent.webPublicationDateOption.getOrElse(DateTime.now),
-      //webPublicationDate(edition: Edition): DateTime = webPublicationDate(edition.timezone),
-      //webPublicationDate(zone: DateTimeZone): DateTime = webPublicationDate.withZone(zone),
-      headline = apiContent.safeFields.getOrDefault("headline", ""),
-      sectionName = apiContent.sectionName.getOrElse(""),
-      thumbnailPath = apiContent.safeFields.get("thumbnail").map(ImgSrc(_, Naked)),
-      isLive = apiContent.safeFields.get("liveBloggingNow").exists(_.toBoolean),
-      isCommentable = apiContent.safeFields.get("commentable").exists(_.toBoolean),
-      isClosedForComments = !apiContent.safeFields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow),
-      leadingParagraphs = {
-        val body = apiContent.safeFields.get("body")
-        val souped = body flatMap { body =>
-          val souped = Jsoup.parseBodyFragment(body).body().select("p")
-          Option(souped) map { _.toList }
-        }
-        souped getOrElse Nil
-      },
-      byline = apiContent.safeFields.get("byline").map(stripHtml),
-      trailPicture = elements.thumbnail.find(_.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize))
-        .orElse(elements.mainPicture)
-        .orElse(elements.thumbnail),
-      tags = tags,
-      fields = fields,
-      commercial = commercial,
-      elements = elements
-    )
-  }
-
-   private[model] def constructContent(apiContent: contentapi.Content) = {
-
-    val fields = constructFields(apiContent)
-    val elements = constructElements(apiContent)
-    val tags = Tags(apiContent.tags map { Tag(_) })
-    val commercial = constructCommercial(tags, fields, apiContent)
-    val trail = constructTrail(tags, fields, commercial, elements, apiContent)
-    val metadata = constructMetaData(tags, fields, trail, apiContent)
-    val sharelinks = ShareLinks(tags, fields)
-
+    val fields = Fields.make(apiContent)
+    val metadata = MetaData.make(fields, apiContent)
+    val elements = Elements.make(apiContent)
+    val tags = Tags(apiContent.tags map { Tag.make(_) })
+    val commercial = Commercial.make(metadata, tags, fields, apiContent)
+    val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
+    val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.safeFields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference(ref.id)._2)).toMap
 
@@ -433,21 +336,28 @@ object Article {
   private def copyMetaData(content: Content) = {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
+    val section = content.metadata.section
+    val id = content.metadata.id
+    val fields = content.fields
 
     content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:${content.fields.section}:${GuardianContentTypes.Article}:${content.fields.id.substring(content.fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = content.fields.section + "/" + contentType.toLowerCase,
+      analyticsName = s"GFE:$section:${GuardianContentTypes.Article}:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
       isImmersive = content.fields.displayHint.contains("immersive"),
       schemaType = Some(ArticleSchemas(content.tags)),
       cacheSeconds = if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) {
-          if (content.trail.isLive) 5
-          else if (content.fields.lastModified > DateTime.now(content.fields.lastModified.getZone) - 1.hour) 300
-          else if (content.fields.lastModified > DateTime.now(content.fields.lastModified.getZone) - 24.hours) 1200
+          if (fields.isLive) 5
+          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 300
+          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 1200
           else 1200
         } else {
           content.metadata.cacheSeconds
-        }
+        },
+      iosType = contentType match {
+        case "Crossword" => None
+        case _ => Some("Article")
+      }
     )
   }
 
@@ -493,7 +403,7 @@ object Article {
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
       ("article:section", trail.sectionName),
       ("article:publisher", "https://www.facebook.com/theguardian"),
-      ("article:author", tags.contributors.map(_.webUrl).mkString(","))
+      ("article:author", tags.contributors.map(_.metadata.webUrl).mkString(","))
     )
 
     val twitterProperties: Map[String, String] = if (content.tags.isLiveBlog) {
@@ -555,11 +465,13 @@ object Audio {
 
     val contentType = GuardianContentTypes.Audio
     val fields = content.fields
+    val id = content.metadata.id
+    val section = content.metadata.section
 
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:${fields.section}:$contentType:${fields.id.substring(fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = content.fields.section + "/" + contentType.toLowerCase,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject")
     )
 
@@ -592,11 +504,13 @@ object Video {
     val contentType = GuardianContentTypes.Video
     val fields = content.fields
     val elements = content.elements
+    val section = content.metadata.section
+    val id = content.metadata.id
 
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:${fields.section}:$contentType:${fields.id.substring(fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = content.fields.section + "/" + contentType.toLowerCase,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/VideoObject")
     )
     val source: Option[String] = elements.videos.find(_.isMain).flatMap(_.source)
@@ -611,7 +525,7 @@ object Video {
     val opengraphProperties = Map(
       "og:type" -> "video",
       "og:video:type" -> "text/html",
-      "og:video" -> fields.webUrl,
+      "og:video" -> content.metadata.webUrl,
       "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
     )
 
@@ -656,10 +570,12 @@ object Gallery {
     val elements = content.elements
     val tags = content.tags
     val lightbox = GalleryLightbox(content.elements, content.tags)
+    val section = content.metadata.section
+    val id = content.metadata.id
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:${fields.section}:$contentType:${fields.id.substring(fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = content.fields.section + "/" + contentType.toLowerCase,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/ImageGallery"),
       openGraphImages = lightbox.openGraphImages
     )
@@ -682,7 +598,7 @@ object Gallery {
       "article:modified_time" -> content.fields.lastModified.toString,
       "article:section" -> trail.sectionName,
       "article:tag" -> tags.keywords.map(_.name).mkString(","),
-      "article:author" -> tags.contributors.map(_.webUrl).mkString(",")
+      "article:author" -> tags.contributors.map(_.metadata.webUrl).mkString(",")
     )
 
     val twitterProperties: Map[String, String] = Map(
@@ -817,15 +733,17 @@ case class Interactive(override val content: Content) extends ContentType {
 
 object Interactive {
   def apply(apiContent: contentapi.Content): Interactive = {
-    val content = Content.constructContent(apiContent)
+    val content = Content.make(apiContent)
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
+    val section = content.metadata.section
+    val id = content.metadata.id
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:${fields.section}:$contentType:${fields.id.substring(fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = fields.section + "/" + contentType.toLowerCase,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
       isImmersive = fields.displayHint.contains("immersive")
     )
 
@@ -847,10 +765,12 @@ object ImageContent {
   def make(content: Content): ImageContent = {
     val contentType = GuardianContentTypes.ImageContent
     val fields = content.fields
+    val section = content.metadata.section
+    val id = content.metadata.id
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:${fields.section}:$contentType:${fields.id.substring(fields.id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = fields.section + "/" + contentType.toLowerCase,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
       isImmersive = fields.displayHint.contains("immersive")
     )
     val lightbox = GenericLightbox(content.elements, content.fields, content.trail,
