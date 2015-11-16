@@ -7,9 +7,8 @@
 }
 
 .email-sub__form {
-    font-family: $f-sans-serif-text;
-    font-size: 14px;
-    padding: 20px;
+    @include fs-textSans(3);
+    padding: $gs-baseline $gs-gutter;
 
     * {
         box-sizing: border-box;
@@ -38,7 +37,7 @@
     .email-sub__label {
         color: guss-colour(neutral-2, $pasteup-palette);
         line-height: 3;
-        left: 15px;
+        left: $gs-gutter * 0.75;
         position: absolute;
         pointer-events: none; // Ensure the text input cursor is shown
     }
@@ -49,7 +48,7 @@
     color: guss-colour(neutral-2, $pasteup-palette);
     height: 3em;
     outline: none;
-    padding: 8px 15px;
+    padding: ($gs-gutter * 0.4) ($gs-gutter * 0.75);
 }
 
 .email-sub__submit-input {
@@ -64,7 +63,7 @@
 
 .email-sub__text-input,
 .email-sub__submit-input {
-    margin-bottom: 15px;
+    margin-bottom: $gs-baseline * 1.25;
     width: 100%;
 }
 
@@ -75,7 +74,7 @@
 
 .email-sub__message {
     color: #ffffff;
-    padding-left: 35px;
+    padding-left: 35px; // Space for our icon (not a grid multiple)
     position: relative;
 
     &:before {
@@ -93,20 +92,17 @@
 
 .email-sub__message__headline,
 .email-sub__message__description {
-    font-family: $f-sans-serif-text;
+    @include fs-textSans(3);
 }
 
 .email-sub__message__headline {
-    font-size: 14px;
     font-weight: bold;
     margin-bottom: 0;
 }
 
 .email-sub__message__description {
-    font-size: 12px;
+    @include fs-textSans(1, $size-only: true);
 }
-
-
 
 /**
 * Modifications
@@ -115,12 +111,12 @@
     // FOOTER MODS
 .email-sub__form--footer {
     margin-bottom: $gs-baseline;
-    padding: 0 20px;
+    padding: 0 $gs-gutter;
 
     .email-sub__label,
     .email-sub__submit-input,
     .email-sub__text-input {
-        font-size: 12px;
+        @include fs-textSans(1, $size-only: true);
     }
 
     .email-sub__label,
@@ -140,7 +136,7 @@
 
     .email-sub__small {
         color: $form-primary-colour;
-        font-size: 12px;
+        @include fs-textSans(1, $size-only: true);
     }
 }
 

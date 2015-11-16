@@ -18,8 +18,8 @@ body {
     // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
     font-family: $f-sans-serif-text;
     font-weight: bold;
-    height: 36px;
-    padding: 0 12px;
+    height: $gs-baseline * 3;
+    padding: 0 ($gs-gutter * 0.6);
 
     &:focus,
     &:hover {
@@ -41,12 +41,12 @@ body {
     }
 
     .email-sub__submit-input {
-        font-size: 12px;
+        @include fs-textSans(1, $size-only: true);
         @include border-radius(0 1000px 1000px 0);
         border-left: 0;
         float: left;
         margin-right: 0;
-        padding-left: 10px;
+        padding-left: $gs-gutter / 2;
         width: 38%;
     }
 }
@@ -54,7 +54,7 @@ body {
 // It's a fixed layout so only at this width do we want to apply these styles
 @include mq(175px, 175px) {
     .email-sub__form--footer {
-        padding-right: 1.25rem;
+        padding-right: $gs-gutter / 2;
     }
 
     .email-sub__text-input {

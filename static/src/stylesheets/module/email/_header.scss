@@ -6,7 +6,7 @@
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
     background-color: guss-colour(guardian-brand, $pasteup-palette);
-    padding-top: 10px;
+    padding-top: $gs-baseline;
 }
 
 .email-sub__description-emph {
@@ -17,10 +17,10 @@
 // LANDING PAGE MODS
 .email-sub__header--landing {
     background-color: $form-primary-colour;
-    font-family: $f-serif-headline;
+    @include fs-headline(2);
 
     .email-sub__heading {
-        line-height: 35px;
+        margin: $gs-baseline 0;
     }
 }
 
@@ -28,9 +28,8 @@
 .email-sub__header--footer {
     .email-sub__heading {
         color: #ffffff;
-        font-family: $f-sans-serif-text;
-        font-size: 14px;
-        margin-bottom: 12px;
+        @include fs-textSans(3, $size-only: true);
+        margin-bottom: $gs-baseline;
     }
 }
 
