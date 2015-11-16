@@ -5,9 +5,9 @@ import implicits.FaciaContentImplicits._
 
 object EndSlateComponents {
   def fromContent(content: Content) = EndSlateComponents(
-    content.series collectFirst { case Tag(apiTag, _) => apiTag.id },
-    content.section,
-    content.shortUrl
+    content.tags.series collectFirst { case Tag(apiTag, _) => apiTag.id },
+    content.metadata.section,
+    content.fields.shortUrl
   )
 
   def fromFaciaContent(faciaContent: FaciaContent) = EndSlateComponents(
