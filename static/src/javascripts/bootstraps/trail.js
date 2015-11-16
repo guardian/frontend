@@ -110,7 +110,7 @@ define([
             mediator.once('ab-network-front-loaded', function () {
                 var $parent = $('.facia-page');
                 $parent.addClass('ab-front-injected');
-                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
+                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected-2');
 
                 $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
                 $('.js-tabs', $parent).addClass('u-h');
