@@ -8,6 +8,7 @@ define([
     'common/utils/mediator',
     'lodash/functions/debounce',
     'common/utils/template',
+    'common/views/svgs',
     'text!common/views/email/submissionResponse.html'
 ], function (
     formInlineLabels,
@@ -19,6 +20,7 @@ define([
     mediator,
     debounce,
     template,
+    svgs,
     successHtml
 ) {
     var classes = {
@@ -64,7 +66,8 @@ define([
                 var submissionMessage = {
                         statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
                         submissionHeadline: (isSuccess) ? 'Thank you for subscribing' : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.'
+                        submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.',
+                        submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
                     submissionHtml = template(successHtml, submissionMessage);
 

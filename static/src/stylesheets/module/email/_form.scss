@@ -74,8 +74,26 @@
 
 .email-sub__message {
     color: #ffffff;
-    padding-left: 35px; // Space for our icon (not a grid multiple)
+
+    padding-left: $gs-gutter * 2; // Space for our icon (not a grid multiple)
     position: relative;
+
+    .inline-icon {
+        background-color: guss-colour(neutral-3, $pasteup-palette);
+        @include border-radius(1000px);
+        fill: guss-colour(neutral-1, $pasteup-palette);
+        height: $icon-size;
+        left: 0;
+        position: absolute;
+        width: $icon-size;
+
+        svg {
+            height: $icon-size / 2;
+            margin-top: $icon-size / 4;
+            margin-left: $icon-size / 4;
+            width: $icon-size / 2;
+        }
+    }
 }
 
 .email-sub__message__headline,
