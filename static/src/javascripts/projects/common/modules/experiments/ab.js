@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/inject-network-front-test-2',
     'common/modules/experiments/tests/reach-dummy-test',
     'common/modules/experiments/tests/large-top-slot',
@@ -30,7 +29,6 @@ define([
     mvtCookie,
     HighCommercialComponent,
     MembershipMessageUSA,
-    RtrtEmailMessage,
     InjectNetworkFrontTest2,
     ReachDummyTest,
     LargeTopAd,
@@ -48,7 +46,6 @@ define([
     var TESTS = flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
-        new RtrtEmailMessage(),
         new InjectNetworkFrontTest2(),
         new ReachDummyTest(),
         new LargeTopAd(),

@@ -34,7 +34,15 @@ define([
         var sectionsWithoutPopular = ['info', 'global'];
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
-        this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
+
+        if (ab.getParticipations().MostPopularDefaultTest &&
+            ab.getParticipations().MostPopularDefaultTest.variant === 'variant' &&
+            ab.testCanBeRun('MostPopularDefaultTest')) {
+
+            this.endpoint = '/ab-most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
+        } else {
+            this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
+        }
     }
 
     Component.define(MostPopular);
