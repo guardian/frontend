@@ -19,7 +19,7 @@ body {
     font-family: $f-sans-serif-text;
     font-weight: bold;
     height: $gs-baseline * 3;
-    padding: 0 ($gs-gutter * 0.6);
+    padding: 0 ($gs-gutter * .6);
 
     &:focus,
     &:hover {

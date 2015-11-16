@@ -37,7 +37,7 @@
     .email-sub__label {
         color: guss-colour(neutral-2, $pasteup-palette);
         line-height: 3;
-        left: $gs-gutter * 0.75;
+        left: $gs-gutter * .75;
         position: absolute;
         pointer-events: none; // Ensure the text input cursor is shown
     }
@@ -48,7 +48,7 @@
     color: guss-colour(neutral-2, $pasteup-palette);
     height: 3em;
     outline: none;
-    padding: ($gs-gutter * 0.4) ($gs-gutter * 0.75);
+    padding: ($gs-gutter * .4) ($gs-gutter * .75);
 }
 
 .email-sub__submit-input {
