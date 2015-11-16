@@ -140,10 +140,19 @@
     }
 }
 
-    // LANDING PAGE MODS
+// LANDING PAGE MODS
+.email-sub--landing {
+    .email-sub__description {
+        padding: $gs-baseline $gs-gutter;
+    }
+}
+
 .email-sub__form--landing {
     background-color: guss-colour(guardian-brand, $pasteup-palette);
 
+    .email-sub__form-wrapper {
+        width: 40%;
+    }
 
     .email-sub__text-input {
         border-color: $form-secondary-colour;
@@ -156,27 +165,9 @@
 
     .email-sub__small {
         text-align: center;
+        width: 100%;
     }
 
-}
-
-// LANDING PAGE LAYOUT MODS
-@include mq(tablet) {
-    .email-sub--landing {
-        display: flex;
-    }
-
-    .email-sub__form--landing {
-        display: flex;
-        flex-grow: 2;
-        flex-direction: column;
-        align-content: center;
-        justify-content: center;
-    }
-
-    .email-sub__header--landing {
-        flex: 2 1 auto;
-    }
 }
 
 
