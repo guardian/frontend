@@ -1,11 +1,13 @@
 define([
     'common/modules/user-prefs',
     'common/utils/ajax',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/cookies'
 ], function (
     prefs,
     ajax,
-    config
+    config,
+    cookies
 ) {
 
     var toHTTPS = function (url) {
@@ -19,7 +21,11 @@ define([
     var root = config.page.discussionApiRoot,
         Api = {
             root: root,
-            proxyRoot: (config.switches.discussionProxy ? toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') : root),
+            proxyRoot: (config.switches.discussionProxy ?
+                (config.switches.discussionHttps ?
+                    toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') :
+                config.page.host + '/guardianapis/discussion/discussion-api') :
+                root),
             clientHeader: config.page.discussionApiClientHeader
         };
 
@@ -33,6 +39,10 @@ define([
         var shouldUseProxy = useProxy || false;
         var root = (method === 'post' || shouldUseProxy) ? Api.proxyRoot : Api.root;
         data = data || {};
+        // TODO remove this once we turn the discussionHttps switch on permanently
+        if (cookies.get('GU_U')) {
+            data.GU_U = cookies.get('GU_U');
+        }
 
         var request = ajax({
             url: root + endpoint,
@@ -43,7 +53,8 @@ define([
             headers: {
                 'D2-X-UID': 'zHoBy6HNKsk',
                 'GU-Client': Api.clientHeader
-            }
+            },
+            withCredentials: true
         });
 
         return request;

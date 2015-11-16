@@ -322,4 +322,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val DiscussionHttpsSwitch = Switch(
+    "Feature",
+    "discussion-https",
+    "in discussion we will send requests to https",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }
