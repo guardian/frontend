@@ -95,7 +95,7 @@ define([
                 mobile:  '1,1|300,250'
             }
         },
-        "top-above-nav": {
+        'top-above-nav': {
             sizeMappings: {
                 desktop: '1,1|88,70|728,90|940,230|900,250|970,250'
             }
