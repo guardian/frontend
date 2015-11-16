@@ -44,8 +44,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
     val date = dateFormatUTC
       .parseDateTime(s"$year/$month/$day")
       .toDateTime
-    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
-    bookSectionContainers("theguardian/mainsection", newspaperDate)
+
+    bookSectionContainers("theguardian/mainsection", date)
   }
 
   private def bookSectionContainers(itemId: String, newspaperDate: DateTime): Future[List[FaciaContainer]] = {
