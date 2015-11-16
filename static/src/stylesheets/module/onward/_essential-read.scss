@@ -1,15 +1,7 @@
 section#the-essential-read {
-    background-color: colour(guardian-brand);
     margin-bottom: $gs-baseline;
 
     .fc-container__header__title {
-        color: #fff;
-
-        @include mq(wide) {
-            font-weight: 300;
-            @include font($f-serif-headline, 200, 36px);
-        }
-
         @include mq($until: mobileLandscape) {
             float: initial;
             margin-left: $gs-gutter/2;
@@ -18,8 +10,6 @@ section#the-essential-read {
     }
 
     .fc-container__header__description {
-        color: colour(guardian-brand-light);
-
         @include mq($until: mobileLandscape) {
             margin-left: $gs-gutter/2;
             line-height: $gs-baseline;
@@ -31,7 +21,7 @@ section#the-essential-read {
         float: left;
         width: $gs-gutter * 2;
         @include font($f-serif-headline, 200, 42px);
-        color: darken(colour(guardian-brand-light), 25%);
+        color: colour(news-main-2);
     }
 
     .essential-read__item {
@@ -49,13 +39,13 @@ section#the-essential-read {
             &:before {
                 position: absolute;
                 top: 0;
-                right: 0.625rem;
+                right: 1px;
                 left: 0;
                 content: '';
                 display: block;
                 width: 40%;
-                height: 0.0625rem;
-                background-color: darken(colour(guardian-brand-light), 25%);
+                height: 1px;
+                background-color: colour(neutral-6);
             }
         }
 
@@ -81,15 +71,11 @@ section#the-essential-read {
             .essential-read__headline {
                 text-decoration: underline;
             }
-
-            .essential-read__number {
-                color: darken(colour(guardian-brand-light), 35%);
-            }
         }
     }
 
     .essential-read__headline {
-        color: #fff;
+        color: colour(neutral-1);
         @include font($f-serif-headline, 500, 16px);
         line-height: 20px;
         padding-top: 2px;
@@ -99,13 +85,12 @@ section#the-essential-read {
 
     .essential-read__kicker {
         @include font($f-serif-headline, 700, 16px);
-        color: colour(guardian-brand-light);
+        color: colour(guardian-brand);
         display: block;
     }
 
     .fc-container__inner {
         @include mq($until: mobileLandscape) {
-            border-top: 0 !important;
             margin-left: 0;
             margin-right: 0;
         }

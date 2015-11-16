@@ -132,7 +132,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
     def collectionIds: Seq[String] = contentSource match {
       case "curated" =>
-        def limit = 2;
         edition match {
           case "uk" => Seq("uk-alpha/people-in-the-news/feature-stories")
           case _ => Seq("eaf2df82-f7b4-4d96-a681-db52be53c798")

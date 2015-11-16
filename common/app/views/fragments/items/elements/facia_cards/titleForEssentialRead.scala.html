@@ -14,7 +14,7 @@
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {
-        case Some(kicker) if snapType != Some(FrontendLatestSnap) => {
+        case Some(kicker) if kicker.EssentialReadShouldUseKicker => {
             @articleLink{<span class="essential-read__kicker">@Html(kicker.kickerHtml)</span> @headline()}
         }
         case _ => {

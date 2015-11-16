@@ -89,7 +89,7 @@ object CollectionEssentials {
   )
 
   def fromMultiplePressedCollections(collections: Seq[PressedCollection], itemLimit: Int = 5) = CollectionEssentials(
-    collections.flatMap(_.curated.take(itemLimit)),
+    collections.flatMap(_.curated.filter(!_.isLiveBlog).take(itemLimit)),
     Nil,
     None,
     None,
