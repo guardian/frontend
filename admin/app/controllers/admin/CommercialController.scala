@@ -1,12 +1,12 @@
 package controllers.admin
 
-import common.dfp.LineItemReport
+import common.dfp.{GuCreativeTemplate, LineItemReport}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.DfpDataHydrator
+import dfp.{CreativeTemplateAgent, DfpDataHydrator}
 import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
@@ -53,7 +53,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
-    val templates = Store.getDfpCreativeTemplates
+    val emptyTemplates = CreativeTemplateAgent.get
+    val creatives = Store.getDfpTemplateCreatives
+    val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
+      soFar :+ template.copy(creatives = creatives.filter(_.templateId == template.id).sortBy(_.name))
+    }.sortBy(_.name)
     NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 

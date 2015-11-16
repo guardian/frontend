@@ -14,6 +14,7 @@ object DfpDataHydrator {
   def apply(): DfpDataHydrator = new DfpDataHydrator()
 }
 
+// this is being replaced by DfpApi
 class DfpDataHydrator extends Logging {
 
   private lazy val dfpServiceRegistry = DfpServiceRegistry()
@@ -177,76 +178,6 @@ class DfpDataHydrator extends Logging {
 
       DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
   }.getOrElse(Failure(new DfpSessionException()))
-
-
-  def loadActiveUserDefinedCreativeTemplates(threshold: Option[JodaDateTime]):
-  Seq[GuCreativeTemplate] = {
-
-    dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
-
-      val exampleAssetUrl =
-        "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
-
-      val templatesQuery = new StatementBuilder()
-        .where("status = :status and type = :type")
-        .withBindVariableValue("status", CreativeTemplateStatus.ACTIVE.getValue)
-        .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
-
-      val dfpCreativeTemplates =
-        DfpApiWrapper.fetchCreativeTemplates(
-          serviceRegistry, templatesQuery
-        ) filterNot { template =>
-          val name = template.getName.toUpperCase
-          name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
-        }
-
-      val creativesQuery = threshold.foldLeft(new StatementBuilder()) { (stmtBuilder,
-                                                                         lastModified) =>
-        stmtBuilder.where("lastModifiedDateTime > :lastModified")
-          .withBindVariableValue("lastModified", lastModified.toString)
-      }
-
-      val creatives = DfpApiWrapper.fetchTemplateCreatives(serviceRegistry, creativesQuery)
-
-      dfpCreativeTemplates.map { template =>
-        val templateCreatives = creatives getOrElse(template.getId, Nil)
-        GuCreativeTemplate(
-          id = template.getId,
-          name = template.getName,
-          description = template.getDescription,
-          parameters = template.getVariables map { param =>
-            GuCreativeTemplateParameter(
-              param.getClass.getSimpleName.stripSuffix("CreativeTemplateVariable"),
-              param.getLabel,
-              param.getIsRequired,
-              Option(param.getDescription)
-            )
-          },
-          snippet = template.getSnippet,
-          creatives = templateCreatives.map { creative =>
-            val args =
-              creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) {
-                case (soFar, arg) =>
-                  val argValue = arg match {
-                    case s: StringCreativeTemplateVariableValue =>
-                      Option(s.getValue) getOrElse ""
-                    case u: UrlCreativeTemplateVariableValue =>
-                      Option(u.getValue) getOrElse ""
-                    case _: AssetCreativeTemplateVariableValue =>
-                      exampleAssetUrl
-                    case other => "???"
-                  }
-                  soFar + (arg.getUniqueName -> argValue)
-              }
-            GuCreative(creative.getId.longValue(),
-              creative.getName,
-              toJodaTime(creative.getLastModifiedDateTime),
-              args)
-          }.sortBy(_.name)
-        )
-      }.sortBy(_.name)
-    }
-  }
 
   private def isPageSkin(dfpLineItem: LineItem) = {
 

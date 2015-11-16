@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRtrtEmailMessage = Switch(
-    "A/B Tests",
-    "ab-rtrt-email-message",
-    "Switch to show the Right Place Right Time email message with segmentation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 15),
-    exposeClientSide = true
-  )
-
   val ABRtrtEmailFormInlineFooter = Switch(
     "A/B Tests",
     "ab-rtrt-email-form-inline-footer",

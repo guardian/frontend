@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/rtrt-email-message',
     'common/modules/experiments/tests/rtrt-email-form-inline-footer',
     'common/modules/experiments/tests/inject-network-front-test',
     'common/modules/experiments/tests/most-popular-default',
@@ -31,7 +30,6 @@ define([
     mvtCookie,
     HighCommercialComponent,
     MembershipMessageUSA,
-    RtrtEmailMessage,
     RtrtEmailFormInlineFooter,
     InjectNetworkFrontTest,
     MostPopularDefaultTest,
@@ -50,7 +48,6 @@ define([
     var TESTS = flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
-        new RtrtEmailMessage(),
         new RtrtEmailFormInlineFooter(),
         new InjectNetworkFrontTest(),
         new MostPopularDefaultTest(),
