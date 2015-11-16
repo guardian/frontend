@@ -47,8 +47,9 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
+    val googleId = request.user.socialLinks.find(_.getNetwork == "google").map(_.getSocialId)
 
-    NoCache(Ok(views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, Option(request.user.primaryEmailAddress))))
+    NoCache(Ok(views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, googleId)))
   }
 
   def processForm = authenticatedActions.authActionWithUser.async { implicit request =>
