@@ -73,7 +73,7 @@ case class Byline(
   private def primaryContributor = {
     if (contributorTags.length > 2) {
       contributorTags.sortBy({ tag =>
-        get.indexOf(tag.webTitle) match {
+        get.indexOf(tag.metadata.webTitle) match {
           case -1 => Int.MaxValue
           case n => n
         }
@@ -83,7 +83,7 @@ case class Byline(
     }
   }
 
-  def shortByline = primaryContributor map { tag => s"${tag.webTitle} and others" } getOrElse get
+  def shortByline = primaryContributor map { tag => s"${tag.metadata.webTitle} and others" } getOrElse get
 }
 
 object DisplaySettings {

@@ -11,12 +11,12 @@ case class Trail (
   tags: Tags,
   commercial: Commercial,
   fields: Fields,
+  metadata: MetaData,
   elements: Elements,
 
   webPublicationDate: DateTime,
   //webPublicationDate(edition: Edition): DateTime = webPublicationDate(edition.timezone),
   //webPublicationDate(zone: DateTimeZone): DateTime = webPublicationDate.withZone(zone),
-
 
   headline: String,
   byline: Option[String],
@@ -24,7 +24,6 @@ case class Trail (
   sectionName: String,
   trailPicture: Option[ImageContainer],
   thumbnailPath: Option[String] = None,
-  isLive: Boolean,
   discussionId: Option[String] = None,
   isCommentable: Boolean = false,
   isClosedForComments: Boolean = false,
@@ -41,7 +40,7 @@ case class Trail (
 
 
   def faciaUrl: Option[String] = this match {
-    case t: Trail => Option(t.url)
+    case t: Trail => Option(t.metadata.url)
   }
 
   lazy val trailType: Option[String] = {
@@ -57,7 +56,7 @@ case class Trail (
   def javascriptConfig: Map[String, JsValue] = Map(
     ("sectionName", JsString(sectionName)),
     ("thumbnail", thumbnailPath.map(JsString.apply).getOrElse(JsBoolean(false))),
-    ("isLive", JsBoolean(isLive)),
+    ("isLive", JsBoolean(fields.isLive)),
     ("webPublicationDate", Json.toJson(webPublicationDate)),
     ("headline", JsString(headline)),
     ("commentable", JsBoolean(isCommentable))
