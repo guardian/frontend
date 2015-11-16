@@ -1,10 +1,16 @@
 @(metaData: model.MetaData)(head: Html)(body: Html)(implicit request: RequestHeader)
 
+@import conf.switches.Switches._
+
 <!doctype html>
 <head>
-    <style class="js-loggable">
-    @Html(Static.css.head(Some("email")))
-    </style>
+    @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email.css")" />
+    } else {
+        <style class="js-loggable">
+        @Html(Static.css.head(Some("email")))
+        </style>
+    }
 
     @fragments.fontDefinitions()
 
