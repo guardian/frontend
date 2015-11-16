@@ -119,7 +119,12 @@ define([
                 thisRootEl = (isIframed) ? rootEl.contentDocument.body : rootEl || document;
 
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
-                formInlineLabels.init(el);
+                formInlineLabels.init(el, {
+                    textInputClass: '.js-email-sub__text-input',
+                    labelClass: '.js-email-sub__label',
+                    hiddenLabelClass: 'email-sub__label--is-hidden',
+                    labelEnabledClass: 'email-sub__inline-label--enabled'
+                });
             });
 
             $('.' + classes.wrapper, thisRootEl).each(function (el) {

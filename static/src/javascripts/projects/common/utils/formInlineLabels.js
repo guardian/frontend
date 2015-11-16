@@ -30,14 +30,15 @@ define([
     }
 
     return {
-        init: function (el) {
+        init: function (el, opts) {
             var $el = $(el),
-                $input = $('.js-email-sub__text-input', el),
-                $label = $('.js-email-sub__label', el),
-                hiddenLabelClass = 'email-sub__label--is-hidden';
+                $input = $(opts.textInputClass, el),
+                $label = $(opts.labelClass, el),
+                hiddenLabelClass = opts.hiddenLabelClass,
+                labelEnabledClass = opts.labelEnabledClass;
 
             // Add the js only styling class for inline label enabled
-            updateClass('add', $el, 'email-sub__inline-label--enabled')();
+            updateClass('add', $el, labelEnabledClass)();
 
             // Check if the input val is empty and if not, hide the label
             if ($input.val() !== '') { updateClass('add', $label, hiddenLabelClass)(); }
