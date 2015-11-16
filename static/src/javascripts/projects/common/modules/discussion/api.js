@@ -1,26 +1,25 @@
 define([
     'common/modules/user-prefs',
     'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/cookies'
+    'common/utils/config'
 ], function (
     prefs,
     ajax,
-    config,
-    cookies
+    config
 ) {
+
+    var toHTTPS = function (url) {
+        return url.replace(/^http:\/\//i, 'https://');
+    };
 
     /**
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
-    var root = (document.location.protocol === 'https:')
-            ? config.page.secureDiscussionApiRoot
-            : config.page.discussionApiRoot,
+    var root = config.page.discussionApiRoot,
         Api = {
             root: root,
-            // TODO get rid of discussion proxy completely when we're changed over to https
-            proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
+            proxyRoot: (config.switches.discussionProxy ? toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') : root),
             clientHeader: config.page.discussionApiClientHeader
         };
 
@@ -30,12 +29,10 @@ define([
      * @param {Object.<string.*>} data
      * @return {Reqwest} a promise
      */
-    Api.send = function (endpoint, method, data) {
-        var root = (method === 'post' && document.location.protocol === 'http:') ? Api.proxyRoot : Api.root;
+    Api.send = function (endpoint, method, data, useProxy) {
+        var shouldUseProxy = useProxy || false;
+        var root = (method === 'post' || shouldUseProxy) ? Api.proxyRoot : Api.root;
         data = data || {};
-        if (cookies.get('GU_U')) {
-            data.GU_U = cookies.get('GU_U');
-        }
 
         var request = ajax({
             url: root + endpoint,
@@ -118,7 +115,7 @@ define([
      */
     Api.getUser = function (id) {
         var endpoint = '/profile/' + (!id ? 'me' : id);
-        return Api.send(endpoint, 'get');
+        return Api.send(endpoint, 'get', null, true);
     };
 
     return Api;
