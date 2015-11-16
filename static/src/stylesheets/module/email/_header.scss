@@ -28,7 +28,7 @@
 .email-sub__header--footer {
     .email-sub__heading {
         color: #ffffff;
-        @include fs-textSans(3, $size-only: true);
+        @include fs-textSans(3);
         margin-bottom: $gs-baseline;
     }
 }
