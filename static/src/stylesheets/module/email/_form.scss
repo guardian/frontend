@@ -75,7 +75,7 @@
 .email-sub__message {
     color: #ffffff;
 
-    padding-left: $gs-gutter * 2; // Space for our icon (not a grid multiple)
+    padding-left: $icon-size + ($gs-gutter / 2);
     position: relative;
 
     .inline-icon {
