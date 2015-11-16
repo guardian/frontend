@@ -195,12 +195,12 @@ define([
                 });
         });
 
-        it('should call "getParaWithSpace" max 10 times', function (done) {
+        it('should call "getParaWithSpace" max 9 times', function (done) {
             config.switches.viewability = true;
 
             articleBodyAdverts.init()
                 .then(function () {
-                    expect(getParaWithSpaceStub.callCount).toEqual(10);
+                    expect(getParaWithSpaceStub.callCount).toEqual(9);
                     done();
                 });
         });
