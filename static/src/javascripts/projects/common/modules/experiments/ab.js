@@ -32,7 +32,7 @@ define([
     MembershipMessageUSA,
     InjectNetworkFrontTest2,
     ReachDummyTest,
-    MostPopularDefaultTest,
+    MostPopularDefaultTest2,
     LargeTopAd,
     VideoPreroll,
     flatten,
@@ -50,7 +50,7 @@ define([
         new MembershipMessageUSA(),
         new InjectNetworkFrontTest2(),
         new ReachDummyTest(),
-        new MostPopularDefaultTest(),
+        new MostPopularDefaultTest2(),
         new LargeTopAd(),
         new VideoPreroll()
     ]);
