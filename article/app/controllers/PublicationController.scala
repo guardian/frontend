@@ -24,22 +24,21 @@ object PublicationController extends Controller with ExecutionContexts with Item
   }
 
   def publishedOn(publication: String,
-                  day: String,
-                  month: String,
                   year: String,
-                  tagTail: String) = Action.async { implicit request =>
+                  month: String,
+                  day: String,
+                  tail: String) = Action.async { implicit request =>
 
     val reqDate = requestedDate(s"$year/$month/$day")
-    val tag = publication + "/" + tagTail
+    val tag = publication + "/" + tail
     val newspaperBookTagSource = "newspaper_books"
     val newspaperBookSectionTagSource = "newspaper_book_sections"
 
     if (tagExists(newspaperBookTagSource, tag) || tagExists(newspaperBookSectionTagSource, tag)) {
       Future(Found(s"/$tag/${urlFormat(reqDate)}/all"))
     } else {
-      Future(NotFound)    // this should redirect to the article endpoint or controller
+      ArticleController.renderItem(s"$publication/$year/$month/$day/$tail")
     }
-
   }
 
   private def tagExists(tagSource: String, tag: String) = {

@@ -104,7 +104,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
     if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) Action.async { implicit request =>
-        loadArticle(path, lastUpdate, rendered)
+      loadArticle(path, lastUpdate, rendered)
     } else MemcachedAction { implicit request =>
       loadArticle(path, lastUpdate, rendered)
     }
