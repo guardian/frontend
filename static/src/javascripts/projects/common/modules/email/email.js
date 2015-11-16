@@ -62,7 +62,7 @@ define([
         updateForm = {
             replaceContent: function (isSuccess, $form) {
                 var submissionMessage = {
-                        statusClass: (isSuccess) ? '--success' : '--failure',
+                        statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
                         submissionHeadline: (isSuccess) ? 'Thank you for subscribing' : 'Something went wrong',
                         submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.'
                     },

@@ -14,18 +14,18 @@
     * {
         box-sizing: border-box;
     }
+}
 
-    &--is-hidden {
-        display: none;
-    }
+.email-sub__form--is-hidden {
+    display: none;
 }
 
 .email-sub__label {
     color: $form-primary-colour;
+}
 
-    &--is-hidden {
-        visibility: hidden;
-    }
+.email-sub__label--is-hidden {
+    visibility: hidden;
 }
 
 // Set with JS so we can use a real label
