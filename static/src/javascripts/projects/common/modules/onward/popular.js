@@ -35,9 +35,9 @@ define([
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
 
-        if (ab.getParticipations().MostPopularDefaultTest &&
-            ab.getParticipations().MostPopularDefaultTest.variant === 'variant' &&
-            ab.testCanBeRun('MostPopularDefaultTest')) {
+        if (ab.getParticipations().MostPopularDefaultTest2 &&
+            ab.getParticipations().MostPopularDefaultTest2.variant === 'variant' &&
+            ab.testCanBeRun('MostPopularDefaultTest2')) {
 
             this.endpoint = '/ab-most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
         } else {
