@@ -42,6 +42,11 @@ GET        /offline-page.json                                                   
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
+# Guardian newspaper page
+GET        /theguardian                                                         controllers.NewspaperController.today()
+GET        /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>               controllers.NewspaperController.forDate(day, month, year)
+GET        /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all           controllers.NewspaperController.allOn(day, month, year)
+
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all             controllers.AllIndexController.allOn(path, day, month, year)
@@ -50,9 +55,6 @@ GET        /$path<.+>/all                                                       
 
 # Sudokus
 GET        /sudokus/:id                                                         controllers.SudokusController.render(id)
-
-# Guardian newspaper page
-GET        /theguardian                                                         controllers.NewspaperController.today()
 
 # Gallery paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                controllers.GalleryController.lightboxJson(path)
