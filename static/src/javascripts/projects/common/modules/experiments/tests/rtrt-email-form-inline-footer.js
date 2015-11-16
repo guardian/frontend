@@ -56,7 +56,7 @@ define([
         this.author = 'Gareth Trufitt';
         this.description = 'Test headings and comfort text (No spam, one click subscribe)';
         this.audience = 0; // Initial 0% test to allow opt in for team testing
-        this.audienceOffset = 0.90; // TODO FIND A GOOD SPACE
+        this.audienceOffset = 0.90;
         this.successMeasure = 'X% more users sign up to the email in the footer';
         this.audienceCriteria = 'All non logged-in users, not on the email landing page';
         this.dataLinkNames = '';
