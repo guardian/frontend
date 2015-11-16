@@ -28,7 +28,7 @@ define([
                 fastdom.read(function () {
                     var offsets = bonzo(React.findDOMNode(this.refs.input)).offset();
                     scroller.scrollTo(offsets.top - offsets.height * 1.5 - $('.crossword__sticky-clue').offset().height, 250, 'easeOutQuad');
-                });
+                }.bind(this));
             }
         },
 

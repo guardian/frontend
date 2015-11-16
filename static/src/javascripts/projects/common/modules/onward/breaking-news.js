@@ -4,7 +4,6 @@ define([
     'common/utils/$',
     'fastdom',
     'qwery',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
@@ -12,14 +11,19 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'text!common/views/breaking-news.html'
+    'text!common/views/breaking-news.html',
+    'lodash/collections/forEach',
+    'lodash/objects/isArray',
+    'lodash/collections/filter',
+    'lodash/arrays/flatten',
+    'common/utils/chain',
+    'lodash/arrays/first'
 ], function (
     bean,
     bonzo,
     $,
     fastdom,
     qwery,
-    _,
     ajax,
     config,
     storage,
@@ -27,8 +31,13 @@ define([
     relativeDates,
     omniture,
     svgs,
-    alertHtml
-) {
+    alertHtml,
+    forEach,
+    isArray,
+    filter,
+    flatten,
+    chain,
+    first) {
     var alertWithinSeconds = 1200, // 20 minutes
         supportedSections = {
             'sport': 'sport',
@@ -44,7 +53,7 @@ define([
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
-        _.forEach(articleIds, function (articleID) {
+        forEach(articleIds, function (articleID) {
             cleanedIDs[articleID] = hiddenIds[articleID] || false;
         });
         return cleanedIDs;
@@ -63,7 +72,7 @@ define([
         }).then(
             function (resp) {
                 var collections = (resp.collections || [])
-                    .filter(function (collection) { return _.isArray(collection.content) && collection.content.length; })
+                    .filter(function (collection) { return isArray(collection.content) && collection.content.length; })
                     .map(function (collection) {
                         // collection.href is string or null
                         collection.href = (collection.href || '').toLowerCase();
@@ -72,17 +81,14 @@ define([
                     edition = (page.edition || '').toLowerCase(),
                     section = supportedSections[page.section],
 
-                    articles = _.chain([
+                    articles = chain([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
-                    ])
-                    .flatten()
-                    .filter(function (article) {
+                    ]).and(flatten).and(filter, function (article) {
                         var alertTime = article.frontPublicationDate;
                         return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
-                    })
-                    .value(),
+                    }).value(),
 
                     articleIds = articles.map(function (article) { return article.id; }),
                     alertDelay = 3000,
@@ -96,9 +102,9 @@ define([
                 // update stored IDs with current batch, so we know we've seen these
                 storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                alerts = _.chain(articles)
-                    .filter(function (article) { return hiddenIds[article.id] !== true; })
-                    .first(maxSimultaneousAlerts)
+                alerts = chain(articles)
+                    .and(filter, function (article) { return hiddenIds[article.id] !== true; })
+                    .and(first, maxSimultaneousAlerts)
                     .value();
 
                 if (alerts.length) {
@@ -106,7 +112,7 @@ define([
                     marque36icon = svgs('marque36icon');
                     closeIcon = svgs('closeCentralIcon');
 
-                    _.forEach(alerts, function (article) {
+                    forEach(alerts, function (article) {
                         var el;
 
                         article.marque36icon = marque36icon;

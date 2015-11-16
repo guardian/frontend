@@ -94,11 +94,6 @@ trait Navigation {
   val sportblog = SectionLink("sport", "sport blog", "Sport blog", "/sport/blog")
   val cycling = SectionLink("sport", "cycling", "Cycling", "/sport/cycling")
   val rugbyunion = SectionLink("sport", "rugby union", "Rugby union", "/sport/rugby-union")
-
-  import Switches.RugbyWorldCupswitch
-  // TODO delete when switch goes
-  val rugbyWorldCup = SectionLink("sport", "rugby world cup", "Rugby world cup 2015", "/sport/rugby-world-cup-2015")
-
   val rugbyLeague = SectionLink("sport", "rugby league", "Rugby union", "/sport/rugbyleague")
   val motorsport = SectionLink("sport", "motor sport", "Motor sport", "/sport/motorsports")
   val tennis = SectionLink("sport", "tennis", "Tennis", "/sport/tennis")
@@ -220,8 +215,8 @@ trait Navigation {
   val speedy = SectionLink("crosswords", "speedy", "Speedy", "/crosswords/series/speedy")
   val everyman = SectionLink("crosswords", "everyman", "Everyman", "/crosswords/series/everyman")
 
-  // R1 Azed, without azed slip series. This should be updated when we know how CAPI will deal with azed.
-  val azed = SectionLink("crosswords", "azed", "Azed", "/crossword/azed")
+  // R1 Azeds have been re-created as NGW content with a new landing page
+  val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")
 
   // Today's paper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")

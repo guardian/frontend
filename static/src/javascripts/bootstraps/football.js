@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -14,11 +13,11 @@ define([
     'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/tag-page-stats',
     'common/modules/sport/score-board',
-    'common/modules/ui/rhc'
+    'common/modules/ui/rhc',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
-    _,
     $,
     ajax,
     config,
@@ -31,8 +30,8 @@ define([
     MatchListLive,
     tagPageStats,
     ScoreBoard,
-    rhc
-) {
+    rhc,
+    debounce) {
 
     function renderNav(match, callback) {
         var matchInfo = new MatchInfo(match, config.page.pageId);
@@ -308,7 +307,7 @@ define([
                     }
                     return r;
                 })();
-                mediator.on('window:resize', _.debounce(resize, 200));
+                mediator.on('window:resize', debounce(resize, 200));
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }

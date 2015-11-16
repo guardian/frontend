@@ -1,23 +1,25 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
-    'text!common/views/commercial/outbrain.html'
+    'text!common/views/commercial/outbrain.html',
+    'lodash/collections/contains',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     $,
-    _,
     config,
     detect,
     mediator,
     template,
     identity,
-    outbrainTpl
+    outbrainTpl,
+    contains,
+    ab
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
@@ -32,7 +34,7 @@ define([
                 widgetCodeImage,
                 widgetCodeText;
 
-            breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
+            breakpoint = (contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
                 desktop: {
                     image: {
@@ -80,11 +82,6 @@ define([
         },
 
         tracking: function (widgetCode) {
-            var s = window.s;
-            // Omniture
-            s.link2 = 'outbrain';
-            s.tl(true, 'o', 'outbrain');
-
             // Ophan
             require(['ophan/ng'], function (ophan) {
                 ophan.record({
@@ -97,7 +94,7 @@ define([
 
         getSection: function () {
             return config.page.section.toLowerCase().match('news')
-                || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
+                || contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
         },
 
         identityPolicy: function () {
@@ -113,6 +110,7 @@ define([
                 && !config.page.isFront
                 && !config.page.isPreview
                 && this.identityPolicy()
+                && !(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))
                 && config.page.section !== 'childrens-books-site') {
                 if (this.hasHighRelevanceComponent()) {
                     this.load();

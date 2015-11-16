@@ -1,18 +1,23 @@
 define([
     'classnames',
     'react',
-    'common/utils/_',
     './helpers',
     './constants',
-    './cell'
+    './cell',
+    'lodash/collections/forEach',
+    'lodash/arrays/range',
+    'lodash/collections/map',
+    'lodash/objects/assign'
 ], function (
     classNames,
     React,
-    _,
     helpers,
     constants,
-    Cell
-) {
+    Cell,
+    forEach,
+    range,
+    map,
+    assign) {
     var Grid = React.createClass({
 
         handleSelect: function (x, y) {
@@ -90,12 +95,12 @@ define([
             var cells = [];
             var separators = [];
 
-            _.forEach(_.range(this.props.rows), function (y) {
-                _.map(_.range(this.props.columns), function (x) {
+            forEach(range(this.props.rows), function (y) {
+                map(range(this.props.columns), function (x) {
                     var cellProps = this.props.cells[x][y];
 
                     if (cellProps.isEditable) {
-                        cells.push(React.createElement(Cell, _.assign({}, cellProps, {
+                        cells.push(React.createElement(Cell, assign({}, cellProps, {
                             handleSelect: this.handleSelect,
                             x: x,
                             y: y,
@@ -104,7 +109,7 @@ define([
                             isFocussed: this.props.focussedCell && x === this.props.focussedCell.x && y === this.props.focussedCell.y
                         }, this)));
 
-                        separators = separators.concat(_.map(this.getSeparators(x, y), function (separator, direction) {
+                        separators = separators.concat(map(this.getSeparators(x, y), function (separator, direction) {
                             return this.createSeparator(x, y, separator, direction);
                         }, this));
                     }

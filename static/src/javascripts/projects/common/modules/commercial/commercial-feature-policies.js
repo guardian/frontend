@@ -1,18 +1,17 @@
 define([
-    'common/utils/_',
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/user-features',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'lodash/objects/mapValues'
 ], function (
-    _,
     location,
     config,
     detect,
     userFeatures,
-    userPrefs
-) {
+    userPrefs,
+    mapValues) {
     var policies = {};
 
     policies.defaultAds = function () {
@@ -142,7 +141,7 @@ define([
     }
 
     function getPolicySwitches() {
-        return _.mapValues(policies, function applyPolicy(policy) {
+        return mapValues(policies, function applyPolicy(policy) {
             return policy();
         });
     }

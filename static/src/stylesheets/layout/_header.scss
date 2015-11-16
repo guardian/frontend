@@ -35,6 +35,14 @@ $c-guardian-services-action: #ffffff;
     &.l-header--is-slim-ab {
         background: colour(guardian-brand);
     }
+
+    .hide-on-slim-header {
+        display: none;
+    }
+
+    .show-on-slim-header {
+        display: block !important;
+    }
 }
 
 .logo-wrapper {

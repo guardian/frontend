@@ -50,10 +50,6 @@
         border-top-color: colour(neutral-2);
         background-color: transparent;
     }
-
-    &.ad-slot__survey {
-        text-align: left;
-    }
 }
 
 /**
@@ -545,11 +541,6 @@
         margin-top: 4px;
         padding-top: 2px;
         border-top: 1px dotted colour(neutral-5);
-
-        .commercial-dfp-multi & {
-            position: absolute;
-            bottom: $gs-gutter;
-        }
 
         .ad-slot--paid-for-badge__link {
             float: none;

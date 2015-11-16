@@ -1,34 +1,37 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
+    'common/utils/config',
     'common/modules/ui/images',
     'common/utils/mediator'
 ], function (
     fastdom,
     $,
-    _,
     ajax,
+    config,
     images,
     mediator
 ) {
-    var containerUrlTemplate = '/container/use-layout/{containerId}.json';
 
-    function injectContainer(containerId) {
+    function injectContainer(containerUrl, containerSelector, containerName) {
         return ajax({
-            url: containerUrlTemplate.replace('{containerId}', containerId),
+            url: containerUrl,
             crossOrigin: true
         }).then(function (resp) {
             if (resp.html) {
                 fastdom.write(function () {
-                    var $related = $('.js-related');
-                    $related.before(resp.html);
-                    $related.css({
-                        display: 'none'
-                    });
+                    var $el = $(containerSelector),
+                        htmlToInject = resp.html.replace(/js-ad-slot ad-slot ad-slot--dfp/g, '');
+
+                    $el.after(htmlToInject.replace(/js-fc-slice-mpu-candidate/g, ''));
+                    if (!(config.page && config.page.hasStoryPackage)) {
+                        $el.css({
+                            display: 'none'
+                        });
+                    }
                     images.upgradePictures();
-                    mediator.emit('ab-briefing-loaded');
+                    mediator.emit(containerName);
                 });
             }
         });

@@ -30,6 +30,10 @@ module.exports = function () {
 
         updateCanIUse: {
             command: 'npm update caniuse-db'
+        },
+
+        eslintTests: {
+            command: 'node dev/eslint-rules/tests/*'
         }
     };
 };

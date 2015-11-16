@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -9,11 +8,12 @@ define([
     'common/modules/lazyload',
     'common/modules/ui/expandable',
     'common/modules/experiments/ab',
+    'lodash/arrays/intersection',
+    'lodash/collections/map',
     'common/modules/onward/inject-container'
 ], function (
     bonzo,
     qwery,
-    _,
     $,
     config,
     mediator,
@@ -21,6 +21,8 @@ define([
     LazyLoad,
     Expandable,
     ab,
+    intersection,
+    map,
     injectContainer
 ) {
 
@@ -49,7 +51,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : _.intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
@@ -66,7 +68,7 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-        } else if (fetchRelated) {
+        } else if (fetchRelated && !(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))) {
             container = document.body.querySelector('.js-related');
 
             if (container) {
@@ -79,7 +81,7 @@ define([
                 relatedUrl = '/container/essential-read/curated/uk.json';
 
                 if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
                         return 'exclude-tag=' + tag;
                     }).join('&');
                 }
@@ -96,18 +98,6 @@ define([
                         mediator.emit('page:new-content', container);
                         mediator.emit('ui:images:upgradePictures', container);
                         register.end(componentName);
-
-                        /* TODO remove after ab test*/
-                        if (ab.getTestVariantId('OnwardNames') &&
-                            ab.testCanBeRun('OnwardNames') &&
-                            ab.getTestVariantId('OnwardNames').indexOf('test:') === 0) {
-                            (function () {
-                                var heading = $('.js-ab-onward-names-related');
-                                if (heading) {
-                                    heading.text(ab.getTestVariantId('OnwardNames').substr(5));
-                                }
-                            })();
-                        }
 
                     },
                     error: function () {

@@ -1,15 +1,11 @@
 package rugby.controllers
 
-import common._
-
-import common.{ExecutionContexts, JsonComponent}
-import conf.switches.Switches.{RugbyWorldCupMatchStatsSwitch, RugbyWorldCupTablesSwitch}
+import common.{ExecutionContexts, JsonComponent, _}
 import model.{Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
+import rugby.feed.CapiFeed
 import rugby.jobs.RugbyStatsJob
-import rugby.model.{ScoreType, Match}
-import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.model.Match
 
 
@@ -26,10 +22,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
 
   def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
-    val matchFixture = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
-    val matchOpt =  RugbyStatsJob.getLiveScore(year, month, day, team1, team2)
-      .map ( m => m.copy( venue = matchFixture.flatMap(_.venue)))
-      .orElse(matchFixture)
+    val matchOpt = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+
     val currentPage = request.getParameter("page")
 
     matchOpt.map { aMatch =>
@@ -38,8 +32,8 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
       val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch)
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
 
-      val matchStat = if (RugbyWorldCupMatchStatsSwitch.isSwitchedOn) RugbyStatsJob.getMatchStat(aMatch) else None
-      val table = if (RugbyWorldCupTablesSwitch.isSwitchedOn) RugbyStatsJob.getGroupTable(aMatch) else None
+      val matchStat = RugbyStatsJob.getMatchStat(aMatch)
+      val table = RugbyStatsJob.getGroupTable(aMatch)
 
       val page = MatchPage(aMatch)
       Cached(60){
