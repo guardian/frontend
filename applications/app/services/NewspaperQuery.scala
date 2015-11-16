@@ -23,25 +23,34 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
   val FRONT_PAGE_DISPLAY_NAME = "front page"
 
-  def fetchTodaysPaper: Future[List[FaciaContainer]] =
-    bookSectionContainers(DateTime.now(DateTimeZone.UTC))
+  def fetchLatestGuardianNewspaper: Future[List[FaciaContainer]] = {
+    val date = DateTime.now(DateTimeZone.UTC)
+    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+
+    bookSectionContainers("theguardian/mainsection", newspaperDate)
+  }
+
+  def fetchLatestObserverNewspaper: Future[List[FaciaContainer]] = {
+    val now = DateTime.now(DateTimeZone.UTC)
+    val daysSinceSunday = DateTimeConstants.SUNDAY - now.getDayOfWeek - 7
+    val date = now.minusDays(Math.abs(daysSinceSunday))
+    bookSectionContainers("theobserver/news", date)
+  }
 
 
-  def fetchPaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+  def fetchGuardianNewspaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
     val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
     val date = dateFormatUTC
       .parseDateTime(s"$year/$month/$day")
       .toDateTime
-
-    bookSectionContainers(date)
+    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+    bookSectionContainers("theguardian/mainsection", newspaperDate)
   }
 
-  private def bookSectionContainers(date: DateTime): Future[List[FaciaContainer]] = {
+  private def bookSectionContainers(itemId: String, newspaperDate: DateTime): Future[List[FaciaContainer]] = {
 
-    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
-
-    val itemQuery = LiveContentApi.item("theguardian/mainsection")
+    val itemQuery = LiveContentApi.item(itemId)
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
