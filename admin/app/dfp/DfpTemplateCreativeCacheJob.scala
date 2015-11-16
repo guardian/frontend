@@ -15,7 +15,7 @@ object DfpTemplateCreativeCacheJob extends ExecutionContexts {
     if (DfpCachingSwitch.isSwitchedOn) {
       val cached = Store.getDfpTemplateCreatives
       val threshold = GuCreative.lastModified(cached) getOrElse now.minusMonths(1)
-      val recentlyModified = DfpApi.loadCreativeTemplatesModifiedSince(threshold)
+      val recentlyModified = DfpApi.loadTemplateCreativesModifiedSince(threshold)
       val merged = GuCreative.merge(cached, recentlyModified)
       Store.putDfpTemplateCreatives(Json.stringify(Json.toJson(merged)))
     }

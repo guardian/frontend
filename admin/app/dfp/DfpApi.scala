@@ -47,7 +47,7 @@ object DfpApi {
     templates getOrElse Nil
   }
 
-  def loadCreativeTemplatesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
+  def loadTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
 
     def toGuCreative(dfpCreative: TemplateCreative) = {
 
