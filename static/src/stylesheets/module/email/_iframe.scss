@@ -30,7 +30,7 @@ body {
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
-@include mq($until: 174px, $and: (min-width: 176px)) {
+@include mq($from: 176px) {
 
     // Rounded inline input
     .email-sub__text-input {
