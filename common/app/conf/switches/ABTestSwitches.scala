@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRtrtEmailMessage = Switch(
-    "A/B Tests",
-    "ab-rtrt-email-message",
-    "Switch to show the Right Place Right Time email message with segmentation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 15),
-    exposeClientSide = true
-  )
-
   val ABLargeTopAd = Switch(
     "A/B Tests",
     "ab-large-top-ad",
@@ -31,12 +22,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABInjectNetworkFrontTest = Switch(
+  val ABInjectNetworkFrontTest2 = Switch(
     "A/B Tests",
-    "ab-inject-network-front-test",
+    "ab-inject-network-front-test2",
     "Switch to inject the network front instead of most popular on all content pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2015, 12, 5),
+    exposeClientSide = true
+  )
+
+  val ABReachDummyTest = Switch(
+    "A/B Tests",
+    "ab-reach-dummy-test",
+    "Switch to inject the network front instead of most popular on all content pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 5),
     exposeClientSide = true
   )
 
