@@ -34,7 +34,7 @@ define([
             },
             submitForm: function ($form, url) {
                 return function (event) {
-                    var data = 'email=' + $('.' + classes.textInput, $form).val();
+                    var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
 
                     require('common/modules/analytics/omniture', function (omniture) {
                         omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
