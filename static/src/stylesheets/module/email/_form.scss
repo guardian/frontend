@@ -163,18 +163,19 @@
 // LANDING PAGE LAYOUT MODS
 @include mq(tablet) {
     .email-sub--landing {
-        @include flex-display();
+        display: flex;
     }
 
     .email-sub__form--landing {
-        @include flex-display();
-        @include flex-direction(column);
+        display: flex;
+        flex-grow: 2;
+        flex-direction: column;
         align-content: center;
         justify-content: center;
     }
 
     .email-sub__header--landing {
-        @include flex($flex-grow: 2);
+        flex: 2 1 auto;
     }
 }
 
