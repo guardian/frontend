@@ -11,6 +11,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   private val pageId = "theguardian"
   private val section = "todayspaper"
   private val guardianDescription = "Main section | News | The Guardian"
+  private val observerDescription = "Main section | From the Observer | The Guardian"
 
   def latestGuardianNewspaper() = Action.async { implicit request =>
 
@@ -23,7 +24,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 
   def latestObserverNewspaper() = Action.async { implicit request =>
-    val page = model.Page(pageId, section, "From the Observer", "GFE: Observer Newspaper books Main Section today")
+    val page = model.Page(pageId, section, observerDescription, "GFE: Observer Newspaper books Main Section today")
 
     val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(page, p))
 
@@ -31,13 +32,24 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
   }
 
-  def forDate(day: String, month: String, year: String) = Action.async { implicit request =>
+  def guardianNewspaperForDate(day: String, month: String, year: String) = Action.async { implicit request =>
     val page = model.Page(pageId, section, guardianDescription, "GFE: Newspaper books Main Section for past date")
 
     val paper = NewspaperQuery.fetchGuardianNewspaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
 
     for( tp <- paper) yield {
       if(noContentForListExists(tp.bookSections)) Found(s"/theguardian")
+      else Cached(900)(Ok(views.html.newspaperPage(tp)))
+    }
+  }
+
+  def observerNewspaperForDate(day: String, month: String, year: String) = Action.async { implicit request =>
+    val page = model.Page(pageId, section, observerDescription, "GFE: Observer Newspaper books Main Section for past date")
+
+    val paper = NewspaperQuery.fetchObserverNewspaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
+
+    for( tp <- paper) yield {
+      if(noContentForListExists(tp.bookSections)) Found(s"/theobserver")
       else Cached(900)(Ok(views.html.newspaperPage(tp)))
     }
   }

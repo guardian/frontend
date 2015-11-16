@@ -33,7 +33,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   def fetchLatestObserverNewspaper: Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)
     val daysSinceSunday = DateTimeConstants.SUNDAY - now.getDayOfWeek - 7
-    val date = now.minusDays(Math.abs(daysSinceSunday))
+    val date = now.minusDays(Math.abs(daysSinceSunday)) //todo test this
     bookSectionContainers("theobserver/news", date)
   }
 
@@ -48,6 +48,17 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
     bookSectionContainers("theguardian/mainsection", date)
   }
 
+  //todo add tests
+  def fetchObserverNewspaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+    val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
+
+    val date = dateFormatUTC
+      .parseDateTime(s"$year/$month/$day")
+      .toDateTime
+
+    bookSectionContainers("theobserver/news", date)
+  }
+
   private def bookSectionContainers(itemId: String, newspaperDate: DateTime): Future[List[FaciaContainer]] = {
 
     val itemQuery = LiveContentApi.item(itemId)
@@ -59,6 +70,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       .fromDate(newspaperDate.withTimeAtStartOfDay())
       .toDate(newspaperDate)
 
+    println(itemQuery.toString())
     LiveContentApi.getResponse(itemQuery).map { resp =>
 
       //filter out the first page results to make a Front Page container
