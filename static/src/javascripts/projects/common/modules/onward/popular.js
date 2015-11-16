@@ -40,7 +40,7 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        if (!(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))) {
+        if (!(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
             this.fetch(qwery('.js-popular-trails'), 'html');
         } else {
             $('.js-most-popular-footer').hide();

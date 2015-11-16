@@ -110,7 +110,7 @@ define([
                 && !config.page.isFront
                 && !config.page.isPreview
                 && this.identityPolicy()
-                && !(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))
+                && !(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))
                 && config.page.section !== 'childrens-books-site') {
                 if (this.hasHighRelevanceComponent()) {
                     this.load();
