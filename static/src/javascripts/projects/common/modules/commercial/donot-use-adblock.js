@@ -6,6 +6,7 @@ define([
     'common/utils/template',
     'common/modules/commercial/adblock-messages',
     'common/modules/adblock-banner',
+    'common/modules/onward/history',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
@@ -21,6 +22,7 @@ define([
     template,
     adblockMsg,
     AdblockBanner,
+    history,
     Message,
     ab,
     navigation,
@@ -66,7 +68,9 @@ define([
     }
 
     function showAdblockBanner() {
-        var variations = [{
+        var variant,
+            contributors = history.getContributors(),
+            variations = [{
                 supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
                 quoteText: 'Become a Guardian Member and support independent journalism',
                 quoteAuthor: 'George Monbiot',
@@ -95,7 +99,13 @@ define([
                 imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
             }];
 
-        new AdblockBanner(variations[random(variations.length - 1)]).show();
+        variant = variations.find(function (message) {
+            return contributors.find(function (contributor) {
+                return contributor[0] === message.quoteAuthor;
+            });
+        }) || variations[random(variations.length - 1)];
+
+        new AdblockBanner(variant).show();
     }
 
     function init() {
