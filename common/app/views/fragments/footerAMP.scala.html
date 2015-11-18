@@ -1,0 +1,63 @@
+@(page: model.MetaData, showNav: Boolean = true)(implicit request: RequestHeader)
+
+@import org.joda.time.DateTime
+@import common.Edition
+@import common.LinkTo
+@import common.editions.{Au, Uk, Us}
+
+<footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
+    <div class="l-footer__primary">
+        <div id="footer-nav" class="gs-container">
+            <div class="brand-bar modern-visible u-cf">
+                <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
+                    <span class="rounded-icon control__icon-wrapper">
+                        @fragments.inlineSvg("arrow-up", "icon")
+                    </span>
+                    <span class="control__info">back to top</span>
+                </a>
+            </div>
+
+            @page match {
+                case content: model.Content => {
+                    @fragments.breadcrumb(content)
+                }
+
+                case _ => {}
+            }
+        </div>
+    </div>
+
+    <div class="l-footer__secondary gs-container" role="contentinfo">
+        <ul class="colophon u-cf">
+        @defining(Edition(request)) { currentEdition =>
+            @if(currentEdition == Uk) {
+                <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_JOBS">
+                    jobs</a></li>
+                <li class="colophon__item"><a data-link-name="uk : footer : contact us" href="@LinkTo {/help/contact-us}">
+                    contact us</a></li>
+            }
+            @if(currentEdition == Us) {
+                <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
+                    jobs</a></li>
+                <li class="colophon__item"><a data-link-name="us : footer : contact us" href="@LinkTo {/info/about-guardian-us/contact}">
+                    contact us</a></li>
+            }
+            @if(currentEdition == Au) {
+                <li class="colophon__item"><a data-link-name="au : footer : vacancies" href="@LinkTo {/info/2014/aug/11/guardian-australia-vacancies}">
+                    vacancies</a></li>
+                <li class="colophon__item"><a data-link-name="au : footer : contact us" href="@LinkTo {/info/2013/may/26/contact-guardian-australia}">
+                    contact us</a></li>
+            }
+            @if(currentEdition != Au) {
+                <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
+                    complaints &amp; corrections</a></li>
+            }
+            <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
+                terms &amp; conditions</a></li>
+        }
+        </ul>
+        <div class="l-footer__misc">
+            <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
+        </div>
+    </div>
+</footer>

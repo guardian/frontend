@@ -29,7 +29,7 @@ trait FeatureSwitches {
     "chapter-headings",
     "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 7),
+    sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
   )
 
@@ -103,15 +103,6 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val IdentitySocialOAuthSwitch = Switch(
-    "Feature",
-    "id-social-oauth",
-    "If this switch is on then social sign-in attempts will be directed to Identity OAuth app, rather than the Webapp.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
   )
 
   val FacebookAutoSigninSwitch = Switch(
@@ -194,42 +185,6 @@ trait FeatureSwitches {
     "If this is switched on then the breaking news feed is requested and articles are displayed",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val RugbyWorldCupswitch = Switch(
-    "Feature",
-    "rugby-world-cup",
-    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 6),
-    exposeClientSide = true
-  )
-
-  val RugbyWorldCupMatchStatsSwitch = Switch(
-    "Feature",
-    "rugby-world-cup-match-stats",
-    "If this switch is on rugby world cup stats will be loaded in to rugby match reports and liveblogs",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 6),
-    exposeClientSide = true
-  )
-
-  val RugbyWorldCupFriendlies = Switch(
-    "Feature",
-    "rugby-world-cup-friendlies-for-pre-prod",
-    "If this switch is on rugby world cup scores will be load in Friendlies too (only use in CODE)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 6),
-    exposeClientSide = false
-  )
-
-  val RugbyWorldCupTablesSwitch = Switch(
-    "Feature",
-    "rugby-world-cup-tables",
-    "If this switch is on rugby world cup tables will be loaded in to rugby match reports and liveblogs",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 6),
     exposeClientSide = true
   )
 
@@ -323,6 +278,15 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val RugbyScoresSwitch = Switch(
+    "Feature",
+    "rugby-world-cup",
+    "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val StocksWidgetSwitch = Switch(
     "Feature",
     "stocks-widget",
@@ -358,4 +322,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val DiscussionHttpsSwitch = Switch(
+    "Feature",
+    "discussion-https",
+    "in discussion we will send requests to https",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }

@@ -6,8 +6,8 @@ import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.gu.conf.ConfigurationFactory
-import conf.Configuration
 import conf.switches.Switches
+import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current
@@ -182,7 +182,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
-    lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
@@ -225,7 +224,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
-    lazy val imageFallback = "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png"
+    lazy val imageFallback = Static("images/facebook/fallback-logo.png").path
   }
 
   object ios {
@@ -235,7 +234,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
-    lazy val secureApiRoot = configuration.getMandatoryStringProperty("discussion.secureApiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
@@ -249,25 +247,27 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
-    lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
+    lazy val masterclasses_url =
+      configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
-    lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
+    lazy val traveloffers_url =
+      configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+    lazy val guMerchandisingAdvertiserId =
+      configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
     private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v3.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
-    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
-    lazy val dfpCreativeTemplatesKey = s"$dfpRoot/creative-templates.json"
-    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers.json"
-    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers.json"
-    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers.json"
+    lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
+    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers-v1.json"
+    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
@@ -290,6 +290,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
+
+    lazy val showMpuInAllContainersPageId =
+      configuration.getStringProperty("commercial.showMpuInAllContainersPageId")
   }
 
   object open {
@@ -306,11 +309,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
     lazy val config: Map[String, String] = Map(
       "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
-      "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
-      ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),

@@ -99,7 +99,7 @@ object InlineJs {
       } else {
         val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
 
-        lazy val compiledCode = if (Switches.MinifyInlineJsSwitch.isSwitchedOn) {
+        lazy val compiledCode = if (Switches.InlineJSStandardOptimisation.isSwitchedOn) {
           JsMinifier.unsafeCompileWithStandardOptimisation(codeToCompile, fileName)
         } else {
           JsMinifier.unsafeCompileWithWhitespaceOptimisation(codeToCompile, fileName)
@@ -112,5 +112,5 @@ object InlineJs {
     }
   }
 
-  def apply(codeToCompile: String)(implicit application: Application): Html = withFileNameHint(codeToCompile, "input.js")
+  def apply(codeToCompile: String, fileName: String = "input.js")(implicit application: Application): Html = withFileNameHint(codeToCompile, fileName)
 }

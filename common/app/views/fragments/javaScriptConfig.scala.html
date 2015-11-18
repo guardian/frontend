@@ -1,8 +1,8 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 @import common.{Edition, StringEncodings}
 @import conf.Static
-@import views.support.{JavaScriptPage, CamelCase}
 @import play.api.libs.json.Json
+@import views.support.{CamelCase, JavaScriptPage}
 
 @defining(Edition(request)) { edition =>
     {

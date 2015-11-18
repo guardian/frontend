@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function () {
     return {
         spriteGeneration: {
             command: 'find . -name \'*.json\' -exec node spricon.js {} \\;',
@@ -24,41 +24,16 @@ module.exports = function(grunt, options) {
                      'static/abtests.json'
         },
 
-        npmInstall: {
-            command: 'npm prune && npm install'
-        },
-
-        jspmInstallStatic: {
-            command: './jspm install && ./jspm dl-loader && ./jspm clean',
-            options: {
-                execOptions: {
-                    cwd: './node_modules/.bin'
-                }
-            }
-        },
-
-        jspmBundleStatic: {
-            command:
-                'node ./bundle',
-            options: {
-                execOptions: {
-                    cwd: '.'
-                }
-            }
-        },
-
-        jspmClusterBundleStatic: {
-            command:
-                'node ./cluster-bundle',
-            options: {
-                execOptions: {
-                    cwd: '.'
-                }
-            }
+        install: {
+            command: 'make install'
         },
 
         updateCanIUse: {
-          command: 'npm update caniuse-db'
+            command: 'npm update caniuse-db'
+        },
+
+        eslintTests: {
+            command: 'node dev/eslint-rules/tests/*'
         }
     };
 };

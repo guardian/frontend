@@ -1,4 +1,5 @@
 @(metaData: model.MetaData, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
+@import conf.switches.Switches._
 
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -7,10 +8,14 @@
     <title>@Html(metaData.webTitle)</title>
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheetLinks(projectName)
+    @fragments.stylesheets(projectName)
 
     @* start trying to use the stylesheets *@
-    @fragments.stylesheetLinksEnable()
+    @if(AsyncCss.isSwitchedOn) {
+        <script>
+            @Html(templates.inlineJS.blocking.js.enableStylesheets().body)
+        </script>
+    }
 </head>
 <body>
     <h2 class="formstack-heading formstack-heading--first">Entries are now closed</h2>

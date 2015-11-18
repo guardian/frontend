@@ -35,19 +35,13 @@ object Au extends Edition(
 
   val economyLocalNav: Seq[SectionLink] = Seq(markets, money)
 
-  import Switches.RugbyWorldCupswitch
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
       NavItem(opinion),
-      NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket,
-
-        //TODO delete and replace with rugbyunion
-        rugbyWorldCup,
-
-        tennis, cycling, boxing)),
+      NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
       NavItem(football, aLeague :: footballNav.toList),
       NavItem(technology),
       NavItem(culture, cultureLocalNav),

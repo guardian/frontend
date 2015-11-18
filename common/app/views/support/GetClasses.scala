@@ -1,9 +1,9 @@
 package views.support
 
-import com.gu.facia.api.utils.{Audio, Video, Gallery}
-import layout._
+import com.gu.facia.api.utils.{Audio, Gallery, Video}
 import conf.switches.Switches.SaveForLaterSwitch
-import slices.{DynamicSlowMPU, Dynamic}
+import layout._
+import slices.{Dynamic, DynamicSlowMPU}
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob) = {
@@ -58,7 +58,7 @@ object GetClasses {
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
-      containerDefinition.displayName == Some("headlines"),
+      containerDefinition.displayName.contains("headlines"),
       containerDefinition.commercialOptions,
       containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),
@@ -66,7 +66,7 @@ object GetClasses {
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
       lazyLoad = containerDefinition.shouldLazyLoad,
-      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU)
+      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false))
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */

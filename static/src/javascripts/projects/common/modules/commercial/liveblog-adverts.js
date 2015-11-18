@@ -1,22 +1,25 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp-api',
+    'lodash/collections/contains',
+    'lodash/functions/debounce',
+    'lodash/functions/once'
 ], function (
     bean,
     bonzo,
-    _,
     $,
     config,
     mediator,
     createAdSlot,
-    dfp
-) {
+    dfp,
+    contains,
+    debounce,
+    once) {
 
     var postsCount,
         timedOut,
@@ -72,7 +75,7 @@ define([
             var criteriaType;
             if (config.page.isDev) {
                 criteriaType = 'test';
-            } else if (_.contains(config.page.toneIds.split(','), 'tone/minutebyminute')) {
+            } else if (contains(config.page.toneIds.split(','), 'tone/minutebyminute')) {
                 criteriaType = 'minutebyminute';
             } else {
                 criteriaType = 'default';
@@ -105,13 +108,13 @@ define([
                     state = 'further';
                 }
             });
-            bean.on(document.body, 'mousemove', _.debounce(function () {
+            bean.on(document.body, 'mousemove', debounce(function () {
                 lastInteraction = new Date();
             }, 200));
         };
 
     return {
-        init: _.once(init)
+        init: once(init)
     };
 
 });

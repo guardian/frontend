@@ -5,7 +5,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -25,6 +24,7 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
+    'common/modules/commercial/user-features',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
@@ -41,6 +41,7 @@ define([
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/message',
+    'common/modules/ui/cookiesBanner',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
@@ -51,13 +52,13 @@ define([
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
     'text!common/views/international-message.html',
-    'bootstraps/identity-common'
+    'bootstraps/identity-common',
+    'lodash/collections/forEach'
 ], function (
     fastdom,
     bean,
     bonzo,
     qwery,
-    _,
     $,
     config,
     cookies,
@@ -77,6 +78,7 @@ define([
     simpleMetrics,
     userAdTargeting,
     donotUseAdblock,
+    userFeatures,
     CommentCount,
     ab,
     AutoSignin,
@@ -93,6 +95,7 @@ define([
     Dropdowns,
     fauxBlockLink,
     Message,
+    cookiesBanner,
     RelativeDates,
     smartAppBanner,
     Tabs,
@@ -103,8 +106,8 @@ define([
     SaveForLater,
     membershipMessages,
     internationalMessage,
-    identity
-) {
+    identity,
+    forEach) {
     var modules = {
             initialiseTopNavItems: function () {
                 var profile,
@@ -128,7 +131,10 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive') && config.page.contentType !== 'Crossword') {
+                if (config.switches.viewability
+                    && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && config.page.contentType !== 'Crossword'
+                    && config.page.pageId !== 'offline-page') {
                     sticky.init();
                 }
             },
@@ -152,9 +158,6 @@ define([
             showRelativeDates: function () {
                 var dates = RelativeDates;
                 dates.init();
-                mediator.on('fragment:ready:dates', function (el) {
-                    dates.init(el);
-                });
             },
 
             initClickstream: function () {
@@ -234,18 +237,19 @@ define([
             // However, this means it's VITAL that all writes in callbacks are delegated to fastdom
             throttledScrollEvent: function () {
                 var running = false;
-                window.addEventListener('scroll', function () {
+                var emit = function () {
                     if (!running) {
                         running = true;
-                        // Use fastdom to avoid forced synchronous layout:
-                        // https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts
-                        // *Fastdom guarantees that reads will come before writes*
                         fastdom.read(function () {
                             mediator.emitEvent('window:throttledScroll');
                             running = false;
                         });
                     }
-                });
+                };
+                var callback = userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window ? function () {
+                    window.requestIdleCallback(emit);
+                } : emit;
+                window.addEventListener('scroll', callback);
             },
 
             checkIframe: function () {
@@ -365,11 +369,12 @@ define([
 
     return {
         init: function () {
-            _.forEach(robust.makeBlocks([
+            forEach(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
+                ['c-cookies-banner', cookiesBanner.init],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
@@ -408,7 +413,8 @@ define([
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
-                ['c-show-membership-messages', modules.showMembershipMessages]
+                ['c-show-membership-messages', modules.showMembershipMessages],
+                ['c-user-features', userFeatures.refresh]
             ]), function (fn) {
                 fn();
             });

@@ -13,22 +13,48 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABDisableAdsSurvey = Switch(
+  val ABLargeTopAd = Switch(
     "A/B Tests",
-    "ab-disable-ads-survey",
-    "Switch to show the survey which tests if users will be interested in paying for the Guardian with no ads",
+    "ab-large-top-ad",
+    "Testing the difference of user behaviour based on large top ad format",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 10, 27),
+    sellByDate = new LocalDate(2015, 12, 31),
     exposeClientSide = true
   )
 
-  val ABMostPopRelContPosition = Switch(
+  val ABInjectNetworkFrontTest2 = Switch(
     "A/B Tests",
-    "ab-most-pop-rel-cont-position",
-    "Switch to show swap the locations of most popular and related content",
+    "ab-inject-network-front-test2",
+    "Switch to inject the network front instead of most popular on all content pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2015, 12, 5),
     exposeClientSide = true
   )
 
+  val ABReachDummyTest = Switch(
+    "A/B Tests",
+    "ab-reach-dummy-test",
+    "Switch to inject the network front instead of most popular on all content pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 5),
+    exposeClientSide = true
+  )
+
+  val ABMostPopularDefaultTest2 = Switch(
+    "A/B Tests",
+    "ab-most-popular-default-test-2",
+    "Switch to change the default of most popular container to show across the guardian first instead of section",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 11, 23),
+    exposeClientSide = true
+  )
+
+  val ABVideoPreroll = Switch(
+    "A/B Tests",
+    "ab-video-preroll",
+    "A test to see if a UK or INT audience will be interested in video pre-rolls",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 11),
+    exposeClientSide = true
+  )
 }

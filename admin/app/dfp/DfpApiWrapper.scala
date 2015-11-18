@@ -1,13 +1,14 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder.SUGGESTED_PAGE_LIMIT
-import com.google.api.ads.dfp.axis.v201411._
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder.SUGGESTED_PAGE_LIMIT
+import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 
 import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
 
+// This is being replaced by SessionWrapper
 object DfpApiWrapper extends Logging {
 
   sealed case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
@@ -39,7 +40,7 @@ object DfpApiWrapper extends Logging {
             case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
             case _ => ""
           }
-          log.error(s"API Exception fetching: type '${err.getApiErrorType}', on the field '${err.getFieldPath}', " +
+          log.error(s"API Exception fetching in the field '${err.getFieldPath}', " +
             s"caused by an invalid value '${err.getTrigger}', with the error message '${err.getErrorString}'" +
             reasonMsg)
         }
@@ -113,26 +114,6 @@ object DfpApiWrapper extends Logging {
       val page = service.getPlacementsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
-  }
-
-  def fetchCreativeTemplates(serviceRegistry: DfpServiceRegistry,
-                             statementBuilder: StatementBuilder): Seq[CreativeTemplate] = {
-    val service = serviceRegistry.creativeTemplateService
-    fetch(statementBuilder) { statement =>
-      val page = service.getCreativeTemplatesByStatement(statement)
-      Page(page.getResults, page.getTotalResultSetSize)
-    }
-  }
-
-  def fetchTemplateCreatives(serviceRegistry: DfpServiceRegistry,
-                             statementBuilder: StatementBuilder): Map[Long, Seq[TemplateCreative]] = {
-    val service = serviceRegistry.creativeService
-    val creatives = fetch(statementBuilder) { statement =>
-      val page = service.getCreativesByStatement(statement)
-      Page(page.getResults, page.getTotalResultSetSize)
-    }
-    creatives collect { case creative: TemplateCreative => creative} groupBy (_
-      .getCreativeTemplateId)
   }
 
   class DfpApprovalException(message: String) extends RuntimeException

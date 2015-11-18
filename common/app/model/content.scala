@@ -219,7 +219,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
   private def conditionalMetaData: Map[String, JsValue] = {
-    val rugbyMeta = if (isRugbyMatch) {
+    val rugbyMeta = if (isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
       val teamIds = keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
       val date = RugbyContent.timeFormatter.withZoneUTC().print(webPublicationDate)
@@ -367,6 +367,13 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
+  lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(body).body().children().select("video[class=gu-video]").size()
+
+  lazy val hasMultipleVideosInPage: Boolean = mainVideoCanonicalPath match {
+    case Some(_) => numberOfVideosInTheBody > 0
+    case None => numberOfVideosInTheBody > 1
+  }
+
   lazy val mainVideoCanonicalPath: Option[String] = Jsoup.parseBodyFragment(main).body.getElementsByClass("element-video").headOption.map { v =>
     new URL(v.attr("data-canonical-url")).getPath.stripPrefix("/")
   }
@@ -382,7 +389,6 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
   override def metaData: Map[String, JsValue] = {
     val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
-
     super.metaData ++ Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(isLiveBlog)),
@@ -390,7 +396,8 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
       ("inBodyExternalLinkCount", JsNumber(linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(shouldHideAdverts)),
       ("hasInlineMerchandise", JsBoolean(hasInlineMerchandise)),
-      ("lightboxImages", lightbox)
+      ("lightboxImages", lightbox),
+      ("hasMultipleVideosInPage", JsBoolean(hasMultipleVideosInPage))
     ) ++ bookReviewIsbn
   }
 

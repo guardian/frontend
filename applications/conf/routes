@@ -32,9 +32,14 @@ GET        /crosswords/optin                                                    
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
 # Web App paths
-GET        /offline-page                                                        controllers.WebAppController.offlinePage()
+GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
+
+# Guardian newspaper page
+GET        /theguardian                                                         controllers.NewspaperController.today()
+GET        /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>               controllers.NewspaperController.forDate(day, month, year)
+GET        /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all           controllers.NewspaperController.allOn(day, month, year)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
@@ -64,8 +69,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
 
 # Short urls with campaign codes
-GET        /$shortCode<p/[\w]+>                                                 controllers.ShortUrlsCampaignController.redirectShortUrl(shortCode)
-GET        /$shortCode<p/[\w]+>/:campaignCode                                   controllers.ShortUrlsCampaignController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+GET        /$shortCode<p/[\w]+>                                                 controllers.ShortUrlsController.redirectShortUrl(shortCode)
+GET        /$shortCode<p/[\w]+>/:campaignCode                                   controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
 # Index pages for tags
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)

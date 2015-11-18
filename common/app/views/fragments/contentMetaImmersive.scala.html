@@ -1,0 +1,24 @@
+@(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
+@import conf.switches.Switches._
+
+@byline(content: model.Content) = {
+    @content match {
+        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v) }
+        case c          => { @fragments.meta.byline(c.byline, c) }
+    }
+}
+
+<div class="content__meta-container content__meta-container--immersive js-content-meta u-cf">
+    @if(!content.shouldHidePublicationDate) {
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, false, content.isLiveBlog, content.isLive)
+    }
+
+    <div class="meta__numbers">
+        <div class="u-h meta__number meta__number--sharecount js-sharecount js-sharecount-immersive"></div>
+        <div class="u-h meta__number meta__number--commentcount" data-discussion-id="@content.discussionId" data-commentcount-format="contentImmersive" data-discussion-closed="@{!content.isCommentable}"></div>
+    </div>
+
+    <div class="meta__social" data-component="share">
+        @fragments.social(content, "top")
+    </div>
+</div>

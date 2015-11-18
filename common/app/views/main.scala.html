@@ -1,4 +1,4 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: model.MetaData, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 @import common.{Edition, Navigation}
 @import conf.switches.Switches._
 @import views.support.Commercial.topBelowNavSlot
@@ -22,11 +22,12 @@ http://developers.theguardian.com/join-the-team.html
 -->
 
 <head>
-    @fragments.head(metaData, projectName, head, curlPaths)
+    @fragments.head(metaData, projectName, head)
 </head>
 @defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
     @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
+
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -48,13 +49,13 @@ http://developers.theguardian.com/join-the-team.html
             @if(showAdverts) {
                 @fragments.commercial.topBanner(metaData, edition)
             }
-    
+
             @fragments.header(metaData)
-    
+
             @if(adBelowNav) {
                 @fragments.commercial.topBannerBelowNav()
             }
-    
+
             @if(showAdverts) {
                 @fragments.commercial.topBannerMobile(metaData, edition)
             }
@@ -74,7 +75,7 @@ http://developers.theguardian.com/join-the-team.html
 
         @fragments.analytics(metaData)
 
-        @fragments.footerJavaScript()
+        @fragments.inlineJSNonBlocking()
 
         @fragments.commercial.pageSkin()
 

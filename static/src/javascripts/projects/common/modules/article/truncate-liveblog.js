@@ -3,24 +3,23 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/views/svgs',
-    'common/modules/article/twitter'
+    'common/modules/article/twitter',
+    'lodash/collections/find'
 ], function (
     $,
     bean,
     bonzo,
     qwery,
-    _,
     config,
     detect,
     mediator,
     svgs,
-    twitter
-) {
+    twitter,
+    find) {
     var truncatedClass = 'truncated-block',
         minVisibleBlocks = detect.getBreakpoint() === 'mobile' ? 5 : 10,
         blocks = qwery('.block'),
@@ -37,7 +36,7 @@ define([
 
     function hashLinkedBlockIsTruncated() {
         var id = window.location.hash.slice(1);
-        return _.find(truncatedBlocks, function (el) { return el.id === id; });
+        return find(truncatedBlocks, function (el) { return el.id === id; });
     }
 
     function truncate() {

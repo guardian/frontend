@@ -35,6 +35,10 @@
         }
     }
 
+    @include mq(mobile) {
+        float: none;
+    }
+
     + .fc-slice__item {
         @include vertical-item-separator;
     }
@@ -327,12 +331,6 @@
 
 .fc-item--list-compact--media {
     @include fc-item--list-compact--media;
-}
-
-.omitted-mpus .l-row--cols-3 .l-row__item--span-1 .fc-item__avatar__media {
-    @include mq(tablet) {
-        right: -5%;
-    }
 }
 
 //Live blog items

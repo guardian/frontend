@@ -4,7 +4,7 @@
 
 readonly staged=$(git diff --name-only --cached)
 
-if [[ $staged == *"package.json"* && $staged != *"npm-shrinkwrap.json"* && $staged != *"systemjs-config.js"* ]]; then
-  node git-hooks/message.js shrinkwrap;
+if [[ $staged == *"package.json"* && $staged != *"npm-shrinkwrap.json"* ]]; then
+  node tools/messages.js should-shrinkwrap;
   exit 1;
 fi

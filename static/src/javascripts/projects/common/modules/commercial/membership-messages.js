@@ -5,7 +5,8 @@ define([
     'common/modules/ui/message',
     'text!common/views/membership-message.html',
     'common/views/svgs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/user-features'
 ], function (
     config,
     storage,
@@ -13,7 +14,8 @@ define([
     Message,
     messageTemplate,
     svgs,
-    commercialFeatures
+    commercialFeatures,
+    userFeatures
 ) {
 
     function canShowUkMessage() {
@@ -21,21 +23,33 @@ define([
         return (
             commercialFeatures.membershipMessages &&
             config.page.edition === 'UK' &&
-            alreadyVisited > 10
+            alreadyVisited > 10 &&
+            !userFeatures.isPayingMember()
         );
     }
 
     function ukMessage() {
-        new Message('membership-message-uk', {
+        var originalMessage = new Message('membership-message-uk');
+        var campaignCode = 'MEMBERSHIP_SUPPORTER_BANNER_UK';
+
+        // Allow tracking to distinguish banners that have been re-displayed
+        // after closing from those that have only been displayed once.
+        if (originalMessage.hasSeen()) {
+            campaignCode += '_REDISPLAYED';
+        }
+
+        // Previously this was called membership-message-uk. To redisplay it to users who have
+        // already closed it, we appended '-redisplayed' to the name.
+        new Message('membership-message-uk-redisplayed', {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide'
         }).show(template(messageTemplate, {
             messageText: [
-                'Thank you for reading The Guardian.',
+                'Thank you for reading the Guardian.',
                 'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
             ].join(' '),
-            linkHref: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUPPORTER_BANNER_UK',
+            linkHref: 'https://membership.theguardian.com/supporter?INTCMP=' + campaignCode,
             linkText: 'Join',
             arrowWhiteRight: svgs('arrowWhiteRight')
         }));

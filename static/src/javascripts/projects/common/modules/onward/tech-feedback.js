@@ -1,25 +1,30 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
-    'common/utils/detect'
+    'common/utils/config',
+    'common/utils/detect',
+    'common/modules/commercial/dfp-api',
+    'lodash/collections/reduce',
+    'lodash/objects/assign'
 ], function (
     bean,
     fastdom,
-    _,
     $,
-    detect
-) {
+    config,
+    detect,
+    dfp,
+    reduce,
+    assign) {
 
     function objToString(obj) {
-        return _.reduce(obj, function (str, value, key) {
+        return reduce(obj, function (str, value, key) {
             return str + key + ': ' + value + '\n';
         }, '');
     }
 
     function objToHash(obj) {
-        return _.reduce(obj, function (str, value, key) {
+        return reduce(obj, function (str, value, key) {
             return str + '&' + encodeURIComponent(key) + '=' + encodeURIComponent(value);
         }, '');
     }
@@ -30,9 +35,11 @@ define([
                 var oldHref = link.attr('href');
                 var props = {
                     page: window.location,
-                    width: window.innerWidth
+                    width: window.innerWidth,
+                    ads: dfp.getCreativeIDs().join(' '),
+                    ophanId: config.ophan.pageViewId
                 };
-                var body = objToHash(_.extend(props, storedValues));
+                var body = objToHash(assign(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
             };
         };
@@ -50,7 +57,7 @@ define([
                     devicePixelRatio: window.devicePixelRatio
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
-                    + objToString(_.extend(props, storedValues))
+                    + objToString(assign(props, storedValues))
                     + '\r\n\r\n';
                 link.attr('href', oldHref + '?body=' + encodeURIComponent(body));
             };
@@ -67,12 +74,12 @@ define([
 
     function getValuesFromHash(hash) {
         var pairs = hash.substring(1).split('&');
-        return _.reduce(pairs, function (accu, pairJoined) {
+        return reduce(pairs, function (accu, pairJoined) {
             var pair = pairJoined.split('='),
                 object = {};
             if (!!pair[0] && !!pair[1]) {
                 object[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-                return _.extend(accu, object);
+                return assign(accu, object);
             } else {
                 return accu;
             }

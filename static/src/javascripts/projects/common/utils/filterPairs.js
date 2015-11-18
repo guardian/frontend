@@ -1,10 +1,12 @@
 define([
-    'common/utils/_'
-], function (_) {
+    'lodash/collections/map',
+    'lodash/collections/filter',
+    'common/utils/chain'
+], function (map, filter, chain) {
     return function (pairs) {
-        return _.chain(pairs).filter(function (pair) {
+        return chain(pairs).and(filter, function (pair) {
             return pair[1];
-        }).map(function (pair) {
+        }).and(map, function (pair) {
             return pair[0];
         }).value();
     };

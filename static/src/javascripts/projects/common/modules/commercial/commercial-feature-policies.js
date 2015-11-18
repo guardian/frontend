@@ -1,18 +1,17 @@
 define([
-    'common/utils/_',
     'common/utils/location',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/user-ad-preference',
-    'common/modules/user-prefs'
+    'common/modules/commercial/user-features',
+    'common/modules/user-prefs',
+    'lodash/objects/mapValues'
 ], function (
-    _,
     location,
     config,
     detect,
-    userAdPreference,
-    userPrefs
-) {
+    userFeatures,
+    userPrefs,
+    mapValues) {
     var policies = {};
 
     policies.defaultAds = function () {
@@ -45,8 +44,9 @@ define([
     };
 
     policies.adfreeExperience = function () {
-        if (userAdPreference.hideAds) {
+        if (userFeatures.isAdfree()) {
             return {
+                topBannerAd : false,
                 articleBodyAdverts : false,
                 articleAsideAdverts : false,
                 sliceAdverts : false,
@@ -97,6 +97,12 @@ define([
         }
     };
 
+    policies.tonePolicy = function () {
+        if (config.hasTone('Match reports')) {
+            return {articleAsideAdverts : false};
+        }
+    };
+
     policies.switchboard = function () {
         var switches = {};
 
@@ -123,6 +129,7 @@ define([
 
     function CommercialFeatureSwitches(enabled) {
         this.dfpAdvertising = enabled;
+        this.topBannerAd = enabled;
         this.articleBodyAdverts = enabled;
         this.articleAsideAdverts = enabled;
         this.sliceAdverts = enabled;
@@ -134,7 +141,7 @@ define([
     }
 
     function getPolicySwitches() {
-        return _.mapValues(policies, function applyPolicy(policy) {
+        return mapValues(policies, function applyPolicy(policy) {
             return policy();
         });
     }

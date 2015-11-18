@@ -20,9 +20,11 @@
     </head>
     <body>
         @defining(s"${request.host}${request.path}") { path =>
-            @defining(
-                s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(metaData, "No Javascript", path, "GoogleAMP")}"
-            ) { omnitureCall =>
+            @defining({
+                val params = OmnitureAnalyticsData(metaData, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
+                val omnitureAccount = Configuration.javascript.pageData("guardian.page.omnitureAccount")
+                s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
+            }) { omnitureCall =>
                 <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
                 <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
             }
@@ -38,7 +40,7 @@
 
             @body
 
-            @fragments.footer(metaData, amp = true)
+            @fragments.footerAMP(metaData)
         </div>
     </body>
 </html>

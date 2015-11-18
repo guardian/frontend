@@ -1,10 +1,11 @@
-module.exports = function(grunt, options) {
+module.exports = function () {
     return {
         options: {
             basePath: '.',
             staticFolder: 'static/src/javascripts',
             seeds: [
-                'bootstraps/app.js',
+                'bootstraps/standard.js',
+                'bootstraps/enhanced.js',
                 'bootstraps/commercial.js',
                 'core.js'
             ],

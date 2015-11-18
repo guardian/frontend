@@ -1,6 +1,9 @@
 @(offlinePage: controllers.OfflinePage)(implicit request: RequestHeader)
 
 @import play.api.libs.json._
+@import conf.switches.Switches._
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
@@ -12,29 +15,67 @@
     @fragments.metaData(offlinePage)
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheetLinks(None)
+    @fragments.stylesheets(None)
 
-    @* polyfill, feature detect etc before we try and use the stylesheets *@
-    @fragments.javaScriptPreFlight(offlinePage)
+    @* We don't use the inlineJSBlocking template because we need to specify
+    our own paths *@
 
-    @* try and load fonts before we use the stylesheets *@
-    @fragments.fonts()
+    @fragments.omnitureScript(Some(offlinePage))
 
-    @* start trying to use the stylesheets *@
-    @fragments.stylesheetLinksEnable()
-
+    @* NOTE the order of these includes is important  *@
     <script>
-        @* DO NOT COPY. We do not want to couple other things to the jspm test.
-        Crossword related things is the only exception. Please use curl instead. *@
-        @Html(Static.systemJs.setupFragment)
+        // polyfills
+        @Html(polyfills().body)
 
-        @* Service worker only caches the bundles, so the offline page can only ask for those.
-        For production, we rely on bundles from systemJsSetup *@
-        @if(play.Play.isDev()) {
-            System.config({ bundles: @Html(Static.systemJs.bundleConfig) });
+        // determine whether to run enhanced JS
+        @InlineJs(shouldEnhance(offlinePage).body, "shouldEnhance.js")
+
+        // page config
+        @Html(config(offlinePage).body)
+
+        // analytics code
+        @InlineJs(analytics().body, "analytics.js")
+
+        // apply render conditions
+        @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
+
+        // try and load fonts before we use the stylesheets
+        @if(FontSwitch.isSwitchedOn) {
+            @InlineJs(loadFonts().body, "loadFonts.js")
         }
 
-        @Html(templates.headerInlineJS.js.bootSystemJS(offlinePage).body)
+        @if(AsyncCss.isSwitchedOn) {
+            // enable non-blocking stylesheets
+            // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        }
+
+        @* Service worker only caches the bundles (including in dev),
+        so the offline page can only ask for those. *@
+        var curl = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                'facebook.js':              '//connect.facebook.net/en_US/all.js',
+                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                text:                       'text', // noop
+                inlineSvg:                  'inlineSvg', // noop
+
+                core:                       '@Static("javascripts/core.js")',
+                'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
+                'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
+                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
+            }
+        };
+
+        // cloudwatch beacons
+        @InlineJs(cloudwatchBeacons(offlinePage).body, "cloudwatchBeacons.js")
+
+        // curl, library only
+        @Html(Static.js.curl);
+
+        // load the enhanced JS
+        @InlineJs(bootEnhanced(offlinePage).body, "bootEnhanced.js")
     </script>
 </head>
     <body
@@ -67,7 +108,7 @@
 
         @fragments.footer(offlinePage)
 
-        @fragments.footerJavaScript()
+        @fragments.inlineJSNonBlocking()
 
     </body>
 </html>

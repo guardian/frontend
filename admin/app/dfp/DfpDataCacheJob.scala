@@ -1,16 +1,14 @@
 package dfp
 
-import common.dfp.GuCreativeTemplate.{lastModified, merge}
 import common.dfp._
 import common.{ExecutionContexts, Logging}
-import conf.switches.Switches
 import conf.switches.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
-import scala.concurrent.{Future, blocking}
+import scala.concurrent.Future
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
@@ -25,7 +23,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     if (DfpCachingSwitch.isSwitchedOn) {
       log.info("Refreshing data cache")
       val start = System.currentTimeMillis
-      val data = blocking(loadLineItems())
+      val data = loadLineItems()
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
@@ -45,8 +43,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       _ <- CustomTargetingValueAgent.refresh()
       _ <- PlacementAgent.refresh()
     } {
-      DfpAdFeatureCacheJob.run()
-      val data = blocking(loadLineItems())
+      val data = loadLineItems()
       val paidForTags = PaidForTag.fromLineItems(data.lineItems)
       CapiLookupAgent.refresh(paidForTags) map {
         _ => write(data)
@@ -80,15 +77,13 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     }
 
     val lineItems = {
-      if (Switches.DfpCacheRecentOnly.isSwitchedOn) {
-        val loadSummary = loadLineItems(
-          fetchCachedLineItems(),
-          hydrator.loadLineItemsModifiedSince,
-          hydrator.loadCurrentLineItems()
-        )
-        logReport(loadSummary)
-        loadSummary.current
-      } else hydrator.loadCurrentLineItems()
+      val loadSummary = loadLineItems(
+        fetchCachedLineItems(),
+        hydrator.loadLineItemsModifiedSince,
+        hydrator.loadCurrentLineItems()
+      )
+      logReport(loadSummary)
+      loadSummary.current
     }
 
     val loadDuration = System.currentTimeMillis - start
@@ -182,21 +177,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       Store.putTopBelowNavSlotTakeovers(stringify(toJson(LineItemReport(now,
         data.topBelowNavSlotTakeovers))))
       Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
-
-      if (Switches.DfpCacheCreativeTemplates.isSwitchedOn) {
-        log.info("Storing creative template data...")
-        val cachedCreativeTemplates = Store.getDfpCreativeTemplates
-        val creativeTemplateThreshold = lastModified(cachedCreativeTemplates)
-        val recentCreativeTemplates =
-          DfpDataHydrator().loadActiveUserDefinedCreativeTemplates(creativeTemplateThreshold)
-        val creativeTemplatesToCache = merge(cachedCreativeTemplates, recentCreativeTemplates)
-        if (creativeTemplatesToCache != cachedCreativeTemplates) {
-          Store.putCreativeTemplates(stringify(toJson(creativeTemplatesToCache)))
-          log.info("Stored creative template data")
-        } else {
-          log.info("No change in creative template data")
-        }
-      }
     }
   }
 }

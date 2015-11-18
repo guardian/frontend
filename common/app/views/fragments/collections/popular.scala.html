@@ -1,51 +1,87 @@
-@(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
-
+@(popular: Seq[model.MostPopular], containerDefinition: Option[layout.FaciaContainer] = None, isMostPopularDefaultTest: Boolean = false)(implicit request: RequestHeader)
 @import common.Localisation
-@import views.support._
-@import views.html.fragments.items.elements.facia_cards.title
 @import layout.FaciaCardHeader
+@import views.html.fragments.items.elements.facia_cards.title
+@import views.support._
 @import implicits.FaciaContentImplicits._
 @import TrailCssClasses.articleToneClass
+@import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular" data-test-id="popular-in">
+    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular @if(isMostPopularDefaultTest){ most-popular-default-ab-2}" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs u-cf">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
-                    @popular.zipWithRowInfo.map{ case (section, info) =>
+                    @if(isMostPopularDefaultTest) {
+                        @popular.reverse.zipWithRowInfo.map{ case (section, info) =>
                         <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
                             <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
                         </li>
+                        }
+                    } else {
+                        @popular.zipWithRowInfo.map{ case (section, info) =>
+                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
+                            <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
+                        </li>
+                        }
                     }
                 </ol>
                 <div class="tabs__content js-tabs-content">
         }
 
-        @popular.zipWithRowInfo.map{ case (section, info) =>
-            <div id="tabs-popular-@info.rowNum"
-                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
-                 @if(isTabbed){
-                     role="tabpanel"
-                     aria-labelledby="tabs-popular-@info.rowNum-tab"
-                 }
-                 data-link-name="@section.heading"
-                 data-link-context="most-read/@section.section">
+        @if(isMostPopularDefaultTest) {
+            @popular.reverse.zipWithRowInfo.map{ case (section, info) =>
+                <div id="tabs-popular-@info.rowNum"
+                class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} @tabsPaneCssClass(containerDefinition) u-cf"
+                    @if(isTabbed){
+                        role="tabpanel"
+                        aria-labelledby="tabs-popular-@info.rowNum-tab"
+                    }
+                    data-link-name="@section.heading"
+                    data-link-context="most-read/@section.section">
 
-                <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
-                    @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+                        <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
+                        @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                         <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @articleToneClass(trail)--most-popular">
                             <div class="headline-list__link" data-link-name="@info.rowNum | text">
-                                <span class="headline-list__count">@info.rowNum</span>
+                                <p class="headline-list__count">@info.rowNum</p>
                                 @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
                                 @fragments.contentAgeNotice(ContentOldAgeDescriber(trail.maybeContent))
                             </div>
                         </li>
+                        }
+                    </ul>
+                </div>
+            }
+        } else {
+            @popular.zipWithRowInfo.map{ case (section, info) =>
+                <div id="tabs-popular-@info.rowNum"
+                class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} @tabsPaneCssClass(containerDefinition) u-cf"
+                    @if(isTabbed){
+                        role="tabpanel"
+                        aria-labelledby="tabs-popular-@info.rowNum-tab"
                     }
-                </ul>
-            </div>
+                    data-link-name="@section.heading"
+                    data-link-context="most-read/@section.section">
+
+                        <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
+                        @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+                        <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @articleToneClass(trail)--most-popular">
+                            <div class="headline-list__link" data-link-name="@info.rowNum | text">
+                                <p class="headline-list__count">@info.rowNum</p>
+                                @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
+                        </div>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            }
         }
 
+
+        @if(showMPU(containerDefinition)) {
             <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
+        }
 
         @if(isTabbed) {
                 </div>

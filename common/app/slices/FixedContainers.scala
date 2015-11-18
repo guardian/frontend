@@ -1,7 +1,7 @@
 package slices
 
-import model.Content
 import conf.Configuration
+import model.Content
 
 object TagContainers {
 
@@ -51,10 +51,11 @@ object FixedContainers {
   val fixedSmallSlowII = slices(HalfHalf)
   val fixedSmallSlowIV = slices(QuarterQuarterQuarterQuarter)
   val fixedSmallSlowVI = slices(TTTL4)
+  val fixedSmallSlowVThird = slices(QuarterQuarterHl3)
   val fixedMediumSlowVI = slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter)
   val fixedMediumSlowVII = slices(HalfQQ, QuarterQuarterQuarterQuarter)
-  val fixedMediumSlowVIII = slices(TTMpu, TlTlTl)
-  val fixedMediumSlowXIIMpu = slices(TTT, TlTlMpu)
+  val fixedMediumSlowVIII = slices(Seq(TTMpu, TlTlTl), slicesWithoutMpu = Seq(TTT, TlTlTl))
+  val fixedMediumSlowXIIMpu = slices(Seq(TTT, TlTlMpu), slicesWithoutMpu = Seq(TTT, TlTlTl))
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
 
@@ -73,6 +74,8 @@ object FixedContainers {
 
   val footballTeamFixtures = slices(TTT)
 
+  val HeadlinesABTest = slices(HalfQuarterQl2Ql4)
+
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
   val all: Map[String, ContainerDefinition] = Map(
@@ -81,8 +84,9 @@ object FixedContainers {
     ("fixed/small/slow-III", slices(HalfQQ)),
     ("fixed/small/slow-IV", fixedSmallSlowIV),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
-    ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),
-    ("fixed/small/slow-V-mpu", slices(TTlMpu)),
+    ("fixed/small/slow-V-third", fixedSmallSlowVThird),
+    ("fixed/small/slow-V-mpu", slices(Seq(TTlMpu),
+      slicesWithoutMpu = Seq(QuarterQuarterQuarterQuarter))),
     ("fixed/small/slow-VI", fixedSmallSlowVI),
     ("fixed/small/fast-VIII", slices(QuarterQuarterQlQl)),
     ("fixed/small/fast-X", slices(QuarterQlQlQl)),
@@ -108,7 +112,7 @@ object DynamicContainers {
     ("dynamic/fast", DynamicFast),
     ("dynamic/slow", DynamicSlow),
     ("dynamic/package", DynamicPackage),
-    ("dynamic/slow-mpu", DynamicSlowMPU)
+    ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false))
   )
 
   def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {

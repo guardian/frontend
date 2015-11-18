@@ -3,17 +3,18 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'common/utils/_',
     'common/modules/component',
-    'admin/modules/abtests/audience-item'
+    'admin/modules/abtests/audience-item',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
-    _,
     Component,
-    audienceItem
-) {
+    AudienceItem,
+    assign,
+    clone) {
 
     function Audience(config) {
-        this.config = _.extend(_.clone(this.config), config);
+        this.config = assign(clone(this.config), config);
     }
 
     Component.define(Audience);
@@ -26,18 +27,18 @@ define([
     Audience.prototype.componentClass = 'audience-breakdown';
     Audience.prototype.useBem = true;
 
-    Audience.prototype.prerender = function() {
+    Audience.prototype.prerender = function () {
 
         var testsContainer = this.getElem('tests');
 
-        this.config.tests.forEach(function(test) {
+        this.config.tests.forEach(function (test) {
             /*eslint-disable new-cap*/
-            new audienceItem({test: test}).render(testsContainer);
+            new AudienceItem({test: test}).render(testsContainer);
             /*eslint-enable new-cap*/
         });
     };
 
-    Audience.prototype.ready = function() {
+    Audience.prototype.ready = function () {
 
     };
 

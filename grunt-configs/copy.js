@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         'javascript': {
             files: [
@@ -31,15 +31,16 @@ module.exports = function(grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
+                },{
                     expand: true,
                     cwd: options.requirejsDir,
                     src: [
                         'core.js',
                         'core.js.map',
-                        'bootstraps/app.js',
-                        'bootstraps/app.js.map',
+                        'bootstraps/standard.js',
+                        'bootstraps/standard.js.map',
+                        'bootstraps/enhanced.js',
+                        'bootstraps/enhanced.js.map',
                         'bootstraps/commercial.js',
                         'bootstraps/commercial.js.map',
                         'components/curl/curl-domReady.js'
@@ -97,7 +98,7 @@ module.exports = function(grunt, options) {
             files: [{
                 expand: true,
                 cwd: options.staticHashDir + 'assets',
-                src: ['**/assets.map', '**/jspm-assets.map'],
+                src: ['**/assets.map'],
                 dest: 'common/conf/assets'
             }]
         },

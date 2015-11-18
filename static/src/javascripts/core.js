@@ -4,7 +4,6 @@ define([
     'picturefill',
 
     // utilities
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -26,6 +25,7 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/component',
+    'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',
