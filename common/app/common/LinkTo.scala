@@ -127,13 +127,7 @@ class CanonicalLink {
 object CanonicalLink extends CanonicalLink
 
 object AnalyticsHost extends implicits.Requests {
-  def apply()(implicit request: RequestHeader): String =
-    if (Switches.SecureOmniture.isSwitchedOn ||
-      request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))) {
-      "https://hits-secure.theguardian.com"
-    } else {
-      "http://hits.theguardian.com"
-    }
+  def apply(): String = "https://hits-secure.theguardian.com"
 }
 
 object SubscribeLink {
