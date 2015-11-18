@@ -20,10 +20,8 @@ trait NewspaperBooksAndSectionsAutoRefresh extends GlobalSettings {
 trait NewspaperTags {
   val source: String
   def getTags(publication: String) = {
-    println(s"### getTags from $source for $publication")
     TagIndexesS3.getIndex(source, publication) match {
       case Right(tagPage) => {
-        println(s"### loaded ${tagPage.tags.length} tags")
         tagPage.tags
       }
       case _ => Seq.empty

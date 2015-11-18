@@ -35,8 +35,7 @@ object PublicationController extends Controller
     val tag = publication + "/" + tail
 
     if (tagExists(publication, tag)) {
-      println(s"### tag exists! ($publication, $tag)")
-      Future(Found(s"/$tag/${urlFormat(reqDate)}/all"))
+      Future(MovedPermanently(s"/$tag/${urlFormat(reqDate)}/all"))
     } else {
       ArticleController.renderItem(s"$publication/$year/$month/$day/$tail")
     }
