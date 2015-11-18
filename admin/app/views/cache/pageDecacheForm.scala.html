@@ -1,0 +1,22 @@
+@()
+
+@admin_main("Clear page", "PROD", isAuthed = true) {
+
+    <h1>Clear page</h1>
+
+    <div>
+        <p>
+            Paste the url of the page (content) you want to clear below. Include the entire url.
+            <code>
+                http://www.theguardian.com/artanddesign/2015/nov/17/12-designs-that-revolutionised-cycling-fold-up-helmets-and-sandwich-bikes
+            </code>
+        </p>
+        <p>
+            Only works on <code>www.theguardian.com</code>
+        </p>
+    </div>
+    <form method="POST">
+        <input class="img-url" name="url" type="text" value="" placeholder="http://www.theguardian.com/books/xxxxx"/>
+        <button type="submit">Clear</button>
+    </form>
+}

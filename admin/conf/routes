@@ -40,6 +40,9 @@ GET         /json/proxy/*absUrl                                                 
 GET         /images/clear                                                                           controllers.cache.ImageDecacheController.renderImageDecacheForm()
 POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
 
+GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecacheForm()
+POST        /page/clear                                                                             controllers.cache.PageDecacheController.decache()
+
 # Ophan proxying for https
 GET         /ophan/pageviews/*path                                                                  controllers.admin.OphanApiController.pageViews(path)
 GET         /ophan/pageviews                                                                        controllers.admin.OphanApiController.platformPageViews()
