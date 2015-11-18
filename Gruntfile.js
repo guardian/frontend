@@ -169,6 +169,7 @@ module.exports = function (grunt) {
     /**
      * Test tasks
      */
+    grunt.registerTask('eslintTests', ['shell:eslintTests']);
     grunt.registerTask('test:unit', function (app) {
         var target = app ? ':' + app : '';
         if (options.singleRun === false) {
@@ -178,6 +179,7 @@ module.exports = function (grunt) {
 
         grunt.task.run(['copy:inlineSVGs']);
         grunt.task.run('karma' + target);
+        grunt.task.run('eslintTests');
     });
     grunt.registerTask('test', ['test:unit']);
     grunt.registerTask('coverage', function () {

@@ -51,8 +51,8 @@ Before checking out the repository you may need to [add an SSH key to your GitHu
     cd frontend
     ```
 
-2. Run `./setup.sh` to install dependencies and compile assets
-3. All being well, you should be able to [run the app](#run-the-app)
+2. Run ```./setup.sh``` to install dependencies and compile assets
+3. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
 
 ### Manual
 Install each of the things listed below:

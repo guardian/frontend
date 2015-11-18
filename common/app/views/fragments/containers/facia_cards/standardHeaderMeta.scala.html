@@ -18,7 +18,7 @@
                         @Localisation(title)
                     </a>
                     }.getOrElse {
-                        <span tabindex="0" @if(title == "related content") {class="js-ab-onward-names-related@* delete after ab test *@"}>@Localisation(title)</span>
+                        <span tabindex="0">@Localisation(title)</span>
                     }
 
                     @if(containerDefinition.showDateHeader) {

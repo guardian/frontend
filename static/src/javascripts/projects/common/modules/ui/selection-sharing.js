@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/client-rects',
     'common/utils/config',
@@ -9,11 +8,13 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/ui/selection-sharing.html',
-    'common/views/svgs'
+    'common/views/svgs',
+    'lodash/functions/debounce',
+    'lodash/functions/throttle',
+    'lodash/collections/some'
 ], function (
     bean,
     bonzo,
-    _,
     $,
     clientRects,
     config,
@@ -21,8 +22,10 @@ define([
     mediator,
     template,
     sharingTemplate,
-    svgs
-    ) {
+    svgs,
+    debounce,
+    throttle,
+    some) {
 
     var $body = bonzo(document.body),
         twitterIcon = svgs('shareTwitter', ['icon']),
@@ -117,16 +120,16 @@ define([
             $twitterAction = $('.js-selection-twitter');
             $emailAction = $('.js-selection-email');
             // Set timeout ensures that any existing selection has been cleared.
-            bean.on(document.body, 'keypress keydown keyup', _.debounce(updateSelection, 50));
-            bean.on(document.body, 'mouseup', _.debounce(updateSelection, 200));
-            bean.on(document.body, 'mousedown', _.debounce(onMouseDown, 50));
-            mediator.on('window:resize', _.throttle(updateSelection, 50));
+            bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
+            bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
+            bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
+            mediator.on('window:resize', throttle(updateSelection, 50));
         }
     },
 
     isValidSelection = function (range) {
         // commonAncestorContainer is buggy, can't use it here.
-        return _.some(validAncestors, function (className) {
+        return some(validAncestors, function (className) {
             return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
         });
     };

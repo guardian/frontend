@@ -1,10 +1,9 @@
 define([
-    'common/utils/_',
-    'common/utils/storage'
+    'common/utils/storage',
+    'lodash/collections/map'
 ], function (
-    _,
-    storage
-) {
+    storage,
+    map) {
     var localStorage = storage.local;
 
     var localStorageKey = function (id) {
@@ -16,8 +15,8 @@ define([
          * Take only the entries from the grid. Other state information like what cells are highlighted ought not
          * to be persisted.
          */
-        var entries = _.map(grid, function (row) {
-            return _.map(row, function (cell) {
+        var entries = map(grid, function (row) {
+            return map(row, function (cell) {
                 return cell.value;
             });
         });

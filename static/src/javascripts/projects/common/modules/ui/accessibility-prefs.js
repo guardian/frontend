@@ -1,12 +1,11 @@
 define([
-    'common/utils/_',
     'common/utils/$',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'lodash/collections/forEach'
 ], function (
-    _,
     $,
-    userPrefs
-) {
+    userPrefs,
+    forEach) {
     /* We live in a rainbow of chaos. */
     // ^ U WOT
 
@@ -19,7 +18,7 @@ define([
     }
 
     return function () {
-        _.forEach(['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacity'], function (filter) {
+        forEach(['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacity'], function (filter) {
             if (userPrefs.isOn(filter)) {
                 set(filter);
             }

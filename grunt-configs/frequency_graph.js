@@ -4,7 +4,8 @@ module.exports = function () {
             basePath: '.',
             staticFolder: 'static/src/javascripts',
             seeds: [
-                'bootstraps/app.js',
+                'bootstraps/standard.js',
+                'bootstraps/enhanced.js',
                 'bootstraps/commercial.js',
                 'core.js'
             ],

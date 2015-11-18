@@ -105,15 +105,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val IdentitySocialOAuthSwitch = Switch(
-    "Feature",
-    "id-social-oauth",
-    "If this switch is on then social sign-in attempts will be directed to Identity OAuth app, rather than the Webapp.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val FacebookAutoSigninSwitch = Switch(
     "Feature",
     "facebook-autosignin",
@@ -331,4 +322,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val DiscussionHttpsSwitch = Switch(
+    "Feature",
+    "discussion-https",
+    "in discussion we will send requests to https",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }
