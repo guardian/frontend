@@ -37,8 +37,8 @@ GET         /api/tag                                                            
 GET         /api/item/*path                                                                         controllers.admin.Api.item(path, callback)
 GET         /json/proxy/*absUrl                                                                     controllers.admin.Api.json(absUrl)
 
-GET         /images/clear                                                                           controllers.images.ImageDecacheController.renderImageDecacheForm()
-POST        /images/clear                                                                           controllers.images.ImageDecacheController.decache()
+GET         /images/clear                                                                           controllers.cache.ImageDecacheController.renderImageDecacheForm()
+POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
 
 # Ophan proxying for https
 GET         /ophan/pageviews/*path                                                                  controllers.admin.OphanApiController.pageViews(path)

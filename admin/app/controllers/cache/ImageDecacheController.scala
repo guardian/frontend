@@ -1,4 +1,4 @@
-package controllers.images
+package controllers.cache
 
 import java.net.URI
 import java.util.UUID
