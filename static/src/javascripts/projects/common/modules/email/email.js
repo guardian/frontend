@@ -87,19 +87,19 @@ define([
             freezeHeight: function ($wrapper, reset, callback) {
                 var wrapperHeight,
                     resetHeight = function () {
-                        fastdom.write(function(){
+                        fastdom.write(function () {
                             $wrapper.css('min-height', '');
                             getHeight();
                             setHeight();
                         });
                     },
                     getHeight = function () {
-                        fastdom.read(function(){
+                        fastdom.read(function () {
                             wrapperHeight = $wrapper.dim().height;
                         });
                     },
                     setHeight = function () {
-                        fastdom.defer(function(){
+                        fastdom.defer(function () {
                             $wrapper.css('min-height', wrapperHeight);
                             callback();
                         });

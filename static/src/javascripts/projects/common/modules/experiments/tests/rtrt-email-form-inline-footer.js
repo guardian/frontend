@@ -17,7 +17,7 @@ define([
     return function () {
 
         var updateFooter = function () {
-            fastdom.write(function(){
+            fastdom.write(function () {
                 $('.js-footer__secondary')
                     .removeClass('l-footer__secondary--no-email')
                     .addClass('l-footer__secondary--has-email');
@@ -75,7 +75,7 @@ define([
                 id: 'headline-a-with-comforter',
                 test: function () {
                     updateFooter();
-                    fastdom.write(function(){
+                    fastdom.write(function () {
                         $('.footer__follow-us').prepend(
                             makeABChanges(getIframe()[0], {headline: 'daily email sign up'})
                         );
