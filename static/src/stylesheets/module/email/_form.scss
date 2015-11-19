@@ -56,7 +56,8 @@
     color: $form-primary-colour;
 
     &:focus,
-    &:hover {
+    &:hover,
+    &:active {
         border-color: $form-primary-colour;
     }
 }
@@ -135,7 +136,8 @@
         border: 1px solid guss-colour(neutral-2, $pasteup-palette);
 
         &:hover,
-        &:focus {
+        &:focus,
+        &:active {
             border-color: guss-colour(neutral-4, $pasteup-palette);
         }
     }
@@ -164,7 +166,8 @@
         border-color: $form-secondary-colour;
         border-radius: 1000px;
 
-        &:focus {
+        &:focus,
+        &:active {
             border-color: $form-primary-colour;
         }
     }

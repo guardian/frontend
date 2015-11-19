@@ -22,7 +22,8 @@ body {
     padding: 0 ($gs-gutter * .6);
 
     &:focus,
-    &:hover {
+    &:hover,
+    &:active {
         outline: 0;
     }
 }
