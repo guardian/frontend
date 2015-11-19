@@ -20,7 +20,7 @@ define([
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
-            minBelow: 300M,
+            minBelow: 300,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
                 ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
