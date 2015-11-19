@@ -201,5 +201,15 @@ define([
                 expect(buildPageTargeting().fr).toEqual('5plus');
             });
         });
+
+        describe('Referrer', function () {
+            it('should set ref to Facebook', function () {
+                expect(buildPageTargeting().ref).toEqual('facebook');
+            });
+
+            it('should set ref to Twitter', function () {
+                expect(buildPageTargeting().fr).toEqual('twitter');
+            });
+        });
     });
 });

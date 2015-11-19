@@ -108,6 +108,9 @@ define([
             }
 
             return visitedValue;
+        },
+        getReferrer = function () {
+            return referrer;
         };
 
     return function (opts) {
@@ -129,6 +132,7 @@ define([
                 si:      identity.isUserLoggedIn() ? 't' : 'f',
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
+                ref:     getReferrer(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
