@@ -17,11 +17,13 @@ define([
     return function () {
 
         var updateFooter = function () {
-            $('.js-footer__secondary')
-                .removeClass('l-footer__secondary--no-email')
-                .addClass('l-footer__secondary--has-email');
+            fastdom.write(function(){
+                $('.js-footer__secondary')
+                    .removeClass('l-footer__secondary--no-email')
+                    .addClass('l-footer__secondary--has-email');
 
-            $('.js-button--email').remove();
+                $('.js-button--email').remove();
+            });
         },
         getIframe = function () {
             return bonzo.create('<iframe src="/email-form" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe"></iframe>');
@@ -29,25 +31,27 @@ define([
         makeABChanges = function (iFrameEl, opts) {
             // Once our iframe had loaded, make the A/B test changes
             bean.on(iFrameEl, 'load', function () {
-                fastdom.write(function () {
-                    if (opts && opts.headline) {
-                        updateHeadline(opts.headline, iFrameEl);
-                    }
-                    if (opts && opts.removeComforter) {
-                        removeComforter(iFrameEl);
-                    }
+                if (opts && opts.headline) {
+                    updateHeadline(opts.headline, iFrameEl);
+                }
+                if (opts && opts.removeComforter) {
+                    removeComforter(iFrameEl);
+                }
 
-                    email.init(iFrameEl);
-                });
+                email.init(iFrameEl);
             });
 
             return iFrameEl;
         },
         updateHeadline = function (headline, iFrameEl) {
-            $('.email-sub__heading', iFrameEl.contentDocument.body).text(headline);
+            fastdom.write(function () {
+                $('.email-sub__heading', iFrameEl.contentDocument.body).text(headline);
+            });
         },
         removeComforter = function (iFrameEl) {
-            $('.email-sub__small', iFrameEl.contentDocument.body).remove();
+            fastdom.write(function () {
+                $('.email-sub__small', iFrameEl.contentDocument.body).remove();
+            });
         };
 
         this.id = 'RtrtEmailFormInlineFooter';
@@ -71,9 +75,11 @@ define([
                 id: 'headline-a-with-comforter',
                 test: function () {
                     updateFooter();
-                    $('.footer__follow-us').prepend(
-                        makeABChanges(getIframe()[0], {headline: 'daily email sign up'})
-                    );
+                    fastdom.write(function(){
+                        $('.footer__follow-us').prepend(
+                            makeABChanges(getIframe()[0], {headline: 'daily email sign up'})
+                        );
+                    });
                 }
             }
         ];
