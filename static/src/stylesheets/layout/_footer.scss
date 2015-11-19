@@ -193,6 +193,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             display: block;
             margin-bottom: $gs-baseline;
             width: 150px; // required to fit longer text
+
+            .l-footer__secondary--has-email & {
+                display: inline-block;
+                width: auto;
+            }
         }
     }
 }
