@@ -40,6 +40,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABEssentialReadTest1 = Switch(
+    "A/B Tests",
+    "ab-essential-read-test-1",
+    "Show the essential read instead of related content",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 15),
+    exposeClientSide = true
+  )
+
   val ABVideoPreroll = Switch(
     "A/B Tests",
     "ab-video-preroll",

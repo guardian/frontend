@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/inject-network-front-test',
+    'common/modules/experiments/tests/essential-read-test-1',
     'common/modules/experiments/tests/most-popular-default',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
@@ -31,6 +32,7 @@ define([
     MembershipMessageUSA,
     InjectNetworkFrontTest,
     MostPopularDefaultTest,
+    EssentialReadTest1,
     LargeTopAd,
     VideoPreroll,
     flatten,
@@ -49,7 +51,8 @@ define([
         new InjectNetworkFrontTest(),
         new MostPopularDefaultTest(),
         new LargeTopAd(),
-        new VideoPreroll()
+        new VideoPreroll(),
+        new EssentialReadTest1()
     ]);
 
     var participationsKey = 'gu.ab.participations';

@@ -130,31 +130,32 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderEssentialRead(contentSource: String, edition: String) = MemcachedAction { implicit request =>
     log.info(s"Serving essential read")
 
-    def collectionIds: Seq[String] = contentSource match {
-      case "curated" =>
-        edition match {
-          case "uk" => Seq("uk-alpha/people-in-the-news/feature-stories")
-          case _ => Seq("eaf2df82-f7b4-4d96-a681-db52be53c798")
-        }
+    def pressedCollections: Future[Seq[PressedCollection]] = contentSource match {
       case "automated" =>
-        edition match {
-          case "uk" => Seq("uk-alpha/news/regular-stories", "6aefcaf1-dbec-4058-a7b8-a925d4163831", "uk-alpha/contributors/feature-stories")
-          case _ => Seq("84e4005f-63fe-4b03-a8cc-10a864564853", "8852-9cf6-d938-01fb", "f9ede09e-8bcc-448f-8080-4d3e51a3e24b")
+        val containerId = edition match {
+            case "uk" => "uk-alpha/news/regular-stories"
+            case "us" => "us-alpha/news/regular-stories"
+            case "au" => "au-alpha/news/regular-stories"
+            case _ => "10f21d96-18f6-426f-821b-19df55dfb831"
         }
+
+        getFirstXCollections(containerId, 4).flatMap { // 4 not 3 so that we have some extra pieces of content to play with when filtering later
+          _ match {
+            case None => Future.failed(new RuntimeException(s"Collection doesn't exist"))
+            case Some(x) => Future.successful(x)
+          }
+        }
+
+      case "curated" =>
+        val containerId = edition match {
+          case "uk" => "uk-alpha/people-in-the-news/feature-stories"
+          case _ => "eaf2df82-f7b4-4d96-a681-db52be53c798"
+        }
+
+        getPressedCollection(containerId).map(_.toSeq)
     }
 
-    val pressedCollections: Seq[Future[PressedCollection]] = collectionIds.map { collectionId =>
-      getPressedCollection(collectionId).flatMap {
-        _ match {
-          case None => Future.failed(new RuntimeException(s"Collection doesn't exist $collectionId"))
-          case Some(x) => Future.successful(x)
-        }
-      }
-    }
-
-    val futureOfCollections = Future.sequence(pressedCollections)
-
-    futureOfCollections.map { collections =>
+    pressedCollections.map { collections =>
         Cached(60) {
           val config = CollectionConfig.empty.copy(
             displayName = Some("the essential read")
@@ -248,6 +249,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
+      })
+    }.getOrElse(successful(None))
+
+  private def getFirstXCollections(collectionId: String, take: Int): Future[Option[List[PressedCollection]]] =
+    ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+        Some(faciaPage.collections.filterNot(_.displayName contains "sport").take(take))
       })
     }.getOrElse(successful(None))
 
