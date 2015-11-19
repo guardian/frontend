@@ -1,6 +1,6 @@
 package controllers
 
-import common.{Logging, ExecutionContexts}
+import common.{LinkTo, Logging, ExecutionContexts}
 import conf.Configuration
 import model._
 import play.api.Play.current
@@ -80,9 +80,9 @@ object EmailController extends Controller with ExecutionContexts with Logging {
     def respond(result: SubscriptionResult): Result = {
       render {
         case Accepts.Html() => result match {
-          case Subscribed   => SeeOther("/email/success")
-          case InvalidEmail => SeeOther("/email/invalid")
-          case OtherError   => SeeOther("/email/error")
+          case Subscribed   => SeeOther(LinkTo("/email/success"))
+          case InvalidEmail => SeeOther(LinkTo("/email/invalid"))
+          case OtherError   => SeeOther(LinkTo("/email/error"))
         }
 
         case Accepts.Json() => result match {
