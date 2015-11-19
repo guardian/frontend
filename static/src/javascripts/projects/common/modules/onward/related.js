@@ -66,7 +66,7 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-        } else if (fetchRelated && !(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))) {
+        } else if (fetchRelated && !(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
             container = document.body.querySelector('.js-related');
 
             if (container) {

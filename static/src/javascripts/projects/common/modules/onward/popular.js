@@ -35,9 +35,9 @@ define([
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
 
-        if (ab.getParticipations().MostPopularDefaultTest &&
-            ab.getParticipations().MostPopularDefaultTest.variant === 'variant' &&
-            ab.testCanBeRun('MostPopularDefaultTest')) {
+        if (ab.getParticipations().MostPopularDefaultTest2 &&
+            ab.getParticipations().MostPopularDefaultTest2.variant === 'variant' &&
+            ab.testCanBeRun('MostPopularDefaultTest2')) {
 
             this.endpoint = '/ab-most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
         } else {
@@ -48,7 +48,7 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        if (!(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))) {
+        if (!(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
             this.fetch(qwery('.js-popular-trails'), 'html');
         } else {
             $('.js-most-popular-footer').hide();

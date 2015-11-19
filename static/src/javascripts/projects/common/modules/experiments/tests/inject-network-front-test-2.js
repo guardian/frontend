@@ -4,16 +4,16 @@ define([
     config
 ) {
     return function () {
-        this.id = 'InjectNetworkFrontTest';
+        this.id = 'InjectNetworkFrontTest2';
         this.start = '2015-10-30';
         this.expiry = '2015-11-30';
         this.author = 'Josh Holder';
         this.description = 'Replace the most popular container with the network front on all content pages';
-        this.audience = 0.02;
-        this.audienceOffset = 0;
+        this.audience = 0.04;
+        this.audienceOffset = 0.46;
         this.successMeasure = 'CTR, page views per visit, tendency to return within a week, engagement time per session';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'inject-network-front-ab';
+        this.dataLinkNames = 'ab-front-injected-2';
         this.idealOutcome = '';
 
         this.canRun = function () {

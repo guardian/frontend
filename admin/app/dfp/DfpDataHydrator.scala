@@ -4,11 +4,10 @@ import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 import common.dfp._
-import dfp.DfpApiWrapper.DfpSessionException
 import org.apache.commons.lang.exception.ExceptionUtils
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
-import scala.util.{Failure, Try}
+import scala.util.{Failure, Success, Try}
 
 object DfpDataHydrator {
   def apply(): DfpDataHydrator = new DfpDataHydrator()
@@ -21,17 +20,17 @@ class DfpDataHydrator extends Logging {
 
   private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
+      val session = new SessionWrapper(serviceRegistry.session)
 
       def loadTargetingValue(id: Long): String = {
         val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", id)
-        val values =
-          DfpApiWrapper.fetchCustomTargetingValues(serviceRegistry, stmtBuilder)
+        val values = session.customTargetingValues(stmtBuilder)
         values.map(_.getName).head
       }
 
       try {
         val dfpLineItems =
-          DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder) filterNot {
+          session.lineItems(statementBuilder) filterNot {
             _.getIsArchived
           }
 
@@ -121,7 +120,8 @@ class DfpDataHydrator extends Logging {
     }
 
     dfpServiceRegistry.map { serviceRegistry =>
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, stmtBuilder)
+      val session = new SessionWrapper(serviceRegistry.session)
+      val dfpAdUnits = session.adUnits(stmtBuilder)
       dfpAdUnits filter { adUnit =>
         Option(adUnit.getParentPath) exists { path =>
           val isRoot = path.length == 1 && adUnit.getName == rootName
@@ -156,9 +156,10 @@ class DfpDataHydrator extends Logging {
 
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
     dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>
+      val session = new SessionWrapper(serviceRegistry.session)
       val statementBuilder = new StatementBuilder()
 
-      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(serviceRegistry, statementBuilder)
+      val suggestedAdUnits = session.suggestedAdUnits(statementBuilder)
 
       val allUnits = suggestedAdUnits.map { adUnit =>
         val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
@@ -169,15 +170,43 @@ class DfpDataHydrator extends Logging {
       allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
   }
 
-  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] =
+  class DfpApprovalException(message: String) extends RuntimeException
+  class DfpSessionException extends RuntimeException
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = {
+
+    def approveTheseAdUnits(
+      serviceRegistry: DfpServiceRegistry,
+      statementBuilder: StatementBuilder
+    ): Try[String] = {
+      val approve: ApproveSuggestedAdUnit = new ApproveSuggestedAdUnit()
+
+      val service = serviceRegistry.suggestedAdUnitService
+      try {
+        val result = Option(service.performSuggestedAdUnitAction(approve, statementBuilder.toStatement))
+        if (result.isDefined) {
+          if (result.get.getNumChanges > 0) {
+            Success("Ad units approved")
+          } else {
+            Failure(new DfpApprovalException("Apparently, nothing changed"))
+          }
+        } else {
+          Failure(new DfpApprovalException("Everything failed"))
+        }
+      } catch {
+        case e: Exception => Failure(e)
+      }
+    }
+
     dfpServiceRegistry.map { serviceRegistry =>
       val adUnitsList: String = adUnits.mkString(",")
 
       val statementBuilder = new StatementBuilder()
-        .where(s"id in ($adUnitsList)")
+                             .where(s"id in ($adUnitsList)")
 
-      DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
-  }.getOrElse(Failure(new DfpSessionException()))
+      approveTheseAdUnits(serviceRegistry, statementBuilder)
+    }.getOrElse(Failure(new DfpSessionException()))
+  }
 
   private def isPageSkin(dfpLineItem: LineItem) = {
 
