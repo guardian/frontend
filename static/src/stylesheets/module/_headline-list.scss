@@ -31,19 +31,19 @@
             width: 40%;
         }
     }
+
+    &.headline-column--desktop__item {
+        display: block;
+        margin-bottom: $gs-baseline / 2;  
+    }
 }
 
 .headline-list__count {
     position: absolute;
     top: 0;
     left: 0;
-    width: gs-span(1);
     color: colour(neutral-4);
     @include font($f-serif-headline, 200, 44px);
-
-    @include mq(mobile) {
-        width: gs-span(1) - $gs-gutter / 2;
-    }
 }
 
 .headline-list__link {
