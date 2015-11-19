@@ -31,9 +31,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABReachDummyTest = Switch(
+  val ABReachDummyTest2 = Switch(
     "A/B Tests",
-    "ab-reach-dummy-test",
+    "ab-reach-dummy-test-2",
     "Switch to inject the network front instead of most popular on all content pages",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 5),

@@ -8,7 +8,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/inject-network-front-test-2',
-    'common/modules/experiments/tests/reach-dummy-test',
+    'common/modules/experiments/tests/reach-dummy-test-2',
     'common/modules/experiments/tests/most-popular-default',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
@@ -31,7 +31,7 @@ define([
     HighCommercialComponent,
     MembershipMessageUSA,
     InjectNetworkFrontTest2,
-    ReachDummyTest,
+    ReachDummyTest2,
     MostPopularDefaultTest2,
     LargeTopAd,
     VideoPreroll,
@@ -49,7 +49,7 @@ define([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
         new InjectNetworkFrontTest2(),
-        new ReachDummyTest(),
+        new ReachDummyTest2(),
         new MostPopularDefaultTest2(),
         new LargeTopAd(),
         new VideoPreroll()
@@ -182,7 +182,7 @@ define([
         // Get this browser's mvt test id.
             mvtCookieId = mvtCookie.getMvtValue();
 
-        if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
+        if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
             variantIds = map(test.variants, function (variant) {
                 return variant.id;
