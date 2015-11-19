@@ -11,7 +11,7 @@ body {
 
 .email-sub__text-input,
 .email-sub__submit-input {
-    @include border-radius(1000px)
+    border-radius: 1000px;
 }
 
 .email-sub__submit-input {
@@ -35,14 +35,14 @@ body {
     // Rounded inline input
     .email-sub__text-input {
         border-right: 0;
-        @include border-radius(1000px 0 0 1000px);
+        border-radius: 1000px 0 0 1000px;
         float: left;
         width: 62%;
     }
 
     .email-sub__submit-input {
         @include fs-textSans(1, $size-only: true);
-        @include border-radius(0 1000px 1000px 0);
+        border-radius: 0 1000px 1000px 0;
         border-left: 0;
         float: left;
         margin-right: 0;
@@ -58,7 +58,7 @@ body {
     }
 
     .email-sub__text-input {
-        @include border-radius(1000px);
+        border-radius: 1000px;
     }
 
     .email-sub__submit-input {

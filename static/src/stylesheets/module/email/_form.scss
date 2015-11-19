@@ -80,7 +80,7 @@
 
     .inline-icon {
         background-color: guss-colour(neutral-3, $pasteup-palette);
-        @include border-radius(1000px);
+        border-radius: 1000px;
         fill: guss-colour(neutral-1, $pasteup-palette);
         height: $icon-size;
         left: 0;
@@ -162,7 +162,7 @@
 
     .email-sub__text-input {
         border-color: $form-secondary-colour;
-        @include border-radius(1000px);
+        border-radius: 1000px;
 
         &:focus {
             border-color: $form-primary-colour;
