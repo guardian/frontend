@@ -44,10 +44,13 @@ define([
             if ($input.val() !== '') { updateClass('add', $label, hiddenLabelClass)(); }
 
             // Bind to focus and blur handlers to update class based on input
-            bean.on($input[0], 'focus', updateClass('add', $label, hiddenLabelClass));
-            bean.on($input[0], 'blur', updateClass('remove', $label, hiddenLabelClass, function () {
-                return $input.val() === '';
-            }));
+            // Not delegated as bean doesn't support it on focus & blur
+            bean.on($input[0], {
+                focus: updateClass('add', $label, hiddenLabelClass),
+                blur: updateClass('remove', $label, hiddenLabelClass, function () {
+                    return $input.val() === '';
+                })
+            });
         }
     };
 });
