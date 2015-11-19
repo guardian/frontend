@@ -15,11 +15,12 @@ define([
     spaceFiller,
     createAdSlot,
     commercialFeatures,
-    cloneDeep) {
+    cloneDeep)
+{
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
-            minBelow: 300,
+            minBelow: 300M,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
                 ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
@@ -47,14 +48,14 @@ define([
     }
 
     // Add new ads while there is still space
-    function addLongArticleAds() {
-        if (ads.length >= 9) {
+    function addLongArticleAds(count) {
+        if (count < 1) {
             return Promise.resolve(null);
         } else {
             return tryAddingAdvert().then(function (trySuccessful) {
                 // If last attempt worked, recurse another
                 if (trySuccessful) {
-                    return addLongArticleAds();
+                    return addLongArticleAds(count - 1);
                 } else {
                     return Promise.resolve(null);
                 }
@@ -94,7 +95,9 @@ define([
             }
 
             if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-                return tryAddingAdvert().then(tryAddingAdvert).then(addLongArticleAds);
+                return tryAddingAdvert().then(tryAddingAdvert).then(function() {
+                    return addLongArticleAds(8);
+                });
             } else {
                 return tryAddingAdvert().then(function () {
                     if (detect.isBreakpoint({max: 'tablet'})) {

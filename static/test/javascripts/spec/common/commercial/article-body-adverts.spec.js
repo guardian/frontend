@@ -13,219 +13,279 @@ define([
     fixtures,
     Injector
 ) {
-    describe('Article Body Adverts', function () {
-        var getParaWithSpaceStub, $fixturesContainer, $style,
-            fixturesConfig = {
-                id: 'article-body-adverts',
-                fixtures: [
-                    '<p class="first-para"></p>',
-                    '<p class="second-para"></p>',
-                    '<p class="third-para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>',
-                    '<p class="para"></p>'
-                ]
-            },
-            injector = new Injector(),
-            articleBodyAdverts, config, detect, spacefinder, commercialFeatures;
+    fdescribe('Article Body Adverts', function () {
+        var injector = new Injector(),
+            articleBodyAdverts,
+            spaceFiller,
+            commercialFeatures,
+            config,
+            detect;
 
         beforeEach(function (done) {
 
             injector.require([
                 'common/modules/commercial/article-body-adverts',
+                'common/modules/commercial/commercial-features',
+                'common/modules/article/space-filler',
                 'common/utils/config',
-                'common/utils/detect',
-                'common/modules/article/spacefinder',
-                'common/modules/commercial/commercial-features'
+                'common/utils/detect'
             ], function () {
                 articleBodyAdverts = arguments[0];
-                config = arguments[1];
-                detect = arguments[2];
-                spacefinder = arguments[3];
-                commercialFeatures = arguments[4];
 
-                $fixturesContainer = fixtures.render(fixturesConfig);
-                $style = $.create('<style type="text/css"></style>')
-                    .html('body:after{ content: "desktop"}')
-                    .appendTo('head');
-
-                config.switches = {
-                    standardAdverts: true,
-                    viewability: true
-                };
-                config.tests = {
-                    mobileTopBannerRemove: false
-                };
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
-
-                getParaWithSpaceStub = sinon.stub();
-                var paras = qwery('p', $fixturesContainer);
-                getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
-                getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
-                getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
-                getParaWithSpaceStub.onCall(3).returns(Promise.resolve(paras[3]));
-                getParaWithSpaceStub.onCall(4).returns(Promise.resolve(paras[4]));
-                getParaWithSpaceStub.onCall(5).returns(Promise.resolve(paras[5]));
-                getParaWithSpaceStub.onCall(6).returns(Promise.resolve(paras[6]));
-                getParaWithSpaceStub.onCall(7).returns(Promise.resolve(paras[7]));
-                getParaWithSpaceStub.onCall(8).returns(Promise.resolve(paras[8]));
-                getParaWithSpaceStub.onCall(9).returns(Promise.resolve(paras[9]));
-                getParaWithSpaceStub.onCall(10).returns(Promise.resolve(paras[10]));
-                getParaWithSpaceStub.onCall(11).returns(Promise.resolve(undefined));
-                spacefinder.getParaWithSpace = getParaWithSpaceStub;
-
+                commercialFeatures = arguments[1];
                 commercialFeatures.articleBodyAdverts = true;
+
+                spaceFiller = arguments[2];
+                spyOn(spaceFiller, 'insertAtFirstSpace').and.callFake(function() {
+                    return new Promise.resolve(true);
+                });
+
+                config = arguments[3];
+                config.page = {};
+                config.switches = {};
+
+                detect = arguments[4];
 
                 done();
             });
-        });
-
-        afterEach(function () {
-            fixtures.clean(fixturesConfig.id);
-            $style.remove();
-            articleBodyAdverts.reset();
         });
 
         it('should exist', function () {
             expect(articleBodyAdverts).toBeDefined();
         });
 
-        it('should call "getParaWithSpace" with correct arguments', function (done) {
-            detect.isBreakpoint = function () {
-                return false;
-            };
-
-            config.switches.viewability = false;
-
-            articleBodyAdverts.init()
-                .then(function () {
-                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 700,
-                        minBelow: 300,
-                        selectors: {
-                            ' > h2': {minAbove: 0, minBelow: 250},
-                            ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                            ' .ad-slot': {minAbove: 500, minBelow: 500}
-                        }
-                    });
-                    done();
-                });
-        });
-
-        it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
-            config.switches.viewability = true;
-
-            articleBodyAdverts.init()
-                .then(function () {
-                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 700,
-                        minBelow: 300,
-                        selectors: {
-                            ' > h2': {minAbove: 0, minBelow: 250},
-                            ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                            ' .ad-slot': {minAbove: 500, minBelow: 500}
-                        }
-                    });
-                    done();
-                })
-                .then(function () {
-                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 700,
-                        minBelow: 300,
-                        selectors: {
-                            ' > h2': {minAbove: 0, minBelow: 250},
-                            ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                            ' .ad-slot': {minAbove: 500, minBelow: 500}
-                        }
-                    });
-                    done();
-                })
-                .then(function () {
-                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 700,
-                        minBelow: 300,
-                        selectors: {
-                            ' > h2': {minAbove: 0, minBelow: 250},
-                            ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                            ' .ad-slot': {minAbove: 1300, minBelow: 1300}
-                        }
-                    });
-                    done();
-                });
-        });
-
-        it('should call "getParaWithSpace" max 2 times when not viewability and on max tablet', function (done) {
-            config.switches.viewability = false;
-            detect.isBreakpoint = function () { return true; };
-
-            articleBodyAdverts.init()
-                .then(function () {
-                    expect(getParaWithSpaceStub.callCount).toEqual(2);
-                    done();
-                });
-        });
-
-        it('should call "getParaWithSpace" max 2 times when not viewability and on desktop', function (done) {
-            config.switches.viewability = false;
-            detect.isBreakpoint = function () { return false; };
-
-            articleBodyAdverts.init()
-                .then(function () {
-                    expect(getParaWithSpaceStub.callCount).toEqual(1);
-                    done();
-                });
-        });
-
-        it('should call "getParaWithSpace" max 2 times when not on mobile', function (done) {
-            config.switches.viewability = true;
-            detect.getBreakpoint = function () { return 'mobile'; };
-            detect.isBreakpoint = function () { return true; };
-
-            articleBodyAdverts.init()
-                .then(function () {
-                    expect(getParaWithSpaceStub.callCount).toEqual(2);
-                    done();
-                });
-        });
-
-        it('should call "getParaWithSpace" max 9 times', function (done) {
-            config.switches.viewability = true;
-
-            articleBodyAdverts.init()
-                .then(function () {
-                    expect(getParaWithSpaceStub.callCount).toEqual(9);
-                    done();
-                });
-        });
-
-        it('should not not display ad slot if turned off in commercial features', function () {
+        it('should exit if commercial feature disabled', function () {
             commercialFeatures.articleBodyAdverts = false;
-            expect(articleBodyAdverts.init()).toBe(false);
+            var executionResult = articleBodyAdverts.init();
+            expect(executionResult).toBe(false);
+            expect(spaceFiller.insertAtFirstSpace).not.toHaveBeenCalled();
         });
 
-        it('should insert an inline ad container to the available slot', function (done) {
+        it('should call space-filler`s insertion method with the correct arguments', function (done) {
             articleBodyAdverts.init().then(function () {
-                expect(getParaWithSpaceStub).toHaveBeenCalled();
-                expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
+                var args = spaceFiller.insertAtFirstSpace.calls.first().args,
+                    rulesArg = args[0],
+                    writerArg = args[1];
+
+                expect(rulesArg.minAbove).toBeDefined();
+                expect(rulesArg.minBelow).toBeDefined();
+                expect(rulesArg.selectors).toBeDefined();
+
+                expect(writerArg).toEqual(jasmine.any(Function));
+
                 done();
             });
         });
 
-        it('should insert an inline merchandising slot if page has one', function (done) {
-            config.page.hasInlineMerchandise = true;
-            articleBodyAdverts.init().then(function () {
-                expect(qwery('#dfp-ad--im', $fixturesContainer).length).toBe(1);
-                expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                done();
+        describe('When merchandising components enabled', function () {
+            beforeEach(function () {
+                config.page.hasInlineMerchandise = true;
+            });
+
+            it('its first call to space-filler uses the inline-merch rules', function (done) {
+                articleBodyAdverts.init().then(function () {
+                    var firstCall = spaceFiller.insertAtFirstSpace.calls.first(),
+                        rules = firstCall.args[0];
+
+                    expect(rules.minAbove).toEqual(300);
+                    expect(rules.selectors[' > h2'].minAbove).toEqual(20);
+
+                    done();
+                });
+            });
+
+            it('its first call to space-filler passes an inline-merch writer', function (done) {
+                var fixture = document.createElement('div'),
+                    paragraph = document.createElement('p');
+                fixture.appendChild(paragraph);
+
+                articleBodyAdverts.init().then(function () {
+                    var firstCall = spaceFiller.insertAtFirstSpace.calls.first(),
+                        writer = firstCall.args[1];
+                    writer(paragraph);
+
+                    var expectedAd = fixture.querySelector('#dfp-ad--im');
+                    expect(expectedAd).toBeTruthy();
+
+                    done();
+                });
             });
         });
 
+        describe('Non-merchandising adverts', function () {
+            beforeEach(function() {
+                config.page.hasInlineMerchandise = false; // exclude IM components from count
+            });
+
+            describe('When viewability enabled', function () {
+                beforeEach(function () {
+                    config.switches.viewability = true;
+                });
+
+                it('inserts up to two on mobile', function (done) {
+                    detect.getBreakpoint = function() {return 'mobile';};
+                    detect.isBreakpoint = function () {
+                        return true; // fudge breakpoint check
+                    };
+
+                    articleBodyAdverts.init().then(function () {
+                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(2);
+                        done();
+                    });
+                });
+
+                describe('On mobiles and desktops', function() {
+                    beforeEach(function () {
+                        detect.getBreakpoint = function() {
+                            return 'tablet';
+                        };
+                    });
+
+                    it('inserts up to ten adverts', function (done) {
+                        articleBodyAdverts.init().then(function () {
+                            expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(10);
+                            done();
+                        });
+                    });
+
+                    it('inserts the third+ adverts with greater vertical spacing', function (done) {
+                        // We do not want the same ad-density on long-read
+                        // articles that we have on shorter pieces
+                        articleBodyAdverts.init().then(function () {
+                            var insertionCalls = spaceFiller.insertAtFirstSpace.calls.all();
+                            var longArticleInsertionCalls = insertionCalls.slice(2);
+                            var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
+                                return call.args[0];
+                            });
+                            longArticleInsertionRules.forEach(function (ruleset) {
+                                var adSlotSpacing = ruleset.selectors[' .ad-slot'];
+                                expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300})
+                            });
+                            done();
+                        });
+                    });
+                });
+            });
+
+            describe('When viewability disabled', function () {
+                beforeEach(function () {
+                    config.switches.viewability = false;
+                });
+
+                it('tries to add two on mobiles and tablets', function (done) {
+                    detect.isBreakpoint = function () {
+                        return true; // fudge check for max:tablet
+                    };
+
+                    articleBodyAdverts.init().then(function () {
+                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(2);
+                        done();
+                    });
+                });
+
+                it('tries to add just one on desktop', function (done) {
+                    detect.isBreakpoint = function () {
+                        return false; //fudge check for max:tablet
+                    };
+
+                    articleBodyAdverts.init().then(function () {
+                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(1);
+                        done();
+                    });
+                });
+            });
+
+            describe('Spacefinder rules', function () {
+
+                it('includes basic rules for all circumstances', function (done) {
+                    getFirstRulesUsed().then(function (rules) {
+                        // do not appear in the bottom 300px of the article
+                        expect(rules.minBelow).toBe(300);
+
+                        // do not appear above headings
+                        expect(rules.selectors[' > h2'].minBelow).toEqual(250);
+
+                        // do not appear next to other adverts
+                        expect(rules.selectors[' .ad-slot']).toEqual({
+                            minAbove : 500,
+                            minBelow : 500
+                        });
+
+                        // do not appear next to non-paragraph elements
+                        expect(rules.selectors[' > *:not(p):not(h2)']).toEqual({
+                            minAbove : 35,
+                            minBelow : 400
+                        });
+
+                        done();
+                    });
+                });
+
+                it('includes rules for mobile phones', function (done) {
+                    detect.getBreakpoint = function() {
+                        return 'mobile';
+                    };
+                    detect.isBreakpoint = function () {
+                        return true; // fudge check for max:tablet
+                    };
+
+                    getFirstRulesUsed().then(function (rules) {
+                        // adverts can appear higher up the page
+                        expect(rules.minAbove).toEqual(300);
+
+                        // give headings more vertical clearance
+                        expect(rules.selectors[' > h2'].minAbove).toEqual(20);
+
+                        done();
+                    });
+                });
+
+                it('includes rules for tablet devices', function (done) {
+                    detect.getBreakpoint = function() {
+                        return 'tablet';
+                    };
+                    detect.isBreakpoint = function () {
+                        return true; // fudge check for max:tablet
+                    };
+
+                    getFirstRulesUsed().then(function (rules) {
+                        // adverts can appear higher up the page
+                        expect(rules.minAbove).toEqual(300);
+
+                        // give headings no vertical clearance
+                        expect(rules.selectors[' > h2'].minAbove).toEqual(0);
+
+                        done();
+                    });
+                });
+
+                it('includes rules for larger screens', function (done) {
+                    detect.getBreakpoint = function() {
+                        return 'desktop';
+                    };
+                    detect.isBreakpoint = function () {
+                        return false; // fudge check for max:tablet
+                    };
+
+                    getFirstRulesUsed().then(function (rules) {
+                        // adverts give the top of the page more clearance
+                        expect(rules.minAbove).toEqual(700);
+
+                        // give headings no vertical clearance
+                        expect(rules.selectors[' > h2'].minAbove).toEqual(0);
+
+                        done();
+                    });
+                });
+
+                function getFirstRulesUsed() {
+                    return articleBodyAdverts.init().then(function () {
+                        var firstCall = spaceFiller.insertAtFirstSpace.calls.first();
+                        return firstCall.args[0];
+                    });
+                }
+
+            });
+        });
     });
 });
