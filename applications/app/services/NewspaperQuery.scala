@@ -26,18 +26,13 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   def fetchLatestGuardianNewspaper: Future[List[FaciaContainer]] = {
     val date = DateTime.now(DateTimeZone.UTC)
-    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
-
-    bookSectionContainers("theguardian/mainsection", newspaperDate)
+    bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(date))
   }
 
   def fetchLatestObserverNewspaper: Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)
-    val daysSinceSunday = DateTimeConstants.SUNDAY - now.getDayOfWeek - 7
-    val date = now.minusDays(Math.abs(daysSinceSunday)) //todo test this
-    bookSectionContainers("theobserver/news", date)
+    bookSectionContainers("theobserver/news", getPastSundayDateFor(now))
   }
-
 
   def fetchNewspaperForDate(path: String, day: String, month: String, year: String): Future[List[FaciaContainer]] = {
     val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
@@ -135,4 +130,11 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   private def getNewspaperPageNumber(content: ApiContent) = content.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
 
   def lowercaseDisplayName(s: String) = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
+
+  def getPastSundayDateFor(date: DateTime) = {
+    val daysSinceSunday = DateTimeConstants.SUNDAY - date.getDayOfWeek - 7
+    date.minusDays(Math.abs(daysSinceSunday))
+  }
+
+  def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
 }
