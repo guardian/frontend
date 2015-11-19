@@ -1,15 +1,20 @@
 package controllers
 
+import com.google.inject.Inject
 import common.{ExecutionContexts, Logging}
 import implicits.{Dates, ItemResponses}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, Controller}
 import services._
+import javax.inject.Singleton
 
 import scala.concurrent.Future
 
-object PublicationController extends Controller
+@Singleton
+class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = NewspaperBookTagAgent,
+                                       bookSectionAgent: NewspaperBookSectionTagAgent = NewspaperBookSectionTagAgent)
+                              extends Controller
                               with ExecutionContexts
                               with ItemResponses
                               with NewspaperBooksAndSectionsAutoRefresh
@@ -32,17 +37,28 @@ object PublicationController extends Controller
                   tail: String) = Action.async { implicit request =>
 
     val reqDate = requestedDate(s"$year/$month/$day")
-    val tag = publication + "/" + tail
+
+    val tag = if (tail.nonEmpty) {
+      publication + "/" + tail
+    } else {
+      publication
+    }
 
     if (tagExists(publication, tag)) {
       Future(MovedPermanently(s"/$tag/${urlFormat(reqDate)}/all"))
     } else {
-      ArticleController.renderItem(s"$publication/$year/$month/$day/$tail")
+      val newPath = if (tail.nonEmpty) {
+        s"$publication/${urlFormat(reqDate)}/$tail"
+      } else {
+        s"$publication/${urlFormat(reqDate)}"
+      }
+      ArticleController.renderItem(newPath)
     }
+
   }
 
   private def tagExists(publication: String, tag: String) = {
-    Seq(NewspaperBookTagAgent.getTags(publication), NewspaperBookSectionTagAgent.getTags(publication))
+    Seq(bookAgent.getTags(publication), bookSectionAgent.getTags(publication))
       .flatMap { _.collect {
           case pubTag if pubTag.id == tag => pubTag
         }
@@ -51,3 +67,5 @@ object PublicationController extends Controller
 
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
 }
+
+object PublicationController extends PublicationController(NewspaperBookTagAgent, NewspaperBookSectionTagAgent)

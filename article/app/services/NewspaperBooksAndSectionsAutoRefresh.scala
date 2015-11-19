@@ -29,7 +29,7 @@ trait NewspaperTags {
   }
 }
 
-object NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
+class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_books"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -38,7 +38,9 @@ object NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 
   }
 }
 
-object NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
+object NewspaperBookTagAgent extends NewspaperBookTagAgent
+
+class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_book_sections"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -46,3 +48,5 @@ object NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seco
     }
   }
 }
+
+object NewspaperBookSectionTagAgent extends NewspaperBookSectionTagAgent
