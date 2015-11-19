@@ -63,7 +63,6 @@ define([
         this.idealOutcome = 'Comfort messaging and headlines with stronger CTA get more sign-ups';
 
         this.canRun = function () {
-            // TODO DO we need this?
             return true;
         };
 
