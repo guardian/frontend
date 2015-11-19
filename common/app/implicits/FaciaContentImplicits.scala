@@ -94,10 +94,10 @@ object FaciaContentImplicits {
     def types: Seq[Tag] = FaciaContentUtils.types(fc)
     def isVideo: Boolean = FaciaContentUtils.isVideo(fc)
     def isGallery: Boolean = FaciaContentUtils.isGallery(fc)
-    def isAudio = FaciaContentUtils.isAudio(fc)
-    def isCartoon = FaciaContentUtils.isCartoon(fc)
+    def isAudio: Boolean = FaciaContentUtils.isAudio(fc)
+    def isCartoon: Boolean = FaciaContentUtils.isCartoon(fc)
     def isArticle: Boolean = FaciaContentUtils.isArticle(fc)
-    def isCrossword = FaciaContentUtils.isCrossword(fc)
+    def isCrossword: Boolean = FaciaContentUtils.isCrossword(fc)
 
     def supporting: List[FaciaContent] = FaciaContentUtils.supporting(fc)
 

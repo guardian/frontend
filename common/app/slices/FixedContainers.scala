@@ -74,9 +74,6 @@ object FixedContainers {
 
   val footballTeamFixtures = slices(TTT)
 
-  val HeadlinesABTest = slices(HalfQuarterQl2Ql4)
-
-
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
   val all: Map[String, ContainerDefinition] = Map(
