@@ -138,7 +138,9 @@
         &:hover,
         &:focus,
         &:active {
-            border-color: guss-colour(neutral-4, $pasteup-palette);
+            cursor: pointer;
+            background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
         }
     }
 
