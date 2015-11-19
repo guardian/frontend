@@ -38,26 +38,16 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   }
 
 
-  def fetchGuardianNewspaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+  def fetchNewspaperForDate(tag: String, day: String, month: String, year: String): Future[List[FaciaContainer]] = {
     val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
     val date = dateFormatUTC
       .parseDateTime(s"$year/$month/$day")
       .toDateTime
 
-    bookSectionContainers("theguardian/mainsection", date)
+    bookSectionContainers(tag, date)
   }
 
-  //todo add tests
-  def fetchObserverNewspaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
-    val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
-
-    val date = dateFormatUTC
-      .parseDateTime(s"$year/$month/$day")
-      .toDateTime
-
-    bookSectionContainers("theobserver/news", date)
-  }
 
   private def bookSectionContainers(itemId: String, newspaperDate: DateTime): Future[List[FaciaContainer]] = {
 

@@ -32,24 +32,15 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
   }
 
-  def guardianNewspaperForDate(day: String, month: String, year: String) = Action.async { implicit request =>
+  def newspaperForDate(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
     val page = model.Page(pageId, section, guardianDescription, "GFE: Newspaper books Main Section for past date")
 
-    val paper = NewspaperQuery.fetchGuardianNewspaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
+    val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
+
+    val paper = NewspaperQuery.fetchNewspaperForDate(pathToTag.get(path).getOrElse(""), day, month, year).map(p => TodayNewspaper(page, p))
 
     for( tp <- paper) yield {
-      if(noContentForListExists(tp.bookSections)) Found(s"/theguardian")
-      else Cached(900)(Ok(views.html.newspaperPage(tp)))
-    }
-  }
-
-  def observerNewspaperForDate(day: String, month: String, year: String) = Action.async { implicit request =>
-    val page = model.Page(pageId, section, observerDescription, "GFE: Observer Newspaper books Main Section for past date")
-
-    val paper = NewspaperQuery.fetchObserverNewspaperForDate(day, month, year).map(p => TodayNewspaper(page, p))
-
-    for( tp <- paper) yield {
-      if(noContentForListExists(tp.bookSections)) Found(s"/theobserver")
+      if(noContentForListExists(tp.bookSections)) Found(s"/$path")
       else Cached(900)(Ok(views.html.newspaperPage(tp)))
     }
   }
