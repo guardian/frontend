@@ -59,8 +59,8 @@ object NewspaperController extends Controller with Logging with ExecutionContext
     frontContainer.flatMap(_.contentItems).isEmpty && otherContainer.flatMap(_.contentItems).isEmpty
   }
 
-  def allOn(day: String, month: String, year: String) = Action {
-    Cached(300)(MovedPermanently(s"/theguardian/$year/$month/$day"))
+  def allOn(path: String, day: String, month: String, year: String) = Action {
+    Cached(300)(MovedPermanently(s"/$path/$year/$month/$day"))
   }
 }
 

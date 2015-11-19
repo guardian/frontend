@@ -70,7 +70,6 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       .fromDate(newspaperDate.withTimeAtStartOfDay())
       .toDate(newspaperDate)
 
-    println(itemQuery.toString())
     LiveContentApi.getResponse(itemQuery).map { resp =>
 
       //filter out the first page results to make a Front Page container
