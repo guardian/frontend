@@ -141,8 +141,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
         getFirstXCollections(containerId, 4).flatMap { // 4 not 3 so that we have some extra pieces of content to play with when filtering later
           _ match {
-            case None => Future.failed(new RuntimeException(s"Collection doesn't exist"))
             case Some(x) => Future.successful(x)
+            case None => Future.failed(new RuntimeException(s"Collection doesn't exist"))
           }
         }
 
