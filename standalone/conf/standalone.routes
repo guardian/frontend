@@ -145,11 +145,11 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                        
 
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)
 
+# Newspaper pages
 GET        /theguardian                                                                        controllers.NewspaperController.latestGuardianNewspaper()
-GET        /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>                              controllers.NewspaperController.guardianNewspaperForDate(day, month, year)
-GET        /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                          controllers.NewspaperController.allOn(day, month, year)
 GET        /theobserver                                                                        controllers.NewspaperController.latestObserverNewspaper()
-GET        /theobserver/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>                              controllers.NewspaperController.observerNewspaperForDate(day, month, year)
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>           controllers.NewspaperController.newspaperForDate(path, day, month, year)
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all       controllers.NewspaperController.allOn(path, day, month, year)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)

@@ -2,42 +2,38 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
-import model.{Cached, MetaData}
+import model.{Page, Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
 object NewspaperController extends Controller with Logging with ExecutionContexts {
 
-  private val pageId = "theguardian"
-  private val section = "todayspaper"
-  private val guardianDescription = "Main section | News | The Guardian"
-  private val observerDescription = "Main section | From the Observer | The Guardian"
-
   def latestGuardianNewspaper() = Action.async { implicit request =>
 
-    val page = model.Page(pageId, section, guardianDescription, "GFE: Newspaper books Main Section today")
-
-    val todaysPaper = NewspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(page, p))
+    val guardianPage = Page("theguardian", "todayspaper", "Main section | News | The Guardian", "GFE: Newspaper books Main Section")
+    val todaysPaper = NewspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.newspaperPage(tp)))
 
   }
 
   def latestObserverNewspaper() = Action.async { implicit request =>
-    val page = model.Page(pageId, section, observerDescription, "GFE: Observer Newspaper books Main Section today")
+    val observerPage = Page("theobserver", "observer", "Main section | From the Observer | The Guardian", "GFE: Observer Newspaper books Main Section")
 
-    val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(page, p))
+    val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.newspaperPage(tp)))
 
   }
 
   def newspaperForDate(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
-    val page = model.Page(pageId, section, guardianDescription, "GFE: Newspaper books Main Section for past date")
 
-    val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
+    val page = path match {
+      case "theguardian" => Page("theguardian", "todayspaper", "Top Stories | From the Guardian | The Guardian", "GFE: Newspaper books Top Stories")
+      case "theobserver" => Page("theobserver", "observer", "News | From the Observer | The Guardian", "GFE: Observer Newspaper books Top Stories")
+    }
 
-    val paper = NewspaperQuery.fetchNewspaperForDate(pathToTag.get(path).getOrElse(""), day, month, year).map(p => TodayNewspaper(page, p))
+    val paper = NewspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))
 
     for( tp <- paper) yield {
       if(noContentForListExists(tp.bookSections)) Found(s"/$path")

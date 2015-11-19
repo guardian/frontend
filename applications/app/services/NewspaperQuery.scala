@@ -22,6 +22,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
   val FRONT_PAGE_DISPLAY_NAME = "front page"
+  val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
   def fetchLatestGuardianNewspaper: Future[List[FaciaContainer]] = {
     val date = DateTime.now(DateTimeZone.UTC)
@@ -38,14 +39,14 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   }
 
 
-  def fetchNewspaperForDate(tag: String, day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+  def fetchNewspaperForDate(path: String, day: String, month: String, year: String): Future[List[FaciaContainer]] = {
     val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
     val date = dateFormatUTC
       .parseDateTime(s"$year/$month/$day")
       .toDateTime
 
-    bookSectionContainers(tag, date)
+    pathToTag.get(path).map(tag => bookSectionContainers(tag, date)).getOrElse(Future.successful(Nil))
   }
 
 
