@@ -252,6 +252,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(successful(None))
 
+  //this is a very short term solution for the Essential Read AB test. It will be removed afterwards, honest
   private def getFirstXCollections(collectionId: String, take: Int): Future[Option[List[PressedCollection]]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
