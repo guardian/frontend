@@ -84,33 +84,44 @@ define([
             }
         },
         ui = {
-            freezeHeight: function ($wrapper, reset) {
+            freezeHeight: function ($wrapper, reset, callback) {
                 var wrapperHeight,
                     resetHeight = function () {
-                        $wrapper.css('min-height', '');
-                        fastdom.read(getHeight);
-                        fastdom.defer(setHeight);
+                        fastdom.write(function(){
+                            $wrapper.css('min-height', '');
+                            getHeight();
+                            setHeight();
+                        });
                     },
                     getHeight = function () {
-                        wrapperHeight = $wrapper.dim().height;
+                        fastdom.read(function(){
+                            wrapperHeight = $wrapper.dim().height;
+                        });
                     },
                     setHeight = function () {
-                        $wrapper.css('min-height', wrapperHeight);
+                        fastdom.defer(function(){
+                            $wrapper.css('min-height', wrapperHeight);
+                            callback();
+                        });
                     };
 
                 return function () {
                     if (reset) {
-                        fastdom.write(resetHeight);
+                        resetHeight();
                     } else {
-                        fastdom.read(getHeight);
-                        fastdom.write(setHeight);
+                        getHeight();
+                        setHeight();
                     }
                 };
             },
-            setIframeHeight: function (iFrameEl) {
+            setIframeHeight: function (iFrameEl, isIframed) {
                 return function () {
-                    iFrameEl.height = '';
-                    iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
+                    if (isIframed) {
+                        fastdom.write(function () {
+                            iFrameEl.height = '';
+                            iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
+                        });
+                    }
                 };
             }
         };
@@ -134,14 +145,9 @@ define([
                 formSubmission.bindSubmit($('.' + classes.form, el));
 
                 // Ensure the height of the wrapper stays the same when submitting
-                ui.freezeHeight($(el)).apply();
-                mediator.on('window:resize', debounce(ui.freezeHeight($(el), true), 500));
+                ui.freezeHeight($(el), false, ui.setIframeHeight(rootEl, isIframed)).apply();
+                mediator.on('window:resize', debounce(ui.freezeHeight($(el), true, ui.setIframeHeight(rootEl, isIframed)), 500));
             });
-
-            if (isIframed) {
-                ui.setIframeHeight(rootEl).apply();
-                mediator.on('window:resize', debounce(ui.setIframeHeight(rootEl), 500));
-            }
         }
     };
 });
