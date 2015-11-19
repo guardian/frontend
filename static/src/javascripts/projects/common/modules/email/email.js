@@ -4,6 +4,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/ajax-promise',
+    'common/utils/config',
     'fastdom',
     'common/utils/mediator',
     'lodash/functions/debounce',
@@ -16,6 +17,7 @@ define([
     qwery,
     $,
     ajax,
+    config,
     fastdom,
     mediator,
     debounce,
@@ -31,7 +33,7 @@ define([
         },
         formSubmission = {
             bindSubmit: function ($form) {
-                var url = $form.attr('action');
+                var url = config.page.ajaxUrl + '/email';
                 bean.on($form[0], 'submit', this.submitForm($form, url));
             },
             submitForm: function ($form, url) {
