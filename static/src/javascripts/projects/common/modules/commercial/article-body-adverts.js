@@ -114,7 +114,7 @@ define([
         init: init,
         // rules exposed for spacefinder debugging
         getRules: getRules,
-        getLenientRules: getInlineMerchRules,
+        getInlineMerchRules: getInlineMerchRules,
 
         reset: function () {
             ads = [];
