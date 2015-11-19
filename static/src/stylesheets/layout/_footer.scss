@@ -89,6 +89,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .colophon__list {
     @include clearfix();
     @include fs-bodyHeading(1);
+    @include f-headlineSans();
     list-style: none;
     margin: 0;
 
