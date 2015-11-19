@@ -30,6 +30,7 @@
         color: #ffffff;
         @include fs-textSans(3);
         margin-bottom: $gs-baseline;
+        padding-left: $gs-baseline / 3;
     }
 }
 
