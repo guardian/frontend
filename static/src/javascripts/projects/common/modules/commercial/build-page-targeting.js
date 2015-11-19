@@ -101,8 +101,8 @@ define([
             var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0,
                 visitedValue;
 
-            if (alreadyVisited > 4) {
-                visitedValue = '5plus';
+            if (alreadyVisited > 19) {
+                visitedValue = '20plus';
             } else {
                 visitedValue = alreadyVisited.toString();
             }

@@ -195,10 +195,10 @@ define([
                 expect(buildPageTargeting().fr).toEqual('3');
             });
 
-            it('should set 5+ frequency param', function () {
+            it('should set 20+ frequency param', function () {
                 storage.local.set('gu.alreadyVisited', 67);
 
-                expect(buildPageTargeting().fr).toEqual('5plus');
+                expect(buildPageTargeting().fr).toEqual('20plus');
             });
         });
     });
