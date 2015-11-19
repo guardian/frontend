@@ -27,11 +27,7 @@ import play.api.test.Helpers._
   }
 
   it should "200 when an observer article is requested" in {
-    //val testReq = TestRequest("theobserver/2015/nov/01/the-big-issue-generation-gap-pensioners-young-people")
-    //val testReq = TestRequest("theobserver/she-said/2014/apr/17/unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")
     val testReq = TestRequest("theobserver/2014/aug/31/profile-clare-smyth-gordon-ramsay-chef-perfect-ten")
-    //val result = controllers.PublicationController.publishedOn("theobserver","2015","nov","01","the-big-issue-generation-gap-pensioners-young-people")(testReq)
-    //val result = controllers.PublicationController.publishedOn("theobserver","2014","apr","17","she-said/unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")(testReq)
     val result = controllers.PublicationController.publishedOn("theobserver","2014","aug","31","profile-clare-smyth-gordon-ramsay-chef-perfect-ten")(testReq)
     status(result) should be(OK)
   }
@@ -42,19 +38,62 @@ import play.api.test.Helpers._
     status(result) should be(OK)
   }
 
-//  it should "200 when an observer dated section is requested" in {
-//    val testReq = TestRequest("theobserver/she-said/2015/may/16")
-//    val result = controllers.PublicationController.publishedOn("theobserver/she-said","2015","may","16","")(testReq)
-//    status(result) should be(OK)
-//  }
+  it should "redirect to an /all page when an observer dated blog section is requested" in {
+    val testReq = TestRequest("theobserver/she-said/2015/jun/15")
+    val result = controllers.PublicationController.publishedOn("theobserver/she-said","2015","jun","15","")(testReq)
+    status(result) should be(PermanentRedirect)
+    header("Location",result).getOrElse("") should endWith ("/theobserver/she-said/2015/jun/15/all")
+  }
 
-  //  val observerBookSectionUrl = "theobserver/2006/mar/05/news/focus"
-//  val observerTagCombinerUrl = "theobserver/series/myweek+stage/comedy"
-//  val guardianArticleUrl = "theguardian/2012/aug/24/good-to-meet-you-zubair-limbada"
-//  val guardianGalleryUrl = "theguardian/gallery/2009/apr/01/prince-harry-william-monarchy"
-//  val guardianFeatures = "theguardian/2003/jul/26/features.jobsmoney7"
-//  val guardianBookUrl = "theguardian/2015/nov/03/mainsection"
-//  val guardianBookSectionUrl = "theguardian/2015/nov/04/g2/features"
-//  val guardianTagCombinerUrl = "theguardian/series/from-the-archive+uk/princessmargaret"
+  it should "200 when an observer dated blog article is requested" in {
+    val testReq = TestRequest("theobserver/she-said/2014/apr/17/unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")
+    val result = controllers.PublicationController.publishedOn("theobserver/she-said","2014","apr","17","unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")(testReq)
+    status(result) should be(OK)
+  }
+
+  it should "redirect to an /all page when a guardian dated newspaper book url is requested" in {
+    val testReq = TestRequest("theguardian/2015/nov/03/mainsection")
+    val result = controllers.PublicationController.publishedOn("theguardian","2015","nov","03","mainsection")(testReq)
+    status(result) should be(PermanentRedirect)
+    header("Location",result).getOrElse("") should endWith ("/theguardian/mainsection/2015/nov/03/all")
+  }
+
+  it should "redirect to an /all page when a guardian dated newspaper book section url is requested" in {
+    val testReq = TestRequest("theguardian/2015/nov/04/g2/features")
+    val result = controllers.PublicationController.publishedOn("theguardian", "2015", "nov", "04", "g2/features")(testReq)
+    status(result) should be(PermanentRedirect)
+    header("Location",result).getOrElse("") should endWith ("/theguardian/g2/features/2015/nov/04/all")
+  }
+
+  it should "200 when a guardian article is requested" in {
+    val testReq = TestRequest("theguardian/2012/aug/24/good-to-meet-you-zubair-limbada")
+    val result = controllers.PublicationController.publishedOn("theguardian","2014","aug","24","good-to-meet-you-zubair-limbada")(testReq)
+    status(result) should be(OK)
+  }
+
+  it should "200 when a guardian newspaper book section article is requested" in {
+    val testReq = TestRequest("theguardian/2003/jul/26/features.jobsmoney7")
+    val result = controllers.PublicationController.publishedOn("theguardian","2003","jul","26","features.jobsmoney7")(testReq)
+    status(result) should be(OK)
+  }
+
+  it should "200 when a guardian gallery is requested" in {
+    val testReq = TestRequest("theguardian/gallery/2009/apr/01/prince-harry-william-monarchy")
+    val result = controllers.PublicationController.publishedOn("theguardian/gallery","2009","apr","01","prince-harry-william-monarchy")(testReq)
+    status(result) should be(OK)
+  }
+
+  it should "redirect to an /all page when a guardian dated blog section is requested" in {
+    val testReq = TestRequest("theguardian/from-the-archive-blog/2012/feb/17")
+    val result = controllers.PublicationController.publishedOn("theguardian/from-the-archive-blog","2012","feb","17","")(testReq)
+    status(result) should be(PermanentRedirect)
+    header("Location",result).getOrElse("") should endWith ("/theguardian/from-the-archive-blog/2012/feb/17/all")
+  }
+
+  it should "200 when a guardian dated blog article is requested" in {
+    val testReq = TestRequest("theguardian/from-the-archive-blog/2012/feb/17/charlie-chaplin-1952-communist")
+    val result = controllers.PublicationController.publishedOn("/theguardian/from-the-archive-blog","2012","feb","17","charlie-chaplin-1952-communist")(testReq)
+    status(result) should be(OK)
+  }
 
 }
