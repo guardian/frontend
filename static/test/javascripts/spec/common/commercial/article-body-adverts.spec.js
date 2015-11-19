@@ -13,7 +13,7 @@ define([
     fixtures,
     Injector
 ) {
-    fdescribe('Article Body Adverts', function () {
+    describe('Article Body Adverts', function () {
         var injector = new Injector(),
             articleBodyAdverts,
             spaceFiller,
@@ -36,7 +36,7 @@ define([
                 commercialFeatures.articleBodyAdverts = true;
 
                 spaceFiller = arguments[2];
-                spyOn(spaceFiller, 'insertAtFirstSpace').and.callFake(function() {
+                spyOn(spaceFiller, 'insertAtFirstSpace').and.callFake(function () {
                     return new Promise.resolve(true);
                 });
 
@@ -113,7 +113,7 @@ define([
         });
 
         describe('Non-merchandising adverts', function () {
-            beforeEach(function() {
+            beforeEach(function () {
                 config.page.hasInlineMerchandise = false; // exclude IM components from count
             });
 
@@ -123,7 +123,7 @@ define([
                 });
 
                 it('inserts up to two on mobile', function (done) {
-                    detect.getBreakpoint = function() {return 'mobile';};
+                    detect.getBreakpoint = function () {return 'mobile';};
                     detect.isBreakpoint = function () {
                         return true; // fudge breakpoint check
                     };
@@ -134,9 +134,9 @@ define([
                     });
                 });
 
-                describe('On mobiles and desktops', function() {
+                describe('On mobiles and desktops', function () {
                     beforeEach(function () {
-                        detect.getBreakpoint = function() {
+                        detect.getBreakpoint = function () {
                             return 'tablet';
                         };
                     });
@@ -159,7 +159,7 @@ define([
                             });
                             longArticleInsertionRules.forEach(function (ruleset) {
                                 var adSlotSpacing = ruleset.selectors[' .ad-slot'];
-                                expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300})
+                                expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300});
                             });
                             done();
                         });
@@ -222,7 +222,7 @@ define([
                 });
 
                 it('includes rules for mobile phones', function (done) {
-                    detect.getBreakpoint = function() {
+                    detect.getBreakpoint = function () {
                         return 'mobile';
                     };
                     detect.isBreakpoint = function () {
@@ -241,7 +241,7 @@ define([
                 });
 
                 it('includes rules for tablet devices', function (done) {
-                    detect.getBreakpoint = function() {
+                    detect.getBreakpoint = function () {
                         return 'tablet';
                     };
                     detect.isBreakpoint = function () {
@@ -260,7 +260,7 @@ define([
                 });
 
                 it('includes rules for larger screens', function (done) {
-                    detect.getBreakpoint = function() {
+                    detect.getBreakpoint = function () {
                         return 'desktop';
                     };
                     detect.isBreakpoint = function () {

@@ -15,8 +15,7 @@ define([
     spaceFiller,
     createAdSlot,
     commercialFeatures,
-    cloneDeep)
-{
+    cloneDeep) {
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -95,7 +94,7 @@ define([
             }
 
             if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-                return tryAddingAdvert().then(tryAddingAdvert).then(function() {
+                return tryAddingAdvert().then(tryAddingAdvert).then(function () {
                     return addLongArticleAds(8);
                 });
             } else {
