@@ -28,7 +28,6 @@ define([
          * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
          */
         this.insertAtFirstSpace = function insertAtFirstSpace(rules, writer, debug) {
-            debug = true; // TODO REMOVE
             lastInsertion = lastInsertion.then(function insertNextContent() {
                 return spacefinder.getParaWithSpace(rules, debug).then(function applyParaToWriter(para) {
                     if (para) {
