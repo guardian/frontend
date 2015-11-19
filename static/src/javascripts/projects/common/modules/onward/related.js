@@ -57,7 +57,7 @@ define([
     };
 
     Related.prototype.renderRelatedComponent = function () {
-        var relatedUrl, popularInTag, componentName, container, editionSuffix
+        var relatedUrl, popularInTag, componentName, container, editionSuffix,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
 
         if (config.page && config.page.hasStoryPackage) {
@@ -95,9 +95,9 @@ define([
                             break;
                     }
 
-                    if(ab.getParticipations().EssentialReadTest1.variant === 'automated') {
+                    if (ab.getParticipations().EssentialReadTest1.variant === 'automated') {
                         relatedUrl = '/container/essential-read/automated' + editionSuffix;
-                    } else if(ab.getParticipations().EssentialReadTest1.variant === 'curated') {
+                    } else if (ab.getParticipations().EssentialReadTest1.variant === 'curated') {
                         relatedUrl = '/container/essential-read/curated' + editionSuffix;
                     }
 
