@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "ab-most-popular-default-test-2",
     "Switch to change the default of most popular container to show across the guardian first instead of section",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 23),
+    sellByDate = new LocalDate(2015, 11, 27),
     exposeClientSide = true
   )
 
