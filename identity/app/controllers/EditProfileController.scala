@@ -31,10 +31,12 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   protected val accountPage = IdentityPage("/account/edit", "Edit Account Details", "edit account details")
   protected val publicPage = IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
   protected val membershipPage = IdentityPage("/membership/edit", "Membership", "edit membership details")
+  protected val digitalPackPage = IdentityPage("/digitalpack/edit", "Digital Pack", "edit digital pack details")
 
   def displayPublicProfileForm = displayForm(publicPage)
   def displayAccountForm = displayForm(accountPage)
   def displayMembershipForm = displayForm(membershipPage)
+  def displayDigitalPackForm = displayForm(digitalPackPage)
 
   protected def displayForm(page: IdentityPage) = CSRFAddToken {
     recentlyAuthenticated.async { implicit request =>
