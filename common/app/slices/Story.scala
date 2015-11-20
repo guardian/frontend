@@ -23,7 +23,7 @@ object Story {
     }
   }
 
-  def fromContent(content: model.Content): Story = fromFaciaContent(FaciaContentConvert.frontendContentToFaciaContent(content))
+  //def fromContent(content: model.Content): Story = fromFaciaContent(FaciaContentConvert.frontendContentToFaciaContent(content))
 
   def fromFaciaContent(faciaContent: FaciaContent): Story = {
     Story(

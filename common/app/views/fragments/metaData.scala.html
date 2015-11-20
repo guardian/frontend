@@ -1,8 +1,9 @@
-@(item: model.MetaData, amp: Boolean = false)(implicit request: RequestHeader)
+@(page: model.Page, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{AnalyticsHost, _}
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
+@import model.Page
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
@@ -36,8 +37,11 @@
 
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
-    @if((item.isArticle && !item.isLiveBlog)) {
-        <link rel="amphtml" href="@LinkTo{/@item.id/amp}">
+    @Page.getContentPage(page).map { content =>
+        @if((content.item.tags.isArticle && !content.item.tags.isLiveBlog)) {
+            <link rel="amphtml" href="@LinkTo{/@page.metadata.id/amp}">
+        }
+        @fragments.breadcrumb(content)
     }
 }
 
@@ -57,12 +61,12 @@
     <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
 }
 
-@item.rssPath.map { path =>
-    <link href="@{LinkTo(path)}" rel="alternate" type="application/rss+xml" title="@views.support.Title(item) RSS feed" />
+@page.metadata.rssPath.map { path =>
+    <link href="@{LinkTo(path)}" rel="alternate" type="application/rss+xml" title="@views.support.Title(page) RSS feed" />
 }
 
-@if(!item.shouldGoogleIndex) { <meta name="robots" content="noindex"> }
-<link rel="canonical" href="@LinkTo(item.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, item.webUrl)))" />
+@if(!page.metadata.shouldGoogleIndex) { <meta name="robots" content="noindex"> }
+<link rel="canonical" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" />
 
 <meta name="apple-mobile-web-app-title" content="Guardian" />
 <meta name="application-name" content="The Guardian" />
@@ -73,40 +77,52 @@
 @* https://support.google.com/plus/answer/1713826 *@
 <link rel="publisher" href="https://plus.google.com/113000071431138202574" />
 
-@item.contributors.map{ contributor =>
-    <meta name="author" content="@contributor.name" />
+@Page.getContent(page).map { content =>
+    @content.tags.contributors.map { contributor =>
+        <meta name="author" content="@contributor.name" />
+    }
 }
 
-@item.description.map { description =>
+@page.metadata.description.map { description =>
     <meta name="description" content="@StripHtmlTags(description)" />
 }
 
 @* https://support.google.com/customsearch/answer/1626955?hl=en *@
-@SeoThumbnail(item).map{ thumb =>
+@SeoThumbnail(page).map{ thumb =>
     <meta name="thumbnail" content="@thumb" />
 }
 
-@* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
-@if(item.keywords.nonEmpty) {
-    <meta name="keywords" content="@item.keywords.map(_.name).mkString(",")" />
-    <meta name="news_keywords" content="@item.keywords.take(10).map(_.name).mkString(",")" />
+@page match {
+    case c: model.ContentPage => {
+        @* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
+        @if(c.item.tags.keywords.nonEmpty) {
+            <meta name="keywords" content="@c.item.tags.keywords.map(_.name).mkString(",")" />
+            <meta name="news_keywords" content="@c.item.tags.keywords.take(10).map(_.name).mkString(",")" />
+        }
+        @c.item.content.getOpenGraph.map { case (key, value) =>
+            <meta property="@key" content="@value" />
+        }
+        @c.item.content.getTwitterProperties.map{ case (key, value) =>
+            <meta name="@key" content="@value" />
+        }
+    }
+    case _ => {
+        @page.metadata.getOpengraphProperties.map{ case (key, value) =>
+            <meta property="@key" content="@value" />
+        }
+        @page.metadata.getTwitterProperties.map{ case (key, value) =>
+            <meta name="@key" content="@value" />
+        }
+    }
 }
 
-@item.openGraph.map{ case (key, value) =>
-    <meta property="@key" content="@value" />
-}
-
-@item.cards.map{ case (key, value) =>
-    <meta name="@key" content="@value" />
-}
-
-@item.openGraphImages.map{ case (imageUrl) =>
+@page.metadata.openGraphImages.map{ case (imageUrl) =>
     <meta property="og:image" content="@Html(imageUrl)" />
 }
 
-@item.pagination.map{ pagination =>
-    @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url+"?page="+next)" /> }
-    @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url+(if(prev != 1){"?page="+prev}else{""}))" /> }
+@page.metadata.pagination.map{ pagination =>
+    @pagination.next.map{ next => <link rel="next" href="@LinkTo(page.metadata.url+"?page="+next)" /> }
+    @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(page.metadata.url+(if(prev != 1){"?page="+prev}else{""}))" /> }
 }
 
 @*
@@ -118,12 +134,12 @@
     @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
 }
 
-@item.linkedData.map { linkedData =>
+@page.metadata.linkedData.map { linkedData =>
     <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
         @Html(LinkedData.toJson(linkedData))
     </script>
 }
 
-@item.iosId("google").map { iosId =>
+@page.metadata.iosId("google").map { iosId =>
     <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
 }

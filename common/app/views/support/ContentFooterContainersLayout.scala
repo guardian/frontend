@@ -1,14 +1,14 @@
 package views.support
 
 import conf.switches.Switches.OutbrainSwitch
-import model.{Content, RelatedContent}
+import model.{Content, RelatedContentPackage}
 import play.twirl.api.{Html, HtmlFormat}
 
 import scala.collection.immutable.Seq
 
 object ContentFooterContainersLayout {
 
-  def apply(content: Content, related: RelatedContent, isAdvertisementFeature: Boolean)
+  def apply(content: Content, related: RelatedContentPackage, isAdvertisementFeature: Boolean)
            (storyPackagePlaceholder: => Html)
            (onwardPlaceholder: => Html)
            (commentsPlaceholder: => Html)
@@ -43,7 +43,7 @@ object ContentFooterContainersLayout {
         optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
         Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
-        optional(content.isCommentable, commentsPlaceholder),
+        optional(content.trail.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
         optional(!content.shouldHideAdverts, standardCommercialComponent)
       ).flatten

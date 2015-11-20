@@ -48,7 +48,7 @@ object Trail {
   }
 }
 
-case class Trail (
+final case class Trail (
   tags: Tags,
   commercial: Commercial,
   fields: Fields,

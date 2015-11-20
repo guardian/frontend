@@ -1,13 +1,27 @@
 package model
 
 import com.gu.contentapi.client.model.ItemResponse
+import com.gu.facia.api.models.FaciaContent
+import services.FaciaContentConvert
 
-case class RelatedContent( storyPackage: Seq[ContentType]) {
-  val hasStoryPackage: Boolean = storyPackage.nonEmpty
+case class RelatedContentItem (
+  content: ContentType,
+  faciaContent: FaciaContent
+)
+
+case class RelatedContentPackage private (
+  items: Seq[RelatedContentItem]
+  ) {
+  val hasStoryPackage: Boolean = items.nonEmpty
+  val faciaItems: Seq[FaciaContent] = items.map(_.faciaContent)
 }
 
-object RelatedContent {
-  def apply(parent: Content, item: ItemResponse): RelatedContent = RelatedContent(
-    item.storyPackage.map(Content(_)).filterNot(_.metadata.id == parent.metadata.id)
-  )
+object RelatedContentPackage {
+  def apply(parent: ContentType, response: ItemResponse): RelatedContentPackage = {
+    val items = response.storyPackage.map { item =>
+      val frontendContent = Content(item)
+      RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
+    }
+    RelatedContentPackage(items.filterNot(_.content.metadata.id == parent.metadata.id))
+  }
 }

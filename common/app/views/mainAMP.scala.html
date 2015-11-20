@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page)(body: Html)(implicit request: RequestHeader)
 @import common.{AnalyticsHost, LinkTo}
 @import conf.Configuration
 @import views.support.OmnitureAnalyticsData
@@ -9,10 +9,10 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
-        @fragments.metaData(metaData, true)
-        <title>@views.support.Title(metaData)</title>
+        @fragments.metaData(page, true)
+        <title>@views.support.Title(page)</title>
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
-        @fragments.amp.stylesheets.main(metaData)
+        @fragments.amp.stylesheets.main(page.metadata)
         <script src="https://cdn.ampproject.org/v0.js" async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
@@ -21,7 +21,7 @@
     <body>
         @defining(s"${request.host}${request.path}") { path =>
             @defining({
-                val params = OmnitureAnalyticsData(metaData, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
+                val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
                 val omnitureAccount = Configuration.javascript.pageData("guardian.page.omnitureAccount")
                 s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
             }) { omnitureCall =>
@@ -40,7 +40,7 @@
 
             @body
 
-            @fragments.footerAMP(metaData)
+            @fragments.footerAMP(page)
         </div>
     </body>
 </html>

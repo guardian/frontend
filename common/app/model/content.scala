@@ -40,7 +40,7 @@ sealed trait ContentType {
 
 case class GenericContent(override val content: Content) extends ContentType
 
-case class Content(
+final case class Content(
   trail: Trail,
   metadata: MetaData,
   tags: Tags,
@@ -216,13 +216,13 @@ case class Content(
     meta.flatten.toMap
   }
 
-  def getOpenGraph: Map[String, String] = Map(
+  def getOpenGraph: Map[String, String] = metadata.getOpengraphProperties ++ Map(
     "og:title" -> metadata.webTitle,
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
     "og:image" -> openGraphImage
   ) ++ opengraphPropertiesOverrides
 
-  def getTwitterProperties: Map[String, String] = Map(
+  def getTwitterProperties: Map[String, String] = metadata.getTwitterProperties ++ Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replace("http", "guardian"),
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList ++ twitterPropertiesOverrides
@@ -430,6 +430,9 @@ object Article {
 case class Article private (
   override val content: Content,
   lightbox: GenericLightbox) extends ContentType {
+
+  val isLiveBlog: Boolean = content.tags.isLiveBlog
+  val isImmersive: Boolean = content.metadata.isImmersive
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")

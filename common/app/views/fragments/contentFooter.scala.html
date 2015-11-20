@@ -1,18 +1,18 @@
-@(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
+@(content: model.ContentType, related: model.RelatedContentPackage, cssClass: String = "")(implicit request: RequestHeader)
 @import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
-    @fragments.discussionFooter(content, content.isCommentable, content.isClosedForComments, content.shortUrlId)
+    @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
-    @ContentFooterContainersLayout(content, related, content.isAdvertisementFeature) {
+    @ContentFooterContainersLayout(content.content, related, content.commercial.isAdvertisementFeature) {
         @fragments.storyPackagePlaceholder(content, related)
     } {
         @fragments.onwardPlaceholder()
     } {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     } {
-        @fragments.mostPopularPlaceholder(content.section)
+        @fragments.mostPopularPlaceholder(content.metadata.section)
     } {
         <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
     } {

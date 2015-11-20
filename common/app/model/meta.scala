@@ -29,7 +29,7 @@ object Commercial {
   }
 }
 
-case class Commercial(
+final case class Commercial(
   tags: Tags,
   fields: Fields,
   metadata: MetaData,
@@ -79,7 +79,7 @@ object Fields {
   }
 }
 
-case class Fields(
+final case class Fields(
   trailText: Option[String],
   linkText: String,
   shortUrl: String,
@@ -94,6 +94,43 @@ case class Fields(
 }
 
 object MetaData {
+
+  def make(
+    id: String,
+    section: String,
+    webTitle: String,
+    analyticsName: String,
+    canonicalUrl: Option[String] = None,
+    shouldGoogleIndex: Boolean = true,
+    pagination: Option[Pagination] = None,
+    description: Option[String] = None,
+    title: Option[String] = None,
+    isFront: Boolean = false,
+    contentType: String = "",
+    adUnitSuffix: Option[String] = None,
+    customSignPosting: Option[NavItem] = None,
+    iosType: Option[String] = Some("Article")
+    ): MetaData = {
+
+    val url = s"/$id"
+
+    MetaData(
+      id = id,
+      url = url,
+      webUrl = s"${Configuration.site.host}$url",
+      webTitle = webTitle,
+      section = section,
+      analyticsName = analyticsName,
+      adUnitSuffix = adUnitSuffix getOrElse section,
+      canonicalUrl = canonicalUrl,
+      shouldGoogleIndex = shouldGoogleIndex,
+      pagination = pagination,
+      description = description,
+      title = title,
+      isFront = isFront,
+      contentType = contentType,
+      customSignPosting = customSignPosting)
+  }
 
   def make(fields: Fields, apiContent: contentapi.Content) = {
     val id = apiContent.id
@@ -120,7 +157,7 @@ object MetaData {
   }
 }
 
-case class MetaData (
+final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
@@ -139,9 +176,12 @@ case class MetaData (
   openGraphImages: Seq[String] = Seq(),
   membershipAccess: Option[String] = None,
   isFront: Boolean = false,
-  hideUi: Boolean = false
+  hideUi: Boolean = false,
+  canonicalUrl: Option[String] = None,
+  shouldGoogleIndex: Boolean = true,
+  title: Option[String] = None,
+  customSignPosting: Option[NavItem] = None
 ){
-  def title: Option[String] = None
 
   def hasPageSkin(edition: Edition) = false
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = Nil
@@ -155,7 +195,6 @@ case class MetaData (
   }
 
   val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
-  val shouldGoogleIndex: Boolean = true
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -209,7 +248,18 @@ case class MetaData (
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
-  def customSignPosting: Option[NavItem] = None
+}
+
+object Page {
+
+  def getContentPage(page: Page): Option[ContentPage] = page match {
+    case c: ContentPage => Some(c)
+    case _ => None
+  }
+
+  def getContent(page: Page): Option[ContentType] = {
+    getContentPage(page).map(_.item)
+  }
 }
 
 // A Page is something that has metadata, and anything with Metadata can be rendered.
@@ -217,29 +267,37 @@ trait Page {
  def metadata: MetaData
 }
 
-/*
-case class CommercialExpiryPage(override val id: String) extends Page(
-  id,
-  section = "global",
-  webTitle = "This page has been removed",
-  analyticsName = "GFE:Gone"
-) {
-  override val shouldGoogleIndex = false
+case class ContentPage(item: ContentType) extends Page {
+  override val metadata = item.metadata
 }
 
-class TagCombiner(
+case class SimplePage(override val metadata: MetaData) extends Page
+
+case class CommercialExpiryPage(
   id: String,
-  val leftTag: Tag,
-  val rightTag: Tag,
-  override val pagination: Option[Pagination] = None
-) extends Page(
-  id,
-  leftTag.section,
-  s"${leftTag.name} + ${rightTag.name}",
-  s"GFE:${leftTag.section}:${leftTag.name} + ${rightTag.name}",
-  pagination,
-  Some(GuardianContentTypes.TagIndex)
-)*/
+  section: String = "global",
+  webTitle: String = "This page has been removed",
+  analyticsName: String = "GFE:Gone") extends Page {
+
+  override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+}
+
+case class TagCombiner(
+  id: String,
+  leftTag: Tag,
+  rightTag: Tag,
+  pagination: Option[Pagination] = None
+) extends Page {
+
+  override val metadata: MetaData = MetaData.make(
+    id,
+    leftTag.metadata.section,
+    s"${leftTag.name} + ${rightTag.name}",
+    s"GFE:${leftTag.metadata.section}:${leftTag.name} + ${rightTag.name}",
+    pagination = pagination,
+    description = Some(GuardianContentTypes.TagIndex)
+  )
+}
 
 object IsRatio {
 
@@ -264,7 +322,7 @@ object Elements {
       .getOrElse(Nil))
   }
 }
-case class Elements(elements: Seq[Element]) {
+final case class Elements(elements: Seq[Element]) {
 
   val trailPicMinDesiredSize = 460
 
@@ -369,7 +427,7 @@ case class Elements(elements: Seq[Element]) {
 /**
  * Tags lets you extract meaning from tags on a page.
  */
-case class Tags(
+final case class Tags(
   tags: Seq[Tag]) {
 
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption

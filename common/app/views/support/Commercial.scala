@@ -4,14 +4,14 @@ import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp.{AdSize, AdSlot, TopAboveNavSlot, TopSlot}
 import conf.switches.Switches._
-import model.MetaData
+import model.{MetaData, Page}
 
 object Commercial {
 
-  def shouldShowAds(metaData: MetaData): Boolean = metaData match {
-    case c: model.Content if c.shouldHideAdverts => false
-    case p: model.Page if p.section == "identity" => false
-    case model.CommercialExpiryPage(_) => false
+  def shouldShowAds(page: Page): Boolean = page match {
+    case c: model.ContentPage if c.item.content.shouldHideAdverts => false
+    case p: model.Page if p.metadata.section == "identity" => false
+    case p: model.CommercialExpiryPage => false
     case _ => true
   }
 

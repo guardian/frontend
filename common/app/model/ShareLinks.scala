@@ -12,7 +12,7 @@ case class ShareLink (
   href: String
 )
 
-case class ShareLinks(
+final case class ShareLinks(
   tags: Tags,
   fields: Fields,
   metadata: MetaData,

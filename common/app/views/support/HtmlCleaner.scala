@@ -129,7 +129,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
-        index <- Some(article.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
+        index <- Some(article.lightbox.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
         crop <- container.largestEditorialCrop
         if !article.isLiveBlog
       } yield (index, crop)
@@ -139,7 +139,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) },
+        shareInfo = lightboxInfo.map{case (index, crop) => (article.sharelinks.elementShares(Some(s"img-$index"), crop.url), article.metadata.contentType) },
         amp = amp
       ).toString()
 
@@ -152,7 +152,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
   def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
     val srcImagePath = new java.net.URL(src).getPath()
-    val imageContainers = article.bodyImages.filter(_.id == id)
+    val imageContainers = article.elements.bodyImages.filter(_.id == id)
 
     // Try to match the container based on both URL and media ID.
     val fullyMatchedImage: Option[ImageContainer] = {
@@ -233,7 +233,7 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
       body.select(".block").foreach { el =>
         val contributorId = el.attributes().get("data-block-contributor")
         if (contributorId.nonEmpty) {
-          article.tags.find(_.id == contributorId).map{ contributorTag =>
+          article.tags.tags.find(_.id == contributorId).map{ contributorTag =>
             val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
             el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
           }
@@ -249,9 +249,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockId = el.id()
-        val shares = article.elementShares(Some(blockId))
+        val shares = article.sharelinks.elementShares(Some(blockId))
 
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.metadata.contentType)
 
         el.append(html.toString())
       }
@@ -417,13 +417,13 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
   def clean(doc: Document): Document = {
 
-    if (article.showInRelated) {
+    if (article.content.showInRelated) {
 
       val paragraphs = doc.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
-      article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
+      article.tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
 
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
@@ -437,7 +437,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
           paragraphsWithMatchers.foreach { case (matcher, p) =>
             val tagLink = doc.createElement("a")
-            tagLink.attr("href", LinkTo(keyword.url, edition))
+            tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
             tagLink.attr("data-component", "auto-linked-tag")

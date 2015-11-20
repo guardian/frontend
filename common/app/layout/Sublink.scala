@@ -187,7 +187,7 @@ case object TimeTimestamp extends FaciaCardTimestamp {
 
 object FaciaCard {
   private def getByline(faciaContent: FaciaContent) = faciaContent.byline.filter(const(faciaContent.showByline)) map { byline =>
-    Byline(byline, faciaContent.contributors.map(Tag.apply(_)))
+    Byline(byline, faciaContent.contributors.map(Tag.make(_)))
   }
 
   def fromTrail(faciaContent: FaciaContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
