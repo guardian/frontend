@@ -1,7 +1,7 @@
 package services
 
 import common.AutoRefresh
-import model.TagIndexListings
+import model.{TagDefinition, TagIndexListings}
 import play.api.{Application, GlobalSettings}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -19,11 +19,9 @@ trait NewspaperBooksAndSectionsAutoRefresh extends GlobalSettings {
 
 trait NewspaperTags {
   val source: String
-  def getTags(publication: String) = {
+  def getTags(publication: String): Seq[TagDefinition] = {
     TagIndexesS3.getIndex(source, publication) match {
-      case Right(tagPage) => {
-        tagPage.tags
-      }
+      case Right(tagPage) => tagPage.tags
       case _ => Seq.empty
     }
   }

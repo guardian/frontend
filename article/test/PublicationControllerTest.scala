@@ -1,16 +1,16 @@
 package test
 
+import controllers.PublicationController
 import model.TagDefinition
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 
 @DoNotDiscover class PublicationControllerTest extends FlatSpec
                                                 with Matchers
                                                 with ConfiguredTestSuite
-                                                with BeforeAndAfterAll
                                                 with MockitoSugar {
 
   private val PermanentRedirect = 301
@@ -20,12 +20,13 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   val emptySeq: Seq[TagDefinition] = Seq.empty
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
+  val publicationController = new PublicationController(bookAgent, bookSectionAgent)
 
   "Publication Controller" should "redirect to an /all page when an observer dated book url is requested" in {
     when(bookAgent.getTags("theobserver")).thenReturn(Seq(new TagDefinition("Observer Magazine","theobserver/magazine",None,false)))
     when(bookSectionAgent.getTags("theobserver")).thenReturn(emptySeq)
     val testReq = TestRequest("theobserver/2009/may/17/magazine")
-    val result = new controllers.PublicationController(bookAgent, bookSectionAgent).publishedOn("theobserver","2009","may","17","magazine")(testReq)
+    val result = publicationController.publishedOn("theobserver","2009","may","17","magazine")(testReq)
     status(result) should be(PermanentRedirect)
     header("Location",result).getOrElse("") should endWith ("/theobserver/magazine/2009/may/17/all")
   }
@@ -34,7 +35,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theobserver")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theobserver")).thenReturn(Seq(new TagDefinition("News","theobserver/news/uknews",None,false)))
     val testReq = TestRequest("theobserver/2015/nov/01/news/uknews")
-    val result = controllers.PublicationController.publishedOn("theobserver", "2015", "nov", "01", "news/uknews")(testReq)
+    val result = publicationController.publishedOn("theobserver", "2015", "nov", "01", "news/uknews")(testReq)
     status(result) should be(PermanentRedirect)
     header("Location",result).getOrElse("") should endWith ("/theobserver/news/uknews/2015/nov/01/all")
   }
@@ -43,7 +44,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theobserver")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theobserver")).thenReturn(emptySeq)
     val testReq = TestRequest("theobserver/2014/aug/31/profile-clare-smyth-gordon-ramsay-chef-perfect-ten")
-    val result = controllers.PublicationController.publishedOn("theobserver","2014","aug","31","profile-clare-smyth-gordon-ramsay-chef-perfect-ten")(testReq)
+    val result = publicationController.publishedOn("theobserver","2014","aug","31","profile-clare-smyth-gordon-ramsay-chef-perfect-ten")(testReq)
     status(result) should be(OK)
   }
 
@@ -51,7 +52,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theobserver")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theobserver")).thenReturn(emptySeq)
     val testReq = TestRequest("theobserver/gallery/2013/sep/14/the-10-best-fonts")
-    val result = controllers.PublicationController.publishedOn("theobserver/gallery","2013","sep","14","the-10-best-fonts")(testReq)
+    val result = publicationController.publishedOn("theobserver/gallery","2013","sep","14","the-10-best-fonts")(testReq)
     status(result) should be(OK)
   }
 
@@ -68,7 +69,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theobserver")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theobserver")).thenReturn(emptySeq)
     val testReq = TestRequest("theobserver/she-said/2014/apr/17/unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")
-    val result = controllers.PublicationController.publishedOn("theobserver/she-said","2014","apr","17","unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")(testReq)
+    val result = publicationController.publishedOn("theobserver/she-said","2014","apr","17","unisex-changing-rooms-are-depriving-me-of-getting-naked-with-my-fellow-women")(testReq)
     status(result) should be(OK)
   }
 
@@ -76,7 +77,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theguardian")).thenReturn(Seq(new TagDefinition("Main section","theguardian/mainsection",None,false)))
     when(bookSectionAgent.getTags("theguardian")).thenReturn(emptySeq)
     val testReq = TestRequest("theguardian/2015/nov/03/mainsection")
-    val result = controllers.PublicationController.publishedOn("theguardian","2015","nov","03","mainsection")(testReq)
+    val result = publicationController.publishedOn("theguardian","2015","nov","03","mainsection")(testReq)
     status(result) should be(PermanentRedirect)
     header("Location",result).getOrElse("") should endWith ("/theguardian/mainsection/2015/nov/03/all")
   }
@@ -85,7 +86,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theguardian")).thenReturn(Seq(new TagDefinition("Comment & features","theguardian/g2/features",None,false)))
     val testReq = TestRequest("theguardian/2015/nov/04/g2/features")
-    val result = controllers.PublicationController.publishedOn("theguardian", "2015", "nov", "04", "g2/features")(testReq)
+    val result = publicationController.publishedOn("theguardian", "2015", "nov", "04", "g2/features")(testReq)
     status(result) should be(PermanentRedirect)
     header("Location",result).getOrElse("") should endWith ("/theguardian/g2/features/2015/nov/04/all")
   }
@@ -94,7 +95,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theguardian")).thenReturn(emptySeq)
     val testReq = TestRequest("theguardian/2012/aug/24/good-to-meet-you-zubair-limbada")
-    val result = controllers.PublicationController.publishedOn("theguardian","2012","aug","24","good-to-meet-you-zubair-limbada")(testReq)
+    val result = publicationController.publishedOn("theguardian","2012","aug","24","good-to-meet-you-zubair-limbada")(testReq)
     status(result) should be(OK)
   }
 
@@ -102,7 +103,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theguardian")).thenReturn(emptySeq)
     val testReq = TestRequest("theguardian/2003/jul/26/features.jobsmoney7")
-    val result = controllers.PublicationController.publishedOn("theguardian","2003","jul","26","features.jobsmoney7")(testReq)
+    val result = publicationController.publishedOn("theguardian","2003","jul","26","features.jobsmoney7")(testReq)
     status(result) should be(OK)
   }
 
@@ -110,7 +111,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theguardian")).thenReturn(emptySeq)
     val testReq = TestRequest("theguardian/gallery/2009/apr/01/prince-harry-william-monarchy")
-    val result = controllers.PublicationController.publishedOn("theguardian/gallery","2009","apr","01","prince-harry-william-monarchy")(testReq)
+    val result = publicationController.publishedOn("theguardian/gallery","2009","apr","01","prince-harry-william-monarchy")(testReq)
     status(result) should be(OK)
   }
 
@@ -127,7 +128,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theguardian")).thenReturn(emptySeq)
     val testReq = TestRequest("theguardian/from-the-archive-blog/2012/feb/17/charlie-chaplin-1952-communist")
-    val result = controllers.PublicationController.publishedOn("theguardian/from-the-archive-blog","2012","feb","17","charlie-chaplin-1952-communist")(testReq)
+    val result = publicationController.publishedOn("theguardian/from-the-archive-blog","2012","feb","17","charlie-chaplin-1952-communist")(testReq)
     status(result) should be(OK)
   }
 

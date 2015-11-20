@@ -58,11 +58,11 @@ class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = Newspa
   }
 
   private def tagExists(publication: String, tag: String) = {
-    Seq(bookAgent.getTags(publication), bookSectionAgent.getTags(publication))
-      .flatMap { _.collect {
-          case pubTag if pubTag.id == tag => pubTag
-        }
-      }.nonEmpty
+    try {
+      bookAgent.getTags(publication).exists(_.id == tag) || bookSectionAgent.getTags(publication).exists(_.id == tag)
+    } catch {
+      case e: Exception => false
+    }
   }
 
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
