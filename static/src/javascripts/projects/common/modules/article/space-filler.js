@@ -24,7 +24,7 @@ define([
          * seek a slot for a new component until all the other component writes have finished.
          *
          * @param rules - a spacefinder ruleset
-         * @param writer - function, takes a para element and injects a container for the new content synchronously
+         * @param writer - function, takes a para element and injects a container for the new content synchronously. It should NOT use Fastdom.
          * @param debug - flag to enable debugging in spacefinder
          *
          * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
