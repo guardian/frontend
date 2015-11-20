@@ -98,6 +98,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     @include mq(tablet) {
+        box-sizing: border-box;
         width: 75%;
     }
 
