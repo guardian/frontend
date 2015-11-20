@@ -53,7 +53,7 @@ define([
                 setupPaymentForm();
                 addToggleFormListener();
             }
-        }, function(error) {
+        }, function (error) {
             if (error.status == 404) {
                 hideLoader();
                 displayMembershipUpSell();

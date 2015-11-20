@@ -38,7 +38,7 @@ define([
                 hideLoader();
                 populateUserDetails(resp);
             }
-        }, function(error) {
+        }, function (error) {
             if (error.status == 404) {
                 hideLoader();
                 displayDigitalPackUpSell();
@@ -67,7 +67,7 @@ define([
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
 
         var trialLeft = userDetails.subscription.trialLength;
-        $(REMAINING_TRIAL_LENGTH).text(trialLeft + " day" + (trialLeft != 1 ? "s" : ""));
+        $(REMAINING_TRIAL_LENGTH).text(trialLeft + ' day' + (trialLeft != 1 ? 's' : ''));
 
         $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
