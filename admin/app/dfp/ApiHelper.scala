@@ -16,7 +16,7 @@ object ApiHelper extends Logging {
     @tailrec
     def fetch(soFar: Seq[T]): Seq[T] = {
       val (pageOfResults, totalResultSetSize) = fetchPage(statementBuilder.toStatement)
-      val resultsSoFar = soFar ++ pageOfResults
+      val resultsSoFar = Option(pageOfResults).map(soFar ++ _).getOrElse(soFar)
       if (resultsSoFar.size >= totalResultSetSize) {
         resultsSoFar
       } else {
