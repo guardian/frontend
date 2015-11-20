@@ -19,6 +19,7 @@ GET        /external/eyeblaster/addineyeV2.html        controllers.Assets.at(pat
 #Facia Press
 GET        /collection/*id/rss                         controllers.FaciaController.renderCollectionRss(id)
 GET        /container/use-layout/*id.json              controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
+GET        /container/essential-read/:contentSource/:edition.json   controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
 GET        /container/*id.json                         controllers.FaciaController.renderContainerJson(id)
 GET        /most-relevant-container/*path.json         controllers.FaciaController.renderMostRelevantContainerJson(path)
 

@@ -45,7 +45,16 @@ trait ABTestSwitches {
     "ab-most-popular-default-test-2",
     "Switch to change the default of most popular container to show across the guardian first instead of section",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 23),
+    sellByDate = new LocalDate(2015, 11, 27),
+    exposeClientSide = true
+  )
+
+  val ABEssentialReadTest1 = Switch(
+    "A/B Tests",
+    "ab-essential-read-test-1",
+    "Show the essential read instead of related content",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 15),
     exposeClientSide = true
   )
 
