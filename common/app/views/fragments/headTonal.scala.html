@@ -1,9 +1,9 @@
-@(item: model.ContentType, faciaItem: com.gu.facia.api.models.FaciaContent, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
 
-<header class="content__head tonal__head tonal__head--@toneClass(faciaItem)
+<header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
 
     <div class="content__header tonal__header u-cf">

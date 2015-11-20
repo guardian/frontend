@@ -38,7 +38,7 @@ sealed trait ContentType {
   final def sharelinks: ShareLinks = content.sharelinks
 }
 
-case class GenericContent(override val content: Content) extends ContentType
+final case class GenericContent(override val content: Content) extends ContentType
 
 final case class Content(
   trail: Trail,
@@ -427,7 +427,7 @@ object Article {
   }
 }
 
-case class Article private (
+final case class Article private (
   override val content: Content,
   lightbox: GenericLightbox) extends ContentType {
 
@@ -491,7 +491,7 @@ object Audio {
   }
 }
 
-case class Audio private (override val content: Content) extends ContentType {
+final case class Audio private (override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
@@ -543,7 +543,7 @@ object Video {
   }
 }
 
-case class Video private (
+final case class Video private (
   override val content: Content,
   source: Option[String] ) extends ContentType {
 
@@ -640,7 +640,7 @@ object Gallery {
   }
 }
 
-case class Gallery(
+final case class Gallery(
   override val content: Content,
   lightbox: GalleryLightbox) extends ContentType {
 
@@ -719,7 +719,7 @@ case class GenericLightbox(
   }
 }
 
-case class Interactive(override val content: Content) extends ContentType {
+final case class Interactive(override val content: Content) extends ContentType {
 
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
@@ -792,7 +792,7 @@ object ImageContent {
   }
 }
 
-case class ImageContent(
+final case class ImageContent(
   override val content: Content,
   lightBox: GenericLightbox ) extends ContentType
 
