@@ -123,7 +123,7 @@ define([
             insertion.then(function (result) {
                 expect(result).toBe(false);
                 done();
-            })
-        })
+            });
+        });
     });
 });

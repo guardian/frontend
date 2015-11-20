@@ -39,7 +39,7 @@ define([
                     } else {
                         return false;
                     }
-                })
+                });
             }
 
             function insertionPromise(para) {
@@ -49,7 +49,7 @@ define([
                             writer(para);
                             resolve(true);
                         } catch (e) {
-                            reject(e)
+                            reject(e);
                         }
                     });
                 });
