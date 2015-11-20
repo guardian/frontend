@@ -25,8 +25,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
   def fetchLatestGuardianNewspaper: Future[List[FaciaContainer]] = {
-    val date = DateTime.now(DateTimeZone.UTC)
-    bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(date))
+    val now = DateTime.now(DateTimeZone.UTC)
+    bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(now))
   }
 
   def fetchLatestObserverNewspaper: Future[List[FaciaContainer]] = {
@@ -132,8 +132,10 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   def lowercaseDisplayName(s: String) = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
 
   def getPastSundayDateFor(date: DateTime) = {
-    val daysSinceSunday = DateTimeConstants.SUNDAY - date.getDayOfWeek - 7
-    date.minusDays(Math.abs(daysSinceSunday))
+    if(date.getDayOfWeek != DateTimeConstants.SUNDAY) {
+      val daysSinceSunday = DateTimeConstants.SUNDAY - date.getDayOfWeek - 7
+      date.minusDays(Math.abs(daysSinceSunday))
+    } else date
   }
 
   def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date

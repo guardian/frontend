@@ -4,7 +4,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest._
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class NewspapeQueryTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite with implicits.Dates{
+@DoNotDiscover class NewspaperQueryTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite with implicits.Dates{
 
   "NewspapeQueryTest" - {
     "lowercase display name except UK news and US news" in {
@@ -15,6 +15,10 @@ import test.ConfiguredTestSuite
 
     "use past Sunday date for a given day (required for /theobserver)" in {
       NewspaperQuery.getPastSundayDateFor(new DateTime(2015, 11, 19, 0, 0).withZone(DateTimeZone.UTC)).toISODateTimeString should be("2015-11-15T00:00:00.000Z")
+    }
+
+    "ensure Sunday date is used for a Sunday date (required for /theobserver)" in {
+      NewspaperQuery.getPastSundayDateFor(new DateTime(2015, 11, 8, 0, 0).withZone(DateTimeZone.UTC)).toISODateTimeString should be("2015-11-08T00:00:00.000Z")
     }
 
     "use Saturday date if day is Sunday (required for /theguardian)" in {
