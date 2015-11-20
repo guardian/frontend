@@ -113,5 +113,17 @@ define([
             });
             spaceFiller.insertAtFirstSpace(mockRules, done);
         });
+
+        it('If a writer throws an exception, the promise is resolved with "false"', function (done) {
+            mockSpacefinderResult = document.createElement('p');
+            var insertion = spaceFiller.insertAtFirstSpace(mockRules, function () {
+                throw mockException;
+            });
+
+            insertion.then(function (result) {
+                expect(result).toBe(false);
+                done();
+            })
+        })
     });
 });

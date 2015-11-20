@@ -30,29 +30,34 @@ define([
          * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
          */
         this.insertAtFirstSpace = function insertAtFirstSpace(rules, writer, debug) {
-            lastInsertion = lastInsertion.then(function insertNextContent() {
+            lastInsertion = lastInsertion.then(insertNextContent).catch(onInsertionError);
+
+            function insertNextContent() {
                 return spacefinder.getParaWithSpace(rules, debug).then(function applyParaToWriter(para) {
                     if (para) {
-                        return promiseInsertion(para);
+                        return insertionPromise(para);
                     } else {
                         return false;
                     }
-                });
-            });
+                })
+            }
 
-            function promiseInsertion(para) {
-                return new Promise(function (resolve) {
+            function insertionPromise(para) {
+                return new Promise(function (resolve, reject) {
                     idleFastdom.write(function () {
                         try {
                             writer(para);
                             resolve(true);
                         } catch (e) {
-                            // log and move on
-                            raven.captureException(e);
-                            resolve(false);
+                            reject(e)
                         }
                     });
                 });
+            }
+
+            function onInsertionError(e) {
+                raven.captureException(e);
+                return false;
             }
 
             return lastInsertion;
