@@ -160,7 +160,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     pressedCollections.map { collections =>
         Cached(60) {
           val config = CollectionConfig.empty.copy(
-            displayName = Some("the essential read")
+            displayName = Some("the-essential-read" + "-" + contentSource)
           )
 
           val collectionEssentials = if (contentSource == "curated") {
