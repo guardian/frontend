@@ -1,14 +1,14 @@
 package views.support
 
 import conf.switches.Switches.OutbrainSwitch
-import model.{Content, RelatedContentPackage}
+import model.{Content, RelatedContent}
 import play.twirl.api.{Html, HtmlFormat}
 
 import scala.collection.immutable.Seq
 
 object ContentFooterContainersLayout {
 
-  def apply(content: Content, related: RelatedContentPackage, isAdvertisementFeature: Boolean)
+  def apply(content: Content, related: RelatedContent, isAdvertisementFeature: Boolean)
            (storyPackagePlaceholder: => Html)
            (onwardPlaceholder: => Html)
            (commentsPlaceholder: => Html)

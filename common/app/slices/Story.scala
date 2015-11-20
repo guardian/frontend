@@ -23,8 +23,6 @@ object Story {
     }
   }
 
-  //def fromContent(content: model.Content): Story = fromFaciaContent(FaciaContentConvert.frontendContentToFaciaContent(content))
-
   def fromFaciaContent(faciaContent: FaciaContent): Story = {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */

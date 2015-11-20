@@ -9,19 +9,19 @@ case class RelatedContentItem (
   faciaContent: FaciaContent
 )
 
-case class RelatedContentPackage private (
+case class RelatedContent private (
   items: Seq[RelatedContentItem]
   ) {
   val hasStoryPackage: Boolean = items.nonEmpty
   val faciaItems: Seq[FaciaContent] = items.map(_.faciaContent)
 }
 
-object RelatedContentPackage {
-  def apply(parent: ContentType, response: ItemResponse): RelatedContentPackage = {
+object RelatedContent {
+  def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
     val items = response.storyPackage.map { item =>
       val frontendContent = Content(item)
       RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
     }
-    RelatedContentPackage(items.filterNot(_.content.metadata.id == parent.metadata.id))
+    RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id))
   }
 }

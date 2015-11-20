@@ -22,9 +22,9 @@ import scala.concurrent.Future
 
 trait ArticleWithStoryPackage {
   def article: Article
-  def related: RelatedContent
+  def related: RelatedContentPackage
 }
-case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
+case class ArticlePage(article: Article, related: RelatedContentPackage) extends ArticleWithStoryPackage
 case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
