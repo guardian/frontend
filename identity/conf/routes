@@ -35,6 +35,7 @@ GET         /public/edit                            @controllers.EditProfileCont
 POST        /public/edit                            @controllers.EditProfileController.submitPublicProfileForm
 GET         /account/edit                           @controllers.EditProfileController.displayAccountForm
 GET         /membership/edit                        @controllers.EditProfileController.displayMembershipForm
+GET         /digitalpack/edit                        @controllers.EditProfileController.displayDigitalPackForm
 POST        /account/edit                           @controllers.EditProfileController.submitAccountForm
 GET         /verify-email/:token                    @controllers.EmailVerificationController.verify(token: String)
 GET         /verify-email                           @controllers.EmailVerificationController.resendEmailValidationEmail()

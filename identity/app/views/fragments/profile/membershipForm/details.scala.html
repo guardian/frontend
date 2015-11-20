@@ -22,7 +22,7 @@
             <div class="fieldset__fields u-cf">
                 <div class="form-field">
                     <span class="js-mem-tier" id="qa-membership-tier"></span>
-                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" id="qa-change-tier" class="submit-input membership-cta" data-link-name="Change tier">Change tier</a>
+                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" id="qa-change-tier" class="submit-input mma-cta" data-link-name="Change tier">Change tier</a>
                 </div>
             </div>
         </li>
@@ -107,11 +107,11 @@
                     <span id="qa-card-details" class="card-details">
                             •••• •••• •••• <span class="js-mem-card-last4"></span>
                         </span>
-                    <button id="qa-change-card" class="submit-input membership-cta js-mem-change-card" data-link-name="Change card">Change card</button>
+                    <button id="qa-change-card" class="submit-input mma-cta js-mem-change-card" data-link-name="Change card">Change card</button>
                 </div>
             </div>
         </li>
-        <li class="details-list__item membership-tab__change-cc-form is-closed js-mem-card-details-form-container">
+        <li class="details-list__item mma-tab__change-cc-form is-closed js-mem-card-details-form-container">
             <form class="js-mem-stripe-form">
 
                 <div class="js-payment-errors qa-form-error form__error is-hidden"></div>
@@ -122,8 +122,8 @@
                 <div class="fieldset__fields">
                     <div class="form-field">
                         <label class="label" for="cc-num">Card Number</label>
-                        <div class="input membership-tab__credit-card-container">
-                            <i class="js-credit-card-image membership-tab__card-types--in-field"></i>
+                        <div class="input mma-tab__credit-card-container">
+                            <i class="js-credit-card-image mma-tab__card-types--in-field"></i>
                             <input type="tel"
                                    size="20"
                                    data-stripe="number"

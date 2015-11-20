@@ -3,8 +3,9 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'membership/payment-form'
-], function (bean, $, ajax, config, PaymentForm) {
+    'mmaTabs/payment-form',
+    'mmaTabs/formatters'
+], function (bean, $, ajax, config, PaymentForm, formatters) {
 
     var PAYMENT_FORM = '.js-mem-stripe-form',
         CARD_DETAILS = '.js-mem-card-details',
@@ -37,36 +38,10 @@ define([
         IS_HIDDEN_CLASSNAME = 'is-hidden',
         CTA_DISABLED_CLASSNAME = 'membership-cta--disabled';
 
-    function formatAmount(amount) {
-        return amount ? '£' + (amount / 100).toFixed(2) : 'FREE';
-    }
-
-    function formatDate(timestamp) {
-        var date = new Date(timestamp),
-            months = [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
-            ],
-            day = date.getDate(),
-            month = months[date.getMonth()],
-            year = date.getFullYear();
-
-        return [day, month, year].join(' ');
-    }
-
     function fetchUserDetails() {
         ajax({
-            url: config.page.membershipUrl + '/user/me/details',
+
+            url: config.page.userAttributesApiUrl + '/me/mma-membership',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
@@ -77,7 +52,9 @@ define([
                 addSpriteCss();
                 setupPaymentForm();
                 addToggleFormListener();
-            } else {
+            }
+        }, function(error) {
+            if (error.status == 404) {
                 hideLoader();
                 displayMembershipUpSell();
             }
@@ -107,16 +84,16 @@ define([
         var intervalText = userDetails.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
             notificationTypeSelector;
 
-        $(MEMBERSHIP_TIER).text(userDetails.tier);
-        $(PACKAGE_COST).text(formatAmount(userDetails.subscription.plan.amount));
-        $(DETAILS_JOIN_DATE).text(formatDate(userDetails.joinDate));
+        $(MEMBERSHIP_TIER).text(userDetails.subscription.plan.name);
+        $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount));
+        $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
         $(PACKAGE_INTERVAL).text(intervalText);
-        $(PACKAGE_CURRENT_PERIOD_START).text(formatDate(userDetails.subscription.start));
-        $(PACKAGE_CURRENT_PERIOD_END).text(formatDate(userDetails.subscription.end));
-        $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatDate(userDetails.subscription.renewalDate));
+        $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
+        $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
+        $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
 
-        $(PACKAGE_NEXT_PAYMENT_DATE).text(formatDate(userDetails.subscription.nextPaymentDate));
-        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatAmount(userDetails.subscription.nextPaymentPrice));
+        $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
+        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
 
         if (userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);

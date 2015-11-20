@@ -4,8 +4,8 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'membership/masker',
-    'membership/stripe-error-messages'
+    'mmaTabs/masker',
+    'mmaTabs/stripe-error-messages'
 ], function (
     bean,
     stripe,
