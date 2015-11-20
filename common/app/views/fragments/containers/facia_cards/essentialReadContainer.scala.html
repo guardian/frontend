@@ -25,14 +25,16 @@
             <ul class="u-unstyled essential-read__item-wrapper">
                 @containerDefinition.items.take(5).zipWithRowInfo.map { case (item, info) =>
                     @if(info.rowNum == 1) {
-                        @InlineImage.fromFaciaContent(item).map { imageContainer =>
-                            @itemImage(imageContainer.imageContainer, false, Some(ContentWidths.MainMedia.inline))
-                        }
+                        <a href="@FaciaCardHeader.fromTrail(item, None).url.get(requestHeader)?INTCMP=@containerDefinition.displayName.getOrElse("essential-read")">
+                            @InlineImage.fromFaciaContent(item).map { imageContainer =>
+                                @itemImage(imageContainer.imageContainer, false, Some(ContentWidths.MainMedia.inline))
+                            }
+                        </a>
                     }
                     <li class="essential-read__item" data-link-name="essential-read-slot-@info.rowNum">
                         <div class="essential-read__number">@info.rowNum</div>
                         <div class="essential-read__text">
-                            @titleForEssentialRead(FaciaCardHeader.fromTrail(item, None), info.rowNum, 1, "headline-list__body", item.keywords.head.webTitle)
+                            @titleForEssentialRead(FaciaCardHeader.fromTrail(item, None), info.rowNum, 1, "headline-list__body", item.keywords.head.webTitle, containerDefinition.displayName)
                         </div>
                     </li>
                 }
