@@ -110,6 +110,11 @@ define([
             return visitedValue;
         },
         getReferrer = function () {
+            var referrerTypes = [
+                {id: 'facebook', match: 'facebook.com'},
+                {id: 'twitter', match: 't.co'}
+            ];
+
             return referrer;
         };
 
