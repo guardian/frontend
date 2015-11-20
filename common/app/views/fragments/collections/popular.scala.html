@@ -7,7 +7,7 @@
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular @if(isMostPopularDefaultTest){ ab-most-popular-default-test}" data-test-id="popular-in">
+    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular @if(isMostPopularDefaultTest){ most-popular-default-ab-2}" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs u-cf">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">

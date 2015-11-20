@@ -8,7 +8,8 @@ object CustomTargetingKeyAgent extends DataAgent[Long, String] {
 
   override def loadFreshData() = Try {
     DfpServiceRegistry().fold(Map[Long, String]()) { serviceRegistry =>
-      val keys = DfpApiWrapper.fetchCustomTargetingKeys(serviceRegistry, new StatementBuilder())
+      val session = new SessionWrapper(serviceRegistry.session)
+      val keys = session.customTargetingKeys(new StatementBuilder())
       keys.map { k => k.getId.longValue() -> k.getName}.toMap
     }
   }

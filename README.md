@@ -5,7 +5,7 @@ http://developers.theguardian.com/join-the-team.html
 
 Frontend
 ========
-[The Guardian](www.theguardian.com) website frontend.
+[The Guardian](http://www.theguardian.com) website frontend.
 
 Frontend is a set of Play Framework 2 Scala applications.
 

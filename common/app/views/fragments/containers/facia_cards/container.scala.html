@@ -2,8 +2,8 @@
 
 @import dfp.{Keyword, Series}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage}
-@import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage, EssentialRead}
+@import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer, essentialReadContainer}
 @import views.support.GetClasses
 
 @defining(containerDefinition.displayName, containerDefinition.faciaComponentName) { case (title, componentName) =>
@@ -53,6 +53,10 @@
 
                 case MostPopular => {
                     @mostPopularContainer(containerDefinition, frontProperties)
+                }
+
+                case EssentialRead => {
+                    @essentialReadContainer(containerDefinition, frontProperties)
                 }
             }
         </div>
