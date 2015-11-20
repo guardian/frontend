@@ -153,12 +153,14 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include mq(tablet) {
         float: left;
         border: 0;
+        box-sizing: border-box;
         margin: 0;
-        padding: 0;
+        padding: 0 $gs-gutter 0 0;
         width: 25%;
     }
 
     @include mq(desktop) {
+        padding-right: 0;
         width: gs-span(3);
     }
 
