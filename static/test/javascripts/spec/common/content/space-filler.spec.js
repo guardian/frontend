@@ -23,7 +23,7 @@ define([
                 spaceFinder = arguments[1];
                 raven = arguments[2];
 
-                spaceFiller = new spaceFiller.constructor(spaceFinder);
+                spaceFiller = new spaceFiller.constructor();
 
                 spyOn(spaceFinder, 'getParaWithSpace').and.callFake(function () {
                     return new Promise.resolve(mockSpacefinderResult);
