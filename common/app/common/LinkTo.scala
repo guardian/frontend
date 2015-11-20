@@ -25,7 +25,10 @@ trait LinkTo extends Logging {
   private val AmpPath = s"^(/.+)(${Requests.AMP_SUFFIX})$$".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
-  val httpsEnabledSections: Seq[String] = Seq("info")
+  /**
+    * email is here to allow secure POSTs from the footer signup form
+    */
+  val httpsEnabledSections: Seq[String] = Seq("info", "email")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))

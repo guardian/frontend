@@ -4,7 +4,9 @@
     labelText: String = "Your email address",
     submitText: String = "Subscribe",
     smallText: String = "No spam ever. Unsubscribe in one click.",
-    formImage: String = "")
+    formImage: String = "")(implicit request: RequestHeader)
+
+@import common.LinkTo
 
 @formId = @{ componentClass + "-email-sub-form" }
 @inputId = @{ componentClass + "-email-sub-input" }
@@ -17,7 +19,7 @@
         @fragments.email.emailSignUpHeader(componentClass, formHeading, formDescription, formImage)
     }
 
-    <form action="/email" method="post" id="@formId" class="@formClass">
+    <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass">
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label js-email-sub__inline-label">
                 <label class="email-sub__label js-email-sub__label" for="@inputId">@labelText</label>
