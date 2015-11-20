@@ -148,8 +148,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
       case "curated" =>
         val containerId = edition match {
-          case "uk" => "uk-alpha/people-in-the-news/feature-stories"
-          case _ => "eaf2df82-f7b4-4d96-a681-db52be53c798"
+          case "uk" => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
+          case "us" => "0295b390-8218-4eda-8bd4-2757c7d186f6"
+          case "au" => "ec4dc5bf-399c-4720-a70c-dac3d96a26d3"
+          case _ => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
         }
 
         getPressedCollection(containerId).map(_.toSeq)

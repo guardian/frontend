@@ -10,7 +10,7 @@
     <span class="essential-read__headline">@RemoveOuterParaHtml(header.headline)</span>
 }
 
-@articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
+@articleLink(html: Html) = {<a href="@header.url.get(request)?INTCMP=essential-read" class="fc-item__link" data-link-name="article">@html</a>}
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {
