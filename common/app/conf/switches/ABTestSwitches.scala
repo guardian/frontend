@@ -22,21 +22,30 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABInjectNetworkFrontTest = Switch(
+  val ABInjectNetworkFrontTest2 = Switch(
     "A/B Tests",
-    "ab-inject-network-front-test",
+    "ab-inject-network-front-test2",
     "Switch to inject the network front instead of most popular on all content pages",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2015, 12, 5),
     exposeClientSide = true
   )
 
-  val ABMostPopularDefaultTest = Switch(
+  val ABReachDummyTest = Switch(
     "A/B Tests",
-    "ab-most-popular-default-test",
+    "ab-reach-dummy-test",
+    "Switch to inject the network front instead of most popular on all content pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 5),
+    exposeClientSide = true
+  )
+
+  val ABMostPopularDefaultTest2 = Switch(
+    "A/B Tests",
+    "ab-most-popular-default-test-2",
     "Switch to change the default of most popular container to show across the guardian first instead of section",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 20),
+    sellByDate = new LocalDate(2015, 11, 27),
     exposeClientSide = true
   )
 
