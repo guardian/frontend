@@ -2,5 +2,8 @@
 @(page: model.MetaData, result: Option[SubscriptionResult] = None)(implicit request: RequestHeader)
 
 @mainEmail(page){ }{
-    @fragments.email.emailSignUp("footer", "The Guardian Today email")
+    @(result match {
+        case Some(result) => fragments.email.subscriptionResult(result)
+        case None => fragments.email.emailSignUp("footer", "The Guardian Today email")
+    })
 }

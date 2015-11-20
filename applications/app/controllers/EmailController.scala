@@ -67,9 +67,9 @@ object EmailController extends Controller with ExecutionContexts with Logging {
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {
-      case "success" => Ok(views.html.emailLanding(emailLandingPage, Some(Subscribed)))
-      case "invalid" => Ok(views.html.emailLanding(emailLandingPage, Some(InvalidEmail)))
-      case "error"   => Ok(views.html.emailLanding(emailLandingPage, Some(OtherError)))
+      case "success" => Ok(views.html.emailFragment(emailLandingPage, Some(Subscribed)))
+      case "invalid" => Ok(views.html.emailFragment(emailLandingPage, Some(InvalidEmail)))
+      case "error"   => Ok(views.html.emailFragment(emailLandingPage, Some(OtherError)))
       case _         => NotFound
     })
   }
