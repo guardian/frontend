@@ -3,7 +3,10 @@
 }
 
 .email-sub__iframe {
-    width: 100%;
+    // pixel calculations are manual design 
+    // adjustments, off grid
+    width: calc(100% + 8px);
+    margin-left: -4px;
 }
 
 .email-sub__form {
@@ -64,13 +67,14 @@
 
 .email-sub__text-input,
 .email-sub__submit-input {
-    margin-bottom: $gs-baseline * 1.25;
+    margin-bottom: $gs-baseline;
     width: 100%;
 }
 
 .email-sub__small {
     color: $form-secondary-colour;
     display: block;
+    padding-left: $gs-baseline / 3;
 }
 
 .email-sub__message {

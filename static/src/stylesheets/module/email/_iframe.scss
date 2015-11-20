@@ -32,7 +32,7 @@ body {
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
-@include mq($from: 176px) {
+@include mq($from: 184px) {
 
     // Rounded inline input
     .email-sub__text-input {
@@ -54,7 +54,7 @@ body {
 }
 
 // It's a fixed layout so only at this width do we want to apply these styles
-@include mq(175px, 175px) {
+@include mq(183px, 183px) {
     .email-sub__form--footer {
         padding-right: $gs-gutter / 2;
     }
