@@ -60,13 +60,4 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val SecureOmniture = Switch(
-    "Monitoring",
-    "secure-omniture",
-    "Send omniture tracking to the https url for all pages",
-    safeState = Off,
-    new LocalDate(2015, 11, 16),
-    exposeClientSide = false
-  )
-
 }

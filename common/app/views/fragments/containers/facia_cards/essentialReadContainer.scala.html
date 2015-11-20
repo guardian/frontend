@@ -1,0 +1,41 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+    @import model.InlineImage
+    @import views.html.fragments.items.elements.facia_cards.itemImage
+
+    @import implicits.FaciaContentImplicits._
+    @import views.support.Seq2zipWithRowInfo
+    @import layout.ContentWidths
+    @import views.html.fragments.items.elements.facia_cards.titleForEssentialRead
+    @import layout.FaciaCardHeader
+
+    <div class="fc-container__header js-container__header">
+        <div class="fc-container__header__title">
+            <span tabindex="0">
+                the essential read
+            </span>
+        </div>
+        <div class="fc-container__header__description">
+            If you read nothing else, read these
+        </div>
+    </div>
+
+    <div class="fc-container__body">
+        <div class="fc-slice-wrapper">
+            <ul class="u-unstyled essential-read__item-wrapper">
+                @containerDefinition.items.take(5).zipWithRowInfo.map { case (item, info) =>
+                    @if(info.rowNum == 1) {
+                        @InlineImage.fromFaciaContent(item).map { imageContainer =>
+                            @itemImage(imageContainer.imageContainer, false, Some(ContentWidths.MainMedia.inline))
+                        }
+                    }
+                    <li class="essential-read__item" data-link-name="essential-read-slot-@info.rowNum">
+                        <div class="essential-read__number">@info.rowNum</div>
+                        <div class="essential-read__text">
+                            @titleForEssentialRead(FaciaCardHeader.fromTrail(item, None), info.rowNum, 1, "headline-list__body", item.keywords.head.webTitle)
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>

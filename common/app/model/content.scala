@@ -9,7 +9,7 @@ import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -355,11 +355,11 @@ class Article(delegate: contentapi.Content) extends Content(delegate) with Light
     isbn.isDefined || super.hasInlineMerchandise
   }
 
-  override lazy val cacheSeconds = if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) {
+  override lazy val cacheSeconds = if (LongCacheSwitch.isSwitchedOn) {
     if (isLive) 5
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 300
     else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 1200
-    else 1200
+    else 1800
   } else {
     super.cacheSeconds
   }
