@@ -6,7 +6,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/membership-message-usa',
     'common/modules/experiments/tests/inject-network-front-test-2',
     'common/modules/experiments/tests/reach-dummy-test',
     'common/modules/experiments/tests/essential-read-test-1',
@@ -30,7 +29,6 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
-    MembershipMessageUSA,
     InjectNetworkFrontTest2,
     ReachDummyTest,
     EssentialReadTest1,
@@ -49,7 +47,6 @@ define([
 
     var TESTS = flatten([
         new HighCommercialComponent(),
-        new MembershipMessageUSA(),
         new InjectNetworkFrontTest2(),
         new ReachDummyTest(),
         new MostPopularDefaultTest2(),
