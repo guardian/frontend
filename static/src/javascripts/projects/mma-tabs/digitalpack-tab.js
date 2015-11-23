@@ -55,16 +55,13 @@ define([
 
 
     function populateUserDetails(userDetails) {
-
-        // this needs to be fixed.
-        var intervalText = userDetails.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual';
-
+        $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
         $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
         $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
         $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);
         $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount));
         $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
-        $(PACKAGE_INTERVAL).text(intervalText);
+        $(PACKAGE_INTERVAL).text(userDetails.subscription.plan.interval + 'ly');
         $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
