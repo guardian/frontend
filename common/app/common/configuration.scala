@@ -184,6 +184,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
+    lazy val digitalPackUrl = configuration.getStringProperty("id.membership.url").getOrElse("subscribe.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
