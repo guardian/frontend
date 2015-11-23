@@ -60,14 +60,14 @@ define([
         );
     }
 
-    function formatEndpointUrl(message) {
-        return membershipEndpoints[message.endpoint] + '?INTCMP=' + message.campaign;
+    function formatEndpointUrl(edition, message) {
+        return membershipEndpoints[edition] + '?INTCMP=' + message.campaign;
     }
 
-    function show(message) {
+    function show(edition, message) {
         var originalMessage;
 
-        var data = defaults({ linkHref: formatEndpointUrl(message) }, message.data, defaultData);
+        var data = defaults({ linkHref: formatEndpointUrl(edition, message) }, message.data, defaultData);
 
         originalMessage = new Message(message.code);
 
@@ -76,7 +76,7 @@ define([
         if (originalMessage.hasSeen()) {
             message.code += '-redisplayed';
             message.campaign += '_REDISPLAYED';
-            message.data.linkHref = formatEndpointUrl(message);
+            message.data.linkHref = formatEndpointUrl(edition, message);
         }
 
         return new Message(message.code, {
@@ -89,7 +89,7 @@ define([
     function init() {
         var message = messages[config.page.edition];
         if (message && canShow(message)) {
-            show(message);
+            show(config.page.edition, message);
         }
     }
 
