@@ -7,8 +7,10 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/membership-message-usa',
+    'common/modules/experiments/tests/rtrt-email-form-inline-footer',
     'common/modules/experiments/tests/inject-network-front-test-2',
     'common/modules/experiments/tests/reach-dummy-test-2',
+    'common/modules/experiments/tests/essential-read-test-1',
     'common/modules/experiments/tests/most-popular-default',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
@@ -30,8 +32,10 @@ define([
     mvtCookie,
     HighCommercialComponent,
     MembershipMessageUSA,
+    RtrtEmailFormInlineFooter,
     InjectNetworkFrontTest2,
     ReachDummyTest2,
+    EssentialReadTest1,
     MostPopularDefaultTest2,
     LargeTopAd,
     VideoPreroll,
@@ -48,11 +52,13 @@ define([
     var TESTS = flatten([
         new HighCommercialComponent(),
         new MembershipMessageUSA(),
+        new RtrtEmailFormInlineFooter(),
         new InjectNetworkFrontTest2(),
         new ReachDummyTest2(),
         new MostPopularDefaultTest2(),
         new LargeTopAd(),
-        new VideoPreroll()
+        new VideoPreroll(),
+        new EssentialReadTest1()
     ]);
 
     var participationsKey = 'gu.ab.participations';
