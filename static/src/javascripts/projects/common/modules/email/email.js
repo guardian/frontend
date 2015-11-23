@@ -86,7 +86,7 @@ define([
             }
         },
         ui = {
-            freezeHeight: function ($wrapper, reset, callback) {
+            freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
                     resetHeight = function () {
                         fastdom.write(function () {
@@ -103,7 +103,6 @@ define([
                     setHeight = function () {
                         fastdom.defer(function () {
                             $wrapper.css('min-height', wrapperHeight);
-                            callback();
                         });
                     };
 
@@ -116,14 +115,13 @@ define([
                     }
                 };
             },
-            setIframeHeight: function (iFrameEl, isIframed) {
+            setIframeHeight: function (iFrameEl, callback) {
                 return function () {
-                    if (isIframed) {
-                        fastdom.write(function () {
-                            iFrameEl.height = '';
-                            iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
-                        });
-                    }
+                    fastdom.write(function () {
+                        iFrameEl.height = '';
+                        iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
+                        callback.call();
+                    });
                 };
             }
         };
@@ -144,11 +142,17 @@ define([
             });
 
             $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                var $el = $(el),
+                    freezeHeight = ui.freezeHeight($el, false),
+                    freezeHeightReset = ui.freezeHeight($el, true);
+
                 formSubmission.bindSubmit($('.' + classes.form, el));
 
-                // Ensure the height of the wrapper stays the same when submitting
-                ui.freezeHeight($(el), false, ui.setIframeHeight(rootEl, isIframed)).apply();
-                mediator.on('window:resize', debounce(ui.freezeHeight($(el), true, ui.setIframeHeight(rootEl, isIframed)), 500));
+                // Ensure our form is the right height, both in iframe and outside
+                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+                mediator.on('window:resize',
+                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                );
             });
         }
     };
