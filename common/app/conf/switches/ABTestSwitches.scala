@@ -4,15 +4,6 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABMembershipMessageUsa = Switch(
-    "A/B Tests",
-    "ab-membership-message-usa",
-    "Switch for the USA Supporter message test",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 18),
-    exposeClientSide = true
-  )
-
   val ABRtrtEmailFormInlineFooter = Switch(
     "A/B Tests",
     "ab-rtrt-email-form-inline-footer",
