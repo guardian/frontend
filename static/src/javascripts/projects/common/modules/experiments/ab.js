@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/most-popular-default',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
+    'common/modules/experiments/tests/rtrt-email-form-inline-footer',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -35,6 +36,7 @@ define([
     MostPopularDefaultTest2,
     LargeTopAd,
     VideoPreroll,
+    RtrtEmailFormInlineFooter,
     flatten,
     forEach,
     keys,
@@ -52,7 +54,8 @@ define([
         new MostPopularDefaultTest2(),
         new LargeTopAd(),
         new VideoPreroll(),
-        new EssentialReadTest1()
+        new EssentialReadTest1(),
+        new RtrtEmailFormInlineFooter()
     ]);
 
     var participationsKey = 'gu.ab.participations';
