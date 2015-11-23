@@ -80,7 +80,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       val loadSummary = loadLineItems(
         fetchCachedLineItems(),
         hydrator.loadLineItemsModifiedSince,
-        hydrator.loadCurrentLineItems()
+        DfpApi.loadCurrentLineItems()
       )
       logReport(loadSummary)
       loadSummary.current

@@ -73,16 +73,6 @@ class DfpDataHydrator extends Logging {
     }
   }
 
-  def loadCurrentLineItems(): Seq[GuLineItem] = {
-    val currentLineItems = new StatementBuilder()
-      .where("status = :readyStatus OR status = :deliveringStatus")
-      .orderBy("id ASC")
-      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
-
-    loadLineItems(currentLineItems)
-  }
-
   def loadLineItemsModifiedSince(threshold:JodaDateTime): Seq[GuLineItem] = {
     val recentlyModified = new StatementBuilder()
       .where("lastModifiedDateTime > :threshold")
