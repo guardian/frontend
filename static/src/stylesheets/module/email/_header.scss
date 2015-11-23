@@ -1,0 +1,36 @@
+.email-sub__heading-emph {
+    color: guss-colour(guardian-brand, $pasteup-palette);
+}
+
+.email-sub__description {
+    border-top: 3px solid $form-secondary-colour;
+    color: $form-primary-colour;
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
+    padding-top: $gs-baseline;
+}
+
+.email-sub__description-emph {
+    display: block;
+    font-weight: bold;
+}
+
+// LANDING PAGE MODS
+.email-sub__header--landing {
+    background-color: $form-primary-colour;
+    @include fs-headline(2);
+
+    .email-sub__heading {
+        margin: $gs-baseline 0;
+    }
+}
+
+// FOOTER MODS
+.email-sub__header--footer {
+    .email-sub__heading {
+        color: #ffffff;
+        @include fs-textSans(3);
+        margin-bottom: $gs-baseline;
+        padding-left: $gs-baseline / 3;
+    }
+}
+

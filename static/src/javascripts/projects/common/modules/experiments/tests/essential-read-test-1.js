@@ -9,8 +9,8 @@ define([
         this.expiry = '2015-12-20';
         this.author = 'Josh Holder';
         this.description = 'Replaces related content with the essential read';
-        this.audience = 0.02;
-        this.audienceOffset = 0;
+        this.audience = 0.3;
+        this.audienceOffset = 0.06;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'the-essential-read';

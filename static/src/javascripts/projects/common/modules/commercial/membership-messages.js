@@ -73,7 +73,7 @@ define([
 
         // Allow tracking to distinguish banners that have been re-displayed
         // after closing from those that have only been displayed once.
-        if( originalMessage.hasSeen() ) {
+        if (originalMessage.hasSeen()) {
             message.code += '-redisplayed';
             message.campaign += '_REDISPLAYED';
             message.data.linkHref = formatEndpointUrl(message);
@@ -88,7 +88,7 @@ define([
 
     function init() {
         var message = messages[config.page.edition];
-        if( message && canShow(message) ) {
+        if (message && canShow(message)) {
             show(message);
         }
     }

@@ -46,11 +46,11 @@ define([
                 storage = arguments[3];
                 config = arguments[2];
                 done();
-            })
+            });
         });
 
-        describe('If user already member', function() {
-            beforeEach(function(done) {
+        describe('If user already member', function () {
+            beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.membershipMessages;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 commercialFeatures.membershipMessages = false;
@@ -58,22 +58,20 @@ define([
                 done();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 commercialFeatures.membershipMessages = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
             });
 
-            it('should not show any messages even to engaged readers', function() {
+            it('should not show any messages even to engaged readers', function () {
                 membershipMessages.init();
                 var message = document.querySelector('.js-site-message.site-message--banner');
                 expect(message).toBeNull();
             });
         });
 
-        describe('If user not member', function() {
-            var page;
-
-            beforeEach(function(done) {
+        describe('If user not member', function () {
+            beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.membershipMessages;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 commercialFeatures.membershipMessages = true;
@@ -81,14 +79,14 @@ define([
                 done();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 commercialFeatures.membershipMessages = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 fixtures.clean(conf.id);
             });
 
-            describe('of the UK edition', function() {
-                it('should show a message to engaged readers', function() {
+            describe('of the UK edition', function () {
+                it('should show a message to engaged readers', function () {
                     config.page = { edition: 'UK' };
                     storage.local.set('gu.alreadyVisited', 10);
                     membershipMessages.init();
@@ -97,8 +95,8 @@ define([
                 });
             });
 
-            describe('of the US edition', function() {
-                it('should show a message to engaged readers', function() {
+            describe('of the US edition', function () {
+                it('should show a message to engaged readers', function () {
                     config.page = { edition: 'US' };
                     storage.local.set('gu.alreadyVisited', 10);
                     membershipMessages.init();
