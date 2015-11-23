@@ -24,7 +24,6 @@ define([
         NOTIFICATION_CHANGE = '.js-mem-change-tier',
         MEMBER_DETAILS = '.js-mem-details',
         DETAILS_MEMBER_NUMBER_CONTAINER = '.js-mem-number-container',
-        MEMBERSHIP_TAB = '.js-mem-tab',
         MEMBERSHIP_TIER = '.js-mem-tier',
         UP_SELL = '.js-mem-up-sell',
         MEMBER_INFO = '.js-mem-info',
@@ -44,7 +43,6 @@ define([
                 hideLoader();
                 setupPaymentForm();
                 populateUserDetails(resp);
-                addSpriteCss();
             }
         }, function (error) {
             if (error.status == 404) {
@@ -102,7 +100,7 @@ define([
             $(DETAILS_MEMBERSHIP_TIER_ICON_CURRENT).addClass('i-g-' + userDetails.tier.toLowerCase());
         } else if (userDetails.subscription.card) {
             // only show card details if user hasn't changed their subscription and has a payment method
-            stripeForm.showCardDetailsElement();
+            stripeForm.showCardDetailsElementWithChangeCardOption();
         }
 
         $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);
@@ -110,19 +108,6 @@ define([
 
     function displayMembershipUpSell() {
         $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
-    }
-
-    function addSpriteCss() {
-        var spriteSheetUrl = $(MEMBERSHIP_TAB).data('sprite-url'),
-            $head = $('head'),
-            link = document.createElement('link');
-
-        link.id = 'membership-sprite';
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = spriteSheetUrl;
-        link.media = 'all';
-        $head.append(link);
     }
 
     function init() {
