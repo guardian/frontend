@@ -233,6 +233,14 @@ define([
                 };
                 expect(buildPageTargeting().ref).toEqual('googleplus');
             });
+
+            it('should set ref empty string if referrer does not match', function () {
+                detect.getReferrer = function () {
+                    return 'https://theguardian.com';
+                };
+
+                expect(buildPageTargeting().ref).toEqual(undefined);
+            });
         });
     });
 });
