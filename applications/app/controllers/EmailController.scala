@@ -116,4 +116,8 @@ object EmailController extends Controller with ExecutionContexts with Logging {
         }
       })
   }
+
+  def options() = Action { implicit request =>
+    TinyResponse.noContent(Some("GET, POST, OPTIONS"))
+  }
 }
