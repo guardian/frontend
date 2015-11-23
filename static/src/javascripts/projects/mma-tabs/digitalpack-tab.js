@@ -11,6 +11,7 @@ define([
         PAYMENT_FORM = '.js-dig-card-details',
         SUBSCRIBER_ID = '.js-dig-subscriber-id',
         REMAINING_TRIAL_LENGTH = '.js-dig-remaining-trial-length',
+        REMAINING_TRIAL_LENGTH_CONTAINER = '.js-dig-remaining-trial-length-container',
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-dig-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-dig-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-dig-current-period-start',
@@ -55,8 +56,6 @@ define([
 
 
     function populateUserDetails(userDetails) {
-        $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
-        $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
         $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
         $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);
         $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount));
@@ -67,10 +66,14 @@ define([
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
 
         var trialLeft = userDetails.subscription.trialLength;
-        $(REMAINING_TRIAL_LENGTH).text(trialLeft + ' day' + (trialLeft != 1 ? 's' : ''));
+        if (trialLeft > 0) {
+            $(REMAINING_TRIAL_LENGTH).text(trialLeft + ' day' + (trialLeft != 1 ? 's' : ''));
+            $(REMAINING_TRIAL_LENGTH_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+        }
 
         $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+
         if (!userDetails.optIn) {
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
             $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
@@ -78,6 +81,7 @@ define([
             stripeForm.updateCard(userDetails.subscription.card);
             stripeForm.showCardDetailsElement();
         }
+        $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
     function displayDigitalPackUpSell() {
