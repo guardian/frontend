@@ -6,8 +6,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/membership-message-usa',
-    'common/modules/experiments/tests/rtrt-email-form-inline-footer',
     'common/modules/experiments/tests/inject-network-front-test-2',
     'common/modules/experiments/tests/reach-dummy-test-2',
     'common/modules/experiments/tests/essential-read-test-1',
@@ -31,8 +29,6 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
-    MembershipMessageUSA,
-    RtrtEmailFormInlineFooter,
     InjectNetworkFrontTest2,
     ReachDummyTest2,
     EssentialReadTest1,
@@ -51,8 +47,6 @@ define([
 
     var TESTS = flatten([
         new HighCommercialComponent(),
-        new MembershipMessageUSA(),
-        new RtrtEmailFormInlineFooter(),
         new InjectNetworkFrontTest2(),
         new ReachDummyTest2(),
         new MostPopularDefaultTest2(),
