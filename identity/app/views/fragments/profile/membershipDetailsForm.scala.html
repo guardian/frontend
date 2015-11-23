@@ -1,10 +1,10 @@
-<div class="mma-tab js-mem-tab" data-sprite-url="@Static("stylesheets/membership-icons.css")">
+<div class="mma-tab js-mem-tab">
     <div class="mma-loader js-mem-loader">
         <span class="is-updating show-updating"></span>
     </div>
     <div id="qa-success-message" class="form__success is-hidden js-mem-card-change-success-msg">Your card details have been updated</div>
-    @fragments.profile.membershipForm.cancelled()
-    @fragments.profile.membershipForm.changed()
-    @fragments.profile.membershipForm.details()
-    @fragments.profile.membershipForm.upsell()
+    @fragments.profile.mmaForms.membershipForm.cancelled()
+    @fragments.profile.mmaForms.membershipForm.changed()
+    @fragments.profile.mmaForms.membershipForm.details()
+    @fragments.profile.mmaForms.membershipForm.upsell()
 </div>

@@ -3,10 +3,12 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'mmaTabs/formatters'
-], function (bean, $, ajax, config, formatters) {
+    'mmaTabs/formatters',
+    'mmaTabs/payment-form'
+], function (bean, $, ajax, config, formatters, PaymentForm) {
 
     var PACKAGE_COST = '.js-dig-package-cost',
+        PAYMENT_FORM = '.js-dig-card-details',
         SUBSCRIBER_ID = '.js-dig-subscriber-id',
         REMAINING_TRIAL_LENGTH = '.js-dig-remaining-trial-length',
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-dig-current-renewal-date',
@@ -22,8 +24,8 @@ define([
         UP_SELL = '.js-dig-up-sell',
         DIG_INFO = '.js-dig-info',
         LOADER = '.js-dig-loader',
-        IS_HIDDEN_CLASSNAME = 'is-hidden';
-
+        IS_HIDDEN_CLASSNAME = 'is-hidden',
+        stripeForm = new PaymentForm();
 
 
     function fetchUserDetails() {
@@ -36,6 +38,7 @@ define([
         }).then(function (resp) {
             if (resp && resp.subscription) {
                 hideLoader();
+                stripeForm.init($(PAYMENT_FORM)[0], $());
                 populateUserDetails(resp);
             }
         }, function (error) {
@@ -74,6 +77,9 @@ define([
         if (!userDetails.optIn) {
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
             $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
+        } else if (userDetails.subscription.card) {
+            stripeForm.updateCard(userDetails.subscription.card);
+            stripeForm.showCardDetailsElement();
         }
     }
 

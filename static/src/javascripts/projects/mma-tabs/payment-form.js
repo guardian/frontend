@@ -27,6 +27,12 @@ define([
 
     StripePaymentForm.prototype.config = {
         classes: {
+            CARD_TYPE: 'js-mma-card-type',
+            CARD_LAST4: 'js-mma-card-last4',
+            CHANGE_CARD: 'js-mma-change-card',
+            IS_CLOSED: 'is-closed',
+            CARD_DETAILS_FORM_CONTAINER: 'js-mma-card-details-form-container',
+            CTA_DISABLED_CLASSNAME: 'membership-cta--disabled',
             STRIPE_FORM: 'js-stripe-form',
             FORM_FIELD_ERROR: 'form-field--error',
             ERROR_CARD_NUMBER: 'js-error--card-number',
@@ -47,6 +53,41 @@ define([
         DOM: {},
         data: {
             CARD_TYPE: 'data-card-type'
+        }
+    };
+
+    /**
+     * @param {{last4: string, type: string}} card info
+     */
+    StripePaymentForm.prototype.updateCard = function (card) {
+        var cardTypeClassName = card.type.toLowerCase().replace(' ', '-');
+        var cardTypeElem = this.config.DOM.CARD_TYPE;
+        $(this.config.DOM.CARD_LAST4).text(card.last4);
+        cardTypeElem.className = cardTypeElem.className.replace(/\bi-\S+/g, '');
+        $(cardTypeElem).addClass('i-' + cardTypeClassName);
+    };
+
+    StripePaymentForm.prototype.showCardDetailsElementWithChangeCardOption = function () {
+        $(this.config.DOM.CHANGE_CARD).removeClass(this.config.classes.HIDE);
+        this.showCardDetailsElement();
+    };
+
+    StripePaymentForm.prototype.showCardDetailsElement = function () {
+        $(this.context).removeClass(this.config.classes.HIDE);
+    };
+
+    StripePaymentForm.prototype.toggle = function (show) {
+        var $cont = $(this.config.DOM.CARD_DETAILS_FORM_CONTAINER),
+            $button = $(this.config.DOM.CHANGE_CARD);
+
+        show = show !== undefined ? show : $cont.hasClass(this.config.classes.IS_CLOSED);
+
+        if (show) {
+            $cont.removeClass(this.config.classes.IS_CLOSED);
+            $button.addClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Cancel');
+        } else {
+            $cont.addClass(this.config.classes.IS_CLOSED);
+            $button.removeClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Change card');
         }
     };
 
@@ -104,10 +145,13 @@ define([
                 data: {
                     stripeToken: token
                 }
-            }).then(function success() {
+            }).then(function success(card) {
                 self.stopLoader();
                 self.reset();
-                self.successCallback.apply(this, arguments);
+                self.updateCard(card);
+                self.toggle();
+                self.successElement.removeClass(self.config.classes.HIDE);
+
             }, function fail(error) {
 
                 var errorObj,
@@ -202,6 +246,11 @@ define([
             $creditCardExpiryMonthElement = self.getElement('CREDIT_CARD_EXPIRY_MONTH'),
             $creditCardExpiryYearElement = self.getElement('CREDIT_CARD_EXPIRY_YEAR'),
             $formElement = $(self.context);
+
+        bean.on(this.config.DOM.CHANGE_CARD, 'click', function () {
+            self.successElement.addClass(self.config.classes.HIDE);
+            self.toggle();
+        });
 
         bean.on($creditCardNumberElement[0], 'keyup blur', function (e) {
             var validationResult,
@@ -464,10 +513,29 @@ define([
         this.getElement('CREDIT_CARD_EXPIRY_YEAR')[0].selectedIndex = 0;
     };
 
-    StripePaymentForm.prototype.init = function (form, successCallback) {
-        this.context = form;
-        this.successCallback = successCallback;
+    /**
+     * To display visa logo etc
+     */
+    StripePaymentForm.prototype.addIconCss = function () {
+        var spriteSheetUrl = $(this.context).data('sprite-url'),
+            link = document.createElement('link'),
+            $existing = $('#stripe-sprite'),
+            $head = $('head');
 
+        if (!$existing.length) {
+            link.id = 'stripe-sprite';
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = spriteSheetUrl;
+            link.media = 'all';
+            $head.append(link);
+        }
+    };
+
+    StripePaymentForm.prototype.init = function (form, successElement) {
+        this.context = form;
+        this.successElement = successElement;
+        this.addIconCss();
         if (this.context) {
             this.domElementSetup();
             this.addListeners();
