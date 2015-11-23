@@ -111,11 +111,15 @@ define([
         },
         getReferrer = function () {
             var referrerTypes = [
-                {id: 'facebook', match: 'facebook.com'},
-                {id: 'twitter', match: 't.co'}
-            ];
+                    {id: 'facebook', match: 'facebook.com'},
+                    {id: 'twitter', match: 't.co'},
+                    {id: 'googleplus', match: 'plus.url.google'}
+                ],
+                matchedRef = referrerTypes.filter(function (referrerType) {
+                    return detect.getReferrer().indexOf(referrerType.match) > -1;
+                })[0] || {};
 
-            return referrer;
+            return matchedRef.id;
         };
 
     return function (opts) {

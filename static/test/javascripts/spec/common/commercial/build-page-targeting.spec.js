@@ -93,6 +93,10 @@ define([
                 });
         });
 
+        afterEach(function () {
+            document.referrer = '';
+        });
+
         it('should exist', function () {
             expect(buildPageTargeting).toBeDefined();
         });
@@ -203,12 +207,31 @@ define([
         });
 
         describe('Referrer', function () {
+            afterEach(function () {
+                detect.getReferrer = function () {
+                    return '';
+                };
+            });
+
             it('should set ref to Facebook', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.facebook.com/feel-the-force';
+                };
                 expect(buildPageTargeting().ref).toEqual('facebook');
             });
 
             it('should set ref to Twitter', function () {
-                expect(buildPageTargeting().fr).toEqual('twitter');
+                detect.getReferrer = function () {
+                    return 'https://www.t.co/you-must-unlearn-what-you-have-learned';
+                };
+                expect(buildPageTargeting().ref).toEqual('twitter');
+            });
+
+            it('should set ref to Google+', function () {
+                detect.getReferrer = function () {
+                    return 'https://plus.url.google.com/always-pass-on-what-you-have-learned';
+                };
+                expect(buildPageTargeting().ref).toEqual('googleplus');
             });
         });
     });
