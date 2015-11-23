@@ -56,15 +56,6 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     status(result) should be(OK)
   }
 
-//  it should "redirect to an /all page when an observer dated blog section is requested" in {
-//    when(bookAgent.getTags("theobserver/she-said")).thenReturn(emptySeq)
-//    when(bookSectionAgent.getTags("theobserver/she-said")).thenReturn(emptySeq)
-//    val testReq = TestRequest("theobserver/she-said/2015/jun/15")
-//    val result = controllers.PublicationController.publishedOn("theobserver/she-said","2015","jun","15","")(testReq)
-//    status(result) should be(PermanentRedirect)
-//    header("Location",result).getOrElse("") should endWith ("/theobserver/she-said/2015/jun/15/all")
-//  }
-
   it should "200 when an observer dated blog article is requested" in {
     when(bookAgent.getTags("theobserver")).thenReturn(emptySeq)
     when(bookSectionAgent.getTags("theobserver")).thenReturn(emptySeq)
@@ -114,15 +105,6 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
     val result = publicationController.publishedOn("theguardian/gallery","2009","apr","01","prince-harry-william-monarchy")(testReq)
     status(result) should be(OK)
   }
-
-//  it should "redirect to an /all page when a guardian dated blog section is requested" in {
-//    when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)
-//    when(bookSectionAgent.getTags("theguardian")).thenReturn(emptySeq)
-//    val testReq = TestRequest("theguardian/from-the-archive-blog/2012/feb/17")
-//    val result = controllers.PublicationController.publishedOn("theguardian/from-the-archive-blog","2012","feb","17","")(testReq)
-//    status(result) should be(PermanentRedirect)
-//    header("Location",result).getOrElse("") should endWith ("/theguardian/from-the-archive-blog/2012/feb/17/all")
-//  }
 
   it should "200 when a guardian dated blog article is requested" in {
     when(bookAgent.getTags("theguardian")).thenReturn(emptySeq)

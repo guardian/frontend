@@ -44,7 +44,7 @@ class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = Newspa
       publication
     }
 
-    if (tagExists(publication, tag)) {
+    if (bookSectionTagExists(publication, tag)) {
       Future(MovedPermanently(s"/$tag/${urlFormat(reqDate)}/all"))
     } else {
       val newPath = if (tail.nonEmpty) {
@@ -57,7 +57,7 @@ class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = Newspa
 
   }
 
-  private def tagExists(publication: String, tag: String) = {
+  private def bookSectionTagExists(publication: String, tag: String) = {
     try {
       bookAgent.getTags(publication).exists(_.id == tag) || bookSectionAgent.getTags(publication).exists(_.id == tag)
     } catch {
