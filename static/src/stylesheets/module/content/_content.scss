@@ -860,9 +860,11 @@
 }
 
 .meta__extras {
-    .old-article-message--clock svg {
-        fill: #ffffff;
-        stroke: colour(neutral-2);
+    .old-article-message {
+        .old-article-message--clock svg {
+            fill: #ffffff;
+            stroke: colour(neutral-2);
+        }
     }
 }
 

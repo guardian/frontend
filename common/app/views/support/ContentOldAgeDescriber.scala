@@ -10,13 +10,11 @@ class ContentOldAgeDescriber {
     message(content.webPublicationDate)
   }
 
-  def apply(maybeContent: Option[com.gu.contentapi.client.model.Content]): String = {
-    maybeContent.map{c =>
-      message(c.webPublicationDate)
-    }.getOrElse("")
+  def apply(apiContent: com.gu.contentapi.client.model.Content): String = {
+    message(apiContent.webPublicationDate)
   }
 
-  def message(pubDate: DateTime) = {
+  private def message(pubDate: DateTime) = {
     val warnLimitDays = 7   // config this!
     if(pubDate.isBefore(DateTime.now().minusDays(warnLimitDays))) {
       val ageMillis = DateTime.now().getMillis - pubDate.getMillis

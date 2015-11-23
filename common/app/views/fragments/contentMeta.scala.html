@@ -9,6 +9,10 @@
     }
 }
 
+@validTagsForAgeMessage() = @{
+    List("world/world","uk/uk","us-news/us-news","australia-news/australia-news")
+}
+
 @metaBody() = {
     @if(!content.hasTonalHeaderByline) {
         @byline(content)
@@ -29,7 +33,9 @@
         <div class="meta__social" data-component="share">
             @fragments.social(content, "top")
         </div>
-        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+        @if(content.tags.exists(tag => validTagsForAgeMessage().contains(tag.id))) {
+            @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+        }
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
             </div>

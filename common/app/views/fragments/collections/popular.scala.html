@@ -7,6 +7,10 @@
 @import TrailCssClasses.articleToneClass
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 
+@validTagsForAgeMessage() = @{
+    List("world/world","uk/uk","us-news/us-news","australia-news/australia-news")
+}
+
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular @if(isMostPopularDefaultTest){ most-popular-default-ab-2}" data-test-id="popular-in">
         @if(isTabbed) {
@@ -46,7 +50,11 @@
                             <div class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <p class="headline-list__count">@info.rowNum</p>
                                 @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
-                                @fragments.contentAgeNotice(ContentOldAgeDescriber(trail.maybeContent))
+                                @trail.maybeContent.map { content =>
+                                    @if(content.tags.exists(tag => validTagsForAgeMessage().contains(tag.id))) {
+                                        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                    }
+                                }
                             </div>
                         </li>
                         }
@@ -70,14 +78,18 @@
                             <div class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <p class="headline-list__count">@info.rowNum</p>
                                 @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
-                        </div>
+                                @trail.maybeContent.map { content =>
+                                    @if(content.tags.exists(tag => validTagsForAgeMessage().contains(tag.id))) {
+                                        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                    }
+                                }
+                            </div>
                         </li>
                         }
                     </ul>
                 </div>
             }
         }
-
 
         @if(showMPU(containerDefinition)) {
             <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
