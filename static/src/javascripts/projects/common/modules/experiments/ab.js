@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/inject-network-front-test-2',
     'common/modules/experiments/tests/reach-dummy-test-2',
     'common/modules/experiments/tests/essential-read-test-1',
-    'common/modules/experiments/tests/most-popular-default',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
     'lodash/arrays/flatten',
@@ -36,7 +35,6 @@ define([
     InjectNetworkFrontTest2,
     ReachDummyTest2,
     EssentialReadTest1,
-    MostPopularDefaultTest2,
     LargeTopAd,
     VideoPreroll,
     flatten,
@@ -55,7 +53,6 @@ define([
         new RtrtEmailFormInlineFooter(),
         new InjectNetworkFrontTest2(),
         new ReachDummyTest2(),
-        new MostPopularDefaultTest2(),
         new LargeTopAd(),
         new VideoPreroll(),
         new EssentialReadTest1()

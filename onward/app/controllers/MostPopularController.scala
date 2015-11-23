@@ -18,11 +18,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
-  // Below is for the Most Popular Default AB Test.
-  def renderAbTest(path: String) = render(path, isMostPopularDefaultTest = true)
-
   def renderHtml(path: String) = render(path)
-  def render(path: String, isMostPopularDefaultTest: Boolean = false) = Action.async { implicit request =>
+  def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular: Option[MostPopular] = {
       var globalPopularContent = MostPopularAgent.mostPopular(edition)
@@ -39,7 +36,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
-            "html" ->  views.html.fragments.collections.popular(popular, isMostPopularDefaultTest = isMostPopularDefaultTest),
+            "html" ->  views.html.fragments.collections.popular(popular),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
