@@ -13,7 +13,7 @@ define([
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
-        PACKAGE_NEXT_PAYMENT_CONTAINER = 'js-mem-next-payment-container',
+        PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-mem-next-payment-container',
         PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date',
         PACKAGE_NEXT_PAYMENT_PRICE = '.js-mem-next-payment-price',
         PACKAGE_INTERVAL = '.js-mem-plan-interval',
@@ -72,11 +72,14 @@ define([
         $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
+        var nextPayment = userDetails.subscription.nextPaymentDate;
 
-        $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
-        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+        if (nextPayment) {
+            $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
+            $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+        }
 
-        if (userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
+        if (nextPayment === userDetails.subscription.renewalDate || !nextPayment) {
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
         }
 
