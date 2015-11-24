@@ -9,6 +9,17 @@ GET     /_healthcheck               conf.HealthCheck.healthcheck()
 
 GET     /_cdn_healthcheck           controllers.CdnHealthcheckController.healthcheck()
 
+# Newspaper pages paths
+# gallery format (?)
+#  e.g. /theobserver/gallery/2013/sep/14/the-10-best-fonts
+# article format
+#  e.g. /theobserver/2015/nov/01/the-big-issue-generation-gap-pensioners-young-people
+# multi-part tags
+#  e.g. /theguardian/2015/nov/04/g2/features
+# single-part tag
+#  e.g. /theguardian/2015/nov/03/mainsection
+GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                 controllers.PublicationController.publishedOn(publication, year, month, day, tail)
+
 GET     /*path.json                 controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
 GET     /*path/amp                  controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
 GET     /*path                      controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])

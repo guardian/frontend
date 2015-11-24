@@ -31,6 +31,7 @@ define([
     'inlineSvg!svgs/icon/share-pinterest',
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
+    'inlineSvg!svgs/icon/tick',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -61,6 +62,7 @@ define([
     sharePinterest,
     shareGPlus,
     externalLink,
+    tick,
     isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -90,7 +92,8 @@ define([
         shareFacebook: shareFacebook,
         sharePinterest: sharePinterest,
         shareGPlus: shareGPlus,
-        externalLink: externalLink
+        externalLink: externalLink,
+        tick: tick
     };
 
     return function (name, classes, title) {

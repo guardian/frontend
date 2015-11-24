@@ -78,6 +78,11 @@ object TagPages extends Logging {
     ("world", "World news")
   )
 
+  val Publications = Map(
+    ("theguardian", "The Guardian"),
+    ("theobserver", "The Observer")
+  )
+
   def alphaIndexKey(s: String) = {
     val badCharacters = """[^a-z0-9]+""".r
 
@@ -88,6 +93,10 @@ object TagPages extends Logging {
     }
 
     maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
+  }
+
+  def tagHeadKey(id: String) = {
+    id.split("/").headOption
   }
 
   private def mappedByKey(key: Tag => String) =
@@ -112,6 +121,7 @@ object TagPages extends Logging {
     }
 
   val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(ValidSections.contains))
+  val publicationsFilter = Enumeratee.filter[Tag](t => tagHeadKey(t.id).exists(Publications.contains))
 
   val byWebTitle = mappedByKey(tag => alphaIndexKey(tag.webTitle))
 
@@ -120,5 +130,8 @@ object TagPages extends Logging {
   }
 
   val bySection = invalidSectionsFilter &>> mappedByKey(_.sectionId.get)
+
+  val byPublication = publicationsFilter &>> mappedByKey(tag => tagHeadKey(tag.id).getOrElse("publication"))
+
 }
 
