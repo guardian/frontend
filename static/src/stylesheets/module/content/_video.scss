@@ -1,0 +1,195 @@
+.content--media {
+    .content__head__comment-count {
+        display: none;
+    }
+
+    @include mq($until: desktop) {
+        .meta__comment-count--top,
+        .meta__comment-count--bottom {
+            .commentcount {
+                border-top: 0;
+            }
+            .commentcount__label {
+                display: none;
+            }
+        }
+    }
+
+    .player {
+        margin-bottom: $gs-baseline/2;
+    }
+
+    .gu-media-wrapper {
+        margin-bottom: 0;
+    }
+
+    .social-icon {
+        overflow: visible; // opacity cuts borders off on chrome otherwise
+    }
+
+    .content__headline:before {
+        content: '';
+        display: inline-block;
+        height: .65em;
+        margin-right: .1em;
+    }
+
+    .content__main-column--video {
+        @include mq(desktop) {
+            min-height: gs-height(12);
+        }
+    }
+    .content__secondary-column--media {
+        @include mq($until: desktop) {
+            display: block;
+            position: relative;
+            width: 100%;
+            max-width: gs-span(8);
+            margin: 0 auto;
+            padding-left: 0;
+        }
+        @include mq(tablet) {
+            max-width: gs-span(9);
+        }
+        @include mq(desktop) {
+            padding-left: $gs-gutter/2;
+            border-left: 1px solid colour(neutral-2);
+        }
+    }
+    .content__secondary-column--video {
+        @include mq(desktop) {
+            height: auto;
+        }
+    }
+    .content__secondary-column--audio .ad-slot {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+}
+// if it's audio and there's body text, we display an advert
+.content--has-body .content__main-column--audio {
+    min-height: 274px;
+}
+.content__headline:before {
+    .content--media--audio & {
+        width: .8em;
+        @include icon(volume-high-white, $with-width: false);
+    }
+    .content--media--video & {
+        content: none;
+    }
+    .content--gallery &,
+    .content--image & {
+        width: .9em;
+        @include icon(camera-white-large, $with-width: false);
+    }
+}
+.content--media--video .inline-video-icon {
+    margin-right: .1em;
+}
+
+.items--audio .fc-item__title:before {
+    @include icon(volume-high--tone-media, false);
+}
+
+/* Most viewed container
+   ========================================================================== */
+
+.most-viewed-container--media {
+    border-top: 1px solid colour(neutral-2);
+
+    @include mq($until: desktop) {
+        margin-top: $gs-baseline*2;
+    }
+
+    .most-viewed-container__header {
+        height: gs-height(1) + $gs-baseline;
+    }
+    .most-viewed-container__heading {
+        @include fs-header(2);
+        position: relative;
+        top: $gs-baseline/4;
+    }
+}
+.most-viewed--media {
+    margin-left: -$gs-gutter/2;
+    margin-right: -$gs-gutter/2;
+
+    .fc-item--media {
+        float: left;
+        width: 50%;
+        padding: 0 $gs-gutter/2;
+
+        @include mq($until: tablet) {
+            &:nth-child(odd):before {
+                display: none;
+            }
+        }
+
+        @include mq(tablet, desktop) {
+            width: 33.3%;
+
+            &:nth-child(4n):before {
+                display: none;
+            }
+
+            &:nth-child(1n+4) {
+                margin-bottom: 0;
+            }
+        }
+
+        @include mq(desktop) {
+            &:nth-child(odd):before {
+                display: none;
+            }
+            &:nth-child(n+5) {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .fc-item__title {
+        @include text-clamp(3, get-line-height(headline, 1));
+        height: get-line-height(headline, 1) * 3;
+    }
+}
+.most-viewed--video .item:nth-child(n+5) {
+    @include mq($until: tablet) {
+        margin-bottom: 0;
+    }
+    @include mq(desktop) {
+        margin-bottom: 0;
+    }
+}
+.most-viewed--audio {
+    .item:nth-child(n+3) {
+        @include mq($until: tablet) {
+            margin-bottom: 0;
+        }
+        @include mq(desktop) {
+            margin-bottom: 0;
+        }
+    }
+    .fc-item:nth-child(4) {
+        @include mq(tablet, desktop) {
+            display: none;
+        }
+    }
+}
+
+.content--video {
+    @include mq(tablet, desktop) {
+        .content__meta-container {
+            float: left;
+            width: 404px; //Magic, as video items below are off grid at 33.3% width
+            margin-right: $gs-gutter;
+            margin-bottom: $gs-baseline*2;
+        }
+    }
+
+    .content__meta-container {
+        border-bottom: 0;
+    }
+}
