@@ -85,11 +85,11 @@ object EmailController extends Controller with ExecutionContexts with Logging {
           case OtherError   => SeeOther(LinkTo("/email/error"))
         }
 
-        case Accepts.Json() => result match {
+        case Accepts.Json() => Cors(NoCache(result match {
           case Subscribed   => Created("Subscribed")
           case InvalidEmail => BadRequest("Invalid email")
           case OtherError   => InternalServerError("Internal error")
-        }
+        }))
       }
     }
 
