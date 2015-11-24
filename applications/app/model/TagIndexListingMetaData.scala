@@ -1,6 +1,6 @@
 package model
 
-case class SubjectsListing() extends Page {
+case class SubjectsListing() extends StandalonePage {
   override val metadata = MetaData.make(
     id = "index/subjects",
     section = "Index",
@@ -9,7 +9,7 @@ case class SubjectsListing() extends Page {
     customSignPosting = Some(IndexNav.keywordsAlpha))
 }
 
-case class ContributorsListing() extends Page {
+case class ContributorsListing() extends StandalonePage {
   override val metadata = MetaData.make(
     id = "index/contributors",
     section = "Index",

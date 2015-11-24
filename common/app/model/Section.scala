@@ -10,6 +10,16 @@ object Section {
     val sectionName = section.id
     val webUrl: String = section.webUrl
     val webTitle: String = section.webTitle
+    val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, sectionName)
+
+    val keywordIds: Seq[String] = frontKeywordIds(id)
+    val keywordSponsorship = KeywordSponsorshipHandling(id, adUnitSuffix, keywordIds)
+
+    val javascriptConfigOverrides: Map[String, JsValue] = Map(
+        "keywords" -> JsString(webTitle),
+        "keywordIds" -> JsString(keywordIds.mkString(",")),
+        "contentType" -> JsString("Section")
+      )
 
     val metadata = MetaData (
       id = id,
@@ -18,30 +28,21 @@ object Section {
       section = sectionName,
       webTitle = webTitle,
       analyticsName = s"GFE:$sectionName",
-      adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, sectionName),
+      adUnitSuffix = adUnitSuffix,
       isFront = true,
       rssPath = Some(s"/$id/rss"),
       iosType = sectionName match {
         case "crosswords" => None
         case _ => Some("front")
-      }
+      },
+      javascriptConfigOverrides = javascriptConfigOverrides
     )
-
-    val keywordIds: Seq[String] = frontKeywordIds(id)
-    val keywordSponsorship = KeywordSponsorshipHandling(metadata, keywordIds)
-
-    val javascriptConfigOverrides: Map[String, JsValue] = Map(
-        "keywords" -> JsString(metadata.webTitle),
-        "keywordIds" -> JsString(keywordIds.mkString(",")),
-        "contentType" -> JsString("Section")
-      )
 
     Section(
       metadata,
       keywordSponsorship,
       pagination = pagination,
-      isEditionalised = section.editions.length > 1,
-      javascriptConfigOverrides = javascriptConfigOverrides)
+      isEditionalised = section.editions.length > 1)
   }
 }
 
@@ -49,11 +50,5 @@ case class Section private (
   override val metadata: MetaData,
   keywordSponsorship: KeywordSponsorshipHandling,
   pagination: Option[Pagination],
-  isEditionalised: Boolean,
-  javascriptConfigOverrides: Map[String, JsValue] = Map()
-  ) extends Page {
-
-  def getJavascriptConfig: Map[String, JsValue] =
-    metadata.javascriptConfig ++
-    javascriptConfigOverrides
-}
+  isEditionalised: Boolean
+  ) extends StandalonePage

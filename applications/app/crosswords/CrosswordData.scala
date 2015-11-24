@@ -142,14 +142,16 @@ object CrosswordContent {
   def make(crossword: CrosswordData, apicontent: contentapi.Content) = {
 
     val content = Content(apicontent)
+    val contentType= GuardianContentTypes.Crossword
 
     val metadata = content.metadata.copy(
       id = crossword.id,
       section = "crosswords",
       analyticsName = crossword.id,
       webTitle = crossword.name,
-      contentType = GuardianContentTypes.Crossword,
-      iosType = None
+      contentType = contentType,
+      iosType = None,
+      javascriptConfigOverrides = Map("contentType" -> JsString(contentType))
     )
 
     val contentOverrides = content.content.copy(metadata = metadata)

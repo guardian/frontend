@@ -9,9 +9,9 @@ case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
 }
 
-case class CrosswordPage(content: CrosswordContent) extends Page {
+case class CrosswordPage(content: CrosswordContent) extends ContentPage {
 
-  override val metadata: MetaData = content.metadata
+  override val item = content
   val crossword = content.crossword
 
   import CrosswordSvg.{BorderSize, CellSize}
@@ -22,10 +22,6 @@ case class CrosswordPage(content: CrosswordContent) extends Page {
   )
 
   def hasGroupedClues = crossword.entries.exists(_.group.length > 1)
-
-  def getJavascriptConfig: Map[String, JsValue] =
-    metadata.javascriptConfig ++
-    Map("contentType" -> JsString(metadata.contentType))
 }
 
 object CrosswordSearchPage {
@@ -42,7 +38,7 @@ object CrosswordSearchPage {
   }
 }
 
-final case class CrosswordSearchPage(override val metadata: MetaData) extends Page {
+final case class CrosswordSearchPage(override val metadata: MetaData) extends StandalonePage {
 
   val year = new DateTime().getYear
   val searchYears = 1999 to year

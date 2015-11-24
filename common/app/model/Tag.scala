@@ -23,6 +23,23 @@ object Tag {
       .map(_.id.stripPrefix("open-module/"))
       .filter(_.matches("""https?://open-module\.appspot\.com/view\?id=\d+"""))
 
+    val javascriptConfigOverrides: Map[String, JsValue] = Map(
+      ("keywords", JsString(tag.webTitle)),
+      ("keywordIds", JsString(tag.id)),
+      ("contentType", JsString("Tag")),
+      ("references", JsArray(tag.references.toSeq.map(ref => Reference.toJavaScript(ref.id))))
+    )
+    val openGraphDescription: Option[String] = tag.bio.orElse(tag.description)
+    val openGraphImage = tag.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String => if (s.startsWith("//")) s"http:$s" else s}
+      .orElse(footballBadgeUrl)
+
+    def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
+      o.map(value => Map(key -> value)).getOrElse(Map())
+
+    val openGraphPropertiesOverrides: Map[String, String] =
+      optionalMapEntry("og:description", openGraphDescription) ++
+      optionalMapEntry("og:image", openGraphImage)
+
     val metadata = MetaData (
       id = tag.id,
       webUrl = tag.webUrl,
@@ -38,26 +55,11 @@ object Tag {
       iosType = section match {
         case "crosswords" => None
         case _ => Some("list")
-      }
+      },
+      javascriptConfigOverrides = javascriptConfigOverrides,
+      opengraphPropertiesOverrides = openGraphPropertiesOverrides,
+      twitterPropertiesOverrides = Map("twitter:card" -> "summary")
     )
-
-    val openGraphDescription: Option[String] = tag.bio.orElse(metadata.description)
-    val openGraphImage = tag.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String => if (s.startsWith("//")) s"http:$s" else s}
-      .orElse(footballBadgeUrl)
-
-    val javascriptConfigOverrides: Map[String, JsValue] = Map(
-      ("keywords", JsString(metadata.webTitle)),
-      ("keywordIds", JsString(metadata.id)),
-      ("contentType", JsString("Tag")),
-      ("references", JsArray(tag.references.toSeq.map(ref => Reference.toJavaScript(ref.id))))
-    )
-
-    def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
-      o.map(value => Map(key -> value)).getOrElse(Map())
-
-    val openGraphPropertiesOverrides: Map[String, String] =
-      optionalMapEntry("og:description", openGraphDescription) ++
-      optionalMapEntry("og:image", openGraphImage)
 
     Tag(
       metadata,
@@ -75,10 +77,7 @@ object Tag {
       bio = tag.bio.getOrElse(""),
       richLinkId = richLinkId,
       openModuleId = openModuleId,
-      podcast = tag.podcast,
-      javascriptConfigOverrides = javascriptConfigOverrides,
-      opengraphPropertiesOverrides = openGraphPropertiesOverrides,
-      twitterPropertiesOverrides = Map("twitter:card" -> "summary")
+      podcast = tag.podcast
     )
   }
 }
@@ -99,11 +98,8 @@ case class Tag private (
   bio: String,
   richLinkId: Option[String],
   openModuleId: Option[String],
-  podcast: Option[Podcast], // TODO Should not be a capi class.
-  javascriptConfigOverrides: Map[String, JsValue] = Map(),
-  opengraphPropertiesOverrides: Map[String, String] = Map(),
-  twitterPropertiesOverrides: Map[String, String] = Map()
-) extends Page {
+  podcast: Option[Podcast] // TODO Should not be a capi class.
+) extends StandalonePage {
 
   lazy val isContributor: Boolean = metadata.id.startsWith("profile/")
 
@@ -115,8 +111,4 @@ case class Tag private (
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
   val isKeyword = tagType == "keyword"
   val tagWithoutSection = metadata.id.split("/")(1) // used for football nav
-
-  def getJavascriptConfig: Map[String, JsValue] =
-    metadata.javascriptConfig ++
-    javascriptConfigOverrides
 }

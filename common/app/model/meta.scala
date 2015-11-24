@@ -7,7 +7,7 @@ import conf.Configuration
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
-import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
 import org.scala_tools.time.Imports._
 import implicits.Dates._
 
@@ -123,7 +123,10 @@ object MetaData {
     contentType: String = "",
     adUnitSuffix: Option[String] = None,
     customSignPosting: Option[NavItem] = None,
-    iosType: Option[String] = Some("Article")
+    iosType: Option[String] = Some("Article"),
+    javascriptConfigOverrides: Map[String, JsValue] = Map(),
+    opengraphPropertiesOverrides: Map[String, String] = Map(),
+    twitterPropertiesOverrides: Map[String, String] = Map()
     ): MetaData = {
 
     val url = s"/$id"
@@ -143,7 +146,10 @@ object MetaData {
       title = title,
       isFront = isFront,
       contentType = contentType,
-      customSignPosting = customSignPosting)
+      customSignPosting = customSignPosting,
+      javascriptConfigOverrides = javascriptConfigOverrides,
+      opengraphPropertiesOverrides = opengraphPropertiesOverrides,
+      twitterPropertiesOverrides = twitterPropertiesOverrides)
   }
 
   def make(fields: Fields, apiContent: contentapi.Content) = {
@@ -194,7 +200,10 @@ final case class MetaData (
   canonicalUrl: Option[String] = None,
   shouldGoogleIndex: Boolean = true,
   title: Option[String] = None,
-  customSignPosting: Option[NavItem] = None
+  customSignPosting: Option[NavItem] = None,
+  javascriptConfigOverrides: Map[String, JsValue] = Map(),
+  opengraphPropertiesOverrides: Map[String, String] = Map(),
+  twitterPropertiesOverrides: Map[String, String] = Map()
 ){
 
   def hasPageSkin(edition: Edition) = false
@@ -233,7 +242,7 @@ final case class MetaData (
     ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
   )
 
-  def getOpengraphProperties: Map[String, String] = Map(
+  def opengraphProperties: Map[String, String] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
@@ -243,7 +252,7 @@ final case class MetaData (
     "al:ios:app_name" -> "The Guardian"
   )) getOrElse Nil)
 
-  def getTwitterProperties: Map[String, String] = Map(
+  def twitterProperties: Map[String, String] = Map(
     "twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId => List(
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
@@ -261,13 +270,17 @@ final case class MetaData (
   )).getOrElse(Nil))
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
-
 }
 
 object Page {
 
   def getContentPage(page: Page): Option[ContentPage] = page match {
     case c: ContentPage => Some(c)
+    case _ => None
+  }
+
+  def getStandalonePage(page: Page): Option[StandalonePage] = page match {
+    case s: StandalonePage => Some(s)
     case _ => None
   }
 
@@ -281,17 +294,58 @@ trait Page {
  def metadata: MetaData
 }
 
-case class ContentPage(item: ContentType) extends Page {
-  override val metadata = item.metadata
+// ContentPage objects use data from a ContentApi item to populate metadata.
+trait ContentPage extends Page {
+  def item: ContentType
+  final override val metadata = item.metadata
+
+  // The order of construction is important, overrides must come last.
+  def getJavascriptConfig: Map[String, JsValue] =
+    item.fields.javascriptConfig ++
+    metadata.javascriptConfig ++
+    item.tags.javascriptConfig ++
+    item.trail.javascriptConfig ++
+    item.commercial.javascriptConfig ++
+    item.content.conditionalConfig ++
+    item.content.javascriptConfig ++
+    metadata.javascriptConfigOverrides
+
+  def getOpenGraphProperties: Map[String, String] =
+    metadata.opengraphProperties ++
+    item.content.opengraphProperties ++
+    metadata.opengraphPropertiesOverrides
+
+  def getTwitterProperties: Map[String, String] =
+    metadata.twitterProperties ++
+    item.content.twitterProperties ++
+    metadata.twitterPropertiesOverrides
+}
+case class SimpleContentPage(override val item: ContentType) extends ContentPage
+
+// StandalonePage objects manage their own metadata.
+trait StandalonePage extends Page {
+
+  // These methods are part of StandalonePage, not MetaData. In the scenario below, the page's config
+  // is wholly made from the metadata object. But pages made from ContentPage use several objects
+  // to create a page config. So placing the accessors here instead of Metadata reduces confusion a little.
+
+  def getJavascriptConfig: Map[String, JsValue] =
+    metadata.javascriptConfig ++ metadata.javascriptConfigOverrides
+
+  def getOpenGraphProperties: Map[String, String] =
+    metadata.opengraphProperties ++ metadata.opengraphPropertiesOverrides
+
+  def getTwitterProperties: Map[String, String] =
+    metadata.twitterProperties ++ metadata.twitterPropertiesOverrides
 }
 
-case class SimplePage(override val metadata: MetaData) extends Page
+case class SimplePage(override val metadata: MetaData) extends StandalonePage
 
 case class CommercialExpiryPage(
   id: String,
   section: String = "global",
   webTitle: String = "This page has been removed",
-  analyticsName: String = "GFE:Gone") extends Page {
+  analyticsName: String = "GFE:Gone") extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
 }
@@ -301,7 +355,7 @@ case class TagCombiner(
   leftTag: Tag,
   rightTag: Tag,
   pagination: Option[Pagination] = None
-) extends Page {
+) extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(
     id,

@@ -67,10 +67,7 @@ final case class Content(
   resolvedMetaData: ResolvedMetaData,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  showFooterContainers: Boolean = false,
-  javascriptConfigOverrides: Map[String, JsValue] = Map(),
-  opengraphPropertiesOverrides: Map[String, String] = Map(),
-  twitterPropertiesOverrides: Map[String, String] = Map()
+  showFooterContainers: Boolean = false
 ) {
 
   lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
@@ -167,18 +164,7 @@ final case class Content(
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
-  // The order of construction is important, overrides must come last.
-  def getJavascriptConfig: Map[String, JsValue] =
-    fields.javascriptConfig ++
-    metadata.javascriptConfig ++
-    tags.javascriptConfig ++
-    trail.javascriptConfig ++
-    commercial.javascriptConfig ++
-    conditionalConfig ++
-    javascriptConfig ++
-    javascriptConfigOverrides
-
-  private def javascriptConfig: Map[String, JsValue] = Map(
+  def javascriptConfig: Map[String, JsValue] = Map(
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
     ("hasStoryPackage", JsBoolean(hasStoryPackage)),
@@ -191,7 +177,7 @@ final case class Content(
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
-  private def conditionalConfig: Map[String, JsValue] = {
+  def conditionalConfig: Map[String, JsValue] = {
     val rugbyMeta = if (tags.isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
       val teamIds = tags.keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
@@ -216,16 +202,17 @@ final case class Content(
     meta.flatten.toMap
   }
 
-  def getOpenGraph: Map[String, String] = metadata.getOpengraphProperties ++ Map(
+  val opengraphProperties = Map(
     "og:title" -> metadata.webTitle,
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
     "og:image" -> openGraphImage
-  ) ++ opengraphPropertiesOverrides
+  )
 
-  def getTwitterProperties: Map[String, String] = metadata.getTwitterProperties ++ Map(
+  val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replace("http", "guardian"),
     "twitter:image" -> rawOpenGraphImage
-  ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList ++ twitterPropertiesOverrides
+  ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
+
 }
 
 object Content {
@@ -333,58 +320,17 @@ object Article {
     )
   }
 
-  private def copyMetaData(content: Content) = {
+  private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
     val section = content.metadata.section
     val id = content.metadata.id
     val fields = content.fields
-
-    content.metadata.copy(
-      contentType = contentType,
-      analyticsName = s"GFE:$section:${GuardianContentTypes.Article}:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = content.fields.displayHint.contains("immersive"),
-      schemaType = Some(ArticleSchemas(content.tags)),
-      cacheSeconds = if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) {
-          if (fields.isLive) 5
-          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 300
-          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 1200
-          else 1200
-        } else {
-          content.metadata.cacheSeconds
-        },
-      iosType = Some("Article")
-    )
-  }
-
-  private def copyShareLinks(content: Content) = {
-    if (content.tags.isLiveBlog) {
-      content.sharelinks.copy(elementShareOrder = List("facebook", "twitter", "gplus"))
-    } else {
-      content.sharelinks
-    }
-  }
-
-  // Perform a copy of the content object to enable Article to override Content.
-  def make(content: Content): Article = {
-
-    val fields = content.fields
-    val elements = content.elements
-    val tags = content.tags
-    val trail = copyTrail(content)
-    val commercial = copyCommercial(content)
-    val metadata = copyMetaData(content)
-    val sharelinks = copyShareLinks(content)
-    val lightbox = GenericLightbox(elements, fields, trail,
-      lightboxableCutoffWidth = 620,
-      includeBodyImages = !tags.isLiveBlog)
-
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
     val javascriptConfig: Map[String, JsValue] = Map(
-      ("contentType", JsString(metadata.contentType)),
-      ("isLiveBlog", JsBoolean(tags.isLiveBlog)),
+      ("contentType", JsString(contentType)),
+      ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
@@ -409,15 +355,55 @@ object Article {
       Map("twitter:card" -> "summary_large_image")
     }
 
+    content.metadata.copy(
+      contentType = contentType,
+      analyticsName = s"GFE:$section:${GuardianContentTypes.Article}:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      isImmersive = content.fields.displayHint.contains("immersive"),
+      schemaType = Some(ArticleSchemas(content.tags)),
+      cacheSeconds = if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) {
+          if (fields.isLive) 5
+          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 300
+          else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 1200
+          else 1200
+        } else {
+          content.metadata.cacheSeconds
+        },
+      iosType = Some("Article"),
+      javascriptConfigOverrides = javascriptConfig,
+      opengraphPropertiesOverrides = opengraphProperties,
+      twitterPropertiesOverrides = twitterProperties
+    )
+  }
+
+  private def copyShareLinks(content: Content) = {
+    if (content.tags.isLiveBlog) {
+      content.sharelinks.copy(elementShareOrder = List("facebook", "twitter", "gplus"))
+    } else {
+      content.sharelinks
+    }
+  }
+
+  // Perform a copy of the content object to enable Article to override Content.
+  def make(content: Content): Article = {
+
+    val fields = content.fields
+    val elements = content.elements
+    val tags = content.tags
+    val trail = copyTrail(content)
+    val commercial = copyCommercial(content)
+    val lightbox = GenericLightbox(elements, fields, trail,
+      lightboxableCutoffWidth = 620,
+      includeBodyImages = !tags.isLiveBlog)
+    val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
+    val sharelinks = copyShareLinks(content)
+
     val contentOverrides = content.copy(
       trail = trail,
       commercial = commercial,
       metadata = metadata,
       sharelinks = sharelinks,
-      showFooterContainers = !tags.isLiveBlog && !content.shouldHideAdverts,
-      javascriptConfigOverrides = javascriptConfig,
-      opengraphPropertiesOverrides = opengraphProperties,
-      twitterPropertiesOverrides = twitterProperties
+      showFooterContainers = !tags.isLiveBlog && !content.shouldHideAdverts
     )
 
     Article(contentOverrides, lightbox)
@@ -467,21 +453,20 @@ object Audio {
     val fields = content.fields
     val id = content.metadata.id
     val section = content.metadata.section
+    val javascriptConfig: Map[String, JsValue] = Map(
+      "contentType" -> JsString(contentType),
+      "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
     val metadata = content.metadata.copy(
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      schemaType = Some("https://schema.org/AudioObject")
+      schemaType = Some("https://schema.org/AudioObject"),
+      javascriptConfigOverrides = javascriptConfig
     )
 
-    val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
-      "isPodcast" -> JsBoolean(content.tags.isPodcast))
-
     val contentOverrides = content.copy(
-      metadata = metadata,
-      javascriptConfigOverrides = javascriptConfig
+      metadata = metadata
     )
 
     Audio(contentOverrides)
@@ -506,13 +491,6 @@ object Video {
     val elements = content.elements
     val section = content.metadata.section
     val id = content.metadata.id
-
-    val metadata = content.metadata.copy(
-      contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
-      schemaType = Some("https://schema.org/VideoObject")
-    )
     val source: Option[String] = elements.videos.find(_.isMain).flatMap(_.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
@@ -521,7 +499,6 @@ object Video {
       "embeddable" -> JsBoolean(elements.videos.find(_.isMain).map(_.embeddable).getOrElse(false)),
       "videoDuration" -> elements.videos.find(_.isMain).map{ v => JsNumber(v.duration)}.getOrElse(JsNull))
 
-
     val opengraphProperties = Map(
       "og:type" -> "video",
       "og:video:type" -> "text/html",
@@ -529,11 +506,18 @@ object Video {
       "video:tag" -> content.tags.keywords.map(_.name).mkString(",")
     )
 
-    val contentOverrides = content.copy(
-      metadata = metadata,
+    val metadata = content.metadata.copy(
+      contentType = contentType,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      schemaType = Some("https://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary_large_image")
+    )
+
+    val contentOverrides = content.copy(
+      metadata = metadata
     )
 
     Video(contentOverrides, source)
@@ -572,12 +556,10 @@ object Gallery {
     val lightbox = GalleryLightbox(content.elements, content.tags)
     val section = content.metadata.section
     val id = content.metadata.id
-    val metadata = content.metadata.copy(
-      contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
-      schemaType = Some("https://schema.org/ImageGallery"),
-      openGraphImages = lightbox.openGraphImages
+    val javascriptConfig: Map[String, JsValue] = Map(
+      "contentType" -> JsString(contentType),
+      "gallerySize" -> JsNumber(lightbox.size),
+      "lightboxImages" -> lightbox.javascriptConfig
     )
     val sharelinks = content.sharelinks.copy(
       elementShareOrder = List("facebook", "twitter", "pinterestBlock"),
@@ -585,12 +567,6 @@ object Gallery {
     )
     val trail = content.trail.copy(
       trailPicture = elements.thumbnail)
-
-    val javascriptConfig: Map[String, JsValue] = Map(
-      "contentType" -> JsString(contentType),
-      "gallerySize" -> JsNumber(lightbox.size),
-      "lightboxImages" -> lightbox.javascriptConfig
-    )
 
     val openGraph: Map[String, String] = Map(
       "og:type" -> "article",
@@ -612,14 +588,21 @@ object Gallery {
           s"twitter:image$index:src" -> i
         })
     }
+    val metadata = content.metadata.copy(
+      contentType = contentType,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      schemaType = Some("https://schema.org/ImageGallery"),
+      openGraphImages = lightbox.openGraphImages,
+      javascriptConfigOverrides = javascriptConfig,
+      twitterPropertiesOverrides = twitterProperties,
+      opengraphPropertiesOverrides = openGraph
+    )
 
     val contentOverrides = content.copy(
       metadata = metadata,
       trail = trail,
       sharelinks = sharelinks,
-      javascriptConfigOverrides = javascriptConfig,
-      twitterPropertiesOverrides = twitterProperties,
-      opengraphPropertiesOverrides = openGraph,
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)
@@ -742,22 +725,20 @@ object Interactive {
     val tags = content.tags
     val section = content.metadata.section
     val id = content.metadata.id
-    val metadata = content.metadata.copy(
-      contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = fields.displayHint.contains("immersive")
-    )
-
     val twitterProperties: Map[String, String] = Map(
       "twitter:title" -> fields.linkText,
       "twitter:card" -> "summary_large_image"
     )
-
-    val contentOverrides = content.copy(
-      metadata = metadata,
+    val metadata = content.metadata.copy(
+      contentType = contentType,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      isImmersive = fields.displayHint.contains("immersive"),
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
+    )
+    val contentOverrides = content.copy(
+      metadata = metadata
     )
     Interactive(
       contentOverrides,
@@ -771,12 +752,6 @@ object ImageContent {
     val fields = content.fields
     val section = content.metadata.section
     val id = content.metadata.id
-    val metadata = content.metadata.copy(
-      contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
-      isImmersive = fields.displayHint.contains("immersive")
-    )
     val lightbox = GenericLightbox(content.elements, content.fields, content.trail,
       lightboxableCutoffWidth = 940,
       includeBodyImages = false)
@@ -784,10 +759,17 @@ object ImageContent {
       "contentType" -> JsString(contentType),
       "lightboxImages" -> lightbox.javascriptConfig
     )
-    val contentOverrides = content.copy(
-      metadata = metadata,
+    val metadata = content.metadata.copy(
+      contentType = contentType,
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      isImmersive = fields.displayHint.contains("immersive"),
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = Map("twitter:card" -> "photo")
+    )
+
+    val contentOverrides = content.copy(
+      metadata = metadata
     )
     ImageContent(contentOverrides, lightbox)
   }

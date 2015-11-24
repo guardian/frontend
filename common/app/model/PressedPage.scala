@@ -12,35 +12,62 @@ import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import scala.language.postfixOps
 
 object PressedPage {
+
   implicit val pressedPageFormat = Json.format[PressedPage]
+
+  def makeMetadata(id: String, seoData: SeoData, frontProperties: FrontProperties, collections: List[PressedCollection]): MetaData = {
+    def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
+      o.map(value => Map(key -> value)).getOrElse(Map())
+
+    val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
+    val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
+    val keywordIds: Seq[String] = frontKeywordIds(id)
+    val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
+
+    val faciaPageMetaData: Map[String, JsValue] = Map(
+      "keywords" -> JsString(seoData.webTitle.capitalize),
+      "keywordIds" -> JsString(keywordIds.mkString(",")),
+      "contentType" -> JsString(contentType)
+    ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
+
+    val openGraph: Map[String, String] = Map(
+      "og:image" -> Configuration.facebook.imageFallback) ++
+      optionalMapEntry("og:description", seoData.description)  ++
+      optionalMapEntry("og:image", frontProperties.imageUrl)
+
+    val twitterProperties: Map[String, String] = Map("twitter:card" -> "summary")
+
+    MetaData.make(
+      id = id,
+      section = seoData.navSection,
+      webTitle = seoData.webTitle,
+      //For network fronts we want the string "Network Front"
+      //This allows us to change webTitle in tool easily on fronts
+      analyticsName = if (isNetworkFront)
+          s"GFE:${GuardianContentTypes.NetworkFront}"
+        else
+          s"GFE:${seoData.webTitle.capitalize}",
+      description = seoData.description,
+      isFront = true,
+      title = seoData.title,
+      contentType = contentType,
+      adUnitSuffix = Some(AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, seoData.navSection)),
+      customSignPosting = FaciaSignpostingOverrides(id),
+      iosType = Some("front"),
+      javascriptConfigOverrides = faciaPageMetaData,
+      opengraphPropertiesOverrides = openGraph,
+      twitterPropertiesOverrides = twitterProperties
+    )
+  }
 }
 
-case class PressedPage(
+case class PressedPage private (
   id: String,
   seoData: SeoData,
   frontProperties: FrontProperties,
   collections: List[PressedCollection]) extends Page {
 
-  val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
-
-  override val metadata: MetaData = MetaData.make(
-    id = id,
-    section = seoData.navSection,
-    webTitle = seoData.webTitle,
-    //For network fronts we want the string "Network Front"
-    //This allows us to change webTitle in tool easily on fronts
-    analyticsName = if (isNetworkFront)
-        s"GFE:${GuardianContentTypes.NetworkFront}"
-      else
-        s"GFE:${seoData.webTitle.capitalize}",
-    description = seoData.description,
-    isFront = true,
-    title = seoData.title,
-    contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section,
-    adUnitSuffix = Some(AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, seoData.navSection)),
-    customSignPosting = FaciaSignpostingOverrides(id),
-    iosType = Some("front")
-  )
+  override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
 
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.
@@ -70,14 +97,7 @@ case class PressedPage(
   }
   val navSection: String = metadata.section
   val keywordIds: Seq[String] = frontKeywordIds(id)
-  val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
 
-  def getJavascriptConfig: Map[String, JsValue] = metadata.javascriptConfig ++ faciaPageMetaData
-  val faciaPageMetaData: Map[String, JsValue] = Map(
-    "keywords" -> JsString(metadata.webTitle.capitalize),
-    "keywordIds" -> JsString(keywordIds.mkString(",")),
-    "contentType" -> JsString(metadata.contentType)
-  ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
   def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
     keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.section), maybeEdition))
@@ -101,21 +121,6 @@ case class PressedPage(
     DfpAgent.omitMPUsFromContainers(id, edition)
   }
 
-
-
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
-
-  def getOpenGraph: Map[String, String] = metadata.getOpengraphProperties ++ Map(
-    "og:image" -> Configuration.facebook.imageFallback) ++
-    optionalMapEntry("og:description", metadata.description)  ++
-    optionalMapEntry("og:image", frontProperties.imageUrl)
-
-
-  def getTwitterProperties: Map[String, String]  = metadata.getTwitterProperties ++ Map(
-    "twitter:card" -> "summary")
-
-
-  private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
-    o.map(value => Map(key -> value)).getOrElse(Map())
 
 }

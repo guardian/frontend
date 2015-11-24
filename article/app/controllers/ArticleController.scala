@@ -20,17 +20,14 @@ import views.support._
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
-trait PageWithStoryPackage extends Page {
+trait PageWithStoryPackage extends ContentPage {
   def article: Article
   def related: RelatedContent
+  override val item = article
 }
 
-case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage {
-  override val metadata = article.metadata
-}
-case class LiveBlogPage(article: Article, related: RelatedContent) extends PageWithStoryPackage {
-  override val metadata = article.metadata
-}
+case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
+case class LiveBlogPage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 

@@ -99,21 +99,22 @@
             <meta name="keywords" content="@c.item.tags.keywords.map(_.name).mkString(",")" />
             <meta name="news_keywords" content="@c.item.tags.keywords.take(10).map(_.name).mkString(",")" />
         }
-        @c.item.content.getOpenGraph.map { case (key, value) =>
+        @c.getOpenGraphProperties.map { case (key, value) =>
             <meta property="@key" content="@value" />
         }
-        @c.item.content.getTwitterProperties.map{ case (key, value) =>
+        @c.getTwitterProperties.map{ case (key, value) =>
             <meta name="@key" content="@value" />
         }
     }
-    case _ => {
-        @page.metadata.getOpengraphProperties.map{ case (key, value) =>
+    case s: model.StandalonePage => {
+        @s.getOpenGraphProperties.map{ case (key, value) =>
             <meta property="@key" content="@value" />
         }
-        @page.metadata.getTwitterProperties.map{ case (key, value) =>
+        @s.getTwitterProperties.map{ case (key, value) =>
             <meta name="@key" content="@value" />
         }
     }
+    case _ => {}
 }
 
 @page.metadata.openGraphImages.map{ case (imageUrl) =>

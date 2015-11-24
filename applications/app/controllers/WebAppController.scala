@@ -3,13 +3,13 @@ package controllers
 import com.gu.contentapi.client.model.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import conf.{Static, LiveContentApi}
-import model.{Page, CrosswordData, Cached, MetaData}
+import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.api.libs.json.{JsArray, JsString, JsObject}
 
 import scala.concurrent.Future
 
-case class OfflinePage(crossword: CrosswordData) extends Page {
+case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
 
   override val metadata = MetaData.make(
       id = "offline-page",

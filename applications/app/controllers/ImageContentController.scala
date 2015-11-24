@@ -10,8 +10,8 @@ import services.ImageQuery
 
 import scala.concurrent.Future
 
-case class ImageContentPage(image: ImageContent, related: RelatedContent) extends Page {
-  override val metadata = image.metadata
+case class ImageContentPage(image: ImageContent, related: RelatedContent) extends ContentPage {
+  override val item = image
 }
 
 object ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {

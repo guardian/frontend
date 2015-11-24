@@ -13,16 +13,12 @@ import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
 
-  private def getContent: PartialFunction[Page, Content] = {
-    case c: ContentPage => c.item.content
-  }
-
   def get(page: Page)(implicit request: RequestHeader): JsValue = Json.toJson(getMap(page))
 
   def getMap(page: Page)(implicit request: RequestHeader): Map[String,JsValue] = {
     val edition = Edition(request)
     val metaData = page.metadata
-    val content: Option[Content] = getContent.lift(page)
+    val content: Option[Content] = Page.getContent(page).map(_.content)
 
     // keeping this here for now as we use it for the "opt in" message
     val internationalEdition = InternationalEdition(request) map { edition =>
@@ -54,7 +50,11 @@ object JavaScriptPage {
       "isInappropriateForSponsorship" -> JsBoolean(isInappropriateForSponsorship)
     ) ++ sponsorshipType ++ sponsorshipTag
 
-    val javascriptConfig = content.map(_.getJavascriptConfig).getOrElse(metaData.javascriptConfig)
+    val javascriptConfig = page match {
+      case c: ContentPage => c.getJavascriptConfig
+      case s: StandalonePage => s.getJavascriptConfig
+      case _ => Map()
+    }
 
     javascriptConfig ++ config ++ internationalEdition ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),

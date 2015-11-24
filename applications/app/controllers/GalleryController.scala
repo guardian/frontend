@@ -16,9 +16,9 @@ case class GalleryPage(
   gallery: Gallery,
   related: RelatedContent,
   index: Int,
-  trail: Boolean) extends Page {
+  trail: Boolean) extends ContentPage {
 
-  override val metadata = gallery.metadata
+  override val item = gallery
 }
 
 object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
@@ -62,7 +62,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse: (() => Html) = () =>
-      views.html.gallery(model.gallery, model.related, model.index)
+      views.html.gallery(model, model.related, model.index)
     val jsonResponse = () =>
       views.html.fragments.galleryBody(model.gallery, model.related, model.index)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
