@@ -90,8 +90,10 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include clearfix();
     @include fs-bodyHeading(1);
     @include f-headlineSans();
+    float: left;
     list-style: none;
     margin: 0;
+    width: 100%;
 
     @include mq($until: tablet) {
         @include columns(2, $gs-gutter);
@@ -166,6 +168,10 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     .l-footer__secondary--has-email & {
+        @include mq($from: mobileLandscape, $until: tablet) {
+            padding-right: 50%;
+        }
+
         @include mq(leftCol) {
             width: gs-span(3);
         }
