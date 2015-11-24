@@ -31,6 +31,13 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
+# Email paths
+GET            /email                                                                                                            controllers.EmailController.renderPage()
+GET            /email-form                                                                                                       controllers.EmailController.renderForm()
+GET            /email/:result                                                                                                    controllers.EmailController.subscriptionResult(result: String)
+POST           /email                                                                                                            controllers.EmailController.submit()
+OPTIONS        /email                                                                                                            controllers.EmailController.options()
+
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
