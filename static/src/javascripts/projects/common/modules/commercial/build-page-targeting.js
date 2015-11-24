@@ -98,16 +98,7 @@ define([
             }
         },
         getVisitedValue = function () {
-            var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0,
-                visitedValue;
-
-            if (alreadyVisited > 4) {
-                visitedValue = '5plus';
-            } else {
-                visitedValue = alreadyVisited.toString();
-            }
-
-            return visitedValue;
+            return storage.local.get('gu.alreadyVisited') || 0;
         };
 
     return function (opts) {
@@ -132,7 +123,7 @@ define([
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
-                fr:      getVisitedValue(),
+                fr:      getVisitedValue().toString(),
                 tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
