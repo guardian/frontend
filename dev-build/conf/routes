@@ -334,6 +334,19 @@ GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all         
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                                                      controllers.AllIndexController.altDate(path, day, month, year)
 GET            /$path<.+>/all                                                                                                    controllers.AllIndexController.all(path)
 
+# Newspaper pages paths
+# gallery format (?)
+# e.g. /theobserver/gallery/2013/sep/14/the-10-best-fonts
+# article format
+# e.g. /theobserver/2015/nov/01/the-big-issue-generation-gap-pensioners-young-people
+
+# multi-part tags
+# e.g. /theguardian/2015/nov/04/g2/features
+# GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tagHead<.+>/$tagTail<.+>    controllers.PublicationController.publishedOn(publication, day, month, year, tagHead, tagTail)
+# single-part tag
+# e.g. /theguardian/2015/nov/03/mainsection
+GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                     controllers.PublicationController.publishedOn(publication, year, month, day, tail)
+
 # Facia
 GET            /                                                                                                                 controllers.FaciaController.rootEditionRedirect()
 GET            /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
