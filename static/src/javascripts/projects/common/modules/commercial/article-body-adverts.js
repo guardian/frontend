@@ -3,7 +3,8 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/article/space-filler',
+    'common/utils/fastdom-idle',
+    'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'lodash/objects/cloneDeep'
@@ -12,7 +13,8 @@ define([
     $,
     config,
     detect,
-    spaceFiller,
+    idleFastdom,
+    spacefinder,
     createAdSlot,
     commercialFeatures,
     cloneDeep) {
@@ -47,68 +49,85 @@ define([
     }
 
     // Add new ads while there is still space
-    function addLongArticleAds(count) {
-        if (count < 1) {
-            return Promise.resolve(null);
-        } else {
-            return tryAddingAdvert().then(function (trySuccessful) {
-                // If last attempt worked, recurse another
-                if (trySuccessful) {
-                    return addLongArticleAds(count - 1);
-                } else {
-                    return Promise.resolve(null);
-                }
+    function getAdSpace() {
+        return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
+            // check if spacefinder found another space
+            if (typeof nextSpace === 'undefined' || ads.length >= 9) {
+                return Promise.resolve(null);
+            }
+
+            // if yes add another ad and try another run
+            adNames.push(['inline' + (ads.length + 1), 'inline']);
+            return insertAdAtP(nextSpace).then(function () {
+                return getAdSpace();
             });
-        }
-
-        function tryAddingAdvert() {
-            return spaceFiller.insertAtFirstSpace(getLongArticleRules(), function (para) {
-                adNames.push(['inline' + (ads.length + 1), 'inline']);
-                insertAdAtPara(para);
-            });
-        }
-    }
-
-    function insertAdAtPara(para) {
-        var adName = adNames[ads.length],
-            $ad    = $.create(createAdSlot(adName[0], adName[1]));
-
-        ads.push($ad);
-        $ad.insertBefore(para);
+        });
     }
 
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
+        insertAdAtP = function (para) {
+            if (para) {
+                var adName = adNames[ads.length],
+                    $ad    = $.create(createAdSlot(adName[0], adName[1]));
+
+                ads.push($ad);
+                return new Promise(function (resolve) {
+                    idleFastdom.write(function () {
+                        $ad.insertBefore(para);
+                        resolve(null);
+                    });
+                });
+            } else {
+                return Promise.resolve(null);
+            }
+        },
         init = function () {
+            var rules, inlineMercPromise;
+
             if (!commercialFeatures.articleBodyAdverts) {
                 return false;
             }
 
-            var rules = getRules();
+            rules = getRules();
 
             if (config.page.hasInlineMerchandise) {
-                spaceFiller.insertAtFirstSpace(getInlineMerchRules(), function (para) {
-                    adNames.unshift(['im', 'im']);
-                    insertAdAtPara(para);
+                inlineMercPromise = spacefinder.getParaWithSpace(getInlineMerchRules()).then(function (space) {
+                    if (space) {
+                        adNames.unshift(['im', 'im']);
+                    }
+                    return insertAdAtP(space);
                 });
+            } else {
+                inlineMercPromise = Promise.resolve(null);
             }
 
             if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-                return tryAddingAdvert().then(tryAddingAdvert).then(function () {
-                    return addLongArticleAds(8);
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
+                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                            return insertAdAtP(nextSpace);
+                        }).then(function () {
+                            return getAdSpace();
+                        });
+                    });
                 });
             } else {
-                return tryAddingAdvert().then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
-                        return tryAddingAdvert();
-                    } else {
-                        return Promise.resolve(null);
-                    }
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
+                        if (detect.isBreakpoint({max: 'tablet'})) {
+                            return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                                return insertAdAtP(nextSpace);
+                            });
+                        } else {
+                            return Promise.resolve(null);
+                        }
+                    });
                 });
-            }
-
-            function tryAddingAdvert() {
-                return spaceFiller.insertAtFirstSpace(rules, insertAdAtPara);
             }
         };
 
@@ -116,7 +135,7 @@ define([
         init: init,
         // rules exposed for spacefinder debugging
         getRules: getRules,
-        getInlineMerchRules: getInlineMerchRules,
+        getLenientRules: getInlineMerchRules,
 
         reset: function () {
             ads = [];

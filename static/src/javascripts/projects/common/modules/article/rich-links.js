@@ -8,7 +8,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/article/space-filler',
+    'common/modules/article/spacefinder',
     'common/modules/ui/images',
     'text!common/views/content/richLinkTag.html',
     'lodash/collections/contains'
@@ -22,7 +22,7 @@ define([
     detect,
     mediator,
     template,
-    spaceFiller,
+    spacefinder,
     imagesModule,
     richLinkTagTmpl,
     contains) {
@@ -66,8 +66,7 @@ define([
     }
 
     function insertTagRichLink() {
-        var $insertedEl,
-            richLinkHrefs = $('.element-rich-link a')
+        var richLinkHrefs = $('.element-rich-link a')
                 .map(function (el) { return $(el).attr('href'); }),
             testIfDuplicate = function (richLinkHref) {
                 // Tag-targeted rich links can be absolute
@@ -76,20 +75,21 @@ define([
             isDuplicate = richLinkHrefs.some(testIfDuplicate),
             isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent;
 
-        if (config.page.richLink &&
-            config.page.richLink.indexOf(config.page.pageId) === -1 &&
-            !isSensitive &&
-            !isDuplicate
-        ) {
-            return spaceFiller.insertAtFirstSpace(getSpacefinderRules(), function (para) {
-                $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
-                $insertedEl.insertBefore(para);
-            }).then(function (didInsert) {
-                if (didInsert) {
-                    return Promise.resolve(upgradeRichLink($insertedEl[0]));
-                } else {
-                    return Promise.resolve(null);
-                }
+        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1
+            && !isSensitive && !isDuplicate) {
+
+            return spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
+                return new Promise(function (resolve) {
+                    if (space) {
+                        fastdom.write(function () {
+                            var $el = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                            $el.insertBefore(space);
+                            resolve(upgradeRichLink($el[0]));
+                        });
+                    } else {
+                        resolve(null);
+                    }
+                });
             });
         } else {
             return Promise.resolve(null);
@@ -101,6 +101,7 @@ define([
     }
 
     return {
+        upgradeRichLink: upgradeRichLink,
         upgradeRichLinks: upgradeRichLinks,
         insertTagRichLink: insertTagRichLink,
         getSpacefinderRules: getSpacefinderRules
