@@ -154,8 +154,7 @@ define([
         return Promise.resolve();
     }
 
-    // Rather than calling this directly, use spaceFiller to inject content into the page.
-    // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
+    // getParaWithSpace returns a paragraph that satisfies the given/default rules:
     function getParaWithSpace(rules, debug) {
         var bodyBottom, paraElems, slots;
         rules = rules || defaultRules;
