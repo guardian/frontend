@@ -9,9 +9,9 @@
 
 .email-sub__iframe {
     // pixel calculations are manual design
-    // adjustments, off grid
-    width: calc(100% + 8px);
-    margin-left: -4px;
+    // adjustments, off grid, based on element font-size
+    width: calc(100% + .66em);
+    margin-left: -.33em;
 }
 
 .email-sub__form {
