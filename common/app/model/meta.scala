@@ -114,6 +114,7 @@ object MetaData {
     section: String,
     webTitle: String,
     analyticsName: String,
+    url: Option[String] = None,
     canonicalUrl: Option[String] = None,
     shouldGoogleIndex: Boolean = true,
     pagination: Option[Pagination] = None,
@@ -129,12 +130,12 @@ object MetaData {
     twitterPropertiesOverrides: Map[String, String] = Map()
     ): MetaData = {
 
-    val url = s"/$id"
+    val resolvedUrl = url.getOrElse(s"/$id")
 
     MetaData(
       id = id,
-      url = url,
-      webUrl = s"${Configuration.site.host}$url",
+      url = resolvedUrl,
+      webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
       section = section,
       analyticsName = analyticsName,
