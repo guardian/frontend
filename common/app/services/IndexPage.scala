@@ -183,6 +183,7 @@ case class IndexPage(
 
   val trails: Seq[Content] = contents.map(_.item.content)
   val faciaTrails: Seq[FaciaContent] = contents.map(_.faciaItem)
+  val commercial: Commercial = Commercial.make(page.metadata, tags)
 
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),

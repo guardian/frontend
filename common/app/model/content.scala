@@ -27,7 +27,7 @@ import scala.util.Try
  * a combination of CAPI content and things from facia tool, in one place
  */
 
-sealed trait ContentType {
+trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
@@ -243,13 +243,13 @@ object Content {
     }
   }
 
-  private[model] def make(apiContent: contentapi.Content) = {
+  private def make(apiContent: contentapi.Content) = {
 
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
     val tags = Tags(apiContent.tags map { Tag.make(_) })
-    val commercial = Commercial.make(metadata, tags, fields, apiContent)
+    val commercial = Commercial.make(metadata, tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.safeFields
@@ -354,10 +354,7 @@ object Article {
         } else {
           content.metadata.cacheSeconds
         },
-      iosType = contentType match {
-        case "Crossword" => None
-        case _ => Some("Article")
-      }
+      iosType = Some("Article")
     )
   }
 
@@ -719,7 +716,9 @@ case class GenericLightbox(
   }
 }
 
-final case class Interactive(override val content: Content) extends ContentType {
+final case class Interactive(
+  override val content: Content,
+  maybeBody: Option[String]) extends ContentType {
 
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
@@ -731,12 +730,12 @@ final case class Interactive(override val content: Content) extends ContentType 
     }
   }
 
-  lazy val figureEl = (Jsoup.parseBodyFragment(fields.body).getElementsByTag("figure").html("").outerHtml())
+  lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 
 object Interactive {
   def apply(apiContent: contentapi.Content): Interactive = {
-    val content = Content.make(apiContent)
+    val content = Content(apiContent).content
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
     val elements = content.elements
@@ -760,7 +759,9 @@ object Interactive {
       javascriptConfigOverrides = Map("contentType" -> JsString(contentType)),
       twitterPropertiesOverrides = twitterProperties
     )
-    Interactive(contentOverrides)
+    Interactive(
+      contentOverrides,
+      maybeBody = apiContent.safeFields.get("body"))
   }
 }
 

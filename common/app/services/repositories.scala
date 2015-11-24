@@ -160,7 +160,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     val latest: Seq[IndexPageItem] = response.results.map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
-    tag map { IndexPage(_, allTrails) }
+    tag map { tag => IndexPage(tag, allTrails, Tags(Seq(tag))) }
   }
 
   // for some reason and for the life of me I cannot figure it out, this does not compile if these

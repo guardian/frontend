@@ -42,7 +42,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
       val (firstPageContent, otherContent) = resp.results.partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
-        val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
+        val content = firstPageContent.map(c => FaciaContentConvert.contentToFaciaContent(c))
         bookSectionContainer(None, Some(s"Front Page"), Some(today.toString(dateForFrontPagePattern)), content, 0)
       }
 
@@ -50,7 +50,7 @@ object TodaysNewspaperQuery extends ExecutionContexts with Dates with Logging {
       val orderedBookSections = orderByPageNumber(unorderedBookSections)
 
       val bookSectionContainers = orderedBookSections.map { list =>
-        val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
+        val content = list.content.map(c => FaciaContentConvert.contentToFaciaContent(c))
         bookSectionContainer(Some(list.tag.id), Some(list.tag.webTitle), None, content, orderedBookSections.indexOf(list) + 1)
       }
 

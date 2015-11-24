@@ -1,25 +1,19 @@
 package model
 
-class SubjectsListingMetaData extends MetaData {
-  override def id: String = "index/subjects"
-
-  override def section: String = "Index"
-
-  override def analyticsName: String = "Subjects"
-
-  override def webTitle: String = "subjects"
-
-  override def customSignPosting = Some(IndexNav.keywordsAlpha)
+case class SubjectsListing() extends Page {
+  override val metadata = MetaData.make(
+    id = "index/subjects",
+    section = "Index",
+    analyticsName = "Subjects",
+    webTitle = "subjects",
+    customSignPosting = Some(IndexNav.keywordsAlpha))
 }
 
-class ContributorsListingMetaData extends MetaData {
-  override def id: String = "index/contributors"
-
-  override def section: String = "Index"
-
-  override def analyticsName: String = "Contributors"
-
-  override def webTitle: String = "contributors"
-
-  override def customSignPosting = Some(IndexNav.contributorsAlpha)
+case class ContributorsListing() extends Page {
+  override val metadata = MetaData.make(
+    id = "index/contributors",
+    section = "Index",
+    analyticsName = "Contributors",
+    webTitle = "contributors",
+    customSignPosting = Some(IndexNav.contributorsAlpha))
 }

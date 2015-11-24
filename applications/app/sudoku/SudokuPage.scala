@@ -1,18 +1,16 @@
 package sudoku
 
-import model.MetaData
+import model.{Page, MetaData}
 import play.api.libs.json.{JsString, JsValue}
 
-class SudokuPage(val sudoku: Sudoku) extends MetaData {
-  override def id: String = sudoku.id
+class SudokuPage(val sudoku: Sudoku) extends Page {
+  override val metadata = MetaData.make(
+    id = sudoku.id,
+    section = "sudokus",
+    analyticsName = sudoku.id,
+    webTitle = sudoku.title)
 
-  override def section: String = "sudokus"
-
-  override def analyticsName: String = id
-
-  override def webTitle: String = sudoku.title
-
-  override def metaData: Map[String, JsValue] = super.metaData ++ Map(
+  val javascriptConfig: Map[String, JsValue] = metadata.javascriptConfig ++ Map(
     "section" -> JsString("lifeandstyle"),
     "series" -> JsString("Sudoku")
   )

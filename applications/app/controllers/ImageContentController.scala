@@ -10,7 +10,9 @@ import services.ImageQuery
 
 import scala.concurrent.Future
 
-case class ImageContentPage(image: ImageContent, related: RelatedContent)
+case class ImageContentPage(image: ImageContent, related: RelatedContent) extends Page {
+  override val metadata = image.metadata
+}
 
 object ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
 
@@ -21,7 +23,7 @@ object ImageContentController extends Controller with RendersItemResponse with I
   private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.imageContent(page)
     val jsonResponse = () => views.html.fragments.imageContentBody(page)
-    renderFormat(htmlResponse, jsonResponse, page.image, Switches.all)
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = image(Edition(request), path).map {

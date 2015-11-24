@@ -12,14 +12,28 @@ import org.scala_tools.time.Imports._
 import implicits.Dates._
 
 object Commercial {
-  def make(metadata: MetaData, tags: Tags, fields: Fields, apiContent: contentapi.Content) = {
+  def make(metadata: MetaData, tags: Tags, apiContent: contentapi.Content) = {
     val section = Some(metadata.section)
 
     model.Commercial(
       tags = tags,
-      fields = fields,
       metadata = metadata,
       isInappropriateForSponsorship = apiContent.safeFields.get("isInappropriateForSponsorship").exists(_.toBoolean),
+      sponsorshipTag = DfpAgent.sponsorshipTag(tags.tags, section),
+      isFoundationSupported = DfpAgent.isFoundationSupported(tags.tags, section),
+      isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags.tags, section),
+      hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags.tags),
+      hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
+      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags))
+  }
+
+  def make(metadata: MetaData, tags: Tags) = {
+    val section = Some(metadata.section)
+
+    model.Commercial(
+      tags = tags,
+      metadata = metadata,
+      isInappropriateForSponsorship = false,
       sponsorshipTag = DfpAgent.sponsorshipTag(tags.tags, section),
       isFoundationSupported = DfpAgent.isFoundationSupported(tags.tags, section),
       isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags.tags, section),
@@ -31,7 +45,7 @@ object Commercial {
 
 final case class Commercial(
   tags: Tags,
-  fields: Fields,
+  //fields: Fields,
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
   sponsorshipTag: Option[Tag],

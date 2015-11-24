@@ -16,7 +16,10 @@ case class GalleryPage(
   gallery: Gallery,
   related: RelatedContent,
   index: Int,
-  trail: Boolean)
+  trail: Boolean) extends Page {
+
+  override val metadata = gallery.metadata
+}
 
 object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -28,7 +31,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     val isTrail = request.getBooleanParameter("trail") getOrElse false
 
     lookup(path, index, isTrail) map {
-      case Left(model) if model.gallery.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
+      case Left(model) if model.gallery.content.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model) => renderGallery(model)
       case Right(other) => RenderOtherStatus(other)
     }
@@ -38,7 +41,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     val index = request.getIntParameter("index") getOrElse 1
     lookup(path, index, isTrail=false) map {
       case Right(other) => RenderOtherStatus(other)
-      case Left(model) => Cached(model.gallery) { JsonComponent(model.gallery.lightbox) }
+      case Left(model) => Cached(model) { JsonComponent(model.gallery.lightbox.javascriptConfig) }
     }
   }
 
@@ -49,8 +52,8 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     getResponse(LiveContentApi.item(path, edition)
       .showFields("all")
     ).map { response =>
-      val gallery = response.content.filter(isSupported).map(Gallery(_))
-      val model = gallery map { g => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
+      val gallery = response.content.map(Content(_))
+      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
 
       ModelOrResult(model, response)
 
@@ -62,7 +65,7 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
       views.html.gallery(model.gallery, model.related, model.index)
     val jsonResponse = () =>
       views.html.fragments.galleryBody(model.gallery, model.related, model.index)
-    renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
+    renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
   private def isSupported(c: ApiContent) = c.isGallery

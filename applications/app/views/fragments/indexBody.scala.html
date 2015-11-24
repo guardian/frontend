@@ -6,9 +6,8 @@
 @import views.html.fragments.containers.facia_cards.containerScaffold
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
-@import services.FaciaContentConvert
 
-@if(index.page.id == "help/accessibility-help") {
+@if(index.page.metadata.id == "help/accessibility-help") {
     @containerScaffold("Preferences", "accesibility preferences") {
         <div id="js-accessibility-preferences">Loading&hellip;</div>
     }
@@ -16,8 +15,8 @@
 
 <div class="l-side-margins">
 
-    @if(!(index.page.id.endsWith("crosswords/series/crossword-editor-update") || index.page.id.endsWith("crosswords/crossword-blog"))) {
-        @if(index.page.id.contains("crosswords")) {
+    @if(!(index.page.metadata.id.endsWith("crosswords/series/crossword-editor-update") || index.page.metadata.id.endsWith("crosswords/crossword-blog"))) {
+        @if(index.page.metadata.id.contains("crosswords")) {
             @fragments.crosswordsOptOutBanner()
         }
     }
@@ -25,16 +24,16 @@
     <div class="@RenderClasses(Map(
         "u-cf" -> true,
         "index-page" -> true,
-        "js-sponsored-front" -> (index.page.isSponsored(Some(Edition(request))) ||
-            index.page.isAdvertisementFeature ||
-            index.page.isFoundationSupported),
-        "fc-container--advertisement-feature" -> index.page.isAdvertisementFeature)
+        "js-sponsored-front" -> (index.commercial.isSponsored(Some(Edition(request))) ||
+            index.commercial.isAdvertisementFeature ||
+            index.commercial.isFoundationSupported),
+        "fc-container--advertisement-feature" -> index.commercial.isAdvertisementFeature)
         )"
         data-link-name="Front | @request.path"
-        @index.page.sponsor.map { sponsor =>
+        @index.tags.sponsor.map { sponsor =>
             data-sponsor="@sponsor"
         }
-        @index.page.sponsorshipType.map { sponsorshipType =>
+        @index.commercial.sponsorshipType.map { sponsorshipType =>
             data-sponsorship="@sponsorshipType"
         }
         role="main">
@@ -45,13 +44,13 @@
             }
         }
 
-        @index.page.pagination.map { paginationInstance =>
+        @index.page.metadata.pagination.map { paginationInstance =>
             <div class="fc-container__pagination">
-                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
             </div>
         }
 
-        @fragments.trendingTopics(index.trails.map(FaciaContentConvert.frontendContentToFaciaContent), index.page.id, None)
+        @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
         <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>
