@@ -1,0 +1,193 @@
+.email-sub {
+    @include clearfix();
+}
+
+.email-sub__iframe {
+    // Fallback for browsers that don't support calc
+    width: 100%;
+}
+
+.email-sub__iframe {
+    // pixel calculations are manual design
+    // adjustments, off grid, based on element font-size
+    width: calc(100% + .66em);
+    margin-left: -.33em;
+}
+
+.email-sub__form {
+    @include fs-textSans(3);
+    padding: $gs-baseline $gs-gutter;
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+.email-sub__form--is-hidden {
+    display: none;
+}
+
+.email-sub__label {
+    color: $form-primary-colour;
+}
+
+.email-sub__label--is-hidden {
+    visibility: hidden;
+}
+
+// Set with JS so we can use a real label
+// instead of abusing the placeholder attr
+// but displays correctly if JS doesn't load
+.email-sub__inline-label--enabled {
+    position: relative;
+    width: 100%;
+
+    .email-sub__label {
+        color: guss-colour(neutral-2, $pasteup-palette);
+        line-height: 3;
+        left: $gs-gutter * .75;
+        position: absolute;
+        pointer-events: none; // Ensure the text input cursor is shown
+    }
+}
+
+.email-sub__text-input {
+    border: 1px solid $form-primary-colour;
+    color: guss-colour(neutral-2, $pasteup-palette);
+    height: 3em;
+    outline: none;
+    padding: ($gs-gutter * .4) ($gs-gutter * .75);
+}
+
+.email-sub__submit-input {
+    border-color: $form-secondary-colour;
+    color: $form-primary-colour;
+
+    &:focus,
+    &:hover,
+    &:active {
+        border-color: $form-primary-colour;
+    }
+}
+
+.email-sub__text-input,
+.email-sub__submit-input {
+    margin-bottom: $gs-baseline;
+    width: 100%;
+}
+
+.email-sub__small {
+    color: $form-secondary-colour;
+    display: block;
+    padding-left: $gs-baseline / 3;
+}
+
+.email-sub__message {
+    color: #ffffff;
+
+    padding-left: $icon-size + ($gs-gutter / 2);
+    position: relative;
+
+    .inline-icon {
+        background-color: guss-colour(neutral-3, $pasteup-palette);
+        border-radius: 1000px;
+        fill: guss-colour(neutral-1, $pasteup-palette);
+        height: $icon-size;
+        left: 0;
+        position: absolute;
+        width: $icon-size;
+
+        svg {
+            height: $icon-size / 2;
+            margin-top: $icon-size / 4;
+            margin-left: $icon-size / 4;
+            width: $icon-size / 2;
+        }
+    }
+}
+
+.email-sub__message__headline,
+.email-sub__message__description {
+    @include fs-textSans(3);
+}
+
+.email-sub__message__headline {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.email-sub__message__description {
+    @include fs-textSans(1, $size-only: true);
+}
+
+/**
+* Modifications
+*/
+
+    // FOOTER MODS
+.email-sub__form--footer {
+    margin-bottom: $gs-baseline;
+    padding: 0 $gs-gutter;
+
+    .email-sub__label,
+    .email-sub__submit-input,
+    .email-sub__text-input {
+        @include fs-textSans(1, $size-only: true);
+    }
+
+    .email-sub__label,
+    .email-sub__submit-input {
+        line-height: 3;
+    }
+
+    .email-sub__submit-input {
+        background-color: guss-colour(neutral-2, $pasteup-palette);
+        border: 1px solid guss-colour(neutral-2, $pasteup-palette);
+
+        &:hover,
+        &:focus,
+        &:active {
+            cursor: pointer;
+            background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+        }
+    }
+
+    .email-sub__small {
+        color: $form-primary-colour;
+        @include fs-textSans(1, $size-only: true);
+    }
+}
+
+// LANDING PAGE MODS
+.email-sub--landing {
+    .email-sub__description {
+        padding: $gs-baseline $gs-gutter;
+    }
+}
+
+.email-sub__form--landing {
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
+
+    .email-sub__form-wrapper {
+        width: 40%;
+    }
+
+    .email-sub__text-input {
+        border-color: $form-secondary-colour;
+        border-radius: 1000px;
+
+        &:focus,
+        &:active {
+            border-color: $form-primary-colour;
+        }
+    }
+
+    .email-sub__small {
+        text-align: center;
+        width: 100%;
+    }
+
+}
+
+

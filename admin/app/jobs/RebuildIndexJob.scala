@@ -47,6 +47,22 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
     }
   }
 
+  def rebuildNewspaperBooks() = {
+    ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(byPublication) map { booksMap =>
+      blocking {
+        saveToS3("newspaper_books", toPages(booksMap)(alphaTitle, asciiLowerWebTitle))
+      }
+    }
+  }
+
+  def rebuildNewspaperBookSections() = {
+    ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(byPublication) map { bookSectionMap =>
+      blocking {
+        saveToS3("newspaper_book_sections", toPages(bookSectionMap)(alphaTitle, asciiLowerWebTitle))
+      }
+    }
+  }
+
   def rebuildContributorIndex() = {
     ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
       blocking {
@@ -66,6 +82,13 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   }
 
   def run() {
-    rebuildKeywordIndexes().withErrorLogging andThen { case _ => rebuildContributorIndex().withErrorLogging }
+    rebuildKeywordIndexes().withErrorLogging andThen {
+      case _ => rebuildContributorIndex().withErrorLogging andThen {
+        case _ => rebuildNewspaperBooks().withErrorLogging andThen {
+          case _ => rebuildNewspaperBookSections().withErrorLogging
+        }
+      }
+    }
   }
+
 }

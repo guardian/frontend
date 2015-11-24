@@ -33,7 +33,7 @@
                     aria-haspopup="true" aria-controls="comments-order-popup">Order by <span class="js-comment-order"></span></button>
 
             <ul id="comments-order-popup" class="popup popup__group popup--comments-order is-off">
-                @List("newest", "oldest").map { value =>
+                @List("newest", "oldest", "recommendations").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
                     </li>

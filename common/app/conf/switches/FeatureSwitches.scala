@@ -5,16 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  // Features
-  val OfflinePageSwitch = Switch(
-    "Feature",
-    "offline-page",
-    "Offline page",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 26),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",

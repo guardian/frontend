@@ -7,7 +7,7 @@ import com.google.api.ads.dfp.axis.v201508._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
-import dfp.ApiHelper.fetch
+import dfp.Loader.load
 
 import scala.collection.JavaConversions._
 import scala.util.control.NonFatal
@@ -46,7 +46,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def lineItems(stmtBuilder: StatementBuilder): Seq[LineItem] = {
     logAround("line items", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.lineItemService.getLineItemsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -55,7 +55,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def customFields(stmtBuilder: StatementBuilder): Seq[CustomField] = {
     logAround("custom fields", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.customFieldsService.getCustomFieldsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -64,7 +64,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def customTargetingKeys(stmtBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
     logAround("custom targeting keys", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.customTargetingService.getCustomTargetingKeysByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -73,7 +73,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def customTargetingValues(stmtBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
     logAround("custom targeting values", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.customTargetingService.getCustomTargetingValuesByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -82,7 +82,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def adUnits(stmtBuilder: StatementBuilder): Seq[AdUnit] = {
     logAround("ad units", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.inventoryService.getAdUnitsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -91,7 +91,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def suggestedAdUnits(stmtBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
     logAround("suggested ad units", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.suggestedAdUnitService.getSuggestedAdUnitsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -100,7 +100,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def placements(stmtBuilder: StatementBuilder): Seq[Placement] = {
     logAround("placements", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.placementService.getPlacementsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -109,7 +109,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def creativeTemplates(stmtBuilder: StatementBuilder): Seq[CreativeTemplate] = {
     logAround("creative templates", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.creativeTemplateService.getCreativeTemplatesByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
@@ -118,7 +118,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   def creatives(stmtBuilder: StatementBuilder): Seq[Creative] = {
     logAround("creatives", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
+      load(stmtBuilder) { statement =>
         val page = services.creativeService.getCreativesByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
