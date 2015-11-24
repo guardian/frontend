@@ -134,9 +134,7 @@ define([
 
     function initFrontsContainers() {
         insertOrProximity('.js-onward', function () {
-            if (true) {
-                new FrontsContainers(qwery('.js-onward'));
-            }
+            new FrontsContainers(qwery('.js-onward'));
         });
     }
 
