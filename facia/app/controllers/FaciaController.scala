@@ -10,6 +10,7 @@ import model.facia.PressedCollection
 import performance.MemcachedAction
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
+import play.api.templates
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices._
@@ -44,6 +45,36 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id, false)
+
+  def renderSomeFrontContainers(path: String, num: String, offset: String, size: String) = MemcachedAction { implicit request =>
+    getSomeCollections(path, num.toInt, offset.toInt).map { collections =>
+      Cached(60) {
+        val containers = collections.getOrElse(List()).map { collection: PressedCollection =>
+
+          val containerLayout = size match {
+            case "small" => Fixed(FixedContainers.fixedSmallSlowIV)
+            case "large" => Fixed(FixedContainers.fixedMediumFastXI)
+            case "original" => Container.resolve(collection.collectionType)
+          }
+
+          val containerDefinition = FaciaContainer(
+            1,
+            containerLayout,
+            CollectionConfigWithId("", CollectionConfig.empty),
+            CollectionEssentials.fromPressedCollection(collection)
+          )
+
+          container(containerDefinition, FrontProperties.empty)
+        }
+
+        if(request.isJson) {
+          JsonCollection(Html(containers.mkString))
+        } else {
+          NotFound
+        }
+      }
+    }
+  }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
 
@@ -261,6 +292,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         Some(faciaPage.collections.filterNot(_.displayName contains "sport").take(take))
       })
     }.getOrElse(successful(None))
+
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0): Future[Option[List[PressedCollection]]] =
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+        Some(faciaPage.collections.drop(offset).take(num))
+      })
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>

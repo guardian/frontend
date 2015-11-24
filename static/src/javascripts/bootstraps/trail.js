@@ -18,6 +18,7 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
+    'common/modules/onward/fronts-containers',
     'common/modules/social/share-count',
     'common/modules/onward/inject-container',
     'common/modules/experiments/ab'
@@ -39,6 +40,7 @@ define([
     Popular,
     Related,
     TonalComponent,
+    FrontsContainers,
     shareCount,
     injectContainer,
     ab
@@ -130,6 +132,14 @@ define([
         });
     }
 
+    function initFrontsContainers() {
+        insertOrProximity('.js-onward', function () {
+            if (true) {
+                new FrontsContainers(qwery('.js-onward'));
+            }
+        });
+    }
+
     function initDiscussion() {
         if (config.switches.discussion && config.page.commentable) {
             var el = qwery('.discussion')[0];
@@ -165,6 +175,7 @@ define([
             ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
+            ['c-fronts-containers', initFrontsContainers],
             ['c-onward', initOnwardContent],
             ['c-comment-adverts', commentAdverts]
         ]);

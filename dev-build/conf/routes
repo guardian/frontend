@@ -338,6 +338,7 @@ GET            /                                                                
 GET            /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
 GET            /rss                                                                                                              controllers.FaciaController.renderRootFrontRss()
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
+GET            /*path/some-containers/:num/:offset/:size.json                                                                          controllers.FaciaController.renderSomeFrontContainers(path, num, offset, size)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
 GET            /container/essential-read/:contentSource/:edition.json                                                            controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)

@@ -76,7 +76,7 @@ object CollectionEssentials {
     Option(collection.displayName),
     collection.href,
     collection.lastUpdated.map(_.toString),
-    if (collection.curated.isEmpty) Some(9) else None
+    if (collection.curated.isEmpty) Some(9) else Some(0)
   )
 
   def fromFaciaContent(trails: Seq[FaciaContent]) = CollectionEssentials(

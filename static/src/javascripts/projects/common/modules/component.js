@@ -132,6 +132,7 @@ define([
         var self = this;
 
         return this._fetch().then(function render(resp) {
+            console.log(resp[self.responseDataKey]);
             self.elem = bonzo.create(resp[self.responseDataKey])[0];
             self._prerender();
 
