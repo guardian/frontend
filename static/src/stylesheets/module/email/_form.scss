@@ -3,12 +3,10 @@
 }
 
 .email-sub__iframe {
-    @if ($old-ie) {
-        width: 100%;
-    } @else {
-        width: calc(100% + 8px);
-        margin-left: -4px;
-    }
+    // Calc with fallback
+    width: 100%;
+    width: calc(100% + 8px);
+    margin-left: -4px;
 }
 
 .email-sub__form {
