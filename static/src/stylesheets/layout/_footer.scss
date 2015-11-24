@@ -166,6 +166,10 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     .l-footer__secondary--has-email & {
+        @include mq($from: mobileLandscape, $until: tablet) {
+            padding-right: 50%;
+        }
+
         @include mq(leftCol) {
             width: gs-span(3);
         }

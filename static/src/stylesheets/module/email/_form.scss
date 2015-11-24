@@ -3,14 +3,11 @@
 }
 
 .email-sub__iframe {
-    // pixel calculations are manual design 
-    // adjustments, off grid
-    width: calc(100% + 8px);
-    margin-left: -4px;
-
-    @include mq($from: mobileLandscape, $until: tablet) {
-        margin-right: 50%;
-        width: calc(50% + 8px);
+    @if ($old-ie) {
+        width: 100%;
+    } @else {
+        width: calc(100% + 8px);
+        margin-left: -4px;
     }
 }
 
