@@ -26,7 +26,7 @@ define([
             });
         },
         getIframe = function () {
-            return bonzo.create('<iframe src="/email-form" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe"></iframe>');
+            return bonzo.create('<iframe src="/email/form" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe"></iframe>');
         },
         makeABChanges = function (iFrameEl, opts) {
             // Once our iframe had loaded, make the A/B test changes
