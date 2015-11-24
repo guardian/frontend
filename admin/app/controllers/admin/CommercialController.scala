@@ -7,19 +7,22 @@ import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
 import dfp.DfpDataHydrator
-import model.{MetaData, Content, NoCache, Page}
+import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.mvc.Controller
 import tools._
 import services.FaciaContentConvert
 
-case class CommercialPage() extends Page {
-  override val metadata = MetaData.make("commercial-templates", "admin", "Commercial Templates", "Commercial Templates")
-
-  val getJavascriptConfig: Map[String, JsValue] = metadata.javascriptConfig ++ Map(
-    "keywordIds" -> JsString("live-better"),
-    "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng"))
+case class CommercialPage() extends StandalonePage {
+  override val metadata = MetaData.make(
+    id = "commercial-templates",
+    section = "admin",
+    webTitle = "Commercial Templates",
+    analyticsName = "Commercial Templates",
+    javascriptConfigOverrides = Map(
+      "keywordIds" -> JsString("live-better"),
+      "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
