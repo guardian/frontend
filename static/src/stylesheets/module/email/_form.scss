@@ -3,8 +3,13 @@
 }
 
 .email-sub__iframe {
-    // Calc with fallback
+    // Fallback for browsers that don't support calc
     width: 100%;
+}
+
+.email-sub__iframe {
+    // pixel calculations are manual design
+    // adjustments, off grid
     width: calc(100% + 8px);
     margin-left: -4px;
 }
