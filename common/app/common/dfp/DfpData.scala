@@ -365,7 +365,8 @@ case class GuCreative(
   name: String,
   lastModified: DateTime,
   args: Map[String, String],
-  templateId: Long
+  templateId: Option[Long],
+  snippet: Option[String]
 )
 
 object GuCreative {
@@ -387,7 +388,8 @@ object GuCreative {
         "name" -> creative.name,
         "lastModified" -> creative.lastModified,
         "args" -> creative.args,
-        "templateId" -> creative.templateId
+        "templateId" -> creative.templateId,
+        "snippet" -> creative.snippet
       )
     }
   }
@@ -397,7 +399,8 @@ object GuCreative {
       (JsPath \ "name").read[String] and
       (JsPath \ "lastModified").read[DateTime] and
       (JsPath \ "args").read[Map[String, String]] and
-      (JsPath \ "templateId").read[Long]
+      (JsPath \ "templateId").readNullable[Long] and
+      (JsPath \ "snippet").readNullable[String]
     ) (GuCreative.apply _)
 }
 

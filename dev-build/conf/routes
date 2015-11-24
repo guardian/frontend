@@ -31,6 +31,13 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
+# Email paths
+GET            /email                                                                                                            controllers.EmailController.renderPage()
+GET            /email-form                                                                                                       controllers.EmailController.renderForm()
+GET            /email/:result                                                                                                    controllers.EmailController.subscriptionResult(result: String)
+POST           /email                                                                                                            controllers.EmailController.submit()
+OPTIONS        /email                                                                                                            controllers.EmailController.options()
+
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
@@ -87,7 +94,6 @@ GET            /most-read.json                                                  
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
-GET            /ab-most-read/*path.json                                                                                          controllers.MostPopularController.renderAbTest(path)
 
 GET            /top-stories.json                                                                                                 controllers.TopStoriesController.renderTopStories()
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
@@ -315,9 +321,11 @@ GET            /embed/video/*path                                               
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
-GET            /theguardian                                                                                                      controllers.NewspaperController.today()
-GET            /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>                                                            controllers.NewspaperController.forDate(day, month, year)
-GET            /theguardian/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                        controllers.NewspaperController.allOn(day, month, year)
+# Newspaper pages
+GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
+GET            /theobserver                                                                                                      controllers.NewspaperController.latestObserverNewspaper()
+GET            /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>                                         controllers.NewspaperController.newspaperForDate(path, day, month, year)
+GET            /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                     controllers.NewspaperController.allOn(path, day, month, year)
 
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)
@@ -325,16 +333,30 @@ GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all         
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                                                      controllers.AllIndexController.altDate(path, day, month, year)
 GET            /$path<.+>/all                                                                                                    controllers.AllIndexController.all(path)
 
+# Newspaper pages paths
+# gallery format (?)
+# e.g. /theobserver/gallery/2013/sep/14/the-10-best-fonts
+# article format
+# e.g. /theobserver/2015/nov/01/the-big-issue-generation-gap-pensioners-young-people
+
+# multi-part tags
+# e.g. /theguardian/2015/nov/04/g2/features
+# GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tagHead<.+>/$tagTail<.+>    controllers.PublicationController.publishedOn(publication, day, month, year, tagHead, tagTail)
+# single-part tag
+# e.g. /theguardian/2015/nov/03/mainsection
+GET         /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                     controllers.PublicationController.publishedOn(publication, year, month, day, tail)
+
 # Facia
-GET         /                                                                                                        controllers.FaciaController.rootEditionRedirect()
-GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>  controllers.FaciaController.renderFrontPressSpecial(path)
-GET         /rss                                                                                                     controllers.FaciaController.renderRootFrontRss()
-GET         /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>              controllers.FaciaController.renderFrontPress(path)
-GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
-GET         /*path/deduped.json                                                                                      controllers.DedupedController.getDedupedForPath(path)
-GET         /container/use-layout/*id.json                                                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
-GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
-GET         /most-relevant-container/*path.json                                                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
+GET            /                                                                                                                 controllers.FaciaController.rootEditionRedirect()
+GET            /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET            /rss                                                                                                              controllers.FaciaController.renderRootFrontRss()
+GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
+GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
+GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
+GET            /container/essential-read/:contentSource/:edition.json                                                            controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
+GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
+GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
+GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)
 
 
 # Editionalised pages

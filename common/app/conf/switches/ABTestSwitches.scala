@@ -4,12 +4,12 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABMembershipMessageUsa = Switch(
+  val ABRtrtEmailFormInlineFooter = Switch(
     "A/B Tests",
-    "ab-membership-message-usa",
-    "Switch for the USA Supporter message test",
+    "ab-rtrt-email-form-inline-footer",
+    "Switch to show the email form inline in the footer",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 18),
+    sellByDate = new LocalDate(2015, 12, 15),
     exposeClientSide = true
   )
 
@@ -31,21 +31,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABReachDummyTest = Switch(
+  val ABReachDummyTest2 = Switch(
     "A/B Tests",
-    "ab-reach-dummy-test",
+    "ab-reach-dummy-test-2",
     "Switch to inject the network front instead of most popular on all content pages",
     safeState = Off,
     sellByDate = new LocalDate(2015, 12, 5),
     exposeClientSide = true
   )
 
-  val ABMostPopularDefaultTest2 = Switch(
+  val ABEssentialReadTest1 = Switch(
     "A/B Tests",
-    "ab-most-popular-default-test-2",
-    "Switch to change the default of most popular container to show across the guardian first instead of section",
+    "ab-essential-read-test-1",
+    "Show the essential read instead of related content",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 23),
+    sellByDate = new LocalDate(2015, 12, 15),
     exposeClientSide = true
   )
 
