@@ -20,8 +20,8 @@
 
     .essential-read__number {
         float: left;
-        width: $gs-gutter * 2;
-        @include font($f-serif-headline, 200, 42px);
+        width: $gs-gutter * 1.6;
+        @include font($f-serif-headline, 200, 44px);
         color: colour(news-main-2);
     }
 
@@ -35,8 +35,6 @@
         width: calc(100% - 20px);
 
         &:not(:first-of-type) {
-            padding-top: $gs-baseline/3;
-
             &:before {
                 position: absolute;
                 top: 0;
@@ -56,7 +54,8 @@
         }
 
         @include mq(tablet) {
-            width: 320px;
+            width: 300px;
+            padding-right: $gs-gutter;
         }
     }
 
@@ -81,7 +80,6 @@
         line-height: 20px;
         padding-top: 2px;
         display: block;
-        margin-left: $gs-gutter*2;
     }
 
     .essential-read__kicker {
@@ -116,7 +114,7 @@
         }
 
         @include mq(desktop) {
-            width: 580px;
+            width: 620px;
         }
 
         .fc-item__image-container {
