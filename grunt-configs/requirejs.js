@@ -7,7 +7,6 @@ module.exports = function (grunt, options) {
                 common:               'projects/common',
                 facia:                'projects/facia',
                 mmaTabs:              'projects/mma-tabs',
-                digitalpack:          'projects/digitalpack',
                 bean:                 'components/bean/bean',
                 bonzo:                'components/bonzo/bonzo',
                 enhancer:             'components/enhancer/enhancer',
