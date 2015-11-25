@@ -61,6 +61,34 @@
             width: 300px;
             padding-right: $gs-gutter;
         }
+        
+        @include mq(tablet, desktop) {
+	        width: 340px;
+	        
+	        &:first-of-type {
+	            position: absolute;
+	            left: 0;
+	            top: 3px;
+	            
+	            &:before {
+	                position: absolute;
+	                top: 0;
+	                right: 1px;
+	                left: 0;
+	                content: '';
+	                display: block;
+	                width: 40%;
+	                height: 1px;
+	                background-color: colour(neutral-5);
+            	}  
+            }
+            
+	        &:not(:first-of-type) {
+	        	float: right;
+	        	padding-right: 0;
+	        	margin-left: 360px; 
+	        }
+        }
     }
 
     .essential-read__item-wrapper {
@@ -68,6 +96,11 @@
             width: 320px;
             margin-top: -10px;
         }
+        
+        @include mq(tablet, desktop) {	        
+	        width: auto;
+	        margin-top: 0;
+	    }
     }
 
     .essential-read__text {
@@ -119,6 +152,11 @@
 
         @include mq(desktop) {
             width: 620px;
+        }
+        
+        @include mq(tablet, desktop) {
+	        top: 75px;
+	        left: 0;
         }
 
         .fc-item__image-container {
