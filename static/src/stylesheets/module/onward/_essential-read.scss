@@ -47,6 +47,10 @@
                 background-color: colour(neutral-6);
             }
         }
+        
+        &:hover .essential-read__number {
+	        color: #25b5d2;
+        }
 
         @include mq(mobileLandscape) {
             margin: 0;
