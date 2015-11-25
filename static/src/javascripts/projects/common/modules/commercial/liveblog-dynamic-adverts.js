@@ -58,7 +58,7 @@ define([
     function onLoad() {
         posts = document.querySelectorAll('.js-liveblog-body > .block');
 
-        new Promise(function (resolve) {
+        return new Promise(function (resolve) {
             fastdom.read(function () {
                 vh = document.documentElement.clientHeight;
                 vstart = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -86,7 +86,7 @@ define([
         // We need to inject new ad slots if there is space for them. If yes,
         // then after the injection we just make sure firstPost is updated so
         // it won't break the process on the next update
-        new Promise(function (resolve) {
+        return new Promise(function (resolve) {
             fastdom.read(function () {
                 var pcur = bonzo(firstPost).previous();
                 var pprev;
@@ -169,8 +169,6 @@ define([
                     return $adSlot;
                 }).concat(slots);
 
-                mediator.emit('modules:liveblog:slots', slots);
-
                 resolve(truncated);
             });
         });
@@ -235,6 +233,8 @@ define([
 
     return {
         init: once(init),
-        settings: settings
+        settings: settings,
+        onLoad: onLoad,
+        onUpdate: onUpdate
     };
 });
