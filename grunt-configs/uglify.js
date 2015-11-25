@@ -33,8 +33,10 @@ module.exports = function (grunt, options) {
                 dest: 'common/conf/assets/vendor'
             }],
             options: options.isDev ? {} : {
-                // Set to false retain constant expressions, used to avoid writing HTML like </script>.
-                compress: false
+                compress: {
+                    // Set to false retain constant expressions, used to avoid writing HTML like </script>.
+                    evaluate: false
+                }
             }
         }
     };
