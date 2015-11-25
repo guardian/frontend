@@ -45,7 +45,6 @@ object Commercial {
 
 final case class Commercial(
   tags: Tags,
-  //fields: Fields,
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
   sponsorshipTag: Option[Tag],

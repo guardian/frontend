@@ -1,15 +1,21 @@
 package model
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import com.gu.facia.api.models.FaciaContent
 import services.FaciaContentConvert
+
+object RelatedContentItem {
+  def apply(content: ApiContent) : RelatedContentItem = {
+    RelatedContentItem(Content(content), FaciaContentConvert.contentToFaciaContent(content))
+  }
+}
 
 case class RelatedContentItem (
   content: ContentType,
   faciaContent: FaciaContent
 )
 
-case class RelatedContent private (
+case class RelatedContent (
   items: Seq[RelatedContentItem]
   ) {
   val hasStoryPackage: Boolean = items.nonEmpty
@@ -18,6 +24,7 @@ case class RelatedContent private (
 
 object RelatedContent {
   def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
+    // It's misleading to use storyPackage here rather than relatedContent. A tidy up should rename this file.
     val items = response.storyPackage.map { item =>
       val frontendContent = Content(item)
       RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
