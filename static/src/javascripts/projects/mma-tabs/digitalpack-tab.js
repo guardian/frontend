@@ -17,6 +17,7 @@ define([
         PACKAGE_CURRENT_PERIOD_START = '.js-dig-current-period-start',
         PACKAGE_NEXT_PAYMENT_DATE = '.js-dig-next-payment-date',
         PACKAGE_NEXT_PAYMENT_PRICE = '.js-dig-next-payment-price',
+        PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-dig-next-payment-container',
         PACKAGE_INTERVAL = '.js-dig-plan-interval',
         DETAILS_JOIN_DATE = '.js-dig-join-date',
         NOTIFICATION_CANCEL = '.js-dig-cancel-tier',
@@ -27,7 +28,6 @@ define([
         LOADER = '.js-dig-loader',
         IS_HIDDEN_CLASSNAME = 'is-hidden',
         stripeForm = new PaymentForm();
-
 
     function fetchUserDetails() {
         ajax({
@@ -54,7 +54,14 @@ define([
         $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
     }
 
-
+    /**
+     * @param {{
+     *  optIn,
+     *  joinDate,subscriberId,
+     *  subscription: {trialLength, nextPaymentDate,nextPaymentPrice,renewalDate,
+     *  plan: {name,amount,interval}}
+     * }} userDetails
+     */
     function populateUserDetails(userDetails) {
         $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
         $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);
@@ -64,7 +71,6 @@ define([
         $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
-
         var trialLeft = userDetails.subscription.trialLength;
         if (trialLeft > 0) {
             $(REMAINING_TRIAL_LENGTH).text(trialLeft + ' day' + (trialLeft != 1 ? 's' : ''));
@@ -72,7 +78,10 @@ define([
         }
 
         $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
-        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+        if (userDetails.subscription.nextPaymentPrice != userDetails.subscription.plan.amount) {
+            $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+            $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+        }
 
         if (!userDetails.optIn) {
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
