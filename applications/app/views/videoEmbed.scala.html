@@ -1,44 +1,9 @@
 @(page: EmbedPage)(implicit request: RequestHeader)
 
 @import model.{Video, VideoPlayer}
-@import views.support.{Video640}
+@import views.support.Video640
 @import conf.Static
 @import conf.Configuration
-
-@bootCurl() = {
-    <script>
-        var curl = {
-            baseUrl: '@{Configuration.assets.securePath}javascripts',
-            apiName: 'require',
-            paths: {
-                core: '@StaticSecure("javascripts/core.js")',
-                text: 'text', // noop
-                inlineSvg: 'inlineSvg', // noop
-                'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
-                'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
-            }
-        };
-
-        @Html(StaticSecure.js.curl)
-
-        require(['bootstraps/video-embed'], function(bootstrap) {
-            bootstrap.init();
-        });
-    </script>
-}
-
-@bootSystemJs() = {
-    <script>
-        @Html(Static.js.systemJsSetupFragment)
-
-        // Bracket notation for IE8 (import is reserved)
-        System['import']('core').then(function () {
-            System['import']('bootstraps/video-embed').then(function (bootstrap) {
-                bootstrap.init();
-            });
-        });
-    </script>
-}
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">
@@ -48,7 +13,7 @@
             * { margin: 0; padding: 0; }
             figure { margin: 0 !important; }
         </style>
-        <link rel="stylesheet" href="@StaticSecure("stylesheets/media-player.css")"/>
+        <link rel="stylesheet" href="@Static("stylesheets/media-player.css")"/>
         <base target="_parent"/>
     </head>
     <body>
@@ -84,7 +49,7 @@
                         <meta itemprop="width" content="@mv.width" />
                     }
                     <meta itemprop="requiresSubscription" content="no" />
-                    <meta itemprop="image" content="@video.openGraphImage" />
+                    <meta itemprop="image" content="@Html(video.openGraphImage)" />
                     @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                     @video.mainVideo.map { videoElement =>
                         @fragments.media.video(VideoPlayer(
@@ -121,7 +86,7 @@
                     var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
 
                     @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
-                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-frontend,guardiangu-network' : 'guardiangu-thirdpartyapps';
+                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
 
                     window.s_account = sAccount;
 
@@ -137,15 +102,28 @@
                     document.documentElement.className = docClass;
                 </script>
 
-                @if(mvt.JspmTest.isParticipating) {
-                    @bootSystemJs()
-                } else {
-                    @bootCurl()
-                }
+                @fragments.omnitureScript(None)
 
+                <script>
+                    var curl = {
+                        baseUrl: '@{Configuration.assets.path}javascripts',
+                        apiName: 'require',
+                        paths: {
+                            core: '@Static("javascripts/core.js")',
+                            text: 'text', // noop
+                            inlineSvg: 'inlineSvg', // noop
+                            'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
+                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
+                        }
+                    };
+
+                    @Html(Static.js.curl)
+
+                    require(['bootstraps/video-embed'], function(bootstrap) {
+                        bootstrap.init();
+                    });
+                </script>
             }
-
         }
-
     </body>
 </html>

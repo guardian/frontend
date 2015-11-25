@@ -1,5 +1,7 @@
 package controllers
 
+import conf.Configuration
+import discussion.DiscussionApi
 import discussion.model.Comment
 import org.scalatest._
 import test.ConfiguredTestSuite
@@ -10,7 +12,7 @@ import play.api.libs.ws.WS
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite {
 
-  object TestPlugin extends DiscussionApiPlugin(app) {
+  object TestPlugin extends DiscussionApi {
 
     override def GET(url: String, headers: (String, String)*) = {
       headersReceived = Map(headers:_*)
@@ -19,6 +21,9 @@ import play.api.libs.ws.WS
 
     var headersReceived: Map[String,String] = Map.empty
     val testUrl = "http://test-url"
+
+    override protected val apiRoot = Configuration.discussion.apiRoot
+    override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
   }
 
   "DiscussionApiPlugin getJsonOrError " should "send GU-Client headers in GET request" in {

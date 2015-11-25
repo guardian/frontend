@@ -1,36 +1,47 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/client-rects',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/ui/selection-sharing.html'
+    'text!common/views/ui/selection-sharing.html',
+    'common/views/svgs',
+    'lodash/functions/debounce',
+    'lodash/functions/throttle',
+    'lodash/collections/some'
 ], function (
     bean,
     bonzo,
-    _,
     $,
     clientRects,
     config,
     detect,
     mediator,
     template,
-    sharingTemplate
-    ) {
+    sharingTemplate,
+    svgs,
+    debounce,
+    throttle,
+    some) {
 
     var $body = bonzo(document.body),
-        $selectionSharing = $.create(sharingTemplate),
+        twitterIcon = svgs('shareTwitter', ['icon']),
+        emailIcon = svgs('shareEmail', ['icon']),
+        selectionSharing = template(sharingTemplate, {
+            twitterIcon: twitterIcon,
+            emailIcon: emailIcon
+        }),
+        $selectionSharing = $.create(selectionSharing),
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
-        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text="<%=text%>"&url=<%=url%>',
+        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
         twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
-        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body="<%=selection%>" <%=url%>',
+        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     updateSelection = function () {
@@ -109,16 +120,16 @@ define([
             $twitterAction = $('.js-selection-twitter');
             $emailAction = $('.js-selection-email');
             // Set timeout ensures that any existing selection has been cleared.
-            bean.on(document.body, 'keypress keydown keyup', _.debounce(updateSelection, 50));
-            bean.on(document.body, 'mouseup', _.debounce(updateSelection, 200));
-            bean.on(document.body, 'mousedown', _.debounce(onMouseDown, 50));
-            mediator.on('window:resize', _.throttle(updateSelection, 50));
+            bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
+            bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
+            bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
+            mediator.on('window:resize', throttle(updateSelection, 50));
         }
     },
 
     isValidSelection = function (range) {
         // commonAncestorContainer is buggy, can't use it here.
-        return _.some(validAncestors, function (className) {
+        return some(validAncestors, function (className) {
             return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
         });
     };

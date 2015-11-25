@@ -55,9 +55,7 @@ define([
             Array.prototype.forEach.call(document.body.querySelectorAll('.tabs'), function (container) {
 
                 var tabSet = $('.js-tabs', container)[0],
-                    tabSetHeight = 0,
                     vPos = 0,
-                    vHeight = 0,
                     vScroll = 0;
 
                 if (tabSet) {
@@ -66,7 +64,6 @@ define([
                         return false;
                     }
 
-                    tabSetHeight = bonzo(tabSet).offset().height;
                     vPos = bonzo(tabSet).offset().top;
 
                     bean.add(tabSet, 'click', function (e) {
@@ -74,7 +71,6 @@ define([
                         // verify they clicked an <a> element
                         if (targetElm.nodeName.toLowerCase() === 'a') {
                             view.showTab(container, targetElm, e);
-                            vHeight = bonzo(container).offset().height - tabSetHeight;
                             if (vScroll > vPos) {
                                 window.scrollTo(0, vPos);
                             }

@@ -1,0 +1,27 @@
+@import common.dfp.TakeoverWithEmptyMPUs
+@(env: String, takeovers: Seq[TakeoverWithEmptyMPUs])
+@import TakeoverWithEmptyMPUs.timeViewFormatter
+
+@admin_main("Takeovers with Empty MPUs", env, isAuthed = true) {
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
+    <h2>Takeovers with Empty MPUs</h2>
+    <p>This list shows URLs where a takeover is taking place and container content should automatically reflow to take the place of MPUs.</p>
+    <div class="well">
+        <ul>
+        @for(takeover <- takeovers) {
+            <li class="line-item">
+                <div><a href="@takeover.url">@takeover.url</a></div>
+                <div>Editions: @takeover.editions.map(_.id).mkString(", ")</div>
+                <div>Starts: @timeViewFormatter.print(takeover.startTime)</div>
+                <div>Ends: @timeViewFormatter.print(takeover.endTime)</div>
+                @helper.form(action = controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.remove(takeover.url)) {
+                    <input class="btn btn-danger" type="submit" value="Remove" />
+                }
+            </li>
+        }
+        </ul>
+    </div>
+    @helper.form(action = controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.viewForm()) {
+        <input class="btn btn-success" type="submit" value="Add another" />
+    }
+}

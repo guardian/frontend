@@ -2,8 +2,8 @@
 
 @import dfp.{Keyword, Series}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage}
-@import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage, EssentialRead}
+@import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer, essentialReadContainer}
 @import views.support.GetClasses
 
 @defining(containerDefinition.displayName, containerDefinition.faciaComponentName) { case (title, componentName) =>
@@ -30,9 +30,11 @@
              aria-expanded="true">
 
              @if(containerDefinition.isStoryPackage){
-                 <style scoped>
-                    @Html(conf.Static.css.head(Some("story-package")))
-                 </style>
+                @conf.Static.css.inline("story-package").map { css =>
+                    <style>
+                        @Html(css)
+                    </style>
+                }
              }
 
         <div class="fc-container__inner">
@@ -51,6 +53,10 @@
 
                 case MostPopular => {
                     @mostPopularContainer(containerDefinition, frontProperties)
+                }
+
+                case EssentialRead => {
+                    @essentialReadContainer(containerDefinition, frontProperties)
                 }
             }
         </div>

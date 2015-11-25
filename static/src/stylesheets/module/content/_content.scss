@@ -18,11 +18,7 @@
     // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
     box-sizing: border-box;
-    padding: 0 $gs-gutter/2;
-
-    @include mq(mobileLandscape) {
-        padding: 0 $gs-gutter;
-    }
+    @include content-gutter();
 }
 
 .content__main-column {
@@ -65,6 +61,11 @@
 
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
+    }
+
+    &.content__main-column--single-column {
+        // Unset style from breakpoints
+        margin-left: 0;
     }
 
     &.content__main-column--media,
@@ -275,7 +276,7 @@
         }
 
         @include mq(phablet) {
-            height: gs-span(2.5) + ($gs-gutter*2);
+            height: gs-span(2.5);
         }
 
         @include mq(desktop) {
@@ -567,24 +568,17 @@
     padding-top: 1px;
     margin-right: 4px;
 
+    @include mq(tablet) {
+        margin-right: 5px;
+        height: 3*get-line-height(bodyCopy, 2);
+    }
+
     .drop-cap__inner {
         display: inline-block;
         vertical-align: text-top;
         @include font-size(52px, 40px);
-    }
-}
 
-.drop-cap--wide {
-    @include mq(tablet) {
-        float: left;
-        display: inline-block;
-        text-transform: uppercase;
-        @include f-headline;
-        font-weight: 200;
-        margin-right: 5px;
-        height: 3*get-line-height(bodyCopy, 2);
-
-        .drop-cap__inner {
+        @include mq(tablet) {
             @include font-size(84px, 68px);
         }
     }
@@ -678,6 +672,12 @@
     border-top: 1px dotted colour(neutral-5);
     padding: 0;
     box-sizing: border-box;
+
+    .meta__extras--crossword & {
+        @include mq(leftCol) {
+            float: left;
+        }
+    }
 }
 
 .meta__social--sticky {
@@ -689,12 +689,10 @@
 
     @include mq(leftCol, $until: wide) {
         margin-left: $gs-gutter * -8;
- 
         .social__item--gplus {
             display: none;
         }
     }
- 
     @include mq(wide) {
         margin-left: $gs-gutter * -12;
     }
@@ -727,6 +725,8 @@
     .button {
         padding-top: 1px;
         margin-right: 0;
+        // Force content to fit inside button
+        white-space: nowrap;
 
         .tonal--tone-media & {
             border: 0;
@@ -744,7 +744,7 @@
             margin-right: 0;
             background-color: transparent !important;
 
-            .inline-mail svg {
+            svg {
                 margin-top: $gs-baseline/4;
             }
         }
@@ -752,6 +752,15 @@
         @include mq(leftCol, wide) {
             max-width: $left-column;
         }
+    }
+
+    .button--small .i-left {
+        margin: 2px 4px 0 0;
+    }
+
+    .button--small svg {
+        width: 14px;
+        height: 14px;
     }
 
     .contact {

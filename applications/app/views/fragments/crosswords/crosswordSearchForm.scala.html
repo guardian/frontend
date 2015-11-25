@@ -1,0 +1,84 @@
+@(page: crosswords.CrosswordSearchPage)(implicit request: RequestHeader)
+
+<form class="form" method="get" action="/crosswords/search">
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Search</h2>
+            <div class="form__note">Search crosswords by type, date and setter.</div>
+        </div>
+
+        <div class="fieldset__fields">
+            <div class="form-fields__inline">
+                <ul>
+                    <li class="form-field">
+                        <label class="label" for="crossword_type">Type</label>
+                        <select id="crossword_type" name="crossword_type">
+                            @page.crosswordTypes.map { crosswordType =>
+                                <option value="@crosswordType">@crosswordType</option>
+                            }
+                        </select>
+                    </li>
+
+                    <li class="form-field">
+                        <label class="label" for="setter">Setter</label>
+                        <select name="setter" id="setter">
+                            <option value="" selected="">any</option>
+
+                            @page.setters.map { setter =>
+                                <option value="@setter">@setter</option>
+                            }
+                        </select>
+                    </li>
+
+                    <li class="form-field">
+                        <label class="label" for="month">Date</label>
+                        <select id="month" name="month">
+                            <option selected="" value="01">Jan</option>
+                            <option value="02">Feb</option>
+                            <option value="03">Mar</option>
+                            <option value="04">Apr</option>
+                            <option value="05">May</option>
+                            <option value="06">Jun</option>
+                            <option value="07">Jul</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+                        </select>
+
+                        <select id="year" name="year">
+                        @page.searchYears.map { year =>
+                            <option value="@year" @if(year == page.year) { selected="true" }>@year</option>
+                        }
+                        </select>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="submit-input" type="submit">Search</button>
+        </div>
+    </fieldset>
+</form>
+
+<form class="form" method="get" action="/crosswords/lookup">
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Lookup</h2>
+            <div class="form__note">Find a crossword by ID.</div>
+        </div>
+
+        <div class="fieldset__fields">
+            <div class="form-fields__inline">
+                <ul>
+                    <li class="form-field">
+                        <label class="label" for="crossword-id">ID</label>
+                        <input type="text" class="text-input" name="id" id="id" />
+                    </li>
+                </ul>
+            </div>
+
+            <button class="submit-input" type="submit">Lookup</button>
+        </div>
+    </fieldset>
+</form>

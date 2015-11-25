@@ -1,0 +1,30 @@
+@admin_main("Facia Press pages", "PROD", isAuthed = true) {
+    <ul>
+        <li>
+            This is used to manually press the facia pages
+        </li>
+        <li>
+            <strong> Be careful: </strong>This ignores the switch state and presses the pages
+        </li>
+
+        <li>
+            <strong>Be careful: </strong> how many times you run these as they fill the queue which is used by the standard jobs too.
+        </li>
+    </ul>
+
+    <form action="/press/low " method="POST" class="form-horizontal redirect-form">
+        <input class="btn btn-default" type="submit" value="Low Frequency Fronts For Press" />
+    </form>
+
+    <form action="/press/standard " method="POST" class="form-horizontal redirect-form">
+        <input class="btn btn-default" type="submit" value="Standard Frequency Fronts For Press" />
+    </form>
+
+    <form action="/press/high " method="POST" class="form-horizontal redirect-form">
+        <input class="btn btn-default" type="submit" value="High Frequency Fronts For Press" />
+    </form>
+
+    <form action="/press/all " method="POST" class="form-horizontal redirect-form">
+        <input class="btn btn-default" type="submit" value="All Frequency Fronts For Press" />
+    </form>
+}

@@ -1,15 +1,13 @@
 define([
     'bonzo',
     'qwery',
-    // Common libraries
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/to-array',
-    // Modules
     'common/modules/accessibility/helpers',
     'common/modules/experiments/ab',
     'common/modules/business/stocks',
@@ -18,17 +16,19 @@ define([
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/lazy-load-containers',
     'facia/modules/ui/live-blog-updates',
-    'facia/modules/ui/slideshow/controller',
     'facia/modules/ui/snaps',
-    'facia/modules/onwards/weather'
+    'facia/modules/ui/sponsorship',
+    'facia/modules/onwards/weather',
+    'lodash/functions/partial',
+    'lodash/collections/forEach'
 ], function (
     bonzo,
     qwery,
-    _,
     $,
     config,
     detect,
     mediator,
+    robust,
     storage,
     toArray,
     accessibility,
@@ -39,10 +39,11 @@ define([
     containerShowMore,
     lazyLoadContainers,
     liveblogUpdates,
-    slideshow,
     snaps,
-    weather
-) {
+    sponsorship,
+    weather,
+    partial,
+    forEach) {
 
     var modules = {
             showSnaps: function () {
@@ -65,7 +66,7 @@ define([
                     };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
-                    'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
+                    'modules:geomostpopular:ready': partial(containerToggleAdd, '.js-popular-trails')
                 });
             },
 
@@ -84,50 +85,38 @@ define([
             },
 
             showLiveblogUpdates: function () {
-                var pageId = config.page.pageId,
-                    isNetFront = _.contains(['uk', 'us', 'au'], pageId),
-                    isSport = _.contains(['sport', 'football'], config.page.section);
-
-                if (detect.isBreakpoint({ max: 'tablet' })) {
-                    return;
-                } else if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
-                    config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
-                    config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
-                    config.switches.liveblogFrontUpdatesAu && pageId === 'au') {
+                if (detect.isBreakpoint({ min: 'desktop' })) {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
                     });
                 }
             },
 
-            startSlideshow: function () {
-                if (detect.isBreakpoint({ min: 'tablet' })) {
-                    mediator.on('page:front:ready', function () {
-                        slideshow.init();
-                    });
-                }
+            finished: function () {
+                mediator.emit('page:front:ready');
             }
+
         },
 
         ready = function () {
-            if (!this.initialised) {
-                this.initialised = true;
-                accessibility.shouldHideFlashingElements();
-                modules.showSnaps();
-                modules.showContainerShowMore();
-                modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo();
-                lazyLoadContainers();
-                stocks();
-                modules.showWeather();
-                modules.showLiveblogUpdates();
-                modules.startSlideshow();
-            }
-            mediator.emit('page:front:ready');
+            forEach(robust.makeBlocks([
+                ['f-accessibility', accessibility.shouldHideFlashingElements],
+                ['f-snaps', modules.showSnaps],
+                ['f-show-more', modules.showContainerShowMore],
+                ['f-container-toggle', modules.showContainerToggle],
+                ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
+                ['f-lazy-load-containers', lazyLoadContainers],
+                ['f-stocks', stocks],
+                ['f-sponsorship', sponsorship],
+                ['f-weather', modules.showWeather],
+                ['f-live-blog-updates', modules.showLiveblogUpdates],
+                ['f-finished', modules.finished]
+            ]), function (fn) {
+                fn();
+            });
         };
 
     return {
         init: ready
     };
-
 });

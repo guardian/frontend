@@ -6,7 +6,7 @@
 
 @container(stories: Seq[model.Content], title: String, dataId: String, href: Option[String]) = {
     @containers.facia_cards.container(
-        FaciaContainer.forStoryPackage(dataId, stories.map(FaciaContentConvert.frontentContentToFaciaContent), title, href)
+        FaciaContainer.forStoryPackage(dataId, stories.map(FaciaContentConvert.frontendContentToFaciaContent), title, href)
     )(request)
 }
 

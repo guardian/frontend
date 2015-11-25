@@ -114,53 +114,11 @@
     }
 }
 
-// Context overrides: hide brand bar items: slim header, edition, and various
-// breakpoints
-
 .brand-bar__item--search {
     padding-left: 0;
 
     .popup__toggle:after {
         display: none;
-    }
-}
-
-.brand-bar__item--subscribe {
-    // Desktop only
-    @include mq($until: desktop) {
-        display: none;
-    }
-
-    .l-header--is-slim & {
-        display: none;
-    }
-}
-
-.brand-bar__item--edition {
-    .l-header--is-slim & {
-        display: none;
-    }
-}
-
-.brand-bar__item--jobs {
-    .brand-bar__item--right--uk-edition &,
-    .brand-bar__item--right--us-edition & {
-        .l-header--is-slim & {
-            display: none;
-        }
-    }
-}
-
-.brand-bar__item--soulmates {
-    // Desktop only
-    @include mq($until: desktop) {
-        display: none;
-    }
-
-    .brand-bar__item--right--uk-edition & {
-        .l-header--is-slim & {
-            display: none;
-        }
     }
 }
 
@@ -174,99 +132,15 @@
     }
 }
 
-.brand-bar__item--jobs,
-.brand-bar__item--edition {
-    // Hide on mobile
-    @include mq($until: tablet) {
-        display: none;
-    }
-}
-
-.brand-bar__item--masterclasses {
-    .brand-bar__item--right--au-edition & {
-        // Hide on mobile
-        @include mq($until: tablet) {
-            display: none;
-        }
-
-        .l-header--is-slim & {
-            display: none;
-        }
-    }
-}
-
-.brand-bar__item--more {
-    .brand-bar__item--right--us-edition &,
-    .brand-bar__item--right--au-edition & {
-        // Mobile only
-        @include mq(tablet) {
-            display: none;
-
-            .l-header--is-slim & {
-                display: block;
-            }
-        }
-    }
-}
-
 // Popups
 
-// Mobile only
-.brand-bar__popup--jobs {
-    .brand-bar__item--right--uk-edition &,
-    .brand-bar__item--right--us-edition & {
-        @include mq(tablet) {
-            display: none;
-
-            .l-header--is-slim & {
-                display: block;
-            }
+.is-not-modern .brand-bar__item--has-control,
+.is-not-modern .is-signed-in.brand-bar__item--profile {
+    &:hover,
+    &:focus {
+        .popup {
+            display: block;
         }
-    }
-}
-
-.brand-bar__popup--edition {
-    .brand-bar__item--right--uk-edition & {
-        // Mobile only
-        @include mq(tablet) {
-            display: none;
-
-            .l-header--is-slim & {
-                display: block;
-            }
-        }
-    }
-}
-
-.brand-bar__popup--soulmates {
-    .brand-bar__item--right--uk-edition & {
-        // Hide on desktop
-        @include mq(desktop) {
-            display: none;
-
-            .l-header--is-slim & {
-                display: block;
-            }
-        }
-    }
-}
-
-.brand-bar__popup--membership {
-    .brand-bar__item--right--uk-edition & {
-        // Hide on desktop
-        @include mq(desktop) {
-            display: none;
-
-            .l-header--is-slim & {
-                display: block;
-            }
-        }
-    }
-}
-
-.brand-bar__item--register {
-    @include mq($until: mobileLandscape) {
-        display: none;
     }
 }
 
@@ -286,40 +160,4 @@
             display: none;
         }
     }
-}
-
-// see .brand-bar__item--action above. This should be removed when we remove the 'beta' bit for International, as it's
-// ugly.
-.brand-bar__item--action-beta {
-    &:focus,
-    &:active {
-        &,
-        .control__info {
-            text-decoration: none;
-
-            .brand-bar__edition-name {
-                text-decoration: underline;
-            }
-        }
-    }
-
-    &:hover {
-        &,
-        .control__info {
-            text-decoration: none;
-
-            .brand-bar__edition-name {
-                text-decoration: underline;
-            }
-        }
-    }
-}
-
-.brand-bar__beta {
-    position: relative;
-    top: -6px;
-    font-weight: bold;
-    color: colour(news-main-2);
-    font-size: 12px;
-    text-decoration: none;
 }

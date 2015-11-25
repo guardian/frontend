@@ -4,14 +4,14 @@
  Common functions to simplify access to page data
  */
 define([
-    'common/utils/_',
     'common/utils/pad',
-    'common/utils/url'
-], function (
-    _,
-    pad,
-    urlUtils
-) {
+    'common/utils/url',
+    'lodash/objects/assign',
+    'lodash/collections/contains',
+    'lodash/collections/map',
+    'lodash/collections/filter',
+    'common/utils/chain'
+], function (pad, urlUtils, assign, contains, map, filter, chain) {
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -19,7 +19,14 @@ define([
         config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
     }
 
-    return _.extend({
+    // This is duplicated from
+    // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+    // Please do not change this without talking to the Ophan project first.
+    config.ophan = {pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
+        return Math.floor(Math.random() * 36).toString(36);
+    })};
+
+    return assign({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
         },
@@ -27,14 +34,11 @@ define([
             return (this.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
-            return _(this.page.references || [])
-                .filter(function (reference) {
+            return chain(this.page.references || []).and(filter, function (reference) {
                     return typeof reference[name] !== 'undefined';
-                })
-                .map(function (reference) {
+                }).and(map, function (reference) {
                     return reference[name];
-                })
-                .valueOf();
+                }).valueOf();
         },
         referenceOfType: function (name) {
             return this.referencesOfType(name)[0];
@@ -57,6 +61,7 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: _.contains(['Video', 'Audio'], config.page.contentType)
+        isMedia: contains(['Video', 'Audio'], config.page.contentType)
+
     }, config);
 });

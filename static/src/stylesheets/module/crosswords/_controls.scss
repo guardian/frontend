@@ -2,38 +2,29 @@
     display: block;
     margin-bottom: $gs-baseline / 2;
 
-    @include mq(tablet) {
-        float: left;
-        clear: both;
-    }
-
     .button {
-        margin-bottom: $gs-baseline / 2;
+        @include fs-textSans(4);
+        margin-bottom: $gs-baseline;
     }
 
     .button--secondary {
         color: colour(neutral-2);
-        float: left;
     }
 
-    .button--crossword--current {
-        float: left;
-        @include button-colour(
-            $fill-colour: lighten(colour(crosswordAccent2), 30%),
-            $border-color: lighten(colour(crosswordAccent2), 30%),
-            $text-colour: darken(colour(crosswordAccent2), 20%),
-            $hover-colour: lighten(colour(crosswordAccent2), 10%),
-            $hover-border: lighten(colour(crosswordAccent2), 10%)
-        );
-        &:hover,
-        &:focus,
-        &:active {
-            color: #ffffff;
-        }
-
-        @include mq(tablet) {
-            margin: 0 0 0 $gs-gutter / 2;
-            float: right;
-        }
+    // Extra specificity needed to overcome above rule
+    .crossword__controls__button--confirm {
+        background-color: colour(comment-support-3);
+        color: #000000;
+        border: 0;
     }
+}
+
+.crossword__controls_autosave_label {
+    @include fs-textSans(3);
+    margin-left: $gs-gutter / 4;
+    font-style: italic;
+}
+
+.crossword__controls__clue .button:last-child {
+    margin-right: 0;
 }

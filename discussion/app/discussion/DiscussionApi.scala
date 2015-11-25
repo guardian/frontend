@@ -8,9 +8,8 @@ import discussion.model._
 import play.api.mvc.{RequestHeader, Headers}
 import discussion.util.Http
 import play.api.libs.ws.WSResponse
-import play.api.libs.json.JsNumber
+import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import discussion.model.CommentCount
-import play.api.libs.json.JsObject
 
 trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
@@ -126,8 +125,9 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
       s"Get back in the past"
     val apiUrl = s"$apiRoot/comment/$id?displayThreaded=false&displayResponses=true&showSwitches=true"
 
-    getJsonOrError(apiUrl, onError) map {
-      json => Comment(json \ "comment", None, None)
+    getJsonOrError(apiUrl, onError) map { json =>
+      val obj = (json \ "comment").getOrElse(JsNull)
+      Comment(obj, None, None)
     }
   }
 
@@ -143,8 +143,9 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     def onError(r: WSResponse) =
       s"Error loading comment id: $id status: ${r.status} message: ${r.statusText}"
 
-    getJsonOrError(apiUrl, onError) map {
-      json => Comment(json \ "comment", None, None)
+    getJsonOrError(apiUrl, onError) map { json =>
+      val obj = (json \ "comment").getOrElse(JsNull)
+      Comment(obj, None, None)
     }
   }
 

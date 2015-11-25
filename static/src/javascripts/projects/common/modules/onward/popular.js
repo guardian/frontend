@@ -1,21 +1,29 @@
 define([
-    'common/utils/_',
     'qwery',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/dfp-api',
+    'common/modules/experiments/ab',
+    'common/modules/onward/inject-container',
+    'lodash/collections/contains'
 ], function (
-    _,
     qwery,
     $,
     config,
+    detect,
     Component,
     mediator,
     createAdSlot,
-    dfp
+    commercialFeatures,
+    dfp,
+    ab,
+    injectContainer,
+    contains
 ) {
 
     function MostPopular() {
@@ -25,20 +33,28 @@ define([
         // Don't even come ask...
         var sectionsWithoutPopular = ['info', 'global'];
         mediator.emit('register:begin', 'popular-in-section');
-        this.hasSection = config.page && config.page.section && !_.contains(sectionsWithoutPopular, config.page.section);
+        this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
     }
 
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        this.fetch(qwery('.js-popular-trails'), 'html');
+        if (!(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
+            this.fetch(qwery('.js-popular-trails'), 'html');
+        } else {
+            $('.js-most-popular-footer').hide();
+        }
+    };
+
+    MostPopular.prototype.mobileMaximumSlotsReached = function () {
+        return (detect.getBreakpoint() === 'mobile' && $('.ad-slot--inline').length > 1);
     };
 
     MostPopular.prototype.prerender = function () {
-        if (!config.page.shouldHideAdverts) {
-            this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
-                .append(createAdSlot('inline3', 'container-inline'));
+        if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
+            var $mpuEl = $('.js-fc-slice-mpu-candidate', this.elem);
+            this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
         } else {
             this.$mpu = undefined;
         }

@@ -223,6 +223,9 @@ Show more button:
     @include fs-textSans(1);
     line-height: $gs-baseline * 2 - 2px;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .button--xsmall {
     @include button-height($base-size * 3);
@@ -248,4 +251,15 @@ $show-more-icon-spacing: $base-size + 1;
         bottom: 0;
         left: $show-more-icon-spacing;
     }
+}
+
+.button--syndication-reprint {
+    @include button-colour(
+        transparent,
+        guss-colour(news-main-2, $pasteup-palette),
+        transparent,
+        darken(guss-colour(news-main-2, $pasteup-palette), 10%),
+        guss-colour(news-main-2, $pasteup-palette)
+    );
+
 }

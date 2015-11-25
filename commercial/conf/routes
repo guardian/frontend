@@ -3,41 +3,41 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*path                                             dev.DevAssetsController.at(path)
-GET        /commercial/test-page                                     controllers.commercial.CreativeTestPage.allComponents(k: List[String])
-GET        /_healthcheck                                             conf.HealthCheck.healthcheck()
+GET        /assets/*path                                                 dev.DevAssetsController.at(path)
+GET        /commercial/test-page                                         controllers.commercial.CreativeTestPage.allComponents(k: List[String])
+GET        /_healthcheck                                                 conf.HealthCheck.healthcheck()
 
+# Travel offer merchandising components
+GET        /commercial/travel/offers.json                                controllers.commercial.TravelOffers.renderTravel
 
-# Travel offers
-GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.renderTravel
+# Job merchandising components
+GET        /commercial/jobs.json                                         controllers.commercial.JobAds.renderJobs
 
-# Jobs
-GET        /commercial/jobs.json                                     controllers.commercial.JobAds.renderJobs
+# Masterclass merchandising components
+GET        /commercial/masterclasses.json                                controllers.commercial.MasterClasses.renderMasterclasses
 
-# Masterclasses
-GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.renderMasterclasses
+# Soulmates merchandising components
+GET        /commercial/soulmates/$subgroup<\w+>.json                     controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
+GET        /commercial/soulmates-test/$subgroup<\w+>.json                controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 
-# Soulmates
-GET        /commercial/soulmates/$subgroup<\w+>.json                 controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
+# Money merchandising components
+GET        /commercial/money/bestbuys.json                               controllers.commercial.MoneyOffers.renderBestBuys
+GET        /commercial/money/savings/:savingsType                        controllers.commercial.MoneyOffers.savings(savingsType)
+GET        /commercial/money/current-accounts/:currentAccountType        controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
+GET        /commercial/money/credit-cards/:creditCardType                controllers.commercial.MoneyOffers.creditCards(creditCardType)
+GET        /commercial/money/loans/:loanType                             controllers.commercial.MoneyOffers.loans(loanType)
 
-# Money offers
-GET        /commercial/money/bestbuys.json                           controllers.commercial.MoneyOffers.renderBestBuys
-GET        /commercial/money/savings/:savingsType                    controllers.commercial.MoneyOffers.savings(savingsType)
-GET        /commercial/money/current-accounts/:currentAccountType    controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
-GET        /commercial/money/credit-cards/:creditCardType            controllers.commercial.MoneyOffers.creditCards(creditCardType)
-GET        /commercial/money/loans/:loanType                         controllers.commercial.MoneyOffers.loans(loanType)
+# Book merchandising components
+GET        /commercial/books/book.json                                   controllers.commercial.BookOffersController.renderBook
+GET        /commercial/books/books.json                                  controllers.commercial.BookOffersController.renderBooks
 
-# Book offers
-GET        /commercial/books/book.json                               controllers.commercial.BookOffersController.renderBook
-GET        /commercial/books/books.json                              controllers.commercial.BookOffersController.renderBooks
+# Multiple offer merchandising components
+GET        /commercial/multi.json                                        controllers.commercial.Multi.renderMulti
 
-GET        /commercial/multi.json                                    controllers.commercial.Multi.renderMulti
-
-
-# Content API offers
-GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffersController.itemsJson
-GET        /commercial/capi                                          controllers.commercial.ContentApiOffersController.itemsHtml
-GET        /commercial/capi-single.json                              controllers.commercial.ContentApiOffersController.itemJson
-GET        /commercial/capi-single                                   controllers.commercial.ContentApiOffersController.itemHtml
-GET        /commercial/capi-single-merch.json                        controllers.commercial.ContentApiOffersController.itemJson
-GET        /commercial/capi-single-merch                             controllers.commercial.ContentApiOffersController.itemHtml
+# Content API merchandising components
+GET        /commercial/capi.json                                         controllers.commercial.ContentApiOffersController.itemsJson
+GET        /commercial/capi                                              controllers.commercial.ContentApiOffersController.itemsHtml
+GET        /commercial/capi-single.json                                  controllers.commercial.ContentApiOffersController.itemJson
+GET        /commercial/capi-single                                       controllers.commercial.ContentApiOffersController.itemHtml
+GET        /commercial/capi-single-merch.json                            controllers.commercial.ContentApiOffersController.itemJson
+GET        /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml

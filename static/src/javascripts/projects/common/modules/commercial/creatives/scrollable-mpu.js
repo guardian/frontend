@@ -1,16 +1,19 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/commercial/creatives/scrollable-mpu.html'
+    'text!common/views/commercial/creatives/scrollable-mpu.html',
+    'lodash/functions/bindAll'
 ], function (
+    fastdom,
     $,
     detect,
     mediator,
     template,
-    scrollableMpuTpl
-) {
+    scrollableMpuTpl,
+    bindAll) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
@@ -18,6 +21,8 @@ define([
     var ScrollableMpu = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
+
+        bindAll(this, 'updateBgPosition');
     };
 
     /**
@@ -27,7 +32,10 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        $('.creative--scrollable-mpu-image').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+        var position = window.pageYOffset - this.$scrollableMpu.offset().top;
+        fastdom.write(function () {
+            $('.creative--scrollable-mpu-image').css('background-position', '100% ' + position + 'px');
+        });
     };
 
     ScrollableMpu.prototype.create = function () {
@@ -44,11 +52,11 @@ define([
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
-            this.updateBgPosition();
+            fastdom.read(this.updateBgPosition);
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition);
             // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition.bind(this));
+            mediator.on('window:resize', this.updateBgPosition);
         }
     };
 

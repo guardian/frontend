@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+echo "Dist play jars."
+
+set +x
+echo "##teamcity[progressStart 'sbt test and dist']"
+set -x
+
+./dev/teamcity/sbt-tc "project root" compile assets test riffRaffUpload
+
+echo "Done disting."

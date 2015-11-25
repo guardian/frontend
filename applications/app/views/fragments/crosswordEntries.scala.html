@@ -1,9 +1,0 @@
-@(entries: Seq[crosswords.CrosswordEntry])
-
-@if(entries.nonEmpty) {
-    <ol class="crossword__clues-list">
-    @for(entry <- entries) {
-        <li value="@entry.number" class="crossword__clue">@Html(entry.clue)</li>
-    }
-    </ol>
-}

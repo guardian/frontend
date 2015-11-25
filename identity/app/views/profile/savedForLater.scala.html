@@ -19,7 +19,9 @@
 
                         <div class="saved-content__header__description">you have @(pageData.totalArticlesSaved) saved articles</div>
 
-                        <div class="js-save-for-later__delete-all save-for-later__delete-all-container"></div>
+                        @if(pageData.totalArticlesSaved > 0) {
+                            <div class="js-save-for-later__delete-all save-for-later__delete-all-container"></div>
+                        }
                     </div>
                     <div class="fc-container__body">
                         @if(savedArticleForm.globalError.isDefined) {

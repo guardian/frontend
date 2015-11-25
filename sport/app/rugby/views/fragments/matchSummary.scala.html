@@ -1,0 +1,70 @@
+@import model.MetaData
+
+@import rugby.model.Status._
+
+@(page: MetaData, theMatch: rugby.model.Match)
+
+@status() = {
+    @theMatch.status match {
+        case Result      => { <abbr class="m-status">FT</abbr> }
+        case HalfTime    => { <abbr class="m-status">HT</abbr> }
+        case FirstHalf   => { <abbr class="m-status">1st</abbr> }
+        case SecondHalf  => { <abbr class="m-status">2nd</abbr> }
+        case _ => {}
+    }
+}
+
+<div class="match-summary match-summary--responsive">
+
+    <div class="@RenderClasses(Map(
+        "match-summary__status" -> true,
+        "match-summary__status--live" -> theMatch.isLive))">
+        <div class="status__time">
+            @if(theMatch.isFixture){
+                @theMatch.date.toString("HH:mm")
+            }else{
+                @status()
+            }
+        </div>
+    </div>
+
+    <div class="match-info">
+        <div class="match-info__competition">@{theMatch.competitionName}</div>
+        <div class="match-info__venue">@{theMatch.venue}</div>
+    </div>
+    <div class="match-summary__teams">
+        <div class="match-summary__team match-summary__team--home u-cf">
+            <div class="team__crest team__crest--home">
+                <div class="team__crest__img-container">
+                    <span class="team__crest__img" style="background-image: url(@Configuration.staticSport.path/rugby/crests/200/@{theMatch.homeTeam.id}.png)"></span>
+                </div>
+            </div>
+            <div class="team__info">
+                <h2 class="team__heading">
+                    <span class="team__name">
+                        <span class="team__name-long">@theMatch.homeTeam.name</span>
+                    </span>
+                    <span class="team__score">@theMatch.homeTeam.score</span>
+                </h2>
+
+                <div class="team__battle-line"></div>
+            </div>
+        </div>
+
+        <div class="match-summary__team match-summary__team--away u-cf">
+            <div class="team__crest team__crest--away">
+                <div class="team__crest__img-container">
+                    <span class="team__crest__img" style="background-image: url(@Configuration.staticSport.path/rugby/crests/200/@{theMatch.awayTeam.id}.png)"></span>
+                </div>
+            </div>
+            <div class="team__info">
+                <h2 class="team__heading">
+                    <span class="team__name">
+                        <span class="team__name-long">@theMatch.awayTeam.name</span>
+                    </span>
+                    <span class="team__score">@theMatch.awayTeam.score</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>

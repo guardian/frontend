@@ -37,7 +37,7 @@
                 </span>
 
                 @comment.responseTo.map{ r =>
-                    <span class="i i-reply-grey"></span>
+                    @fragments.inlineSvg("reply", "icon", List("grey"))
                     <a href="#comment-@r.commentId" class="js-discussion-author-link">
                         <span class="d-comment__reply-to-author">@r.displayName</span>
                     </a>
@@ -48,7 +48,7 @@
                             datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
                             data-timestamp="@comment.date.getMillis" data-relativeformat="med"
                             title="Permalink to this comment (@Format(comment.date, "d MMM y HH:mm"))">@Format(comment.date, "d MMM y HH:mm")</time>
-                        <i class="i i-comment-anchor"></i>
+                        @fragments.inlineSvg("comment-anchor", "icon")
                     </a>
                 </div>
 
@@ -71,9 +71,9 @@
                     data-user-id="@comment.profile.userId"
                     data-recommend-count="@comment.numRecommends"
                     title="@comment.numRecommends recommendations">
-                    <button class="u-button-reset d-comment__recommend-button">
+                    <button class="u-button-reset d-comment__recommend-button rounded-icon">
                         <span class="d-comment__recommend-pulse"></span>
-                        <i></i>
+                        @fragments.inlineSvg("arrow-up-white", "icon")
                     </button>
                     <span class="d-comment__recommend-count js-recommend-count">
                         <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
@@ -102,7 +102,8 @@
                     <div class="d-comment__actions d-comment__actions--left modern-visible">
                         <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@Configuration.discussion.url/comment-permalink/@comment.id"
                                 data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
-                            <i class="i i-reply-blue"></i>Reply
+                            @fragments.inlineSvg("reply", "icon", List("blue"))
+                            Reply
                         </a>
 
                         <span class="d-comment__action-separator d-staff-required">|</span>
@@ -114,7 +115,7 @@
                     </div>
 
                     <div class="report-comment-container js-report-comment-container d-comment__action d-comment__action--report">
-                        <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" class="js-report-comment" data-comment-id="@comment.id" target="_blank">Report</a>
+                        <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" rel="nofollow" class="js-report-comment" data-comment-id="@comment.id" target="_blank">Report</a>
                     </div>
                 }
             </div>

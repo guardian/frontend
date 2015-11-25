@@ -1,12 +1,9 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 
-@import views.support.{ImgSrc, Item460}
+@import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media, CardStyle}
 @import views.support.TrailCssClasses.toneClass
-@import model.Tag
-@import views.support.RenderClasses
-@import views.support.CardStyleForFrontend
-@import com.gu.facia.api.utils.{Feature, DefaultCardstyle, Comment}
+@import views.support.{ImgSrc, RichLinkContributor, Item460, RenderClasses}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -28,9 +25,9 @@
     ))">
 
     <div class="rich-link__container">
-        @if(content.isGallery || content.isVideo || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
+        @if(CardStyle.fromContent(content.delegate) == Media || CardStyle.fromContent(content.delegate) == Feature || CardStyle.fromContent(content.delegate) == DefaultCardstyle) {
             @content.trailPicture.map { trailPictureContainer =>
-                @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
+                @Item460.bestFor(trailPictureContainer).map { imgSrc =>
 
                     <div class="rich-link__image-container u-responsive-ratio">
                         <img src="@imgSrc" itemprop="contentURL">
@@ -40,8 +37,13 @@
         }
 
         <div class="rich-link__header">
-            <h1 class="rich-link__title"><a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
-            @if(!content.isMedia && CardStyleForFrontend(content) == Comment) {
+            <h1 class="rich-link__title">
+                @if( toneClass(content) == "tone-comment" ) {
+                    @fragments.inlineSvg("quote", "icon")
+                }
+                <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a>
+            </h1>
+            @if(!content.isMedia && CardStyle.fromContent(content.delegate) == Comment) {
                 <div class="rich-link__byline">@content.byline.map { byline => @Html(byline) }</div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
@@ -55,7 +57,7 @@
                 @content.contributors.headOption.map { profile =>
                     @profile.contributorLargeImagePath.map{ image =>
                         <div class="rich-link__byline-img">
-                            <img class="rich-link__byline-img__img" src="@image" alt="@profile.name" />
+                            <img class="rich-link__byline-img__img" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
                         </div>
                     }
                 }

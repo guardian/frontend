@@ -80,7 +80,7 @@ linters:
 
   PropertySpelling:
     enabled: true
-    extra_properties: []
+    extra_properties: ['will-change']
 
   SelectorDepth:
     enabled: true
@@ -89,7 +89,7 @@ linters:
       - static/src/stylesheets/module/content/_live-blog.scss
       - static/src/stylesheets/module/_discussion.scss
       - static/src/stylesheets/module/commercial/_travel.scss
-      - static/src/stylesheets/head.story-package.scss
+      - static/src/stylesheets/inline/story-package.scss
 
   Shorthand:
     enabled: true

@@ -1,19 +1,18 @@
 /* global s */
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/analytics/omniture',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/functions/debounce'
 ], function (
     bonzo,
-    _,
     $,
     mediator,
     omniture,
-    Id
-) {
+    Id,
+    debounce) {
 
     /**
      * event51: Comment
@@ -109,18 +108,18 @@ define([
             scroll = function () {
                 if (!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
-                    mediator.off('window:scroll', _.debounce(scroll, 200));
+                    mediator.off('window:throttledScroll', debounce(scroll, 200));
                 }
             };
 
         if (!track.seen) {
-            mediator.on('window:scroll', _.debounce(scroll, 200));
+            mediator.on('window:throttledScroll', debounce(scroll, 200));
         }
     };
 
     track.areCommentsVisible = function () {
         var comments = $('#comments').offset(),
-            scrollTop = $('body').first().scrollTop(),
+            scrollTop = window.pageYOffset,
             viewport = bonzo.viewport().height;
 
         if ((comments.top - ((viewport  / 2)) < scrollTop) &&

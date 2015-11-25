@@ -7,7 +7,6 @@ define([
     time,
     id
 ) {
-
     var userSegmentsKey = 'gu.ads.userSegmentsData';
 
     function getUserSegments() {
@@ -31,27 +30,25 @@ define([
 
     function requestUserSegmentsFromId() {
         if (storage.local.isAvailable() && (storage.local.get(userSegmentsKey) === null) && id.getUserFromCookie()) {
-            id.getUserFromApi(
-                function (user) {
-                    if (user && user.adData) {
-                        var key,
-                            userSegments = [];
-                        for (key in user.adData) {
-                            userSegments.push(key + user.adData[key]);
-                        }
-                        storage.local.set(
-                            userSegmentsKey,
-                            {
-                                segments: userSegments,
-                                userHash: user.id % 9999
-                            },
-                            {
-                                expires: time.currentDate().getTime() + (24 * 60 * 60 * 1000)
-                            }
-                        );
+            id.getUserFromApi(function (user) {
+                if (user && user.adData) {
+                    var key,
+                        userSegments = [];
+                    for (key in user.adData) {
+                        userSegments.push(key + user.adData[key]);
                     }
+                    storage.local.set(
+                        userSegmentsKey,
+                        {
+                            segments: userSegments,
+                            userHash: user.id % 9999
+                        },
+                        {
+                            expires: time.currentDate().getTime() + (24 * 60 * 60 * 1000)
+                        }
+                    );
                 }
-            );
+            });
         }
     }
 
@@ -59,5 +56,4 @@ define([
         getUserSegments: getUserSegments,
         requestUserSegmentsFromId: requestUserSegmentsFromId
     };
-
 });

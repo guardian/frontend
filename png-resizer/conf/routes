@@ -1,3 +1,0 @@
-
-GET       /:backend/w-:width/h--/q-:quality/*path     controllers.Resizer.resize(backend, path, width, quality)
-GET       /_healthcheck                               conf.HealthCheck.healthcheck()

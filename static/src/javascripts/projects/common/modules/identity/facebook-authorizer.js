@@ -1,12 +1,11 @@
 /*global FB:false*/
+/*global guardian*/
 /* jscs:disable disallowDanglingUnderscores */
 define(function () {
 
-    var instance = null,
-        scriptId = 'facebook-jssdk';
+    var scriptId = 'facebook-jssdk';
 
     function FacebookAuthorizer(appId) {
-        instance = this;
         this.appId = appId;
         this.onConnected = new RepeatablePromise();
         this.onFBScriptLoaded = new RepeatablePromise();
@@ -102,7 +101,10 @@ define(function () {
     };
 
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
-        require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
+        // don't tell Facebook about pages that have not launched yet
+        if (!guardian.config.page.isPreview) {
+            require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
+        }
     };
 
     FacebookAuthorizer.prototype._handleScriptLoaded = function () {
@@ -120,10 +122,6 @@ define(function () {
 
         this.onFBScriptLoaded.resolve(FB);
 
-    };
-
-    FacebookAuthorizer.prototype.destroy = function () {
-        instance = null;
     };
 
     function RepeatablePromise() {

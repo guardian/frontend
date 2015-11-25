@@ -6,8 +6,17 @@
     }
 }
 
+.inline-icon--light-grey {
+    fill: colour(neutral-3);
+}
+
+.inline-close--small svg {
+    height: 100%;
+    width: 45%;
+}
+
 .inline-icon__fallback {
-    display: none;
+    display: none !important;
 }
 
 .inline-tone-fill {
@@ -53,6 +62,6 @@
     }
 
     .inline-icon__fallback {
-        display: initial;
+        display: block !important;
     }
 }

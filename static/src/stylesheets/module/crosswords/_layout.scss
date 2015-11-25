@@ -8,13 +8,27 @@
     .crossword__container--#{$xword} {
         @include mq(tablet) {
             padding-left: $size;
+
+            &.crossword__container--accessible {
+                padding-left: 0;
+            }
         }
 
-        .crossword__grid-wrapper {
+        .crossword__container__game {
             @include mq(tablet) {
                 margin-left: 0 - $size;
+            }
+        }
+
+        // Because the parent is floated, it has no dimensions, so we must
+        // define dimensions for the grid. (SVGs use viewBox which require
+        // the parent to have dimensions)
+        .crossword__container__grid-wrapper {
+            width: 100%;
+            height: $size;
+
+            @include mq(tablet) {
                 width: $size;
-                height: $size;
             }
         }
 
@@ -34,13 +48,50 @@
 
 
 .crossword__container {
+    clear: both;
     position: relative;
+    margin-top: $gs-baseline;
 }
 
 .crossword__controls {
     margin-top: $gs-baseline;
     float: left;
     clear: both;
+}
+
+// scrollable clues - only on tablets not in accessible view
+.crossword__container--react {
+    & .crossword__clues--wrapper,
+    & .crossword__clues {
+        @include mq($from: tablet, $until: leftCol) {
+            height: xword-grid-dimensions(15) + ($gs-baseline * 10);
+        }
+    }
+
+    @include mq($from: tablet, $until: leftCol) {
+        & .crossword__clues {
+            position: relative;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+}
+
+.crossword__clues__gradient {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
+    display: none;
+
+    @include mq($from: tablet, $until: leftCol) {
+        display: block;
+
+        .hide-gradient & {
+            display: none;
+        }
+    }
 }
 
 .crossword__clues {
@@ -50,10 +101,29 @@
     @include mq(tablet) {
         clear: none;
         padding-left: $gs-gutter;
+        box-sizing: border-box;
+
+        noscript & {
+            width: 85%;
+        }
+
+        .crossword__container--accessible & {
+            display: table;
+            table-layout: fixed;
+            width: initial;
+        }
+    }
+
+    @include mq(leftCol) {
         display: table;
         table-layout: fixed;
-        box-sizing: border-box;
+        height: auto;
+        background: none;
     }
+}
+
+.crossword__accessible-row-data-wrapper {
+    float: left;
 }
 
 .crossword__clues--across {
@@ -68,4 +138,23 @@
         display: table-cell;
         padding-left: $gs-gutter / 2;
     }
+}
+
+.crossword__links {
+    @include mq(leftCol) {
+        top: $gs-baseline * -3;
+    }
+
+    position: relative;
+    top: $gs-baseline * -2;
+    font-family: $f-sans-serif-text;
+    font-size: 15px;
+}
+
+.js-crossword-link {
+    display: none;
+}
+
+.crossword__instructions {
+    margin: $gs-baseline 0;
 }

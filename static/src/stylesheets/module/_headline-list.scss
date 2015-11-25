@@ -1,7 +1,6 @@
 .headline-list__item {
     position: relative;
     box-sizing: border-box;
-    padding-left: gs-span(1) - $gs-gutter/2;
     padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline * 2;
 
@@ -35,14 +34,13 @@
 }
 
 .headline-list__count {
-    position: absolute;
-    top: $gs-baseline / 6;
-    left: 0;
+    float: left;
+    width: gs-span(1);
     color: colour(neutral-4);
     @include font($f-serif-headline, 200, 44px);
 
-    @include mq(desktop) {
-        top: $gs-baseline / 4;
+    @include mq(mobile) {
+        width: gs-span(1) - $gs-gutter / 2;
     }
 }
 
@@ -55,6 +53,11 @@
 
     .fc-item__title {
         margin-top: -1 * ($gs-baseline / 3);
+        margin-left: gs-span(1);
+
+        @include mq(mobile) {
+            margin-left: gs-span(1) - $gs-gutter / 2;
+        }
     }
 
     .inline-icon {

@@ -1,5 +1,5 @@
 import common._
-import conf.{Configuration => GuardianConfiguration}
+import conf.{Configuration => GuardianConfiguration, SwitchboardLifecycle}
 import frontpress.{FrontPressCron, ToolPressQueueWorker}
 import metrics._
 import play.api.GlobalSettings
@@ -7,6 +7,7 @@ import services.ConfigAgentLifecycle
 
 object Global extends GlobalSettings
   with ConfigAgentLifecycle
+  with SwitchboardLifecycle
   with CloudWatchApplicationMetrics {
 
   private def getTotalPressSuccessCount: Long =

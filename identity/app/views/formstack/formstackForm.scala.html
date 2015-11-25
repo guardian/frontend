@@ -5,13 +5,12 @@
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
-    @fragments.stylesheetsLoad(projectName)
 
-    @fragments.javaScriptFirstSteps(metaData)
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheets(projectName)
 
-    @fragments.stylesheetsUse()
-
-    @fragments.javaScriptLaterSteps(metaData)
+    @* inline JS - blocking *@
+    @fragments.inlineJSBlocking(metaData)
 </head>
 <body id="top">
 

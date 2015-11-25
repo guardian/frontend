@@ -5,10 +5,11 @@ import java.io.File
 import play.api.libs.MimeTypes
 import play.api.mvc._
 import play.api.libs.iteratee.Enumerator
+import play.Play
 
 object DevAssetsController extends Controller with ExecutionContexts {
 
-  def at(path: String): Action[AnyContent] = Action {
+  def at(path: String): Action[AnyContent] = Action { implicit request =>
     val contentType: Option[String] = MimeTypes.forFileName(path) map { mime =>
       // Add charset for text types
       if (MimeTypes.isText(mime)) s"${mime}; charset=utf-8" else mime
@@ -16,7 +17,9 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
     val hashFile = new File(s"static/hash/$path")
 
-    val resolved = if (hashFile.exists()) {
+    val resolved = if (Play.isDev && path.startsWith("javascripts")) {
+      new File(s"static/src/$path").toURI.toURL
+    } else if (hashFile.exists()) {
       hashFile.toURI.toURL
     } else {
       new File(s"static/src/$path").toURI.toURL
@@ -27,12 +30,6 @@ object DevAssetsController extends Controller with ExecutionContexts {
       Enumerator.fromStream(resolved.openStream())
     )
   }
-
-  def atFonts(path: String) = at(s"fonts/$path")
-  def atJavascripts(file: String) = at(s"javascripts/$file")
-  def atStylesheets(file: String) = at(s"stylesheets/$file")
-
-  def humans(): Action[AnyContent] = controllers.Assets.at(path = "/public", file = "humans.txt")
 
   def surveys(file: String): Action[AnyContent] =
     controllers.Assets.at(path = "/public/surveys", file, aggressiveCaching = false)

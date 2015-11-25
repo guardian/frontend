@@ -8,7 +8,7 @@ set -o errexit
 cd `dirname $0`/..
 
 rm -rf node_modules
-npm prune
+npm prune --production
 npm cache clean
 
 echo "Done cleaning."

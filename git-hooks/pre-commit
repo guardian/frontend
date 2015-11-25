@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# ensure npm-shrinkwrap is committed with package.json changes
+
+readonly staged=$(git diff --name-only --cached)
+
+if [[ $staged == *"package.json"* && $staged != *"npm-shrinkwrap.json"* ]]; then
+  node tools/messages.js should-shrinkwrap;
+  exit 1;
+fi

@@ -1,13 +1,18 @@
 package common.editions
 
+import java.util.Locale
+
 import common._
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 
 object Uk extends Edition(
   id = "UK",
   displayName = "UK edition",
   timezone = DateTimeZone.forID("Europe/London"),
-  lang = "en-gb"){
+  locale = Locale.forLanguageTag("en-gb"),
+  homePagePath = "/uk"
+){
 
   implicit val UK = Uk
 
@@ -73,6 +78,18 @@ object Uk extends Edition(
     pollution
   )
 
+  val crosswordsLocalNav = Seq(
+    crosswordBlog,
+    crosswordEditorUpdate,
+    quick,
+    cryptic,
+    prize,
+    quiptic,
+    genius,
+    speedy,
+    everyman,
+    azed
+  )
 
   override val navigation: Seq[NavItem] = {
     Seq(
@@ -89,14 +106,15 @@ object Uk extends Edition(
       NavItem(fashion),
       NavItem(environment, environmentLocalNav),
       NavItem(technology),
-      NavItem(travel, Seq(uktravel, europetravel, usTravel)),
+      NavItem(travel, Seq(uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(money, Seq(property, savings, pensions, borrowing, workAndCareers)),
       NavItem(science),
       NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
+      NavItem(sundayPaper, Seq(observerNewReview, observerMagazine)),
       NavItem(membership),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }

@@ -1,19 +1,17 @@
 package services
 
 import com.gu.contentapi.client.model.ItemResponse
-import common.Edition
-import model.ApiContent2Is
-import common._
+import common.{Edition, _}
 import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
 import controllers.ImageContentPage
-import model.{RelatedContent, Trail, Content, ImageContent}
-import play.api.mvc.{Result => PlayResult}
-import LiveContentApi.getResponse
+import model.{ApiContent2Is, Content, ImageContent, RelatedContent}
+import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
 trait ImageQuery extends ConciergeRepository {
-  def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]] = {
+  def image(edition: Edition, path: String)(implicit request: RequestHeader): Future[Either[ImageContentPage, PlayResult]] = {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
     val response = getResponse(LiveContentApi.item(path, edition)
       .showFields("all")

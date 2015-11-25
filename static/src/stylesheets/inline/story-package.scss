@@ -1,0 +1,202 @@
+@import '../_vars';
+@import '../_mixins';
+@import '../components/pasteup-buttons/src/_mixins';
+
+@mixin kicker-override($tone, $colour) {
+    .tone-#{$tone}--item {
+        .fc-item__kicker,
+        .rich-link__kicker,
+        .fc-item__byline,
+        .fc-save-for-later--is-saved {
+            color: $colour;
+        }
+
+        .fc-save-for-later--is-saved .inline-tone-fill {
+            fill: $colour;
+        }
+    }
+
+    .tone-#{$tone}--sublink {
+        .fc-sublink__kicker {
+            color: $colour;
+        }
+    }
+}
+
+.fc-container--story-package {
+    background-color: colour(neutral-4);
+    margin-bottom: $gs-baseline;
+    border-top: 1px solid #ffffff;
+
+    // Container Chrome
+    .fc-container__header__title {
+        border-top-color: colour(story-package);
+        color: colour(news-support-2);
+
+        & a:hover {
+            color: colour(story-package);
+        }
+    }
+
+    .fc-container__header__description {
+        color: colour(story-package);
+    }
+
+    .treats__treat {
+        border-color: colour(news-support-2);
+        background-color: transparent;
+        color: colour(story-package);
+
+        &:hover {
+            background-color: inherit;
+        }
+    }
+
+    .button--primary {
+        @include button-colour(
+            colour(news-support-2),
+            #ffffff,
+            mix(colour(news-support-2), colour(neutral-1), 60%)
+        );
+    }
+
+    .fc-slice__item+.fc-slice__item:before {
+        border-left-color: lighten(colour(news-support-6), 30%);
+    }
+
+    // Item Level
+    .fc-item {
+        // This shouldn't need to be important but too specific selectors on some tones force it to be
+        background-color: colour(story-package) !important;
+
+        .u-faux-block-link--hover {
+            color: inherit;
+            background-color: mix(colour(story-package), colour(neutral-1), 50%);
+        }
+    }
+
+    .fc-item__header,
+    .fc-sublink__title {
+        color: #ffffff;
+    }
+
+    .fc-sublink__title:before {
+        border-color: mix(colour(story-package), #ffffff, 80%);
+    }
+
+    .fc-item__standfirst {
+        color: colour(neutral-4);
+    }
+
+    .fc-item__kicker,
+    .fc-sublink__kicker {
+        &:after {
+            color: mix(colour(story-package), #ffffff, 80%);
+        }
+    }
+
+    .fc-item__link,
+    .rich-link__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix(#ffffff, colour(story-package), 80%);
+        }
+    }
+
+    .fc-item__title--quoted .inline-quote {
+        fill: colour(neutral-4);
+    }
+
+    .fc-item__meta {
+        color: mix(#ffffff, colour(story-package), 80%);
+
+        .inline-icon {
+            fill: mix(#ffffff, colour(story-package), 80%);
+        }
+    }
+
+    .fc-save-for-later {
+        border-color: mix(colour(story-package), #ffffff, 80%);
+    }
+
+    .live-pulse-icon:before {
+        background-color: colour(live-support-1);
+    }
+
+    .fc-item__liveblog-block__text {
+        background-color: lighten(colour(story-package), 5%);
+        border-top-color: lighten(colour(story-package), 15%);
+        border-bottom-color: lighten(colour(story-package), 5%);
+    }
+
+    .fc-item__liveblog-block__text:after {
+        background-color: lighten(colour(story-package), 5%);
+        box-shadow: -5px 0 5px -2px lighten(colour(story-package), 5%);
+    }
+
+    // These need to exist for all kickers because of tone on tone action
+    @include kicker-override(analysis, colour(analysis-accent));
+    @include kicker-override(comment, colour(comment-accent));
+    @include kicker-override(dead, colour(live-support-1));
+    @include kicker-override(editorial, colour(news-accent));
+    @include kicker-override(external, colour(maps-support-1));
+    @include kicker-override(feature, colour(feature-mute));
+    @include kicker-override(letters, colour(comment-accent));
+    @include kicker-override(live, colour(live-support-1));
+    @include kicker-override(media, colour(media-default));
+    @include kicker-override(news, colour(news-accent));
+    @include kicker-override(review, colour(review-accent));
+
+    // Item Level
+    .fc-item--three-quarters-tall-tablet {
+        @include mq(tablet) {
+            .fc-item__standfirst {
+                display: block !important;
+            }
+        }
+    }
+
+    // Slice Level
+    .fc-slice--qqqtall-q2 {
+        .l-row__item--span-1 .l-list {
+            .fc-slice__item {
+                .fc-item__media-wrapper,
+                .fc-item__avatar {
+                    display: block;
+                }
+            }
+
+            .fc-slice__item:first-of-type {
+                [class*="fc-item--has-sublinks"] {
+                    .fc-item__standfirst {
+                        display: none;
+                    }
+                }
+            }
+
+            // This targets the first item in the right-hand column only
+            .fc-slice__item:nth-of-type(n+2) {
+                .fc-sublink:nth-of-type(n+2) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .fc-slice--qqqtall-q2-ql2 {
+        .fc-item--standard-tablet {
+            &.fc-item--has-sublinks-1 {
+                .fc-item__media-wrapper {
+                    display: none;
+                }
+            }
+
+            // Only allows one sublink on each item in the right col
+            &[class*="fc-item--has-sublinks"] {
+                .fc-sublink:nth-of-type(n+2) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -2,16 +2,16 @@ package views.support
 
 import com.gu.facia.api.models.FaciaContent
 import com.gu.facia.api.utils.CardStyle
-import model.Trail
 import implicits.FaciaContentImplicits._
+import model.Content
 
 object TrailCssClasses {
   def toneClassFromStyle(cardStyle: CardStyle) =
     s"tone-${cardStyle.toneString}"
 
-  def toneClass(trail: Trail) = toneClassFromStyle(CardStyleForFrontend(trail))
+  def toneClass(content: Content) = toneClassFromStyle(CardStyle.fromContent(content.delegate))
 
-  def articleToneClass(trail: Trail) = toneClass(trail)
+  def articleToneClass(content: Content) = toneClass(content)
 
   def toneClass(faciaContent: FaciaContent) = toneClassFromStyle(faciaContent.cardStyle)
 

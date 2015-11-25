@@ -2,28 +2,29 @@
 define([
     'bean',
     'qwery',
-    'raven',
+    'common/utils/report-error',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'text!common/views/ui/video-ads-skip-overlay.html',
+    'lodash/arrays/indexOf',
+    'lodash/functions/throttle'
 ], function (
     bean,
     qwery,
-    raven,
+    reportError,
     $,
-    _,
     config,
     detect,
     template,
     OmnitureMedia,
     history,
-    adsSkipOverlayTmpl
-) {
+    adsSkipOverlayTmpl,
+    indexOf,
+    throttle) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
         QUARTILES = [25, 50, 75],
@@ -66,7 +67,7 @@ define([
 
     function initOphanTracking(player, mediaId) {
         EVENTS.concat(QUARTILES.map(function (q) {
-            return 'play:' + q;
+            return 'content:' + q;
         })).forEach(function (event) {
             player.one(constructEventName(event, player), function (event) {
                 ophanRecord(mediaId, event, player);
@@ -110,14 +111,46 @@ define([
                     player.play();
                 }
             }
+        },
+        adFailed = function () {
+            bindContentEvents(player);
+            if (shouldAutoPlay(player)) {
+                player.play();
+            }
+            // Remove both handlers, because this adFailed handler should only happen once.
+            player.off('adtimeout', adFailed);
+            player.off('adserror', adFailed);
         };
+
         player.one('adsready', events.ready);
 
-        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
-        player.one('adtimeout', function () {
-            player.trigger('adscanceled');
-            bindContentEvents(player);
-        });
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking.
+        player.one('adtimeout', adFailed);
+        player.one('adserror', adFailed);
+    }
+
+    function kruxTracking(player, event) {
+        var desiredVideos = ['gu-video-457263940', 'gu-video-55e4835ae4b00856194f85c2'];
+        //test videos /artanddesign/video/2015/jun/25/damien-hirst-paintings-john-hoyland-newport-street-gallery-london-video
+        ///music/video/2015/aug/31/vmas-2015-highlights-video
+
+
+        if (config.switches.kruxVideoTracking && config.switches.krux && $(player.el()).attr('data-media-id') && indexOf(desiredVideos, $(player.el()).attr('data-media-id')) !== -1) {
+            if (event === 'videoPlaying') {
+                //Krux is a global object loaded by krux.js file
+
+                /*eslint-disable */
+                Krux('admEvent', 'KAIQvckS', {});
+                /*eslint-enable */
+
+            } else if (event === 'videoEnded') {
+
+                /*eslint-disable */
+                Krux('admEvent', 'KBaTegd5', {});
+                /*eslint-enable */
+            }
+        }
+
     }
 
     function bindContentEvents(player) {
@@ -137,7 +170,7 @@ define([
                 var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
                 QUARTILES.reverse().some(function (quart) {
                     if (progress >= quart) {
-                        player.trigger(constructEventName('play:' + quart, player));
+                        player.trigger(constructEventName('content:' + quart, player));
                         return true;
                     } else {
                         return false;
@@ -148,7 +181,7 @@ define([
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
-                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
+                player.on('timeupdate', throttle(events.timeupdate, 1000));
                 player.one('ended', events.end);
 
                 if (shouldAutoPlay(player)) {
@@ -164,6 +197,7 @@ define([
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
+            kruxTracking(player, 'videoPlaying');
             bean.fire(document.body, 'videoPlaying');
         });
         player.on('pause', function () {
@@ -171,6 +205,7 @@ define([
         });
         player.on('ended', function () {
             bean.fire(document.body, 'videoEnded');
+            kruxTracking(player, 'videoEnded');
         });
     }
 
@@ -210,26 +245,26 @@ define([
 
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);
-                    this.one(constructEventName('content:play', this), function () {
-                        $('.js-ads-skip', this.el()).hide();
-                        window.clearInterval(intervalId);
-                    });
+
+                },
+                end: function () {
+                    $('.js-ads-skip', this.el()).hide();
+                    window.clearInterval(intervalId);
                 }
             };
 
         this.one(constructEventName('preroll:play', this), events.init.bind(this));
+        this.one(constructEventName('preroll:end', this), events.end.bind(this));
     }
 
     function beaconError(err) {
         if (err && 'message' in err && 'code' in err) {
             var error = new Error(err.message);
             if (!error.message.match(/Your browser is no longer supported/)) {
-                raven.captureException(error, {
-                    tags: {
-                        feature: 'player',
-                        vjsCode: err.code
-                    }
-                });
+                reportError(error, {
+                    feature: 'player',
+                    vjsCode: err.code
+                }, false);
             }
         }
     }

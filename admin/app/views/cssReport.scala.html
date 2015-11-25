@@ -1,5 +1,7 @@
 @(environment: String)
 
+@import controllers.admin.routes.UncachedWebAssets
+
 @admin_main("CSS reports", environment) {
     <style>
         html {
@@ -93,9 +95,9 @@
         }
     </style>
 
-    <script src="@routes.Assets.at("javascripts/components/jquery/dist/jquery.min.js")"></script>
-    <script src="@routes.Assets.at("javascripts/components/react/react.js")"></script>
-    <script src="@routes.Assets.at("javascripts/components/lodash/lodash.js")"></script>
+    <script src="@UncachedWebAssets.at("lib/jquery/jquery.min.js")"></script>
+    <script src="@UncachedWebAssets.at("lib/react/react.min.js")"></script>
+    <script src="@UncachedWebAssets.at("lib/lodash/lodash.min.js")"></script>
 
     <div class="css-reports-navbar">
         <div>

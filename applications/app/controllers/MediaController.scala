@@ -2,11 +2,11 @@ package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
+import conf.switches.Switches
 import model._
-import play.api.mvc.{Content => _, _}
+import play.api.mvc._
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -34,12 +34,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
       }
       val model = mediaOption map { media => MediaPage(media, RelatedContent(media, response)) }
 
-      if (mediaOption.exists(_.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(model, response)
-      }
-
+      ModelOrResult(model, response)
     }
 
     result recover convertApiExceptions

@@ -79,8 +79,7 @@
         @include icon(volume-high-white, $with-width: false);
     }
     .content--media--video & {
-        width: 1.04em;
-        @include icon(video-icon-white, $with-width: false);
+        content: none;
     }
     .content--gallery &,
     .content--image & {
@@ -88,82 +87,8 @@
         @include icon(camera-white-large, $with-width: false);
     }
 }
-
-
-/* Media item
-   ========================================================================== */
-
-.fc-item--media {
-    position: relative;
-    box-sizing: border-box;
-    margin-bottom: $gs-baseline*2;
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
-
-    &.fc-item {
-        width: 25%;
-        background-color: transparent;
-        margin-left: 0;
-        margin-right: 0;
-        padding: 0 $gs-gutter/2;
-    }
-
-    + .fc-item {
-        &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 1px;
-            height: 100%;
-            border-left: 1px solid colour(neutral-2);
-        }
-    }
-
-    .fc-item__container {
-        margin-top: -$gs-baseline;
-    }
-
-    .fc-item__image-container {
-        display: block;
-    }
-
-    .fc-item__action {
-        display: block;
-        padding-top: $gs-baseline;
-        color: colour(neutral-5);
-
-        &:hover,
-        &:focus {
-            text-decoration: underline;
-        }
-        &:visited,
-        &:active {
-            color: darken(colour(neutral-5), 20%);
-        }
-    }
-
-    .fc-item__title {
-        @include fs-headline(1);
-        font-weight: 500;
-        text-align: left; //Required for end slate items
-        @include text-clamp(3, get-line-height(headline, 1));
-        height: get-line-height(headline, 1) * 3;
-
-        &:before {
-            display: inline-block;
-            content: '';
-            margin-right: $gs-gutter/5;
-            height: 10px;
-            width: 16px;
-        }
-    }
-}
-
-.items--video .fc-item__title:before {
-    @include icon(video-icon, false);
+.content--media--video .inline-video-icon {
+    margin-right: .1em;
 }
 
 .items--audio .fc-item__title:before {

@@ -1,15 +1,18 @@
 @(title: String)(content: Html)
 
+@import controllers.admin.routes.UncachedAssets
+@import controllers.admin.routes.UncachedWebAssets
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <title>@title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="shortcut icon" type="image/x-icon" href='@routes.Assets.at("football/images/favicon.ico")' />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
-        <link rel="stylesheet" media="screen" href='@routes.Assets.at("football/css/football-main.css")' />
-        <link rel="stylesheet" href='@routes.Assets.at("football/css/jquery-ui-1.10.4.custom.css")' />
+        <link rel="shortcut icon" type="image/x-icon" href='@UncachedAssets.at("football/images/favicon.ico")' />
+        <link rel="stylesheet" href='@UncachedWebAssets.at("lib/bootstrap/css/bootstrap.min.css")' />
+        <link rel="stylesheet" media="screen" href='@UncachedAssets.at("football/css/football-main.css")' />
+        <link rel="stylesheet" href='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.css")' />
 
             <!--[if (gt IE 9)|(IEMobile)]><!-->
         @if(play.Play.isDev()) {
@@ -21,12 +24,12 @@
         }
             <!--<![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/content.css")" />
 
-        <script src='@routes.Assets.at("football/javascripts/jquery-1.10.2.js")'></script>
-        <script src='@routes.Assets.at("football/javascripts/jquery-ui-1.10.4.custom.min.js")'></script>
-        <script src='@routes.Assets.at("football/javascripts/bootstrap/bootstrap.min.js")'></script>
-        <script src='@routes.Assets.at("football/javascripts/browser.js")'></script>
+        <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
+        <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>
+        <script src='@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")'></script>
+        <script src='@UncachedAssets.at("football/javascripts/browser.js")'></script>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-static-top" role="navigation">

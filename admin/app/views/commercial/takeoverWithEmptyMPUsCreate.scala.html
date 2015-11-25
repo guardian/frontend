@@ -1,0 +1,20 @@
+@import common.dfp.TakeoverWithEmptyMPUs
+@(env: String, takeoverForm: Form[TakeoverWithEmptyMPUs])(implicit messages: Messages)
+@import helper._
+
+@admin_main("Create takeover with Empty MPUs", env, isAuthed = true) {
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
+    <h1>New Takeover with Empty MPUs</h1>
+    @form(action = controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.create()) {
+        <p>Fill in the details of a front takeover in which MPUs should not appear on the page.</p>
+        @inputText(takeoverForm("url"), '_label -> "Paste URL here:", 'size -> 100, '_help -> "")
+        @select(takeoverForm("editions"), options = List("UK" -> "UK", "US" -> "US", "AU" -> "AU"), 'multiple -> true, '_label -> "Editions this applies to (one or multiple):")
+        @input(takeoverForm("startTime"), '_label -> "Takeover starts (UTC):", '_help -> "") { (id, name, value, args) =>
+            <input type="datetime-local" name="@name" id="@id" @toHtmlArgs(args)>
+        }
+        @input(takeoverForm("endTime"), '_label -> "Takeover ends (UTC):", '_help -> "") { (id, name, value, args) =>
+            <input type="datetime-local" name="@name" id="@id" @toHtmlArgs(args)>
+        }
+        <input class="btn btn-large btn-success" type="submit" value="Save" />
+    }
+}

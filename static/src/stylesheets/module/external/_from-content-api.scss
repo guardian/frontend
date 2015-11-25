@@ -37,7 +37,7 @@
     }
     > li, // sometimes HTML is malformed on purpose by editors
     > ol,
-    > blockquote > ul,
+    > blockquote ul,
     > ul {
         list-style: none;
     }
@@ -54,8 +54,12 @@
             @include fs-header(2, true);
         }
     }
-    > ol > li,
-    > ul > li {
+    > ul ul,
+    > ol ol {
+        margin-left: $gs-gutter;
+    }
+    > ol li,
+    > ul li {
         position: relative;
         margin-bottom: .8em;
     }
@@ -105,6 +109,7 @@
         // TODO: Write mixin for this
         margin-left: initial;
         margin-left: unset;
+        overflow: auto;
     }
 }
 
@@ -115,6 +120,11 @@
 .from-content-api pre {
     // Unset from `.from-content-api`
     word-wrap: normal;
+    $x: lighten(colour(guardian-brand-light), 30%);
+    background-color: $x;
+    border: 1px solid darken($x, 10%);
+    padding: $gs-baseline*.75 $gs-gutter*.75;
+    border-radius: 4px;
 }
 
 
@@ -128,12 +138,16 @@
     @include faux-bullet-point;
 }
 
-.from-content-api ul > li,
-.content__standfirst ul > li {
-    @include faux-bullet-point($right-space: 4px);
+.from-content-api ul,
+.content__standfirst ul {
+    list-style: none;
 
-    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
-        display: inline;
+    > li {
+        @include faux-bullet-point($right-space: 4px);
+
+        > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
+            display: inline;
+        }
     }
 }
 
@@ -304,6 +318,8 @@ figure.element--thumbnail + h2 {
     @include mq(tablet) {
         width: gs-span(3);
         float: left;
+        // Prevent previous embeds from interfering
+        clear: left;
         padding-right: $gs-gutter;
         padding-top: $gs-baseline/4;
         margin-bottom: $gs-baseline/2;

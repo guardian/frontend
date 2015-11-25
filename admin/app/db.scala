@@ -18,11 +18,3 @@ trait db {
     }
   }
 }
-
-trait SentryDb extends db {
-
-  Class.forName("org.postgresql.Driver").newInstance
-
-  def getConnection = getConnectionByUrl("%s?user=%s&password=%s".format(db.sentry_db_url, db.sentry_db_username, db.sentry_db_password))
-
-}

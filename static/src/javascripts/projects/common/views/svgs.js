@@ -3,7 +3,6 @@
 // This file is only required by core, and so has a long cache time.
 
 define([
-    'common/utils/_',
     'inlineSvg!svgs/icon/comment-16',
     'inlineSvg!svgs/icon/marque-36',
     'inlineSvg!svgs/icon/marque-54',
@@ -19,10 +18,22 @@ define([
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
     'inlineSvg!svgs/icon/bookmark',
-    'inlineSvg!svgs/notifications-explainer-mobile',
-    'inlineSvg!svgs/notifications-explainer-desktop'
+    'inlineSvg!svgs/icon/dropdown-mask',
+    'inlineSvg!svgs/icon/comment-anchor',
+    'inlineSvg!svgs/icon/reply',
+    'inlineSvg!svgs/icon/expand-image',
+    'inlineSvg!svgs/icon/cursor',
+    'inlineSvg!svgs/icon/plus',
+    'inlineSvg!svgs/icon/share',
+    'inlineSvg!svgs/icon/share-twitter',
+    'inlineSvg!svgs/icon/share-email',
+    'inlineSvg!svgs/icon/share-facebook',
+    'inlineSvg!svgs/icon/share-pinterest',
+    'inlineSvg!svgs/icon/share-gplus',
+    'inlineSvg!svgs/icon/external-link',
+    'inlineSvg!svgs/icon/tick',
+    'lodash/objects/isArray'
 ], function (
-    _,
     commentCount16icon,
     marque36icon,
     marque54icon,
@@ -38,9 +49,21 @@ define([
     arrowWhiteRight,
     arrowRight,
     bookmark,
-    notificationsExplainerMobile,
-    notificationsExplainerDesktop
-) {
+    dropdownMask,
+    commentAnchor,
+    reply,
+    expandImage,
+    cursor,
+    plus,
+    share,
+    shareTwitter,
+    shareEmail,
+    shareFacebook,
+    sharePinterest,
+    shareGPlus,
+    externalLink,
+    tick,
+    isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
@@ -57,8 +80,20 @@ define([
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
         bookmark: bookmark,
-        notificationsExplainerMobile: notificationsExplainerMobile,
-        notificationsExplainerDesktop: notificationsExplainerDesktop
+        dropdownMask: dropdownMask,
+        commentAnchor: commentAnchor,
+        reply: reply,
+        expandImage: expandImage,
+        cursor: cursor,
+        plus: plus,
+        share: share,
+        shareTwitter: shareTwitter,
+        shareEmail: shareEmail,
+        shareFacebook: shareFacebook,
+        sharePinterest: sharePinterest,
+        shareGPlus: shareGPlus,
+        externalLink: externalLink,
+        tick: tick
     };
 
     return function (name, classes, title) {
@@ -66,10 +101,13 @@ define([
 
         // Only mess with classes if we actually need to.
         if (classes) {
-            if (_.isArray(classes)) {
+            if (isArray(classes)) {
                 svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
-                window.console.error('Classes for inlineSvg must be an array: ', classes);
+                // Some environments don't support or don't always expose the console object
+                if (window.console && window.console.error) {
+                    window.console.error('Classes for inlineSvg must be an array: ', classes);
+                }
             }
         }
 

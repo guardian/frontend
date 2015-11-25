@@ -1,11 +1,11 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     var dir = options.staticTargetDir + 'stylesheets/';
     return {
         modern: {
             files: [{
                 expand: true,
                 cwd: dir,
-                src: ['*.css', '!{_*,ie9.*,old-ie.*}'],
+                src: ['*.css', '!{_*,ie9.*,old-ie.*,webfonts*}'],
                 dest: dir
             }],
             options: {
@@ -35,5 +35,5 @@ module.exports = function(grunt, options) {
                 browsers: ['Explorer 9']
             }
         }
-    }
+    };
 };

@@ -1,9 +1,8 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
-
+@(metaData: model.MetaData, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 @import common.{Edition, Navigation}
-@import conf.Switches._
-@import views.support.RenderClasses
-
+@import conf.switches.Switches._
+@import views.support.Commercial.topBelowNavSlot
+@import views.support.{Commercial, RenderClasses}
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
@@ -23,27 +22,12 @@ http://developers.theguardian.com/join-the-team.html
 -->
 
 <head>
-    @fragments.head(metaData, projectName, head, curlPaths)
+    @fragments.head(metaData, projectName, head)
 </head>
-@defining(
-    metaData match {
-        case c: model.Content if c.shouldHideAdverts => { false }
-        case p: model.Page if p.section == "identity" => { false }
-        case _ => { true }
-    },
-    Edition(request)
-) { case (showAdverts, edition) =>
-    @defining(
-        showAdverts &&
-            ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
-                (AppleAdAuNetworkFrontSwitch.isSwitchedOn && edition.id == "AU" && metaData.id == "au") ||
-                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology") ||
-                (AppleAdCultureFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/culture") ||
-                (AppleAdFashionFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "fashion") ||
-                (AppleAdTravelFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "travel") ||
-                (AppleAdUsNetworkFrontSwitch.isSwitchedOn && edition.id == "US" && metaData.id == "us"))
-    ) { adBelowNav =>
+@defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
+    @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
         @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
+
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -53,28 +37,31 @@ http://developers.theguardian.com/join-the-team.html
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
-            ("is-immersive", metaData.isImmersive)))"
+            ("is-immersive", metaData.isImmersive),
+            ("is-immersive-interactive", metaData.isImmersive && metaData.isInteractive)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(showAdverts) {
-            @fragments.commercial.topBanner()
+        @if(!(metaData.isImmersive && metaData.isArticle)) {
+            @if(showAdverts) {
+                @fragments.commercial.topBanner(metaData, edition)
+            }
+
+            @fragments.header(metaData)
+
+            @if(adBelowNav) {
+                @fragments.commercial.topBannerBelowNav()
+            }
+
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile(metaData, edition)
+            }
+
+            <div id="maincontent" class="js-maincontent" tabindex="0"></div>
         }
-
-        @fragments.header(metaData)
-
-        @if(adBelowNav) {
-            @fragments.commercial.topBannerBelowNav()
-        }
-
-        @if(showAdverts) {
-            @fragments.commercial.topBannerMobile()
-        }
-
-        <div id="maincontent" tabindex="0"></div>
 
         @if(BreakingNewsSwitch.isSwitchedOn) {
             <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
@@ -88,7 +75,7 @@ http://developers.theguardian.com/join-the-team.html
 
         @fragments.analytics(metaData)
 
-        @fragments.footerJavaScript()
+        @fragments.inlineJSNonBlocking()
 
         @fragments.commercial.pageSkin()
 

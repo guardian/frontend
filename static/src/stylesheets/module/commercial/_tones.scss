@@ -71,9 +71,8 @@
 /* .commercial--tone-membership */
 @include tone-commercial(
     membership,
-    guss-colour(news-main-2, $pasteup-palette),
-    guss-colour(news-main-1, $pasteup-palette),
-    $titleColor :colour(neutral-1)
+    colour(membership-default),
+    colour(membership-default)
 );
 
 /* .commercial--tone-live */

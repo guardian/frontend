@@ -1,7 +1,5 @@
 @(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], optCapiAdFeature: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
-@import com.gu.facia.api.utils.{Video, Audio, Gallery}
-
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
     <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising commercial-dfp-multi @optSponsorType" data-link-name="merchandising | capi | multiple @optOmnitureId">
         <div class="fc-container__inner">
@@ -41,10 +39,15 @@
                                     }">
                                     <div class="fc-item__container">
                                         @item.trailPicture.map { trailPictureContainer =>
-                                            @fragments.items.elements.facia_cards.image(trailPictureContainer, true)
+                                            @fragments.items.elements.facia_cards.itemImage(trailPictureContainer, true)
                                         }
                                         <div class="fc-item__content">
-                                            <h2 class="fc-item__header">@item.webTitle</h2>
+                                            <div class="fc-item__header">
+                                                <h2 class="fc-item__title">
+                                                    @insertItemMediaIcon(item)
+                                                    @item.webTitle
+                                                </h2>
+                                            </div>
                                             <div class="fc-item__meta">
                                                 <time
                                                     class="fc-item__timestamp js-item__timestamp"
@@ -70,4 +73,13 @@
             </div>
         </div>
     </section>
+}
+
+@insertItemMediaIcon(item : model.Content) = @{
+    item match {
+        case _: Video => fragments.inlineSvg("video-icon", "icon")
+        case _: Audio => fragments.inlineSvg("volume-high", "icon")
+        case _: Gallery => fragments.inlineSvg("camera", "icon")
+        case _ => ""
+    }
 }

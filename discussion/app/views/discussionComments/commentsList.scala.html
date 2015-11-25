@@ -3,8 +3,9 @@
 <div class="d-discussion @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch => data-@switch.name="@switch.state" }>
 
-    <ul class="d-thread d-thread--comments">
-        @userMessageForLargeDiscussion
+    @userMessageForLargeDiscussion
+
+    <ul class="d-thread d-thread--comments js-new-comments">
 
         @page.comments.map { comment =>
             @fragments.comment(comment, page.isClosedForRecommendation, false)

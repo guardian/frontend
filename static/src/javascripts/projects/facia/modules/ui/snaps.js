@@ -2,34 +2,39 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
+    'common/utils/proximity-loader',
     'common/modules/ui/relativedates',
-    'facia/modules/ui/football-snaps'
+    'facia/modules/ui/football-snaps',
+    'lodash/functions/once',
+    'lodash/collections/find',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
     ajax,
     detect,
     mediator,
     template,
     toArray,
+    proximityLoader,
     relativeDates,
-    FootballSnaps
-) {
+    FootballSnaps,
+    once,
+    find,
+    debounce) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
         snapIframes = [],
-        bindIframeMsgReceiverOnce = _.once(function () {
+        bindIframeMsgReceiverOnce = once(function () {
             bean.on(window, 'message', function (event) {
-                var iframe = _.find(snapIframes, function (iframe) { return iframe.contentWindow === event.source; }),
+                var iframe = find(snapIframes, function (iframe) { return iframe.contentWindow === event.source; }),
                     message;
                 if (iframe) {
                     message = JSON.parse(event.data);
@@ -48,13 +53,7 @@ define([
                 })
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); });
 
-        snaps.forEach(fetchSnap);
-
-        if (snaps.length && !detect.isIOS) {
-            mediator.on('window:resize', _.debounce(function () {
-                snaps.forEach(function (el) { addCss(el, true); });
-            }, 200));
-        }
+        snaps.forEach(initSnap);
     }
 
     function addCss(el, isResize) {
@@ -129,25 +128,33 @@ define([
         });
     }
 
-    function fetchSnap(el) {
-        fastdom.write(function () {
-            bonzo(el).addClass('facia-snap-embed');
+    function initSnap(el) {
+        proximityLoader.add(el, 1500, function () {
+            fastdom.write(function () {
+                bonzo(el).addClass('facia-snap-embed');
+            });
+            addCss(el);
+
+            switch (el.getAttribute('data-snap-type')) {
+                case 'document':
+                    injectIframe(el);
+                    break;
+
+                case 'fragment':
+                    fetchFragment(el);
+                    break;
+
+                case 'json.html':
+                    fetchFragment(el, true);
+                    break;
+            }
+
+            if (!detect.isIOS) {
+                mediator.on('window:resize', debounce(function () {
+                    addCss(el, true);
+                }, 200));
+            }
         });
-        addCss(el);
-
-        switch (el.getAttribute('data-snap-type')) {
-            case 'document':
-                injectIframe(el);
-                break;
-
-            case 'fragment':
-                fetchFragment(el);
-                break;
-
-            case 'json.html':
-                fetchFragment(el, true);
-                break;
-        }
     }
 
     return {

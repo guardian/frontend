@@ -1,12 +1,10 @@
-@import conf.Switches._
+@(metaData: model.MetaData, edition: common.Edition)
+@import views.support.Commercial.topAboveNavSlot
 
-<div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--above-nav">
+<div class="@topAboveNavSlot.cssClasses(metaData, edition)">
     @fragments.commercial.standardAd(
         "top-above-nav",
         Seq("top-banner-ad"),
-        Map(
-            "mobile" -> Seq("1,1", "88,70", "728,90"),
-            "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
-        )
+        topAboveNavSlot.adSizes(metaData, edition)
     )
 </div>

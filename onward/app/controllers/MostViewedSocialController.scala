@@ -47,7 +47,7 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
               Fixed(container),
               CollectionConfigWithId(dataId, config),
               CollectionEssentials(
-                items.map(Content(_)).map(FaciaContentConvert.frontentContentToFaciaContent),
+                items.map(Content(_)).map(FaciaContentConvert.frontendContentToFaciaContent),
                 Nil,
                 displayName,
                 None,

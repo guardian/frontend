@@ -66,16 +66,17 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
-      "passes the auth parameters to the http lib's GET method" in {
-        val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
-        api.authBrowser(auth, trackingParameters)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.argThat(new ParamsIncludes(Iterable(("testParam", "value")))), Matchers.any[Parameters])
-      }
-
       "passes the auth header to the http lib's GET method" in {
         val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
         api.authBrowser(auth, trackingParameters)
         verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
+      }
+
+      "passes the parameters to the http lib's POST body" in {
+        val auth = EmailPassword("email@test.com", "password", None)
+        val jsonBody = Option(write(auth))
+        api.authBrowser(auth, trackingParameters)
+        verify(http).POST(Matchers.any[String], Matchers.eq(jsonBody), argThat(new ParamsIncludes(Iterable(("format", "cookies")))),  Matchers.any[Parameters])
       }
 
       "returns a cookies response" in {
@@ -569,7 +570,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       "passes the user's IP details as provided" in {
         when(trackingParameters.ipAddress).thenReturn(Some("127.0.0.1"))
         api.register(user, trackingParameters)
-        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable("X-GU-ID-REMOTE-IP" -> "127.0.0.1"))))
+        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable("X-Forwarded-For" -> "127.0.0.1"))))
       }
     }
 

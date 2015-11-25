@@ -2,10 +2,11 @@ package mvt
 
 import MultiVariateTesting._
 import common.InternationalEditionVariant
-import conf.Switch
+import conf.switches.Switch
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
+import conf.switches.Switches.ServerSideTests
 
 // To add a test, do the following:
 // 1. Create an object that extends TestDefinition
@@ -17,40 +18,28 @@ import views.support.CamelCase
 //    val tests = List(ExampleTest)
 // }
 
-object JspmTest extends TestDefinition(
-  List(Variant0),
-  "jspm-test",
-  "Tests our new JSPM jsavscript configuration",
-  new LocalDate(2015, 6, 30)
+object EmailTextTestControl extends TestDefinition(
+  List(Variant1),
+  "email-text-test-control",
+  "Control for testing a different version of the email text in the footer",
+  new LocalDate(2015, 12, 15)
 )
 
-object JspmControlTest extends TestDefinition(
-  List(Variant7),
-  "jspm-control",
-  "A control test/variant to compare with the JspmTest",
-  new LocalDate(2015, 6, 30)
-)
-
-object CMHRTest extends TestDefinition(
-  List(Variant1, Variant2, Variant3),
-  "cm-hr-test",
-  "Test moving commercial high relevance component above most popular",
-  new LocalDate(2015, 6, 30)
-)
-
-object CMOutbrainTest extends TestDefinition(
-  List(Variant4, Variant5, Variant6),
-  "cm-outbrain-test",
-  "Test moving outbrain component to the second position below the article",
-  new LocalDate(2015, 6, 30)
+object EmailTextTestV1 extends TestDefinition(
+  List(Variant2),
+  "email-text-test-v1",
+  "Tests a different version of the email text in the footer - Guardian today email",
+  new LocalDate(2015, 12, 15)
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, CMHRTest, CMOutbrainTest)
+  val tests: Seq[TestDefinition] = List(EmailTextTestControl, EmailTextTestV1)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
+
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
-    List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+      List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+
     configEntries.flatten.mkString(",")
   }
 }
@@ -65,7 +54,7 @@ case class TestDefinition (
     "Server-side A/B Tests",
     name,
     description,
-    conf.Off,
+    conf.switches.Off,
     sellByDate,
     exposeClientSide = true
   )
@@ -84,7 +73,7 @@ trait Tests {
       tests.find { test =>
         test.variants.contains(variant) &&
         test.switch.isSwitchedOn &&
-        conf.Switches.ServerSideTests.isSwitchedOn
+        ServerSideTests.isSwitchedOn
       }
     }
   }

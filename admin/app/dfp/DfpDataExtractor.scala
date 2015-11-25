@@ -1,6 +1,9 @@
 package dfp
 
 import common.Edition
+import common.dfp.AdSize.responsiveSize
+import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
+import org.joda.time.DateTime
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
@@ -27,6 +30,37 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
         isR2Only = lineItem.targeting.targetsR2Only,
         targetsAdTest = lineItem.targeting.hasAdTestTargetting
       )
+    }
+  }
+
+  def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] = lineItems sortBy { lineItem =>
+    (lineItem.startTime.getMillis, lineItem.endTime.map(_.getMillis).getOrElse(0L))
+  }
+
+  val topAboveNavSlotTakeovers: Seq[GuLineItem] = dateSort {
+    lineItems filter (_.isSuitableForTopAboveNavSlot)
+  }
+
+  val topBelowNavSlotTakeovers: Seq[GuLineItem] = dateSort {
+    lineItems filter {
+      _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
+    }
+  }
+
+  val topSlotTakeovers = dateSort {
+    lineItems filter { lineItem =>
+      lineItem.costType == "CPD" &&
+        lineItem.targetsNetworkOrSectionFrontDirectly &&
+        lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
+          geoTarget.locationType == "COUNTRY" && (
+            geoTarget.name == "United Kingdom" ||
+              geoTarget.name == "United States" ||
+              geoTarget.name == "Australia"
+            )
+        } &&
+        lineItem.creativeSizes.contains(responsiveSize) &&
+        lineItem.startTime.isBefore(DateTime.now.plusDays(1)) &&
+        lineItem.endTime.isDefined
     }
   }
 

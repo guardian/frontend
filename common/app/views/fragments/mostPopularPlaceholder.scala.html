@@ -4,7 +4,7 @@
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
     <section
-    class="fc-container fc-container--has-toggle"
+    class="fc-container fc-container--has-toggle js-most-popular-footer"
     data-link-name="most-popular"
     data-component="most-popular">
         <div class="fc-container__inner">

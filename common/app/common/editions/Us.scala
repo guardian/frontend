@@ -1,7 +1,10 @@
 package common.editions
 
+import java.util.Locale
+
 import common._
 import common.editions.Uk._
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 import contentapi.QueryDefaults
 import common.NavItem
@@ -10,7 +13,8 @@ object Us extends Edition(
   id = "US",
   displayName = "US edition",
   timezone = DateTimeZone.forID("America/New_York"),
-  lang = "en-us"
+  locale = Locale.forLanguageTag("en-us"),
+  homePagePath = "/us"
 ) with QueryDefaults {
 
   implicit val US = Us
@@ -51,7 +55,6 @@ object Us extends Edition(
     energy,
     pollution
   )
-
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
@@ -65,11 +68,11 @@ object Us extends Edition(
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
       NavItem(fashion),
       NavItem(business, businessLocalNav),
-      NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
+      NavItem(travel, Seq(usaTravel, europetravel, uktravel, skiingTravel)),
       NavItem(environment, environmentLocalNav),
       NavItem(science),
       NavItem(media),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }

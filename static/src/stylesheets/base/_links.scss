@@ -13,3 +13,18 @@ a,
         text-decoration: none;
     }
 }
+/* to prevent bugs while anchor jumping with sticky nav
+ based on http://stackoverflow.com/questions/11386807/adding-an-automatic-offset-to-the-scroll-position-for-all-hash-links-calls */
+a[name] {
+    padding-top: gs-height(2);
+    margin-top: gs-height(-2);
+    display: inline-block;
+    width: 0px;
+}
+
+/* to prevent bugs while anchor jumping with sticky nav
+ based on http://stackoverflow.com/questions/11386807/adding-an-automatic-offset-to-the-scroll-position-for-all-hash-links-calls */
+.anchor-link-fix {
+    padding-top: $gs-baseline*4.5;
+    margin-top: $gs-baseline*-4.5;
+}

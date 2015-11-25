@@ -99,6 +99,11 @@
     color: #a55;
 }
 
+.abtest-item__description-label,
+.abtest-item__hypothesis-label {
+    font-weight: bold;
+}
+
 .audience-breakdown__ruler-division {
     width: 25%;
 }

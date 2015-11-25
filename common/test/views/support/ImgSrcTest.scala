@@ -1,12 +1,11 @@
 package views.support
 
-import org.joda.time.DateTime
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-import model.{ImageContainer, ImageAsset}
-import com.gu.contentapi.client.model.{Content, Asset, Tag, Element}
-import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
+import com.gu.contentapi.client.model.{Asset, Content, Element, Tag}
 import conf.Configuration
+import conf.switches.Switches.ImageServerSwitch
+import model.{ImageAsset, ImageContainer}
+import org.joda.time.DateTime
+import org.scalatest.{FlatSpec, Matchers}
 
 
 class ImgSrcTest extends FlatSpec with Matchers  {
@@ -25,12 +24,16 @@ class ImgSrcTest extends FlatSpec with Matchers  {
   val tag = List(Tag(id = "type/article", `type` = "keyword", webTitle = "",
       sectionId = None, sectionName = None, webUrl = "", apiUrl = "apiurl", references = Nil))
 
-  val content = Content("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = tag,
-      elements = Some(List(element))
-    )
+  val content = Content(id = "foo/2012/jan/07/bar",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = Some(new DateTime),
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    tags = tag,
+    elements = Some(List(element))
+  )
 
   val imageAsset = ImageAsset(asset, 1)
 
@@ -48,12 +51,12 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
   "ImgSrc" should "convert the URL of a static image to the resizing endpoint with a /static prefix" in {
     ImageServerSwitch.switchOn()
-      Item700.bestFor(image) should be (Some(s"$imageHost/static/w-700/h--/q-95/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
+      Item700.bestFor(image) should be (Some(s"$imageHost/img/static/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg?w=700&q=85&auto=format&sharp=10&s=70cbadc4c6d3f932fe763721dd8ba5ac"))
   }
 
   it should "convert the URL of a media service to the resizing endpoint with a /media prefix" in {
     ImageServerSwitch.switchOn()
-      Item700.bestFor(mediaImage) should be (Some(s"$imageHost/media/w-700/h--/q-95/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"))
+      Item700.bestFor(mediaImage) should be (Some(s"$imageHost/img/media/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg?w=700&q=85&auto=format&sharp=10&s=47061238050fb440cc090b52c2f2354f"))
   }
 
   it should "not convert the URL of the image if it is disabled" in {
@@ -63,9 +66,8 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
   it should "convert the URL of the image if it is a PNG" in {
     ImageServerSwitch.switchOn()
-    PngResizingSwitch.switchOn()
     val pngImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)), element, 0)
-    Item700.bestFor(pngImage) should be (Some(s"$imageHost/static/w-700/h--/q-95/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png"))
+    Item700.bestFor(pngImage) should be (Some(s"$imageHost/img/static/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png?w=700&q=85&auto=format&sharp=10&s=454c03a065f89e05748e41457c3bcb32"))
   }
 
   it should "not convert the URL of the image if it is a GIF (we do not support animated GIF)" in {

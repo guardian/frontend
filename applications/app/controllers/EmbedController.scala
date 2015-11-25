@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.ItemResponse
 import conf._
 import common._
 import model._
-import play.api.mvc.{ Content => _, _ }
+import play.api.mvc._
 import scala.concurrent.Future
 import LiveContentApi.getResponse
 

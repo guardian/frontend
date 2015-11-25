@@ -26,9 +26,21 @@ object Fastly extends ExecutionContexts with Logging {
 
   def apply(): Future[List[FastlyStatistic]] = {
 
-    val futureResponses: Future[List[String]] = Future.sequence( regions map { region =>
-        WS.url(s"https://api.fastly.com/stats?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=${region}"
-        ).withHeaders("Fastly-Key" -> AdminConfiguration.fastly.key).get() map { _.body } })
+    val futureResponses: Future[List[String]] = Future.sequence{
+      regions map { region =>
+        val request = WS.url(s"https://api.fastly.com/stats?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=${region}"
+        ).withHeaders("Fastly-Key" -> AdminConfiguration.fastly.key).withRequestTimeout(20000)
+
+        val response: Future[Option[String]] = request.get().map { resp => Some(resp.body) }.recover {
+          case e: Throwable => {
+            log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
+            None
+          }
+        }
+        response
+      }
+
+    }.map(_.flatten)
 
     futureResponses map { responses =>
 

@@ -5,7 +5,8 @@
         background-color: colour(comment-background);
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(comment-background), 5%);
     }
 
@@ -21,6 +22,10 @@
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
         color: colour(comment-default);
+    }
+
+    .fc-save-for-later {
+        border-color: mix(#000000, colour(comment-background), 10%);
     }
 
     .fc-item__kicker--dreamsnap {

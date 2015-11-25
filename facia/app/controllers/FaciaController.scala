@@ -3,11 +3,8 @@ package controllers
 import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
-import common.editions.EditionalisedSections
-import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches
 import controllers.front._
-import layout.{Front, CollectionEssentials, FaciaContainer}
+import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
@@ -15,7 +12,7 @@ import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
-import slices.Container
+import slices._
 import views.html.fragments.containers.facia_cards.container
 
 import scala.concurrent.Future
@@ -25,42 +22,19 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
-  val frontJson: FrontJson
   val frontJsonFapi: FrontJsonFapi
-
-  // TODO - these should not be separate endpoints
-  // see comment in routes file...
-  def rootEditionRedirect() = editionRedirect(path = "")
-  def editionRedirect(path: String) = Action.async { implicit request =>
-    if (request.getQueryString("page").isDefined) {
-      applicationsRedirect(path)
-    } else {
-      val edition = Edition(request)
-      val editionBase = InternationalEdition(request)
-        .filter(_.isInternational && path == "") // ONLY the network front
-        .map(_ => InternationalEdition.path)
-        .getOrElse(s"/${edition.id.toLowerCase}")
-
-      val redirectPath = path match {
-        case "" => editionBase
-        case sectionFront => s"$editionBase/$sectionFront"
-      }
-
-      Future.successful(Cached(60)(Redirect(redirectPath)))
-    }
-  }
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
-    Future.apply(InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None))
+    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader) = {
     FaciaToRssRedirectMetric.increment()
-    Future.successful(InternalRedirect.internalRedirect(
+    successful(InternalRedirect.internalRedirect(
       "rss_server",
       path,
-      if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
+      request.rawQueryStringOption.map("?" + _)
     ))
   }
 
@@ -69,44 +43,41 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
-  def renderContainerJson(id: String) = renderContainer(id)
+  def renderContainerJson(id: String) = renderContainer(id, false)
 
+  def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
+
+  // Needed as aliases for reverse routing
+  def renderRootFrontRss() = renderFrontRss(path = "")
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
-  log.info(s"Serving RSS Path: $path")
-    if (!ConfigAgent.shouldServeFront(path))
+    log.info(s"Serving RSS Path: $path")
+    if (shouldEditionRedirect(path))
+      redirectTo(s"${Editionalise(path, Edition(request))}/rss")
+    else if (!ConfigAgent.shouldServeFront(path))
       rssRedirect(s"$path/rss")
     else
       renderFrontPressResult(path)
   }
 
+  def rootEditionRedirect() = renderFront(path = "")
   def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (EditionalisedSections.isEditionalised(path) && !request.getQueryString("page").isDefined)
-      redirectToEditionalisedVersion(path)
+    if (shouldEditionRedirect(path))
+      redirectTo(Editionalise(path, Edition(request)))
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
   }
 
-  def redirectToEditionalisedVersion(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(Cached(60)(Found(LinkTo(Editionalise(s"/$path", request)))))
+  private def shouldEditionRedirect(path: String)(implicit request: RequestHeader) = {
+    val editionalisedPath = Editionalise(path, Edition(request))
+    (editionalisedPath != path) && request.getQueryString("page").isEmpty
   }
 
-  private def withPressedPage(path: String)(f: PressedPage => Result): Future[Result] = {
-    if (ConfigAgent.shouldServeFront(path)) {
-      for {
-        maybeFront <- frontJson.get(path)
-          .flatMap {
-            case Some(pressedPage) => Future.successful(Option(PressedPage.fromFaciaPage(pressedPage)))
-            case _ => frontJsonFapi.get(path)}
-      } yield maybeFront match {
-        case Some(front) => f(front)
-        case None => Cached(60)(NotFound)
-      }
-    } else {
-      Future.successful(Cached(60)(NotFound))
-    }
+  def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
+    val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
+    Cached(60)(Found(LinkTo(s"/$path$params")))
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
@@ -114,129 +85,132 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case p if p.startsWith("breaking-news") => 10
       case _ => 60}
 
-    lazy val newFormat = frontJsonFapi.get(path).map {
+    frontJsonFapi.get(path).map {
         case Some(pressedPage) => Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(pressedPage))))
         case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}
-    lazy val oldFormat = frontJson.getAsJsValue(path).map { json =>
-      Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))}
-
-    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
-      newFormat.fallbackTo(oldFormat)}
-    else {
-      oldFormat}
-  }
-
-
-
-  private[controllers] def renderFrontPressResultFallback(path: String)(implicit request : RequestHeader) = {
-    val futureResult = for {
-      maybeFaciaPage <- frontJson.get(path)
-    } yield maybeFaciaPage match {
-        case Some(faciaPage) =>
-          Cached(faciaPage) {
-            if (request.isRss)
-              Ok(TrailsToRss(
-                faciaPage,
-                faciaPage.collections
-                  .filterNot(_._1.config.excludeFromRss)
-                  .map(_._2)
-                  .flatMap(_.items)
-                  .toSeq
-                  .distinctBy(_.id))
-              ).as("text/xml; charset=utf-8")
-            else if (request.isJson)
-              JsonFront(PressedPage.fromFaciaPage(faciaPage))
-            else if (faciaPage.isExpiredAdvertisementFeature)
-              MovedPermanently(expiredAdFeatureUrl)
-            else
-              Ok(views.html.front(PressedPage.fromFaciaPage(faciaPage)))
-          }
-        case None => Cached(45)(NotFound)
-      }
-    futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
-    futureResult
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
-    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
-      val futureResult = frontJsonFapi.get(path).flatMap {
-        case Some(faciaPage) =>
-          Future.successful(
-            Cached(faciaPage) {
-              if (request.isRss)
-                Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
-              else if (request.isJson)
-                JsonFront(faciaPage)
-              else if (faciaPage.isExpiredAdvertisementFeature)
-                MovedPermanently(expiredAdFeatureUrl)
-              else
-                Ok(views.html.front(faciaPage))
-            }
-          )
-        case None => renderFrontPressResultFallback(path)
-      }
+    val futureResult = frontJsonFapi.get(path).flatMap {
+      case Some(faciaPage) =>
+        successful(
+          Cached(faciaPage) {
+            if (request.isRss)
+              Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
+            else if (request.isJson)
+              JsonFront(faciaPage)
+            else
+              Ok(views.html.front(faciaPage))
+          })
+      case None => successful(Cached(60)(NotFound))}
 
-      futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
-      futureResult.fallbackTo(renderFrontPressResultFallback(path))
-
-      futureResult
-    } else {
-      renderFrontPressResultFallback(path)
-    }
-
+    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    futureResult
   }
 
   def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
 
-  def renderContainer(id: String) = MemcachedAction { implicit request =>
+  def renderContainer(id: String, preserveLayout: Boolean = false) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    lazy val oldFormat = renderContainerFallback(id)
-    lazy val newFormat =
-      getPressedCollection(id).map { collectionOption =>
-        collectionOption.map { collection =>
-          Cached(60) {
-            val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
-
-            val containerDefinition = FaciaContainer(
-              1,
-              Container.fromConfig(config),
-              CollectionConfigWithId(id, config),
-              CollectionEssentials.fromPressedCollection(collection)
-            )
-
-            val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
-            if (request.isJson)
-              JsonCollection(html, collection)
-            else
-              NotFound
-          }
-        }.getOrElse(ServiceUnavailable)
-      }
-
-    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
-      newFormat.fallbackTo(oldFormat)
-    } else {
-      oldFormat
-    }
+    renderContainerView(id, preserveLayout)
   }
 
-  def renderContainerFallback(id: String)(implicit request: RequestHeader) = {
-   log.info(s"Serving collection ID: $id")
-    getPressedCollectionFallback(id).map { collectionOption =>
-      collectionOption.map { collection =>
+  def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving most relevant container for $path")
+
+    val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
+      alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten
+    )
+
+    canonicalId.map { collectionId =>
+      renderContainerView(collectionId)
+    }.getOrElse(successful(NotFound))
+  }
+
+  def renderEssentialRead(contentSource: String, edition: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving essential read")
+
+    def pressedCollections: Future[Seq[PressedCollection]] = contentSource match {
+      case "automated" =>
+        val containerId = edition match {
+            case "uk" => "uk-alpha/news/regular-stories"
+            case "us" => "us-alpha/news/regular-stories"
+            case "au" => "au-alpha/news/regular-stories"
+            case _ => "10f21d96-18f6-426f-821b-19df55dfb831"
+        }
+
+        getFirstXCollections(containerId, 4).flatMap { // 4 not 3 so that we have some extra pieces of content to play with when filtering later
+          _ match {
+            case Some(x) => Future.successful(x)
+            case None => Future.failed(new RuntimeException(s"Collection doesn't exist"))
+          }
+        }
+
+      case "curated" =>
+        val containerId = edition match {
+          case "uk" => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
+          case "us" => "0295b390-8218-4eda-8bd4-2757c7d186f6"
+          case "au" => "ec4dc5bf-399c-4720-a70c-dac3d96a26d3"
+          case _ => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
+        }
+
+        getPressedCollection(containerId).map(_.toSeq)
+    }
+
+    pressedCollections.map { collections =>
         Cached(60) {
-          val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+          val config = CollectionConfig.empty.copy(
+            displayName = Some("the-essential-read" + "-" + contentSource)
+          )
+
+          val collectionEssentials = if (contentSource == "curated") {
+            CollectionEssentials.fromMultiplePressedCollections(collections)
+          } else {
+            CollectionEssentials.fromMultiplePressedCollections(collections, 2)
+          }
 
           val containerDefinition = FaciaContainer(
             1,
-            Container.fromConfig(config),
-            CollectionConfigWithId(id, config),
-            CollectionEssentials.fromCollection(collection)
+            EssentialRead,
+            CollectionConfigWithId("", config), // Empty string for essential read AB test
+            collectionEssentials
           )
 
-          val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
+          val html = container(containerDefinition, FrontProperties.empty)
           if (request.isJson)
-            JsonCollection(html, collection)
+            JsonCollection(html)
+          else
+            NotFound
+        }
+    }
+  }
+
+  def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
+
+  private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
+    log.info(s"Rendering container view for collection id $collectionId")
+    getPressedCollection(collectionId).map { collectionOption =>
+      collectionOption.map { collection =>
+        Cached(60) {
+          val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
+
+          val containerLayout = {
+            if (preserveLayout)
+              Container.resolve(collection.collectionType)
+            else
+              Fixed(FixedContainers.fixedMediumFastXII)
+          }
+
+          val containerDefinition = FaciaContainer(
+            1,
+            containerLayout,
+            CollectionConfigWithId(collectionId, config),
+            CollectionEssentials.fromPressedCollection(collection)
+          )
+
+          val html = container(containerDefinition, FrontProperties.empty)
+          if (request.isJson)
+            JsonCollection(html)
           else
             NotFound
         }
@@ -245,69 +219,23 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
-    lazy val oldFormat = renderShowMoreFallback(path, collectionId)
-    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
-      lazy val newFormat = frontJsonFapi.get(path).flatMap {
-        case Some(pressedPage) =>
-          val maybeResponse =
-            for {
-              (container, index) <- Front.fromPressedPage(pressedPage).containers.zipWithIndex.find(_._1.dataId == collectionId)
-              containerLayout <- container.containerLayout
-            } yield
-            Future.successful{Cached(pressedPage) {
-              JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
+    frontJsonFapi.get(path).flatMap {
+      case Some(pressedPage) =>
+        val containers = Front.fromPressedPage(pressedPage, Edition(request)).containers
+        val maybeResponse =
+          for {
+            (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
+            containerLayout <- container.containerLayout}
+          yield
+            successful{Cached(pressedPage) {
+            JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
 
-          maybeResponse getOrElse Future.successful(Cached(60)(NotFound))
-        case None => renderShowMoreFallback(path, collectionId)}
-      newFormat.fallbackTo(oldFormat)
-    }
-    else {
-      oldFormat}}
+        maybeResponse getOrElse successful(Cached(60)(NotFound))
+      case None => successful(Cached(60)(NotFound))}}
 
-
-
-  def renderShowMoreFallback(path: String, collectionId: String)(implicit request : RequestHeader): Future[Result] = {
-    for {
-      maybeFaciaPage <- frontJson.get(path)
-    } yield {
-      val maybeResponse = for {
-        faciaPage <- maybeFaciaPage
-        (container, index) <- faciaPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
-        containerLayout <- container.containerLayout
-      } yield {
-          Cached(faciaPage) {
-            JsonComponent(views.html.fragments.containers.facia_cards.showMore(
-              containerLayout.remainingCards,
-              index
-            ))
-          }
-        }
-      maybeResponse getOrElse Cached(60)(NotFound)
-    }
-  }
-
-  def renderFrontCollection(frontId: String, collectionId: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving collection $collectionId on front $frontId")
-
-    withPressedPage(frontId) { pressedPage =>
-      Front.fromPressedPage(pressedPage).containers.find(_.dataId == collectionId) match {
-        case Some(containerDefinition) =>
-          Cached(60) {
-            JsonComponent(
-              "html" -> container(containerDefinition, pressedPage.frontProperties)(request)
-            )
-          }
-        case _ => NotFound
-      }
-    }
-  }
 
   private object JsonCollection{
-    def apply(html: Html, collection: PressedCollection)(implicit request: RequestHeader) = JsonComponent(
-      "html" -> html
-    )
-
-    def apply(html: Html, collection: Collection)(implicit request: RequestHeader) = JsonComponent(
+    def apply(html: Html)(implicit request: RequestHeader) = JsonComponent(
       "html" -> html
     )
   }
@@ -324,49 +252,30 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
-    }.getOrElse(Future.successful(None))
+    }.getOrElse(successful(None))
 
-  private def getPressedCollectionFallback(collectionId: String): Future[Option[Collection]] =
+  //this is a very short term solution for the Essential Read AB test. It will be removed afterwards, honest
+  private def getFirstXCollections(collectionId: String, take: Int): Future[Option[List[PressedCollection]]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJson.get(path).map(_.flatMap{ faciaPage =>
-        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+        Some(faciaPage.collections.filterNot(_.displayName contains "sport").take(take))
       })
-    }.getOrElse(Future.successful(None))
+    }.getOrElse(successful(None))
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    lazy val oldFormat = renderCollectionRssFallback(id)
-    lazy val newFormat =
-      getPressedCollection(id).flatMap {
-        case Some(collection) =>
-          Future.successful{
-            Cached(60) {
-              val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
-              val webTitle = config.displayName.getOrElse("The Guardian")
-              Ok(TrailsToRss.fromFaciaContent(webTitle, collection.all, "", None)).as("text/xml; charset=utf8")}}
-
-        case None => renderCollectionRssFallback(id)}
-
-    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
-      newFormat.fallbackTo(oldFormat)
-    } else {
-      oldFormat
-    }
-  }
-
-  /* Google news hits this endpoint */
-  def renderCollectionRssFallback(id: String)(implicit request: RequestHeader) = {
-    log.info(s"Serving collection ID: $id")
-    getPressedCollectionFallback(id).map { collectionOption =>
-      collectionOption.map { collection =>
-        Cached(60) {
-          val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
-          Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
+    getPressedCollection(id).flatMap {
+      case Some(collection) =>
+        successful{
+          Cached(60) {
+            val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+            val webTitle = config.displayName.getOrElse("The Guardian")
+            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}
         }
-      }.getOrElse(NotFound(s"Could not find $id"))
-    }
+      case None => successful(Cached(60)(NotFound))}
   }
+
 
   def renderAgentContents = Action {
     Ok(ConfigAgent.contentsAsJsonString)
@@ -374,6 +283,5 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 }
 
 object FaciaController extends FaciaController {
-  val frontJson: FrontJson = FrontJsonLive
   val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
 }

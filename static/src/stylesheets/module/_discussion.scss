@@ -109,22 +109,14 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-discussion__size-message {
-    display: none;
-}
+    @include fs-textSans(2);
+    margin-bottom: $gs-baseline * 2 / 3;
+    border-top: 1px solid colour(neutral-4);
+    padding-top: $gs-baseline;
+    color: colour(neutral-2);
 
-.discussion--pagesize-msg-show {
-
-    .d-discussion__size-message {
-        @include fs-textSans(2);
-        margin-bottom: $gs-baseline * 2 / 3;
-        border-top: 1px solid colour(neutral-4);
-        padding-top: $gs-baseline;
-        color: colour(neutral-2);
-        display: block;
-
-        & + .d-comment {
-            border-top: 0;
-        }
+    & + .d-comment {
+        border-top: 0;
     }
 }
 
@@ -200,9 +192,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion--empty {
-    .discussion__top-comments,
     .discussion__toolbar,
-    .discussion__main-comments,
     .discussion__show-button {
         display: none;
     }
@@ -264,7 +254,7 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-.discussion__toolbar-dropdown {
+.discussion__toolbar-item {
     position: relative;
     top: 1px;
     float: left;
@@ -304,6 +294,12 @@ $avatarPadding: $gs-gutter / 2;
         margin-left: $gs-gutter / 2;
         border-left: 1px solid colour(neutral-4);
     }
+}
+
+.discussion__toolbar-item__checkbox {
+    // Unset global styles
+    float: none;
+    margin-left: 0;
 }
 
 /* All comments (top level and reply)
@@ -499,13 +495,14 @@ $avatarPadding: $gs-gutter / 2;
     a {
         color: colour(neutral-2);
     }
-    .i-comment-anchor {
+    .inline-comment-anchor {
         display: none;
         vertical-align: middle;
         margin-left: 2px;
+        max-height: 15px;
     }
-    .d-comment__inner:hover & .i-comment-anchor,
-    .d-top-comment__meta:hover & .i-comment-anchor {
+    .d-comment__inner:hover & .inline-comment-anchor,
+    .d-top-comment__meta:hover & .inline-comment-anchor {
         display: inline-block;
     }
 }
@@ -527,11 +524,18 @@ $avatarPadding: $gs-gutter / 2;
     margin-left: 0;
 }
 
-.i-reply-grey {
-    margin-bottom: -4px;
-    display: inline-block;
+.inline-reply {
+    &.grey {
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        fill: #bdbdbd;
+    }
+    &.blue {
+        fill: #005689;
+    }
 }
-.d-comment-box--top-level .i-reply-grey {
+.d-comment-box--top-level .inline-reply.grey {
     display: none;
 }
 
@@ -680,9 +684,10 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-show-more-replies__button.button--show-more {
     padding-left: $gs-baseline * 2;
-    .i {
-        height: $gs-baseline * 1.5;
-        width: $gs-baseline * 1.5;
+    svg {
+        fill: colour(guardian-brand);
+        height: 16px;
+        width: 16px;
         left: 4px;
     }
 }
@@ -720,25 +725,32 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment__recommend-button {
-    @include icon-button(arrow-up-grey, $comment-recommend-button-size);
+    width: $comment-recommend-button-size;
+    height: $comment-recommend-button-size;
     display: inline-block;
     background-color: colour(neutral-7);
     cursor: default;
     position: relative;
     top: 1px;
     float: right;
-    i {
-        width: 13px !important;
-        height: 13px !important;
-        left: 2px;
-    }
 
+    .inline-arrow-up-white svg {
+        position: relative;
+        height: $gs-baseline;
+        padding-top: $gs-baseline/4;
+        padding-left: $gs-baseline/6;
+        fill: colour(neutral-2);
+    }
     .id--signed-in .d-discussion--recommendations-open & {
         cursor: pointer;
     }
     .d-comment__recommend--clicked &,
     .d-comment__recommend--recommended & {
         cursor: default;
+
+        svg {
+            fill: #ffffff;
+        }
     }
 }
 
@@ -795,9 +807,6 @@ $comment-recommend-button-size: 19px;
     .d-comment__recommend-pulse {
         animation: pulse .5s ease-in-out 1;
     }
-    .d-comment__recommend-button i {
-        @include icon(arrow-up-white);
-    }
 }
 
 .d-comment__recommend--recommended {
@@ -841,19 +850,9 @@ $comment-recommend-button-size: 19px;
         text-decoration: underline;
     }
 
-    .i {
-        margin-top: -1px;
+    .inline-reply svg {
         vertical-align: middle;
-        margin-right: 2px;
     }
-}
-
-.d-comment__reply-icon {
-    @include icon-button(reply-white, 18px);
-    margin-right: 1px;
-    display: inline-block;
-    background-color: colour(news-default);
-    vertical-align: top;
 }
 
 .d-comment__action--report {
@@ -900,7 +899,7 @@ $comment-recommend-button-size: 19px;
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 3;
+    z-index: $zindex-content;
     width: gs-span(4);
     color: colour(neutral-1);
     padding: $gs-baseline / 2 $gs-gutter / 2;

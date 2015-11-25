@@ -5,7 +5,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1055;
+    z-index: $zindex-overlay;
 
     .is-updating {
         margin-top: ($gs-baseline/3)*20;
@@ -30,6 +30,7 @@
     .l-header,
     #js-context,
     .l-footer,
+    .cookie-message,
     .site-message,
     .content,
     .fc-container,

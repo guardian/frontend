@@ -1,18 +1,19 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
-import layout.{CollectionEssentials, FaciaContainer}
-import play.api.mvc.{ Controller, Action, RequestHeader }
-import common._
-import model._
-import services.{FaciaContentConvert, CollectionConfigWithId}
-import slices.{Fixed, FixedContainers}
-import scala.concurrent.Future
-import implicits.Requests
-import conf.LiveContentApi
-import LiveContentApi.getResponse
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.facia.api.models.CollectionConfig
+import common._
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import implicits.Requests
+import layout.{CollectionEssentials, FaciaContainer}
+import model._
+import play.api.mvc.{Action, Controller, RequestHeader}
+import services.{CollectionConfigWithId, FaciaContentConvert}
+import slices.{Fixed, FixedContainers}
+
+import scala.concurrent.Future
 
 object MediaInSectionController extends Controller with Logging with Paging with ExecutionContexts with Requests {
   // These exist to work around the absence of default values in Play routing.
@@ -52,7 +53,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
         }
     }
 
-    promiseOrResponse recover { case GuardianContentApiError(404, message) =>
+    promiseOrResponse recover { case GuardianContentApiError(404, message, _) =>
       log.info(s"Got a 404 calling content api: $message" )
       None
     }
@@ -83,7 +84,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(trails map FaciaContentConvert.frontendContentToFaciaContent take 7, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps,
       FrontProperties.empty

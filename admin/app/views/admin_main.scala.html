@@ -1,5 +1,8 @@
 @(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)
 
+@import controllers.admin.routes.UncachedAssets
+@import controllers.admin.routes.UncachedWebAssets
+
 <!DOCTYPE html>
 
 <html ng-app>
@@ -11,23 +14,23 @@
             <meta http-equiv="refresh" content="60">
         }
 
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.ico")" />
+        <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon.ico")" />
 
-        <link rel="apple-touch-icon" sizes="144x144" href="@routes.Assets.at("images/144x144.png")" />
-        <link rel="apple-touch-icon" sizes="114x114" href="@routes.Assets.at("images/114x114.png")" />
-        <link rel="apple-touch-icon" sizes="72x72" href="@routes.Assets.at("images/72x72.png")" />
-        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("images/57x57.png")" />
+        <link rel="apple-touch-icon" sizes="144x144" href="@UncachedAssets.at("images/144x144.png")" />
+        <link rel="apple-touch-icon" sizes="114x114" href="@UncachedAssets.at("images/114x114.png")" />
+        <link rel="apple-touch-icon" sizes="72x72" href="@UncachedAssets.at("images/72x72.png")" />
+        <link rel="apple-touch-icon-precomposed" href="@UncachedAssets.at("images/57x57.png")" />
 
         <meta name="apple-mobile-web-app-title" content="Guardian" />
         <meta name="application-name" content="The Guardian" />
         <meta name="msapplication-TileColor" content="#005689" />
-        <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
+        <meta name="msapplication-TileImage" content="@UncachedAssets.at("images/windows_tile_144_b.png")" />
 
-        <link href="@routes.Assets.at("javascripts/components/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" />
-        <link href="@routes.Assets.at("css/admin.css")" rel="stylesheet">
+        <link href="@UncachedWebAssets.at("lib/bootstrap/css/bootstrap.min.css")" rel="stylesheet" />
+        <link href="@UncachedAssets.at("css/admin.css")" rel="stylesheet">
         <style>
-            .ajax-loading { background-image: url('@routes.Assets.at("images/ajax-loader.gif")'); }
-            .ajax-failed { background-image: url('@routes.Assets.at("images/ajax-failed.png")'); }
+            .ajax-loading { background-image: url('@UncachedAssets.at("images/ajax-loader.gif")'); }
+            .ajax-failed { background-image: url('@UncachedAssets.at("images/ajax-failed.png")'); }
         </style>
 
         @if(hasCharts){
@@ -73,22 +76,20 @@
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
-        <script>
-            @Html(Static.js.systemJsSetupFragment)
-
-            // Our app assumes a normal env
-            window.guardian = {
-                config: {
-                    switches: { },
-                    page: { }
+        <script type="text/javascript">
+            var curl = {
+                baseUrl: 'assets/javascripts',
+                apiName: 'require',
+                paths:   {
+                    text: 'text', // noop
+                    inlineSvg: 'inlineSvg' // noop
                 }
             };
 
-            System.import('core').then(function () {
-                System.import('bootstraps/admin');
-            })
+            @Html(Static.js.curl)
         </script>
         <script src="//code.jquery.com/jquery.js"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>
+        <script type="text/javascript" src="@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")"></script>
+        <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>
     </body>
 </html>

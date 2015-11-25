@@ -1,17 +1,21 @@
 define([
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/template',
-    'text!common/views/commercial/ad-slot.html'
+    'text!common/views/commercial/ad-slot.html',
+    'lodash/collections/map',
+    'lodash/objects/isArray',
+    'lodash/objects/pairs'
 ], function (
-    _,
     $,
     config,
+    detect,
     template,
-    adSlotTpl
-) {
-
+    adSlotTpl,
+    map,
+    isArray,
+    pairs) {
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -39,22 +43,22 @@ define([
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,50|300,250',
-                'mobile-landscape': '1,1|300,50|320,50|300,250',
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
         },
-        inline2: {
+        inline: {
             sizeMappings: {
-                mobile:             '1,1|300,50',
-                'mobile-landscape': '1,1|300,50|320,50',
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
         },
-        inline3: {
+        mostpop: {
             sizeMappings: {
-                mobile:             '1,1|300,50',
-                'mobile-landscape': '1,1|300,50|320,50',
+                mobile:             '1,1|300,250',
+                'mobile-landscape': '1,1|300,250',
                 tablet:             '1,1|300,250'
             }
         },
@@ -100,7 +104,7 @@ define([
             dataAttrs,
             $adSlot;
 
-        definition = (slotName.match(/^inline-extra/)) ? adSlotDefinitions.inline1 : adSlotDefinitions[slotName];
+        definition = (slotName.match(/^inline/) && slotName !== 'inline1') ? adSlotDefinitions.inline : adSlotDefinitions[slotName];
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
             definition.sizeMappings.wide = '1,1';
         }
@@ -114,10 +118,10 @@ define([
                 name: definition.name || name,
                 // badges now append their index to the name
                 normalisedName: (definition.name || name).replace(/((?:ad|fo|sp)badge).*/, '$1'),
-                types: types ? _.map((_.isArray(types) ? types : [types]), function (type) {
+                types: types ? map((isArray(types) ? types : [types]), function (type) {
                     return ' ad-slot--' + type;
                 }).join('') : '',
-                sizeMappings: _.map(_.pairs(definition.sizeMappings), function (size) {
+                sizeMappings: map(pairs(definition.sizeMappings), function (size) {
                     return ' data-' + size[0] + '="' + size[1] + '"';
                 }).join('')
             })

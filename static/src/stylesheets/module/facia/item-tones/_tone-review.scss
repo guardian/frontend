@@ -8,7 +8,8 @@
         color: $c-headline;
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(review-background), 6%);
     }
 
@@ -35,6 +36,10 @@
         color: colour(review-accent);
     }
 
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(review-background), 20%);
+    }
+
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, colour(review-background), 10%);
     }
@@ -54,10 +59,6 @@
 
     .fc-item__meta {
         color: colour(neutral-4);
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(review-accent);
     }
 }
 

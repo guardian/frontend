@@ -3,12 +3,10 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'common/utils/_',
     'fastdom',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/delete-all-button.html'
 ], function (
@@ -16,17 +14,13 @@ define([
     qwery,
     bonzo,
     bean,
-    _,
     fastdom,
     config,
     mediator,
     template,
-    identity,
     svgs,
-    deleteButtonAllTmp
-) {
-    function SavedForLater() {
-
+    deleteButtonAllTmp) {
+    return function SavedForLater() {
         this.init = function () {
             var self = this,
                 deleteAll = $('.js-save-for-later__delete-all')[0];
@@ -56,7 +50,5 @@ define([
                 setTimeout(this.init.bind(this), 2000);
             }
         };
-    }
-
-    return SavedForLater;
+    };
 });

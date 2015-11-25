@@ -1,8 +1,14 @@
-<div class="top-banner-ad-container top-banner-ad-container--mobile">
+@(metaData: model.MetaData, edition: common.Edition)(implicit request: RequestHeader)
+@import conf.switches.Switches._
+@import views.support.Commercial.topSlot
+
+@if(topSlot.hasResponsiveAd(metaData, edition)) {
+    <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile js-top-banner-mobile">
     @fragments.commercial.standardAd(
         "top",
         Seq("top-banner-ad"),
-        Map("mobile" -> Seq("1,1", "300,50", "320,50", "88,70")),
-        showLabel=false
+        Map("mobile" -> Seq("1,1", "88,70")),
+        showLabel = false
     )
-</div>
+    </div>
+}

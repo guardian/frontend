@@ -17,6 +17,10 @@ object GuardianContentTypes {
   val Article = "Article"
   val NetworkFront = "Network Front"
   val Section = "Section"
+  /**
+   * ImageContent example:
+   * http://www.theguardian.com/commentisfree/picture/2015/oct/12/steve-bell-david-cameron-tom-watson-cartoon
+   */
   val ImageContent = "ImageContent"
   val Interactive = "Interactive"
   val Gallery = "Gallery"
@@ -24,6 +28,7 @@ object GuardianContentTypes {
   val Audio = "Audio"
   val LiveBlog = "LiveBlog"
   val TagIndex = "Index"
+  val Crossword = "Crossword"
 }
 
 // Eventually, replace list above with one of these

@@ -2,8 +2,9 @@
  * This shall stop the z-index chaos
  */
 
-$zindex-ads: 800;      // 800 to 899 - Ads
-$zindex-sticky: 1000;  // Sticky nav, sticky ads
-$zindex-modal: 1040;   // Search modal
+$zindex-ads: 1010;     // Ads
+$zindex-content: 1015; // Modals and overlays inside content
+$zindex-sticky: 1020;  // Sticky header
+$zindex-modal: 1030;   // Search modal
+$zindex-popover: 1040; // Breaking news
 $zindex-overlay: 1050; // Lightbox
-$zindex-popover: 1060; // Breaking news

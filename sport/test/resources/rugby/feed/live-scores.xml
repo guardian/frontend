@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2001-2015 Opta Sportsdata Ltd. All rights reserved. -->
+<livescores date="2015-08-15 20:00:00">
+    <game id="2872" comp_id="3" comp_name="International" game_date="20150815" leg="1" public="1" round="1" stage="1" status="Result" time="08:35:00">
+        <team home_20_score="3" home_60_score="34" home_ft_score="41" home_ht_score="13" home_or_away="home" home_score="41" team_id="850" />
+        <team away_20_score="3" away_60_score="6" away_ft_score="13" away_ht_score="6" away_score="13" home_or_away="away" team_id="100" />
+    </game>
+    <game id="7523" comp_id="3" comp_name="International" game_date="20150815" leg="1" public="1" round="1" stage="1" status="Result" time="17:00:00">
+        <team home_20_score="7" home_60_score="19" home_ft_score="28" home_ht_score="7" home_or_away="home" home_score="28" team_id="600" />
+        <team away_20_score="0" away_60_score="15" away_ft_score="22" away_ht_score="7" away_score="22" home_or_away="away" team_id="700" />
+    </game>
+    <game id="7520" comp_id="3" comp_name="International" game_date="20150815" leg="1" public="1" round="1" stage="1" status="First half" time="20:00:00">
+        <team home_20_score="12" home_60_score="" home_ft_score="" home_ht_score="" home_or_away="home" home_score="12" team_id="550" />
+        <team away_20_score="3" away_60_score="" away_ft_score="" away_ht_score="" away_score="9" home_or_away="away" team_id="650" />
+    </game>
+    <game id="2873" comp_id="3" comp_name="International" game_date="20150815" leg="1" public="1" round="1" stage="1" status="Fixture" time="20:40:00">
+        <team home_20_score="" home_60_score="" home_ft_score="" home_ht_score="" home_or_away="home" home_score="" team_id="800" />
+        <team away_20_score="" away_60_score="" away_ft_score="" away_ht_score="" away_score="" home_or_away="away" team_id="900" />
+    </game>
+    <teams>
+        <team id="100" name="Australia" />
+        <team id="550" name="England" />
+        <team id="600" name="Ireland" />
+        <team id="650" name="France" />
+        <team id="700" name="Scotland" />
+        <team id="800" name="Argentina" />
+        <team id="850" name="New Zealand" />
+        <team id="900" name="South Africa" />
+    </teams>
+</livescores>

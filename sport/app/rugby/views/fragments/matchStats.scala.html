@@ -1,0 +1,83 @@
+@import rugby.model.Match
+@import rugby.model.MatchStat
+
+@(theMatch: Match, matchStat: Option[MatchStat])
+
+@if(matchStat.isDefined) {
+
+    @defining((matchStat.get.teams.head, matchStat.get.teams.last)) { case (firstTeam, secondTeam) =>
+
+     <div data-component="football-stats-embed" class="@RenderClasses(Map(
+                "c-match-stats" -> true
+            ))">
+
+    <h3 class="component__heading content__meta-heading">Match stats</h3>
+
+
+    <h4 class="match-stats__caption">Possession</h4>
+    @donut(firstTeam.name, secondTeam.name, firstTeam.possession, secondTeam.possession)
+
+    <h4 class="match-stats__caption">Territory</h4>
+    @donut(firstTeam.name, secondTeam.name, firstTeam.territory, secondTeam.territory)
+
+    @barfight("Metres carried", firstTeam.carries_metres, secondTeam.carries_metres)
+    @barfight("Tackles made", firstTeam.tackles, secondTeam.tackles)
+    @barfight("Tackles missed", firstTeam.missed_tackles, secondTeam.missed_tackles)
+    @barfight("Turnovers won", firstTeam.turnover_won, secondTeam.turnover_won)
+    @barfight("Penalties conceded", firstTeam.penalties_conceded, secondTeam.penalties_conceded)
+
+    </div>
+    }
+}
+
+@barfight(propertyTitle: String, firstTeamProperty: Int, secondTeamProperty: Int) = {
+    <dl class="u-cf match-stats bar-fight">
+            <dt class="match-stats__caption">@propertyTitle</dt>
+            @defining(PercentMaker(firstTeamProperty, secondTeamProperty)){ case (firstPercent, secondPercent) =>
+                <dd
+                    class="bar-fight__bar bar-fight__bar--home"
+                    style="background-color: rgb(0, 83, 166); width: @NudgePercent(firstPercent, secondPercent)%;">
+                    @firstTeamProperty
+                </dd>
+                <dd
+                    class="bar-fight__bar bar-fight__bar--away"
+                    style="background-color: rgb(0, 171, 77); width: @NudgePercent(secondPercent, firstPercent)%;">
+                    @secondTeamProperty
+                </dd>
+            }
+    </dl>
+}
+
+@donut(firstTeamName: String, secondTeamName: String, firstTeamProperty: Float, secondTeamProperty: Float) = {
+    <div class="football-possession">
+        <table class="match-stats bar-fight js-chart"
+        data-chart-type="doughnut"
+        data-chart-unit="%"
+        data-chart-class="chart--football-possession"
+        data-chart-width="200"
+        data-chart-show-values="true">
+            <thead hidden>
+                <tr>
+                    <th>@secondTeamName</th>
+                    <th>@firstTeamName</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                @defining(PercentMaker((firstTeamProperty * 100.toInt).toInt, (secondTeamProperty * 100).toInt)) { case (firstProperty, secondProperty) =>
+                <td
+                class="bar-fight__bar bar-fight__bar--home"
+                data-chart-value="@secondProperty"
+                data-chart-color="rgb(0, 171, 77)"
+                style="background-color: rgb(0, 171, 77); width: @NudgePercent(secondProperty, firstProperty)%;">@secondProperty</td>
+                <td
+                class="bar-fight__bar bar-fight__bar--away"
+                data-chart-value="@firstProperty"
+                data-chart-color="rgb(0, 83, 166)"
+                style="background-color: rgb(0, 83, 166); width: @NudgePercent(firstProperty, secondProperty)%;">@firstProperty</td>
+                }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}

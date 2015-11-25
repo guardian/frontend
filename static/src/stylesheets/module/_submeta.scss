@@ -24,6 +24,23 @@
     .content--liveblog & {
         padding-top: $gs-baseline * 2;
     }
+
+    .submeta__share {
+        float: left;
+    }
+
+    .submeta__syndication {
+        display: none;
+        @include mq(desktop) {
+            padding-top: $gs-baseline/2;
+            display: inline-block;
+            @include fs-textSans(1);
+            height: 32px;
+            float: right;
+            line-height: 15px;
+            margin-bottom: 0;
+        }
+    }
 }
 
 .submeta__head {
@@ -35,19 +52,20 @@
 }
 
 .submeta__share {
+    margin-bottom: $gs-baseline / 2;
+
     @include mq(tablet) {
         float: left;
         margin-right: $gs-gutter / 2;
+        margin-bottom: 0;
     }
 }
 
 .submeta__save-for-later {
     // Shown with test
     display: none;
-    margin-top: $gs-baseline / 2;
 
     @include mq(tablet) {
-        margin-top: 0;
         float: left;
     }
 }

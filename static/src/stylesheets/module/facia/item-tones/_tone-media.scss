@@ -8,7 +8,8 @@
         color: $c-headline;
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(media-background), 7.5%);
     }
 
@@ -39,6 +40,10 @@
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
         color: colour(media-default);
+    }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(media-background), 20%);
     }
 
     .fc-item__kicker:after,

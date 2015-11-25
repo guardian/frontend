@@ -3,68 +3,73 @@ package model.commercial.masterclasses
 import model.ImageContainer
 import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.libs.json.JsValue
-
+import play.api.libs.json._
 
 case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageContainer])
 
 
 object EventbriteMasterClass {
-  private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
   private val ignoredTags = Seq("masterclass", "short")
 
   def apply(block: JsValue): Option[EventbriteMasterClass] = {
-    val id = (block \ "id").as[Long]
-    val title = (block \ "title").as[String]
-    val literalDate = (block \ "start_date").as[String]
-    val startDate: DateTime = datePattern.parseDateTime(literalDate)
+    val id = (block \ "id").as[String]
+    val name = (block \ "name" \ "text").as[String]
+    val literalDate = (block \ "start" \ "utc").as[String]
+    val startDate: DateTime = ISODateTimeFormat.dateTimeParser().parseDateTime(literalDate)
     val url = (block \ "url").as[String]
-    val description = (block \ "description").as[String]
+    val description = (block \ "description" \ "html").as[String]
     val status = (block \ "status").as[String]
     val capacity = (block \ "capacity").as[Int]
 
-    val tags = {
-      for {
-        rawTag <- (block \ "tags").as[String].split(",")
-        tag = rawTag.toLowerCase.replaceAll("courses?", "").trim()
-        if tag.nonEmpty && !ignoredTags.exists(tag.contains)
-      } yield tag
-    }.toSeq
+    // TODO: reinstate tags
+    //    val tags = {
+    //      for {
+    //        rawTag <- (block \ "tags").as[String].split(",")
+    //        tag = rawTag.toLowerCase.replaceAll("courses?", "").trim()
+    //        if tag.nonEmpty && !ignoredTags.exists(tag.contains)
+    //      } yield tag
+    //    }.toSeq
 
     val tickets = {
-      for {
-        ticket <- block \\ "ticket"
-        visible <- (ticket \ "visible").asOpt[String]
-        if visible.toBoolean
-      } yield {
-        val price = (ticket \ "display_price").as[String].replace(",", "").toDouble
-        new Ticket(price)
+      val maybeTickets = for (JsArray(ticketClasses) <- (block \ "ticket_classes").toOption) yield {
+        for {
+          ticketClass <- ticketClasses
+          hidden <- (ticketClass \ "hidden").asOpt[Boolean]
+          if !hidden
+        } yield {
+          val price = (ticketClass \ "cost" \ "value").as[Int] / 100
+          new Ticket(price)
+        }
       }
-    }
+      maybeTickets getOrElse Nil
+    }.toList
 
     val doc: Document = Jsoup.parse(description)
-    val elements: Array[Element] = doc.select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)").toArray map {_.asInstanceOf[Element]}
+    val elements: Array[Element] = doc.select(
+      s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)"
+    ).toArray(Array.empty[Element])
 
     val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
 
     elements.headOption.map { element =>
-      new EventbriteMasterClass(id.toString,
-        title,
+      new EventbriteMasterClass(
+        id,
+        name,
         startDate,
         url,
         description,
         status,
-        Venue(block \ "venue"),
-        tickets.toList,
+        venue = Venue((block \ "venue").getOrElse(JsNull)),
+        tickets,
         capacity,
-        element.attr("href"),
-        paragraphs.headOption.fold("")(_.text),
-        tags
+        guardianUrl = element.attr("href"),
+        firstParagraph = paragraphs.headOption.fold("")(_.text),
+        tags = Nil
       )
     }
   }
@@ -84,7 +89,7 @@ case class EventbriteMasterClass(id: String,
                                  tags: Seq[String],
                                  keywordIdSuffixes: Seq[String] = Nil) {
 
-  def isOpen = { status == "Live" }
+  def isOpen = { status == "live" }
 
   lazy val displayPrice = {
     val priceList = tickets.map(_.price).sorted.distinct
@@ -106,15 +111,15 @@ object Venue {
 
   def apply(json: JsValue): Venue = {
 
-    def eval(jsonField: JsValue) = jsonField.asOpt[String].filterNot(_.length == 0)
+    def eval(jsonField: JsLookupResult) = jsonField.asOpt[String].filterNot(_.length == 0)
 
     Venue(
       name = eval(json \ "name"),
-      address = eval(json \ "address"),
-      address2 = eval(json \ "address_2"),
-      city = eval(json \ "city"),
-      country = eval(json \ "country"),
-      postcode = eval(json \ "postal_code")
+      address = eval(json \ "address" \ "address_1"),
+      address2 = eval(json \ "address" \ "address_2"),
+      city = eval(json \ "address" \ "city"),
+      country = eval(json \ "address" \ "country"),
+      postcode = eval(json \ "address" \ "postal_code")
     )
   }
 }

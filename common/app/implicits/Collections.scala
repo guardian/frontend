@@ -35,3 +35,5 @@ trait Collections {
     }
   }
 }
+
+object CollectionsOps extends Collections

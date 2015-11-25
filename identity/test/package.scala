@@ -22,8 +22,7 @@ class EditionalisedHtmlUnit(val port: String) extends TestSettings {
   protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
 
     running(TestServer(port.toInt,
-      FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
-                      withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
+      FakeApplication(withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
@@ -41,9 +40,7 @@ trait FakeApp extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
-      withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
-      additionalPlugins = testPlugins,
       additionalConfiguration = Map(
         "application.secret" -> "this_is_not_a_real_secret_just_for_tests"
       )

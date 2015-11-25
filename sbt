@@ -60,6 +60,5 @@ export APP_SECRET="this_is_not_a_real_secret_just_for_tests"
 ####################################################################################
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
-  -Dsbt.ivy.home=`dirname $0`/ivy-sbt \
   -Duser.timezone=Australia/Sydney \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"

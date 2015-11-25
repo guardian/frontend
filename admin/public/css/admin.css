@@ -52,3 +52,8 @@
 .big-metric-name {
     color: #00456e;
 }
+
+.img-url {
+    width: 100%;
+    margin-bottom: 10px;
+}

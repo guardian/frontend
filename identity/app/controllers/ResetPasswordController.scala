@@ -7,7 +7,7 @@ import play.api.mvc._
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdentityUrlBuilder, IdRequestParser}
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages}
 import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -20,18 +20,33 @@ import scala.concurrent.Future
 class ResetPasswordController @Inject()(  api : IdApiClient,
                                           idRequestParser: IdRequestParser,
                                           idUrlBuilder: IdentityUrlBuilder,
-                                          authenticationService: AuthenticationService)
+                                          authenticationService: AuthenticationService,
+                                          val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/reset-password", "Reset Password", "reset-password")
 
   val requestPasswordResetForm = Form(
     Forms.single(
+      "email-address" -> Forms.text
+    )
+  )
+
+  val requestPasswordResetFormWithConstraints = Form(
+    Forms.single(
       "email-address" -> of[String].verifying(Constraints.nonEmpty)
     )
   )
 
   val passwordResetForm = Form(
+    Forms.tuple (
+      "password" -> Forms.text,
+      "password-confirm" ->  Forms.text,
+      "email-address" -> Forms.text
+    )
+  )
+
+  val passwordResetFormWithConstraints = Form(
     Forms.tuple (
       "password" ->  idPassword
         .verifying(Constraints.nonEmpty),
@@ -63,7 +78,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
   def processPasswordResetRequestForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
-    val boundForm = requestPasswordResetForm.bindFromRequest
+    val boundForm = requestPasswordResetFormWithConstraints.bindFromRequest
 
     def onError(formWithErrors: Form[(String)]): Future[Result] = {
       logger.info("bad password reset request form submission")
@@ -99,7 +114,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
   }
 
   def resetPassword(token : String) = Action.async { implicit request =>
-    val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm.bindFromRequest)
+    val boundForm = passwordResetFormWithConstraints.bindFromRequest
 
     def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
       logger.info("form errors in reset password attempt")

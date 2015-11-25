@@ -37,7 +37,7 @@ $c-navigation-toggle-background: colour(neutral-1);
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
-$navigation-h-space-between-items: $gs-gutter;
+$navigation-h-space-between-items: $gs-gutter/2;
 
 $c-navigation-expandable-background: colour(neutral-1);
 
@@ -57,6 +57,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     animation: animate-height-up ease-in .2s;
     animation-fill-mode: forwards;
+    overflow: visible;
 }
 
 @mixin animate-height-down($height) {
@@ -72,6 +73,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     animation: animate-height-down ease-in .2s;
     animation-fill-mode: forwards;
+    overflow: hidden;
 }
 
 /* Styles common to all states
@@ -117,7 +119,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     &:before {
         background: $c-navigation-background-side-bar;
-        border-bottom: 1px solid $c-global-navigation-border;
         background-clip: padding-box;
     }
 
@@ -157,7 +158,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 .top-navigation {
-    position: relative;
     background: $c-top-header-background;
 }
 .navigation__container--first {
@@ -186,14 +186,13 @@ $c-navigation-expandable-background: colour(neutral-1);
    ========================================================================== */
 
 .signposting {
-    position: relative;
     background: $c-signposting-background;
     border-right: 1px solid $c-global-navigation-border;
     box-sizing: border-box;
     padding-right: $navigation-h-space-between-items;
 
     @include mq(mobileLandscape) {
-        padding-left: $navigation-h-space-between-items/2;
+        padding-left: $navigation-h-space-between-items;
     }
 
     .navigation-container--expanded .navigation--has-local-navigation & {
@@ -225,8 +224,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 .signposting__item {
     white-space: nowrap;
     display: table-cell;
-    position: relative;
-    padding-left: $navigation-h-space-between-items/2;
 }
 .signposting__action {
     color: $c-signposting-action;
@@ -240,15 +237,21 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 .signposting__separator__inner {
     font-weight: 200;
-    color: $c-signposting-action;
+    color: colour(neutral-2);
     font-size: 27px;
     line-height: $navigation-height;
-    padding-right: $navigation-h-space-between-items/2;
 }
 
 
 /* Actions and items
    ========================================================================== */
+@mixin navigation-items-shrink-spacing {
+    padding-right: $navigation-h-space-between-items/2;
+    padding-left: $navigation-h-space-between-items/2;
+    &:first-child {
+        padding-left: $navigation-h-space-between-items;
+    }
+}
 
 .local-navigation {
     background: $c-local-navigation-background;
@@ -258,15 +261,17 @@ $c-navigation-expandable-background: colour(neutral-1);
 .local-navigation__action,
 .top-navigation__action,
 .global-navigation__action {
-    position: relative;
+    padding-left: $navigation-h-space-between-items;
+    padding-right: $navigation-h-space-between-items;
+    height: 100%;
 
-    &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: -$gs-gutter/4;
-        left: -$gs-gutter/4;
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        @include navigation-items-shrink-spacing;
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            @include navigation-items-shrink-spacing;
+        }
     }
 }
 .local-navigation__action,
@@ -289,43 +294,23 @@ $c-navigation-expandable-background: colour(neutral-1);
     white-space: nowrap;
 }
 .top-navigation__item--current {
-    margin-right: $gs-gutter/2;
-}
-
-@mixin navigation-items-shrink-spacing {
-    padding-right: $navigation-h-space-between-items/2 - 3;
-    padding-left: $navigation-h-space-between-items/2 - 3;
-    &:first-child {
-        padding-left: $navigation-h-space-between-items/2;
-    }
+    margin-right: $navigation-h-space-between-items;
 }
 .local-navigation__item,
 .top-navigation__item {
     display: table-cell;
-    position: relative;
-    padding-right: $navigation-h-space-between-items/2;
-    padding-left: $navigation-h-space-between-items/2;
-
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation-items-shrink-spacing;
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-            @include navigation-items-shrink-spacing;
-        }
-    }
 }
 .navigation-container--collapsed .navigation--has-signposting {
     .local-navigation,
     .top-navigation {
-        padding-left: $navigation-h-space-between-items/2;
+        padding-left: $navigation-h-space-between-items;
     }
 }
 @include mq(mobileLandscape) {
     .navigation-container--collapsed {
         .local-navigation,
         .top-navigation {
-            padding-left: $navigation-h-space-between-items/2;
+            padding-left: $navigation-h-space-between-items;
         }
     }
 }
@@ -344,11 +329,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         display: table-cell;
     }
 }
-.top-navigation__icon-wrapper {
-    position: relative;
-    display: inline-block;
-    top: 3px;
-}
 .top-navigation__icon {
     display: inline-block;
     background-repeat: no-repeat;
@@ -358,6 +338,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     width: 15px;
     height: 18px;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAO0lEQVQoz9XPsQ0AIAwDwYzuzZ8iQjIQUiLh9r5xhA0BinqInDqsggX34EAPSpzBFTOg3Su2o3+wGtYAGI94niPCbrMAAAAASUVORK5CYII=');
+    margin-bottom: -3px;
 
     @media (-webkit-min-device-pixel-ratio: 1.3),
            (min-resolution: 124.8dpi),
@@ -413,8 +394,8 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include mq($until: tablet) {
         line-height: $gs-baseline*2;
         padding-bottom: $gs-baseline;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        padding-left: $navigation-h-space-between-items;
+        padding-right: $navigation-h-space-between-items;
     }
     @include mq(mobileLandscape, tablet) {
         padding-left: $gs-gutter;
@@ -448,10 +429,10 @@ $c-navigation-expandable-background: colour(neutral-1);
     overflow: hidden;
 
     @include mq($until: tablet) {
-        margin-left: -$gs-gutter/2;
-        margin-right: -$gs-gutter/2;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        margin-left: -$navigation-h-space-between-items;
+        margin-right: -$navigation-h-space-between-items;
+        padding-left: $navigation-h-space-between-items;
+        padding-right: $navigation-h-space-between-items;
         padding-bottom: $gs-baseline*.75;
         font-size: 14px;
         line-height: 2;
@@ -462,7 +443,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
     @include mq(tablet) {
         padding-bottom: $gs-baseline/4;
-        padding-left: $gs-gutter/2;
+        padding-left: $navigation-h-space-between-items;
     }
 
     &.global-navigation__children--history {
@@ -496,8 +477,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     .global-navigation__action {
         float: left;
         line-height: $navigation-height - $gs-baseline/2;
-        margin-left: $navigation-h-space-between-items/2;
-        margin-right: $navigation-h-space-between-items/2;
         white-space: nowrap;
     }
 }
@@ -518,6 +497,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
             white-space: nowrap;
+            backface-visibility: hidden;
         }
 
         &::-webkit-scrollbar {
@@ -557,9 +537,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 
 
-/* State: expanded
+/* State: default (nojs) / expanded
    ========================================================================== */
 
+.navigation-container--default,
 .navigation-container--expanded {
     .navigation {
         z-index: 2;
@@ -574,8 +555,8 @@ $c-navigation-expandable-background: colour(neutral-1);
         background: $c-local-navigation-background;
 
         @include mq(mobileLandscape) {
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
+            padding-left: $navigation-h-space-between-items;
+            padding-right: $navigation-h-space-between-items;
         }
     }
     .local-navigation__item {
@@ -604,8 +585,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         width: 50%;
         padding-right: 0;
         box-sizing: border-box;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
 
         &:nth-child(2n+1) {
             clear: both;
@@ -758,6 +737,12 @@ $c-navigation-expandable-background: colour(neutral-1);
             min-width: $navigation-toggler-width;
         }
     }
+
+    .is-not-modern .l-footer & {
+        min-width: $navigation-toggler-width;
+        // Magic number to align the up arrow correctly on core
+        font-size: 24px;
+    }
 }
 
 .navigation-toggle-label__extra {
@@ -784,9 +769,11 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 .navigation-toggle-label--close,
+.navigation-container--default .navigation-toggle-label--open,
 .navigation-container--expanded .navigation-toggle-label--open {
     display: none;
 }
+
 .navigation-container--expanded .navigation-toggle-label--close {
     display: inline;
 }
@@ -835,7 +822,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     .burger-icon {
         margin-top: $gs-baseline * 1.5;
-        
+
         @include mq($until: mobileLandscape) {
             margin: $gs-baseline * 1.5 0 0;
         }

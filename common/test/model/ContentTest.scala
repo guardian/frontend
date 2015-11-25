@@ -1,11 +1,9 @@
 package model
 
+import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import common.Edition
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-
 import org.joda.time.DateTime
-import com.gu.contentapi.client.model.{Asset, Element => ApiElement, Content => ApiContent, Tag => ApiTag}
+import org.scalatest.{FlatSpec, Matchers}
 
 class ContentTest extends FlatSpec with Matchers with implicits.Dates {
   "Trail" should "be populated properly" in {
@@ -30,9 +28,13 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
         Nil)
     )
 
-    val content = ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    val content = ApiContent(id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       //mediaAssets = media,
       tags = List(tag("type/article")),
       elements = Some(elements)
@@ -118,11 +120,15 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 
   it should "detect if article requires membershipAccess" in {
 
-    conf.Switches.MembersAreaSwitch.switchOn()
+    conf.switches.Switches.MembersAreaSwitch.switchOn()
 
-    val membershipArticle = ApiContent("membership/2015/jan/01/foo", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/membership/2015/jan/01/foo",
-      "http://content.guardianapis.com/membership/2015/jan/01/foo",
+    val membershipArticle = ApiContent(id = "membership/2015/jan/01/foo",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/membership/2015/jan/01/foo",
+      apiUrl = "http://content.guardianapis.com/membership/2015/jan/01/foo",
       tags = List(tag("type/article")),
       fields = Some(Map("membershipAccess" -> "members-only")),
       elements = None
@@ -146,24 +152,21 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
   private def content(contentType: String, elements: List[ApiElement]): Content = {
     Content(
       ApiContent(
-        "/content",
-        None,
-        None,
-        Some(DateTime.now),
-        "webTitle",
-        "webUrl",
-        "apiUrl",
-        None,
-        List(tag(s"type/$contentType")),
-        Some(elements),
-        Nil,
-        None
+        id = "/content",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDateOption = Some(DateTime.now),
+        webTitle = "webTitle",
+        webUrl = "webUrl",
+        apiUrl = "apiUrl",
+        tags = List(tag(s"type/$contentType")),
+        elements = Some(elements)
       )
     )
   }
 
   private val article: ApiContent =
-    content("article", Nil).apiContent.delegate
+    content("article", Nil).delegate
 
   private def image(  id: String,
                       relation: String,

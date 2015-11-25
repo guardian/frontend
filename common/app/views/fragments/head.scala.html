@@ -1,4 +1,7 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@(metaData: model.MetaData, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+@import conf.Static
+@import conf.Configuration
+@import views.support.OmnitureAnalyticsData
 
 <meta charset="utf-8" />
 <title>@views.support.Title(metaData)</title>
@@ -6,10 +9,8 @@
 @fragments.metaData(metaData)
 @head
 
-@fragments.stylesheetsLoad(projectName)
+@* stylesheet <link>s - get the stylesheets downloading ASAP *@
+@fragments.stylesheets(projectName)
 
-@fragments.javaScriptFirstSteps(metaData)
-
-@fragments.stylesheetsUse()
-
-@fragments.javaScriptLaterSteps(metaData, curlPaths)
+@* inline JS - blocking *@
+@fragments.inlineJSBlocking(metaData)

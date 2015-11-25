@@ -1,13 +1,11 @@
 package implicits
 
 import com.gu.contentapi.client.model.Element
-import com.gu.facia.api.models.{ImageSlideshow, Replace, FaciaImage, FaciaContent}
-import com.gu.facia.api.utils.FaciaContentUtils
-import implicits.FaciaContentImplicits._
-import com.gu.facia.api.utils.FaciaContentUtils.fold
-import dfp.DfpAgent
-import model._
+import com.gu.facia.api.models.{FaciaContent, ImageSlideshow, Replace}
+import common.dfp.DfpAgent
 import implicits.Dates._
+import implicits.FaciaContentImplicits._
+import model._
 import org.scala_tools.time.Imports._
 
 import scala.util.Try
@@ -69,11 +67,7 @@ object FaciaContentFrontendHelpers {
       isAdvertisementFeature && faciaContent.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 
-    def url: String = fold(faciaContent)(
-      curatedContent => SupportedUrl(curatedContent.content),
-      supportingCuratedContent => SupportedUrl(supportingCuratedContent.content),
-      linkSnap => linkSnap.id,
-      latestSnap => latestSnap.latestContent.map(SupportedUrl(_)).getOrElse(latestSnap.id))
+    def url: String = faciaContent.maybeContent.map(SupportedUrl(_)).getOrElse(faciaContent.id)
 
     def slideshow: Option[List[FaciaImageElement]] = faciaContent.image match {
       case Some(ImageSlideshow(assets)) =>

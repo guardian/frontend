@@ -26,6 +26,7 @@
 
         &.creative--scrollable-mpu-image-fixed {
             background-attachment: fixed;
+            /*TODO consider using solution from https://www.youtube.com/watch?v=QU1JAW5LRKU*/
             background-repeat: repeat;
             background-position: 50% 0;
         }
@@ -373,12 +374,195 @@
 
         &.ad-exp--expand-scrolling-bg-fixed {
             background-attachment: fixed;
+            /*TODO consider using solution from https://www.youtube.com/watch?v=QU1JAW5LRKU*/
         }
 
         &.ad-exp--expand-scrolling-bg-parallax {
             background-attachment: scroll;
         }
     }
+}
+
+.creative--expandable-video {
+
+    .facia-container__inner {
+        border-top: 0;
+        padding-top: 0;
+    }
+    .ad-slot__label--wrapper {
+        @include mq($until: tablet) {
+            width: auto;
+        }
+    }
+    .ad-slot__label {
+        text-align: left;
+    }
+    .ad-exp--expand {
+        height: 0;
+        position: relative;
+        overflow: hidden;
+        transition: height 1s;
+    }
+    .ad-exp--expand .facia-container__inner {
+        height: 100%;
+        position: relative;
+
+        @include mq($until: tablet) {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    .ad-exp__close-button {
+        position: absolute;
+        top: 34px;
+        right: 10px;
+        border-radius: 100px;
+        border: 1px solid #ffffff;
+        background-color: #000000;
+        margin: 5px;
+        padding: 0;
+        z-index: 3;
+        height: 32px;
+        width: 32px;
+        transform: rotate(45deg);
+        transition: all 1s ease;
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
+
+        &:focus {
+            outline-color: transparent;
+            outline-style: none;
+        }
+        &.button-spin {
+            transform: rotate(360deg);
+        }
+    }
+
+    .ad-exp__open-chevron {
+        position: absolute;
+        z-index: 11;
+        bottom: -10px;
+        left: 50%;
+        border: 1px solid #ffffff;
+        border-width: 1px 1px 0;
+        background: colour(neutral-1);
+        color: #ffffff;
+        opacity: .75;
+        padding: $gs-baseline/2 0 0;
+        width: gs-span(1);
+        margin-left: $gs-gutter*-1.5;
+        text-align: center;
+        outline: none;
+        height: 39px;
+        @include fs-textSans(1);
+        border-radius: $gs-gutter $gs-gutter 0 0;
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
+
+        .inline-arrow-down {
+            transition: all 1s ease;
+            display: block;
+            margin: -12px auto 2px;
+        }
+
+        &.chevron-down .inline-arrow-down {
+            transform: rotate(180deg);
+            transition: all 1s ease;
+        }
+
+        &.chevron-up {
+            animation: chevronanimation 3s ease-in-out 2;
+        }
+
+    }
+
+    .slide-container {
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        @include mq(wide) {
+            width: 1300px;
+        }
+    }
+
+    &.full-width-video .slide-video .slide-container {
+        @include mq(wide) {
+            width: 100%;
+        }
+    }
+
+    .slide-video {
+        background: #000000;
+        position: absolute;
+        top: 24px;
+        width: 100%;
+        z-index: 3;
+        display: none;
+    }
+
+    .slide-video__expand {
+        transition: all 1s;
+        display: block;
+    }
+
+    &.right-aligned-video .video-container__inner {
+        width: 100%;
+        position: relative;
+
+        @include mq(1024px) {
+            width: 768px;
+            float: right;
+        }
+    }
+
+    .expandable-video {
+        position: absolute;
+        z-index: 10;
+        margin-left: -50%;
+        left: 50%;
+    }
+
+    &.full-width-video .expandable-video {
+        margin-left: -50%;
+        left: 50%;
+    }
+
+    &.right-aligned-video .expandable-video {
+        margin: 0;
+        left: auto;
+        right: 0;
+    }
+
+    .slide-1 {
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .ad-exp-collapse__slide {
+        position: relative;
+    }
+
+    .ad-exp__layer {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.ad-exp__layer1 {
+            z-index: 1;
+        }
+
+        &.ad-exp__layer2 {
+            z-index: 2;
+        }
+
+        &.ad-exp__layer3 {
+            z-index: 3;
+        }
+    }
+
 }
 
 .creative--expandable-ga {
@@ -493,7 +677,8 @@
         height: 500px;
         width: 100%;
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        /*background-attachment: fixed;*/
+        /*If you need the above style, please use the solution from https://www.youtube.com/watch?v=QU1JAW5LRKU*/
     }
 
     .ad-scrolling-bg-parallax {
@@ -506,8 +691,29 @@
             &.ad-scrolling-text-hide {
                 background-position: 0 -250px;
             }
+            &.ad-scrolling-text-hide-left {
+                background-position: left -250px;
+            }
+            &.ad-scrolling-text-hide-right {
+                background-position: right -250px;
+            }
+            &.ad-scrolling-text-hide-centre {
+                background-position: center -250px;
+            }
             &.ad-scrolling-text-animate {
                 animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-left {
+                animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-right {
+                animation: textanimation-right 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+            &.ad-scrolling-text-animate-centre {
+                animation: textanimation-centre 1.4s ease .4s;
                 animation-fill-mode: forwards;
             }
         }
@@ -687,15 +893,43 @@
 
 @keyframes textanimation {
     0% {
-        background-position: 0 -250px; 
+        background-position: 0 -250px;
     }
 
     75% {
-        background-position: 0 0; 
+        background-position: 0 0;
     }
 
     100% {
-        background-position: 0 0; 
+        background-position: 0 0;
+    }
+}
+
+@keyframes textanimation-right {
+    0% {
+        background-position: right -250px;
+    }
+
+    75% {
+        background-position: right 0;
+    }
+
+    100% {
+        background-position: right 0;
+    }
+}
+
+@keyframes textanimation-centre {
+    0% {
+        background-position: center -250px;
+    }
+
+    75% {
+        background-position: center 0;
+    }
+
+    100% {
+        background-position: center 0;
     }
 }
 

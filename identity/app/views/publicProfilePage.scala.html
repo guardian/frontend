@@ -16,7 +16,7 @@
                 <h1 class="user-profile__name">@user.publicFields.displayName</h1>
                 @user.dates.accountCreatedDate.map { accountCreatedDate =>
                     <p class="user-profile__last-seen">
-                        <i class="i i-clock-light-grey"></i>
+                        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
                         Member since @accountCreatedDate.toString("d MMM yyyy")
                     </p>
                 }

@@ -10,7 +10,8 @@
         color: $c-headline;
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(editorial-default), 5%);
     }
 
@@ -38,6 +39,11 @@
     .fc-save-for-later--is-saved {
         color: colour(editorial-accent);
     }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(editorial-default), 20%);
+    }
+
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, colour(editorial-default), 10%);

@@ -1,0 +1,148 @@
+.crossword__anagram-helper-outer {
+    position: fixed;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 2.5%;
+    background: colour(neutral-8);
+    text-align: center;
+
+    .button:last-of-type {
+        margin-right: 0;
+    }
+
+    @include mq($until: tablet) {
+        z-index: 1030;
+    }
+
+    @include mq(tablet) {
+        position: absolute;
+    }
+}
+
+.crossword__anagram-helper-inner {
+    height: 50%;
+}
+
+.crossword__anagram-helper__clue-input,
+.crossword__anagram-helper-shuffler__letter,
+.crossword__anagram-helper__clue-preview {
+    font-family: $f-sans-serif-text;
+}
+
+.crossword__anagram-helper__clue-input,
+.crossword__anagram-helper-shuffler__letter {
+    font-size: 24px;
+}
+
+.crossword__anagram-helper-shuffler__letter,
+.crossword__anagram-helper__cell {
+    text-transform: uppercase;
+}
+
+.crossword__anagram-helper__clue-input {
+    width: 100%;
+    background: none;
+    border: 0;
+    outline: none;
+    padding-top: 15%;
+    text-align: center;
+
+    @include mq(tablet) {
+        padding-top: 25%;
+    }
+}
+
+.crossword__anagram-helper__clue-preview {
+    margin-top: 5%;
+    font-size: 14px;
+}
+
+.crossword__anagram-helper__direction {
+    text-transform: capitalize;
+}
+
+.crossword__anagram-helper__cell {
+    display: inline-block;
+    vertical-align: middle;
+    width: $xword-cell-width;
+    height: $xword-cell-width;
+    line-height: $xword-cell-width;
+    border: 1px solid colour(neutral-3);
+    border-left: 1px solid colour(neutral-3);
+
+    @include mq($until: mobileLandscape) {
+        width: $xword-cell-width-small;
+        height: $xword-cell-width-small;
+        line-height: $xword-cell-width-small;
+
+        .long & {
+            width: $xword-cell-width-xsmall;
+            height: $xword-cell-width-xsmall;
+            line-height: $xword-cell-width-xsmall;
+        }
+    }
+
+    &:first-of-type {
+        border-left: 1px solid colour(neutral-3);
+    }
+
+    &.has-value {
+        background: colour(neutral-4);
+        color: colour(neutral-3);
+    }
+}
+
+.crossword__anagram-helper__cell--with-space {
+    border-right: 1px solid colour(neutral-1);
+}
+
+.crossword__anagram-helper__cell--with-hyphen::after {
+    content: '-';
+    padding-left: 27px;
+    font-size: 24px;
+
+    @include mq($until: mobileLandscape) {
+        padding-left: 19px;
+    }
+}
+
+.crossword__anagram-helper-shuffler {
+    position: relative;
+    top: 25px;
+    left: 10px;
+    width: 175px;
+    height: 175px;
+    margin: 0 auto;
+
+    @include mq(tablet) {
+        top: 0;
+        left: 5%;
+        width: 50%;
+        height: 100%;
+    }
+}
+
+.crossword__anagram-helper-shuffler__letter {
+    position: absolute;
+
+    &.entered {
+        color: colour(neutral-3);
+    }
+}
+
+.crossword__anagram-helper-close {
+    position: absolute;
+    top: $gs-baseline;
+    right: 0;
+    padding: 0;
+
+    & .inline-icon {
+        position: relative;
+        top: 2px;
+        left: 3px;
+        fill: colour(neutral-1);
+    }
+}

@@ -1,5 +1,7 @@
-@(env: String, report: dfp.PaidForTagsReport)
-@import dfp.{GuLineItem, PaidForTag, printDate}
+@import common.dfp.PaidForTagsReport
+@(env: String, report: PaidForTagsReport)
+@import _root_.dfp.printDate
+@import common.dfp.{GuLineItem, PaidForTag}
 @import tools.{DfpLink, SiteLink}
 
 @buildRef(s: String) = {@{s.toLowerCase.replaceAll("\\s+", "-")}}
@@ -100,7 +102,7 @@
 
 @admin_main("Paid-for Tags", env, isAuthed = true) {
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h1>Paid-for Tags</h1>
     <p>Last updated: @report.updatedTimeStamp</p>

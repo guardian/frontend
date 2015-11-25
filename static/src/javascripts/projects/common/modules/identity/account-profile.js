@@ -8,12 +8,16 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
-    'common/utils/url'
+    'common/utils/url',
+    'common/utils/config',
+    'common/utils/cookies'
 ], function (
     $,
     bean,
     bonzo,
-    url
+    url,
+    config,
+    cookies
 ) {
 
     var accountProfile = function () {
@@ -26,19 +30,23 @@ define([
             publicForm: '.js-public-profile-form',
             tabs: '.js-tabs',
             formError: '.form__error',
+            formSuccess: '.form__success',
             changed: 'js-form-changed',
             textInput: '.text-input',
             avatarUploadForm: '.js-avatar-upload-form',
+            avatarUploadButton: '.js-avatar-upload-button',
             memberShipContainer: '.js-memebership-tab-container'
         };
 
         self.messages = {
             noCorsError: 'Cross-origin resource sharing is not supported by this browser. Please upgrade your browser to use this feature.',
-            noServerError: 'The image upload server could not be reached.'
+            noServerError: 'Sorry, the Avatar upload service is currently unavailable. Please try again shortly.',
+            avatarUploadSuccess: 'Thank you for uploading your avatar. It will be checked by Guardian moderators shortly.',
+            avatarUploadFailure: 'Sorry, something went wrong. Please try again.'
         };
 
         self.urls = {
-            avatarTokenUrl: 'https://gu-image-upload.appspot.com/upload-endpoint-generator'
+            avatarApiUrl: config.page.avatarApiUrl + '/v1/avatars'
         };
 
         self.unsavedFields = [];
@@ -96,8 +104,42 @@ define([
         }
     };
 
+    accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
+        var self = this;
+        var formData = new FormData(document.querySelector('form' + self.classes.avatarUploadForm));
+        var xhr = self.createCORSRequest('POST', self.urls.avatarApiUrl);
+
+        // disable form while submitting to prevent overlapping submissions
+        document.querySelector(self.classes.avatarUploadButton).disabled = true;
+
+        if (!xhr) {
+            self.prependErrorMessage(self.messages.noCorsError, avatarForm);
+        }
+
+        xhr.onload = function () {
+            var status = xhr.status;
+            if (status >= 200 && status < 300) {
+                self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
+            } else if (status >= 400 && status < 500) {
+                self.prependErrorMessage(
+                    JSON.parse(xhr.responseText).message || self.messages.avatarUploadFailure,
+                    avatarForm);
+            } else {
+                self.prependErrorMessage(self.messages.noServerError, avatarForm);
+            }
+        };
+
+        xhr.onerror = function () {
+            self.prependErrorMessage(self.messages.noServerError, avatarForm);
+            document.querySelector(self.classes.avatarUploadButton).disabled = false;
+        };
+
+        xhr.setRequestHeader('Authorization', 'Bearer cookie=' + cookies.get('GU_U'));
+        xhr.send(formData);
+    };
+
     /*
-    *   Request a new image upload token on submit of the image upload form.
+    *   Handle user avatar upload
     *   TO DO: Use html5 file api to validate file size prior to upload @chrisfinch
     */
     accountProfile.prototype.bindAvatarUpload = function () {
@@ -107,35 +149,27 @@ define([
         if (avatarForm) {
             bean.on(avatarForm, 'submit', function (event) {
                 event.preventDefault();
-
-                var xhr = self.createCORSRequest('GET', self.urls.avatarTokenUrl);
-                if (!xhr) {
-                    self.prependErrorMessage(self.messages.noCorsError, avatarForm);
-                }
-
-                xhr.onerror = function () {
-                    self.prependErrorMessage(self.messages.noServerError, avatarForm);
-                };
-
-                xhr.onload = function () {
-                    avatarForm.setAttribute('action', xhr.responseText);
-                    avatarForm.submit();
-                };
-
-                xhr.send();
+                self.avatarUploadByApi(avatarForm);
             });
         }
 
     };
 
-    /*
-    *   Prepend an error message in to an element
-    */
-    accountProfile.prototype.prependErrorMessage = function (message, location) {
+    accountProfile.prototype.prependMessage = function (message, location, clazz) {
         var errorHtml = document.createElement('div');
         errorHtml.innerHTML = message;
-        errorHtml.className = this.classes.formError.replace('.', '');
+        errorHtml.className = clazz;
         location.insertBefore(errorHtml, location.firstChild);
+    };
+
+    accountProfile.prototype.prependErrorMessage = function (message, location) {
+        var errorClass = this.classes.formError.replace('.', '');
+        this.prependMessage(message, location, errorClass);
+    };
+
+    accountProfile.prototype.prependSuccessMessage = function (message, location) {
+        var errorClass = this.classes.formSuccess.replace('.', '');
+        this.prependMessage(message, location, errorClass);
     };
 
     /*

@@ -26,7 +26,9 @@
 
                         @media match {
                             case audio: Audio if audio.mainAudio.exists(_.imageCrops.nonEmpty) => {
-                                @fragments.img(media.mainAudio, false, false)
+                                @media.mainAudio.map { audio =>
+                                    @fragments.img(audio)
+                                }
                             }
                             case _ => { }
                         }
@@ -64,7 +66,7 @@
                                             <meta itemprop="width" content="@mv.width" />
                                         }
                                         <meta itemprop="requiresSubscription" content="false" />
-                                        <meta itemprop="image" content="@video.openGraphImage" />
+                                        <meta itemprop="image" content="@Html(video.openGraphImage)" />
                                         @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                                         @video.mainVideo.map { videoElement =>
                                             @fragments.media.video(VideoPlayer(

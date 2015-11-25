@@ -21,7 +21,7 @@ object EmailSubscriptions {
       "news",
       "News",
       "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
-      "Every weekday",
+      "Every day",
       "1506",
       11,
       subscribedTo = subscribedListIds.exists{ x => x == "1506" }
@@ -118,6 +118,19 @@ object EmailSubscriptions {
     )
   )
 
+  def newsEmails(subscribedListIds: Iterable[String] = None) = List(
+    EmailSubscription(
+      "The Long Read",
+      "news",
+      "The week’s Long Reads and audio features",
+      "Bringing you the latest Long Read features and podcasts, delivered to your inbox every Saturday morning",
+      "Every week",
+      "3322",
+      0,
+      subscribedTo = subscribedListIds.exists{ x => x == "3322" }
+    )
+  )
+
   def apply(subscribedListIds: Iterable[String] = None): EmailSubscriptions = EmailSubscriptions(List(
     // News
     EmailSubscription(
@@ -125,7 +138,7 @@ object EmailSubscriptions {
       "news",
       "News",
       "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
-      "Every weekday morning",
+      "Every day",
       "37",
       12,
       subscribedTo = subscribedListIds.exists{ x => x == "37" }
@@ -135,7 +148,7 @@ object EmailSubscriptions {
       "news",
       "News",
       "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
-      "Every weekday morning",
+      "Every day",
       "1493",
       11,
       subscribedTo = subscribedListIds.exists{ x => x == "1493" }
@@ -268,5 +281,5 @@ object EmailSubscriptions {
       "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" }
     )
-  ) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds))
+  ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds))
 }

@@ -125,24 +125,36 @@ GET        /football/match/:matchId                                             
 GET        /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                  football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET        /football/match-redirect/:matchId                                                   football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
+GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json                     rugby.controllers.MatchesController.scoreJson(year, month, day, team1Id, team2Id)
+GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                          rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
+
 # Onward journeys
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
 
 # Facia
-GET        /                                                                                   controllers.FaciaDraftController.editionRedirect(path = "")
-GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.editionRedirect(path)
+GET        /                                                                                   controllers.FaciaDraftController.rootEditionRedirect()
+GET        /rss                                                                                controllers.FaciaController.renderRootFrontRss()
+GET        /$path<.+>/show-more/*id.json                                                       controllers.FaciaDraftController.renderShowMore(path, id)
+GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.renderFront(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.FaciaDraftController.renderFrontRss(path)
 GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonLite(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.FaciaDraftController.renderFrontJson(path)
 
+
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)
+
+# Newspaper pages
+GET        /theguardian                                                                        controllers.NewspaperController.latestGuardianNewspaper()
+GET        /theobserver                                                                        controllers.NewspaperController.latestObserverNewspaper()
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>           controllers.NewspaperController.newspaperForDate(path, day, month, year)
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all       controllers.NewspaperController.allOn(path, day, month, year)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                          controllers.AllIndexController.newer(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                controllers.IndexController.renderTrailsJson(path)
@@ -158,14 +170,14 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 
 # Weather - OLD
-GET        /weather/city/:id.json                                                              controllers.WeatherController.forCity(id)
-GET        /weather/city.json                                                                  controllers.LocationsController.whatIsMyCity()
-GET        /weather/locations                                                                  controllers.LocationsController.findCity(query: String)
+GET        /weather/city/:id.json                                                              weather.controllers.WeatherController.forCity(id)
+GET        /weather/city.json                                                                  weather.controllers.LocationsController.whatIsMyCity()
+GET        /weather/locations                                                                  weather.controllers.LocationsController.findCity(query: String)
 
 # Weather
-GET        /weatherapi/city/:id.json                                                           controllers.WeatherController.forCity(id)
-GET        /weatherapi/city.json                                                               controllers.LocationsController.whatIsMyCity()
-GET        /weatherapi/locations                                                               controllers.LocationsController.findCity(query: String)
+GET        /weatherapi/city/:id.json                                                           weather.controllers.WeatherController.forCity(id)
+GET        /weatherapi/city.json                                                               weather.controllers.LocationsController.whatIsMyCity()
+GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])

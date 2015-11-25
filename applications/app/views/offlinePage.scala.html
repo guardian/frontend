@@ -1,0 +1,114 @@
+@(offlinePage: controllers.OfflinePage)(implicit request: RequestHeader)
+
+@import play.api.libs.json._
+@import conf.switches.Switches._
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
+
+<!DOCTYPE html>
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@views.support.Title(offlinePage)</title>
+
+    @fragments.metaData(offlinePage)
+
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheets(None)
+
+    @* We don't use the inlineJSBlocking template because we need to specify
+    our own paths *@
+
+    @fragments.omnitureScript(Some(offlinePage))
+
+    @* NOTE the order of these includes is important  *@
+    <script>
+        // polyfills
+        @Html(polyfills().body)
+
+        // determine whether to run enhanced JS
+        @InlineJs(shouldEnhance(offlinePage).body, "shouldEnhance.js")
+
+        // page config
+        @Html(config(offlinePage).body)
+
+        // analytics code
+        @InlineJs(analytics().body, "analytics.js")
+
+        // apply render conditions
+        @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
+
+        // try and load fonts before we use the stylesheets
+        @if(FontSwitch.isSwitchedOn) {
+            @InlineJs(loadFonts().body, "loadFonts.js")
+        }
+
+        @if(AsyncCss.isSwitchedOn) {
+            // enable non-blocking stylesheets
+            // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        }
+
+        @* Service worker only caches the bundles (including in dev),
+        so the offline page can only ask for those. *@
+        var curl = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                'facebook.js':              '//connect.facebook.net/en_US/all.js',
+                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                text:                       'text', // noop
+                inlineSvg:                  'inlineSvg', // noop
+
+                core:                       '@Static("javascripts/core.js")',
+                'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
+                'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
+                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
+            }
+        };
+
+        // cloudwatch beacons
+        @InlineJs(cloudwatchBeacons(offlinePage).body, "cloudwatchBeacons.js")
+
+        // curl, library only
+        @Html(Static.js.curl);
+
+        // load the enhanced JS
+        @InlineJs(bootEnhanced(offlinePage).body, "bootEnhanced.js")
+    </script>
+</head>
+    <body
+        id="top"
+        itemscope itemtype="http://schema.org/WebPage">
+
+        <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
+
+        @fragments.header(offlinePage)
+
+        <div class="l-side-margins">
+            <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
+                <div class="content__head tonal__head tonal__head--tone-news">
+                    <div class="gs-container">
+                        <div class="content__main-column content__main-column--single-column">
+                            <h1 class="content__headline">Unable to connect to the Internet</h1>
+                            <p>In the meantime, how about a quick crossword?</p>
+                            <button class="button js-open-crossword-btn">Open crossword</button>
+                        </div>
+                        <div class="js-crossword-container is-hidden u-baseline-top">
+                            <h2><a href="/crosswords/@offlinePage.crossword.id">@offlinePage.crossword.name</a></h2>
+                            <div class="js-crossword"
+                                data-crossword-data="@Json.stringify(Json.toJson(offlinePage.crossword))">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        @fragments.footer(offlinePage)
+
+        @fragments.inlineJSNonBlocking()
+
+    </body>
+</html>

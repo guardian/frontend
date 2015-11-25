@@ -1,97 +1,23 @@
 # Routes
 
 #CUSTOM (This Project)
-GET        /configagent         controllers.FaciaEndToEndController.configAgentContents
+GET         /configagent                                                    controllers.FaciaEndToEndController.configAgentContents
 
 #FACIA-PRESS
-GET        /_healthcheck        conf.HealthCheck.healthcheck()
-GET        /debug/config        controllers.Application.showCurrentConfig
+GET         /_healthcheck                                                   conf.HealthCheck.healthcheck()
+GET         /debug/config                                                   controllers.Application.showCurrentConfig
 
-GET        /pressed/fronts      controllers.Application.generateFrontJson()
-GET        /pressed/live/*id      controllers.Application.generateLivePressedFor(id)
-
-#FACIA-TOOL
-# authentication endpoints
-GET           /authError                 controllers.PandaAuthController.authError(message:String)
-GET           /oauthCallback             controllers.PandaAuthController.oauthCallback
-GET           /logout                    controllers.PandaAuthController.logout
-GET           /login/status              controllers.PandaAuthController.status
-
-# static files
-GET           /humans.txt                controllers.Assets.at(path="/public", file="humans.txt")
-GET           /assets/javascripts/*file  dev.DevAssetsController.atJavascripts(file)
-GET           /assets/stylesheets/*file  dev.DevAssetsController.atStylesheets(file)
-GET           /assets/*file              controllers.UncachedAssets.at(file)
-GET           /assets/fonts/*path        dev.DevAssetsController.atFonts(path)
-
-##################### NOTE ############################
-#all endpoints below this line should be authenticated#
-#######################################################
-
-# Fronts
-GET           /                          controllers.FaciaToolController.priorities()
-GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
-GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
-GET           /training                  controllers.FaciaToolController.collectionEditor(priority="training")
-
-
-GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
-GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
-GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")
-
-
-POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
-POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
-
-POST          /press/live/*path          controllers.FaciaToolController.pressLivePath(path)
-POST          /press/draft/*path         controllers.FaciaToolController.pressDraftPath(path)
-
-GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
-
-#Facia Press
-GET           /container/*id.json        controllers.FaciaController.renderContainerJson(id)
-GET           /collection/*id/rss        controllers.FaciaController.renderCollectionRss(id)
-
-GET           /collection/*id            controllers.FaciaToolController.getCollection(id)
-POST          /edits                     controllers.FaciaToolController.collectionEdits
-GET           /collection                controllers.FaciaToolController.listCollections
-GET           /config                    controllers.FaciaToolController.getConfig
-
-POST          /treats/*collectionId      controllers.FaciaToolController.treatEdits(collectionId)
-
-# endpoints for proxying https
-GET           /switches                  controllers.SwitchesProxy.getSwitches()
-GET           /api/proxy/*path           controllers.FaciaContentApiProxy.capi(path)
-GET           /http/proxy/*url           controllers.FaciaContentApiProxy.http(url)
-GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
-GET           /ophan/*path               controllers.FaciaContentApiProxy.ophan(path)
-
-# thumbnails
-GET           /thumbnails/*id.svg        controllers.ThumbnailController.container(id)
-
-# Updating config
-
-POST          /config/fronts             controllers.FrontController.create()
-POST          /config/fronts/*path       controllers.FrontController.update(path)
-
-POST          /config/collections        controllers.CollectionController.create()
-POST          /config/collections/*id    controllers.CollectionController.update(id)
-
-
-# Depend on frontend project
-GET           /frontend/config                  controllers.FrontendDependentController.configuration()
-
-# Stories visible
-POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
+GET         /pressed/fronts                                                 controllers.Application.generateFrontJson()
+GET         /pressed/live/*id                                               controllers.Application.generateLivePressedFor(id)
 
 
 # FACIA
 # Editionalised redirects
-GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
+GET         /$path<(culture|sport|commentisfree|business|money|rss)>        controllers.FaciaController.editionRedirect(path)
 
 # Editionalised pages
-GET        /*path/show-more/*id.json                                   controllers.FaciaController.renderShowMore(path, id)
-GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
-GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)
-GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)
-GET        /*path                                                      controllers.FaciaController.renderFront(path)
+GET         /*path/show-more/*id.json                                       controllers.FaciaController.renderShowMore(path, id)
+GET         /*path/rss                                                      controllers.FaciaController.renderFrontRss(path)
+GET         /*path/lite.json                                                controllers.FaciaController.renderFrontJsonLite(path)
+GET         /*path.json                                                     controllers.FaciaController.renderFrontJson(path)
+GET         /*path                                                          controllers.FaciaController.renderFront(path)

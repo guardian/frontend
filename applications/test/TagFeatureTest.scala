@@ -3,7 +3,7 @@ package test
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import services.IndexPagePagination
 import collection.JavaConversions._
-import conf.Switches
+import conf.switches.Switches
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
 @DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
@@ -31,7 +31,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
       goTo("/profile/jemimakiss") { browser =>
         Then("I should see her profile image")
         val profileImage = browser.findFirst("[data-test-id=header-image]")
-        profileImage.getAttribute("src") should endWith(s"42593747/Jemima-Kiss.jpg")
+        profileImage.getAttribute("src") should include(s"42593747/Jemima-Kiss.jpg")
       }
     }
 

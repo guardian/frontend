@@ -3,16 +3,12 @@ package model.facia
 
 import com.gu.facia.api.models.{CuratedContent, _}
 import com.gu.facia.api.utils._
+import implicits.CollectionsOps._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import services.CollectionConfigWithId
-import com.gu.contentapi.client.model.Reference
-import com.gu.contentapi.client.model.Podcast
-import com.gu.contentapi.client.model.Tag
-import com.gu.contentapi.client.model.Asset
-import com.gu.contentapi.client.model.Element
-import com.gu.contentapi.client.model.Content
-import com.gu.facia.api.utils.CardStyle
+import com.gu.contentapi.client.model._
+import implicits.FaciaContentImplicits._
 
 object FapiJsonFormats {
   /* Content API Formats */
@@ -21,6 +17,24 @@ object FapiJsonFormats {
   implicit val contentApiTagFormat = Json.format[Tag]
   implicit val contentApiAssetFormat = Json.format[Asset]
   implicit val contentApiElementFormat = Json.format[Element]
+  implicit val contentApiUserFormat = Json.format[User]
+  implicit val contentApiAssetTypeDataFormat = Json.format[AssetTypeData]
+  implicit val contentApiVideoTypeDataFormat = Json.format[VideoTypeData]
+  implicit val contentApiTweetTypeDataFormat = Json.format[TweetTypeData]
+  implicit val contentApiImageTypeDataFormat = Json.format[ImageTypeData]
+  implicit val contentApiAudioTypeDataFormat = Json.format[AudioTypeData]
+  implicit val contentApiPullquoteTypeDataFormat = Json.format[PullquoteTypeData]
+  implicit val contentApiTextTypeDataFormat = Json.format[TextTypeData]
+  implicit val contentApiBlockAssetFormat = Json.format[BlockAsset]
+  implicit val contentApiBlockElementFormat = Json.format[BlockElement]
+  implicit val contentApiBlockFormat = Json.format[Block]
+  implicit val contentApiBlocksFormat = Json.format[Blocks]
+  implicit val contentApiRightsFormat = Json.format[Rights]
+  implicit val contentApiCrosswordDimensionsFormat = Json.format[CrosswordDimensions]
+  implicit val contentApiCrosswordPositionFormat = Json.format[CrosswordPosition]
+  implicit val contentApiCrosswordEntryFormat = Json.format[CrosswordEntry]
+  implicit val contentApiCrosswordCreatorFormat = Json.format[CrosswordCreator]
+  implicit val contentApiCrosswordFormat = Json.format[Crossword]
   implicit val contentApiContentFormat = Json.format[Content]
 
   implicit val frontImageFormat = Json.format[FrontImage]
@@ -59,7 +73,7 @@ object FapiJsonFormats {
         case JsSuccess(JsString("AnalysisKicker"), _) => JsSuccess(AnalysisKicker)
         case JsSuccess(JsString("ReviewKicker"), _) => JsSuccess(ReviewKicker)
         case JsSuccess(JsString("CartoonKicker"), _) => JsSuccess(CartoonKicker)
-        case JsSuccess(JsString("PodcastKicker"), _) =>  (json \ "item").validate[PodcastKicker](podcastKickerFormat)
+        case JsSuccess(JsString("PodcastKicker"), _) =>  (json \ "series").validate[PodcastKicker](podcastKickerFormat)
         case JsSuccess(JsString("TagKicker"), _) => (json \ "item").validate[TagKicker](tagKickerFormat)
         case JsSuccess(JsString("SectionKicker"), _) => (json \ "item").validate[SectionKicker](sectionKickerFormat)
         case JsSuccess(JsString("FreeHtmlKicker"), _) => (json \ "item").validate[FreeHtmlKicker](freeHtmlKickerFormat)
@@ -82,7 +96,7 @@ object FapiJsonFormats {
     }
   }
 
-  implicit object CardStyleFormat extends Format[com.gu.facia.api.utils.CardStyle] {
+  implicit object CardStyleFormat extends Format[CardStyle] {
     def reads(json: JsValue) = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("SpecialReport"), _) => JsSuccess(SpecialReport)
@@ -208,7 +222,7 @@ case class PressedCollection(
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val all = curated ++ backfill
+  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy(c => c.maybeContentId.getOrElse(c.id))
 }
 
 object PressedCollection {

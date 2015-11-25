@@ -5,12 +5,11 @@
  * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
  */
 define([
-    'common/utils/_',
-    'common/utils/$'
+    'common/utils/$',
+    'lodash/objects/assign'
 ], function (
-    _,
-    $
-) {
+    $,
+    assign) {
     /**
      * @param {string} type
      * @return {Bonzo}
@@ -33,7 +32,7 @@ define([
      * @return {Bonzo} SVG Element
      */
     var Doughnut = function (data, o) {
-        o = _.assign({
+        o = assign({
             percentCutout: 35,
             unit: '',
             showValues: false

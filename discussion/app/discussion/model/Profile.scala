@@ -27,12 +27,12 @@ object Profile {
       displayName = (profileJson \ "displayName").as[String],
       isStaff = badges.exists(_.as[String] == "Staff"),
       isContributor = badges.exists(_.as[String] == "Contributor"),
-      privateFields = getPrivateFields(profileJson \ "privateFields")
+      privateFields = getPrivateFields((profileJson \ "privateFields").toOption)
     )
   }
 
-  private def getPrivateFields(json: JsValue): Option[PrivateProfileFields] = json match {
-    case obj: JsObject => Some(PrivateProfileFields(obj))
+  private def getPrivateFields(json: Option[JsValue]): Option[PrivateProfileFields] = json match {
+    case Some(obj:JsObject) => Some(PrivateProfileFields(obj))
     case _ => None
   }
 }

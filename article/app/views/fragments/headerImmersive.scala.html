@@ -1,0 +1,66 @@
+@(article: model.Article, showBadge: Boolean = false)(implicit request: RequestHeader)
+
+@import views.support.TrailCssClasses.articleToneClass
+@import views.support.ContributorLinks
+@import views.support.ImgSrc
+@import layout._
+
+<header class="content__head content__head--desktop tonal__head tonal__head--@articleToneClass(article)">
+    <div class="gs-container content__logo-container">
+        <a href="@LinkTo{/}">
+            @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
+        </a>
+    </div>
+
+    @if(article.hasMainEmbed || article.elements("main").isEmpty) {
+        <div class="content__loading">
+            <span class="content__loading-animation is-updating"></span>
+            <span class="u-h">Loading header</span>
+        </div>
+        @MainCleaner(article, article.main, false)
+    } else {
+        <style>
+            @article.mainPicture.map { picture =>
+                .content__head--mobile {
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1000))).getOrElse(""))');
+                }
+                @@media (min-width: @{layout.Phablet.minWidth}px) {
+                    .content__head--mobile {
+                        background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
+                    }
+                }
+                .content__head--desktop {
+                    background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(1300))).getOrElse(""))');
+                }
+                @@media (min-width: @{layout.Wide.minWidth}px) {
+                    .content__head--desktop {
+                        background-image: url('@Html(ImgSrc.findNearestSrc(picture, Profile(width = Some(2200))).getOrElse(""))');
+                    }
+                }
+            }
+        </style>
+    }
+
+    <div class="content__header">
+        <div class="content__head--mobile">
+            <div class="content__wrapper content__wrapper--headline">
+                <div class="gs-container">
+                    @article.blogOrSeriesTag.map { series =>
+                    <h3 class="content__series-label">
+                        <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+                    </h3>
+                    }
+                    <h1 class="content__headline">@Html(article.headline)</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="content__wrapper content__wrapper--standfirst">
+            <div class="gs-container">
+                @if(article.standfirst.isDefined) {
+                    @fragments.standfirst(article)
+                }
+            </div>
+        </div>
+    </div>
+</header>

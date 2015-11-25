@@ -1,0 +1,19 @@
+@import model.MetaData
+
+@import rugby.model.ScoreEvent
+@(page: MetaData, theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader)
+
+@main(page, "football") { } {
+    <div class="l-side-margins">
+        <article class="content">
+            <header class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        @rugby.views.html.fragments.matchSummary(page, theMatch)
+
+                    </div>
+                </div>
+            </header>
+        </article>
+    </div>
+}

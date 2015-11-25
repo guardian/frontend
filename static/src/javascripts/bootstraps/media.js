@@ -1,11 +1,9 @@
-/* global videojs */
 define([
     'bean',
     'bonzo',
     'fastdom',
     'raven',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
@@ -13,19 +11,21 @@ define([
     'common/utils/url',
     'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/commercial-features',
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
-    'text!common/views/ui/loading.html'
+    'bootstraps/video-player',
+    'text!common/views/ui/loading.html',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     fastdom,
     raven,
     $,
-    _,
     config,
     deferToAnalytics,
     detect,
@@ -33,13 +33,15 @@ define([
     urlUtils,
     beacon,
     buildPageTargeting,
+    commercialFeatures,
     Component,
     events,
     fullscreener,
     supportedBrowsers,
     techOrder,
-    loadingTmpl
-) {
+    videojs,
+    loadingTmpl,
+    debounce) {
 
     function getAdUrl() {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
@@ -82,27 +84,31 @@ define([
     }
 
     function createVideoPlayer(el, options) {
+
         var player = videojs(el, options),
             $el = $(el),
             duration = parseInt($el.attr('data-duration'), 10);
 
-        if (!isNaN(duration)) {
-            player.duration(duration);
-            player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
-        }
+        player.ready(function () {
 
-        // we have some special autoplay rules, so do not want to depend on 'default' autoplay
-        player.guAutoplay = $(el).attr('data-auto-play') === 'true';
+            if (!isNaN(duration)) {
+                player.duration(duration);
+                player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
+            }
 
-        // need to explicitly set the dimensions for the ima plugin.
-        player.height(bonzo(player.el()).parent().dim().height);
-        player.width(bonzo(player.el()).parent().dim().width);
+            // we have some special autoplay rules, so do not want to depend on 'default' autoplay
+            player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
-        if (events.handleInitialMediaError(player)) {
-            player.dispose();
-            options.techOrder = techOrder(el).reverse();
-            player = videojs(el, options);
-        }
+            // need to explicitly set the dimensions for the ima plugin.
+            player.height(bonzo(player.el()).parent().dim().height);
+            player.width(bonzo(player.el()).parent().dim().width);
+
+            if (events.handleInitialMediaError(player)) {
+                player.dispose();
+                options.techOrder = techOrder(el).reverse();
+                player = videojs(el, options);
+            }
+        });
 
         return player;
     }
@@ -129,8 +135,8 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                        enhanceVideo($('video', player).get(0), true);
                     });
-                    enhanceVideo($('video', player).get(0), true);
                 });
                 fastdom.write(function () {
                     $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
@@ -233,12 +239,13 @@ define([
 
                     player.fullscreener();
 
-                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
+                    //The `hasMultipleVideosInPage` flag is temporary until the #10034 will be fixed
+                    if (commercialFeatures.videoPreRolls && !blockVideoAds && !config.page.hasMultipleVideosInPage) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
                                 events.bindPrerollEvents(player);
-                                player.adSkipCountdown(15);
+                                player.adSkipCountdown(10);
 
                                 require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
                                     player.ima({
@@ -248,6 +255,11 @@ define([
                                     // Video analytics event.
                                     player.trigger(events.constructEventName('preroll:request', player));
                                     player.ima.requestAds();
+                                }, function (e) {
+                                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
+                                    // ad blocker, so just carry on without
+                                    events.bindContentEvents(player);
+                                    throw e;
                                 });
                             }
                         )();
@@ -269,7 +281,7 @@ define([
             });
         });
 
-        mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+        mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
 
         // built in vjs-user-active is buggy so using custom implementation
         player.on('mousemove', function () {
@@ -343,18 +355,18 @@ define([
         });
     }
 
-    function ready() {
+    function init() {
         if (config.switches.enhancedMediaPlayer) {
-            require(['bootstraps/video-player'], raven.wrap(
+            raven.wrap(
                 { tags: { feature: 'media' } },
                 initPlayer
-            ));
+            )();
         }
         initMoreInSection();
         initMostViewedMedia();
     }
 
     return {
-        init: ready
+        init: init
     };
 });

@@ -1,0 +1,107 @@
+@(env: String)
+@admin_main("Commercial Tools", env, isAuthed = true) {
+
+    <p><a href="@controllers.admin.routes.AdminIndexController.admin()">Admin</a></p>
+
+    <h2>Commercial Tools</h2>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3>Performance</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Performance metrics.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercialRadiator()">Commercial Radiator</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercial()">Slot Load Times</a></li>
+                        <li><a href="https://dashboard.ophan.co.uk/ads">Ophan: Slot Load Times</a></li>
+                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityABTest/KPIAB">Viewability: A/B Tests</a></li>
+                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityDashSecondDraft/Health-SlotSizeBrowser">Viewability: Slot Performance</a></li>
+                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityDashSecondDraft/DiagnosticsSlots">Viewability: Slot Diagnostics</a></li>
+                        <li><a href="https://theguardian.moat.com/">Viewability: Moat Dashboard</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Targeting</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Troubleshoot targeting problems.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderSpecialAdUnits()">Special Ad Units</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderPaidForTags()">Paid-For Tags</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderInlineMerchandisingTargetedTags()">Inline Merchandising Slot</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderPageskins()">Pageskins</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderSurgingContent()">Surging Content</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialAdUnitController.renderToApprove()">Ad Units for approval</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.sponsoredContainers()">Sponsored Containers Debug</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderAdTests()">Ad Tests</a></li>
+                        <li><a href="@controllers.admin.commercial.routes.DfpDataController.renderCacheFlushPage()">Refresh all cached DFP data</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>404 AB tests</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">In case 404 survey AB tests would be needed in the future</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="https://github.com/guardian/frontend/pull/10512" target="_blank">404 survey framework PR</a></li>
+                        <li><a href="https://github.com/guardian/frontend/pull/10937" target="_blank">Live streaming 404 PR</a></li>
+                        <li><a href="https://github.com/guardian/frontend/pull/11110" target="_blank">404 AB test cleanup PR</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3>Display</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Preview ad formats and merchandising components.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCreativeTemplates()">Creative Templates</a></li>
+                        <li><a href="http://m.code.dev-theguardian.com/commercial/test-page">Components test page</a> (on dev)</li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderFluidAds()">Responsive ads</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Layout</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Troubleshoot presence and size of ad slots.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.commercial.routes.SlotController.viewSlot("top")">Mobile Top Slot</a></li>
+                        <li><a href="@controllers.admin.commercial.routes.SlotController.viewSlot("top-above-nav")">Desktop Top Above Nav Slot</a></li>
+                        <li><a href="@controllers.admin.commercial.routes.SlotController.viewSlot("top-below-nav")">Desktop Top Below Nav Slot</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Ad Ops</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Tools for the Ad Ops team.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.viewList()">Takeovers with empty MPUs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

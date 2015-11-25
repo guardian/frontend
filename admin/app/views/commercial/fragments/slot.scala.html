@@ -1,0 +1,53 @@
+@import common.dfp.LineItemReport
+@(slotReport: LineItemReport)
+@import _root_.dfp.printUniversalTime
+@import common.dfp.GuLineItem
+@import tools.DfpLink
+@import views.commercial.LineItemSupport.targetedAdUnits
+
+@lineItemTemplate(lineItem: GuLineItem) = {
+    <li class="line-item">
+        <div class="large sub-line-item">@{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>)</div>
+        <div class="sub-line-item">Sizes: @for(size <- lineItem.creativeSizes){@{size.width}x@{size.height} }</div>
+        <div class="sub-line-item">Starts: @printUniversalTime(lineItem.startTime)</div>
+        <div>@for(endTime <- lineItem.endTime) {Ends: @printUniversalTime(endTime)}</div>
+        @if(targetedAdUnits(lineItem).nonEmpty) {
+            @if(targetedAdUnits(lineItem).size == 1) {
+                <div class="sub-line-item">Ad Unit: @{targetedAdUnits(lineItem)}</div>
+            } else {
+                <div class="sub-line-item">Ad Units: @{targetedAdUnits(lineItem).mkString(", ")}</div>
+            }
+        }
+        @if(lineItem.targeting.geoTargetsIncluded.nonEmpty) {
+            @if(lineItem.targeting.geoTargetsIncluded.size == 1) {
+                <div class="sub-line-item">Geotarget: @{lineItem.targeting.geoTargetsIncluded.map(_.name)}</div>
+            } else {
+                <div class="sub-line-item">Geotargets: @{lineItem.targeting.geoTargetsIncluded.map(_.name).mkString(", ")}</div>
+            }
+        }
+        @if(lineItem.targeting.geoTargetsExcluded.nonEmpty) {
+            @if(lineItem.targeting.geoTargetsExcluded.size == 1) {
+                <div class="sub-line-item">Excluded geotarget: @{lineItem.targeting.geoTargetsExcluded.map(_.name)}</div>
+            } else {
+                <div class="sub-line-item">Excluded geotargets: @{lineItem.targeting.geoTargetsExcluded.map(_.name).mkString(", ")}</div>
+            }
+        }
+        @for(targetSet <- lineItem.targeting.customTargetSets){
+            <div class="sub-line-item">Key-value targeting: @for(target <- targetSet.targets){@{target.name}=@{target.values} }</div>
+        }
+    </li>
+}
+
+<p>Last updated: @slotReport.timestamp</p>
+
+<h3>Live Site</h3>
+@if(slotReport.nonAdTestLineItems.isEmpty) {
+    Nothing applicable.
+} else {
+    <ol>@for(lineItem <- slotReport.nonAdTestLineItems) {@lineItemTemplate(lineItem)}</ol>
+}
+
+@if(slotReport.adTestLineItems.nonEmpty) {
+    <h3>Test</h3>
+    <ol>@for(lineItem <- slotReport.adTestLineItems) {@lineItemTemplate(lineItem)}</ol>
+}

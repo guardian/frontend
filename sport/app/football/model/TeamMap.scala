@@ -140,8 +140,9 @@ object TeamName {
 object MatchUrl {
   def apply(theMatch: FootballMatch): String = {
     (for {
-      homeTeam <- TeamMap(theMatch.homeTeam).tag.flatMap(_.url)
-      awayTeam <- TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
+      homeTeam: String <- TeamMap(theMatch.homeTeam).tag.flatMap(_.url)
+      awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
+      if(homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/"))
     } yield {
       s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")

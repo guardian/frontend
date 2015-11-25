@@ -10,8 +10,20 @@ GET        /_healthcheck                                                        
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id     controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
+
+# Crosswords search
+GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
+GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
+
+# Email paths
+GET        /email                                                               controllers.EmailController.renderPage()
+GET        /email/form                                                          controllers.EmailController.renderForm()
+GET        /email/:result                                                       controllers.EmailController.subscriptionResult(result: String)
+POST       /email                                                               controllers.EmailController.submit()
+OPTIONS    /email                                                               controllers.EmailController.options()
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)
@@ -22,16 +34,25 @@ GET        /embed/video/*path                                                   
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
-GET        /preferences/notifications                                           controllers.PreferencesController.notificationPrefs()
+
+GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
+GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
 # Web App paths
-GET        /2015-05-28-2-service-worker.js                                      controllers.WebAppController.serviceWorker()
+GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
+GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
+
+# Newspaper pages
+GET        /theguardian                                                                     controllers.NewspaperController.latestGuardianNewspaper()
+GET        /theobserver                                                                     controllers.NewspaperController.latestObserverNewspaper()
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>        controllers.NewspaperController.newspaperForDate(path, day, month, year)
+GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all    controllers.NewspaperController.allOn(path, day, month, year)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all             controllers.AllIndexController.allOn(path, day, month, year)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer           controllers.AllIndexController.newer(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate         controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                       controllers.AllIndexController.all(path)
 
 # Sudokus
@@ -54,6 +75,10 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        
 # Interactive paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
+
+# Short urls with campaign codes
+GET        /$shortCode<p/[\w]+>                                                 controllers.ShortUrlsController.redirectShortUrl(shortCode)
+GET        /$shortCode<p/[\w]+>/:campaignCode                                   controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
 # Index pages for tags
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)

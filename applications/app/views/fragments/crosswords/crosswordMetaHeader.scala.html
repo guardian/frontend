@@ -1,0 +1,62 @@
+@(crosswordPage: crosswords.CrosswordPage, gridVisable: Boolean = true)(implicit requestHeader: RequestHeader)
+@import views.support.AuFriendlyFormat
+@import common.LinkTo
+@import conf.switches.Switches.SaveForLaterSwitch
+
+<header class="content__head tonal__head tonal__head--tone-news">
+    <div class="gs-container">
+        <div class="content__main-column">
+            <div class="content__labels">
+                <div class="content__section-label">
+                    <a class="tone-colour" data-link-name="article section" href="@LinkTo("/crosswords")">Crosswords</a>
+                </div>
+            </div>
+
+
+            <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
+            @if( gridVisable ) {
+                <div class="crossword__links">
+                    <a class="crossword__link js-print-crossword">Print</a>
+
+                    @crosswordPage.crossword.pdf.map { pdf =>
+                            | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
+                    }
+
+                    | <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Accessible version</a>
+                </div>
+            }
+
+            <p class="content__dateline">
+                @crosswordPage.crossword.creator.map { creator =>
+                    Set by: <a class="tone-colour" data-link-name="crossword-creator" href="@creator.webUrl">@creator.name</a>
+                }
+                <time itemprop="datePublished" datetime="@crosswordPage.crossword.date.toString("yyyy-MM-dd'T'HH:mm:ssZ"))"
+                data-timestamp="@crosswordPage.crossword.date.getMillis" class="content__dateline-wpd js-wpd">
+                    @crosswordPage.crossword.date.toString("EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(crosswordPage.crossword.date)</span>
+                </time>
+            </p>
+
+            <div class="meta__extras meta__extras--crossword">
+                <div class="meta__social" data-component="share">
+                @fragments.social(crosswordPage, "top")
+                </div>
+                @if(SaveForLaterSwitch.isSwitchedOn) {
+                    <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+                }
+                <div class="meta__numbers modern-visible">
+                    <div class="u-h meta__number" data-discussion-id="@crosswordPage.discussionId" data-commentcount-format="content" data-discussion-closed="@{crosswordPage.isCommentable}">
+                    </div>
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                </div>
+            </div>
+
+            @crosswordPage.crossword.instructions.map { instructions =>
+                <div class="crossword__instructions">
+                    <strong>Special instructions:</strong> @instructions
+                </div>
+            }
+        </div>
+    </div>
+</header>
+

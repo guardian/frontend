@@ -229,7 +229,24 @@ Hence why a greater depth of selector specificity is needed.
 
         .tabs__pane {
             width: (100% / 3) * 2;
+            min-height: 300px;
         }
+
+        .tabs__pane--without-mpu {
+            width: (100% / 3) * 3;
+            min-height: 300px;
+        }
+    }
+}
+
+.fc-container--dynamic-slow-mpu {
+    .ad-slot--container-inline {
+        width: gs-span(9);
+        background: colour(neutral-8);
+        border-bottom: $gs-baseline / 2 solid colour(neutral-8);
+    }
+    .ad-slot__label {
+        text-align: left;
     }
 }
 

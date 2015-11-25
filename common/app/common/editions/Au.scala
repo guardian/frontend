@@ -1,6 +1,9 @@
 package common.editions
 
+import java.util.Locale
+
 import common.editions.Uk._
+import conf.switches.Switches
 import org.joda.time.DateTimeZone
 import common._
 import contentapi.QueryDefaults
@@ -13,9 +16,9 @@ object Au extends Edition(
   id = "AU",
   displayName = "Australia edition",
   DateTimeZone.forID("Australia/Sydney"),
-  lang = "en-au"
-)
-  with QueryDefaults {
+  locale = Locale.forLanguageTag("en-au"),
+  homePagePath = "/au"
+) with QueryDefaults {
 
   implicit val AU = Au
 
@@ -45,11 +48,11 @@ object Au extends Edition(
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
       NavItem(fashion),
       NavItem(economy, economyLocalNav),
-      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
+      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(media),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(science),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }

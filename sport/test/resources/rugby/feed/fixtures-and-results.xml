@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2001-2015 Opta Sportsdata Ltd. All rights reserved. -->
+<fixtures>
+    <fixture id="7491" comp_id="3" comp_name="International" datetime="2015-07-08T02:00:00+0000" game_date="20150708" group="1" group_name="1" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="03:00:00" venue="Apia Park" venue_id="70">
+        <team eighty_min_score="16" home_or_away="home" score="16" team_id="950" />
+        <team eighty_min_score="25" home_or_away="away" score="25" team_id="850" />
+    </fixture>
+    <fixture id="7550" comp_id="3" comp_name="International" datetime="2015-07-11T14:00:00+0000" game_date="20150711" group="1" group_name="1" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" tbc="3" time="15:00:00" venue="Hage Geingob Rugby Stadium" venue_id="374">
+        <team eighty_min_score="" home_or_away="home" score="39" team_id="2900" />
+        <team eighty_min_score="" home_or_away="away" score="19" team_id="8850" />
+    </fixture>
+    <fixture id="7551" comp_id="3" comp_name="International" datetime="2015-07-18T14:00:00+0000" game_date="20150718" group="1" group_name="1" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="15:00:00" venue="Hage Geingob Rugby Stadium" venue_id="374">
+        <team eighty_min_score="" home_or_away="home" score="45" team_id="2900" />
+        <team eighty_min_score="" home_or_away="away" score="5" team_id="8850" />
+    </fixture>
+    <fixture id="7527" comp_id="3" comp_name="International" datetime="2015-08-08T13:30:00+0000" game_date="20150808" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="14:30:00" venue="Millennium Stadium" venue_id="4">
+        <team eighty_min_score="21" home_or_away="home" score="21" team_id="500" />
+        <team eighty_min_score="35" home_or_away="away" score="35" team_id="600" />
+    </fixture>
+    <fixture id="2872" comp_id="3" comp_name="International" datetime="2015-08-15T07:35:00+0000" game_date="20150815" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="08:35:00" venue="Eden Park" venue_id="58">
+        <team eighty_min_score="41" home_or_away="home" score="41" team_id="850" />
+        <team eighty_min_score="13" home_or_away="away" score="13" team_id="100" />
+    </fixture>
+    <fixture id="7523" comp_id="3" comp_name="International" datetime="2015-08-15T16:00:00+0000" game_date="20150815" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="17:00:00" venue="Aviva Stadium" venue_id="117">
+        <team eighty_min_score="28" home_or_away="home" score="28" team_id="600" />
+        <team eighty_min_score="22" home_or_away="away" score="22" team_id="700" />
+    </fixture>
+    <fixture id="7520" comp_id="3" comp_name="International" datetime="2015-08-15T19:00:00+0000" game_date="20150815" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="20:00:00" venue="Twickenham" venue_id="38">
+        <team eighty_min_score="19" home_or_away="home" score="19" team_id="550" />
+        <team eighty_min_score="14" home_or_away="away" score="14" team_id="650" />
+    </fixture>
+    <fixture id="2873" comp_id="3" comp_name="International" datetime="2015-08-15T19:40:00+0000" game_date="20150815" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" status="Result" time="20:40:00" venue="Estadio Jose Amalfitani" venue_id="55">
+        <team eighty_min_score="12" home_or_away="home" score="12" team_id="800" />
+        <team eighty_min_score="26" home_or_away="away" score="26" team_id="900" />
+    </fixture>
+    <fixture id="7531" comp_id="3" comp_name="International" datetime="2015-08-22T09:00:00+0000" game_date="20150822" group="International" group_name="International" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="10:00:00" venue="Level 5 Stadium" venue_id="175">
+        <team home_or_away="home" team_id="3000" />
+        <team home_or_away="away" team_id="2800" />
+    </fixture>
+    <fixture id="7524" comp_id="3" comp_name="International" datetime="2015-08-22T18:00:00+0000" game_date="20150822" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="19:00:00" venue="Stadio Olimpico di Torino" venue_id="285">
+        <team home_or_away="home" team_id="952" />
+        <team home_or_away="away" team_id="700" />
+    </fixture>
+    <fixture id="7521" comp_id="3" comp_name="International" datetime="2015-08-22T19:00:00+0000" game_date="20150822" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="20:00:00" venue="Stade de France" venue_id="12">
+        <team home_or_away="home" team_id="650" />
+        <team home_or_away="away" team_id="550" />
+    </fixture>
+    <fixture id="7540" comp_id="3" comp_name="International" datetime="2015-08-22T20:00:00+0000" game_date="20150822" group="1" group_name="1" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="21:00:00" venue="Twin Elm Rugby Park" venue_id="275">
+        <team home_or_away="home" team_id="953" />
+        <team home_or_away="away" team_id="2950" />
+    </fixture>
+    <fixture id="7532" comp_id="3" comp_name="International" datetime="2015-08-29T09:00:00+0000" game_date="20150829" group="International" group_name="International" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="10:00:00" venue="Prince Chichibu Memorial Stadium" venue_id="69">
+        <team home_or_away="home" team_id="3000" />
+        <team home_or_away="away" team_id="2800" />
+    </fixture>
+    <fixture id="7528" comp_id="3" comp_name="International" datetime="2015-08-29T13:30:00+0000" game_date="20150829" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="14:30:00" venue="Aviva Stadium" venue_id="117">
+        <team home_or_away="home" team_id="600" />
+        <team home_or_away="away" team_id="500" />
+    </fixture>
+    <fixture id="7525" comp_id="3" comp_name="International" datetime="2015-08-29T14:15:00+0000" game_date="20150829" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="15:15:00" venue="Murrayfield" venue_id="5">
+        <team home_or_away="home" team_id="700" />
+        <team home_or_away="away" team_id="952" />
+    </fixture>
+    <fixture id="7534" comp_id="3" comp_name="International" datetime="2015-09-02T18:30:00+0000" game_date="20150902" group="International" group_name="International" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="19:30:00" venue="Molesey Road" venue_id="357">
+        <team home_or_away="home" team_id="953" />
+        <team home_or_away="away" team_id="2850" />
+    </fixture>
+    <fixture id="7559" comp_id="3" comp_name="International" datetime="2015-09-04T23:00:00+0000" game_date="20150905" group="1" group_name="1" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" tbc="3" time="00:00:00" venue="Arcul de Triumf" venue_id="142">
+        <team home_or_away="home" team_id="951" />
+        <team home_or_away="away" team_id="750" />
+    </fixture>
+    <fixture id="7522" comp_id="3" comp_name="International" datetime="2015-09-05T13:30:00+0000" game_date="20150905" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="14:30:00" venue="Twickenham" venue_id="38">
+        <team home_or_away="home" team_id="550" />
+        <team home_or_away="away" team_id="600" />
+    </fixture>
+    <fixture id="7533" comp_id="3" comp_name="International" datetime="2015-09-05T15:30:00+0000" game_date="20150905" group="International" group_name="International" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="16:30:00" venue="Kingsholm" venue_id="30">
+        <team home_or_away="home" team_id="3000" />
+        <team home_or_away="away" team_id="2850" />
+    </fixture>
+    <fixture id="7529" comp_id="3" comp_name="International" datetime="2015-09-05T16:00:00+0000" game_date="20150905" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="17:00:00" venue="Millennium Stadium" venue_id="4">
+        <team home_or_away="home" team_id="500" />
+        <team home_or_away="away" team_id="952" />
+    </fixture>
+    <fixture id="7526" comp_id="3" comp_name="International" datetime="2015-09-05T19:00:00+0000" game_date="20150905" group="International" group_name="International" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="20:00:00" venue="Stade de France" venue_id="12">
+        <team home_or_away="home" team_id="650" />
+        <team home_or_away="away" team_id="700" />
+    </fixture>
+    <fixture id="7553" comp_id="3" comp_name="International" datetime="2015-09-05T19:00:00+0000" game_date="20150905" group="1" group_name="1" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="20:00:00" venue="Soldier Field" venue_id="301">
+        <team home_or_away="home" team_id="2950" />
+        <team home_or_away="away" team_id="100" />
+    </fixture>
+    <fixture id="7541" comp_id="3" comp_name="International" datetime="2015-09-06T13:30:00+0000" game_date="20150906" group="1" group_name="1" leg="1" live_scores="10" public="1" round="1" round_type_id="1" season_id="2016" stage="1" time="14:30:00" venue="The Stoop" venue_id="35">
+        <team home_or_away="home" team_id="954" />
+        <team home_or_away="away" team_id="953" />
+    </fixture>
+    <fixture id="7554" comp_id="3" comp_name="International" datetime="2016-06-10T23:00:00+0000" game_date="20160611" group="1" group_name="1" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" tbc="3" time="00:00:00" venue="Suncorp Stadium" venue_id="49">
+        <team home_or_away="home" team_id="100" />
+        <team home_or_away="away" team_id="550" />
+    </fixture>
+    <fixture id="7555" comp_id="3" comp_name="International" datetime="2016-06-17T23:00:00+0000" game_date="20160618" group="1" group_name="1" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" tbc="3" time="00:00:00" venue="AAMI Park" venue_id="215">
+        <team home_or_away="home" team_id="100" />
+        <team home_or_away="away" team_id="550" />
+    </fixture>
+    <fixture id="7556" comp_id="3" comp_name="International" datetime="2016-06-24T23:00:00+0000" game_date="20160625" group="1" group_name="1" leg="1" live_scores="11" public="1" round="1" round_type_id="1" season_id="2016" stage="1" tbc="3" time="00:00:00" venue="Allianz Stadium" venue_id="41">
+        <team home_or_away="home" team_id="100" />
+        <team home_or_away="away" team_id="550" />
+    </fixture>
+    <teams>
+        <team id="100" name="Australia" />
+        <team id="500" name="Wales" />
+        <team id="550" name="England" />
+        <team id="600" name="Ireland" />
+        <team id="650" name="France" />
+        <team id="700" name="Scotland" />
+        <team id="750" name="Tonga" />
+        <team id="800" name="Argentina" />
+        <team id="850" name="New Zealand" />
+        <team id="900" name="South Africa" />
+        <team id="950" name="Samoa" />
+        <team id="951" name="Romania" />
+        <team id="952" name="Italy" />
+        <team id="953" name="Canada" />
+        <team id="954" name="Fiji" />
+        <team id="2800" name="Uruguay" />
+        <team id="2850" name="Georgia" />
+        <team id="2900" name="Namibia" />
+        <team id="2950" name="USA" />
+        <team id="3000" name="Japan" />
+        <team id="8850" name="Russia" />
+    </teams>
+</fixtures>

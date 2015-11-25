@@ -1,4 +1,4 @@
-module.exports = function(grunt, options) {
+module.exports = function (grunt, options) {
     return {
         'javascript': {
             files: [
@@ -7,6 +7,12 @@ module.exports = function(grunt, options) {
                     cwd: 'static/public/javascripts/components',
                     src: ['**/*.js'],
                     dest: options.staticTargetDir + 'javascripts/components'
+                },
+                {
+                    expand: true,
+                    cwd: 'static/public/javascripts/vendor',
+                    src: ['**/*.js'],
+                    dest: options.staticTargetDir + 'javascripts/vendor'
                 },
                 {
                     expand: true,
@@ -25,15 +31,16 @@ module.exports = function(grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
+                },{
                     expand: true,
                     cwd: options.requirejsDir,
                     src: [
                         'core.js',
                         'core.js.map',
-                        'bootstraps/app.js',
-                        'bootstraps/app.js.map',
+                        'bootstraps/standard.js',
+                        'bootstraps/standard.js.map',
+                        'bootstraps/enhanced.js',
+                        'bootstraps/enhanced.js.map',
                         'bootstraps/commercial.js',
                         'bootstraps/commercial.js.map',
                         'components/curl/curl-domReady.js'
@@ -66,12 +73,13 @@ module.exports = function(grunt, options) {
                 dest: options.staticTargetDir + 'flash'
             }]
         },
-        headCss: {
+        inlineCss: {
             files: [{
                 expand: true,
                 cwd: options.staticTargetDir + 'stylesheets',
-                src: ['**/head*.css'],
-                dest: 'common/conf/assets'
+                src: ['**/head*.css', 'inline/**/*.css'],
+                flatten: true,
+                dest: 'common/conf/assets/inline-stylesheets'
             }]
         },
         headJs: {
@@ -84,9 +92,9 @@ module.exports = function(grunt, options) {
                 }
             ]
         },
-        // assets.map must go where Play can find it from resources at runtime.
+        // asset maps must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.
-        assetMap: {
+        assetMaps: {
             files: [{
                 expand: true,
                 cwd: options.staticHashDir + 'assets',

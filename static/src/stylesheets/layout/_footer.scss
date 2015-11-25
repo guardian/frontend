@@ -42,10 +42,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         }
     }
 
-    .is-immersive & {
-        display: none;
-    }
-
     .control__info {
         display: inline-block;
     }
@@ -84,32 +80,140 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         color: colour(neutral-4);
     }
 }
+
 .colophon {
-    @include fs-bodyHeading(1);
-    list-style: none;
-    margin: 0;
     padding-top: $gs-baseline * 2;
     padding-bottom: $gs-baseline * .5;
+}
+
+.colophon__list {
+    @include clearfix();
+    @include fs-bodyHeading(1);
+    @include f-headlineSans();
+    float: left;
+    list-style: none;
+    margin: 0;
+    width: 100%;
+
     @include mq($until: tablet) {
-        @include columns(2);
+        @include columns(2, $gs-gutter);
     }
 
-    @include mq(tablet, wide) {
-        @include columns(3);
+    @include mq(tablet) {
+        box-sizing: border-box;
+        width: 75%;
     }
 
-    @include mq(wide) {
-        @include columns(4);
+    @include mq($from: tablet, $until: leftCol) {
+        @include columns(3, $gs-gutter);
+    }
+
+    @include mq(desktop) {
+        width: gs-span(9);
+        padding-left: $gs-gutter;
+    }
+
+    // no-email is out of A/B test
+    .l-footer__secondary--no-email & {
+        @include mq(leftCol) {
+            @include columns(4, $gs-gutter);
+            width: gs-span(12);
+        }
+    }
+
+    // has-email is in A/B test
+    .l-footer__secondary--has-email & {
+        @include mq($from: leftCol, $until: wide) {
+            @include columns(3, $gs-gutter);
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(10);
+        }
+
+        @include mq(wide) {
+            @include columns(4, $gs-gutter);
+            width: gs-span(11);
+        }
     }
 
     a {
         display: inline-block;
         padding-bottom: $gs-baseline;
+        text-transform: lowercase;
     }
-
 }
+
 .colophon__item {
     box-sizing: border-box;
+}
+
+.footer__follow-us {
+    margin-bottom: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    border-bottom: 1px solid colour(neutral-2);
+
+    @include mq(tablet) {
+        float: left;
+        border: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 $gs-gutter 0 0;
+        width: 25%;
+    }
+
+    @include mq(desktop) {
+        padding-right: 0;
+        width: gs-span(3);
+    }
+
+    .l-footer__secondary--has-email & {
+        @include mq($from: mobileLandscape, $until: tablet) {
+            padding-right: 50%;
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(3);
+        }
+
+        @include mq(wide) {
+            width: gs-span(4);
+        }
+    }
+
+    .l-footer__secondary--no-email & {
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
+        }
+    }
+
+    .button {
+        border-color: colour(neutral-2);
+
+        &:hover {
+            border-color: colour(neutral-4);
+        }
+
+        @include mq(tablet) {
+            display: block;
+            margin-bottom: $gs-baseline;
+            width: 150px; // required to fit longer text
+
+            .l-footer__secondary--has-email & {
+                display: inline-block;
+                width: auto;
+            }
+        }
+    }
+}
+
+.footer__follow-us__item {
+    display: inline;
+    text-transform: lowercase;
 }
 
 .l-footer__misc {

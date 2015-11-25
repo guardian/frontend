@@ -1,16 +1,18 @@
 package services
 
+import java.util.concurrent.TimeoutException
+
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.regions.Region.getRegion
 import com.amazonaws.regions.Regions.EU_WEST_1
 import com.amazonaws.services.simpleemail._
 import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
-import common.{ExecutionContexts, Logging}
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import conf.Configuration.aws.mandatoryCredentials
 
 import scala.collection.JavaConversions._
+import scala.concurrent.duration._
 import scala.concurrent.{Future, Promise}
-import scala.language.implicitConversions
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
@@ -63,7 +65,7 @@ object EmailService extends ExecutionContexts with Logging {
     }
 
     futureResponse onFailure {
-      case NonFatal(e) => log.error(s"Email send failed: $e")
+      case NonFatal(e) => log.error(s"Email send failed: ${e.getMessage}")
     }
 
     futureResponse
@@ -75,6 +77,10 @@ object EmailService extends ExecutionContexts with Logging {
     def sendAsyncEmail(request: SendEmailRequest): Future[SendEmailResult] = {
       val promise = Promise[SendEmailResult]()
 
+      AkkaAsync.after(1.minute) {
+        promise.tryFailure(new TimeoutException(s"Timed out"))
+      }
+
       val handler = new AsyncHandler[SendEmailRequest, SendEmailResult] {
         override def onSuccess(request: SendEmailRequest, result: SendEmailResult): Unit =
           promise.complete(Success(result))
@@ -82,9 +88,12 @@ object EmailService extends ExecutionContexts with Logging {
           promise.complete(Failure(exception))
       }
 
-      client.sendEmailAsync(request, handler)
-
-      promise.future
+      try {
+        client.sendEmailAsync(request, handler)
+        promise.future
+      } catch {
+        case NonFatal(e) => Future.failed(e)
+      }
     }
   }
 

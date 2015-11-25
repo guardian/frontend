@@ -24,19 +24,21 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val globalPopular: Option[MostPopular] = {
       var globalPopularContent = MostPopularAgent.mostPopular(edition)
       if (globalPopularContent.nonEmpty)
-        Some(MostPopular("across the guardian", "", globalPopularContent.map(FaciaContentConvert.frontentContentToFaciaContent)))
+        Some(MostPopular("across the guardian", "", globalPopularContent.map(FaciaContentConvert.frontendContentToFaciaContent)))
       else
         None
     }
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
     sectionPopular.map { sectionPopular =>
-      sectionPopular ++ globalPopular match {
+      val mostPopular = globalPopular.toList ++ sectionPopular
+
+      mostPopular match {
         case Nil => NotFound
         case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
-            "html" -> views.html.fragments.collections.popular(popular),
+            "html" ->  views.html.fragments.collections.popular(popular),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
@@ -54,7 +56,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
-    val countryPopular = MostPopular("across the guardian", "", GeoMostPopularAgent.mostPopular(countryCode).map(FaciaContentConvert.frontentContentToFaciaContent))
+    val countryPopular = MostPopular("across the guardian", "", GeoMostPopularAgent.mostPopular(countryCode).map(FaciaContentConvert.frontendContentToFaciaContent))
 
     Cached(900) {
       JsonComponent(
@@ -86,7 +88,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     ).map{response =>
       val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
           val popular = response.mostViewed map { Content(_) } take 10
-          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(FaciaContentConvert.frontentContentToFaciaContent)))
+          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(FaciaContentConvert.frontendContentToFaciaContent)))
     }
   }
 }

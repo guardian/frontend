@@ -5,55 +5,128 @@
 /*global self*/
 /*global clients*/
 
-var findInArray = function (array, fn) {
-    for (var i = array.length - 1; i >= 0; i--) {
-        var value = array[i];
-        if (fn(value)) return value;
-    }
+//
+// Offline page
+//
+
+var staticCacheName = 'static';
+
+var getISODate = function () {
+    return new Date().toISOString().split('T')[0];
 };
 
-// Warning: reassignment!
-var notificationData;
+var fetchAll = function (inputs) {
+    return Promise.all(inputs.map(function (input) {
+        return fetch(input);
+    }));
+};
 
-self.addEventListener('push', function (event) {
-    event.waitUntil(
-        fetch('@{JavaScript(Configuration.pushNotifications.host + "/?url=http://push-api-web.gutools.co.uk/messages/web/latest")}')
-            .then(function (x) { return x.json(); })
-            .then(function (data) {
-                // Warning: reassign !
-                notificationData = {
-                    title: data.message,
-                    url: data.link,
-                    body: '',
-                    tag: 'breaking-news',
-                    icon: '@{JavaScript(Static("images/favicons/152x152.png").path)}'
-                };
+var cachePageAndAssetResponses = function (jsonResponse, assetResponses) {
+    var cacheName = [getISODate(), staticCacheName].join('-');
+    return caches.open(cacheName).then(function (cache) {
+        return jsonResponse.clone().json().then(function (jsonResponseJson) {
+            var pageRequest = new Request('/offline-page');
+            var pageResponse = new Response(jsonResponseJson.html, { headers: { 'Content-Type': 'text/html' } });
+            return Promise.all([
+                cache.put(pageRequest, pageResponse)
+            ].concat(
+                assetResponses.map(function (assetResponse) {
+                    var assetRequest = new Request(assetResponse.url);
+                    return cache.put(assetRequest, assetResponse);
+                })
+            ));
+        });
+    });
+};
 
-                return self.registration.showNotification(notificationData.title, {
-                    body: notificationData.body,
-                    icon: notificationData.icon,
-                    tag: notificationData.tag
+// The JSON contains the HTML and asset versions. We cache the assets at
+// their specified URLs and the page HTML as '/offline-page'.
+var updateCache = function () {
+    // Fetch page and all assets. Iff all responses are OK then cache all assets and page.
+    return fetch('/offline-page.json').then(function (jsonResponse) {
+        if (jsonResponse.ok) {
+            return jsonResponse.clone().json().then(function (json) {
+                return fetchAll(json.assets).then(function (assetResponses) {
+                    var allAssetResponsesOk = assetResponses.every(function (response) { return response.ok; });
+
+                    if (allAssetResponsesOk) {
+                        return cachePageAndAssetResponses(jsonResponse, assetResponses);
+                    }
                 });
+            });
+        }
+    });
+};
+
+var deleteOldCaches = function () {
+    return caches.keys().then(function (keys) {
+        return Promise.all(
+            keys.map(function (key) {
+                if (!keyMatchesTodaysCache(key)) {
+                    return caches.delete(key);
+                }
             })
-    );
+        );
+    })
+};
+
+var keyMatchesTodaysCache = function (key) {
+    return new RegExp('^' + getISODate() + '-').test(key);
+};
+
+var doesRequestAcceptHtml = function (request) {
+    return request.headers.get('Accept')
+        .split(',')
+        .some(function (type) { return type === 'text/html'; });
+};
+
+var isCacheUpdated = function () {
+    return caches.keys().then(function (keys) {
+        return keys.some(keyMatchesTodaysCache);
+    });
+};
+
+self.addEventListener('install', function (event) {
+    event.waitUntil(updateCache());
 });
 
-self.addEventListener('notificationclick', function (event) {
-    // Android doesn't close the notification when you click on it
-    // See: http://crbug.com/463146
-    event.notification.close();
+this.addEventListener('fetch', function (event) {
+    var request = event.request;
 
-    var url = notificationData.url;
+    if (doesRequestAcceptHtml(request)) {
+        isCacheUpdated().then(function (isUpdated) {
+            if (!isUpdated) {
+                updateCache().then(deleteOldCaches);
+            }
+        });
+    }
 
-    // Focus if already open
-    event.waitUntil(
-        clients.matchAll({ type: 'window' })
-            .then(function (clientList) {
-                var matchingClient = findInArray(clientList, function (client) {
-                    return new URL(client.url).pathname === url;
-                });
-                return matchingClient ? matchingClient.focus() : clients.openWindow(url);
-            })
-    );
+    var url = new URL(request.url);
+    var isRootRequest = url.host === self.location.host;
+    // To workaround a bug in Chrome which results in broken HTTPS->HTTP
+    // redirects, we only handle root requests if they match the developer
+    // blog. The info section often hosts holding pages which will could
+    // eventually redirect to a HTTP page.
+    // https://github.com/guardian/frontend/issues/10936
+    var isRequestToDeveloperBlog = url.pathname.match(/^\/info\/developer-blog($|\/.*$)/);
+    if (isRootRequest && isRequestToDeveloperBlog && doesRequestAcceptHtml(request)) {
+        // HTML pages fallback to offline page
+        event.respondWith(
+            fetch(request)
+                .catch(function () {
+                    return caches.match('/offline-page');
+                })
+        );
+    @* In dev, all requests come from one server (by default) *@
+    } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
+        // Default fetch behaviour
+        // Cache first for all other requests
+        event.respondWith(
+            caches.match(request)
+                .then(function (response) {
+                    return response || fetch(request);
+                })
+        );
+    }
 });
 

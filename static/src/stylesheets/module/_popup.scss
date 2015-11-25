@@ -77,7 +77,6 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .popup__toggle {
-
     // disclosure arrow
     &:after {
         content: '';
@@ -95,7 +94,9 @@ $control-offset: 36 + $gs-gutter/2;
     }
 
     &.is-active,
-    .is-active > & {
+    .is-active > &,
+    .is-not-modern .brand-bar__item--has-control:hover &,
+    .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
         @include mq(tablet) {
             &:after {
                 border-top: 0;
@@ -117,8 +118,15 @@ $control-offset: 36 + $gs-gutter/2;
             border-right: $popup-anchor-arrow-size solid transparent;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
             top: $popup-top - $popup-anchor-arrow-size;
+        }
+    }
+}
 
-            .brand-bar__item--has-control & {
+.popup__toggle {
+    &.is-active,
+    .is-active > & {
+        &:before {
+            .has-popup & {
                 @include mq(tablet) {
                     margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
                 };
@@ -162,8 +170,11 @@ $control-offset: 36 + $gs-gutter/2;
 
 .popup__item {
     display: block;
-    border-bottom: 1px solid colour(neutral-5);
     line-height: 36px;
+
+    a {
+        border-bottom: 1px solid colour(neutral-5);
+    }
 
     &:last-child {
         border-bottom: 0;
@@ -196,9 +207,9 @@ $control-offset: 36 + $gs-gutter/2;
 .brand-bar__item--profile {
     // stupid having to reset this, but :not was :not available to all in 2009
     @if ($old-ie == true) {
-        .popup__toggle:before,
+        .popup__toggle:hover:before,
         .popup__toggle:after {
-            display: none;
+            display: none !important;
         }
         &.is-signed-in .popup__toggle {
             display: inline-block;
@@ -207,31 +218,44 @@ $control-offset: 36 + $gs-gutter/2;
         &:not(.is-signed-in) .popup__toggle {
             &:before,
             &:after {
-                display: none;
+                display: none !important;
             }
         }
     }
 }
 
-.brand-bar__item--profile .control__icon-wrapper[data-saved-content-count]:before {
-    content: attr(data-saved-content-count);
-    background: colour(news-main-2);
-    display: block;
+.brand-bar__item--profile .save-for-later__icon {
     position: absolute;
-    bottom: -4px;
-    left: 20px;
+    top: 20px;
+    left: 30px;
+    display: none;
+    fill: colour(news-main-2);
+}
+
+.has-saved-articles .save-for-later__icon {
+    display: inline;
+}
+
+.js-on.is-modern .brand-bar__item--saved-for-later:after {
+    display: inline-block;
+    content: attr(data-saved-content-count);
+    position: relative;
+    top: -1px;
+    line-height: $gs-baseline;
     font-size: 11px;
-    line-height: 1;
-    padding: 2px 5px;
+    margin-left: $gs-gutter / 2;
+    padding: 0 $gs-gutter / 3;
     border-radius: 30px;
-    font-family: $f-sans-serif-text;
+    text-align: center;
+    background: colour(news-main-2);
+    color: #ffffff;
 }
 
 /* Search Menu
    ========================================================================== */
 
 .popup--search {
-    z-index: 300;
+    z-index: $zindex-modal;
     padding: 0;
     right: 0;
     padding-top: 5px; // manual amount, determined by google, not guss-grid-system

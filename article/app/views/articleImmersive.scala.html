@@ -1,0 +1,7 @@
+@(model: ArticlePage)(implicit request: RequestHeader)
+@import conf.switches.Switches._
+
+@main(model.article){
+}{
+    @fragments.articleBodyImmersive(model)
+}

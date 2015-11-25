@@ -1,0 +1,18 @@
+@(forecasts: Seq[weather.models.ForecastResponse])(implicit request: RequestHeader)
+
+@import common.Edition
+
+
+@for((forecast, index) <- forecasts.drop(1).zipWithIndex) {
+    <li class="forecast__item forecast__item--@index">
+        <p class="weather__desc">
+            <span class="u-h">The temperature at</span>
+            <time class="weather__time">@forecast.hourString</time>
+            <span class="u-h">will be</span>
+            @defining(forecast.temperatureForEdition(Edition(request))) { temp =>
+                <span class="weather__temp">@temp</span>
+            }
+        </p>
+        @fragments.inlineSvg(s"weather-${forecast.weatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@forecast.weatherText</span>
+    </li>
+}

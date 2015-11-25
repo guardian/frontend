@@ -1,0 +1,112 @@
+{
+    "name": "Cryptic crossword No 26,666",
+    "type": "cryptic",
+    "number": 26666,
+    "date": "2015-09-02",
+    "dimensions": {
+        "cols": 15,
+        "rows": 15
+    },
+    "entries": [
+        {
+            "id": "10-across",
+            "number": 10,
+            "humanNumber": "10",
+            "direction": "across",
+            "position": {
+                "x": 5,
+                "y": 3
+            },
+            "separatorLocations": {},
+            "length": 9,
+            "clue": "See 2",
+            "group": [
+                "2-down",
+                "10-across",
+                "23-down",
+                "21-across"
+            ],
+            "solution": "THEROMANS"
+        },
+        {
+            "id": "21-across",
+            "number": 21,
+            "humanNumber": "21",
+            "direction": "across",
+            "position": {
+                "x": 1,
+                "y": 11
+            },
+            "separatorLocations": {},
+            "length": 9,
+            "clue": "See 2",
+            "group": [
+                "2-down",
+                "10-across",
+                "23-down",
+                "21-across"
+            ],
+            "solution": "DONEFORUS"
+        },
+        {
+            "id": "2-down",
+            "number": 2,
+            "humanNumber": "2,10,23,21across",
+            "direction": "down",
+            "position": {
+                "x": 3,
+                "y": 0
+            },
+            "separatorLocations": {
+                ",": [
+                    4,
+                    8,
+                    11,
+                    17,
+                    21,
+                    25,
+                    28
+                ]
+            },
+            "length": 8,
+            "clue": " Excuse me? Did some old people at any time cause our ruin? That's a funny revolutionary line (4,4,3,6,4,4,3,2)",
+            "group": [
+                "2-down",
+                "10-across",
+                "23-down",
+                "21-across"
+            ],
+            "solution": "WHATHAVE",
+            "format": "4,4,3,6,4,4,3,2"
+        },
+        {
+            "id": "23-down",
+            "number": 23,
+            "humanNumber": "23",
+            "direction": "down",
+            "position": {
+                "x": 13,
+                "y": 11
+            },
+            "separatorLocations": {},
+            "length": 4,
+            "clue": "See 2",
+            "group": [
+                "2-down",
+                "10-across",
+                "23-down",
+                "21-across"
+            ],
+            "solution": "EVER"
+        }
+    ],
+    "solutionAvailable": true,
+    "hasNumbers": true,
+    "randomCluesOrdering": false,
+    "instructions": "Five of the thematic solutions have something in common, not further defined in their clues",
+    "creator": {
+        "name": "Imogen",
+        "webUrl": "http://www.theguardian.com/profile/imogen"
+    },
+    "pdf": "http://static.guim.co.uk/crosswords/pdfs/gdn.cryptic.20150902.pdf"
+}

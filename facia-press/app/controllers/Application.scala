@@ -2,7 +2,7 @@ package controllers
 
 import common.ExecutionContexts
 import conf.Configuration
-import conf.Switches.FaciaPressOnDemand
+import conf.switches.Switches.FaciaPressOnDemand
 import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress}
 import model.NoCache
 import play.api.libs.json.Json
@@ -56,5 +56,17 @@ object Application extends Controller with ExecutionContexts {
 
   def pressDraftForPath(path: String) = Action.async {
     handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
+  }
+
+  def pressDraftForAll() = Action.async {
+    ConfigAgent.getPathIds.foldLeft(Future.successful(List[(String, Result)]())){ case (lastFuture, path) =>
+      lastFuture
+        .flatMap(resultList => handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
+          .map(path -> _)
+          .map(resultList :+ _))
+    }.map { pressedPaths =>
+      Ok(s"Pressed ${pressedPaths.length} paths on DRAFT: ${pressedPaths.map{ case (a, b) => (a, b.header.status)}}")}
+    .recover { case t: Throwable =>
+        InternalServerError(s"Error pressing all paths on draft: $t")}
   }
 }

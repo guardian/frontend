@@ -1,12 +1,21 @@
 @(metaData: model.MetaData, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
+@import conf.switches.Switches._
 
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
-    @fragments.stylesheetsLoad(projectName)
-    @fragments.stylesheetsUse()
+
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheets(projectName)
+
+    @* start trying to use the stylesheets *@
+    @if(AsyncCss.isSwitchedOn) {
+        <script>
+            @Html(templates.inlineJS.blocking.js.enableStylesheets().body)
+        </script>
+    }
 </head>
 <body id="top">
 

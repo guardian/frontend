@@ -4,7 +4,7 @@ define([
     config
 ) {
 
-    var remarketingUrl = 'http://www.googleadservices.com/pagead/conversion_async.js';
+    var remarketingUrl = '//www.googleadservices.com/pagead/conversion_async.js';
 
     function load() {
 

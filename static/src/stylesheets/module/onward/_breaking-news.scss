@@ -2,7 +2,7 @@ $breaking-news-icon-width: 36px;
 $breaking-news-close-icon-width: 32px;
 
 .breaking-news {
-    z-index: 16777271;
+    z-index: $zindex-popover;
     position: fixed;
     left: 0;
     right: 0;
@@ -10,6 +10,7 @@ $breaking-news-close-icon-width: 32px;
     opacity: 1;
     transform: translateY(0);
     box-shadow: 0 -1px 2px fade-out(#000000, .8);
+    backface-visibility: hidden;
 
     a,
     .button {

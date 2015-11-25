@@ -3,7 +3,6 @@ package services
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import contentapi.{QueryDefaults, SectionTagLookUp, SectionsLookUp}
@@ -39,7 +38,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, PlayResult]] = {
+  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)
+           (implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
 
     val section = leftSide.split('/').head
 
@@ -82,7 +82,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _) => Right(Found(s"/$leftSide+$rightSide"))
+      case GuardianContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
     }).recover(convertApiExceptions)
 
   }
@@ -128,16 +128,13 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-      if (page.exists(_.page.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(page, response, maybeSection)
-      }
+
+      ModelOrResult(page, response, maybeSection)
     }
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path"))
+      case GuardianContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
     }).recover(convertApiExceptions)
   }
 

@@ -8,17 +8,6 @@ if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
 
-# Build configuration
-BUILD_PARAMS=""
-if [ -n "$BUILD_NUMBER" ]; then
-  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.number=\"$BUILD_NUMBER\""
-fi 
-if [ -n "$BUILD_VCS_NUMBER" ]; then
-  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
-fi
-
-DOMAIN=`hostname -d`
-
 echo ''
 echo "********************************* JAVA VERSION *********************************"
 /usr/lib/jvm/java-1.8.0/bin/java -version
@@ -31,11 +20,10 @@ export JDK_HOME=/usr/lib/jvm/java-1.8.0/bin/java
 # NOTE this is not a REAL APP_SECRET it is just for DEV environments
 fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
-cat /dev/null | /usr/lib/jvm/java-1.8.0/bin/java -Xmx4096M \
+cat /dev/null | /usr/lib/jvm/java-1.8.0/bin/java -Xmx6144M \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.log.noformat=true \
   -XX:+UseConcMarkSweepGC \
   -DAPP_SECRET=$fake_secret \
   -Duser.timezone=Australia/Sydney \
-  $BUILD_PARAMS \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"

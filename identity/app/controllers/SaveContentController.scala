@@ -37,8 +37,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   import SavedArticleData._
 
-  implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
-
 
   val page = IdentityPage("/saved-for-later", "Saved for later", "saved-for-later")
 
@@ -115,7 +113,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
       def onSuccess(data: SavedArticleData): Future[Result] = {
         val response: Future[Result] = savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
           savedArticles =>
-            val form = savedArticlesForm.fill(SavedArticleData(savedArticles.articles.map(_.shortUrl)))
+            val form = savedArticlesForm.fill(SavedArticleData(savedArticles.newestFirst.map(_.shortUrl)))
             val updatedArticlesViow: Option[Future[Result]] = data.deleteArticle.map {
               shortUrlOfDeletedArticle =>
                 val updatedArticles = savedArticles.removeArticle(shortUrlOfDeletedArticle)

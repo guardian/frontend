@@ -1,6 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.Switches.SponsoredSwitch
+@import conf.switches.Switches.SponsoredSwitch
 @import model.{Gallery, Interactive, LiveBlog, Media}
 
 @defining(content.isSponsored(Some(Edition(request))),
@@ -33,7 +33,9 @@
                 Map("mobile" -> Seq("1,1", s"$adSlotWidth,90")),
                 showLabel = false,
                 refresh = false,
-                forceDisplay = content.sponsor.nonEmpty
+                forceDisplay = content.sponsor.nonEmpty,
+                contentSponsor = content.sponsor,
+                paidForContentType = content.sponsorshipType
             ) {
                 @content.sponsor.map { sponsor =>
                     <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
@@ -49,7 +51,7 @@
                                     Brought to you by:
                                 } else {
                                     @content.sponsorshipTag.map { tag =>
-                                    Guardian @tag.name is supported by:
+                                        @tag.name is supported by:
                                     }.getOrElse {
                                         Supported by:
                                     }

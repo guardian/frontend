@@ -440,16 +440,18 @@
         <form class="js-soulmates-feed">
             <label>Feed selection:
                 <select>
-                    <option value="brighton" selected>Brighton</option>
+                    <option value="mixednew" selected>Standard New</option>
+                    <option value="brighton">Brighton</option>
                     <option value="east">East of England</option>
                     <option value="eastmidlands">East Midlands</option>
                     <option value="mature">Mature</option>
                     <option value="men">Men</option>
-                    <option value="northeast">North East</option>
-                    <option value="northwest">North West</option>
+                    <option value="northeast">Northeast</option>
+                    <option value="northwest">Northwest</option>
+                    <option value="northwestnew">Northwest New</option>
                     <option value="scotland">Scotland</option>
                     <option value="south">South</option>
-                    <option value="southwest">South West</option>
+                    <option value="southwest">Southwest</option>
                     <option value="wales">Wales</option>
                     <option value="westmidlands">West Midlands</option>
                     <option value="women">Women</option>
@@ -514,6 +516,31 @@
             ) {
                 new CommercialComponent(document.querySelector('.js-merchandising-soulmates'), {
                 type: 'soulmates',
+                omnitureId: '[%OmnitureID%]',
+                clickMacro: '%%CLICK_URL_ESC%%'
+            }).create();
+        });
+    });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
+                Merchandising: commercial component (soulmates) test
+            </a>
+        </h2>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-soulmates-test ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+    loadCommercial(function () {
+        require(['common/modules/commercial/creatives/commercial-component'])
+            .then(function(
+                CommercialComponent
+            ) {
+                new CommercialComponent(document.querySelector('.js-merchandising-soulmates-test'), {
+                type: 'soulmatesTest',
                 omnitureId: '[%OmnitureID%]',
                 clickMacro: '%%CLICK_URL_ESC%%'
             }).create();

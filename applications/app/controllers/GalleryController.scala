@@ -2,11 +2,12 @@ package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
+import conf.switches.Switches
 import model._
 import play.api.mvc._
+import play.twirl.api.Html
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -41,27 +42,26 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     }
   }
 
-  private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
+  private def lookup(path: String, index: Int, isTrail: Boolean)
+                    (implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
     getResponse(LiveContentApi.item(path, edition)
       .showFields("all")
-    ).map{response =>
-        val gallery = response.content.filter(isSupported).map(Gallery(_))
-        val model = gallery map { g => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
+    ).map { response =>
+      val gallery = response.content.filter(isSupported).map(Gallery(_))
+      val model = gallery map { g => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
 
-      if (gallery.exists(_.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(model, response)
-      }
+      ModelOrResult(model, response)
 
-    }.recover{convertApiExceptions}
+    }.recover {convertApiExceptions}
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.gallery(model.gallery, model.related, model.index)
-    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.related, model.index)
+    val htmlResponse: (() => Html) = () =>
+      views.html.gallery(model.gallery, model.related, model.index)
+    val jsonResponse = () =>
+      views.html.fragments.galleryBody(model.gallery, model.related, model.index)
     renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
   }
 

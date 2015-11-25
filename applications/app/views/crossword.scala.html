@@ -1,51 +1,41 @@
 @(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
 
-@import common.LinkTo
 @import play.api.libs.json._
-@import views.html.fragments.crosswordEntries
-@import com.gu.crosswords.api.client.models.{Across, Down}
+@import views.html.fragments.crosswords._
 
 @main(crosswordPage) { } {
     <div class="l-side-margins">
+
+        @fragments.crosswordsOptOutBanner()
+
         <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
-            <header class="content__head tonal__head tonal__head--tone-news">
-                <div class="gs-container">
-                    <div class="content__main-column">
-                        <div class="content__labels">
-                            <div class="content__section-label">
-                                <a class="tone-colour" data-link-name="article section" href="@LinkTo("type/crossword")">Crosswords</a>
-                            </div>
-                        </div>
-                        <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
-                    </div>
-                </div>
-            </header>
+            @crosswordMetaHeader(crosswordPage)
 
             <div class="content__main tonal__main tonal__main--tone-news">
                 <div class="gs-container">
                     <div class="js-content-main-column">
 
-                        <div class="js-crossword"
+                        <div class="js-crossword @if(crosswordPage.hasGroupedClues) {has-grouped-clues}"
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
                             <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
-
                                 @* The following is a fallback for when JavaScript is not enabled *@
-                                <div class="crossword__grid-wrapper">
+                                <div class="crossword__container__grid-wrapper">
                                     <noscript>@svg</noscript>
                                 </div>
-                                <noscript>
-                                <div class="crossword__clues">
-                                    <div class="crossword__clues--across">
-                                        <h3 class="crossword__clues-header">Across</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
-                                    </div>
 
-                                    <div class="crossword__clues--down">
-                                        <h3 class="crossword__clues-header">Down</h3>
-                                        <noscript>@crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                                <noscript>
+                                    <div class="crossword__clues">
+                                        <div class="crossword__clues--across">
+                                            <h3 class="crossword__clues-header">Across</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                        </div>
+
+                                        <div class="crossword__clues--down">
+                                            <h3 class="crossword__clues-header">Down</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                        </div>
                                     </div>
-                                </div>
                                 </noscript>
                             </div>
                         </div>
@@ -53,5 +43,6 @@
                 </div>
             </div>
         </article>
+        @crosswordFooter(crosswordPage)
     </div>
 }

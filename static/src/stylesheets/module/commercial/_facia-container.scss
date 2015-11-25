@@ -3,33 +3,13 @@
    ========================================================================== */
 .commercial {
     background-color: colour(neutral-6);
-
-    .button--tertiary {
-
-        .i-arrow-black {
-            path { fill: #000000; }
-        }
-        .i-arrow-black-right,
-        .i-arrow-black {
-            opacity: .3;
-        }
-        &:hover {
-            .i-arrow-black-right,
-            .i-arrow-black {
-                opacity: 1;
-            }
-        }
-    }
 }
 .commercial__inner {
     position: relative;
     overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 
     @include mq(leftCol) {
-        padding-left: 0;
-        padding-right: 0;
         max-width: gs-span(14) + $gs-gutter*2;
     }
     @include mq(wide) {
@@ -37,17 +17,18 @@
         max-width: none;
     }
 }
-.commercial__header__inner,
+.commercial__header,
 .commercial__body {
     position: relative;
     overflow: hidden;
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
 
     @include mq($until: leftCol) {
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
     }
     @include mq(mobileLandscape) {
         max-width: gs-span(8);
+        padding: $gs-baseline/2 $gs-gutter $gs-baseline;
     }
     @include mq(tablet) {
         max-width: gs-span(9);
@@ -56,31 +37,31 @@
         max-width: gs-span(12);
     }
 }
-.commercial__header__inner {
-    padding: $gs-baseline/2 $gs-gutter/2;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    @include mq(leftCol) {
-        box-sizing: border-box;
-        height: 100%;
-    }
-}
 .commercial__header {
-    height: 100%;
-    padding-top: 0;
     @include fs-header(2);
 
+    @include mq($until: leftCol) {
+        padding-bottom: $gs-baseline/2;
+        padding-right: $gs-gutter * 2;
+    }
     @include mq(leftCol) {
         width: $left-column + $gs-gutter;
         position: absolute;
         top: 0;
         bottom: 0;
+        box-sizing: border-box;
     }
     @include mq(wide) {
         width: $left-column-wide + $gs-gutter;
+    }
+}
+.commercial__body {
+    @include mq(leftCol) {
+        margin-left: $left-column + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left: $left-column-wide + $gs-gutter;
+        margin-right: 0;
     }
 }
 .commercial__title {
@@ -115,21 +96,6 @@
         @include mq($until: leftCol) {
             opacity: .8;
         }
-    }
-}
-.commercial__body {
-    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    @include mq(leftCol) {
-        margin-left: $left-column + $gs-gutter;
-    }
-    @include mq(wide) {
-        margin-left: $left-column-wide + $gs-gutter;
-        margin-right: 0;
     }
 }
 .commercial__title__logo {
@@ -223,15 +189,17 @@
         bottom: $gs-baseline;
         left: $gs-gutter/2;
     }
+    @include mq($until: mobileLandscape) {
+        width: $base-size * 6;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: #ffffff;
+    }
     .hide-on-mobile-inline {
         @include mq(leftCol, wide) {
             display: none !important;
-        }
-    }
-    .i-right {
-        @include mq($until: mobileLandscape) {
-            margin: -1px -13px;
-            float: none;
         }
     }
 }
@@ -261,21 +229,19 @@
    ========================================================================== */
 @include mq(wide) {
     .has-page-skin {
-        .commercial__header__inner,
+        .commercial__header,
         .commercial__body {
             margin-left: auto;
             margin-right: auto;
         }
-        .commercial__header__inner {
-            box-sizing: content-box;
+        .commercial__header {
+            width: 100%;
+            height: auto;
+            position: relative;
             margin: 0;
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
-            height: auto;
-        }
-        .commercial__header {
-            width: 100%;
-            position: relative;
+            box-sizing: content-box;
         }
         .commercial__search {
             position: absolute;

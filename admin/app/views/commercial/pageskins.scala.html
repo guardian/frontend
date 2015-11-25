@@ -29,7 +29,7 @@
 
 @admin_main("Pageskins", env, isAuthed = true) {
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h1>Pageskins</h1>
     <p>Pages will squish to accommodate pageskins according to these criteria:</p>

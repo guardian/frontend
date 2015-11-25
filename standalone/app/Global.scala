@@ -1,14 +1,16 @@
-import com.gu.googleauth.{UserIdentity, FilterExemption, GoogleAuthFilters}
+import com.gu.googleauth.{FilterExemption, UserIdentity}
 import common.ExecutionContexts
-import conf.{Switches, Filters}
+import common.dfp.FaciaDfpAgentLifecycle
+import conf._
 import controllers.AuthCookie
-import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
 import play.Play
 import play.api.mvc.Results._
 import play.api.mvc._
-import scala.concurrent.Future
+import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
+
+import scala.concurrent.Future
 
 // OBVIOUSLY this is only for the preview server
 // NOT to be used elsewhere...
@@ -56,9 +58,14 @@ object PreviewAuthFilters {
 }
 
 object Global extends WithFilters(
-  new PreviewAuthFilters.AuthFilterWithExemptions(
+    new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*) with CommercialLifecycle
-                                                        with OnwardJourneyLifecycle
-                                                        with ConfigAgentLifecycle
-                                                        with DfpAgentLifecycle
+    FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
+  with CommercialLifecycle
+  with OnwardJourneyLifecycle
+  with ConfigAgentLifecycle
+  with FaciaDfpAgentLifecycle
+  with SwitchboardLifecycle
+  with FootballLifecycle
+  with CricketLifecycle
+  with RugbyLifecycle

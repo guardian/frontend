@@ -3,20 +3,31 @@
 @import views.support.Format
 
 <aside class="fc-item__meta js-item__meta">
-    @if(conf.Switches.ABSaveForLaterSwitch.isSwitchedOn) {
-        <button class="js-save-for-later-link fc-save-for-later is-hidden u-faux-block-link__promote" type="button">
-           @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
-        </button>
-    }
     @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {
         <time class="fc-item__timestamp@if(timeStampDisplay.javaScriptUpdate){ js-item__timestamp}"
-              datetime="@publishedAt.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-              data-timestamp="@publishedAt.getMillis"
-              data-relativeformat="short">
-              @fragments.inlineSvg("clock", "icon")
-              <span class="fc-timestamp__text">
-                <span class="u-h">Published: </span>@Format(publishedAt, timeStampDisplay.formatString)
-            </span>
+        datetime="@publishedAt.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+        data-timestamp="@publishedAt.getMillis"
+        data-relativeformat="short">
+            @fragments.inlineSvg("clock", "icon")
+        <span class="fc-timestamp__text">
+            <span class="u-h">Published: </span>@Format(publishedAt, timeStampDisplay.formatString)
+        </span>
         </time>
+    }
+
+    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
+        @if(item.isSavedForLater) {
+            <button class="button button--secondary button--medium saved-content__button js-saved-content__button"
+                    data-link-name="Delete"
+                    name="deleteArticle"
+                    type="submit"
+                    @item.shortUrl.map { url => value="@url" }>
+            @fragments.inlineSvg("cross", "icon") Remove
+            </button>
+        } else {
+            <button class="js-save-for-later-link fc-save-for-later u-faux-block-link__promote  is-hidden">
+            @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
+            </button>
+        }
     }
 </aside>

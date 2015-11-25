@@ -5,14 +5,14 @@ import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
-import play.api.{Application => PlayApp, Plugin}
+import play.api.GlobalSettings
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
+trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
 
-  def scheduleJobs() {
+  private def scheduleJobs() {
     Competitions.competitionIds.zipWithIndex map { case (id, index) =>
       //stagger fixtures and results refreshes to avoid timeouts
       val seconds = index * 5 % 60
@@ -39,18 +39,9 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
     Jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
       TeamMap.refresh()
     }
-
-    // Have all these run once at load, then on the scheduled times
-    AkkaAsync.after(5.seconds){
-      val competitionUpdate = Competitions.refreshCompetitionData()
-      competitionUpdate.onSuccess { case _ => Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent) }
-      Competitions.refreshMatchDay()
-      LiveBlogAgent.refresh()
-      TeamMap.refresh()
-    }
   }
 
-  def descheduleJobs() {
+  private def descheduleJobs() {
     Competitions.competitionIds map { id =>
       Jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }
@@ -60,21 +51,32 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
     Jobs.deschedule("TeamMapRefreshJob")
   }
 
-  override def onStart() {
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
     descheduleJobs()
     scheduleJobs()
+
+    AkkaAsync {
+      val competitionUpdate = Competitions.refreshCompetitionData()
+      competitionUpdate.onSuccess { case _ => Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent) }
+      Competitions.refreshMatchDay()
+      LiveBlogAgent.refresh()
+      TeamMap.refresh()
+    }
   }
 
-  override def onStop() {
+  override def onStop(app: play.api.Application) {
     descheduleJobs()
+    super.onStop(app)
   }
+
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
 
   import play.api.Play.current
 
-  override lazy val base = Configuration.pa.host
+  override lazy val base = SportConfiguration.pa.host
 
   private var _http: Http = new Http {
     override def GET(urlString: String): Future[pa.Response] = {
@@ -99,7 +101,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   def http = _http
   def http_=(delegateHttp: Http) = _http = delegateHttp
 
-  lazy val apiKey = Configuration.pa.apiKey
+  lazy val apiKey = SportConfiguration.pa.apiKey
 
   override def GET(urlString: String): Future[pa.Response] = {
     _http.GET(urlString)

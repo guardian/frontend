@@ -5,7 +5,7 @@ import common._
 import model._
 
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.{LocalDate, DateTime}
+import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -74,8 +74,8 @@ object ContributorLinks {
       case (t, tag) =>
         t.replaceFirst(tag.name,
         s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
-           |  <a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link"
-           |    href="${LinkTo("/"+tag.id)}">${tag.name}</a></span>""".stripMargin)
+           |  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
+           |    href="${LinkTo("/"+tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin)
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
@@ -124,13 +124,16 @@ object AuFriendlyFormat {
 }
 
 object Format {
-  def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    apply(date, Edition(request), pattern)
+  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
+    apply(date, Edition(request), pattern, tzOverride)
   }
 
-  def apply(date: DateTime, edition: Edition, pattern: String): String = {
-    val timezone = edition.timezone
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
+  def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[DateTimeZone]): String = {
+    val timeZone = tzOverride match {
+      case Some(tz) => tz
+      case _ => edition.timezone
+    }
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
   }
 
   def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTimeAtStartOfDay, pattern)(request)

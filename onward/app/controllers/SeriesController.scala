@@ -1,18 +1,19 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
-import play.api.mvc.{Controller, Action, RequestHeader}
-import common._
-import model._
-import services.{FaciaContentConvert, CollectionConfigWithId}
-import scala.concurrent.Future
-import implicits.Requests
-import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import layout.{DescriptionMetaHeader, MetaDataHeader, CollectionEssentials, FaciaContainer}
-import slices.{Fixed, FixedContainers}
-import LiveContentApi.getResponse
+import com.gu.facia.api.models.CollectionConfig
+import common._
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import implicits.Requests
+import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
+import model._
+import play.api.mvc.{Action, Controller, RequestHeader}
+import services.{CollectionConfigWithId, FaciaContentConvert}
+import slices.Fixed
+
+import scala.concurrent.Future
 
 case class Series(id: String, tag: Tag, trails: Seq[Content]) {
   lazy val displayName = tag.id match {
@@ -45,7 +46,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
           } else { None }
         }
       }
-      seriesResponse.recover{ case GuardianContentApiError(404, message) =>
+      seriesResponse.recover{ case GuardianContentApiError(404, message, _) =>
         log.info(s"Got a 404 calling content api: $message" )
         None
       }
@@ -68,7 +69,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
         1,
         Fixed(visuallyPleasingContainerForStories(series.trails.length)),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(series.trails map FaciaContentConvert.frontendContentToFaciaContent take 4, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps
        .copy(customHeader = header),

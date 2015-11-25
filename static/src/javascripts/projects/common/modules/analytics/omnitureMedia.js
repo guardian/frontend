@@ -1,13 +1,12 @@
 /* global guardian, s */
 define([
-    'common/utils/_',
+    'qwery',
     'common/utils/config',
-    'qwery'
-], function (
-    _,
-    config,
-    qwery
-) {
+    'common/modules/analytics/omniture',
+    'lodash/objects/values',
+    'common/utils/chain',
+    'common/modules/experiments/ab'
+], function (qwery, config, omniture, values, chain, ab) {
 
     function OmnitureMedia(player) {
 
@@ -39,7 +38,17 @@ define([
                 'video:fullscreen': 'event96',
                 // extra events with no set ordering
                 duration: 'event57'
-            };
+            },
+            abTestParticipation = ab.makeOmnitureTag(),
+            trackingVars = [
+                // these tracking vars are specific to media events.
+                'eVar11',   // embedded or on platform
+                'prop41',   // preroll milestone
+                'prop43',   // media type
+                'prop44',   // media id
+                'eVar44',   // media id
+                'eVar74',   // ad or content
+                'eVar61'];  // restricted
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -71,11 +80,14 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9,channel';
-            s.linkTrackEvents = _.values(events).join(',');
+            s.linkTrackVars = omniture.getStandardProps() + ',' + chain(trackingVars).join(',');
+            s.linkTrackEvents = values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
+
+            s.list1 = abTestParticipation;
+
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -86,13 +98,15 @@ define([
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
-            s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61,channel';
-            s.Media.trackEvents = 'event17,event18,event19,event20,event21,event22,event23,event57,event59,event64,event96,event97,event98';
+            s.Media.trackVars = omniture.getStandardProps() + ',' + chain(trackingVars).join(',');
+            s.Media.trackEvents = values(events).join(',');
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
+            s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
+
+            s.list1 = abTestParticipation;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 
@@ -172,9 +186,9 @@ define([
             player.one('video:content:play', this.onContentPlay.bind(this));
             player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));
 
-            player.one('video:play:25', this.sendNamedEvent.bind(this, 'video:25'));
-            player.one('video:play:50', this.sendNamedEvent.bind(this, 'video:50'));
-            player.one('video:play:75', this.sendNamedEvent.bind(this, 'video:75'));
+            player.one('video:content:25', this.sendNamedEvent.bind(this, 'video:25'));
+            player.one('video:content:50', this.sendNamedEvent.bind(this, 'video:50'));
+            player.one('video:content:75', this.sendNamedEvent.bind(this, 'video:75'));
             player.one('video:content:end', this.sendNamedEvent.bind(this, 'video:end'));
             player.one('audio:content:end', this.sendNamedEvent.bind(this, 'audio:end'));
             player.on('player:fullscreen', this.sendNamedEvent.bind(this, 'video:fullscreen'));

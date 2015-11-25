@@ -54,7 +54,7 @@ itemscope itemtype="http://schema.org/Comment">
                     data-timestamp="@comment.date.getMillis" data-relativeformat="med" title="Permalink to this comment">
                     @Format(comment.date, "d MMM y HH:mm")
                     </time>
-                    <i class="i i-comment-anchor"></i>
+                    @fragments.inlineSvg("comment-anchor", "icon")
                 </a>
             </div>
             @fragments.commentBadges(comment)
@@ -70,9 +70,9 @@ itemscope itemtype="http://schema.org/Comment">
                 <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
                 <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
             </span>
-            <button class="u-button-reset d-comment__recommend-button">
+            <button class="u-button-reset d-comment__recommend-button rounded-icon">
                 <span class="d-comment__recommend-pulse"></span>
-                <i></i>
+                @fragments.inlineSvg("arrow-up-white", "icon")
             </button>
         </div>
 

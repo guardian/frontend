@@ -1,4 +1,4 @@
-@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, accountDetailsForm: Form[form.AccountFormData])(implicit request: RequestHeader)
+@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, accountDetailsForm: Form[form.AccountFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
@@ -32,10 +32,10 @@
 
                 <li class="form-field form-field--email-validation">
                     @if(user.statusFields.userEmailValidated.getOrElse(false)){
-                        <i class="i i-status-ok"></i>
+                        @fragments.inlineSvg("status-ok", "icon")
                         <p class="form__note">Your email address has been validated.</p>
                     }else{
-                        <i class="i i-status-alert"></i>
+                        @fragments.inlineSvg("status-alert", "icon")
                         <p class="form__note">
                             Please confirm your email address to post comments.<br />
                             <a class="js-id-send-validation-email" data-link-name="Resend verification email">Send validation email</a>

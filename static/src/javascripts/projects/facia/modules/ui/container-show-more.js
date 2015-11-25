@@ -2,25 +2,32 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'raven',
-    'common/utils/_',
+    'common/utils/report-error',
     'common/utils/$',
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'lodash/collections/groupBy',
+    'lodash/collections/filter',
+    'lodash/collections/map',
+    'lodash/collections/forEach',
+    'lodash/collections/find'
 ], function (
     bonzo,
     fastdom,
     qwery,
-    raven,
-    _,
+    reportError,
     $,
     ajax,
     config,
     mediator,
-    userPrefs
-) {
+    userPrefs,
+    groupBy,
+    filter,
+    map,
+    forEach,
+    find) {
     var HIDDEN_CLASS_NAME = 'fc-show-more--hidden',
         VISIBLE_CLASS_NAME = 'fc-show-more--visible',
         TEXT_HOOK = 'js-button-text',
@@ -128,6 +135,7 @@ define([
                 }
                 setButtonState(button, STATE_DISPLAYED);
                 updatePref(button.id, button.state);
+                mediator.emit('modules:show-more:loaded');
             });
             button.isLoaded = true;
         }).catch(function (err) {
@@ -136,7 +144,7 @@ define([
             });
 
             showErrorMessage(button);
-            raven.captureException(new Error('Error retrieving show more (' + err + ')'));
+            reportError(new Error('Error retrieving show more (' + err + ')'), false);
         });
     }
 
@@ -167,7 +175,7 @@ define([
     }
 
     function itemsByArticleId($el) {
-        return _.groupBy(qwery(ITEM_SELECTOR, $el), function (el) {
+        return groupBy(qwery(ITEM_SELECTOR, $el), function (el) {
             return bonzo(el).attr(ARTICLE_ID_ATTRIBUTE);
         });
     }
@@ -213,12 +221,12 @@ define([
         init: function () {
             fastdom.read(function () {
                 var containers = qwery('.js-container--fc-show-more').map(bonzo),
-                    buttons = _.filter(_.map(containers, makeButton));
+                    buttons = filter(map(containers, makeButton));
 
-                _.forEach(buttons, renderToDom);
+                forEach(buttons, renderToDom);
 
                 mediator.on('module:clickstream:click', function (clickSpec) {
-                    var clickedButton = _.find(buttons, function (button) {
+                    var clickedButton = find(buttons, function (button) {
                         return button.$el[0] === clickSpec.target;
                     });
                     if (clickedButton && clickedButton.state !== STATE_LOADING) {

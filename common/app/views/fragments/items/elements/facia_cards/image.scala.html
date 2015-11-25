@@ -1,24 +1,9 @@
-@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
+@(classes: Seq[String], srcset: String, sizes: String, src: Option[String] = None)
 
-@import fragments.items.elements.facia_cards.lazyImage
-@import views.support.ImgSrc
-
-<div class="fc-item__media-wrapper">
-    <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
-        @widthsByBreakpoint match {
-            case Some(widths) => {
-                @lazyImage(
-                    Seq("responsive-img"),
-                    ImgSrc.srcset(imageContainer, widths),
-                    widths.sizes,
-                    ImgSrc.getFallbackUrl(imageContainer),
-                    inlineImage
-                )
-            }
-
-            case _ => {
-                <img src="@ImgSrc.getFallbackUrl(imageContainer)">
-            }
-        }
-    </div>
-</div>
+<img class="@RenderClasses(classes: _*)"
+    srcset="@srcset"
+    sizes="@sizes"
+    @src.map { src =>
+        src="@src"
+    }
+>

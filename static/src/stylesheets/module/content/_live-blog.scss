@@ -231,7 +231,8 @@ $block-padding-right: $gs-gutter;
     .block-elements > .element.element-tweet,
     .block-elements > .element.element-rich-link,
     .block-elements > .element.element-witness,
-    .block-elements > .element.element--thumbnail {
+    .block-elements > .element.element--thumbnail,
+    .liveblog-block-byline {
         margin-left: $gs-gutter/2;
         margin-right: $gs-gutter/2;
         @include mq(tablet) {
@@ -240,27 +241,29 @@ $block-padding-right: $gs-gutter;
         }
     }
 
-    .block-elements {
+    /* Bylines
+       ========================================================= */
+    .liveblog-block-byline {
+        margin-bottom: $gs-baseline * .5;
+        border-bottom: 1px dotted colour(neutral-4);
+        padding-bottom: $gs-baseline * .5;
+    }
 
-        /* Bylines
-           ========================================================= */
-        .liveblog-block-byline {
-            margin-bottom: $gs-baseline * .5;
-            border-bottom: 1px dotted colour(neutral-4);
-            padding-bottom: $gs-baseline * .5;
-        }
-        .liveblog-block-byline__img {
-            display: inline;
-            border-radius: 50%;
-            max-width: 36px;
-            vertical-align: middle;
-            margin-right: $gs-gutter * .2;
-        }
-        .liveblog-block-byline__name {
-            @include fs-bodyCopy(2);
-            display: inline;
-            color: colour(neutral-1);
-        }
+    .liveblog-block-byline__img {
+        display: inline;
+        border-radius: 50%;
+        max-width: 36px;
+        vertical-align: middle;
+        margin-right: $gs-gutter * .2;
+    }
+
+    .liveblog-block-byline__name {
+        @include fs-bodyCopy(2);
+        display: inline;
+        color: colour(neutral-1);
+    }
+
+    .block-elements {
 
         /* Quotes
            ========================================================= */
@@ -371,13 +374,12 @@ $block-padding-right: $gs-gutter;
             }
         }
 
-        > .element-image:first-child,
-        > .element-video:first-child {
+        &.block-elements--no-byline > .element-image:first-child:not(.element--thumbnail),
+        &.block-elements--no-byline > .element-video:first-child {
             @include mq(tablet) {
                 margin-top: 55px; // Extra margin top to position media below block-time
             }
         }
-
 
         > .element.element--thumbnail {
             border-bottom: 0;
@@ -412,6 +414,7 @@ $block-padding-right: $gs-gutter;
 }
 .tweet,
 .from-content-api blockquote.tweet {
+    display: inline-block;
     border-left-width: 0;
     padding: $gs-baseline/2 0 0;
     margin-bottom: $gs-baseline;
@@ -425,13 +428,17 @@ $block-padding-right: $gs-gutter;
     }
 
     @include mq(tablet) {
-        margin-left: $block-padding-left;
+
+        // forcing this max-width because that is the width of
+        // the 'upgrade' from Twitter and we don't want it jumping
+        // on upgrade
+        max-width: 500px;
+
         margin-right: $block-padding-right;
     }
 }
 // Temporary fix to issue #1674
 .from-content-api blockquote.tweet {
-    display: block;
     width: auto;
 }
 // End temporary fix
@@ -446,7 +453,14 @@ $block-padding-right: $gs-gutter;
     display: inline-block;
     font-weight: bold;
     padding-left: 40px;
+    padding-bottom: 1px;
     margin-bottom: 0;
+    background-repeat: no-repeat;
+}
+
+.tweet-main-image {
+    width: 100%;
+    margin-bottom: $gs-gutter;
 }
 
 .tweet-date {
@@ -514,6 +528,10 @@ $block-padding-right: $gs-gutter;
         @include mq(desktop) {
             display: block !important; //Overrides JS active state
         }
+    }
+
+    .is-not-modern & {
+        border-top: 0;
     }
 }
 
@@ -796,7 +814,7 @@ $timeline-width: 15px;
     }
 }
 
-.content--liveblog.section-football { // Football overrides
+.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
     .tonal__header {
         background-color: #ffffff;
 

@@ -1,0 +1,32 @@
+@()(implicit request: RequestHeader)
+
+@main(model.CommercialExpiryPage(id = request.path)) { } {
+    <div class="l-side-margins">
+    <div class="content content--expired">
+        <header class="content__head">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <h1 itemprop="headline" class="content__headline">Sorry – the page you are looking for has been removed</h1>
+                </div>
+            </div>
+        </header>
+        <div class="content__main">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--expired">
+                    <div class="js-article__container u-cf">
+                        <div class="from-content-api" itemprop="articleBody">
+                            <div class="from-content-api">
+                                <p>This is because it was advertisement feature content that was published as part of a commercial deal and funded by an advertiser.<p>
+                                <p>It is Guardian News and Media policy to take down paid-for content at the end of these deals.</p>
+                                <p>Click <a href="/paid-for-content">here</a> for more on our commercial content guidelines.</p>
+                                <p>If you want to contact someone about the page, you can email:<br /><a href="mailto:paid-content@@theguardian.com">paid-content@@theguardian.com</a></p>
+                                <p>To continue reading, please visit the Guardian’s <a href="/">home page</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

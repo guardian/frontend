@@ -1,8 +1,9 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
 @import conf.Configuration
 @import common.AnalyticsHost
-@import views.support.OmnitureAnalyticsData
+@import views.support.{OmnitureAnalyticsData, OmnitureAnalyticsAccount}
 @import conf.Static
+@import conf.switches.Switches.NoBounceIndicator
 
 @defining(s"${request.host}${request.path}") { path =>
 
@@ -13,40 +14,27 @@
                 <div>
                     <img id="omnitureNoScriptImage" alt=""
                          src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
+                    <img id="omnitureConfidenceNoScriptImage" alt=""
+                         src="@{Configuration.debug.beaconUrl}/count/pva.gif" width="1" height="1" class="u-h" />
                 </div>
             </noscript>
     }
 
-    @defining(
-        s"${AnalyticsHost()}/b/ss/${OmnitureAnalyticsAccount(page)}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
-    ){ omnitureCall =>
         <script>
             @*
-            //    we do not run our javascript on some browsers, hence analytics will not run.
-            //    this does a minimal tracking for those devices
-             *@
+                Basic Omniture runs on both Core & 'Full experience'
+                We just need to run Ophan here.
+            *@
+
             if (!guardian.isModernBrowser) {
-                var analyticsImage = document.createElement("img");
-                analyticsImage.src = "@Html(omnitureCall)";
-                analyticsImage.width = "1";
-                analyticsImage.height = "1";
-                document.body.appendChild(analyticsImage);
-
-                @*
-                // this is used to sanity check our analytics calls
-                *@
-                var img = new Image();
-                img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
-
-                var s = document.createElement('script'),
+                var ophanScript = document.createElement('script'),
                         sc = document.getElementsByTagName('script')[0];
 
-                s.src = '@Static("javascripts/bootstraps/ophan.js")';
-                s.aysnc = true;
-                sc.parentNode.insertBefore(s, sc);
+                ophanScript.src = '@Static("javascripts/bootstraps/ophan.js")';
+                ophanScript.async = true;
+                sc.parentNode.insertBefore(ophanScript, sc);
             }
         </script>
-    }
 }
 
 @* google remarketing fallback *@
@@ -57,3 +45,28 @@
 </noscript>
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+
+@if(NoBounceIndicator.isSwitchedOn) {
+    @* NOTE for removal - there is a corresponding entry in omniture.js *@
+    <script type="text/javascript">
+
+        @* Limit to "modern browsers" *@
+        if (guardian.isModernBrowser) {
+            try {
+                @* sessionStorage is part of the isModernBrowser test *@
+                var session = window.sessionStorage;
+
+                @*
+                    If this key is still present then the user went to a new page before Omniture ran
+                    and we did not count the page view
+                *@
+                if (session.getItem('gu-bounce-test') === 'true') {
+                    var img = new Image();
+                    img.src = '@{Configuration.debug.beaconUrl}/count/user-navigated-early.gif';
+                }
+
+                session.setItem('gu-bounce-test', 'true');
+            } catch (e) {};
+        }
+    </script>
+}

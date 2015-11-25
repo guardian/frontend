@@ -1,13 +1,12 @@
 package model
 
-import conf.Switches
-import conf.Switches.DoubleCacheTimesSwitch
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import com.gu.contentapi.client.model.{Content => ApiContent}
+import conf.switches.Switches
+import conf.switches.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
-import com.gu.contentapi.client.model.{ Content => ApiContent }
-import play.api.mvc.Results
 import org.scala_tools.time.Imports._
+import org.scalatest.{FlatSpec, Matchers}
+import play.api.mvc.Results
 
 class CachedTest extends FlatSpec with Matchers with Results with implicits.Dates {
 
@@ -108,9 +107,13 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {
-    Content(ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    Content(ApiContent(id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
       fields = Some(Map(
         "lastModified" -> lastModified.toISODateTimeNoMillisString,

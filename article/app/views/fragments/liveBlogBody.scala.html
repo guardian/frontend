@@ -1,7 +1,7 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
-@import conf.Switches._
+@import conf.switches.Switches._
 @import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfigJson
 @import views.BodyCleaner
@@ -15,7 +15,7 @@
         class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemscope itemtype="@article.schemaType" role="main">
 
-        <a itemprop="url" href=""/>
+        <meta itemprop="url" content="@LinkTo(article.url)">
 
         <header class="content__head tonal__head tonal__head--@articleToneClass(article)">
             @* UPPER HEADER *@
@@ -44,7 +44,7 @@
         <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
-                    <div class="js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
+                    <div class="js-sport-tabs js-football-meta football-tabs content__mobile-full-width"></div>
                     <div class="js-cricket-score"></div>
 
                     @fragments.mainMedia(article)
@@ -57,7 +57,7 @@
 
                         <div class="js-top-marker"></div>
                         @if(article.hasKeyEvents) {
-                            <div class="blog__timeline blog__dropdown js-live-blog__key-events">
+                            <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible">
                                 <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
                                     @fragments.dropdown("Key events", Some("key-events"), false) {
                                         <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
@@ -74,7 +74,7 @@
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-                                @BodyCleaner(article, article.body)
+                                @BodyCleaner(article, article.body, amp = false)
                             </div>
                         </div>
 
@@ -87,7 +87,7 @@
                 </div>
 
                 <div class="content__secondary-column" aria-hidden="true">
-                    <div class="mpu-container js-mpu-ad-slot"></div>
+                    <div class="ad-slot-container js-ad-slot-container"></div>
                     @if(model.related.hasStoryPackage) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
@@ -95,7 +95,7 @@
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
                                         FaciaCardAndIndex.fromTrail(
-                                            FaciaContentConvert.frontentContentToFaciaContent(trail),
+                                            FaciaContentConvert.frontendContentToFaciaContent(trail),
                                             ItemClasses.liveBlogMore,
                                             index
                                         ).transformCard(_.withTimeStamp),

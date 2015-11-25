@@ -1,26 +1,19 @@
 package controllers
 
-import common.{Edition, InternationalEdition }
+import common.Edition
+import model.NoCache
 import play.api.mvc._
-import conf.Switches.InternationalEditionSwitch
 
 object ChangeEditionController extends Controller with PreferenceController {
-
   def render(editionId: String) = Action { implicit request =>
-    fromEdition(editionId).map{ id =>
-      switchTo("GU_EDITION" -> id.toUpperCase, pathFor(id))
-    }.getOrElse(NotFound)
+    NoCache(Edition.byId(editionId).map{ edition =>
+      val home = edition.homePagePath
+      // This INTCMP parameter is simply to cachebust the local cache of browsers
+      // For people who switch a lot of editions (mixing going to the page directly and using the edition switcher)
+      // the local cache is too long.
+      // Using an INTCMP as it follows a familiar pattern & gives extra tracking
+      val path = s"$home?INTCMP=CE_${edition.id}"
+      switchTo("GU_EDITION" -> edition.id, path)
+    }.getOrElse(NotFound))
   }
-
-  private def fromEdition(editionId: String)(implicit request: RequestHeader) = {
-    if (InternationalEditionSwitch.isSwitchedOn && editionId == InternationalEdition.id) {
-      Some(InternationalEdition.id)
-    } else Edition.byId(editionId).map(_.id)
-  }
-
-  private def pathFor(editionId: String) = if (editionId == InternationalEdition.id)
-    InternationalEdition.path
-  else
-    s"/${editionId.toLowerCase}"
-
 }

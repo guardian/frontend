@@ -1,5 +1,5 @@
-@(isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-@import conf.Switches._
+@(content: model.Content, isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+@import conf.switches.Switches._
 
 @sectionHeading = {
 
@@ -8,8 +8,8 @@
         <div class="container__meta">
             <h2 class="container__meta__title">comments <span class="discussion__comment-count js-discussion-comment-count"></span></h2>
 
-            <p class="container__meta__item discussion__meta discussion__meta--open-signed-out"><a class="u-underline" href="@Configuration.id.url/signin">Sign in</a>
-                or <a class="u-underline" href="@Configuration.id.url/register">create your Guardian account</a> to join the discussion.
+            <p class="container__meta__item discussion__meta discussion__meta--open-signed-out"><a class="u-underline" href="@Configuration.id.url/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN">Sign in</a>
+                or <a class="u-underline" href="@Configuration.id.url/register?INTCMP=DOTCOM_COMMENTS_REG">create your Guardian account</a> to join the discussion.
             </p>
 
             <p class="container__meta__item discussion__meta discussion__meta--closed">This discussion is closed for comments.</p>
@@ -28,12 +28,12 @@
 @toolbar = {
     <div class="discussion__toolbar js-discussion-toolbar u-cf">
 
-        <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
+        <div class="discussion__toolbar-item js-comment-order-dropdown">
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order"
                     aria-haspopup="true" aria-controls="comments-order-popup">Order by <span class="js-comment-order"></span></button>
 
             <ul id="comments-order-popup" class="popup popup__group popup--comments-order is-off">
-                @List("newest", "oldest").map { value =>
+                @List("newest", "oldest", "recommendations").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
                     </li>
@@ -42,7 +42,7 @@
         </div>
 
         @if(DiscussionPageSizeSwitch.isSwitchedOn) {
-            <div class="discussion__toolbar-dropdown hide-until-tablet js-comment-pagesize-dropdown sign-in-required">
+            <div class="discussion__toolbar-item hide-until-tablet js-comment-pagesize-dropdown sign-in-required">
                 <button class="u-button-reset popup__toggle" data-toggle="popup--comments-pagesize"
                         aria-haspopup="true" aria-controls="comments-pagesize-popup">Show <span class="js-comment-pagesize">25</span></button>
 
@@ -53,7 +53,7 @@
         }
 
 
-        <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
+        <div class="discussion__toolbar-item js-comment-threading-dropdown">
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading"
                     aria-haspopup="true" aria-controls="comments-order-threading">Threads <span class="js-comment-threading"></span></button>
 
@@ -65,6 +65,21 @@
                 }
             </ul>
         </div>
+
+        @if(content.section == "crosswords") {
+            <div class="discussion__toolbar-item js-timestamps-dropdown hide-until-tablet">
+                <button class="u-button-reset popup__toggle" data-toggle="popup--timestamp"
+                        aria-haspopup="true" aria-controls="timestamp-popup">Timestamps <span class="js-timestamps"></span></button>
+
+                <ul id="timestamp-popup" class="popup popup__group popup--timestamp is-off">
+                    @List("relative", "absolute").map { value =>
+                        <li class="popup__item">
+                            <button class="u-button-reset popup__action" data-timestamp="@value" data-link-name="comments-@value">@value</button>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
 
         <div class="discussion__pagination discussion__pagination--top js-discussion-pagination"></div>
 
@@ -121,7 +136,7 @@
                         <div class="discussion__comment-box discussion__comment-box--bottom js-discussion-comment-box--bottom"></div>
 
                         <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button" data-link-name="more-comments">
-                            <i class="i i-plus-white"></i>
+                            @fragments.inlineSvg("plus", "icon")
                             View more comments
                         </button>
 

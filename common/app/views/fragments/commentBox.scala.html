@@ -6,7 +6,7 @@
         <div class="d-comment-box__meta-text">
             <span class="d-comment-box__author-label">Signed in as</span>
             <span class="d-comment-box__author"></span>
-            <span class="i i-reply-grey"></span>
+            @fragments.inlineSvg("reply", "icon", List("grey"))
             <span class="d-comment-box__reply-to-author"></span>
             <span class="u-fauxlink d-comment-box__show-parent" role="button">Show comment</span>
             <span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>
@@ -24,7 +24,7 @@
     <div class="d-comment-box__content">
         <div class="d-comment-box__messages"></div>
         <div class="d-discussion__error d-comment-box__premod">
-            <i class="i i-status-alert"></i>
+            @fragments.inlineSvg("status-alert", "icon")
             <span class="d-discussion__error-text">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</span>
         </div>
         <textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>

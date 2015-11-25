@@ -1,5 +1,6 @@
 package test
 
+import org.apache.commons.codec.digest.DigestUtils
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
@@ -94,13 +95,21 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     header("X-Gu-Backend-App", result).head should be ("test-project")
   }
 
-  "International users" should "still be in the UK edition" in {
+  it should "infer a Surrogate-Key based on the path" in {
+
+    val expectedSurrogateKey = DigestUtils.md5Hex("/stage/2015/jul/15/alex-edelman-steve-martin-edinburgh-fringe")
+
+    val result = route(app, TestRequest("/stage/2015/jul/15/alex-edelman-steve-martin-edinburgh-fringe?index=7")).head
+    header("Surrogate-Key", result).head should be (expectedSurrogateKey)
+  }
+
+  "International users" should "be in the International edition" in {
     val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
       .withHeaders(
-        "X-GU-Edition" -> "intl"
+        "X-GU-Edition" -> "int"
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"edition\":\"UK\"")
+    contentAsString(result) should include ("\"edition\":\"INT\"")
   }
 
   they can "be in the control variant" in {
@@ -110,7 +119,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
         "X-GU-International" -> "control"
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEditionVariant\" : \"control\"")
+    contentAsString(result) should include ("\"internationalEdition\":\"control\"")
   }
 
   they can "be in the test variant" in {
@@ -120,6 +129,6 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
         "X-GU-International" -> "international"
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"internationalEditionVariant\" : \"international\"")
+    contentAsString(result) should include ("\"internationalEdition\":\"international\"")
   }
 }

@@ -10,11 +10,8 @@
                     <ul>
                         <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
                         <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
-                        <li><a href="@controllers.admin.routes.GoogleReferrerController.renderGoogleReferrerDashboard()">Google Referrers</a></li>
                         <li>Content Performance Dashboards:
                             <ul>
-                                <li><a href="@controllers.admin.routes.ContentPerformanceController.renderGalleryDashboard()">Gallery</a></li>
-                                <li><a href="@controllers.admin.routes.ContentPerformanceController.renderLiveBlogDashboard()">Live Blog</a></li>
                                 <li><a href="@controllers.admin.routes.ContentPerformanceController.renderVideoEncodingsDashboard()">Video</a></li>
                             </ul>
                         </li>
@@ -33,6 +30,8 @@
                         <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()">Radiator</a></li>
                         <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()?features=external">Radiator (external)</a></li>
                         <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
+                        <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear images</a></li>
+                        <li><a href="@controllers.cache.routes.PageDecacheController.renderPageDecacheForm()">Clear page (content)</a></li>
                         <li><a href="@controllers.admin.routes.CssReportController.entry()">CSS Selector Usage</a></li>
                     </ul>
                 </div>
@@ -73,7 +72,7 @@
                 <div class="panel-heading">Diagnose problems with features.</div>
                 <div class="panel-body">
                     <ul>
-                        <li><a href="@controllers.admin.routes.TroubleshooterController.index()">Site outages</a></li>
+                        <li><a href="@controllers.admin.routes.TroubleshooterController.index()">Check a path</a></li>
                         <li><a href="@controllers.admin.routes.SportTroubleshooterController.renderFootballTroubleshooter()">Football feeds</a></li>
                         <li><a href="@controllers.admin.routes.SportTroubleshooterController.renderCricketTroubleshooter()">Cricket feeds</a></li>
                     </ul>
@@ -101,33 +100,20 @@
             <div class="panel panel-default well--front">
                 <div class="panel-heading">Tools for the commercial team</div>
                 <div class="panel-body">
-                    <h5><a href="@controllers.admin.routes.CommercialController.renderCommercialRadiator()">Commercial Radiator</a></h5>
-                    <h5>Display</h5>
                     <ul>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderCreativeTemplates()">Creative Templates</a></li>
-                        <li><a href="http://m.code.dev-theguardian.com/commercial/test-page">Components test page</a>, (on dev)</li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderFluidAds()">Responsive ads</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercialMenu()">Main page</a></li>
                     </ul>
-                    <h5>Targeting</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Facia Ecosystem Tools</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Tools for facia</div>
+                <div class="panel-body">
                     <ul>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderSpecialAdUnits()">List Special Ad Units</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderPaidForTags()">Sponsored Tags</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderInlineMerchandisingTargetedTags()">Inline Merchandising Slot</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderPageskins()">Pageskins</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderSurgingContent()">Surging Content</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialAdUnitController.renderToApprove()">NG Ad Units for approval</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.sponsoredContainers()">Sponsored Containers Debug</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderAdTests()">Ad Tests</a></li>
-                        <li><a href="@controllers.admin.commercial.routes.DfpDataController.renderCacheFlushPage()">Refresh all cached DFP data</a></li>
-                    </ul>
-                    <h5>Performance</h5>
-                    <ul>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercial()">Slot Load Times</a></li>
-                        <li><a href="https://dashboard.ophan.co.uk/ads">Ophan: Slot Load Times</a></li>
-                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityABTest/KPIAB">Viewability: A/B Tests</a></li>
-                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityDashSecondDraft/Health-SlotSizeBrowser">Viewability: Slot Performance</a></li>
-                        <li><a href="http://tableau-dev.gutools.co.uk:8099/views/ViewabilityDashSecondDraft/DiagnosticsSlots">Viewability: Slot Diagnostics</a></li>
-                        <li><a href="https://theguardian.moat.com/">Viewability: Moat Dashboard</a></li>
+                        <li><a href="@controllers.admin.routes.WhatIsDeduped.index()">What is deduped?</a></li>
                     </ul>
                 </div>
             </div>

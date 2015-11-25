@@ -3,7 +3,8 @@ package idapiclient
 import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User, SavedArticles}
 import client.{Anonymous, Auth, Response, Parameters}
 import client.connection.{Http, HttpResponse}
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future, ExecutionContext}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
@@ -31,9 +32,10 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   // AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
-    val params = buildParams(Some(userAuth), Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
+    val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
     val headers = buildHeaders(Some(userAuth))
-    val response = http.POST(apiUrl("auth"), None, params, headers)
+    val body = write(userAuth)
+    val response = http.POST(apiUrl("auth"), Some(body), params, headers)
     response map extract(jsonField("cookies"))
   }
 
@@ -98,10 +100,10 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def updateUser(user: User, auth: Auth, trackingData: TrackingData): Future[Response[User]] =
     post("user", Some(auth), Some(trackingData), Some(write(user))) map extractUser
 
-  def register(user: User, trackingParameters: TrackingData): Future[Response[User]] = {
+  def register(user: User, trackingParameters: TrackingData, returnUrl: Option[String] = None): Future[Response[User]] = {
     val userData = write(user)
-    val params = buildParams(tracking = Some(trackingParameters))
-    val headers = buildHeaders(extra = trackingParameters.ipAddress.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)))
+    val params = buildParams(tracking = Some(trackingParameters), extra = returnUrl.map(url => Iterable("returnUrl" -> url)))
+    val headers = buildHeaders(extra = trackingParameters.ipAddress.map(ip => Iterable("X-Forwarded-For" -> ip)))
     val response = http.POST(apiUrl("user"), Some(userData), params, headers)
     response map extractUser
   }
@@ -167,6 +169,11 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
     post("user/send-validation-email", Some(auth), Some(trackingParameters)) map extractUnit
+
+  // THIRD PARTY SIGN-IN
+  def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
+    post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
+  }
 
   def post(apiPath: String,
            auth: Option[Auth] = None,

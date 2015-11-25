@@ -1,6 +1,6 @@
 package discussion.model
 
-import play.api.libs.json.{JsObject, JsArray, JsValue}
+import play.api.libs.json.{JsNull, JsObject, JsArray, JsValue}
 import common.Pagination
 
 trait Comments {
@@ -24,16 +24,16 @@ case class DiscussionComments(
 object DiscussionComments {
 
   def apply(json: JsValue): DiscussionComments = {
-    val discussion = Discussion(json \ "discussion")
+    val discussion = Discussion((json \ "discussion").toOption.getOrElse(JsNull))
     val comments = (json \ "discussion" \"comments").as[JsArray].value map {Comment(_, None, Some(discussion))}
     DiscussionComments(
       discussion = discussion,
       comments = comments,
       pagination = DiscussionPagination(json),
-      commentCount = (json \ "discussion" \ "commentCount").as[Int],
-      topLevelCommentCount = (json \ "discussion" \ "topLevelCommentCount").as[Option[Int]] getOrElse 0,
-      commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]] getOrElse 0,
-      isClosedForRecommendation = (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse true,
+      commentCount = (json \ "discussion" \ "commentCount").asOpt[Int] getOrElse 0,
+      topLevelCommentCount = (json \ "discussion" \ "topLevelCommentCount").asOpt[Int] getOrElse 0,
+      commenterCount =  (json \ "discussion" \ "commenterCount").asOpt[Int] getOrElse 0,
+      isClosedForRecommendation = (json \ "isClosedForRecommendation").asOpt[Boolean] getOrElse true,
       orderBy = (json \ "orderBy").as[String],
       switches = (json \ "switches").as[Seq[JsObject]] map {Switch(_)}
     )
@@ -107,8 +107,8 @@ object DiscussionPagination {
   def apply(json: JsValue): Pagination = {
     Pagination(
       (json \ "currentPage").as[Int],
-      (json \ "pages").as[Option[Int]] getOrElse 100,
-      (json \ "discussion" \ "commentCount").as[Option[Int]] getOrElse 10000
+      (json \ "pages").asOpt[Int] getOrElse 100,
+      (json \ "discussion" \ "commentCount").asOpt[Int] getOrElse 10000
     )
   }
 }

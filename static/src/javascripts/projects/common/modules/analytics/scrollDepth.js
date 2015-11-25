@@ -1,13 +1,18 @@
 define([
-    'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/objects/assign',
+    'lodash/functions/bindAll',
+    'lodash/functions/debounce'
 ], function (
-    _,
-    mediator
-) {
+    mediator,
+    assign,
+    bindAll,
+    debounce) {
 
     function ScrollDepth(options) {
-        this.opts = _.assign(this.opts, options);
+        this.opts = assign(this.opts, options);
+
+        bindAll(this, 'assertScrolling', 'hasDataChanged');
 
         if (this.opts.isContent) {
             this.opts.contentEl = this.contentEl || document.getElementById('article') || document.getElementById('live-blog');
@@ -96,9 +101,9 @@ define([
     };
 
     ScrollDepth.prototype.init = function () {
-        mediator.on('window:scroll', _.debounce(this.assertScrolling.bind(this), 200));
-        mediator.on('scrolldepth:inactive', this.hasDataChanged.bind(this));
-        mediator.on('module:clickstream:click', this.hasDataChanged.bind(this));
+        mediator.on('window:throttledScroll', debounce(this.assertScrolling, 200));
+        mediator.on('scrolldepth:inactive', this.hasDataChanged);
+        mediator.on('module:clickstream:click', this.hasDataChanged);
     };
 
     return ScrollDepth;

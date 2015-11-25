@@ -54,6 +54,12 @@ a.u-faux-block-link__overlay {
     // this line is needed as all elements have a solid black
     // background in high contrast mode
     opacity: 0;
+
+    // Override the default user agent stylesheet so we don't incur a "Layout"
+    // each time the user taps a link.
+    &:focus {
+        outline: none;
+    }
 }
 // Underline cta when block is hovered
 .u-faux-block-link--hover .u-faux-block-link__cta {

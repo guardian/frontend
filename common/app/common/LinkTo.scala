@@ -1,16 +1,16 @@
 package common
 
-import com.gu.facia.api.models._
-import layout.ContentCard
-import play.twirl.api.Html
-import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
+import common.editions.{Au, Us, Uk}
 import conf.Configuration
-import model.{Snap, Trail, MetaData}
+import conf.switches.Switches
+import implicits.Requests
+import layout.ContentCard
+import model.Trail
 import org.jsoup.Jsoup
+import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
+import play.twirl.api.Html
+
 import scala.collection.JavaConversions._
-import conf.Configuration.environment
-import dev.HttpSwitch
-import implicits.FaciaContentImplicits._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -19,52 +19,61 @@ trait LinkTo extends Logging {
 
   lazy val host = Configuration.site.host
 
-  private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
-  private val AbsolutePath = "^/(.+)".r
-  private val RssPath = "^/(.+)(/rss)".r
+  private val ProdURL = "^http://www.theguardian.com/.*$".r
+  private val GuardianUrl = "^(http://www.theguardian.com)?(/.*)?$".r
+  private val RssPath = "^(/.+)?(/rss)".r
+  private val AmpPath = s"^(/.+)(${Requests.AMP_SUFFIX})$$".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
+
+  /**
+    * email is here to allow secure POSTs from the footer signup form
+    */
+  val httpsEnabledSections: Seq[String] = Seq("info", "email")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition, InternationalEdition.isInternationalEdition(request)).url
-    handleQueryStrings(processedUrl)
-  }
+  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String =
+    processUrl(url.trim, edition).url
 
-  def handleQueryStrings(url: String)(implicit request: RequestHeader) =
-    HttpSwitch.queryString(url).trim
+  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.url))
+
+  def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
+    faciaCard.header.url.get(request)
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition, isInternational: Boolean) = url match {
-    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition))
-    case "/" if isInternational => ProcessedUrl(InternationalEdition.path)
-    case "/" => ProcessedUrl(homeLink(edition))
-    case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
-    case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
-    case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
-    case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + "/rss")
-    case AbsolutePath(path) => ProcessedUrl(urlFor(path, edition))
-    case otherUrl => ProcessedUrl(otherUrl, true)
+  def processUrl(url: String, edition: Edition) = url match {
+    case url if url.startsWith("//") =>
+      ProcessedUrl(url)
+    case RssPath(path, format) =>
+      ProcessedUrl(urlFor(path, edition) + format)
+    case AmpPath(path, format) =>
+      ProcessedUrl(urlFor(path, edition, secure = true) + format)
+    case GuardianUrl(_, path) =>
+      ProcessedUrl(urlFor(path, edition))
+    case otherUrl =>
+      ProcessedUrl(otherUrl, true)
   }
 
-  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapHref.filter(_.nonEmpty).map(apply(_))
-    case t: Trail => Option(apply(t.url))
+  private def urlFor(path: String, edition: Edition, secure: Boolean = false): String = {
+    val pathString = Option(path).getOrElse("")
+    val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
+    val editionalisedPath = Editionalise(clean(id), edition)
+    val url = s"$host/$editionalisedPath"
+    url match {
+      case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
+      case _ => url
+    }
   }
 
-  def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
-    faciaCard.url.get(request)
-
-  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(clean(path), edition)}"
+  private def isHttpsEnabled(editionalisedPath: String) =
+    httpsEnabledSections.exists(editionalisedPath.startsWith)
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
     case _ => path
   }
-
-  private def homeLink(edition: Edition) = urlFor("", edition)
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
@@ -98,29 +107,41 @@ object LinkTo extends LinkTo {
 
 }
 
+/**
+ * represents the link rel=canonical for any page on the site
+ */
 class CanonicalLink {
-
-  lazy val scheme = if (environment.secure) "https" else "http"
 
   val significantParams: Seq[String] = Seq(
     "index",
     "page"
   )
 
-  def apply(implicit request: RequestHeader): String = {
+  def apply(implicit request: RequestHeader, webUrl: String): String = {
     val queryString = {
       val q = significantParams.flatMap(key => request.getQueryString(key).map(value => s"$key=${value.urlEncoded}"))
         .sorted.mkString("&")
       if (q.isEmpty) "" else s"?$q"
     }
-    s"$scheme://${request.host}${request.path}$queryString"
+    s"$webUrl$queryString"
   }
 }
 
 object CanonicalLink extends CanonicalLink
 
 object AnalyticsHost extends implicits.Requests {
-  def apply()(implicit request: RequestHeader): String =
-    if (request.isSecure) "https://hits-secure.theguardian.com" else "http://hits.theguardian.com"
+  // safest to always use secure host as we avoid mixed content if we fail to detect https
+  def apply(): String = "https://hits-secure.theguardian.com"
+}
+
+object SubscribeLink {
+  private val subscribeEditions = Map(
+    Us -> "us",
+    Au -> "au"
+  )
+
+  private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")
+
+  def apply(edition: Edition): String = s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
 }
 

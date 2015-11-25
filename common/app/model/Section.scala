@@ -1,8 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.{ Section => ApiSection }
-import common.{Edition, Pagination}
-import dfp.DfpAgent
+import com.gu.contentapi.client.model.{Section => ApiSection}
+import common.Pagination
 import play.api.libs.json.{JsString, JsValue}
 
 case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None)
@@ -31,4 +30,10 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "keywordIds" -> JsString(keywordIds.mkString(",")),
     "contentType" -> JsString("Section")
   )
+
+  override def iosType: Option[String] = section match {
+      case "crosswords" => None
+      case _ => Some("front")
+  }
+
 }

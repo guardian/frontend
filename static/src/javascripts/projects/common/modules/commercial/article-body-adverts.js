@@ -1,24 +1,23 @@
 define([
-    'fastdom',
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fastdom-idle',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/experiments/ab'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/cloneDeep'
 ], function (
-    fastdom,
     Promise,
-    _,
     $,
     config,
     detect,
+    idleFastdom,
     spacefinder,
     createAdSlot,
-    ab
-) {
+    commercialFeatures,
+    cloneDeep) {
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -31,16 +30,15 @@ define([
         };
     }
 
-    function getLenientRules() {
-        var lenientRules = _.cloneDeep(getRules());
-        // more lenient rules, closer to the top start of the article
-        lenientRules.minAbove = 300;
-        lenientRules.selectors[' > h2'].minAbove = 20;
-        return lenientRules;
+    function getInlineMerchRules() {
+        var newRules = cloneDeep(getRules());
+        newRules.minAbove = 300;
+        newRules.selectors[' > h2'].minAbove = 20;
+        return newRules;
     }
 
     function getLongArticleRules() {
-        var newRules = _.cloneDeep(getRules());
+        var newRules = cloneDeep(getRules());
 
         newRules.selectors[' .ad-slot'] = {
             minAbove: 1300,
@@ -54,12 +52,12 @@ define([
     function getAdSpace() {
         return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
             // check if spacefinder found another space
-            if (typeof nextSpace === 'undefined') {
+            if (typeof nextSpace === 'undefined' || ads.length >= 9) {
                 return Promise.resolve(null);
             }
 
             // if yes add another ad and try another run
-            adNames.push(['inline-extra' + ads.length, 'inline']);
+            adNames.push(['inline' + (ads.length + 1), 'inline']);
             return insertAdAtP(nextSpace).then(function () {
                 return getAdSpace();
             });
@@ -75,7 +73,7 @@ define([
 
                 ads.push($ad);
                 return new Promise(function (resolve) {
-                    fastdom.write(function () {
+                    idleFastdom.write(function () {
                         $ad.insertBefore(para);
                         resolve(null);
                     });
@@ -85,31 +83,26 @@ define([
             }
         },
         init = function () {
-            var rules, lenientRules, inlineMercPromise;
+            var rules, inlineMercPromise;
 
-            // is the switch off, or not an article, or a live blog
-            if (
-                !config.switches.standardAdverts ||
-                    config.page.contentType !== 'Article' ||
-                    config.page.isLiveBlog
-            ) {
+            if (!commercialFeatures.articleBodyAdverts) {
                 return false;
             }
 
             rules = getRules();
-            lenientRules = getLenientRules();
 
             if (config.page.hasInlineMerchandise) {
-                adNames.unshift(['im', 'im']);
-
-                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
+                inlineMercPromise = spacefinder.getParaWithSpace(getInlineMerchRules()).then(function (space) {
+                    if (space) {
+                        adNames.unshift(['im', 'im']);
+                    }
                     return insertAdAtP(space);
                 });
             } else {
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (ab.shouldRunTest('Viewability', 'variant') && config.switches.commercialExtraAds) {
+            if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);
@@ -142,7 +135,7 @@ define([
         init: init,
         // rules exposed for spacefinder debugging
         getRules: getRules,
-        getLenientRules: getLenientRules,
+        getLenientRules: getInlineMerchRules,
 
         reset: function () {
             ads = [];

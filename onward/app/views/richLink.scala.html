@@ -1,5 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 @import conf.Static
 @import conf.Configuration
 
@@ -17,25 +17,6 @@
               margin: 0;
             }
             </style>
-        }
-
-        @if(play.Play.isDev()) {
-            <script>
-                @Html(Static.js.systemJsSetupFragment)
-
-                // Our app assumes a normal env
-                window.guardian = {
-                    config: {
-                        switches: { },
-                        page: { }
-                    }
-                };
-
-                // Bracket notation for IE8 (import is reserved)
-                System['import']('core').then(function () {
-                    System['import']('bootstraps/dev').then(function (devmode) { devmode.init(); });
-                });
-            </script>
         }
 
    </head>

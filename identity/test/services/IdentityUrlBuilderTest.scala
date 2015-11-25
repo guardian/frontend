@@ -13,7 +13,10 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
   val omnitureTracking = mock[TrackingData]
   when(idRequest.trackingData) thenReturn omnitureTracking
   when(idRequest.returnUrl) thenReturn None
+  when(idRequest.groupCode) thenReturn None
   when(idRequest.skipConfirmation) thenReturn None
+  when(idRequest.page) thenReturn None
+  when(idRequest.campaignCode) thenReturn None
   when(omnitureTracking.registrationType) thenReturn None
 
   val idUrlBuilder = new IdentityUrlBuilder(conf)
@@ -83,6 +86,11 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
 
     "should add path and params to configured root" - {
       idUrlBuilder.buildUrl("/test/path", idRequest) should equal(conf.id.url + "/test/path?returnUrl=foo&type=bar")
+    }
+
+    "should override idRequest params if necessary" - {
+      when(omnitureTracking.registrationType) thenReturn None
+      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(conf.id.url + "/test/path?returnUrl=bar")
     }
   }
 }

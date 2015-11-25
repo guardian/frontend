@@ -1,0 +1,14 @@
+@import common.dfp.LineItemReport
+@(env: String, slotReport: LineItemReport)
+
+@views.html.commercial.commercialMain(env, "Desktop Top-Below-Nav Slot") {
+    <h4>Rules:</h4>
+    <p>This slot will only open if there is an ad that:</p>
+    <ul>
+        <li>Targets the ad unit of the requested page</li>
+        <li>Targets the requested edition</li>
+        <li>Targets the top-below-nav slot</li>
+    </ul>
+    <p>The ad will also appear on the Code site if it targets a test cookie.</p>
+    @views.html.commercial.fragments.slot(slotReport)
+}

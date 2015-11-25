@@ -3,17 +3,18 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'common/utils/_',
     'common/modules/component',
-    'bonzo'
+    'bonzo',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function (
-    _,
     Component,
-    bonzo
-) {
+    bonzo,
+    assign,
+    clone) {
 
     function AudienceItem(config) {
-        this.config = _.extend(_.clone(this.config), config);
+        this.config = assign(clone(this.config), config);
     }
 
     Component.define(AudienceItem);
@@ -26,7 +27,7 @@ define([
     AudienceItem.prototype.componentClass = 'audience-item';
     AudienceItem.prototype.useBem = true;
 
-    AudienceItem.prototype.prerender = function() {
+    AudienceItem.prototype.prerender = function () {
         bonzo(this.getElem('test-label')).prepend(this.config.test.id);
 
         // Set the width and absolute position to match the audience size and offset.
@@ -41,7 +42,7 @@ define([
         bonzo(this.getElem('caption-range')).append(audienceOffset + '% to ' + audienceEnd  + '%');
     };
 
-    AudienceItem.prototype.ready = function() {
+    AudienceItem.prototype.ready = function () {
 
     };
 

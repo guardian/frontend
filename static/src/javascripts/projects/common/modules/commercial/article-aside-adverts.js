@@ -1,27 +1,28 @@
 define([
-    'fastdom',
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
-    'common/modules/commercial/create-ad-slot'
+    'common/utils/fastdom-idle',
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/defaults'
 ], function (
-    fastdom,
     Promise,
-    _,
     $,
     $css,
     config,
-    createAdSlot
-) {
+    idleFastdom,
+    createAdSlot,
+    commercialFeatures,
+    defaults) {
     function init(options) {
         var $mainCol, adType,
-            opts = _.defaults(
+            opts = defaults(
                 options || {},
                 {
                     columnSelector: '.js-secondary-column',
-                    adSlotContainerSelector: '.js-mpu-ad-slot'
+                    adSlotContainerSelector: '.js-ad-slot-container'
                 }
             ),
             $col        = $(opts.columnSelector),
@@ -29,8 +30,8 @@ define([
             $componentsContainer,
             $adSlotContainer;
 
-        // is the switch off, or not an article, or the secondary column hidden
-        if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {
+        // are article aside ads disabled, or secondary column hidden?
+        if (!commercialFeatures.articleAsideAdverts || colIsHidden) {
             return false;
         }
 
@@ -39,7 +40,7 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
 
         return new Promise(function (resolve) {
-            fastdom.read(function () {
+            idleFastdom.read(function () {
                 if (
                     !$mainCol.length ||
                     (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
@@ -52,7 +53,7 @@ define([
                     adType = 'right-small';
                 }
 
-                fastdom.write(function () {
+                idleFastdom.write(function () {
                     if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
                         $componentsContainer.addClass('u-h');
                     }

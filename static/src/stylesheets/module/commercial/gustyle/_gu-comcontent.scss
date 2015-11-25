@@ -1,0 +1,135 @@
+.gu-image-container {
+    background-color: colour(neutral-8);
+}
+
+%gu-style-box {
+    padding: $gs-baseline / 2;
+}
+
+.gu-box {
+    @extend %gu-style-box;
+}
+
+.gu-title {
+    @include f-headlineSans;
+    @include font-size(21, 26);
+
+    color: colour(neutral-1);
+    padding-bottom: $gs-baseline;
+    text-align: left;
+}
+
+.gu-text {
+    @include f-textSans;
+    @include font-size(14, 18);
+    
+    color: colour(neutral-2);
+    text-align: left;
+    margin-bottom: $gs-row-height;
+}
+
+.gu-brand {
+    text-align: right;
+}
+
+.gu-note {
+    @include f-textSans;
+    @include font-size(13, 18);
+
+    color: colour(neutral-2);   
+}
+
+.gu-logo {
+    width: 40%;
+    vertical-align: sub;
+}
+
+.gu-image {
+    width: 100%;
+    display: block;
+}
+
+.gu-external-icon {
+    float: right; 
+    svg {
+        fill: #ffffff;
+        margin: 0 5px;
+        width: 15px;
+        height: 15px;
+        vertical-align: sub;
+    }
+}
+
+.gu-comcontent {
+    display: block;
+    background-color: colour(neutral-8);
+    border-top: 1px solid $gustyle-tone;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+
+    &:hover {
+        background-color: colour(neutral-6);
+        text-decoration: none;
+
+        .gu-image {
+            background-color: #000000;
+            opacity: .9;
+        }
+    }
+}
+
+.gu-display {
+    min-height: 400px;
+    position: relative;
+
+    .gu-box {
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        padding: $gs-gutter/2;
+    }
+
+    .gu-title {
+        padding-bottom: $gs-baseline/2;
+        
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .button {
+        float: left;
+        color: #ffffff;
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
+    }
+
+}
+
+$mobile-max-container-width: gs-span(8);
+@include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+
+.gu-style {
+    width: auto;
+    margin-left: $gs-gutter / 2;
+    margin-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(containerWidestMobile) {
+        margin: 0 auto;
+        width: $mobile-max-container-width;
+    }
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+    }
+
+    @include mq(desktop) {
+        width: 300px;
+    }
+}

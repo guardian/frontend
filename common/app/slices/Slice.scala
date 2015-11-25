@@ -360,6 +360,43 @@ case object QuarterQuarterHl3 extends Slice {
   )
 }
 
+/* .________.________._________________.
+ * |                 |########|########|
+ * |_________________|########|########|
+ * |_________________|        |        |
+ * |_________________|________|________|
+ */
+case object Hl3QuarterQuarter extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "hl3-q-q",
+    columns = Seq(
+      Rows(
+        colSpan = 2,
+        columns = 1,
+        rows = 3,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = MediaList
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Standard
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Standard
+        )
+      )
+    )
+  )
+}
+
 /* ._________________.________.________.
  * |_________________|########|########|
  * |_________________|########|########|
@@ -426,6 +463,35 @@ case object Hl4Half extends Slice {
           mobile = MediaList,
           tablet = MediaList
         )
+      )
+    )
+  )
+}
+
+/* ._________________._________________.
+ * |_###_____________|                 |
+ * |_###_____________|     MPU         |
+ * |_###_____________|_________________|
+ */
+/*
+* The order of this sequence is important.
+* We use flex-direction(row-reverse) to maintain DOM hierarchy whilst having correct visual ordering.
+* */
+case object Hl3Mpu extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "hl3-mpu",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 3,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = MediaList
+        )
+      ),
+      MPU(
+        colSpan = 1
       )
     )
   )

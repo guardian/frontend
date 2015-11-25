@@ -3,31 +3,31 @@ define([
     'bonzo',
     'fastdom',
     'common/utils/config',
-    'common/utils/_',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/objects/assign'
 ], function (
     bean,
     bonzo,
     fastdom,
     config,
-    _,
     ajax,
     mediator,
-    id
-) {
+    id,
+    assign) {
 
     /**
      * @param {Object} config
      * @constructor
      */
     function Profile(options) {
-        this.opts = _.assign(this.opts, options);
+        this.opts = assign(this.opts, options);
         this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
         this.dom.register = document.body.querySelector('.' + Profile.CONFIG.classes.register);
+        this.dom.commentActivity = document.body.querySelector('.' + Profile.CONFIG.classes.commentActivity);
     }
 
     /** @type {Object.<string.*>} */
@@ -37,7 +37,9 @@ define([
             container: 'js-profile-nav',
             content: 'js-profile-info',
             popup: 'js-profile-popup',
-            register: 'js-profile-register'
+            register: 'js-profile-register',
+            commentActivity: 'js-comment-activity',
+            action: 'brand-bar__item--action'
         }
     };
 
@@ -58,8 +60,8 @@ define([
         var user = id.getUserFromCookie(),
             $container = bonzo(this.dom.container),
             $content = bonzo(this.dom.content),
-            $popup = bonzo(this.dom.popup),
-            $register = bonzo(this.dom.register);
+            $register = bonzo(this.dom.register),
+            $commentActivity = bonzo(this.dom.commentActivity);
 
         if (user) {
             // Run this code only if we haven't already inserted
@@ -72,24 +74,11 @@ define([
                 });
             }
 
-            $popup.html(
-                    '<ul class="popup popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">' +
-                    this.menuListItem('Comment activity', this.opts.url + '/user/id/' + user.id) +
-                    this.menuListItem('Edit profile', this.opts.url + '/public/edit') +
-                    this.menuListItem('Email preferences', this.opts.url + '/email-prefs') +
-                    this.menuListItem('Change password', this.opts.url + '/password/change') +
-                    this.menuListItem('Sign out', this.opts.url + '/signout') +
-                    '</ul>'
-            );
+            $commentActivity.removeClass('u-h');
+            $commentActivity.attr('href', this.opts.url + '/user/id/' + user.id);
         }
 
         this.emitLoadedEvent(user);
-    };
-
-    Profile.prototype.menuListItem = function (text, url) {
-        return '<li class="popup__item">' +
-                   '<a href="' + url + '" class="brand-bar__item--action" data-link-name="' + text + '">' + text + '</a>' +
-               '</li>';
     };
 
     /**

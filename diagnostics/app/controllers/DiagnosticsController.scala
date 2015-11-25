@@ -1,15 +1,12 @@
 package controllers
 
-import java.net.URLEncoder
-
 import common._
-import conf.Switches
-import play.api.mvc.{ Content => _, _ }
+import play.api.mvc._
 import model.diagnostics.javascript.JavaScript
 import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
-import model.{NoCache, TinyResponse}
+import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
 
@@ -49,7 +46,7 @@ object DiagnosticsController extends Controller with Logging {
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
 
   def css = Action(jsonParser) { implicit request =>
-    if (conf.Switches.CssLogging.isSwitchedOn) {
+    if (conf.switches.Switches.CssLogging.isSwitchedOn) {
       Css.report(request.body)
     }
     TinyResponse.noContent()

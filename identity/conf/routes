@@ -3,10 +3,12 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                          conf.HealthCheck.healthcheck()
 
+GET         /google1ec7a89a27d60d47.html            controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
+
 GET         /reauthenticate                         @controllers.ReauthenticationController.renderForm(returnUrl : Option[String])
 POST        /reauthenticate                         @controllers.ReauthenticationController.processForm
 
-GET         /signin                                 @controllers.SigninController.renderForm(returnUrl : Option[String])
+GET         /signin                                 @controllers.SigninController.renderForm(returnUrl : Option[String], group: Option[String])
 POST        /signin                                 @controllers.SigninController.processForm
 GET         /signout                                @controllers.SignoutController.signout
 GET         /reset                                  @controllers.ResetPasswordController.renderPasswordResetRequestForm
@@ -20,7 +22,7 @@ POST        /password/change                        @controllers.ChangePasswordC
 GET         /password/reset-confirmation            @controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /password/email-sent                    @controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
-GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String], skipConfirmation : Option[Boolean])
+GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String], skipConfirmation : Option[Boolean], group: Option[String])
 POST        /register                               @controllers.RegistrationController.processForm
 GET         /register/confirm                       @controllers.RegistrationController.renderRegistrationConfirmation(returnUrl)
 GET         /email-prefs                            @controllers.EmailController.preferences
@@ -45,3 +47,5 @@ GET         /et/subscribe/:subDefId                 @controllers.ExactTargetCont
 GET         /save-content                           @controllers.SaveContentController.saveContentItem
 GET         /saved-for-later                        @controllers.SaveContentController.listSavedContentPage
 POST        /saved-for-later                        @controllers.SaveContentController.deleteSavedContentItemFromPage
+GET         /agree/:groupCode                       @controllers.ThirdPartyConditionsController.renderAgree(groupCode: String)
+POST        /agree/:groupCode                       @controllers.ThirdPartyConditionsController.agree(groupCode: String, returnUrl: Option[String])

@@ -1,0 +1,24 @@
+@(environment: String, paths: List[String])
+
+@admin_main("What is Deduped?", environment, isAuthed = true) {
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Path</th>
+                </tr>
+            </thead>
+            <tbody>
+                @paths.map { path =>
+                  <tr>
+                    <td>
+                      <a href="deduped/@path">@path</a>
+                    </td>
+                  </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}

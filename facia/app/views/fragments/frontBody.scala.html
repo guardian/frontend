@@ -7,6 +7,11 @@
         faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
+
+            @if(faciaPage.id.endsWith("crosswords")) {
+                @crosswordsOptOutBanner()
+            }
+
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
                 "fc-container--advertisement-feature" -> isAdFeature,
@@ -21,13 +26,13 @@
                 }
             role="main">
 
-                @defining(layout.Front.fromPressedPage(faciaPage).containers) { collections =>
+                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
 
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }
 
-                    @defining(layout.Front.makeLinkedData(collections)) { linkedData =>
+                    @defining(layout.Front.makeLinkedData(faciaPage.url, collections)) { linkedData =>
                         <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
                             @Html(model.meta.LinkedData.toJson(linkedData))
                         </script>

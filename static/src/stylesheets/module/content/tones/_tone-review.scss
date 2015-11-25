@@ -20,7 +20,7 @@
     @include stars($width: 18px, $margin-top: -($gs-baseline * 1.5), $margin-bottom: $gs-baseline * 1.5, $margin-right: 2px);
 
     .stars {
-        @include mq(tablet) {
+        @include mq(leftCol) {
             margin-top: -($gs-baseline * 2.5);
         }
     }

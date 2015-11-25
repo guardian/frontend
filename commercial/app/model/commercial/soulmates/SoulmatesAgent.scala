@@ -29,13 +29,18 @@ case class SoulmatesAgent(groupName: String,
 object SoulmatesAgent {
 
   lazy val womenAgent = SoulmatesAgent("women", FemaleSoulmatesFeed, Sample.take6)
+  lazy val newWomenAgent = SoulmatesAgent("new-women", NewWomenSoulmatesFeed, Sample.take6)
   lazy val menAgent = SoulmatesAgent("men", MaleSoulmatesFeed, Sample.take6)
+  lazy val newMenAgent = SoulmatesAgent("new-men", NewMenSoulmatesFeed, Sample.take6)
 
   private lazy val agents = Seq(
     womenAgent,
+    newWomenAgent,
     menAgent,
+    newMenAgent,
     SoulmatesAgent("brighton", BrightonSoulmatesFeed, Sample.default),
     SoulmatesAgent("northwest", NorthwestSoulmatesFeed, Sample.default),
+    SoulmatesAgent("northwestnew", NewNorthwestSoulmatesFeed, Sample.default),
     SoulmatesAgent("scotland", ScotlandSoulmatesFeed, Sample.default),
     SoulmatesAgent("young", YoungSoulmatesFeed, Sample.default),
     SoulmatesAgent("mature", MatureSoulmatesFeed, Sample.default),

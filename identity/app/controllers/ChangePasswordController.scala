@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import javax.inject.Singleton
 import model.{NoCache, IdentityPage}
 import play.api.mvc._
-import play.api.data.Form
+import play.api.data.{Forms, Form}
 import play.api.data.Forms._
 import services._
 import utils.SafeLogging
@@ -13,7 +13,7 @@ import form.Mappings
 import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import actions.AuthenticatedActions
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages, I18nSupport}
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
 
@@ -22,14 +22,23 @@ class ChangePasswordController @Inject()( api: IdApiClient,
                                           authenticatedActions: AuthenticatedActions,
                                           authenticationService: AuthenticationService,
                                           idRequestParser: IdRequestParser,
-                                          idUrlBuilder: IdentityUrlBuilder)
-  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
+                                          idUrlBuilder: IdentityUrlBuilder,
+                                          val messagesApi: MessagesApi)
+  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
   import authenticatedActions.authAction
 
   val page = IdentityPage("/password/change", "Change Password", "change-password")
 
   val passwordForm = Form(
+    mapping(
+      ("oldPassword", optional(Forms.text)),
+      ("newPassword1", Forms.text),
+      ("newPassword2", Forms.text)
+    )(PasswordFormData.apply)(PasswordFormData.unapply)
+  )
+
+  val passwordFormWithConstraints = Form(
     mapping(
       ("oldPassword", optional(idPassword)),
       ("newPassword1", idPassword),
@@ -68,7 +77,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
     authAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)
-        val boundForm = passwordForm.bindFromRequest()
+        val boundForm = passwordFormWithConstraints.bindFromRequest()
         val futureFormOpt = boundForm.value map {
           data =>
             val update = PasswordUpdate(data.oldPassword, data.newPassword1)

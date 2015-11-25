@@ -1,6 +1,6 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches._
-@import common.{LinkTo, Edition}
+@import conf.switches.Switches._
+@import common.{LinkTo, Edition, SubscribeLink}
 @import common.editions._
 @import conf.Configuration
 @import views.support.URLEncode
@@ -8,7 +8,7 @@
 
 
 <header id="header"
-        class="l-header u-cf @if(metaData.hasSlimHeader) {l-header--is-slim l-header--no-navigation}"
+        class="l-header u-cf @if(metaData.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -18,11 +18,12 @@
                     @if(Edition(request) == Uk) {
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
-                                    popup-container has-popup js-profile-register">
-                            <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=HEADER_GU_REG&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
-                               data-link-name="Register link"
-                               class="brand-bar__item--action">
-                                @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                    popup-container has-popup js-profile-register
+                                    hide-until-mobile-landscape">
+                            <a href="@Configuration.id.membershipUrl?INTCMP=DOTCOM_HEADER_BECOMEMEMBER"
+                                data-link-name="Register link"
+                                class="brand-bar__item--action">
+                                    @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                                 <span class="brand-bar__item__badge control__icon-wrapper control__icon-wrapper--text">free</span>
                                 <span class="control__info js-control-info control__info--supporting">become a member</span>
                             </a>
@@ -30,26 +31,43 @@
                     }
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
-                                    has-popup brand-bar__item--has-control js-profile-nav"
-                             data-component="identity-profile">
-                            <a href="@Configuration.id.url/signin"
+                                    has-popup js-profile-nav"
+                             data-component="identity-profile">                                                                                    <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
                                data-link-name="User profile"
                                data-toggle="popup--profile"
+                               data-toggle-signed-in="true"
                                class="brand-bar__item--action popup__toggle"
                                data-test-id="sign-in-link"
                                aria-haspopup="true">
                                 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                    @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
+                                }
                                 <span class="js-profile-info control__info"
                                       data-test-id="sign-in-name">sign in</span>
                             </a>
-                            <div class="js-profile-popup"></div>
+                            <div class="js-profile-popup">
+                                <ul class="popup popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
+                                    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                        <li class="popup__item">
+                                            <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
+                                                Saved for later</a>
+                                        </li>
+                                    }
+                                    <li class="popup__item"><a class="brand-bar__item--action js-comment-activity u-h" data-link-name="Comment activity">Comment activity</a></li>
+                                    <li class="popup__item"><a href="@Configuration.id.url/public/edit" class="brand-bar__item--action" data-link-name="Edit profile">Edit profile</a></li>
+                                    <li class="popup__item"><a href="@Configuration.id.url/email-prefs" class="brand-bar__item--action" data-link-name="Email preferences">Email preferences</a></li>
+                                    <li class="popup__item"><a href="@Configuration.id.url/password/change" class="brand-bar__item--action" data-link-name="Change password">Change password</a></li>
+                                    <li class="popup__item"><a href="@Configuration.id.url/signout" class="brand-bar__item--action" data-link-name="Sign out">Sign out</a></li>
+                                </ul>
+                            </div>
                         </div>
                     }
 
                     <div class="brand-bar__item has-popup brand-bar__item--has-control
-                                popup-container brand-bar__item--subscribe"
+                                popup-container brand-bar__item--subscribe desktop-only hide-on-slim-header"
                          data-component="subscribe">
-                        <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
+                        <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
                         data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                             <span class="control__info">subscribe</span>
@@ -57,7 +75,7 @@
                     </div>
 
                     @if(SearchSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item has-popup popup-container brand-bar__item--has-control brand-bar__item--search" data-component="search">
+                        <div class="brand-bar__item has-popup popup-container brand-bar__item--search" data-component="search">
                             <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
                                class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
                                aria-haspopup="true">
@@ -70,10 +88,10 @@
                 </div>
             </div>
 
-            <div class="popup popup--search is-off"><div class="js-search-placeholder"></div></div>
+            <div class="popup popup--search is-off js-popup--search"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
-                @if(metaData.section == "observer" && metaData.isFront) {
+                @if((metaData.section == "observer" && metaData.isFront) || metaData.id == "theobserver") {
                     <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
                         @if(metaData.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
@@ -100,7 +118,6 @@
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
                             <![endif]-->
-                            <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize 2014</span>
                         }
                     </a>
                 }

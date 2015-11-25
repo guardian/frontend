@@ -3,9 +3,11 @@ package controllers
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
 import conf._
+import conf.switches.Switches
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import services.ImageQuery
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
@@ -25,7 +27,7 @@ object ImageContentController extends Controller with RendersItemResponse with I
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = image(Edition(request), path).map {
     case Left(content) => renderImageContent(content)
-    case Right(result) => result
+    case Right(result) => RenderOtherStatus(result)
   }
 
   private def isSupported(c: ApiContent) = c.isImageContent

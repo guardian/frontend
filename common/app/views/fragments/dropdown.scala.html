@@ -1,28 +1,26 @@
-@(name: String, modifier: Option[String] = None, isActive: Boolean = false)(content: Html)
+@(name: String, modifier: Option[String] = None, isActive: Boolean = false, isClientSideTemplate: Boolean = false)(content: Html)
 
 @defining("dropdown-"+content.hashCode){ hash =>
 <div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active}">
     <button class="dropdown__button u-button-reset js-dropdown-button"
             type="button"
-            data-link-name="Show dropdown: @name"
+            data-link-name="Show dropdown: @if(isClientSideTemplate) {<%=name%>} else {@name}"
             aria-controls="@hash"
             aria-expanded="@{isActive.toString}">
-        <span class="dropdown__label">@name</span>
-        <span class="control modern-visible">
-            <i class="i i-dropdown-mask"></i>
-        </span>
+        <span class="dropdown__label">@if(isClientSideTemplate) {<%=name%>} else {@name}</span>
+        @fragments.inlineSvg("dropdown-mask", "icon", List("control", "modern-visible"))
     </button>
 
-    <label class="dropdown__toggle-label modern-hidden"
+    <label class="dropdown__toggle-label u-h"
            aria-controls="@hash"
            for="@{hash}__label">Show</label>
-    <input class="dropdown__toggle modern-hidden"
+    <input class="dropdown__toggle u-h"
             aria-controls="@hash"
             type="checkbox"
             id="@{hash}__label" />
 
     <div id="@hash" class="dropdown__content" aria-hidden="@{!isActive.toString}" aria-expanded="@{isActive.toString}">
-        @content
+        @if(isClientSideTemplate) {<%=content%>} else {@content}
     </div>
 </div>
 }

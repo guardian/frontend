@@ -1,13 +1,14 @@
-@(article: model.Article)(implicit request: RequestHeader)
+@import views.MainMediaWidths
+@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import model.EndSlateComponents
 @import model.{AudioPlayer, VideoPlayer}
 @import views.support.Video640
-@import views.BodyCleaner
+@import views.{BodyCleaner, MainCleaner}
 
 @if(article.hasMainEmbed || article.elements("main").isEmpty) {
     <div class="media-primary">
-        @BodyCleaner(article, article.main)
+        @MainCleaner(article, article.main, amp)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
@@ -25,7 +26,7 @@
                             endSlatePath = EndSlateComponents.fromContent(article).toUriPath,
                             overrideIsRatioHd = None,
                             embedPath = article.mainVideoCanonicalPath
-                        ), true)
+                        ), true, amp = amp)
                     }
 
                     @mainVideo.caption.map { caption =>
@@ -34,8 +35,16 @@
                 </figure>
             }
         } else {
-            @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature, false,
-                Some(article.url), article.isMainMediaLightboxable)
+            @article.mainPicture.map { picture =>
+                @fragments.img(
+                    picture,
+                    if(article.isMainMediaLightboxable) Some(1) else None,
+                    article.hasShowcaseMainElement,
+                    article.isFeature,
+                    MainMediaWidths(article),
+                    amp = amp
+                )
+            }
         }
     }
 }

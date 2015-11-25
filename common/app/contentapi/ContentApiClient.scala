@@ -2,8 +2,9 @@ package contentapi
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
+import com.gu.contentapi.client.model.{ErrorResponse, ItemQuery, ItemResponse, SearchQuery}
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
-import conf.Switches
+import conf.switches.Switches
 import scala.concurrent.{ExecutionContext, Future}
 import common._
 import model.{Content, Trail}
@@ -86,6 +87,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
     .showElements("all")
     .showReferences(references)
     .showStoryPackage(true)
+    .showRights("syndicatable")
 
   //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
@@ -142,12 +144,17 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
   }
 }
 
-class ElasticSearchLiveContentApiClient extends CircuitBreakingContentApiClient {
+class LiveContentApiClient extends CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
 }
 
-class ElasticSearchPreviewContentApiClient extends ElasticSearchLiveContentApiClient {
-  override val targetUrl = contentApi.contentApiPreviewHost
+object ErrorResponseHandler {
+
+  private val commercialExpiryMessage = "The requested resource has expired for commercial reason."
+
+  def isCommercialExpiry(error: ErrorResponse): Boolean = {
+    error.message == commercialExpiryMessage
+  }
 }

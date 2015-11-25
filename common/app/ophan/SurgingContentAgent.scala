@@ -63,8 +63,8 @@ trait SurgingContentAgentLifecycle extends GlobalSettings {
 
     Jobs.deschedule("SurgingContentAgentRefreshJob")
 
-    // update every 30 min
-    Jobs.schedule("SurgingContentAgentRefreshJob",  "0 0/30 * * * ?") {
+    // update every 30 min, on the 51st second past the minute (e.g 13:09:51, 13:39:51)
+    Jobs.schedule("SurgingContentAgentRefreshJob",  "51 9/30 * * * ?") {
       SurgingContentAgent.update()
     }
 

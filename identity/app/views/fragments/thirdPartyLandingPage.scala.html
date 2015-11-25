@@ -1,0 +1,34 @@
+@(groupCode: String)
+
+@import views.html.fragments.identityPageHeader
+
+@groupCode match {
+
+    case "GRS" => {
+        @identityPageHeader(s"Welcome to Guardian Jobs") {
+        }
+
+        <p>By connecting your account you get access to a range of features:</p>
+        <ul>
+            <li>Receive relevant jobs into your inbox</li>
+            <li>Upload your CV and let potential employers find you</li>
+            <li>Shortlist jobs that interest you, so that you can come back to them later</li>
+        </ul>
+    }
+
+    case "GTNF" => {
+        @identityPageHeader(s"Welcome to Guardian Teacher's Network") {
+        }
+
+        <p>By connecting your account you get access to a range of features:</p>
+        <ul>
+            <li>Download teaching resources</li>
+        </ul>
+    }
+
+    case _ => {
+        @identityPageHeader(s"Welcome to The Guardian") {
+        }
+    }
+
+}

@@ -1,18 +1,14 @@
 @(page: model.Page, path: String)(implicit request: RequestHeader)
 
+@import common.LinkTo
+
 @main(page){ } {
     <div class="l-side-margins">
-        @defining(layout.Feedback(path)) { feedback =>
             <div class="content content--expired">
                 <header class="content__head">
                     <div class="gs-container">
                         <div class="content__main-column">
-                            @defining(feedback.links match {
-                                case None => "Thank you for telling us about your issue"
-                                case _ => "Report a technical issue"
-                            }) { headline =>
-                                <h1 itemprop="headline" class="content__headline">@headline</h1>
-                            }
+                            <h1 itemprop="headline" class="content__headline">Report a technical issue</h1>
                         </div>
                     </div>
                 </header>
@@ -22,44 +18,29 @@
                             <div class="js-article__container u-cf">
                                 <div class="from-content-api" itemprop="articleBody">
                                     <div class="from-content-api">
-                                        <p>@feedback.problem</p>
-                                        @feedback.links.map { links =>
-                                            <p>Please tell us more by choosing one of the options below.  We will record your choice, and give you more options on a new page.</p>
-                                            <ul>
-                                                @links.map { link =>
-                                                    <li><a data-link-name="tech feedback : @link._1" href="tech-feedback/@link._1">@link._2</a></li>
-                                                }
-                                            </ul>
-                                        }
-                                        @if(feedback.email) {
-                                            <p>
-                                                If you'd like to help us further, please tell our developers more about your issue by emailing
-                                                <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto : dotcom" href="mailto:dotcom.feedback@@theguardian.com">
-                                                    dotcom.feedback@@theguardian.com
-                                                </a>.
-                                                    <strong>We value all feedback but we are unable to respond directly.</strong>
-                                            </p>
-                                            <p>If you need help from us with your issue please contact our user support desk at
-                                                <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">
-                                                    userhelp@@theguardian.com
-                                                </a> and someone should get back to you.
-                                            </p>
-                                            <p>Think you can fix it yourself?  <a href="http://developers.theguardian.com/">Work for us</a>!</p>
-                                        } else {
-                                            <p>Need help, or want something else? Contact our user support desk at
-                                                <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">
-                                                    userhelp@@theguardian.com
-                                                </a>.
-                                            </p>
-                                        }
+                                        <p>Thanks for coming to report a technical issue with our web site.</p>
+                                        <h2>Contact us</h2>
+                                        <p>Do you need a response?</p>
+                                        <p>
+                                            If not, to help our developers improve the site, send comments to
+                                            <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto : dotcom" href="mailto:dotcom.feedback@@theguardian.com">
+                                                dotcom.feedback@@theguardian.com
+                                            </a>.
+                                            <strong>We value all feedback but we are unable to respond directly.</strong>
+                                        </p>
+                                        <p>If you need help, please contact our user support desk at
+                                            <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">
+                                                userhelp@@theguardian.com
+                                            </a> and someone should get back to you.
+                                        </p>
+                                        <p>Think you can fix it yourself? <a href="http://developers.theguardian.com/">Work for us</a>!</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
 
         <div class="facia-container facia-container--layout-content">
         @fragments.mostPopularPlaceholder("/")

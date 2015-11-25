@@ -60,7 +60,7 @@ trait Comment {
 object Comment extends implicits.Dates {
 
   def apply(json: JsValue, profileOpt: Option[Profile], discussionOpt: Option[Discussion]): Comment = {
-    val discussion = discussionOpt getOrElse {Discussion(json \ "discussion")}
+    val discussion = discussionOpt getOrElse {Discussion((json \ "discussion").getOrElse(JsNull))}
     DefaultComment(
       id = (json \ "id").as[Int],
       body = (json \ "body").as[String],
@@ -112,7 +112,7 @@ object Discussion {
     (json \ "title").as[String],
     (json \ "apiUrl").as[String],
     (json \ "webUrl").as[String],
-    (json \ "isClosedForComments").as[Option[Boolean]] getOrElse false,
-    (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse false
+    (json \ "isClosedForComments").asOpt[Boolean] getOrElse false,
+    (json \ "isClosedForRecommendation").asOpt[Boolean] getOrElse false
   )
 }

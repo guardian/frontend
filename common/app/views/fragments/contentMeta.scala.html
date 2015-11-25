@@ -1,5 +1,5 @@
 @(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
-@import conf.Switches._
+@import conf.switches.Switches._
 
 @byline(content: model.Content) = {
     @content match {
@@ -21,7 +21,7 @@
     }
 
     @if(!content.shouldHidePublicationDate) {
-        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, secondary = true)
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, content.isLiveBlog, content.isLive)
     }
 
     <div class="meta__extras">
@@ -34,7 +34,7 @@
             <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
             </div>
         </div>
-        @if(ABSaveForLaterSwitch.isSwitchedOn) {
+        @if(SaveForLaterSwitch.isSwitchedOn) {
             <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
         }
     </div>
@@ -43,7 +43,7 @@
 <div class="content__meta-container js-content-meta js-football-meta u-cf
     @if(content.byline.isEmpty){ content__meta-container--no-byline}
     @if(content.isLiveBlog) { content__meta-container--liveblog}
-    @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
+    @if(content.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @content.contributorBio.map { bio => content__meta-container--bio}
     @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}

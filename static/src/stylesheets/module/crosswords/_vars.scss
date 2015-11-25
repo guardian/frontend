@@ -1,14 +1,22 @@
 // based on cellSize + borderSize from
 // projects/common/modules/crosswords/constants.js
 $xword-cell-width: 31px;
+$xword-cell-width-small: 24px; // only used in anagram helper preview cells
+$xword-cell-width-xsmall: 20px; // as above but for long (10+ letter) clues
 $xword-border-width: 1px;
 
-$xword-highlight: lighten(colour(crosswordAccent2), 30%);
-$xword-focussed: lighten(colour(crosswordAccent2), 10%);
-$xword-ink: #3f4ac3; // biro blue
+$xword-highlight-colour: colour(crosswordAccent2);
+$xword-focussed-colour: #000000;
+$xword-focussed-background-colour: lighten($xword-highlight-colour, 30%);
+
+$xword-clue-number-width: 32px;
 
 $xword-grid-sizes: (
     quick: 13,
+    cryptic: 15,
+    prize: 15,
+    quiptic: 15,
+    genius: 15,
     speedy: 13,
-    cryptic: 15
+    everyman: 15
 );

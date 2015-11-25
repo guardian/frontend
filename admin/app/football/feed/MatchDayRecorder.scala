@@ -1,11 +1,12 @@
 package football.feed
 
 import common.{Edition, ExecutionContexts, Logging}
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.ws.WS
 import services.S3
+import conf.AdminConfiguration.pa
 
 import scala.concurrent.ExecutionContext
 import play.api.Play.current
@@ -17,12 +18,10 @@ object MatchDayRecorder extends ExecutionContexts with Logging {
 
   override implicit lazy val executionContext: ExecutionContext = feedsRecorderExecutionContext
 
-  import conf.Configuration.pa
-
   def record(): Unit = if (Switches.FootballFeedRecorderSwitch.isSwitchedOn) {
 
     val now = DateTime.now
-    val feedUrl = s"${pa.host}/api/football/competitions/matchDay/${pa.apiKey}/${now.toString(feedDateFormat)}"
+    val feedUrl = s"${pa.footballHost}/api/football/competitions/matchDay/${pa.footballApiKey}/${now.toString(feedDateFormat)}"
     val fileName = s"football-feeds/match-day/${now.toString(fileDateFormat)}.xml"
     val result = WS.url(feedUrl).get()
 

@@ -1,38 +1,43 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
-import com.google.api.ads.dfp.axis.v201411._
+import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
+import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
-import conf.Configuration.commercial.guMerchandisingAdvertiserId
-import dfp.DfpApiWrapper.DfpSessionException
+import common.dfp._
 import org.apache.commons.lang.exception.ExceptionUtils
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
-import scala.util.{Failure, Try}
+import scala.util.{Failure, Success, Try}
 
 object DfpDataHydrator {
   def apply(): DfpDataHydrator = new DfpDataHydrator()
 }
 
+// this is being replaced by DfpApi
 class DfpDataHydrator extends Logging {
 
   private lazy val dfpServiceRegistry = DfpServiceRegistry()
 
   private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
-      try {
-        val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder)
+      val session = new SessionWrapper(serviceRegistry.session)
 
-        val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
-        val allAdUnits = AdUnitAgent.get.data
-        val placementAdUnits = PlacementAgent.get.data
-        val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
-        val allCustomTargetingValues = CustomTargetingValueAgent.get.data
+      def loadTargetingValue(id: Long): String = {
+        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", id)
+        val values = session.customTargetingValues(stmtBuilder)
+        values.map(_.getName).head
+      }
+
+      try {
+        val dfpLineItems =
+          session.lineItems(statementBuilder) filterNot {
+            _.getIsArchived
+          }
 
         dfpLineItems map { dfpLineItem =>
 
           val sponsor = for {
-            sponsorFieldId <- optSponsorFieldId
+            sponsorFieldId <- CustomFieldAgent.get.data.get("Sponsor")
             customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
             sponsor <- customFieldValues.collect {
               case fieldValue: CustomFieldValue
@@ -41,70 +46,20 @@ class DfpDataHydrator extends Logging {
             }.headOption
           } yield sponsor
 
-          val dfpTargeting = dfpLineItem.getTargeting
-
-          val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map {
-            adUnits =>
-              adUnits.flatMap { adUnit =>
-                allAdUnits get adUnit.getAdUnitId
-              }.toSeq
-          } getOrElse Nil
-
-          val adUnitsDerivedFromPlacements = {
-            Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map {
-              placementIds =>
-
-                def adUnitsInPlacement(id: Long) = {
-                  placementAdUnits get id map {
-                    _ flatMap allAdUnits.get
-                  } getOrElse Nil
-                }
-
-                placementIds.flatMap(adUnitsInPlacement).toSeq
-
-            } getOrElse Nil
-          }
-
-          val adUnits =
-            (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
-
-          def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
-            Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
-              Option(locations(geoTargeting)) map { locations =>
-                locations.map { location =>
-                  GeoTarget(
-                    location.getId,
-                    optJavaInt(location.getCanonicalParentId),
-                    location.getType,
-                    location.getDisplayName
-                  )
-                }.toSeq
-              }
-            } getOrElse Nil
-          }
-          val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
-          val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
-
-          val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
-            buildCustomTargetSets(customTargeting,
-              allCustomTargetingKeys,
-              allCustomTargetingValues)
-          } getOrElse Nil
-
           GuLineItem(
             id = dfpLineItem.getId,
             name = dfpLineItem.getName,
             startTime = toJodaTime(dfpLineItem.getStartDateTime),
-            endTime = if (dfpLineItem.getUnlimitedEndDateTime) None
-            else Some(toJodaTime(dfpLineItem
-              .getEndDateTime)),
+            endTime = {
+              if (dfpLineItem.getUnlimitedEndDateTime) None
+              else Some(toJodaTime(dfpLineItem.getEndDateTime))
+            },
             isPageSkin = isPageSkin(dfpLineItem),
             sponsor = sponsor,
-            targeting = GuTargeting(adUnits,
-              geoTargetsIncluded,
-              geoTargetsExcluded,
-              customTargetSets),
+            creativePlaceholders = buildCreativePlaceholders(dfpLineItem, loadTargetingValue),
+            targeting = buildTargeting(dfpLineItem.getTargeting, loadTargetingValue),
             status = dfpLineItem.getStatus.toString,
+            costType = dfpLineItem.getCostType.toString,
             lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
           )
 
@@ -128,14 +83,28 @@ class DfpDataHydrator extends Logging {
     loadLineItems(currentLineItems)
   }
 
-  def loadAllAdFeatures(): Seq[GuLineItem] = {
-    val allSponsored = new StatementBuilder()
-      .where("lineItemType = :sponsoredType AND status != :draftStatus")
-      .orderBy("id ASC")
-      .withBindVariableValue("sponsoredType", LineItemType.SPONSORSHIP.toString)
-      .withBindVariableValue("draftStatus", ComputedStatus.DRAFT.toString)
+  def loadLineItemsModifiedSince(threshold:JodaDateTime): Seq[GuLineItem] = {
+    val recentlyModified = new StatementBuilder()
+      .where("lastModifiedDateTime > :threshold")
+      .withBindVariableValue("threshold", threshold.getMillis)
 
-    loadLineItems(allSponsored) filter { lineItem =>
+    loadLineItems(recentlyModified)
+  }
+
+  def loadAdFeatures(expiredSince: JodaDateTime, expiringBefore: JodaDateTime): Seq[GuLineItem] = {
+    val statement = new StatementBuilder()
+      .where(
+        "LineItemType = :sponsored AND " +
+          "Status != :draft AND " +
+          "EndDateTime > :startTime AND " +
+          "EndDateTime < :endTime"
+      )
+      .withBindVariableValue("sponsored", LineItemType.SPONSORSHIP.toString)
+      .withBindVariableValue("draft", ComputedStatus.DRAFT.toString)
+      .withBindVariableValue("startTime", expiredSince.getMillis)
+      .withBindVariableValue("endTime", expiringBefore.getMillis)
+
+    loadLineItems(statement) filter { lineItem =>
       lineItem.targeting.customTargetSets exists { targetSet =>
         targetSet.targets exists (_.isAdvertisementFeatureSlot)
       }
@@ -151,7 +120,8 @@ class DfpDataHydrator extends Logging {
     }
 
     dfpServiceRegistry.map { serviceRegistry =>
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, stmtBuilder)
+      val session = new SessionWrapper(serviceRegistry.session)
+      val dfpAdUnits = session.adUnits(stmtBuilder)
       dfpAdUnits filter { adUnit =>
         Option(adUnit.getParentPath) exists { path =>
           val isRoot = path.length == 1 && adUnit.getName == rootName
@@ -186,9 +156,10 @@ class DfpDataHydrator extends Logging {
 
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
     dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>
+      val session = new SessionWrapper(serviceRegistry.session)
       val statementBuilder = new StatementBuilder()
 
-      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(serviceRegistry, statementBuilder)
+      val suggestedAdUnits = session.suggestedAdUnits(statementBuilder)
 
       val allUnits = suggestedAdUnits.map { adUnit =>
         val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
@@ -199,69 +170,42 @@ class DfpDataHydrator extends Logging {
       allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
   }
 
-  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] =
+  class DfpApprovalException(message: String) extends RuntimeException
+  class DfpSessionException extends RuntimeException
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = {
+
+    def approveTheseAdUnits(
+      serviceRegistry: DfpServiceRegistry,
+      statementBuilder: StatementBuilder
+    ): Try[String] = {
+      val approve: ApproveSuggestedAdUnit = new ApproveSuggestedAdUnit()
+
+      val service = serviceRegistry.suggestedAdUnitService
+      try {
+        val result = Option(service.performSuggestedAdUnitAction(approve, statementBuilder.toStatement))
+        if (result.isDefined) {
+          if (result.get.getNumChanges > 0) {
+            Success("Ad units approved")
+          } else {
+            Failure(new DfpApprovalException("Apparently, nothing changed"))
+          }
+        } else {
+          Failure(new DfpApprovalException("Everything failed"))
+        }
+      } catch {
+        case e: Exception => Failure(e)
+      }
+    }
+
     dfpServiceRegistry.map { serviceRegistry =>
       val adUnitsList: String = adUnits.mkString(",")
 
       val statementBuilder = new StatementBuilder()
-        .where(s"id in ($adUnitsList)")
+                             .where(s"id in ($adUnitsList)")
 
-      DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
-  }.getOrElse(Failure(new DfpSessionException()))
-
-
-  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] =
-    dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
-    val templatesQuery = new StatementBuilder()
-      .where("status = :active and type = :type")
-      .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
-      .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
-      .orderBy("name ASC")
-
-      val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(serviceRegistry,
-        templatesQuery) filterNot { template =>
-      val name = template.getName.toUpperCase
-      name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
-    }
-
-    // fetch merchandising creatives by advertiser and logo creatives by size
-    val creativesQuery = new StatementBuilder()
-      .where("advertiserId = :advertiserId or (width = :width and height = :height)")
-      .withBindVariableValue("advertiserId", guMerchandisingAdvertiserId)
-      .withBindVariableValue("width", "140")
-      .withBindVariableValue("height", "90")
-
-      val creatives = DfpApiWrapper.fetchTemplateCreatives(serviceRegistry, creativesQuery)
-
-    dfpCreativeTemplates map { template =>
-      val templateCreatives = creatives getOrElse(template.getId, Nil)
-      GuCreativeTemplate(
-        id = template.getId,
-        name = template.getName,
-        description = template.getDescription,
-        parameters = template.getVariables map { param =>
-          GuCreativeTemplateParameter(
-            param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
-            param.getLabel,
-            param.getIsRequired,
-            param.getDescription
-          )
-        },
-        snippet = template.getSnippet,
-        creatives = templateCreatives map { creative =>
-          val args = creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) { case (soFar, arg) =>
-            val argValue = arg.getBaseCreativeTemplateVariableValueType match {
-              case "StringCreativeTemplateVariableValue" => Option(arg.asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
-              case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
-              case "UrlCreativeTemplateVariableValue" => Option(arg.asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
-              case other => "???"
-            }
-            soFar + (arg.getUniqueName -> argValue)
-          }
-          GuCreative(creative.getId.longValue(), creative.getName, args)
-        }
-      )
-    }
+      approveTheseAdUnits(serviceRegistry, statementBuilder)
+    }.getOrElse(Failure(new DfpSessionException()))
   }
 
   private def isPageSkin(dfpLineItem: LineItem) = {
@@ -281,10 +225,12 @@ class DfpDataHydrator extends Logging {
 
   private def buildCustomTargetSets(customCriteriaSet: CustomCriteriaSet,
                                     targetingKeys: Map[Long, String],
-                                    targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
+                                    targetingValues: Map[Long, String],
+                                    lookUpTargetingValue: Long => String): Seq[CustomTargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[CustomTargetSet] = {
-      val targets = crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))
+      val targets =
+        crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))
       if (targets.isEmpty) {
         None
       } else {
@@ -293,14 +239,22 @@ class DfpDataHydrator extends Logging {
     }
 
     def buildTarget(crit: CustomCriteria): Option[CustomTarget] = {
-      targetingKeys.get(crit.getKeyId) map {
-        keyName => CustomTarget(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
+      targetingKeys.get(crit.getKeyId) map { keyName =>
+        CustomTarget(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
       }
     }
 
     def buildValueNames(valueIds: Array[Long]): Seq[String] = {
+
+      def lookUpValue(id: Long): String = {
+        log.info(s"Looking up targeting value $id ...")
+        val targetValue = lookUpTargetingValue(id)
+        log.info(s"Found targeting value $id=$targetValue")
+        targetValue
+      }
+
       valueIds map { id =>
-        targetingValues.getOrElse(id, "*** unknown ***")
+        targetingValues.getOrElse(id, lookUpValue(id))
       }
     }
 
@@ -309,6 +263,101 @@ class DfpDataHydrator extends Logging {
     }.toSeq
   }
 
+  private def buildTargeting(dfpTargeting: Targeting,
+                             lookUpTargetingValue: Long => String): GuTargeting = {
+
+    val adUnits: Seq[GuAdUnit] = {
+      val maybeAdUnits = for {
+        inventoryTargeting <- Option(dfpTargeting.getInventoryTargeting)
+      } yield {
+          val allAdUnits = AdUnitAgent.get.data
+
+          def adUnitsFromIds(adUnitIds: Seq[String]): Seq[GuAdUnit] = for {
+            adUnitId <- adUnitIds
+            adUnits <- allAdUnits.get(adUnitId)
+          } yield adUnits
+
+          val directAdUnits =
+            adUnitsFromIds(toSeq(inventoryTargeting.getTargetedAdUnits) map (_.getAdUnitId))
+
+          val adUnitsDerivedFromPlacements = {
+            val placementAdUnits = PlacementAgent.get.data
+            val adUnits = for {
+              placementId <- toSeq(inventoryTargeting.getTargetedPlacementIds)
+              adUnitIds <- placementAdUnits.get(placementId)
+            } yield adUnitsFromIds(adUnitIds)
+            adUnits.flatten
+          }
+
+          (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
+        }
+
+      maybeAdUnits getOrElse Nil
+    }
+
+    def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
+      Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
+        Option(locations(geoTargeting)) map { locations =>
+          locations.map { location =>
+            GeoTarget(
+              location.getId,
+              optJavaInt(location.getCanonicalParentId),
+              location.getType,
+              location.getDisplayName
+            )
+          }.toSeq
+        }
+      } getOrElse Nil
+    }
+    val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
+    val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
+
+    val customTargetSets = {
+      val maybeTargetSets = for (customTargeting <- Option(dfpTargeting.getCustomTargeting)) yield {
+        val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
+        val allCustomTargetingValues = CustomTargetingValueAgent.get.data
+        buildCustomTargetSets(
+          customTargeting,
+          allCustomTargetingKeys,
+          allCustomTargetingValues,
+          lookUpTargetingValue
+        )
+      }
+      maybeTargetSets getOrElse Nil
+    }
+
+    GuTargeting(
+      adUnits,
+      geoTargetsIncluded,
+      geoTargetsExcluded,
+      customTargetSets
+    )
+  }
+
+  private def buildCreativePlaceholders(lineItem: LineItem,
+                                        lookUpTargetingValue: Long => String):
+  Seq[GuCreativePlaceholder] = {
+
+    def creativeTargeting(name: String): Option[GuTargeting] = {
+      for (targeting <- toSeq(lineItem.getCreativeTargetings) find (_.getName == name)) yield {
+        buildTargeting(targeting.getTargeting, lookUpTargetingValue)
+      }
+    }
+
+    val placeholders = for (placeholder <- lineItem.getCreativePlaceholders) yield {
+      val size = placeholder.getSize
+      val targeting = Option(placeholder.getTargetingName).flatMap(creativeTargeting)
+      GuCreativePlaceholder(AdSize(size.getWidth, size.getHeight), targeting)
+    }
+
+    placeholders sortBy { placeholder =>
+      val size = placeholder.size
+      (size.width, size.height)
+    }
+  }
+
+  private def toSeq[A](as: Array[A]): Seq[A] = Option(as) map (_.toSeq) getOrElse Nil
+
   private def toJodaTime(time: DateTime): JodaDateTime = {
     val date = time.getDate
     new JodaDateTime(date.getYear,
@@ -316,8 +365,10 @@ class DfpDataHydrator extends Logging {
       date.getDay,
       time.getHour,
       time.getMinute,
+      time.getSecond,
       DateTimeZone.forID(time.getTimeZoneID))
   }
 
+  //noinspection IfElseToOption
   private def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }

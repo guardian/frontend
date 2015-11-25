@@ -1,6 +1,6 @@
 package crosswords
 
-import com.gu.crosswords.api.client.models.{Crossword, Position}
+import com.gu.contentapi.client.model.{CrosswordPosition => Position, Crossword}
 
 import scalaz.std.list._
 import scalaz.std.set._
@@ -47,7 +47,7 @@ object CrosswordGrid {
   ).map((Position.apply _).tupled))
 
   def fromCrossword(crossword: Crossword): CrosswordGrid =
-    CrosswordGrid(crossword.entries.foldMap[Set[Position]](_.allPositions.toSet))
+    CrosswordGrid(crossword.entries.toList.foldMap[Set[Position]](_.allPositions.toSet))
 }
 
 case class CrosswordGrid(cellsInPlay: Set[Position])

@@ -6,14 +6,31 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/utils/_',
     'common/utils/mediator',
-    'common/utils/$'
+    'common/utils/$',
+    'lodash/arrays/last',
+    'lodash/arrays/findIndex',
+    'lodash/objects/defaults',
+    'lodash/arrays/first',
+    'lodash/collections/findLast',
+    'common/utils/chain',
+    'lodash/collections/contains',
+    'lodash/collections/pluck',
+    'lodash/arrays/initial',
+    'lodash/arrays/rest'
 ], function (
-    _,
     mediator,
-    $
-) {
+    $,
+    last,
+    findIndex,
+    defaults,
+    first,
+    findLast,
+    chain,
+    contains,
+    pluck,
+    initial,
+    rest) {
 
     var supportsPushState,
         getUserAgent,
@@ -149,6 +166,10 @@ define([
         return /\.facebook\.com/.test(document.referrer);
     }
 
+    function isGuardianReferral() {
+        return /\.theguardian\.com/.test(document.referrer);
+    }
+
     function socialContext() {
         var override = /socialContext=(facebook|twitter)/.exec(window.location.hash);
 
@@ -215,33 +236,6 @@ define([
 
         return speed;
 
-    }
-
-    function getFontFormatSupport(ua) {
-        ua = ua.toLowerCase();
-        var browserSupportsWoff2 = false,
-            // for now only Chrome 36+ supports WOFF 2.0.
-            // Opera/Chromium also support it but their share on theguardian.com is around 0.5%
-            woff2browsers = /Chrome\/([0-9]+)/i,
-            chromeVersion;
-
-        if (woff2browsers.test(ua)) {
-            chromeVersion = parseInt(woff2browsers.exec(ua)[1], 10);
-
-            if (chromeVersion >= 36) {
-                browserSupportsWoff2 = true;
-            }
-        }
-
-        if (browserSupportsWoff2) {
-            return 'woff2';
-        }
-
-        if (ua.indexOf('android') > -1) {
-            return 'ttf';
-        }
-
-        return 'woff';
     }
 
     function hasTouchScreen() {
@@ -314,19 +308,16 @@ define([
     function getBreakpoint(includeTweakpoint) {
         var viewportWidth = detect.getViewport().width,
             index,
-            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
+            breakpoint = last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
             })).name;
         if (!includeTweakpoint) {
-            index = _.findIndex(breakpoints, function (b) {
+            index = findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
-            breakpoint = _(breakpoints)
-                .first(index + 1)
-                .findLast(function (b) {
+            breakpoint = chain(breakpoints).and(first, index + 1).and(findLast, function (b) {
                     return !b.isTweakpoint;
-                })
-                .valueOf()
+                }).valueOf()
                 .name;
         }
 
@@ -334,23 +325,19 @@ define([
     }
 
     function isBreakpoint(criteria) {
-        var c = _.defaults(
+        var c = defaults(
                 criteria,
                 {
-                    min: _.first(breakpoints).name,
-                    max: _.last(breakpoints).name
+                    min: first(breakpoints).name,
+                    max: last(breakpoints).name
                 }
             ),
             currentBreakpoint = getBreakpoint(true);
-        return _(breakpoints)
-            .rest(function (breakpoint) {
+        return chain(breakpoints).and(rest, function (breakpoint) {
                 return breakpoint.name !== c.min;
-            })
-            .initial(function (breakpoint) {
+            }).and(initial, function (breakpoint) {
                 return breakpoint.name !== c.max;
-            })
-            .pluck('name')
-            .contains(currentBreakpoint);
+            }).and(pluck, 'name').and(contains, currentBreakpoint).value();
     }
 
     // Page Visibility
@@ -404,57 +391,50 @@ define([
         return 'WebSocket' in window;
     }
 
-    // Determine if what type of font-hinting we want.
-    // Duplicated in /common/app/views/fragments/javaScriptLaterSteps.scala.html
-    function fontHinting() {
-        var ua = navigator.userAgent,
-            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-            hinting = 'Off',
-            version;
-
-        if (windowsNT) {
-            version = parseFloat(windowsNT[1], 10);
-            // For Windows XP-7
-            if (version >= 5.1 && version <= 6.1) {
-                if (/Chrome/.exec(ua) && version < 6.0) {
-                    // Chrome on windows XP wants auto-hinting
-                    hinting = 'Auto';
-                } else {
-                    // All others use cleartype
-                    hinting = 'Cleartype';
-                }
-            }
-        }
-        return hinting;
-    }
-
     function isModernBrowser() {
         return window.guardian.isModernBrowser;
     }
 
     function adblockInUse() {
-        var displayed = '',
-            isAdblock = false,
-            mozBinding = '',
-            mozBindingHidden = -1;
+        if (!detect.cachedAdblockInUse) {
+            var sacrificialAd = createSacrificialAd(),
+                contentBlocked = isHidden(sacrificialAd);
+            sacrificialAd.remove();
+            detect.cachedAdblockInUse = contentBlocked;
+            return contentBlocked;
+        }
 
-        $.create('<div class="ad_unit"></div>').appendTo(document.body);
-        displayed = $('.ad_unit').css('display');
-        mozBinding = $('.ad_unit').css('-moz-binding');
-        if (typeof mozBinding !== 'undefined') {
-            mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+        return detect.cachedAdblockInUse;
+
+        function isHidden(bonzoElement) {
+            return bonzoElement.css('display') === 'none';
         }
-        $('.ad_unit').remove();
-        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
-            isAdblock = true;
+    }
+
+    /** Includes Firefox Adblock Plus users who whitelist the Guardian domain */
+    function getFirefoxAdblockPlusInstalled() {
+        var sacrificialAd = createSacrificialAd();
+        var adUnitMozBinding = sacrificialAd.css('-moz-binding');
+        if (adUnitMozBinding) {
+            return adUnitMozBinding.match('elemhidehit') !== null;
+        } else {
+            return false;
         }
-        return isAdblock;
+    }
+
+    function createSacrificialAd() {
+        var sacrificialAd = $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>');
+        sacrificialAd.appendTo(document.body);
+        return sacrificialAd;
+    }
+
+    function getReferrer() {
+        return document.referrer || '';
     }
 
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
-        getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
@@ -469,6 +449,7 @@ define([
         isTwitterApp: isTwitterApp,
         isFacebookReferral: isFacebookReferral,
         isTwitterReferral: isTwitterReferral,
+        isGuardianReferral: isGuardianReferral,
         socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
@@ -477,9 +458,10 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse()
+        adblockInUse: adblockInUse,
+        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
+        getReferrer: getReferrer
     };
     return detect;
 });

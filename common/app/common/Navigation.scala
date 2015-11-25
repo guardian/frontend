@@ -1,5 +1,6 @@
 package common
 
+import conf.switches.Switches
 import model.{Content, MetaData}
 import play.api.mvc.RequestHeader
 
@@ -190,6 +191,7 @@ trait Navigation {
   val budget = SectionLink("travel", "budget travel", "Budget travel", "/travel/budget")
   val australasiaTravel = SectionLink("australasia", "australasia", "Australasia", "/travel/australasia")
   val asiaTravel = SectionLink("asia", "asia", "Asia", "/travel/asia")
+  val skiingTravel = SectionLink("travel", "skiing", "Skiing", "/travel/skiing")
 
   //Environment
   val climateChange = SectionLink("environment", "climate change", "Climate change", "/environment/climate-change")
@@ -203,8 +205,20 @@ trait Navigation {
 
   //Games
   val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
+  val crosswordBlog = SectionLink("crosswords", "blog", "Blog", "/crosswords/crossword-blog")
+  val crosswordEditorUpdate = SectionLink("crosswords", "editor", "Editor", "/crosswords/series/crossword-editor-update")
+  val quick = SectionLink("crosswords", "quick", "Quick", "/crosswords/series/quick")
+  val cryptic = SectionLink("crosswords", "cryptic", "Cryptic", "/crosswords/series/cryptic")
+  val prize = SectionLink("crosswords", "prize", "Prize", "/crosswords/series/prize")
+  val quiptic = SectionLink("crosswords", "quiptic", "Quiptic", "/crosswords/series/quiptic")
+  val genius = SectionLink("crosswords", "genius", "Genius", "/crosswords/series/genius")
+  val speedy = SectionLink("crosswords", "speedy", "Speedy", "/crosswords/series/speedy")
+  val everyman = SectionLink("crosswords", "everyman", "Everyman", "/crosswords/series/everyman")
 
-  // Today's paper
+  // R1 Azeds have been re-created as NGW content with a new landing page
+  val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")
+
+  // Guardian newspaper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
   val editorialsandletters = SectionLink("todayspaper", "editorials and letters", "Editorials and Letters", "/theguardian/mainsection/editorialsandreply")
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
@@ -212,6 +226,13 @@ trait Navigation {
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
   val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
+
+
+  // Observer newspaper
+  val sundayPaper = SectionLink("theobserver", "sunday's paper", "The Observer", "/theobserver")
+  val observerNewReview = SectionLink("theobserver", "the new review", "Observer The New Review", "/theobserver/new-review")
+  val observerMagazine = SectionLink("theobserver", "observer magazine", "Observer Magazine", "/theobserver/magazine")
+
 
   // Membership
   val membership = SectionLink("membership", "membership", "Membership", "/membership")

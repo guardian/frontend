@@ -1,15 +1,14 @@
 package model
 
 import common.Edition
-import dfp.DfpAgent
+import common.dfp.DfpAgent
 import implicits.Dates
 import org.scala_tools.time.Imports._
-import views.support.CardStyleForFrontend
 
 /**
  * additional information needed to display something on a facia page from CAPI
  */
-trait Trail extends Elements with Tags with FaciaFields with Dates {
+trait Trail extends Elements with Tags with Dates {
   def webPublicationDate: DateTime
   def webPublicationDate(edition: Edition): DateTime = webPublicationDate(edition.timezone)
   def webPublicationDate(zone: DateTimeZone): DateTime = webPublicationDate.withZone(zone)
@@ -45,43 +44,6 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
     DfpAgent.isFoundationSupported(tags, Some(section))
 
   def faciaUrl: Option[String] = this match {
-    case snap: Snap => snap.snapHref.filter(_.nonEmpty)
     case t: Trail => Option(t.url)
   }
-
-  def trailSlideshow(aspectWidth: Int, aspectHeight: Int): Iterable[FaciaImageElement] =
-  slideshow
-    .filter(image => IsRatio(aspectWidth, aspectHeight, image.width, image.height))
-
-  def cardStyle = CardStyleForFrontend(this)
-}
-
-/**
- * Information needed to display something on a facia page (from the pressed json)
- */
-trait FaciaFields {
-  def group: Option[String] = None
-  def supporting: List[Trail] = Nil
-  def imageReplace: Boolean = false
-  def imageSrc: Option[String] = None
-  def imageSrcWidth: Option[String] = None
-  def imageSrcHeight: Option[String] = None
-  def isBoosted: Boolean = false
-  def imageHide: Boolean = false
-  def isBreaking: Boolean = false
-  def showKickerTag: Boolean = false
-  def showKickerSection: Boolean = false
-  def showKickerCustom: Boolean = false
-  def customKicker: Option[String] = None
-  def showMainVideo: Boolean = false
-  def showBoostedHeadline: Boolean = false
-  def showQuotedHeadline: Boolean = false
-  def imageCutoutReplace: Boolean = false
-  def customImageCutout: Option[FaciaImageElement]
-
-  def imageSlideshowReplace: Boolean = false
-  def slideshow: Iterable[FaciaImageElement] = Nil
-
-  def snapType: Option[String]
-  def snapUri: Option[String]
 }

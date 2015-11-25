@@ -2,28 +2,31 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-v3.html'
+    'text!common/views/commercial/creatives/fluid250-v3.html',
+    'lodash/functions/bindAll',
+    'lodash/objects/merge'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
     detect,
     mediator,
     storage,
     template,
-    fluid250Tpl
-) {
+    fluid250Tpl,
+    bindAll,
+    merge) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
+
+        bindAll(this, 'updateBgPosition');
     };
 
     Fluid250.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
@@ -33,17 +36,16 @@ define([
     Fluid250.isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
 
     Fluid250.prototype.updateBgPosition = function () {
+        var that = this;
         switch (this.params.backgroundImagePType) {
             case 'fixed':
                 break;
             case 'parallax':
-                fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                    this.scrollAmountP = this.scrollAmount + '%';
-                }.bind(this));
+                this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+                this.scrollAmountP = this.scrollAmount + '%';
                 fastdom.write(function () {
-                    $('.ad-scrolling-bg', $(this.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + this.scrollAmountP);
-                }.bind(this));
+                    $('.ad-scrolling-bg', $(that.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + that.scrollAmountP);
+                });
                 break;
         }
 
@@ -51,17 +53,18 @@ define([
     };
 
     Fluid250.prototype.layer2Animation = function () {
-        var inViewB;
+        var inViewB,
+            that = this;
         if (this.params.layerTwoAnimation === 'enabled' && Fluid250.isModernBrowser && !Fluid250.isIE9OrLess) {
             fastdom.read(function () {
-                inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
-            }.bind(this));
+                inViewB = (window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top;
+            });
             fastdom.write(function () {
-                $('.hide-until-tablet .fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-hide');
+                $('.hide-until-tablet .fluid250_layer2', $(that.$adSlot)).addClass('ad-scrolling-text-hide');
                 if (inViewB) {
-                    $('.hide-until-tablet .fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-animate');
+                    $('.hide-until-tablet .fluid250_layer2', $(that.$adSlot)).addClass('ad-scrolling-text-animate');
                 }
-            }.bind(this));
+            });
         }
     };
 
@@ -88,17 +91,19 @@ define([
                     '<div class="ad-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: 50% 0; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             };
 
-        $.create(template(fluid250Tpl, { data: _.merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
+        $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
+
         if (Fluid250.hasScrollEnabled) {
             // update bg position
-            this.updateBgPosition();
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            fastdom.read(this.updateBgPosition);
+
+            mediator.on('window:throttledScroll', this.updateBgPosition);
             // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition.bind(this));
+            mediator.on('window:resize', this.updateBgPosition);
         }
     };
 

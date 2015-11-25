@@ -1,9 +1,8 @@
-import ab_headlines.ABTHeadlinesLifecycle
-import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
-import conf.Filters
+import common.dfp.DfpAgentLifecycle
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
@@ -17,7 +16,7 @@ object Global extends WithFilters(Filters.common: _*)
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
   with SectionsLookUpLifecycle
-  with ABTHeadlinesLifecycle
+  with SwitchboardLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-applications"
 

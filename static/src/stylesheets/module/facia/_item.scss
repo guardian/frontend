@@ -126,6 +126,21 @@ $fc-item-gutter: $gs-gutter / 4;
     padding-bottom: $gs-baseline * 2;
 }
 
+.fc-slice--q-q-q-q,
+.fc-slice--ql-ql-ql-ql {
+    @include mq($from: tablet, $until: desktop) {
+        .fc-item--has-timestamp {
+            .fc-item__content {
+                padding-bottom: $gs-baseline * 4;
+            }
+
+            &.fc-item--has-cutout .fc-item__content {
+                padding-bottom: $gs-baseline * 2;
+            }
+        }
+    }
+}
+
 .fc-item,
 .item {
     @include mq($until: tablet) {
@@ -172,16 +187,20 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: colour(neutral-6);
 
+        .fc-slice--nav-list--media & {
+            background-color: inherit;
+        }
+    }
+
+    .u-faux-block-link--hover {
         .fc-item__image-container {
             background-color: #000000;
 
-            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
-            .responsive-img {
-                opacity: .9;
-            }
+            opacity: .9;
         }
 
         .u-faux-block-link__cta {
@@ -217,8 +236,12 @@ $fc-item-gutter: $gs-gutter / 4;
         margin-bottom: 0;
     }
 
-    .vjs-big-play-button > span {
+    .vjs-big-play-button > .vjs-control-text {
         @include video-play-button-size($vjs-small-button-size);
+
+        &:before {
+            @include video-play-button-size($vjs-small-button-size);
+        }
     }
 }
 
@@ -289,6 +312,56 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__image-container {
     display: none;
 }
+
+.fc-item__slideshow {
+    img {
+        @include mq($until: tablet) {
+            &:nth-child(1n+2) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
+        }
+    }
+}
+
+@for $i from 2 through 5 {
+    $hangTime: 4;
+    $fadeTime: 1;
+    $totalLoopTime: $i * ($hangTime + $fadeTime);
+    @keyframes fc-item__slideshow--#{$i} {
+        0% {
+            opacity: 0;
+        }
+        #{(100% / $totalLoopTime) * $fadeTime} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime)} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
+            opacity: 0;
+        }
+    }
+    @include mq(tablet) {
+        .fc-item__slideshow--#{$i} img {
+            animation-duration: #{$totalLoopTime}s;
+            animation-name: fc-item__slideshow--#{$i};
+
+            @for $j from 2 through $i {
+                &:nth-child(#{$j}) {
+                    animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
+                }
+            }
+        }
+    }
+}
+
 
 .fc-item__video-play {
     display: block;
@@ -401,17 +474,28 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 // Liveblog blocks
-$block-height: 74px;
+$block-height: 71px;
 
 .fc-item__liveblog-blocks {
-    box-sizing: content-box !important;
-    height: $block-height;
-    overflow: hidden;
-    border-bottom: $gs-gutter/4 solid transparent;
+    display: none;
+}
+
+@include mq(desktop) {
+    .fc-item__liveblog-blocks {
+        display: block;
+        box-sizing: content-box !important;
+        height: $block-height;
+        overflow: hidden;
+        border-bottom: $gs-gutter/4 solid transparent;
+    }
 }
 
 .fc-item__liveblog-blocks__inner {
-    transition: transform .75s ease-out;
+    transition: transform .5s ease-in;
+}
+
+.fc-item__liveblog-blocks__inner--offset {
+    transform: translate3d(0, $block-height * -1, 0);
 }
 
 .fc-item__liveblog-block {
@@ -445,7 +529,7 @@ $block-height: 74px;
     right: 0;
     @include fs-headline(1);
     font-size: 30px;
-    line-height: $gs-baseline/2;
+    line-height: $gs-baseline;
     color: mix(#ffffff, colour(live-default), 92%);
     height: 18px;
     padding-right: 8px;
@@ -483,6 +567,14 @@ $block-height: 74px;
     position: relative;
     float: left;
     margin-bottom: $gs-baseline / 4;
+    margin-right: 1em;
+
+    .saved-contents & {
+        @include mq(desktop) {
+            position: absolute;
+            bottom: 0;
+        }
+    }
 }
 
 .fc-item__timestamp {
@@ -496,6 +588,14 @@ $block-height: 74px;
         height: 11px;
         width: 11px;
         margin-right: 2px;
+    }
+
+    .fc-slice--ql-ql-ql-ql &,
+    .fc-slice--q-q-q-q & {
+        @include mq($from: tablet, $until: desktop) {
+            display: block;
+            float: none;
+        }
     }
 }
 
@@ -515,13 +615,13 @@ $block-height: 74px;
 .fc-save-for-later {
     // reset button defaults
     border: 0;
+    border-left: 1px solid;
     background-color: transparent;
     padding: 0;
-
     color: transparent;
-    float: right;
-    margin-right: 0 - ($gs-gutter * .25);
-    padding-right: ($gs-gutter * .25);
+    margin-right: 0 - ($gs-gutter / 4);
+    padding-right: ($gs-gutter / 4);
+    padding-left: $gs-gutter / 4;
     transition: color 100ms;
 
     &:hover,
@@ -531,17 +631,58 @@ $block-height: 74px;
         color: inherit;
     }
 
-    &:before {
+
+    &:after {
         content: 'save';
-        margin-right: .4em;
+    }
+
+    &.fc-save-for-later--is-saved:after {
+        content: 'saved';
+    }
+
+    @include mq($until: tablet) {
+        border-left: 0;
+        float: right;
+
+        .fc-item--has-timestamp & {
+            &:after,
+            &.fc-save-for-later--is-saved:after {
+                content: '';
+            }
+        }
+    }
+
+    @include mq($from: tablet, $until: desktop) {
+        .fc-item--has-timestamp &:last-child {
+            border-left: 0;
+            padding-left: 0;
+
+            .inline-icon {
+                margin-left: 0;
+            }
+        }
     }
 
     .inline-icon {
         float: right;
-    }
+        margin-left: $gs-gutter / 4;
+        margin-right: 0;
 
-    &.fc-save-for-later--is-saved:before {
-        content: 'saved';
+        @include mq(tablet) {
+            float: left;
+            margin-right: $gs-gutter / 4;
+        }
+    }
+}
+
+.fc-save-for-later:only-child {
+    @include mq(tablet) {
+        border: 0;
+        padding: 0;
+        
+        .inline-icon {
+            margin-left: 0;
+        }
     }
 }
 

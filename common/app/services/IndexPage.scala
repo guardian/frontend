@@ -1,21 +1,22 @@
 package services
 
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
-import com.gu.facia.api.utils.{ReviewKicker, CartoonKicker, TagKicker}
-import common.Edition
-import conf.{Configuration, Switches}
+import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.utils.{CartoonKicker, ReviewKicker, TagKicker}
+import common.{Edition, LinkTo}
+import conf.switches.Switches
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
-import model.meta.{ListItem, ItemList}
-import org.joda.time.DateTime
+import model.meta.{ItemList, ListItem}
+import org.joda.time.{DateTimeZone, DateTime}
+import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
 
 import scala.Function.const
-import scalaz.syntax.traverse._
 import scalaz.std.list._
 import scalaz.syntax.std.boolean._
+import scalaz.syntax.traverse._
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -60,7 +61,7 @@ object IndexPage {
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
         val collection = CollectionEssentials.fromFaciaContent(
-          grouping.items.map(FaciaContentConvert.frontentContentToFaciaContent)
+          grouping.items.map(FaciaContentConvert.frontendContentToFaciaContent)
         )
 
         val mpuContainer = (if (isSlow)
@@ -147,12 +148,12 @@ object IndexPage {
     }))
   }
 
-  def makeLinkedData(indexPage: IndexPage): ItemList = {
+  def makeLinkedData(indexPage: IndexPage)(implicit request: RequestHeader): ItemList = {
     ItemList(
-      indexPage.page.url,
+      LinkTo(indexPage.page.url),
       indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
-          ListItem(position = index, url = Some(Configuration.site.host + trail.url))
+          ListItem(position = index, url = Some(LinkTo(trail.url)))
       }
     )
   }
@@ -160,7 +161,8 @@ object IndexPage {
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now) {
+                     date: DateTime = DateTime.now,
+                     tzOverride: Option[DateTimeZone] = None) {
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),
     Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
@@ -184,7 +186,8 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def forcesDayView = page match {
-    case tag: Tag => Set("series", "blog") contains tag.tagType
+    case tag: Tag if tag.section == "crosswords" => false
+    case tag: Tag => Set("series", "blog").contains(tag.tagType)
     case _ => false
   }
 

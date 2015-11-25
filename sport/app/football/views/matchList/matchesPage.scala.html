@@ -1,6 +1,6 @@
 @(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader)
 
-@import conf.Switches
+@import conf.switches.Switches
 @import football.model._
 
 @main(page, "football"){
@@ -53,13 +53,14 @@
                     @if( matchesList.nextPage.isDefined) {
                         <div class="matches-nav" data-link-name="@matchesList.pageType nav">
                             @matchesList.nextPage.map{url =>
-                                <a href="@url" class="football-matches__show-more js-show-more button--show-more button button--medium button--primary"
+                                <a href="@url" class="football-matches__show-more js-show-more-football-matches button--show-more button button--medium button--primary"
                                    data-shows-more=".football-matches__day"
                                    data-puts-more-into="football-matches"
                                    data-new-url="next"
                                    data-link-name="next"
                                    title="Next page">
-                                   <i class="i i-plus-white"></i>More
+                                   @fragments.inlineSvg("plus", "icon")
+                                   More
                                 </a>
                             }
                         </div>

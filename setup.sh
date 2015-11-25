@@ -94,21 +94,12 @@ install_node() {
 
 install_grunt() {
   if ! installed grunt; then
-    sudo npm -g install grunt-cli
+    npm -g install grunt-cli
   fi
-}
-
-install_jspm() {
-  if ! installed jspm; then
-    sudo npm -g install jspm
-    jspm registry config github
-    jspm registry create bower jspm-bower-endpoint
-  fi
-  jspm install
 }
 
 install_ruby() {
-  if linux; then
+  if linux && ! installed ruby; then
     sudo apt-get install -y ruby1.9.1-full
   fi
 }
@@ -142,7 +133,7 @@ install_dependencies() {
 }
 
 compile() {
-  grunt compile
+  make install compile
 }
 
 report() {
@@ -164,7 +155,6 @@ main() {
   install_node
   install_gcc
   install_grunt
-  install_jspm
   install_ruby
   install_bundler
   install_libpng

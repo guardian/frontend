@@ -1,9 +1,9 @@
 @(env: String, surgingContent: ophan.SurgingContent)
-@import dfp.printLondonTime
+@import _root_.dfp.printLondonTime
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h1>Surging Content</h1>
     <p>Guardian content that is currently surging.</p>

@@ -49,6 +49,7 @@ define([
         var container = document.body.querySelector('.tone-feature');
         mediator.emit('page:new-content', container);
         mediator.emit('ui:images:upgradePictures');
+        mediator.emit('modules:tonal:loaded');
         register.end('tonal-content');
     };
 

@@ -1,5 +1,7 @@
 package controllers
 
+import utils.{ThirdPartyConditions, SafeLogging}
+import ThirdPartyConditions._
 import implicits.Forms
 import play.api.mvc._
 import play.api.data._
@@ -9,7 +11,7 @@ import common.ExecutionContexts
 import services.{PlaySigninService, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages}
 import idapiclient.EmailPassword
 import utils.SafeLogging
 import form.Mappings
@@ -21,12 +23,21 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  api: IdApiClient,
                                  idRequestParser: IdRequestParser,
                                  idUrlBuilder: IdentityUrlBuilder,
-                                 signInService : PlaySigninService)
+                                 signInService : PlaySigninService,
+                                 val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
+    Forms.tuple(
+      "email" -> Forms.text,
+      "password" -> Forms.text,
+      "keepMeSignedIn" -> Forms.boolean
+    )
+  )
+
+  val formWithConstraints = Form(
     Forms.tuple(
       "email" -> idEmail
         .verifying(Constraints.nonEmpty),
@@ -36,24 +47,26 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     )
   )
 
-  def renderForm(returnUrl: Option[String]) = Action { implicit request =>
+  def renderForm(returnUrl: Option[String], group: Option[String] = None) = Action { implicit request =>
 
     val filledForm = form.bindFromFlash.getOrElse(form.fill("", "", true))
 
     logger.trace("Rendering signin form")
     val idRequest = idRequestParser(request)
-    NoCache(Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm)))
+    val groupCode = idRequest.groupCode.orElse(group)
+
+    NoCache(Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm, groupCode)))
   }
 
   def processForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
-    val boundForm = form.bindFromRequest
+    val boundForm = formWithConstraints.bindFromRequest
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
     def onError(formWithErrors: Form[(String, String, Boolean)]): Future[Result] = {
       logger.info("Invalid login form submission")
       Future.successful {
-        redirectToSigninPage(formWithErrors, verifiedReturnUrlAsOpt)
+        redirectToSigninPage(formWithErrors, verifiedReturnUrlAsOpt, idRequest.groupCode)
       }
     }
 
@@ -72,20 +85,25 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
               formFold.withError(error.context.getOrElse(""), errorMessage)
             }
 
-            redirectToSigninPage(formWithErrors, verifiedReturnUrlAsOpt)
+            redirectToSigninPage(formWithErrors, verifiedReturnUrlAsOpt, idRequest.groupCode)
 
           case Right(responseCookies) =>
             logger.trace("Logging user in")
-            SeeOther(verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl))
-              .withCookies(responseCookies:_*)
+            val finalReturnUrl = idRequest.groupCode match {
+              case Some(validGroupCode) => idUrlBuilder.buildUrl(ThirdPartyConditions.agreeUrl(validGroupCode), idRequest, ("skipThirdPartyLandingPage", "true"))
+              case _ => verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
+            }
+            SeeOther(finalReturnUrl)
+              .withCookies(responseCookies: _*)
+
         }
     }
 
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  def redirectToSigninPage(formWithErrors: Form[(String, String, Boolean)], returnUrl: Option[String]): Result = {
-    NoCache(SeeOther(routes.SigninController.renderForm(returnUrl).url).flashing(clearPassword(formWithErrors).toFlash))
+  def redirectToSigninPage(formWithErrors: Form[(String, String, Boolean)], returnUrl: Option[String], groupCode: Option[String] = None): Result = {
+    NoCache(SeeOther(routes.SigninController.renderForm(returnUrl, groupCode).url).flashing(clearPassword(formWithErrors).toFlash))
   }
 
   private def clearPassword(formWithPassword: Form[(String, String, Boolean)]) = {

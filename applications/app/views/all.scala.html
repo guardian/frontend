@@ -3,23 +3,23 @@
 @import com.gu.facia.api.models.CollectionConfig
 @import views.support.PreviousAndNext
 @import layout.{ContainerLayout, ContainerDisplayConfig}
-@import model.Collection
 @import services.FaciaContentConvert
 
 @main(index.page, projectName = Option("facia")){  }{
 <div class="l-side-margins">
     <div data-link-name="Front" role="main" class="fc-container">
         @fragments.containers.index(
-            Collection(index.trails),
+            index.trails,
             ContainerLayout.singletonFromContainerDefinition(
-                slices.TagContainers.allTagPage,
+                slices.TagContainers.allTagPageSlices(index.trails.length),
                 ContainerDisplayConfig.empty,
-                index.trails.map(FaciaContentConvert.frontentContentToFaciaContent)
+                index.trails.map(FaciaContentConvert.frontendContentToFaciaContent)
             ),
             0,
             index.date,
             index.page,
-            nav
+            nav,
+            index.tzOverride
         )(request, CollectionConfig.empty)
     </div>
 </div>

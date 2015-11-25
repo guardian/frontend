@@ -11,7 +11,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
-import conf.Switches
+import conf.switches.Switches
 import org.joda.time.LocalDate
 import play.api.Play.current
 

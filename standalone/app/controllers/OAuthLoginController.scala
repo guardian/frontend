@@ -15,7 +15,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
-  val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
+  val forbiddenNoCredentials = Forbidden("Invalid OAuth credentials set")
   val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.standalone.oauthCredentials.map { cred =>
     GoogleAuthConfig(
       cred.oauthClientId,     // The client ID from the dev console
@@ -27,6 +27,8 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
     )
   }
 
+  lazy val validRedirectDomain = """^(\w+:\/\/[^/]+\.(?:dev-)?gutools\.co\.uk\/.*)$""".r
+
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
   def login = Action { request =>
       Ok(views.html.standalone_auth(projectName, "Dev", UserIdentity.fromRequest(request)))
@@ -36,7 +38,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
   def loginAction = Action.async { implicit request =>
-    googleAuthConfig.map(checkIsSecure).map { config =>
+    googleAuthConfig.flatMap(overrideRedirectUrl).map(checkIsSecure).map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
         _.withSession {
@@ -49,11 +51,20 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
   // TODO - this is only while in transition from http to https for preview
   // no copy and paste for use elsewhere, simply go full https
   private def checkIsSecure(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
-    if (request.isSecure){
+    if (request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))){
       val oldRedirect = config.redirectUrl
       config.copy(redirectUrl = oldRedirect.replace("http://", "https://"))
     } else {
       config
+    }
+  }
+
+  // Allow redirect url to be overridden via request params. Only allows gutools.co.uk
+  private def overrideRedirectUrl(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
+    request.getQueryString("redirect-url") match {
+      case Some(validRedirectDomain(url)) => Some(config.copy(redirectUrl = url))
+      case None => Some(config)
+      case _ => None
     }
   }
 
@@ -63,7 +74,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
   def oauth2Callback = Action.async { implicit request =>
-    googleAuthConfig.map(checkIsSecure).map { config =>
+    googleAuthConfig.flatMap(overrideRedirectUrl).map(checkIsSecure).map { config =>
       request.session.get(ANTI_FORGERY_KEY) match {
         case None =>
           Future.successful(Redirect(routes.OAuthLoginController.login())

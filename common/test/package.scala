@@ -1,24 +1,20 @@
 package test
 
-import common.ExecutionContexts
-import conf.{LiveContentApi, Configuration}
-import java.net.URLEncoder
-import contentapi.Http
-import org.scalatestplus.play._
-import play.api.test._
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
-import recorder.ContentApiHttpRecorder
-import play.api.GlobalSettings
-import org.apache.commons.codec.digest.DigestUtils
+
 import com.gargoylesoftware.htmlunit.BrowserVersion
+import common.ExecutionContexts
+import conf.{Configuration, LiveContentApi}
+import contentapi.Http
+import org.apache.commons.codec.digest.DigestUtils
+import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.scalatestplus.play._
+import play.api.GlobalSettings
+import play.api.test._
+import recorder.ContentApiHttpRecorder
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
-  def testPlugins: Seq[String] = Nil
-  def disabledPlugins: Seq[String] = Seq(
-    "conf.SwitchBoardPlugin"
-  )
 
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
@@ -42,7 +38,7 @@ trait TestSettings {
 
     verify(
       Configuration.contentApi.contentApiLiveHost,
-      "37f3bee67d016a9fec7959aa5bc5e53fa7fdc688f987c0dea6fa0f6af6979079",
+      "5f755b14e59810c1c7ed8a79dfe9bc132340d22ee255f3b41bd4f3e2af5e5393",
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
     )
 
@@ -67,9 +63,10 @@ trait TestSettings {
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
-  lazy val host = s"http://localhost:${port}"
+  lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
+  lazy val appId = "409128287"
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
@@ -78,6 +75,11 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
   def US[T](path: String)(block: TestBrowser => T): T = {
       val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
       goTo(editionPath)(block)
+  }
+
+  def AU[T](path: String)(block: TestBrowser => T): T = {
+    val editionPath = if (path.contains("?")) s"$path&_edition=AU" else s"$path?_edition=AU"
+    goTo(editionPath)(block)
   }
 
   protected def goTo[T](path: String)(block: TestBrowser => T): T = {
@@ -97,13 +99,14 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   implicit override lazy val app = FakeApplication(
-    withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
-      additionalPlugins = testPlugins,
       additionalConfiguration = Map(
         ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
         ("guardian.projectName", "test-project"),
-        ("ws.compressionEnabled", true)
+        ("ws.compressionEnabled", true),
+        ("ws.timeout.connection", "10000"),// when running healthchecks on a cold app it can time out
+        ("ws.timeout.idle", "10000"),
+        ("ws.timeout.request", "10000")
       )
   )
 }

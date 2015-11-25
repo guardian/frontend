@@ -4,7 +4,8 @@
         background-color: colour(neutral-7);
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(neutral-6), 2%);
     }
 
@@ -17,6 +18,10 @@
     .fc-item__byline,
     .fc-save-for-later--is-saved {
         color: colour(live-accent);
+    }
+
+    .fc-save-for-later {
+        border-color: mix(#000000, colour(neutral-7), 10%);
     }
 
     .fc-item__kicker--dreamsnap {

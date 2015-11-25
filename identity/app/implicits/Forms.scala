@@ -4,9 +4,9 @@ import play.api.data.{Form, FormError}
 import play.api.libs.Crypto
 import play.api.libs.json._
 import play.api.mvc.{Flash, RequestHeader}
+import play.api.i18n.I18nSupport
 
-
-trait Forms {
+trait Forms extends I18nSupport {
 
   private val formKey = "form-data"
 

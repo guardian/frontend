@@ -4,6 +4,7 @@ import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
+import com.ning.http.client.uri.Uri;
 import play.api.libs.ws.{WS, WSResponse}
 import play.api.Application
 import java.util
@@ -26,7 +27,7 @@ private case class Resp(getResponseBody: String) extends NingResponse {
   def getResponseBodyExcerpt(maxLength: Int, charset: String): String = throw new NotImplementedError()
   def getResponseBodyExcerpt(maxLength: Int): String = throw new NotImplementedError()
   def getStatusText: String = throw new NotImplementedError()
-  def getUri: URI = throw new NotImplementedError()
+  def getUri: Uri = throw new NotImplementedError()
   def getHeader(name: String): String = throw new NotImplementedError()
   def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
   def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
@@ -53,7 +54,7 @@ object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
   }
 }
 
-class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
+class DiscussionApiStub extends DiscussionApi {
   import play.api.Play.current
   protected val clientHeaderValue: String =""
   protected val apiRoot = conf.Configuration.discussion.apiRoot
@@ -62,7 +63,6 @@ class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
   override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
     WS.url(url).withRequestTimeout(2000).get()
   }
-
 }
 
 class DiscussionTestSuite extends Suites (
@@ -76,8 +76,8 @@ class DiscussionTestSuite extends Suites (
   new CommentCountControllerTest,
   new ProfileTest
   ) with SingleServerSuite {
-
-  override def disabledPlugins = super.disabledPlugins :+ classOf[controllers.DiscussionApiPlugin].getName
-  override def testPlugins = super.testPlugins :+ "test.DiscussionApiStub"
   override lazy val port: Int = conf.HealthCheck.testPort
+
+  // Inject stub api.
+  controllers.delegate.api = new DiscussionApiStub()
 }

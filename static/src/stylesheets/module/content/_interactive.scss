@@ -1,4 +1,4 @@
-.content--interactive {
+.js-on.is-modern .content--interactive {
     padding: 0;
 
     .content__headline {
@@ -17,6 +17,7 @@
             max-width: none;
             margin: 0;
         }
+
     }
 
     .meta__numbers {
@@ -42,14 +43,32 @@
         border-bottom: 0;
 
         .meta__number {
-            border-left: 1px solid colour(neutral-5);
-            padding-left: $gs-gutter / 2;
+            @include mq(tablet) {
+                float: right;
+                border-left: 1px solid colour(neutral-5);
+                padding-left: $gs-gutter / 2;
+
+                &:first-child {
+                    padding-right: 0;
+                }
+            }
+
+            @include mq($until: mobile) {
+                position: relative;
+                top: $gs-baseline;
+            }
+
+            &:last-child {
+                padding-right: $gs-gutter / 2;
+            }
         }
 
         .meta__social {
-            float: left;
-            position: relative;
-            z-index: 2;
+            @include mq(tablet) {
+                float: left;
+                position: relative;
+                z-index: 2;
+            }
         }
 
         @include mq(leftCol) {
@@ -84,14 +103,13 @@
         @include mq(desktop) {
             width: gs-span(7);
         }
-        @include mq(leftCol) {
-            width: gs-span(8);
-            border-top: 0;
-            padding-bottom: 0;
-            min-height: $gs-baseline * 2;
-            display: inline;
-            margin-right: $gs-gutter/2;
-        }
+        width: gs-span(8);
+        border-top: 0;
+        padding-bottom: 0;
+        min-height: $gs-baseline * 2;
+        display: inline;
+        margin-right: $gs-gutter/2;
+
     }
     .meta__email,
     .meta__twitter {
@@ -132,5 +150,35 @@
         .content__meta-container {
             border: 0;
         }
+    }
+}
+
+.is-not-modern {
+    .content__meta-footer {
+        display: none;
+    }
+
+    .content__head .content__dateline {
+        display: none;
+    }
+
+    .content__main-column--interactive {
+        border-top: 1px dotted colour(neutral-5);
+        padding-top: $gs-baseline/2;
+        min-height: $gs-baseline*20;
+    }
+}
+
+.js-on.is-modern .is-immersive-interactive {
+    .content--interactive,
+    .content--interactive ~ *,
+    .l-footer {
+        display: none;
+    }
+}
+
+.is-immersive .content--interactive {
+    figure.element {
+        margin: 0;
     }
 }

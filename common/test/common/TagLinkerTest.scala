@@ -1,15 +1,16 @@
 package common
 
-import org.jsoup.Jsoup
-import org.scalatest.{Matchers, FlatSpec}
-import com.gu.contentapi.client.model.{Tag => ApiTag, Content => ApiContent}
-import model.{ApiContentWithMeta, Article}
-import views.support.TagLinker
-import org.joda.time.DateTime
+import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 import common.editions.Uk
-import scala.collection.JavaConversions._
+import model.Article
+import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
+import views.support.TagLinker
+
+import scala.collection.JavaConversions._
 
 class TagLinkerTest extends FlatSpec with Matchers {
 
@@ -79,18 +80,21 @@ class TagLinkerTest extends FlatSpec with Matchers {
   private def tag(id: String, name: String) = new ApiTag(id, "keyword", webTitle = name, webUrl = "does not matter",
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
-  private def sensitiveArticle(tags: ApiTag*) = new Article(ApiContentWithMeta(
+  private def sensitiveArticle(tags: ApiTag*) = new Article(
     article(tags:_*).delegate.copy(fields = Some(Map("showInRelatedContent" -> "false")))
-  ))
+  )
 
-  private def article(tags: ApiTag*) = new Article(ApiContentWithMeta(ApiContent("foo/2012/jan/07/bar", None, None,
-    Some(new DateTime), "Some article",
-    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    "http://content.guardianapis.com/foo/2012/jan/07/bar",
+  private def article(tags: ApiTag*) = new Article(ApiContent(id = "foo/2012/jan/07/bar",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = Some(new DateTime),
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
     elements = None,
     tags = tags.toList,
     fields = Some(Map("showInRelatedContent" -> "true"))
-  )))
+  ))
 
   private def souped(s: String) = Jsoup.parseBodyFragment(s)
 }

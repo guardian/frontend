@@ -1,9 +1,10 @@
-@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)], groupCode: Option[String])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
 @import views.html.fragments.identityPageHeader
+@import views.html.fragments.thirdPartyConditions
 @import views.SocialSigninRoute.Signin
 
 @main(page, projectName = Option("identity")){
@@ -22,7 +23,7 @@
             <div class="fieldset__heading">
                 <h2 class="form__heading">Use your social account</h2>
                 <div class="form__note">
-                    By proceeding, you agree to the Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
+                    @thirdPartyConditions(groupCode, true)
                 </div>
             </div>
             <div class="fieldset__fields">

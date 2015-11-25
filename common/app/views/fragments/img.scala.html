@@ -1,74 +1,130 @@
-@(img: Option[model.ImageContainer],
-  isShowcase: Boolean = false,
-  isFeature: Boolean = false,
-  isImageContent: Boolean = false,
-  url: Option[String] = None,
-  isLightboxable: Boolean = false)(implicit request: RequestHeader)
-
+@import model.ImageAsset
 
 @import layout.WidthsByBreakpoint
-@import layout.ContentWidths.{PictureMedia, MainMedia}
+@import layout.ContentWidths.MainMedia
 @import views.support.ImgSrc
 
-@img.map{ picture =>
+@(
+    picture: model.ImageContainer,
+    lightboxIndex: Option[Int] = None,
+    isShowcase: Boolean = false,
+    isFeature: Boolean = false,
+    widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.inline,
+    image_figureClasses: Option[(model.ImageAsset, String)] = None,
+    shareInfo: Option[(Seq[model.ShareLink], String)] = None,
+    amp: Boolean = false
+)(implicit request: RequestHeader)
 
-    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
-        class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
 
-        <meta itemprop="representativeOfPage" content="true">
+@defining(image_figureClasses match {
+    case Some((image, figureClasses)) => (Some(image), s"element element-image $figureClasses", false)
+    case None => (ImgSrc.getFallbackAsset(picture), s"media-primary media-content${if(isShowcase) " media-primary--showcase"}", true)
+} ) { case (imageOption, figureClasses, isMain) =>
 
-        @if(isFeature && isShowcase) {
-            @lightbox(picture, MainMedia.FeatureShowcase)
-            <div class="gs-container">
-                <div class="content__main-column">
-                    @caption(picture)
-                </div>
-            </div>
-        } else {
-            @if(isImageContent ) {
-                @lightbox(picture, PictureMedia.Inline)
-            } else {
-                @if(isShowcase) {
-                    @lightbox(picture, MainMedia.Showcase)
-                } else {
-                    @lightbox(picture, MainMedia.Inline)
-                }
-            }
-            @caption(picture)
+    <figure
+        itemprop="associatedMedia image"
+        itemscope
+        itemtype="http://schema.org/ImageObject"
+        data-component="image"
+        class="@figureClasses @shareInfo.map { _ => fig--narrow-caption fig--has-shares} @if(!imageOption.map(_.showCaption).getOrElse(false)){fig--no-caption}"
+        @defining(imageOption.flatMap(_.mediaId)){ id =>
+            @id.map{ id => data-media-id="@id" }
+        }
+        @lightboxIndex.map { index =>
+          id="img-@index"
+        }
+    >
+
+        @if(isMain) {
+            <meta itemprop="representativeOfPage" content="true">
+        }
+
+        @if(amp) {
+            <meta itemprop="url" content="@ImgSrc.getFallbackUrl(picture)">
+        }
+
+        @lightbox{
+            @image(picture, widthsByBreakpoint, imageOption, isMain)
+        }
+        @showcaseFeature{
+            @caption(picture, imageOption, isMain)
         }
     </figure>
+
 }
 
-@lightbox(picture: model.ImageContainer, widths: WidthsByBreakpoint) =  {
+@showcaseFeature(captionHtml: => Html) =  {
 
-    @if(isLightboxable) {
-        <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
-            <div class="@if(isFeature && isShowcase){u-responsive-ratio u-responsive-ratio--letterbox}">
-                @image(picture, widths)
-                <span class="rounded-icon article__fullscreen"><i class="i i-expand-white"></i><i class="i i-expand-black"></i></span>
+    @if(isFeature && isShowcase) {
+        <div class="gs-container">
+            <div class="content__main-column">
+                @captionHtml
             </div>
-        </a>
+        </div>
     } else {
-        @image(picture, widths)
+        @captionHtml
     }
 
 }
 
-@image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
+@lightbox(imageHtml: => Html) =  {
 
-    <img src="@ImgSrc.getFallbackUrl(picture)"
-        srcset="@ImgSrc.srcset(picture, widths)"
-        sizes="@widths.sizes"
-        class="maxed responsive-img"
-        itemprop="contentUrl"
-        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+    @lightboxIndex.map { index =>
+        <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
+                @imageHtml
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen modern-visible"))
+        </a>
+        @shareInfo.map { case (shareLinks, contentType) =>
+            @share.blockLevelSharing(s"img-$index", shareLinks, contentType)
+        }
+    }.getOrElse {
+        @imageHtml
+    }
 
 }
 
-@caption(picture: model.ImageContainer) = {
-    @ImgSrc.getFallbackAsset(picture).map { img =>
+@image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
+
+@if(amp) {
+    @picture.largestImage.map { largestImage =>
+        <amp-img src="@ImgSrc.getFallbackUrl(picture)"
+        srcset="@ImgSrc.srcset(picture, widths)"
+        sizes="@widths.sizes"
+        layout="responsive"
+        width="@largestImage.width"
+        height="@largestImage.height"
+        class="maxed responsive-img"
+        itemprop="contentUrl"
+        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" ></amp-img>
+    }
+} else {
+
+    @picture.largestImage.map{ largestImage =>
+        <div
+        class="u-responsive-ratio@if(isFeature && isShowcase) { u-responsive-ratio--letterbox}"
+            @if(isFeature && isShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
+        >
+    }
+
+    <img src="@ImgSrc.getFallbackUrl(picture)"
+    srcset="@ImgSrc.srcset(picture, widths)"
+    sizes="@widths.sizes"
+    class="@if(isMain) {maxed responsive-img} else {gu-image}"
+    itemprop="contentUrl"
+    alt="@imageOption.flatMap(_.altText).getOrElse("")" />
+
+    @picture.largestImage.map{ largestImage =>
+        </div>
+    }
+
+}
+
+}
+
+@caption(picture: model.ImageContainer, imageOption: Option[ImageAsset], isMain: Boolean) = {
+    @imageOption.map { img =>
         @if(img.showCaption) {
-            <figcaption class="caption caption--main caption--img" itemprop="description">
+            <figcaption class="caption@if(isMain){ caption--main} caption--img" itemprop="description">
                 @img.caption.map(Html(_))
                 @if(img.displayCredit && !img.creditEndsWithCaption) { @img.credit.map(Html(_)) }
             </figcaption>

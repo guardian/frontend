@@ -1,16 +1,46 @@
 @()
-<tr>
-    <td><span class="abtest-item__name"></span></td>
-    <td>
-        <span class="label label-success abtest-item__active-label">active</span>
-        <span class="label label-danger abtest-item__expired-label">expired</span>
-        <span class="label label-success abtest-item__switched-on-label">on</span>
-        <span class="label label-danger abtest-item__switched-off-label">off</span>
-    </td>
-    <td><div class="abtest-item__participation"></div></td>
-    <td class="abtest-item__expiry"></td>
-    <td class="abtest-item__audience"></td>
-    <td class="abtest-item__audience-offset"></td>
-    <td class="abtest-item__tableau"></td>
-    <td class="abtest-item__ophan"></td>
-</tr>
+
+<table class="abtest__data-table table table-r table-bordered table-hover">
+    <thead>
+        <th>Name</th>
+        <th>State</th>
+        <th>Variants</th>
+        <th class="abtest-item__expiry-title">Expires</th>
+        <th class="abtest-item__audience-title">Audience</th>
+        <th class="abtest-teim__audience-offset-title">Offset</th>
+        <th>Tableau</th>
+        <th>Ophan</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span class="abtest-item__name"></span></td>
+            <td>
+                <span class="label label-success abtest-item__active-label">active</span>
+                <span class="label label-danger abtest-item__expired-label">expired</span>
+                <span class="label label-success abtest-item__switched-on-label">on</span>
+                <span class="label label-danger abtest-item__switched-off-label">off</span>
+            </td>
+            <td><div class="abtest-item__participation"></div></td>
+            <td class="abtest-item__expiry"></td>
+            <td class="abtest-item__audience"></td>
+            <td class="abtest-item__audience-offset"></td>
+            <td class="abtest-item__tableau"></td>
+            <td class="abtest-item__ophan"></td>
+        </tr>
+        <tr>
+            <td><span class="abtest-item__description-label">Description</span></td>
+            <td colspan="7">
+                <span class="abtest-item__description"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="abtest-item__hypothesis-label">Hypothesis</span></td>
+            <td colspan="7">
+                <span class="abtest-item__hypothesis"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+

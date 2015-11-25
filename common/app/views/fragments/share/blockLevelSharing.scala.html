@@ -1,10 +1,10 @@
 @(id: String, shareItems: Seq[model.ShareLink], contentType: String)
 
 <div class="block-share block-share--@contentType.toLowerCase hide-on-mobile" data-link-name="block share">
-
     @shareItems.map { item: model.ShareLink =>
         <a class="rounded-icon block-share__item block-share__item--@item.css js-blockshare-link" href="@item.href" target="_blank" data-link-name="social @item.css">
-            <i class="i"></i><span class="u-h">@item.text</span>
+            @fragments.inlineSvg("share-" + item.css, "icon")
+            <span class="u-h">@item.text</span>
         </a>
     }
 </div>
@@ -22,7 +22,8 @@
             @shareItems.map { item: model.ShareLink =>
                 <a class="share-modal__link" href="@item.href" target="_blank" data-link-name="social @item.css">
                     <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">
-                        <i class="i"></i>@item.text
+                        @fragments.inlineSvg("share-" + item.css, "icon")
+                        @item.text
                     </div>
                 </a>
             }

@@ -17,7 +17,7 @@
                 0,
                 Fixed(fixedMediumSlowVI),
                 CollectionConfigWithId("front", CollectionConfig.empty.copy(displayName = Some("Front"))),
-                CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontentContentToFaciaContent))
+                CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontendContentToFaciaContent))
             ))(request)
 
             @Seq(
@@ -44,7 +44,7 @@
                         displayName = Some(c("title")),
                         apiQuery = Some(c("keyword"))
                     )),
-                    CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontentContentToFaciaContent))
+                    CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontendContentToFaciaContent))
                 ))(request)
             }
         </div>

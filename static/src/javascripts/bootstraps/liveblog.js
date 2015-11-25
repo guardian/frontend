@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
+    'fastdom',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -17,15 +17,17 @@ define([
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
+    'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
-    'bootstraps/article',
+    'bootstraps/article-liveblog-common',
+    'bootstraps/trail',
     'common/utils/robust'
 ], function (
     bean,
     bonzo,
     qwery,
-    _,
+    fastdom,
     $,
     config,
     detect,
@@ -40,15 +42,15 @@ define([
     LiveFilter,
     AutoUpdate,
     dropdowns,
+    lastModified,
     NotificationCounter,
     RelativeDates,
-    article,
-    robust
-) {
+    articleLiveblogCommon,
+    trail,
+    robust) {
     'use strict';
 
     var modules,
-        affix = null,
         autoUpdate = null;
 
     function getTimelineEvents() {
@@ -76,12 +78,14 @@ define([
             selectedClass = 'live-blog__key-event--selected';
 
         function unselect() {
-            $('.' + selectedClass).removeClass(selectedClass);
+            fastdom.write(function () {
+                $('.' + selectedClass).removeClass(selectedClass);
+            });
         }
 
         function unselectOnScroll() {
             bean.off(curBinding);
-            curBinding = mediator.once('window:scroll', function () { unselect(); });
+            curBinding = mediator.once('window:throttledScroll', unselect);
         }
 
         bean.on(document.body, 'click', 'a', function (e) {
@@ -99,8 +103,14 @@ define([
                     eventId = $el.attr('data-event-id'),
                     title = $('.timeline__title', $el).text(),
                     targetEl = qwery('#' + eventId),
-                    dim = bonzo(targetEl).offset();
-                scroller.scrollTo(dim.top - 12, 500, 'easeOutQuint');
+                    dim = bonzo(targetEl).offset(),
+                    duration = 500,
+                    slimHeaderHeight = 52,
+                    topPadding = 12,
+                    scrollAmount;
+
+                scrollAmount = config.switches.viewability ? dim.top - slimHeaderHeight : dim.top - topPadding;
+                scroller.scrollTo(scrollAmount, duration, 'easeOutQuint');
                 window.setTimeout(unselectOnScroll, 550);
                 bean.off(curBinding);
                 unselect();
@@ -179,14 +189,16 @@ define([
                 dropdown.addClass('dropdown--active');
                 dropdowns.updateAria(dropdown);
 
-                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
+                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
                     topMarker = qwery('.js-top-marker')[0];
-                    affix = new Affix({
+                    /*eslint-disable no-new*/
+                    new Affix({
                         element: qwery('.js-live-blog__timeline-container')[0],
                         topMarker: topMarker,
                         bottomMarker: qwery('.js-bottom-marker')[0],
                         containerElement: qwery('.js-live-blog__key-events')[0]
                     });
+                    /*eslint-enable no-new*/
                 }
                 createScrollTransitions();
             }
@@ -244,22 +256,21 @@ define([
     };
 
     function ready() {
-        robust('lb-a11y',       modules.accessibility);
-        robust('lb-adverts',    modules.initAdverts);
-        robust('lb-filter',     modules.createFilter);
-        robust('lb-timeline',   modules.createTimeline);
-        robust('lb-autoupdate', modules.createAutoUpdate);
-        robust('lb-timestamp',  modules.keepTimestampsCurrent);
-        robust('lb-updates',    modules.handleUpdates);
-        robust('lb-richlinks',  richLinks.upgradeRichLinks);
+        robust.catchErrorsAndLogAll([
+            ['lb-a11y',       modules.accessibility],
+            ['lb-adverts',    modules.initAdverts],
+            ['lb-filter',     modules.createFilter],
+            ['lb-timeline',   modules.createTimeline],
+            ['lb-autoupdate', modules.createAutoUpdate],
+            ['lb-timestamp',  modules.keepTimestampsCurrent],
+            ['lb-updates',    modules.handleUpdates],
+            ['lb-richlinks',  richLinks.upgradeRichLinks]
+        ]);
 
-        // re-use modules from article bootstrap
-        robust('lb-article',    article.modules.initOpenCta);
-        robust('lb-fence',      article.modules.initFence);
-        robust('lb-twitter',    article.modules.initTruncateAndTwitter);
-        robust('lb-sharing',    article.modules.initSelectionSharing);
+        trail();
+        articleLiveblogCommon();
 
-        robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
+        robust.catchErrorsAndLog('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }
 
     return {

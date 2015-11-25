@@ -1,6 +1,7 @@
 package test
 
 import com.ning.http.client.FluentCaseInsensitiveStringsMap
+import com.ning.http.client.uri.Uri;
 import common.ExecutionContexts
 import java.io.{File, InputStream}
 import java.nio.ByteBuffer
@@ -10,8 +11,8 @@ import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import play.api.libs.ws.WSResponse
-import play.api.{Application => PlayApplication, Plugin}
-import conf.{FootballClient, FootballStatsPlugin, Configuration}
+import play.api.{Application => PlayApplication}
+import conf.{SportConfiguration, FootballClient, Configuration}
 import pa.Http
 import io.Source
 import org.joda.time.LocalDate
@@ -35,11 +36,15 @@ class SportTestSuite extends Suites (
   new LeagueTablesFeatureTest,
   new LiveMatchesFeatureTest,
   new MatchFeatureTest,
-  new ResultsFeatureTest ) with SingleServerSuite {
+  new ResultsFeatureTest,
+  new rugby.model.MatchParserTest
+) with SingleServerSuite with FootballTestData {
 
   override lazy val port: Int = conf.HealthCheck.testPort
-  override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
-  override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
+
+  // Inject stub api.
+  FootballClient.http = TestHttp
+  loadTestData()
 }
 
 private case class Resp(getResponseBody: String) extends com.ning.http.client.Response {
@@ -52,7 +57,7 @@ private case class Resp(getResponseBody: String) extends com.ning.http.client.Re
   def getResponseBodyExcerpt(maxLength: Int, charset: String): String = throw new NotImplementedError()
   def getResponseBodyExcerpt(maxLength: Int): String = throw new NotImplementedError()
   def getStatusText: String = throw new NotImplementedError()
-  def getUri: URI = throw new NotImplementedError()
+  def getUri: Uri = throw new NotImplementedError()
   def getHeader(name: String): String = throw new NotImplementedError()
   def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
   def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
@@ -78,14 +83,6 @@ object FeedHttpRecorder extends HttpRecorder[WSResponse] {
   }
 }
 
-class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with FootballTestData {
-  override def onStart() {
-    FootballClient.http = TestHttp
-    loadTestData()
-  }
-}
-
-
 // Stubs data for Football stats integration tests
 object TestHttp extends Http with ExecutionContexts {
 
@@ -96,8 +93,8 @@ object TestHttp extends Http with ExecutionContexts {
   def GET(url: String) = {
 
     val fileName = {
-      val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
-        .replace(s"${Configuration.pa.host}/", "")
+      val file = base + (url.replace(SportConfiguration.pa.apiKey, "APIKEY")
+        .replace(s"${SportConfiguration.pa.host}/", "")
         .replace("/", "__"))
       // spoof todays date
       file.replace(today.toString("yyyyMMdd"), "20121020")

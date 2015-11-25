@@ -1,8 +1,6 @@
 **/stylesheets/**/*.js
-**/systemjs-config.js
-**/systemjs-bundle-config.js
-**/jspm_packages/**/*.js
 **/javascripts/bower_components/**/*.js
 **/javascripts/components/**/*.js
 **/javascripts/vendor/**/*.js
 **/javascripts/projects/common/utils/atob.js
+**/javascripts/projects/common/utils/picturefill.js

@@ -4,7 +4,8 @@ import java.util.concurrent.TimeoutException
 
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.GuardianContentApiError
-import conf.SwitchTrait
+import contentapi.ErrorResponseHandler.isCommercialExpiry
+import conf.switches.SwitchTrait
 import model.{Cached, NoCache}
 import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}
@@ -13,25 +14,38 @@ import play.twirl.api.Html
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
-  def convertApiExceptions[T](implicit log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
+  def convertApiExceptions[T](implicit request: RequestHeader,
+                              log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
+
+    convertApiExceptionsWithoutEither.andThen(Right(_))
+  }
+
+  def convertApiExceptionsWithoutEither[T](implicit request: RequestHeader,
+                              log: Logger): PartialFunction[Throwable, Result] = {
     case e: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
-      Right(NoCache(ServiceUnavailable))
-    case GuardianContentApiError(404, message) =>
+      NoCache(ServiceUnavailable)
+    case GuardianContentApiError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
-      Right(NoCache(NotFound))
-    case GuardianContentApiError(410, message) =>
-      log.info(s"Got a 410 while calling content api: $message")
-      Right(NoCache(Gone))
+      NoCache(NotFound)
+    case GuardianContentApiError(410, message, errorResponse) =>
+      errorResponse match {
+        case Some(errorResponse) if isCommercialExpiry(errorResponse) =>
+          log.info(s"Got a 410 while calling content api: $message: ${errorResponse.message}")
+          Cached(60)(Ok(views.html.commercialExpired()))
+        case _ =>
+          log.info(s"Got a 410 while calling content api: $message")
+          NoCache(Gone)
+      }
     case timeout: TimeoutException =>
       log.info(s"Got a timeout while calling content api: ${timeout.getMessage}")
-      Right(NoCache(GatewayTimeout(timeout.getMessage)))
+      NoCache(GatewayTimeout(timeout.getMessage))
     case error =>
       log.info(s"Content api exception: ${error.getMessage}")
       Option(error.getCause).map { cause =>
         log.info(s"Content api exception cause: ", cause)
       }
-      Right(NoCache(InternalServerError))
+      NoCache(InternalServerError)
   }
 
   /*

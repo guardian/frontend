@@ -2,30 +2,32 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/collections/contains'
 ], function (
     bean,
     bonzo,
     $,
-    _,
-    mediator
-) {
+    mediator,
+    contains) {
 
-    var Toggles = function () {
+    var Toggles = function (parent) {
 
         var self = this,
             controls,
             doNotReset = ['popup--search'],
-            readyClass = 'js-toggle-ready';
+            readyClass = 'js-toggle-ready',
+            isSignedIn = $('.js-profile-nav').hasClass('is-signed-in'),
+            component  = parent || document.body;
 
         this.init = function () {
-            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
+            controls = Array.prototype.slice.call(component.querySelectorAll('[data-toggle]'));
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
                     var target = self.getTarget(control);
-                    if (target) {
+
+                    if (target && !(!isSignedIn && control.getAttribute('data-toggle-signed-in') === 'true')) {
                         control.toggleTarget = target;
                         bonzo(control).addClass(readyClass);
                         bean.add(control, 'click', function (e) {
@@ -39,7 +41,7 @@ define([
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
-                return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
+                return !(omitEl === control || contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
         };
 

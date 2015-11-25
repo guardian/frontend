@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8" /></head>
+<body style="margin:0;padding:0">
+<script type="text/javascript">
+    (function() {
+        function getParameterByName(name) {
+            name = name.replace('/[\\[]/', '\\[').replace('/[\\]]/', '\\]');
+            var regexS = '[\\?&]' + name + '=([^&#]*)',
+                regex = new RegExp(regexS),
+                results = regex.exec(window.location.search);
+            if (results) {
+                var host = '',
+                    result = results[1].replace(/\+/g, ' ');
+                try {
+                    host = decodeURIComponent(result);
+                    return decodeURIComponent(host);
+                } catch (error) {
+                    return '';
+                }
+            }
+            return '';
+        }
+        var bust = document.createElement('script'),
+            bustJS = getParameterByName('rbbust');
+        if (bustJS !== '') {
+            bust.src = bustJS;
+            bust.type = 'text/javascript';
+            document.body.appendChild(bust);
+        } // Need a fallback in case the bust file is empty
+    })();
+</script>
+</body>
+</html>

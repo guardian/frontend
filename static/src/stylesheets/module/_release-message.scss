@@ -13,7 +13,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 9999999;
+    z-index: $zindex-popover;
 }
 
 .site-message__inner {
@@ -85,6 +85,12 @@
         display: table-cell;
         vertical-align: middle;
         max-width: none;
+    }
+
+    .site-message--adblock & {
+        @include mq($from: tablet, $until: desktop) {
+            max-width: gs-span(6);
+        }
     }
 
     @include mq(desktop) {
@@ -174,6 +180,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     display: block;
     padding: 0;
     height: $btn-height + 2px;
+    width: $btn-height + 2px;
     @include fs-textSans(2);
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
@@ -190,6 +197,21 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         position: absolute;
         right: $gs-gutter;
         top: $gs-baseline;
+    }
+}
+
+/* EU cookie policy message
+   ========================================================================== */
+.site-message--cookies {
+    .site-message__copy {
+        margin-right: $gs-gutter*2;
+        a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+    }
+    .site-message__media .inline-icon {
+        display: none;
     }
 }
 
@@ -403,10 +425,181 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.site-message--adblock {
-    background: colour(news-support-2);
+/**
+ * Membership messages
+ */
+.site-message--adblock-message,
+.site-message--membership-message,
+.site-message--membership-message-uk,
+.site-message--membership-message-uk-redisplayed,
+.site-message--membership-message-us,
+.site-message--membership-message-us-redisplayed {
+    background: colour(membership-default);
 }
 
-.site-message--membership-message {
-    background: colour(news-main-2);
+/**
+ * Adblock banner in sticky nav
+ */
+.adblock-sticky__message {
+    position: relative;
+    @include fs-headline(1);
+    background: colour(neutral-8);
+    display: block;
+    color: #ffffff;
+
+    @include mq(desktop) {
+        @include fs-headline(2, true);
+    }
+
+    .gs-container {
+        height: 128px;
+        background-color: colour(neutral-4);
+    }
+
+    .adblock-sticky__quote {
+        @include clearfix;
+    }
+
+    .adblock-sticky__info {
+        float: left;
+        padding-left: $gs-gutter;
+
+        @include mq(desktop) {
+            max-width: $gs-column-width*10;
+        }
+
+        @include mq(wide) {
+            max-width: none;
+        }
+    }
+
+    .adblock-byline-img {
+        position: absolute;
+        top: -10px;
+        right: 20%;
+
+        @include mq(desktop) {
+            right: 5%;
+            top: 7px;
+            z-index: 1;
+        }
+
+        .byline-img__img {
+            width: 145px;
+        }
+    }
+
+    .adblock-sticky__quote-text {
+        padding-top: $gs-gutter;
+        margin-bottom: 0;
+        color: colour(neutral-1);
+        @include fs-headline(2);
+        @include mq(desktop) {
+            @include fs-headline(3);
+        }
+        @include mq(wide) {
+            @include fs-headline(4);
+        }
+    }
+
+    .adblock-sticky__author {
+        color: colour(guardian-brand);
+        @include fs-headline(2);
+        @include mq(desktop) {
+            @include fs-headline(3);
+        }
+        @include mq(wide) {
+            @include fs-headline(4);
+        }
+    }
+
+    .adblock-sticky__logo {
+        float: right;
+        padding: $gs-gutter*.75 $gs-gutter*.5 0 0;
+    }
+
+    .inline-marque-54 {
+        fill: #000000;
+    }
+
+    .adblock-sticky__membership-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: colour(news-main-2);
+        padding: $gs-baseline*.25 0;
+    }
+
+    .adblock-sticky__membership-bar-text {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: $gs-gutter;
+        max-width: $gs-column-width*9;
+        @include mq(desktop) {
+            max-width: $gs-column-width*10;
+        }
+        @include mq(leftCol) {
+            max-width: $gs-column-width*13;
+        }
+        @include mq(wide) {
+            max-width: none;
+        }
+    }
+
+    .site-message__actions__sticky-item {
+        height: $btn-height;
+        @include fs-bodyHeading(1);
+        color: #ffffff;
+
+        @include mq($from: wide) {
+            padding-left: $gs-gutter*2;
+            margin-right: $gs-gutter/2;
+            @include fs-bodyHeading(2);
+        }
+
+        a {
+            float: right;
+            display: block;
+            color: #ffffff;
+            line-height: $btn-height + 1px;
+
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none;
+            }
+        }
+
+        .inline-cursor {
+            display: block;
+            float: left;
+            margin-top: $gs-baseline*.25;
+            margin-right: $gs-gutter*.25;
+        }
+    }
+
+    .adblock-sticky__link {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &.macaskill {
+        .adblock-sticky__info {
+            @include mq(desktop) {
+                max-width: $gs-column-width*12;
+            }
+            @include mq(wide) {
+                max-width: none;
+            }
+        }
+
+        .adblock-byline-img {
+            right: 8%;
+        }
+    }
 }

@@ -2,36 +2,44 @@ define([
     'bean',
     'bonzo',
     'qwery',
-
     'common/utils/$',
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/scroller',
-
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/whole-discussion',
-    'common/modules/ui/relativedates'
+    'common/modules/ui/relativedates',
+    'common/modules/user-prefs',
+    'common/views/svgs'
 ], function(
     bean,
     bonzo,
     qwery,
-
     $,
     ajaxPromise,
     config,
     mediator,
     scroller,
-
     Component,
     DiscussionApi,
     CommentBox,
     WholeDiscussion,
-    relativedates
+    relativedates,
+    userPrefs,
+    svgs
 ) {
 'use strict';
+
+var PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
+var shouldMakeTimestampsRelative = function () {
+    // Default to true
+    return userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
+        ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
+        : true;
+};
 
 var Comments = function(options) {
     this.setOptions(options);
@@ -78,15 +86,18 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('commentReport'), this.reportComment);
 
-    window.setInterval(
-        function () {
-            this.relativeDates();
-        }.bind(this),
-        60000
-    );
+    if (shouldMakeTimestampsRelative()) {
+        window.setInterval(
+            function () {
+                this.relativeDates();
+            }.bind(this),
+            60000
+        );
+
+        this.relativeDates();
+    }
 
     this.emit('ready');
-    this.relativeDates();
 
     this.on('click', '.js-report-comment-close', function() {
         $('.js-report-comment-form').addClass('u-h');
@@ -139,8 +150,13 @@ Comments.prototype.fetchComments = function(options) {
         (options.comment ? 'comment-context/' + options.comment : this.options.discussionId) +
         '.json?' + (options.page ? '&page=' + options.page : '');
 
+    var orderBy = options.order || this.options.order;
+    if (orderBy === 'recommendations') {
+        orderBy = 'mostRecommended';
+    }
+
     var queryParams = {
-        orderBy: options.order || this.options.order,
+        orderBy: orderBy,
         pageSize: options.pagesize || this.options.pagesize,
         displayThreaded: this.options.threading !== 'unthreaded'
     };
@@ -202,7 +218,9 @@ Comments.prototype.renderComments = function(resp) {
 
     this.postedCommentEl = resp.postedCommentHtml;
 
-    this.relativeDates();
+    if (shouldMakeTimestampsRelative()) {
+        this.relativeDates();
+    }
     this.emit('rendered', resp.paginationHtml);
 
     mediator.emit('modules:comments:renderComments:rendered');
@@ -211,7 +229,9 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.emit('first-load');
-    this.relativeDates();
+    if (shouldMakeTimestampsRelative()) {
+        this.relativeDates();
+    }
 };
 
 Comments.prototype.addMoreRepliesButtons = function (comments) {
@@ -226,7 +246,7 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 
                 $btn = $.create(
                     '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
-                        '<i class="i i-plus-blue"></i>' +
+                        svgs('plus', ['icon']) +
                         'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies') +
                     '</button>').attr({
                         'data-link-name': 'Show more replies',
@@ -264,7 +284,9 @@ Comments.prototype.getMoreReplies = function(event) {
         bonzo(li).addClass('u-h');
         this.emit('untruncate-thread');
 
-        this.relativeDates();
+        if (shouldMakeTimestampsRelative()) {
+            this.relativeDates();
+        }
     }.bind(this));
 };
 
@@ -442,7 +464,9 @@ Comments.prototype.addUser = function(user) {
 };
 
 Comments.prototype.relativeDates = function() {
-    relativedates.init();
+    if (shouldMakeTimestampsRelative()) {
+        relativedates.init();
+    }
 };
 
 Comments.prototype.isAllPageSizeActive = function() {

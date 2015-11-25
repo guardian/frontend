@@ -19,9 +19,9 @@
                     @fragments.witnessCallToAction(gallery)
                     @fragments.contentMeta(gallery)
                     <ul class="gallery2">
-                        @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
-                        }
+                    @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                        @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
+                    }
                     </ul>
                     @fragments.witnessCallToAction(gallery)
                     @fragments.submeta(gallery)
@@ -59,17 +59,13 @@
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
                 <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                    srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
-                    sizes="@GalleryMedia.Inline.sizes"
-                    src="@ImgSrc.getFallbackUrl(imageElement)"
-                    alt="@image.altText.getOrElse("")"
-                    itemprop="contentUrl"
-                    nopin="nopin" />
+                srcset="@ImgSrc.srcset(imageElement, GalleryMedia.inline)"
+                sizes="@GalleryMedia.inline.sizes"
+                src="@ImgSrc.getFallbackUrl(imageElement)"
+                alt="@image.altText.getOrElse("")"
+                itemprop="contentUrl" />
 
-                <span class="rounded-icon gallery2__fullscreen">
-                    <i class="i i-expand-white"></i>
-                    <i class="i i-expand-black"></i>
-                </span>
+                @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon gallery2__fullscreen modern-visible"))
             </a>
 
             <div class="gallery2__figcaption">

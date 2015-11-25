@@ -3,8 +3,11 @@ package form
 import play.api.data.Forms._
 import com.gu.identity.model.{PublicFields, User}
 import idapiclient.UserUpdate
+import play.api.i18n.Messages.Implicits.applicationMessagesApi
+import play.api.Play.current
 
 object ProfileMapping extends UserFormMapping[ProfileFormData] {
+  override val messagesApi = applicationMessagesApi
 
   protected lazy val formMapping = mapping(
     "location" -> textField,

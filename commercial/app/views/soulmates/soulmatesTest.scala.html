@@ -1,0 +1,99 @@
+@(members: Seq[model.commercial.soulmates.Member], omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+
+@import conf.Configuration
+
+@defining(("2_2", "2014-03-28")) { case (version, date) =>
+    <div class="commercial commercial--soulmates-test commercial--tone-soulmates js-custom-select" role="complementary" data-link-name="commercial | soulmates | @omnitureId">
+        <div class="commercial__inner">
+            <div class="commercial__header">
+                <div class="i--commercial i-soulmates-title-background">
+                    @fragments.inlineSvg("marque-54", "icon")
+                    <h3 class="commercial__title logo--soulmates_large">
+                        @fragments.inlineSvg("logo-soulmates", "commercial")
+                        <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+                    </h3>
+                    @fragments.inlineSvg("soulmates-h-line", "commercial")
+                    <p class="commercial__explainer">Meet someone <span><em>worth</em> meeting</span></p>
+                </div>
+                <div class="commercial__ctas">
+                    <a class="commercial__cta icon__cta" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
+                        <span class="commercial__cta__icon">@fragments.inlineSvg("soulmates-join", "commercial")</span>
+                        <span class="commercial__cta__label">Join now</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="commercial__body">
+                <div class="lineitems__box">
+                    <h4 class="feed__title feed__title-desktop">Guardian readers looking for dates now</h4>
+                    <h4 class="feed__title feed__title-mobile">Meet someone <em>worth</em> meeting</h4>
+                    @fragments.inlineSvg("soulmates-border-topleft", "commercial")
+                    @fragments.inlineSvg("soulmates-border-topright", "commercial")
+                    <ul class="lineitems">
+                        @members.map { member =>
+                            <li class="lineitem">
+                                <a class="lineitem__link"
+                                    data-link-name="merchandising-soulmates-v@{version}_@{date}-profile-@{member.gender}"
+                                    href="@clickMacro@member.profileUrl">
+                                    <div class="lineitem__image__container">
+                                            <img class="lineitem__image" src="@member.profilePhoto" alt="" />
+                                    </div>
+                                    <div class="lineitem__text">
+                                        <h4 class="lineitem__title">@member.username</h4>
+                                        <p class="lineitem__meta">@member.age, @member.location</p>                     
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="commercial__search__box">
+                    @fragments.inlineSvg("soulmates-border-topleft", "commercial")
+                    @fragments.inlineSvg("soulmates-border-topright", "commercial")
+                    <form class="commercial__search" action="@Configuration.commercial.soulmates_url/find" method="get">
+                        <div class="form-row">
+                            <label for="my_gender" class="search__dropdown">
+                                <select id="my_gender" name="my_gender" class="search__dropdown__options transform">
+                                    @Seq("woman", "man").map { myGender =>
+                                        <option value="@myGender.capitalize"@if(myGender == "man"){ selected="selected"}>I'm a @myGender</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <label for="match_gender" class="search__dropdown">
+                                <select id="match_gender" name="match_gender" class="search__dropdown__options transform">
+                                    @Map("Woman" -> "woman", "Man" -> "man", "../../../public" -> "man or woman").map { case (matchGenderValue, matchGenderName) =>
+                                        <option value="@matchGenderValue">seeking a @matchGenderName</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <label for="age_min" class="search__dropdown">
+                                <select id="age_min" name="age_min" class="search__dropdown__options transform">
+                                    @for(ageMin <- 18 to 99) {
+                                        <option@if(ageMin == 25){ selected="selected"} value="@ageMin">aged between @ageMin</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <label for="age_max" class="search__dropdown">
+                                <select id="age_max" name="age_max" class="search__dropdown__options transform">
+                                    @for(ageMax <- 18 to 99) {
+                                        <option@if(ageMax == 45){ selected="selected"} value="@ageMax">and @ageMax</option>
+                                    }
+                                </select>
+                            </label>
+                        </div>
+                        <button type="submit" class="search__submit" data-link-name="merchandising-soulmates-v@{version}_@{date}-find-a-soulmate">
+                            <span class="search__submit__text">Find a Soulmate</span>
+                            @fragments.inlineSvg("soulmates-arrow", "commercial")
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

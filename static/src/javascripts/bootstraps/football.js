@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -12,13 +11,13 @@ define([
     'common/modules/sport/football/football',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-list-live',
-    'common/modules/sport/football/score-board',
     'common/modules/sport/football/tag-page-stats',
-    'common/modules/ui/rhc'
+    'common/modules/sport/score-board',
+    'common/modules/ui/rhc',
+    'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
-    _,
     $,
     ajax,
     config,
@@ -29,20 +28,20 @@ define([
     football,
     MatchInfo,
     MatchListLive,
-    ScoreBoard,
     tagPageStats,
-    rhc
-) {
+    ScoreBoard,
+    rhc,
+    debounce) {
 
     function renderNav(match, callback) {
-        var matchInfo;
+        var matchInfo = new MatchInfo(match, config.page.pageId);
 
-        return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function (resp) {
+        return matchInfo.fetch().then(function (resp) {
             var $nav;
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav).first().each(function (nav) {
                     if (match.id || $('.tabs__tab', nav).length > 2) {
-                        $('.js-football-tabs').append(nav);
+                        $('.js-sport-tabs').append(nav);
                     }
                 });
             }
@@ -143,34 +142,20 @@ define([
                 renderNav(match);
             } else {
                 var $h = $('.js-score'),
-                    scoreBoard = new ScoreBoard(),
-                    scoreContainer = bonzo.create(
-                        '<div class="score-container">' +
-                            '<div class="score__loading' + (match.pageType !== 'report' ? ' score__loading--live' : '') + '">' +
-                                '<div class="loading__text">Fetching the scores…</div>' +
-                                '<div class="is-updating"></div>' +
-                            '</div>' +
-                        '</div>'
-                    )[0];
-
-                if (match.pageType === 'report') {
-                    $h.after(scoreContainer);
-                } else {
-                    $h.addClass('u-h').before(scoreContainer);
-                }
+                    scoreBoard = new ScoreBoard({
+                        pageType: match.pageType,
+                        parent: $h,
+                        responseDataKey: 'matchSummary',
+                        autoupdated: match.isLive
+                    });
 
                 renderNav(match, function (resp, $nav, endpoint) {
                     dropdownTemplate = resp.dropdown;
-                    scoreContainer.innerHTML = '';
-                    scoreBoard.template = resp.matchSummary;
 
+                    // Test if template is not composed of just whitspace. A content validation check, apparently.
                     if (!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.endpoint = endpoint;
-                        scoreBoard.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
-                        scoreBoard.autoupdated = match.isLive;
-
-                        scoreBoard.render(scoreContainer);
-                        scoreBoard.setState(match.pageType);
+                        scoreBoard.loadFromJson(resp.matchSummary);
                     } else {
                         $h.removeClass('u-h');
                     }
@@ -264,7 +249,7 @@ define([
         });
 
         // Binding
-        bean.on(document.body, 'click', '.js-show-more', function (e) {
+        bean.on(document.body, 'click', '.js-show-more-football-matches', function (e) {
             e.preventDefault();
             var el = e.currentTarget;
             ajax({
@@ -322,7 +307,7 @@ define([
                     }
                     return r;
                 })();
-                mediator.on('window:resize', _.debounce(resize, 200));
+                mediator.on('window:resize', debounce(resize, 200));
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }

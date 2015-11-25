@@ -1,46 +1,46 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 
-@import conf.Switches._
-@import dev.HttpSwitch
-@import common.InternationalEdition
 @import common.LinkTo
 @import common.Edition
 @import common.editions._
-@import common.editions.Uk
 @import views.support.RenderClasses
 @import views.html.fragments.topNav.editionMenu
 
-<div class="brand-bar__item--right brand-bar__item--right--@Edition(request).id.toLowerCase-edition"
+@ellipsis() = {
+    <a class="brand-bar__item--action popup__toggle"
+    data-toggle="top-bar__popup--more" data-link-name="topNav : more"
+    aria-haspopup="true" aria-controls="guardian-services-top-menu">
+        <span class="rounded-icon control__icon-wrapper">
+            @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
+                <!--[if (gt IE 8)&(IEMobile)]><!-->
+            @fragments.inlineSvg("ellipsis-36", "icon")
+                <!--<![endif]-->
+        </span>
+        <span class="control__info" data-test-id="sign-in-name">more</span>
+    </a>
+}
+
+<div class="brand-bar__item--right"
      data-component="guardian-services">
     @if(Edition(request) == Uk){
-        <div class="brand-bar__item brand-bar__item--jobs">
+        <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
                href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
         </div>
-        <div class="brand-bar__item brand-bar__item--soulmates">
+        <div class="brand-bar__item brand-bar__item--soulmates desktop-only hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
                href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">dating</a>
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
-            <a href="#guardian-services-top-menu" class="brand-bar__item--action popup__toggle"
-               data-toggle="top-bar__popup--more" data-link-name="uk : topNav : more"
-               aria-haspopup="true" aria-controls="guardian-services-top-menu">
-                <span class="rounded-icon control__icon-wrapper">
-                    @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                    <!--[if (gt IE 8)&(IEMobile)]><!-->
-                    @fragments.inlineSvg("ellipsis-36", "icon")
-                    <!--<![endif]-->
-                </span>
-                <span class="control__info" data-test-id="sign-in-name">more</span>
-            </a>
+            @ellipsis()
             <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
-                    <li class="popup__item brand-bar__popup--jobs">
+                    <li class="popup__item brand-bar__popup--jobs mobile-only show-on-slim-header">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
                            href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
                     </li>
-                    <li class="popup__item brand-bar__popup--soulmates">
+                    <li class="popup__item brand-bar__popup--soulmates hide-on-desktop show-on-slim-header">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
                            href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">dating</a>
                     </li>
@@ -49,7 +49,7 @@
                            href="http://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES">masterclasses</a>
                     </li>
                 </ul>
-                <div class="brand-bar__popup--membership">
+                <div class="brand-bar__popup--membership hide-on-desktop show-on-slim-header">
                     <h3 class="popup__group-header">join us:</h3>
                     <ul class="popup__group">
                         <li class="popup__item">
@@ -67,26 +67,16 @@
         </div>
     }
     @if(Edition(request) == Us){
-        <div class="brand-bar__item brand-bar__item--jobs">
+        <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="us : topNav : jobs"
                href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
         </div>
-        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
-            <a href="#guardian-services-top-menu" class="brand-bar__item--action popup__toggle"
-               data-toggle="top-bar__popup--more" data-link-name="topNav : more"
-               aria-haspopup="true" aria-controls="guardian-services-top-menu">
-                <span class="rounded-icon control__icon-wrapper">
-                    @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                    <!--[if (gt IE 8)&(IEMobile)]><!-->
-                    @fragments.inlineSvg("ellipsis-36", "icon")
-                    <!--<![endif]-->
-                </span>
-                <span class="control__info" data-test-id="sign-in-name">more</span>
-            </a>
+        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more mobile-only show-on-slim-header">
+            @ellipsis()
             <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
-                    <li class="popup__item brand-bar__popup--jobs">
+                    <li class="popup__item brand-bar__popup--jobs mobile-only show-on-slim-header">
                         <a class="brand-bar__item--action" data-link-name="us: topNav : jobs"
                            href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
                     </li>
@@ -96,22 +86,12 @@
         </div>
     }
     @if(Edition(request) == Au){
-        <div class="brand-bar__item brand-bar__item--masterclasses">
+        <div class="brand-bar__item brand-bar__item--masterclasses hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="au : topNav : masterclasses"
                 href="http://www.theguardian.com/guardian-masterclasses/guardian-masterclasses-australia">masterclasses</a>
         </div>
-        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
-            <a href="#guardian-services-top-menu" class="brand-bar__item--action popup__toggle"
-               data-toggle="top-bar__popup--more" data-link-name="topNav : more"
-               aria-haspopup="true" aria-controls="guardian-services-top-menu">
-                <span class="rounded-icon control__icon-wrapper">
-                    @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                    <!--[if (gt IE 8)&(IEMobile)]><!-->
-                    @fragments.inlineSvg("ellipsis-36", "icon")
-                    <!--<![endif]-->
-                </span>
-                <span class="control__info" data-test-id="sign-in-name">more</span>
-            </a>
+        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more mobile-only show-on-slim-header">
+            @ellipsis()
             <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
@@ -128,34 +108,49 @@
             </div>
         </div>
     }
-    <div class="brand-bar__item has-popup brand-bar__item--edition" data-component="edition">
-        <a href="#guardian-edition-menu" class="@RenderClasses(Map(
+    @if(Edition(request) == International){
+        <div class="brand-bar__item brand-bar__item--soulmates desktop-only hide-on-slim-header">
+            <a class="brand-bar__item--action" data-link-name="int : topNav : soulmates"
+               href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_SOULMATES">dating</a>
+        </div>
+        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
+            @ellipsis()
+            <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
+                <h3 class="popup__group-header">from the guardian:</h3>
+                <ul class="popup__group">
+                    <li class="popup__item brand-bar__popup--soulmates hide-on-desktop show-on-slim-header">
+                        <a class="brand-bar__item--action" data-link-name="int : topNav : soulmates"
+                           href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_SOULMATES">dating</a>
+                    </li>
+                    <li class="popup__item brand-bar__popup--jobs">
+                        <a class="brand-bar__item--action" data-link-name="int: topNav : jobs"
+                        href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_JOBS">jobs</a>
+                    </li>
+                </ul>
+                @editionMenu()
+            </div>
+        </div>
+    }
+    <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--edition hide-until-tablet hide-on-slim-header" data-component="edition">
+        <a class="@RenderClasses(Map(
             "brand-bar__item--action" -> true,
-            "popup__toggle" -> true,
-            "brand-bar__item--action-beta" -> InternationalEdition.isInternationalEdition(request)
+            "popup__toggle" -> true
         ))"
            data-link-name="topNav : edition" data-toggle="top-bar__popup--edition"
            aria-haspopup="true" aria-controls="guardian-edition-menu">
-        @if(InternationalEdition.isInternationalEdition(request)) {
-            <span class="brand-bar__edition-name">@InternationalEdition.displayName</span>
-            <small class="brand-bar__beta">beta</small>
-        } else {
             @Edition(request).displayName
-        }
         </a>
         <ul class="popup popup__group is-off top-bar__popup--edition" id="guardian-edition-menu">
             @Edition.others(request).map{ edition =>
                 <li class="popup__item">
                     <a class="@RenderClasses(Map(
-                        "brand-bar__item--action" -> true,
-                        "brand-bar__item--action-beta" -> edition.isBeta
+                        "brand-bar__item--action" -> true
                     ))" data-edition="@edition.id"
                         data-link-name="switch to @edition.id edition"
                         href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                         title="Switch to the @edition.id edition">
                         <span class="u-h">switch to the </span>
                         <span class="brand-bar__edition-name">@edition.displayName</span>
-                        @if(edition.isBeta) {<small class="brand-bar__beta">beta</small>}
                     </a>
                 </li>
             }

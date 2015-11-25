@@ -1,11 +1,11 @@
-@(stylesheet: String, reload: String = "")
-@import conf.Switches._
+@(stylesheet: String)
+@import conf.switches.Switches._
 
 @if(AsyncCss.isSwitchedOn) {
-    <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" media="only x" />
+    <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" media="only x" />
     <noscript>
         <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
     </noscript>
 } else {
-    <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" />
+    <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
 }

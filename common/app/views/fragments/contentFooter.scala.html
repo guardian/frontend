@@ -1,66 +1,24 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
-
-@import conf.Switches._
+@import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
-    @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
+    @fragments.discussionFooter(content, content.isCommentable, content.isClosedForComments, content.shortUrlId)
 
-    @* majority of footer components we don't want to appear on advertisement feature articles *@
-    @if(!content.isAdvertisementFeature) {
-        @if((Switches.FacebookMostViewed.isSwitchedOn || Switches.TwitterMostViewed.isSwitchedOn) && content.showFooterContainers) {
-            @fragments.mostPopularSocial()
-        }
-
-        @if(!content.shouldHideAdverts && !(mvt.CMHRTest.isParticipating || mvt.CMOutbrainTest.isParticipating)) {
-            <div class="fc-container fc-container--commercial-high">
-                @fragments.commercial.commercialComponentHigh()
-            </div>
-        }
-
+    @ContentFooterContainersLayout(content, related, content.isAdvertisementFeature) {
         @fragments.storyPackagePlaceholder(content, related)
-        @if(Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
-            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
-            </div>
-        }
+    } {
         @fragments.onwardPlaceholder()
-        @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
-            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
-            </div>
-        }
-
-        @if(content.isCommentable) {
-            <div class="js-repositioned-comments content__repositioned-comments"></div>
-        }
-
-        @if(!content.shouldHideAdverts && (mvt.CMHRTest.isParticipating || mvt.CMOutbrainTest.isParticipating)) {
-            <div class="fc-container fc-container--commercial-high">
-                @fragments.commercial.commercialComponentHigh()
-            </div>
-        }
+    } {
+        <div class="js-repositioned-comments content__repositioned-comments"></div>
+    } {
         @fragments.mostPopularPlaceholder(content.section)
-
-        @if(!mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
-            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
-            </div>
-        }
-
-        @if(!content.shouldHideAdverts) {
-            <div class="fc-container fc-container--commercial">
-                @fragments.commercial.commercialComponent()
-            </div>
-        }
-    } else {
-        @fragments.storyPackagePlaceholder(content, related)
+    } {
+        <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+    } {
+        <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+    } {
+        @fragments.outbrainPlaceholder()
     }
 
 </div>

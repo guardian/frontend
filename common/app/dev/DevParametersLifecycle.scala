@@ -28,7 +28,9 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "INTCMP", // Internal campaign parameter for Omniture js
 
     "oauth_token", // for generating Magento tokens for bookshop service
-    "oauth_verifier" // for generating Magento tokens for bookshop service
+    "oauth_verifier", // for generating Magento tokens for bookshop service
+    "query", // testing the weather locations endpoint
+    "rel" // used by browsersync
   )
 
   val commercialParams = Seq(
@@ -56,7 +58,9 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
         !request.uri.startsWith("/px.gif")  && // diagnostics box
         !request.uri.startsWith("/ab.gif") &&
         !request.uri.startsWith("/js.gif") &&
-        !request.uri.startsWith("/tech-feedback")
+        !request.uri.startsWith("/tech-feedback") &&
+        !request.uri.startsWith("/crosswords/search") &&
+        !request.uri.startsWith("/crosswords/lookup")
       ) {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {

@@ -1,15 +1,15 @@
 package test
 
-import com.gu.facia.api.models.{Group, FaciaContent, CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.models.FaciaContent
+import common.editions.{Au, Uk, Us}
 import common.{AkkaAgent, Edition}
-import common.editions.{Au, Us, Uk}
 import controllers.front.Front
-import model._
-import model.PressedPage
+import model.{PressedPage, _}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
+import services.FaciaContentConvert
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import services.{FaciaContentConvert, CollectionConfigWithId}
 
 object TestContent {
 
@@ -23,12 +23,9 @@ object TestContent {
     apiUrl="",
     elements=None
   )
-
-  def apiContentWithMeta: ApiContentWithMeta = ApiContentWithMeta(newApiContent)
-
 }
 
-case class TestTrail(u: String) extends Content(TestContent.apiContentWithMeta) {
+case class TestTrail(u: String) extends Content(TestContent.newApiContent) {
   override lazy val url = u
   override lazy val webPublicationDate: DateTime = DateTime.now
   override lazy val shortUrl: String = ""
@@ -93,11 +90,11 @@ trait FaciaTestData extends ModelHelper {
     )
 
 
-  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
-  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
-  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
+  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
+  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
+  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
 
-  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
+  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map trailWithUrl map FaciaContentConvert.frontendContentToFaciaContent
 
   val ukFaciaPage: PressedPage = PressedPage(
     id = "uk",

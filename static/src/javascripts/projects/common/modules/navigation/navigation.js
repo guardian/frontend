@@ -15,6 +15,7 @@ define([
 ) {
     var Navigation = {
         init: function () {
+            this.jsEnableFooterNav();
             this.copyMegaNavMenu();
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
@@ -27,13 +28,18 @@ define([
             }
         },
 
+        jsEnableFooterNav: function () {
+            fastdom.write(function () {
+                $('.navigation-container--default').removeClass('navigation-container--default').addClass('navigation-container--collapsed');
+            });
+        },
+
         copyMegaNavMenu: function () {
             var megaNavCopy = $.create($('.js-mega-nav').html()),
                 placeholder = $('.js-mega-nav-placeholder');
 
-            $('.global-navigation', megaNavCopy).addClass('global-navigation--top');
-
             fastdom.write(function () {
+                $('.global-navigation', megaNavCopy).addClass('global-navigation--top');
                 placeholder.append(megaNavCopy);
             });
         },

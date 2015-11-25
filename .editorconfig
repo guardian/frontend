@@ -14,3 +14,6 @@ insert_final_newline = true
 
 [*.scala]
 indent_size = 2
+
+[makefile]
+indent_style = tab

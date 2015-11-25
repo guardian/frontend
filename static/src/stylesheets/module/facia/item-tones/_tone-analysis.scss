@@ -5,7 +5,8 @@
         color: colour(analysis-default);
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(analysis-background), 5%);
     }
 
@@ -28,6 +29,10 @@
     .rich-link__standfirst,
     .fc-save-for-later--is-saved {
         color: colour(news-support-6);
+    }
+
+    .fc-save-for-later {
+        border-color: mix(#000000, colour(analysis-background), 10%);
     }
 
     .fc-item__kicker--dreamsnap {

@@ -9,25 +9,18 @@ LinkedIn: chrismulholland
 Twitter: @crifmulholland
 From: Glasgow, Scotland
 
-Design and art direction: Katrina Stubbings
-Twitter: @vilderness
-Location: London, UK
-
 Development Manager: Grant Klopper
 Twitter: @grantklopper
 From: Durban, South Africa
 Location: London, UK
 
-Lead Engineer: Patrick Hamann
-Twitter: @patrickhamann
-From: London, UK
-
 Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
 From: London, UK
 
-Engineer (Tech lead): Ken Lim
+Engineer (Tech lead, Commercial): Ken Lim
 Twitter: @kenlim
+From: Kuala Lumpur, Malaysia
 Location: London, UK
 
 Developer: Stephan Fowler
@@ -42,21 +35,17 @@ Agile Programme Manager: Nichola Johnson
 linkedin: nicholajohnson
 Location: London, UK
 
-Product Manager (Aging hipster): Cantlin Ashrowan
-Twitter: @cantlin
-Website: http://www.whereiscantlin.com
-Location: London, UK
-
-Developer: Matt Osborn
-Location: London, UK
-
 Developer: Josh Holder
 Twitter: @Josh_H
 Location: London, UK
 
-Developer: Robert Berry
-Twitter: @RobJamesBerry
-From: Manchester, UK
+Developer: Jenny Sivapalan
+Twitter: @jenny_sivapalan
+From: London, UK
+
+Developer: Natalia Baltazar
+Twitter: @NataliaLKB
+From: Halifax, Canada
 
 Developer: Justin Pinner
 Twitter: @_JustinPinner
@@ -71,6 +60,10 @@ Twitter: @wblau
 Guardian CTO: Shannon Maher
 
 Developer: John Duffell
+
+Developer: Oliver Ash
+Twitter: @OliverJAsh
+From: London, UK
 
 
 /* ALUMNI and COLLEAGUES */
@@ -153,10 +146,6 @@ From: London, UK
 Software Architect/Hacker: Phil Wills
 Twitter: @philwills
 
-Developer (Tech Lead): Jenny Sivapalan
-Twitter: @jenny_sivapalan
-From: London, UK
-
 Developer: Mariot Chauvin
 Twitter: @mchv
 
@@ -178,3 +167,23 @@ Twitter: @andyhume
 
 Senior Developer: Adam Fisher
 Twitter: @adamnfish
+
+Developer: Robert Berry
+Twitter: @RobJamesBerry
+From: Manchester, UK
+
+Product Manager (Aging hipster): Cantlin Ashrowan
+Twitter: @cantlin
+Website: http://www.whereiscantlin.com
+Location: London, UK
+
+Lead Engineer: Patrick Hamann
+Twitter: @patrickhamann
+From: London, UK
+
+Design and art direction: Katrina Stubbings
+Twitter: @vilderness
+Location: London, UK
+
+Developer: Matt Osborn
+Location: London, UK

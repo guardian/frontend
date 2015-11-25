@@ -1,14 +1,15 @@
-import ab_headlines.ABTHeadlinesLifecycle
+import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
-import conf.Filters
+import conf._
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
-import feed.{OnwardJourneyLifecycle, MostReadLifecycle, MostPopularFacebookAutoRefreshLifecycle}
+import dfp.DfpDataCacheLifecycle
+import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
+import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader, WithFilters}
+import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -54,23 +55,24 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 }
 
 
-object Global extends WithFilters(
-  DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*
-)
-with DevParametersLifecycle
-with AdminLifecycle
-with DiagnosticsLifecycle
-with OnwardJourneyLifecycle
-with CommercialLifecycle
-with MostReadLifecycle
-with DfpDataCacheLifecycle
-with DfpAgentLifecycle
-with ConfigAgentLifecycle
-with SurgingContentAgentLifecycle
-with SectionsLookUpLifecycle
-with ABTHeadlinesLifecycle
-with MostPopularFacebookAutoRefreshLifecycle
-with CorsErrorHandler {
+object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*)
+  with DevParametersLifecycle
+  with AdminLifecycle
+  with DiagnosticsLifecycle
+  with OnwardJourneyLifecycle
+  with CommercialLifecycle
+  with MostReadLifecycle
+  with DfpDataCacheLifecycle
+  with FaciaDfpAgentLifecycle
+  with ConfigAgentLifecycle
+  with SurgingContentAgentLifecycle
+  with SectionsLookUpLifecycle
+  with MostPopularFacebookAutoRefreshLifecycle
+  with SwitchboardLifecycle
+  with FootballLifecycle
+  with CricketLifecycle
+  with RugbyLifecycle
+  with CorsErrorHandler {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

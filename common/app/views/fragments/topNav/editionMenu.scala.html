@@ -1,30 +1,21 @@
 @()(implicit request: RequestHeader)
 
-@import common.InternationalEdition
 @import common.{Edition, LinkTo}
 @import views.support.RenderClasses
 
-<div class="brand-bar__popup--edition">
+<div class="brand-bar__popup--edition mobile-only show-on-slim-header">
     <h3 class="popup__group-header">change edition:</h3>
     <ul class="popup__group">
         <li class="popup__item">
             @Edition.others(request).map { edition =>
                 <a class="@RenderClasses(Map(
                     "brand-bar__item--action" -> true,
-                    "brand-bar__item--inline-action" -> true,
-                    "brand-bar__item--action-beta" -> edition.isBeta
+                    "brand-bar__item--inline-action" -> true
                 ))" data-edition="@edition.id"
                 data-link-name="switch to @edition.id edition"
                 href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                 title="Switch to the @edition.id edition">
-                    @if(edition.isBeta) {
-                        <span class="u-h">switch to the </span>
-                        <span class="brand-bar__edition-name">@InternationalEdition.abbreviation</span>
-                        <small class="brand-bar__beta">beta</small>
-                        <span class="u-h"> edition</span>
-                    }else{
-                        <span class="u-h">switch to the </span> @edition.id <span class="u-h"> edition</span>
-                    }
+                    <span class="u-h">switch to the </span> @edition.id <span class="u-h"> edition</span>
                 </a>
             }
         </li>

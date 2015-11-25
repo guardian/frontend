@@ -5,7 +5,7 @@ import java.net.URL
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import org.apache.commons.io.IOUtils
-import play.api.libs.json.{JsObject, JsString, Json}
+import play.api.libs.json._
 import play.api.{Mode, Play}
 
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
@@ -22,13 +22,17 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      assets()(path)
+      if (path.startsWith("javascripts")) {
+        Asset(path)
+      } else {
+        assets().getOrElse(path, throw AssetNotFoundException(path))
+      }
     } else {
       memoizedAssets(path)
     }
   }
 
-  private def assets(): Map[String, Asset] = {
+  def assets(): Map[String, Asset] = {
 
     // Use the grunt-generated asset map in Dev.
     val json: String = if (Play.current.mode == Mode.Dev) {
@@ -38,9 +42,10 @@ class AssetMap(base: String, assetMap: String) {
       val url = AssetFinder(assetMap)
       IOUtils.toString(url)
     }
-    val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
-
-    val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
+    val paths: Map[String, String] = Json.parse(json).validate[Map[String, String]] match {
+      case JsSuccess(m, _) => m
+      case JsError(_) => Map.empty
+    }
 
     paths mapValues { path => Asset(base + path) }
   }
@@ -48,8 +53,8 @@ class AssetMap(base: String, assetMap: String) {
   private lazy val memoizedAssets = assets()
 }
 
-class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMap)
+class Assets(base: String, assetMapPath: String = "assets/assets.map") extends Logging {
+  val lookup = new AssetMap(base, assetMapPath)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
@@ -71,13 +76,20 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
     private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
-    def projectCss(projectOverride: Option[String] = None) = project(projectOverride.getOrElse(Configuration.environment.projectName))
-    def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
-    def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
-    def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
+    def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
+    def head(projectOverride: Option[String]) = cssHead(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
+    def inline(module: String): Option[String] = {
+       val knownInlines : PartialFunction[String,String] =
+       {
+         case "story-package" => "story-package.css"
+       }
+       knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }
+    }
 
-    private def css(project: String): String = {
+    private def cssHead(project: String): String = {
 
       val suffix = project match {
         case "footballSnaps" => "footballSnaps.css"
@@ -85,13 +97,19 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "identity" => "identity.css"
         case "football" => "football.css"
         case "index" => "index.css"
-        case "story-package" => "story-package.css"
         case "rich-links" => "rich-links.css"
+        case "email" => "email.css"
         case _ => "content.css"
       }
-      val url = AssetFinder(s"assets/head.$suffix")
 
-      // Reload head css on every access in DEV
+      loadCssResource(s"assets/inline-stylesheets/head.$suffix")
+    }
+
+    private def loadCssResource(resourceName: String): String = {
+
+      val url = AssetFinder(resourceName)
+
+      // Reload css on every access in DEV
       if (Play.current.mode == Mode.Dev) {
         memoizedCss.remove(url)
       }
@@ -104,7 +122,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private def project(project: String): String = {
       project match {
         case "facia" => "stylesheets/facia.css"
-        case _ => "stylesheets/global.css"
+        case _ => "stylesheets/content.css"
       }
     }
 
@@ -129,22 +147,10 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   }
 
   object js {
-
      private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
-
-     val systemJsPolyfills: String = inlineJs("assets/system-polyfills.src.js")
-
-     val systemJs: String = inlineJs("assets/system.src.js")
-
-     val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
-
-     val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
-
-     val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
-
-     lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body
+     val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
   }
 }
 
@@ -158,5 +164,5 @@ object AssetFinder {
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
   override val getMessage: String =
-    s"Cannot find asset $assetPath. You probably need to run 'grunt compile'."
+    s"Cannot find asset $assetPath. You probably need to run 'make compile'."
 }

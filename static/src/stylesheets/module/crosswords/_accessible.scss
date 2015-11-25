@@ -1,0 +1,36 @@
+.crossword__accessible-blank-data {
+    list-style-type: none;
+}
+
+.crossword__accessible-blank-data {
+    margin: 0;
+    margin-bottom: $gs-baseline;
+}
+
+.crossword__accessible-row-data--row-number {
+    font-weight: bold;
+}
+
+.crossword__accessible-row-data {
+    position: relative;
+    cursor: pointer;
+    @include fs-textSans(4);
+    padding: $gs-baseline * .25 0;
+    list-style-type: none;
+    padding-left: 2em;
+
+    &:before {
+        content: attr(data-number);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        -webkit-font-smoothing: initial;
+    }
+}
+
+.crossword__accessible-data--header {
+    @include fs-header(1);
+    border-top: 1px solid colour(crosswordAccent2);
+    border-bottom: 1px dotted colour(neutral-3);
+    padding-bottom: $gs-baseline * .75;
+}

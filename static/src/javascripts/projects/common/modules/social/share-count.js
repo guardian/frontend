@@ -1,24 +1,27 @@
 define([
-    'raven',
+    'common/utils/report-error',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/formatters',
     'common/utils/template',
-    'text!common/views/content/share-count.html'
+    'common/views/svgs',
+    'text!common/views/content/share-count.html',
+    'text!common/views/content/share-count-immersive.html'
 ], function (
-    raven,
+    reportError,
     $,
     ajax,
     detect,
     config,
     formatters,
     template,
-    shareCountTemplate
+    svgs,
+    shareCountTemplate,
+    shareCountImmersiveTemplate
 ) {
-
-    var shareCount    = 0,
+    var shareCount = 0,
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
@@ -44,6 +47,11 @@ define([
     }
 
     function addToShareCount(val) {
+        if ($shareCountEls.hasClass('js-sharecount-immersive')) {
+            shareCountTemplate = template(shareCountImmersiveTemplate, {
+                icon: svgs('share')
+            });
+        }
 
         $shareCountEls
             .removeClass('u-h')
@@ -56,7 +64,7 @@ define([
         if (detect.isBreakpoint({min: 'tablet'})) {
             var duration = 250,
                 updateStep = 25,
-                slices     = duration / updateStep,
+                slices = duration / updateStep,
                 amountPerStep = val / slices,
                 currentSlice = 0,
                 interval = window.setInterval(function () {
@@ -68,11 +76,13 @@ define([
         } else {
             incrementShareCount(val);
         }
-
     }
 
-    function init() {
-        if ($shareCountEls.length) {
+    return function () {
+        // asking for social counts in preview "leaks" upcoming URLs to social sites.
+        // when they then crawl them they get 404s which affects later sharing.
+        // don't call counts in preview
+        if ($shareCountEls.length && !config.page.isPreview) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({
@@ -98,18 +108,10 @@ define([
                     updateTooltip();
                 });
             } catch (e) {
-                raven.captureException(new Error('Error retrieving share counts (' + e.message + ')'), {
-                    tags: {
-                        feature: 'share-count'
-                    }
-                });
+                reportError(new Error('Error retrieving share counts (' + e.message + ')'), {
+                    feature: 'share-count'
+                }, false);
             }
-
         }
-
-    }
-
-    return {
-        init: init
     };
 });

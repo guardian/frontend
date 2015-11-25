@@ -1,4 +1,5 @@
 .ad-slot {
+    position: relative;
     z-index: $zindex-ads;
     overflow: hidden;
 
@@ -9,6 +10,14 @@
             display: block;
         }
     }
+}
+
+/* Ad slots with sticky MPUs should be vertically separated from the following content, but collapse if empty.
+ * Margins on children don't affect the position of elements we make sticky.
+ */
+.ad-slot-container > :last-child {
+    margin-bottom: 0;
+    padding-bottom: $gs-baseline * 2;
 }
 .ad-slot--dark {
     background-color: lighten(colour(media-background), 2.5%);
@@ -50,11 +59,12 @@
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
+.top-banner-ad-container--ab-mobile {
+    display: none;
+}
 .top-banner-ad-container--desktop {
     background-color: colour(neutral-8);
-    border-bottom: 2px solid colour(neutral-4);
     display: none;
-    overflow: hidden;
 
     &.top-banner-ad-container--below-nav {
         border-bottom-width: 1px;
@@ -81,21 +91,39 @@
             margin: 0;
         }
     }
-    iframe {
-        transform: translateZ(0);
-        transition: height 1s cubic-bezier(0, 0, 0, .985);
+
+     /*
+      * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
+      * We are giving this ad priority 5 so it will go over everything except lightbox
+      */
+    .ad-slot {
+        overflow: visible;
+        z-index: $zindex-popover;
     }
+}
+.top-banner-ad-container--small {
+    min-height: ($gs-row-height * 3) + 18;
+}
+.top-banner-ad-container--large {
+    min-height: ($gs-row-height * 7) + 34;
+}
+.top-banner-ad-container--responsive {
+    min-height: ($gs-row-height * 7) + 16;
+}
+.top-banner-ad-container--reveal iframe {
+    transform: translateZ(0);
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
@@ -165,14 +193,13 @@
 .ad-slot--liveblog-inline {
     width: 300px;
     margin: $gs-baseline auto;
-    min-height: 50 + $mpu-ad-label-height;
+    min-height: 250 + $mpu-ad-label-height;
     text-align: center;
 
     @include mq(mobileLandscape) {
         width: 320px;
     }
     @include mq(tablet) {
-        height: 250px + $mpu-ad-label-height;
         width: auto;
     }
     .ad-slot__label {
@@ -204,7 +231,7 @@
 }
 .ad-slot__content {
     > div {
-        margin: 0 auto;            
+        margin: 0 auto;
     }
 }
 .ad-slot--container-inline {
@@ -215,7 +242,6 @@
         position: relative;
         height: auto;
         margin: 0 $gs-gutter/2;
-        width: gs-span(4.5);
 
         .content-footer & {
             width: 300px;
@@ -498,6 +524,11 @@
         @include mq(mobile, $until: leftCol) {
             max-height: 60px;
         }
+        @include mq($from: leftCol) {
+            .has-page-skin & {
+                max-height: 60px;
+            }
+        }
     }
 
     @include mq(leftCol) {
@@ -511,14 +542,19 @@
         padding-top: 2px;
         border-top: 1px dotted colour(neutral-5);
 
-        .commercial-dfp-multi & {
-            position: absolute;
-            bottom: $gs-gutter;
-        }
-
         .ad-slot--paid-for-badge__link {
             float: none;
             margin-top: $gs-row-height/4;
+        }
+    }
+    @include mq($from: leftCol) {
+        .has-page-skin & {
+            float: right;
+            clear: right;
+            width: $left-column + $gs-gutter;
+            min-height: 90px;
+            margin: 0;
+            padding: 2px 0 $gs-baseline;
         }
     }
     @include mq(tablet, $until: leftCol) {
@@ -529,16 +565,6 @@
     @include mq(wide) {
         width: $left-column-wide;
 
-        .has-page-skin & {
-            margin-left: 50%;
-            width: auto;
-            float: none;
-            margin-top: -$gs-row-height;
-
-            .ad-slot--paid-for-badge__link {
-                float: right;
-            }
-        }
         .has-page-skin .fc-container--has-toggle & {
             margin-right: gs-span(1);
         }

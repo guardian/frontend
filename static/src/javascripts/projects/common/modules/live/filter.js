@@ -8,15 +8,14 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/_'
+    'lodash/collections/toArray'
 ], function (
     bonzo,
     bean,
     qwery,
     $,
     mediator,
-    _
-) {
+    toArray) {
     function Filter(context) {
         this.context = context;
         this.order = 'newest';
@@ -30,7 +29,7 @@ define([
     Filter.prototype.toggle = function (order) {
         bean.fire(qwery('button[data-toggle="popup--live-blog"]')[0], 'click');
         if (this.order !== order) {
-            var blocks = _.toArray($('.block', this.context).detach());
+            var blocks = toArray($('.block', this.context).detach());
             blocks.reverse();
             bonzo(this.context).prepend(blocks);
             mediator.emit('module:filter:toggle', order === 'oldest');

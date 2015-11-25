@@ -1,11 +1,12 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
-import com.gu.util.liveblogs.{BlockToText, BlockType, Block}
+import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
-import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
+import conf.switches.Switches
+import conf.switches.Switches.LongCacheSwitch
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -30,10 +31,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(_))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
 
   private def renderLatestFrom(model: ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
+      val html = withJsoup(BodyCleaner(model.article, model.article.body, amp = false)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
             val blocksToKeep = d.getElementsByTag("div") takeWhile {
@@ -77,60 +78,83 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   }
 
-  private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
+  private def render(path: String, model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
     case blog: LiveBlogPage =>
-      val htmlResponse = () => views.html.liveBlog(blog)
-      val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+      if (request.isAmp) {
+        MovedPermanently(path)
+      } else {
+        val htmlResponse = () => views.html.liveBlog(blog)
+        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
+        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+      }
 
     case article: ArticlePage =>
-      val htmlResponse = () => views.html.article(article)
+      val htmlResponse = () => if (request.isAmp) {
+        views.html.articleAMP(article)
+      } else {
+          if (article.article.isImmersive) {
+            views.html.articleImmersive(article)
+          } else {
+            views.html.article(article)
+          }
+      }
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = MemcachedAction { implicit request =>
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
+      // we cannot sensibly decache memcached (does not support surogate keys)
+      // so if we are doing the 'soft purge' don't memcache
+      loadArticle(path, lastUpdate, rendered)
+    } else MemcachedAction { implicit request =>
+      loadArticle(path, lastUpdate, rendered)
+    }
+  }
+
+  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path) { model =>
       (lastUpdate, rendered) match {
         case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
         case (None, Some(false)) => blockText(model, 6)
-        case (_, _) => render(model)
+        case (_, _) => render(path, model)
       }
     }
   }
 
   def mapModel(path: String)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path) map {
+    lookup(path) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
+
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
+    getResponse(LiveContentApi.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
     )
 
-    val result = response map { response =>
+  }
 
-      val supportedContent = response.content.filter(isSupported).map(Content(_))
-      val content: Option[ArticleWithStoryPackage] = supportedContent.map {
-        case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
-        case article: Article => ArticlePage(article, RelatedContent(article, response))
-      }
-
-      if (content.exists(_.article.isExpiredAdvertisementFeature)) {
-        Right(MovedPermanently(expiredAdFeatureUrl))
-      } else {
-        ModelOrResult(content, response)
-      }
+  /**
+   * convert a response into something we can render, and return it
+   * optionally, throw a response if we know it's not right to send the content
+   * @param response
+   * @return
+   */
+  def redirect(response: ItemResponse)(implicit request: RequestHeader) = {
+    val supportedContent = response.content.filter(isSupported).map(Content(_))
+    val content: Option[ArticleWithStoryPackage] = supportedContent.map {
+      case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
+      case article: Article => ArticlePage(article, RelatedContent(article, response))
     }
 
-    result recover convertApiExceptions
+    ModelOrResult(content, response)
   }
 
 }

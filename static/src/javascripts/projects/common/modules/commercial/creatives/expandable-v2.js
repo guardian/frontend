@@ -2,27 +2,28 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-v2.html'
+    'text!common/views/commercial/creatives/expandable-v2.html',
+    'lodash/functions/bindAll',
+    'lodash/objects/merge'
 ], function (
     bean,
     bonzo,
     fastdom,
-    _,
     $,
-	detect,
+    detect,
     mediator,
     storage,
     template,
     svgs,
-    expandableV2Tpl
-) {
+    expandableV2Tpl,
+    bindAll,
+    merge) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
@@ -39,6 +40,8 @@ define([
             this.closedHeight = 150;
             this.openedHeight = 300;
         }
+
+        bindAll(this, 'updateBgPosition', 'listener');
     };
 
     /**
@@ -48,63 +51,60 @@ define([
     ExpandableV2.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ExpandableV2.prototype.updateBgPosition = function () {
-        var adHeight, inViewB, inViewT, topCusp, bottomCusp, bottomScroll, topScroll;
-        fastdom.read(function () {
-            adHeight = (this.isClosed) ?
-                this.closedHeight : this.openedHeight;
-            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top);
-            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20);
-            topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
-                'true' : 'false';
-            bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
-                'true' : 'false';
-            bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50;
-            topScroll = (topCusp === 'true') ?
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
-        }.bind(this));
+        var scrollY = window.pageYOffset,
+            viewportHeight = bonzo.viewport().height,
+            adSlotTop = this.$adSlot.offset().top,
+            that = this;
+
+        var adHeight = (this.isClosed) ? this.closedHeight : this.openedHeight;
+        var inViewB = ((scrollY + viewportHeight) > adSlotTop);
+        var inViewT = ((scrollY - (adHeight * 2)) < adSlotTop + 20);
+        var topCusp = (inViewT &&
+            ((scrollY + (viewportHeight * 0.4) - adHeight) > adSlotTop)) ?
+            'true' : 'false';
+        var bottomCusp = (inViewB &&
+            (scrollY + (viewportHeight * 0.5)) < adSlotTop) ?
+            'true' : 'false';
+        var bottomScroll = (bottomCusp === 'true') ?
+            50 - ((scrollY + (viewportHeight * 0.5) - adSlotTop) * -0.2) : 50;
+        var topScroll = (topCusp === 'true') ?
+            ((scrollY + (viewportHeight * 0.4) - adSlotTop - adHeight) * 0.2) : 0;
 
         switch (this.params.backgroundImagePType) {
             case 'split':
+                this.scrollAmount = bottomScroll + topScroll + '%';
                 fastdom.write(function () {
-                    this.scrollAmount = bottomScroll + topScroll + '%';
                     $('.ad-exp--expand-scrolling-bg').css('background-repeat', 'no-repeat');
-                }.bind(this));
+                });
                 break;
             case 'fixed':
-                fastdom.read(function () {
-                    this.scrollAmount = (window.pageYOffset - this.$adSlot.offset().top) + 'px';
-                }.bind(this));
+                this.scrollAmount = (scrollY - adSlotTop) + 'px';
                 break;
             case 'parallax':
-                fastdom.read(function () {
-                    this.scrollAmount = ((window.pageYOffset - this.$adSlot.offset().top) * 0.15) + '%';
-                }.bind(this));
+                this.scrollAmount = ((scrollY - adSlotTop) * 0.15) + '%';
                 break;
         }
+
         fastdom.write(function () {
-            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
-        }.bind(this));
+            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + that.scrollAmount);
+        });
     };
 
     ExpandableV2.prototype.listener = function () {
-        fastdom.read(function () {
-            if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
-                // expires in 1 week
-                var week = 1000 * 60 * 60 * 24 * 7;
+        var that = this;
+        if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
+            // expires in 1 week
+            var week = 1000 * 60 * 60 * 24 * 7;
 
-                storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
-                fastdom.write(function () {
-                    this.$button.toggleClass('button-spin');
-                    $('.ad-exp__open-chevron').toggleClass('chevron-down');
-                    this.$ad.css('height', this.openedHeight);
-                    this.isClosed = false;
-                }.bind(this));
-                return true;
-            }
-        }.bind(this));
+            storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
+            fastdom.write(function () {
+                that.$button.toggleClass('button-spin');
+                $('.ad-exp__open-chevron').toggleClass('chevron-down');
+                that.$ad.css('height', that.openedHeight);
+                that.isClosed = false;
+            });
+            return true;
+        }
     };
 
     ExpandableV2.prototype.create = function () {
@@ -135,7 +135,7 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, { data: _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
+            $expandablev2 = $.create(template(expandableV2Tpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
@@ -156,7 +156,7 @@ define([
         }.bind(this));
 
         if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
-            mediator.on('window:scroll', this.listener.bind(this));
+            mediator.on('window:throttledScroll', this.listener);
         }
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
@@ -172,9 +172,9 @@ define([
             // update bg position
             this.updateBgPosition();
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition);
             // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition.bind(this));
+            mediator.on('window:resize', this.updateBgPosition);
         }
 
         return domPromise;

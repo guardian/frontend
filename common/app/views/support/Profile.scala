@@ -1,16 +1,14 @@
 package views.support
 
 import java.net.{URI, URISyntaxException}
-
 import common.Logging
-import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
-import conf.{Configuration, Switches}
-import implicits.Requests._
+import conf.switches.Switches.ImageServerSwitch
+import conf.Configuration
 import layout.WidthsByBreakpoint
 import model.{Content, ImageAsset, ImageContainer, MetaData}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
-import play.api.mvc.RequestHeader
+import Function.const
 
 sealed trait ElementProfile {
 
@@ -19,9 +17,9 @@ sealed trait ElementProfile {
   def compression: Int
 
   def elementFor(image: ImageContainer): Option[ImageAsset] = {
-    val sortedCorps = image.imageCrops.sortBy(_.width)
+    val sortedCrops = image.imageCrops.sortBy(-_.width)
     width.flatMap{ desiredWidth =>
-      sortedCorps.find(_.width >= desiredWidth)
+      sortedCrops.find(_.width >= desiredWidth)
     }.orElse(image.largestImage)
   }
 
@@ -36,9 +34,17 @@ sealed trait ElementProfile {
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
-  def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
+  // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
+  lazy val resizeString = {
+    val qualityparam = "q=85"
+    val autoParam = "auto=format"
+    val sharpParam = "sharp=10"
+    val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
+    val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam).filter(_.nonEmpty).mkString("&")
+    s"?$params"
+  }
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
@@ -64,6 +70,7 @@ case class VideoProfile(
 
 // Configuration of our different image profiles
 object Contributor extends Profile(width = Some(140), height = Some(140))
+object RichLinkContributor extends Profile(width = Some(173))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
 object Item300 extends Profile(width = Some(300))
@@ -72,6 +79,7 @@ object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
+object FacebookOpenGraphImage extends Profile(width = Some(1200))
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))
@@ -90,24 +98,22 @@ object ImgSrc extends Logging {
     "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 
-  def apply(url: String, imageType: ElementProfile, useImageService: Boolean = false): String = {
+  def tokenFor(host:String): Option[String] = hostPrefixMapping.get(host).map(_.token)
+
+  private val supportedImages = Set(".jpg", ".jpeg", ".png")
+
+  def apply(url: String, imageType: ElementProfile): String = {
     try {
       val uri = new URI(url.trim)
-
-      val supportedImages = if (PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
 
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
-        .filter(_ => isSupportedImage)
-        .filter(_ => ImageServerSwitch.isSwitchedOn)
+        .filter(const(ImageServerSwitch.isSwitchedOn))
+        .filter(const(isSupportedImage))
         .map { host =>
-          if (useImageService && Switches.ImgixSwitch.isSwitchedOn) {
-            val signedPath = ImageUrlSigner.sign(s"${uri.getPath}${imageType.imgixResizeString}", host.token)
-            s"$imageHost/img/${host.prefix}$signedPath"
-          } else {
-            s"$imageHost/${host.prefix}${imageType.resizeString}${uri.getPath}"
-          }
+          val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
+          s"$imageHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>
@@ -116,46 +122,39 @@ object ImgSrc extends Logging {
     }
   }
 
-  // always, and I mean ALWAYS think carefully about the size image you use
-  def findSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  def findNearestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
   }
 
-  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
+  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.largestFor(imageContainer).flatMap(_.url).map{ largestImage =>
-      ImgSrc(largestImage, profile, request.isInImgixTest)
+      ImgSrc(largestImage, profile)
     }
   }
 
-  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
-    if(request.isInImgixTest) {
-        widths.profiles.map { profile =>
-          s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
-        } mkString ", "
-      } else {
-        normalSrcset(imageContainer, widths)
-      }
-  }
-
-  def normalSrcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
+  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile =>
-      s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
+      if(ImageServerSwitch.isSwitchedOn) {
+        s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      } else {
+        s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
+      }
     } mkString ", "
   }
 
-  def srcset(path: String, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
+  def srcset(path: String, widths: WidthsByBreakpoint): String = {
     widths.profiles map { profile =>
-      s"${ImgSrc(path, profile, request.isInImgixTest)} ${profile.width.get}w"
+      s"${ImgSrc(path, profile)} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def getFallbackUrl(imageContainer: ImageContainer)(implicit request: RequestHeader): Option[String] = {
-    if(request.isInImgixTest) {
+  def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
+    if(ImageServerSwitch.isSwitchedOn) {
       findLargestSrc(imageContainer, Item300)
     } else {
-      findSrc(imageContainer, Item300)
+      findNearestSrc(imageContainer, Item300)
     }
   }
 

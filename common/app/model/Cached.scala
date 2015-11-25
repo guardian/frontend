@@ -1,10 +1,12 @@
 package model
 
-import conf.Switches.DoubleCacheTimesSwitch
+import conf.switches.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import play.api.mvc.Result
+import play.api.mvc.{Request, Action, Result}
+import scala.concurrent.Future
 import scala.concurrent.duration.Duration
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object Cached extends implicits.Dates {
 
@@ -48,4 +50,20 @@ object Cached extends implicits.Dates {
 
 object NoCache {
   def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
+}
+
+case class NoCache[A](action: Action[A]) extends Action[A] {
+
+  override def apply(request: Request[A]): Future[Result] = {
+
+    action(request) map { response =>
+      response.withHeaders(
+        ("Cache-Control", "no-cache, no-store, must-revalidate"),
+        ("Pragma", "no-cache"),
+        ("Expires", "0")
+      )
+    }
+  }
+
+  lazy val parser = action.parser
 }

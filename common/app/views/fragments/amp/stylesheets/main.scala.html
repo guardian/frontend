@@ -1,0 +1,259 @@
+@(metaData: model.MetaData)
+<style amp-custom>
+    body {
+        font-family: Georgia,serif;
+        font-size: 100%;
+        line-height: 1.5rem;
+        color: #333;
+        background: rgba(51,51,51,0.05);
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .main-body {
+        background: #fff;
+        max-width: 600px;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: none;
+        cursor: pointer;
+        color: #005689;
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.35rem;
+        font-weight: 300;
+        margin: 0px 0px 12px;
+    }
+
+    cite {
+        font-style: normal;
+    }
+
+    .from-content-api blockquote {
+        font-style: italic;
+        margin: 1rem 0 1.75rem 1.5rem;
+    }
+
+    .from-content-api h2, .from-content-api .block-elements h2 {
+        font-size: 1.125rem;
+        line-height: 1.4rem;
+        font-weight: 900;
+        margin: 12px 0px 0px
+    }
+
+    .meta__contact-header {
+        display: none;
+    }
+
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main {
+        margin: 0 0.625rem;
+    }
+
+    .content__section-label, .content__series-label {
+        display: inline-block;
+    }
+
+    .content__section-label__link {
+        color: #005689;
+        text-decoration: none;
+        font-size: 1rem;
+        line-height: 1.25rem;
+    }
+
+    .content__labels {
+        padding: 0.375rem 0;
+        border-bottom: 0.0625rem dotted #dfdfdf;
+        position: relative;
+        z-index: 1;
+    }
+
+    .content__headline {
+        color: #333;
+        font-size: 1.75rem;
+        font-weight: 400;
+        line-height: 2rem;
+        letter-spacing: -.02rem;
+        padding-top: 0.125rem;
+        padding-bottom: 1.5rem;
+        margin: 0;
+    }
+
+    @@media (min-width: 30rem) {
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main {
+        margin: 0 20px;
+        }
+    .content__headline {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        }
+    }
+
+    .content__standfirst {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        margin-bottom: 0.375rem;
+    }
+
+    .contact {
+        height: 1.3125rem;
+        display: inline-block;
+        vertical-align: top;
+        font-size: 0.75rem;
+        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    }
+
+    .meta__twitter, .meta__email {
+        margin-right: 5px;
+        display: inline;
+    }
+
+    .inline-twitter-bird, .inline-mail {
+        display: inline-block;
+        margin-top: 2px;
+    }
+
+    .byline {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 600;
+        padding-top: 0.25rem;
+        margin: 0;
+    }
+
+    .caption, .content__standfirst, .byline, .content__dateline, .element-rich-link--not-upgraded a:before, .content__series-label__link, blockquote.quoted, .ad-slot--paid-for-badge__header {
+        color: #767676;
+    }
+
+    .ad-slot--paid-for-badge__header {
+        margin: 3px 0 0;
+    }
+
+    .quoted__contents {
+        font-style: italic;
+    }
+
+    .u-cf:after, .main-body:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+
+    .u-cf:after, .u-cf:before {
+        content: '';
+        display: table;
+    }
+
+    .caption {
+        padding-top: 0.5rem;
+    }
+
+    .content__dateline {
+        padding: 0.125rem 0 0.5rem;
+        margin: 0;
+    }
+
+    .caption, .content__dateline, .ad-slot--paid-for-badge__header {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    }
+
+    .content__meta-container {
+        border-top: 0.0625rem dotted #dfdfdf;
+        border-bottom: 0.0625rem dotted #dfdfdf;
+        margin-top: 16px;
+        margin-bottom: 0.75rem;
+    }
+
+    .u-underline {
+        text-decoration: none;
+        border-bottom: 0.0625rem solid #dcdcdc;
+        color: #005689;
+    }
+
+    .main-header {
+        background: #005689;
+        min-height: 45px;
+    }
+
+    .logo-wrapper {
+        float: right;
+        margin: 0.1875rem 0.625rem 0.34rem 0;
+    }
+
+    .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
+        letter-spacing: -0.02em;
+    }
+
+    @* Dropcap styling *@
+    .drop-cap__inner {
+        float: left;
+        display: inline-block;
+        vertical-align: text-top;
+        font-size: 3rem;
+        line-height: 2.5rem;
+    }
+
+    .drop-cap {
+        float: left;
+        display: inline-block;
+        text-transform: uppercase;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 2.5rem;
+        padding-top: 0.0625rem;
+        margin-right: 0.25rem;
+    }
+
+    @* Bullet Points related styling below *@
+    .bullet {
+        font-size: 0.00625rem;
+        color: transparent;
+    }
+
+    .bullet:before, .tonal__standfirst ul>li:before, .from-content-api ul>li:before {
+        display: inline-block;
+        content: '';
+        -webkit-border-radius: 0.375rem;
+        border-radius: 0.375rem;
+        height: 0.75rem;
+        width: 0.75rem;
+        margin-right: 0.125rem;
+        background-color: #bdbdbd;
+    }
+
+    .from-content-api>ol>li, .from-content-api>ul>li {
+        position: relative;
+        margin-bottom: .8em;
+    }
+
+    .content__standfirst>ul, .content__standfirst>ol, .from-content-api>ul {
+        margin: .8em 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    @fragments.amp.stylesheets.tones()
+    @fragments.amp.stylesheets.embeds()
+    @fragments.amp.stylesheets.quotes()
+    @fragments.amp.stylesheets.richLinks()
+    @fragments.amp.stylesheets.ads()
+    @fragments.amp.stylesheets.tables()
+    @fragments.amp.stylesheets.inlineSvgs()
+    @fragments.amp.stylesheets.social()
+    @fragments.amp.stylesheets.footer()
+    @if(metaData.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
+        @fragments.amp.stylesheets.fonts()
+    }
+
+    @* temporarily hiding these for demo *@
+    .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
+        display: none;
+    }
+</style>

@@ -1,62 +1,81 @@
-@(model: ArticlePage)(implicit request: RequestHeader)
 
-@import conf.Switches._
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+
+@import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(model.article) { article =>
-<div class="l-side-margins">
-    <article id="article" data-test-id="article-root"
-        class="content content--article tonal tonal--@articleToneClass(article) section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-        @if(article.isAdvertisementFeature){content--advertisement-feature}
-        @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
-        itemscope itemtype="@article.schemaType" role="main">
+    <div class="l-side-margins">
+        <article id="article" data-test-id="article-root"
+            class="content content--article tonal tonal--@articleToneClass(article) section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+            @if(article.isAdvertisementFeature){content--advertisement-feature}
+            @if(article.isFeature && article.hasShowcaseMainElement){has-feature-showcase-element}"
+            itemscope itemtype="@article.schemaType" role="main">
+            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
+            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="The Guardian">
+                @if(amp) {
+                    @* AMP doesn't support sameAs *@
+                    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                        <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
+                    </div>
+                } else {
+                    <link itemprop="sameAs" href="http://www.theguardian.com">
+                }
+            </div>
 
-        @fragments.headTonal(article)
+            @fragments.headTonal(article)
 
-        @if(article.isFeature && article.hasShowcaseMainPicture) {
-            @fragments.mainMedia(article)
-        }
+            @if(article.isFeature && article.hasShowcaseMainElement) {
+                @fragments.mainMedia(article, amp)
+            }
 
-        <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
+            <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.isSudoku) {sudoku}">
 
-                    <div class="js-football-tabs football-tabs content__mobile-full-width"></div>
+                        <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-                    @if(!(article.isFeature && article.hasShowcaseMainPicture)) {
-                        @fragments.mainMedia(article)
-                    }
+                        @if(!(article.isFeature && article.hasShowcaseMainElement)) {
+                            @fragments.mainMedia(article, amp)
+                        }
 
-                    @fragments.witnessCallToAction(article)
+                        @fragments.witnessCallToAction(article)
 
-                    @fragments.contentMeta(article)
+                        @fragments.contentMeta(article)
 
-                    @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
-                        <hr class="content__hr hide-until-leftcol" />
-                    }
+                        @fragments.chapterHeadings(article)
 
-                    <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
-                        data-test-id="article-review-body">
-                        @BodyCleaner(article, article.body)
+                        @if(article.isNews && !article.hasMainEmbed && article.elements("main").isEmpty) {
+                            <hr class="content__hr hide-until-leftcol" />
+                        }
+
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
+                            data-test-id="article-review-body">
+                            @BodyCleaner(article, article.body, amp = amp)
+                        </div>
+
+                        @fragments.witnessCallToAction(article)
+
+                        @fragments.submeta(article)
+
+                        <div class="after-article js-after-article"></div>
                     </div>
 
-                    @fragments.witnessCallToAction(article)
-
-                    @fragments.submeta(article)
-
-                    <div class="after-article js-after-article"></div>
-                </div>
-
-                <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                    <div class="mpu-container js-mpu-ad-slot"></div>
-                    <div class="js-components-container"></div>
+                    <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+                        @fragments.chapterHeadings(article)
+                        <div class="ad-slot-container js-ad-slot-container"></div>
+                        <div class="js-components-container"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
 
-    @fragments.contentFooter(article, model.related)
+        @* Currently AMP documents don't support most of what we do in the footer *@
+        @if(!amp) {
+            @fragments.contentFooter(article, model.related)
+        }
 
-    }
-</div>
+    </div>
+}

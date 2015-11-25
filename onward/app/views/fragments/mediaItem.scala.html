@@ -14,10 +14,15 @@
                     </div>
                 </div>
             }
-            <h4 class="fc-item__title">@content match {
-                case a: Audio => { @a.webTitle }
-                case v: Video => { @v.videoLinkText }
-            }</h4>
+            <h4 class="fc-item__title">
+                @content match {
+                    case a: Audio => { @a.webTitle }
+                    case v: Video => {
+                        @fragments.inlineSvg("video-icon", "icon", List("yellow"))
+                        @v.videoLinkText
+                    }
+                }
+            </h4>
         </a>
     </div>
 </li>

@@ -1,5 +1,4 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
-
 @import common.LinkTo
 @import model.MostPopular
 
@@ -22,7 +21,7 @@
     MostPopular(
         containerDefinition.displayName.getOrElse("popular"),
         "popular",
-        containerDefinition.contentItems.slice(0, 10)
+        containerDefinition.contentItems.take(10)
     ),
     MostPopular(
         "across the guardian",
@@ -30,6 +29,6 @@
         Nil
     )
 )){ popular =>
-    @fragments.collections.popular(popular)
+    @fragments.collections.popular(popular, Some(containerDefinition))
 }
 </div>

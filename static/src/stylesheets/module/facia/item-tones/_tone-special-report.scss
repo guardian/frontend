@@ -4,7 +4,8 @@
         background-color: colour(news-support-6);
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(news-support-6), 5%);
     }
 
@@ -36,6 +37,10 @@
         color: colour(news-support-1);
     }
 
+    .fc-save-for-later {
+        border-color: mix(#000000, colour(news-support-6), 10%);
+    }
+
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, colour(news-support-6), 10%);
     }
@@ -64,10 +69,6 @@
 
     .fc-item__meta {
         color: colour(neutral-4);
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(news-support-1);
     }
 }
 

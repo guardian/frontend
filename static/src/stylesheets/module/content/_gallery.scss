@@ -56,7 +56,7 @@
 
 .gallery2__figcaption {
     @include fs-textSans(1);
-    padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline / 4;
     overflow: visible;
     max-height: 100%;
     position: relative;
@@ -152,30 +152,16 @@
     position: absolute;
     margin: $gs-gutter/2;
 
-    .i {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-    }
-
-    .i-expand-black {
-        display: none;
-    }
-
     .element--thumbnail & {
         width: 33px;
         height: 33px;
         margin: $gs-baseline/3 $gs-gutter/5;
         display: none;
+    }
 
-        .i-expand-black,
-        .i-expand-white {
-            width: 50%;
-            height: 50%;
-        }
+    &.inline-expand-image svg {
+        width: 50%;
+        height: 50%;
     }
 
     .element--thumbnail:hover & {
@@ -187,11 +173,8 @@
         .article__img-container:hover & {
             background-color: colour(media-default);
 
-            .i-expand-black {
-                display: inline-block;
-            }
-            .i-expand-white {
-                display: none;
+            &.inline-expand-image {
+                fill: #000000;
             }
         }
     }

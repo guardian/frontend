@@ -1,11 +1,11 @@
 package integration
 
-import java.net.URL
 import java.util.concurrent.TimeUnit
 
 import akka.agent.Agent
+import commercial.AdsTest
+import driver.SauceLabsWebDriver
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest._
 import org.scalatestplus.play.BrowserFactory.UninitializedDriver
@@ -18,22 +18,8 @@ import scala.concurrent.duration._
 trait SingleWebDriver extends SuiteMixin { this: Suite =>
 
   private lazy val webDriver = {
-
-    def remoteWebDriver = {
-      val capabilities = DesiredCapabilities.firefox()
-
-      // this makes the test name appear in the Saucelabs UI
-      val buildNumber = System.getProperty("build.number", "")
-      capabilities.setCapability("name", s"Integrated Tests Suite $buildNumber")
-      val domain = s"${Config.stack.userName}:${Config.stack.automateKey}@ondemand.saucelabs.com"
-      val url = s"http://$domain:80/wd/hub"
-      new RemoteWebDriver(new URL(url), capabilities)
-    }
-
     def localWebDriver = new ChromeDriver()
-
-    if (Config.remoteMode) remoteWebDriver
-    else localWebDriver
+    if (Config.remoteMode) SauceLabsWebDriver() else localWebDriver
   }
 
   abstract override def run(testName: Option[String], args: Args): Status = {
@@ -68,8 +54,8 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
     super.run(testName, args)
   }
 
-  protected def get(path: String) = {
-    webDriver.get(s"${Config.baseUrl}$path?test=test#gu.prefs.switchOff=adverts&countmein&noads")
+  protected def get(path: String, ads: Boolean = false) = {
+    webDriver.get(s"${Config.baseUrl}$path?test=test#gu.prefs.switch${if (ads) "On" else "Off"}=adverts&countmein&${if (ads) "" else "no"}ads")
     webDriver.navigate().refresh()
   }
 
@@ -86,5 +72,6 @@ class IntegratedTestsSuite extends Suites (
   new AdsTest,
   new MostPopularTest,
   new SslCertTest,
-  new ProfileCommentsTest) with SingleWebDriver {
+  new ProfileCommentsTest
+) with SingleWebDriver {
 }

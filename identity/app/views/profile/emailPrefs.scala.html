@@ -1,4 +1,4 @@
-@(page: model.MetaData, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader)
+@(page: model.MetaData, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import views.html.fragments.form.{checkboxField, radioField}
 @import form.IdFormHelpers._
@@ -22,7 +22,10 @@
                             value="@if(subscription.subscribedTo){unsubscribe-}@subscription.listId">
                         @if(subscription.subscribedTo){Unsubscribe}else{Subscribe}
                     </button>
-                    <div class="email-subscription__frequency"><i class="i i-clock-light-grey"></i>@subscription.frequency</div>
+                    <div class="email-subscription__frequency">
+                        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
+                        @subscription.frequency
+                    </div>
                 </div>
             </div>
         }
@@ -61,7 +64,7 @@
                                 We recommend HTML emails.
                             </div>
 
-                            @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields)
+                            @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
 
                         </li>
 
@@ -70,8 +73,8 @@
                             <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                             <div class="form-fields-group">
-                                @checkboxField(Checkbox(emailPrefsForm("statusFields.receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields)
-                                @checkboxField(Checkbox(emailPrefsForm("statusFields.receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields)
+                                @checkboxField(Checkbox(emailPrefsForm("statusFields.receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
+                                @checkboxField(Checkbox(emailPrefsForm("statusFields.receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
                             </div>
 
                         </li>

@@ -57,6 +57,13 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     }).toSeq
   }
 
+  def getCanonicalIdForFront(frontId: String): Option[String] = {
+    val config = configAgent.get()
+    val canonicalCollectionMap = config.map (_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
+
+    canonicalCollectionMap.get(frontId).flatten
+  }
+
   def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
     val config = configAgent.get()
     config.flatMap(_.fronts.get(id).map(_.collections))
@@ -127,7 +134,7 @@ trait ConfigAgentLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("ConfigAgentJob")
-    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
+    Jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()
     }
 

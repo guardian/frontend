@@ -44,7 +44,7 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
         1,
         Fixed(FixedContainers.fixedSmallSlowIV),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(audios map FaciaContentConvert.frontentContentToFaciaContent take 4, Nil, displayName, None, None, None)
+        CollectionEssentials(audios map FaciaContentConvert.frontendContentToFaciaContent take 4, Nil, displayName, None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
     )(request)

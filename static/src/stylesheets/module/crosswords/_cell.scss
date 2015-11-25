@@ -6,40 +6,46 @@
 .crossword__cell--highlighted {
     &,
     .crossword__grid--focussed & {
-        fill: $xword-highlight;
+        fill: $xword-highlight-colour;
     }
 }
 
 .crossword__cell--focussed {
     &,
     .crossword__grid--focussed & {
-        fill: $xword-focussed;
+        fill: $xword-focussed-background-colour;
     }
 }
 
-.crossword__cell-number {
+.crossword__cell-number,
+.crossword__cell-text {
+    fill: #000000;
     font-family: $f-sans-serif-text;
+}
+
+.crossword__cell-number {
     font-size: 10px;
 }
 
 .crossword__cell-text {
     display: inline-block;
-    font-family: 'Rock Salt', cursive;
     opacity: 1;
     -webkit-font-smoothing: subpixel-antialiased;
-    font-weight: bold;
-    fill: #3f4ac3; // biro blue
     transition: opacity .15s ease-in;
 
     @each $xword, $cells in $xword-grid-sizes {
         .crossword__container--#{$xword} & {
-            font-size: ceil(1.13px * $cells);
+            font-size: ceil(1.2px * $cells);
 
             @include mq(tablet) {
-                font-size: 1px * $cells;
+                font-size: 1.1px * $cells;
             }
         }
     }
+}
+
+.crossword__cell-text--focussed {
+    font-weight: bold;
 }
 
 .crossword__cell-text--error {

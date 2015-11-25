@@ -155,16 +155,14 @@
 
     .social-signin__icon {
         position: absolute;
-    }
+        top: 0;
+        left: 0;
 
-    .social-signin__icon--fb {
-        top: 7px;
-        left: 14px;
-    }
-
-    .social-signin__icon--gplus {
-        top: 9px;
-        left: 10px;
+        svg {
+            float: left;
+            width: 40px;
+            height: 40px;
+        }
     }
 }
 
@@ -259,7 +257,7 @@
     position: relative;
     padding-left: 24px;
 
-    i {
+    .inline-icon {
         position: absolute;
         top: 0;
         left: 0;
@@ -345,13 +343,14 @@
 .email-subscription__meta {
     margin-top: $gs-baseline;
 }
+
 .email-subscription__frequency {
     @include fs-textSans(1);
     float: right;
     margin-bottom: $gs-baseline/1.5;
     margin-top: $gs-baseline/1.5;
 
-    .i {
+    .inline-icon {
         margin-right: $gs-gutter/4;
         vertical-align: text-top;
     }
@@ -384,6 +383,51 @@
 
 /* Saved-content
    ========================================================================== */
+.saved-contents {
+    .fc-item__meta {
+        @include mq($until: desktop) {
+            position: relative;
+        }
+
+        @include mq(desktop) {
+            top: 0;
+        }
+    }
+
+    .has-flex-wrap & .fc-item--has-cutout .fc-item__content {
+        @include mq(tablet) {
+            max-width: none;
+            flex-basis: 100%;
+        }
+    }
+
+    .fc-item--has-cutout {
+        .fc-item__header,
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                padding-right: 40%;
+            }
+        }
+    }
+
+    .fc-item__content,
+    .fc-item--has-metadata .fc-item__content {
+        @include mq($until: desktop) {
+            padding-bottom: $gs-baseline * 3;
+        }
+    }
+
+    .saved-content__button {
+        @include mq($until: desktop) {
+            right: $gs-gutter / 2;
+        }
+
+        @include mq(desktop) {
+            right: 0;
+            top: ($gs-baseline / 3) * 2;
+        }
+    }
+}
 
 .saved-content {
     margin-bottom: $gs-baseline*2;
@@ -444,6 +488,10 @@
     text-align: right;
 }
 
+.saved-content__button {
+    position: absolute;
+}
+
 .save-for-later__delete-all-container {
     @include mq($from: mobileLandscape, $until: leftCol) {
         position: absolute;
@@ -471,7 +519,7 @@
     .inline-icon {
         float: left;
         padding-right: .5em;
-        fill: colour(neutral-2);
+        fill: colour(neutral-2) !important;
 
         svg {
             width: 18px;

@@ -15,32 +15,31 @@
 define([
     'bean',
     'qwery',
-    'raven',
-    'common/utils/_',
+    'common/utils/report-error',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/user-prefs',
-    'facia/modules/onwards/search-tool'
+    'facia/modules/onwards/search-tool',
+    'lodash/collections/contains'
 ], function (
     bean,
     qwery,
-    raven,
-    _,
+    reportError,
     $,
-    ajax,
+    ajaxPromise,
     config,
     detect,
     mediator,
     template,
     omniture,
     userPrefs,
-    SearchTool
-    ) {
+    SearchTool,
+    contains) {
 
     var $holder        = null,
         searchTool     = null,
@@ -56,7 +55,7 @@ define([
         },
 
         isNetworkFront: function () {
-            return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId);
+            return contains(['uk', 'us', 'au', 'international'], config.page.pageId);
         },
 
         /**
@@ -74,7 +73,7 @@ define([
         },
 
         getWeatherData: function (url) {
-            return ajax({
+            return ajaxPromise({
                 url: url,
                 type: 'json',
                 method: 'get',
@@ -101,14 +100,8 @@ define([
                 return this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
-                        omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
-                    }.bind(this))
-                    .fail(function (err, msg) {
-                        raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
-                            tags: {
-                                feature: 'weather'
-                            }
-                        });
+                    }.bind(this)).catch(function (err) {
+                        reportError(err, { feature: 'weather' });
                     });
             }
         },
@@ -118,12 +111,8 @@ define([
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
-                }.bind(this)).fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
-                        tags: {
-                            feature: 'weather'
-                        }
-                    });
+                }.bind(this)).catch(function (err) {
+                    reportError(err, { feature: 'weather' });
                 });
         },
 
@@ -136,13 +125,8 @@ define([
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
-                }.bind(this))
-                .fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
-                        tags: {
-                            feature: 'weather'
-                        }
-                    });
+                }.bind(this)).catch(function (err) {
+                    reportError(err, { feature: 'weather' });
                 });
         },
 
@@ -198,11 +182,6 @@ define([
 
         attachToDOM: function (tmpl, city) {
             $holder = $('#headlines .js-container__header');
-
-            if (config.switches.attachWeatherToTopContainer) {
-                $holder = $($('.js-container__header')[0]);
-            }
-
             $('.js-weather', $holder).remove();
             $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
         },

@@ -29,7 +29,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         $(".player object") should have size (1)
 
         And("the ultimate fallback should be an image")
-        findFirst(".player object img").getAttribute("src") should endWith ("/Chloe-Grace-Moretz-talks--016.jpg")
+        findFirst(".player object img").getAttribute("src") should include ("/Chloe-Grace-Moretz-talks--016.jpg")
       }
     }
 

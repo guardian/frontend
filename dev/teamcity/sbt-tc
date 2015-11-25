@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+cat /dev/null | java -Xmx6144M \
+  -XX:ReservedCodeCacheSize=128m \
+  -Dsbt.log.noformat=true \
+  -XX:+UseConcMarkSweepGC \
+  -DAPP_SECRET="fake_secret" \
+  -Duser.timezone=Australia/Sydney \
+  -jar `dirname $0`/../sbt-launch.jar "$@"

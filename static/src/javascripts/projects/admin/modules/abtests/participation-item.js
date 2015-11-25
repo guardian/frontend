@@ -3,21 +3,21 @@
  Description: Displays opt-in link for a variant
  */
 define([
-    'common/utils/_',
-    'common/modules/component'
+    'common/modules/component',
+    'lodash/objects/assign'
 ], function (
-    _,
-    Component
-    ) {
+    Component,
+    assign) {
 
     function ParticipationItem(config) {
-        this.config = _.extend(this.config, config);
+        this.config = assign(this.config, config);
     }
 
     Component.define(ParticipationItem);
 
     ParticipationItem.prototype.config = {
         test: '',
+        examplePath: '',
         variant: ''
     };
 
@@ -26,10 +26,11 @@ define([
     ParticipationItem.prototype.classes = {};
     ParticipationItem.prototype.useBem = true;
 
-    ParticipationItem.prototype.prerender = function() {
-        var origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin;
+    ParticipationItem.prototype.prerender = function () {
+        var origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin,
+            href = this.config.examplePath + '=' + this.config.variant;
         this.elem.textContent = this.config.variant;
-        this.elem.href = origin + '/uk#ab-' + this.config.test + '=' + this.config.variant;
+        this.elem.href = origin + href;
     };
 
     return ParticipationItem;

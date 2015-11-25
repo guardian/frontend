@@ -8,7 +8,8 @@
         color: $c-headline;
     }
 
-    .u-faux-block-link--hover {
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
         background-color: darken(colour(live-default), 4%);
     }
 
@@ -34,6 +35,10 @@
     .rich-link__read-more-text,
     .fc-save-for-later--is-saved {
         color: colour(live-mute);
+    }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(live-default), 20%);
     }
 
     .rich-link__arrow-icon {
@@ -68,10 +73,6 @@
         .inline-icon {
             fill: colour(live-mute);
         }
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: colour(live-mute);
     }
 }
 

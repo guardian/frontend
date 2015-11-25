@@ -1,18 +1,83 @@
-.crossword__grid-wrapper {
+$stickyClueVerticalPadding: ($gs-baseline / 2);
+$stickyClueLineHeight: 20;
+$stickyClueLines: 2;
+$stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $stickyClueLines);
+
+.crossword__container__game {
     position: relative;
-    height: 0;
-    padding-bottom: 100%;
-    font-size: 0;
-    background-color: #f7f7f7;
+    // Placeholder for sticky clue
+    padding-top: $stickyClueHeight;
 
     @include mq(tablet) {
         float: left;
-        height: auto;
-        padding-bottom: 0;
+        // Unset
+        padding-top: 0;
     }
 }
 
-.crossword__grid {
+// Wrapper for .crossword__sticky-clue because fixed positioning doesn't play
+// well with CSS tables
+.crossword__sticky-clue-wrapper {
+    // Relative to parent, .crossword__container__game
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    // Position above sibling, .crossword__container__grid-wrapper, which has its own
+    // stacking context
+    z-index: 1;
+    // Needs its own layer so we don't keep repainting when the top value is
+    // updated by JS
+    will-change: transform;
+
+    // Mobile only
+    @include mq(tablet) {
+        display: none;
+    }
+
+    &.is-fixed {
+        position: fixed;
+        // When the element is out of the document flow, we must manually offset
+        // for the page gutter
+        @include content-gutter();
+    }
+
+}
+
+.crossword__sticky-clue {
+    background: #ffffff;
+    height: $stickyClueHeight;
+    border-bottom: 1px solid #000000;
+    // The border needs to be included in the height because we use the height
+    // as padding on parent, .crossword__container__game
+    box-sizing: border-box;
+    padding-top: $stickyClueVerticalPadding;
+    padding-bottom: $stickyClueVerticalPadding;
+    @include fs-textSans(3);
+    display: table;
     width: 100%;
-    height: auto;
+}
+
+.crossword__sticky-clue__direction {
+    text-transform: capitalize;
+}
+
+.crossword__sticky-clue__inner {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+// Another level necessary because CSS table-cells don't allow max heights,
+// which we need for text clamping
+.crossword__sticky-clue__inner__inner {
+    @include text-clamp(2, $stickyClueLineHeight);
+}
+
+.crossword__container__grid-wrapper {
+    position: relative;
+}
+
+.crossword__grid {
+    // SVGs are inline by default
+    display: block;
 }

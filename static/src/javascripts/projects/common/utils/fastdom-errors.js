@@ -3,17 +3,18 @@
 
 define([
     'fastdom',
-    'raven'
+    'common/utils/report-error'
 ], function (
     fastdom,
-    raven
+    reportError
 ) {
     fastdom.onError = function (error) {
-        raven.captureException(error, {
-            tags: {
-                feature: 'fastdom'
-            }
-        });
-        window.console.error(error);
+        // Some environments don't support or don't always expose the console object
+        if (window.console && window.console.warn) {
+            window.console.warn('Caught FastDom error.', error.stack);
+        }
+        reportError(error, {
+            feature: 'fastdom'
+        }, false);
     };
 });
