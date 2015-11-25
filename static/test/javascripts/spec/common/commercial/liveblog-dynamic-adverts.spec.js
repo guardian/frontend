@@ -63,7 +63,7 @@ define([
         });
 
         it('should insert ads every ' + liveblogDynamicAdverts.settings.INTERVAL + 'th block after an update', function () {
-            for( var i = 0; i < 12; i++ ) {
+            for (var i = 0; i < 12; i++) {
                 var d = document.createElement('div');
                 d.classList.add('block');
                 body.insertBefore(d, body.firstChild);
@@ -75,7 +75,7 @@ define([
                 var index = 0;
                 var nprev;
 
-                while (nprev = ncur.previousElementSibling) {
+                while ((nprev = ncur.previousElementSibling)) {
                     index += 1;
                     if (index % (liveblogDynamicAdverts.settings.INTERVAL + 1) === 0) {
                         candidates.push(nprev);
