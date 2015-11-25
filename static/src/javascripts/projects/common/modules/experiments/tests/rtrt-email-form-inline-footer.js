@@ -22,7 +22,8 @@ define([
                     .removeClass('l-footer__secondary--no-email')
                     .addClass('l-footer__secondary--has-email');
 
-                $('.js-button--email').remove();
+                $('.js-button--social').remove();
+                $('.js-colophon__item--social').removeClass('is-hidden');
             });
         },
         getIframe = function () {
