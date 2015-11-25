@@ -18,6 +18,25 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
 
   private def logAround[T](loadingType: String, stmtBuilder: StatementBuilder)
                   (doLoad: => Seq[T]): Seq[T] = {
+
+    def logApiException(e: ApiException, baseMessage: String): Unit = {
+      e.getErrors foreach { err =>
+        val reasonMsg = err match {
+          case freqCapErr: FrequencyCapError => s", with the reason '${freqCapErr.getReason}'"
+          case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
+          case _ => ""
+        }
+        val path = err.getFieldPath
+        val trigger = err.getTrigger
+        val msg = s"'${err.getErrorString}'$reasonMsg"
+        log.error(
+          s"$baseMessage failed: API exception in field '$path', " +
+          s"caused by an invalid value '$trigger', " +
+          s"with the error message $msg"
+        )
+      }
+    }
+
     val qry = stmtBuilder.buildQuery()
     val params = stmtBuilder.getBindVariableMap.map { case (k, rawValue) =>
       k -> (
@@ -38,6 +57,9 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
       log.info(s"Successfully loaded ${loaded.size} $loadingType in $duration ms")
       loaded
     } catch {
+      case e: ApiException =>
+        logApiException(e, baseMessage)
+        Nil
       case NonFatal(e) =>
         log.error(s"$baseMessage failed: ${e.getMessage}")
         Nil
@@ -48,6 +70,15 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
     logAround("line items", stmtBuilder) {
       load(stmtBuilder) { statement =>
         val page = services.lineItemService.getLineItemsByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def lineItemCreativeAssociations(stmtBuilder: StatementBuilder): Seq[LineItemCreativeAssociation] = {
+    logAround("licas", stmtBuilder) {
+      load(stmtBuilder) { statement =>
+        val page = services.licaService.getLineItemCreativeAssociationsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
     }
