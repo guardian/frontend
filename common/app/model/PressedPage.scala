@@ -61,7 +61,7 @@ object PressedPage {
   }
 }
 
-case class PressedPage private (
+case class PressedPage (
   id: String,
   seoData: SeoData,
   frontProperties: FrontProperties,
@@ -98,6 +98,17 @@ case class PressedPage private (
   val navSection: String = metadata.section
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
+   def sponsorshipType: Option[String] = {
+    if (isSponsored(None)) {
+      Option("sponsoredfeatures")
+    } else if (isAdvertisementFeature) {
+      Option("advertisement-features")
+    } else if (isFoundationSupported) {
+      Option("foundation-features")
+    } else {
+      None
+    }
+  }
 
   def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
     keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.section), maybeEdition))
