@@ -118,39 +118,6 @@ object EmailSubscriptions {
     )
   )
 
-  def moreFromTheguardianEmails(subscribedListIds: Iterable[String] = None) = List(
-    // More from theguardian
-    EmailSubscription(
-      "The Guardian Masterclasses",
-      "more from theguardian",
-      "Courses and training",
-      "News on the latest courses and special offers from the Guardian's learning programme, plus inspiring tips on everything from journalism, to food business and creative writing, delivered to your inbox twice a week.",
-      "",
-      "3388",
-      subscribedTo = subscribedListIds.exists{ x => x == "3388" }
-    ),
-
-    EmailSubscription(
-      "The Guardian Gardener",
-      "more from theguardian",
-      "Gardening",
-      "Sign up to receive the latest offers from the Guardian Garden Centre. Get tips and seasonal advice from our expert gardeners and shop for bulbs, plants and garden hardware.",
-      "1-2 times per week",
-      "3389",
-      subscribedTo = subscribedListIds.exists{ x => x == "3389" }
-    ),
-
-    EmailSubscription(
-      "The Guardian Bookshop",
-      "more from theguardian",
-      "Books",
-      "Every week you’ll receive our hand-picked edits of books we know you’ll enjoy. From thought-provoking collections, round-ups of the Guardian and Observer weekend reviews and special offers plus from time to time we’ll give you first preview of the books we publish and new and noteworthy titles to look out for each month.",
-      "Every Wednesday, Saturday and Sunday",
-      "3394",
-      subscribedTo = subscribedListIds.exists{ x => x == "3394" }
-    )
-  )
-
   def newsEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       "The Long Read",
@@ -314,5 +281,5 @@ object EmailSubscriptions {
       "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" }
     )
-  ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ moreFromTheguardianEmails(subscribedListIds))
+  ) ++ newsEmails(subscribedListIds) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds))
 }
