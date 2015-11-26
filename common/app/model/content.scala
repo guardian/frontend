@@ -230,7 +230,7 @@ object Content {
     }
   }
 
-  def make(apiContent: contentapi.Content) = {
+  def make(apiContent: contentapi.Content): Content = {
 
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
