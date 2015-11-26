@@ -3,14 +3,11 @@
     margin-bottom: $gs-baseline;
 
     .fc-container__header__title {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-        font-weight: normal;
-	    
+        @include font($f-serif-headline, 400, 36px);
+
         @include mq($until: mobileLandscape) {
             float: initial;
-            font-size: 1.75rem;
-            line-height: 2rem;
+            @include font($f-serif-headline, 400, 28px);
             margin-left: $gs-gutter/2;
             margin-top: $gs-baseline/2;
         }
@@ -56,6 +53,12 @@
             }
         }
 
+        @include mq(desktop, leftCol) {
+            &:first-of-type {
+              margin-top: $gs-baseline/2;
+            }
+        }
+
         &:not(:first-of-type) {
             &:before {
                 position: absolute;
@@ -69,7 +72,7 @@
                 background-color: colour(neutral-6);
             }
         }
-        
+
         &:hover .essential-read__number {
             color: #25b5d2;
         }
@@ -83,34 +86,37 @@
             width: 300px;
             padding-right: $gs-gutter;
         }
-        
+
         @include mq(tablet, desktop) {
             width: 340px;
-	        
+
             &:first-of-type {
                 position: absolute;
                 left: 0;
                 top: 3px;
-	            
-                &:before {
-                    position: absolute;
-                    top: 0;
-                    right: 1px;
-                    left: 0;
-                    content: '';
-                    display: block;
-                    width: 40%;
-                    height: 1px;
-                    background-color: colour(neutral-5);
-            	}  
             }
-            
+
             &:not(:first-of-type) {
                 float: right;
                 padding-right: 0;
-                margin-left: 360px; 
+                margin-left: 360px;
             }
         }
+
+        @include mq(mobileLandscape, desktop) {
+          &:after {
+              position: absolute;
+              top: 0;
+              right: 1px;
+              left: 0;
+              content: '';
+              display: block;
+              width: 40%;
+              height: 1px;
+              background-color: colour(neutral-5);
+          }
+        }
+
     }
 
     .essential-read__item-wrapper {
@@ -118,8 +124,8 @@
             width: 320px;
             margin-top: -10px;
         }
-        
-        @include mq(tablet, desktop) {	        
+
+        @include mq(tablet, desktop) {
             width: auto;
             margin-top: 0;
 	    }
@@ -131,7 +137,7 @@
                 text-decoration: underline;
             }
         }
-        
+
         .fc-item__title {
             overflow: hidden;
         }
@@ -179,7 +185,7 @@
         @include mq(desktop) {
             width: 620px;
         }
-        
+
         @include mq(tablet, desktop) {
             top: 75px;
             left: 0;
