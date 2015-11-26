@@ -20,13 +20,7 @@ class OfflinePage(val crossword: CrosswordData) extends MetaData {
 object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
-    Cached(3600) {
-      if (conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
-        Ok(templates.js.serviceWorker())
-      } else {
-        NotFound
-      }
-    }
+    Cached(3600) { Ok(templates.js.serviceWorker()) }
   }
 
   def manifest() = Action {
@@ -34,7 +28,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
   }
 
 
-  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
+  protected def withCrossword(crosswordType: String)(f: (Crossword) => Result)(implicit request: RequestHeader): Future[Result] = {
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/series/quick", Edition(request)).showFields("all")).map { response =>
       val maybeCrossword = for {
         content <- response.results.headOption
@@ -48,24 +42,20 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
   }
 
   def offlinePage() = Action.async { implicit request =>
-    if (conf.switches.Switches.OfflinePageSwitch.isSwitchedOn) {
-      withCrossword("quick", 14127) { crossword =>
-        val crosswordHtml = views.html.offlinePage(new OfflinePage(CrosswordData.fromCrossword(crossword)))
-        Cached(60)(JsonComponent(JsObject(Map(
-          "html" -> JsString(crosswordHtml.body),
-          "assets" -> JsArray(Seq(
-            Static("stylesheets/head.content.css"),
-            Static("stylesheets/content.css"),
-            Static("stylesheets/print.css"),
-            Static("javascripts/core.js"),
-            Static("javascripts/bootstraps/standard.js"),
-            Static("javascripts/bootstraps/enhanced.js"),
-            Static("javascripts/bootstraps/crosswords.js")
-          ).map(asset => JsString(asset.toString)))
-        ))))
-      }
-    } else {
-      Future(NotFound)
+    withCrossword("quick") { crossword =>
+      val crosswordHtml = views.html.offlinePage(new OfflinePage(CrosswordData.fromCrossword(crossword)))
+      Cached(60)(JsonComponent(JsObject(Map(
+        "html" -> JsString(crosswordHtml.body),
+        "assets" -> JsArray(Seq(
+          Static("stylesheets/head.content.css"),
+          Static("stylesheets/content.css"),
+          Static("stylesheets/print.css"),
+          Static("javascripts/core.js"),
+          Static("javascripts/bootstraps/standard.js"),
+          Static("javascripts/bootstraps/enhanced.js"),
+          Static("javascripts/bootstraps/crosswords.js")
+        ).map(asset => JsString(asset.toString)))
+      ))))
     }
   }
 }

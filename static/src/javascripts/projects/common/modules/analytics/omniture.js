@@ -16,7 +16,8 @@ define([
     'lodash/objects/assign',
     'lodash/collections/forEach',
     'lodash/arrays/uniq',
-    'lodash/collections/map'
+    'lodash/collections/map',
+    'common/utils/robust'
 ], function (
     $,
     config,
@@ -34,7 +35,8 @@ define([
     assign,
     forEach,
     uniq,
-    map) {
+    map,
+    robust) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
         standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
@@ -54,7 +56,12 @@ define([
     Omniture.prototype.addHandlers = function () {
         mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
 
-        mediator.on('module:clickstream:click', this.logTag.bind(this));
+        var logTag = this.logTag.bind(this);
+        mediator.on('module:clickstream:click', function (spec) {
+            // We don't want tracking errors to terminate the event emitter, as
+            // this will mean other event listeners will not be called.
+            robust.catchErrorsAndLog('c-analytics', function () { logTag(spec); });
+        });
     };
 
     Omniture.prototype.logView = function () {

@@ -41,6 +41,3 @@ GET        /commercial/capi-single.json                                  control
 GET        /commercial/capi-single                                       controllers.commercial.ContentApiOffersController.itemHtml
 GET        /commercial/capi-single-merch.json                            controllers.commercial.ContentApiOffersController.itemJson
 GET        /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml
-
-# Static pages
-GET        /commercial/ad-free-survey                                    controllers.commercial.StaticPageController.renderAdFreeSurveyPage()

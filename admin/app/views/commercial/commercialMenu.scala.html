@@ -1,7 +1,7 @@
 @(env: String)
 @admin_main("Commercial Tools", env, isAuthed = true) {
 
-    <p><a href="@controllers.admin.routes.AdminIndexController.index()">Admin</a></p>
+    <p><a href="@controllers.admin.routes.AdminIndexController.admin()">Admin</a></p>
 
     <h2>Commercial Tools</h2>
 
@@ -40,6 +40,20 @@
                         <li><a href="@controllers.admin.routes.CommercialController.sponsoredContainers()">Sponsored Containers Debug</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderAdTests()">Ad Tests</a></li>
                         <li><a href="@controllers.admin.commercial.routes.DfpDataController.renderCacheFlushPage()">Refresh all cached DFP data</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>404 AB tests</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">In case 404 survey AB tests would be needed in the future</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="https://github.com/guardian/frontend/pull/10512" target="_blank">404 survey framework PR</a></li>
+                        <li><a href="https://github.com/guardian/frontend/pull/10937" target="_blank">Live streaming 404 PR</a></li>
+                        <li><a href="https://github.com/guardian/frontend/pull/11110" target="_blank">404 AB test cleanup PR</a>
                     </ul>
                 </div>
             </div>

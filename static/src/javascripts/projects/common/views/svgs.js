@@ -31,10 +31,7 @@ define([
     'inlineSvg!svgs/icon/share-pinterest',
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
-    'inlineSvg!svgs/logo/membership-logo',
-    'inlineSvg!svgs/commercial/thrasher-benefit-icon',
-    'inlineSvg!svgs/commercial/survey-overlay',
-    'inlineSvg!svgs/commercial/survey-new',
+    'inlineSvg!svgs/icon/tick',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -65,10 +62,7 @@ define([
     sharePinterest,
     shareGPlus,
     externalLink,
-    membershipLogo,
-    thrasherBenefit,
-    surveyOverlay,
-    surveyNew,
+    tick,
     isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -99,10 +93,7 @@ define([
         sharePinterest: sharePinterest,
         shareGPlus: shareGPlus,
         externalLink: externalLink,
-        membershipLogo: membershipLogo,
-        surveyOverlay: surveyOverlay,
-        surveyNew: surveyNew,
-        thrasherBenefit: thrasherBenefit
+        tick: tick
     };
 
     return function (name, classes, title) {

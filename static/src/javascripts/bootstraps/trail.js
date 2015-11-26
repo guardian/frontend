@@ -83,7 +83,7 @@ define([
             });
         }
 
-        if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
+        if (ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2')) {
             var frontUrl;
 
             switch (config.page.edition) {
@@ -110,11 +110,10 @@ define([
             mediator.once('ab-network-front-loaded', function () {
                 var $parent = $('.facia-page');
                 $parent.addClass('ab-front-injected');
-                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
+                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected-2');
 
                 $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
                 $('.js-tabs', $parent).addClass('u-h');
-                mediator.emit('modules:popular:loaded', this.elem);
             }.bind(this));
         }
     }

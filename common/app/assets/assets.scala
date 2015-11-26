@@ -94,6 +94,7 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
         case "football" => "football.css"
         case "index" => "index.css"
         case "rich-links" => "rich-links.css"
+        case "email" => "email.css"
         case _ => "content.css"
       }
 

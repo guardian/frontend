@@ -360,9 +360,26 @@ object GuCreativeTemplateParameter {
     )(GuCreativeTemplateParameter.apply _)
 }
 
-case class GuCreative(id: Long, name: String, lastModified: DateTime, args: Map[String, String])
+case class GuCreative(
+  id: Long,
+  name: String,
+  lastModified: DateTime,
+  args: Map[String, String],
+  templateId: Option[Long],
+  snippet: Option[String]
+)
 
 object GuCreative {
+
+  def lastModified(cs: Seq[GuCreative]): Option[DateTime] = {
+    if (cs.isEmpty) None
+    else Some(cs.map(_.lastModified).maxBy(_.getMillis))
+  }
+
+  def merge(old: Seq[GuCreative], recent: Seq[GuCreative]): Seq[GuCreative] = {
+    def mapById(cs: Seq[GuCreative]): Map[Long, GuCreative] = cs.map(c => c.id -> c).toMap
+    (mapById(old) ++ mapById(recent)).values.toSeq
+  }
 
   implicit val writes = new Writes[GuCreative] {
     def writes(creative: GuCreative): JsValue = {
@@ -370,7 +387,9 @@ object GuCreative {
         "id" -> creative.id,
         "name" -> creative.name,
         "lastModified" -> creative.lastModified,
-        "args" -> creative.args
+        "args" -> creative.args,
+        "templateId" -> creative.templateId,
+        "snippet" -> creative.snippet
       )
     }
   }
@@ -379,8 +398,10 @@ object GuCreative {
     (JsPath \ "id").read[Long] and
       (JsPath \ "name").read[String] and
       (JsPath \ "lastModified").read[DateTime] and
-      (JsPath \ "args").read[Map[String, String]]
-    )(GuCreative.apply _)
+      (JsPath \ "args").read[Map[String, String]] and
+      (JsPath \ "templateId").readNullable[Long] and
+      (JsPath \ "snippet").readNullable[String]
+    ) (GuCreative.apply _)
 }
 
 case class GuCreativeTemplate(id: Long,
@@ -408,35 +429,6 @@ case class GuCreativeTemplate(id: Long,
 }
 
 object GuCreativeTemplate extends implicits.Collections {
-
-  def lastModified(templates: Seq[GuCreativeTemplate]): Option[DateTime] = {
-    val cachedLastModified = for {
-      template <- templates
-      creative <- template.creatives
-    } yield creative.lastModified
-    if (cachedLastModified.isEmpty) None
-    else Some(cachedLastModified maxBy (_.getMillis))
-  }
-
-  def merge(oldTemplates: Seq[GuCreativeTemplate],
-            newTemplates: Seq[GuCreativeTemplate]): Seq[GuCreativeTemplate] = {
-
-    def toMap(templates: Seq[GuCreativeTemplate]): Map[Long, GuCreativeTemplate] =
-      templates.groupBy(_.id).mapValues(_.head)
-
-    val oldMap = toMap(oldTemplates)
-
-    def dedup(creatives: Seq[GuCreative]): Seq[GuCreative] =
-      creatives.sortBy(_.lastModified.getMillis).reverse.distinctBy(_.id)
-
-    for (template <- newTemplates) yield {
-      val modifiedTemplate = for (oldTemplate <- oldMap.get(template.id)) yield {
-        val creatives = dedup(oldTemplate.creatives ++ template.creatives) sortBy (_.name)
-        template.copy(creatives = creatives)
-      }
-      modifiedTemplate getOrElse template
-    }
-  }
 
   implicit val writes = new Writes[GuCreativeTemplate] {
     def writes(template: GuCreativeTemplate): JsValue = {
