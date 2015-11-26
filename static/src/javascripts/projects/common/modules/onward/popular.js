@@ -9,7 +9,6 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-api',
     'common/modules/experiments/ab',
-    'common/modules/onward/inject-container',
     'lodash/collections/contains'
 ], function (
     qwery,
@@ -22,7 +21,6 @@ define([
     commercialFeatures,
     dfp,
     ab,
-    injectContainer,
     contains
 ) {
 
@@ -48,11 +46,7 @@ define([
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        if (!(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
-            this.fetch(qwery('.js-popular-trails'), 'html');
-        } else {
-            $('.js-most-popular-footer').hide();
-        }
+        this.fetch(qwery('.js-popular-trails'), 'html');
     };
 
     MostPopular.prototype.mobileMaximumSlotsReached = function () {

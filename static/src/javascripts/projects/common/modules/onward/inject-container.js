@@ -1,39 +1,40 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/modules/ui/images',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/analytics/register'
 ], function (
     fastdom,
     $,
     ajax,
     config,
     images,
-    mediator
+    mediator,
+    register
 ) {
 
-    function injectContainer(containerUrl, containerSelector, containerName) {
+    function injectContainer(containerUrl, $container, containerName, callback) {
+        register.begin(containerName);
+
         return ajax({
             url: containerUrl,
             crossOrigin: true
         }).then(function (resp) {
             if (resp.html) {
                 fastdom.write(function () {
-                    var $el = $(containerSelector),
-                        htmlToInject = resp.html.replace(/js-ad-slot ad-slot ad-slot--dfp/g, '');
+                    $container.html(resp.html);
 
-                    $el.after(htmlToInject.replace(/js-fc-slice-mpu-candidate/g, ''));
-                    if (!(config.page && config.page.hasStoryPackage)) {
-                        $el.css({
-                            display: 'none'
-                        });
-                    }
-                    images.upgradePictures();
-                    mediator.emit(containerName);
+                    register.end(containerName);
+                    mediator.emit('modules:' + containerName + ':loaded');
+                    mediator.emit('page:new-content');
+                    mediator.emit('ui:images:upgradePictures');
                 });
             }
+
+            callback();
         });
     }
 

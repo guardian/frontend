@@ -64,23 +64,23 @@
     .l-side-margins:before {
         background: none;
     }
-}
 
-.ab-front-injected {
+    .fc-container--has-show-more .treats__container {
+        bottom: $gs-baseline;
+    }
+
     .button--show-more {
         display: none;
     }
+}
 
+.ab-front-injected {
     .fc-container--first .fc-container__inner {
         border-top: 1px solid colour(news-main-2);
     }
 
     .fc-container--first .fc-container__header__title {
         border: 0;
-    }
-
-    .fc-container--has-show-more .treats__container {
-        bottom: $gs-baseline;
     }
 
     .fc-container--lazy-load {

@@ -66,70 +66,75 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-        } else if (fetchRelated && !(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
-            container = document.body.querySelector('.js-related');
+        } else if (fetchRelated) {
+            if (!(ab.getParticipations().FrontsOnArticles &&
+                ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
+                ab.testCanBeRun('FrontsOnArticles'))) {
 
-            if (container) {
-                popularInTag = this.popularInTagOverride();
-                componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
-                register.begin(componentName);
+                container = document.body.querySelector('.js-related');
 
-                container.setAttribute('data-component', componentName);
+                if (container) {
+                    popularInTag = this.popularInTagOverride();
+                    componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
+                    register.begin(componentName);
 
-                if (ab.getParticipations().EssentialReadTest1 &&
-                    (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated')  &&
-                    ab.testCanBeRun('EssentialReadTest1')
-                ) {
-                    switch (config.page.edition) {
-                        case 'UK':
-                            editionSuffix = '/uk.json';
-                            break;
-                        case 'US':
-                            editionSuffix = '/us.json';
-                            break;
-                        case 'AU':
-                            editionSuffix = '/au.json';
-                            break;
-                        case 'INT':
-                            editionSuffix = '/international.json';
-                            break;
+                    container.setAttribute('data-component', componentName);
+
+                    if (ab.getParticipations().EssentialReadTest1 &&
+                        (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated') &&
+                        ab.testCanBeRun('EssentialReadTest1')
+                    ) {
+                        switch (config.page.edition) {
+                            case 'UK':
+                                editionSuffix = '/uk.json';
+                                break;
+                            case 'US':
+                                editionSuffix = '/us.json';
+                                break;
+                            case 'AU':
+                                editionSuffix = '/au.json';
+                                break;
+                            case 'INT':
+                                editionSuffix = '/international.json';
+                                break;
+                        }
+
+                        if (ab.getParticipations().EssentialReadTest1.variant === 'automated') {
+                            relatedUrl = '/container/essential-read/automated' + editionSuffix;
+                        } else if (ab.getParticipations().EssentialReadTest1.variant === 'curated') {
+                            relatedUrl = '/container/essential-read/curated' + editionSuffix;
+                        }
+
+                    } else {
+                        relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+
+                        if (opts.excludeTags && opts.excludeTags.length) {
+                            relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                                return 'exclude-tag=' + tag;
+                            }).join('&');
+                        }
                     }
 
-                    if (ab.getParticipations().EssentialReadTest1.variant === 'automated') {
-                        relatedUrl = '/container/essential-read/automated' + editionSuffix;
-                    } else if (ab.getParticipations().EssentialReadTest1.variant === 'curated') {
-                        relatedUrl = '/container/essential-read/curated' + editionSuffix;
-                    }
+                    new LazyLoad({
+                        url: relatedUrl,
+                        container: container,
+                        success: function () {
+                            var relatedContainer = container.querySelector('.related-content');
 
-                } else {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+                            new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
+                            // upgrade images
+                            mediator.emit('modules:related:loaded', container);
+                            mediator.emit('page:new-content', container);
+                            mediator.emit('ui:images:upgradePictures', container);
+                            register.end(componentName);
 
-                    if (opts.excludeTags && opts.excludeTags.length) {
-                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                            return 'exclude-tag=' + tag;
-                        }).join('&');
-                    }
+                        },
+                        error: function () {
+                            bonzo(container).remove();
+                            register.error(componentName);
+                        }
+                    }).load();
                 }
-
-                new LazyLoad({
-                    url: relatedUrl,
-                    container: container,
-                    success: function () {
-                        var relatedContainer = container.querySelector('.related-content');
-
-                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
-                        // upgrade images
-                        mediator.emit('modules:related:loaded', container);
-                        mediator.emit('page:new-content', container);
-                        mediator.emit('ui:images:upgradePictures', container);
-                        register.end(componentName);
-
-                    },
-                    error: function () {
-                        bonzo(container).remove();
-                        register.error(componentName);
-                    }
-                }).load();
             }
         } else {
             $('.js-related').addClass('u-h');

@@ -7,8 +7,7 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'text!common/views/commercial/outbrain.html',
-    'lodash/collections/contains',
-    'common/modules/experiments/ab'
+    'lodash/collections/contains'
 ], function (
     fastdom,
     $,
@@ -18,8 +17,7 @@ define([
     template,
     identity,
     outbrainTpl,
-    contains,
-    ab
+    contains
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
@@ -105,13 +103,16 @@ define([
             return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
         },
 
+        canRun: function() {
+            return config.switches.outbrain
+            && !config.page.isFront
+            && !config.page.isPreview
+            && this.identityPolicy()
+            && config.page.section !== 'childrens-books-site';
+        },
+
         init: function () {
-            if (config.switches.outbrain
-                && !config.page.isFront
-                && !config.page.isPreview
-                && this.identityPolicy()
-                && !(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))
-                && config.page.section !== 'childrens-books-site') {
+            if (this.canRun()) {
                 if (this.hasHighRelevanceComponent()) {
                     this.load();
                 } else {

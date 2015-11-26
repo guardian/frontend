@@ -47,7 +47,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderContainerJson(id: String) = renderContainer(id, false)
 
   def renderSomeFrontContainers(path: String, num: String, offset: String, size: String) = MemcachedAction { implicit request =>
-    getSomeCollections(path, num.toInt, offset.toInt).map { collections =>
+    getSomeCollections(Editionalise(path, Edition(request)), num.toInt, offset.toInt).map { collections =>
       Cached(60) {
         val containers = collections.getOrElse(List()).map { collection: PressedCollection =>
 
@@ -61,7 +61,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             1,
             containerLayout,
             CollectionConfigWithId("", CollectionConfig.empty),
-            CollectionEssentials.fromPressedCollection(collection)
+            CollectionEssentials.fromPressedCollection(collection).copy(treats = Nil)
           )
 
           container(containerDefinition, FrontProperties.empty)
@@ -295,7 +295,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   private def getSomeCollections(path: String, num: Int, offset: Int = 0): Future[Option[List[PressedCollection]]] =
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
-        Some(faciaPage.collections.drop(offset).take(num))
+        // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
+        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2).drop(offset).take(num))
       })
 
   /* Google news hits this endpoint */
