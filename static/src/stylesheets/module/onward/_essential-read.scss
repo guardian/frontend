@@ -105,18 +105,17 @@
 
         @include mq(mobileLandscape, desktop) {
             &:after {
-              position: absolute;
-              top: 0;
-              right: 1px;
-              left: 0;
-              content: '';
-              display: block;
-              width: 40%;
-              height: 1px;
-              background-color: colour(neutral-5);
-          }
+                position: absolute;
+                top: 0;
+                right: 1px;
+                left: 0;
+                content: '';
+                display: block;
+                width: 40%;
+                height: 1px;
+                background-color: colour(neutral-5);
+            }
         }
-
     }
 
     .essential-read__item-wrapper {
