@@ -1,8 +1,9 @@
 package model
 
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 
-class FaciaPageTest extends FlatSpec with Matchers {
+class FaciaPageTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   private def toPressedPage(id: String): PressedPage = {
     PressedPage(id, SeoData.empty, FrontProperties.empty, Nil)
