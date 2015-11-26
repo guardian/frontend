@@ -42,7 +42,7 @@
 		
         @include mq($from: desktop) {
             &:first-of-type {
-				&:before {
+                &:before {
 	                content: '';
 					position: absolute;
                     border-left: $gs-gutter solid #ffffff;
@@ -93,15 +93,15 @@
                 top: 3px;
 	            
                 &:before {
-	                position: absolute;
-	                top: 0;
-	                right: 1px;
-	                left: 0;
-	                content: '';
-	                display: block;
-	                width: 40%;
-	                height: 1px;
-	                background-color: colour(neutral-5);
+                    position: absolute;
+                    top: 0;
+                    right: 1px;
+                    left: 0;
+                    content: '';
+                    display: block;
+                    width: 40%;
+                    height: 1px;
+                    background-color: colour(neutral-5);
             	}  
             }
             
@@ -109,7 +109,7 @@
                 float: right;
                 padding-right: 0;
                 margin-left: 360px; 
-	        }
+            }
         }
     }
 
