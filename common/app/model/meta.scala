@@ -162,7 +162,7 @@ object MetaData {
     MetaData(
       id = id,
       url = url,
-      webUrl = s"${Configuration.site.host}$url",
+      webUrl = apiContent.webUrl,
       section = section,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.safeFields.get("membershipAccess"),

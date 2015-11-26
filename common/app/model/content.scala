@@ -394,7 +394,11 @@ object Article {
     val commercial = copyCommercial(content)
     val lightbox = GenericLightbox(elements, fields, trail,
       lightboxableCutoffWidth = 620,
-      includeBodyImages = !tags.isLiveBlog)
+      includeBodyImages = !tags.isLiveBlog,
+      id = content.metadata.id,
+      headline = trail.headline,
+      shouldHideAdverts = content.shouldHideAdverts,
+      standfirst = fields.standfirst)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
     val sharelinks = copyShareLinks(content)
 
@@ -495,6 +499,7 @@ object Video {
 
     val javascriptConfig: Map[String, JsValue] = Map(
       "contentType" -> JsString(contentType),
+      "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
       "embeddable" -> JsBoolean(elements.videos.find(_.isMain).map(_.embeddable).getOrElse(false)),
       "videoDuration" -> elements.videos.find(_.isMain).map{ v => JsNumber(v.duration)}.getOrElse(JsNull))
@@ -510,7 +515,7 @@ object Video {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      schemaType = Some("https://schema.org/VideoObject"),
+      schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary_large_image")
@@ -553,9 +558,13 @@ object Gallery {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val lightbox = GalleryLightbox(content.elements, content.tags)
     val section = content.metadata.section
     val id = content.metadata.id
+    val lightbox = GalleryLightbox(elements,tags,
+      id = id,
+      headline = content.trail.headline,
+      shouldHideAdverts = content.shouldHideAdverts,
+      standfirst = fields.standfirst)
     val javascriptConfig: Map[String, JsValue] = Map(
       "contentType" -> JsString(contentType),
       "gallerySize" -> JsNumber(lightbox.size),
@@ -629,7 +638,11 @@ final case class Gallery(
 
 case class GalleryLightbox(
   elements: Elements,
-  tags: Tags
+  tags: Tags,
+  id: String,
+  headline: String,
+  shouldHideAdverts: Boolean,
+  standfirst: Option[String]
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
@@ -658,6 +671,10 @@ case class GalleryLightbox(
       ))
     }
     JsObject(Seq(
+      "id" -> JsString(id),
+      "headline" -> JsString(headline),
+      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
+      "standfirst" -> JsString(standfirst.getOrElse("")),
       "images" -> JsArray(imageJson)
     ))
   }
@@ -668,7 +685,11 @@ case class GenericLightbox(
   fields: Fields,
   trail: Trail,
   lightboxableCutoffWidth: Int,
-  includeBodyImages: Boolean
+  includeBodyImages: Boolean,
+  id: String,
+  headline: String,
+  shouldHideAdverts: Boolean,
+  standfirst: Option[String]
 ) {
   lazy val mainFiltered = elements.mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
   lazy val bodyFiltered: Seq[ImageContainer] = elements.bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
@@ -694,6 +715,10 @@ case class GenericLightbox(
       ))
     }
     JsObject(Seq(
+      "id" -> JsString(id),
+      "headline" -> JsString(headline),
+      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
+      "standfirst" -> JsString(standfirst.getOrElse("")),
       "images" -> JsArray(imageJson)
     ))
   }
@@ -754,7 +779,11 @@ object ImageContent {
     val id = content.metadata.id
     val lightbox = GenericLightbox(content.elements, content.fields, content.trail,
       lightboxableCutoffWidth = 940,
-      includeBodyImages = false)
+      includeBodyImages = false,
+      id = id,
+      headline = content.trail.headline,
+      shouldHideAdverts = content.shouldHideAdverts,
+      standfirst = fields.standfirst)
     val javascriptConfig: Map[String, JsValue] = Map(
       "contentType" -> JsString(contentType),
       "lightboxImages" -> lightbox.javascriptConfig

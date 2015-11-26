@@ -17,7 +17,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
     whenReady(response) { item: ItemResponse =>
 
       item.content.map { apiContent =>
-        val pageShares = model.Content(apiContent).pageShares
+        val pageShares = model.Content(apiContent).sharelinks.pageShares
 
         pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Pinterest", "Google plus", "WhatsApp"))
         pageShares.map(_.href) should be (List(
@@ -40,7 +40,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
 
       item.content.map { apiContent =>
         val gallery = model.Content(apiContent)
-        val elementShares = gallery.elementShares(Some("2"))
+        val elementShares = gallery.sharelinks.elementShares(Some("2"))
 
         elementShares.map(_.text) should be (List("Facebook", "Twitter", "Pinterest"))
         elementShares.map(_.href) should be (List(
