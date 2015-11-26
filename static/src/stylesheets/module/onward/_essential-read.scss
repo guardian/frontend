@@ -3,14 +3,14 @@
     margin-bottom: $gs-baseline;
 
     .fc-container__header__title {
-	    font-size: 2.25rem;
-	    line-height: 2.5rem;
-	    font-weight: normal;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: normal;
 	    
         @include mq($until: mobileLandscape) {
             float: initial;
             font-size: 1.75rem;
-		    line-height: 2rem;
+            line-height: 2rem;
             margin-left: $gs-gutter/2;
             margin-top: $gs-baseline/2;
         }
@@ -41,7 +41,7 @@
         width: calc(100% - 20px);
 		
         @include mq($from: desktop) {
-			&:first-of-type {
+            &:first-of-type {
 				&:before {
 	                content: '';
 					position: absolute;
@@ -88,11 +88,11 @@
             width: 340px;
 	        
             &:first-of-type {
-	            position: absolute;
-	            left: 0;
-	            top: 3px;
+                position: absolute;
+                left: 0;
+                top: 3px;
 	            
-	            &:before {
+                &:before {
 	                position: absolute;
 	                top: 0;
 	                right: 1px;
@@ -106,9 +106,9 @@
             }
             
             &:not(:first-of-type) {
-	        	float: right;
-	        	padding-right: 0;
-	        	margin-left: 360px; 
+                float: right;
+                padding-right: 0;
+                margin-left: 360px; 
 	        }
         }
     }
