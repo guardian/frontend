@@ -12,7 +12,7 @@ import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent) extends ContentPage {
-  override val item = interactive
+  override lazy val item = interactive
 }
 
 object InteractiveController extends Controller with RendersItemResponse with Logging with ExecutionContexts {

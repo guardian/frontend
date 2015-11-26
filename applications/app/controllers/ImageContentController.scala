@@ -11,7 +11,7 @@ import services.ImageQuery
 import scala.concurrent.Future
 
 case class ImageContentPage(image: ImageContent, related: RelatedContent) extends ContentPage {
-  override val item = image
+  override lazy val item = image
 }
 
 object ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {

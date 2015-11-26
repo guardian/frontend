@@ -23,7 +23,7 @@ import scala.concurrent.Future
 trait PageWithStoryPackage extends ContentPage {
   def article: Article
   def related: RelatedContent
-  override val item = article
+  override lazy val item = article
 }
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage

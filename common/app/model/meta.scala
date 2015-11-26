@@ -331,7 +331,9 @@ trait ContentPage extends Page {
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
 }
-case class SimpleContentPage(override val item: ContentType) extends ContentPage
+case class SimpleContentPage(content: ContentType) extends ContentPage {
+  override lazy val item: ContentType = content
+}
 
 // StandalonePage objects manage their own metadata.
 trait StandalonePage extends Page {

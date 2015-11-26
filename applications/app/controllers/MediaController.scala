@@ -12,7 +12,7 @@ import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
 case class MediaPage(media: ContentType, related: RelatedContent) extends ContentPage {
-  override val item = media
+  override lazy val item = media
 }
 
 object MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {

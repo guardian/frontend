@@ -18,7 +18,7 @@ case class GalleryPage(
   index: Int,
   trail: Boolean) extends ContentPage {
 
-  override val item = gallery
+  override lazy val item = gallery
 }
 
 object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {

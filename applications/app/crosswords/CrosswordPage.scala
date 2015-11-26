@@ -11,7 +11,7 @@ case class SvgDimensions(width: Int, height: Int) {
 
 case class CrosswordPage(content: CrosswordContent) extends ContentPage {
 
-  override val item = content
+  override lazy val item = content
   val crossword = content.crossword
 
   import CrosswordSvg.{BorderSize, CellSize}
