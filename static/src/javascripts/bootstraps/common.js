@@ -370,6 +370,8 @@ define([
 
             initEmail: function () {
                 email.init();
+
+                email.init(document.getElementById('article__email-form'));
             }
         };
 
