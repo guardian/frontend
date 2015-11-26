@@ -103,7 +103,7 @@ define([
             return detect.adblockInUse() || config.page.edition.toLowerCase() === 'int';
         },
 
-        canRun: function() {
+        canRun: function () {
             return config.switches.outbrain
             && !config.page.isFront
             && !config.page.isPreview
