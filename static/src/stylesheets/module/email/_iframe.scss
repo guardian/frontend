@@ -6,10 +6,6 @@ body {
 /**
 * IFRAME MODS
 */
-.email-sub__form--footer {
-    padding: 0;
-}
-
 .email-sub__text-input,
 .email-sub__submit-input {
     border-radius: 1000px;
@@ -17,6 +13,8 @@ body {
 
 .email-sub__submit-input {
     // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
+    border-width: 1px;
+    border-style: solid;
     font-family: $f-sans-serif-text;
     font-weight: bold;
     height: $gs-baseline * 3;
@@ -29,27 +27,52 @@ body {
     }
 }
 
+/**
+* IFRAME FOOTER MODS
+*/
+.email-sub__form--footer {
+    padding: 0;
+
+    .email-sub__submit-input {
+        // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
+        font-family: $f-sans-serif-text;
+        font-weight: bold;
+        height: $gs-baseline * 3;
+        padding: 0 ($gs-gutter * .6);
+
+        &:focus,
+        &:hover,
+        &:active {
+            outline: 0;
+        }
+    }
+}
+
+
+
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
 @include mq($from: 184px) {
 
-    // Rounded inline input
-    .email-sub__text-input {
-        border-right: 0;
-        border-radius: 1000px 0 0 1000px;
-        float: left;
-        width: 62%;
-    }
+    .email-sub__form--footer {
+        // Rounded inline input
+        .email-sub__text-input {
+            border-right: 0;
+            border-radius: 1000px 0 0 1000px;
+            float: left;
+            width: 62%;
+        }
 
-    .email-sub__submit-input {
-        @include fs-textSans(1, $size-only: true);
-        border-radius: 0 1000px 1000px 0;
-        border-left: 0;
-        float: left;
-        margin-right: 0;
-        padding-left: $gs-gutter / 2;
-        width: 38%;
+        .email-sub__submit-input {
+            @include fs-textSans(1, $size-only: true);
+            border-radius: 0 1000px 1000px 0;
+            border-left: 0;
+            float: left;
+            margin-right: 0;
+            padding-left: $gs-gutter / 2;
+            width: 38%;
+        }
     }
 }
 
@@ -57,16 +80,19 @@ body {
 @include mq(183px, 183px) {
     .email-sub__form--footer {
         padding-right: $gs-gutter / 2;
+
+        .email-sub__text-input {
+            border-radius: 1000px;
+        }
+
+        .email-sub__submit-input {
+            margin-right: 0;
+            width: 100%;
+        }
     }
 
-    .email-sub__text-input {
-        border-radius: 1000px;
-    }
 
-    .email-sub__submit-input {
-        margin-right: 0;
-        width: 100%;
-    }
+
 }
 
 

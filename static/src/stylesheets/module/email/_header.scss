@@ -15,7 +15,8 @@
 }
 
 // LANDING PAGE MODS
-.email-sub__header--landing {
+.email-sub__header--landing,
+.email-sub__header--article {
     background-color: $form-primary-colour;
     @include fs-headline(2);
 

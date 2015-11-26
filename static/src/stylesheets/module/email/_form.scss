@@ -60,6 +60,7 @@
 }
 
 .email-sub__submit-input {
+    background-color: transparent;
     border-color: $form-secondary-colour;
     color: $form-primary-colour;
 
@@ -124,7 +125,7 @@
 * Modifications
 */
 
-    // FOOTER MODS
+// FOOTER MODS
 .email-sub__form--footer {
     margin-bottom: $gs-baseline;
     padding: 0 $gs-gutter;
@@ -160,14 +161,17 @@
 }
 
 // LANDING PAGE MODS
-.email-sub--landing {
+.email-sub--landing,
+.email-sub--article {
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
+
     .email-sub__description {
         padding: $gs-baseline $gs-gutter;
     }
 }
 
-.email-sub__form--landing {
-    background-color: guss-colour(guardian-brand, $pasteup-palette);
+.email-sub__form--landing,
+.email-sub__form--article {
 
     .email-sub__form-wrapper {
         width: 40%;
