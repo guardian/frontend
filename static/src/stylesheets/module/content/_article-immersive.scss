@@ -553,6 +553,10 @@
                 margin-right: $gs-gutter;
             }
         }
+
+        + .section-rule {
+            display: none;
+        }
     }
 
     figure.element--showcase {
