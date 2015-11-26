@@ -7,6 +7,7 @@ import com.gu.contentapi.client.GuardianContentApiError
 import contentapi.ErrorResponseHandler.isCommercialExpiry
 import conf.switches.SwitchTrait
 import model.{Cached, NoCache}
+import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
@@ -42,6 +43,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       NoCache(GatewayTimeout(timeout.getMessage))
     case error =>
       log.info(s"Content api exception: ${error.getMessage}")
+      log.info(s"Content api stack trace: ${ExceptionUtils.getStackTrace(error)}")
       Option(error.getCause).map { cause =>
         log.info(s"Content api exception cause: ", cause)
       }
