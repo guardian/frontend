@@ -16,7 +16,7 @@
     @content.standfirst.map { s =>
         @defining(Edition(request)) { edition =>
             @withJsoup(BulletCleaner(
-                if(content.isImmersive && content.isArticle) {
+                if(content.isImmersive && content.isArticle && content.byline) {
                     if (s.indexOf(content.byline.get) != -1) {
                         ContributorLinks(s, content.contributors).toString()
                     } else {
