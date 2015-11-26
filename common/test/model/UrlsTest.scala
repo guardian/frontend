@@ -24,7 +24,7 @@ class UrlsTest extends FlatSpec with Matchers {
 
     SupportedUrl(content) should be("/foo/2012/jan/07/bar")
 
-    Content(content).url should be("/foo/2012/jan/07/bar")
+    Content(content).metadata.url should be("/foo/2012/jan/07/bar")
   }
 
   they should "be created relative for galleries" in {
@@ -42,11 +42,11 @@ class UrlsTest extends FlatSpec with Matchers {
 
     SupportedUrl(content) should be("/foo/gallery/2012/jan/07/bar")
 
-    Content(content).url should be("/foo/gallery/2012/jan/07/bar")
+    Content(content).metadata.url should be("/foo/gallery/2012/jan/07/bar")
   }
 
   they should "be created relative for tags" in {
-    Tag(tag("foo/bar")).url should be("/foo/bar")
+    Tag.make(tag("foo/bar")).metadata.url should be("/foo/bar")
   }
 
   private def tag(id: String, name: String = "") = ApiTag(

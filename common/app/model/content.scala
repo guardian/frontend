@@ -230,7 +230,7 @@ object Content {
     }
   }
 
-  private def make(apiContent: contentapi.Content) = {
+  def make(apiContent: contentapi.Content) = {
 
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
@@ -251,7 +251,7 @@ object Content {
       commercial = commercial,
       sharelinks = sharelinks,
       publication = apifields.getOrElse("publication", ""),
-      internalPageCode = apifields("internalPageCode"),
+      internalPageCode = apifields.getOrElse("internalPageCode", ""),
       contributorBio = apifields.get("contributorBio"),
       starRating = apifields.get("starRating").flatMap(s => Try(s.toInt).toOption),
       allowUserGeneratedContent = apifields.get("allowUgc").exists(_.toBoolean),

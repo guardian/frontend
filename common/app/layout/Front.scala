@@ -446,7 +446,7 @@ object Front extends implicits.Collections {
     pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext, emptyDedupedResultWithPath)
       ) { case ((seenTrails, context, dedupedFrontResult), (pressedCollection, index)) =>
-        val omitMPU = pressedPage.omitMPUsFromContainers(edition)
+        val omitMPU = pressedPage.metadata.omitMPUsFromContainers(edition)
         val container = Container.fromPressedCollection(pressedCollection, omitMPU)
         val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
 

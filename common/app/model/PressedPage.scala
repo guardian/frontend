@@ -49,6 +49,7 @@ object PressedPage {
           s"GFE:${seoData.webTitle.capitalize}",
       description = seoData.description,
       isFront = true,
+      isPressedPage = true,
       title = seoData.title,
       contentType = contentType,
       adUnitSuffix = Some(AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, seoData.navSection)),
@@ -65,7 +66,7 @@ case class PressedPage (
   id: String,
   seoData: SeoData,
   frontProperties: FrontProperties,
-  collections: List[PressedCollection]) extends Page {
+  collections: List[PressedCollection]) extends StandalonePage {
 
   override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
 
@@ -119,19 +120,6 @@ case class PressedPage (
   val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
       Some(metadata.section)))
   def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
-  def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(metadata.adUnitSuffix, edition)
-
-  def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = {
-    DfpAgent.sizeOfTakeoverAdsInSlot(slot, metadata.adUnitSuffix, edition)
-  }
-
-  def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
-    DfpAgent.hasAdInTopBelowNavSlot(metadata.adUnitSuffix, edition)
-  }
-  def omitMPUsFromContainers(edition: Edition): Boolean = {
-    DfpAgent.omitMPUsFromContainers(id, edition)
-  }
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
-
 }

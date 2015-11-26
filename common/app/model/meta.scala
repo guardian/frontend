@@ -81,7 +81,7 @@ object Fields {
     Fields (
       trailText = apiContent.safeFields.get("trailText"),
       linkText = apiContent.webTitle,
-      shortUrl = apiContent.safeFields("shortUrl"),
+      shortUrl = apiContent.safeFields.getOrElse("shortUrl", ""),
       standfirst = apiContent.safeFields.get("standfirst"),
       main = apiContent.safeFields.getOrElse("main",""),
       body = apiContent.safeFields.getOrElse("body",""),
@@ -120,6 +120,7 @@ object MetaData {
     description: Option[String] = None,
     title: Option[String] = None,
     isFront: Boolean = false,
+    isPressedPage: Boolean = false,
     contentType: String = "",
     adUnitSuffix: Option[String] = None,
     customSignPosting: Option[NavItem] = None,
@@ -145,6 +146,7 @@ object MetaData {
       description = description,
       title = title,
       isFront = isFront,
+      isPressedPage = isPressedPage,
       contentType = contentType,
       customSignPosting = customSignPosting,
       javascriptConfigOverrides = javascriptConfigOverrides,
@@ -196,6 +198,7 @@ final case class MetaData (
   openGraphImages: Seq[String] = Seq(),
   membershipAccess: Option[String] = None,
   isFront: Boolean = false,
+  isPressedPage: Boolean = true,
   hideUi: Boolean = false,
   canonicalUrl: Option[String] = None,
   shouldGoogleIndex: Boolean = true,
@@ -206,10 +209,18 @@ final case class MetaData (
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
 
-  def hasPageSkin(edition: Edition) = false
-  def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = Nil
-  def hasAdInBelowTopNavSlot(edition: Edition) = false
-  def omitMPUsFromContainers(edition: Edition) = false
+  def hasPageSkin(edition: Edition) = if (isPressedPage){
+    DfpAgent.isPageSkinned(adUnitSuffix, edition)
+  } else false
+  def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
+    DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
+  } else Nil
+  def hasAdInBelowTopNavSlot(edition: Edition) = if (isPressedPage) {
+    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
+  } else false
+  def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
+    DfpAgent.omitMPUsFromContainers(id, edition)
+  } else false
 
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
