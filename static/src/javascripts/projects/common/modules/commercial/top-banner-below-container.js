@@ -2,16 +2,21 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/modules/commercial/create-ad-slot'
 ], function (
     bonzo,
     $,
     config,
+    detect,
     createAdSlot
 ) {
 
     function init() {
-        if (typeof config.tests.topBannerPosition === 'undefined' || !config.page.isFront) {
+        if (typeof config.tests.topBannerPosition === 'undefined'
+            || !config.page.isFront 
+            || detect.getBreakpoint() === 'mobile') {
+
             return false;
         }
 
