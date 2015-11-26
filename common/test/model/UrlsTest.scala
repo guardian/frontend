@@ -3,9 +3,10 @@ package model
 import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import play.api.Play
 
-class UrlsTest extends FlatSpec with Matchers {
+class UrlsTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   Play.unsafeApplication
 

@@ -2,13 +2,14 @@ package common
 
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
 import com.gu.contentapi.client.model.{Content => ApiContent}
 
 import scala.util.Try
 import scala.xml._
 
-class TrailsToRssTest extends FlatSpec with Matchers {
+class TrailsToRssTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   val request = FakeRequest()
   val trails = Seq(testTrail("a"), testTrail("b"))

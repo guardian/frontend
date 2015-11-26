@@ -4,8 +4,9 @@ import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => 
 import common.Edition
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 
-class ContentTest extends FlatSpec with Matchers with implicits.Dates {
+class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implicits.Dates {
   "Trail" should "be populated properly" in {
     val imageElement = ApiElement(
       "test-picture",
