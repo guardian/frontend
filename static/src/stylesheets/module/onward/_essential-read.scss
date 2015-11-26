@@ -3,11 +3,11 @@
     margin-bottom: $gs-baseline;
 
     .fc-container__header__title {
-        @include font($f-serif-headline, 400, 36px);
+        @include fs-headline(4);
 
         @include mq($until: mobileLandscape) {
             float: initial;
-            @include font($f-serif-headline, 400, 28px);
+            @include fs-headline(6);
             margin-left: $gs-gutter/2;
             margin-top: $gs-baseline/2;
         }
