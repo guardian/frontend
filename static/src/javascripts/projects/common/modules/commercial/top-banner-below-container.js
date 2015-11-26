@@ -14,7 +14,7 @@ define([
 
     function init() {
         if (typeof config.tests.topBannerPosition === 'undefined'
-            || !config.page.isFront 
+            || !config.page.isFront
             || detect.getBreakpoint() === 'mobile') {
 
             return false;
