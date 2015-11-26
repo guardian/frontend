@@ -39,22 +39,22 @@
         margin-right: $gs-gutter/2;
         width: 90%;
         width: calc(100% - 20px);
-		
+
         @include mq($from: desktop) {
             &:first-of-type {
                 &:before {
-	                content: '';
-					position: absolute;
+                    content: '';
+                    position: absolute;
                     border-left: $gs-gutter solid #ffffff;
-					border-top: $gs-baseline * 3.2 solid transparent;
-					border-bottom: $gs-baseline * 3.2 solid transparent;
-	                top: -$gs-baseline/2;
-	                right: -$gs-gutter;
-	                width: 0;
-	                height: 0;
-	            }
-			}
-		}
+                    border-top: $gs-baseline * 3.2 solid transparent;
+                    border-bottom: $gs-baseline * 3.2 solid transparent;
+                    top: -$gs-baseline/2;
+                    right: -$gs-gutter;
+                    width: 0;
+                    height: 0;
+                }
+            }
+        }
 
         &:not(:first-of-type) {
             &:before {
