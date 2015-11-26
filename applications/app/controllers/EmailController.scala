@@ -11,16 +11,17 @@ import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
 import play.api.mvc.{Result, Action, Controller}
 import metrics.EmailSubsciptionMetrics._
-import model.MetaData
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-object emailLandingPage extends MetaData {
-  lazy val id: String = "email-landing-page"
-  lazy val section: String = ""
-  lazy val analyticsName: String = id
-  lazy val webTitle: String = "Email Landing Page"
+object emailLandingPage extends StandalonePage {
+  private val id = "email-landing-page"
+  override val metadata = MetaData.make(
+    id = id,
+    section = "",
+    analyticsName = id,
+    webTitle = "Email Landing Page")
 }
 
 case class EmailPage(interactive: Interactive, related: RelatedContent)
