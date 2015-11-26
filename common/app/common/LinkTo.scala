@@ -25,7 +25,10 @@ trait LinkTo extends Logging {
   private val AmpPath = s"^(/.+)(${Requests.AMP_SUFFIX})$$".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
-  val httpsEnabledSections: Seq[String] = Seq("info")
+  /**
+    * email is here to allow secure POSTs from the footer signup form
+    */
+  val httpsEnabledSections: Seq[String] = Seq("info", "email")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -127,13 +130,8 @@ class CanonicalLink {
 object CanonicalLink extends CanonicalLink
 
 object AnalyticsHost extends implicits.Requests {
-  def apply()(implicit request: RequestHeader): String =
-    if (Switches.SecureOmniture.isSwitchedOn ||
-      request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))) {
-      "https://hits-secure.theguardian.com"
-    } else {
-      "http://hits.theguardian.com"
-    }
+  // safest to always use secure host as we avoid mixed content if we fail to detect https
+  def apply(): String = "https://hits-secure.theguardian.com"
 }
 
 object SubscribeLink {

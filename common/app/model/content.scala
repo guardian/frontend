@@ -8,7 +8,7 @@ import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, SoftPurgeWithLongCachingSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -361,11 +361,11 @@ object Article {
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       isImmersive = content.fields.displayHint.contains("immersive"),
       schemaType = Some(ArticleSchemas(content.tags)),
-      cacheSeconds = if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) {
+      cacheSeconds = if (LongCacheSwitch.isSwitchedOn) {
           if (fields.isLive) 5
           else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 300
           else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) 1200
-          else 1200
+          else 1800
         } else {
           content.metadata.cacheSeconds
         },

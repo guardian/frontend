@@ -2,6 +2,7 @@ package test
 
 import java.util.{ List => JList }
 import org.scalatest.Suites
+import services.NewspaperControllerTest
 import collection.JavaConversions._
 
 object `package` {
@@ -34,7 +35,8 @@ class ApplicationsTestSuite extends Suites (
   new TagFeatureTest,
   new TagTemplateTest,
   new ShareLinksTest,
-  new CrosswordDataTest
+  new CrosswordDataTest,
+  new NewspaperControllerTest
 ) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort

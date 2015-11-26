@@ -34,21 +34,13 @@ define([
         var sectionsWithoutPopular = ['info', 'global'];
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && !contains(sectionsWithoutPopular, config.page.section);
-
-        if (ab.getParticipations().MostPopularDefaultTest &&
-            ab.getParticipations().MostPopularDefaultTest.variant === 'variant' &&
-            ab.testCanBeRun('MostPopularDefaultTest')) {
-
-            this.endpoint = '/ab-most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
-        } else {
-            this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
-        }
+        this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
     }
 
     Component.define(MostPopular);
 
     MostPopular.prototype.init = function () {
-        if (!(ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest'))) {
+        if (!(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
             this.fetch(qwery('.js-popular-trails'), 'html');
         } else {
             $('.js-most-popular-footer').hide();

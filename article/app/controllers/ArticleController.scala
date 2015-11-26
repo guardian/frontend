@@ -6,7 +6,7 @@ import common._
 import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
-import conf.switches.Switches.SoftPurgeWithLongCachingSwitch
+import conf.switches.Switches.LongCacheSwitch
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -105,8 +105,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
-    if (SoftPurgeWithLongCachingSwitch.isSwitchedOn) Action.async { implicit request =>
-        loadArticle(path, lastUpdate, rendered)
+    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
+      // we cannot sensibly decache memcached (does not support surogate keys)
+      // so if we are doing the 'soft purge' don't memcache
+      loadArticle(path, lastUpdate, rendered)
     } else MemcachedAction { implicit request =>
       loadArticle(path, lastUpdate, rendered)
     }

@@ -50,13 +50,13 @@ http://developers.theguardian.com/join-the-team.html
             @if(showAdverts) {
                 @fragments.commercial.topBanner(page.metadata, edition)
             }
-    
+
             @fragments.header(page)
-    
+
             @if(adBelowNav) {
                 @fragments.commercial.topBannerBelowNav()
             }
-    
+
             @if(showAdverts) {
                 @fragments.commercial.topBannerMobile(page.metadata, edition)
             }
@@ -76,7 +76,7 @@ http://developers.theguardian.com/join-the-team.html
 
         @fragments.analytics(page)
 
-        @fragments.footerJavaScript()
+        @fragments.inlineJSNonBlocking()
 
         @fragments.commercial.pageSkin()
 

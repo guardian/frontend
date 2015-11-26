@@ -502,12 +502,10 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
 case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
 
   private def setDropCap(p: Element): String = {
-    val html = p.html
-    if ( html.length > 200 && html.matches("^[\"a-zA-Z].*") && html.split("\\s+").head.length >= 2 ) {
-      s"""<span class="drop-cap"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
-    } else {
-      html
-    }
+    p.html.replaceFirst(
+      "^([\"'“‘]*[a-zA-Z])(.{199,})",
+      """<span class="drop-cap"><span class="drop-cap__inner">$1</span></span>$2"""
+    )
   }
 
   override def clean(document: Document): Document = {
