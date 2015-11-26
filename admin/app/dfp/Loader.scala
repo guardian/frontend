@@ -11,22 +11,6 @@ object Loader extends Logging {
 
   def load[T](statementBuilder: StatementBuilder)(loadPage: Statement => (Array[T], Int)): Seq[T] = {
 
-    def logApiException(e: ApiException): Unit = {
-      e.getErrors foreach { err =>
-        val reasonMsg = err match {
-          case freqCapErr: FrequencyCapError => s", with the reason '${freqCapErr.getReason}'"
-          case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
-          case _ => ""
-        }
-        val path = err.getFieldPath
-        val trigger = err.getTrigger
-        val msg = s"'${err.getErrorString}'$reasonMsg"
-        log.error(
-          s"API loading exception in field '$path', caused by an invalid value '$trigger', with the error message $msg"
-        )
-      }
-    }
-
     @tailrec
     def load(soFar: Seq[T]): Seq[T] = {
       val (pageOfResults, totalResultSetSize) = loadPage(statementBuilder.toStatement)
@@ -39,16 +23,7 @@ object Loader extends Logging {
       }
     }
 
-    try {
-      statementBuilder.limit(SUGGESTED_PAGE_LIMIT)
-      load(Nil)
-    } catch {
-      case e: ApiException =>
-        logApiException(e)
-        Nil
-      case e: Exception =>
-        log.error(s"Exception fetching: ${e.getMessage}")
-        Nil
-    }
+    statementBuilder.limit(SUGGESTED_PAGE_LIMIT)
+    load(Nil)
   }
 }

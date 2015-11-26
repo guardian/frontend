@@ -30,10 +30,11 @@ trait PreferenceController extends Results {
     NoCache(
       Found(url)
       .withCookies(cookies.map{ case (name, value) =>
-        // 60 days expiration, or expire if value is empty
+        // Expire after one year or if value is empty
+        val oneYearInSeconds = 31536000
         Cookie( name,
                 value,
-                maxAge = if (value.nonEmpty) { Some(5184000) } else { Some(-1) },
+                maxAge = if (value.nonEmpty) { Some(oneYearInSeconds) } else { Some(-1) },
                 domain = getShortenedDomain(request.domain),
                 httpOnly = false)
       }.toSeq:_*)

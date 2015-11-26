@@ -229,10 +229,7 @@ trait Navigation {
 
 
   // Observer newspaper
-  val sundayPaper = SectionLink("theobserver", "the observer", "The Observer", "/theobserver")
-  val observerMainNews = SectionLink("theobserver", "news", "The Observer Main section", "/theobserver/news")
-  val observerComment = SectionLink("theobserver", "comment", "Observer comment", "/theobserver/news/comment")
-  val observerSport = SectionLink("theobserver", "observer sport", "Observer sport", "/theobserver/sport")
+  val sundayPaper = SectionLink("theobserver", "sunday's paper", "The Observer", "/theobserver")
   val observerNewReview = SectionLink("theobserver", "the new review", "Observer The New Review", "/theobserver/new-review")
   val observerMagazine = SectionLink("theobserver", "observer magazine", "Observer Magazine", "/theobserver/magazine")
 
