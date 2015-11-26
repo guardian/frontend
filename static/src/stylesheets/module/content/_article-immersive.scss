@@ -620,4 +620,8 @@
             margin-right: -(gs-span(5) + $gs-gutter);
         }
     }
+
+    .ad-slot--right {
+        position: static !important; // To override sticky ad
+    }
 }
