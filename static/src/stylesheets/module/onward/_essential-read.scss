@@ -55,7 +55,7 @@
 
         @include mq(desktop, leftCol) {
             &:first-of-type {
-              margin-top: $gs-baseline/2;
+                margin-top: $gs-baseline/2;
             }
         }
 
@@ -104,7 +104,7 @@
         }
 
         @include mq(mobileLandscape, desktop) {
-          &:after {
+            &:after {
               position: absolute;
               top: 0;
               right: 1px;
