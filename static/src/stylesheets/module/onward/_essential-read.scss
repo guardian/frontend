@@ -4,13 +4,13 @@
 
     .fc-container__header__title {
 	    font-size: 2.25rem;
-		line-height: 2.5rem;
+	    line-height: 2.5rem;
 	    font-weight: normal;
 	    
         @include mq($until: mobileLandscape) {
             float: initial;
             font-size: 1.75rem;
-			line-height: 2rem;
+		    line-height: 2rem;
             margin-left: $gs-gutter/2;
             margin-top: $gs-baseline/2;
         }
@@ -40,12 +40,12 @@
         width: 90%;
         width: calc(100% - 20px);
 		
-		@include mq($from: desktop) {
+        @include mq($from: desktop) {
 			&:first-of-type {
 				&:before {
 	                content: '';
 					position: absolute;
-					border-left: $gs-gutter solid #fff;
+                    border-left: $gs-gutter solid #ffffff;
 					border-top: $gs-baseline * 3.2 solid transparent;
 					border-bottom: $gs-baseline * 3.2 solid transparent;
 	                top: -$gs-baseline/2;
@@ -71,7 +71,7 @@
         }
         
         &:hover .essential-read__number {
-	        color: #25b5d2;
+            color: #25b5d2;
         }
 
         @include mq(mobileLandscape) {
@@ -85,9 +85,9 @@
         }
         
         @include mq(tablet, desktop) {
-	        width: 340px;
+            width: 340px;
 	        
-	        &:first-of-type {
+            &:first-of-type {
 	            position: absolute;
 	            left: 0;
 	            top: 3px;
@@ -105,7 +105,7 @@
             	}  
             }
             
-	        &:not(:first-of-type) {
+            &:not(:first-of-type) {
 	        	float: right;
 	        	padding-right: 0;
 	        	margin-left: 360px; 
@@ -120,8 +120,8 @@
         }
         
         @include mq(tablet, desktop) {	        
-	        width: auto;
-	        margin-top: 0;
+            width: auto;
+            margin-top: 0;
 	    }
     }
 
@@ -133,7 +133,7 @@
         }
         
         .fc-item__title {
-	        overflow: hidden;
+            overflow: hidden;
         }
     }
 
@@ -181,8 +181,8 @@
         }
         
         @include mq(tablet, desktop) {
-	        top: 75px;
-	        left: 0;
+            top: 75px;
+            left: 0;
         }
 
         .fc-item__image-container {
