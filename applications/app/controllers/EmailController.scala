@@ -10,6 +10,7 @@ import play.api.data.Forms._
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
 import play.api.mvc.{Result, Action, Controller}
+import metrics.EmailSubsciptionMetrics._
 import model.MetaData
 
 import scala.concurrent.Future
@@ -58,11 +59,11 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   )
 
   def renderPage() = Action { implicit request =>
-    Ok(views.html.emailLanding(emailLandingPage))
+    Cached(60)(Ok(views.html.emailLanding(emailLandingPage)))
   }
 
   def renderForm() = Action { implicit request =>
-    Ok(views.html.emailFragment(emailLandingPage))
+    Cached(60)(Ok(views.html.emailFragment(emailLandingPage)))
   }
 
   def subscriptionResult(result: String) = Action { implicit request =>
@@ -101,17 +102,20 @@ object EmailController extends Controller with ExecutionContexts with Logging {
           case 200 | 201 => respond(Subscribed)
           case status    => {
             log.error(s"Error posting to ExactTarget: HTTP $status")
+            APIHTTPError.increment()
             respond(OtherError)
           }
         }) recover {
           case e: Exception => {
             log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            APINetworkError.increment()
             respond(OtherError)
           }
         }
 
         case None => {
           log.error(s"Unable to find a trigger for list ID $listId")
+          ListIDError.increment()
           Future.successful(respond(OtherError))
         }
       })
