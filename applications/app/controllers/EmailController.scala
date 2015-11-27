@@ -28,7 +28,7 @@ case class EmailPage(interactive: Interactive, related: RelatedContent)
 case class EmailForm(email: String)
 
 object listIds {
-  val testList = 3485
+  val testList = 37
 }
 
 object EmailForm {
