@@ -23,7 +23,7 @@ define([
         },
 
         getProgressAsPercentage: function () {
-            return window.scrollY / articleHeight * 100 + "%"
+            return window.scrollY / articleHeight * 100 + '%';
         },
 
         getArticleHeight: function () {
