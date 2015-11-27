@@ -33,7 +33,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
       val globalFirst = globalPopular.toList ++ sectionPopular
-      
+
       val mostPopular = if ( path.contains("global-development") ) sectionFirst else globalFirst
 
       mostPopular match {
@@ -74,6 +74,21 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     Cached(900) {
       JsonComponent(
         "trails" -> JsArray(DayMostPopularAgent.mostPopular(countryCode).map{ trail =>
+          Json.obj(
+            ("url", trail.url),
+            ("headline", trail.headline)
+          )
+        })
+      )
+    }
+  }
+
+  def renderPopularAmp = Action { implicit request =>
+    val edition = Edition(request)
+
+    Cached(900) {
+      JsonComponent(
+        "items" -> JsArray(MostPopularAgent.mostPopular(edition).map{ trail =>
           Json.obj(
             ("url", trail.url),
             ("headline", trail.headline)
