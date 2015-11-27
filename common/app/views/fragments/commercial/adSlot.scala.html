@@ -7,12 +7,14 @@
     outOfPage: Boolean = false,
     forceDisplay: Boolean = false,
     contentSponsor: Option[String] = None,
-    paidForContentType: Option[String] = None
+    paidForContentType: Option[String] = None,
+    fluid: Boolean = false
 )(placeholderContent: Html)
+@import conf.switches.Switches._
 
 <div
     id="dfp-ad--@name"
-    class="js-ad-slot ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")@if(forceDisplay) { ad-slot--force-display}"
+    class="js-ad-slot ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")@if(forceDisplay) { ad-slot--force-display}@if(fluid && FluidAdvertsSwitch.isSwitchedOn) { ad-slot--fluid}"
     data-link-name="ad slot @name"
     @for(sponsor <- contentSponsor) { data-sponsor="@sponsor" }
     @for(paidForType <- paidForContentType) { data-sponsorship="@paidForType" }
@@ -23,4 +25,6 @@
     @if(outOfPage){ data-out-of-page="true" }
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
-    }>@placeholderContent</div>
+    }
+    @if(fluid && FluidAdvertsSwitch.isSwitchedOn){ data-fluid="true" }
+    >@placeholderContent</div>

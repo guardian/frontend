@@ -136,6 +136,14 @@
         padding-left: $left-column-wide + $gs-gutter;
     }
 
+    @include mq(wide) {
+        /* Fluid ads just expand horizontally to the size of their container */
+        &.ad-slot--fluid {
+            padding-left: 0;
+            width: auto;
+        }
+    }
+
     .top-banner-ad-container--mobile & {
         height: 50px;
         padding: $gs-baseline 0;

@@ -32,6 +32,15 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val FluidAdvertsSwitch = Switch(
+    "Commercial",
+    "fluid-adverts",
+    "Enable fluid ads",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val CommercialComponentsSwitch = Switch(
     "Commercial",
     "commercial-components",

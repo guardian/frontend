@@ -404,24 +404,24 @@ define([
                 adUnit         = adUnitOverride ?
                     ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
                 id             = $adSlot.attr('id'),
-                sizeMapping    = defineSlotSizes($adSlot),
+                slot,
+                size,
+                sizeMapping;
+
+            if ($adSlot.data('out-of-page')) {
+                slot = googletag.defineOutOfPageSlot(adUnit, id);
+            } else if ($adSlot.data('fluid')) {
+                slot = googletag.defineSlot(adUnit, 'fluid', id);
+            } else {
+                sizeMapping = defineSlotSizes($adSlot);
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = uniq(
-                    flatten(sizeMapping, true, function (map) {
-                        return map[1];
-                    }),
-                    function (size) {
-                        return size[0] + '-' + size[1];
-                    }
-                ),
-                slot = (
-                    $adSlot.data('out-of-page') ?
-                        googletag.defineOutOfPageSlot(adUnit, id) :
-                        googletag.defineSlot(adUnit, size, id)
-                    )
-                    .addService(googletag.pubads())
-                    .defineSizeMapping(sizeMapping)
-                    .setTargeting('slot', slotTarget);
+                size = uniq(
+                    flatten(sizeMapping, true, function (map) { return map[1]; }),
+                    function (size) { return size[0] + '-' + size[1]; }
+                );
+                slot = googletag.defineSlot(adUnit, size, id);
+                slot.defineSizeMapping(sizeMapping);
+            }
 
             if ($adSlot.data('series')) {
                 slot.setTargeting('se', parseKeywords($adSlot.data('series')));
@@ -430,6 +430,9 @@ define([
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
             }
+
+            slot.addService(googletag.pubads())
+                .setTargeting('slot', slotTarget);
 
             // Add to the array of ads to be refreshed (when the breakpoint changes)
             // only if it's `data-refresh` attribute isn't set to false.
