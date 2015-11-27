@@ -17,28 +17,21 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     analyticsName = "analyticsName",
     webTitle = "webTitle")
 
-  def pageShouldRequestAdSizes(pageId: String, sizesAvailableForSlot: Seq[AdSize])
-                              (sizes: Seq[String]): Unit = {
+  def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {
     val metaData = metaDataFromId(pageId)
-    topAboveNavSlot.adSizes(metaData, defaultEdition, sizesAvailableForSlot).get("desktop").value shouldBe sizes
+    topAboveNavSlot.adSizes(metaData, defaultEdition).get("desktop").value shouldBe sizes
   }
 
   override protected def beforeEach(): Unit = {
     FixedTopAboveNavAdSlotSwitch.switchOn()
   }
 
-  "topAboveNavSlot ad sizes" should "be fixed for UK business front" in {
-    pageShouldRequestAdSizes("uk/business", Nil)(
-      Seq("1,1", "900,250", "970,250")
-    )
-  }
-
-  they should "be variable for any other page" in {
-    pageShouldRequestAdSizes("uk/culture", Nil)(
+  "topAboveNavSlot ad sizes" should "be variable for all pages" in {
+    pageShouldRequestAdSizes("uk/culture")(
       Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
     )
     pageShouldRequestAdSizes(
-      "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis", Nil)(
+      "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis")(
         Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
       )
   }

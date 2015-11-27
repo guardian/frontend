@@ -30,22 +30,10 @@ object Commercial {
       metaData.id == "uk/business" || metaData.id == "us/business" || metaData.id == "au/business"
     }
 
-    // The sizesOverride parameter is for testing only.
-    def adSizes(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): Map[String, Seq[String]] = {
-      val desktopSizes = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
-            Seq("728,90")
-          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
-            Seq("88,70")
-          } else {
-            Seq("1,1", "900,250", "970,250")
-          }
-        } else Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
-      }
+    def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> desktopSizes
+        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
       )
     }
 

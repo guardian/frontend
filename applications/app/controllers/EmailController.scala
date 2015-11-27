@@ -60,11 +60,11 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   )
 
   def renderPage() = Action { implicit request =>
-    Ok(views.html.emailLanding(emailLandingPage))
+    Cached(60)(Ok(views.html.emailLanding(emailLandingPage)))
   }
 
   def renderForm() = Action { implicit request =>
-    Ok(views.html.emailFragment(emailLandingPage))
+    Cached(60)(Ok(views.html.emailFragment(emailLandingPage)))
   }
 
   def subscriptionResult(result: String) = Action { implicit request =>
