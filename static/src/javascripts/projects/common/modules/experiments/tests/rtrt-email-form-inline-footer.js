@@ -57,7 +57,7 @@ define([
             });
         };
 
-        this.id = 'RtrtEmailFormInlineFooter';
+        this.id = 'RtrtEmailFormInlineFooterV2';
         this.start = '2015-11-30';
         this.expiry = '2015-12-08';
         this.author = 'Gareth Trufitt';
