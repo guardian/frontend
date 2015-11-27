@@ -7,12 +7,13 @@ import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
 import scala.collection.JavaConversions._
 
-class TagLinkerTest extends FlatSpec with Matchers {
+class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   implicit val edition = Uk
   implicit val request = FakeRequest("GET", "/")

@@ -12,7 +12,7 @@ import scala.xml._
 class TrailsToRssTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   val request = FakeRequest()
-  val trails = Seq(testTrail("a"), testTrail("b"))
+  lazy val trails = Seq(testTrail("a"), testTrail("b"))
 
   "TrailsToRss" should "produce a valid RSS feed" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
