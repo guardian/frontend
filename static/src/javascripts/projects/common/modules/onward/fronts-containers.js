@@ -40,15 +40,21 @@ define([
         var numberToInject =  (numberOfContainers) ? numberOfContainers : 3,
             offset = 3 - numberToInject;
 
-        injectContainer.injectContainer('/container/' + config.page.section + '/some/' + numberToInject + '/' + offset + '/original.json', $('.js-fronts-containers'), 'fronts-containers', function () {
-            proximityLoader.add(qwery('.js-network-fronts-containers')[0], 1500, function () {
+        injectContainer.injectContainer('/container/' + config.page.section + '/some/' + numberToInject + '/' + offset + '/original.json', $('.js-fronts-containers'), 'fronts-containers', function (isEmpty) {
+            if(isEmpty) {
+                injectContainer.injectContainer('/container/' + 'uk' + '/some/3/0/original.json', $('.js-fronts-containers'), 'network-fronts-containers', function () {});
+                injectNetworkFrontsContainers(3);
+            } else {
                 injectNetworkFrontsContainers();
-            });
+            }
         });
     }
 
-    function injectNetworkFrontsContainers() {
-        injectContainer.injectContainer('/container/' + 'uk' + '/some/3/0/original.json', $('.js-network-fronts-containers'), 'network-fronts-containers', function () {});
+    function injectNetworkFrontsContainers(offset) {
+        var offsetBy = offset || 0;
+        proximityLoader.add(qwery('.js-network-fronts-containers')[0], 1500, function () {
+            injectContainer.injectContainer('/container/' + 'uk' + '/some/3/' + offsetBy + '/original.json', $('.js-network-fronts-containers'), 'network-fronts-containers', function () {});
+        });
     }
 
     return FrontsContainers;

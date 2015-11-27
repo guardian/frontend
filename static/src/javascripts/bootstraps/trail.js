@@ -89,9 +89,13 @@ define([
             if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
-                $('.js-onward').each(function (c) {
-                    new TonalComponent().fetch(c, 'html');
-                });
+                if (!(ab.getParticipations().FrontsOnArticles &&
+                    ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
+                    ab.testCanBeRun('FrontsOnArticles'))) {
+                    $('.js-onward').each(function (c) {
+                        new TonalComponent().fetch(c, 'html');
+                    });
+                }
             }
         });
     }

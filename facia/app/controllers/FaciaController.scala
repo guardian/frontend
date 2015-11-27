@@ -54,7 +54,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           val containerLayout = size match {
             case "small" => Fixed(FixedContainers.fixedSmallSlowIV)
             case "large" => Fixed(FixedContainers.fixedMediumFastXI)
-            case "original" => Container.resolve(collection.collectionType)
+            case "original" => if(collection.collectionType.contains("mpu")) {
+              Fixed(FixedContainers.fixedSmallSlowIV)
+            } else {
+              Container.resolve(collection.collectionType)
+            }
           }
 
           val containerDefinition = FaciaContainer(
@@ -296,7 +300,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private def getSomeCollections(path: String, num: Int, offset: Int = 0): Future[Option[List[PressedCollection]]] =
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
-        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2).drop(offset).take(num))
+        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular").drop(offset).take(num))
       })
 
   /* Google news hits this endpoint */
