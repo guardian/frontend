@@ -65,7 +65,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        val snaps = if(publication == "theguardian") createSnapForGuardian(newspaperDate) else createSnapsForObserver(newspaperDate)
+        //for /theguardian fetch date links either side of date requested, for /theobserver, fetch each sunday around the date and the day before
+        val snaps = createSnap(newspaperDate, publication)
         bookSectionContainer(None, Some(FRONT_PAGE_DISPLAY_NAME), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0, snaps)
       }
 
@@ -142,26 +143,18 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
 
-  private def createSnapsForObserver(date: DateTime): List[LinkSnap] = {
 
-    val datesAroundNewspaperDate = List(date.plusDays(7), date.minusDays(7))
-    datesAroundNewspaperDate.filter( d => d.isBeforeNow).map { d =>
-      val displayFormat = d.toString(dateForFrontPagePattern)
-      val href = s"/theobserver/${d.toString(hrefFormat).toLowerCase}"
-
-      createSnap(displayFormat, href)
-    }
-  }
-
-  private def createSnapForGuardian(date: DateTime) = {
-    val datesAroundNewspaperDate = List(date.minusDays(1), date.plusDays(1))
+  private def createSnap(date: DateTime, publication: String) = {
+    //if /theguardian get links for date either side of the date requests
+    // else for theobserver get dates either sunday around the date and the previous Saturday.
+    //filter out any dates in the future
+    val daysAroundDateToFetchLinksFor = if(publication == "theguardian") List(1, -1) else List(7, -1, -7)
+    val datesAroundNewspaperDate = daysAroundDateToFetchLinksFor.map(date.plusDays(_))
     datesAroundNewspaperDate.filter( d => d.isBeforeNow).map { d =>
       val displayFormat = d.toString(dateForFrontPagePattern)
       val hrefDateFormat = d.toString(hrefFormat).toLowerCase
       val href = if(d.getDayOfWeek == DateTimeConstants.SUNDAY) s"/theobserver/$hrefDateFormat" else s"/theguardian/$hrefDateFormat"
-      createSnap(displayFormat, href)
+      LinkSnap("no-id", None, "no-snap-type", None, None, Some(displayFormat), Some(href), None, "group", None, ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default), None, None)
     }
   }
-
-  private def createSnap(displayFormat: String, href: String) = LinkSnap("no-id", None, "no-snap-type", None, None, Some(displayFormat), Some(href), None, "group", None, ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default), None, None)
 }
