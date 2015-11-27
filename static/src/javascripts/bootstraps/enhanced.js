@@ -123,7 +123,8 @@ define([
             }
 
             if (config.switches.offlinePage) {
-                if (window.location.protocol === 'https:') {
+                var isDev = window.location.hostname === 'localhost';
+                if (window.location.protocol === 'https:' || isDev) {
                     var navigator = window.navigator;
                     if (navigator && navigator.serviceWorker) {
                         navigator.serviceWorker.register('/service-worker.js');
