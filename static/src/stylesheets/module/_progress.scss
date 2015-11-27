@@ -1,5 +1,13 @@
 .progress {
-    background-color: aqua;
-    height: 200px;
+    position: fixed;
+    z-index: 1;
+    height: $gs-baseline / 4;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.progress__indicator {
+    background-color: colour(feature-default);
+    width: 0%;
+    height: 100%;
 }

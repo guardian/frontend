@@ -8,15 +8,18 @@ define([
     return {
         init: function () {
             this.bindEvents();
-            console.log("progress");
         },
 
         bindEvents: function () {
-            mediator.on('window:throttledScroll', this.updateProgress);
+            mediator.on('window:throttledScroll', this.updateProgress.bind(this));
         },
 
         updateProgress: function () {
-            console.log("hey");
+            $('.progress__indicator').css('width', this.getProgressAsPercentage);
+        },
+
+        getProgressAsPercentage: function () {
+            return window.scrollY + "px"
         }
     };
 });
