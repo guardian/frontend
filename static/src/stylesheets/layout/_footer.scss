@@ -67,12 +67,17 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .l-footer__secondary {
     box-sizing: border-box;
     @include fs-textSans(1);
-    padding-right: $gs-gutter * .5;
-    padding-left: $gs-gutter * .5;
+    padding-right: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
         padding-left: $gs-gutter;
+    }
+
+    @include mq($from: tablet, $until: desktop) {
+        padding-right: $gs-gutter / 2;
+        padding-left: $gs-gutter / 2;
     }
 
     &,
@@ -102,14 +107,16 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include mq(tablet) {
         box-sizing: border-box;
         width: 75%;
+        padding-left: $gs-gutter / 2;
     }
 
     @include mq($from: tablet, $until: leftCol) {
-        @include columns(3, $gs-gutter);
+        @include columns(3, $gs-gutter / 2);
     }
 
     @include mq(desktop) {
-        width: gs-span(9);
+        width: gs-span(9) + $gs-gutter;
+        @include columns(3, $gs-gutter);
         padding-left: $gs-gutter;
     }
 
@@ -128,12 +135,12 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         }
 
         @include mq(leftCol) {
-            width: gs-span(10);
+            width: gs-span(9) + $gs-gutter;
         }
 
         @include mq(wide) {
             @include columns(4, $gs-gutter);
-            width: gs-span(11);
+            width: gs-span(12) + $gs-gutter;
         }
     }
 
@@ -158,12 +165,13 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         border: 0;
         box-sizing: border-box;
         margin: 0;
-        padding: 0 $gs-gutter 0 0;
+        padding: 0 $gs-gutter / 2;
         width: 25%;
     }
 
     @include mq(desktop) {
         padding-right: 0;
+        padding-left: 0;
         width: gs-span(3);
     }
 
@@ -171,7 +179,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         @include mq($from: mobileLandscape, $until: tablet) {
             padding-right: 50%;
         }
-
         @include mq(leftCol) {
             width: gs-span(3);
         }

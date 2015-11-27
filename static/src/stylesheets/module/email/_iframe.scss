@@ -33,7 +33,6 @@ body {
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
 @include mq($from: 184px) {
-
     // Rounded inline input
     .email-sub__text-input {
         border-right: 0;
