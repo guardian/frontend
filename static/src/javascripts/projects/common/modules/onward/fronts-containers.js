@@ -41,7 +41,7 @@ define([
             offset = 3 - numberToInject;
 
         injectContainer.injectContainer('/container/' + config.page.section + '/some/' + numberToInject + '/' + offset + '/original.json', $('.js-fronts-containers'), 'fronts-containers', function (isEmpty) {
-            if(isEmpty) {
+            if (isEmpty) {
                 injectContainer.injectContainer('/container/' + 'uk' + '/some/3/0/original.json', $('.js-fronts-containers'), 'network-fronts-containers', function () {});
                 injectNetworkFrontsContainers(3);
             } else {
