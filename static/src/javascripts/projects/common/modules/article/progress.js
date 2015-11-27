@@ -5,13 +5,17 @@ define([
     $,
     mediator
 ) {
+    var articleHeight;
+
     return {
         init: function () {
+            this.getArticleHeight();
             this.bindEvents();
         },
 
         bindEvents: function () {
             mediator.on('window:throttledScroll', this.updateProgress.bind(this));
+            mediator.on('window:resize', this.getArticleHeight.bind(this));
         },
 
         updateProgress: function () {
@@ -19,7 +23,11 @@ define([
         },
 
         getProgressAsPercentage: function () {
-            return window.scrollY + "px"
+            return window.scrollY / articleHeight * 100 + "%"
+        },
+
+        getArticleHeight: function () {
+            articleHeight = $('.content--article').offset().height;
         }
     };
 });
