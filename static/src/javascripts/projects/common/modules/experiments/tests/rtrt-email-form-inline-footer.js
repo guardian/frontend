@@ -4,14 +4,16 @@ define([
     'bonzo',
     'common/modules/identity/api',
     'fastdom',
-    'common/modules/email/email'
+    'common/modules/email/email',
+    'common/utils/config'
 ], function (
     $,
     bean,
     bonzo,
     Id,
     fastdom,
-    email
+    email,
+    config
 ) {
 
     return function () {
@@ -31,24 +33,24 @@ define([
         };
 
         this.id = 'RtrtEmailFormInlineFooter';
-        this.start = '2015-11-13';
-        this.expiry = '2015-12-13';
+        this.start = '2015-11-30';
+        this.expiry = '2015-12-08';
         this.author = 'Gareth Trufitt';
-        this.description = 'Test headings and comfort text (No spam, one click subscribe)';
-        this.audience = 0; // Initial 0% test to allow opt in for team testing
-        this.audienceOffset = 0.90;
-        this.successMeasure = 'X% more users sign up to the email in the footer';
-        this.audienceCriteria = 'All non logged-in users, not on the email landing page';
+        this.description = 'Test inline footer Guardian Today email sign-up with 50% of logged-out, UK users';
+        this.audience = 50;
+        this.audienceOffset = 0.50;
+        this.successMeasure = 'Increase conversion of email sign-up';
+        this.audienceCriteria = 'Logged-out UK users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'Comfort messaging and headlines with stronger CTA get more sign-ups';
+        this.idealOutcome = 'Email sign-up conversion and engagement is increased';
 
         this.canRun = function () {
-            return true;
+            return config.page.edition === 'UK' && !Id.isUserLoggedIn();
         };
 
         this.variants = [
             {
-                id: 'headline-a-with-comforter',
+                id: 'control',
                 test: function () {
                     updateFooter();
                     fastdom.write(function () {
