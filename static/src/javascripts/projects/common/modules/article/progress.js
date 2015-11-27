@@ -9,8 +9,11 @@ define([
 
     return {
         init: function () {
-            this.getArticleHeight();
-            this.bindEvents();
+            // Check if progress bar is present
+            if ($('.progress').length) {
+                this.getArticleHeight();
+                this.bindEvents();
+            }
         },
 
         bindEvents: function () {
