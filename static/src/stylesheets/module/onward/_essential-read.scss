@@ -3,7 +3,7 @@
     margin-bottom: $gs-baseline;
 
     .fc-container__header__title {
-        @include fs-headline(4);
+        @include fs-headline(7);
 
         @include mq($until: mobileLandscape) {
             float: initial;
