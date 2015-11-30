@@ -9,7 +9,8 @@ define([
     'common/utils/proximity-loader',
     'common/modules/onward/inject-container',
     'common/modules/commercial/third-party-tags/outbrain',
-    'lodash/collections/contains'
+    'lodash/collections/contains',
+    'common/modules/identity/api'
 ], function (
     fastdom,
     qwery,
@@ -21,7 +22,8 @@ define([
     proximityLoader,
     injectContainer,
     outbrain,
-    contains
+    contains,
+    identity
 ) {
 
     var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle'],
@@ -34,6 +36,8 @@ define([
 
     function insertFirstThree() {
         var front = (loadSection) ? config.page.section : 'uk';
+
+        moveComments();
 
         if (!config.page.hasStoryPackage && !(config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent && outbrain.canRun() && !outbrain.hasHighRelevanceComponent()) {
             insertContainers(front, $('.js-related'), 1, 0, 'small', function () {
@@ -54,6 +58,12 @@ define([
         proximityLoader.add($el, 1500, function () {
             injectContainer.injectContainer('/container/' + section + '/some/' + num + '/' + offset + '/' + size + '.json', $el, 'inject-network-front-' + num, callback);
         });
+    }
+
+    function moveComments() {
+        if(!identity.isUserLoggedIn() && config.page.commentable) {
+            $(".js-comments").insertAfter(qwery(".js-network-fronts-containers"));
+        }
     }
 
     return FrontsContainers;
