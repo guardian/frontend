@@ -10,7 +10,7 @@ define([
     return {
         init: function () {
             // Check if progress bar is present
-            if ($('.progress').length) {
+            if ($('.js-progress').length) {
                 this.getArticleHeight();
                 this.bindEvents();
             }
@@ -22,7 +22,7 @@ define([
         },
 
         updateProgress: function () {
-            $('.progress__indicator').css('width', this.getProgressAsPercentage);
+            $('.js-progress__indicator').css('width', this.getProgressAsPercentage);
         },
 
         getProgressAsPercentage: function () {
