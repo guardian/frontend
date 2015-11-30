@@ -1,4 +1,5 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+@import model.Page.getContent
 
 <meta charset="utf-8" />
 <title>@views.support.Title(page)</title>
@@ -7,7 +8,7 @@
 @head
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
-@fragments.stylesheets(projectName)
+@fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking(page)

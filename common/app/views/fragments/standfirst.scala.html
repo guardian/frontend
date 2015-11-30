@@ -13,17 +13,17 @@
             <meta itemprop="description" content="@trailText" />
         }
     }
-    @item.fields.standfirst.map { s =>
+    @item.fields.standfirst.map { standfirst =>
         @defining(Edition(request)) { edition =>
             @withJsoup(BulletCleaner(
-                if(item.metadata.isImmersive && item.tags.isArticle) {
-                    if (s.indexOf(item.trail.byline.get) != -1) {
-                        ContributorLinks(s, item.tags.contributors).toString()
+                if(item.metadata.isImmersive && item.tags.isArticle && item.trail.byline) {
+                    if (standfirst.contains(item.trail.byline.get)) {
+                        ContributorLinks(standfirst, item.tags.contributors).toString()
                     } else {
-                        s + "<p>Words by" + ContributorLinks(item.trail.byline.get, item.tags.contributors) + "</p>"
+                        standfirst + "<p>Words by" + ContributorLinks(item.trail.byline.get, item.tags.contributors) + "</p>"
                     }
                 } else {
-                    s
+                    standfirst
                 }
             ))(
                 InBodyLinkCleaner("in standfirst link")
