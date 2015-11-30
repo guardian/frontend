@@ -8,7 +8,8 @@ define([
     'common/modules/analytics/register',
     'common/utils/proximity-loader',
     'common/modules/onward/inject-container',
-    'common/modules/commercial/third-party-tags/outbrain'
+    'common/modules/commercial/third-party-tags/outbrain',
+    'lodash/collections/contains'
 ], function (
     fastdom,
     qwery,
@@ -19,41 +20,39 @@ define([
     register,
     proximityLoader,
     injectContainer,
-    outbrain
+    outbrain,
+    contains
 ) {
 
+    var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle'],
+        loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false;
+
     function FrontsContainers() {
+        insertFirstThree();
+        insertFinalThree();
+    }
+
+    function insertFirstThree() {
+        var front = (loadSection) ? config.page.section : 'uk';
+
         if (!config.page.hasStoryPackage && !(config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent && outbrain.canRun() && !outbrain.hasHighRelevanceComponent()) {
-            injectFirstInRelated();
+            insertContainers(front, $('.js-related'), 1, 0, 'small', function () {
+                insertContainers(front, $('.js-fronts-containers'), 2, 1, 'original', function () {});
+            });
         } else {
-            injectFrontsContainers();
+            insertContainers(front, $('.js-fronts-containers'), 3, 0, 'original', function () {});
         }
     }
 
-    function injectFirstInRelated() {
-        injectContainer.injectContainer('/container/' + config.page.section + '/some/1/0/small.json', $('.js-related'), 'fronts-containers-first', function () {
-            injectFrontsContainers(2);
-        });
+    function insertFinalThree() {
+        var offset = (loadSection) ? 0 : 3;
+
+        insertContainers('uk', $('.js-network-fronts-containers'), 3, offset, 'original', function () {});
     }
 
-    function injectFrontsContainers(numberOfContainers) {
-        var numberToInject =  (numberOfContainers) ? numberOfContainers : 3,
-            offset = 3 - numberToInject;
-
-        injectContainer.injectContainer('/container/' + config.page.section + '/some/' + numberToInject + '/' + offset + '/original.json', $('.js-fronts-containers'), 'fronts-containers', function (isEmpty) {
-            if (isEmpty) {
-                injectContainer.injectContainer('/container/' + 'uk' + '/some/3/0/original.json', $('.js-fronts-containers'), 'network-fronts-containers', function () {});
-                injectNetworkFrontsContainers(3);
-            } else {
-                injectNetworkFrontsContainers();
-            }
-        });
-    }
-
-    function injectNetworkFrontsContainers(offset) {
-        var offsetBy = offset || 0;
-        proximityLoader.add(qwery('.js-network-fronts-containers')[0], 1500, function () {
-            injectContainer.injectContainer('/container/' + 'uk' + '/some/3/' + offsetBy + '/original.json', $('.js-network-fronts-containers'), 'network-fronts-containers', function () {});
+    function insertContainers(section, $el, num, offset, size, callback) {
+        proximityLoader.add($el, 1500, function () {
+            injectContainer.injectContainer('/container/' + section + '/some/' + num + '/' + offset + '/' + size + '.json', $el, 'inject-network-front-' + num, callback);
         });
     }
 
