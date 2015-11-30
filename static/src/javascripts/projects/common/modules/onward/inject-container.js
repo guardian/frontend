@@ -34,7 +34,7 @@ define([
                 });
             }
 
-            callback(resp.html === "");
+            callback(resp.html === '');
         });
     }
 

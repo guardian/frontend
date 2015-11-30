@@ -62,7 +62,7 @@ define([
 
     function moveComments() {
         if (!identity.isUserLoggedIn() && config.page.commentable) {
-            $(".js-comments").insertAfter(qwery(".js-network-fronts-containers"));
+            $('.js-comments').insertAfter(qwery('.js-network-fronts-containers'));
         }
     }
 
