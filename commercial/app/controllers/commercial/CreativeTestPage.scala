@@ -7,32 +7,31 @@ import conf.Configuration
 
 case class TestPage(specifiedKeywords : List[String] = Nil) extends model.StandalonePage {
 
-  lazy val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
+  val isNetworkFront: Boolean = false
+  val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
+  private val webTitle = "Commercial components"
 
-  override val metadata = MetaData.make(
-    id = "1234567",
-    description = None,
-    section = "Comercial components test page",
-    webTitle = "Commercial components",
-    analyticsName = "analytics name",
-    isFront = true,
-    contentType = contentType,
-    javascriptConfigOverrides = newMetaData)
+  val allTheKeywords = webTitle :: specifiedKeywords
+  val capitalisedKeywords = (allTheKeywords).map(_.capitalize).mkString(",")
+  val lowerCaseKeywords = (allTheKeywords).map(_.toLowerCase).mkString(",")
 
-  lazy val navSection: String = "Commercial"
-
-  lazy val newMetaData: Map[String, JsValue] = Map(
+  val newMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(capitalisedKeywords),
     "keywordIds" -> JsString(lowerCaseKeywords),
     "contentType" -> JsString(contentType)
   )
 
-  lazy val allTheKeywords = metadata.webTitle :: specifiedKeywords
+  override val metadata = MetaData.make(
+    id = "1234567",
+    description = None,
+    section = "Comercial components test page",
+    webTitle = webTitle,
+    analyticsName = "analytics name",
+    isFront = true,
+    contentType = contentType,
+    javascriptConfigOverrides = newMetaData)
 
-  lazy val capitalisedKeywords = (allTheKeywords).map(_.capitalize).mkString(",")
-  lazy val lowerCaseKeywords = (allTheKeywords).map(_.toLowerCase).mkString(",")
-
-  val isNetworkFront: Boolean = false
+  val navSection: String = "Commercial"
 }
 
 object CreativeTestPage extends Controller {
