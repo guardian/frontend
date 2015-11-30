@@ -137,11 +137,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         @include mq(leftCol) {
             width: gs-span(9) + $gs-gutter;
         }
-
-        @include mq(wide) {
-            @include columns(4, $gs-gutter);
-            width: gs-span(12) + $gs-gutter;
-        }
     }
 
     a {
@@ -180,11 +175,12 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             padding-right: 50%;
         }
         @include mq(leftCol) {
-            width: gs-span(3);
+            width: gs-span(5);
+            padding-right: gs-span(1);
         }
-
         @include mq(wide) {
-            width: gs-span(4);
+            width: gs-span(6);
+            padding-right: gs-span(2);
         }
     }
 
