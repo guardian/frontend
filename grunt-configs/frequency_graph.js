@@ -7,7 +7,7 @@ module.exports = function () {
                 'bootstraps/standard.js',
                 'bootstraps/enhanced.js',
                 'bootstraps/commercial.js',
-                'core.js'
+                'enhanced-vendor.js'
             ],
             requireConfig: '/grunt-configs/requirejs.js',
             gruntJit: true,

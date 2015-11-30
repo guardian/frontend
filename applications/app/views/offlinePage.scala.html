@@ -61,21 +61,16 @@
                 text:                       'text', // noop
                 inlineSvg:                  'inlineSvg', // noop
 
-                core:                       '@Static("javascripts/core.js")',
-                'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
+                'enhanced-vendor':          '@Static("javascripts/enhanced-vendor.js")',
                 'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
-                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
+                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
+
+                react: 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js'
             }
         };
 
         // cloudwatch beacons
         @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
-
-        // curl, library only
-        @Html(Static.js.curl);
-
-        // load the enhanced JS
-        @InlineJs(bootEnhanced(offlinePage.metadata).body, "bootEnhanced.js")
     </script>
 </head>
     <body

@@ -123,7 +123,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'uglify:javascript']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:standard', 'uglify:javascript']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -158,7 +158,7 @@ module.exports = function (grunt) {
         if (!options.isDev && requirejsName !== 'common') {
             grunt.task.run('requirejs:common');
         }
-        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'asset_hash']);
+        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'concat:standard', 'uglify:javascript', 'asset_hash']);
     }
     for (var requireTaskName in grunt.config('requirejs')) {
         if (requireTaskName !== 'options') {

@@ -14,7 +14,6 @@ var curl = {
             stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
-            react:                          'components/react/react',
             classnames:                     'components/classnames/index',
             enhancer:                       'components/enhancer/enhancer',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
@@ -25,7 +24,6 @@ var curl = {
             picturefill:                    'projects/common/utils/picturefill',
             Promise:                        'components/when/Promise',
             qwery:                          'components/qwery/qwery',
-            raven:                          'components/raven-js/raven',
             reqwest:                        'components/reqwest/reqwest',
             'facebook.js':                  '//connect.facebook.net/en_US/all.js',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
@@ -44,12 +42,10 @@ var curl = {
             text:         'components/requirejs-text/text',
             inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
-            core:                       '@Static("javascripts/core.js")',
-            'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
+            'enhanced-vendor':          '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
             'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
             'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
-            'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
             'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
             'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
             'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
@@ -72,9 +68,9 @@ var curl = {
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg' // noop
+            inlineSvg:                  'inlineSvg', // noop
+
+            react: 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js'
         }
     }
 };
-
-@JavaScript(Static.js.curl);

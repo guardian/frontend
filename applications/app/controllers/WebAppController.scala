@@ -51,10 +51,11 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
           Static("stylesheets/head.content.css"),
           Static("stylesheets/content.css"),
           Static("stylesheets/print.css"),
-          Static("javascripts/core.js"),
-          Static("javascripts/bootstraps/standard.js"),
+          Static("javascripts/standard.js"),
+          Static("javascripts/enhanced-vendor.js"),
           Static("javascripts/bootstraps/enhanced.js"),
-          Static("javascripts/bootstraps/crosswords.js")
+          Static("javascripts/bootstraps/crosswords.js"),
+          "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js"
         ).map(asset => JsString(asset.toString)))
       ))))
     }

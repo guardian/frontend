@@ -31,19 +31,15 @@ module.exports = function (grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },{
+                },
+                {
                     expand: true,
                     cwd: options.requirejsDir,
                     src: [
-                        'core.js',
-                        'core.js.map',
-                        'bootstraps/standard.js',
-                        'bootstraps/standard.js.map',
+                        'enhanced-vendor.js',
+                        'enhanced-vendor.js.map',
                         'bootstraps/enhanced.js',
-                        'bootstraps/enhanced.js.map',
-                        'bootstraps/commercial.js',
-                        'bootstraps/commercial.js.map',
-                        'components/curl/curl-domReady.js'
+                        'bootstraps/enhanced.js.map'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
                 }

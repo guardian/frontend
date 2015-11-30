@@ -9,7 +9,9 @@ define([
     'common/utils/mediator',
     'common/utils/user-timing',
     'bootstraps/common',
-    'bootstraps/sport'
+    'bootstraps/sport',
+
+    'enhanced-core'
 ], function (
     fastdom,
     bean,
@@ -23,7 +25,6 @@ define([
     common,
     sport
 ) {
-
     var bootstrapContext = function (featureName, bootstrap) {
             raven.context(
                 { tags: { feature: featureName } },
