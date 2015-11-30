@@ -62,7 +62,7 @@ define([
         this.expiry = '2015-12-08';
         this.author = 'Gareth Trufitt';
         this.description = 'Test inline footer Guardian Today email sign-up with 50% of logged-out, UK users';
-        this.audience = 100;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Increase conversion of email sign-up';
         this.audienceCriteria = 'Logged-out UK users';
