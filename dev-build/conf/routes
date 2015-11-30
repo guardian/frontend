@@ -92,7 +92,7 @@ GET            /most-read-facebook.json                                         
 GET            /most-read-twitter.json                                                                                           controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
-GET            /most-read-amp.json                                                                                               controllers.MostPopularController.renderPopularAmp()
+GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 

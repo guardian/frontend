@@ -83,7 +83,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
-  def renderPopularAmp = Action { implicit request =>
+  def renderPopularMicroformat2 = Action { implicit request =>
     val edition = Edition(request)
 
     Cached(900) {

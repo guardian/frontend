@@ -46,7 +46,7 @@
                 <div class="fc-container__header__title">
                     <span>popular</span>
                 </div>
-                <amp-list width="600" height="1000" layout="responsive" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-amp.json">
+                <amp-list width="600" height="1000" layout="responsive" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-mf2.json">
                     <template type="amp-mustache">
                         <div class="headline-list__item">
                             <p class="headline-list__count">{{index}}</p>
