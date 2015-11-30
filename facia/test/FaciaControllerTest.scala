@@ -7,7 +7,6 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest._
 import common.ExecutionContexts
-import controllers.FaciaController
 import services.ConfigAgent
 
 @DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite

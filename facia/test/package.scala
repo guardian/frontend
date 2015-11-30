@@ -4,7 +4,6 @@ import java.io.File
 
 import controllers.{front, FaciaController}
 import controllers.front.FrontJsonFapi
-import metadata.FaciaMetaDataTest
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
 import recorder.HttpRecorder
@@ -43,6 +42,7 @@ object `package` {
 }
 
 class FaciaTestSuite extends Suites (
+  new model.FaciaPageTest,
   new controllers.front.FaciaDefaultsTest,
   new services.FaciaHealthcheckTest,
   new slices.DynamicFastTest,
@@ -50,7 +50,7 @@ class FaciaTestSuite extends Suites (
   new slices.StoryTest,
   new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
-  new FaciaMetaDataTest
+  new metadata.FaciaMetaDataTest
 ) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
