@@ -15,8 +15,6 @@ import scala.concurrent.Await
   }
 
   "Cdn Healthcheck" should "pass once fronts can be served" in goTo("/uk"){ _ =>
-    //val wsConfig = new TestWsConfig{}
-    //implicit val config = wsConfig.longTimeoutConfig
     Await.result(WS.clientUrl(s"http://localhost:$port/_fronts_cdn_healthcheck")(longTimeoutConfig).get(), 10.seconds).status should be (200)
   }
 }

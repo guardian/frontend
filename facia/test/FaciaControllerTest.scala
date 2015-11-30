@@ -27,7 +27,7 @@ import services.ConfigAgent
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
-    val result = FaciaController.renderFront("does-not-exist")(TestRequest()) //Film is actually a facia front ON PROD
+    val result = test.faciaController.renderFront("does-not-exist")(TestRequest()) //Film is actually a facia front ON PROD
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist"))
   }
@@ -35,7 +35,7 @@ import services.ConfigAgent
   it should "serve an X-Accel-Redirect for /rss that it doesn't know about" in {
     val fakeRequest = FakeRequest("GET", "/does-not-exist/rss")
 
-    val result = FaciaController.renderFrontRss("does-not-exist")(fakeRequest)
+    val result = test.faciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss"))
   }
@@ -43,7 +43,7 @@ import services.ConfigAgent
   it should "keep query params for X-Accel-Redirect" in {
     val fakeRequest = FakeRequest("GET", "/does-not-exist?page=77")
 
-    val result = FaciaController.renderFront("does-not-exist")(fakeRequest)
+    val result = test.faciaController.renderFront("does-not-exist")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist?page=77"))
   }
@@ -51,7 +51,7 @@ import services.ConfigAgent
   it should "keep query params for X-Accel-Redirect with RSS" in {
     val fakeRequest = FakeRequest("GET", "/does-not-exist/rss?page=77")
 
-    val result = FaciaController.renderFrontRss("does-not-exist")(fakeRequest)
+    val result = test.faciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss?page=77"))
   }
@@ -59,14 +59,14 @@ import services.ConfigAgent
   it should "not serve X-Accel for a path facia serves" in {
     val fakeRequest = FakeRequest("GET", "/music")
 
-    val result = FaciaController.renderFront("music")(fakeRequest)
+    val result = test.faciaController.renderFront("music")(fakeRequest)
     header("X-Accel-Redirect", result) should be (None)
   }
 
   it should "redirect to applications when 'page' query param" in {
     val fakeRequest = FakeRequest("GET", "/music?page=77")
 
-    val result = FaciaController.renderFront("music")(fakeRequest)
+    val result = test.faciaController.renderFront("music")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/music?page=77"))
   }
@@ -74,27 +74,27 @@ import services.ConfigAgent
   it should "not redirect to applications when any other query param" in {
     val fakeRequest = FakeRequest("GET", "/music?id=77")
 
-    val result = FaciaController.renderFront("music")(fakeRequest)
+    val result = test.faciaController.renderFront("music")(fakeRequest)
     header("X-Accel-Redirect", result) should be (None)
   }
 
   it should "redirect to editionalised fronts" in {
     val ukRequest = FakeRequest("GET", "/").from(Uk)
-    val ukResult = FaciaController.renderFront("")(ukRequest)
+    val ukResult = test.faciaController.renderFront("")(ukRequest)
     header("Location", ukResult).head should endWith ("/uk")
 
     val usRequest = FakeRequest("GET", "/").from(Us)
-    val usResult = FaciaController.renderFront("")(usRequest)
+    val usResult = test.faciaController.renderFront("")(usRequest)
     header("Location", usResult).head should endWith ("/us")
   }
 
   it should "redirect to editionalised pages" in {
     val ukRequest = FakeRequest("GET", "/technology").from(Uk)
-    val ukResult = FaciaController.renderFront("technology")(ukRequest)
+    val ukResult = test.faciaController.renderFront("technology")(ukRequest)
     header("Location", ukResult).head should endWith ("/uk/technology")
 
     val usRequest = FakeRequest("GET", "/technology").from(Us)
-    val usResult = FaciaController.renderFront("technology")(usRequest)
+    val usResult = test.faciaController.renderFront("technology")(usRequest)
     header("Location", usResult).head should endWith ("/us/technology")
   }
 
@@ -102,7 +102,7 @@ import services.ConfigAgent
 
 
     val international = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INT")
-    val redirectToInternational = FaciaController.renderFront("")(international)
+    val redirectToInternational = test.faciaController.renderFront("")(international)
     header("Location", redirectToInternational).head should endWith ("/international")
   }
 
@@ -112,19 +112,19 @@ import services.ConfigAgent
       "X-GU-Edition" -> "INT",
       "X-GU-Edition-From-Cookie" -> "true"
     )
-    val redirectToUk = FaciaController.renderFront("")(control)
+    val redirectToUk = test.faciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/international")
   }
 
   it should "send international traffic ot the UK version of editionalised sections" in {
     val international = FakeRequest("GET", "/commentisfree").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
-    val redirectToInternational = FaciaController.renderFront("commentisfree")(international)
+    val redirectToInternational = test.faciaController.renderFront("commentisfree")(international)
     header("Location", redirectToInternational).head should endWith ("/uk/commentisfree")
   }
 
   it should "list the alterative options for a path by section and edition" in {
-    FaciaController.alternativeEndpoints("uk/lifeandstyle") should be (List("lifeandstyle", "uk"))
-    FaciaController.alternativeEndpoints("uk") should be (List("uk"))
-    FaciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
+    test.faciaController.alternativeEndpoints("uk/lifeandstyle") should be (List("lifeandstyle", "uk"))
+    test.faciaController.alternativeEndpoints("uk") should be (List("uk"))
+    test.faciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
   }
 }
