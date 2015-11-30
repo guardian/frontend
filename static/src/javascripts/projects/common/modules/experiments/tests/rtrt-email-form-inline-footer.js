@@ -62,8 +62,8 @@ define([
         this.expiry = '2015-12-08';
         this.author = 'Gareth Trufitt';
         this.description = 'Test inline footer Guardian Today email sign-up with 50% of logged-out, UK users';
-        this.audience = 50;
-        this.audienceOffset = 0.50;
+        this.audience = 100;
+        this.audienceOffset = 0;
         this.successMeasure = 'Increase conversion of email sign-up';
         this.audienceCriteria = 'Logged-out UK users';
         this.dataLinkNames = '';
@@ -76,6 +76,10 @@ define([
         this.variants = [
             {
                 id: 'control',
+                test: function () {}
+            },
+            {
+                id: 'show-form',
                 test: function () {
                     updateFooter();
                     fastdom.write(function () {
