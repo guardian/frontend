@@ -411,7 +411,11 @@ define([
             if ($adSlot.data('out-of-page')) {
                 slot = googletag.defineOutOfPageSlot(adUnit, id);
             } else if ($adSlot.data('fluid')) {
-                slot = googletag.defineSlot(adUnit, 'fluid', id);
+                sizeMapping = defineSlotSizes($adSlot);
+                // regis kuckaertz (Nov 30) – SizeMappingBuilder does not handle 'fluid' very well,
+                // so instead we add it manually ourselves to the end of each array of sizes
+                forEach(sizeMapping, function (sizeMap) { sizeMap[1].push('fluid'); });
+                slot = googletag.defineSlot(adUnit, 'fluid', id).defineSizeMapping(sizeMapping);
             } else {
                 sizeMapping = defineSlotSizes($adSlot);
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
@@ -419,8 +423,7 @@ define([
                     flatten(sizeMapping, true, function (map) { return map[1]; }),
                     function (size) { return size[0] + '-' + size[1]; }
                 );
-                slot = googletag.defineSlot(adUnit, size, id);
-                slot.defineSizeMapping(sizeMapping);
+                slot = googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
             }
 
             if ($adSlot.data('series')) {
