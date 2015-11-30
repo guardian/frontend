@@ -13,6 +13,7 @@ define([
     'text!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample',
+    'lodash/collections/find',
     'lodash/utilities/random'
 ], function (
     $,
@@ -29,6 +30,7 @@ define([
     messageTemplate,
     svgs,
     sample,
+    find,
     random) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
@@ -99,8 +101,8 @@ define([
                 imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
             }];
 
-        variant = variations.find(function (message) {
-            return contributors.find(function (contributor) {
+        variant = find(variations, function (message) {
+            return find(contributors, function (contributor) {
                 return contributor[0] === message.quoteAuthor;
             });
         }) || variations[random(variations.length - 1)];
