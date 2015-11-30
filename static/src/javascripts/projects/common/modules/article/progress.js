@@ -30,7 +30,7 @@ define([
         },
 
         getArticleHeight: function () {
-            articleHeight = $('.content--article').offset().height;
+            articleHeight = $('.js-content--article').offset().height;
         }
     };
 });
