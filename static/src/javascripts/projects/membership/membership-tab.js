@@ -17,7 +17,7 @@ define([
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
-        PACKAGE_NEXT_PAYMENT_CONTAINER = 'js-mem-next-payment-container',
+        PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-mem-next-payment-container',
         PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date',
         PACKAGE_NEXT_PAYMENT_PRICE = '.js-mem-next-payment-price',
         PACKAGE_INTERVAL = '.js-mem-plan-interval',
@@ -66,7 +66,7 @@ define([
 
     function fetchUserDetails() {
         ajax({
-            url: config.page.membershipUrl + '/user/me/details',
+            url: config.page.userAttributesApiUrl + '/me/mma-membership',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
@@ -104,7 +104,7 @@ define([
     }
 
     function populateUserDetails(userDetails) {
-        var intervalText = userDetails.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
+        var intervalText = userDetails.subscription.plan.interval === 'Month' ? 'Monthly' : 'Annual',
             notificationTypeSelector;
 
         $(MEMBERSHIP_TIER).text(userDetails.tier);
@@ -118,7 +118,8 @@ define([
         $(PACKAGE_NEXT_PAYMENT_DATE).text(formatDate(userDetails.subscription.nextPaymentDate));
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatAmount(userDetails.subscription.nextPaymentPrice));
 
-        if (userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
+        var isMonthly = userDetails.subscription.plan.interval === 'Month';
+        if (userDetails.subscription.nextPaymentDate == userDetails.subscription.renewalDate || isMonthly) {
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
         }
 

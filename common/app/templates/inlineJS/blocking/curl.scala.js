@@ -11,6 +11,7 @@ var curl = {
             common:                         'projects/common',
             facia:                          'projects/facia',
             membership:                     'projects/membership',
+            stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
             react:                          'components/react/react',
