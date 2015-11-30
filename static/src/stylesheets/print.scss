@@ -179,6 +179,10 @@ $logoHeight: 60px;
     fill: #ffffff;
 }
 
+.crossword__container {
+    clear: none;
+}
+
 .crossword__container__game {
     // Clearfix
     overflow: hidden;
