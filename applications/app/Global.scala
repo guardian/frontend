@@ -3,7 +3,7 @@ import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import metrics.FrontendMetric
+import metrics.{FrontendMetric, EmailSubsciptionMetrics}
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
@@ -25,6 +25,9 @@ object Global extends WithFilters(Filters.common: _*)
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
     ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
-    ContentApiMetrics.ContentApiErrorMetric
+    ContentApiMetrics.ContentApiErrorMetric,
+    EmailSubsciptionMetrics.APIHTTPError,
+    EmailSubsciptionMetrics.APINetworkError,
+    EmailSubsciptionMetrics.ListIDError
   )
 }
