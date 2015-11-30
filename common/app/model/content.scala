@@ -357,7 +357,7 @@ object Article {
 
     content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:${GuardianContentTypes.Article}:${id.substring(id.lastIndexOf("/") + 1)}",
+      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       isImmersive = content.fields.displayHint.contains("immersive"),
       schemaType = Some(ArticleSchemas(content.tags)),
