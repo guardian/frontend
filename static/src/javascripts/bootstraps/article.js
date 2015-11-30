@@ -11,6 +11,7 @@ define([
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
     'common/modules/article/chapters',
+    'common/modules/article/progress',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'bootstraps/article-liveblog-common',
@@ -27,6 +28,7 @@ define([
     membershipEvents,
     openModule,
     chapters,
+    progress,
     ab,
     geoMostPopular,
     articleLiveblogCommon,
@@ -68,6 +70,7 @@ define([
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             chapters.init();
+            progress.init();
             openModule.init();
             mediator.emit('page:article:ready');
         };

@@ -1,0 +1,14 @@
+.progress {
+    position: fixed;
+    z-index: 1;
+    height: $gs-baseline / 4;
+    width: 100%;
+    background-color: rgba(255, 255, 255, .2);
+    pointer-events: none;
+}
+
+.progress__indicator {
+    background-color: colour(feature-default);
+    width: 0%;
+    height: 100%;
+}
