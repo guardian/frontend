@@ -29,20 +29,9 @@ object Commercial {
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
-      val desktopSizes = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition)) {
-            Seq("728,90")
-          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition)) {
-            Seq("88,70")
-          } else {
-            Seq("1,1", "900,250", "970,250")
-          }
-        } else Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
-      }
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> desktopSizes
+        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
       )
     }
 

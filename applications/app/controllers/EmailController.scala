@@ -29,6 +29,7 @@ case class EmailForm(email: String)
 
 object listIds {
   val testList = 3485
+  val guardianTodayUk = 37
 }
 
 object EmailForm {
@@ -36,7 +37,8 @@ object EmailForm {
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
   val listTriggers = Map(
-    listIds.testList -> 2529
+    listIds.testList -> 2529,
+    listIds.guardianTodayUk -> 2529
   )
 
   def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
@@ -59,11 +61,11 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   )
 
   def renderPage() = Action { implicit request =>
-    Ok(views.html.emailLanding(emailLandingPage))
+    Cached(60)(Ok(views.html.emailLanding(emailLandingPage)))
   }
 
   def renderForm() = Action { implicit request =>
-    Ok(views.html.emailFragment(emailLandingPage))
+    Cached(60)(Ok(views.html.emailFragment(emailLandingPage)))
   }
 
   def subscriptionResult(result: String) = Action { implicit request =>
@@ -76,7 +78,7 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   }
 
   def submit() = Action.async { implicit request =>
-    val listId = listIds.testList
+    val listId = listIds.guardianTodayUk
 
     def respond(result: SubscriptionResult): Result = {
       render {

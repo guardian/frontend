@@ -121,9 +121,6 @@ define([
         if (!config.switches.sponsored) {
             switches.badges = false;
         }
-        if (!config.switches.membershipMessages) {
-            switches.membershipMessages = false;
-        }
 
         return switches;
     };

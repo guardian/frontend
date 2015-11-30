@@ -1,6 +1,7 @@
 @(classes: Seq[String], srcset: String, sizes: String, src: Option[String] = None)
 
 <img class="@RenderClasses(classes: _*)"
+    alt=""
     srcset="@srcset"
     sizes="@sizes"
     @src.map { src =>

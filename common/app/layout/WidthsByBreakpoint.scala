@@ -7,7 +7,7 @@ import views.support.Profile
 object FaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](
     (MediaList, 127.px),
-    (Standard, 100.perc)
+    (Standard, 95.vw)
   )
 
   val ExtraPixelWidthsForMediaMobile: Seq[PixelWidth] = List(
@@ -279,8 +279,8 @@ case class WidthsByBreakpoint(
   def profiles: Seq[Profile] = (breakpoints flatMap {
     case BreakpointWidth(breakpoint, PixelWidth(pixels)) =>
       Seq(pixels)
-    case BreakpointWidth(Mobile, _: PercentageWidth) =>
-      // Percentage widths are not explicitly associated with any pixel widths that could be used with a srcset.
+    case BreakpointWidth(Mobile, _: PercentageWidth | _: ViewportWidth) =>
+      // Percentage and viewport widths are not explicitly associated with any pixel widths that could be used with a srcset.
       // So we create a series of profiles by combining usable widths in the class with predefined sensible widths.
       val pixelWidths = breakpoints.collect { case BreakpointWidth(_,width: PixelWidth) => width.get }
       val widths: Seq[Int] = pixelWidths.dropWhile(_ > MaximumMobileImageWidth).take(SourcesToEmitOnMobile)
