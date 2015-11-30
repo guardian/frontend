@@ -1,4 +1,4 @@
-@(item: model.MetaData)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 
