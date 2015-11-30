@@ -101,7 +101,10 @@ object EmailController extends Controller with ExecutionContexts with Logging {
 
       form => EmailForm.submit(form, listId) match {
         case Some(future) => future.map(_.status match {
-          case 200 | 201 => respond(Subscribed)
+          case 200 | 201 => {
+            EmailSubmission.increment()
+            respond(Subscribed)
+          }
           case status    => {
             log.error(s"Error posting to ExactTarget: HTTP $status")
             APIHTTPError.increment()
