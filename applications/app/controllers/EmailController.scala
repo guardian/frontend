@@ -101,28 +101,26 @@ object EmailController extends Controller with ExecutionContexts with Logging {
 
       form => EmailForm.submit(form, listId) match {
         case Some(future) => future.map(_.status match {
-          case 200 | 201 => {
+          case 200 | 201 =>
             EmailSubmission.increment()
             respond(Subscribed)
-          }
-          case status    => {
+
+          case status    =>
             log.error(s"Error posting to ExactTarget: HTTP $status")
             APIHTTPError.increment()
             respond(OtherError)
-          }
+
         }) recover {
-          case e: Exception => {
+          case e: Exception =>
             log.error(s"Error posting to ExactTarget: ${e.getMessage}")
             APINetworkError.increment()
             respond(OtherError)
-          }
         }
 
-        case None => {
+        case None =>
           log.error(s"Unable to find a trigger for list ID $listId")
           ListIDError.increment()
           Future.successful(respond(OtherError))
-        }
       })
   }
 
