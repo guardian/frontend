@@ -415,7 +415,7 @@ define([
             } else if ($adSlot.data('fluid') && cookies.get('adtest') === 'tm2') {
                 $adSlot.addClass('ad-slot--fluid');
                 sizeMapping = defineSlotSizes($adSlot);
-                // regis kuckaertz (Nov 30) – SizeMappingBuilder does not handle 'fluid' very well,
+                // SizeMappingBuilder does not handle 'fluid' very well,
                 // so instead we add it manually ourselves to the end of each array of sizes
                 forEach(sizeMapping, function (sizeMap) { sizeMap[1].push('fluid'); });
                 slot = googletag.defineSlot(adUnit, 'fluid', id).defineSizeMapping(sizeMapping);

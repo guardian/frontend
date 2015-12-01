@@ -35,9 +35,9 @@ trait CommercialSwitches {
   val FluidAdvertsSwitch = Switch(
     "Commercial",
     "fluid-adverts",
-    "Enable fluid ads",
+    "Enable fluid ads, which occupy 100% of the width of their parent container but have a fixed height",
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2015, 12, 15),
     exposeClientSide = true
   )
 
