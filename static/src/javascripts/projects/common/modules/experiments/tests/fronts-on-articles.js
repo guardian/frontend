@@ -9,8 +9,8 @@ define([
         this.expiry = '2015-12-30';
         this.author = 'Josh Holder';
         this.description = 'Inject fronts containers on articles';
-        this.audience = 0.04;
-        this.audienceOffset = 0.46;
+        this.audience = 0.0;
+        this.audienceOffset = 0.0;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';

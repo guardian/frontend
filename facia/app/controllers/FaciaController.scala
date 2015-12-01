@@ -52,10 +52,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         val containers = collections.getOrElse(List()).map { collection: PressedCollection =>
 
           val containerLayout = size match {
-            case "small" => Fixed(FixedContainers.fixedSmallSlowIV)
+            case "small" => Fixed(FixedContainers.frontsOnArticles)
             case "large" => Fixed(FixedContainers.fixedMediumFastXI)
             case "original" => if(collection.collectionType.contains("mpu")) {
-              Fixed(FixedContainers.fixedSmallSlowIV)
+              Fixed(FixedContainers.frontsOnArticles)
             } else {
               Container.resolve(collection.collectionType)
             }
@@ -233,7 +233,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             if (preserveLayout)
               Container.resolve(collection.collectionType)
             else
-              Fixed(FixedContainers.fixedMediumFastXII)
+              Fixed(FixedContainers.fixedSmallSlowVI)
           }
 
           val containerDefinition = FaciaContainer(
