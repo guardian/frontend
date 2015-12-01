@@ -25,18 +25,18 @@ object SiteMapJob extends ExecutionContexts with Logging {
     news: xml.NodeSeq,
     video: xml.NodeSeq)
 
-  private val siteMapContent = AkkaAgent[SiteMapContent](SiteMapContent(Nil, Nil))
+  private val siteMapContent = AkkaAgent[Option[SiteMapContent]](None)
 
   def update(): Unit = {
     for {
       newsSiteMap <- NewsSiteMap.getLatestContent
       videoSiteMap <- VideoSiteMap.getLatestContent
     } {
-      siteMapContent.send(SiteMapContent(newsSiteMap, videoSiteMap))
+      siteMapContent.send(Some(SiteMapContent(newsSiteMap, videoSiteMap)))
     }
   }
 
-  def siteMaps(): SiteMapContent = siteMapContent()
+  def siteMaps(): Option[SiteMapContent] = siteMapContent()
 }
 
 
