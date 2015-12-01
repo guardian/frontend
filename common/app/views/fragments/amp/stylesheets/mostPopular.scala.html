@@ -1,0 +1,84 @@
+.fc-container__inner {
+    border-top: 0.0625rem solid #4bc6df;
+    padding-top: 0.1875rem;
+    overflow: hidden;
+    position: relative;
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
+}
+
+.fc-container__header__title {
+    position: relative;
+    padding-bottom: 1rem;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    font-family: "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
+    font-weight: 900;
+    line-height: 1.5rem;
+    color: #00456e;
+}
+
+.headline-list__count {
+    float: left;
+    width: 3.75rem;
+    color: #dcdcdc;
+    font-weight: 200;
+    font-size: 2.75rem;
+    line-height: 2.75rem;
+}
+
+@@media (min-width: 20em) {
+    .headline-list__count {
+        width: 3.125rem;
+    }
+}
+
+.fc-item__title {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    word-wrap: break-word;
+}
+
+.fc-item__link {
+    color: #333;
+}
+
+.headline-list__link .fc-item__title {
+    margin-top: -0.25rem;
+    margin-left: 3.75rem;
+}
+
+@@media (min-width: 20em) {
+    .headline-list__link .fc-item__title {
+        margin-left: 3.125rem;
+    }
+}
+
+.headline-list__item {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 0.25rem;
+    padding-bottom: 1.5rem;
+    min-height: 9%;
+}
+
+.headline-list__item:before {
+    position: absolute;
+    top: 0;
+    right: 0.625rem;
+    left: 0;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0.0625rem;
+    background-color: #dcdcdc;
+}
+
+@@media (max-width: 46.24em) {
+    .headline-list__item:first-child:before {
+        display: none;
+    }
+}
