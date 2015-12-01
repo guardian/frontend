@@ -1,5 +1,4 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -8,9 +7,16 @@ define([
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'lodash/arrays/compact',
+    'lodash/collections/map',
+    'lodash/objects/forIn',
+    'lodash/objects/keys',
+    'lodash/objects/merge',
+    'lodash/arrays/uniq',
+    'lodash/objects/pick',
+    'lodash/objects/isArray'
 ], function (
-    _,
     config,
     cookies,
     detect,
@@ -19,8 +25,15 @@ define([
     krux,
     identity,
     userAdTargeting,
-    ab
-) {
+    ab,
+    compact,
+    map,
+    forIn,
+    keys,
+    merge,
+    uniq,
+    pick,
+    isArray) {
 
     var format = function (keyword) {
             return keyword.replace(/[+\s]+/g, '-').toLowerCase();
@@ -50,7 +63,7 @@ define([
             if (!ids) {
                 return null;
             }
-            return _.compact(_.map(
+            return compact(map(
                 ids.split(','), function (id) {
                     return parseId(id);
                 }
@@ -60,13 +73,13 @@ define([
             var abParams = [],
                 abParticipations = ab.getParticipations();
 
-            _.forIn(abParticipations, function (n, key) {
+            forIn(abParticipations, function (n, key) {
                 if (n.variant && n.variant !== 'notintest') {
                     abParams.push(key + '-' + n.variant.substring(0, 1));
                 }
             });
 
-            _.forIn(_.keys(config.tests), function (n) {
+            forIn(keys(config.tests), function (n) {
                 if (n.toLowerCase().match(/^cm/)) {
                     abParams.push(n);
                 }
@@ -95,13 +108,25 @@ define([
             }
 
             return visitedValue;
+        },
+        getReferrer = function () {
+            var referrerTypes = [
+                    {id: 'facebook', match: 'facebook.com'},
+                    {id: 'twitter', match: 't.co'},
+                    {id: 'googleplus', match: 'plus.url.google'}
+                ],
+                matchedRef = referrerTypes.filter(function (referrerType) {
+                    return detect.getReferrer().indexOf(referrerType.match) > -1;
+                })[0] || {};
+
+            return matchedRef.id;
         };
 
     return function (opts) {
         var win         = (opts || {}).window || window,
             page        = config.page,
             contentType = formatTarget(page.contentType),
-            pageTargets = _.merge({
+            pageTargets = merge({
                 url:     win.location.pathname,
                 edition: page.edition && page.edition.toLowerCase(),
                 se:      getSeries(page),
@@ -116,18 +141,19 @@ define([
                 si:      identity.isUserLoggedIn() ? 't' : 'f',
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
+                ref:     getReferrer(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
                 fr:      getVisitedValue(),
-                tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
+                tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments());
 
         // filter out empty values
-        return _.pick(pageTargets, function (target) {
-            if (_.isArray(target)) {
+        return pick(pageTargets, function (target) {
+            if (isArray(target)) {
                 return target.length > 0;
             } else {
                 return target;

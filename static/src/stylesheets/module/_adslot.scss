@@ -50,10 +50,6 @@
         border-top-color: colour(neutral-2);
         background-color: transparent;
     }
-
-    &.ad-slot__survey {
-        text-align: left;
-    }
 }
 
 /**
@@ -132,6 +128,22 @@
         }
     }
 }
+
+.top-banner-below-container {
+    margin: 0 auto;
+    text-align: center;
+    z-index: 0;
+
+    .ad-slot__label {
+        width: 970px; // Size of the large banner 970x250
+        margin: 0 auto;
+    }
+
+    @include mq($until: desktop) {
+        display: none !important;
+    }
+}
+
 .ad-slot--top-banner-ad {
     text-align: center;
 

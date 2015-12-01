@@ -17,6 +17,13 @@ x x x x x x x x x x x x x x x x x x x x x x x
     min-height: $item-min-height;
     padding-left: $image-width;
 
+    // Override u-responsive-ratio
+    // Circumvents Chrome bug with positioning, overflow: hidden and columns
+    // https://code.google.com/p/chromium/issues/detail?id=527709
+    .fc-item__image-container {
+        overflow: visible;
+    }
+
     .fc-item__image-container {
         display: block;
     }

@@ -4,9 +4,10 @@ import com.gu.facia.api.models._
 import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, NavItem}
 import conf.Configuration
+import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
-import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 
 import scala.language.postfixOps
 
@@ -69,7 +70,7 @@ case class PressedPage(id: String,
     "keywords" -> JsString(webTitle.capitalize),
     "keywordIds" -> JsString(keywordIds.mkString(",")),
     "contentType" -> JsString(contentType)
-  )
+  ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
   val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
 
@@ -96,6 +97,8 @@ case class PressedPage(id: String,
   override def omitMPUsFromContainers(edition: Edition): Boolean = {
     DfpAgent.omitMPUsFromContainers(id, edition)
   }
+
+  val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 

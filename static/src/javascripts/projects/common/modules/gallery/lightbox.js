@@ -2,7 +2,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -20,12 +19,15 @@ define([
     'text!common/views/content/endslate.html',
     'text!common/views/content/loader.html',
     'text!common/views/content/share-button.html',
-    'text!common/views/content/share-button-mobile.html'
+    'text!common/views/content/share-button-mobile.html',
+    'lodash/collections/map',
+    'lodash/functions/throttle',
+    'lodash/collections/forEach',
+    'common/utils/chain'
 ], function (
     bean,
     bonzo,
     qwery,
-    _,
     $,
     ajax,
     config,
@@ -43,8 +45,11 @@ define([
     endslateTpl,
     loaderTpl,
     shareButtonTpl,
-    shareButtonMobileTpl
-) {
+    shareButtonMobileTpl,
+    map,
+    throttle,
+    forEach,
+    chain) {
 
     function GalleryLightbox() {
 
@@ -156,8 +161,8 @@ define([
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: _.map(shareItems, template.bind(null, shareButtonTpl)).join(''),
-            shareButtonsMobile: _.map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
+            shareButtons: map(shareItems, template.bind(null, shareButtonTpl)).join(''),
+            shareButtonsMobile: map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
         });
     };
 
@@ -181,7 +186,7 @@ define([
             this.translateContent(this.index, dx, updateTime);
         }.bind(this);
 
-        bean.on(this.$swipeContainer[0], 'touchmove', _.throttle(touchMove, updateTime, {trailing: false}));
+        bean.on(this.$swipeContainer[0], 'touchmove', throttle(touchMove, updateTime, {trailing: false}));
 
         bean.on(this.$swipeContainer[0], 'touchend', function () {
             var direction;
@@ -231,8 +236,10 @@ define([
     GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
 
         var imageContent, $img;
-        _([-1, 0, 1]).map(function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; })
-            .each(function (i) {
+        chain([-1, 0, 1]).and(
+            map,
+            function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
+        ).and(forEach, function (i) {
                 imageContent = this.images[i];
                 $img = bonzo(this.$images[i]);
                 if (!$img.attr('src')) {
@@ -287,9 +294,10 @@ define([
                     this.images = json.images;
                     this.$countEl.text(this.images.length);
 
-                    var imagesHtml = _(this.images)
-                        .map(function (img, i) { return this.generateImgHTML(img, i + 1); }.bind(this))
-                        .join('');
+                    var imagesHtml = chain(this.images).and(
+                        map,
+                        function (img, i) { return this.generateImgHTML(img, i + 1); }.bind(this)
+                    ).join('').value();
 
                     this.$contentEl.html(imagesHtml);
 

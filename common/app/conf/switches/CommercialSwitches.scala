@@ -14,15 +14,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val DfpCacheCreativeTemplates = Switch(
-    "Commercial",
-    "dfp-cache-creative-templates",
-    "Admin will cache DFP creative templates.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 18),
-    exposeClientSide = false
-  )
-
   val CommercialSwitch = Switch(
     "Commercial",
     "commercial",
@@ -154,7 +145,7 @@ trait CommercialSwitches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2015, 12, 4),
     exposeClientSide = false
   )
 
@@ -226,7 +217,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 16),
+    sellByDate = new LocalDate(2016, 3, 16),
     exposeClientSide = false
   )
 

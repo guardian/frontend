@@ -51,6 +51,7 @@ object FixedContainers {
   val fixedSmallSlowII = slices(HalfHalf)
   val fixedSmallSlowIV = slices(QuarterQuarterQuarterQuarter)
   val fixedSmallSlowVI = slices(TTTL4)
+  val fixedSmallSlowVThird = slices(QuarterQuarterHl3)
   val fixedMediumSlowVI = slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter)
   val fixedMediumSlowVII = slices(HalfQQ, QuarterQuarterQuarterQuarter)
   val fixedMediumSlowVIII = slices(Seq(TTMpu, TlTlTl), slicesWithoutMpu = Seq(TTT, TlTlTl))
@@ -73,8 +74,6 @@ object FixedContainers {
 
   val footballTeamFixtures = slices(TTT)
 
-  val HeadlinesABTest = slices(HalfQuarterQl2Ql4)
-
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
   val all: Map[String, ContainerDefinition] = Map(
@@ -83,7 +82,7 @@ object FixedContainers {
     ("fixed/small/slow-III", slices(HalfQQ)),
     ("fixed/small/slow-IV", fixedSmallSlowIV),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
-    ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),
+    ("fixed/small/slow-V-third", fixedSmallSlowVThird),
     ("fixed/small/slow-V-mpu", slices(Seq(TTlMpu),
       slicesWithoutMpu = Seq(QuarterQuarterQuarterQuarter))),
     ("fixed/small/slow-VI", fixedSmallSlowVI),

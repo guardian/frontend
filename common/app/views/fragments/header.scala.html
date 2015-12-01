@@ -18,7 +18,8 @@
                     @if(Edition(request) == Uk) {
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
-                                    popup-container has-popup js-profile-register">
+                                    popup-container has-popup js-profile-register
+                                    hide-until-mobile-landscape">
                             <a href="@Configuration.id.membershipUrl?INTCMP=DOTCOM_HEADER_BECOMEMEMBER"
                                 data-link-name="Register link"
                                 class="brand-bar__item--action">
@@ -64,7 +65,7 @@
                     }
 
                     <div class="brand-bar__item has-popup brand-bar__item--has-control
-                                popup-container brand-bar__item--subscribe"
+                                popup-container brand-bar__item--subscribe desktop-only hide-on-slim-header"
                          data-component="subscribe">
                         <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
                         data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
@@ -90,7 +91,7 @@
             <div class="popup popup--search is-off js-popup--search"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
-                @if(metaData.section == "observer" && metaData.isFront) {
+                @if((metaData.section == "observer" && metaData.isFront) || metaData.id == "theobserver") {
                     <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
                         @if(metaData.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")

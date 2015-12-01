@@ -2,31 +2,30 @@ define([
     'fastdom',
     'qwery',
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/article/spacefinder',
+    'common/modules/article/space-filler',
     'common/modules/ui/images',
-    'text!common/views/content/richLinkTag.html'
+    'text!common/views/content/richLinkTag.html',
+    'lodash/collections/contains'
 ], function (
     fastdom,
     qwery,
     Promise,
-    _,
     $,
     ajax,
     config,
     detect,
     mediator,
     template,
-    spacefinder,
+    spaceFiller,
     imagesModule,
-    richLinkTagTmpl
-) {
+    richLinkTagTmpl,
+    contains) {
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
@@ -67,30 +66,30 @@ define([
     }
 
     function insertTagRichLink() {
-        var richLinkHrefs = $('.element-rich-link a')
+        var $insertedEl,
+            richLinkHrefs = $('.element-rich-link a')
                 .map(function (el) { return $(el).attr('href'); }),
             testIfDuplicate = function (richLinkHref) {
                 // Tag-targeted rich links can be absolute
-                return _.contains(config.page.richLink, richLinkHref);
+                return contains(config.page.richLink, richLinkHref);
             },
             isDuplicate = richLinkHrefs.some(testIfDuplicate),
             isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent;
 
-        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1
-            && !isSensitive && !isDuplicate) {
-
-            return spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
-                return new Promise(function (resolve) {
-                    if (space) {
-                        fastdom.write(function () {
-                            var $el = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
-                            $el.insertBefore(space);
-                            resolve(upgradeRichLink($el[0]));
-                        });
-                    } else {
-                        resolve(null);
-                    }
-                });
+        if (config.page.richLink &&
+            config.page.richLink.indexOf(config.page.pageId) === -1 &&
+            !isSensitive &&
+            !isDuplicate
+        ) {
+            return spaceFiller.insertAtFirstSpace(getSpacefinderRules(), function (para) {
+                $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                $insertedEl.insertBefore(para);
+            }).then(function (didInsert) {
+                if (didInsert) {
+                    return Promise.resolve(upgradeRichLink($insertedEl[0]));
+                } else {
+                    return Promise.resolve(null);
+                }
             });
         } else {
             return Promise.resolve(null);
@@ -102,7 +101,6 @@ define([
     }
 
     return {
-        upgradeRichLink: upgradeRichLink,
         upgradeRichLinks: upgradeRichLinks,
         insertTagRichLink: insertTagRichLink,
         getSpacefinderRules: getSpacefinderRules

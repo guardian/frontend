@@ -22,11 +22,7 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      if (path.startsWith("javascripts")) {
-        Asset(path)
-      } else {
-        assets().getOrElse(path, throw AssetNotFoundException(path))
-      }
+      assets().getOrElse(path, throw AssetNotFoundException(path))
     } else {
       memoizedAssets(path)
     }
@@ -98,6 +94,7 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
         case "football" => "football.css"
         case "index" => "index.css"
         case "rich-links" => "rich-links.css"
+        case "email" => "email.css"
         case _ => "content.css"
       }
 

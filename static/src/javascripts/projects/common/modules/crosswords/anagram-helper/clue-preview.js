@@ -1,14 +1,15 @@
 define([
     'react',
-    'common/utils/_'
+    'lodash/collections/some',
+    'lodash/collections/map'
 ], function (
     React,
-    _
-) {
+    some,
+    map) {
     var CluePreview = React.createClass({
 
         letterHasBoundary: function (separators, letterIndex) {
-            return _.some(separators, function (separator) {
+            return some(separators, function (separator) {
                 return separator === letterIndex;
             });
         },
@@ -75,14 +76,14 @@ define([
                     ' ',
                     this.props.clue.clue
                 ),
-                _.map(entries, (function (entry, i) {
+                map(entries, (function (entry, i) {
                     var classNames = this.checkIfLetterHasSeparator(this.props.clue.separatorLocations, i + 1); //Separators are one indexed in CAPI, annoyingly
                     var span = React.createElement(
                         'span', {
-                            className: classNames + (entry.solved ? ' has-value' : ''),
+                            className: classNames + (entry && entry.solved ? ' has-value' : ''),
                             key: i
                         },
-                        entry.value
+                        entry && entry.value || ''
                     );
                     return span;
                 }), this)

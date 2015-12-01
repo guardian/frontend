@@ -53,6 +53,11 @@
 
     .fc-item__title {
         margin-top: -1 * ($gs-baseline / 3);
+        margin-left: gs-span(1);
+
+        @include mq(mobile) {
+            margin-left: gs-span(1) - $gs-gutter / 2;
+        }
     }
 
     .inline-icon {

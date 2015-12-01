@@ -1,7 +1,6 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/date-formats',
@@ -13,10 +12,14 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/ab',
     'common/modules/onward/history',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lodash/objects/assign',
+    'lodash/collections/forEach',
+    'lodash/arrays/uniq',
+    'lodash/collections/map',
+    'common/utils/robust'
 ], function (
     $,
-    _,
     config,
     cookies,
     dateFormats,
@@ -28,8 +31,12 @@ define([
     mvtCookie,
     ab,
     history,
-    id
-) {
+    id,
+    assign,
+    forEach,
+    uniq,
+    map,
+    robust) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
         NG_STORAGE_KEY = 'gu.analytics.referrerVars',
         standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
@@ -49,7 +56,12 @@ define([
     Omniture.prototype.addHandlers = function () {
         mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
 
-        mediator.on('module:clickstream:click', this.logTag.bind(this));
+        var logTag = this.logTag.bind(this);
+        mediator.on('module:clickstream:click', function (spec) {
+            // We don't want tracking errors to terminate the event emitter, as
+            // this will mean other event listeners will not be called.
+            robust.catchErrorsAndLog('c-analytics', function () { logTag(spec); });
+        });
     };
 
     Omniture.prototype.logView = function () {
@@ -109,9 +121,9 @@ define([
     Omniture.prototype.trackLink = function (linkObject, linkName, options) {
         options = options || {};
         this.populateEventProperties(linkName);
-        _.assign(this.s, options.customEventProperties);
+        assign(this.s, options.customEventProperties);
         this.s.tl(linkObject, 'o', linkName);
-        _.forEach(options.customEventProperties, function (value, key) {
+        forEach(options.customEventProperties, function (value, key) {
             delete this.s[key];
         });
     };
@@ -150,10 +162,10 @@ define([
         this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         // List of components on the page
-        this.s.list2 = _.uniq($('[data-component]')
+        this.s.list2 = uniq($('[data-component]')
             .map(function (x) { return $(x).attr('data-component'); }))
             .toString();
-        this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
+        this.s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
         if (this.s.eVar51) {
             this.s.events = this.s.apl(this.s.events, 'event58', ',');
@@ -185,7 +197,7 @@ define([
         this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
 
         // Sponsored content
-        this.s.prop38 = _.uniq($('[data-sponsorship]')).map(function (n) {
+        this.s.prop38 = uniq($('[data-sponsorship]')).map(function (n) {
             var sponsorshipType = n.getAttribute('data-sponsorship');
             var maybeSponsor = n.getAttribute('data-sponsor');
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';

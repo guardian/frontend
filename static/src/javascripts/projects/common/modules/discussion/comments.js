@@ -150,8 +150,13 @@ Comments.prototype.fetchComments = function(options) {
         (options.comment ? 'comment-context/' + options.comment : this.options.discussionId) +
         '.json?' + (options.page ? '&page=' + options.page : '');
 
+    var orderBy = options.order || this.options.order;
+    if (orderBy === 'recommendations') {
+        orderBy = 'mostRecommended';
+    }
+
     var queryParams = {
-        orderBy: options.order || this.options.order,
+        orderBy: orderBy,
         pageSize: options.pagesize || this.options.pagesize,
         displayThreaded: this.options.threading !== 'unthreaded'
     };

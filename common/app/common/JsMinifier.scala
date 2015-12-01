@@ -112,5 +112,5 @@ object InlineJs {
     }
   }
 
-  def apply(codeToCompile: String)(implicit application: Application): Html = withFileNameHint(codeToCompile, "input.js")
+  def apply(codeToCompile: String, fileName: String = "input.js")(implicit application: Application): Html = withFileNameHint(codeToCompile, fileName)
 }

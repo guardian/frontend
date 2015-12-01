@@ -4,25 +4,33 @@ import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 import common.dfp._
-import dfp.DfpApiWrapper.DfpSessionException
 import org.apache.commons.lang.exception.ExceptionUtils
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
-import scala.util.{Failure, Try}
+import scala.util.{Failure, Success, Try}
 
 object DfpDataHydrator {
   def apply(): DfpDataHydrator = new DfpDataHydrator()
 }
 
+// this is being replaced by DfpApi
 class DfpDataHydrator extends Logging {
 
   private lazy val dfpServiceRegistry = DfpServiceRegistry()
 
   private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
+      val session = new SessionWrapper(serviceRegistry.session)
+
+      def loadTargetingValue(id: Long): String = {
+        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", id)
+        val values = session.customTargetingValues(stmtBuilder)
+        values.map(_.getName).head
+      }
+
       try {
         val dfpLineItems =
-          DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder) filterNot {
+          session.lineItems(statementBuilder) filterNot {
             _.getIsArchived
           }
 
@@ -48,8 +56,8 @@ class DfpDataHydrator extends Logging {
             },
             isPageSkin = isPageSkin(dfpLineItem),
             sponsor = sponsor,
-            creativePlaceholders = buildCreativePlaceholders(dfpLineItem),
-            targeting = buildTargeting(dfpLineItem.getTargeting),
+            creativePlaceholders = buildCreativePlaceholders(dfpLineItem, loadTargetingValue),
+            targeting = buildTargeting(dfpLineItem.getTargeting, loadTargetingValue),
             status = dfpLineItem.getStatus.toString,
             costType = dfpLineItem.getCostType.toString,
             lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
@@ -112,7 +120,8 @@ class DfpDataHydrator extends Logging {
     }
 
     dfpServiceRegistry.map { serviceRegistry =>
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, stmtBuilder)
+      val session = new SessionWrapper(serviceRegistry.session)
+      val dfpAdUnits = session.adUnits(stmtBuilder)
       dfpAdUnits filter { adUnit =>
         Option(adUnit.getParentPath) exists { path =>
           val isRoot = path.length == 1 && adUnit.getName == rootName
@@ -147,9 +156,10 @@ class DfpDataHydrator extends Logging {
 
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
     dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>
+      val session = new SessionWrapper(serviceRegistry.session)
       val statementBuilder = new StatementBuilder()
 
-      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(serviceRegistry, statementBuilder)
+      val suggestedAdUnits = session.suggestedAdUnits(statementBuilder)
 
       val allUnits = suggestedAdUnits.map { adUnit =>
         val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
@@ -160,84 +170,42 @@ class DfpDataHydrator extends Logging {
       allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
   }
 
-  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] =
+  class DfpApprovalException(message: String) extends RuntimeException
+  class DfpSessionException extends RuntimeException
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = {
+
+    def approveTheseAdUnits(
+      serviceRegistry: DfpServiceRegistry,
+      statementBuilder: StatementBuilder
+    ): Try[String] = {
+      val approve: ApproveSuggestedAdUnit = new ApproveSuggestedAdUnit()
+
+      val service = serviceRegistry.suggestedAdUnitService
+      try {
+        val result = Option(service.performSuggestedAdUnitAction(approve, statementBuilder.toStatement))
+        if (result.isDefined) {
+          if (result.get.getNumChanges > 0) {
+            Success("Ad units approved")
+          } else {
+            Failure(new DfpApprovalException("Apparently, nothing changed"))
+          }
+        } else {
+          Failure(new DfpApprovalException("Everything failed"))
+        }
+      } catch {
+        case e: Exception => Failure(e)
+      }
+    }
+
     dfpServiceRegistry.map { serviceRegistry =>
       val adUnitsList: String = adUnits.mkString(",")
 
       val statementBuilder = new StatementBuilder()
-        .where(s"id in ($adUnitsList)")
+                             .where(s"id in ($adUnitsList)")
 
-      DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
-  }.getOrElse(Failure(new DfpSessionException()))
-
-
-  def loadActiveUserDefinedCreativeTemplates(threshold: Option[JodaDateTime]):
-  Seq[GuCreativeTemplate] = {
-
-    dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
-
-      val exampleAssetUrl =
-        "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
-
-      val templatesQuery = new StatementBuilder()
-        .where("status = :status and type = :type")
-        .withBindVariableValue("status", CreativeTemplateStatus.ACTIVE.getValue)
-        .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
-
-      val dfpCreativeTemplates =
-        DfpApiWrapper.fetchCreativeTemplates(
-          serviceRegistry, templatesQuery
-        ) filterNot { template =>
-          val name = template.getName.toUpperCase
-          name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
-        }
-
-      val creativesQuery = threshold.foldLeft(new StatementBuilder()) { (stmtBuilder,
-                                                                         lastModified) =>
-        stmtBuilder.where("lastModifiedDateTime > :lastModified")
-          .withBindVariableValue("lastModified", lastModified.toString)
-      }
-
-      val creatives = DfpApiWrapper.fetchTemplateCreatives(serviceRegistry, creativesQuery)
-
-      dfpCreativeTemplates.map { template =>
-        val templateCreatives = creatives getOrElse(template.getId, Nil)
-        GuCreativeTemplate(
-          id = template.getId,
-          name = template.getName,
-          description = template.getDescription,
-          parameters = template.getVariables map { param =>
-            GuCreativeTemplateParameter(
-              param.getClass.getSimpleName.stripSuffix("CreativeTemplateVariable"),
-              param.getLabel,
-              param.getIsRequired,
-              Option(param.getDescription)
-            )
-          },
-          snippet = template.getSnippet,
-          creatives = templateCreatives.map { creative =>
-            val args =
-              creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) {
-                case (soFar, arg) =>
-                  val argValue = arg match {
-                    case s: StringCreativeTemplateVariableValue =>
-                      Option(s.getValue) getOrElse ""
-                    case u: UrlCreativeTemplateVariableValue =>
-                      Option(u.getValue) getOrElse ""
-                    case _: AssetCreativeTemplateVariableValue =>
-                      exampleAssetUrl
-                    case other => "???"
-                  }
-                  soFar + (arg.getUniqueName -> argValue)
-              }
-            GuCreative(creative.getId.longValue(),
-              creative.getName,
-              toJodaTime(creative.getLastModifiedDateTime),
-              args)
-          }.sortBy(_.name)
-        )
-      }.sortBy(_.name)
-    }
+      approveTheseAdUnits(serviceRegistry, statementBuilder)
+    }.getOrElse(Failure(new DfpSessionException()))
   }
 
   private def isPageSkin(dfpLineItem: LineItem) = {
@@ -257,10 +225,12 @@ class DfpDataHydrator extends Logging {
 
   private def buildCustomTargetSets(customCriteriaSet: CustomCriteriaSet,
                                     targetingKeys: Map[Long, String],
-                                    targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
+                                    targetingValues: Map[Long, String],
+                                    lookUpTargetingValue: Long => String): Seq[CustomTargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[CustomTargetSet] = {
-      val targets = crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))
+      val targets =
+        crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))
       if (targets.isEmpty) {
         None
       } else {
@@ -269,14 +239,22 @@ class DfpDataHydrator extends Logging {
     }
 
     def buildTarget(crit: CustomCriteria): Option[CustomTarget] = {
-      targetingKeys.get(crit.getKeyId) map {
-        keyName => CustomTarget(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
+      targetingKeys.get(crit.getKeyId) map { keyName =>
+        CustomTarget(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
       }
     }
 
     def buildValueNames(valueIds: Array[Long]): Seq[String] = {
+
+      def lookUpValue(id: Long): String = {
+        log.info(s"Looking up targeting value $id ...")
+        val targetValue = lookUpTargetingValue(id)
+        log.info(s"Found targeting value $id=$targetValue")
+        targetValue
+      }
+
       valueIds map { id =>
-        targetingValues.getOrElse(id, "*** unknown ***")
+        targetingValues.getOrElse(id, lookUpValue(id))
       }
     }
 
@@ -285,7 +263,8 @@ class DfpDataHydrator extends Logging {
     }.toSeq
   }
 
-  private def buildTargeting(dfpTargeting: Targeting): GuTargeting = {
+  private def buildTargeting(dfpTargeting: Targeting,
+                             lookUpTargetingValue: Long => String): GuTargeting = {
 
     val adUnits: Seq[GuAdUnit] = {
       val maybeAdUnits = for {
@@ -337,7 +316,12 @@ class DfpDataHydrator extends Logging {
       val maybeTargetSets = for (customTargeting <- Option(dfpTargeting.getCustomTargeting)) yield {
         val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
         val allCustomTargetingValues = CustomTargetingValueAgent.get.data
-        buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
+        buildCustomTargetSets(
+          customTargeting,
+          allCustomTargetingKeys,
+          allCustomTargetingValues,
+          lookUpTargetingValue
+        )
       }
       maybeTargetSets getOrElse Nil
     }
@@ -350,11 +334,13 @@ class DfpDataHydrator extends Logging {
     )
   }
 
-  private def buildCreativePlaceholders(lineItem: LineItem): Seq[GuCreativePlaceholder] = {
+  private def buildCreativePlaceholders(lineItem: LineItem,
+                                        lookUpTargetingValue: Long => String):
+  Seq[GuCreativePlaceholder] = {
 
     def creativeTargeting(name: String): Option[GuTargeting] = {
       for (targeting <- toSeq(lineItem.getCreativeTargetings) find (_.getName == name)) yield {
-        buildTargeting(targeting.getTargeting)
+        buildTargeting(targeting.getTargeting, lookUpTargetingValue)
       }
     }
 

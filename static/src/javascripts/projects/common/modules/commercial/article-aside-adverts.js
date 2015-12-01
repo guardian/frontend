@@ -1,27 +1,24 @@
 define([
     'Promise',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
     'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/objects/defaults'
 ], function (
     Promise,
-    _,
     $,
     $css,
     config,
     idleFastdom,
     createAdSlot,
-    commercialFeatures
-) {
-
-
+    commercialFeatures,
+    defaults) {
     function init(options) {
         var $mainCol, adType,
-            opts = _.defaults(
+            opts = defaults(
                 options || {},
                 {
                     columnSelector: '.js-secondary-column',

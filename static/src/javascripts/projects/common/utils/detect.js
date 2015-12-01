@@ -6,14 +6,31 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/utils/_',
     'common/utils/mediator',
-    'common/utils/$'
+    'common/utils/$',
+    'lodash/arrays/last',
+    'lodash/arrays/findIndex',
+    'lodash/objects/defaults',
+    'lodash/arrays/first',
+    'lodash/collections/findLast',
+    'common/utils/chain',
+    'lodash/collections/contains',
+    'lodash/collections/pluck',
+    'lodash/arrays/initial',
+    'lodash/arrays/rest'
 ], function (
-    _,
     mediator,
-    $
-) {
+    $,
+    last,
+    findIndex,
+    defaults,
+    first,
+    findLast,
+    chain,
+    contains,
+    pluck,
+    initial,
+    rest) {
 
     var supportsPushState,
         getUserAgent,
@@ -291,19 +308,16 @@ define([
     function getBreakpoint(includeTweakpoint) {
         var viewportWidth = detect.getViewport().width,
             index,
-            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
+            breakpoint = last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
             })).name;
         if (!includeTweakpoint) {
-            index = _.findIndex(breakpoints, function (b) {
+            index = findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
-            breakpoint = _(breakpoints)
-                .first(index + 1)
-                .findLast(function (b) {
+            breakpoint = chain(breakpoints).and(first, index + 1).and(findLast, function (b) {
                     return !b.isTweakpoint;
-                })
-                .valueOf()
+                }).valueOf()
                 .name;
         }
 
@@ -311,23 +325,19 @@ define([
     }
 
     function isBreakpoint(criteria) {
-        var c = _.defaults(
+        var c = defaults(
                 criteria,
                 {
-                    min: _.first(breakpoints).name,
-                    max: _.last(breakpoints).name
+                    min: first(breakpoints).name,
+                    max: last(breakpoints).name
                 }
             ),
             currentBreakpoint = getBreakpoint(true);
-        return _(breakpoints)
-            .rest(function (breakpoint) {
+        return chain(breakpoints).and(rest, function (breakpoint) {
                 return breakpoint.name !== c.min;
-            })
-            .initial(function (breakpoint) {
+            }).and(initial, function (breakpoint) {
                 return breakpoint.name !== c.max;
-            })
-            .pluck('name')
-            .contains(currentBreakpoint);
+            }).and(pluck, 'name').and(contains, currentBreakpoint).value();
     }
 
     // Page Visibility
@@ -418,6 +428,10 @@ define([
         return sacrificialAd;
     }
 
+    function getReferrer() {
+        return document.referrer || '';
+    }
+
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -446,7 +460,8 @@ define([
         breakpoints: breakpoints,
         isModernBrowser: isModernBrowser,
         adblockInUse: adblockInUse,
-        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled
+        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
+        getReferrer: getReferrer
     };
     return detect;
 });

@@ -3,33 +3,34 @@ define([
     'qwery',
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'common/modules/ui/smartAppBanner',
     'common/modules/commercial/adblock-messages',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'lodash/collections/contains',
+    'lodash/functions/bindAll'
 ], function (
     bean,
     qwery,
     fastdom,
     $,
-    _,
     config,
     detect,
     mediator,
     ab,
     smartAppBanner,
     adblockMsg,
-    commercialFeatures
-) {
+    commercialFeatures,
+    contains,
+    bindAll) {
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
 
         // temporarily disable on mobile
-        if ((this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) || $('.adfreesurvey-wrapper').length) {
+        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
             return;
         }
 
@@ -45,18 +46,18 @@ define([
             firstLoadDepth: 500,
             isNavigationLocked: false
         };
-        this.isMobile = _.contains(this.breakpoint, 'mobile');
-        this.isTablet = _.contains(this.breakpoint, 'tablet');
+        this.isMobile = contains(this.breakpoint, 'mobile');
+        this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.noTopBanner = !commercialFeatures.topBannerAd;
         this.isProfilePage = config.page.section === 'identity';
 
-        _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
+        bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
 
     StickyHeader.prototype.init = function () {
         // temporarily disable on mobile
-        if ((this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) || $('.adfreesurvey-wrapper').length) {
+        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
             return;
         }
 
@@ -129,7 +130,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (adblockMsg.noAdblockMsg()) { // if paying member uses adblock, dont show the messages
+        } else if (adblockMsg.noAdblockMsg() || config.tests.topBannerPosition) { // if paying member uses adblock, dont show the messages
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';

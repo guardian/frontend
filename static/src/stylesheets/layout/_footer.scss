@@ -87,14 +87,25 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 }
 
 .colophon__list {
+    @include clearfix();
     @include fs-bodyHeading(1);
-    @include columns(2, $gs-gutter);
+    @include f-headlineSans();
+    float: left;
     list-style: none;
     margin: 0;
+    width: 100%;
+
+    @include mq($until: tablet) {
+        @include columns(2, $gs-gutter);
+    }
 
     @include mq(tablet) {
-        @include columns(3, $gs-gutter);
+        box-sizing: border-box;
         width: 75%;
+    }
+
+    @include mq($from: tablet, $until: leftCol) {
+        @include columns(3, $gs-gutter);
     }
 
     @include mq(desktop) {
@@ -102,9 +113,28 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-left: $gs-gutter;
     }
 
-    @include mq(leftCol) {
-        @include columns(4, $gs-gutter);
-        width: gs-span(12);
+    // no-email is out of A/B test
+    .l-footer__secondary--no-email & {
+        @include mq(leftCol) {
+            @include columns(4, $gs-gutter);
+            width: gs-span(12);
+        }
+    }
+
+    // has-email is in A/B test
+    .l-footer__secondary--has-email & {
+        @include mq($from: leftCol, $until: wide) {
+            @include columns(3, $gs-gutter);
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(10);
+        }
+
+        @include mq(wide) {
+            @include columns(4, $gs-gutter);
+            width: gs-span(11);
+        }
     }
 
     a {
@@ -126,21 +156,39 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include mq(tablet) {
         float: left;
         border: 0;
+        box-sizing: border-box;
         margin: 0;
-        padding: 0;
+        padding: 0 $gs-gutter 0 0;
         width: 25%;
     }
 
     @include mq(desktop) {
+        padding-right: 0;
         width: gs-span(3);
     }
 
-    @include mq(leftCol) {
-        width: gs-span(2);
+    .l-footer__secondary--has-email & {
+        @include mq($from: mobileLandscape, $until: tablet) {
+            padding-right: 50%;
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(3);
+        }
+
+        @include mq(wide) {
+            width: gs-span(4);
+        }
     }
 
-    @include mq(wide) {
-        width: gs-span(3);
+    .l-footer__secondary--no-email & {
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
+        }
     }
 
     .button {
@@ -154,6 +202,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             display: block;
             margin-bottom: $gs-baseline;
             width: 150px; // required to fit longer text
+
+            .l-footer__secondary--has-email & {
+                display: inline-block;
+                width: auto;
+            }
         }
     }
 }

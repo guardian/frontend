@@ -218,7 +218,7 @@ trait Navigation {
   // R1 Azeds have been re-created as NGW content with a new landing page
   val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")
 
-  // Today's paper
+  // Guardian newspaper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
   val editorialsandletters = SectionLink("todayspaper", "editorials and letters", "Editorials and Letters", "/theguardian/mainsection/editorialsandreply")
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
@@ -226,6 +226,13 @@ trait Navigation {
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
   val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
+
+
+  // Observer newspaper
+  val sundayPaper = SectionLink("theobserver", "sunday's paper", "The Observer", "/theobserver")
+  val observerNewReview = SectionLink("theobserver", "the new review", "Observer The New Review", "/theobserver/new-review")
+  val observerMagazine = SectionLink("theobserver", "observer magazine", "Observer Magazine", "/theobserver/magazine")
+
 
   // Membership
   val membership = SectionLink("membership", "membership", "Membership", "/membership")

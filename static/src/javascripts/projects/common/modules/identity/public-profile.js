@@ -1,30 +1,28 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/url',
     'common/modules/component',
-    'common/modules/discussion/activity-stream'
-],
-function (
+    'common/modules/discussion/activity-stream',
+    'lodash/objects/mapValues'
+], function (
     bean,
     bonzo,
-    _,
     $,
     config,
     url,
     component,
-    ActivityStream
-) {
+    ActivityStream,
+    mapValues) {
     function getActivityStream(cb) {
         var activityStream, opts = {
             userId: 'data-user-id',
             streamType: 'data-stream-type'
         };
         $('.js-activity-stream').each(function (el) {
-            (activityStream = new ActivityStream(_.mapValues(opts, function (key) {
+            (activityStream = new ActivityStream(mapValues(opts, function (key) {
                 return el.getAttribute(key);
             }))).fetch(el).then(function () {
                 bonzo(el).removeClass('activity-stream--loading');
