@@ -112,8 +112,9 @@ define([
         getReferrer = function () {
             var referrerTypes = [
                     {id: 'facebook', match: 'facebook.com'},
-                    {id: 'twitter', match: 't.co'},
-                    {id: 'googleplus', match: 'plus.url.google'}
+                    {id: 'twitter', match: 't.co/'},
+                    {id: 'googleplus', match: 'plus.url.google'},
+                    {id: 'reddit', match: 'reddit.com'}
                 ],
                 matchedRef = referrerTypes.filter(function (referrerType) {
                     return detect.getReferrer().indexOf(referrerType.match) > -1;
