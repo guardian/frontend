@@ -55,7 +55,7 @@ object DfpApi extends Logging {
                       .withBindVariableValue("threshold", threshold.getMillis)
 
     withDfpSession(stmtBuilder) { (stmtBuilder, session) =>
-      session.creatives(stmtBuilder) collect {
+      session.creatives.get(stmtBuilder) collect {
         case tc: TemplateCreative => tc
       } map toGuTemplateCreative
     }
