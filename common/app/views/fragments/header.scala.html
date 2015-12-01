@@ -91,7 +91,7 @@
             <div class="popup popup--search is-off js-popup--search"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
-                @if(metaData.section == "observer" && metaData.isFront) {
+                @if((metaData.section == "observer" && metaData.isFront) || metaData.id == "theobserver") {
                     <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
                         @if(metaData.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")

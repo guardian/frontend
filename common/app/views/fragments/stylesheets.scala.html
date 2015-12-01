@@ -1,4 +1,4 @@
-@(projectName: Option[String])(implicit request: RequestHeader)
+@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader)
 
 @import conf.switches.Switches._
 
@@ -49,8 +49,8 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (lt IE 9)&(!IEMobile)]>
-    @fragments.stylesheetLink(Static.css.headOldIE(projectName))
-    @fragments.stylesheetLink("stylesheets/old-ie.content.css")
+    @fragments.stylesheetLink(Static.css.headOldIE(projectName), isCrossword)
+    @fragments.stylesheetLink("stylesheets/old-ie.content.css", isCrossword)
 <![endif]-->
 
 @*
@@ -58,8 +58,8 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (IE 9)&(!IEMobile)]>
-    @fragments.stylesheetLink(Static.css.headIE9(projectName))
-    @fragments.stylesheetLink("stylesheets/ie9.content.css")
+    @fragments.stylesheetLink(Static.css.headIE9(projectName), isCrossword)
+    @fragments.stylesheetLink("stylesheets/ie9.content.css", isCrossword)
 <![endif]-->
 
 @*
@@ -75,7 +75,7 @@
         @Html(Static.css.head(projectName))
     </style>
 }
-@fragments.stylesheetLink(Static.css.projectCss(projectName))
+@fragments.stylesheetLink(Static.css.projectCss(projectName), isCrossword)
 <!--<![endif]-->
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />

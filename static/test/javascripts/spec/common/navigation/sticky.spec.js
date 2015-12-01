@@ -1,18 +1,22 @@
 define([
+    'common/utils/config',
     'common/modules/commercial/adblock-messages',
     'common/modules/navigation/sticky'
 ], function (
+    config,
     adblockMsg,
     sut
 ) {
     describe('Sticky Header', function () {
-
         describe('getUpdateMethod', function () {
-
             beforeEach(function () {
                 sut.isMobile = false;
                 sut.isAppleCampaign = false;
                 sut.isProfilePage = false;
+
+                config.tests = {
+                    topBannerPosition: false
+                };
             });
 
             it('should return updatePositionMobile for mobile', function () {
@@ -24,6 +28,15 @@ define([
                 adblockMsg.noAdblockMsg = function () {
                     return true;
                 };
+
+                expect(sut.getUpdateMethod()).toEqual('updatePositionAdblock');
+            });
+
+            it('should return updatePositionAdblock when in topBannerPosition AB test', function () {
+                adblockMsg.noAdblockMsg = function () {
+                    return false;
+                };
+                config.tests.topBannerPosition = true;
 
                 expect(sut.getUpdateMethod()).toEqual('updatePositionAdblock');
             });

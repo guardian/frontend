@@ -17,9 +17,7 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
     val hashFile = new File(s"static/hash/$path")
 
-    val resolved = if (Play.isDev && path.startsWith("javascripts")) {
-      new File(s"static/src/$path").toURI.toURL
-    } else if (hashFile.exists()) {
+    val resolved = if (hashFile.exists()) {
       hashFile.toURI.toURL
     } else {
       new File(s"static/src/$path").toURI.toURL

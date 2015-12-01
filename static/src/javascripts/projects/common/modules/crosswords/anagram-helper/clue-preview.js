@@ -80,10 +80,10 @@ define([
                     var classNames = this.checkIfLetterHasSeparator(this.props.clue.separatorLocations, i + 1); //Separators are one indexed in CAPI, annoyingly
                     var span = React.createElement(
                         'span', {
-                            className: classNames + (entry.solved ? ' has-value' : ''),
+                            className: classNames + (entry && entry.solved ? ' has-value' : ''),
                             key: i
                         },
-                        entry.value
+                        entry && entry.value || ''
                     );
                     return span;
                 }), this)
