@@ -70,29 +70,28 @@ define([
 
                         state.submitting = true;
 
-                        getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
-                        });
-
                         event.preventDefault();
 
-                        return ajax({
-                            url: url,
-                            method: 'post',
-                            data: data,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        })
-                        .then(getOmniture)
-                        .then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
-                        })
-                        .then(this.submissionResult(true, $form))
-                        .catch(function () {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
-                            this.submissionResult(false, $form);
-                        });
+                        return getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
+
+                            return ajax({
+                                url: url,
+                                method: 'post',
+                                data: data,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                            })
+                            .then(this.submissionResult(true, $form))
+                            .catch(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
+                                this.submissionResult(false, $form);
+                            });
+                        }.bind(this));
                     }
                 }.bind(this);
             },
