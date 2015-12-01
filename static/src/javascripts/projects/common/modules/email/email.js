@@ -25,6 +25,28 @@ define([
     svgs,
     successHtml
 ) {
+    var omniture;
+
+    /**
+     * The omniture module depends on common/modules/experiments/ab, so trying to
+     * require omniture directly inside an AB test gives you a circular dependency.
+     *
+     * This is a workaround to load omniture without making it a dependency of
+     * this module, which is required by an AB test.
+     */
+    function getOmniture() {
+        return new Promise(function (resolve) {
+            if (omniture) {
+                return resolve(omniture);
+            }
+
+            require('common/modules/analytics/omniture', function (omnitureM) {
+                omniture = omnitureM;
+                resolve(omniture);
+            });
+        });
+    }
+
     var state = {
             submitting: false
         },
@@ -46,7 +68,7 @@ define([
 
                         state.submitting = true;
 
-                        require('common/modules/analytics/omniture', function (omniture) {
+                        getOmniture().then(function (omniture) {
                             omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
                         });
 
@@ -59,7 +81,13 @@ define([
                             headers: {
                                 'Accept': 'application/json'
                             }
-                        }).then(this.submissionResult(true, $form), this.submissionResult(false, $form));
+                        })
+                        .then(getOmniture)
+                        .then(function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                        })
+                        .then(this.submissionResult(true, $form))
+                        .catch(this.submissionResult(false, $form));
                     }
                 }.bind(this);
             },
@@ -84,12 +112,6 @@ define([
                     $form.addClass('email-sub__form--is-hidden');
                     $form.after(submissionHtml);
                 });
-
-                if (isSuccess) {
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
-                    });
-                }
             }
         },
         ui = {

@@ -78,6 +78,7 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   }
 
   def submit() = Action.async { implicit request =>
+    AllEmailSubmission.increment()
     val listId = listIds.guardianTodayUk
 
     def respond(result: SubscriptionResult): Result = {
