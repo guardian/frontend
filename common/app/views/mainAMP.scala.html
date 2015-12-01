@@ -11,7 +11,7 @@
         <meta charset="utf-8">
         @fragments.metaData(page, true)
         <title>@views.support.Title(page)</title>
-        @fragments.amp.stylesheets.main(page)
+        @fragments.amp.stylesheets.main(page.metadata)
         <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
@@ -43,7 +43,7 @@
 
             @body
 
-            @if(metaData.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
+            @if(page.metadata.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
 
                 <div class="fc-container__inner">
                     <div class="fc-container__header__title">
