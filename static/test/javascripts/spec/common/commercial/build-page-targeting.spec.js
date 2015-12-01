@@ -241,6 +241,13 @@ define([
                 expect(buildPageTargeting().ref).toEqual('reddit');
             });
 
+            it('should set ref to google', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.google.com/i-find-your-lack-of-faith-distrubing';
+                };
+                expect(buildPageTargeting().ref).toEqual('google');
+            });
+
             it('should set ref empty string if referrer does not match', function () {
                 detect.getReferrer = function () {
                     return 'https://theguardian.com';
