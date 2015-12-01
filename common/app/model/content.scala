@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
-import conf.Configuration.facebook
+import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
