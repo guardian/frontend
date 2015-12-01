@@ -87,11 +87,11 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
     Cached(900) {
       JsonComponent(
-        "items" -> JsArray(MostPopularAgent.mostPopular(edition).zipWithIndex.map{ case (trail, index) =>
+        "items" -> JsArray(MostPopularAgent.mostPopular(edition).zipWithIndex.map{ case (item, index) =>
           Json.obj(
             ("index", index + 1),
-            ("url", trail.url),
-            ("headline", trail.headline)
+            ("url", item.content.metadata.url),
+            ("headline", item.content.trail.headline)
           )
         })
       )
