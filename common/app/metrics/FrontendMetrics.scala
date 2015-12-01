@@ -113,3 +113,11 @@ object UsPressLatencyMetric extends DurationMetric("us-press-latency", StandardU
 object AuPressLatencyMetric extends DurationMetric("au-press-latency", StandardUnit.Milliseconds)
 
 object AllFrontsPressLatencyMetric extends DurationMetric("front-press-latency", StandardUnit.Milliseconds)
+
+object EmailSubsciptionMetrics {
+  object AllEmailSubmission extends CountMetric("all-email-submission", "Any request to the submit email endpoint")
+  object EmailSubmission extends CountMetric("email-submission", "Successful POST to the email API Gateway")
+  object APIHTTPError extends CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
+  object APINetworkError extends CountMetric("email-api-network-error", "Email subscription API network failure")
+  object ListIDError extends CountMetric("email-list-id-error", "Invalid list ID in email subscription")
+}

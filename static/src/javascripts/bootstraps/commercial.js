@@ -8,6 +8,7 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp-api',
     'common/modules/commercial/front-commercial-components',
+    'common/modules/commercial/top-banner-below-container',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'lodash/collections/forEach'
@@ -21,6 +22,7 @@ define([
     badges,
     dfp,
     frontCommercialComponents,
+    topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
     forEach) {
@@ -29,6 +31,7 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
+        ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-badges', badges.init]
     ];

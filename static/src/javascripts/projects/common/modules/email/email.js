@@ -25,7 +25,32 @@ define([
     svgs,
     successHtml
 ) {
-    var classes = {
+    var omniture;
+
+    /**
+     * The omniture module depends on common/modules/experiments/ab, so trying to
+     * require omniture directly inside an AB test gives you a circular dependency.
+     *
+     * This is a workaround to load omniture without making it a dependency of
+     * this module, which is required by an AB test.
+     */
+    function getOmniture() {
+        return new Promise(function (resolve) {
+            if (omniture) {
+                return resolve(omniture);
+            }
+
+            require('common/modules/analytics/omniture', function (omnitureM) {
+                omniture = omnitureM;
+                resolve(omniture);
+            });
+        });
+    }
+
+    var state = {
+            submitting: false
+        },
+        classes = {
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
@@ -38,28 +63,38 @@ define([
             },
             submitForm: function ($form, url) {
                 return function (event) {
-                    var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
+                    if (!state.submitting) {
+                        var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
 
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
-                    });
+                        state.submitting = true;
 
-                    event.preventDefault();
+                        getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
+                        });
 
-                    return ajax({
-                        url: url,
-                        method: 'post',
-                        data: data,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    }).then(this.submissionResult(true, $form), this.submissionResult(false, $form));
+                        event.preventDefault();
+
+                        return ajax({
+                            url: url,
+                            method: 'post',
+                            data: data,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(getOmniture)
+                        .then(function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                        })
+                        .then(this.submissionResult(true, $form))
+                        .catch(this.submissionResult(false, $form));
+                    }
                 }.bind(this);
-
             },
             submissionResult: function (isSuccess, $form) {
                 return function () {
                     updateForm.replaceContent(isSuccess, $form);
+                    state.submitting = false;
                 };
             }
         },
@@ -77,12 +112,6 @@ define([
                     $form.addClass('email-sub__form--is-hidden');
                     $form.after(submissionHtml);
                 });
-
-                if (isSuccess) {
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
-                    });
-                }
             }
         },
         ui = {

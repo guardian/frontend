@@ -206,6 +206,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
       ("isLive", JsBoolean(isLive)),
+      ("isImmersive", JsBoolean(isImmersive)),
       ("isContent", JsBoolean(true)),
       ("wordCount", JsNumber(wordCount)),
       ("shortUrl", JsString(shortUrl)),
