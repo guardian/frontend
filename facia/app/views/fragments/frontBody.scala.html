@@ -7,11 +7,6 @@
         faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
-
-            @if(faciaPage.id.endsWith("crosswords")) {
-                @crosswordsOptOutBanner()
-            }
-
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
                 "fc-container--advertisement-feature" -> isAdFeature,
