@@ -31,7 +31,7 @@ object PressedPage {
     ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
     val openGraph: Map[String, String] = Map(
-      "og:image" -> Configuration.facebook.imageFallback) ++
+      "og:image" -> Configuration.images.fallbackLogo) ++
       optionalMapEntry("og:description", seoData.description)  ++
       optionalMapEntry("og:image", frontProperties.imageUrl)
 

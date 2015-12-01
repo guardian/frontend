@@ -14,13 +14,6 @@
 }
 
 <div class="l-side-margins">
-
-    @if(!(index.page.metadata.id.endsWith("crosswords/series/crossword-editor-update") || index.page.metadata.id.endsWith("crosswords/crossword-blog"))) {
-        @if(index.page.metadata.id.contains("crosswords")) {
-            @fragments.crosswordsOptOutBanner()
-        }
-    }
-
     <div class="@RenderClasses(Map(
         "u-cf" -> true,
         "index-page" -> true,

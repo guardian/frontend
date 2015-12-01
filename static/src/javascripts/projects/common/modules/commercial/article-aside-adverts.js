@@ -42,9 +42,10 @@ define([
         return new Promise(function (resolve) {
             idleFastdom.read(function () {
                 if (
+                    !config.page.isImmersive && (
                     !$mainCol.length ||
                     (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
-                    (config.page.section === 'football' && $mainCol.dim().height >= 2200)
+                    (config.page.section === 'football' && $mainCol.dim().height >= 2200))
                 ) {
                     adType = 'right-sticky';
                 } else if ($mainCol.dim().height >= 600) {
@@ -52,7 +53,6 @@ define([
                 } else {
                     adType = 'right-small';
                 }
-
                 idleFastdom.write(function () {
                     if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
                         $componentsContainer.addClass('u-h');

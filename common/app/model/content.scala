@@ -7,7 +7,7 @@ import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
-import conf.Configuration.facebook
+import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
@@ -285,7 +285,7 @@ object Content {
         bestOpenGraphImage
           .orElse(elements.mainPicture.flatMap(_.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
-          .getOrElse(facebook.imageFallback)
+          .getOrElse(Configuration.images.fallbackLogo)
       }
 
     )
@@ -336,7 +336,8 @@ object Article {
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
-      ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage))
+      ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
+      ("isImmersive", JsBoolean(content.metadata.isImmersive))
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -621,7 +622,7 @@ object Gallery {
 
         bestOpenGraphImage
           .orElse(lightbox.galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
-          .getOrElse(conf.Configuration.facebook.imageFallback)
+          .getOrElse(conf.Configuration.images.fallbackLogo)
       }
     )
 
