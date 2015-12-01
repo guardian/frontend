@@ -111,6 +111,7 @@ object International extends Edition(
       NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
+      NavItem(sundayPaper, Seq(observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)

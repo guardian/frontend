@@ -30,13 +30,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     FixedTopAboveNavAdSlotSwitch.switchOn()
   }
 
-  "topAboveNavSlot ad sizes" should "be fixed for UK business front" in {
-    pageShouldRequestAdSizes("uk/business", Nil)(
-      Seq("1,1", "900,250", "970,250")
-    )
-  }
-
-  they should "be variable for any other page" in {
+  "topAboveNavSlot ad sizes" should "be variable for all pages" in {
     pageShouldRequestAdSizes("uk/culture", Nil)(
       Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
     )

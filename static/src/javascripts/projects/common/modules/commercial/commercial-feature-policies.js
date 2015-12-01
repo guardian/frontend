@@ -59,7 +59,8 @@ define([
     policies.membershipMessages = function () {
         if (!detect.adblockInUse() &&
             detect.getBreakpoint() !== 'mobile' &&
-            config.page.contentType === 'Article'
+            config.page.contentType === 'Article' &&
+            !userFeatures.isPayingMember()
         ) {
             return {
                 membershipMessages : true
@@ -119,9 +120,6 @@ define([
         }
         if (!config.switches.sponsored) {
             switches.badges = false;
-        }
-        if (!config.switches.membershipMessages) {
-            switches.membershipMessages = false;
         }
 
         return switches;

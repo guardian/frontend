@@ -428,6 +428,10 @@ define([
         return sacrificialAd;
     }
 
+    function getReferrer() {
+        return document.referrer || '';
+    }
+
     detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -456,7 +460,8 @@ define([
         breakpoints: breakpoints,
         isModernBrowser: isModernBrowser,
         adblockInUse: adblockInUse,
-        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled
+        getFirefoxAdblockPlusInstalled: getFirefoxAdblockPlusInstalled,
+        getReferrer: getReferrer
     };
     return detect;
 });

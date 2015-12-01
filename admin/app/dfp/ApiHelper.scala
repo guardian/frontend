@@ -1,55 +1,24 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
-import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder.SUGGESTED_PAGE_LIMIT
 import com.google.api.ads.dfp.axis.v201508._
 import common.Logging
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
-import scala.annotation.tailrec
+private[dfp] object ApiHelper extends Logging {
 
-object ApiHelper extends Logging {
+  def isPageSkin(dfpLineItem: LineItem) = {
 
-  def fetch[T](statementBuilder: StatementBuilder)
-              (fetchPage: Statement => (Array[T], Int)): Seq[T] = {
-
-    @tailrec
-    def fetch(soFar: Seq[T]): Seq[T] = {
-      val (pageOfResults, totalResultSetSize) = fetchPage(statementBuilder.toStatement)
-      val resultsSoFar = soFar ++ pageOfResults
-      if (resultsSoFar.size >= totalResultSetSize) {
-        resultsSoFar
-      } else {
-        statementBuilder.increaseOffsetBy(SUGGESTED_PAGE_LIMIT)
-        fetch(resultsSoFar)
+    def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
+      placeholders.exists {
+        _.getCompanions.exists { companion =>
+          val size = companion.getSize
+          size.getWidth == 1 && size.getHeight == 1
+        }
       }
     }
 
-    try {
-      statementBuilder.limit(SUGGESTED_PAGE_LIMIT)
-      fetch(Nil)
-    } catch {
-
-      case e: ApiException =>
-        e.getErrors foreach { err =>
-          val reasonMsg = err match {
-            case freqCapErr: FrequencyCapError => s", with the reason '${freqCapErr.getReason}'"
-            case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
-            case _ => ""
-          }
-          log.error(s"API Exception fetching in the field '${err.getFieldPath}', " +
-            s"caused by an invalid value '${err.getTrigger}', with the error message '${
-              err
-                .getErrorString
-            }'" +
-            reasonMsg)
-        }
-        Nil
-
-      case e: Exception =>
-        log.error(s"Exception fetching: ${e.getMessage}")
-        Nil
-    }
+    dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET &&
+      hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 
   def toJodaTime(time: DateTime): JodaDateTime = {
@@ -64,4 +33,9 @@ object ApiHelper extends Logging {
       DateTimeZone.forID(time.getTimeZoneID)
     )
   }
+
+  def toSeq[A](as: Array[A]): Seq[A] = Option(as) map (_.toSeq) getOrElse Nil
+
+  //noinspection IfElseToOption
+  def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }

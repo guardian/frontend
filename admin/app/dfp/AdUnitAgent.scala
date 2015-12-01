@@ -11,12 +11,13 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
   override def loadFreshData() = Try {
     DfpServiceRegistry().fold(Map[String, GuAdUnit]()) { serviceRegistry =>
+      val session = new SessionWrapper(serviceRegistry.session)
 
       val statementBuilder = new StatementBuilder()
         .where("status = :status")
         .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
+      val dfpAdUnits = session.adUnits(statementBuilder)
 
       val rootName = Configuration.commercial.dfpAdUnitRoot
       val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
