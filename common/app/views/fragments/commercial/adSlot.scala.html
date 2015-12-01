@@ -14,7 +14,7 @@
 
 <div
     id="dfp-ad--@name"
-    class="js-ad-slot ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")@if(forceDisplay) { ad-slot--force-display}@if(fluid && FluidAdvertsSwitch.isSwitchedOn) { ad-slot--fluid}"
+    class="js-ad-slot ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")@if(forceDisplay) { ad-slot--force-display}"
     data-link-name="ad slot @name"
     @for(sponsor <- contentSponsor) { data-sponsor="@sponsor" }
     @for(paidForType <- paidForContentType) { data-sponsorship="@paidForType" }

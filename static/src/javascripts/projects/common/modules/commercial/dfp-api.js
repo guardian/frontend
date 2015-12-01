@@ -17,6 +17,7 @@ define([
     'common/utils/user-timing',
     'common/utils/sha1',
     'common/utils/fastdom-idle',
+    'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -59,6 +60,7 @@ define([
     userTiming,
     sha1,
     idleFastdom,
+    cookies,
     StickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -410,7 +412,8 @@ define([
 
             if ($adSlot.data('out-of-page')) {
                 slot = googletag.defineOutOfPageSlot(adUnit, id);
-            } else if ($adSlot.data('fluid')) {
+            } else if ($adSlot.data('fluid') && cookies.get('adtest') === 'tm2') {
+                $adSlot.addClass('ad-slot--fluid');
                 sizeMapping = defineSlotSizes($adSlot);
                 // regis kuckaertz (Nov 30) – SizeMappingBuilder does not handle 'fluid' very well,
                 // so instead we add it manually ourselves to the end of each array of sizes
