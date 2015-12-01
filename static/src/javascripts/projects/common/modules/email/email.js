@@ -89,7 +89,10 @@ define([
                             omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
                         })
                         .then(this.submissionResult(true, $form))
-                        .catch(this.submissionResult(false, $form));
+                        .catch(function () {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
+                            this.submissionResult(false, $form);
+                        });
                     }
                 }.bind(this);
             },
