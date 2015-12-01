@@ -499,6 +499,20 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
+case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("h2").foreach{ h2 =>
+        val beforeH2 = h2.previousElementSibling()
+        if(beforeH2.hasClass("element--immersive")) {
+          beforeH2.addClass("element--rotate")
+        }
+      }
+    }
+    document
+  }
+}
+
 case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
   private def setDropCap(p: Element): String = {
     p.html.replaceFirst(
