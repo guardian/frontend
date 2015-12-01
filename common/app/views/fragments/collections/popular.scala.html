@@ -7,10 +7,6 @@
 @import TrailCssClasses.articleToneClass
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 
-@validTagsForAgeMessage() = @{
-    List("world/world","uk/uk","us-news/us-news","australia-news/australia-news")
-}
-
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test" data-test-id="popular-in">
         @if(isTabbed) {
@@ -41,7 +37,7 @@
                             <p class="headline-list__count">@info.rowNum</p>
                             @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
                             @trail.maybeContent.map { content =>
-                                @if(content.tags.exists(tag => validTagsForAgeMessage().contains(tag.id))) {
+                                @if(content.tags.exists(_.id == "tone/news")) {
                                     @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
                                 }
                             }

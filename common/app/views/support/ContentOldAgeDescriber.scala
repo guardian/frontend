@@ -15,7 +15,7 @@ class ContentOldAgeDescriber {
   }
 
   private def message(pubDate: DateTime) = {
-    val warnLimitDays = 7   // config this!
+    val warnLimitDays = 30   // config this!
     if(pubDate.isBefore(DateTime.now().minusDays(warnLimitDays))) {
       val ageMillis = DateTime.now().getMillis - pubDate.getMillis
       val years = TimeUnit.MILLISECONDS.toDays(ageMillis) / 365
