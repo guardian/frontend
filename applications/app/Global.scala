@@ -29,6 +29,7 @@ object Global extends WithFilters(Filters.common: _*)
     EmailSubsciptionMetrics.EmailSubmission,
     EmailSubsciptionMetrics.APIHTTPError,
     EmailSubsciptionMetrics.APINetworkError,
-    EmailSubsciptionMetrics.ListIDError
+    EmailSubsciptionMetrics.ListIDError,
+    EmailSubsciptionMetrics.AllEmailSubmission
   )
 }
