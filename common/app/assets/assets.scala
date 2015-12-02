@@ -1,6 +1,7 @@
 package common.Assets
 
 import java.net.URL
+import java.io.File
 
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
@@ -22,7 +23,11 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      assets().getOrElse(path, Asset(path))
+      assets().getOrElse(path, if (new File(s"static/src/$path").exists()) {
+        Asset(path)
+      } else {
+        throw AssetNotFoundException(path)
+      })
     } else {
       memoizedAssets(path)
     }
