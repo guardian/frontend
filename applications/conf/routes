@@ -7,6 +7,9 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
+GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
+GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
+
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.

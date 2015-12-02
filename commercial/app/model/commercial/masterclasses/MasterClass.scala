@@ -40,9 +40,10 @@ object EventbriteMasterClass {
         for {
           ticketClass <- ticketClasses
           hidden <- (ticketClass \ "hidden").asOpt[Boolean]
+          cost <- (ticketClass \ "cost").asOpt[JsValue]
           if !hidden
         } yield {
-          val price = (ticketClass \ "cost" \ "value").as[Int] / 100
+          val price = (cost \ "value").as[Int] / 100
           new Ticket(price)
         }
       }

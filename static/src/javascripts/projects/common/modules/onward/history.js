@@ -205,6 +205,18 @@ define([
             .value();
     }
 
+    function getContributors() {
+        var contibutors = [],
+            tagId,
+            tags = getSummary().tags;
+        for (tagId in tags) {
+            if (tagId.indexOf('profile/') === 0) {
+                contibutors.push(tags[tagId]);
+            }
+        }
+        return contibutors;
+    }
+
     function getPopularFiltered(opts) {
         var flush = opts && opts.flush;
 
@@ -396,6 +408,7 @@ define([
         showInMegaNavEnabled: showInMegaNavEnabled,
         getPopular: getPopular,
         getPopularFiltered: getPopularFiltered,
+        getContributors: getContributors,
         deleteFromSummary: deleteFromSummary,
         isRevisit: isRevisit,
         reset: reset,

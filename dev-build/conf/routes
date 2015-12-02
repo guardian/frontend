@@ -92,6 +92,7 @@ GET            /most-read-facebook.json                                         
 GET            /most-read-twitter.json                                                                                           controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
+GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 
@@ -312,6 +313,8 @@ GET            /commercial/magento/books                                        
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
+GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
+GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()

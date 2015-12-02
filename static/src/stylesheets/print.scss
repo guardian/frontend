@@ -7,6 +7,7 @@
 .block-share__link,
 .l-header,
 .top-banner-ad-container,
+.adblock-sticky__message,
 .content__secondary-column,
 .content__labels,
 .content-footer,
@@ -179,6 +180,10 @@ $logoHeight: 60px;
     fill: #ffffff;
 }
 
+.crossword__container {
+    clear: none;
+}
+
 .crossword__container__game {
     // Clearfix
     overflow: hidden;
@@ -261,8 +266,4 @@ $logoHeight: 60px;
 .crossword__instructions {
     font-size: 13px;
     text-align: left;
-}
-
-.site-message--crosswords {
-    display: none;
 }
