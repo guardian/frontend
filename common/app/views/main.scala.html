@@ -33,7 +33,6 @@ http://developers.theguardian.com/join-the-team.html
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
-            ("wide-localnav", navigation.map(_.repelCutout).getOrElse(false)),
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
