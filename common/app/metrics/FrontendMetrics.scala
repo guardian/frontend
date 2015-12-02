@@ -117,6 +117,8 @@ object AllFrontsPressLatencyMetric extends DurationMetric("front-press-latency",
 object EmailSubsciptionMetrics {
   object AllEmailSubmission extends CountMetric("all-email-submission", "Any request to the submit email endpoint")
   object EmailSubmission extends CountMetric("email-submission", "Successful POST to the email API Gateway")
+  object NotAccepted extends CountMetric("email-submission-not-accepted", "Any request with the wrong MIME type")
+  object FormError extends CountMetric("email-submission-form-error", "Email submission form error")
   object APIHTTPError extends CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
   object APINetworkError extends CountMetric("email-api-network-error", "Email subscription API network failure")
   object ListIDError extends CountMetric("email-list-id-error", "Invalid list ID in email subscription")
