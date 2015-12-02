@@ -103,7 +103,7 @@ object EmailController extends Controller with ExecutionContexts with Logging {
 
     emailForm.bindFromRequest.fold(
       formWithErrors => {
-        FormError.increment()
+        EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
       form => EmailForm.submit(form, listId) match {
