@@ -3,28 +3,22 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/mediator',
     'common/utils/ajax',
-    'common/modules/analytics/register',
     'common/utils/proximity-loader',
     'common/modules/onward/inject-container',
-    'common/modules/commercial/third-party-tags/outbrain',
     'lodash/collections/contains'
 ], function (
     fastdom,
     qwery,
     $,
     config,
-    mediator,
     ajax,
-    register,
     proximityLoader,
     injectContainer,
-    outbrain,
     contains
 ) {
 
-    var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle', 'culture', 'business', 'tech', 'environment'],
+    var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle', 'culture', 'business', 'technology', 'environment'],
         loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false;
 
     function FrontsContainers() {
