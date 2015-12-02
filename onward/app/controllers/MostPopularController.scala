@@ -31,10 +31,9 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
     sectionPopular.map { sectionPopular =>
-      val sectionFirst = sectionPopular ++ globalPopular
-      val globalFirst = globalPopular.toList ++ sectionPopular
-      
-      val mostPopular = if ( path.contains("global-development") ) sectionFirst else globalFirst
+      lazy val sectionFirst = sectionPopular ++ globalPopular
+      lazy val globalFirst = globalPopular.toList ++ sectionPopular
+      lazy val mostPopular = if (path == "global-development") sectionFirst else globalFirst
 
       mostPopular match {
         case Nil => NotFound
@@ -75,6 +74,22 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       JsonComponent(
         "trails" -> JsArray(DayMostPopularAgent.mostPopular(countryCode).map{ trail =>
           Json.obj(
+            ("url", trail.url),
+            ("headline", trail.headline)
+          )
+        })
+      )
+    }
+  }
+
+  def renderPopularMicroformat2 = Action { implicit request =>
+    val edition = Edition(request)
+
+    Cached(900) {
+      JsonComponent(
+        "items" -> JsArray(MostPopularAgent.mostPopular(edition).zipWithIndex.map{ case (trail, index) =>
+          Json.obj(
+            ("index", index + 1),
             ("url", trail.url),
             ("headline", trail.headline)
           )

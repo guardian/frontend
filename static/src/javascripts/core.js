@@ -19,6 +19,7 @@ define([
     // shared modules
     'common/modules/analytics/beacon',
     'common/modules/article/spacefinder',
+    'common/modules/article/space-filler',
     'common/modules/commercial/badges',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/create-ad-slot',

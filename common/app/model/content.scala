@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
-import conf.Configuration.facebook
+import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
@@ -100,7 +100,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
   private lazy val rawOpenGraphImage: String = bestOpenGraphImage
     .orElse(mainPicture.flatMap(largestImageUrl))
     .orElse(trailPicture.flatMap(largestImageUrl))
-    .getOrElse(facebook.imageFallback)
+    .getOrElse(Configuration.images.fallbackLogo)
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
   override lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
@@ -206,6 +206,7 @@ class Content protected (val delegate: contentapi.Content) extends Trail with Me
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
       ("isLive", JsBoolean(isLive)),
+      ("isImmersive", JsBoolean(isImmersive)),
       ("isContent", JsBoolean(true)),
       ("wordCount", JsNumber(wordCount)),
       ("shortUrl", JsString(shortUrl)),
@@ -554,7 +555,7 @@ class Gallery(delegate: contentapi.Content) extends Content(delegate) with Light
   override lazy val openGraphImage: String = {
     val imageUrl = bestOpenGraphImage
       .orElse(galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
-      .getOrElse(conf.Configuration.facebook.imageFallback)
+      .getOrElse(Configuration.images.fallbackLogo)
 
     ImgSrc(imageUrl, FacebookOpenGraphImage)
   }

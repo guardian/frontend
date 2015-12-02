@@ -9,6 +9,7 @@ import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.control.NonFatal
 
 object EventbriteApi extends ExecutionContexts with Logging {
 
@@ -50,6 +51,10 @@ object EventbriteApi extends ExecutionContexts with Logging {
     }
 
     val eventualEvents = events flatMap identity
+
+    eventualEvents onFailure {
+      case NonFatal(e) => log.error(s"Failed to load from $feedName: ${e.getMessage}")
+    }
 
     eventualEvents onSuccess {
       case results => log.info(s"Loaded ${results.size} $feedName from $url")

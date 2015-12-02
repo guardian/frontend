@@ -10,11 +10,12 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import test.TestRequest
+import org.scalatestplus.play.OneAppPerSuite
 
 import scala.collection.JavaConversions._
 import scala.xml.XML
 
-class TemplatesTest extends FlatSpec with Matchers {
+class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be(" foo <b>bar</b> ")

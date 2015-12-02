@@ -227,11 +227,25 @@ define([
                 expect(buildPageTargeting().ref).toEqual('twitter');
             });
 
-            it('should set ref to Google+', function () {
+            it('should set ref to Googleplus', function () {
                 detect.getReferrer = function () {
                     return 'https://plus.url.google.com/always-pass-on-what-you-have-learned';
                 };
                 expect(buildPageTargeting().ref).toEqual('googleplus');
+            });
+
+            it('should set ref to reddit', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.reddit.com/its-not-my-fault';
+                };
+                expect(buildPageTargeting().ref).toEqual('reddit');
+            });
+
+            it('should set ref to google', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.google.com/i-find-your-lack-of-faith-distrubing';
+                };
+                expect(buildPageTargeting().ref).toEqual('google');
             });
 
             it('should set ref empty string if referrer does not match', function () {
