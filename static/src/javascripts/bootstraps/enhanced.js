@@ -11,7 +11,7 @@ define([
     'bootstraps/common',
     'bootstraps/sport',
 
-    'enhanced-core'
+    'enhanced-common'
 ], function (
     fastdom,
     bean,
