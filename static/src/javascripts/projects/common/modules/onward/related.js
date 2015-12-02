@@ -67,74 +67,69 @@ define([
                 showCount: false
             }).init();
         } else if (fetchRelated) {
-            if (!(ab.getParticipations().FrontsOnArticles &&
-                ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
-                ab.testCanBeRun('FrontsOnArticles'))) {
+            container = document.body.querySelector('.js-related');
 
-                container = document.body.querySelector('.js-related');
+            if (container) {
+                popularInTag = this.popularInTagOverride();
+                componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
+                register.begin(componentName);
 
-                if (container) {
-                    popularInTag = this.popularInTagOverride();
-                    componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
-                    register.begin(componentName);
+                container.setAttribute('data-component', componentName);
 
-                    container.setAttribute('data-component', componentName);
-
-                    if (ab.getParticipations().EssentialReadTest1 &&
-                        (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated') &&
-                        ab.testCanBeRun('EssentialReadTest1')
-                    ) {
-                        switch (config.page.edition) {
-                            case 'UK':
-                                editionSuffix = '/uk.json';
-                                break;
-                            case 'US':
-                                editionSuffix = '/us.json';
-                                break;
-                            case 'AU':
-                                editionSuffix = '/au.json';
-                                break;
-                            case 'INT':
-                                editionSuffix = '/international.json';
-                                break;
-                        }
-
-                        if (ab.getParticipations().EssentialReadTest1.variant === 'automated') {
-                            relatedUrl = '/container/essential-read/automated' + editionSuffix;
-                        } else if (ab.getParticipations().EssentialReadTest1.variant === 'curated') {
-                            relatedUrl = '/container/essential-read/curated' + editionSuffix;
-                        }
-
-                    } else {
-                        relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
-
-                        if (opts.excludeTags && opts.excludeTags.length) {
-                            relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                                return 'exclude-tag=' + tag;
-                            }).join('&');
-                        }
+                if (ab.getParticipations().EssentialReadTest1 &&
+                    (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated') &&
+                    ab.testCanBeRun('EssentialReadTest1')
+                ) {
+                    switch (config.page.edition) {
+                        case 'UK':
+                            editionSuffix = '/uk.json';
+                            break;
+                        case 'US':
+                            editionSuffix = '/us.json';
+                            break;
+                        case 'AU':
+                            editionSuffix = '/au.json';
+                            break;
+                        case 'INT':
+                            editionSuffix = '/international.json';
+                            break;
                     }
 
-                    new LazyLoad({
-                        url: relatedUrl,
-                        container: container,
-                        success: function () {
-                            var relatedContainer = container.querySelector('.related-content');
+                    if (ab.getParticipations().EssentialReadTest1.variant === 'automated') {
+                        relatedUrl = '/container/essential-read/automated' + editionSuffix;
+                    } else if (ab.getParticipations().EssentialReadTest1.variant === 'curated') {
+                        relatedUrl = '/container/essential-read/curated' + editionSuffix;
+                    }
 
-                            new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
-                            // upgrade images
-                            mediator.emit('modules:related:loaded', container);
-                            mediator.emit('page:new-content', container);
-                            mediator.emit('ui:images:upgradePictures', container);
-                            register.end(componentName);
+                } else {
+                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
-                        },
-                        error: function () {
-                            bonzo(container).remove();
-                            register.error(componentName);
-                        }
-                    }).load();
+                    if (opts.excludeTags && opts.excludeTags.length) {
+                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                            return 'exclude-tag=' + tag;
+                        }).join('&');
+                    }
                 }
+
+                new LazyLoad({
+                    url: relatedUrl,
+                    container: container,
+                    success: function () {
+                        var relatedContainer = container.querySelector('.related-content');
+
+                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
+                        // upgrade images
+                        mediator.emit('modules:related:loaded', container);
+                        mediator.emit('page:new-content', container);
+                        mediator.emit('ui:images:upgradePictures', container);
+                        register.end(componentName);
+
+                    },
+                    error: function () {
+                        bonzo(container).remove();
+                        register.error(componentName);
+                    }
+                }).load();
             }
         } else {
             $('.js-related').addClass('u-h');
