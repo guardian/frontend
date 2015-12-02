@@ -24,19 +24,19 @@ define([
 
     function FrontsContainers() {
         moveComments();
-        insertFirstThree();
-        insertFinalThree();
+        insertFirstTwo();
+        insertFinalTwo();
     }
 
-    function insertFirstThree() {
+    function insertFirstTwo() {
         var front = (loadSection) ? config.page.section : edition;
 
-        insertContainers(front, $('.js-fronts-containers'), 3, 0, 'original', function () {});
+        insertContainers(front, $('.js-fronts-containers'), 2, 0, 'original', function () {});
     }
 
-    function insertFinalThree() {
-        var offset = (loadSection) ? 0 : 3;
-        insertContainers(edition, $('.js-network-fronts-containers'), 3, offset, 'original', function () {});
+    function insertFinalTwo() {
+        var offset = (loadSection) ? 0 : 2;
+        insertContainers(edition, $('.js-network-fronts-containers'), 2, offset, 'original', function () {});
     }
 
     function insertContainers(section, $el, num, offset, size, callback) {
