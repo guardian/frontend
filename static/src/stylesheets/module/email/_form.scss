@@ -136,11 +136,6 @@
         @include fs-textSans(1, $size-only: true);
     }
 
-    .email-sub__label,
-    .email-sub__submit-input {
-        line-height: 3;
-    }
-
     .email-sub__submit-input {
         background-color: guss-colour(neutral-2, $pasteup-palette);
         border: 1px solid guss-colour(neutral-2, $pasteup-palette);
@@ -161,8 +156,7 @@
 }
 
 // LANDING PAGE MODS
-.email-sub--landing,
-.email-sub--article {
+.email-sub--landing {
     background-color: guss-colour(guardian-brand, $pasteup-palette);
 
     .email-sub__description {
@@ -170,9 +164,7 @@
     }
 }
 
-.email-sub__form--landing,
-.email-sub__form--article {
-
+.email-sub__form--landing {
     .email-sub__form-wrapper {
         width: 40%;
     }
@@ -191,7 +183,27 @@
         text-align: center;
         width: 100%;
     }
+}
 
+// IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub--article {
+    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+}
+
+.email-sub__form--article {
+    border-bottom: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+
+    .email-sub__text-input {
+        border-color: guss-colour(neutral-1, $pasteup-palette);
+    }
+
+    .email-sub__submit-input {
+        background-color: guss-colour(guardian-brand, $pasteup-palette);
+    }
+
+    .email-sub__small {
+        color: guss-colour(neutral-1, $pasteup-palette);
+    }
 }
 
 

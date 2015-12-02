@@ -48,14 +48,13 @@ body {
     }
 }
 
-
-
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
 @include mq($from: 184px) {
 
-    .email-sub__form--footer {
+    .email-sub__form--footer,
+    .email-sub__form--article {
         // Rounded inline input
         .email-sub__text-input {
             border-right: 0;
@@ -72,6 +71,11 @@ body {
             margin-right: 0;
             padding-left: $gs-gutter / 2;
             width: 38%;
+        }
+
+        .email-sub__label,
+        .email-sub__submit-input {
+            line-height: 3;
         }
     }
 }
@@ -91,10 +95,12 @@ body {
         }
     }
 
-
-
 }
 
+// Above mobile
+@include mq($from: 320px) {
+
+}
 
 
 

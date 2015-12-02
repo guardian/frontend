@@ -14,7 +14,7 @@
     font-weight: bold;
 }
 
-// LANDING PAGE MODS
+// LANDING AND IN-ARTICLE (COMPOSER) PAGE MODS
 .email-sub__header--landing,
 .email-sub__header--article {
     background-color: $form-primary-colour;
@@ -23,6 +23,11 @@
     .email-sub__heading {
         margin: $gs-baseline 0;
     }
+}
+
+// IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub__heading {
+    color: guss-colour(neutral-1, $pasteup-palette);
 }
 
 // FOOTER MODS
