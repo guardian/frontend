@@ -22,7 +22,7 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      assets().getOrElse(path, throw AssetNotFoundException(path))
+      assets().getOrElse(path, Asset(path))
     } else {
       memoizedAssets(path)
     }
