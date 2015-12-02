@@ -4,7 +4,7 @@
     // Download but don't execute, just define
     var preFetchEnhancedBundles = function () {
         var downloaded = false;
-        var listeners = [];
+        var onLoad;
 
         if (guardian.isModernBrowser) {
             // Order matters because define fn needs dependencies to register
@@ -13,7 +13,9 @@
                 'js!bootstraps/enhanced!order'
             ], function () {
                 downloaded = true;
-                listeners.forEach(function (fn) { fn(); });
+                if (onLoad) {
+                    onLoad();
+                }
             });
         }
 
@@ -21,7 +23,7 @@
             if (downloaded) {
                 callback();
             } else {
-                listeners.push(callback);
+                onLoad = callback;
             }
         };
     };
