@@ -8,7 +8,8 @@ define([
     'common/utils/proximity-loader',
     'common/modules/onward/inject-container',
     'lodash/collections/contains',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/utils/scroller'
 ], function (
     fastdom,
     bean,
@@ -19,7 +20,8 @@ define([
     proximityLoader,
     injectContainer,
     contains,
-    identity
+    identity,
+    scroller
 ) {
 
     var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle', 'culture', 'business', 'technology', 'environment'],
@@ -62,6 +64,9 @@ define([
                 fastdom.write(function () {
                     $('.js-comments').insertBefore(qwery('.fc-container--commercial-high'));
                     $('.js-move-comments').hide();
+                    fastdom.read(function () {
+                        scroller.scrollToElement(qwery('.js-comments'), 300, 'easeInOutQuad');
+                    });
                 });
             });
         }
