@@ -11,6 +11,15 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
+    @Html(curlConfig().body)
+
+    // Polyfill for async script
+    (function () {
+        var script = document.createElement('script');
+        script.src = '@Static("javascripts/standard.js")';
+        document.head.appendChild(script);
+    })();
+
     // render-critical blocking JS
 
     // polyfills

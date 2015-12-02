@@ -10,5 +10,7 @@
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
+<link rel="prefetch" href="@Static("javascripts/standard.js")">
+
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking(page)
