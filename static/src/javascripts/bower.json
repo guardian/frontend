@@ -11,7 +11,7 @@
     "curl": "~0.8.9",
     "qwery": "3.4.2",
     "react": "0.13.2",
-    "reqwest": "1.1.5",
+    "reqwest": "2.0.5",
     "enhancer": "0.1.3",
     "raven-js": "~1.1.16",
     "requirejs-text": "~2.0.12",

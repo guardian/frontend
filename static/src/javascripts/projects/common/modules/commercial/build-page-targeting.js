@@ -108,6 +108,20 @@ define([
             }
 
             return visitedValue;
+        },
+        getReferrer = function () {
+            var referrerTypes = [
+                    {id: 'facebook', match: 'facebook.com'},
+                    {id: 'twitter', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
+                    {id: 'googleplus', match: 'plus.url.google'},
+                    {id: 'reddit', match: 'reddit.com'},
+                    {id: 'google', match: 'www.google'}
+                ],
+                matchedRef = referrerTypes.filter(function (referrerType) {
+                    return detect.getReferrer().indexOf(referrerType.match) > -1;
+                })[0] || {};
+
+            return matchedRef.id;
         };
 
     return function (opts) {
@@ -129,6 +143,7 @@ define([
                 si:      identity.isUserLoggedIn() ? 't' : 'f',
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
+                ref:     getReferrer(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),

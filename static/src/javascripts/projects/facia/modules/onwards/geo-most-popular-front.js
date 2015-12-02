@@ -26,6 +26,7 @@ define([
 
     GeoMostPopularFront.prototype.endpoint = '/most-read-geo.json';
     GeoMostPopularFront.prototype.isNetworkFront = config.page.contentType === 'Network Front';
+    GeoMostPopularFront.prototype.isVideoFront = config.page.pageId === 'video';
     GeoMostPopularFront.prototype.isInternational = config.page.pageId === 'international';
     GeoMostPopularFront.prototype.manipulationType = 'html';
 
@@ -43,7 +44,7 @@ define([
         this.parent = qwery('.js-popular-trails')[0];
 
         if (this.parent) {
-            if (this.isInternational && this.isNetworkFront) {
+            if ((this.isInternational && this.isNetworkFront) || this.isVideoFront) {
                 // hide the tabs
                 hideTabs(this.parent);
             } else {

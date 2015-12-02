@@ -7,6 +7,9 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
+GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
+GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
+
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -20,9 +23,10 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET        /email                                                               controllers.EmailController.renderPage()
-GET        /email-form                                                          controllers.EmailController.renderForm()
+GET        /email/form                                                          controllers.EmailController.renderForm()
 GET        /email/:result                                                       controllers.EmailController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailController.submit()
+OPTIONS    /email                                                               controllers.EmailController.options()
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)
