@@ -1,3 +1,3 @@
-define(['membership/membership-tab'], function (membershipTab) {
+define(['mmaTabs/membership-tab'], function (membershipTab) {
     return membershipTab;
 });

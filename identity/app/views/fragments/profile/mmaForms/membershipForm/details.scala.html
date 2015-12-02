@@ -1,0 +1,85 @@
+@import views.html.fragments.selectDates
+
+<div class="is-hidden js-mem-info">
+    <ul class="details-list u-unstyled js-mem-details">
+        <li class="details-list__item is-hidden js-mem-number-container">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                        Membership number
+                </h2>
+            </div>
+            <div class="fieldset__fields">
+                <div class="form-field js-mem-number"></div>
+            </div>
+        </li>
+        <li class="details-list__item">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                        Membership tier
+                </h2>
+            </div>
+
+            <div class="fieldset__fields u-cf">
+                <div class="form-field">
+                    <span class="js-mem-tier" id="qa-membership-tier"></span>
+                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" id="qa-change-tier" class="submit-input mma-cta" data-link-name="Change tier">Change tier</a>
+                </div>
+            </div>
+        </li>
+        <li class="details-list__item">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                        Start date
+                </h2>
+            </div>
+
+            <div class="fieldset__fields">
+                <div class="form-field">
+                    <span id="qa-mem-join-date" class="js-mem-join-date"></span>
+                </div>
+            </div>
+        </li>
+        <li class="details-list__item js-mem-next-payment-container">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                    Next payment price
+                </h2>
+            </div>
+
+            <div class="fieldset__fields">
+                <div class="form-field">
+                    <span id="qa-mem-next-payment-price" class="js-mem-next-payment-price"></span>
+                </div>
+            </div>
+        </li>
+        <li class="details-list__item js-mem-next-payment-container">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                    Next payment date
+                </h2>
+            </div>
+
+            <div class="fieldset__fields">
+                <div class="form-field">
+                    <span id="qa-mem-next-payment-date" class="js-mem-next-payment-date"></span>
+                </div>
+            </div>
+        </li>
+        <li class="details-list__item">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                    <span class="js-mem-plan-interval"></span> payment
+                </h2>
+            </div>
+
+            <div class="fieldset__fields">
+                <div class="form-field">
+                    <span id="qa-mem-payment-cost" class="js-mem-package-cost"></span>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="js-mem-card-details is-hidden"  data-sprite-url="@Static("stylesheets/membership-icons.css")">
+    @views.html.fragments.profile.mmaForms.stripe()
+    </div>
+</div>

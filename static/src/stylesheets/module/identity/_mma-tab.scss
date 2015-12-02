@@ -1,13 +1,13 @@
-/* Edit profile Membership tab
+/* Edit profile mma tab
    ========================================================================== */
-.membership-tab {
+.mma-tab {
     padding-bottom: $gs-baseline*2;
 
     .show-updating {
         display: inline-block;
     }
 
-    .membership-loader {
+    .mma-loader {
         text-align: center;
         min-height: 200px;
         margin-top: $gs-baseline*4;
@@ -15,15 +15,15 @@
 
     /* Up sell
     ========================================================================== */
-    .membership-up-sell {
+    .mma-up-sell {
         padding: $gs-gutter*2;
     }
 
-    .membership-up-sell__heading {
+    .mma-up-sell__heading {
         margin-bottom: $gs-baseline;
     }
 
-    .membership-up-sell__content {
+    .mma-up-sell__content {
         margin-bottom: 18px;
     }
 
@@ -54,9 +54,9 @@
         vertical-align: middle;
     }
 
-    /* Membership CTA
+    /* mma CTA
    ========================================================================== */
-    .membership-cta {
+    .mma-cta {
         width: $gs-baseline*10;
         margin: ($gs-baseline/2) 0 0;
         display: block;
@@ -73,7 +73,7 @@
         }
     }
 
-    .membership-cta--disabled {
+    .mma-cta--disabled {
         background: none;
         color: colour(news-default);
 
@@ -89,11 +89,11 @@
 
     /* Header
        ========================================================================== */
-    .membership-header {
+    .mma-header {
         @include fs-header(3);
     }
 
-    .membership-header--highlight {
+    .mma-header--highlight {
         padding: 15px 0 15px 4px;
         margin: 32px 0 15px;
         background-color: #fff8e5;
@@ -224,7 +224,7 @@
 
     /* Credit card change form
    ========================================================================== */
-    .membership-tab__change-cc-form {
+    .mma-tab__change-cc-form {
         overflow: hidden;
         max-height: 424px;
         transition: all .25s ease-in-out;
@@ -249,11 +249,11 @@
         $small-card: 32px;
         $large-card: 35px;
 
-        .membership-tab__credit-card-container {
+        .mma-tab__credit-card-container {
             position: relative;
         }
 
-        .membership-tab__card-types--in-field {
+        .mma-tab__card-types--in-field {
             position: absolute;
             right: 2px;
             top: 2px;
@@ -262,7 +262,7 @@
         }
 
         @include mq(tablet) {
-            .membership-tab__card-types--in-field {
+            .mma-tab__card-types--in-field {
                 width: 49px !important;
                 height: $small-card !important;
                 background-size: 49px $small-card;

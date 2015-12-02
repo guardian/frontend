@@ -14,7 +14,7 @@ requirejs.config({
         admin:        'projects/admin',
         common:       'projects/common',
         facia:        'projects/facia',
-        membership:   'projects/membership',
+        mmaTabs:      'projects/mma-tabs',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
         react:        'components/react/react',
