@@ -60,8 +60,8 @@ private[dfp] object SessionLogger extends Logging {
           }
           )
       }.toMap
-      val paramStr = if (params.isEmpty) "" else params.toString
-      s"""with statement "$qry" and params $paramStr"""
+      val paramStr = if (params.isEmpty) "" else s"and params ${params.toString}"
+      s"""with statement "$qry" $paramStr"""
     }
     val baseMessage = s"$opName $typesName"
     val msgPrefix = maybeQryLogMessage map (qryLogMsg => s"$baseMessage $qryLogMsg") getOrElse baseMessage

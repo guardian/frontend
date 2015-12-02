@@ -6,6 +6,7 @@ import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services.FaciaContentConvert
+import views.support.TrailCssClasses
 import scala.concurrent.Future
 import play.api.libs.json.{Json, JsArray}
 import LiveContentApi.getResponse
@@ -91,7 +92,9 @@ object MostPopularController extends Controller with Logging with ExecutionConte
           Json.obj(
             ("index", index + 1),
             ("url", trail.url),
-            ("headline", trail.headline)
+            ("headline", trail.headline),
+            ("thumbnail", trail.thumbnailPath),
+            ("toneClass", TrailCssClasses.articleToneClass(trail))
           )
         })
       )
