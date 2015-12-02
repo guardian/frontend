@@ -28,14 +28,10 @@
 
     var afterPreFetch = preFetchEnhancedBundles();
 
-    require(['bootstraps/standard', 'domReady!'], function (standardBootstrap) {
-        standardBootstrap.go();
-
+    require(['bootstraps/standard', 'domReady!'], function () {
         if (guardian.isModernBrowser) {
             afterPreFetch(function () {
-                require(['bootstraps/enhanced'], function (enhancedBootstrap) {
-                    enhancedBootstrap.go();
-                });
+                require(['bootstraps/enhanced']);
             });
         }
     });
