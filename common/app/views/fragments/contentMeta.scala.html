@@ -29,8 +29,10 @@
         <div class="meta__social" data-component="share">
             @fragments.social(content, "top")
         </div>
-        @if(content.tags.exists(_.id == "tone/news")) {
-            @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+        @if(contentAgeMessageSwitch.isSwitchedOn) {
+            @if(content.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+            }
         }
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
