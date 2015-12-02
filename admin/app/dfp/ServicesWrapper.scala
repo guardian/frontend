@@ -10,6 +10,8 @@ private[dfp] class ServicesWrapper(session: DfpSession) {
 
   lazy val lineItemService = dfpServices.get(session, classOf[LineItemServiceInterface])
 
+  lazy val licaService = dfpServices.get(session, classOf[LineItemCreativeAssociationServiceInterface])
+
   lazy val customFieldsService = dfpServices.get(session, classOf[CustomFieldServiceInterface])
 
   lazy val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])

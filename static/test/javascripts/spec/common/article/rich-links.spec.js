@@ -31,19 +31,21 @@ define([
         };
 
         var articleBodyFixtureElement,
-            richLinks, config, spacefinder,
+            richLinks, config, spaceFiller,
             injector = new Injector();
 
         beforeEach(function (done) {
             articleBodyFixtureElement = fixtures.render(articleBodyConf);
 
-            injector.require(['common/modules/article/rich-links', 'common/utils/config', 'common/modules/article/spacefinder'], function () {
+            injector.require(['common/modules/article/rich-links', 'common/utils/config', 'common/modules/article/space-filler'], function () {
                 richLinks = arguments[0];
                 config = arguments[1];
-                spacefinder = arguments[2];
+                spaceFiller = arguments[2];
 
-                spacefinder.getParaWithSpace = function () {
-                    return Promise.resolve($('#article-body p').first());
+                spaceFiller.insertAtFirstSpace = function (rules, writer) {
+                    var space = $('#article-body p').first();
+                    writer(space);
+                    return Promise.resolve(true);
                 };
 
                 done();

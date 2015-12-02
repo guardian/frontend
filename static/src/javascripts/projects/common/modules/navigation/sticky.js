@@ -130,7 +130,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (adblockMsg.noAdblockMsg()) { // if paying member uses adblock, dont show the messages
+        } else if (adblockMsg.noAdblockMsg() || config.tests.topBannerPosition) { // if paying member uses adblock, dont show the messages
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';

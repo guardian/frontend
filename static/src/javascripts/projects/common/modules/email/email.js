@@ -6,6 +6,7 @@ define([
     'common/utils/ajax-promise',
     'common/utils/config',
     'fastdom',
+    'Promise',
     'common/utils/mediator',
     'lodash/functions/debounce',
     'common/utils/template',
@@ -19,13 +20,46 @@ define([
     ajax,
     config,
     fastdom,
+    Promise,
     mediator,
     debounce,
     template,
     svgs,
     successHtml
 ) {
-    var classes = {
+    var omniture;
+
+    /**
+     * The omniture module depends on common/modules/experiments/ab, so trying to
+     * require omniture directly inside an AB test gives you a circular dependency.
+     *
+     * This is a workaround to load omniture without making it a dependency of
+     * this module, which is required by an AB test.
+     */
+    function getOmniture() {
+        return new Promise(function (resolve) {
+            if (omniture) {
+                return resolve(omniture);
+            }
+
+            require('common/modules/analytics/omniture', function (omnitureM) {
+                omniture = omnitureM;
+                resolve(omniture);
+            });
+        });
+    }
+
+    function handleSubmit(isSuccess, $form) {
+        return function () {
+            updateForm.replaceContent(isSuccess, $form);
+            state.submitting = false;
+        };
+    }
+
+    var state = {
+            submitting: false
+        },
+        classes = {
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
@@ -38,28 +72,34 @@ define([
             },
             submitForm: function ($form, url) {
                 return function (event) {
-                    var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
+                    if (!state.submitting) {
+                        var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
 
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
-                    });
+                        state.submitting = true;
 
-                    event.preventDefault();
+                        event.preventDefault();
 
-                    return ajax({
-                        url: url,
-                        method: 'post',
-                        data: data,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    }).then(this.submissionResult(true, $form), this.submissionResult(false, $form));
-                }.bind(this);
+                        return getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
 
-            },
-            submissionResult: function (isSuccess, $form) {
-                return function () {
-                    updateForm.replaceContent(isSuccess, $form);
+                            return ajax({
+                                url: url,
+                                method: 'post',
+                                data: data,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                            })
+                            .then(handleSubmit(true, $form))
+                            .catch(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
+                                handleSubmit(false, $form);
+                            });
+                        });
+                    }
                 };
             }
         },
@@ -77,16 +117,10 @@ define([
                     $form.addClass('email-sub__form--is-hidden');
                     $form.after(submissionHtml);
                 });
-
-                if (isSuccess) {
-                    require('common/modules/analytics/omniture', function (omniture) {
-                        omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
-                    });
-                }
             }
         },
         ui = {
-            freezeHeight: function ($wrapper, reset, callback) {
+            freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
                     resetHeight = function () {
                         fastdom.write(function () {
@@ -103,7 +137,6 @@ define([
                     setHeight = function () {
                         fastdom.defer(function () {
                             $wrapper.css('min-height', wrapperHeight);
-                            callback();
                         });
                     };
 
@@ -116,14 +149,13 @@ define([
                     }
                 };
             },
-            setIframeHeight: function (iFrameEl, isIframed) {
+            setIframeHeight: function (iFrameEl, callback) {
                 return function () {
-                    if (isIframed) {
-                        fastdom.write(function () {
-                            iFrameEl.height = '';
-                            iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
-                        });
-                    }
+                    fastdom.write(function () {
+                        iFrameEl.height = '';
+                        iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
+                        callback.call();
+                    });
                 };
             }
         };
@@ -144,11 +176,17 @@ define([
             });
 
             $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                var $el = $(el),
+                    freezeHeight = ui.freezeHeight($el, false),
+                    freezeHeightReset = ui.freezeHeight($el, true);
+
                 formSubmission.bindSubmit($('.' + classes.form, el));
 
-                // Ensure the height of the wrapper stays the same when submitting
-                ui.freezeHeight($(el), false, ui.setIframeHeight(rootEl, isIframed)).apply();
-                mediator.on('window:resize', debounce(ui.freezeHeight($(el), true, ui.setIframeHeight(rootEl, isIframed)), 500));
+                // Ensure our form is the right height, both in iframe and outside
+                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+                mediator.on('window:resize',
+                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                );
             });
         }
     };

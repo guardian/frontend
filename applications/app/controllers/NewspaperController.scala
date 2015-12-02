@@ -18,7 +18,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 
   def latestObserverNewspaper() = Action.async { implicit request =>
-    val observerPage = Page("theobserver", "observer", "Main section | From the Observer | The Guardian", "GFE: Observer Newspaper books Main Section")
+    val observerPage = Page("theobserver", "theobserver", "Main section | From the Observer | The Guardian", "GFE: Observer Newspaper books Main Section")
 
     val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
@@ -30,7 +30,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
     val page = path match {
       case "theguardian" => Page("theguardian", "todayspaper", "Top Stories | From the Guardian | The Guardian", "GFE: Newspaper books Top Stories")
-      case "theobserver" => Page("theobserver", "observer", "News | From the Observer | The Guardian", "GFE: Observer Newspaper books Top Stories")
+      case "theobserver" => Page("theobserver", "theobserver", "News | From the Observer | The Guardian", "GFE: Observer Newspaper books Top Stories")
     }
 
     val paper = NewspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))

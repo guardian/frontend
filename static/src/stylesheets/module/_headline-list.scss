@@ -34,9 +34,7 @@
 }
 
 .headline-list__count {
-    position: absolute;
-    top: 0;
-    left: 0;
+    float: left;
     width: gs-span(1);
     color: colour(neutral-4);
     @include font($f-serif-headline, 200, 44px);

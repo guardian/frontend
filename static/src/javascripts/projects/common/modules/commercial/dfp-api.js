@@ -17,6 +17,7 @@ define([
     'common/utils/user-timing',
     'common/utils/sha1',
     'common/utils/fastdom-idle',
+    'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -59,6 +60,7 @@ define([
     userTiming,
     sha1,
     idleFastdom,
+    cookies,
     StickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -404,24 +406,28 @@ define([
                 adUnit         = adUnitOverride ?
                     ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
                 id             = $adSlot.attr('id'),
-                sizeMapping    = defineSlotSizes($adSlot),
+                slot,
+                size,
+                sizeMapping;
+
+            if ($adSlot.data('out-of-page')) {
+                slot = googletag.defineOutOfPageSlot(adUnit, id);
+            } else if ($adSlot.data('fluid') && cookies.get('adtest') === 'tm2') {
+                $adSlot.addClass('ad-slot--fluid');
+                sizeMapping = defineSlotSizes($adSlot);
+                // SizeMappingBuilder does not handle 'fluid' very well,
+                // so instead we add it manually ourselves to the end of each array of sizes
+                forEach(sizeMapping, function (sizeMap) { sizeMap[1].push('fluid'); });
+                slot = googletag.defineSlot(adUnit, 'fluid', id).defineSizeMapping(sizeMapping);
+            } else {
+                sizeMapping = defineSlotSizes($adSlot);
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = uniq(
-                    flatten(sizeMapping, true, function (map) {
-                        return map[1];
-                    }),
-                    function (size) {
-                        return size[0] + '-' + size[1];
-                    }
-                ),
-                slot = (
-                    $adSlot.data('out-of-page') ?
-                        googletag.defineOutOfPageSlot(adUnit, id) :
-                        googletag.defineSlot(adUnit, size, id)
-                    )
-                    .addService(googletag.pubads())
-                    .defineSizeMapping(sizeMapping)
-                    .setTargeting('slot', slotTarget);
+                size = uniq(
+                    flatten(sizeMapping, true, function (map) { return map[1]; }),
+                    function (size) { return size[0] + '-' + size[1]; }
+                );
+                slot = googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
+            }
 
             if ($adSlot.data('series')) {
                 slot.setTargeting('se', parseKeywords($adSlot.data('series')));
@@ -430,6 +436,9 @@ define([
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
             }
+
+            slot.addService(googletag.pubads())
+                .setTargeting('slot', slotTarget);
 
             // Add to the array of ads to be refreshed (when the breakpoint changes)
             // only if it's `data-refresh` attribute isn't set to false.
