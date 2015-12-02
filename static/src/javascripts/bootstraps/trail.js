@@ -104,7 +104,6 @@ define([
         if (ab.getParticipations().FrontsOnArticles &&
             ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
             ab.testCanBeRun('FrontsOnArticles')) {
-
             insertOrProximity('.js-onward', function () {
                 new FrontsContainers();
             });

@@ -31,15 +31,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABReachDummyTest2 = Switch(
-    "A/B Tests",
-    "ab-reach-dummy-test-2",
-    "Switch to inject the network front instead of most popular on all content pages",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 5),
-    exposeClientSide = true
-  )
-
   val ABEssentialReadTest1 = Switch(
     "A/B Tests",
     "ab-essential-read-test-1",
