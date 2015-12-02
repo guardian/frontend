@@ -27,6 +27,8 @@ object Global extends WithFilters(Filters.common: _*)
     ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
     ContentApiMetrics.ContentApiErrorMetric,
     EmailSubsciptionMetrics.EmailSubmission,
+    EmailSubsciptionMetrics.EmailFormError,
+    EmailSubsciptionMetrics.NotAccepted,
     EmailSubsciptionMetrics.APIHTTPError,
     EmailSubsciptionMetrics.APINetworkError,
     EmailSubsciptionMetrics.ListIDError,
