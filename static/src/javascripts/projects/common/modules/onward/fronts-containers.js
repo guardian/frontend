@@ -19,7 +19,8 @@ define([
 ) {
 
     var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle', 'culture', 'business', 'technology', 'environment'],
-        loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false;
+        loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false,
+        edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase();
 
     function FrontsContainers() {
         moveComments();
@@ -28,14 +29,14 @@ define([
     }
 
     function insertFirstThree() {
-        var front = (loadSection) ? config.page.section : 'uk';
+        var front = (loadSection) ? config.page.section : edition;
 
         insertContainers(front, $('.js-fronts-containers'), 3, 0, 'original', function () {});
     }
 
     function insertFinalThree() {
         var offset = (loadSection) ? 0 : 3;
-        insertContainers('uk', $('.js-network-fronts-containers'), 3, offset, 'original', function () {});
+        insertContainers(edition, $('.js-network-fronts-containers'), 3, offset, 'original', function () {});
     }
 
     function insertContainers(section, $el, num, offset, size, callback) {
