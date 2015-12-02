@@ -49,6 +49,13 @@ define([
         });
     }
 
+    function handleSubmit(isSuccess, $form) {
+        return function () {
+            updateForm.replaceContent(isSuccess, $form);
+            state.submitting = false;
+        };
+    }
+
     var state = {
             submitting: false
         },
@@ -86,19 +93,13 @@ define([
                             .then(function () {
                                 omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
                             })
-                            .then(this.submissionResult(true, $form))
+                            .then(handleSubmit(true, $form))
                             .catch(function () {
                                 omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
-                                this.submissionResult(false, $form);
+                                handleSubmit(false, $form);
                             });
-                        }.bind(this));
+                        });
                     }
-                }.bind(this);
-            },
-            submissionResult: function (isSuccess, $form) {
-                return function () {
-                    updateForm.replaceContent(isSuccess, $form);
-                    state.submitting = false;
                 };
             }
         },
