@@ -13,8 +13,8 @@ define([
     'text!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample',
-    'lodash/collections/find',
-    'lodash/utilities/random'
+    'lodash/collections/filter',
+    'lodash/collections/find'
 ], function (
     $,
     config,
@@ -30,8 +30,8 @@ define([
     messageTemplate,
     svgs,
     sample,
-    find,
-    random) {
+    filter,
+    find) {
     function showAdblockMessage() {
         var adblockLink = 'https://membership.theguardian.com/supporter',
             message = sample([
@@ -70,9 +70,8 @@ define([
     }
 
     function showAdblockBanner() {
-        var variant,
-            contributors = history.getContributors(),
-            variations = [{
+        var contributors = history.getContributors(),
+            allVariations = [{
                 supporterLink: 'https://membership.theguardian.com/supporter?INTCMP=ADBLOCK_BANNER_MONBIOT',
                 quoteText: 'Become a Guardian Member and support independent journalism',
                 quoteAuthor: 'George Monbiot',
@@ -99,13 +98,16 @@ define([
                 quoteAuthor: 'Ewen MacAskill',
                 customCssClass: 'macaskill',
                 imageAuthor: '//i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=85&auto=format&sharp=10&s=0ecfbc78dc606a01c0a9b04bd5ac7a82'
-            }];
+            }],
 
-        variant = find(variations, function (message) {
-            return find(contributors, function (contributor) {
-                return contributor[0] === message.quoteAuthor;
-            });
-        }) || variations[random(variations.length - 1)];
+            variationsFromContributors = filter(allVariations, function (message) {
+                return find(contributors, function (contributor) {
+                    return contributor[0] === message.quoteAuthor;
+                }) !== undefined;
+            }),
+
+            variationsToUse = variationsFromContributors.length > 1 ? variationsFromContributors : allVariations,
+            variant = sample(variationsToUse);
 
         new AdblockBanner(variant).show();
     }
