@@ -1,21 +1,25 @@
 define([
     'fastdom',
+    'bean',
     'qwery',
     'common/utils/$',
     'common/utils/config',
     'common/utils/ajax',
     'common/utils/proximity-loader',
     'common/modules/onward/inject-container',
-    'lodash/collections/contains'
+    'lodash/collections/contains',
+    'common/modules/identity/api'
 ], function (
     fastdom,
+    bean,
     qwery,
     $,
     config,
     ajax,
     proximityLoader,
     injectContainer,
-    contains
+    contains,
+    identity
 ) {
 
     var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle', 'culture', 'business', 'technology', 'environment'],
@@ -48,10 +52,15 @@ define([
     }
 
     function moveComments() {
-        if (config.page.commentable) {
+        if (!identity.isUserLoggedIn() && config.page.commentable) {
             fastdom.write(function () {
-                $('.submeta').before('<a href=\'#comments\' class=\'button button--small submeta__jump-to-comments\'><span class=\'submeta__jump-to-comments-text\'>Jump to comments</span></a>');
+                $('.submeta__share').prepend('<button class=\'button button--small submeta__jump-to-comments js-move-comments\'><span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
                 $('.js-comments').insertAfter(qwery('.js-network-fronts-containers'));
+            });
+
+            bean.on(document.body, 'click', '.js-move-comments', function () {
+                $('.js-comments').insertBefore(qwery('.fc-container--commercial-high'));
+                $('.js-move-comments').hide();
             });
         }
     }
