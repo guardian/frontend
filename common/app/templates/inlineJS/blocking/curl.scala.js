@@ -27,7 +27,6 @@ var curl = {
             qwery:                          'components/qwery/qwery',
             raven:                          'components/raven-js/raven',
             reqwest:                        'components/reqwest/reqwest',
-            socketio:                       'components/socket.io-client/socket.io',
             'facebook.js':                  '//connect.facebook.net/en_US/all.js',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
