@@ -14,12 +14,13 @@
     @Html(curlConfig().body)
 
     // Polyfill for async script
-    (function () {
+    (function (document) {
         var script = document.createElement('script');
         script.src = '@Static("javascripts/standard.js")';
         var head = document.getElementsByTagName("head")[0];
         head.appendChild(script);
     })();
+    })(document);
 
     // render-critical blocking JS
 
