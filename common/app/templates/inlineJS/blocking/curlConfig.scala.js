@@ -40,7 +40,9 @@ var curl = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg'
+            inlineSvg:    'projects/common/utils/inlineSvg',
+
+            react: '@Static.js.reactPath'
         } else {
             'enhanced-vendor':          '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
