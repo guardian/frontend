@@ -17,7 +17,8 @@
     (function () {
         var script = document.createElement('script');
         script.src = '@Static("javascripts/standard.js")';
-        document.head.appendChild(script);
+        var head = document.getElementsByTagName("head")[0];
+        head.appendChild(script);
     })();
 
     // render-critical blocking JS
