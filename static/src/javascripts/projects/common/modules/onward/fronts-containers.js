@@ -67,7 +67,6 @@ define([
                     fastdom.read(function () {
                         scroller.scrollToElement(qwery('.js-comments'), 300, 'easeInOutQuad');
                     });
-
                 });
             });
         }
