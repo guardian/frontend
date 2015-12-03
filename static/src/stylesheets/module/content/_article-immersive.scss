@@ -69,7 +69,7 @@
     }
 
     .content__headline {
-        @include fs-headline(5);
+        @include fs-headline(7);
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
