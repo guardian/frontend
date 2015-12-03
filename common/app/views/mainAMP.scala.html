@@ -17,7 +17,9 @@
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
-        <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
+        @if(metaData.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition") {
+            <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
+        }
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
@@ -49,13 +51,17 @@
                     <div class="fc-container__header__title">
                         <span>popular</span>
                     </div>
-                    <amp-list width="600" height="1000" layout="responsive" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-mf2.json">
+                    <amp-list height="940" layout="fixed-height" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-mf2.json">
                         <template type="amp-mustache">
-                            <div class="headline-list__item">
-                                <p class="headline-list__count">{{index}}</p>
-                                <h2 class="fc-item__title">
-                                    <a href="{{url}}" class="fc-item__link">{{headline}}</a>
-                                </h2>
+                            <div class="fc-item {{toneClass}}">
+                                <a href="{{url}}" class="fc-item__link">
+                                    <div class="fc-item__image-container">
+                                        <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
+                                    </div>
+                                    <div class="fc-item__content">
+                                        <h2 class="fc-item__title">{{headline}}</h2>
+                                    </div>
+                                </a>
                             </div>
                         </template>
                     </amp-list>

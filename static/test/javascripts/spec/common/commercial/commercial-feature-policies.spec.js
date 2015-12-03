@@ -38,20 +38,27 @@ define([
         });
 
         describe('Sensitive content policy', function () {
-            it('hides all features on a sensitive page', function () {
+            var featuresToDisable = {
+                dfpAdvertising : false,
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
+                sliceAdverts : false,
+                popularContentMPU : false,
+                videoPreRolls : false,
+                frontCommercialComponents : false
+            };
+
+            it('hides features on a sensitive page', function () {
                 config.page.shouldHideAdverts = true;
                 var switches = commercialFeaturePolicies.getPolicySwitches().sensitiveContent;
-                forOwn(switches, function (featureSwitch) {
-                    expect(featureSwitch).toBe(false);
-                });
+                expect(switches).toEqual(featuresToDisable);
             });
 
             it('hides all features on pages in the childrens\' book site', function () {
                 config.page.section = 'childrens-books-site';
                 var switches = commercialFeaturePolicies.getPolicySwitches().sensitiveContent;
-                forOwn(switches, function (featureSwitch) {
-                    expect(featureSwitch).toBe(false);
-                });
+                expect(switches).toEqual(featuresToDisable);
             });
 
             it('applies no changes to a non-sensitive page outside the childrens\' book site', function () {

@@ -10,9 +10,11 @@ define([
         return commercialFeatures;
     }
 
+    /**
+     * Take the results of all our commercial content policies and smush them together
+     * @see commercial-feature-policies.js for the list.
+     */
     function getFeatureSwitches() {
-        // Take the results of all our commercial content policies and smush them together
-
         var activeSwitches = {};
         var switchesForPolicies = commercialFeaturePolicies.getPolicySwitches();
 
