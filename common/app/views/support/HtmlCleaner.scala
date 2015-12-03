@@ -505,7 +505,9 @@ case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
       document.getElementsByTag("h2").foreach{ h2 =>
         val beforeH2 = h2.previousElementSibling()
         if(beforeH2.hasClass("element--immersive")) {
-          beforeH2.addClass("element--rotate")
+          beforeH2.addClass("section-image")
+          beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
+          h2.remove()
         }
       }
     }
