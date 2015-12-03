@@ -75,20 +75,3 @@
 .submeta__jump-to-comments {
     margin-top: $gs-baseline;
 }
-
-.submeta__jump-to-comments-text {
-    &:after {
-        content: '';
-        display: inline-block;
-        pointer-events: none;
-        width: 0;
-        height: 0;
-        border-bottom: 0;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        margin-left: 4px;
-        border-left: $popup-toggle-arrow-size solid transparent;
-        border-right: $popup-toggle-arrow-size solid transparent;
-        border-top: $popup-toggle-arrow-size solid colour(neutral-8);
-    }
-}

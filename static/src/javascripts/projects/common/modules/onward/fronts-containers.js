@@ -56,7 +56,7 @@ define([
     function moveComments() {
         if (!identity.isUserLoggedIn() && config.page.commentable) {
             fastdom.write(function () {
-                $('.submeta').after('<button class=\'button button--small submeta__jump-to-comments js-move-comments\'><span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
+                $('.submeta').after('<button class=\'button button--small submeta__jump-to-comments js-move-comments\'>View comments</button>');
                 $('.js-comments').insertAfter(qwery('.js-network-fronts-containers'));
             });
 
