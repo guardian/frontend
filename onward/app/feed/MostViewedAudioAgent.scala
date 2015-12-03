@@ -1,21 +1,19 @@
 package feed
 
-import java.net.URL
-
 import conf.LiveContentApi
 import common._
-import model.{Audio, Content}
+import model.RelatedContentItem
 import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
 import LiveContentApi.getResponse
 
 object MostViewedAudioAgent extends Logging with ExecutionContexts {
 
-  private val audioAgent = AkkaAgent[Seq[Audio]](Nil)
-  private val podcastAgent = AkkaAgent[Seq[Audio]](Nil)
+  private val audioAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
+  private val podcastAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
 
-  def mostViewedAudio(): Seq[Audio] = audioAgent()
-  def mostViewedPodcast(): Seq[Audio] = podcastAgent()
+  def mostViewedAudio(): Seq[RelatedContentItem] = audioAgent()
+  def mostViewedPodcast(): Seq[RelatedContentItem] = podcastAgent()
 
   def refresh() = {
     log.info("Refreshing most viewed audio.")
@@ -24,20 +22,22 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
 
     ophanResponse.map { result =>
 
-      val mostViewed: Iterable[Future[Option[Content]]] = for {
+      val mostViewed: Iterable[Future[Option[RelatedContentItem]]] = for {
         item: JsValue <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
+          RelatedContentItem(item)
+        })
       }
 
       Future.sequence(mostViewed).map { contentSeq =>
         val allAudio = contentSeq.toSeq.collect {
-          case Some(audio: Audio) => audio
+          case audio if audio.exists(_.content.tags.isAudio) => audio
         }
-        val audio = allAudio.filter(!_.isPodcast)
-        val podcast = allAudio.filter(_.isPodcast)
+        val audio = allAudio.flatten.filter(!_.content.tags.isPodcast)
+        val podcast = allAudio.flatten.filter(_.content.tags.isPodcast)
 
         audioAgent alter audio
         podcastAgent alter podcast

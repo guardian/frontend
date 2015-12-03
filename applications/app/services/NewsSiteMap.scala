@@ -75,26 +75,26 @@ object NewsSiteMap extends ExecutionContexts {
         resp <- paginatedResults
         item <- resp.results.map(Content.apply)
       } yield {
-        val keywordTags = item.keywords.map(_.webTitle)
-        val sectionTag = item.seriesTag.toList.filter(tag => !keywordTags.contains(tag.sectionName)).map(_.webTitle)
+        val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
+        val sectionTag = item.content.seriesTag.toList.filter(tag => !keywordTags.contains(tag.sectionName)).map(_.metadata.webTitle)
         val keywords = (keywordTags ++ sectionTag).mkString(", ")
 
-        val genres = item.tones.flatMap(_.webTitle match {
+        val genres = item.tags.tones.flatMap(_.metadata.webTitle match {
           case "Blogposts" => Some("Blog")
           case "Reviews" => Some("Opinion")
           case "Comment" => Some("OpEd")
           case _ => None
         }).mkString(", ")
 
-        val imageUrl: String = item.mainPicture.flatMap(_.largestEditorialCrop.flatMap(_.url))
+        val imageUrl: String = item.elements.mainPicture.flatMap(_.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
 
         Url(
-          location = item.webUrl,
+          location = item.metadata.webUrl,
           keywords = keywords,
-          title = item.headline,
+          title = item.trail.headline,
           genres = genres,
-          webPublicationDate = item.webPublicationDate,
+          webPublicationDate = item.trail.webPublicationDate,
           imageUrl = imageUrl)
       }
 

@@ -1,19 +1,19 @@
 package rugby.controllers
 
 import common.{ExecutionContexts, JsonComponent, _}
-import model.{Cached, MetaData}
+import model.{MetaData, StandalonePage, Cached}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
 import rugby.feed.CapiFeed
 import rugby.jobs.RugbyStatsJob
 import rugby.model.Match
 
-
-case class MatchPage(liveScore: Match) extends MetaData {
-  override lazy val id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}"
-  override lazy val section = "rugby"
-  override lazy val webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} "
-  override lazy val analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}"
+case class MatchPage(liveScore: Match) extends StandalonePage {
+  override val metadata = MetaData.make(
+    id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
+    section = "rugby",
+    webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name} ",
+    analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }
 
 object MatchesController extends Controller with Logging with ExecutionContexts {

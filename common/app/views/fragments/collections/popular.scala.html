@@ -3,7 +3,7 @@
 @import layout.FaciaCardHeader
 @import views.html.fragments.items.elements.facia_cards.title
 @import views.support._
-@import TrailCssClasses.articleToneClass
+@import TrailCssClasses.toneClass
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 
 @defining(popular.size > 1){ isTabbed =>
@@ -32,7 +32,7 @@
 
                     <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @articleToneClass(trail)--most-popular">
+                    <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @toneClass(trail)--most-popular">
                         <div class="headline-list__link" data-link-name="@info.rowNum | text">
                             <p class="headline-list__count">@info.rowNum</p>
                             @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")

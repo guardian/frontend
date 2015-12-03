@@ -182,6 +182,7 @@ define([
 
             player.one('video:preroll:request', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.onPrerollPlay.bind(this));
+            player.one('video:preroll:skip', this.sendNamedEvent.bind(this, 'preroll:skip', true));
             player.one('video:preroll:end', this.sendNamedEvent.bind(this, 'preroll:end', true));
             player.one('video:content:play', this.onContentPlay.bind(this));
             player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));

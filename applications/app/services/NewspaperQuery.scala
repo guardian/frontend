@@ -64,7 +64,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       val (firstPageContent, otherContent) = resp.results.partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
-        val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
+        val content = firstPageContent.map(c => FaciaContentConvert.contentToFaciaContent(c))
         //for /theguardian fetch date links either side of date requested, for /theobserver, fetch each sunday around the date and the day before
         val snaps = createSnap(newspaperDate, publication)
         bookSectionContainer(None, Some(FRONT_PAGE_DISPLAY_NAME), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0, snaps)
@@ -74,7 +74,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       val orderedBookSections = orderByPageNumber(unorderedBookSections)
 
       val bookSectionContainers = orderedBookSections.map { list =>
-        val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
+        val content = list.content.map(c => FaciaContentConvert.contentToFaciaContent(c))
         bookSectionContainer(Some(list.tag.id), Some(lowercaseDisplayName(list.tag.webTitle)), None, content, orderedBookSections.indexOf(list) + 1, Nil)
       }
 

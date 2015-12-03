@@ -27,7 +27,7 @@ object FootballNavigation {
   )
 
   def navFor(tag: Tag): Seq[Link] = tag match {
-    case competition if tag.isFootballCompetition => navFor(tag.url)
+    case competition if tag.isFootballCompetition => navFor(tag.metadata.url)
     case _ => defaultNav
   }
 
