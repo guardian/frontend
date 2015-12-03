@@ -11,8 +11,10 @@ object ContentFooterContainersLayout {
   def apply(content: Content, related: RelatedContent, isAdvertisementFeature: Boolean)
            (storyPackagePlaceholder: => Html)
            (onwardPlaceholder: => Html)
+           (frontsContainers: => Html)
            (commentsPlaceholder: => Html)
            (mostPopularPlaceholder: => Html)
+           (networkFrontsContainers: => Html)
            (highRelevanceCommercialComponent: => Html)
            (standardCommercialComponent: => Html)
            (outbrainPlaceholder: Html): Html = {
@@ -28,7 +30,8 @@ object ContentFooterContainersLayout {
 
       def includeOutbrainPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
         if (content.showFooterContainers && !content.shouldHideAdverts && OutbrainSwitch.isSwitchedOn) {
-          val pos = if ((content.isSeries || content.isBlog) && !related.hasStoryPackage) {
+          val pos = if (((content.isSeries || content.isBlog) && !related.hasStoryPackage) || (!content.showInRelated && !related.hasStoryPackage)) {
+            // Essentially, is the related content slot there but empty
             3
           } else if (related.hasStoryPackage || content.showInRelated) {
             2
@@ -43,8 +46,10 @@ object ContentFooterContainersLayout {
         optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
         Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
+        Some(frontsContainers),
         optional(content.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
+        Some(networkFrontsContainers),
         optional(!content.shouldHideAdverts, standardCommercialComponent)
       ).flatten
 

@@ -64,31 +64,12 @@
     .l-side-margins:before {
         background: none;
     }
-}
-
-.ab-front-injected {
-    .button--show-more {
-        display: none;
-    }
-
-    .fc-container--first .fc-container__inner {
-        border-top: 1px solid colour(news-main-2);
-    }
-
-    .fc-container--first .fc-container__header__title {
-        border: 0;
-    }
 
     .fc-container--has-show-more .treats__container {
         bottom: $gs-baseline;
     }
 
-    .fc-container--lazy-load {
-        display: block !important;
-    }
-
-    .fc-container--thrasher {
-        display: none !important;
+    .button--show-more {
+        display: none;
     }
 }
-
