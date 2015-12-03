@@ -22,7 +22,7 @@
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
         </h2>
 
-        <h1 class="page-header">@pageModel.page.webTitle</h1>
+        <h1 class="page-header">@pageModel.page.metadata.webTitle</h1>
 
         @comps.map{ comp =>
             @renderTeamList(comp)

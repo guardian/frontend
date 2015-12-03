@@ -76,23 +76,23 @@ object VideoSiteMap extends ExecutionContexts {
         resp <- paginatedResults
         item <- resp.results.map(Content.apply).collect({ case video:Video => video })
       } yield {
-        val keywordTags = item.keywords.map(_.webTitle)
-        val sectionTag = item.seriesTag.filter(tag => !keywordTags.contains(tag.sectionName)).map(_.webTitle)
+        val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
+        val sectionTag = item.content.seriesTag.filter(tag => !keywordTags.contains(tag.sectionName)).map(_.metadata.webTitle)
 
 
-        val imageUrl: String = item.mainPicture.flatMap(_.largestEditorialCrop.flatMap(_.url))
+        val imageUrl: String = item.elements.mainPicture.flatMap(_.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
 
         Url(
-          location = item.webUrl,
-          thumbnail_loc = item.thumbnail.flatMap(Naked.bestFor),
+          location = item.metadata.webUrl,
+          thumbnail_loc = item.elements.thumbnail.flatMap(Naked.bestFor),
           content_loc = item.source,
-          title = item.headline,
-          description = item.trailText,
-          duration = item.mainVideo.map(_.duration).getOrElse(0),
-          publication = item.webPublicationDate,
+          title = item.trail.headline,
+          description = item.fields.trailText,
+          duration = item.elements.mainVideo.map(_.duration).getOrElse(0),
+          publication = item.trail.webPublicationDate,
           tags = keywordTags ++ sectionTag,
-          category = item.section)
+          category = item.metadata.section)
       }
 
       UrlSet(urls take 1000).xml()

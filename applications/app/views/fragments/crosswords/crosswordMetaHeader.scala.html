@@ -38,13 +38,13 @@
 
             <div class="meta__extras meta__extras--crossword">
                 <div class="meta__social" data-component="share">
-                @fragments.social(crosswordPage, "top")
+                @fragments.social(crosswordPage.content, "top")
                 </div>
                 @if(SaveForLaterSwitch.isSwitchedOn) {
                     <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
                 }
                 <div class="meta__numbers modern-visible">
-                    <div class="u-h meta__number" data-discussion-id="@crosswordPage.discussionId" data-commentcount-format="content" data-discussion-closed="@{crosswordPage.isCommentable}">
+                    <div class="u-h meta__number" data-discussion-id="@crosswordPage.content.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{crosswordPage.content.trail.isCommentable}">
                     </div>
                     <div class="u-h meta__number js-sharecount">
                     </div>

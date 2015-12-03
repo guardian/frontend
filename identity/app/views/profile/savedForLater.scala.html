@@ -1,4 +1,4 @@
-@(page: model.MetaData, savedArticleForm: Form[SavedArticleData], pageData: model.SaveForLaterPageData)(implicit request: RequestHeader)
+@(page: model.Page, savedArticleForm: Form[SavedArticleData], pageData: model.SaveForLaterPageData)(implicit request: RequestHeader)
 
 @import common.SimplePagePaths
 @import controllers.SaveForLaterCleaner
@@ -29,7 +29,7 @@
                         }
                         @fragments.profile.saveForLater.contentListPage(pageData.savedItems)
                         <div class="saved-content__list-nav js-saved-content__list-nav">
-                            @fragments.pagination(page.webTitle, pageData.pagination, SimplePagePaths(pageData.paginationUrl), None, false, None )
+                            @fragments.pagination(page.metadata.webTitle, pageData.pagination, SimplePagePaths(pageData.paginationUrl), None, false, None )
                         </div>
                     </div>
                 </form>

@@ -6,7 +6,7 @@ import common.{ExecutionContexts, Edition, JsonNotFound}
 import conf.LiveContentApi
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
-import model.{Content, FrontProperties}
+import model.FrontProperties
 import play.api.mvc.{Action, Controller}
 import services.{FaciaContentConvert, CollectionConfigWithId}
 import slices.Fixed
@@ -47,7 +47,7 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
               Fixed(container),
               CollectionConfigWithId(dataId, config),
               CollectionEssentials(
-                items.map(Content(_)).map(FaciaContentConvert.frontendContentToFaciaContent),
+                items.map(FaciaContentConvert.contentToFaciaContent(_)),
                 Nil,
                 displayName,
                 None,

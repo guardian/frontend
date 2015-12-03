@@ -3,29 +3,31 @@ package model
 import common.Edition
 import common.dfp.DfpAgent
 
-trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
-  val keywordIds: Seq[String]
+case class KeywordSponsorshipHandling(
+  id: String,
+  adUnitSuffix: String,
+  keywordIds: Seq[String]) {
 
-  override def isSponsored(maybeEdition: Option[Edition]): Boolean =
+  def isSponsored(maybeEdition: Option[Edition]): Boolean =
     keywordIds exists (DfpAgent.isSponsored(_, Some(id), maybeEdition))
 
-  override lazy val hasMultipleSponsors: Boolean = keywordIds exists {
+  val hasMultipleSponsors: Boolean = keywordIds exists {
     DfpAgent.hasMultipleSponsors
   }
 
-  override lazy val isAdvertisementFeature: Boolean = keywordIds exists {
+  val isAdvertisementFeature: Boolean = keywordIds exists {
     DfpAgent.isAdvertisementFeature(_, Some(id))
   }
 
-  override lazy val hasMultipleFeatureAdvertisers: Boolean = keywordIds exists {
+  val hasMultipleFeatureAdvertisers: Boolean = keywordIds exists {
     DfpAgent.hasMultipleFeatureAdvertisers
   }
 
-  override lazy val isFoundationSupported: Boolean = keywordIds exists {
+  val isFoundationSupported: Boolean = keywordIds exists {
     DfpAgent.isFoundationSupported(_, Some(id))
   }
 
-  override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
+  val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
-  override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+  def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }

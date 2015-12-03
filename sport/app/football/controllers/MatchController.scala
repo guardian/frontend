@@ -12,8 +12,7 @@ import feed._
 import implicits.{ Requests, Football }
 import scala.concurrent.Future
 
-
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football with ExecutionContexts {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football with ExecutionContexts {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
@@ -25,13 +24,9 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
 
   lazy val hasPaStats: Boolean = teamHasStats( lineUp.homeTeam ) && teamHasStats( lineUp.awayTeam )
 
-  override lazy val id = MatchUrl(theMatch)
-  override lazy val section = "football"
-  override lazy val webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}"
+  private val id = MatchUrl(theMatch)
 
-  override lazy val analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
-
-  override lazy val metaData: Map[String, JsValue] = super.metaData + (
+  private val javascriptConfig: Map[String, JsValue] = Map(
     "footballMatch" -> JsObject(Seq(
       "id" -> JsString(theMatch.id),
       "dateInMillis" -> JsNumber(theMatch.date.getMillis),
@@ -39,6 +34,13 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
       "awayTeam" -> JsString(theMatch.awayTeam.id),
       "isLive" -> JsBoolean(theMatch.isLive)
     ))
+  )
+  override val metadata = MetaData.make(
+    id = id,
+    section = "football",
+    webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}",
+    analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}",
+    javascriptConfigOverrides = javascriptConfig
   )
 }
 

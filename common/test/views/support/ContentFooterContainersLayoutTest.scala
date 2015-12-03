@@ -2,7 +2,7 @@ package views.support
 
 import conf.switches.Switches.OutbrainSwitch
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
-import model.{Article, Content, RelatedContent}
+import model.{RelatedContentItem, RelatedContent}
 import org.scalatest.{FlatSpec, Matchers}
 import play.twirl.api.Html
 
@@ -14,11 +14,13 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
                           shouldHideAdverts: Boolean = false,
                           commentable: Boolean = true,
                           seriesId: Option[String] = None,
-                          blogId: Option[String] = None): Content = {
-    val seriesTag = for (id <- seriesId) yield emptyTag.copy(id = id, `type` = "series")
-    val blogTag = for (id <- blogId) yield emptyTag.copy(id = id, `type` = "blog")
-    val tags = List(seriesTag, blogTag).flatten
-    new Article(emptyApiContent.copy(
+                          blogId: Option[String] = None): RelatedContentItem = {
+    val seriesTag = for (id <- seriesId) yield emptyTag.copy(id = s"$id/$id", `type` = "series")
+    val blogTag = for (id <- blogId) yield emptyTag.copy(id = s"$id/$id", `type` = "blog")
+    val articleType = Some(emptyTag.copy(id = "type/article", `type` = "type"))
+
+    val tags = List(seriesTag, blogTag, articleType).flatten
+    RelatedContentItem(emptyApiContent.copy(
       fields = Some(Map(
       "showInRelatedContent" -> showInRelatedContent.toString,
       "shouldHideAdverts" -> shouldHideAdverts.toString,
@@ -32,10 +34,10 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   private val emptyRelatedContent: RelatedContent = RelatedContent(Nil)
 
-  private def buildHtml(content: Content,
+  private def buildHtml(item: RelatedContentItem,
                         related: RelatedContent = relatedContent,
                         isAdFeature: Boolean = false): Html = {
-    ContentFooterContainersLayout(content, related, isAdFeature) {
+    ContentFooterContainersLayout(item.content.content, related, isAdFeature) {
       Html("storyPackageHtml ")
     } {
       Html("onwardHtml ")

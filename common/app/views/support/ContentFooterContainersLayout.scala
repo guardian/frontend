@@ -47,7 +47,7 @@ object ContentFooterContainersLayout {
         Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
         Some(frontsContainers),
-        optional(content.isCommentable, commentsPlaceholder),
+        optional(content.trail.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
         Some(networkFrontsContainers),
         optional(!content.shouldHideAdverts, standardCommercialComponent)

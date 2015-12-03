@@ -320,7 +320,10 @@ GET            /service-worker.js                                               
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
-
+GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
+GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
+GET            /index/contributors                                                                                               controllers.TagIndexController.contributors()
+GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 

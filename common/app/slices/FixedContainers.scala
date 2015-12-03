@@ -1,5 +1,6 @@
 package slices
 
+import com.gu.facia.api.models.FaciaContent
 import conf.Configuration
 import model.Content
 
@@ -115,11 +116,11 @@ object DynamicContainers {
     ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false))
   )
 
-  def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {
+  def apply(collectionType: Option[String], items: Seq[FaciaContent]): Option[ContainerDefinition] = {
     for {
       typ <- collectionType
       dynamicContainer <- all.get(typ)
-      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromContent))
+      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
     } yield definition
   }
 }

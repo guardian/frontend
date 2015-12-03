@@ -1,4 +1,4 @@
-@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, String, String, Boolean, Boolean)], registrationErrorOpt: Option[String], groupCode: Option[String])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+@(page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, String, String, Boolean, Boolean)], registrationErrorOpt: Option[String], groupCode: Option[String])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}

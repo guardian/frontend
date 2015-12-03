@@ -11,6 +11,6 @@ import scala.concurrent.duration._
 
   "Healthchecks" should "pass" in goTo("/admin"){ browser =>
 
-    Await.result(WS.clientUrl(withHost(s"/_healthcheck")).get(), 10.seconds).status should be (200)
+    Await.result(WS.clientUrl(withHost(s"/_healthcheck"))(longTimeoutConfig).get(), 10.seconds).status should be (200)
   }
 }
