@@ -116,7 +116,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-left: $gs-gutter;
     }
 
-     @include mq(wide) {
+    @include mq(wide) {
         padding-right: gs-span(1) + $gs-gutter;
     }
 
