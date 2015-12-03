@@ -116,20 +116,14 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-left: $gs-gutter;
     }
 
+     @include mq(wide) {
+        padding-right: gs-span(1) + $gs-gutter;
+    }
+
     // no-email is out of A/B test
     .l-footer__secondary--no-email & {
         @include mq(leftCol) {
             @include columns(4, $gs-gutter);
-        }
-
-        @include mq(wide) {
-            padding-right: gs-span(1) + $gs-gutter;
-        }
-    }
-
-    .l-footer__secondary--has-email & {
-        @include mq(wide) {
-            padding-right: gs-span(1);
         }
     }
 
