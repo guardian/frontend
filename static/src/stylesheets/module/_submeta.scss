@@ -73,5 +73,25 @@
 // Fronts on article test styles
 
 .submeta__jump-to-comments {
-    margin-top: $gs-baseline;
+    height: 32px;
+    line-height: 32px; // We want it to match the share icon height
+
+    .inline-icon {
+        position: relative;
+        svg {
+            height: 16px;
+            width: 16px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    .submeta__jump-to-comments-text {
+        padding-left: $gs-gutter;
+    }
+}
+
+.submeta .submeta__jump-to-comments-line {
+    margin-top: $gs-baseline * 1.5;
 }

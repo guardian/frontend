@@ -9,7 +9,8 @@ define([
     'common/modules/onward/inject-container',
     'lodash/collections/contains',
     'common/modules/identity/api',
-    'common/utils/scroller'
+    'common/utils/scroller',
+    'common/views/svgs'
 ], function (
     fastdom,
     bean,
@@ -21,7 +22,8 @@ define([
     injectContainer,
     contains,
     identity,
-    scroller
+    scroller,
+    svgs
 ) {
 
     var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifestyle', 'culture', 'business', 'technology', 'environment'],
@@ -56,7 +58,7 @@ define([
     function moveComments() {
         if (!identity.isUserLoggedIn() && config.page.commentable) {
             fastdom.write(function () {
-                $('.submeta').after('<button class=\'button button--small submeta__jump-to-comments js-move-comments\'>View comments</button>');
+                $('.submeta').append('<hr class=\'submeta__jump-to-comments-line\'/><button class=\'button button--large button--primary submeta__jump-to-comments js-move-comments\'>' + svgs('commentCount16icon') + '<span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
                 $('.js-comments').insertAfter(qwery('.js-network-fronts-containers'));
             });
 
