@@ -60,6 +60,8 @@ object FixedContainers {
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
 
+  val frontsOnArticles = slices(QuarterQuarterQlQl)
+
   val fastIndexPageMpuII = slices(TTMpu)
   val fastIndexPageMpuIV = slices(TTlMpu)
   val fastIndexPageMpuVI = slices(TlTlMpu)
