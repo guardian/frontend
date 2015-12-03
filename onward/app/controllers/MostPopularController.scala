@@ -6,6 +6,7 @@ import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services.FaciaContentConvert
+import views.support.TrailCssClasses
 import scala.concurrent.Future
 import play.api.libs.json.{Json, JsArray}
 import LiveContentApi.getResponse
@@ -31,10 +32,9 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
     sectionPopular.map { sectionPopular =>
-      val sectionFirst = sectionPopular ++ globalPopular
-      val globalFirst = globalPopular.toList ++ sectionPopular
-
-      val mostPopular = if ( path.contains("global-development") ) sectionFirst else globalFirst
+      lazy val sectionFirst = sectionPopular ++ globalPopular
+      lazy val globalFirst = globalPopular.toList ++ sectionPopular
+      lazy val mostPopular = if (path == "global-development") sectionFirst else globalFirst
 
       mostPopular match {
         case Nil => NotFound
@@ -92,7 +92,9 @@ object MostPopularController extends Controller with Logging with ExecutionConte
           Json.obj(
             ("index", index + 1),
             ("url", trail.url),
-            ("headline", trail.headline)
+            ("headline", trail.headline),
+            ("thumbnail", trail.thumbnailPath),
+            ("toneClass", TrailCssClasses.articleToneClass(trail))
           )
         })
       )

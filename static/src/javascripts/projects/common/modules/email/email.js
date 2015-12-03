@@ -6,6 +6,7 @@ define([
     'common/utils/ajax-promise',
     'common/utils/config',
     'fastdom',
+    'Promise',
     'common/utils/mediator',
     'lodash/functions/debounce',
     'common/utils/template',
@@ -19,6 +20,7 @@ define([
     ajax,
     config,
     fastdom,
+    Promise,
     mediator,
     debounce,
     template,
@@ -47,6 +49,13 @@ define([
         });
     }
 
+    function handleSubmit(isSuccess, $form) {
+        return function () {
+            updateForm.replaceContent(isSuccess, $form);
+            state.submitting = false;
+        };
+    }
+
     var state = {
             submitting: false
         },
@@ -68,33 +77,29 @@ define([
 
                         state.submitting = true;
 
-                        getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
-                        });
-
                         event.preventDefault();
 
-                        return ajax({
-                            url: url,
-                            method: 'post',
-                            data: data,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        })
-                        .then(getOmniture)
-                        .then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
-                        })
-                        .then(this.submissionResult(true, $form))
-                        .catch(this.submissionResult(false, $form));
+                        return getOmniture().then(function (omniture) {
+                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
+
+                            return ajax({
+                                url: url,
+                                method: 'post',
+                                data: data,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                            })
+                            .then(handleSubmit(true, $form))
+                            .catch(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
+                                handleSubmit(false, $form);
+                            });
+                        });
                     }
-                }.bind(this);
-            },
-            submissionResult: function (isSuccess, $form) {
-                return function () {
-                    updateForm.replaceContent(isSuccess, $form);
-                    state.submitting = false;
                 };
             }
         },
