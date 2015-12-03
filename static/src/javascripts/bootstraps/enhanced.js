@@ -123,7 +123,8 @@ define([
             }
 
             var isDev = window.location.hostname === 'localhost';
-            if (window.location.protocol === 'https:' || isDev) {
+            if ((window.location.protocol === 'https:' || isDev)
+                && config.page.section !== 'identity') {
                 var navigator = window.navigator;
                 if (navigator && navigator.serviceWorker) {
                     navigator.serviceWorker.register('/service-worker.js');
