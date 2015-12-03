@@ -15,8 +15,8 @@ object JsonComponent extends Results with implicits.Requests {
     resultFor(request, json)
   }
 
-  def apply(metaData: MetaData, html: Html)(implicit request: RequestHeader): Result = {
-    val json = jsonFor(metaData, "html" -> html)
+  def apply(page: Page, html: Html)(implicit request: RequestHeader): Result = {
+    val json = jsonFor(page, "html" -> html)
     resultFor(request, json)
   }
 
@@ -25,8 +25,8 @@ object JsonComponent extends Results with implicits.Requests {
     resultFor(request, json)
   }
 
-  def apply(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader): Result = {
-    val json = jsonFor(metaData, items: _*)
+  def apply(page: Page, items: (String, Any)*)(implicit request: RequestHeader): Result = {
+    val json = jsonFor(page, items: _*)
     resultFor(request, json)
   }
 
@@ -38,8 +38,8 @@ object JsonComponent extends Results with implicits.Requests {
     Json.stringify(json)
   )
 
-  private def jsonFor(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader): String = {
-    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData).body)) +: items: _*)
+  private def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader): String = {
+    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(page).body)) +: items: _*)
   }
 
   private def jsonFor(items: (String, Any)*) = {

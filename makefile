@@ -5,10 +5,10 @@ watch: compile-dev
 		./node_modules/.bin/gulp --cwd ./dev watch:css & \
 		./node_modules/browser-sync/bin/browser-sync.js start --config ./dev/bs-config.js
 
-compile:
+compile: clean-assets
 	@grunt compile-assets
 
-compile-dev:
+compile-dev: clean-assets
 	@grunt compile-assets --dev
 
 install:
@@ -42,6 +42,9 @@ validate-js:
 shrinkwrap:
 	@npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
 	@node tools/messages.js did-shrinkwrap
+
+clean-assets:
+	@rm -rf static/target static/hash static/requirejs
 
 
 # internal targets

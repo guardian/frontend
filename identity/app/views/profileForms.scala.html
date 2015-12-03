@@ -1,25 +1,24 @@
 @(
-        page: model.MetaData with tracking.TrackingParams,
+        page: model.Page,
         user: com.gu.identity.model.User,
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-@import tracking.TrackingParams
 @import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
-    <li class="tabs__tab @if(hidden){is-hidden} @if(page.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.id == url)" aria-controls="tabs-account-profile-@i">
+    <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">
         <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}>@name</a>
     </li>
 }
 
 @content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
-    <div@if(page.id != url){ style="display: none;"} id="tabs-account-profile-@i" class="tabs__pane u-cf @optionalClass" role="tabpanel" aria-labelledby="tabs-account-profile-@i-tab" data-link-name="Public Profile" data-link-context="Identity/profile">
+    <div@if(page.metadata.id != url){ style="display: none;"} id="tabs-account-profile-@i" class="tabs__pane u-cf @optionalClass" role="tabpanel" aria-labelledby="tabs-account-profile-@i-tab" data-link-name="Public Profile" data-link-context="Identity/profile">
         @body
     </div>
 }

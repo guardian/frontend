@@ -22,8 +22,8 @@ object Cached extends implicits.Dates {
     apply(duration.toSeconds.toInt)(result)
   }
 
-  def apply(metaData: MetaData)(result: Result): Result = {
-    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(metaData.cacheSeconds, result) else result
+  def apply(page: Page)(result: Result): Result = {
+    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(page.metadata.cacheSeconds, result) else result
   }
 
   private def cacheHeaders(seconds: Int, result: Result) = {

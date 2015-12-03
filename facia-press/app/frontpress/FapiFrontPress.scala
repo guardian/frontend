@@ -21,11 +21,20 @@ import services.{ConfigAgent, S3FrontsApi}
 import views.support.{Item460, Item140, Naked}
 
 import scala.collection.JavaConversions._
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Try
 
 private case class ContentApiClientWithTarget(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey) with CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
+
+  override def fetch(url: String)(implicit context: ExecutionContext): Future[String] = {
+    val futureString: Future[String] = super.fetch(url)(context)
+    futureString.onFailure{ case t =>
+      val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
+      log.error(s"$t: $tryDecodedUrl")}
+    futureString
+  }
 }
 
 object LiveFapiFrontPress extends FapiFrontPress {

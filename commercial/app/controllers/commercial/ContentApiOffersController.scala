@@ -56,7 +56,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     val futureContents = for {
       specific <- CapiAgent.contentByShortUrls(specificIds)
       latestByKeyword <- futureLatestByKeyword
-    } yield (specific ++ latestByKeyword.filter(_.trailPicture.nonEmpty)).distinct take 4
+    } yield (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
 
     futureContents map {
       case Nil => NoCache(format.nilResult)

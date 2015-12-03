@@ -56,27 +56,21 @@ object TrailsToRss extends implicits.Collections {
     // Feed: entries
     val entries = trails.map{ trail =>
       // Entry: categories
-      val categories = trail.keywords.map{ tag =>
+      val categories = trail.tags.keywords.map{ tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
-        category.setTaxonomyUri(tag.webUrl)
+        category.setTaxonomyUri(tag.metadata.webUrl)
         category
       }.asJava
 
       // Entry: description
       val description = new SyndContentImpl
-      val standfirst = trail match {
-          case c: Content => c.standfirst.getOrElse("")
-          case _ => ""
-        }
-      val intro = trail match {
-          case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
-          case _ => ""
-        }
-      val readMore = s""" <a href="${trail.webUrl}">Continue reading...</a>"""
+      val standfirst = trail.fields.standfirst.getOrElse("")
+      val intro = Jsoup.parseBodyFragment(trail.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
+      val readMore = s""" <a href="${trail.metadata.webUrl}">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).flatMap { i =>
+      val images: Seq[ImageAsset] = (trail.elements.bodyImages ++ trail.elements.mainPicture ++ trail.elements.thumbnail).flatMap { i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
       }.distinctBy(_.url)
 
@@ -110,8 +104,8 @@ object TrailsToRss extends implicits.Collections {
 
       // Entry
       val entry = new SyndEntryImpl
-      entry.setTitle(stripInvalidXMLCharacters(trail.linkText))
-      entry.setLink(trail.webUrl)
+      entry.setTitle(stripInvalidXMLCharacters(trail.fields.linkText))
+      entry.setLink(trail.metadata.webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
       entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
@@ -139,7 +133,7 @@ object TrailsToRss extends implicits.Collections {
         .filter(_.maybeContentId.isDefined)
         .distinctBy(faciaContent => faciaContent.maybeContentId.getOrElse(faciaContent.id))
 
-    fromFaciaContent(pressedPage.webTitle, faciaContentList, pressedPage.url, pressedPage.description)
+    fromFaciaContent(pressedPage.metadata.webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
   }
 
   def fromFaciaContent(webTitle: String, faciaContentList: Seq[FaciaContent], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
@@ -160,10 +154,10 @@ object TrailsToRss extends implicits.Collections {
     // Feed: entries
     val entries = faciaContentList.map{ faciaContent =>
       // Entry: categories
-      val categories = faciaContent.keywords.map(Tag.apply(_)).map{ tag =>
+      val categories = faciaContent.keywords.map(Tag.make(_)).map{ tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
-        category.setTaxonomyUri(tag.webUrl)
+        category.setTaxonomyUri(tag.metadata.webUrl)
         category
       }.asJava
 

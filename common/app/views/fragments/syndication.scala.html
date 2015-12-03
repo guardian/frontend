@@ -1,12 +1,12 @@
-@(content: model.Content, position: String = "bottom")(implicit request: RequestHeader)
+@(content: model.ContentType, position: String = "bottom")(implicit request: RequestHeader)
 @import views.support.URLEncode
 
     <div class="submeta__syndication">
         <ul class="syndication--@position u-unstyled">
             <li class="syndication__item">
                 <a class="syndication__action"
-                data-link-name="meta-syndication-@content.syndicationType"
-                href="http://syndication.theguardian.com/automation/?url=@URLEncode(content.webUrl)&type=@content.syndicationType&internalpagecode=@content.internalPageCode"
+                data-link-name="meta-syndication-@content.content.syndicationType"
+                href="http://syndication.theguardian.com/automation/?url=@URLEncode(content.metadata.webUrl)&type=@content.content.syndicationType&internalpagecode=@content.content.internalPageCode"
                 target="_blank"
                 title="Reuse this content">
                     <span class="syndication__link button button--syndication-reprint button--small">Reuse this content</span>

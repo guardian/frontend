@@ -8,5 +8,5 @@ object SurrogateKey {
 
   def apply(s: String): String = DigestUtils.md5Hex(s)
   def apply(request: RequestHeader): String = this(request.path)
-  def apply(c: Content): String = this(s"/${c.id}")
+  def apply(c: Content): String = this(s"/${c.metadata.id}")
 }

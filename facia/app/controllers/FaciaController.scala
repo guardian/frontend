@@ -10,6 +10,7 @@ import model.facia.PressedCollection
 import performance.MemcachedAction
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
+import play.api.templates
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices._
@@ -44,6 +45,47 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id, false)
+
+  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, size: String) = MemcachedAction { implicit request =>
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, Edition(request)), num, offset).map { collections =>
+      Cached(60) {
+        val containers = collections.getOrElse(List()).map { collection: PressedCollection =>
+
+          val containerLayout = size match {
+            case "small" => Fixed(FixedContainers.frontsOnArticles)
+            case "large" => Fixed(FixedContainers.fixedMediumFastXI)
+            case "original" => if(collection.collectionType.contains("mpu")) {
+              Fixed(FixedContainers.frontsOnArticles)
+            } else {
+              Container.resolve(collection.collectionType)
+            }
+          }
+
+          val containerDefinition = FaciaContainer(
+            1,
+            containerLayout,
+            CollectionConfigWithId("", CollectionConfig.empty),
+            CollectionEssentials.fromPressedCollection(collection).copy(treats = Nil)
+          )
+
+          container(containerDefinition, FrontProperties.empty)
+        }
+
+        if(request.isJson) {
+          JsonCollection(Html(containers.mkString))
+        } else {
+          NotFound
+        }
+      }
+    }
+
+    (rawNum, rawOffset) match {
+      case (Int(num), Int(offset)) => returnContainers(num, offset)
+      case _ => Future.successful(Cached(600) {
+        BadRequest
+      })
+    }
+  }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
 
@@ -198,7 +240,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             if (preserveLayout)
               Container.resolve(collection.collectionType)
             else
-              Fixed(FixedContainers.fixedMediumFastXII)
+              Fixed(FixedContainers.fixedSmallSlowVI)
           }
 
           val containerDefinition = FaciaContainer(
@@ -262,6 +304,12 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(successful(None))
 
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0): Future[Option[List[PressedCollection]]] =
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+        // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
+        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular").drop(offset).take(num))
+      })
+
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
@@ -279,6 +327,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderAgentContents = Action {
     Ok(ConfigAgent.contentsAsJsonString)
+  }
+}
+
+object Int {
+  def unapply(s : String) : Option[Int] = try {
+    Some(s.toInt)
+  } catch {
+    case _ : java.lang.NumberFormatException => None
   }
 }
 

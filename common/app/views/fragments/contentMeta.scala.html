@@ -1,43 +1,44 @@
-@(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = true)(implicit request: RequestHeader)
 @import conf.switches.Switches._
+@import model._
 @import views.support.ContentOldAgeDescriber
 
-@byline(content: model.Content) = {
-    @content match {
-        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v) }
-        case c          => { @fragments.meta.byline(c.byline, c) }
+@byline() = {
+    @item match {
+        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v.tags) }
+        case c          => { @fragments.meta.byline(c.trail.byline, c.tags) }
     }
 }
 
 @metaBody() = {
-    @if(!content.hasTonalHeaderByline) {
-        @byline(content)
+    @if(!item.content.hasTonalHeaderByline) {
+        @byline()
     }
 
-    @content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
+    @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
-    @if(content.contributors.length == 1) {
-        @if(content.hasTonalHeaderByline && (content.contributors.headOption.exists(_.twitterHandle.nonEmpty) || content.contributors.headOption.exists(_.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-        @fragments.meta.contactAuthor(content)
+    @if(item.content.tags.contributors.length == 1) {
+        @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+        @fragments.meta.contactAuthor(item.tags)
     }
 
-    @if(!content.shouldHidePublicationDate) {
-        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, content.isLiveBlog, content.isLive)
+    @if(!item.trail.shouldHidePublicationDate) {
+        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
     }
 
     <div class="meta__extras">
         <div class="meta__social" data-component="share">
-            @fragments.social(content, "top")
+            @fragments.social(item, "top")
         </div>
         @if(contentAgeMessageSwitch.isSwitchedOn) {
-            @if(content.tags.exists(_.id == "tone/news")) {
+            @if(item.content.tags.exists(_.id == "tone/news")) {
                 @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
             }
         }
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
             </div>
-            <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
+            <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!item.trail.isCommentable}">
             </div>
         </div>
         @if(SaveForLaterSwitch.isSwitchedOn) {
@@ -47,22 +48,22 @@
 }
 
 <div class="content__meta-container js-content-meta js-football-meta u-cf
-    @if(content.byline.isEmpty){ content__meta-container--no-byline}
-    @if(content.isLiveBlog) { content__meta-container--liveblog}
-    @if(content.hasShowcaseMainElement){ content__meta-container--showcase}
-    @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
-    @content.contributorBio.map { bio => content__meta-container--bio}
-    @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
-    @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}">
+    @if(item.trail.byline.isEmpty){ content__meta-container--no-byline}
+    @if(item.tags.isLiveBlog) { content__meta-container--liveblog}
+    @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
+    @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
+    @item.content.contributorBio.map { bio => content__meta-container--bio}
+    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
+    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}">
 
     @if(showBadge) {
-        @fragments.commercial.badge(content)
+        @fragments.commercial.badge(item)
     }
 
-    @if(content.showCircularBylinePicAtSide) {
+    @if(item.content.showCircularBylinePicAtSide) {
         <div class="media__body meta__body">
             <div class="media__img meta__image">
-                @fragments.meta.bylineImage(content)
+                @fragments.meta.bylineImage(item.tags)
             </div>
             @metaBody()
         </div>
