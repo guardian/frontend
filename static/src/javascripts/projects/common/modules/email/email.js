@@ -71,9 +71,23 @@ define([
                 bean.on($form[0], 'submit', this.submitForm($form, url));
             },
             submitForm: function ($form, url) {
+                /**
+                 * simplistic email address validation to prevent misfired
+                 * omniture events
+                 *
+                 * @param  {String} emailAddress
+                 * @return {Boolean}
+                 */
+                function validate(emailAddress) {
+                    return typeof emailAddress === 'string' &&
+                           emailAddress.indexOf('@') > -1;
+                }
+
                 return function (event) {
-                    if (!state.submitting) {
-                        var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
+                    var emailAddress = $('.' + classes.textInput, $form).val();
+
+                    if (!state.submitting && validate(emailAddress)) {
+                        var data = 'email=' + encodeURIComponent(emailAddress);
 
                         state.submitting = true;
 
