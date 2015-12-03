@@ -87,7 +87,13 @@ object Creative extends Logging {
 
           maybeCreated map { created =>
 
-            log.info(s"Created new template creative ${created.getId}")
+            val params = for {
+              param <- created.asInstanceOf[TemplateCreative].getCreativeTemplateVariableValues
+            } yield {
+              val strParam = param.asInstanceOf[StringCreativeTemplateVariableValue]
+              s"${strParam.getUniqueName} -> ${strParam.getValue}"
+            }
+            log.info(s"Created new template creative ${created.getId}: params ${params mkString ", "}")
 
             val existingLicas = session.lineItemCreativeAssociations.get(
               new StatementBuilder().where("creativeId = :creativeId").withBindVariableValue("creativeId", origin.getId)
