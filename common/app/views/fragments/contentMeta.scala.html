@@ -31,8 +31,8 @@
             @fragments.social(item, "top")
         </div>
         @if(contentAgeMessageSwitch.isSwitchedOn) {
-            @if(item.content.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
             }
         }
         <div class="meta__numbers modern-visible">

@@ -7,7 +7,7 @@ object ContentOldAgeDescriber extends ContentOldAgeDescriber
 
 class ContentOldAgeDescriber {
   def apply(content: model.Content): String = {
-    message(content.webPublicationDate)
+    message(content.trail.webPublicationDate)
   }
 
   def apply(apiContent: com.gu.contentapi.client.model.Content): String = {
