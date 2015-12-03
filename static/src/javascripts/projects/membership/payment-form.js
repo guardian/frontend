@@ -34,7 +34,7 @@ define([
             ERROR_CARD_EXPIRY: 'js-error--card-expiry',
             HIDE: 'is-hidden',
             PAYMENT_ERRORS: 'js-payment-errors',
-            FORM_SUBMIT: 'js-submit-input',
+            FORM_SUBMIT: 'submit-input',
             CREDIT_CARD_NUMBER: 'js-credit-card-number',
             CREDIT_CARD_CVC: 'js-credit-card-cvc',
             CREDIT_CARD_EXPIRY_MONTH: 'js-credit-card-exp-month',
@@ -94,7 +94,7 @@ define([
             token = response.id;
 
             ajax({
-                url: config.page.membershipUrl + '/subscription/update-card',
+                url: config.page.userAttributesApiUrl + '/me/membership-update-card',
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
@@ -105,6 +105,7 @@ define([
                     stripeToken: token
                 }
             }).then(function success() {
+                $(self.config.DOM.FORM_SUBMIT).removeAttr('disabled');
                 self.stopLoader();
                 self.reset();
                 self.successCallback.apply(this, arguments);
@@ -254,7 +255,7 @@ define([
 
             // turn month select errors on when submitting
             self.displayMonthError = true;
-
+            $(self.config.DOM.FORM_SUBMIT).attr('disabled', true);
             var formValidationResult = self.isFormValid();
 
             if (formValidationResult.isValid) {
