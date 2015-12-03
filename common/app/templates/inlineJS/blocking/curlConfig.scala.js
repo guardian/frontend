@@ -70,7 +70,7 @@ var curl = {
             text:                       'text', // noop
             inlineSvg:                  'inlineSvg', // noop
 
-            react: 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js'
+            react: '@Static.js.reactPath'
         }
     }
 };
