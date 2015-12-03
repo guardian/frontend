@@ -40,7 +40,6 @@ import conf.switches.Switches.contentAgeMessageSwitch
     val result = controllers.ArticleController.renderArticle(oldToneNewsArticleUrl, None, None)(TestRequest(oldToneNewsArticleUrl))
     MetaDataMatcher.ensureNoOldArticleMessage(result, oldToneNewsArticleUrl)
   }
-
   it should "not include an old article message on an article that is not tagged with tone/news (switch is OFF)" in {
     val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(TestRequest(articleUrl))
     MetaDataMatcher.ensureNoOldArticleMessage(result, articleUrl)
