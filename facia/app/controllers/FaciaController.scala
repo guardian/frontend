@@ -46,8 +46,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id, false)
 
-  def renderSomeFrontContainers(path: String, num: String, offset: String, size: String) = MemcachedAction { implicit request =>
-    getSomeCollections(Editionalise(path, Edition(request)), num.toInt, offset.toInt).map { collections =>
+  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, size: String) = MemcachedAction { implicit request =>
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, Edition(request)), num, offset).map { collections =>
       Cached(60) {
         val containers = collections.getOrElse(List()).map { collection: PressedCollection =>
 
@@ -77,6 +77,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           NotFound
         }
       }
+    }
+
+    (rawNum, rawOffset) match {
+      case (Int(num), Int(offset)) => returnContainers(num, offset)
+      case _ => Future.successful(Cached(600) {
+        BadRequest
+      })
     }
   }
 
@@ -320,6 +327,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderAgentContents = Action {
     Ok(ConfigAgent.contentsAsJsonString)
+  }
+}
+
+object Int {
+  def unapply(s : String) : Option[Int] = try {
+    Some(s.toInt)
+  } catch {
+    case _ : java.lang.NumberFormatException => None
   }
 }
 
