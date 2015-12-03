@@ -6,6 +6,8 @@ import play.api.mvc.{Action, Controller}
 import services._
 
 object TagIndexController extends Controller with ExecutionContexts with Logging {
+  private val TagIndexCacheTime = 600
+
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
     TagIndexesS3.getIndex(keywordType, page) match {
       case Left(TagIndexNotFound) =>
@@ -17,11 +19,13 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
         InternalServerError
 
       case Right(tagPage) =>
-        Ok(views.html.tagIndexPage(
-          metadata,
-          tagPage,
-          title
-        ))
+        Cached(TagIndexCacheTime) {
+          Ok(views.html.tagIndexPage(
+            metadata,
+            tagPage,
+            title
+          ))
+        }
     }
   }
 
@@ -30,7 +34,9 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
       alphaListing <- KeywordAlphaIndexAutoRefresh.get
       sectionListing <- KeywordSectionIndexAutoRefresh.get
     } yield {
-      Ok(views.html.subjectsIndexListing(SubjectsListing(), alphaListing))
+      Cached(TagIndexCacheTime) {
+        Ok(views.html.subjectsIndexListing(SubjectsListing(), alphaListing))
+      }
     }) getOrElse InternalServerError("Not yet loaded alpha and section index for keywords")
   }
 
@@ -38,7 +44,9 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
     (for {
       alphaListing <- ContributorAlphaIndexAutoRefresh.get
     } yield {
-      Ok(views.html.contributorsIndexListing(ContributorsListing(), alphaListing))
+      Cached(TagIndexCacheTime) {
+        Ok(views.html.contributorsIndexListing(ContributorsListing(), alphaListing))
+      }
     }) getOrElse InternalServerError("Not yet loaded contributor index listing")
   }
 
