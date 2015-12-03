@@ -34,7 +34,7 @@ define([
             ERROR_CARD_EXPIRY: 'js-error--card-expiry',
             HIDE: 'is-hidden',
             PAYMENT_ERRORS: 'js-payment-errors',
-            FORM_SUBMIT: 'submit-input',
+            FORM_SUBMIT: 'js-mem-change-cc-submit',
             CREDIT_CARD_NUMBER: 'js-credit-card-number',
             CREDIT_CARD_CVC: 'js-credit-card-cvc',
             CREDIT_CARD_EXPIRY_MONTH: 'js-credit-card-exp-month',
