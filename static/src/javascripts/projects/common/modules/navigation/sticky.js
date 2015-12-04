@@ -53,8 +53,6 @@ define([
         this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || this.inTopBannerAbTest;
         this.isProfilePage = config.page.section === 'identity';
 
-        console.log(config.tests);
-
         bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
 
