@@ -49,7 +49,7 @@ define([
         this.isMobile = contains(this.breakpoint, 'mobile');
         this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.noTopBanner = !commercialFeatures.topBannerAd;
+        this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || config.tests.topBannerPosition;
         this.isProfilePage = config.page.section === 'identity';
 
         bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
