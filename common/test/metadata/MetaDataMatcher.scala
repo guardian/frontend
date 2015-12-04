@@ -65,4 +65,20 @@ object MetaDataMatcher extends Matchers  {
     script.size() should be(0)
   }
 
+  def ensureOldArticleMessage(result: Future[Result], articleUrl: String) {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+
+    val elements = body.getElementsByClass("old-article-message")
+    elements.size() should be(1)
+  }
+
+  def ensureNoOldArticleMessage(result: Future[Result], articleUrl: String) {
+    val body = Jsoup.parseBodyFragment(contentAsString(result))
+    status(result) should be(200)
+
+    val elements = body.getElementsByClass("old-article-message")
+    elements.size() should be(0)
+  }
+
 }

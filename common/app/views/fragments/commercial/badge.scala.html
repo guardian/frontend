@@ -1,15 +1,15 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.ContentType)(implicit request: RequestHeader)
 @import common.Edition
 @import conf.switches.Switches.SponsoredSwitch
-@import model.{Gallery, Interactive, LiveBlog, Media}
+@import model.{Video, Audio, Gallery, Interactive, Article}
 
-@defining(content.isSponsored(Some(Edition(request))),
-    content.isAdvertisementFeature,
-    content.isFoundationSupported) { case (isSponsored, isAdFeature, isFoundationFunded) =>
+@defining(content.commercial.isSponsored(Some(Edition(request))),
+    content.commercial.isAdvertisementFeature,
+    content.commercial.isFoundationSupported) { case (isSponsored, isAdFeature, isFoundationFunded) =>
     @if(
         SponsoredSwitch.isSwitchedOn &&
             (isSponsored || isAdFeature || isFoundationFunded) &&
-            !content.isInappropriateForSponsorship
+            !content.commercial.isInappropriateForSponsorship
     ) {
         @defining((
             content match {
@@ -18,12 +18,12 @@
                 case _ => "fobadge"
             },
             content match {
-                case _: LiveBlog => "live-blog"
+                case a: Article if a.isLiveBlog => "live-blog"
                 case _: Interactive => "interactive"
                 case _ => "article"
             },
             content match {
-                case _: Media | _: Gallery => "141"
+                case _: Audio | _:Video | _: Gallery => "141"
                 case _ => "140"
             }
             )) { case (name, badgeType, adSlotWidth) =>
@@ -33,15 +33,15 @@
                 Map("mobile" -> Seq("1,1", s"$adSlotWidth,90")),
                 showLabel = false,
                 refresh = false,
-                forceDisplay = content.sponsor.nonEmpty,
-                contentSponsor = content.sponsor,
-                paidForContentType = content.sponsorshipType
+                forceDisplay = content.tags.sponsor.nonEmpty,
+                contentSponsor = content.tags.sponsor,
+                paidForContentType = content.commercial.sponsorshipType
             ) {
-                @content.sponsor.map { sponsor =>
+                @content.tags.sponsor.map { sponsor =>
                     <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
                         <h3 class="ad-slot--paid-for-badge__header">
                             @if(isSponsored) {
-                                @if(content.hasMultipleSponsors) {
+                                @if(content.commercial.hasMultipleSponsors) {
                                     This content is sponsored.
                                 } else {
                                     Sponsored by:
@@ -50,7 +50,7 @@
                                 @if(isAdFeature) {
                                     Brought to you by:
                                 } else {
-                                    @content.sponsorshipTag.map { tag =>
+                                    @content.commercial.sponsorshipTag.map { tag =>
                                         @tag.name is supported by:
                                     }.getOrElse {
                                         Supported by:
@@ -58,7 +58,7 @@
                                 }
                             }
                         </h3>
-                        @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
+                        @if(!content.commercial.hasMultipleSponsors && !content.commercial.hasMultipleFeatureAdvertisers) {
                             <p class="ad-slot--paid-for-badge__header">@sponsor</p>
                         }
                     </div>

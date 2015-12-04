@@ -6,11 +6,11 @@ import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.concurrent.Eventually
 import views.MainMediaWidths
-import model.{Article}
+import model.{Content, Article}
 
 class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually with SingleServerSuite {
   "should return correct widths" in {
-    val content = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDateOption = Some(new DateTime),
@@ -21,7 +21,8 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
       elements = None
     )
 
-    val article = new Article(content)
+    val content = Content.make(item)
+    val article = Article.make(content)
 
     MainMediaWidths(article) shouldEqual MainMedia.inline
   }
@@ -38,7 +39,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
         Some("http://www.foo.com/bar"),
         Map("caption" -> "caption", "width" -> "55", "role" -> "showcase"))))
 
-    val content = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDateOption = Some(new DateTime),
@@ -49,13 +50,14 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
       elements = Some(List(imageElement))
     )
 
-    val article = new Article(content)
+    val content = Content.make(item)
+    val article = Article.make(content)
 
     MainMediaWidths(article) shouldEqual MainMedia.showcase
   }
 
   "should return correct widths for a liveblog" in {
-    val content = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDateOption = Some(new DateTime),
@@ -66,7 +68,8 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
       elements = None
     )
 
-    val article = new Article(content)
+    val content = Content.make(item)
+    val article = Article.make(content)
 
     MainMediaWidths(article) shouldEqual LiveBlogMedia.inline
   }
@@ -83,7 +86,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
         Some("http://www.foo.com/bar"),
         Map("caption" -> "caption", "width" -> "55", "role" -> "showcase"))))
 
-    val content = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDateOption = Some(new DateTime),
@@ -94,7 +97,8 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
       elements = Some(List(imageElement))
     )
 
-    val article = new Article(content)
+    val content = Content.make(item)
+    val article = Article.make(content)
 
     MainMediaWidths(article) shouldEqual MainMedia.featureShowcase
   }

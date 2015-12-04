@@ -1,42 +1,42 @@
-@(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
 
-@import views.support.TrailCssClasses.articleToneClass
+@import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
 
-<header class="content__head tonal__head tonal__head--@articleToneClass(content)
-    @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
+<header class="content__head tonal__head tonal__head--@toneClass(item)
+    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
 
     <div class="content__header tonal__header u-cf">
         <div class="gs-container">
             <div class="content__main-column">
 
-                @fragments.meta.metaInline(content)
+                @fragments.meta.metaInline(item)
 
                 <h1 class="content__headline js-score" itemprop="headline">
-                    @content match {
-                        case v: Video => {
+                    @item match {
+                        case v: model.Video => {
                             @fragments.inlineSvg("video-icon", "icon")
-                            @Html(content.headline)
+                            @Html(item.trail.headline)
                         }
-                        case _ => { @Html(content.headline) }
+                        case _ => { @Html(item.trail.headline) }
                     }
                 </h1>
 
-                @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
-                    @fragments.meta.bylineImage(content)
+                @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) {
+                    @fragments.meta.bylineImage(item.tags)
                 }
 
-                @if(content.hasTonalHeaderByline) {
-                    @content.byline.map { text =>
-                        <span class="content__headline content__headline--byline">@ContributorLinks(text, content.contributors)</span>
+                @if(item.content.hasTonalHeaderByline) {
+                    @item.trail.byline.map { text =>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, item.tags.contributors)</span>
                     }
                 }
 
-                @if(content.hasTonalHeaderIllustration) {
+                @if(item.content.hasTonalHeaderIllustration) {
                     <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }
 
-                @content.starRating.map { rating =>
+                @item.content.starRating.map { rating =>
                     <span class="u-h" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
                         <meta itemprop="worstRating" content="1" />
                         <span itemprop="ratingValue">@rating</span> /
@@ -45,17 +45,17 @@
                     @fragments.items.elements.starRating(rating)
                 }
 
-                @content.imdb.map { imdbId =>
+                @item.content.imdb.map { imdbId =>
                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Movie">
                         <link itemprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
-                        @defining(content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
+                        @defining(item.content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
                             @* we're not the authority on the film name, but just to keep google validator happy
                             *@<meta itemprop="name" content="@tag"/>
                         }
                     </div>
                 }
 
-                @content.isbn.map { isbn =>
+                @item.content.isbn.map { isbn =>
                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/Book">
                         <meta itemprop="isbn" content="@isbn">
                         <div itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -67,7 +67,7 @@
                 }
 
                 @if(showBadge) {
-                    @fragments.commercial.badge(content)
+                    @fragments.commercial.badge(item)
                 }
 
             </div>
@@ -75,11 +75,11 @@
     </div>
 
     <div class="tonal__standfirst u-cf">
-        @if(content.standfirst.isDefined) {
+        @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">
-                    @if(!content.delegate.isVideo) {
-                        @fragments.standfirst(content)
+                    @if(!item.tags.isVideo) {
+                        @fragments.standfirst(item)
                     }
                 </div>
             </div>

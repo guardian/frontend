@@ -1,5 +1,6 @@
 package views.fragments.nav
 
+import model.{SimplePage, MetaData}
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.FakeRequest
@@ -10,7 +11,7 @@ import scala.collection.JavaConversions._
 
   it should "render current section once (UK)" in {
 
-    val page = model.Page(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla")
+    val page = SimplePage(MetaData.make(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla"))
 
     val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla"))
 
@@ -25,7 +26,7 @@ import scala.collection.JavaConversions._
 
   it should "render current section once (US)" in {
 
-    val page = model.Page(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla")
+    val page = SimplePage(MetaData.make(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla"))
 
     val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla?_edition=US"))
 

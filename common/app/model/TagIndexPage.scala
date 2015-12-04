@@ -24,7 +24,7 @@ object TagDefinition {
       name <- apiTag.sectionName
       id <- apiTag.sectionId
     } yield SectionDefinition(name, id),
-    new Tag(apiTag).isSectionTag
+    Tag.make(apiTag).isSectionTag
   )
 }
 

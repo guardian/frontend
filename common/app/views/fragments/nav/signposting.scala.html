@@ -1,4 +1,4 @@
-@(metaData: model.MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
+@(page: model.Page, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo, Navigation}
 @import views.support.RenderClasses
@@ -11,14 +11,14 @@
         <a class="signposting__action" href="@LinkTo{/}" data-link-name="nav : signposting : home">home</a>
     </li>
 
-    @Navigation.topLevelItem(navigation, metaData).map{ topLink =>
+    @Navigation.topLevelItem(navigation, page).map{ topLink =>
         @if(!Edition.isEditionFront){
             <li class="signposting__item signposting__item--parent">
                 <span class="signposting__separator" aria-hidden="true"><span class="signposting__separator__inner">›</span></span>
                 <a class="signposting__action" href="@LinkTo(topLink.name.href)" data-link-name="nav : signposting : @topLink.name.title">@Html(topLink.name.title)</a>
             </li>
 
-            @topLink.searchForCurrentSublink(metaData).map{ subLink =>
+            @topLink.searchForCurrentSublink(page).map{ subLink =>
                 <li class="signposting__item signposting__item--current">
                     <span class="signposting__separator"><span class="signposting__separator__inner">›</span></span>
                     <a class="signposting__action" href="@LinkTo(subLink.href)" data-link-name="nav : signposting : @topLink.name.title &gt; @subLink.title">@Html(subLink.title)</a>

@@ -1,18 +1,17 @@
 package controllers
 
 import com.gu.facia.api.models.{Groups, CollectionConfig}
-import com.gu.facia.client.models.CollectionConfigJson
 import common._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
-import services.{FaciaContentConvert, CollectionConfigWithId}
+import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedGalleryAgent
 
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
-  private val page = Page("more galleries", "inpictures", "more galleries", "more galleries")
+  private val page = SimplePage(MetaData.make("more galleries", "inpictures", "more galleries", "more galleries"))
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
     displayName = Some("more galleries"),
@@ -34,18 +33,18 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   }
   def renderMostViewedHtml() = renderMostViewed()
 
-  private def getMostViewedGallery()(implicit request: RequestHeader): Seq[Content] = {
+  private def getMostViewedGallery()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("6").toInt
     MostViewedGalleryAgent.mostViewedGalleries().take(size)
   }
 
-  private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
+  private def renderMostViewedGallery(galleries: Seq[RelatedContentItem])(implicit request: RequestHeader) = {
     val html = views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(galleries.map(FaciaContentConvert.frontendContentToFaciaContent), Nil, Some("more galleries"), None, None, None)
+        CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("more galleries"), None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
     )(request)

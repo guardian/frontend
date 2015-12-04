@@ -10,7 +10,7 @@ class TagHistogramTest extends FlatSpec with Matchers {
     FixtureTemplates.emptyTag.copy(id = id)
 
   def trailWithTags(tags: List[Tag]) =
-    Content(FixtureTemplates.emptyApiContent.copy(tags = tags))
+    Content(FixtureTemplates.emptyApiContent.copy(tags = tags)).trail
 
   "frequency" should "return 0 for any unrecorded tag ID" in {
     TagHistogram.fromTrails(Seq(

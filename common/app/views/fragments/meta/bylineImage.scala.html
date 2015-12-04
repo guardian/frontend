@@ -7,7 +7,7 @@
     @profile.contributorLargeImagePath.map{ src =>
         <div class="byline-img">
         @if(request.isAmp) {
-            @if(tags.tones.exists(_.isComment)) {
+            @if(model.Tags(tags.tones).isComment) {
                 <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="180" height="150" />
             } else {
                 <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="79" height="66" />

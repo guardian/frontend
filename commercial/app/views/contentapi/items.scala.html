@@ -1,4 +1,4 @@
-@(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], optCapiAdFeature: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String])(implicit request: RequestHeader)
+@(items: Seq[model.ContentType], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], optCapiAdFeature: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
     <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising commercial-dfp-multi @optSponsorType" data-link-name="merchandising | capi | multiple @optOmnitureId">
@@ -38,32 +38,32 @@
                                         case _ => { tone-news--item }
                                     }">
                                     <div class="fc-item__container">
-                                        @item.trailPicture.map { trailPictureContainer =>
+                                        @item.trail.trailPicture.map { trailPictureContainer =>
                                             @fragments.items.elements.facia_cards.itemImage(trailPictureContainer, true)
                                         }
                                         <div class="fc-item__content">
                                             <div class="fc-item__header">
                                                 <h2 class="fc-item__title">
                                                     @insertItemMediaIcon(item)
-                                                    @item.webTitle
+                                                    @item.metadata.webTitle
                                                 </h2>
                                             </div>
                                             <div class="fc-item__meta">
                                                 <time
                                                     class="fc-item__timestamp js-item__timestamp"
-                                                    datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                                                    data-timestamp="@item.webPublicationDate.getMillis"
+                                                    datetime="@item.trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                                    data-timestamp="@item.trail.webPublicationDate.getMillis"
                                                     data-relativeformat="short">
                                                     <span class="timestamp__text">
                                                         <span class="u-h">Published: </span>
-                                                        @Format(item.webPublicationDate, "d MMM y")
+                                                        @Format(item.trail.webPublicationDate, "d MMM y")
                                                     </span>
                                                 </time>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="@optClickMacro@item.webUrl" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle" tabindex="-1">
-                                        @item.webTitle
+                                    <a href="@optClickMacro@item.metadata.webUrl" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.metadata.webTitle" tabindex="-1">
+                                        @item.metadata.webTitle
                                     </a>
                                 </div>
                             </li>
@@ -75,7 +75,7 @@
     </section>
 }
 
-@insertItemMediaIcon(item : model.Content) = @{
+@insertItemMediaIcon(item : model.ContentType) = @{
     item match {
         case _: Video => fragments.inlineSvg("video-icon", "icon")
         case _: Audio => fragments.inlineSvg("volume-high", "icon")

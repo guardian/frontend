@@ -1,11 +1,11 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
-@import views.support.TrailCssClasses.articleToneClass
+@import views.support.TrailCssClasses.toneClass
 
-@body(page.interactive, page.interactive.isImmersive)
+@body(page.interactive, page.interactive.metadata.isImmersive)
 
 @bodyRaw(interactive: model.Interactive) = {
-    @page.interactive.body.map { body =>
+    @page.interactive.maybeBody.map { body =>
         @HtmlFormat.raw(body)
     }.getOrElse {
         <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
@@ -16,17 +16,17 @@
     <div class="l-side-margins">
         <article class="@RenderClasses(
                 Map(
-                    "content--advertisement-feature" -> interactive.isAdvertisementFeature,
-                    "content--sponsored" -> interactive.isSponsored(Some(Edition(request))),
-                    "content--foundation-supported" -> interactive.isFoundationSupported
+                    "content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature,
+                    "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
+                    "content--foundation-supported" -> interactive.commercial.isFoundationSupported
                 ),
-                "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
+                "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
             )"
-            itemscope itemtype="@interactive.schemaType" role="main">
+            itemscope itemtype="@interactive.metadata.schemaType" role="main">
 
             @fragments.headDefault(interactive, showBadge = true)
 
-            <div class="content__main tonal__main tonal__main--@articleToneClass(interactive)">
+            <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
                 <div class="gs-container u-cf">
                     <div class="content__main-column">
                         @fragments.contentMeta(interactive, showBadge = false)

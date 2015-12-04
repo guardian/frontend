@@ -11,6 +11,6 @@ import scala.concurrent.Await
 
   "Healthchecks" should "pass" in goTo("/ab.gif"){ _ =>
 
-    Await.result(WS.clientUrl(s"http://localhost:${port}/_healthcheck").get(), 10.seconds).status should be (200)
+    Await.result(WS.clientUrl(s"http://localhost:${port}/_healthcheck")(longTimeoutConfig).get(), 10.seconds).status should be (200)
   }
 }

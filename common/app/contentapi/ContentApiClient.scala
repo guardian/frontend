@@ -56,7 +56,7 @@ trait QueryDefaults extends implicits.Collections {
           else
             Nil
 
-        (editorsPicks ++ leadContent ++ results).distinctBy(_.id)
+        (editorsPicks ++ leadContent ++ results).distinctBy(_.metadata.id).map(_.trail)
       }
   }
 
