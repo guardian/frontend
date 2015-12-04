@@ -320,6 +320,7 @@ object Navigation {
     "guardian-masterclasses" -> Seq(
       SectionLink("guardian-masterclasses", "guardian masterclasses", "guardian masterclasses", "/guardian-masterclasses"),
       SectionLink("guardian-masterclasses", "writing", "writing", "/guardian-masterclasses/writing-and-publishing"),
+      SectionLink("guardian-masterclasses", "digital", "digital", "/guardian-masterclasses/digital"),
       SectionLink("guardian-masterclasses", "culture", "culture", "/guardian-masterclasses/culture"),
       SectionLink("guardian-masterclasses", "business", "business", "/guardian-masterclasses/business"),
       SectionLink("guardian-masterclasses", "journalism", "journalism", "/guardian-masterclasses/journalism"),
