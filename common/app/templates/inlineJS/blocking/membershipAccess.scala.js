@@ -35,9 +35,9 @@
                     crossOrigin: true,
                     withCredentials: true
                 }).then(function (resp) {
-                    var access = resp.contentAccess
+                    var access = resp.contentAccess;
                     // Check the users access matches the content
-                    var canViewContent = access && (requiresPaidTier) ? !!access.paidMember : !!access.member;
+                    var canViewContent = access && (requiresPaidTier ? access.paidMember : access.member);
                     if (canViewContent) {
                         $('body').removeClass('has-membership-access-requirement');
                     } else {
