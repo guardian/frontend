@@ -499,6 +499,8 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
+// Magic rule to stop production staff to stop playing around in javascript
+// Explained here: https://github.com/guardian/frontend/pull/11268
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
