@@ -49,8 +49,11 @@ define([
         this.isMobile = contains(this.breakpoint, 'mobile');
         this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || config.tests.topBannerPosition;
+        this.inTopBannerAbTest = config.tests && config.tests.topBannerPosition;
+        this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || this.inTopBannerAbTest;
         this.isProfilePage = config.page.section === 'identity';
+
+        console.log(config.tests);
 
         bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
@@ -130,7 +133,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (adblockMsg.noAdblockMsg() || config.tests.topBannerPosition) { // if paying member uses adblock, dont show the messages
+        } else if (adblockMsg.noAdblockMsg() || this.inTopBannerAbTest) { // if paying member uses adblock, dont show the messages
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';

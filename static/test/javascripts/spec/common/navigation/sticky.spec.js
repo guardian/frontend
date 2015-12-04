@@ -13,10 +13,7 @@ define([
                 sut.isMobile = false;
                 sut.isAppleCampaign = false;
                 sut.isProfilePage = false;
-
-                config.tests = {
-                    topBannerPosition: false
-                };
+                sut.inTopBannerAbTest = false;
             });
 
             it('should return updatePositionMobile for mobile', function () {
@@ -36,7 +33,8 @@ define([
                 adblockMsg.noAdblockMsg = function () {
                     return false;
                 };
-                config.tests.topBannerPosition = true;
+
+                sut.inTopBannerAbTest = true;
 
                 expect(sut.getUpdateMethod()).toEqual('updatePositionAdblock');
             });
