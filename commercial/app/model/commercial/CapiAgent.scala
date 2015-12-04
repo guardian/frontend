@@ -17,7 +17,8 @@ object CapiAgent extends Logging {
 
     val shortUrlIds = shortUrls map { url =>
       val slashPrefixed = if (url startsWith "/") url else s"/$url"
-      slashPrefixed.trim
+      val endTrimmed = slashPrefixed.take(slashPrefixed.indexOf("/", 3))
+      endTrimmed
     }
 
     val urlsNotInCache = shortUrlIds filterNot cache.contains
