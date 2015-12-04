@@ -8,7 +8,7 @@ trait FeatureSwitches {
   val contentAgeMessageSwitch = Switch(
     "Feature",
     "content-age-message",
-    "Show old content message on... old content",
+    "Show old content message on... old content (tagged tone/news)",
     safeState = Off,
     sellByDate = new LocalDate(2016, 1, 6),
     exposeClientSide = false
