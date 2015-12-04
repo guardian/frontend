@@ -1,4 +1,4 @@
-@(item: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 @import common.{Edition, StringEncodings}
 @import conf.Static
 @import views.support.{JavaScriptPage, CamelCase}
@@ -21,7 +21,7 @@ window.guardian = {
         loaded: false
     },
     config: @defining(Edition(request)) { edition => {
-        "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage(item).get))),
+        "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(page)))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },

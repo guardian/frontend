@@ -94,6 +94,17 @@
             color: colour(neutral-3);
         }
     }
+
+    .old-article-message {
+        @include fs-textSans(1);
+        color: colour(neutral-2);
+
+        .old-article-message--clock svg {
+            fill: colour(neutral-2);
+            stroke: #ffffff;
+        }
+    }
+
 }
 
 .headline-list__body {

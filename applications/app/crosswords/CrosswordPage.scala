@@ -2,27 +2,17 @@ package crosswords
 
 import org.joda.time.DateTime
 import com.gu.contentapi.client.{model => contentapi}
-import model.{MetaData, Content, GuardianContentTypes}
+import model._
 import play.api.libs.json.{JsString, JsValue}
 
 case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
 }
 
-class CrosswordPage(val crossword: CrosswordData, content: contentapi.Content) extends Content(content) {
+case class CrosswordPage(content: CrosswordContent) extends ContentPage {
 
-  override lazy val id: String = crossword.id
-
-  override lazy val section: String = "crosswords"
-
-  override lazy val analyticsName: String = id
-
-  override lazy val webTitle: String = crossword.name
-
-  override lazy val contentType = GuardianContentTypes.Crossword
-
-  override lazy val metaData: Map[String, JsValue] =
-    super.metaData ++ Map("contentType" -> JsString(contentType))
+  override lazy val item = content
+  val crossword = content.crossword
 
   import CrosswordSvg.{BorderSize, CellSize}
 
@@ -34,14 +24,21 @@ class CrosswordPage(val crossword: CrosswordData, content: contentapi.Content) e
   def hasGroupedClues = crossword.entries.exists(_.group.length > 1)
 }
 
-trait CrosswordSearchPage extends MetaData {
-  override def id: String = "crosswords/search"
+object CrosswordSearchPage {
+  def make(): CrosswordSearchPage = {
 
-  override def section: String = "crosswords"
+    val metadata = MetaData.make (
+      id = "crosswords/search",
+      section = "crosswords",
+      webTitle = "Crosswords search",
+      analyticsName = "Crosswords search"
+    )
 
-  override def analyticsName: String = "Crosswords search"
+    CrosswordSearchPage(metadata)
+  }
+}
 
-  override def webTitle: String = analyticsName
+final case class CrosswordSearchPage(override val metadata: MetaData) extends StandalonePage {
 
   val year = new DateTime().getYear
   val searchYears = 1999 to year
@@ -112,5 +109,3 @@ trait CrosswordSearchPage extends MetaData {
     "Troll"
   )
 }
-
-object CrosswordSearchPage extends CrosswordSearchPage

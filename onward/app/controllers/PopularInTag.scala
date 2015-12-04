@@ -11,14 +11,14 @@ object PopularInTag extends Controller with Related with Containers with Logging
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
     getPopularInTag(edition, tag, excludeTags) map {
-      case Nil => JsonNotFound()
+      case popular if popular.items.isEmpty => JsonNotFound()
       case trails => renderPopularInTag(trails)
     }
   }
 
-  private def renderPopularInTag(trails: Seq[Content])(implicit request: RequestHeader) = Cached(600) {
+  private def renderPopularInTag(trails: RelatedContent)(implicit request: RequestHeader) = Cached(600) {
     val html = views.html.fragments.containers.facia_cards.container(
-      onwardContainer("related content", trails map FaciaContentConvert.frontendContentToFaciaContent take 8),
+      onwardContainer("related content", trails.faciaItems take 8),
       FrontProperties.empty
     )(request)
 

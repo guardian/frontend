@@ -24,7 +24,7 @@ trait Formats extends implicits.Dates {
   implicit val galleryFormat: Writes[Gallery] = new Writes[Gallery] {
     def writes(gallery: Gallery): JsValue = toJson(
       Map(
-        "pictures" -> gallery.largestCrops.map(toJson(_))
+        "pictures" -> gallery.lightbox.largestCrops.map(toJson(_))
       )
     )
   }
@@ -35,6 +35,6 @@ trait Formats extends implicits.Dates {
   }
 
   implicit val metaDataFormat: Writes[MetaData] = new Writes[MetaData] {
-    def writes(item: MetaData): JsValue = toJson(item.metaData)
+    def writes(item: MetaData): JsValue = toJson(item)
   }
 }

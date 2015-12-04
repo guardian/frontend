@@ -7,7 +7,7 @@ import LiveContentApi.getResponse
 trait LiveBlogAgent extends ExecutionContexts with Logging {
   import Edition.{all => editions}
 
-  private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[Trail]](None)).toMap
+  private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[ContentType]](None)).toMap
 
   def refresh() = {
     log.info("Refreshing Live Blogs")
@@ -28,18 +28,18 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
 
       val editorsPicks = response.editorsPicks map { Content(_) }
 
-      val editorsPicksIds = editorsPicks map { _.id }
+      val editorsPicksIds = editorsPicks map { _.metadata.id }
 
-      val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains c.id }
+      val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains c.metadata.id }
 
       // order by editors' picks first
-      val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
+      val liveBlogs: Seq[ContentType] = (editorsPicks ++ latestContent).filter(_.fields.isLive)
 
       liveBlogs.find(isClockWatch).orElse(liveBlogs.headOption)
     }
   }
 
-  private def isClockWatch(content: Content) = content.tags.exists(_.id == "football/series/saturday-clockwatch")
+  private def isClockWatch(content: ContentType) = content.tags.tags.exists(_.id == "football/series/saturday-clockwatch")
 
   def blogFor(edition: Edition) = agents(edition.id)
 }

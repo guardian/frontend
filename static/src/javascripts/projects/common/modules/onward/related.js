@@ -66,7 +66,7 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-        } else if (fetchRelated && !(ab.getParticipations().InjectNetworkFrontTest2 && ab.getParticipations().InjectNetworkFrontTest2.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest2'))) {
+        } else if (fetchRelated) {
             container = document.body.querySelector('.js-related');
 
             if (container) {
@@ -77,7 +77,7 @@ define([
                 container.setAttribute('data-component', componentName);
 
                 if (ab.getParticipations().EssentialReadTest1 &&
-                    (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated')  &&
+                    (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated') &&
                     ab.testCanBeRun('EssentialReadTest1')
                 ) {
                     switch (config.page.edition) {

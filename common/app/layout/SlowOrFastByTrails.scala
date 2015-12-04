@@ -1,16 +1,14 @@
 package layout
 
 import com.gu.facia.api.models.FaciaContent
-import implicits.Collections
 import implicits.FaciaContentImplicits._
 import implicits.Collections
 import model.Trail
 
-
 object TagHistogram extends Collections {
   def fromTrails(trails: Seq[Trail]): TagHistogram = TagHistogram(trails.foldLeft(Map.empty[String, Int]) {
     case (histogram, trail) =>
-      trail.tags.map(_.id).toSet.foldLeft(histogram) {
+      trail.tags.tags.map(_.id).toSet.foldLeft(histogram) {
         case (hist, tagId) =>
           hist + (tagId -> (hist.getOrElse(tagId, 0) + 1))
       }

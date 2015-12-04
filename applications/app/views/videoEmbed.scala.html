@@ -32,30 +32,30 @@
             @page.model.map{ video: Video =>
 
                 <figure class="gu-video-embed" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-                    <meta itemprop="name" content="@Html(video.headline)"/>
-                    <meta itemprop="headline" content="@Html(video.headline)"/>
-                    <meta itemprop="url" content="@video.url"/>
-                    @video.trailText.map{ t =>
+                    <meta itemprop="name" content="@Html(video.trail.headline)"/>
+                    <meta itemprop="headline" content="@Html(video.trail.headline)"/>
+                    <meta itemprop="url" content="@video.metadata.url"/>
+                    @video.fields.trailText.map{ t =>
                         <meta itemprop="description" content="@StripHtmlTags(t)" />
                         <meta itemprop="about" content="@StripHtmlTags(t)" />
                     }
 
-                    <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
-                    <meta itemprop="name" content="@video.webTitle" />
-                    <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
-                    @video.mainVideo.map { mv =>
+                    <meta itemprop="datePublished" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+                    <meta itemprop="name" content="@video.metadata.webTitle" />
+                    <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+                    @video.elements.mainVideo.map { mv =>
                         <meta itemprop="duration" content="@mv.ISOduration" />
                         <meta itemprop="height" content="@mv.height" />
                         <meta itemprop="width" content="@mv.width" />
                     }
                     <meta itemprop="requiresSubscription" content="no" />
-                    <meta itemprop="image" content="@Html(video.openGraphImage)" />
-                    @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
-                    @video.mainVideo.map { videoElement =>
+                    <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
+                    @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
+                    @video.elements.mainVideo.map { videoElement =>
                         @fragments.media.video(VideoPlayer(
                             videoElement,
                             Video640,
-                            video.headline,
+                            video.trail.headline,
                             autoPlay = true,
                             showControlsAtStart = true,
                             endSlatePath = video.endSlatePath,
@@ -78,7 +78,7 @@
                                 || 'XDomainRequest' in window
                             )
                         ),
-                        config: @fragments.javaScriptConfig(video)
+                        config: @fragments.javaScriptConfig(model.SimpleContentPage(video))
                     };
                     var docClass = document.documentElement.className;
 

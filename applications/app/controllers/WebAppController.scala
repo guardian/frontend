@@ -3,18 +3,19 @@ package controllers
 import com.gu.contentapi.client.model.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import conf.{Static, LiveContentApi}
-import crosswords.CrosswordData
-import model.{Cached, MetaData}
+import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.api.libs.json.{JsArray, JsString, JsObject}
 
 import scala.concurrent.Future
 
-class OfflinePage(val crossword: CrosswordData) extends MetaData {
-  lazy val id: String = "offline-page"
-  lazy val section: String = ""
-  lazy val analyticsName: String = id
-  lazy val webTitle: String = "Unable to connect to the Internet"
+case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
+
+  override val metadata = MetaData.make(
+      id = "offline-page",
+      section = "",
+      analyticsName = "offline-page",
+      webTitle = "Unable to connect to the Internet")
 }
 
 object WebAppController extends Controller with ExecutionContexts with Logging {
@@ -43,7 +44,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def offlinePage() = Action.async { implicit request =>
     withCrossword("quick") { crossword =>
-      val crosswordHtml = views.html.offlinePage(new OfflinePage(CrosswordData.fromCrossword(crossword)))
+      val crosswordHtml = views.html.offlinePage(OfflinePage(CrosswordData.fromCrossword(crossword)))
       Cached(60)(JsonComponent(JsObject(Map(
         "html" -> JsString(crosswordHtml.body),
         "assets" -> JsArray(Seq(

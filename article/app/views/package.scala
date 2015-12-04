@@ -11,10 +11,10 @@ import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleane
 object MainMediaWidths {
 
   def apply(article: Article): layout.WidthsByBreakpoint = {
-    if (article.hasShowcaseMainElement && article.isFeature) {
+    if (article.elements.hasShowcaseMainElement && article.tags.isFeature) {
       MainMedia.featureShowcase
     } else {
-      val hinting = if (article.hasShowcaseMainElement) { Showcase } else { Inline }
+      val hinting = if (article.elements.hasShowcaseMainElement) { Showcase } else { Inline }
       val relation = if (article.isLiveBlog) { LiveBlogMedia } else { MainMedia }
       ContentWidths.getWidthsFromContentElement(hinting, relation)
     }
@@ -40,7 +40,7 @@ object BodyCleaner {
       InBodyElementCleaner,
       InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
-      new TweetCleaner(article, amp),
+      new TweetCleaner(article.content, amp),
       WitnessCleaner,
       TagLinker(article),
       TableEmbedComplimentaryToP,
@@ -51,7 +51,7 @@ object BodyCleaner {
       BloggerBylineImage(article),
       LiveBlogShareButtons(article),
       ImmersiveHeaders(article.isImmersive),
-      DropCaps(article.isComment || article.isFeature, article.isImmersive),
+      DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner,
       MembershipEventCleaner,

@@ -3,8 +3,10 @@
 @import layout.FaciaCardHeader
 @import views.html.fragments.items.elements.facia_cards.title
 @import views.support._
-@import TrailCssClasses.articleToneClass
+@import TrailCssClasses.toneClass
+@import implicits.FaciaContentImplicits._
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
+@import conf.switches.Switches.contentAgeMessageSwitch
 
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test" data-test-id="popular-in">
@@ -32,11 +34,18 @@
 
                     <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @articleToneClass(trail)--most-popular">
+                    <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @toneClass(trail)--most-popular">
                         <div class="headline-list__link" data-link-name="@info.rowNum | text">
                             <p class="headline-list__count">@info.rowNum</p>
                             @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
-                    </div>
+                            @if(contentAgeMessageSwitch.isSwitchedOn) {
+                                @trail.maybeContent.map { content =>
+                                    @if(content.tags.exists(_.id == "tone/news")) {
+                                        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                    }
+                                }
+                            }
+                        </div>
                     </li>
                     }
                 </ul>

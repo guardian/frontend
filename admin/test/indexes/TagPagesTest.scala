@@ -58,7 +58,7 @@ import scala.concurrent.duration._
   "byWebTitle" should "convert an enumerator of tags into a Future of alpha-ordered TagPages" in {
     def tagFixture(webTitle: String) =
       ApiTag(
-        "",
+        "id/id",
         "",
         None,
         None,

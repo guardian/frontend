@@ -1,7 +1,7 @@
-@(metaData: model.ContributorsListingMetaData, listing: model.TagIndexListings)(implicit requestHeader: RequestHeader)
+@(page: model.ContributorsListing, listing: model.TagIndexListings)(implicit requestHeader: RequestHeader)
 
 @import fragments.tagIndexListingBody
 
-@main(metaData, projectName = Some("index")) { } {
-    @tagIndexListingBody("contributors", metaData.webTitle, listing)
+@main(page, projectName = Some("index")) { } {
+    @tagIndexListingBody("contributors", page.metadata.webTitle, listing)
 }

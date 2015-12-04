@@ -34,7 +34,9 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     ).map {
         response =>
           response.results filter { content => !isCurrentStory(content) } map { result =>
-            Video(result)
+            Content(result)
+          } collect {
+            case v: Video => v
           } match {
             case Nil => None
             case results => Some(results)
@@ -48,7 +50,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
   }
 
   private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
-    val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
+    val sectionName = trails.headOption.map(t => t.trail.sectionName).getOrElse("")
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More ${sectionName} videos")
     renderFormat(response, response, 1)
   }
@@ -72,7 +74,9 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .showFields("all")
     ).map { response =>
       response.results filter { content => !isCurrentStory(content) } map { result =>
-        Video(result)
+        Content(result)
+      } collect {
+        case v: Video => v
       } match {
         case Nil => None
         case results => Some(results)
