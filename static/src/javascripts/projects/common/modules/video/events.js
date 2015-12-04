@@ -259,10 +259,13 @@ define([
 
     function beaconError(err) {
         if (err && 'message' in err && 'code' in err) {
-            reportError(new Error(err.message), {
-                feature: 'player',
-                vjsCode: err.code
-            }, false);
+            var error = new Error(err.message);
+            if (!error.message.match(/Your browser is no longer supported/)) {
+                reportError(error, {
+                    feature: 'player',
+                    vjsCode: err.code
+                }, false);
+            }
         }
     }
 
