@@ -75,6 +75,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-left: $gs-gutter;
     }
 
+    //mobile,phablet,leftcol,wide need $gs-gutter divided by 2, so duplication needed//
     @include mq($from: tablet, $until: desktop) {
         padding-right: $gs-gutter / 2;
         padding-left: $gs-gutter / 2;
