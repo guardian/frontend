@@ -17,7 +17,7 @@ body {
     border-style: solid;
     font-family: $f-sans-serif-text;
     font-weight: bold;
-    height: $gs-baseline * 3;
+    height: 3em;
     padding: 0 ($gs-gutter * .6);
 
     &:focus,
@@ -32,20 +32,6 @@ body {
 */
 .email-sub__form--footer {
     padding: 0;
-
-    .email-sub__submit-input {
-        // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
-        font-family: $f-sans-serif-text;
-        font-weight: bold;
-        height: $gs-baseline * 3;
-        padding: 0 ($gs-gutter * .6);
-
-        &:focus,
-        &:hover,
-        &:active {
-            outline: 0;
-        }
-    }
 }
 
 // When we are in an iframe, our widths are based on the iframe so we need to set
@@ -64,18 +50,12 @@ body {
         }
 
         .email-sub__submit-input {
-            @include fs-textSans(1, $size-only: true);
             border-radius: 0 1000px 1000px 0;
             border-left: 0;
             float: left;
             margin-right: 0;
             padding-left: $gs-gutter / 2;
             width: 38%;
-        }
-
-        .email-sub__label,
-        .email-sub__submit-input {
-            line-height: 3;
         }
     }
 }
