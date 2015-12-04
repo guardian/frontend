@@ -86,12 +86,12 @@ define([
                 return function (event) {
                     var emailAddress = $('.' + classes.textInput, $form).val();
 
+                    event.preventDefault();
+
                     if (!state.submitting && validate(emailAddress)) {
                         var data = 'email=' + encodeURIComponent(emailAddress);
 
                         state.submitting = true;
-
-                        event.preventDefault();
 
                         return getOmniture().then(function (omniture) {
                             omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
