@@ -499,8 +499,25 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
+// Magic rule to stop production staff to stop playing around in javascript
+// Explained here: https://github.com/guardian/frontend/pull/11268
+case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("h2").foreach{ h2 =>
+        val beforeH2 = h2.previousElementSibling()
+        if(beforeH2.hasClass("element--immersive")) {
+          beforeH2.addClass("section-image")
+          beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
+          h2.remove()
+        }
+      }
+    }
+    document
+  }
+}
 
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
   private def setDropCap(p: Element): String = {
     p.html.replaceFirst(
       "^([\"'“‘]*[a-zA-Z])(.{199,})",
@@ -509,7 +526,6 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
   }
 
   override def clean(document: Document): Document = {
-
     if(isFeature) {
       val children = document.body().children().toList
       children.headOption match {
@@ -521,11 +537,14 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     }
 
     document.getElementsByTag("h2").foreach{ h2 =>
-        if (h2.text() == "* * *" && isImmersive) {
-            h2.tagName("hr").addClass("section-rule").html("")
+        if (isImmersive) {
+            h2.before("""<hr class="section-rule" />""")
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
                 next.html(setDropCap(next))
+            }
+            if (h2.text() == "* * *") {
+                h2.remove()
             }
         }
     }
