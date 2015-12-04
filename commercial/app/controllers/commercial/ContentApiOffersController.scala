@@ -59,7 +59,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       specific <- eventualSpecific
       latestByKeyword <- eventualLatest
     } yield {
-      (specific ++ latestByKeyword.filter(_.trailPicture.nonEmpty)).distinct take 4
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
     futureContents map {
