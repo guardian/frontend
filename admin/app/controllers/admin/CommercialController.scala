@@ -6,7 +6,7 @@ import conf.Configuration.environment
 import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.{CreativeTemplateAgent, DfpDataHydrator}
+import dfp.{CreativeTemplateAgent, DfpApi}
 import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
@@ -28,7 +28,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
-    val specialAdUnits = DfpDataHydrator().loadSpecialAdunits(Configuration.commercial.dfpAdUnitRoot)
+    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 

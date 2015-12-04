@@ -52,7 +52,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   }
 
   private def loadLineItems(): DfpDataExtractor = {
-    val hydrator = DfpDataHydrator()
 
     def fetchCachedLineItems(): Seq[GuLineItem] = {
       val maybeLineItems = for {
@@ -79,8 +78,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     val lineItems = {
       val loadSummary = loadLineItems(
         fetchCachedLineItems(),
-        hydrator.loadLineItemsModifiedSince,
-        DfpApi.loadCurrentLineItems()
+        DfpApi.readLineItemsModifiedSince,
+        DfpApi.readCurrentLineItems()
       )
       logReport(loadSummary)
       loadSummary.current

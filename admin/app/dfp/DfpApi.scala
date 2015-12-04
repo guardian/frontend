@@ -7,18 +7,10 @@ import common.dfp.{GuAdUnit, GuCreative, GuCreativeTemplate, GuLineItem}
 import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative}
 import org.joda.time.DateTime
 
-import scala.util.control.NonFatal
-
 // this is replacing DfpDataHydrator
 object DfpApi extends Logging {
 
-  def loadCurrentLineItems(): Seq[GuLineItem] = {
-
-    def stmtBuilder = new StatementBuilder()
-                      .where("status = :readyStatus OR status = :deliveringStatus")
-                      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-                      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
-                      .orderBy("id ASC")
+  private def readLineItems(stmtBuilder: StatementBuilder): Seq[GuLineItem] = {
 
     def sponsor(lineItem: LineItem) = for {
       sponsorFieldId <- CustomFieldAgent.get.data.get("Sponsor")
@@ -41,7 +33,7 @@ object DfpApi extends Logging {
       val cachedData = AdUnitAgent.get.data
       lazy val fallback = {
         val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", adUnitId)
-        toGuAdUnit(session.adUnits(stmtBuilder).head, cachedData)
+        toGuAdUnit(session.adUnits(stmtBuilder).head)
       }
       cachedData getOrElse(adUnitId, fallback)
     }
@@ -62,7 +54,7 @@ object DfpApi extends Logging {
       CustomTargetingKeyAgent.get.data getOrElse(valueId, fallback)
     }
 
-    withDfpSession(stmtBuilder) { session =>
+    withDfpSession { session =>
       session.lineItems(stmtBuilder) map { lineItem =>
         toGuLineItem(
           lineItem,
@@ -76,49 +68,102 @@ object DfpApi extends Logging {
     }
   }
 
-  def loadActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
+  def readCurrentLineItems(): Seq[GuLineItem] = {
 
-    def stmtBuilder = new StatementBuilder()
+    val stmtBuilder = new StatementBuilder()
+                      .where("status = :readyStatus OR status = :deliveringStatus")
+                      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
+                      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
+                      .orderBy("id ASC")
+
+    readLineItems(stmtBuilder)
+  }
+
+  def readLineItemsModifiedSince(threshold: DateTime): Seq[GuLineItem] = {
+
+    val stmtBuilder = new StatementBuilder()
+                      .where("lastModifiedDateTime > :threshold")
+                      .withBindVariableValue("threshold", threshold.getMillis)
+
+    readLineItems(stmtBuilder)
+  }
+
+  def readAdFeatureLogoLineItems(expiredSince: DateTime, expiringBefore: DateTime): Seq[GuLineItem] = {
+
+    val stmtBuilder = new StatementBuilder()
+                      .where(
+                        "LineItemType = :sponsored AND " +
+                        "Status != :draft AND " +
+                        "EndDateTime > :startTime AND " +
+                        "EndDateTime < :endTime"
+                      )
+                      .withBindVariableValue("sponsored", LineItemType.SPONSORSHIP.toString)
+                      .withBindVariableValue("draft", ComputedStatus.DRAFT.toString)
+                      .withBindVariableValue("startTime", expiredSince.getMillis)
+                      .withBindVariableValue("endTime", expiringBefore.getMillis)
+
+    readLineItems(stmtBuilder) filter (_.isAdFeatureLogo)
+  }
+
+  def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
+
+    val stmtBuilder = new StatementBuilder()
                       .where("status = :active and type = :userDefined")
                       .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
                       .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
 
-    def isAppTemplate(template: CreativeTemplate): Boolean = {
-      val name = template.getName.toLowerCase
-      name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
-    }
-
-    withDfpSession(stmtBuilder) {
-      _.creativeTemplates(stmtBuilder) filterNot isAppTemplate map toGuCreativeTemplate
+    withDfpSession {
+      _.creativeTemplates(stmtBuilder) map toGuCreativeTemplate filterNot (_.isForApps)
     }
   }
 
-  def loadTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
+  def readTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
 
-    def stmtBuilder = new StatementBuilder()
+    val stmtBuilder = new StatementBuilder()
                       .where("lastModifiedDateTime > :threshold")
                       .withBindVariableValue("threshold", threshold.getMillis)
 
-    withDfpSession(stmtBuilder) {
-      _.creatives(stmtBuilder) collect { case creative: TemplateCreative => creative } map toGuTemplateCreative
+    withDfpSession {
+      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative => creative } map toGuTemplateCreative
     }
   }
 
-  private def withDfpSession[T](stmtBuilder: => StatementBuilder)(block: SessionWrapper => Seq[T]): Seq[T] = {
+  private def readDescendantAdUnits(rootName: String, stmtBuilder: StatementBuilder): Seq[GuAdUnit] = {
+    withDfpSession { session =>
+      session.adUnits(stmtBuilder) filter { adUnit =>
 
-    val maybeStatementBuilder = try {
-      Some(stmtBuilder)
-    } catch {
-      case NonFatal(e) =>
-        log.error(s"Building statement failed: ${e.getMessage}")
-        None
+        def isRoot(path: Array[AdUnitParent]) = path.length == 1 && adUnit.getName == rootName
+        def isDescendant(path: Array[AdUnitParent]) = path.length > 1 && path(1).getName == rootName
+
+        Option(adUnit.getParentPath) exists { path => isRoot(path) || isDescendant(path) }
+      } map toGuAdUnit sortBy (_.id)
     }
+  }
 
-    val results = for {
-      stmtBuilder <- maybeStatementBuilder
-      session <- SessionWrapper()
-    } yield block(session)
+  def readActiveAdUnits(rootName: String): Seq[GuAdUnit] = {
 
+    val stmtBuilder = new StatementBuilder()
+                      .where("status = :status")
+                      .withBindVariableValue("status", InventoryStatus._ACTIVE)
+
+    readDescendantAdUnits(rootName, stmtBuilder)
+  }
+
+  def readSpecialAdUnits(rootName: String): Seq[(String, String)] = {
+
+    val statementBuilder = new StatementBuilder()
+                           .where("status = :status")
+                           .where("explicitlyTargeted = :targeting")
+                           .withBindVariableValue("status", InventoryStatus._ACTIVE)
+                           .withBindVariableValue("targeting", true)
+
+    readDescendantAdUnits(rootName, statementBuilder) map { adUnit =>
+      (adUnit.id, adUnit.path.mkString("/"))
+    } sortBy (_._2)
+  }
+
+  private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
+    val results = for (session <- SessionWrapper()) yield block(session)
     results getOrElse Nil
   }
 }
