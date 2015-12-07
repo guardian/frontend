@@ -17,7 +17,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return !config.page.isFront;
+            return !config.page.isFront && config.page.section !== 'childrens-books-site';
         };
 
         this.variants = [

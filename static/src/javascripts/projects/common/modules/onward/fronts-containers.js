@@ -2,6 +2,7 @@ define([
     'fastdom',
     'bean',
     'qwery',
+    'bonzo',
     'common/utils/$',
     'common/utils/config',
     'common/utils/ajax',
@@ -15,6 +16,7 @@ define([
     fastdom,
     bean,
     qwery,
+    bonzo,
     $,
     config,
     ajax,
@@ -25,25 +27,33 @@ define([
     scroller,
     svgs
 ) {
-    var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifeandstyle', 'culture', 'business', 'technology', 'environment', 'travel', 'film', 'media', 'money', 'society', 'science', 'music', 'books', 'cities', 'tv-and-radio', 'global-development'],
+    var sectionsToLoadSectionFronts = ['commentisfree', 'sport', 'football', 'fashion', 'lifeandstyle', 'education', 'culture', 'business', 'technology', 'politics', 'environment', 'travel', 'film', 'media', 'money', 'society', 'science', 'music', 'books', 'stage', 'cities', 'tv-and-radio', 'artanddesign', 'global-development'],
         loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false,
         edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase();
 
     function FrontsContainers() {
         moveComments();
         insertFirstTwo();
-        insertFinalTwo();
     }
 
     function insertFirstTwo() {
-        var front = (loadSection) ? config.page.section : edition;
-
-        insertContainers(front, $('.js-fronts-containers'), 2, 0, 'original', function () {});
+        if(loadSection) {
+            insertContainers(config.page.section, $('.js-fronts-section'), 1, 0, 'original', function () {});
+            insertContainers(edition, $('.js-fronts-network-1'), 1, 0, 'none', function () {
+                insertFinalTwo();
+            });
+        } else {
+            insertContainers(edition, $('.js-fronts-network-1'), 2, 0, 'none', function () {
+                insertFinalTwo();
+            });
+        }
     }
 
     function insertFinalTwo() {
-        var offset = (loadSection) ? 0 : 2;
-        insertContainers(edition, $('.js-network-fronts-containers'), 2, offset, 'original', function () {});
+        var offset = (loadSection) ? 1 : 2,
+            toFilter = (config.page.section === 'sport') ? 'sport' : 'none';
+
+        insertContainers(edition, $('.js-fronts-network-2'), 2, offset, toFilter, function () {});
     }
 
     function insertContainers(section, $el, num, offset, size, callback) {
@@ -56,17 +66,19 @@ define([
 
     function moveComments() {
         if (!identity.isUserLoggedIn() && config.page.commentable) {
+            var $comments = $('.js-comments');
+
             fastdom.write(function () {
                 $('.submeta').append('<hr class=\'submeta__jump-to-comments-line\'/><button class=\'button button--large button--primary submeta__jump-to-comments js-move-comments\'>' + svgs('commentCount16icon') + '<span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
-                $('.js-comments').insertAfter(qwery('.js-network-fronts-containers'));
+                $comments.insertAfter(qwery('.js-network-fronts-containers'));
             });
 
             bean.on(document.body, 'click', '.js-move-comments', function () {
                 fastdom.write(function () {
-                    $('.js-comments').insertBefore(qwery('.fc-container--commercial-high'));
+                    $comments.insertBefore(qwery('.fc-container--commercial-high'));
                     $('.js-move-comments').hide();
                     fastdom.read(function () {
-                        scroller.scrollToElement(qwery('.js-comments'), 300, 'easeInOutQuad');
+                        scroller.scrollToElement($comments, 300, 'easeInOutQuad');
                     });
                 });
             });

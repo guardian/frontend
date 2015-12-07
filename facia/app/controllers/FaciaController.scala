@@ -46,20 +46,16 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id, false)
 
-  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, size: String) = MemcachedAction { implicit request =>
-    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, Edition(request)), num, offset).map { collections =>
+  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String) = MemcachedAction { implicit request =>
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, Edition(request)), num, offset, sectionNameToFilter).map { collections =>
       Cached(60) {
         val containers = collections.getOrElse(List()).zipWithIndex.map { case (collection: PressedCollection, index) =>
 
-          val containerLayout = size match {
-            case "small" => Fixed(FixedContainers.frontsOnArticles)
-            case "large" => Fixed(FixedContainers.fixedMediumFastXI)
-            case "original" => if(collection.collectionType.contains("mpu")) {
+          val containerLayout = if(collection.collectionType.contains("mpu")) {
               Fixed(FixedContainers.frontsOnArticles)
             } else {
               Container.resolve(collection.collectionType)
             }
-          }
 
           val containerDefinition = FaciaContainer(
             index,
@@ -304,10 +300,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0): Future[Option[List[PressedCollection]]] =
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
-        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular").drop(offset).take(num))
+        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).drop(offset).take(num))
       })
 
   /* Google news hits this endpoint */
