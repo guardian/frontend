@@ -98,16 +98,21 @@ define([
             }
         },
         getVisitedValue = function () {
-            var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0,
-                visitedValue;
+            var visitCount = storage.local.get('gu.alreadyVisited') || 1;
 
-            if (alreadyVisited > 4) {
-                visitedValue = '5plus';
-            } else {
-                visitedValue = alreadyVisited.toString();
+            if (visitCount <= 5) {
+                return visitCount.toString();
+            } else if (visitCount >= 6 && visitCount <= 9) {
+                return '6-9';
+            } else if (visitCount >= 10 && visitCount <= 15) {
+                return '10-15';
+            } else if (visitCount >= 16 && visitCount <= 19) {
+                return '16-19';
+            } else if (visitCount >= 20 && visitCount <= 29) {
+                return '20-29';
+            } else if (visitCount >= 30) {
+                return '30plus';
             }
-
-            return visitedValue;
         },
         getReferrer = function () {
             var referrerTypes = [
