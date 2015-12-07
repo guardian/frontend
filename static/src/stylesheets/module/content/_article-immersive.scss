@@ -24,13 +24,37 @@
 
     .content__logo-container {
         z-index: 2;
+
+        @include mq($until: desktop) {
+            background-color: rgba(0, 0, 0, .6);
+            padding-bottom: $gs-baseline / 2;
+        }
+
+        .gs-container {
+            overflow: auto;
+            display: block;
+
+            @include mq(desktop) {
+                overflow: visible;
+            }
+        }
+
+        .is-fixed-height & {
+            background-color: transparent;
+            padding-bottom: 0;
+
+            .gs-container {
+                overflow: visible;
+            }
+        }
     }
 
     .content__logo {
-        float: right;
         width: gs-span(2) + $gs-gutter;
         height: auto;
         margin-top: $gs-baseline / 2;
+        display: block;
+        float: right;
 
         svg {
             width: 100%;
