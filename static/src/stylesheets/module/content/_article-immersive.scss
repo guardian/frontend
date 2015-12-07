@@ -385,6 +385,17 @@
         }
     }
 
+    .section-title,
+    .from-content-api h2 {
+        @include fs-headline(5);
+        font-weight: 200;
+        padding-bottom: .5em;
+
+        @include mq(tablet) {
+            @include fs-headline(7, true);
+        }
+    }
+
     .section-title {
         position: absolute;
         z-index: 20;
@@ -393,17 +404,11 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, .5);
         color: #ffffff;
-        @include fs-headline(5);
-        font-weight: 200;
         padding: .1em $gs-gutter / 2 .5em;
 
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
-        }
-
-        @include mq(tablet) {
-            @include fs-headline(7, true);
         }
 
         @include mq(leftCol) {

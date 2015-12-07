@@ -20,7 +20,7 @@
                     if (standfirst.contains(item.trail.byline.get)) {
                         ContributorLinks(standfirst, item.tags.contributors).toString()
                     } else {
-                        standfirst + "<p>Words by" + ContributorLinks(item.trail.byline.get, item.tags.contributors) + "</p>"
+                        standfirst + "<p>by" + ContributorLinks(item.trail.byline.get, item.tags.contributors) + "</p>"
                     }
                 } else {
                     standfirst

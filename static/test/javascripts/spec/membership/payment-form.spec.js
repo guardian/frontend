@@ -66,7 +66,7 @@ define([
             errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
             creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
             creditCardVerificationCodeInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-cvc')[0];
-            submitButtonElement = paymentFormFixtureElement.querySelectorAll('.js-mem-change-cc-submit')[0];
+            submitButtonElement = paymentFormFixtureElement.querySelectorAll('.js-manage-account-change-cc-submit')[0];
             errorMessageDisplayElement = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
             creditCardImageElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-image')[0];
             expiryMonthElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-month')[0];
