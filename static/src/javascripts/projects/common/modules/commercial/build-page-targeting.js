@@ -98,7 +98,7 @@ define([
             }
         },
         getVisitedValue = function () {
-            var visitCount = storage.local.get('gu.alreadyVisited') || 1;
+            var visitCount = storage.local.get('gu.alreadyVisited') || 0;
 
             if (visitCount <= 5) {
                 return visitCount.toString();

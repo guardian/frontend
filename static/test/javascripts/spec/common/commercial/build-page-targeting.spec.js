@@ -188,7 +188,7 @@ define([
                 si: 't',
                 ab: ['MtMaster-v'],
                 pv: '123456',
-                fr: '1'
+                fr: '0'
             });
         });
 
@@ -208,7 +208,7 @@ define([
                 expect(buildPageTargeting().fr).toEqual('30plus');
             });
 
-            it('passes a value of 1 if the value is not stored', function () {
+            it('passes a value of 0 if the value is not stored', function () {
                 storage.local.remove('gu.alreadyVisited');
                 expect(buildPageTargeting().fr).toEqual('1');
             });
