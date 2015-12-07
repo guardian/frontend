@@ -203,14 +203,14 @@ define([
                 expect(buildPageTargeting().fr).toEqual('16-19');
             });
 
-            it('over thirty, includes it in a boundless bucket', function () {
+            it('over thirty, includes it in the bucket "30plus"', function () {
                 storage.local.set('gu.alreadyVisited', 300);
                 expect(buildPageTargeting().fr).toEqual('30plus');
             });
 
             it('passes a value of 0 if the value is not stored', function () {
                 storage.local.remove('gu.alreadyVisited');
-                expect(buildPageTargeting().fr).toEqual('1');
+                expect(buildPageTargeting().fr).toEqual('0');
             });
         });
 
