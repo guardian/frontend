@@ -42,11 +42,11 @@
     }
 
     .content__logo {
+        display: block;
+        float: right;
         width: gs-span(2) + $gs-gutter;
         height: auto;
         margin-top: $gs-baseline / 2;
-        display: block;
-        float: right;
 
         svg {
             width: 100%;
