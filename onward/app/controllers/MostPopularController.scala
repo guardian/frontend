@@ -94,6 +94,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
             ("headline", item.content.trail.headline),
             ("thumbnail", item.content.trail.thumbnailPath),
             ("toneClass", TrailCssClasses.toneClass(item.content)),
+            ("isComment", item.content.tags.isComment),
             ("byline", item.content.trail.byline),
             ("webPublicationDate", Format(item.content.trail.webPublicationDate, "d MMM y"))
           )

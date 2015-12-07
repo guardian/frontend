@@ -61,6 +61,11 @@
                                     <div class="fc-item__content">
                                         <div class="fc-item__header">
                                             <h2 class="fc-item__title">{{headline}}</h2>
+                                            {{#isComment}}
+                                                <div class="fc-item__byline">
+                                                    {{byline}}
+                                                </div>
+                                            {{/isComment}}
                                         </div>
                                         <aside class="fc-item__meta">
                                             <time
