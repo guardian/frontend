@@ -25,7 +25,6 @@ define([
     scroller,
     svgs
 ) {
-
     var sectionsToLoadSectionFronts = ['sport', 'football', 'fashion', 'lifeandstyle', 'culture', 'business', 'technology', 'environment', 'travel', 'film', 'media', 'money', 'society', 'science', 'music', 'books', 'cities', 'tv-and-radio', 'global-development'],
         loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false,
         edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase();

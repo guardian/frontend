@@ -49,7 +49,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, size: String) = MemcachedAction { implicit request =>
     def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, Edition(request)), num, offset).map { collections =>
       Cached(60) {
-        val containers = collections.getOrElse(List()).map { collection: PressedCollection =>
+        val containers = collections.getOrElse(List()).zipWithIndex.map { case (collection: PressedCollection, index) =>
 
           val containerLayout = size match {
             case "small" => Fixed(FixedContainers.frontsOnArticles)
@@ -62,7 +62,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
 
           val containerDefinition = FaciaContainer(
-            1,
+            index,
             containerLayout,
             CollectionConfigWithId("", CollectionConfig.empty),
             CollectionEssentials.fromPressedCollection(collection).copy(treats = Nil)
