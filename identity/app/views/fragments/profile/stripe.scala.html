@@ -4,7 +4,7 @@
     <li class="details-list__item">
         <div class="fieldset__heading">
             <h2 class="form__heading">
-                    Card details
+                Card details
             </h2>
         </div>
 
@@ -12,9 +12,10 @@
             <div class="form-field">
                 <span class="card-type-display js-mma-card-type"><span class="js-mma-payment-card-text u-h"></span></span>
                 <span id="qa-card-details" class="card-details">
-                        •••• •••• •••• <span class="js-mma-card-last4"></span>
-                    </span>
-                <button id="qa-change-card" class="submit-input membership-cta js-mma-change-card is-hidden" data-link-name="Change card">Change card</button>
+                    •••• •••• •••• <span class="js-mma-card-last4"></span>
+                </span>
+                <button id="qa-change-card" class="submit-input membership-cta js-mma-change-card is-hidden" data-link-name="Change card">
+                    Change card</button>
             </div>
         </div>
     </li>
@@ -32,13 +33,13 @@
                     <div class="input membership-tab__credit-card-container">
                         <i class="js-credit-card-image membership-tab__card-types--in-field"></i>
                         <input type="tel"
-                               size="20"
-                               data-stripe="number"
-                               class="js-credit-card-number text-input"
-                               id="cc-num"
-                               placeholder="xxxx xxxx xxxx xxxx"
-                               maxlength="19"
-                               autocomplete="off"/>
+                        size="20"
+                        data-stripe="number"
+                        class="js-credit-card-number text-input"
+                        id="cc-num"
+                        placeholder="xxxx xxxx xxxx xxxx"
+                        maxlength="19"
+                        autocomplete="off"/>
                     </div>
                 </div>
 
@@ -46,13 +47,13 @@
                     <label class="label" for="cc-cvc"></label>
                     <span>Security code</span>
                     <input type="tel"
-                           size="4"
-                           data-stripe="cvc"
-                           class="js-credit-card-cvc text-input text-input--small text-input--block"
-                           id="cc-cvc"
-                           placeholder="CVC"
-                           maxlength="4"
-                           autocomplete="off"/>
+                    size="4"
+                    data-stripe="cvc"
+                    class="js-credit-card-cvc text-input text-input--small text-input--block"
+                    id="cc-cvc"
+                    placeholder="CVC"
+                    maxlength="4"
+                    autocomplete="off"/>
 
                 </div>
 
@@ -62,14 +63,14 @@
                     <p>
                         <select data-stripe="exp-month" id="cc-exp-month" class="js-credit-card-exp-month">
                             <option selected="selected">Month</option>
-                            @for(month <- selectDates.validCardMonths){
+                            @for( month <- selectDates.validCardMonths) {
                                 <option value="@month">@month</option>
                             }
-                        </select>
+                            </select>
                         <span> / </span>
                         <select data-stripe="exp-year" id="cc-exp-year" class="js-credit-card-exp-year">
                             <option selected="selected">Year</option>
-                            @for((year, formattedYear) <- selectDates.validCardYears){
+                            @for( (year, formattedYear) <- selectDates.validCardYears) {
                                 <option value="@year">@formattedYear</option>
                             }
                         </select>
@@ -77,8 +78,8 @@
                 </div>
                 <div class="form-field">
                     <button class="js-submit-input submit-input js-mma-change-cc-submit"
-                            type="submit"
-                            data-link-name="Update card details">Update</button>
+                    type="submit"
+                    data-link-name="Update card details">Update</button>
                     <div class="is-updating js-updating"></div>
                 </div>
             </div>
