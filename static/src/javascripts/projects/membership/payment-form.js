@@ -27,11 +27,11 @@ define([
 
     StripePaymentForm.prototype.config = {
         classes: {
-            CARD_TYPE: 'js-mma-card-type',
-            CARD_LAST4: 'js-mma-card-last4',
-            CHANGE_CARD: 'js-mma-change-card',
+            CARD_TYPE: 'js-manage-account-card-type',
+            CARD_LAST4: 'js-manage-account-card-last4',
+            CHANGE_CARD: 'js-manage-account-change-card',
             IS_CLOSED: 'is-closed',
-            CARD_DETAILS_FORM_CONTAINER: 'js-mma-card-details-form-container',
+            CARD_DETAILS_FORM_CONTAINER: 'js-manage-account-card-details-form-container',
             CTA_DISABLED_CLASSNAME: 'membership-cta--disabled',
             STRIPE_FORM: 'js-stripe-form',
             FORM_FIELD_ERROR: 'form-field--error',
@@ -40,7 +40,7 @@ define([
             ERROR_CARD_EXPIRY: 'js-error--card-expiry',
             HIDE: 'is-hidden',
             PAYMENT_ERRORS: 'js-payment-errors',
-            FORM_SUBMIT: 'js-mma-change-cc-submit',
+            FORM_SUBMIT: 'js-manage-account-change-cc-submit',
             CREDIT_CARD_NUMBER: 'js-credit-card-number',
             CREDIT_CARD_CVC: 'js-credit-card-cvc',
             CREDIT_CARD_EXPIRY_MONTH: 'js-credit-card-exp-month',
