@@ -167,7 +167,7 @@ define([
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
-                fastdom.write(function(){
+                fastdom.write(function () {
                     if (formTitle) {
                         $('.js-email-sub__heading', el).text(formTitle);
                     }
