@@ -59,9 +59,19 @@
                                         <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
                                     </div>
                                     <div class="fc-item__content">
-                                        <h2 class="fc-item__title">
-                                            {{headline}}
-                                        </h2>
+                                        <div class="fc-item__header">
+                                            <h2 class="fc-item__title">{{headline}}</h2>
+                                        </div>
+                                        <aside class="fc-item__meta">
+                                            <time
+                                            class="fc-item__timestamp"
+                                            data-relativeformat="short">
+                                                <span class="timestamp__text">
+                                                    <span class="u-h">Published: </span>
+                                                    {{webPublicationDate}}
+                                                </span>
+                                            </time>
+                                        </aside>
                                     </div>
                                 </a>
                             </div>
