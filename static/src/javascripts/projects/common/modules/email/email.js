@@ -131,7 +131,7 @@ define([
                     },
                     getHeight = function () {
                         fastdom.read(function () {
-                            wrapperHeight = $wrapper.dim().height;
+                            wrapperHeight = $wrapper[0].clientHeight;
                         });
                     },
                     setHeight = function () {

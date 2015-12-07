@@ -1,4 +1,5 @@
 .email-sub__heading {
+    @include fs-headline(3, $size-only: true);
     padding-left: $gs-baseline / 3;
 }
 
@@ -25,7 +26,7 @@
     @include fs-headline(2);
 
     .email-sub__heading {
-        margin: $gs-baseline 0;
+        margin: $gs-baseline / 2 0 $gs-baseline 0;
     }
 }
 

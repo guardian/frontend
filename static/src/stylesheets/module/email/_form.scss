@@ -18,7 +18,7 @@
 .email-sub__form {
     @include clearfix();
     @include fs-textSans(3);
-    padding: $gs-baseline 0;
+    padding: $gs-baseline 0 $gs-baseline * 2;
 
     * {
         box-sizing: border-box;
@@ -57,9 +57,10 @@
     display: none; // Hidden by default
 
     svg {
-        fill: lighten($form-label-colour, 10);
+        fill: $form-label-colour;
+        opacity: .65;
         width: 1.143em;
-        height: 0.857em;
+        height: .857em;
     }
 }
 
@@ -68,7 +69,7 @@
     color: guss-colour(neutral-1, $pasteup-palette);
     height: 3em;
     outline: none;
-    padding: 0.667em 1.250em;
+    padding: .667em 1.250em;
 }
 
 .email-sub__submit-input {
@@ -80,6 +81,7 @@
     &:hover,
     &:active {
         border-color: $form-primary-colour;
+        cursor: pointer;
     }
 }
 
@@ -97,6 +99,7 @@
 }
 
 .email-sub__small {
+    @include fs-textSans(1, $size-only: true);
     color: guss-colour(guardian-brand, $pasteup-palette);
     display: block;
     padding-left: $gs-baseline / 3;
@@ -156,7 +159,6 @@
         &:hover,
         &:focus,
         &:active {
-            cursor: pointer;
             background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
             border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
         }
