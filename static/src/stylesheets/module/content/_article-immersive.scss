@@ -23,7 +23,8 @@
     }
 
     .content__logo-container {
-        z-index: 2;
+        position: relative;
+        z-index: 10;
 
         @include mq($until: desktop) {
             background-color: rgba(0, 0, 0, .6);
@@ -35,15 +36,6 @@
             display: block;
 
             @include mq(desktop) {
-                overflow: visible;
-            }
-        }
-
-        .is-fixed-height & {
-            background-color: transparent;
-            padding-bottom: 0;
-
-            .gs-container {
                 overflow: visible;
             }
         }
@@ -102,14 +94,6 @@
         @include mq(desktop) {
             font-size: 4rem;
         }
-
-        .is-fixed-height & {
-            @include fs-headline(7, true);
-
-            @include mq(desktop) {
-                font-size: 3.25rem;
-            }
-        }
     }
 
     .content__series-label + .content__headline {
@@ -134,10 +118,6 @@
             height: 2px;
             width: gs-span(2);
             background-color: rgba(255, 255, 255, .2);
-
-            .is-fixed-height & {
-                display: none;
-            }
         }
 
         a {
@@ -160,11 +140,6 @@
         background-color: colour(neutral-5);
         color: colour(neutral-1);
         display: none;
-
-        // Should be removed when capi returns a no-id element for code embeds in main media
-        .is-fixed-height & {
-            display: block;
-        }
     }
 
     .content__loading-animation {
@@ -175,7 +150,7 @@
         transform: translate(-50%, -50%);
     }
 
-    &.content__head .element-embed {
+    .content__head .element-embed {
         margin: 0;
         position: absolute;
         top: 0;
@@ -243,6 +218,35 @@
             .content__head--mobile {
                 background-image: none !important;
             }
+        }
+
+        .content__logo-container {
+            background-color: transparent;
+            padding-bottom: 0;
+
+            .gs-container {
+                overflow: visible;
+            }
+        }
+
+        .content__headline {
+            @include fs-headline(7, true);
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
+        }
+
+        .content__standfirst:before {
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+
+        // Should be removed when capi returns a no-id element for code embeds in main media
+        .content__loading {
+            display: block;
         }
     }
 
