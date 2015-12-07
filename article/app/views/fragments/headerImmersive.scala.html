@@ -5,14 +5,16 @@
 @import views.support.ImgSrc
 @import layout._
 
-<header class="content__head content__head--desktop tonal__head tonal__head--@toneClass(article) @if(article.elements.elements("main").isEmpty) { content__head--empty }">
+<header class="content__head content__head--desktop tonal__head tonal__head--@toneClass(article)
+               @if(article.elements.hasMainEmbed || article.elements.hasMainPicture) { is-fixed-height }">
     <div class="gs-container content__logo-container">
         <a href="@LinkTo{/}">
             @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
         </a>
     </div>
 
-    @if(article.elements.hasMainEmbed) {
+    // hasMainEmbed returns false if it's true. I dunno. Ask Rich when he's back.
+    @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
         <div class="content__loading">
             <span class="content__loading-animation is-updating"></span>
             <span class="u-h">Loading header</span>

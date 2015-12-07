@@ -114,90 +114,92 @@
         }
     }
 
-    .content__head--desktop {
-        height: 100vh;
-        max-height: 800px;
-    }
-
-    .content__header {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
-    @include mq($until: desktop) {
-        .content__head--mobile {
-            position: relative;
-            display: table-cell;
-            vertical-align: bottom;
-            background-position: center center;
-            background-size: cover;
+   .is-fixed-height {
+        &.content__head--desktop {
+            height: 100vh;
+            max-height: 800px;
         }
-
-        .content__head--desktop {
-            background-image: none !important;
-        }
-
+    
         .content__header {
-            display: table;
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
         }
-
-        .content__wrapper--standfirst {
-            display: table-row-group;
-            height: 1px;
+    
+        @include mq($until: desktop) {
+            .content__head--mobile {
+                position: relative;
+                display: table-cell;
+                vertical-align: bottom;
+                background-position: center center;
+                background-size: cover;
+            }
+    
+            .content__head--desktop {
+                background-image: none !important;
+            }
+    
+            .content__header {
+                display: table;
+                width: 100%;
+                height: 100%;
+            }
+    
+            .content__wrapper--standfirst {
+                display: table-row-group;
+                height: 1px;
+            }
         }
-    }
-
-    @include mq(desktop) {
-        .content__head--desktop {
-            position: relative;
-            background-position: center center;
-            background-size: cover;
-            max-height: initial;
+    
+        @include mq(desktop) {
+            .content__head--desktop {
+                position: relative;
+                background-position: center center;
+                background-size: cover;
+                max-height: initial;
+            }
+    
+            .content__head--mobile {
+                background-image: none !important;
+            }
         }
-
-        .content__head--mobile {
-            background-image: none !important;
+    
+        .content__loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: colour(neutral-5);
+            color: colour(neutral-1);
         }
-    }
-
-    .content__loading {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: colour(neutral-5);
-        color: colour(neutral-1);
-    }
-
-    .content__loading-animation {
-        display: block;
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .content__head .element-embed {
-        margin: 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-
-        .fenced {
-            height: 100% !important; // Overwrite inline styles
-            opacity: 0;
-            transition: .5s opacity ease-out;
+    
+        .content__loading-animation {
+            display: block;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-
-        .fenced-rendered {
-            opacity: 1;
+    
+        &.content__head .element-embed {
+            margin: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+    
+            .fenced {
+                height: 100% !important; // Overwrite inline styles
+                opacity: 0;
+                transition: .5s opacity ease-out;
+            }
+    
+            .fenced-rendered {
+                opacity: 1;
+            }
         }
     }
 
