@@ -67,34 +67,15 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
 }
 
 
-sealed trait TagType {
-  val name: String
-}
-
-case object Series extends TagType {
-  override val name: String = "series"
-}
-
-case object Keyword extends TagType {
-  override val name: String = "keyword"
-}
+sealed abstract class TagType(val name: String)
+case object Series extends TagType("series")
+case object Keyword extends TagType("keyword")
 
 
-sealed trait PaidForType {
-  val name: String
-}
-
-case object Sponsored extends PaidForType {
-  override val name: String = "sponsoredfeatures"
-}
-
-case object AdvertisementFeature extends PaidForType {
-  override val name: String = "advertisement-features"
-}
-
-case object FoundationFunded extends PaidForType {
-  override val name: String = "foundation-features"
-}
+sealed abstract class PaidForType(val name: String)
+case object Sponsored extends PaidForType("sponsoredfeatures")
+case object AdvertisementFeature extends PaidForType("advertisement-features")
+case object FoundationFunded extends PaidForType("foundation-features")
 
 
 case class PaidForTag(targetedName: String,
