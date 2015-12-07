@@ -101,7 +101,7 @@ define([
     }
 
     function initFrontsContainers() {
-        if (ab.getParticipations().FrontsOnArticles &&
+        if (config.page.section !== 'childrens-books-site' && ab.getParticipations().FrontsOnArticles &&
             ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
             ab.testCanBeRun('FrontsOnArticles')) {
             insertOrProximity('.js-onward', function () {
