@@ -15,7 +15,7 @@ import scala.util.Random
 class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   private def toTag(tagType: String, tagId: String, sectionId: Option[String] = None): Tag = {
-    Tag(ApiTag(id = tagId,
+    Tag.make(ApiTag(id = tagId,
       `type` = tagType,
       sectionId = sectionId,
       webTitle = "title",

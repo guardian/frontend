@@ -320,7 +320,10 @@ GET            /service-worker.js                                               
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
-
+GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
+GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
+GET            /index/contributors                                                                                               controllers.TagIndexController.contributors()
+GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
@@ -357,6 +360,7 @@ GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|bus
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
 GET            /container/essential-read/:contentSource/:edition.json                                                            controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
+GET            /container/*path/some/:num/:offset/:size.json                                                                     controllers.FaciaController.renderSomeFrontContainers(path, num, offset, size)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)

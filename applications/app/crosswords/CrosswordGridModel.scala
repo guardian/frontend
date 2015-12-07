@@ -1,6 +1,7 @@
 package crosswords
 
 import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordDimensions, Crossword, CrosswordPosition}
+import model.Entry
 
 import scalaz.State
 import scalaz.syntax.traverse._

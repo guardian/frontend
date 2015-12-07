@@ -26,29 +26,20 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   "typeOrTone" should "ignore Article and find Video" in {
-    val tags = new Tags {
-      override val tags = Seq(
-        Tag(tag(id = "type/article", tagType = "type")),
-        Tag(tag(id = "tone/foo", tagType = "tone")),
-        Tag(tag(id = "type/video", tagType = "type"))
-      )
-      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
-      override val isFoundationSupported: Boolean = false
-      override val isAdvertisementFeature: Boolean = false
-    }
+    val tags = Tags(tags = Seq(
+        Tag.make(tag(id = "type/article", tagType = "type")),
+        Tag.make(tag(id = "tone/foo", tagType = "tone")),
+        Tag.make(tag(id = "type/video", tagType = "type"))
+      ))
+
     tags.typeOrTone.get.id should be("type/video")
   }
 
   it should "find tone when only content type is Article" in {
-    val tags = new Tags {
-      override val tags = Seq(
-        Tag(tag(id = "type/article", tagType = "type")),
-        Tag(tag(id = "tone/foo", tagType = "tone"))
-      )
-      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
-      override val isFoundationSupported: Boolean = false
-      override val isAdvertisementFeature: Boolean = false
-    }
+    val tags = Tags(tags = Seq(
+        Tag.make(tag(id = "type/article", tagType = "type")),
+        Tag.make(tag(id = "tone/foo", tagType = "tone"))
+      ))
     tags.typeOrTone.get.id should be("tone/foo")
   }
 
@@ -235,17 +226,20 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
     ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
   )
 
-  val testContent = new Article(ApiContent(
-    id = "foo/2012/jan/07/bar",
-    sectionId = None,
-    sectionName = None,
-    webPublicationDateOption = None,
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    fields = Some(Map("shortUrl" -> "http://gu.com/p/439az")),
-    elements = Some(testImages)
-  ))
+  val testContent = {
+    val content = Content.make(ApiContent(
+      id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = None,
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      fields = Some(Map("shortUrl" -> "http://gu.com/p/439az")),
+      elements = Some(testImages)
+    ))
+    Article.make(content)
+  }
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>

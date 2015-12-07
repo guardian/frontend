@@ -41,6 +41,9 @@ GET        /preferences                                                         
 GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
 
+GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
+GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
+
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()

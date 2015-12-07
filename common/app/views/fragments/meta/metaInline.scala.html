@@ -1,19 +1,19 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(item: model.ContentType)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
 
     <div class="content__labels">
 
         <div class="content__section-label">
-            <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
+            <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@item.content.sectionLabelLink}">@Html(Localisation(item.content.sectionLabelName))</a>
         </div>
 
-        @content.blogOrSeriesTag.map { series =>
+        @item.content.blogOrSeriesTag.map { series =>
         <div class="content__series-label">
             <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
         </div>
         }.getOrElse {
-            @if(content.isFromTheObserver) {
+            @if(item.content.isFromTheObserver) {
                 <div class="content__series-label">
                     <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
                 </div>

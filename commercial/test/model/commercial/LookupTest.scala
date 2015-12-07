@@ -21,7 +21,7 @@ import scala.concurrent.duration._
 
   "contentByShortUrls" should "find content for genuine URLs" in {
     val contents = contentsOf("http://gu.com/p/3qeqm", "http://gu.com/p/4v86p", "http://gu.com/p/4vf6t")
-    contents.map(_.webTitle) should be(Seq(
+    contents.map(_.metadata.webTitle) should be(Seq(
       "Wikipedia: meet the man who has edited 3m articles",
       "A book for the beach: In the Woods by Tana French",
       "Norway minister threatens to deport Eritrean migrants"
@@ -43,7 +43,7 @@ import scala.concurrent.duration._
   "latestContentByKeyword" should "find content ordered reverse chronologically for an existing keyword" in {
     val contents = contentsForKeyword("technology/apple")
     contents should have size 4
-    contents.sortBy(_.webPublicationDate.getMillis).reverse should be(contents)
+    contents.sortBy(_.trail.webPublicationDate.getMillis).reverse should be(contents)
   }
 
   "latestContentByKeyword" should "not find content for a non-existent keyword" in {
