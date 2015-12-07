@@ -34,27 +34,11 @@ define([
         makeABChanges = function (iFrameEl, opts) {
             // Once our iframe had loaded, make the A/B test changes
             bean.on(iFrameEl, 'load', function () {
-                if (opts && opts.headline) {
-                    updateHeadline(opts.headline, iFrameEl);
-                }
-                if (opts && opts.removeComforter) {
-                    removeComforter(iFrameEl);
-                }
-
+                email.updateForm(iFrameEl, iFrameEl.contentDocument.body, opts);
                 email.init(iFrameEl);
             });
 
             return iFrameEl;
-        },
-        updateHeadline = function (headline, iFrameEl) {
-            fastdom.write(function () {
-                $('.email-sub__heading', iFrameEl.contentDocument.body).text(headline);
-            });
-        },
-        removeComforter = function (iFrameEl) {
-            fastdom.write(function () {
-                $('.email-sub__small', iFrameEl.contentDocument.body).remove();
-            });
         };
 
         this.id = 'RtrtEmailFormInlineFooterV2';

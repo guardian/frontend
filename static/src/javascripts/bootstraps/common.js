@@ -369,9 +369,12 @@ define([
             },
 
             initEmail: function () {
-                email.init();
 
-                email.init(document.getElementById('article__email-form'));
+                // Initalise the in-article email form (allowing for multiple)
+                forEach(document.getElementsByClassName('js-email-sub__iframe--article'), function(el){
+                    email.init(el);
+                })
+
             }
         };
 
