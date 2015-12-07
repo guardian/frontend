@@ -108,11 +108,6 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       .showTags("all")
       .showReferences(references)
 
-  def generateFrontJsonFromFapiClient(): Response[JsValue] =
-    for {
-      frontsSet <- FAPI.getFronts()
-    } yield Json.toJson(frontsSet.toList)
-
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)

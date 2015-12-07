@@ -37,24 +37,6 @@ object FapiJsonFormats {
   implicit val contentApiCrosswordFormat = Json.format[Crossword]
   implicit val contentApiContentFormat = Json.format[Content]
 
-  implicit val frontImageFormat = Json.format[FrontImage]
-  implicit object frontPriorityFormat extends Format[FrontPriority] {
-    def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("EditorialPriority"), _) => JsSuccess(EditorialPriority)
-      case JsSuccess(JsString("CommercialPriority"), _) => JsSuccess(CommercialPriority)
-      case JsSuccess(JsString("TrainingPriority"), _) => JsSuccess(TrainingPriority)
-      case _ => JsError("Could not convert FrontPriority")
-    }
-
-    def writes(frontPriority: FrontPriority) = frontPriority match {
-      case EditorialPriority => JsObject(Seq("type" -> JsString("EditorialPriority")))
-      case CommercialPriority => JsObject(Seq("type" -> JsString("CommercialPriority")))
-      case TrainingPriority => JsObject(Seq("type" -> JsString("TrainingPriority")))
-    }
-  }
-
-  implicit val frontFormat = Json.format[Front]
-
   implicit val groupFormat = Json.format[Group]
 
   implicit val seriesFormat = Json.format[Series]
