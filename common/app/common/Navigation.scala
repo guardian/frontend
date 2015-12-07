@@ -316,6 +316,15 @@ object Navigation {
       SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
       SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
       SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
+    ),
+    "guardian-masterclasses" -> Seq(
+      SectionLink("guardian-masterclasses", "guardian masterclasses", "guardian masterclasses", "/guardian-masterclasses"),
+      SectionLink("guardian-masterclasses", "writing", "writing", "/guardian-masterclasses/writing-and-publishing"),
+      SectionLink("guardian-masterclasses", "digital", "digital", "/guardian-masterclasses/digital"),
+      SectionLink("guardian-masterclasses", "culture", "culture", "/guardian-masterclasses/culture"),
+      SectionLink("guardian-masterclasses", "business", "business", "/guardian-masterclasses/business"),
+      SectionLink("guardian-masterclasses", "journalism", "journalism", "/guardian-masterclasses/journalism"),
+      SectionLink("guardian-masterclasses", "corporate training", "corporate training", "/guardian-masterclasses/corporate-training")
     )
   ).withDefault( _ => Nil)
 
