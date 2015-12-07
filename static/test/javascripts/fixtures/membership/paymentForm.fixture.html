@@ -9,16 +9,16 @@
 
             <div class="fieldset__fields u-cf">
                 <div class="form-field">
-                    <span class="card-type-display js-mma-card-type"><span class="js-mma-payment-card-text u-h"></span></span>
+                    <span class="card-type-display js-manage-account-card-type"><span class="js-manage-account-payment-card-text u-h"></span></span>
                 <span id="qa-card-details" class="card-details">
-                        •••• •••• •••• <span class="js-mma-card-last4"></span>
+                        •••• •••• •••• <span class="js-manage-account-card-last4"></span>
                     </span>
-                    <button id="qa-change-card" class="submit-input mma-cta js-mma-change-card is-hidden" data-link-name="Change card">Change card</button>
+                    <button id="qa-change-card" class="submit-input manage-account-cta js-manage-account-change-card is-hidden" data-link-name="Change card">Change card</button>
                 </div>
             </div>
         </li>
-        <li class="details-list__item mma-tab__change-cc-form is-closed js-mma-card-details-form-container">
-            <form class="js-mma-stripe-form">
+        <li class="details-list__item manage-account-tab__change-cc-form is-closed js-manage-account-card-details-form-container">
+            <form class="js-manage-account-stripe-form">
 
                 <div class="js-payment-errors qa-form-error form__error is-hidden"></div>
 
@@ -28,8 +28,8 @@
                 <div class="fieldset__fields">
                     <div class="form-field">
                         <label class="label" for="cc-num">Card Number</label>
-                        <div class="input mma-tab__credit-card-container">
-                            <i class="js-credit-card-image mma-tab__card-types--in-field"></i>
+                        <div class="input manage-account-tab__credit-card-container">
+                            <i class="js-credit-card-image manage-account-tab__card-types--in-field"></i>
                             <input type="tel"
                                    size="20"
                                    data-stripe="number"
@@ -101,7 +101,7 @@
                         </p>
                     </div>
                     <div class="form-field">
-                        <button class="js-submit-input submit-input js-mma-change-cc-submit"
+                        <button class="js-submit-input submit-input js-manage-account-change-cc-submit"
                                 type="submit"
                                 data-link-name="Update card details">Update</button>
                         <div class="is-updating js-updating"></div>
