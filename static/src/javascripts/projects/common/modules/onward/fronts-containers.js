@@ -37,7 +37,7 @@ define([
     }
 
     function insertFirstTwo() {
-        if(loadSection) {
+        if (loadSection) {
             insertContainers(config.page.section, $('.js-fronts-section'), 1, 0, 'original', function () {});
             insertContainers(edition, $('.js-fronts-network-1'), 1, 0, 'none', function () {
                 insertFinalTwo();
