@@ -69,22 +69,22 @@
     }
 
     .content__headline {
-        @include fs-headline(7);
+        @include fs-headline(9);
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
         padding-bottom: 1.5rem;
 
         @include mq(desktop) {
-            font-size: 3.25rem;
+            font-size: 4rem;
         }
-    }
 
-    .content__headline {
-        @include fs-headline(7);
-        
-        @include mq(desktop) {
-            
+        .is-fixed-height & {
+            @include fs-headline(7, true);
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
         }
     }
 
@@ -95,19 +95,24 @@
     .content__standfirst {
         position: relative;
         padding-top: .33em;
+        padding-bottom: .5rem;
         margin-bottom: 0;
         color: #ffffff;
 
         @include mq(desktop) {
             padding-bottom: 1rem;
+        }
 
-            &:before {
-                content: '';
-                position: absolute;
-                top: 0;
-                height: 2px;
-                width: gs-span(2);
-                background-color: rgba(255, 255, 255, .2);
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 2px;
+            width: gs-span(2);
+            background-color: rgba(255, 255, 255, .2);
+
+            .is-fixed-height & {
+                display: none;
             }
         }
 
@@ -119,6 +124,49 @@
                 text-decoration: none;
                 border-bottom-color: rgba(colour(feature-mute), .8);
             }
+        }
+    }
+
+    .content__loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: colour(neutral-5);
+        color: colour(neutral-1);
+        display: none;
+
+        // Should be removed when capi returns a no-id element for code embeds in main media
+        .is-fixed-height & {
+            display: block;
+        }
+    }
+
+    .content__loading-animation {
+        display: block;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &.content__head .element-embed {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        .fenced {
+            height: 100% !important; // Overwrite inline styles
+            opacity: 0;
+            transition: .5s opacity ease-out;
+        }
+
+        .fenced-rendered {
+            opacity: 1;
         }
     }
 
@@ -170,43 +218,6 @@
 
             .content__head--mobile {
                 background-image: none !important;
-            }
-        }
-
-        .content__loading {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: colour(neutral-5);
-            color: colour(neutral-1);
-        }
-
-        .content__loading-animation {
-            display: block;
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        &.content__head .element-embed {
-            margin: 0;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-
-            .fenced {
-                height: 100% !important; // Overwrite inline styles
-                opacity: 0;
-                transition: .5s opacity ease-out;
-            }
-
-            .fenced-rendered {
-                opacity: 1;
             }
         }
     }
