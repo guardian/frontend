@@ -2,7 +2,7 @@
 @import conf.Static
 @import conf.Configuration
 
-var curl = {
+window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
     paths: {
@@ -48,7 +48,7 @@ var curl = {
             'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
             'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
             'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
-            'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
+            'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
             'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
             'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
             'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
@@ -76,3 +76,5 @@ var curl = {
         }
     }
 };
+// curl will read from window.curl
+window.curl = window.curlConfig;

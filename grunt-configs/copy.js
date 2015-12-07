@@ -36,6 +36,8 @@ module.exports = function (grunt, options) {
                     expand: true,
                     cwd: options.requirejsDir,
                     src: [
+                        'bootstraps/commercial.js',
+                        'bootstraps/commercial.js.map',
                         'enhanced-vendor.js',
                         'enhanced-vendor.js.map',
                         'bootstraps/enhanced.js',

@@ -44,7 +44,9 @@ define([
     'lodash/collections/find',
     'lodash/arrays/last',
     'lodash/arrays/intersection',
-    'lodash/arrays/initial'
+    'lodash/arrays/initial',
+
+    'bootstraps/creatives'
 ], function (
     bean,
     bonzo,
@@ -551,10 +553,8 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require(['bootstraps/creatives'], function () {
-                                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                        new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                                    });
+                                require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                    new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                 });
                             } else {
                                 // evil, but we own the returning js snippet

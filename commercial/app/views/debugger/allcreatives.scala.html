@@ -94,6 +94,7 @@
         // window.require is assigned asynchronously
         window.addEventListener('load', function () {
             require('bootstraps/standard')
+                .next(['bootstraps/commercial'])
                 .next([
                     'bean',
                     'common/utils/$'
@@ -157,7 +158,7 @@
             window.addEventListener('load', function () {
                 // Commercial is in standard
                 require('bootstraps/standard')
-                    .next(['bootstraps/creatives'])
+                    .next(['bootstraps/commercial'])
                     .then(callback) ;
             });
         };
@@ -187,6 +188,7 @@
             function showRHColumn(component) {
                 loadCommercial(function () {
                     require('bootstraps/standard')
+                        .next(['bootstraps/commercial'])
                         .next([
                             'common/utils/$'
                         ])

@@ -16,16 +16,17 @@ define([
     'common/modules/experiments/ab',
     'common/modules/ui/images',
     'common/utils/storage',
-    'bootstraps/commercial',
     'common/utils/$',
     'common/utils/ajax',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+
+    // Ensure this is bundled for boot
+    'Promise'
 ], function (
     raven,
     ab,
     images,
     storage,
-    commercial,
     $,
     ajax,
     identity
@@ -128,22 +129,6 @@ define([
     if (guardian.isModernBrowser) {
         alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
         storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
-    }
-
-    //
-    // Commercial
-    //
-
-    // Preference pages are served via HTTPS for service worker support.
-    // These pages must not have mixed (HTTP/HTTPS) content, so
-    // we disable ads (until the day comes when all ads are HTTPS).
-    if (config.switches.commercial && !config.page.isPreferencesPage) {
-        raven.context(
-            { tags: { feature: 'commercial' } },
-            function () {
-                commercial.init();
-            }
-        );
     }
 
     //
