@@ -90,7 +90,7 @@ object PaidForTag {
   def fromLineItems(lineItems: Seq[GuLineItem]): Seq[PaidForTag] = {
 
     val lineItemsGroupedByTag: Map[String, Seq[GuLineItem]] = {
-      val logoLineItems = lineItems filter (_.paidForTags.nonEmpty)
+      val logoLineItems = lineItems filterNot (_.isExpired) filter (_.paidForTags.nonEmpty)
       logoLineItems.foldLeft(Map.empty[String, Seq[GuLineItem]]) { case (soFar, lineItem) =>
         val lineItemTags = lineItem.paidForTags map { tag =>
           val tagLineItems = soFar.get(tag).map(_ :+ lineItem).getOrElse(Seq(lineItem))
