@@ -34,6 +34,12 @@ body {
     padding: 0;
 }
 
+.email-sub__form--article {
+    .email-sub__submit-input {
+        padding: 0 calc(#{$gs-gutter} + #{$rounded-adjustment}) 0 $gs-gutter;
+    }
+}
+
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
@@ -54,8 +60,13 @@ body {
             border-left: 0;
             float: left;
             margin-right: 0;
-            padding-left: $gs-gutter / 2;
             width: 38%;
+        }
+    }
+
+    .email-sub__form--footer {
+        .email-sub__submit-input {
+            padding-left: $gs-gutter / 2;
         }
     }
 }
@@ -77,10 +88,27 @@ body {
 
 }
 
-// Above mobile
-@include mq($from: 320px) {
+// Above Phablet
+@include mq($from: 606px) {
+    .email-sub__form--article {
+        .email-sub__form-wrapper {
+            line-height: 3;
+        }
 
+        .email-sub__inline-label {
+            width: gs-span(4);
+        }
+
+        .email-sub__submit-input {
+            width: auto;
+        }
+
+        .email-sub__small {
+            display: inline-block;
+            margin-left: $gs-gutter;
+            width: gs-span(3);
+        }
+    }
 }
-
 
 
