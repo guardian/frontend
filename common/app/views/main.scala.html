@@ -76,6 +76,23 @@ http://developers.theguardian.com/join-the-team.html
 
         @body
 
+        @********************** 
+         24x7 support training 
+        
+         We intentionally modified the displayed section on this specific article.
+         This is a failure that trainees have to diagnose in frontend.
+        ************************@
+        @if(request.path == "/info/2015/mar/11/-removed-article") {
+            <script type="text/javascript">
+                document.querySelectorAll('[data-link-name="article section"]')[0].textContent = "Culture"
+                @***
+                 The following is a misdirection to let people think damned CAPI is causing the issue  
+                ***@
+                console.log("Error connecting to content API to retrieve section: 503")
+                console.log("Defaulting to Culture")
+            </script>
+        }
+
         @fragments.footer(page)
 
         @fragments.analytics(page)
