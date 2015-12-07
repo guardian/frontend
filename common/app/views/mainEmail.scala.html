@@ -1,6 +1,8 @@
 @(metaData: model.MetaData)(head: Html)(body: Html)(implicit request: RequestHeader)
 
 @import conf.switches.Switches._
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
 
 <!doctype html>
 <head>
@@ -13,6 +15,12 @@
     }
 
     @fragments.fontDefinitions()
+
+    <script id="gu">
+    @if(FontSwitch.isSwitchedOn) {
+        @InlineJs(loadFonts().body, "loadFonts.js")
+    }
+    </script>
 
 </head>
 <html>
