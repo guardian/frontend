@@ -1,6 +1,6 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
-@import conf.switches.Switches.SaveForLaterSwitch
+@import conf.switches.Switches.{SaveForLaterSwitch,SyndicationLinkSwitch}
 @import common.RichRequestHeader
 
 @toneLink = {
@@ -31,10 +31,14 @@
                 @if(SaveForLaterSwitch.isSwitchedOn) {
                     <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
                 }
-                @fragments.syndication(content)
+                @if(SyndicationLinkSwitch.isSwitchedOn) {
+                    @fragments.syndication(content)
+                }
             </div>
         } else {
-            @fragments.syndication(content)
+            @if(SyndicationLinkSwitch.isSwitchedOn) {
+                @fragments.syndication(content)
+            }
         }
     </div>
 }

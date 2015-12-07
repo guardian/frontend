@@ -59,7 +59,7 @@ define([
 
         this.id = 'RtrtEmailFormInlineFooterV2';
         this.start = '2015-11-30';
-        this.expiry = '2015-12-08';
+        this.expiry = '2015-12-16';
         this.author = 'Gareth Trufitt';
         this.description = 'Test inline footer Guardian Today email sign-up with 50% of logged-out, UK users';
         this.audience = 1;

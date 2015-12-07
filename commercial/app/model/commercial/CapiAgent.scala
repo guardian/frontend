@@ -1,7 +1,7 @@
 package model.commercial
 
 import common.{AkkaAgent, Logging}
-import model.{ContentType, Content}
+import model.ContentType
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
@@ -12,15 +12,17 @@ object CapiAgent extends Logging {
 
   private lazy val cache = shortUrlAgent.get()
 
+  private[commercial] def idsFromShortUrls(shortUrls: Seq[String]): Seq[String] = {
+    shortUrls map { url =>
+      val slashPrefixed = if (url startsWith "/") url else s"/$url"
+      slashPrefixed.trim.stripSuffix("/stw")
+    }
+  }
+
   def contentByShortUrls(shortUrls: Seq[String])
                         (implicit ec: ExecutionContext): Future[Seq[ContentType]] = {
 
-    val shortUrlIds = shortUrls map { url =>
-      val slashPrefixed = if (url startsWith "/") url else s"/$url"
-      val endTrimmed = slashPrefixed.take(slashPrefixed.indexOf("/", 3))
-      endTrimmed
-    }
-
+    val shortUrlIds = idsFromShortUrls(shortUrls)
     val urlsNotInCache = shortUrlIds filterNot cache.contains
 
     def addToCache(contents: Seq[ContentType]): Future[Map[String, Option[ContentType]]] = {

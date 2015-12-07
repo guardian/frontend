@@ -19,6 +19,7 @@
         ], function($, ajax, identity) {
 
             var membershipUrl = "@Configuration.id.membershipUrl",
+                membersDataApiUrl = "@Configuration.id.membersDataApiUrl",
                 membershipAccess = "@membershipAccess",
                 requiresPaidTier = (membershipAccess.indexOf('paid-members-only') !== -1),
                 membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
@@ -29,13 +30,14 @@
 
             if (identity.isUserLoggedIn()) {
                 ajax({
-                    url: membershipUrl + '/user/me',
+                    url: membersDataApiUrl + '/user-attributes/me/membership',
                     type: 'json',
                     crossOrigin: true,
                     withCredentials: true
                 }).then(function (resp) {
+                    var access = resp.contentAccess;
                     // Check the users access matches the content
-                    var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
+                    var canViewContent = access && (requiresPaidTier ? access.paidMember : access.member);
                     if (canViewContent) {
                         $('body').removeClass('has-membership-access-requirement');
                     } else {

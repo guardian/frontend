@@ -110,5 +110,4 @@ case class Tag private (
   val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.section)
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
   val isKeyword = tagType == "keyword"
-  val tagWithoutSection = metadata.id.split("/")(1) // used for football nav
 }
