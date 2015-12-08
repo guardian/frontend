@@ -1,4 +1,4 @@
-require(['Promise'], function (Promise) {
+require(['Promise', 'lodash/collections/map'], function (Promise, map) {
     var guardian = window.guardian;
     var config = guardian.config;
 
@@ -17,12 +17,12 @@ require(['Promise'], function (Promise) {
     };
 
     var xhrFetchAll = function (urls) {
-        return Promise.all(urls.map(function (url) {
+        return Promise.all(map(urls, function (url) {
             return xhrFetch(url);
         }));
     };
 
-    var commercialResponsesPromise = xhrFetchAll(['bootstraps/commercial'].map(getPath));
+    var commercialResponsesPromise = xhrFetchAll(map(['bootstraps/commercial'], getPath));
     var enhancedModuleIds = [
         'enhanced-vendor',
         'bootstraps/enhanced'
@@ -30,8 +30,7 @@ require(['Promise'], function (Promise) {
     var shouldRunEnhance = guardian.isModernBrowser;
     var enhancedResponsesPromise = (
         shouldRunEnhance
-            // // TODO: map
-            ? xhrFetchAll(enhancedModuleIds.map(getPath))
+            ? xhrFetchAll(map(enhancedModuleIds, getPath))
             : Promise.resolve()
     );
 
