@@ -29,32 +29,16 @@ define([
             });
         },
         getIframe = function () {
-            return bonzo.create('<iframe src="/email/form" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe"></iframe>');
+            return bonzo.create('<iframe src="/email/form/footer" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe"></iframe>');
         },
         makeABChanges = function (iFrameEl, opts) {
             // Once our iframe had loaded, make the A/B test changes
             bean.on(iFrameEl, 'load', function () {
-                if (opts && opts.headline) {
-                    updateHeadline(opts.headline, iFrameEl);
-                }
-                if (opts && opts.removeComforter) {
-                    removeComforter(iFrameEl);
-                }
-
+                email.updateForm(iFrameEl, iFrameEl.contentDocument.body, opts);
                 email.init(iFrameEl);
             });
 
             return iFrameEl;
-        },
-        updateHeadline = function (headline, iFrameEl) {
-            fastdom.write(function () {
-                $('.email-sub__heading', iFrameEl.contentDocument.body).text(headline);
-            });
-        },
-        removeComforter = function (iFrameEl) {
-            fastdom.write(function () {
-                $('.email-sub__small', iFrameEl.contentDocument.body).remove();
-            });
         };
 
         this.id = 'RtrtEmailFormInlineFooterV2';
