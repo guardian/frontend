@@ -649,6 +649,28 @@
     }
 }
 
+.paid-content--advertisement-feature-bar {
+    background-color: colour(news-support-3);
+    border-top: none;
+    padding-bottom: 0;
+}
+
+.paid-content--advertisement-feature {
+    &.content--article,
+    &.content--interactive {
+        background-color: colour(paid-article);
+    }
+
+
+    &.content__header {
+        background-color: colour(paid-article-header);
+    }
+
+    &.tonal__standfirst {
+        background-color: colour(paid-article-subheader);
+    }
+}
+
 .meta__body {
     @include mq(leftCol) {
         clear: left;

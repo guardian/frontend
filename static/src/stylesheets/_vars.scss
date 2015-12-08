@@ -149,7 +149,17 @@ $frontend-palette: (
     // Membership
     // =============================================================================
 
-    membership-default:     #bb3a7f
+    membership-default:     #bb3a7f,
+
+    // Commercial content
+    // =============================================================================
+
+    paid-article:              #d9d9d9,
+    paid-article-bg:           #d1d1d1,
+    paid-article-header:       #bfbfbf,
+    paid-article-header-bg:    #b8b8b8,
+    paid-article-subheader:    #cccccc,
+    paid-article-subheader-bg: #c4c4c4
 );
 
 $c-top-header-background: guss-colour(guardian-brand-dark, $pasteup-palette); // one-off colour for header bg
