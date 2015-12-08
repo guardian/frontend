@@ -18,10 +18,7 @@ define([
     'common/utils/storage',
     'common/utils/$',
     'common/utils/ajax',
-    'common/modules/identity/api',
-
-    // Ensure this is bundled for boot
-    'Promise'
+    'common/modules/identity/api'
 ], function (
     raven,
     ab,
