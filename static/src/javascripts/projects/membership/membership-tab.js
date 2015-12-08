@@ -81,7 +81,7 @@ define([
     }
 
     function setupPaymentForm() {
-        stripeForm.init($(CARD_DETAILS)[0], $(CARD_CHANGE_SUCCESS_MSG));
+        stripeForm.init($(CARD_DETAILS)[0], $(CARD_CHANGE_SUCCESS_MSG), '/me/membership-update-card');
     }
 
     function populateUserDetails(userDetails) {
