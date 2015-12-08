@@ -9,10 +9,8 @@
 .fc-container__header__title {
     position: relative;
     padding-bottom: 1rem;
-    font-size: 1.375rem;
+    font-size: 1.5rem;
     line-height: 1.75rem;
-    font-weight: 900;
-    line-height: 1.5rem;
     color: #00456e;
 }
 
@@ -32,9 +30,8 @@
 }
 
 .fc-item__content {
-    display: inline-block;
-    padding-left: 0.3125rem;
-    padding-right: 0.3125rem;
+    min-height: 52px;
+    padding: 0 0.3125rem 20px;
     position: relative;
 }
 
@@ -53,7 +50,7 @@
 
 .fc-item__title {
     padding: 0;
-    margin: 0;
+    margin: 3px 0 0;
     font: inherit;
     word-wrap: break-word;
     font-size: 1rem;
@@ -65,15 +62,21 @@
     font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     font-size: 0.75rem;
     line-height: 1rem;
+    position: absolute;
+    bottom: 3px;
+    left: 0.3125rem;
+    right: 0.3125rem;
     color: #767676;
+}
+
+.fc-item__meta .inline-icon {
+    fill: #bdbdbd;
+    position: relative;
+    bottom: -1px;
 }
 
 .fc-item__byline {
     line-height: 1;
-}
-
-.inline-quote svg {
-    fill: #767676;
 }
 
 @@media (max-width: 480px) {

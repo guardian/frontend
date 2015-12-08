@@ -60,9 +60,20 @@
                                 <div class="fc-item__content">
                                     <div class="fc-item__header">
                                         <h2 class="fc-item__title">
-                                            {{#isComment}}
-                                                @fragments.inlineSvg("quote", "icon")
-                                            {{/isComment}}
+                                            <span>
+                                                {{#isVideo}}
+                                                    @fragments.inlineSvg("video-icon", "icon")
+                                                {{/isVideo}}
+                                                {{#isGallery}}
+                                                    @fragments.inlineSvg("camera", "icon")
+                                                {{/isGallery}}
+                                                {{#isAudio}}
+                                                    @fragments.inlineSvg("volume-high", "icon")
+                                                {{/isAudio}}
+                                                {{#isComment}}
+                                                    @fragments.inlineSvg("quote", "icon")
+                                                {{/isComment}}
+                                            </span>
                                             {{headline}}
                                         </h2>
                                         {{#isComment}}
@@ -75,6 +86,7 @@
                                         <time
                                         class="fc-item__timestamp"
                                         data-relativeformat="short">
+                                            @fragments.inlineSvg("clock", "icon")
                                             <span class="timestamp__text">
                                                 <span class="u-h">Published: </span>
                                                 {{webPublicationDate}}
