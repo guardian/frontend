@@ -257,7 +257,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val guMerchandisingAdvertiserId =
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
-    private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
+    // root dir relative to S3 bucket
+    private lazy val commercialRoot = {
+      configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
+    }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"

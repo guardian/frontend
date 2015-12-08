@@ -11,10 +11,11 @@ object ContentFooterContainersLayout {
   def apply(content: Content, related: RelatedContent, isAdvertisementFeature: Boolean)
            (storyPackagePlaceholder: => Html)
            (onwardPlaceholder: => Html)
-           (frontsContainers: => Html)
+           (sectionFrontContainers: => Html)
+           (networkFrontContainers1: => Html)
            (commentsPlaceholder: => Html)
            (mostPopularPlaceholder: => Html)
-           (networkFrontsContainers: => Html)
+           (networkFrontContainers2: => Html)
            (highRelevanceCommercialComponent: => Html)
            (standardCommercialComponent: => Html)
            (outbrainPlaceholder: Html): Html = {
@@ -46,10 +47,11 @@ object ContentFooterContainersLayout {
         optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
         Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
-        Some(frontsContainers),
+        Some(sectionFrontContainers),
+        Some(networkFrontContainers1),
         optional(content.trail.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
-        Some(networkFrontsContainers),
+        Some(networkFrontContainers2),
         optional(!content.shouldHideAdverts, standardCommercialComponent)
       ).flatten
 
