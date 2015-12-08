@@ -256,4 +256,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = true
   )
+
+  val NewCommercialContent = Switch(
+    "Commercial",
+    "new-commercial-content",
+    "New commercial content designs",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 31),
+    exposeClientSide = true
+  )
 }
