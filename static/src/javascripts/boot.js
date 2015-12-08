@@ -37,16 +37,19 @@ require(['Promise', 'lodash/collections/map'], function (Promise, map) {
         }));
     };
 
-    var commercialResponsesPromise = xhrFetchAll(map(['bootstraps/commercial'], getPath));
+    var fetchAllModules = function (moduleIds) {
+        return xhrFetchAll(map(moduleIds, getPath));
+    };
+
+    var shouldRunEnhance = guardian.isModernBrowser;
+
+    var commercialResponsesPromise = fetchAllModules(['bootstraps/commercial']);
     var enhancedModuleIds = [
         'enhanced-vendor',
         'bootstraps/enhanced'
     ];
-    var shouldRunEnhance = guardian.isModernBrowser;
     var enhancedResponsesPromise = (
-        shouldRunEnhance
-            ? xhrFetchAll(map(enhancedModuleIds, getPath))
-            : Promise.resolve()
+        shouldRunEnhance ? fetchAllModules(enhancedModuleIds) : Promise.resolve()
     );
 
     var executeResponses = function (responses) {
