@@ -15,10 +15,12 @@ combination of ajax/eval/curl instead.
 
 define([
     'Promise',
-    'lodash/collections/map'
+    'lodash/collections/map',
+    'lodash/collections/forEach'
 ], function (
     Promise,
-    map
+    map,
+    forEach
 ) {
     // We must cast promises because…
     // https://github.com/cujojs/curl/issues/293
@@ -75,7 +77,7 @@ define([
     );
 
     var executeResponses = function (responses) {
-        responses.forEach(function (response) {
+        forEach(responses, function (response) {
             eval(response.responseText);
         });
     };
