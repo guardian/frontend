@@ -5,6 +5,7 @@
 @import common.LinkTo
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
+@import conf.switches.Switches._
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     <div class="l-footer__primary">
@@ -33,30 +34,31 @@
         </div>
     </div>
 
-    <div class="l-footer__secondary js-footer__secondary l-footer__secondary--no-email gs-container" role="contentinfo">
+    <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
         <div class="colophon u-cf">
 
             @defining(Edition(request)) { currentEdition =>
-            <div class="footer__follow-us">
+                @if(EmailInlineInFooterSwitch.isSwitchedOn) {
+                    <div class="footer__email-container">
+                    @currentEdition match {
+                        case Uk => {
+                            @fragments.email.emailIframe("1111", "footer")
+                        }
 
-                @currentEdition match {
-                    case Uk => {
-                        <iframe src="/email/form/footer" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe"></iframe>
-                    }
+                        case Us => {
+                            @fragments.email.emailIframe("2222", "footer")
+                        }
 
-                    case Us => {
-                        <iframe src="/email/form/footer" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe"></iframe>
-                    }
+                        case Au => {
+                            @fragments.email.emailIframe("3333", "footer")
+                        }
 
-                    case Au => {
-                        <iframe src="/email/form/footer" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe"></iframe>
+                        case International => {
+                            @fragments.email.emailIframe("1111", "footer")
+                        }
                     }
-
-                    case International => {
-                        <iframe src="/email/form/footer" scrolling="no" seamless id="footer__email-form" frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe"></iframe>
-                    }
+                    </div>
                 }
-            </div>
 
             <ul class="colophon__list">
                 @currentEdition match {

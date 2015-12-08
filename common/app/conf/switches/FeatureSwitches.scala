@@ -340,4 +340,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val EmailInlineInFooterSwitch = Switch(
+    "Feature",
+    "email-inline-in-footer",
+    "show the email sign-up in the footer",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }
