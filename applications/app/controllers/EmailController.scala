@@ -27,7 +27,7 @@ object emailLandingPage extends StandalonePage {
 
 case class EmailPage(interactive: Interactive, related: RelatedContent)
 
-case class EmailForm(email: String)
+case class EmailForm(email: String, listId: Int)
 
 object listIds {
   val testList = 3485
@@ -47,11 +47,11 @@ object EmailForm {
     listIds.guardianTodayAu -> 2563
   )
 
-  def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
-    listTriggers.get(listId).map { triggeredSendKey =>
+  def submit(form: EmailForm): Option[Future[WSResponse]] = {
+    listTriggers.get(form.listId).map { triggeredSendKey =>
       WS.url(Configuration.emailSignup.url).post(Json.obj(
         "email" -> form.email,
-        "listId" -> listId,
+        "listId" -> form.listId,
         "triggeredSendKey" -> triggeredSendKey,
         "emailGroup" -> "email-footer-test"
       ))
@@ -62,7 +62,8 @@ object EmailForm {
 object EmailController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
-      "email" -> nonEmptyText.verifying(emailAddress)
+      "email" -> nonEmptyText.verifying(emailAddress),
+      "listId" -> number
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
@@ -112,7 +113,7 @@ object EmailController extends Controller with ExecutionContexts with Logging {
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => EmailForm.submit(form, listId) match {
+      form => EmailForm.submit(form) match {
         case Some(future) => future.map(_.status match {
           case 200 | 201 =>
             EmailSubmission.increment()
