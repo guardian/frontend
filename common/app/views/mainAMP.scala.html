@@ -60,7 +60,23 @@
                                     </div>
                                     <div class="fc-item__content">
                                         <div class="fc-item__header">
-                                            <h2 class="fc-item__title">{{headline}}</h2>
+                                            <h2 class="fc-item__title">
+                                                <span>
+                                                    {{#isVideo}}
+                                                        @fragments.inlineSvg("video-icon", "icon")
+                                                    {{/isVideo}}
+                                                    {{#isGallery}}
+                                                        @fragments.inlineSvg("camera", "icon")
+                                                    {{/isGallery}}
+                                                    {{#isAudio}}
+                                                        @fragments.inlineSvg("volume-high", "icon")
+                                                    {{/isAudio}}
+                                                    {{#isComment}}
+                                                        @fragments.inlineSvg("quote", "icon")
+                                                    {{/isComment}}
+                                                </span>
+                                                {{headline}}
+                                            </h2>
                                             {{#isComment}}
                                                 <div class="fc-item__byline">
                                                     {{byline}}
