@@ -1,41 +1,41 @@
 package common
 
-import conf.switches.Switches
-import model.{Content, MetaData}
+import model._
 import play.api.mvc.RequestHeader
 
 case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String) {
-  def currentFor(page: MetaData): Boolean = page.url == href ||
-    s"/${page.section}" == href ||
-    (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
+  def currentFor(page: Page): Boolean = page.metadata.url == href ||
+    s"/${page.metadata.section}" == href ||
+    (Edition.all.exists(_.id.toLowerCase == page.metadata.id.toLowerCase) && href == "/")
 
-  def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
+  def currentForIncludingAllTags(tags: Tags): Boolean = tags.tags.exists(t => s"/${t.id}" == href)
 }
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
-  def currentFor(page: MetaData): Boolean = {
+  def currentFor(page: Page): Boolean = {
     name.currentFor(page) ||
       links.exists(_.currentFor(page)) || exactFor(page)
   }
 
-  def currentForIncludingAllTags(page: MetaData): Boolean = {
-    name.currentForIncludingAllTags(page) ||
-      links.exists(_.currentForIncludingAllTags(page))
+  def currentForIncludingAllTags(tags: Tags): Boolean = {
+    name.currentForIncludingAllTags(tags) ||
+      links.exists(_.currentForIncludingAllTags(tags))
   }
 
-  def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
+  def searchForCurrentSublink(page: Page)(implicit request: RequestHeader): Option[SectionLink] = {
     val localHrefs = links.map(_.href)
-    val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
+    val tags = Navigation.getTagsFromPage(page)
+    val currentHref = tags.tags.find(tag => localHrefs.contains(tag.metadata.url)).map(_.metadata.url).getOrElse("")
     links.find(_.href == currentHref)
       .orElse(links.find(_.currentFor(page)))
-      .orElse(links.find(_.currentForIncludingAllTags(page)))
+      .orElse(links.find(_.currentForIncludingAllTags(tags)))
   }
 
-  def exactFor(page: MetaData): Boolean = {
+  def exactFor(page: Page): Boolean = {
     Set(
-      contentapi.Paths.withoutEdition(page.section),
-      Some(page.section)
-    ).flatten.contains(name.href.stripPrefix("/")) || page.url == name.href
+      contentapi.Paths.withoutEdition(page.metadata.section),
+      Some(page.metadata.section)
+    ).flatten.contains(name.href.stripPrefix("/")) || page.metadata.url == name.href
   }
 }
 
@@ -246,9 +246,9 @@ trait Navigation {
 case class BreadcrumbItem(href: String, title: String)
 
 object Breadcrumbs {
-  def items(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
-    val primaryKeywod = page.keywordTags.headOption.map(k => BreadcrumbItem(k.url, k.webTitle))
-    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcrumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
+  def items(navigation: Seq[NavItem], page: ContentPage): Seq[BreadcrumbItem] = {
+    val primaryKeywod = page.item.content.keywordTags.headOption.map(k => BreadcrumbItem(k.metadata.url, k.metadata.webTitle))
+    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcrumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.metadata.section}", page.item.content.trail.sectionName)))
     val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcrumbTitle)).orElse(primaryKeywod)
     Seq(firstBreadcrumb, secondBreadcrumb, primaryKeywod).flatten.distinct
   }
@@ -267,25 +267,29 @@ object Navigation {
     "technology/games" -> "/culture"
   )
 
-  def navFromOverride(navigation: Seq[NavItem], page: MetaData) = {
-    BafflingNavigationLookUpOverrides.get(page.id) flatMap { navHref =>
+  def navFromOverride(navigation: Seq[NavItem], page: Page) = {
+    BafflingNavigationLookUpOverrides.get(page.metadata.id) flatMap { navHref =>
       navigation.find(_.name.href == navHref)
     }
   }
 
-  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = page.customSignPosting orElse
+  def getTagsFromPage(page: Page) = {
+    Page.getContent(page).map(_.tags).getOrElse(Tags(Nil))
+  }
+
+  def topLevelItem(navigation: Seq[NavItem], page: Page): Option[NavItem] = page.metadata.customSignPosting orElse
     navFromOverride(navigation, page) orElse
     navigation.find(_.exactFor(page)) orElse
     navigation.find(_.currentFor(page)) orElse                /* This searches the top level nav for tags in the page */
-    navigation.find(_.currentForIncludingAllTags(page))       /* This searches the whole nav for tags in the page */
+    navigation.find(_.currentForIncludingAllTags(getTagsFromPage(page)))       /* This searches the whole nav for tags in the page */
 
-  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] =
+  def subNav(navigation: Seq[NavItem], page: Page): Option[SectionLink] =
     topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def rotatedLocalNav(topSection: Option[NavItem], metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
-    sectionSpecificSublinks.get(metaData.section)
+  def rotatedLocalNav(topSection: Option[NavItem], page: Page)(implicit request: RequestHeader): Seq[SectionLink] =
+    sectionSpecificSublinks.get(page.metadata.section)
       .orElse(topSection.map{ section =>
-        section.searchForCurrentSublink(metaData) match {
+        section.searchForCurrentSublink(page) match {
           case Some(currentSection) =>
             val navSlices = section.links.span(_.href != currentSection.href)
             navSlices._2.drop(1) ++ navSlices._1
@@ -308,11 +312,20 @@ object Navigation {
       SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
       SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
       SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
+    ),
+    "guardian-masterclasses" -> Seq(
+      SectionLink("guardian-masterclasses", "guardian masterclasses", "guardian masterclasses", "/guardian-masterclasses"),
+      SectionLink("guardian-masterclasses", "writing", "writing", "/guardian-masterclasses/writing-and-publishing"),
+      SectionLink("guardian-masterclasses", "digital", "digital", "/guardian-masterclasses/digital"),
+      SectionLink("guardian-masterclasses", "culture", "culture", "/guardian-masterclasses/culture"),
+      SectionLink("guardian-masterclasses", "business", "business", "/guardian-masterclasses/business"),
+      SectionLink("guardian-masterclasses", "journalism", "journalism", "/guardian-masterclasses/journalism"),
+      SectionLink("guardian-masterclasses", "corporate training", "corporate training", "/guardian-masterclasses/corporate-training")
     )
   ).withDefault( _ => Nil)
 
-  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = sectionSpecificSublinks.get(metaData.section)
-    .orElse(Navigation.topLevelItem(navigation, metaData).map(_.links).filter(_.nonEmpty))
+  def localLinks(navigation: Seq[NavItem], page: Page): Seq[SectionLink] = sectionSpecificSublinks.get(page.metadata.section)
+    .orElse(Navigation.topLevelItem(navigation, page).map(_.links).filter(_.nonEmpty))
     .getOrElse(Nil)
 
 }

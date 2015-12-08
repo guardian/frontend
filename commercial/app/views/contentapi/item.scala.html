@@ -1,4 +1,4 @@
-@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
+@(item: model.ContentType, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
     <section class="fc-container fc-container--paid-for commercial commercial--dfp fc-container--merchandising commercial--dfp-single @optSponsorType" data-link-name="merchandising | capi | single @optOmnitureId">
@@ -27,16 +27,16 @@
                 <div class="lineitems">
                     <div class="lineitem lineitem--dfp-single">
                         <div class="lineitem--dfp-single__offer">
-                            <a href="@optClickMacro@item.webUrl" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
-                                @item.trailPicture.map { trailPictureContainer =>
+                            <a href="@optClickMacro@item.metadata.webUrl" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.metadata.webTitle">
+                                @item.trail.trailPicture.map { trailPictureContainer =>
                                     @Item300.bestFor(trailPictureContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
                                 }
-                                <h4 class="fc-item__title lineitem__title">@item.webTitle</h4>
-                                @item.trailText.map { trailText =>
+                                <h4 class="fc-item__title lineitem__title">@item.metadata.webTitle</h4>
+                                @item.fields.trailText.map { trailText =>
                                     <p class="fc-item__standfirst lineitem__desc">@Html(trailText)</p>
                                 }
                                 @for(buttonText <- optCapiButtonText) {
-                                    <a href="@optClickMacro@item.webUrl" class="lineitem__cta button button--tertiary button--small">
+                                    <a href="@optClickMacro@item.metadata.webUrl" class="lineitem__cta button button--tertiary button--small">
                                         @buttonText
                                         @fragments.inlineSvg("arrow-right", "icon", List("i-right", "i-arrow-black"))
                                     </a>

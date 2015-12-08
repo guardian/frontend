@@ -62,7 +62,8 @@ GET        /embed/card/*path.json                                               
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
+GET        /sport/cricket/match/:matchDate/:teamId.json                                        controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET        /sport/cricket/match/:matchDate/:teamId                                             controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day                                                football.controllers.FixturesController.allFixturesFor(year, month, day)

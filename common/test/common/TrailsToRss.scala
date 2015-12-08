@@ -1,17 +1,18 @@
 package common
 
-import model.Trail
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
+import com.gu.contentapi.client.model.{Content => ApiContent}
 
 import scala.util.Try
 import scala.xml._
 
-class TrailsToRssTest extends FlatSpec with Matchers {
+class TrailsToRssTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   val request = FakeRequest()
-  val trails = Seq(TestTrail("a"), TestTrail("b"))
+  lazy val trails = Seq(testTrail("a"), testTrail("b"))
 
   "TrailsToRss" should "produce a valid RSS feed" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
@@ -30,17 +31,17 @@ class TrailsToRssTest extends FlatSpec with Matchers {
 
   it should "strip invalid Unicode characters from XML" in {
     isWellFormedXML(TrailsToRss(Option("foo"), Seq(
-      TestTrail("h", customTitle = Some("\u0000LOL"))
+      testTrail("h", customTitle = Some("\u0000LOL"))
     ))(request)) shouldBe true
   }
 
   "TrailsToRss" should "escape special XML characters" in {
     isWellFormedXML(TrailsToRss(Option("foo"), Seq(
-      TestTrail("c", customTitle = Some("TV & Radio")),
-      TestTrail("d", customTitle = Some("Scala < Haskell")),
-      TestTrail("e", customTitle = Some("Scala > JavaScript")),
-      TestTrail("f", customTitle = Some("Let's get a pizza")),
-      TestTrail("g", customTitle = Some(""" "No, let's not." """))
+      testTrail("c", customTitle = Some("TV & Radio")),
+      testTrail("d", customTitle = Some("Scala < Haskell")),
+      testTrail("e", customTitle = Some("Scala > JavaScript")),
+      testTrail("f", customTitle = Some("Let's get a pizza")),
+      testTrail("g", customTitle = Some(""" "No, let's not." """))
     ))(request)) shouldBe true
   }
 
@@ -55,20 +56,22 @@ class TrailsToRssTest extends FlatSpec with Matchers {
       scala.xml.XML.loadString(s)
     }.isSuccess
 
-  case class TestTrail(url: String, customTitle: Option[String] = None) extends Trail {
-    def webPublicationDate: DateTime = DateTime.now
-    def shortUrl: String = ""
-    def linkText: String = customTitle getOrElse "hello …"
-    def headline: String = ""
-    def webUrl: String = ""
-    def trailText: Option[String] = None
-    def section: String = ""
-    def sectionName: String = ""
-    def isLive: Boolean = true
-    override def byline: Option[String] = Some("Chadders") // this is how I'd like to be remembered
+  def testTrail(url: String, customTitle: Option[String] = None) = {
 
-    val snapUri: Option[String] = None
-    val snapType: Option[String] = None
+    val contentItem = ApiContent(
+      id = url,
+      sectionId = None,
+      sectionName = None,
+      webUrl = "",
+      apiUrl = "",
+      webPublicationDateOption = Some(new DateTime),
+      elements = None,
+      webTitle = customTitle getOrElse "hello …",
+      fields = Some(Map(
+        "liveBloggingNow" -> "true",
+        "byline" -> "Chadders"))
+    )
+    model.Content(contentItem).trail
   }
 
 }

@@ -49,6 +49,13 @@ define([
         });
     }
 
+    function handleSubmit(isSuccess, $form) {
+        return function () {
+            updateForm.replaceContent(isSuccess, $form);
+            state.submitting = false;
+        };
+    }
+
     var state = {
             submitting: false
         },
@@ -64,39 +71,49 @@ define([
                 bean.on($form[0], 'submit', this.submitForm($form, url));
             },
             submitForm: function ($form, url) {
+                /**
+                 * simplistic email address validation to prevent misfired
+                 * omniture events
+                 *
+                 * @param  {String} emailAddress
+                 * @return {Boolean}
+                 */
+                function validate(emailAddress) {
+                    return typeof emailAddress === 'string' &&
+                           emailAddress.indexOf('@') > -1;
+                }
+
                 return function (event) {
-                    if (!state.submitting) {
-                        var data = 'email=' + encodeURIComponent($('.' + classes.textInput, $form).val());
+                    var emailAddress = $('.' + classes.textInput, $form).val();
+
+                    event.preventDefault();
+
+                    if (!state.submitting && validate(emailAddress)) {
+                        var data = 'email=' + encodeURIComponent(emailAddress);
 
                         state.submitting = true;
 
-                        getOmniture().then(function (omniture) {
+                        return getOmniture().then(function (omniture) {
                             omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
+
+                            return ajax({
+                                url: url,
+                                method: 'post',
+                                data: data,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                            })
+                            .then(handleSubmit(true, $form))
+                            .catch(function () {
+                                omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
+                                handleSubmit(false, $form);
+                            });
                         });
-
-                        event.preventDefault();
-
-                        return ajax({
-                            url: url,
-                            method: 'post',
-                            data: data,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        })
-                        .then(getOmniture)
-                        .then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
-                        })
-                        .then(this.submissionResult(true, $form))
-                        .catch(this.submissionResult(false, $form));
                     }
-                }.bind(this);
-            },
-            submissionResult: function (isSuccess, $form) {
-                return function () {
-                    updateForm.replaceContent(isSuccess, $form);
-                    state.submitting = false;
                 };
             }
         },

@@ -53,7 +53,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
   protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result
 
   private def renderTrailsFragment(model: IndexPage)(implicit request: RequestHeader) = {
-    val response = () => views.html.fragments.trailblocks.headline(model.trails.map(FaciaContentConvert.frontendContentToFaciaContent), numItemsVisible = model.trails.size)
+    val response = () => views.html.fragments.trailblocks.headline(model.faciaTrails, numItemsVisible = model.trails.size)
     renderFormat(response, response, model.page)
   }
 

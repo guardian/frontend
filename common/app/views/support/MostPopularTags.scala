@@ -2,7 +2,7 @@ package views.support
 
 import com.gu.facia.api.models.FaciaContent
 import common.Seqs._
-import model.{Content, Tag}
+import model.Tag
 import implicits.FaciaContentImplicits._
 
 object MostPopularTags {
@@ -11,7 +11,7 @@ object MostPopularTags {
     */
   def apply(items: Seq[FaciaContent]): Seq[(Tag, Int)] =
     items
-      .flatMap(_.tags.map(Tag.apply(_)))
+      .flatMap(_.tags.map(Tag.make(_)))
       .filter(_.isKeyword)
       .filterNot(_.isSectionTag)
       .frequencies

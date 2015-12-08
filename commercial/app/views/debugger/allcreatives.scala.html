@@ -1,4 +1,4 @@
-@(page: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
 @import play.api.libs.json.{JsObject, Json}
 
@@ -197,7 +197,7 @@
                                 new BrandedComponent($('.branded-component-' + component), {
                                     type: component,
                                     clickMacro: '%%CLICK_URL_ESC%%',
-                                    omnitureId: 'omnitureId'
+                                    omnitureId: '[%OmnitureID%]'
                                 }, {
                                     force: true
                                 }).create();
@@ -219,12 +219,13 @@
                             creative: 'manual-inline',
                             Toneclass: 'commercial--tone-brand',
                             component_title: 'The Guardian Bookshop',
-                            omniture_id: 'omniture_id',
+                            omniture_id: '[%OmnitureID%]',
                             base_url: 'http://www.guardianbookshop.co.uk/',
                             offer_title: 'Title',
                             offer_url: 'http://www.guardianbookshop.co.uk/',
                             offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
-                            offer_meta: 'Meta'
+                            offer_meta: 'Meta',
+                            clickMacro: '%%CLICK_URL_ESC%%'
                         }).create();
                       });
                 });
@@ -237,7 +238,7 @@
                             type: 'book',
                             isbn: '9780852655634',
                             clickMacro: '%%CLICK_URL_ESC%%',
-                            omnitureId: 'omnitureId'
+                            omnitureId: '[%OmnitureID%]'
                         }).create();
                     });
                 });
@@ -564,7 +565,7 @@
                     type: 'multi',
                     components: ['soulmates', 'jobs', 'books', 'masterclasses'],
                     clickMacro: '%%CLICK_URL_ESC%%',
-                    omnitureId: 'omnitureId'
+                    omnitureId: '[%OmnitureID%]'
                 }).create();
             });
         });
@@ -626,7 +627,7 @@
                                 rmt: 'Seemoreoverhere',
                                 af: $(event.srcElement).val(),
                                 clickMacro: '%%CLICK_URL_ESC%%',
-                                omnitureId: "omnitureId"
+                                omnitureId: '[%OmnitureID%]'
                             });
 
                             commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
@@ -692,7 +693,7 @@
                 ("offer4meta", "Offer 1 Meta"),
                 ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%")
+                ("clickMacro", "%%CLICK_URL_ESC%%")
             ))
         )
     ).map { component =>

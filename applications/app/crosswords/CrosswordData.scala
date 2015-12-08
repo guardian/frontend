@@ -1,6 +1,8 @@
-package crosswords
+package model
 
+import com.gu.contentapi.client.{model => contentapi}
 import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
+import crosswords.{CrosswordPage, CrosswordGridColumnNotation}
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
@@ -135,3 +137,29 @@ case class CrosswordData(
   pdf: Option[String],
   instructions: Option[String]
 )
+
+object CrosswordContent {
+  def make(crossword: CrosswordData, apicontent: contentapi.Content) = {
+
+    val content = Content(apicontent)
+    val contentType= GuardianContentTypes.Crossword
+
+    val metadata = content.metadata.copy(
+      id = crossword.id,
+      section = "crosswords",
+      analyticsName = crossword.id,
+      webTitle = crossword.name,
+      contentType = contentType,
+      iosType = None,
+      javascriptConfigOverrides = Map("contentType" -> JsString(contentType))
+    )
+
+    val contentOverrides = content.content.copy(metadata = metadata)
+
+    CrosswordContent(contentOverrides, crossword)
+  }
+}
+
+final case class CrosswordContent(
+  override val content: Content,
+  crossword: CrosswordData ) extends ContentType

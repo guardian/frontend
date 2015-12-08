@@ -1,8 +1,9 @@
-@(metaData: model.MetaData, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 @import common.{Edition, Navigation}
 @import conf.switches.Switches._
 @import views.support.Commercial.topBelowNavSlot
 @import views.support.{Commercial, RenderClasses}
+@import model.Page.getContent
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
@@ -22,47 +23,47 @@ http://developers.theguardian.com/join-the-team.html
 -->
 
 <head>
-    @fragments.head(metaData, projectName, head)
+    @fragments.head(page, projectName, head)
 </head>
-@defining(Commercial.shouldShowAds(metaData), Edition(request)) { case (showAdverts, edition) =>
-    @defining(showAdverts && topBelowNavSlot.hasAd(metaData, edition)) { adBelowNav =>
-        @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
+@defining(Commercial.shouldShowAds(page), Edition(request)) { case (showAdverts, edition) =>
+    @defining(showAdverts && topBelowNavSlot.hasAd(page.metadata, edition)) { adBelowNav =>
+        @defining(Navigation.topLevelItem(edition.navigation, page)) { navigation =>
 
     <body
         id="top"
         class="@RenderClasses(Map(
-            ("has-page-skin", metaData.hasPageSkin(edition)),
+            ("has-page-skin", page.metadata.hasPageSkin(edition)),
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
-            ("has-membership-access-requirement", metaData.requiresMembershipAccess),
-            ("childrens-books-site", metaData.section == "childrens-books-site"),
+            ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
+            ("childrens-books-site", page.metadata.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
-            ("is-immersive", metaData.isImmersive),
-            ("is-immersive-interactive", metaData.isImmersive && metaData.isInteractive)))"
+            ("is-immersive", page.metadata.isImmersive),
+            ("is-immersive-interactive", page.metadata.isImmersive && getContent(page).exists(_.tags.isInteractive))))"
         itemscope itemtype="http://schema.org/WebPage">
 
-        @fragments.message(metaData)
+        @fragments.message(page.metadata)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!(metaData.isImmersive && metaData.isArticle)) {
+        @if(!(page.metadata.isImmersive && getContent(page).exists(_.tags.isArticle))) {
             @if(!mvt.TopBannerPosition.isParticipating) {
                 @if(showAdverts) {
-                    @fragments.commercial.topBanner(metaData, edition)
+                    @fragments.commercial.topBanner(page.metadata, edition)
                 }
 
-                @fragments.header(metaData)
+                @fragments.header(page)
 
                 @if(adBelowNav) {
                     @fragments.commercial.topBannerBelowNav()
                 }
 
                 @if(showAdverts) {
-                    @fragments.commercial.topBannerMobile(metaData, edition)
+                    @fragments.commercial.topBannerMobile(page.metadata, edition)
                 }
 
                 <div id="maincontent" class="js-maincontent" tabindex="0"></div>
             } else {
-                @fragments.header(metaData)
+                @fragments.header(page)
             }
         }
 
@@ -74,9 +75,26 @@ http://developers.theguardian.com/join-the-team.html
 
         @body
 
-        @fragments.footer(metaData)
+        @**********************
+         24x7 support training
 
-        @fragments.analytics(metaData)
+         We intentionally modified the displayed section on this specific article.
+         This is a failure that trainees have to diagnose in frontend.
+        ************************@
+        @if(request.path == "/info/2015/mar/11/-removed-article") {
+            <script type="text/javascript">
+                document.querySelectorAll('[data-link-name="article section"]')[0].textContent = "Culture"
+                @***
+                 The following is a misdirection to let people think damned CAPI is causing the issue
+                ***@
+                console.log("Error connecting to content API to retrieve section: 503")
+                console.log("Defaulting to Culture")
+            </script>
+        }
+
+        @fragments.footer(page)
+
+        @fragments.analytics(page)
 
         @fragments.inlineJSNonBlocking()
 

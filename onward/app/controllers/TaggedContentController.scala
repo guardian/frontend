@@ -22,16 +22,16 @@ object TaggedContentController extends Controller with Related with Logging with
     } getOrElse(Future { BadRequest })
   }
 
-  private def render(trails: Seq[Content])(implicit request: RequestHeader) = Cached(300) {
+  private def render(trails: Seq[ContentType])(implicit request: RequestHeader) = Cached(300) {
     JsonComponent(
       "trails" -> JsArray(trails.map { trail =>
         Json.obj(
-          ("webTitle", trail.webTitle),
-          ("webUrl", trail.webUrl),
-          ("sectionName", trail.sectionName),
-          ("thumbnail", trail.thumbnailPath),
-          ("starRating", trail.starRating),
-          ("isLive", trail.isLive)
+          ("webTitle", trail.metadata.webTitle),
+          ("webUrl", trail.metadata.webUrl),
+          ("sectionName", trail.trail.sectionName),
+          ("thumbnail", trail.trail.thumbnailPath),
+          ("starRating", trail.content.starRating),
+          ("isLive", trail.fields.isLive)
         )
       })
     )
@@ -43,7 +43,7 @@ object TaggedContentController extends Controller with Related with Logging with
     "theguardian/series/guardiancommentcartoon"
   )
 
-  private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[Seq[Content]] = {
+  private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[Seq[ContentType]] = {
     log.info(s"Fetching tagged stories for edition ${edition.id}")
     getResponse(LiveContentApi.search(edition)
       .tag(tag)
