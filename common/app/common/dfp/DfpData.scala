@@ -5,6 +5,7 @@ import java.net.URLEncoder
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
+import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -227,8 +228,8 @@ case class GuLineItem(id: Long,
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
   val isExpired = endTime.exists(_.isBeforeNow)
-  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(DateTime.now().minusWeeks(1)))
-  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(DateTime.now().plusMonths(1)))
+  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
+  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
   val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
     targetSet.sponsoredTags ++ targetSet.advertisementFeatureTags ++ targetSet.foundationSupportedTags
@@ -258,14 +259,15 @@ case class GuLineItem(id: Long,
     }
 
     costType == "CPD" &&
-      placeholder.nonEmpty && (
+    placeholder.nonEmpty && (
       targeting.targetsSectionFrontDirectly("business") ||
-        placeholder.exists(_.targetsSectionFrontDirectly("business"))
+      placeholder.exists(_.targetsSectionFrontDirectly("business"))
       ) &&
-      targeting.geoTargetsIncluded.exists { geoTarget =>
-        geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
-      } &&
-      startTime.isBefore(DateTime.now.plusDays(1))
+    targeting.geoTargetsIncluded.exists { geoTarget =>
+      geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
+    } &&
+    startTime.isBefore(now.plusDays(1)) &&
+    (endTime.isEmpty || endTime.exists(_.isAfter(now)))
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
@@ -365,7 +367,8 @@ case class GuCreative(
   name: String,
   lastModified: DateTime,
   args: Map[String, String],
-  templateId: Long
+  templateId: Option[Long],
+  snippet: Option[String]
 )
 
 object GuCreative {
@@ -387,7 +390,8 @@ object GuCreative {
         "name" -> creative.name,
         "lastModified" -> creative.lastModified,
         "args" -> creative.args,
-        "templateId" -> creative.templateId
+        "templateId" -> creative.templateId,
+        "snippet" -> creative.snippet
       )
     }
   }
@@ -397,7 +401,8 @@ object GuCreative {
       (JsPath \ "name").read[String] and
       (JsPath \ "lastModified").read[DateTime] and
       (JsPath \ "args").read[Map[String, String]] and
-      (JsPath \ "templateId").read[Long]
+      (JsPath \ "templateId").readNullable[Long] and
+      (JsPath \ "snippet").readNullable[String]
     ) (GuCreative.apply _)
 }
 

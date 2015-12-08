@@ -93,6 +93,10 @@ define([
                 });
         });
 
+        afterEach(function () {
+            document.referrer = '';
+        });
+
         it('should exist', function () {
             expect(buildPageTargeting).toBeDefined();
         });
@@ -189,16 +193,75 @@ define([
         });
 
         describe('Already visited frequency', function () {
-            it('should set 3 frequency param', function () {
-                storage.local.set('gu.alreadyVisited', 3);
-
-                expect(buildPageTargeting().fr).toEqual('3');
+            it('can pass a value of five or less', function () {
+                storage.local.set('gu.alreadyVisited', 5);
+                expect(buildPageTargeting().fr).toEqual('5');
             });
 
-            it('should set 5+ frequency param', function () {
-                storage.local.set('gu.alreadyVisited', 67);
+            it('between five and thirty, includes it in a bucket in the form "x-y"', function () {
+                storage.local.set('gu.alreadyVisited', 18);
+                expect(buildPageTargeting().fr).toEqual('16-19');
+            });
 
-                expect(buildPageTargeting().fr).toEqual('5plus');
+            it('over thirty, includes it in the bucket "30plus"', function () {
+                storage.local.set('gu.alreadyVisited', 300);
+                expect(buildPageTargeting().fr).toEqual('30plus');
+            });
+
+            it('passes a value of 0 if the value is not stored', function () {
+                storage.local.remove('gu.alreadyVisited');
+                expect(buildPageTargeting().fr).toEqual('0');
+            });
+        });
+
+        describe('Referrer', function () {
+            afterEach(function () {
+                detect.getReferrer = function () {
+                    return '';
+                };
+            });
+
+            it('should set ref to Facebook', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.facebook.com/feel-the-force';
+                };
+                expect(buildPageTargeting().ref).toEqual('facebook');
+            });
+
+            it('should set ref to Twitter', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.t.co/you-must-unlearn-what-you-have-learned';
+                };
+                expect(buildPageTargeting().ref).toEqual('twitter');
+            });
+
+            it('should set ref to Googleplus', function () {
+                detect.getReferrer = function () {
+                    return 'https://plus.url.google.com/always-pass-on-what-you-have-learned';
+                };
+                expect(buildPageTargeting().ref).toEqual('googleplus');
+            });
+
+            it('should set ref to reddit', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.reddit.com/its-not-my-fault';
+                };
+                expect(buildPageTargeting().ref).toEqual('reddit');
+            });
+
+            it('should set ref to google', function () {
+                detect.getReferrer = function () {
+                    return 'https://www.google.com/i-find-your-lack-of-faith-distrubing';
+                };
+                expect(buildPageTargeting().ref).toEqual('google');
+            });
+
+            it('should set ref empty string if referrer does not match', function () {
+                detect.getReferrer = function () {
+                    return 'https://theguardian.com';
+                };
+
+                expect(buildPageTargeting().ref).toEqual(undefined);
             });
         });
     });

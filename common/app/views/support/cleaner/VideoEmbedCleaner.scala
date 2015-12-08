@@ -18,7 +18,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
       val mediaTitle = element.attr("data-video-name")
 
       if (!shortUrl.isEmpty) {
-        val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl, mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, article.sharelinks.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl, mediaPath = Some(mediaPath), title = mediaTitle), article.metadata.contentType)
         element.child(0).after(html.toString())
         element.addClass("fig--has-shares")
         element.addClass("fig--narrow-caption")
@@ -105,9 +105,9 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
     document
   }
 
-  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
+  def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
 
   def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
 
-  def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
+  def findVideoApiElement(id:String): Option[VideoElement] = article.elements.bodyVideos.filter(_.id == id).headOption
 }

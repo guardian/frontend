@@ -5,14 +5,22 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  // Features
-  val OfflinePageSwitch = Switch(
+  val SyndicationLinkSwitch = Switch(
     "Feature",
-    "offline-page",
-    "Offline page",
+    "syndication-link",
+    "Show syndication link in content",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 26),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2015, 12, 18),
+    exposeClientSide = false
+  )
+
+  val contentAgeMessageSwitch = Switch(
+    "Feature",
+    "content-age-message",
+    "Show old content message on... old content (tagged tone/news)",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 6),
+    exposeClientSide = false
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
@@ -220,7 +228,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 1),
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = false
   )
 
@@ -238,7 +246,7 @@ trait FeatureSwitches {
     "ipad-split-capabilities",
     "If switched on then this gives older ipads the stripped down front but full articles",
     safeState = On,
-    sellByDate = new LocalDate(2015, 12, 1),
+    sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = false
   )
 

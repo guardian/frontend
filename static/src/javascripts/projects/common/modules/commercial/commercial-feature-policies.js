@@ -21,7 +21,16 @@ define([
     policies.sensitiveContent = function () {
         // Avoid inappropriate adverts on pages with content of a sensitive nature
         if (config.page.shouldHideAdverts || config.page.section === 'childrens-books-site') {
-            return new CommercialFeatureSwitches(false);
+            return {
+                dfpAdvertising : false,
+                topBannerAd : false,
+                articleBodyAdverts : false,
+                articleAsideAdverts : false,
+                sliceAdverts : false,
+                popularContentMPU : false,
+                videoPreRolls : false,
+                frontCommercialComponents : false
+            };
         }
     };
 
@@ -59,7 +68,8 @@ define([
     policies.membershipMessages = function () {
         if (!detect.adblockInUse() &&
             detect.getBreakpoint() !== 'mobile' &&
-            config.page.contentType === 'Article'
+            config.page.contentType === 'Article' &&
+            !userFeatures.isPayingMember()
         ) {
             return {
                 membershipMessages : true
@@ -119,9 +129,6 @@ define([
         }
         if (!config.switches.sponsored) {
             switches.badges = false;
-        }
-        if (!config.switches.membershipMessages) {
-            switches.membershipMessages = false;
         }
 
         return switches;

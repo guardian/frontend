@@ -183,7 +183,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
-    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
+    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
+    lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
+    lazy val membersDataApiUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
@@ -195,6 +197,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    val fallbackLogo = Static("images/fallback-logo.png").path
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
@@ -224,7 +227,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
-    lazy val imageFallback = Static("images/facebook/fallback-logo.png").path
   }
 
   object ios {
@@ -256,7 +258,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val guMerchandisingAdvertiserId =
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
-    private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
+    // root dir relative to S3 bucket
+    private lazy val commercialRoot = {
+      configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
+    }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
@@ -428,6 +433,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object pngResizer {
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
+  }
+
+  object emailSignup {
+    val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
 }
 

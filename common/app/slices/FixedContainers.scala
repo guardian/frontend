@@ -1,5 +1,6 @@
 package slices
 
+import com.gu.facia.api.models.FaciaContent
 import conf.Configuration
 import model.Content
 
@@ -59,6 +60,8 @@ object FixedContainers {
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
 
+  val frontsOnArticles = slices(QuarterQuarterQlQl)
+
   val fastIndexPageMpuII = slices(TTMpu)
   val fastIndexPageMpuIV = slices(TTlMpu)
   val fastIndexPageMpuVI = slices(TlTlMpu)
@@ -73,8 +76,6 @@ object FixedContainers {
   val slowSeriesV = slices(HalfHalf, TTT)
 
   val footballTeamFixtures = slices(TTT)
-
-  val HeadlinesABTest = slices(HalfQuarterQl2Ql4)
 
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
@@ -115,11 +116,11 @@ object DynamicContainers {
     ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false))
   )
 
-  def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {
+  def apply(collectionType: Option[String], items: Seq[FaciaContent]): Option[ContainerDefinition] = {
     for {
       typ <- collectionType
       dynamicContainer <- all.get(typ)
-      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromContent))
+      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
     } yield definition
   }
 }

@@ -2,85 +2,144 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
 import com.google.api.ads.dfp.axis.v201508._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
-import dfp.ApiHelper.fetch
-import dfp.DfpServiceRegistry._
+import dfp.Reader.read
+import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead}
 
-import scala.collection.JavaConversions._
 import scala.util.control.NonFatal
 
-// This will replace DfpApiWrapper
-private[dfp] class SessionWrapper(dfpSession: DfpSession) extends Logging {
+private[dfp] class SessionWrapper(dfpSession: DfpSession) {
 
-  private val dfpServices = new DfpServices
+  private val services = new ServicesWrapper(dfpSession)
 
-  private lazy val creativeTemplateService =
-    dfpServices.get(dfpSession, classOf[CreativeTemplateServiceInterface])
-
-  private lazy val creativeService =
-    dfpServices.get(dfpSession, classOf[CreativeServiceInterface])
-
-  def logFailure(e: Throwable, loadedType: String, stmtBuilder: StatementBuilder): Nil.type = {
-    val qry = stmtBuilder.buildQuery()
-    log.error(s"Loading $loadedType with statement '$qry' failed: ${e.getMessage}")
-    Nil
-  }
-
-  def logAround[T](loadingType: String, stmtBuilder: StatementBuilder)
-                  (doLoad: => Seq[T]): Seq[T] = {
-    val qry = stmtBuilder.buildQuery()
-    val params = stmtBuilder.getBindVariableMap.map { case (k, rawValue) =>
-      k -> (
-        rawValue match {
-          case t: TextValue => s""""${t.getValue}""""
-          case n: NumberValue => n.getValue
-          case b: BooleanValue => b.getValue
-          case other => other.toString
-        }
-        )
-    }.toMap
-    val baseMessage = s"""Loading $loadingType with statement "$qry" and params $params"""
-    try {
-      log.info(s"$baseMessage ...")
-      val start = System.currentTimeMillis()
-      val loaded = doLoad
-      val duration = System.currentTimeMillis() - start
-      log.info(s"Successfully loaded ${loaded.size} $loadingType in $duration ms")
-      loaded
-    } catch {
-      case NonFatal(e) =>
-        log.error(s"$baseMessage failed: ${e.getMessage}")
-        Nil
-    }
-  }
-
-  def creativeTemplates(stmtBuilder: StatementBuilder): Seq[CreativeTemplate] = {
-    logAround("creative templates", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
-        val page = creativeTemplateService.getCreativeTemplatesByStatement(statement)
+  def lineItems(stmtBuilder: StatementBuilder): Seq[LineItem] = {
+    logAroundRead("line items", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.lineItemService.getLineItemsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
     }
   }
 
-  def creatives(stmtBuilder: StatementBuilder): Seq[Creative] = {
-    logAround("creatives", stmtBuilder) {
-      fetch(stmtBuilder) { statement =>
-        val page = creativeService.getCreativesByStatement(statement)
+  def customFields(stmtBuilder: StatementBuilder): Seq[CustomField] = {
+    logAroundRead("custom fields", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.customFieldsService.getCustomFieldsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def customTargetingKeys(stmtBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
+    logAroundRead("custom targeting keys", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.customTargetingService.getCustomTargetingKeysByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def customTargetingValues(stmtBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
+    logAroundRead("custom targeting values", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.customTargetingService.getCustomTargetingValuesByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def adUnits(stmtBuilder: StatementBuilder): Seq[AdUnit] = {
+    logAroundRead("ad units", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.inventoryService.getAdUnitsByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def suggestedAdUnits(stmtBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
+    logAroundRead("suggested ad units", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.suggestedAdUnitService.getSuggestedAdUnitsByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def placements(stmtBuilder: StatementBuilder): Seq[Placement] = {
+    logAroundRead("placements", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.placementService.getPlacementsByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def creativeTemplates(stmtBuilder: StatementBuilder): Seq[CreativeTemplate] = {
+    logAroundRead("creative templates", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.creativeTemplateService.getCreativeTemplatesByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  object lineItemCreativeAssociations {
+
+    private val licaService = services.licaService
+
+    def get(stmtBuilder: StatementBuilder): Seq[LineItemCreativeAssociation] = {
+      logAroundRead("licas", stmtBuilder) {
+        read(stmtBuilder) { statement =>
+          val page = licaService.getLineItemCreativeAssociationsByStatement(statement)
+          (page.getResults, page.getTotalResultSetSize)
+        }
+      }
+    }
+
+    def create(licas: Seq[LineItemCreativeAssociation]): Seq[LineItemCreativeAssociation] = {
+      logAroundCreate("licas") {
+        licaService.createLineItemCreativeAssociations(licas.toArray)
+      }
+    }
+
+    def deactivate(filterStatement: Statement): Int = {
+      logAroundPerform("licas", "deactivating", filterStatement) {
+        val action = new DeactivateLineItemCreativeAssociations()
+        val result = licaService.performLineItemCreativeAssociationAction(action, filterStatement)
+        result.getNumChanges
+      }
+    }
+  }
+
+  object creatives {
+
+    private val creativeService = services.creativeService
+
+    def get(stmtBuilder: StatementBuilder): Seq[Creative] = {
+      logAroundRead("creatives", stmtBuilder) {
+        read(stmtBuilder) { statement =>
+          val page = creativeService.getCreativesByStatement(statement)
+          (page.getResults, page.getTotalResultSetSize)
+        }
+      }
+    }
+
+    def create(creatives: Seq[Creative]): Seq[Creative] = {
+      logAroundCreate("creatives") {
+        creativeService.createCreatives(creatives.toArray)
       }
     }
   }
 }
 
-object SessionWrapper {
+object SessionWrapper extends Logging {
 
-  def apply(): Option[SessionWrapper] = {
+  def apply(networkId: Option[String] = None): Option[SessionWrapper] = {
     val dfpSession = try {
       for {
         clientId <- AdminConfiguration.dfpApi.clientId
@@ -89,15 +148,15 @@ object SessionWrapper {
         appName <- AdminConfiguration.dfpApi.appName
       } yield {
         val credential = new OfflineCredentials.Builder()
-          .forApi(Api.DFP)
-          .withClientSecrets(clientId, clientSecret)
-          .withRefreshToken(refreshToken)
-          .build().generateCredential()
+                         .forApi(Api.DFP)
+                         .withClientSecrets(clientId, clientSecret)
+                         .withRefreshToken(refreshToken)
+                         .build().generateCredential()
         new DfpSession.Builder()
-          .withOAuth2Credential(credential)
-          .withApplicationName(appName)
-          .withNetworkCode(Configuration.commercial.dfpAccountId)
-          .build()
+        .withOAuth2Credential(credential)
+        .withApplicationName(appName)
+        .withNetworkCode(networkId.getOrElse(Configuration.commercial.dfpAccountId))
+        .build()
       }
     } catch {
       case NonFatal(e) =>

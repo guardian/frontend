@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
 @import common._
 @import views.support.RenderClasses
@@ -9,7 +9,7 @@
             <div class="navigation__inner" aria-hidden="true">
                 <div class="navigation__scroll">
                     <div class="navigation__container navigation__container--second" data-component="footer-nav">
-                        @fragments.nav.topNavigation(metaData, navigation)
+                        @fragments.nav.topNavigation(page, navigation)
                     </div>
                 </div>
                 <a class="navigation-toggle js-navigation-toggle" href="#top" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="js-mega-nav navigation__expandable" data-component="all-footer-nav" data-link-name="global navigation: footer : sections">
-                @fragments.nav.globalNavigation(metaData)
+                @fragments.nav.globalNavigation(page)
             </div>
         </div>
     </div>

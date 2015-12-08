@@ -40,10 +40,8 @@ define([
 
         // Outbrain needs to be loaded before first ad as it is checking for presence of high relevance component on page
         outbrain.init();
-        // Load third parties after first ad was rendered
-        mediator.once('modules:commercial:dfp:rendered', function () {
-            loadOther();
-        });
+
+        loadOther();
 
         return Promise.resolve(null);
     }

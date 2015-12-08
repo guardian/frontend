@@ -2,7 +2,8 @@ package services
 
 import _root_.model.Content
 import com.gu.contentapi.client.model.{Content => ApiContent, Tag}
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import com.gu.facia.api.models.{LinkSnap, CollectionConfig, FaciaContent}
+import com.gu.facia.api.utils.{ResolvedMetaData, ContentProperties}
 import common._
 import conf.LiveContentApi
 import implicits.Dates
@@ -21,27 +22,34 @@ case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionCo
 object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
+  private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
   val FRONT_PAGE_DISPLAY_NAME = "front page"
+  val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
-  def fetchTodaysPaper: Future[List[FaciaContainer]] =
-    bookSectionContainers(DateTime.now(DateTimeZone.UTC))
+  def fetchLatestGuardianNewspaper: Future[List[FaciaContainer]] = {
+    val now = DateTime.now(DateTimeZone.UTC)
+    bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(now), "theguardian")
+  }
 
+  def fetchLatestObserverNewspaper: Future[List[FaciaContainer]] = {
+    val now = DateTime.now(DateTimeZone.UTC)
+    bookSectionContainers("theobserver/news", getPastSundayDateFor(now), "theobserver")
+  }
 
-  def fetchPaperForDate(day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+  def fetchNewspaperForDate(path: String, day: String, month: String, year: String): Future[List[FaciaContainer]] = {
     val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
     val date = dateFormatUTC
       .parseDateTime(s"$year/$month/$day")
       .toDateTime
 
-    bookSectionContainers(date)
+    pathToTag.get(path).map(tag => bookSectionContainers(tag, date, path)).getOrElse(Future.successful(Nil))
   }
 
-  private def bookSectionContainers(date: DateTime): Future[List[FaciaContainer]] = {
 
-    val newspaperDate = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+  private def bookSectionContainers(itemId: String, newspaperDate: DateTime, publication: String): Future[List[FaciaContainer]] = {
 
-    val itemQuery = LiveContentApi.item("theguardian/mainsection")
+    val itemQuery = LiveContentApi.item(itemId)
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
@@ -56,17 +64,18 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       val (firstPageContent, otherContent) = resp.results.partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
-        val content = firstPageContent.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-
-        bookSectionContainer(None, Some(FRONT_PAGE_DISPLAY_NAME), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0)
+        val content = firstPageContent.map(c => FaciaContentConvert.contentToFaciaContent(c))
+        //for /theguardian fetch date links either side of date requested, for /theobserver, fetch each sunday around the date and the day before
+        val snaps = createSnap(newspaperDate, publication)
+        bookSectionContainer(None, Some(FRONT_PAGE_DISPLAY_NAME), Some(newspaperDate.toString(dateForFrontPagePattern)), content, 0, snaps)
       }
 
       val unorderedBookSections = createBookSections(otherContent)
       val orderedBookSections = orderByPageNumber(unorderedBookSections)
 
       val bookSectionContainers = orderedBookSections.map { list =>
-        val content = list.content.map(c => FaciaContentConvert.frontendContentToFaciaContent(Content(c)))
-        bookSectionContainer(Some(list.tag.id), Some(lowercaseDisplayName(list.tag.webTitle)), None, content, orderedBookSections.indexOf(list) + 1)
+        val content = list.content.map(c => FaciaContentConvert.contentToFaciaContent(c))
+        bookSectionContainer(Some(list.tag.id), Some(lowercaseDisplayName(list.tag.webTitle)), None, content, orderedBookSections.indexOf(list) + 1, Nil)
       }
 
       firstPageContainer :: bookSectionContainers
@@ -105,7 +114,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   }
 
   private def bookSectionContainer(dataId: Option[String], containerName: Option[String],
-                                   containerDescription: Option[String], trails: Seq[FaciaContent], index: Int): FaciaContainer = {
+                                   containerDescription: Option[String], trails: Seq[FaciaContent], index: Int, linkSnaps: List[LinkSnap]): FaciaContainer = {
     val containerDefinition = trails.length match {
       case 1 => FixedContainers.fixedSmallSlowI
       case 2 => FixedContainers.fixedSmallSlowII
@@ -117,11 +126,35 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       index,
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId.getOrElse(""), CollectionConfig.empty.copy(displayName = containerName, description = containerDescription)),
-      CollectionEssentials(trails, Nil, containerName, dataId, None, None)
+      CollectionEssentials(trails, linkSnaps, containerName, dataId, None, None)
     ).copy(hasShowMoreEnabled = false)
   }
 
   private def getNewspaperPageNumber(content: ApiContent) = content.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
 
   def lowercaseDisplayName(s: String) = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
+
+  def getPastSundayDateFor(date: DateTime) = {
+    if(date.getDayOfWeek != DateTimeConstants.SUNDAY) {
+      val daysSinceSunday = DateTimeConstants.SUNDAY - date.getDayOfWeek - 7
+      date.minusDays(Math.abs(daysSinceSunday))
+    } else date
+  }
+
+  def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+
+
+  private def createSnap(date: DateTime, publication: String) = {
+    //if /theguardian get links for date either side of the date requests
+    // else for theobserver get dates either sunday around the date and the previous Saturday.
+    //filter out any dates in the future
+    val daysAroundDateToFetchLinksFor = if(publication == "theguardian") List(1, -1) else List(7, -1, -7)
+    val datesAroundNewspaperDate = daysAroundDateToFetchLinksFor.map(date.plusDays(_))
+    datesAroundNewspaperDate.filter( d => d.isBeforeNow).map { d =>
+      val displayFormat = d.toString(dateForFrontPagePattern)
+      val hrefDateFormat = d.toString(hrefFormat).toLowerCase
+      val href = if(d.getDayOfWeek == DateTimeConstants.SUNDAY) s"/theobserver/$hrefDateFormat" else s"/theguardian/$hrefDateFormat"
+      LinkSnap("no-id", None, "no-snap-type", None, None, Some(displayFormat), Some(href), None, "group", None, ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default), None, None)
+    }
+  }
 }

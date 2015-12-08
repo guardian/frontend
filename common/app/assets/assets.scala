@@ -1,6 +1,7 @@
 package common.Assets
 
 import java.net.URL
+import java.io.File
 
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
@@ -22,11 +23,11 @@ class AssetMap(base: String, assetMap: String) {
 
     // Avoid memoizing the asset map in Dev.
     if (Play.current.mode == Mode.Dev) {
-      if (path.startsWith("javascripts")) {
+      assets().getOrElse(path, if (new File(s"static/src/$path").exists()) {
         Asset(path)
       } else {
-        assets().getOrElse(path, throw AssetNotFoundException(path))
-      }
+        throw AssetNotFoundException(path)
+      })
     } else {
       memoizedAssets(path)
     }
@@ -98,6 +99,7 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
         case "football" => "football.css"
         case "index" => "index.css"
         case "rich-links" => "rich-links.css"
+        case "email" => "email.css"
         case _ => "content.css"
       }
 
@@ -163,5 +165,5 @@ object AssetFinder {
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
   override val getMessage: String =
-    s"Cannot find asset $assetPath. You probably need to run 'make compile'."
+    s"Cannot find asset $assetPath. Have you got the right path? Or do you need to run 'make compile', or 'make compile-dev'?."
 }

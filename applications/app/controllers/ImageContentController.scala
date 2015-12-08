@@ -7,10 +7,13 @@ import conf.switches.Switches
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import services.ImageQuery
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-case class ImageContentPage(image: ImageContent, related: RelatedContent)
+case class ImageContentPage(image: ImageContent, related: RelatedContent) extends ContentPage {
+  override lazy val item = image
+}
 
 object ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
 
@@ -21,12 +24,12 @@ object ImageContentController extends Controller with RendersItemResponse with I
   private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.imageContent(page)
     val jsonResponse = () => views.html.fragments.imageContentBody(page)
-    renderFormat(htmlResponse, jsonResponse, page.image, Switches.all)
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = image(Edition(request), path).map {
     case Left(content) => renderImageContent(content)
-    case Right(result) => result
+    case Right(result) => RenderOtherStatus(result)
   }
 
   private def isSupported(c: ApiContent) = c.isImageContent

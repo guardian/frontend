@@ -1,16 +1,14 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
-@import conf.Static
-@import conf.Configuration
-@import views.support.OmnitureAnalyticsData
+@(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+@import model.Page.getContent
 
 <meta charset="utf-8" />
-<title>@views.support.Title(metaData)</title>
+<title>@views.support.Title(page)</title>
 
-@fragments.metaData(metaData)
+@fragments.metaData(page)
 @head
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
-@fragments.stylesheets(projectName)
+@fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
 @* inline JS - blocking *@
-@fragments.inlineJSBlocking(metaData)
+@fragments.inlineJSBlocking(page)

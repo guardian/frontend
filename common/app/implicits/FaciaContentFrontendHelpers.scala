@@ -23,7 +23,7 @@ object FaciaContentFrontendHelpers {
 
     def frontendElements: List[model.Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (e, i) => model.Element(e, i) }
 
-    def frontendTags: List[model.Tag] = faciaContent.tags.map(Tag.apply(_))
+    def frontendTags: List[model.Tag] = faciaContent.tags.map(Tag.make(_))
 
     protected lazy val images: Seq[ImageElement] = frontendElements.flatMap { case image: ImageElement => Some(image)
     case _ => None

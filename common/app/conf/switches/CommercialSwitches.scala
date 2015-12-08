@@ -32,6 +32,15 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val FluidAdvertsSwitch = Switch(
+    "Commercial",
+    "fluid-adverts",
+    "Enable fluid ads, which occupy 100% of the width of their parent container but have a fixed height",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 12, 15),
+    exposeClientSide = true
+  )
+
   val CommercialComponentsSwitch = Switch(
     "Commercial",
     "commercial-components",
@@ -145,7 +154,7 @@ trait CommercialSwitches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2016, 1, 6),
     exposeClientSide = false
   )
 
@@ -217,7 +226,7 @@ trait CommercialSwitches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on fronts.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 16),
+    sellByDate = new LocalDate(2016, 3, 16),
     exposeClientSide = false
   )
 
@@ -235,7 +244,7 @@ trait CommercialSwitches {
     "advert-opt-out",
     "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 9),
+    sellByDate = new LocalDate(2016, 1, 31),
     exposeClientSide = true
   )
 
@@ -245,6 +254,15 @@ trait CommercialSwitches {
     "Display a message to regular readers promoting Membership",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
+  val NewCommercialContent = Switch(
+    "Commercial",
+    "new-commercial-content",
+    "New commercial content designs",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 31),
     exposeClientSide = true
   )
 }

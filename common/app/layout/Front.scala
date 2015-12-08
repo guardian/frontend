@@ -88,6 +88,35 @@ object CollectionEssentials {
     None
   )
 
+  def fromMultiplePressedCollections(collections: Seq[PressedCollection], itemLimit: Int = 5) = {
+    val normalContainers = Seq("headlines", "highlights", "opinion")
+
+    def items = {
+      if(itemLimit == 5) {
+        collections.flatMap(_.curated)
+      } else {
+        collections.flatMap { collection =>
+          val actualLimit = if(normalContainers contains collection.displayName) {
+            2
+          } else {
+            1
+          }
+
+          collection.curated.filter(content => (!content.isLiveBlog && !content.isVideo && !content.isGallery)).take(actualLimit)
+        }
+      }
+    }
+
+    CollectionEssentials(
+      items,
+      Nil,
+      None,
+      None,
+      None,
+      None
+    )
+  }
+
   val empty = CollectionEssentials(Nil, Nil, None, None, None, None)
 }
 
@@ -446,7 +475,7 @@ object Front extends implicits.Collections {
     pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext, emptyDedupedResultWithPath)
       ) { case ((seenTrails, context, dedupedFrontResult), (pressedCollection, index)) =>
-        val omitMPU = pressedPage.omitMPUsFromContainers(edition)
+        val omitMPU = pressedPage.metadata.omitMPUsFromContainers(edition)
         val container = Container.fromPressedCollection(pressedCollection, omitMPU)
         val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
 
