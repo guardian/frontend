@@ -9,7 +9,7 @@ trait ABTestSwitches {
     "ab-rtrt-email-form-inline-footer-v2",
     "Switch to show the email form inline in the footer",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 8),
+    sellByDate = new LocalDate(2015, 12, 16),
     exposeClientSide = true
   )
 
@@ -22,21 +22,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABInjectNetworkFrontTest2 = Switch(
+  val ABFrontsOnArticles = Switch(
     "A/B Tests",
-    "ab-inject-network-front-test2",
-    "Switch to inject the network front instead of most popular on all content pages",
+    "ab-fronts-on-articles",
+    "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 5),
-    exposeClientSide = true
-  )
-
-  val ABReachDummyTest2 = Switch(
-    "A/B Tests",
-    "ab-reach-dummy-test-2",
-    "Switch to inject the network front instead of most popular on all content pages",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 5),
+    sellByDate = new LocalDate(2015, 12, 30),
     exposeClientSide = true
   )
 

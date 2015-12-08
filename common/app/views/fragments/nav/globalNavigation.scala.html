@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
 @import common._
 @import common.Edition
@@ -6,7 +6,7 @@
 @import views.support.RenderClasses
 
 @defining(Edition(request).navigation) { navigation =>
-    @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
+    @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>
         <nav role="navigation" aria-label="All sections">
             <ul class="global-navigation js-global-navigation">
                 @navigation.map { nav =>
@@ -17,17 +17,17 @@
                         ))">
                         <a class="global-navigation__title" href="@LinkTo(nav.name.href)" data-link-name="nav : globalTop : @nav.name.title">
                             @Html(nav.name.title)
-                            @if(nav.currentFor(metaData)) {
+                            @if(nav.currentFor(page)) {
                                 <span class="u-h">selected</span>
                             }
                         </a>
                         @if(nav.links.nonEmpty) {
                             <ul class="global-navigation__children">
                                 @nav.links.map{ link =>
-                                    <li class="global-navigation__child@if(link.currentFor(metaData)){ global-navigation__child--current}">
+                                    <li class="global-navigation__child@if(link.currentFor(page)){ global-navigation__child--current}">
                                         <a class="global-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : globalSub : @link.title">
                                             @Html(link.title)
-                                            @if(link.currentFor(metaData)){
+                                            @if(link.currentFor(page)){
                                                 <span class="u-h">selected</span>
                                             }
                                         </a>

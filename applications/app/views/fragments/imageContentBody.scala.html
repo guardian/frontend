@@ -1,12 +1,10 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
-@import conf.switches.Switches._
-@import views.support.TrailCssClasses.articleToneClass
 @import layout.ContentWidths.ImageContentMedia
 
 @defining(page.image) { image =>
 
 <div class="l-side-margins l-side-margins--media">
-    <article class="content content--media content--image tonal tonal--tone-media" itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
+    <article class="content content--media content--image tonal tonal--tone-media" itemprop="mainContentOfPage" itemscope itemtype="@image.metadata.schemaType" role="main">
 
         @fragments.headTonal(image)
 
@@ -14,10 +12,10 @@
             <div class="gs-container">
                 <div class="content__main-column content__main-column--image">
 
-                    @image.mainPicture.map { picture =>
+                    @image.elements.mainPicture.map { picture =>
                         @fragments.img(
                             picture,
-                            lightboxIndex = if(image.isMainMediaLightboxable) Some(1) else None,
+                            lightboxIndex = if(image.lightBox.isMainMediaLightboxable) Some(1) else None,
                             widthsByBreakpoint = ImageContentMedia.inline
                         )
                     }

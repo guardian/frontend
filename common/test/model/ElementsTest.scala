@@ -4,8 +4,9 @@ import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => 
 import contentapi.FixtureTemplates
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 
-class ElementsTest extends FlatSpec with Matchers {
+class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   "Elements" should "find the biggest crop of the main picture" in {
     val images: Elements = Content(
@@ -20,7 +21,7 @@ class ElementsTest extends FlatSpec with Matchers {
           image("test-image-0", "main", 0, List(asset("smaller picture 1", 50), asset("biggest picture 1", 100))),
           image("test-image-1", "main", 1, "a single picture 2", 200))),
         fields = None)
-    )
+    ).elements
 
     images.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
   }
@@ -47,7 +48,7 @@ class ElementsTest extends FlatSpec with Matchers {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).trailPicture(5, 3).map(_.delegate) shouldEqual Some(theImage)
+    ).elements.trailPicture(5, 3).map(_.delegate) shouldEqual Some(theImage)
   }
 
   it should "reject images more than 1% from the desired aspect ratio" in {
@@ -57,7 +58,7 @@ class ElementsTest extends FlatSpec with Matchers {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).trailPicture(5, 3).map(_.delegate) shouldEqual None
+    ).elements.trailPicture(5, 3).map(_.delegate) shouldEqual None
   }
 
   it should "not die if an image has 0 height or width" in {
@@ -69,7 +70,7 @@ class ElementsTest extends FlatSpec with Matchers {
           thumbnailFixture((0, 300), (500, 0), (500, 300))
         ))
       )
-    ).trailPicture(5, 3) shouldBe defined
+    ).elements.trailPicture(5, 3) shouldBe defined
   }
 
   private def image(  id: String,

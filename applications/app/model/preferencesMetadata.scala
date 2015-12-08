@@ -1,15 +1,12 @@
 package model
 
-import play.api.libs.json.{JsBoolean, JsValue}
+import play.api.libs.json.JsBoolean
 
-class PreferencesMetaData extends MetaData {
-  override def id: String = "preferences"
-
-  override def section: String = "Index"
-
-  override def analyticsName: String = "Preferences"
-
-  override def webTitle: String = "Preferences"
-
-  override lazy val metaData: Map[String, JsValue] = super.metaData + ("isPreferencesPage" -> JsBoolean(true))
+class PreferencesMetaData extends StandalonePage {
+  override val metadata = MetaData.make(
+    id = "preferences",
+    section = "Index",
+    analyticsName = "Preferences",
+    webTitle = "Preferences",
+    javascriptConfigOverrides = Map("isPreferencesPage" -> JsBoolean(true)))
 }

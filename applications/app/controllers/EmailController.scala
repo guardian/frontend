@@ -9,18 +9,20 @@ import play.api.data.validation.Constraints.emailAddress
 import play.api.data.Forms._
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
+import play.api.mvc.Results._
 import play.api.mvc.{Result, Action, Controller}
 import metrics.EmailSubsciptionMetrics._
-import model.MetaData
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-object emailLandingPage extends MetaData {
-  lazy val id: String = "email-landing-page"
-  lazy val section: String = ""
-  lazy val analyticsName: String = id
-  lazy val webTitle: String = "Email Landing Page"
+object emailLandingPage extends StandalonePage {
+  private val id = "email-landing-page"
+  override val metadata = MetaData.make(
+    id = id,
+    section = "",
+    analyticsName = id,
+    webTitle = "Email Landing Page")
 }
 
 case class EmailPage(interactive: Interactive, related: RelatedContent)
@@ -94,11 +96,17 @@ object EmailController extends Controller with ExecutionContexts with Logging {
           case InvalidEmail => BadRequest("Invalid email")
           case OtherError   => InternalServerError("Internal error")
         }))
+        case _ =>
+          NotAccepted.increment()
+          NotAcceptable
       }
     }
 
     emailForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(respond(InvalidEmail)),
+      formWithErrors => {
+        log.error(s"FormErrors: ${formWithErrors.errors}")
+        EmailFormError.increment()
+        Future.successful(respond(InvalidEmail))},
 
       form => EmailForm.submit(form, listId) match {
         case Some(future) => future.map(_.status match {

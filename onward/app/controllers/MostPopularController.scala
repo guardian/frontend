@@ -5,19 +5,18 @@ import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import services.FaciaContentConvert
 import views.support.TrailCssClasses
 import scala.concurrent.Future
 import play.api.libs.json.{Json, JsArray}
 import LiveContentApi.getResponse
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
-  val page = new Page(
+  val page = SimplePage(MetaData.make(
     "most-read",
     "most-read",
     "Most read",
     "GFE:Most Read"
-  )
+  ))
 
   def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
@@ -25,7 +24,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val globalPopular: Option[MostPopular] = {
       var globalPopularContent = MostPopularAgent.mostPopular(edition)
       if (globalPopularContent.nonEmpty)
-        Some(MostPopular("across the guardian", "", globalPopularContent.map(FaciaContentConvert.frontendContentToFaciaContent)))
+        Some(MostPopular("across the guardian", "", globalPopularContent.map(_.faciaContent)))
       else
         None
     }
@@ -59,7 +58,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
-    val countryPopular = MostPopular("across the guardian", "", GeoMostPopularAgent.mostPopular(countryCode).map(FaciaContentConvert.frontendContentToFaciaContent))
+    val countryPopular = MostPopular("across the guardian", "", GeoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
     Cached(900) {
       JsonComponent(
@@ -75,8 +74,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       JsonComponent(
         "trails" -> JsArray(DayMostPopularAgent.mostPopular(countryCode).map{ trail =>
           Json.obj(
-            ("url", trail.url),
-            ("headline", trail.headline)
+            ("url", trail.content.metadata.url),
+            ("headline", trail.content.trail.headline)
           )
         })
       )
@@ -88,13 +87,13 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
     Cached(900) {
       JsonComponent(
-        "items" -> JsArray(MostPopularAgent.mostPopular(edition).zipWithIndex.map{ case (trail, index) =>
+        "items" -> JsArray(MostPopularAgent.mostPopular(edition).zipWithIndex.map{ case (item, index) =>
           Json.obj(
             ("index", index + 1),
-            ("url", trail.url),
-            ("headline", trail.headline),
-            ("thumbnail", trail.thumbnailPath),
-            ("toneClass", TrailCssClasses.articleToneClass(trail))
+            ("url", item.content.metadata.url),
+            ("headline", item.content.trail.headline),
+            ("thumbnail", item.content.trail.thumbnailPath),
+            ("toneClass", TrailCssClasses.toneClass(item.content))
           )
         })
       )
@@ -108,8 +107,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showMostViewed(true)
     ).map{response =>
       val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
-          val popular = response.mostViewed map { Content(_) } take 10
-          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(FaciaContentConvert.frontendContentToFaciaContent)))
+          val popular = response.mostViewed map { RelatedContentItem(_) } take 10
+          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
     }
   }
 }

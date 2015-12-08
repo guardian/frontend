@@ -193,16 +193,24 @@ define([
         });
 
         describe('Already visited frequency', function () {
-            it('should set 3 frequency param', function () {
-                storage.local.set('gu.alreadyVisited', 3);
-
-                expect(buildPageTargeting().fr).toEqual('3');
+            it('can pass a value of five or less', function () {
+                storage.local.set('gu.alreadyVisited', 5);
+                expect(buildPageTargeting().fr).toEqual('5');
             });
 
-            it('should set 5+ frequency param', function () {
-                storage.local.set('gu.alreadyVisited', 67);
+            it('between five and thirty, includes it in a bucket in the form "x-y"', function () {
+                storage.local.set('gu.alreadyVisited', 18);
+                expect(buildPageTargeting().fr).toEqual('16-19');
+            });
 
-                expect(buildPageTargeting().fr).toEqual('5plus');
+            it('over thirty, includes it in the bucket "30plus"', function () {
+                storage.local.set('gu.alreadyVisited', 300);
+                expect(buildPageTargeting().fr).toEqual('30plus');
+            });
+
+            it('passes a value of 0 if the value is not stored', function () {
+                storage.local.remove('gu.alreadyVisited');
+                expect(buildPageTargeting().fr).toEqual('0');
             });
         });
 

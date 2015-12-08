@@ -5,7 +5,7 @@ import common.Logging
 import conf.switches.Switches.ImageServerSwitch
 import conf.Configuration
 import layout.WidthsByBreakpoint
-import model.{Content, ImageAsset, ImageContainer, MetaData}
+import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import Function.const
@@ -164,8 +164,8 @@ object ImgSrc extends Logging {
 }
 
 object SeoThumbnail {
-  def apply(metadata: MetaData): Option[String] = metadata match {
-    case content: Content => content.thumbnail.flatMap(Item620.bestFor)
+  def apply(page: Page): Option[String] = page match {
+    case content: ContentPage => content.item.elements.thumbnail.flatMap(Item620.bestFor)
     case _ => None
   }
 }

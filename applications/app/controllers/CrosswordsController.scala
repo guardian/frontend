@@ -3,13 +3,13 @@ package controllers
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
 import common.{Edition, ExecutionContexts}
 import conf.{LiveContentApi, Static}
-import crosswords.{AccessibleCrosswordRows, CrosswordData, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
-import model.{Cached, Cors, _}
+import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
+import model._
 import org.joda.time.LocalDate
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
-import services.IndexPage
+import services.{IndexPageItem, IndexPage}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -28,7 +28,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
+        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
          CrosswordSvg(crossword, None, None, false)
       )))
     }
@@ -37,7 +37,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.accessibleCrossword(
-        new CrosswordPage(CrosswordData.fromCrossword(crossword), content),
+        new CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         AccessibleCrosswordRows(crossword)
       )))
     }
@@ -74,11 +74,11 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
     )(CrosswordLookup.apply)(CrosswordLookup.unapply)
   )
 
-  def noResults()(implicit request: RequestHeader) = Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage)))
+  def noResults()(implicit request: RequestHeader) = Cached(7.days)(Ok(views.html.crosswordsNoResults(CrosswordSearchPage.make())))
 
   def search() = Action.async { implicit request =>
     searchForm.bindFromRequest.fold(
-      empty => Future.successful(Cached(7.days)(Ok(views.html.crosswordSearch(CrosswordSearchPage)))),
+      empty => Future.successful(Cached(7.days)(Ok(views.html.crosswordSearch(CrosswordSearchPage.make())))),
 
       params => {
         val withoutSetter = LiveContentApi.item(s"crosswords/series/${params.crosswordType}")
@@ -95,8 +95,8 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
             case Nil => noResults
 
             case results =>
-              val section = Section(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
-              val page = IndexPage(section, results.map(Content(_)))
+              val section = Section.make(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
+              val page = IndexPage(section, results.map(IndexPageItem(_)))
 
               Cached(15.minutes)(Ok(views.html.index(page)))
           }

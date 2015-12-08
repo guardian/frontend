@@ -49,15 +49,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "cache other things for 1 minute" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
-    val page = new MetaData {
-      def id = ""
-
-      def section = ""
-
-      def webTitle = ""
-
-      def analyticsName = ""
-    }
+    val page = SimplePage(MetaData.make(
+      id = "",
+      section = "",
+      webTitle = "",
+      analyticsName = ""))
 
     val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
@@ -89,15 +85,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "set Surrogate-Control the same as Cache-Control" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
-    val page = new MetaData {
-      def id = ""
-
-      def section = ""
-
-      def webTitle = ""
-
-      def analyticsName = ""
-    }
+    val page = SimplePage(MetaData.make(
+      id = "",
+      section = "",
+      webTitle = "",
+      analyticsName = ""))
 
     val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
@@ -106,8 +98,8 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should equal (headers("Surrogate-Control"))
   }
 
-  private def content(lastModified: DateTime, live: Boolean): Content = {
-    Content(ApiContent(id = "foo/2012/jan/07/bar",
+  private def content(lastModified: DateTime, live: Boolean) = {
+    val content = Content(ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDateOption = Some(new DateTime),
@@ -120,5 +112,6 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
         "liveBloggingNow" -> live.toString)
       )
     ))
+    model.SimpleContentPage(content)
   }
 }

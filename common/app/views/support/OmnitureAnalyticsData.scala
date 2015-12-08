@@ -3,7 +3,7 @@ package views.support
 import java.net.URLEncoder._
 
 import conf.Configuration
-import model.{Content, MetaData}
+import model.{Page, ContentPage, MetaData}
 import play.api.libs.json.{Json, JsValue, JsString}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
@@ -22,8 +22,8 @@ object OmnitureAnalyticsAccount {
 
 object OmnitureAnalyticsData {
 
-  def apply(page: MetaData, jsSupport: String, path: String, platform: String = "frontend", extras: Map[String, String] = Map.empty)(implicit request: RequestHeader): Html = {
-    val data = page.metaData map {
+  def apply(page: Page, jsSupport: String, path: String, platform: String = "frontend", extras: Map[String, String] = Map.empty)(implicit request: RequestHeader): Html = {
+    val data = JavaScriptPage.getMap(page).map {
       case (key, JsString(s)) => key -> s
       case (key, jValue: JsValue) => key -> Json.stringify(jValue)
     }
@@ -37,11 +37,11 @@ object OmnitureAnalyticsData {
     val omnitureErrorMessage = data.getOrElse("omnitureErrorMessage", "")
 
     val isContent = page match {
-      case c: Content => true
+      case c: ContentPage => true
       case _ => false
     }
 
-    val pageName = page.analyticsName
+    val pageName = page.metadata.analyticsName
     val analyticsData = Map(
       ("g", path),
       ("ns", "guardian"),
