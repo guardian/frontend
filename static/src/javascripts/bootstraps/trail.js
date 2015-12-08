@@ -95,7 +95,7 @@ define([
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
                 if (!(ab.getParticipations().FrontsOnArticles &&
-                    ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
+                    (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
                     ab.testCanBeRun('FrontsOnArticles'))) {
                     $('.js-onward').each(function (c) {
                         new TonalComponent().fetch(c, 'html');
