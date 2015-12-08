@@ -54,31 +54,35 @@
                     <amp-list height="940" layout="fixed-height" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-mf2.json">
                         <template type="amp-mustache">
                             <div class="fc-item {{toneClass}}">
-                                <a href="{{url}}" class="fc-item__link">
-                                    <div class="fc-item__image-container">
-                                        <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
-                                    </div>
-                                    <div class="fc-item__content">
-                                        <div class="fc-item__header">
-                                            <h2 class="fc-item__title">{{headline}}</h2>
+                                <div class="fc-item__image-container">
+                                    <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
+                                </div>
+                                <div class="fc-item__content">
+                                    <div class="fc-item__header">
+                                        <h2 class="fc-item__title">
                                             {{#isComment}}
-                                                <div class="fc-item__byline">
-                                                    {{byline}}
-                                                </div>
+                                                @fragments.inlineSvg("quote", "icon")
                                             {{/isComment}}
-                                        </div>
-                                        <aside class="fc-item__meta">
-                                            <time
-                                            class="fc-item__timestamp"
-                                            data-relativeformat="short">
-                                                <span class="timestamp__text">
-                                                    <span class="u-h">Published: </span>
-                                                    {{webPublicationDate}}
-                                                </span>
-                                            </time>
-                                        </aside>
+                                            {{headline}}
+                                        </h2>
+                                        {{#isComment}}
+                                            <div class="fc-item__byline">
+                                                {{byline}}
+                                            </div>
+                                        {{/isComment}}
                                     </div>
-                                </a>
+                                    <aside class="fc-item__meta">
+                                        <time
+                                        class="fc-item__timestamp"
+                                        data-relativeformat="short">
+                                            <span class="timestamp__text">
+                                                <span class="u-h">Published: </span>
+                                                {{webPublicationDate}}
+                                            </span>
+                                        </time>
+                                    </aside>
+                                </div>
+                                <a href="{{url}}" class="fc-item__link">{{headline}}</a>
                             </div>
                         </template>
                     </amp-list>
