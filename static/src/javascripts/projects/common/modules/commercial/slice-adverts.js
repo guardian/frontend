@@ -4,9 +4,11 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/mediator',
     'common/utils/detect',
     'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp-api',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features',
     'lodash/objects/defaults',
@@ -19,9 +21,11 @@ define([
     Promise,
     $,
     config,
+    mediator,
     detect,
     idleFastdom,
     createAdSlot,
+    dfp,
     userPrefs,
     commercialFeatures,
     defaults,
@@ -29,9 +33,15 @@ define([
     map,
     chain) {
     var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3,
+        index,
         init = function (options) {
             if (!commercialFeatures.sliceAdverts) {
                 return false;
+            }
+
+            if (commercialFeatures.popularContentMPU) {
+                mediator.on('modules:geomostpopular:ready', onHeadlines);
+                mediator.on('modules:onward:geo-most-popular:ready', onHeadlines);
             }
 
             var container, containerId, $adSlice, isFrontFirst,
@@ -44,10 +54,11 @@ define([
                 ),
                 // get all the containers
                 containers   = qwery(opts.containerSelector),
-                index        = 0,
                 adSlices     = [],
                 containerGap = 1,
                 prefs        = userPrefs.get('container-states');
+
+            index = 0;
 
             // pull out ad slices which have at least x containers between them
             while (index < containers.length) {
@@ -70,34 +81,48 @@ define([
                 }
             }
 
-            return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
-                    var adName        = 'inline' + (index + 1),
-                        $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                            .addClass('ad-slot--mobile'),
-                        $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                            .addClass('ad-slot--not-mobile');
-
-                    return new Promise(function (resolve) {
-                        idleFastdom.write(function () {
-                            // add a tablet+ ad to the slice
-                            if (detect.getBreakpoint() !== 'mobile') {
-                                $adSlice
-                                    .removeClass('fc-slice__item--no-mpu')
-                                    .append($tabletAdSlot);
-                            } else {
-                                // add a mobile advert after the container
-                                $mobileAdSlot
-                                    .insertAfter($.ancestor($adSlice[0], 'fc-container'));
-                            }
-
-                            resolve(null);
-                        });
-                    });
-                }).valueOf()
-            ).then(function () {
+            return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, sliceAdvertSlot).valueOf()).then(function () {
                 return adSlices;
             });
         };
+
+    function sliceAdvertSlot($adSlice, index) {
+        var adName        = 'inline' + (index + 1),
+            $slot         = bonzo(createAdSlot(adName, 'container-inline'));
+
+        return new Promise(function (resolve) {
+            // add a tablet+ ad to the slice
+            if (detect.getBreakpoint() !== 'mobile') {
+                idleFastdom.write(function () {
+                    $slot.addClass('ad-slot--not-mobile');
+                    $adSlice
+                        .removeClass('fc-slice__item--no-mpu')
+                        .append($slot);
+                    resolve($slot);
+                });
+            } else {
+                // add a mobile advert after the container
+                idleFastdom.write(function () {
+                    $slot.addClass('ad-slot--mobile');
+                    $slot
+                        .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+                    resolve($slot);
+                });
+            }
+        });
+    }
+
+    function onHeadlines() {
+        var $li = $('.js-popular-trails .js-fc-slice-mpu-candidate-onload').first();
+        $li.removeClass('js-fc-slice-mpu-candidate-onload')
+            .addClass('fc-slice__popular-mpu')
+            .addClass('fc-slice__item--mpu-candidate');
+        sliceAdvertSlot($li, index).then(function($slot) {
+            dfp.addSlot($slot);
+        });
+        mediator.off('modules:geomostpopular:ready', onHeadlines);
+        mediator.off('modules:onward:geo-most-popular:ready', onHeadlines);
+    }
 
     return {
         init: init
