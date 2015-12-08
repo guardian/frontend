@@ -29,11 +29,17 @@ case class EmailPage(interactive: Interactive, related: RelatedContent)
 
 case class EmailForm(email: String, listId: Int)
 
-object listIds {
+object ListIds {
   val testList = 3485
   val guardianTodayUk = 37
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
+}
+
+object EmailTypes {
+  val footer = "footer"
+  val article = "article"
+  val landing = "landing"
 }
 
 object EmailForm {
@@ -41,10 +47,10 @@ object EmailForm {
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
   val listTriggers = Map(
-    listIds.testList -> 2529,
-    listIds.guardianTodayUk -> 2529,
-    listIds.guardianTodayUs -> 2564,
-    listIds.guardianTodayAu -> 2563
+    ListIds.testList -> 2529,
+    ListIds.guardianTodayUk -> 2529,
+    ListIds.guardianTodayUs -> 2564,
+    ListIds.guardianTodayAu -> 2563
   )
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
@@ -71,22 +77,21 @@ object EmailController extends Controller with ExecutionContexts with Logging {
     Cached(60)(Ok(views.html.emailLanding(emailLandingPage)))
   }
 
-  def renderForm(formType: String) = Action { implicit request =>
-    Cached(60)(Ok(views.html.emailFragment(emailLandingPage, None, formType)))
+  def renderForm(emailType: String, listId: Int) = Action { implicit request =>
+    Cached(60)(Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
   }
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {
-      case "success" => Ok(views.html.emailFragment(emailLandingPage, Some(Subscribed)))
-      case "invalid" => Ok(views.html.emailFragment(emailLandingPage, Some(InvalidEmail)))
-      case "error"   => Ok(views.html.emailFragment(emailLandingPage, Some(OtherError)))
+      case "success" => Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
+      case "invalid" => Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
+      case "error"   => Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
       case _         => NotFound
     })
   }
 
   def submit() = Action.async { implicit request =>
     AllEmailSubmission.increment()
-    val listId = listIds.guardianTodayUk
 
     def respond(result: SubscriptionResult): Result = {
       render {
@@ -132,7 +137,7 @@ object EmailController extends Controller with ExecutionContexts with Logging {
         }
 
         case None =>
-          log.error(s"Unable to find a trigger for list ID $listId")
+          log.error(s"Unable to find a trigger for list ID ${form.listId}")
           ListIDError.increment()
           Future.successful(respond(OtherError))
       })
