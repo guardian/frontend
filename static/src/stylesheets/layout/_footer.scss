@@ -121,13 +121,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-right: gs-span(1) + $gs-gutter;
     }
 
-    // no-email is out of A/B test
-    .l-footer__secondary--no-email & {
-        @include mq(leftCol) {
-            @include columns(4, $gs-gutter);
-        }
-    }
-
     a {
         display: inline-block;
         padding-bottom: $gs-baseline;
@@ -159,24 +152,16 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         width: gs-span(3);
     }
 
-    .l-footer__secondary--has-email & {
-        @include mq($from: mobileLandscape, $until: tablet) {
-            padding-right: 50%;
-        }
-        @include mq(leftCol) {
-            width: gs-span(5);
-            padding-right: gs-span(1);
-        }
-        @include mq(wide) {
-            width: gs-span(6);
-            padding-right: gs-span(2);
-        }
+    @include mq($from: mobileLandscape, $until: tablet) {
+        padding-right: 50%;
     }
-
-    .l-footer__secondary--no-email & {
-        @include mq($from: leftCol, $until: wide) {
-            width: gs-span(2);
-        }
+    @include mq(leftCol) {
+        width: gs-span(5);
+        padding-right: gs-span(1);
+    }
+    @include mq(wide) {
+        width: gs-span(6);
+        padding-right: gs-span(2);
     }
 
     .button {
@@ -187,14 +172,9 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         }
 
         @include mq(tablet) {
-            display: block;
+            display: inline-block;
             margin-bottom: $gs-baseline;
-            width: 136px; // required to fit longer text
-
-            .l-footer__secondary--has-email & {
-                display: inline-block;
-                width: auto;
-            }
+            width: auto;
         }
     }
 }
