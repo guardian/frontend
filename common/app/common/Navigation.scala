@@ -37,10 +37,6 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
       Some(page.metadata.section)
     ).flatten.contains(name.href.stripPrefix("/")) || page.metadata.url == name.href
   }
-
-  // arbitrary cutoff, feel free to tweak - https://github.com/guardian/frontend/pull/9487
-  val repelCutout: Boolean = links.size > 5
-
 }
 
 trait Navigation {
