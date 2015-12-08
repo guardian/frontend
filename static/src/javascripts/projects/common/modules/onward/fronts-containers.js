@@ -56,10 +56,10 @@ define([
         insertContainers(edition, $('.js-fronts-network-2'), 2, offset, toFilter, function () {});
     }
 
-    function insertContainers(section, $el, num, offset, size, callback) {
+    function insertContainers(section, $el, num, offset, sectionToFilter, callback) {
         proximityLoader.add($el, 1500, function () {
             fastdom.write(function () {
-                injectContainer.injectContainer('/container/' + section + '/some/' + num + '/' + offset + '/' + size + '.json', $el, 'inject-network-front-' + num, callback);
+                injectContainer.injectContainer('/container/' + section + '/some/' + num + '/' + offset + '/' + sectionToFilter + '/' + edition + '.json', $el, 'inject-network-front-' + num, callback);
             });
         });
     }
