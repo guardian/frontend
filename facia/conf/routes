@@ -4,32 +4,32 @@
 
 
 # For dev machines
-GET        /assets/*path                                                 dev.DevAssetsController.at(path)
+GET        /assets/*path                                                            dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                 conf.HealthCheck.healthcheck()
-GET        /_fronts_cdn_healthcheck                                      conf.HealthCheck.cdnHealthcheck()
+GET        /_healthcheck                                                            conf.HealthCheck.healthcheck()
+GET        /_fronts_cdn_healthcheck                                                 conf.HealthCheck.cdnHealthcheck()
 
-GET        /_agentcontents                                               controllers.FaciaController.renderAgentContents
+GET        /_agentcontents                                                          controllers.FaciaController.renderAgentContents
 
-GET        /humans.txt                                                   controllers.Assets.at(path="/public", file="humans.txt")
-GET        /rockabox/rockabox_buster.html                                controllers.Assets.at(path="/public", file="rockabox_buster.html")
-GET        /external/eyeblaster/addineyeV2.html                          controllers.Assets.at(path="/public", file="addineyeV2.html")
+GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
+GET        /rockabox/rockabox_buster.html                                           controllers.Assets.at(path="/public", file="rockabox_buster.html")
+GET        /external/eyeblaster/addineyeV2.html                                     controllers.Assets.at(path="/public", file="addineyeV2.html")
 
 
 #Facia Press
-GET        /collection/*id/rss                                           controllers.FaciaController.renderCollectionRss(id)
-GET        /container/use-layout/*id.json                                controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
-GET        /container/essential-read/:contentSource/:edition.json        controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
-GET        /container/*path/some/:num/:offset/:size.json                controllers.FaciaController.renderSomeFrontContainers(path, num, offset, size)
-GET        /container/*id.json                                           controllers.FaciaController.renderContainerJson(id)
-GET        /most-relevant-container/*path.json                           controllers.FaciaController.renderMostRelevantContainerJson(path)
+GET        /collection/*id/rss                                                      controllers.FaciaController.renderCollectionRss(id)
+GET        /container/use-layout/*id.json                                           controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
+GET        /container/essential-read/:contentSource/:edition.json                   controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
+GET        /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json  controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
+GET        /container/*id.json                                                      controllers.FaciaController.renderContainerJson(id)
+GET        /most-relevant-container/*path.json                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
 # Editionalised pages
-GET        /*path/show-more/*id.json                                     controllers.FaciaController.renderShowMore(path, id)
-GET        /rss                                                          controllers.FaciaController.renderRootFrontRss()
-GET        /*path/rss                                                    controllers.FaciaController.renderFrontRss(path)
-GET        /*path/lite.json                                              controllers.FaciaController.renderFrontJsonLite(path)
-GET        /*path/deduped.json                                           controllers.DedupedController.getDedupedForPath(path)
-GET        /*path.json                                                   controllers.FaciaController.renderFrontJson(path)
-GET        /                                                             controllers.FaciaController.rootEditionRedirect()
-GET        /*path                                                        controllers.FaciaController.renderFront(path)
+GET        /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
+GET        /rss                                                                     controllers.FaciaController.renderRootFrontRss()
+GET        /*path/rss                                                               controllers.FaciaController.renderFrontRss(path)
+GET        /*path/lite.json                                                         controllers.FaciaController.renderFrontJsonLite(path)
+GET        /*path/deduped.json                                                      controllers.DedupedController.getDedupedForPath(path)
+GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
+GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
+GET        /*path                                                                   controllers.FaciaController.renderFront(path)

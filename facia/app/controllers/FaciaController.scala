@@ -46,7 +46,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id, false)
 
-  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String) = MemcachedAction { implicit request =>
+  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = MemcachedAction { implicit request =>
     def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, Edition(request)), num, offset, sectionNameToFilter).map { collections =>
       Cached(60) {
         val containers = collections.getOrElse(List()).zipWithIndex.map { case (collection: PressedCollection, index) =>
