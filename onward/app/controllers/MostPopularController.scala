@@ -5,7 +5,7 @@ import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import views.support.TrailCssClasses
+import views.support.{Format, TrailCssClasses}
 import scala.concurrent.Future
 import play.api.libs.json.{Json, JsArray}
 import LiveContentApi.getResponse
@@ -93,7 +93,13 @@ object MostPopularController extends Controller with Logging with ExecutionConte
             ("url", item.content.metadata.url),
             ("headline", item.content.trail.headline),
             ("thumbnail", item.content.trail.thumbnailPath),
-            ("toneClass", TrailCssClasses.toneClass(item.content))
+            ("toneClass", TrailCssClasses.toneClass(item.content)),
+            ("isComment", item.content.tags.isComment),
+            ("byline", item.content.trail.byline),
+            ("isVideo", item.content.tags.isVideo),
+            ("isAudio", item.content.tags.isAudio),
+            ("isGallery", item.content.tags.isGallery),
+            ("webPublicationDate", Format(item.content.trail.webPublicationDate, "d MMM y"))
           )
         })
       )
