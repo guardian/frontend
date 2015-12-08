@@ -117,7 +117,7 @@ define([
         $li.removeClass('js-fc-slice-mpu-candidate-onload')
             .addClass('fc-slice__popular-mpu')
             .addClass('fc-slice__item--mpu-candidate');
-        sliceAdvertSlot($li, index).then(function($slot) {
+        sliceAdvertSlot($li, index).then(function ($slot) {
             dfp.addSlot($slot);
         });
         mediator.off('modules:geomostpopular:ready', onHeadlines);
