@@ -31,14 +31,14 @@ object CreativeTemplate extends Logging with implicits.Collections {
 
     val relabelledDuplicates = duplicate.flatMap {
       case (label, labelParams) =>
-        val tail = labelParams.tail.zipWithIndex.map {
+        val tail = labelParams.tail.sortBy(_._2.toLong).zipWithIndex.map {
           case ((lbl, value), index) => s"$lbl.${index + 1}" -> value
         }
         labelParams.head +: tail
     }.toSeq
 
     (unique.values.flatten ++ relabelledDuplicates).toSeq.sortBy {
-      case (_, value) => value
+      case (_, value) => value.toLong
     }
   }
 
