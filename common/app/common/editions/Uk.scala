@@ -16,20 +16,18 @@ object Uk extends Edition(
 
   implicit val UK = Uk
 
-  import Switches.RugbyWorldCupswitch
   val sportLocalNav: Seq[SectionLink] = Seq(
     football,
     cricket,
-
-    // TODO delete & replace with rugbyUnion
-    rugbyWorldCup, //rugbyunion
+    rugbyunion,
     formulaOne,
     tennis,
     golf,
     cycling,
     boxing,
     racing,
-    rugbyLeague
+    rugbyLeague,
+    usSport
   )
 
   val cultureLocalNav: Seq[SectionLink] = Seq(

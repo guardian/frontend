@@ -1,10 +1,9 @@
 define([
-    'common/utils/_',
-    'common/modules/crosswords/anagram-helper/main'
+    'common/modules/crosswords/anagram-helper/main',
+    'lodash/collections/sortBy'
 ], function (
-    _,
-    AnagramHelper
-) {
+    AnagramHelper,
+    sortBy) {
     var cases = [{
         entries: ['', '', '', '', 'l', '', 'e'],
         word: 'liberal',
@@ -31,7 +30,7 @@ define([
                 });
                 var result = helper.shuffleWord(testCase.word, entries);
 
-                expect(_.sortBy(result, sort)).toEqual(_.sortBy(testCase.expected, sort));
+                expect(sortBy(result, sort)).toEqual(sortBy(testCase.expected, sort));
             });
         });
     });

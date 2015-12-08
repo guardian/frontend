@@ -3,7 +3,6 @@
 // This file is only required by core, and so has a long cache time.
 
 define([
-    'common/utils/_',
     'inlineSvg!svgs/icon/comment-16',
     'inlineSvg!svgs/icon/marque-36',
     'inlineSvg!svgs/icon/marque-54',
@@ -32,12 +31,8 @@ define([
     'inlineSvg!svgs/icon/share-pinterest',
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
-    'inlineSvg!svgs/logo/membership-logo',
-    'inlineSvg!svgs/commercial/thrasher-benefit-icon',
-    'inlineSvg!svgs/commercial/survey-overlay',
-    'inlineSvg!svgs/commercial/survey-new'
+    'lodash/objects/isArray'
 ], function (
-    _,
     commentCount16icon,
     marque36icon,
     marque54icon,
@@ -66,11 +61,7 @@ define([
     sharePinterest,
     shareGPlus,
     externalLink,
-    membershipLogo,
-    thrasherBenefit,
-    surveyOverlay,
-    surveyNew
-) {
+    isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
@@ -99,11 +90,7 @@ define([
         shareFacebook: shareFacebook,
         sharePinterest: sharePinterest,
         shareGPlus: shareGPlus,
-        externalLink: externalLink,
-        membershipLogo: membershipLogo,
-        surveyOverlay: surveyOverlay,
-        surveyNew: surveyNew,
-        thrasherBenefit: thrasherBenefit
+        externalLink: externalLink
     };
 
     return function (name, classes, title) {
@@ -111,7 +98,7 @@ define([
 
         // Only mess with classes if we actually need to.
         if (classes) {
-            if (_.isArray(classes)) {
+            if (isArray(classes)) {
                 svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
                 // Some environments don't support or don't always expose the console object

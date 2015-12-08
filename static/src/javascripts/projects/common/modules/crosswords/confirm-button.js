@@ -1,12 +1,11 @@
 define([
     'react',
     'classnames',
-    'common/utils/_'
+    'lodash/objects/assign'
 ], function (
     React,
     classNames,
-    _
-) {
+    assign) {
     var ConfirmButton = React.createClass({
         getInitialState: function () {
             this.timeout = this.props.timeout || 2000;
@@ -29,7 +28,7 @@ define([
                     this.setState({
                         confirming: false
                     });
-                }, this.timeout);
+                }.bind(this), this.timeout);
             }
         },
 
@@ -46,7 +45,7 @@ define([
 
             return React.createElement(
                 'button',
-                _.assign({}, this.props, {
+                assign({}, this.props, {
                     onClick: this.confirm,
                     className: className
                 }, this),

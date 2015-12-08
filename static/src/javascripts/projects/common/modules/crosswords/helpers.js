@@ -1,10 +1,35 @@
 define([
-    'common/utils/_',
-    './constants'
+    './constants',
+    'lodash/arrays/findIndex',
+    'lodash/collections/find',
+    'lodash/collections/map',
+    'lodash/collections/forEach',
+    'lodash/arrays/flatten',
+    'lodash/arrays/first',
+    'lodash/collections/reduce',
+    'lodash/collections/contains',
+    'lodash/collections/every',
+    'lodash/arrays/range',
+    'lodash/arrays/uniq',
+    'lodash/collections/filter',
+    'lodash/collections/some',
+    'common/utils/chain'
 ], function (
-    _,
-    constants
-) {
+    constants,
+    findIndex,
+    find,
+    map,
+    forEach,
+    flatten,
+    first,
+    reduce,
+    contains,
+    every,
+    range,
+    uniq,
+    filter,
+    some,
+    chain) {
     var getLastCellInClue = function (clue) {
         var ax = {
             'true': 'x',
@@ -31,26 +56,26 @@ define([
     };
 
     var getNextClueInGroup = function (entries, clue) {
-        var newClueId = clue.group[_.findIndex(clue.group, function (id) {
+        var newClueId = clue.group[findIndex(clue.group, function (id) {
             return id === clue.id;
         }) + 1];
-        return _.find(entries, {
+        return find(entries, {
             id: newClueId
         });
     };
 
     var getPreviousClueInGroup = function (entries, clue) {
-        var newClueId = clue.group[_.findIndex(clue.group, function (id) {
+        var newClueId = clue.group[findIndex(clue.group, function (id) {
             return id === clue.id;
         }) - 1];
-        return _.find(entries, {
+        return find(entries, {
             id: newClueId
         });
     };
 
     var getGroupEntriesForClue = function (entries, group) {
-        return _.map(group, function (clueId) {
-            return _.find(entries, {
+        return map(group, function (clueId) {
+            return find(entries, {
                 id: clueId
             });
         });
@@ -64,10 +89,10 @@ define([
 
         var k = {};
 
-        _.forEach([',', '-'], function (separator) {
+        forEach([',', '-'], function (separator) {
             var cnt = 0;
-            var flattenedSeparators = _.flatten(_.map(clues, function (clue) {
-                var seps = _.map(clue.separatorLocations[separator], function (s) {
+            var flattenedSeparators = flatten(map(clues, function (clue) {
+                var seps = map(clue.separatorLocations[separator], function (s) {
                     return s + cnt;
                 });
                 cnt += clue.length;
@@ -79,15 +104,15 @@ define([
     };
 
     var getClueForGroupedEntries = function (clueGroup) {
-        return _.first(clueGroup).clue;
+        return first(clueGroup).clue;
     };
 
     var getNumbersForGroupedEntries = function (clueGroup) {
-        return _.first(clueGroup).humanNumber;
+        return first(clueGroup).humanNumber;
     };
 
     var getTtotalLengthOfGroup = function (clueGroup) {
-        var length = _.reduce(clueGroup, function (total, clue) {
+        var length = reduce(clueGroup, function (total, clue) {
             var t = total += clue.length;
             return t;
         }, 0);
@@ -110,11 +135,11 @@ define([
     };
 
     var cluesAreInGroup = function (clue, otherClue) {
-        return _.contains(otherClue.group, clue.id);
+        return contains(otherClue.group, clue.id);
     };
 
     var checkClueHasBeenAnswered = function (grid, entry) {
-        return _.every(cellsForEntry(entry), function (position) {
+        return every(cellsForEntry(entry), function (position) {
             return (/^[A-Z]$/.test(grid[position.x][position.y].value));
         });
     };
@@ -128,12 +153,12 @@ define([
     };
 
     var cellsForEntry = function (entry) {
-        return isAcross(entry) ? _.map(_.range(entry.position.x, entry.position.x + entry.length), function (x) {
+        return isAcross(entry) ? map(range(entry.position.x, entry.position.x + entry.length), function (x) {
             return {
                 x: x,
                 y: entry.position.y
             };
-        }) : _.map(_.range(entry.position.y, entry.position.y + entry.length), function (y) {
+        }) : map(range(entry.position.y, entry.position.y + entry.length), function (y) {
             return {
                 x: entry.position.x,
                 y: y
@@ -144,7 +169,7 @@ define([
     var cellsForClue = function (entries, clue) {
         if (clueIsInGroup(clue)) {
             var entriesForClue = getGroupEntriesForClue(entries, clue.group);
-            return _.flatten(_.map(entriesForClue, function (entry) {
+            return flatten(map(entriesForClue, function (entry) {
                 return cellsForEntry(entry);
             }));
         } else {
@@ -159,7 +184,7 @@ define([
     var getClearableCellsForClue = function (grid, clueMap, entries, clue) {
         if (clueIsInGroup(clue)) {
             var entriesForClue = getGroupEntriesForClue(entries, clue.group);
-            return _.uniq(_.flatten(_.map(entriesForClue, function (entry) {
+            return uniq(flatten(map(entriesForClue, function (entry) {
                 return getClearableCellsForEntry(grid, clueMap, entries, entry);
             })), function (cell) {
                 return [cell.x, cell.y].join();
@@ -171,7 +196,7 @@ define([
 
     var getClearableCellsForEntry = function (grid, clueMap, entries, entry) {
         var direction = entry.direction === 'across' ? 'down' : 'across';
-        return _.filter(cellsForEntry(entry), function (cell) {
+        return filter(cellsForEntry(entry), function (cell) {
             var clues = cluesFor(clueMap, cell.x, cell.y);
             var otherClue = clues[direction];
             if (otherClue) {
@@ -185,8 +210,8 @@ define([
      * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
      */
     var buildGrid = function (rows, columns, entries, savedState) {
-        var grid = _.map(_.range(columns), function (x) {
-            return _.map(_.range(rows), function (y) {
+        var grid = map(range(columns), function (x) {
+            return map(range(rows), function (y) {
                 return {
                     isHighlighted: false,
                     isEditable: false,
@@ -197,13 +222,13 @@ define([
             });
         });
 
-        _.forEach(entries, function (entry) {
+        forEach(entries, function (entry) {
             var x = entry.position.x;
             var y = entry.position.y;
 
             grid[x][y].number = entry.number;
 
-            _.forEach(cellsForEntry(entry), function (cell) {
+            forEach(cellsForEntry(entry), function (cell) {
                 grid[cell.x][cell.y].isEditable = true;
             });
         });
@@ -220,8 +245,8 @@ define([
     var buildClueMap = function (clues) {
         var map = {};
 
-        _.forEach(clues, function (clue) {
-            _.forEach(cellsForEntry(clue), function (cell) {
+        forEach(clues, function (clue) {
+            forEach(cellsForEntry(clue), function (cell) {
                 var key = clueMapKey(cell.x, cell.y);
 
                 if (map[key] === undefined) {
@@ -241,8 +266,8 @@ define([
 
     /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
     var buildSeparatorMap = function (clues) {
-        return _(clues).map(function (clue) {
-            return _.map(clue.separatorLocations, function (locations, separator) {
+        return chain(clues).and(map, function (clue) {
+            return map(clue.separatorLocations, function (locations, separator) {
                 return locations.map(function (location) {
                     var key = isAcross(clue) ? clueMapKey(clue.position.x + location, clue.position.y) : clueMapKey(clue.position.x, clue.position.y + location);
 
@@ -253,7 +278,7 @@ define([
                     };
                 });
             });
-        }).flatten().reduce(function (map, d) {
+        }).and(flatten).and(reduce, function (map, d) {
             if (map[d.key] === undefined) {
                 map[d.key] = {};
             }
@@ -261,11 +286,11 @@ define([
             map[d.key][d.direction] = d.separator;
 
             return map;
-        }, {});
+        }, {}).value();
     };
 
     var entryHasCell = function (entry, x, y) {
-        return _.any(cellsForEntry(entry), function (cell) {
+        return some(cellsForEntry(entry), function (cell) {
             return cell.x === x && cell.y === y;
         });
     };
@@ -276,8 +301,8 @@ define([
     };
 
     var mapGrid = function (grid, f) {
-        return _.map(grid, function (col, x) {
-            return _.map(col, function (cell, y) {
+        return map(grid, function (col, x) {
+            return map(col, function (cell, y) {
                 return f(cell, x, y);
             });
         });

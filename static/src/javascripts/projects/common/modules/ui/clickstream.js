@@ -1,14 +1,15 @@
 define([
     'bean',
-    'common/utils/_',
     'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'lodash/objects/merge',
+    'lodash/collections/map'
 ], function (
     bean,
-    _,
     mediator,
-    ab
-) {
+    ab,
+    merge,
+    map) {
 
     var Clickstream = function (opts) {
 
@@ -68,7 +69,7 @@ define([
                 }
 
                 var customEventProperties = JSON.parse(el.getAttribute('data-custom-event-properties') || '{}');
-                spec.customEventProperties = _.merge(customEventProperties, spec.customEventProperties);
+                spec.customEventProperties = merge(customEventProperties, spec.customEventProperties);
 
                 if (!spec.validTarget) {
                     spec.validTarget = filterSource(elName).length > 0 || !!forceValid;
@@ -110,7 +111,7 @@ define([
                 // prefix ab tests to the click spec
                 applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests !== undefined && applicableTests.length > 0) {
-                    clickSpec.tag = _.map(applicableTests, function (test) {
+                    clickSpec.tag = map(applicableTests, function (test) {
                         var variant = ab.getTestVariantId(test);
                         return 'AB,' + test + ',' + variant + ',' + clickSpec.tag;
                     }).join(',');

@@ -1,22 +1,21 @@
 define([
-    'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/commercial/badges',
-    'common/modules/component'
+    'common/modules/component',
+    'lodash/arrays/union'
 ], function (
-    _,
     config,
     mediator,
     register,
     badges,
-    Component
-) {
+    Component,
+    union) {
 
     var getTag = function () {
         var seriesAndBlogTags = config.page.blogIds.split(',').concat([config.page.seriesId]);
-        return _.union(config.page.nonKeywordTagIds.split(','), seriesAndBlogTags).shift();
+        return union(config.page.nonKeywordTagIds.split(','), seriesAndBlogTags).shift();
     };
 
     function OnwardContent(context) {

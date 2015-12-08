@@ -22,7 +22,7 @@ object OmnitureAnalyticsAccount {
 
 object OmnitureAnalyticsData {
 
-  def apply(page: MetaData, jsSupport: String, path: String, platform: String = "frontend")(implicit request: RequestHeader): Html = {
+  def apply(page: MetaData, jsSupport: String, path: String, platform: String = "frontend", extras: Map[String, String] = Map.empty)(implicit request: RequestHeader): Html = {
     val data = page.metaData map {
       case (key, JsString(s)) => key -> s
       case (key, jValue: JsValue) => key -> Json.stringify(jValue)
@@ -68,7 +68,7 @@ object OmnitureAnalyticsData {
       ("event", omnitureEvent),
       ("v23", registrationType),
       ("e27", omnitureErrorMessage)
-    )
+    ) ++ extras
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString "&")
   }

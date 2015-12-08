@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/storage',
@@ -9,10 +8,17 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'text!facia/views/liveblog-block.html'
+    'text!facia/views/liveblog-block.html',
+    'lodash/arrays/compact',
+    'lodash/objects/isUndefined',
+    'lodash/collections/forEach',
+    'lodash/functions/debounce',
+    'lodash/collections/filter',
+    'lodash/objects/isEmpty',
+    'lodash/collections/map',
+    'common/utils/chain'
 ], function (
     bonzo,
-    _,
     $,
     ajax,
     storage,
@@ -21,8 +27,15 @@ define([
     mediator,
     detect,
     fastdomPromise,
-    blockTemplate
-) {
+    blockTemplate,
+    compact,
+    isUndefined,
+    forEach,
+    debounce,
+    filter,
+    isEmpty,
+    map,
+    chain) {
     var animateDelayMs = 2000,
         animateAfterScrollDelayMs = 500,
         refreshSecs = 30,
@@ -57,32 +70,28 @@ define([
             ariaHidden: !block.isNew,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
-            text: _.compact([block.title, block.body.slice(0, 500)]).join('. '),
+            text: compact([block.title, block.body.slice(0, 500)]).join('. '),
             index: index + 1
         });
     }
 
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
-        var fakeUpdate = _.isUndefined(oldBlockDate);
+        var fakeUpdate = isUndefined(oldBlockDate);
 
-        _.forEach(targets, function (element) {
+        forEach(targets, function (element) {
             var hasNewBlock = false,
                 wrapperClasses = [
                     'fc-item__liveblog-blocks__inner',
                     'u-faux-block-link__promote'
                 ],
-                blocksHtml = _.chain(blocks)
-                    .slice(0, 2)
-                    .map(function (block, index) {
+                blocksHtml = chain(blocks).slice(0, 2).and(map, function (block, index) {
                         if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
                             block.isNew = true;
                             hasNewBlock = true;
                             wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
                         }
                         return renderBlock(articleId, block, index);
-                    })
-                    .slice(0, hasNewBlock ? 2 : 1)
-                    .value(),
+                    }).slice(0, hasNewBlock ? 2 : 1).value(),
 
                 el = bonzo.create(
                     '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'
@@ -106,7 +115,7 @@ define([
             var animateOnScroll;
 
             if (!didAnimate) {
-                animateOnScroll = _.debounce(function () {
+                animateOnScroll = debounce(function () {
                     maybeAnimateBlocks(el, true).then(function (didAnimate) {
                         if (didAnimate) {
                             mediator.off('window:throttledScroll', animateOnScroll);
@@ -138,7 +147,7 @@ define([
     }
 
     function sanitizeBlocks(blocks) {
-        return _.filter(blocks, function (block) {
+        return filter(blocks, function (block) {
             return block.id && block.publishedDateTime && block.body && block.body.length >= 10;
         });
     }
@@ -160,10 +169,10 @@ define([
         .then(function (elementsById) {
             var oldBlockDates;
 
-            if (!_.isEmpty(elementsById)) {
+            if (!isEmpty(elementsById)) {
                 oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
-                _.forEach(elementsById, function (elements, articleId) {
+                forEach(elementsById, function (elements, articleId) {
                     ajax({
                         url: '/' + articleId + '.json?rendered=false',
                         type: 'json',

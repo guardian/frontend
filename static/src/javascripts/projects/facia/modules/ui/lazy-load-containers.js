@@ -2,23 +2,22 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'common/utils/_',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'lodash/functions/throttle'
 ], function (
     bonzo,
     fastdom,
     qwery,
-    _,
     detect,
-    mediator
-) {
+    mediator,
+    throttle) {
     var distanceBeforeLoad = detect.getViewport().height;
 
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
             containers = qwery('.js-container--lazy-load'),
-            lazyLoad = _.throttle(function () {
+            lazyLoad = throttle(function () {
                 if (containers.length === 0) {
                     mediator.off('window:throttledScroll', lazyLoad);
                 } else {
