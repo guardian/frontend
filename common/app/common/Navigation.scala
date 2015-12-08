@@ -220,7 +220,7 @@ trait Navigation {
 
   // Guardian newspaper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
-  val editorialsandletters = SectionLink("todayspaper", "editorials and letters", "Editorials and Letters", "/theguardian/mainsection/editorialsandreply")
+  val editorialsandletters = SectionLink("todayspaper", "editorials & letters", "Editorials & Letters", "/theguardian/mainsection/editorialsandreply")
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
@@ -230,6 +230,7 @@ trait Navigation {
 
   // Observer newspaper
   val sundayPaper = SectionLink("theobserver", "sunday's paper", "The Observer", "/theobserver")
+  val observerComment = SectionLink("theobserver", "comment", "The Observer Comment", "/theobserver/news/comment")
   val observerNewReview = SectionLink("theobserver", "the new review", "Observer The New Review", "/theobserver/new-review")
   val observerMagazine = SectionLink("theobserver", "observer magazine", "Observer Magazine", "/theobserver/magazine")
 
