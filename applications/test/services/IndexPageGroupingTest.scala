@@ -4,12 +4,13 @@ import java.util.UUID
 
 import model.Content
 import org.joda.time.{LocalDate, DateTimeZone, DateTime}
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import contentapi.FixtureTemplates.emptyApiContent
 import IndexPageGrouping.fromContent
 import common.JodaTime._
+import test.ConfiguredTestSuite
 
-class IndexPageGroupingTest extends FlatSpec with Matchers {
+@DoNotDiscover class IndexPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val timeZone = DateTimeZone.forOffsetHours(0)
 
   def makeFixture(dateTime: DateTime) = Content(
@@ -24,10 +25,10 @@ class IndexPageGroupingTest extends FlatSpec with Matchers {
       makeFixture(new DateTime(1987, 2, 5, 13, 0, 0, timeZone))
     )
 
-    fromContent(fixtures, timeZone) shouldEqual Seq(
+    fromContent(fixtures.map(_.content), timeZone) shouldEqual Seq(
       Day(
         new LocalDate(1987, 2, 5),
-        fixtures.sortBy(_.webPublicationDate).reverse
+        fixtures.sortBy(_.trail.webPublicationDate).reverse.map(_.content)
       )
     )
   }
@@ -38,10 +39,10 @@ class IndexPageGroupingTest extends FlatSpec with Matchers {
       makeFixture(new DateTime(1987, 2, 6, 13, 0, 0, timeZone))
     )
 
-    fromContent(fixtures, timeZone) shouldEqual Seq(
+    fromContent(fixtures.map(_.content), timeZone) shouldEqual Seq(
       Month(
         new LocalDate(1987, 2, 1),
-        fixtures.sortBy(_.webPublicationDate).reverse
+        fixtures.sortBy(_.trail.webPublicationDate).reverse.map(_.content)
       )
     )
   }

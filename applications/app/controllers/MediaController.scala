@@ -11,7 +11,9 @@ import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-case class MediaPage(media: Media, related: RelatedContent)
+case class MediaPage(media: ContentType, related: RelatedContent) extends ContentPage {
+  override lazy val item = media
+}
 
 object MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -28,10 +30,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
     )
 
     val result = response map { response =>
-      val mediaOption: Option[Media] = response.content.filter(isSupported).map {
-        case a if a.isAudio => Audio(a)
-        case v => Video(v)
-      }
+      val mediaOption: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
       val model = mediaOption map { media => MediaPage(media, RelatedContent(media, response)) }
 
       ModelOrResult(model, response)
@@ -43,7 +42,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.media(model)
     val jsonResponse = () => views.html.fragments.mediaBody(model)
-    renderFormat(htmlResponse, jsonResponse, model.media, Switches.all)
+    renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = lookup(path) map {

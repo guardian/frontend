@@ -1,33 +1,27 @@
 package model
 
-trait TagIndexPageMetaData extends MetaData {
-  val page: String
+object SubjectIndexPageMetaData {
+  private val tagType: String = "keywords"
+  private val indexFolder: String = "subjects"
+  private val signPosting = Some(IndexNav.keywordsAlpha)
 
-  val tagType: String
-
-  val indexFolder: String
-
-  override def id: String = s"index/$indexFolder/$page"
-
-  override def section: String = tagType
-
-  override def analyticsName: String = tagType
-
-  override def webTitle: String = page.capitalize
+  def make(page: String): MetaData = MetaData.make(
+    id = s"index/$indexFolder/$page",
+    section = tagType,
+    analyticsName = tagType,
+    webTitle = page.capitalize,
+    customSignPosting = signPosting)
 }
 
-class SubjectIndexPageMetaData(val page: String) extends TagIndexPageMetaData {
-  override val tagType: String = "keywords"
+object ContributorsIndexPageMetaData {
+  private val tagType: String = "contributors"
+  private val indexFolder: String = "contributors"
+  private val signPosting = Some(IndexNav.contributorsAlpha)
 
-  override val indexFolder: String = "subjects"
-
-  override def customSignPosting = Some(IndexNav.keywordsAlpha)
-}
-
-class ContributorsIndexPageMetaData(val page: String) extends TagIndexPageMetaData {
-  override val tagType: String = "contributors"
-
-  override val indexFolder: String = "contributors"
-
-  override def customSignPosting = Some(IndexNav.contributorsAlpha)
+  def make(page: String): MetaData = MetaData.make(
+    id = s"index/$indexFolder/$page",
+    section = tagType,
+    analyticsName = tagType,
+    webTitle = page.capitalize,
+    customSignPosting = signPosting)
 }

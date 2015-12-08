@@ -27,13 +27,14 @@ define([
 ) {
     function cricket() {
         var cricketScore, parentEl,
-            matchIdentifier = config.page.cricketMatch;
+            matchDate = config.page.cricketMatchDate,
+            team = config.page.cricketTeam;
 
-        if (matchIdentifier) {
+        if (matchDate && team) {
             cricketScore = new Component();
             parentEl = $('.js-cricket-score')[0];
 
-            cricketScore.endpoint = '/sport/cricket/match/' + matchIdentifier + '.json';
+            cricketScore.endpoint = '/sport/cricket/match/' + matchDate + '/' + team + '.json';
             cricketScore.fetch(parentEl, 'summary');
         }
     }

@@ -68,15 +68,15 @@ define([
          *
          * @constructor
          * @extends Component
-         * @param (Object=) $adSlot
+         * @param (Object=) adSlot
          * @param {Object=} params
          */
-        CommercialComponent = function ($adSlot, params) {
+        CommercialComponent = function (adSlot, params) {
             this.params = params || {};
             this.type   = this.params.type;
             // remove type from params
             delete this.params.type;
-            this.$adSlot    = $adSlot;
+            this.adSlot    = adSlot;
             this.components = {
                 bestbuy:        buildComponentUrl('money/bestbuys', this.params),
                 book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
@@ -88,7 +88,7 @@ define([
                 soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
                 travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
-                capiSingle:     buildComponentUrl('capi-single', merge({}, this.params, getKeywords())),
+                capiSingle:     buildComponentUrl('capi-single', this.params),
                 capi:           buildComponentUrl('capi', this.params)
             };
         };
@@ -102,7 +102,7 @@ define([
     CommercialComponent.prototype.create = function () {
         new LazyLoad({
             url: this.components[this.type],
-            container: this.$adSlot,
+            container: this.adSlot,
             beforeInsert: function (html) {
                 // Currently we are replacing the OmnitureToken with nothing. This will change once
                 // commercial components have properly been setup in the lovely mess that is Omniture!
@@ -110,13 +110,13 @@ define([
             }.bind(this),
             success: function () {
                 if (this.postLoadEvents[this.type]) {
-                    this.postLoadEvents[this.type](this.$adSlot);
+                    this.postLoadEvents[this.type](this.adSlot);
                 }
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this),
             error: function () {
-                this.$adSlot.hide();
+                bonzo(this.adSlot).hide();
             }.bind(this)
         }).load();
 

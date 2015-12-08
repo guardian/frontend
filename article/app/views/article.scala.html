@@ -1,7 +1,6 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
-@import conf.switches.Switches._
 
-@main(model.article){
+@main(model){
 }{
     @fragments.articleBody(model)
 }

@@ -7,7 +7,7 @@ import pa._
 import LiveContentApi.getResponse
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
-  lazy val url = tag.map(_.url)
+  lazy val url = tag.map(_.metadata.url)
   override lazy val name = shortName.getOrElse(team.name)
   override lazy val id = team.id
 }
@@ -104,7 +104,7 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == s"football/$name").map(_._1)
 
-  def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
+  def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
 
   def refresh(page: Int = 1) { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
@@ -118,7 +118,7 @@ object TeamMap extends ExecutionContexts with Logging {
         refresh(page + 1)
       }
 
-      val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
+      val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag.make(tag)) }.toMap
       teamAgent.send(old => old ++ tagReferences)
     }
   }
@@ -140,8 +140,8 @@ object TeamName {
 object MatchUrl {
   def apply(theMatch: FootballMatch): String = {
     (for {
-      homeTeam: String <- TeamMap(theMatch.homeTeam).tag.flatMap(_.url)
-      awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
+      homeTeam: String <- TeamMap(theMatch.homeTeam).tag.flatMap(_.metadata.url)
+      awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.metadata.url)
       if(homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/"))
     } yield {
       s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"

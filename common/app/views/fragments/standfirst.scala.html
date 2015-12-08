@@ -1,26 +1,26 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(item: model.ContentType)(implicit request: RequestHeader)
 
 @* live with empty standfirst as it is used to hook things into the page with javascript *@
 <div class="content__standfirst" data-link-name="standfirst" data-component="standfirst">
-    @content.trailText.map{ t =>
+    @item.fields.trailText.map{ t =>
 
         @defining({
             val trailText = views.support.StripHtmlTags(t)
             // description has to end in a full stop in the metadata to match google linked data standards, but
             // editorial style doesn't allow it in trail text.
-            s"$trailText${if (content.isReview) "." else ""}"
+            s"$trailText${if (item.tags.isReview) "." else ""}"
         }){ trailText =>
             <meta itemprop="description" content="@trailText" />
         }
     }
-    @content.standfirst.map { standfirst =>
+    @item.fields.standfirst.map { standfirst =>
         @defining(Edition(request)) { edition =>
             @withJsoup(BulletCleaner(
-                if(content.isImmersive && content.isArticle && content.byline) {
-                    if (standfirst.contains(content.byline.get)) {
-                        ContributorLinks(standfirst, content.contributors).toString()
+                if(item.metadata.isImmersive && item.tags.isArticle && item.trail.byline) {
+                    if (standfirst.contains(item.trail.byline.get)) {
+                        ContributorLinks(standfirst, item.tags.contributors).toString()
                     } else {
-                        standfirst + "<p>Words by" + ContributorLinks(content.byline.get, content.contributors) + "</p>"
+                        standfirst + "<p>by" + ContributorLinks(item.trail.byline.get, item.tags.contributors) + "</p>"
                     }
                 } else {
                     standfirst

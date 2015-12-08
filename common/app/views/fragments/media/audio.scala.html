@@ -10,7 +10,7 @@
         }
     </audio>
     @player.audio match {
-        case audio: Audio => {
+        case audio: model.Audio => {
             <ul class="podcast-meta u-unstyled">
                 @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                     <li class="podcast-meta__item podcast-meta__item--itunes">

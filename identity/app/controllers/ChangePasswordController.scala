@@ -16,6 +16,7 @@ import actions.AuthenticatedActions
 import play.api.i18n.{MessagesApi, Messages, I18nSupport}
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
+import tracking.Omniture
 
 @Singleton
 class ChangePasswordController @Inject()( api: IdApiClient,
@@ -62,7 +63,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
         api.passwordExists(request.user.auth) map {
           result =>
             val pwdExists = result.right.toOption exists {_ == true}
-            NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  form, pwdExists )))
+            NoCache(Ok(views.html.password.changePassword(Omniture.tracking(page, idRequest), idRequest, idUrlBuilder,  form, pwdExists )))
         }
     }
   }

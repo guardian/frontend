@@ -15,7 +15,6 @@ import form.Mappings
 import utils.SafeLogging
 import scala.concurrent.Future
 
-
 @Singleton
 class ResetPasswordController @Inject()(  api : IdApiClient,
                                           idRequestParser: IdRequestParser,

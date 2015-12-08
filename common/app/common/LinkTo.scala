@@ -36,7 +36,7 @@ trait LinkTo extends Logging {
   def apply(url: String, edition: Edition)(implicit request: RequestHeader): String =
     processUrl(url.trim, edition).url
 
-  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.url))
+  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.metadata.url))
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.header.url.get(request)

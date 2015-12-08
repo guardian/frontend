@@ -4,22 +4,24 @@ import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp.{AdSize, AdSlot, TopAboveNavSlot, TopSlot}
 import conf.switches.Switches._
-import model.MetaData
+import model.{MetaData, Page}
 
 object Commercial {
 
-  def shouldShowAds(metaData: MetaData): Boolean = metaData match {
-    case c: model.Content if c.shouldHideAdverts => false
-    case p: model.Page if p.section == "identity" => false
-    case model.CommercialExpiryPage(_) => false
+  def shouldShowAds(page: Page): Boolean = page match {
+    case c: model.ContentPage if c.item.content.shouldHideAdverts => false
+    case p: model.Page if p.metadata.section == "identity" => false
+    case p: model.CommercialExpiryPage => false
     case _ => true
   }
 
   private def hasAdOfSize(slot: AdSlot,
                           size: AdSize,
                           metaData: MetaData,
-                          edition: Edition): Boolean = {
-    metaData.sizeOfTakeoverAdsInSlot(slot, edition) contains size
+                          edition: Edition,
+                          sizesOverride: Seq[AdSize] = Nil): Boolean = {
+    val sizes = if (sizesOverride.nonEmpty) sizesOverride else metaData.sizeOfTakeoverAdsInSlot(slot, edition)
+    sizes contains size
   }
 
   object topAboveNavSlot {
@@ -35,7 +37,8 @@ object Commercial {
       )
     }
 
-    def cssClasses(metaData: MetaData, edition: Edition): String = {
+    // The sizesOverride parameter is for testing only.
+    def cssClasses(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): String = {
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
@@ -44,9 +47,9 @@ object Commercial {
 
       val sizeSpecificClass = {
         if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition)) {
+          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
             "top-banner-ad-container--small"
-          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition)) {
+          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
             "top-banner-ad-container--responsive"
           } else {
             "top-banner-ad-container--large"

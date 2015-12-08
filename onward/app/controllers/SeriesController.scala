@@ -15,10 +15,10 @@ import slices.Fixed
 
 import scala.concurrent.Future
 
-case class Series(id: String, tag: Tag, trails: Seq[Content]) {
+case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {
     case "commentisfree/commentisfree" => "opinion"
-    case _ => tag.webTitle
+    case _ => tag.metadata.webTitle
  }
 }
 
@@ -40,9 +40,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
-          val trails = response.results filterNot (isCurrentStory(_)) map (Content(_))
+          val trails = response.results filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
           if (!trails.isEmpty) {
-            Some(Series(seriesId, Tag(tag,None), trails))
+            Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
           } else { None }
         }
       }
@@ -56,8 +56,8 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val dataId = "series"
     val componentId = Some("series")
     val displayName = Some(series.displayName)
-    val properties = FrontProperties(series.tag.description, None, None, None, false, None)
-    val header = series.tag.description map { description => DescriptionMetaHeader(description) }
+    val properties = FrontProperties(series.tag.metadata.description, None, None, None, false, None)
+    val header = series.tag.metadata.description map { description => DescriptionMetaHeader(description) }
 
 
     val config = CollectionConfig.empty.copy(
@@ -67,9 +67,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val response = () => views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
-        Fixed(visuallyPleasingContainerForStories(series.trails.length)),
+        Fixed(visuallyPleasingContainerForStories(series.trails.faciaItems.length)),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails map FaciaContentConvert.frontendContentToFaciaContent take 4, Nil, displayName, None, None, None),
+        CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps
        .copy(customHeader = header),

@@ -6,7 +6,7 @@ import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import contentapi.{QueryDefaults, SectionTagLookUp, SectionsLookUp}
-import model.{Section, _}
+import model._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.mvc.{RequestHeader, Result => PlayResult}
@@ -66,13 +66,13 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
       .showFields(if (isRss) rssFields else trailFields)
     ).map {response =>
-      val trails = response.results map { Content(_) }
+      val trails = response.results.map(IndexPageItem(_))
       trails match {
         case Nil => Right(NotFound)
         case head :: _ =>
           //we can use .head here as the query is guaranteed to return the 2 tags
-          val tag1 = findTag(head, firstTag)
-          val tag2 = findTag(head, secondTag)
+          val tag1 = findTag(head.item, firstTag)
+          val tag2 = findTag(head.item, secondTag)
 
           val page = new TagCombiner(s"$leftSide+$rightSide", tag1, tag2, pagination(response))
 
@@ -87,7 +87,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   }
 
-  private def findTag(content: Content, tagId: String) = content.tags.filter(tag =>
+  private def findTag(trail: ContentType, tagId: String) = trail.content.tags.tags.filter(tag =>
     tagId.contains(tag.id))
     .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
     .head
@@ -139,26 +139,28 @@ trait Index extends ConciergeRepository with QueryDefaults {
   }
 
   private def section(apiSection: ApiSection, response: ItemResponse) = {
-    val section = Section(apiSection, pagination(response))
-    val editorsPicks = response.editorsPicks.map(Content(_))
+    val section = Section.make(apiSection, pagination(response))
+    val editorsPicks = response.editorsPicks
     val editorsPicksIds = editorsPicks.map(_.id)
-    val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
-    val trails = editorsPicks ++ latestContent
+    val latestContent = response.results.filterNot(c => editorsPicksIds contains c.id)
+    val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
+
     IndexPage(section, trails)
   }
 
   private def tag(response: ItemResponse, page: Int) = {
-    val tag = response.tag map { new Tag(_, pagination(response)) }
+    val tag = response.tag map { Tag.make(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - leadContentMaxAge
-    val editorsPicks = response.editorsPicks.map(Content(_))
+    val editorsPicks = response.editorsPicks.map(IndexPageItem(_))
     val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
-      response.leadContent.take(1).map(Content(_)).filter(_.webPublicationDate > leadContentCutOff)
+      response.leadContent.take(1).map(IndexPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
     else
       Nil
+    val leadContentIds = leadContent.map(_.item.metadata.id)
 
-    val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).contains(c.id))
-    val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id)
-    tag map { IndexPage(_, allTrails) }
+    val latest: Seq[IndexPageItem] = response.results.map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
+    val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
+    tag map { tag => IndexPage(tag, allTrails, Tags(Seq(tag))) }
   }
 
   // for some reason and for the life of me I cannot figure it out, this does not compile if these
