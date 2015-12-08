@@ -156,9 +156,7 @@ define([
             prefs[containerId] = 'closed';
             $('.fc-container-first', $fixtureContainer).attr('data-id', containerId);
             userPrefs.set('container-states', prefs);
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init().then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 done();
             });
