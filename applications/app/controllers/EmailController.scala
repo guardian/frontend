@@ -92,7 +92,6 @@ object EmailController extends Controller with ExecutionContexts with Logging {
 
   def submit() = Action.async { implicit request =>
     AllEmailSubmission.increment()
-    val listId = listIds.guardianTodayUk
 
     def respond(result: SubscriptionResult): Result = {
       render {
@@ -138,7 +137,7 @@ object EmailController extends Controller with ExecutionContexts with Logging {
         }
 
         case None =>
-          log.error(s"Unable to find a trigger for list ID $listId")
+          log.error(s"Unable to find a trigger for list ID ${form.listId}")
           ListIDError.increment()
           Future.successful(respond(OtherError))
       })
