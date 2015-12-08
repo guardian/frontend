@@ -32,6 +32,8 @@ case class EmailForm(email: String)
 object listIds {
   val testList = 3485
   val guardianTodayUk = 37
+  val guardianTodayUs = 1493
+  val guardianTodayAu = 1506
 }
 
 object EmailForm {
@@ -40,7 +42,9 @@ object EmailForm {
     */
   val listTriggers = Map(
     listIds.testList -> 2529,
-    listIds.guardianTodayUk -> 2529
+    listIds.guardianTodayUk -> 2529,
+    listIds.guardianTodayUs -> 2564,
+    listIds.guardianTodayAu -> 2563
   )
 
   def submit(form: EmailForm, listId: Int): Option[Future[WSResponse]] = {
