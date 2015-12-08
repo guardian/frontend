@@ -95,7 +95,7 @@
 .email-sub__submit-input,
 .email-sub__text-input {
     @include fs-textSans(1, $size-only: true);
-    line-height: 3;
+    line-height: 1.5;
 }
 
 .email-sub__small {
@@ -223,10 +223,6 @@
 }
 
 .email-sub__form--article {
-    .email-sub__inline-label {
-
-    }
-
     .email-sub__label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
@@ -245,6 +241,9 @@
     .email-sub__submit-input,
     .email-sub__text-input {
         @include fs-textSans(3, $size-only: true);
+    }
+
+    .email-sub__label {
         line-height: 3;
     }
 }
