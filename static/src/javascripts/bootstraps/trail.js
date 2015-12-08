@@ -45,7 +45,7 @@ define([
 ) {
     // messy but removed within a week
     var blogIdsCheck = (ab.getParticipations().FrontsOnArticles &&
-    ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
+    (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
     ab.testCanBeRun('FrontsOnArticles')) ? (config.page.blogIds && !(config.page.blogIds.indexOf('commentisfree') > -1)) : config.page.blogIds;
 
     function insertOrProximity(selector, insert) {
@@ -107,7 +107,7 @@ define([
 
     function initFrontsContainers() {
         if (config.page.section !== 'childrens-books-site' && config.page.contentType !== 'LiveBlog' && ab.getParticipations().FrontsOnArticles &&
-            ab.getParticipations().FrontsOnArticles.variant === 'variant' &&
+            (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
             ab.testCanBeRun('FrontsOnArticles')) {
             insertOrProximity('.js-onward', function () {
                 new FrontsContainers();

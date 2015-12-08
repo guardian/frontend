@@ -11,7 +11,8 @@ define([
     'lodash/collections/contains',
     'common/modules/identity/api',
     'common/utils/scroller',
-    'common/views/svgs'
+    'common/views/svgs',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     bean,
@@ -25,35 +26,53 @@ define([
     contains,
     identity,
     scroller,
-    svgs
+    svgs,
+    ab
 ) {
     var sectionsToLoadSectionFronts = ['commentisfree', 'sport', 'football', 'fashion', 'lifeandstyle', 'education', 'culture', 'business', 'technology', 'politics', 'environment', 'travel', 'film', 'media', 'money', 'society', 'science', 'music', 'books', 'stage', 'cities', 'tv-and-radio', 'artanddesign', 'global-development'],
         loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false,
-        edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase();
+        edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase(),
+        isOneAndThree = ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree';
 
     function FrontsContainers() {
         moveComments();
-        insertFirstTwo();
+        insertFirstFew();
     }
 
-    function insertFirstTwo() {
+    function insertFirstFew() {
+        var numToLoad = (isOneAndThree) ? 1 : 2;
+
         if (loadSection) {
-            insertContainers(config.page.section, $('.js-fronts-section'), 1, 0, 'original', function () {});
-            insertContainers(edition, $('.js-fronts-network-1'), 1, 0, 'none', function () {
-                insertFinalTwo();
-            });
+            insertContainers(config.page.section, $('.js-fronts-section'), 1, 0, 'none', function () {});
+
+            if(!isOneAndThree) {
+                insertContainers(edition, $('.js-fronts-network-1'), 1, 0, 'none', function () {
+                    insertFinalFew();
+                });
+            } else {
+                insertFinalFew();
+            }
         } else {
-            insertContainers(edition, $('.js-fronts-network-1'), 2, 0, 'none', function () {
-                insertFinalTwo();
+            insertContainers(edition, $('.js-fronts-network-1'), numToLoad, 0, 'none', function () {
+                insertFinalFew();
             });
         }
     }
 
-    function insertFinalTwo() {
-        var offset = (loadSection) ? 1 : 2,
-            toFilter = (config.page.section === 'sport') ? 'sport' : 'none';
+    function insertFinalFew() {
+        var toFilter = (config.page.section === 'sport') ? 'sport' : 'none',
+            offset,
+            numberToLoad = (isOneAndThree) ? 3 : 2;
 
-        insertContainers(edition, $('.js-fronts-network-2'), 2, offset, toFilter, function () {});
+        if (isOneAndThree && loadSection) {
+            offset = 0;
+        } else if ((isOneAndThree && !loadSection) || (!isOneAndThree && loadSection)) {
+            offset = 1;
+        } else {
+            offset = 2;
+        }
+
+        insertContainers(edition, $('.js-fronts-network-2'), numberToLoad, offset, toFilter, function () {});
     }
 
     function insertContainers(section, $el, num, offset, sectionToFilter, callback) {

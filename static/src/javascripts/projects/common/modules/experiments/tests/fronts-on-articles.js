@@ -28,7 +28,13 @@ define([
                 }
             },
             {
-                id: 'variant',
+                id: 'oneAndThree',
+                test: function () {
+
+                }
+            },
+            {
+                id: 'twoAndTwo',
                 test: function () {
 
                 }
