@@ -1,3 +1,18 @@
+/*
+Bundles: commercial + (enhanced-vendor + enhanced)*
+* Only if we detect we should run enhance
+
+We download the bundles in parallel, but they must be executed
+sequentially because each bundle assumes dependencies from the previous
+bundle.
+
+Once a bundle has been executed, all of its modules have been registered.
+Now we can safely require one of those modules.
+
+Unfortunately we can't do all of this using the curl API, so we use a
+combination of ajax/eval/curl instead.
+ */
+
 require(['Promise', 'lodash/collections/map'], function (Promise, map) {
     var guardian = window.guardian;
     var config = guardian.config;
@@ -39,18 +54,6 @@ require(['Promise', 'lodash/collections/map'], function (Promise, map) {
             eval(response.responseText);
         });
     };
-
-    /*
-    Bundles: commercial + (enhanced-vendor + enhanced)*
-    * Only if we detect we should run enhance
-
-    We download the bundles in parallel, but they must be executed
-    sequentially because each bundle assumes dependencies from the previous
-    bundle.
-
-    Once a bundle has been executed, all of its modules have been registered.
-    Now we can safely require one of those modules.
-     */
 
     var bootEnhanced = function () { return Promise.resolve(require(['bootstraps/enhanced'])); };
 
