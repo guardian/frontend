@@ -67,11 +67,11 @@ define([
             listIdHiddenInput: 'js-email-sub__listid-input'
         },
         formSubmission = {
-            bindSubmit: function ($form) {
+            bindSubmit: function ($form, analytics) {
                 var url = config.page.ajaxUrl + '/email';
-                bean.on($form[0], 'submit', this.submitForm($form, url));
+                bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
             },
-            submitForm: function ($form, url) {
+            submitForm: function ($form, url, analytics) {
                 /**
                  * simplistic email address validation to prevent misfired
                  * omniture events
@@ -96,7 +96,7 @@ define([
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
+                            omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe clicked');
 
                             return ajax({
                                 url: url,
@@ -107,11 +107,11 @@ define([
                                 }
                             })
                             .then(function () {
-                                omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe successful');
                             })
                             .then(handleSubmit(true, $form))
                             .catch(function () {
-                                omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
+                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
                                 handleSubmit(false, $form);
                             });
                         });
@@ -214,9 +214,13 @@ define([
                 $('.' + classes.wrapper, thisRootEl).each(function (el) {
                     var $el = $(el),
                         freezeHeight = ui.freezeHeight($el, false),
-                        freezeHeightReset = ui.freezeHeight($el, true);
+                        freezeHeightReset = ui.freezeHeight($el, true),
+                        $formEl = $('.' + classes.form, el);
 
-                    formSubmission.bindSubmit($('.' + classes.form, el));
+                    formSubmission.bindSubmit($formEl, {
+                        formType: $formEl.data('email-form-type'),
+                        listId: $formEl.data('email-list-id')
+                    });
 
                     // If we're in an iframe, we should check whether we need to add a title and description
                     // from the data attributes on the iframe (eg: allowing us to set them from composer)
