@@ -35,6 +35,8 @@ object Creative extends Logging {
 
     log.info(s"Replacing creative ${origin.getId}")
 
+    def mkString(licas: Seq[LineItemCreativeAssociation]): String = licas.map(_.getLineItemId).mkString(", ")
+
     val templateCreative: Option[TemplateCreative] = {
 
       for {
@@ -95,17 +97,29 @@ object Creative extends Logging {
             }
             log.info(s"Created new template creative ${created.getId}: params ${params mkString ", "}")
 
-            val existingLicas = session.lineItemCreativeAssociations.get(
-              new StatementBuilder().where("creativeId = :creativeId").withBindVariableValue("creativeId", origin.getId)
-            )
-            if (existingLicas.isEmpty) {
-              log.warn(s"Origin creative ${origin.getId} has no line item associations")
+            val existingUnarchivedLicas = {
+              val allExistingLicas = session.lineItemCreativeAssociations.get(
+                new StatementBuilder().where("status = :status AND creativeId = :creativeId")
+                .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
+                .withBindVariableValue("creativeId", origin.getId)
+              )
+              allExistingLicas filterNot { lica =>
+                val archivedLineItems = session.lineItems(
+                  new StatementBuilder().where(s"lineItemId IN (${mkString(allExistingLicas)})")
+                )
+                archivedLineItems contains lica
+              }
+            }
+            if (existingUnarchivedLicas.isEmpty) {
+              log.warn(s"Origin creative ${origin.getId} has no unarchived line item associations")
             } else {
-              val lineItemIds = s"${existingLicas.map(_.getLineItemId).mkString(", ")}"
-              log.info(s"Origin creative ${origin.getId} is associated with line items $lineItemIds")
+              log.info(
+                s"Origin creative ${origin.getId} is associated with " +
+                s"unarchived line items ${mkString(existingUnarchivedLicas)}"
+              )
             }
 
-            val lineItemIds = existingLicas flatMap { existingLica =>
+            val lineItemIds = existingUnarchivedLicas flatMap { existingLica =>
               val lica = new LineItemCreativeAssociation()
               lica.setLineItemId(existingLica.getLineItemId)
               lica.setCreativeId(created.getId)
