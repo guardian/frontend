@@ -49,19 +49,19 @@ define([
         }));
     };
 
-    var fetchAllModules = function (moduleIds) {
+    var xhrFetchAllModules = function (moduleIds) {
         return xhrFetchAll(map(moduleIds, getPath));
     };
 
     var shouldRunEnhance = guardian.isModernBrowser;
 
-    var commercialResponsesPromise = fetchAllModules(['bootstraps/commercial']);
+    var commercialResponsesPromise = xhrFetchAllModules(['bootstraps/commercial']);
     var enhancedModuleIds = [
         'enhanced-vendor',
         'bootstraps/enhanced'
     ];
     var enhancedResponsesPromise = (
-        shouldRunEnhance ? fetchAllModules(enhancedModuleIds) : Promise.resolve()
+        shouldRunEnhance ? xhrFetchAllModules(enhancedModuleIds) : Promise.resolve()
     );
 
     var executeResponses = function (responses) {
