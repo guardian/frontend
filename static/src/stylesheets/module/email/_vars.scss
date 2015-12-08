@@ -1,4 +1,7 @@
 $form-elements-height: $gs-baseline * 3;
 $form-primary-colour: #ffffff;
 $form-secondary-colour: guss-colour(news-support-1, $pasteup-palette);
+$form-label-colour: guss-colour(neutral-2, $pasteup-palette);
 $icon-size: 30px;
+$icon-padding: $icon-size + ($gs-gutter / 2);
+$rounded-adjustment: .66em;

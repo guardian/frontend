@@ -500,7 +500,6 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
 }
 
 case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
-
   private def setDropCap(p: Element): String = {
     p.html.replaceFirst(
       "^([\"'“‘]*[a-zA-Z])(.{199,})",
@@ -509,7 +508,6 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
   }
 
   override def clean(document: Document): Document = {
-
     if(isFeature) {
       val children = document.body().children().toList
       children.headOption match {
@@ -521,12 +519,13 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     }
 
     document.getElementsByTag("h2").foreach{ h2 =>
-        if (h2.text() == "* * *" && isImmersive) {
-            h2.tagName("hr").addClass("section-rule").html("")
+        if (isImmersive && h2.text() == "* * *") {
+            h2.before("""<hr class="section-rule" />""")
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
                 next.html(setDropCap(next))
             }
+            h2.remove()
         }
     }
     document

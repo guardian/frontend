@@ -27,6 +27,12 @@ define([
 
     StripePaymentForm.prototype.config = {
         classes: {
+            CARD_TYPE: 'js-manage-account-card-type',
+            CARD_LAST4: 'js-manage-account-card-last4',
+            CHANGE_CARD: 'js-manage-account-change-card',
+            IS_CLOSED: 'is-closed',
+            CARD_DETAILS_FORM_CONTAINER: 'js-manage-account-card-details-form-container',
+            CTA_DISABLED_CLASSNAME: 'membership-cta--disabled',
             STRIPE_FORM: 'js-stripe-form',
             FORM_FIELD_ERROR: 'form-field--error',
             ERROR_CARD_NUMBER: 'js-error--card-number',
@@ -34,7 +40,7 @@ define([
             ERROR_CARD_EXPIRY: 'js-error--card-expiry',
             HIDE: 'is-hidden',
             PAYMENT_ERRORS: 'js-payment-errors',
-            FORM_SUBMIT: 'js-mem-change-cc-submit',
+            FORM_SUBMIT: 'js-manage-account-change-cc-submit',
             CREDIT_CARD_NUMBER: 'js-credit-card-number',
             CREDIT_CARD_CVC: 'js-credit-card-cvc',
             CREDIT_CARD_EXPIRY_MONTH: 'js-credit-card-exp-month',
@@ -47,6 +53,41 @@ define([
         DOM: {},
         data: {
             CARD_TYPE: 'data-card-type'
+        }
+    };
+
+    /**
+     * @param {{last4: string, type: string}} card info
+     */
+    StripePaymentForm.prototype.updateCard = function (card) {
+        var cardTypeClassName = card.type.toLowerCase().replace(' ', '-');
+        var cardTypeElem = this.config.DOM.CARD_TYPE;
+        $(this.config.DOM.CARD_LAST4).text(card.last4);
+        cardTypeElem.className = cardTypeElem.className.replace(/\bi-\S+/g, '');
+        $(cardTypeElem).addClass('i-' + cardTypeClassName);
+    };
+
+    StripePaymentForm.prototype.showCardDetailsElementWithChangeCardOption = function () {
+        $(this.config.DOM.CHANGE_CARD).removeClass(this.config.classes.HIDE);
+        this.showCardDetailsElement();
+    };
+
+    StripePaymentForm.prototype.showCardDetailsElement = function () {
+        $(this.context).removeClass(this.config.classes.HIDE);
+    };
+
+    StripePaymentForm.prototype.toggle = function (show) {
+        var $cont = $(this.config.DOM.CARD_DETAILS_FORM_CONTAINER),
+            $button = $(this.config.DOM.CHANGE_CARD);
+
+        show = show !== undefined ? show : $cont.hasClass(this.config.classes.IS_CLOSED);
+
+        if (show) {
+            $cont.removeClass(this.config.classes.IS_CLOSED);
+            $button.addClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Cancel');
+        } else {
+            $cont.addClass(this.config.classes.IS_CLOSED);
+            $button.removeClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Change card');
         }
     };
 
@@ -74,10 +115,6 @@ define([
         }
     };
 
-    StripePaymentForm.prototype.getElement = function (element) {
-        return $(this.config.DOM[element]);
-    };
-
     StripePaymentForm.prototype.stripeResponseHandler = function (status, response) {
 
         var errorMessage, token,
@@ -94,7 +131,7 @@ define([
             token = response.id;
 
             ajax({
-                url: config.page.userAttributesApiUrl + '/me/membership-update-card',
+                url: config.page.userAttributesApiUrl + self.apiUrl,
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
@@ -104,11 +141,14 @@ define([
                 data: {
                     stripeToken: token
                 }
-            }).then(function success() {
+            }).then(function success(card) {
                 $(self.config.DOM.FORM_SUBMIT).removeAttr('disabled');
                 self.stopLoader();
                 self.reset();
-                self.successCallback.apply(this, arguments);
+                self.updateCard(card);
+                self.toggle();
+                self.successElement.removeClass(self.config.classes.HIDE);
+
             }, function fail(error) {
 
                 var errorObj,
@@ -160,8 +200,8 @@ define([
      * @param errorMessages
      */
     StripePaymentForm.prototype.handleErrors = function (errorMessages) {
-        var $paymentErrorsElement = this.getElement('PAYMENT_ERRORS'),
-            $formSubmitButton = this.getElement('FORM_SUBMIT'),
+        var $paymentErrorsElement = $(this.config.DOM.PAYMENT_ERRORS),
+            $formSubmitButton = $(this.config.DOM.FORM_SUBMIT),
             errorString = '';
 
         if (errorMessages.length) {
@@ -189,7 +229,7 @@ define([
 
     StripePaymentForm.prototype.displayCardTypeImage = function (creditCardNumber) {
         var cardType = this.getCardType(creditCardNumber),
-            $creditCardImageElement = this.getElement('CREDIT_CARD_IMAGE');
+            $creditCardImageElement = $(this.config.DOM.CREDIT_CARD_IMAGE);
 
         $creditCardImageElement[0].className = $creditCardImageElement[0].className.replace(/\bi-\S*/gi, '');
         $creditCardImageElement.addClass('i-' + cardType);
@@ -198,11 +238,16 @@ define([
     StripePaymentForm.prototype.addListeners = function () {
 
         var self = this,
-            $creditCardNumberElement = self.getElement('CREDIT_CARD_NUMBER'),
-            $creditCardCVCElement = self.getElement('CREDIT_CARD_CVC'),
-            $creditCardExpiryMonthElement = self.getElement('CREDIT_CARD_EXPIRY_MONTH'),
-            $creditCardExpiryYearElement = self.getElement('CREDIT_CARD_EXPIRY_YEAR'),
+            $creditCardNumberElement = $(self.config.DOM.CREDIT_CARD_NUMBER),
+            $creditCardCVCElement = $(self.config.DOM.CREDIT_CARD_CVC),
+            $creditCardExpiryMonthElement = $(self.config.DOM.CREDIT_CARD_EXPIRY_MONTH),
+            $creditCardExpiryYearElement = $(self.config.DOM.CREDIT_CARD_EXPIRY_YEAR),
             $formElement = $(self.context);
+
+        bean.on(this.config.DOM.CHANGE_CARD, 'click', function () {
+            self.successElement.addClass(self.config.classes.HIDE);
+            self.toggle();
+        });
 
         bean.on($creditCardNumberElement[0], 'keyup blur', function (e) {
             var validationResult,
@@ -285,7 +330,7 @@ define([
      */
     StripePaymentForm.prototype.validateCardNumber = function ($creditCardNumberElement) {
 
-        var $element = $creditCardNumberElement || this.getElement('CREDIT_CARD_NUMBER');
+        var $element = $creditCardNumberElement || $(this.config.DOM.CREDIT_CARD_NUMBER);
 
         return {
             isValid: stripe.card.validateCardNumber($element.val()),
@@ -302,7 +347,7 @@ define([
      */
     StripePaymentForm.prototype.validateCVC = function ($cvcElement) {
 
-        var $element = $cvcElement || this.getElement('CREDIT_CARD_CVC');
+        var $element = $cvcElement || $(this.config.DOM.CREDIT_CARD_CVC);
 
         return {
             isValid: stripe.card.validateCVC($element.val()),
@@ -316,7 +361,7 @@ define([
      * @returns {boolean}
      */
     StripePaymentForm.prototype.setDisplayMonthErrorStatus = function () {
-        var $creditCardExpiryYearElement = this.getElement('CREDIT_CARD_EXPIRY_YEAR');
+        var $creditCardExpiryYearElement = $(this.config.DOM.CREDIT_CARD_EXPIRY_YEAR);
 
         this.displayMonthError = $creditCardExpiryYearElement[0].selectedIndex !== 0;
     };
@@ -328,8 +373,8 @@ define([
      */
     StripePaymentForm.prototype.validateExpiry = function () {
 
-        var $creditCardExpiryMonthElement = this.getElement('CREDIT_CARD_EXPIRY_MONTH'),
-            $creditCardExpiryYearElement = this.getElement('CREDIT_CARD_EXPIRY_YEAR'),
+        var $creditCardExpiryMonthElement = $(this.config.DOM.CREDIT_CARD_EXPIRY_MONTH),
+            $creditCardExpiryYearElement = $(this.config.DOM.CREDIT_CARD_EXPIRY_YEAR),
             today = new Date(),
             isValid = !this.displayMonthError,
             validDateEntry = function () {
@@ -411,7 +456,7 @@ define([
      */
     StripePaymentForm.prototype.manageErrors = function (validationResult) {
 
-        var paymentErrorsElement = this.getElement('PAYMENT_ERRORS')[0],
+        var paymentErrorsElement = $(this.config.DOM.PAYMENT_ERRORS)[0],
             paymentErrorsElementText = paymentErrorsElement.textContent,
             errors = [],
             messageIndex,
@@ -450,25 +495,45 @@ define([
     };
 
     StripePaymentForm.prototype.startLoader = function () {
-        this.getElement('UPDATING').css('display', 'inline-block');
+        $(this.config.DOM.UPDATING).css('display', 'inline-block');
     };
 
     StripePaymentForm.prototype.stopLoader = function () {
-        this.getElement('UPDATING').css('display', 'none');
+        $(this.config.DOM.UPDATING).css('display', 'none');
     };
 
     StripePaymentForm.prototype.reset = function () {
-        this.getElement('CREDIT_CARD_IMAGE')[0].className = this.getElement('CREDIT_CARD_IMAGE')[0].className.replace(/\bi-\S*/gi, '');
-        this.getElement('CREDIT_CARD_NUMBER').val('');
-        this.getElement('CREDIT_CARD_CVC').val('');
-        this.getElement('CREDIT_CARD_EXPIRY_MONTH')[0].selectedIndex = 0;
-        this.getElement('CREDIT_CARD_EXPIRY_YEAR')[0].selectedIndex = 0;
+        $(this.config.DOM.CREDIT_CARD_IMAGE)[0].className = $(this.config.DOM.CREDIT_CARD_IMAGE)[0].className.replace(/\bi-\S*/gi, '');
+        $(this.config.DOM.CREDIT_CARD_NUMBER).val('');
+        $(this.config.DOM.CREDIT_CARD_CVC).val('');
+        $(this.config.DOM.CREDIT_CARD_EXPIRY_MONTH)[0].selectedIndex = 0;
+        $(this.config.DOM.CREDIT_CARD_EXPIRY_YEAR)[0].selectedIndex = 0;
     };
 
-    StripePaymentForm.prototype.init = function (form, successCallback) {
-        this.context = form;
-        this.successCallback = successCallback;
+    /**
+     * To display visa logo etc
+     */
+    StripePaymentForm.prototype.addIconCss = function () {
+        var spriteSheetUrl = $(this.context).data('sprite-url'),
+            link = document.createElement('link'),
+            $existing = $('#stripe-sprite'),
+            $head = $('head');
 
+        if (!$existing.length) {
+            link.id = 'stripe-sprite';
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = spriteSheetUrl;
+            link.media = 'all';
+            $head.append(link);
+        }
+    };
+
+    StripePaymentForm.prototype.init = function (form, successElement, url) {
+        this.context = form;
+        this.successElement = successElement;
+        this.apiUrl = url;
+        this.addIconCss();
         if (this.context) {
             this.domElementSetup();
             this.addListeners();

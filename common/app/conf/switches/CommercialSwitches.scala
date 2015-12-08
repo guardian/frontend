@@ -244,7 +244,7 @@ trait CommercialSwitches {
     "advert-opt-out",
     "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 9),
+    sellByDate = new LocalDate(2016, 1, 31),
     exposeClientSide = true
   )
 
@@ -254,6 +254,15 @@ trait CommercialSwitches {
     "Display a message to regular readers promoting Membership",
     safeState = Off,
     sellByDate = new LocalDate(2015, 11, 30),
+    exposeClientSide = true
+  )
+
+  val NewCommercialContent = Switch(
+    "Commercial",
+    "new-commercial-content",
+    "New commercial content designs",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 31),
     exposeClientSide = true
   )
 }

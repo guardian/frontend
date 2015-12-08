@@ -23,7 +23,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET        /email                                                               controllers.EmailController.renderPage()
-GET        /email/form                                                          controllers.EmailController.renderForm()
+GET        /email/form/$formType<footer|article>                                controllers.EmailController.renderForm(formType: String)
 GET        /email/:result                                                       controllers.EmailController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailController.submit()
 OPTIONS    /email                                                               controllers.EmailController.options()
@@ -40,6 +40,9 @@ GET        /preferences                                                         
 
 GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
+
+GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
+GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
 
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()
