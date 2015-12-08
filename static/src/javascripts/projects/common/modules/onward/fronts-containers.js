@@ -45,7 +45,7 @@ define([
         if (loadSection) {
             insertContainers(config.page.section, $('.js-fronts-section'), 1, 0, 'none', function () {});
 
-            if(!isOneAndThree) {
+            if (!isOneAndThree) {
                 insertContainers(edition, $('.js-fronts-network-1'), 1, 0, 'none', function () {
                     insertFinalFew();
                 });
