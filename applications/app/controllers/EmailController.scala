@@ -29,11 +29,17 @@ case class EmailPage(interactive: Interactive, related: RelatedContent)
 
 case class EmailForm(email: String, listId: Int)
 
-object listIds {
+object ListIds {
   val testList = 3485
   val guardianTodayUk = 37
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
+}
+
+object EmailTypes {
+  val footer = "footer"
+  val article = "article"
+  val standalonePage = "standalonePage"
 }
 
 object EmailForm {
@@ -41,10 +47,10 @@ object EmailForm {
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
   val listTriggers = Map(
-    listIds.testList -> 2529,
-    listIds.guardianTodayUk -> 2529,
-    listIds.guardianTodayUs -> 2564,
-    listIds.guardianTodayAu -> 2563
+    ListIds.testList -> 2529,
+    ListIds.guardianTodayUk -> 2529,
+    ListIds.guardianTodayUs -> 2564,
+    ListIds.guardianTodayAu -> 2563
   )
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
