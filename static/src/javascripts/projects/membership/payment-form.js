@@ -131,7 +131,7 @@ define([
             token = response.id;
 
             ajax({
-                url: config.page.userAttributesApiUrl + '/me/membership-update-card',
+                url: config.page.userAttributesApiUrl + self.apiUrl,
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
@@ -529,9 +529,10 @@ define([
         }
     };
 
-    StripePaymentForm.prototype.init = function (form, successElement) {
+    StripePaymentForm.prototype.init = function (form, successElement, url) {
         this.context = form;
         this.successElement = successElement;
+        this.apiUrl = url;
         this.addIconCss();
         if (this.context) {
             this.domElementSetup();

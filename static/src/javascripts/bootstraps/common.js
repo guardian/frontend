@@ -370,6 +370,11 @@ define([
 
             initEmail: function () {
                 email.init();
+
+                // Initalise email forms in iframes
+                forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
+                    email.init(el);
+                });
             }
         };
 

@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/essential-read-test-1',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
-    'common/modules/experiments/tests/rtrt-email-form-inline-footer',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -32,7 +31,6 @@ define([
     EssentialReadTest1,
     LargeTopAd,
     VideoPreroll,
-    RtrtEmailFormInlineFooter,
     flatten,
     forEach,
     keys,
@@ -48,8 +46,7 @@ define([
         new FrontsOnArticles(),
         new LargeTopAd(),
         new VideoPreroll(),
-        new EssentialReadTest1(),
-        new RtrtEmailFormInlineFooter()
+        new EssentialReadTest1()
     ]);
 
     var participationsKey = 'gu.ab.participations';

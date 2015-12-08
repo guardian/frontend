@@ -39,7 +39,7 @@ object ListIds {
 object EmailTypes {
   val footer = "footer"
   val article = "article"
-  val standalonePage = "standalonePage"
+  val landing = "landing"
 }
 
 object EmailForm {
