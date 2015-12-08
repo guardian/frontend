@@ -13,13 +13,19 @@
 <script id="gu">
     @Html(curlConfig().body)
 
-    // Polyfill for async script
-    (function (document) {
-        var script = document.createElement('script');
-        script.src = '@Static("javascripts/standard.js")';
-        var ref = document.getElementsByTagName('script')[0];
-        ref.parentNode.insertBefore(script, ref);
-    })(document);
+    @if(play.Play.isDev()) {
+        @Html(Static.js.curl);
+
+        require(['boot']);
+    } else {
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/standard.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+    }
 
     // render-critical blocking JS
 

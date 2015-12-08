@@ -24,6 +24,7 @@ window.curlConfig = {
             picturefill:                    'projects/common/utils/picturefill',
             Promise:                        'components/when/Promise',
             qwery:                          'components/qwery/qwery',
+            raven:                          'components/raven-js/raven',
             reqwest:                        'components/reqwest/reqwest',
             'facebook.js':                  '//connect.facebook.net/en_US/all.js',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',

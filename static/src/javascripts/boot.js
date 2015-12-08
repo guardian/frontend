@@ -30,8 +30,11 @@ define([
     var config = guardian.config;
 
     var curlConfig = window.curlConfig;
-    // TODO: dev
-    var getPath = function (moduleId) { return curlConfig.paths[moduleId]; };
+    var resolveModuleId = function (moduleId) {
+        var match = curlConfig.paths[moduleId];
+        // In dev, there will be no match.
+        return match ? match : (window.curlConfig.baseUrl + '/' + moduleId + '.js');
+    };
 
     var xhrFetch = function (url) {
         // TODO: handle errors
@@ -50,7 +53,7 @@ define([
     };
 
     var xhrFetchAllModules = function (moduleIds) {
-        return xhrFetchAll(map(moduleIds, getPath));
+        return xhrFetchAll(map(moduleIds, resolveModuleId));
     };
 
     var shouldRunEnhance = guardian.isModernBrowser;
