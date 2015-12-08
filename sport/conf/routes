@@ -7,8 +7,8 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
 
-GET        /sport/cricket/match/:matchId.json                                                  controllers.CricketMatchController.renderMatchIdJson(matchId)
-GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
+GET        /sport/cricket/match/:matchDate/:teamId.json                                        controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET        /sport/cricket/match/:matchDate/:teamId                                             controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET        /football/fixtures/more/:year/:month/:day.json                                      football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET        /football/fixtures/more/:year/:month/:day                                           football.controllers.FixturesController.moreFixturesFor(year, month, day)
