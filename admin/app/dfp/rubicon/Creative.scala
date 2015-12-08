@@ -103,11 +103,11 @@ object Creative extends Logging {
                 .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
                 .withBindVariableValue("creativeId", origin.getId)
               )
+              val archivedLineItemIds = session.lineItems(
+                new StatementBuilder().where(s"lineItemId IN (${mkString(allExistingLicas)})")
+              ).filter(_.getIsArchived).map(_.getId)
               allExistingLicas filterNot { lica =>
-                val archivedLineItems = session.lineItems(
-                  new StatementBuilder().where(s"lineItemId IN (${mkString(allExistingLicas)})")
-                )
-                archivedLineItems contains lica
+                archivedLineItemIds.contains(lica.getLineItemId)
               }
             }
             if (existingUnarchivedLicas.isEmpty) {
