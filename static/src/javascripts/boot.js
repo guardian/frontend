@@ -37,11 +37,18 @@ define([
     };
 
     var xhrFetch = function (url) {
-        // TODO: handle errors
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
-            xhr.addEventListener('load', function () { resolve(this); });
             xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(xhr);
+                    } else {
+                        reject(new Error('Bad response: ' + xhr.status + ' ' + xhr.statusText));
+                    }
+                }
+            };
             xhr.send();
         });
     };
