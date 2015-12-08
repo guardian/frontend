@@ -112,21 +112,22 @@ object Creative extends Logging {
               lica.setStatus(ACTIVE)
               val newLica = session.lineItemCreativeAssociations.create(Seq(lica))
               if (newLica.isEmpty)
-                log.error(s"Failed to link creative ${lica.getCreativeId} with line item ${lica.getLineItemId}")
+                log.error(s"Failed to associate creative ${lica.getCreativeId} with line item ${lica.getLineItemId}")
               newLica.headOption.map(_.getLineItemId)
             }
-            if (lineItemIds.nonEmpty)
+            if (lineItemIds.nonEmpty) {
               log.info(s"Associated creative ${created.getId} with line items ${lineItemIds.mkString(", ")}")
 
-            val numDeactivated = session.lineItemCreativeAssociations.deactivate(
-              new StatementBuilder()
-              .where("creativeId = :creativeId")
-              .withBindVariableValue("creativeId", origin.getId)
-              .toStatement
-            )
-            if (numDeactivated == lineItemIds.size && lineItemIds.nonEmpty) {
-              val lineItems = lineItemIds.mkString(", ")
-              log.info(s"Deactivated original line-item creative associations ${origin.getId} -> $lineItems")
+              val numDeactivated = session.lineItemCreativeAssociations.deactivate(
+                new StatementBuilder()
+                .where("creativeId = :creativeId")
+                .withBindVariableValue("creativeId", origin.getId)
+                .toStatement
+              )
+              if (numDeactivated == lineItemIds.size && lineItemIds.nonEmpty) {
+                val lineItems = lineItemIds.mkString(", ")
+                log.info(s"Deactivated original line-item creative associations ${origin.getId} -> $lineItems")
+              }
             }
 
             log.info(s"Finished replacing creative ${origin.getId} with creative ${created.getId}")
