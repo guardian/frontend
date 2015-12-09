@@ -60,10 +60,11 @@ define([
 
     function populateUserDetails(userDetails) {
         var intervalText = userDetails.subscription.plan.interval === 'Month' ? 'Monthly' : 'Annual',
+            glyph = userDetails.subscription.plan.currency,
             notificationTypeSelector;
 
         $(MEMBERSHIP_TIER).text(userDetails.tier);
-        $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount));
+        $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount, glyph));
         $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
         $(PACKAGE_INTERVAL).text(intervalText);
         $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
@@ -75,7 +76,7 @@ define([
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
         }
 
-        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice, glyph));
 
         var isMonthly = userDetails.subscription.plan.interval === 'Month';
         if (userDetails.subscription.nextPaymentDate == userDetails.subscription.renewalDate || isMonthly) {
