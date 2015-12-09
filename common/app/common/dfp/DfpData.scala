@@ -267,7 +267,25 @@ case class GuLineItem(id: Long,
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
     } &&
     startTime.isBefore(now.plusDays(1)) &&
-    (endTime.isEmpty || endTime.exists(_.isAfter(now)))
+    (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  }
+
+  lazy val isSuitableForTopBelowNavSlot: Boolean = targeting.customTargetSets
+                                                   .exists(_.targets.exists(_.isSlot("top-below-nav")))
+
+  lazy val isSuitableForTopSlot: Boolean = {
+    costType == "CPD" &&
+    targetsNetworkOrSectionFrontDirectly &&
+    targeting.geoTargetsIncluded.exists { geoTarget =>
+      geoTarget.locationType == "COUNTRY" && (
+        geoTarget.name == "United Kingdom" ||
+        geoTarget.name == "United States" ||
+        geoTarget.name == "Australia"
+        )
+    } &&
+    creativeSizes.contains(responsiveSize) &&
+    startTime.isBefore(DateTime.now.plusDays(1)) &&
+    endTime.exists(_.isAfterNow)
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
