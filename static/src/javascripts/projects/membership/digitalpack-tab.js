@@ -8,6 +8,7 @@ define([
 ], function (bean, $, ajax, config, formatters, PaymentForm) {
 
     var PACKAGE_COST = '.js-dig-package-cost',
+        CARD_CHANGE_SUCCESS_MSG = '.js-dig-card-change-success-msg',
         PAYMENT_FORM = '.js-dig-card-details',
         SUBSCRIBER_ID = '.js-dig-subscriber-id',
         REMAINING_TRIAL_LENGTH = '.js-dig-remaining-trial-length',
@@ -27,7 +28,7 @@ define([
         DIG_INFO = '.js-dig-info',
         LOADER = '.js-dig-loader',
         IS_HIDDEN_CLASSNAME = 'is-hidden',
-        stripeForm = new PaymentForm();
+        stripeForm = new PaymentForm(PAYMENT_FORM, CARD_CHANGE_SUCCESS_MSG, '/me/digitalpack-update-card');
 
     function fetchUserDetails() {
         ajax({
@@ -39,7 +40,6 @@ define([
         }).then(function (resp) {
             if (resp && resp.subscription) {
                 hideLoader();
-                stripeForm.init($(PAYMENT_FORM)[0], $(), '/me/digitalpack-update-card');
                 populateUserDetails(resp);
             } else {
                 hideLoader();
@@ -61,9 +61,10 @@ define([
      * }} userDetails
      */
     function populateUserDetails(userDetails) {
+        var glyph = userDetails.subscription.plan.currency;
         $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
         $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);
-        $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount));
+        $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount, glyph));
         $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
         $(PACKAGE_INTERVAL).text(userDetails.subscription.plan.interval + 'ly');
         $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
@@ -77,7 +78,7 @@ define([
 
         $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
         if (userDetails.subscription.nextPaymentPrice != userDetails.subscription.plan.amount) {
-            $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice));
+            $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice, glyph));
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
         }
 
@@ -95,11 +96,7 @@ define([
         $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
-    function init() {
-        fetchUserDetails();
-    }
-
     return {
-        init: init
+        init: fetchUserDetails
     };
 });
