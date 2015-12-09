@@ -111,7 +111,7 @@ $ima-controls-height: 70px;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-            background-color: rgba(51, 51, 51, .8);
+            background-color: rgba(51, 51, 51, .6);
             .gu-media-wrapper:hover &,
             .gu-media__fallback:hover & {
                 background-color: colour(media-default);
