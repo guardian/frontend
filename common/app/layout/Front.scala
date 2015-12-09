@@ -350,9 +350,10 @@ object Front extends implicits.Collections {
         dynamicContainer.containerDefinitionFor(
           faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
-          (seen ++ faciaContentList
+          val newSeen = seen ++ faciaContentList
             .map(_.url)
-            .take(itemsVisible(containerDefinition)), faciaContentList, (Nil, Nil))
+            .take(itemsVisible(containerDefinition))
+          (newSeen, faciaContentList, (Nil, Nil))
         } getOrElse {
           (seen, faciaContentList, (Nil, Nil))
         }
