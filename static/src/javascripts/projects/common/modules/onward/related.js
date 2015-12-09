@@ -102,12 +102,16 @@ define([
                     }
 
                 } else {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
+                    if (true || (ab.isInVariant('AlternativeRelated', 'variant'))) {
+                        relatedUrl = popularInTag || '/related-alt/' + config.page.pageId + '.json?keywordIds=' + config.page.keywordIds;
+                    } else {
+                        relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
-                    if (opts.excludeTags && opts.excludeTags.length) {
-                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                            return 'exclude-tag=' + tag;
-                        }).join('&');
+                        if (opts.excludeTags && opts.excludeTags.length) {
+                            relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                                    return 'exclude-tag=' + tag;
+                                }).join('&');
+                        }
                     }
                 }
 
