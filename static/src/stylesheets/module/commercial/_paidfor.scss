@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Paid for component
+   ========================================================================== */
+.commercial--paidfor {
+
+    .commercial__header,
+    .commercial__title,
+    .fc-item__standfirst,
+    .fc-item__header,
+    .item__title,
+    .rich-link__header {
+        @include f-textSans;
+    }
+
+    .fc-slice__item + .fc-slice__item:before {
+        content: none;
+    }
+
+    .commercial__kicker__label,
+    .commercial__kicker__info {
+        display: inline-block;
+        font-size: 14px;
+    }
+
+    .commercial__kicker__info {
+        font-weight: 300;
+        margin-left: 10px;
+    }
+
+    .commercial__cta {
+        text-align: right;
+
+        .inline-icon {
+            fill: #495053;
+        }
+    }
+}
+
+.tone-paidfor--item {
+    background: #ccc;
+}
+
+.fc-item--paidfor {
+    .fc-item__standfirst {
+        display: block;
+        color: guss-colour(neutral-1, $pasteup-palette);
+    }
+
+    .fc-item__meta {
+        text-align: right;
+        color: colour(neutral-2);
+    }
+}
