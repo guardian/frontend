@@ -44,12 +44,7 @@ define([
             creditCardImageElement,
             expiryMonthElement,
             expiryYearElement,
-            now,
-            guConfig = {
-                page: {
-                    stripePublicToken: 'pk_test_xxxxxxxxxxxxx'
-                }
-            };
+            now;
 
         function triggerEvent(element, eventType) {
             var event;
@@ -61,8 +56,8 @@ define([
 
         beforeEach(function () {
             paymentFormFixtureElement = $.create(paymentFormHtml)[0];
-            paymentForm = new PaymentForm(guConfig);
-            paymentForm.init(paymentFormFixtureElement);
+            paymentForm = new PaymentForm(paymentFormFixtureElement, '', '');
+
             errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
             creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
             creditCardVerificationCodeInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-cvc')[0];
@@ -85,7 +80,13 @@ define([
 
         it('should correctly initialise itself', function () {
             expect(paymentForm.context).toEqual(paymentFormFixtureElement);
-            expect(paymentForm.config.DOM.CREDIT_CARD_NUMBER).toEqual(paymentFormFixtureElement.querySelector('.js-credit-card-number'));
+            expect(paymentForm.DOM.CREDIT_CARD_NUMBER).toEqual(paymentFormFixtureElement.querySelector('.js-credit-card-number'));
+        });
+
+        it('should add CSS icons to the head only once', function () {
+            paymentForm.addIconCss();
+            paymentForm.addIconCss();
+            expect($('head link[href="test/sprite/url"]').length).toBe(1);
         });
 
         it('should display an error message', function () {
