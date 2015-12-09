@@ -64,7 +64,7 @@ object BodyCleaner {
       VideoEmbedCleaner(article)
     )
     val ampOnlyCleaners = List(
-      AmpAdCleaner,
+      AmpAdCleaner(edition, request.uri, article),
       AmpEmbedCleaner(article)
     )
     withJsoup(BulletCleaner(html))((if (amp) ampOnlyCleaners else nonAmpCleaners) ++ cleaners :_*)
