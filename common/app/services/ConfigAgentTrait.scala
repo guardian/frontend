@@ -41,6 +41,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       Future.successful(configAgent.get())
     }
 
+  def getPriorityForPath(path: String): Option[String] = {
+    val config = configAgent.get()
+    config.flatMap(_.fronts.get(path).flatMap(_.priority))
+  }
+
   def getPathIds: List[String] = {
     val config = configAgent.get()
     config.map(_.fronts.keys.toList).getOrElse(Nil)

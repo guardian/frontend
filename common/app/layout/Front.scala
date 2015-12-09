@@ -12,7 +12,7 @@ import model.meta.{ItemList, ListItem}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
-import services.CollectionConfigWithId
+import services.{ConfigAgent, CollectionConfigWithId}
 import slices.{MostPopular, _}
 import views.support.CutOut
 
@@ -341,7 +341,8 @@ object Front extends implicits.Collections {
     seen: Set[TrailUrl],
     container: Container,
     faciaContentList: Seq[FaciaContent],
-    isNetworkFront: Boolean
+    isNetworkFront: Boolean,
+    isEditorialFront: Boolean
     )(implicit request: RequestHeader): (Set[TrailUrl], Seq[FaciaContent], (Seq[DedupedItem], Seq[DedupedItem])) = {
     def dedupeContainer: (Int) => (Set[TrailUrl], Seq[FaciaContent], (Seq[DedupedItem], Seq[DedupedItem])) = (nToTake: Int) => {
       val usedInThisIteration: Seq[FaciaContent] =
@@ -366,7 +367,7 @@ object Front extends implicits.Collections {
     container match {
 
       case Dynamic(dynamicContainer) =>
-        if (mvt.DedupeDynamicContainers.isParticipating && !isNetworkFront) {
+        if (mvt.DedupeDynamicContainers.isParticipating && isEditorialFront && !isNetworkFront) {
           /** Dynamic Containers participate in de-duplication. */
           val slices = dynamicContainer.slicesFor(faciaContentList.map(Story.fromFaciaContent))
           val nToTake = itemsVisible(slices.getOrElse(Nil))
@@ -415,7 +416,7 @@ object Front extends implicits.Collections {
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
 
         //We don't need the used in the case of fromConfigsAndContainers
-        val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items, isNetworkFront = false)
+        val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items, isNetworkFront = false, isEditorialFront = false)
 
         ContainerLayout.fromContainer(container, context, config, newItems) map {
           case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
@@ -461,7 +462,9 @@ object Front extends implicits.Collections {
         val omitMPU = pressedPage.metadata.omitMPUsFromContainers(edition)
         val isNetworkFront = pressedPage.metadata.isNetworkFront
         val container = Container.fromPressedCollection(pressedCollection, omitMPU)
-        val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated, isNetworkFront)
+        val isEditorialFront = ConfigAgent.getPriorityForPath(pressedPage.id).getOrElse("editorial") == "editorial"
+
+        val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated, isNetworkFront = isNetworkFront, isEditorialFront = isEditorialFront)
 
         val dedupedContainerResult: DedupedContainerResult = DedupedContainerResult(pressedCollection.id, pressedCollection.displayName, usedAndDeduped.toList, usedButNotDeduped.toList)
 
