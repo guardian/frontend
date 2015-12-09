@@ -126,8 +126,8 @@ object EmailSubscriptions {
       "Courses and training",
       "News on the latest courses and special offers from the Guardian's learning programme, plus inspiring tips on everything from journalism, to food business and creative writing, delivered to your inbox twice a week.",
       "",
-      "3388",
-      subscribedTo = subscribedListIds.exists{ x => x == "3388" }
+      "3561",
+      subscribedTo = subscribedListIds.exists{ x => x == "3561" }
     ),
 
     EmailSubscription(
@@ -136,8 +136,8 @@ object EmailSubscriptions {
       "Gardening",
       "Sign up to receive the latest offers from the Guardian Garden Centre. Get tips and seasonal advice from our expert gardeners and shop for bulbs, plants and garden hardware.",
       "1-2 times per week",
-      "3389",
-      subscribedTo = subscribedListIds.exists{ x => x == "3389" }
+      "3562",
+      subscribedTo = subscribedListIds.exists{ x => x == "3562" }
     ),
 
     EmailSubscription(
@@ -146,8 +146,8 @@ object EmailSubscriptions {
       "Books",
       "Every week you’ll receive our hand-picked edits of books we know you’ll enjoy. From thought-provoking collections, round-ups of the Guardian and Observer weekend reviews and special offers plus from time to time we’ll give you first preview of the books we publish and new and noteworthy titles to look out for each month.",
       "Every Wednesday, Saturday and Sunday",
-      "3394",
-      subscribedTo = subscribedListIds.exists{ x => x == "3394" }
+      "3563",
+      subscribedTo = subscribedListIds.exists{ x => x == "3563" }
     )
   )
 
