@@ -19,13 +19,7 @@ define([
     /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
     'use strict';
 
-    function StripePaymentForm() {
-        this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
-
-        return this;
-    }
-
-    StripePaymentForm.prototype.config = {
+    var sharedConfig = {
         classes: {
             CARD_TYPE: 'js-manage-account-card-type',
             CARD_LAST4: 'js-manage-account-card-last4',
@@ -55,6 +49,16 @@ define([
         }
     };
 
+    function StripePaymentForm(form, successElement, url) {
+        this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
+        this.successElement = successElement;
+        this.context = form;
+        this.apiUrl = url;
+        this.DOM = {};
+        this.init();
+        return this;
+    }
+
     /**
      * @param {{last4: string, type: string}} card info
      */
@@ -67,26 +71,26 @@ define([
     };
 
     StripePaymentForm.prototype.showCardDetailsElementWithChangeCardOption = function () {
-        $(this.DOM.CHANGE_CARD).removeClass(this.config.classes.HIDE);
+        $(this.DOM.CHANGE_CARD).removeClass(sharedConfig.classes.HIDE);
         this.showCardDetailsElement();
     };
 
     StripePaymentForm.prototype.showCardDetailsElement = function () {
-        $(this.context).removeClass(this.config.classes.HIDE);
+        $(this.context).removeClass(sharedConfig.classes.HIDE);
     };
 
     StripePaymentForm.prototype.toggle = function (show) {
         var $cont = $(this.DOM.CARD_DETAILS_FORM_CONTAINER),
             $button = $(this.DOM.CHANGE_CARD);
 
-        show = show !== undefined ? show : $cont.hasClass(this.config.classes.IS_CLOSED);
+        show = show !== undefined ? show : $cont.hasClass(sharedConfig.classes.IS_CLOSED);
 
         if (show) {
-            $cont.removeClass(this.config.classes.IS_CLOSED);
-            $button.addClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Cancel');
+            $cont.removeClass(sharedConfig.classes.IS_CLOSED);
+            $button.addClass(sharedConfig.classes.CTA_DISABLED_CLASSNAME).text('Cancel');
         } else {
-            $cont.addClass(this.config.classes.IS_CLOSED);
-            $button.removeClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Change card');
+            $cont.addClass(sharedConfig.classes.IS_CLOSED);
+            $button.removeClass(sharedConfig.classes.CTA_DISABLED_CLASSNAME).text('Change card');
         }
     };
 
@@ -110,8 +114,8 @@ define([
 
     StripePaymentForm.prototype.domElementSetup = function () {
         this.DOM = {};
-        for (var className in this.config.classes) {
-            this.DOM[className] = this.context.querySelector('.' + this.config.classes[className]);
+        for (var className in sharedConfig.classes) {
+            this.DOM[className] = this.context.querySelector('.' + sharedConfig.classes[className]);
         }
     };
 
@@ -147,7 +151,7 @@ define([
                 self.reset();
                 self.updateCard(card);
                 self.toggle();
-                self.successElement.removeClass(self.config.classes.HIDE);
+                self.successElement.removeClass(sharedConfig.classes.HIDE);
 
             }, function fail(error) {
 
@@ -211,14 +215,14 @@ define([
             });
 
             $paymentErrorsElement
-                .removeClass(this.config.classes.HIDE)
+                .removeClass(sharedConfig.classes.HIDE)
                 .html(errorString);
 
             $formSubmitButton.attr('disabled', true);
         } else {
             //hide errors and enable submit
             $paymentErrorsElement.html('');
-            $paymentErrorsElement.addClass(this.config.classes.HIDE);
+            $paymentErrorsElement.addClass(sharedConfig.classes.HIDE);
             $formSubmitButton.removeAttr('disabled');
         }
     };
@@ -244,7 +248,7 @@ define([
             $formElement = $(self.context);
 
         bean.on(this.DOM.CHANGE_CARD, 'click', function () {
-            self.successElement.addClass(self.config.classes.HIDE);
+            self.successElement.addClass(sharedConfig.classes.HIDE);
             self.toggle();
         });
 
@@ -528,10 +532,10 @@ define([
         }
     };
 
-    StripePaymentForm.prototype.init = function (form, successElement, url) {
-        this.context = form;
-        this.successElement = successElement;
-        this.apiUrl = url;
+    StripePaymentForm.prototype.init = function () {
+
+
+
         this.addIconCss();
         if (this.context) {
             this.domElementSetup();

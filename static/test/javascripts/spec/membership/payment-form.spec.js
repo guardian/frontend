@@ -56,8 +56,7 @@ define([
 
         beforeEach(function () {
             paymentFormFixtureElement = $.create(paymentFormHtml)[0];
-            paymentForm = new PaymentForm();
-            paymentForm.init(paymentFormFixtureElement, $());
+            paymentForm = new PaymentForm(paymentFormFixtureElement, $(), '');
 
             errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
             creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
