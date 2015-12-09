@@ -661,13 +661,30 @@
         background-color: colour(paid-article);
     }
 
+    &.content {
+        border-top: 0;
+    }
 
-    &.content__header {
+    .content__header {
         background-color: colour(paid-article-header);
     }
 
-    &.tonal__standfirst {
+    .tonal__standfirst {
         background-color: colour(paid-article-subheader);
+    }
+
+    .ad-slot__label,
+    .ad-slot--inline {
+        background-color: unset;
+        border-top: 0;
+    }
+
+    .content__section-label {
+        @include f-headlineSans;
+
+        .content__section-label__link {
+            color: colour(neutral-1);
+        }
     }
 }
 

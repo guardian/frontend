@@ -27,12 +27,12 @@ define([
     var badgesConfig = {
             sponsoredfeatures: {
                 count:      0,
-                header:     'Sponsored by:',
+                header:     config.switches.newCommercialContent ? 'Supported by:' : 'Sponsored by:',
                 namePrefix: 'sp'
             },
             'advertisement-features': {
                 count:      0,
-                header:     'Brought to you by:',
+                header:     config.switches.newCommercialContent ? 'Paid for by' : 'Brought to you by:',
                 namePrefix: 'ad'
             },
             'foundation-features': {
@@ -63,6 +63,7 @@ define([
                                 opts.keywords,
                                 slotTarget
                               ));
+            console.log('renderAd', badgesConfig[sponsorship]);
 
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
 
@@ -78,6 +79,8 @@ define([
         init = function () {
             var sponsoredFrontPromise,
                 sponsoredContainersPromise;
+
+            console.log(config.switches.newCommercialContent);
 
             if (!commercialFeatures.badges) {
                 return false;
