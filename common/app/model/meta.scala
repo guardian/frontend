@@ -210,6 +210,8 @@ final case class MetaData (
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
 
+  val isNetworkFront: Boolean = isFront && Edition.all.exists(_.id.toLowerCase == id)
+
   def hasPageSkin(edition: Edition) = if (isPressedPage){
     DfpAgent.isPageSkinned(adUnitSuffix, edition)
   } else false

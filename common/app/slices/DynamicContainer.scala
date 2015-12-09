@@ -11,7 +11,7 @@ private [slices] case class BigsAndStandards(
   standards: Seq[Story]
 )
 
-private [slices] trait DynamicContainer {
+trait DynamicContainer {
   protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice]
 
   protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {

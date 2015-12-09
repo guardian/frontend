@@ -10,7 +10,7 @@ trait DedupedController extends Controller with Logging with ExecutionContexts {
 
   val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
 
-  def getDedupedForPath(path: String) = Action.async { request =>
+  def getDedupedForPath(path: String) = Action.async { implicit request =>
     frontJsonFapi.get(path).map {
       case Some(pressedFront) =>
         val ((_, _, dedupedFrontResult), _) =

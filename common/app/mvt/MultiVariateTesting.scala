@@ -25,8 +25,15 @@ object TopBannerPosition extends TestDefinition(
   new LocalDate(2016, 1, 25)
 )
 
+object DedupeDynamicContainers extends TestDefinition(
+  List(Variant5),
+  "dedupe-dynamic-containers",
+  "Test deduping dynamic containers on all fronts except network fronts",
+  new LocalDate(2016, 1, 27)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(TopBannerPosition)
+  val tests: Seq[TestDefinition] = List(TopBannerPosition, DedupeDynamicContainers)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 
