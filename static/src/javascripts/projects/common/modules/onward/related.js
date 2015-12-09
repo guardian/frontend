@@ -102,7 +102,7 @@ define([
                     }
 
                 } else {
-                    if (true || (ab.isInVariant('AlternativeRelated', 'variant'))) {
+                    if (ab.isInVariant('AlternativeRelated', 'variant')) {
                         relatedUrl = popularInTag || '/related-alt/' + config.page.pageId + '.json?keywordIds=' + config.page.keywordIds;
                     } else {
                         relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
