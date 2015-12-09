@@ -10,7 +10,6 @@ import org.joda.time.DateTime
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 
-// this is replacing DfpDataHydrator
 object DfpApi extends Logging {
 
   private def readLineItems(stmtBuilder: StatementBuilder): Seq[GuLineItem] = {
