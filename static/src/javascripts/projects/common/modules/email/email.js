@@ -145,7 +145,7 @@ define([
                     },
                     getHeight = function () {
                         fastdom.read(function () {
-                            wrapperHeight = $wrapper.dim().height;
+                            wrapperHeight = $wrapper[0].clientHeight;
                         });
                     },
                     setHeight = function () {
@@ -175,33 +175,60 @@ define([
         };
 
     return {
-        // eg: rootEl can be a specific container or an iframe contentDocument
-        init: function (rootEl) {
-            var isIframed = rootEl && rootEl.tagName === 'IFRAME',
-                thisRootEl = (isIframed) ? rootEl.contentDocument.body : rootEl || document;
+            updateForm: function (thisRootEl, el, opts) {
+                var formData = $(thisRootEl).data(),
+                    formTitle = (opts && opts.formTitle) || formData.formTitle || false,
+                    formDescription = (opts && opts.formDescription) || formData.formDescription || false,
+                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
-            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
-                formInlineLabels.init(el, {
-                    textInputClass: '.js-email-sub__text-input',
-                    labelClass: '.js-email-sub__label',
-                    hiddenLabelClass: 'email-sub__label--is-hidden',
-                    labelEnabledClass: 'email-sub__inline-label--enabled'
+                fastdom.write(function () {
+                    if (formTitle) {
+                        $('.js-email-sub__heading', el).text(formTitle);
+                    }
+
+                    if (formDescription) {
+                        $('.js-email-sub__description', el).text(formDescription);
+                    }
+
+                    if (removeComforter) {
+                        $('.js-email-sub__small', el).remove();
+                    }
                 });
-            });
+            },
+            // eg: rootEl can be a specific container or an iframe contentDocument
+            init: function (rootEl) {
+                var isIframed = rootEl && rootEl.tagName === 'IFRAME',
+                    thisRootEl = (isIframed) ? rootEl.contentDocument.body : rootEl || document;
 
-            $('.' + classes.wrapper, thisRootEl).each(function (el) {
-                var $el = $(el),
-                    freezeHeight = ui.freezeHeight($el, false),
-                    freezeHeightReset = ui.freezeHeight($el, true);
+                $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
+                    formInlineLabels.init(el, {
+                        textInputClass: '.js-email-sub__text-input',
+                        labelClass: '.js-email-sub__label',
+                        hiddenLabelClass: 'email-sub__label--is-hidden',
+                        labelEnabledClass: 'email-sub__inline-label--enabled'
+                    });
+                });
 
-                formSubmission.bindSubmit($('.' + classes.form, el));
+                $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                    var $el = $(el),
+                        freezeHeight = ui.freezeHeight($el, false),
+                        freezeHeightReset = ui.freezeHeight($el, true);
 
-                // Ensure our form is the right height, both in iframe and outside
-                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
-                mediator.on('window:resize',
-                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
-                );
-            });
-        }
-    };
+                    formSubmission.bindSubmit($('.' + classes.form, el));
+
+                    // If we're in an iframe, we should check whether we need to add a title and description
+                    // from the data attributes on the iframe (eg: allowing us to set them from composer)
+                    if (isIframed) {
+                        this.updateForm(rootEl, $el);
+                    }
+
+                    // Ensure our form is the right height, both in iframe and outside
+                    (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+
+                    mediator.on('window:resize',
+                        debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                    );
+                }.bind(this));
+            }
+        };
 });
