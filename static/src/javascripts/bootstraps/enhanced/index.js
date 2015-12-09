@@ -8,8 +8,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/user-timing',
-    'bootstraps/common',
-    'bootstraps/sport',
+    './common',
+    './sport',
 
     'enhanced-common'
 ], function (
@@ -39,39 +39,39 @@ define([
 
     // Front
     if (config.page.isFront) {
-        require(['bootstraps/facia'], function (facia) {
+        require(['bootstraps/enhanced/facia'], function (facia) {
             bootstrapContext('facia', facia);
         });
     }
 
     if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
-        require(['bootstraps/sudoku'], function (sudoku) {
+        require(['bootstraps/enhanced/sudoku'], function (sudoku) {
             bootstrapContext('sudoku', sudoku);
         });
     }
 
     if (config.page.contentType === 'Article') {
-        require(['bootstraps/article', 'bootstraps/image-content'], function (article, imageContent) {
+        require(['bootstraps/enhanced/article', 'bootstraps/enhanced/image-content'], function (article, imageContent) {
             bootstrapContext('article', article);
             bootstrapContext('article : image-content', imageContent);
         });
     }
 
     if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-page') {
-        require(['bootstraps/crosswords'], function (crosswords) {
+        require(['bootstraps/enhanced/crosswords'], function (crosswords) {
             bootstrapContext('crosswords', crosswords);
         });
     }
 
     if (config.page.contentType === 'LiveBlog') {
-        require(['bootstraps/liveblog', 'bootstraps/image-content'], function (liveBlog, imageContent) {
+        require(['bootstraps/enhanced/liveblog', 'bootstraps/enhanced/image-content'], function (liveBlog, imageContent) {
             bootstrapContext('liveBlog', liveBlog);
             bootstrapContext('liveBlog : image-content', imageContent);
         });
     }
 
     if (config.isMedia || config.page.contentType === 'Interactive') {
-        require(['bootstraps/trail'], function (trail) {
+        require(['bootstraps/enhanced/trail'], function (trail) {
             bootstrapContext('media : trail', {
                 init: trail
             });
@@ -79,20 +79,20 @@ define([
     }
 
     if (config.isMedia || qwery('video, audio').length) {
-        require(['bootstraps/media'], function (media) {
+        require(['bootstraps/enhanced/media/index'], function (media) {
             bootstrapContext('media', media);
         });
     }
 
     if (config.page.contentType === 'Gallery') {
-        require(['bootstraps/gallery', 'bootstraps/image-content'], function (gallery, imageContent) {
+        require(['bootstraps/enhanced/gallery', 'bootstraps/enhanced/image-content'], function (gallery, imageContent) {
             bootstrapContext('gallery', gallery);
             bootstrapContext('gallery : image-content', imageContent);
         });
     }
 
     if (config.page.contentType === 'ImageContent') {
-        require(['bootstraps/image-content', 'bootstraps/trail'], function (imageContent, trail) {
+        require(['bootstraps/enhanced/image-content', 'bootstraps/enhanced/trail'], function (imageContent, trail) {
             bootstrapContext('image-content', imageContent);
             bootstrapContext('image-content : trail', {
                 init: trail
@@ -101,7 +101,7 @@ define([
     }
 
     if (config.page.section === 'football') {
-        require(['bootstraps/football'], function (football) {
+        require(['bootstraps/enhanced/football'], function (football) {
             bootstrapContext('football', football);
         });
     }
@@ -112,13 +112,13 @@ define([
     }
 
     if (config.page.section === 'identity') {
-        require(['bootstraps/profile'], function (profile) {
+        require(['bootstraps/enhanced/profile'], function (profile) {
             bootstrapContext('profile', profile);
         });
     }
 
     if (config.page.isPreferencesPage) {
-        require(['bootstraps/preferences'], function (preferences) {
+        require(['bootstraps/enhanced/preferences'], function (preferences) {
             bootstrapContext('preferences', preferences);
         });
     }
@@ -143,7 +143,7 @@ define([
     }
 
     if (config.page.pageId === 'help/accessibility-help') {
-        require(['bootstraps/accessibility'], function (accessibility) {
+        require(['bootstraps/enhanced/accessibility'], function (accessibility) {
             bootstrapContext('accessibility', accessibility);
         });
     }

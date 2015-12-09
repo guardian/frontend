@@ -34,9 +34,9 @@ define([
     var guardian = window.guardian;
     var config = guardian.config;
 
-    var bootStandard = function () { return promiseRequire(['bootstraps/standard', 'domReady!']); };
+    var bootStandard = function () { return promiseRequire(['bootstraps/standard/index', 'domReady!']); };
 
-    var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced']); };
+    var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced/index']); };
 
     var bootCommercial = function () {
         return promiseRequire(['raven'])
@@ -102,7 +102,7 @@ define([
     var commercialResponsesPromise = preFetch(['bootstraps/commercial']);
     var enhancedModuleIds = [
         'enhanced-vendor',
-        'bootstraps/enhanced'
+        'bootstraps/enhanced/index'
     ];
     var enhancedResponsesPromise = (
         shouldRunEnhance
