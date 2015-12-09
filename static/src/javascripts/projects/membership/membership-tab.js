@@ -30,7 +30,7 @@ define([
         MEMBER_INFO = '.js-mem-info',
         LOADER = '.js-mem-loader',
         IS_HIDDEN_CLASSNAME = 'is-hidden',
-        stripeForm = new PaymentForm();
+        stripeForm = new PaymentForm(CARD_DETAILS, CARD_CHANGE_SUCCESS_MSG, '/me/membership-update-card');
 
     function fetchUserDetails() {
         ajax({
@@ -41,7 +41,6 @@ define([
         }).then(function (resp) {
             if (resp && resp.subscription) {
                 hideLoader();
-                setupPaymentForm();
                 populateUserDetails(resp);
             } else {
                 hideLoader();
@@ -54,9 +53,6 @@ define([
         $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
     }
 
-    function setupPaymentForm() {
-        stripeForm.init($(CARD_DETAILS)[0], $(CARD_CHANGE_SUCCESS_MSG), '/me/membership-update-card');
-    }
 
     function populateUserDetails(userDetails) {
         var intervalText = userDetails.subscription.plan.interval === 'Month' ? 'Monthly' : 'Annual',
