@@ -50,8 +50,8 @@ define([
     };
 
     /**
-     * @param {String} form CSS selector for the form to attach behaviour to
-     * @param {String} successElement CSS selector for an element to show/hide on form success
+     * @param {String|Element} form element or selector which is the form this is for
+     * @param {String|Element} successElement element or selector for the success element to show/hide
      * @param {String} url The API url to hit with a new card token
      * @returns {StripePaymentForm}
      * @constructor
