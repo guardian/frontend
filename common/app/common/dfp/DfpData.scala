@@ -267,7 +267,7 @@ case class GuLineItem(id: Long,
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
     } &&
     startTime.isBefore(now.plusDays(1)) &&
-    (endTime.isEmpty || endTime.exists(_.isAfter(now)))
+    (endTime.isEmpty || endTime.exists(_.isAfterNow))
   }
 
   lazy val isSuitableForTopBelowNavSlot: Boolean = targeting.customTargetSets
@@ -285,7 +285,7 @@ case class GuLineItem(id: Long,
     } &&
     creativeSizes.contains(responsiveSize) &&
     startTime.isBefore(DateTime.now.plusDays(1)) &&
-    endTime.isDefined
+    endTime.exists(_.isAfterNow)
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
