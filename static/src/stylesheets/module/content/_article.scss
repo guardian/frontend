@@ -71,4 +71,8 @@
     .fc-container--first .fc-container__header__title {
         border: 0 !important;
     }
+
+    .fc-show-more--hidden .button--show-more {
+        display: none;
+    }
 }
