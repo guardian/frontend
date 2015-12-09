@@ -344,9 +344,8 @@ object Front extends implicits.Collections {
     ): (Set[TrailUrl], Seq[FaciaContent], (Seq[DedupedItem], Seq[DedupedItem])) = {
     container match {
       case Dynamic(dynamicContainer) =>
-        /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
-          * Containers will not be duplicated further down on the page, they themselves retain all their trails, no
-          * matter what occurred further up the page.
+        /** We won't remove items from a dynamic container to avoid unexpected layout, but we will add items in the
+          * container to the list of things to remove later.
           */
         dynamicContainer.containerDefinitionFor(
           faciaContentList.map(Story.fromFaciaContent)
