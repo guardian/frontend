@@ -7,6 +7,9 @@ import common.dfp.{GuAdUnit, GuCreative, GuCreativeTemplate, GuLineItem}
 import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative}
 import org.joda.time.DateTime
 
+import scala.util.control.NonFatal
+import scala.util.{Failure, Success, Try}
+
 // this is replacing DfpDataHydrator
 object DfpApi extends Logging {
 
@@ -29,14 +32,7 @@ object DfpApi extends Logging {
       PlacementAgent.get.data getOrElse(placementId, fallback)
     }
 
-    def adUnit(session: SessionWrapper, adUnitId: String): GuAdUnit = {
-      val cachedData = AdUnitAgent.get.data
-      lazy val fallback = {
-        val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", adUnitId)
-        toGuAdUnit(session.adUnits(stmtBuilder).head)
-      }
-      cachedData getOrElse(adUnitId, fallback)
-    }
+    def adUnit(adUnitId: String): Option[GuAdUnit] = AdUnitAgent.get.data.get(adUnitId)
 
     def targetingKey(session: SessionWrapper, keyId: Long): String = {
       lazy val fallback = {
@@ -51,7 +47,7 @@ object DfpApi extends Logging {
         val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", valueId)
         session.customTargetingValues(stmtBuilder).head.getName
       }
-      CustomTargetingKeyAgent.get.data getOrElse(valueId, fallback)
+      CustomTargetingValueAgent.get.data getOrElse(valueId, fallback)
     }
 
     withDfpSession { session =>
@@ -60,7 +56,7 @@ object DfpApi extends Logging {
           lineItem,
           sponsor(lineItem),
           placementAdUnitIds(session, _),
-          adUnit(session, _),
+          adUnit,
           targetingKey(session, _),
           targetingValue(session, _)
         )
@@ -162,8 +158,40 @@ object DfpApi extends Logging {
     } sortBy (_._2)
   }
 
+  def readAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = {
+    withDfpSession { session =>
+      val suggestedAdUnits = session.suggestedAdUnits.get(new StatementBuilder())
+      val allUnits = suggestedAdUnits map toGuAdUnit
+      allUnits.filter { adUnit =>
+        (adUnit.path.last == "ng" || adUnit.path.last == "r2") && adUnit.path.size == 4
+      }.sortBy(_.id).distinct
+    }
+  }
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = {
+    try {
+      val maybeResult = for (session <- SessionWrapper()) yield {
+        val adUnitsList = adUnits.mkString(",")
+        val numChanges = session.suggestedAdUnits.approve(
+          new StatementBuilder().where(s"id in ($adUnitsList)").toStatement
+        )
+        if (numChanges > 0) {
+          Success("Ad units approved")
+        } else {
+          Failure(new DfpApprovalException("Apparently, nothing changed"))
+        }
+      }
+      maybeResult getOrElse Failure(new DfpSessionException())
+    } catch {
+      case NonFatal(e) => Failure(new DfpApprovalException(e.getMessage))
+    }
+  }
+
   private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for (session <- SessionWrapper()) yield block(session)
     results getOrElse Nil
   }
 }
+
+class DfpApprovalException(message: String) extends RuntimeException
+class DfpSessionException extends RuntimeException

@@ -8,27 +8,32 @@ import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 object DataMapper {
 
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
-    val parentPathComponents: List[String] = dfpAdUnit.getParentPath.map(_.getName).toList.tail
-    GuAdUnit(dfpAdUnit.getId, parentPathComponents :+ dfpAdUnit.getName)
+    val ancestors = toSeq(dfpAdUnit.getParentPath)
+    val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.map(_.getName).tail
+    GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName)
+  }
+
+  def toGuAdUnit(suggested: SuggestedAdUnit): GuAdUnit = {
+    val ancestorNames = toSeq(suggested.getParentPath).map(_.getName) ++ suggested.getPath.toList
+    GuAdUnit(suggested.getId, ancestorNames.tail)
   }
 
   def toGuTargeting(
     dfpTargeting: Targeting,
     placementAdUnitIds: Long => Seq[String],
-    adUnit: String => GuAdUnit,
+    adUnit: String => Option[GuAdUnit],
     targetingKey: Long => String,
     targetingValue: Long => String
   ): GuTargeting = {
 
     def toGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits map (_.getAdUnitId)) map adUnit
+      //noinspection MapFlatten
+      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnit).flatten
 
+      //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
-        val adUnits = for {
-          placementId <- toSeq(inventoryTargeting.getTargetedPlacementIds)
-        } yield placementAdUnitIds(placementId) map adUnit
-        adUnits.flatten
+        toSeq(inventoryTargeting.getTargetedPlacementIds).flatMap(placementAdUnitIds).map(adUnit).flatten
       }
 
       (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
@@ -82,7 +87,7 @@ object DataMapper {
   def toGuCreativePlaceholders(
     dfpLineItem: LineItem,
     placementAdUnitIds: Long => Seq[String],
-    adUnit: String => GuAdUnit,
+    adUnit: String => Option[GuAdUnit],
     targetingKey: Long => String,
     targetingValue: Long => String
   ): Seq[GuCreativePlaceholder] = {
@@ -109,7 +114,7 @@ object DataMapper {
     dfpLineItem: LineItem,
     sponsor: Option[String],
     placementAdUnitIds: Long => Seq[String],
-    adUnit: String => GuAdUnit,
+    adUnit: String => Option[GuAdUnit],
     targetingKey: Long => String,
     targetingValue: Long => String
   ) = GuLineItem(

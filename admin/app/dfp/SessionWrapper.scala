@@ -61,11 +61,25 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     }
   }
 
-  def suggestedAdUnits(stmtBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
-    logAroundRead("suggested ad units", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.suggestedAdUnitService.getSuggestedAdUnitsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
+  object suggestedAdUnits {
+
+    private val suggestedAdUnitService = services.suggestedAdUnitService
+    private val typeName = "suggested ad units"
+
+    def get(stmtBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
+      logAroundRead(typeName, stmtBuilder) {
+        read(stmtBuilder) { statement =>
+          val page = suggestedAdUnitService.getSuggestedAdUnitsByStatement(statement)
+          (page.getResults, page.getTotalResultSetSize)
+        }
+      }
+    }
+
+    def approve(filterStatement: Statement): Int = {
+      logAroundPerform(typeName, "approving", filterStatement) {
+        val action = new ApproveSuggestedAdUnit()
+        val result = suggestedAdUnitService.performSuggestedAdUnitAction(action, filterStatement)
+        result.getNumChanges
       }
     }
   }
@@ -91,9 +105,10 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
   object lineItemCreativeAssociations {
 
     private val licaService = services.licaService
+    private val typeName = "licas"
 
     def get(stmtBuilder: StatementBuilder): Seq[LineItemCreativeAssociation] = {
-      logAroundRead("licas", stmtBuilder) {
+      logAroundRead(typeName, stmtBuilder) {
         read(stmtBuilder) { statement =>
           val page = licaService.getLineItemCreativeAssociationsByStatement(statement)
           (page.getResults, page.getTotalResultSetSize)
@@ -102,13 +117,13 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     }
 
     def create(licas: Seq[LineItemCreativeAssociation]): Seq[LineItemCreativeAssociation] = {
-      logAroundCreate("licas") {
+      logAroundCreate(typeName) {
         licaService.createLineItemCreativeAssociations(licas.toArray)
       }
     }
 
     def deactivate(filterStatement: Statement): Int = {
-      logAroundPerform("licas", "deactivating", filterStatement) {
+      logAroundPerform(typeName, "deactivating", filterStatement) {
         val action = new DeactivateLineItemCreativeAssociations()
         val result = licaService.performLineItemCreativeAssociationAction(action, filterStatement)
         result.getNumChanges
@@ -119,9 +134,10 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
   object creatives {
 
     private val creativeService = services.creativeService
+    private val typeName = "creatives"
 
     def get(stmtBuilder: StatementBuilder): Seq[Creative] = {
-      logAroundRead("creatives", stmtBuilder) {
+      logAroundRead(typeName, stmtBuilder) {
         read(stmtBuilder) { statement =>
           val page = creativeService.getCreativesByStatement(statement)
           (page.getResults, page.getTotalResultSetSize)
@@ -130,7 +146,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     }
 
     def create(creatives: Seq[Creative]): Seq[Creative] = {
-      logAroundCreate("creatives") {
+      logAroundCreate(typeName) {
         creativeService.createCreatives(creatives.toArray)
       }
     }

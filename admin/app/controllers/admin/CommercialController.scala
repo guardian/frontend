@@ -7,12 +7,12 @@ import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
 import dfp.{CreativeTemplateAgent, DfpApi}
-import model.{Content, NoCache, Page}
+import model._
 import ophan.SurgingContentAgent
-import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.{JsString, Json}
 import play.api.mvc.Controller
-import tools._
 import services.FaciaContentConvert
+import tools._
 
 case class CommercialPage() extends StandalonePage {
   override val metadata = MetaData.make(
