@@ -49,10 +49,17 @@ define([
         }
     };
 
+    /**
+     * @param {String} form CSS selector for the form to attach behaviour to
+     * @param {String} successElement CSS selector for an element to show/hide on form success
+     * @param {String} url The API url to hit with a new card token
+     * @returns {StripePaymentForm}
+     * @constructor
+     */
     function StripePaymentForm(form, successElement, url) {
         this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
-        this.successElement = successElement;
-        this.context = form;
+        this.$successElement = $(successElement);
+        this.context = $(form)[0];
         this.apiUrl = url;
         this.DOM = {};
         this.init();
@@ -151,7 +158,7 @@ define([
                 self.reset();
                 self.updateCard(card);
                 self.toggle();
-                self.successElement.removeClass(sharedConfig.classes.HIDE);
+                self.$successElement.removeClass(sharedConfig.classes.HIDE);
 
             }, function fail(error) {
 
@@ -244,11 +251,10 @@ define([
             $creditCardNumberElement = $(self.DOM.CREDIT_CARD_NUMBER),
             $creditCardCVCElement = $(self.DOM.CREDIT_CARD_CVC),
             $creditCardExpiryMonthElement = $(self.DOM.CREDIT_CARD_EXPIRY_MONTH),
-            $creditCardExpiryYearElement = $(self.DOM.CREDIT_CARD_EXPIRY_YEAR),
-            $formElement = $(self.context);
+            $creditCardExpiryYearElement = $(self.DOM.CREDIT_CARD_EXPIRY_YEAR);
 
         bean.on(this.DOM.CHANGE_CARD, 'click', function () {
-            self.successElement.addClass(sharedConfig.classes.HIDE);
+            self.$successElement.addClass(sharedConfig.classes.HIDE);
             self.toggle();
         });
 
@@ -298,7 +304,7 @@ define([
 
         });
 
-        bean.on($formElement[0], 'submit', function (e) {
+        bean.on(self.context, 'submit', function (e) {
             e.preventDefault();
 
             // turn month select errors on when submitting
@@ -533,9 +539,6 @@ define([
     };
 
     StripePaymentForm.prototype.init = function () {
-
-
-
         this.addIconCss();
         if (this.context) {
             this.domElementSetup();

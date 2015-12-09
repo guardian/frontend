@@ -30,7 +30,7 @@ define([
         MEMBER_INFO = '.js-mem-info',
         LOADER = '.js-mem-loader',
         IS_HIDDEN_CLASSNAME = 'is-hidden',
-        stripeForm = new PaymentForm($(CARD_DETAILS)[0], $(CARD_CHANGE_SUCCESS_MSG), '/me/membership-update-card');
+        stripeForm = new PaymentForm(CARD_DETAILS, CARD_CHANGE_SUCCESS_MSG, '/me/membership-update-card');
 
     function fetchUserDetails() {
         ajax({
