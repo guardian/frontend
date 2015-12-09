@@ -44,7 +44,6 @@ body {
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
 @include mq($from: 184px) {
-
     .email-sub__form--footer,
     .email-sub__form--article {
         // Rounded inline input

@@ -11,13 +11,13 @@
         }
 
         case InvalidEmail => {
-            @fragments.inlineSvg("crossIcon", "icon")
+            @fragments.inlineSvg("cross", "icon")
             <h2 class="email-sub__message__headline">Invalid email address</h2>
             <p class="email-sub__message__description">Sorry, we couldn't verify that email address. Please try again or contact userhelp@@theguardian.com.</p>
         }
 
         case OtherError => {
-            @fragments.inlineSvg("crossIcon", "icon")
+            @fragments.inlineSvg("cross", "icon")
             <h2 class="email-sub__message__headline">Subscription error</h2>
             <p class="email-sub__message__description">Sorry, there was a problem with your subscription request. Please try again or contact userhelp@@theguardian.com.</p>
         }
