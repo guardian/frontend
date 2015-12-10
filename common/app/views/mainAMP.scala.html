@@ -99,15 +99,18 @@
                         </template>
                     </amp-list>
                 </div>
+            }
 
+            @if(page.metadata.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition" ||
+                page.metadata.id == "technology/2014/sep/17/apple-iphone-6-thinner-faster-slightly-cheaper-review"){
                 <amp-font
                     layout="nodisplay"
                     font-family="Guardian Egyptian Web"
                     timeout="3000"
-                    on-load-add-class="guardian-egyptian-loaded"
-                    on-load-remove-class="guardian-egyptian-loading"
                     on-error-remove-class="guardian-egyptian-loading"
-                    on-error-add-class="guardian-egyptian-missing">
+                    on-error-add-class="guardian-egyptian-missing"
+                    on-load-remove-class="guardian-egyptian-loading"
+                    on-load-add-class="guardian-egyptian-loaded">
                 </amp-font>
             }
 
