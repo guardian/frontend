@@ -32,8 +32,15 @@ object EmailTextTestV1 extends TestDefinition(
   new LocalDate(2015, 12, 15)
 )
 
+object TopBannerPosition extends TestDefinition(
+  List(Variant4),
+  "top-banner-position",
+  "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
+  new LocalDate(2016, 1, 25)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(EmailTextTestControl, EmailTextTestV1)
+  val tests: Seq[TestDefinition] = List(EmailTextTestControl, EmailTextTestV1, TopBannerPosition)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 

@@ -10,11 +10,12 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import test.TestRequest
+import org.scalatestplus.play.OneAppPerSuite
 
 import scala.collection.JavaConversions._
 import scala.xml.XML
 
-class TemplatesTest extends FlatSpec with Matchers {
+class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be(" foo <b>bar</b> ")
@@ -25,29 +26,20 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   "typeOrTone" should "ignore Article and find Video" in {
-    val tags = new Tags {
-      override val tags = Seq(
-        Tag(tag(id = "type/article", tagType = "type")),
-        Tag(tag(id = "tone/foo", tagType = "tone")),
-        Tag(tag(id = "type/video", tagType = "type"))
-      )
-      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
-      override val isFoundationSupported: Boolean = false
-      override val isAdvertisementFeature: Boolean = false
-    }
+    val tags = Tags(tags = Seq(
+        Tag.make(tag(id = "type/article", tagType = "type")),
+        Tag.make(tag(id = "tone/foo", tagType = "tone")),
+        Tag.make(tag(id = "type/video", tagType = "type"))
+      ))
+
     tags.typeOrTone.get.id should be("type/video")
   }
 
   it should "find tone when only content type is Article" in {
-    val tags = new Tags {
-      override val tags = Seq(
-        Tag(tag(id = "type/article", tagType = "type")),
-        Tag(tag(id = "tone/foo", tagType = "tone"))
-      )
-      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
-      override val isFoundationSupported: Boolean = false
-      override val isAdvertisementFeature: Boolean = false
-    }
+    val tags = Tags(tags = Seq(
+        Tag.make(tag(id = "type/article", tagType = "type")),
+        Tag.make(tag(id = "tone/foo", tagType = "tone"))
+      ))
     tags.typeOrTone.get.id should be("tone/foo")
   }
 
@@ -121,11 +113,6 @@ class TemplatesTest extends FlatSpec with Matchers {
     body should not include ("""<span class="drop-cap__inner">""")
   }
 
-  it should "not add the dropcap span when the paragraph is which begins with a word of less than one Letter" in {
-    val body = withJsoup(bodyStartsWithOneLetter)(DropCaps(true, false)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
-  }
-
   it should "not add the dropcap span when first body element is not a paragraph" in {
     val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
@@ -134,6 +121,11 @@ class TemplatesTest extends FlatSpec with Matchers {
   it should "not add the dropcap span when when the article is not a feature" in {
     val body = withJsoup(bodyWithoutInlines)(DropCaps(false, false)).body.trim
     body should not include ("""<span class="drop-cap__inner">""")
+  }
+
+  it should "add the dropcap span when the paragraph begins with a double quote mark" in {
+    val body = withJsoup(bodyStartsWithDoubleQuote)(DropCaps(true, false)).body.trim
+    body should include ("""<span class="drop-cap__inner">“S</span>""")
   }
 
   "RowInfo" should "add row info to a sequence" in {
@@ -234,17 +226,20 @@ class TemplatesTest extends FlatSpec with Matchers {
     ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
   )
 
-  val testContent = new Article(ApiContent(
-    id = "foo/2012/jan/07/bar",
-    sectionId = None,
-    sectionName = None,
-    webPublicationDateOption = None,
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    fields = Some(Map("shortUrl" -> "http://gu.com/p/439az")),
-    elements = Some(testImages)
-  ))
+  val testContent = {
+    val content = Content.make(ApiContent(
+      id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = None,
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      fields = Some(Map("shortUrl" -> "http://gu.com/p/439az")),
+      elements = Some(testImages)
+    ))
+    Article.make(content)
+  }
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>
@@ -283,6 +278,13 @@ class TemplatesTest extends FlatSpec with Matchers {
     """
       <body>
         <h2>The recipe</h2><p>Season four chicken thighs then brown them on  both sides in a little oil  in a casserole or heavy  deep-sided pan. Roughly chop and thoroughly wash two small leeks. Lift out the browned thighs and set aside, then tip the chopped leeks into the pan and let them soften over a low heat, stirring regularly so they do not brown. Return the chicken thighs to the pan, pour over  a litre of chicken stock, and leave to simmer for about 20 minutes.</p><p>Remove the pods from 450g of broad beans. Break 50g of linguine into short lengths (about 2cm)  and add to the pan, turning the heat up so the liquid boils, then cook for  eight or nine minutes until the pasta is cooked. A few minutes before the pasta is ready, add the podded beans and 200g (shelled weight) of peas to the soup. Finish with a good handful of freshly chopped parsley, check the seasoning and serve. Serves 2.</p><p></p><h2>The trick</h2><p>Brown the chicken thoroughly, a little more than usual, so the caramelised notes enrich the stock. The chicken pieces will also look better that way. You can use chicken or vegetable stock for this. I like to lift the chicken out of the cooking liquor before  I add the pasta, then return it just as the pasta is ready. It won't come to grief if you leave it in, but by removing the chicken you will reduce the risk of overcooking.</p><p></p><h2>The twist</h2><p>Instead of broad beans, use green French beans, chopped into short lengths, like the pasta. Add a hit  of lemon by adding lemon thyme  and a good tablespoon of chopped  leaves. At the last moment, fold  a handful of young spinach or garlic leaves into the stock.</p>
+      </body>
+    """
+
+  val bodyStartsWithDoubleQuote =
+    """
+      <body>
+        <p>“Season four chicken thighs then brown them on  both sides in a little oil  in a casserole or heavy  deep-sided pan.” Roughly chop and thoroughly wash two small leeks. Lift out the browned thighs and set aside, then tip the chopped leeks into the pan and let them soften over a low heat, stirring regularly so they do not brown. Return the chicken thighs to the pan, pour over  a litre of chicken stock, and leave to simmer for about 20 minutes.</p><p>Remove the pods from 450g of broad beans. Break 50g of linguine into short lengths (about 2cm)  and add to the pan, turning the heat up so the liquid boils, then cook for  eight or nine minutes until the pasta is cooked. A few minutes before the pasta is ready, add the podded beans and 200g (shelled weight) of peas to the soup. Finish with a good handful of freshly chopped parsley, check the seasoning and serve. Serves 2.</p><p></p><h2>The trick</h2><p>Brown the chicken thoroughly, a little more than usual, so the caramelised notes enrich the stock. The chicken pieces will also look better that way. You can use chicken or vegetable stock for this. I like to lift the chicken out of the cooking liquor before  I add the pasta, then return it just as the pasta is ready. It won't come to grief if you leave it in, but by removing the chicken you will reduce the risk of overcooking.</p><p></p><h2>The twist</h2><p>Instead of broad beans, use green French beans, chopped into short lengths, like the pasta. Add a hit  of lemon by adding lemon thyme  and a good tablespoon of chopped  leaves. At the last moment, fold  a handful of young spinach or garlic leaves into the stock.</p>
       </body>
     """
 

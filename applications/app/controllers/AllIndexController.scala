@@ -4,8 +4,8 @@ import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
 import conf.LiveContentApi
 import common.{Logging, ExecutionContexts, Edition}
-import model.{Cached, Tag, Content, Section}
-import services.{ConfigAgent, IndexPage}
+import model._
+import services.{IndexPageItem, ConfigAgent, IndexPage}
 import views.support.PreviousAndNext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, DateTime}
@@ -55,9 +55,9 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
     loadLatest(path, reqDate).map { _.map { index =>
 
-      val contentOnRequestedDate = index.trails.filter(_.webPublicationDate.sameDay(reqDate))
+      val contentOnRequestedDate = index.contents.filter(_.item.trail.webPublicationDate.sameDay(reqDate))
 
-      val olderDate = index.trails.find(!_.webPublicationDate.sameDay(reqDate)).map(_.webPublicationDate.toDateTime)
+      val olderDate = index.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
 
       if (index.trails.isEmpty) {
         redirectToFirstAllPage(path)
@@ -72,7 +72,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         }
         val today = DateTime.now
         val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
-        val model = index.copy(trails = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
+        val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
         Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage)))
       }
@@ -94,10 +94,11 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
       LiveContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
-        IndexPage(Section(section), item.results.map(Content(_)), date)
-      ).orElse(item.tag.map( tag =>
-        IndexPage(Tag(tag), item.results.map(Content(_)), date)
-      ))
+        IndexPage(Section.make(section), item.results.map(IndexPageItem(_)), date = date)
+      ).orElse(item.tag.map( apitag => {
+        val tag = Tag.make(apitag)
+        IndexPage(tag, item.results.map(IndexPageItem(_)), Tags(Seq(tag)), date = date)
+      }))
     }
 
     result.recover{ case e: Exception =>

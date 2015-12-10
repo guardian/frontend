@@ -6,7 +6,8 @@ define([
     'text!common/views/membership-message.html',
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/user-features',
+    'lodash/objects/defaults'
 ], function (
     config,
     storage,
@@ -15,49 +16,80 @@ define([
     messageTemplate,
     svgs,
     commercialFeatures,
-    userFeatures
+    userFeatures,
+    defaults
 ) {
 
-    function canShowUkMessage() {
-        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+    var membershipEndpoints = {
+        UK:   'https://membership.theguardian.com/supporter',
+        US:   'https://membership.theguardian.com/us/supporter'
+    };
+
+    var defaultData = {
+        arrowWhiteRight: svgs('arrowWhiteRight')
+    };
+
+    var messages = {
+        UK: {
+            campaign:      'MEMBERSHIP_SUPPORTER_BANNER_UK',
+            code:          'membership-message-uk',
+            minVisited:    10,
+            data: {
+                messageText: [
+                    'Thank you for reading the Guardian.',
+                    'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
+                ].join(' '),
+                linkText: 'Join'
+            }
+        },
+        US: {
+            campaign:      'MEMBERSHIP_SUPPORTER_BANNER_US',
+            code:          'membership-message-us',
+            minVisited:    10,
+            data: {
+                messageText: 'Support open, independent journalism. Become a Supporter from just $5 per month',
+                linkText: 'Find out more'
+            }
+        }
+    };
+
+    function canShow(message) {
         return (
             commercialFeatures.membershipMessages &&
-            config.page.edition === 'UK' &&
-            alreadyVisited > 10 &&
-            !userFeatures.isPayingMember()
+            message.minVisited <= (storage.local.get('gu.alreadyVisited') || 0)
         );
     }
 
-    function ukMessage() {
-        var originalMessage = new Message('membership-message-uk');
-        var campaignCode = 'MEMBERSHIP_SUPPORTER_BANNER_UK';
+    function formatEndpointUrl(edition, message) {
+        return membershipEndpoints[edition] + '?INTCMP=' + message.campaign;
+    }
+
+    function show(edition, message) {
+        var originalMessage;
+
+        var data = defaults({ linkHref: formatEndpointUrl(edition, message) }, message.data, defaultData);
+
+        originalMessage = new Message(message.code);
 
         // Allow tracking to distinguish banners that have been re-displayed
         // after closing from those that have only been displayed once.
         if (originalMessage.hasSeen()) {
-            campaignCode += '_REDISPLAYED';
+            message.code += '-redisplayed';
+            message.campaign += '_REDISPLAYED';
+            message.data.linkHref = formatEndpointUrl(edition, message);
         }
 
-        // Previously this was called membership-message-uk. To redisplay it to users who have
-        // already closed it, we appended '-redisplayed' to the name.
-        new Message('membership-message-uk-redisplayed', {
+        return new Message(message.code, {
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide'
-        }).show(template(messageTemplate, {
-            messageText: [
-                'Thank you for reading the Guardian.',
-                'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
-            ].join(' '),
-            linkHref: 'https://membership.theguardian.com/supporter?INTCMP=' + campaignCode,
-            linkText: 'Join',
-            arrowWhiteRight: svgs('arrowWhiteRight')
-        }));
+        }).show(template(messageTemplate, data));
     }
 
     function init() {
-        if (canShowUkMessage()) {
-            ukMessage();
+        var message = messages[config.page.edition];
+        if (message && canShow(message)) {
+            show(config.page.edition, message);
         }
     }
 

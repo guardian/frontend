@@ -1,0 +1,25 @@
+@(result: SubscriptionResult)
+
+@import model.{SubscriptionResult, Subscribed, InvalidEmail, OtherError}
+
+<div class="email-sub__message">
+    @result match {
+        case Subscribed => {
+            @fragments.inlineSvg("tick", "icon")
+            <h3 class="email-sub__message__headline">You've subscribed!</h3>
+            <p class="email-sub__message__description">Thank you! You are now subscribed to receive the Guardian Today email.</p>
+        }
+
+        case InvalidEmail => {
+            @fragments.inlineSvg("cross", "icon")
+            <h2 class="email-sub__message__headline">Invalid email address</h2>
+            <p class="email-sub__message__description">Sorry, we couldn't verify that email address. Please try again or contact userhelp@@theguardian.com.</p>
+        }
+
+        case OtherError => {
+            @fragments.inlineSvg("cross", "icon")
+            <h2 class="email-sub__message__headline">Subscription error</h2>
+            <p class="email-sub__message__description">Sorry, there was a problem with your subscription request. Please try again or contact userhelp@@theguardian.com.</p>
+        }
+    }
+</div>

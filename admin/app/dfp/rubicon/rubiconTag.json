@@ -1,0 +1,496 @@
+{
+    "name" : "Rubicon Tag",
+    "description" : "",
+    "variables" : [ {
+        "choices" : [ {
+            "label" : "guardian.co.uk (US)",
+            "value" : "12566"
+        }, {
+            "label" : "guardian.co.uk (ROW)",
+            "value" : "12580"
+        }, {
+            "label" : "guardian.co.uk (UK)",
+            "value" : "13015"
+        }, {
+            "label" : "Guardian UK Mobile",
+            "value" : "24187"
+        }, {
+            "label" : "Guardian ROW Mobile",
+            "value" : "33910"
+        }, {
+            "label" : "theguardian.com (UK) - tablet",
+            "value" : "37854"
+        }, {
+            "label" : "theguardian.com (UK) - Expandable",
+            "value" : "52244"
+        }, {
+            "label" : "The Guardian UK_App",
+            "value" : "53896"
+        }, {
+            "label" : "The Guardian ROW_App",
+            "value" : "64096"
+        }, {
+            "label" : "theguardian.com (UK) - HPTO / Roadblock",
+            "value" : "69862"
+        }, {
+            "label" : "The Guardian PMP First Look ONLY",
+            "value" : "73212"
+        }, {
+            "label" : "Guardian UK Mobile PMP ONLY - Mobile-R.F.M",
+            "value" : "78220"
+        } ],
+        "allowOtherChoice" : false,
+        "label" : "rp_site",
+        "uniqueName" : "rp_site",
+        "isRequired" : true,
+        "variableType" : "LIST"
+    }, {
+        "choices" : [ {
+            "label" : "RON - ATF.1",
+            "value" : "22620"
+        }, {
+            "label" : "News",
+            "value" : "22621"
+        }, {
+            "label" : "Business",
+            "value" : "22622"
+        }, {
+            "label" : "Sport",
+            "value" : "22623"
+        }, {
+            "label" : "Travel - ATF",
+            "value" : "22624"
+        }, {
+            "label" : "Network Front",
+            "value" : "22635"
+        }, {
+            "label" : "Network MPU1",
+            "value" : "22636"
+        }, {
+            "label" : "Network MPU2",
+            "value" : "22637"
+        }, {
+            "label" : "Tech",
+            "value" : "22638"
+        }, {
+            "label" : "Culture",
+            "value" : "23187"
+        }, {
+            "label" : "Environment",
+            "value" : "23188"
+        }, {
+            "label" : "Life & Style",
+            "value" : "23189"
+        }, {
+            "label" : "RON BTF",
+            "value" : "25501"
+        }, {
+            "label" : "Travel - BTF",
+            "value" : "25515"
+        }, {
+            "label" : "ROS ATF Tier 1",
+            "value" : "25940"
+        }, {
+            "label" : "Homepage ATF Tier 1.1",
+            "value" : "25942"
+        }, {
+            "label" : "Business ATF Tier 1.1",
+            "value" : "25952"
+        }, {
+            "label" : "Culture ATF Tier 1.1",
+            "value" : "25953"
+        }, {
+            "label" : "Environment ATF Tier 1.1",
+            "value" : "25956"
+        }, {
+            "label" : "Life & Style ATF Tier 1.1",
+            "value" : "25959"
+        }, {
+            "label" : "News ATF Tier 1.1",
+            "value" : "25962"
+        }, {
+            "label" : "Tech ATF Tier 1.1",
+            "value" : "25967"
+        }, {
+            "label" : "Football and Sports ATF Tier 1.1",
+            "value" : "25968"
+        }, {
+            "label" : "Travel ATF Tier 1.1",
+            "value" : "25969"
+        }, {
+            "label" : "Business BTF MPU",
+            "value" : "26799"
+        }, {
+            "label" : "Culture BTF MPU",
+            "value" : "26800"
+        }, {
+            "label" : "Environment BTF MPU",
+            "value" : "26801"
+        }, {
+            "label" : "Life & Style BTF MPU",
+            "value" : "26802"
+        }, {
+            "label" : "News BTF MPU",
+            "value" : "26803"
+        }, {
+            "label" : "Sport BTF MPU",
+            "value" : "26804"
+        }, {
+            "label" : "Tech BTF MPU",
+            "value" : "26805"
+        }, {
+            "label" : "Money ATF Tier 1.1",
+            "value" : "26948"
+        }, {
+            "label" : "Guardian Jobs",
+            "value" : "82130"
+        }, {
+            "label" : "Business ATF",
+            "value" : "91913"
+        }, {
+            "label" : "Travel ATF",
+            "value" : "91915"
+        }, {
+            "label" : "Sport ATF",
+            "value" : "91917"
+        }, {
+            "label" : "Technology ATF",
+            "value" : "91919"
+        }, {
+            "label" : "Run of Network ATF",
+            "value" : "91921"
+        }, {
+            "label" : "Money ATF",
+            "value" : "91923"
+        }, {
+            "label" : "Culture ATF",
+            "value" : "91925"
+        }, {
+            "label" : "Life & Style ATF",
+            "value" : "91927"
+        }, {
+            "label" : "Business BTF.1",
+            "value" : "91931"
+        }, {
+            "label" : "Travel BTF.1",
+            "value" : "91933"
+        }, {
+            "label" : "Sport BTF",
+            "value" : "91935"
+        }, {
+            "label" : "Technology BTF",
+            "value" : "91937"
+        }, {
+            "label" : "Run of Network BTF",
+            "value" : "91939"
+        }, {
+            "label" : "Money BTF.1",
+            "value" : "91941"
+        }, {
+            "label" : "Culture BTF.1",
+            "value" : "91943"
+        }, {
+            "label" : "Life & Style BTF.1",
+            "value" : "91945"
+        }, {
+            "label" : "L&S ATF Tier 1",
+            "value" : "102720"
+        }, {
+            "label" : "Premium Format ROS ATF",
+            "value" : "133060"
+        }, {
+            "label" : "RON - ATF",
+            "value" : "135314"
+        }, {
+            "label" : "RON - ATF.2",
+            "value" : "136784"
+        }, {
+            "label" : "Business BTF.2",
+            "value" : "139926"
+        }, {
+            "label" : "Culture ATF.1",
+            "value" : "139928"
+        }, {
+            "label" : "Technology BTF.1",
+            "value" : "139956"
+        }, {
+            "label" : "Culture/Tech/L&S - Premium Formats",
+            "value" : "156592"
+        }, {
+            "label" : "Business ATF Tier 1",
+            "value" : "158596"
+        }, {
+            "label" : "Business BTF",
+            "value" : "158598"
+        }, {
+            "label" : "Culture ATF Tier 1",
+            "value" : "158600"
+        }, {
+            "label" : "Culture BTF",
+            "value" : "158602"
+        }, {
+            "label" : "Environment ATF Tier 1",
+            "value" : "158604"
+        }, {
+            "label" : "Environment BTF",
+            "value" : "158606"
+        }, {
+            "label" : "Football and Sports ATF Tier 1",
+            "value" : "158612"
+        }, {
+            "label" : "Football and Sports BTF",
+            "value" : "158614"
+        }, {
+            "label" : "Guardian Jobs ATF",
+            "value" : "158616"
+        }, {
+            "label" : "Homepage ATF Tier 1",
+            "value" : "158620"
+        }, {
+            "label" : "Homepage BTF Tier 1",
+            "value" : "158622"
+        }, {
+            "label" : "Money ATF Tier 1",
+            "value" : "158624"
+        }, {
+            "label" : "Life & Style BTF",
+            "value" : "158626"
+        }, {
+            "label" : "Life & Style ATF Tier 1",
+            "value" : "158628"
+        }, {
+            "label" : "Money BTF",
+            "value" : "158630"
+        }, {
+            "label" : "News ATF Tier 1",
+            "value" : "158632"
+        }, {
+            "label" : "News BTF",
+            "value" : "158634"
+        }, {
+            "label" : "ROS ATF Tier 1.1",
+            "value" : "158636"
+        }, {
+            "label" : "ROS BTF",
+            "value" : "158638"
+        }, {
+            "label" : "Tech ATF Tier 1",
+            "value" : "158640"
+        }, {
+            "label" : "Tech BTF",
+            "value" : "158642"
+        }, {
+            "label" : "Travel ATF Tier 1",
+            "value" : "158644"
+        }, {
+            "label" : "Travel BTF",
+            "value" : "158646"
+        }, {
+            "label" : "Rich Media - Run of Network BTF",
+            "value" : "174286"
+        }, {
+            "label" : "Netflix Sport Roadblock",
+            "value" : "234012"
+        }, {
+            "label" : "Business ATF Tier 1 - Expandable",
+            "value" : "237898"
+        }, {
+            "label" : "ROS ATF Tier 1 - Expandable",
+            "value" : "237904"
+        }, {
+            "label" : "Business BTF - Expandable",
+            "value" : "238928"
+        }, {
+            "label" : "Culture ATF Tier 1 - Expandable",
+            "value" : "238930"
+        }, {
+            "label" : "Culture BTF - Expandable",
+            "value" : "238932"
+        }, {
+            "label" : "Environment ATF Tier 1.2",
+            "value" : "238934"
+        }, {
+            "label" : "Environment BTF - Expandable",
+            "value" : "238936"
+        }, {
+            "label" : "Football and Sports ATF Tier 1 - Expandable",
+            "value" : "238942"
+        }, {
+            "label" : "Football and Sports BTF - Expandable",
+            "value" : "238944"
+        }, {
+            "label" : "Homepage ATF Tier 1 - Expandable",
+            "value" : "238950"
+        }, {
+            "label" : "Homepage BTF Tier 1 - Expandable",
+            "value" : "238952"
+        }, {
+            "label" : "L&S BTF - Expandable",
+            "value" : "238956"
+        }, {
+            "label" : "Life & Style ATF Tier 1.2",
+            "value" : "238958"
+        }, {
+            "label" : "Money ATF Tier 1 - Expandable",
+            "value" : "238962"
+        }, {
+            "label" : "Money BTF - Expandable",
+            "value" : "238964"
+        }, {
+            "label" : "News ATF Tier 1 - Expandable",
+            "value" : "238974"
+        }, {
+            "label" : "News BTF - Expandable",
+            "value" : "238976"
+        }, {
+            "label" : "ROS BTF - Expandable",
+            "value" : "238982"
+        }, {
+            "label" : "Tech ATF Tier 1 - Expandable",
+            "value" : "238984"
+        }, {
+            "label" : "Tech BTF - Expandable",
+            "value" : "238988"
+        }, {
+            "label" : "Travel ATF Tier 1 - Expandable",
+            "value" : "238990"
+        }, {
+            "label" : "Travel BTF - Expandable",
+            "value" : "238992"
+        }, {
+            "label" : "iOS",
+            "value" : "248372"
+        }, {
+            "label" : "Android",
+            "value" : "248374"
+        }, {
+            "label" : "Culture HPTO",
+            "value" : "261782"
+        }, {
+            "label" : "Music HPTO",
+            "value" : "261786"
+        }, {
+            "label" : "Mobile Phone Page Specific Zone",
+            "value" : "266518"
+        }, {
+            "label" : "Android - London Only",
+            "value" : "271484"
+        }, {
+            "label" : "iOS - London Only",
+            "value" : "271486"
+        }, {
+            "label" : "Business.1",
+            "value" : "273702"
+        }, {
+            "label" : "Travel - ATF.1",
+            "value" : "273704"
+        }, {
+            "label" : "Test Zone 2 (Expandable)",
+            "value" : "281784"
+        }, {
+            "label" : "iOS.1",
+            "value" : "302608"
+        }, {
+            "label" : "Android.1",
+            "value" : "302610"
+        }, {
+            "label" : "Business ATF -Tier 1 - HPTO",
+            "value" : "333182"
+        }, {
+            "label" : "Business BTF - HPTO",
+            "value" : "333184"
+        }, {
+            "label" : "Culture ATF -Tier 1 - HPTO",
+            "value" : "333190"
+        }, {
+            "label" : "Culture BTF - HPTO",
+            "value" : "333192"
+        }, {
+            "label" : "Essence ROS First Look",
+            "value" : "347354"
+        }, {
+            "label" : "Accuen ROS First Look",
+            "value" : "347356"
+        }, {
+            "label" : "Accuen Sports First Look",
+            "value" : "347358"
+        }, {
+            "label" : "Essence Sport First Look",
+            "value" : "347360"
+        }, {
+            "label" : "Network Front - ATF - HPTO",
+            "value" : "348558"
+        }, {
+            "label" : "Business First Look PMP",
+            "value" : "350624"
+        }, {
+            "label" : "Culture First Look PMP",
+            "value" : "350626"
+        }, {
+            "label" : "Environment First Look PMP",
+            "value" : "350628"
+        }, {
+            "label" : "Life and style First Look PMP",
+            "value" : "350630"
+        }, {
+            "label" : "Tech First Look PMP",
+            "value" : "350632"
+        }, {
+            "label" : "Travel First Look PMP",
+            "value" : "350634"
+        }, {
+            "label" : "Politics First Look PMP",
+            "value" : "350636"
+        }, {
+            "label" : "Money First Look PMP",
+            "value" : "350638"
+        }, {
+            "label" : "Football and Sports First Look PMP",
+            "value" : "350640"
+        }, {
+            "label" : "ROS - Moblie PMP",
+            "value" : "368436"
+        } ],
+        "allowOtherChoice" : false,
+        "label" : "rp_zone",
+        "uniqueName" : "rp_zone",
+        "isRequired" : true,
+        "variableType" : "LIST"
+    }, {
+        "choices" : [ {
+            "label" : "Leaderboard",
+            "value" : "2"
+        }, {
+            "label" : "Wide Skyscraper",
+            "value" : "9"
+        }, {
+            "label" : "Wide Sky",
+            "value" : "10"
+        }, {
+            "label" : "Medium Rectangle",
+            "value" : "15"
+        }, {
+            "label" : "Mobile Banner 1",
+            "value" : "43"
+        }, {
+            "label" : "Mobile Banner 2",
+            "value" : "44"
+        }, {
+            "label" : "Leaderboard.1",
+            "value" : "56"
+        }, {
+            "label" : "Leaderboard.2",
+            "value" : "57"
+        } ],
+        "allowOtherChoice" : false,
+        "label" : "rp_size",
+        "uniqueName" : "rp_size",
+        "isRequired" : true,
+        "variableType" : "LIST"
+    } ],
+    "formatter" : "<!--  Begin Rubicon Project Tag -->\n<script type=\"text/javascript\">\nrp_account = '7845';\nrp_site = '[%rp_site%]';\nrp_zonesize = '[%rp_zone%]-[%rp_size%]';\nrp_adtype = 'js';\nrp_smartfile = '[SMART FILE URL]';\nrp_kw = '[INSERT KEYWORD HERE]';\n</script>\n<script type=\"text/javascript\" src=\"https://ads.rubiconproject.com/ad/7845.js\"></script>\n<!--  End Rubicon Project Tag -->\n",
+    "type" : "USER_DEFINED",
+    "isInterstitial" : false,
+    "isNativeEligible" : false,
+    "isSafeFrameCompatible" : false
+}

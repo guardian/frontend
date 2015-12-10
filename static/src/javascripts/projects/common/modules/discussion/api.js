@@ -10,17 +10,22 @@ define([
     cookies
 ) {
 
+    var toHTTPS = function (url) {
+        return url.replace(/^http:\/\//i, 'https://');
+    };
+
     /**
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
-    var root = (document.location.protocol === 'https:')
-            ? config.page.secureDiscussionApiRoot
-            : config.page.discussionApiRoot,
+    var root = config.page.discussionApiRoot,
         Api = {
             root: root,
-            // TODO get rid of discussion proxy completely when we're changed over to https
-            proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
+            proxyRoot: (config.switches.discussionProxy ?
+                (config.switches.discussionHttps ?
+                    toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') :
+                config.page.host + '/guardianapis/discussion/discussion-api') :
+                root),
             clientHeader: config.page.discussionApiClientHeader
         };
 
@@ -30,9 +35,11 @@ define([
      * @param {Object.<string.*>} data
      * @return {Reqwest} a promise
      */
-    Api.send = function (endpoint, method, data) {
-        var root = (method === 'post' && document.location.protocol === 'http:') ? Api.proxyRoot : Api.root;
+    Api.send = function (endpoint, method, data, useProxy) {
+        var shouldUseProxy = useProxy || false;
+        var root = (method === 'post' || shouldUseProxy) ? Api.proxyRoot : Api.root;
         data = data || {};
+        // TODO remove this once we turn the discussionHttps switch on permanently
         if (cookies.get('GU_U')) {
             data.GU_U = cookies.get('GU_U');
         }
@@ -46,7 +53,8 @@ define([
             headers: {
                 'D2-X-UID': 'zHoBy6HNKsk',
                 'GU-Client': Api.clientHeader
-            }
+            },
+            withCredentials: true
         });
 
         return request;
@@ -118,7 +126,7 @@ define([
      */
     Api.getUser = function (id) {
         var endpoint = '/profile/' + (!id ? 'me' : id);
-        return Api.send(endpoint, 'get');
+        return Api.send(endpoint, 'get', null, true);
     };
 
     return Api;

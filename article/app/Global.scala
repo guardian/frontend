@@ -5,9 +5,11 @@ import dev.DevParametersLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
+import services.NewspaperBooksAndSectionsAutoRefresh
 
 object Global
   extends WithFilters(Filters.common: _*)
+  with NewspaperBooksAndSectionsAutoRefresh
   with DevParametersLifecycle
   with DfpAgentLifecycle
   with CloudWatchApplicationMetrics

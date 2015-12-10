@@ -1,17 +1,29 @@
 package controllers.admin
 
-import common.dfp.LineItemReport
+import common.dfp.{GuCreativeTemplate, LineItemReport}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.DfpDataHydrator
-import model.{Content, NoCache, Page}
+import dfp.{CreativeTemplateAgent, DfpDataHydrator}
+import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.mvc.Controller
 import tools._
+import services.FaciaContentConvert
+
+case class CommercialPage() extends StandalonePage {
+  override val metadata = MetaData.make(
+    id = "commercial-templates",
+    section = "admin",
+    webTitle = "Commercial Templates",
+    analyticsName = "Commercial Templates",
+    javascriptConfigOverrides = Map(
+      "keywordIds" -> JsString("live-better"),
+      "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
+}
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
@@ -53,7 +65,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
-    val templates = Store.getDfpCreativeTemplates
+    val emptyTemplates = CreativeTemplateAgent.get
+    val creatives = Store.getDfpTemplateCreatives
+    val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
+      soFar :+ template.copy(creatives = creatives.filter(_.templateId == template.id).sortBy(_.name))
+    }.sortBy(_.name)
     NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
@@ -63,20 +79,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
       LiveContentApi.search(Edition(request))
         .pageSize(2)
     ).map { response  =>
-      response.results.map {
-        Content(_)
+      response.results.map { item =>
+        FaciaContentConvert.contentToFaciaContent(item)
       }
     }
     trailsFuture map { trails =>
-      object CommercialPage {
-        def apply() = new Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates", None, None) {
-          override def metaData: Map[String, JsValue] = super.metaData ++
-            List(
-              "keywordIds" -> JsString("live-better"),
-              "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")
-            )
-        }
-      }
       NoCache(Ok(views.html.commercial.sponsoredContainers(environment.stage, CommercialPage(), trails)))
     }
   }

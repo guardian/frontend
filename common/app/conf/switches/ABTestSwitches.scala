@@ -4,21 +4,12 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABMembershipMessageUsa = Switch(
+  val ABRtrtEmailFormInlineFooter = Switch(
     "A/B Tests",
-    "ab-membership-message-usa",
-    "Switch for the USA Supporter message test",
+    "ab-rtrt-email-form-inline-footer-v2",
+    "Switch to show the email form inline in the footer",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 18),
-    exposeClientSide = true
-  )
-
-  val ABRtrtEmailMessage = Switch(
-    "A/B Tests",
-    "ab-rtrt-email-message",
-    "Switch to show the Right Place Right Time email message with segmentation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 15),
+    sellByDate = new LocalDate(2015, 12, 16),
     exposeClientSide = true
   )
 
@@ -31,21 +22,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABInjectNetworkFrontTest = Switch(
+  val ABFrontsOnArticles = Switch(
     "A/B Tests",
-    "ab-inject-network-front-test",
-    "Switch to inject the network front instead of most popular on all content pages",
+    "ab-fronts-on-articles",
+    "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
+    sellByDate = new LocalDate(2015, 12, 30),
     exposeClientSide = true
   )
 
-  val ABMostPopularDefaultTest = Switch(
+  val ABEssentialReadTest1 = Switch(
     "A/B Tests",
-    "ab-most-popular-default-test",
-    "Switch to change the default of most popular container to show across the guardian first instead of section",
+    "ab-essential-read-test-1",
+    "Show the essential read instead of related content",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 20),
+    sellByDate = new LocalDate(2015, 12, 15),
     exposeClientSide = true
   )
 
@@ -54,7 +45,7 @@ trait ABTestSwitches {
     "ab-video-preroll",
     "A test to see if a UK or INT audience will be interested in video pre-rolls",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 11),
+    sellByDate = new LocalDate(2016, 1, 6),
     exposeClientSide = true
   )
 }

@@ -20,7 +20,7 @@
     @* We don't use the inlineJSBlocking template because we need to specify
     our own paths *@
 
-    @fragments.omnitureScript(Some(offlinePage))
+    @fragments.omnitureScript(Some(offlinePage.metadata))
 
     @* NOTE the order of these includes is important  *@
     <script>
@@ -28,7 +28,7 @@
         @Html(polyfills().body)
 
         // determine whether to run enhanced JS
-        @InlineJs(shouldEnhance(offlinePage).body, "shouldEnhance.js")
+        @InlineJs(shouldEnhance(offlinePage.metadata).body, "shouldEnhance.js")
 
         // page config
         @Html(config(offlinePage).body)
@@ -69,13 +69,13 @@
         };
 
         // cloudwatch beacons
-        @InlineJs(cloudwatchBeacons(offlinePage).body, "cloudwatchBeacons.js")
+        @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
 
         // curl, library only
         @Html(Static.js.curl);
 
         // load the enhanced JS
-        @InlineJs(bootEnhanced(offlinePage).body, "bootEnhanced.js")
+        @InlineJs(bootEnhanced(offlinePage.metadata).body, "bootEnhanced.js")
     </script>
 </head>
     <body
@@ -108,7 +108,7 @@
 
         @fragments.footer(offlinePage)
 
-        @fragments.footerJavaScript()
+        @fragments.inlineJSNonBlocking()
 
     </body>
 </html>

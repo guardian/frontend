@@ -1,14 +1,12 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 @import conf.switches.Switches._
 @import common.{LinkTo, Edition, SubscribeLink}
 @import common.editions._
 @import conf.Configuration
 @import views.support.URLEncode
 
-
-
 <header id="header"
-        class="l-header u-cf @if(metaData.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
+        class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -32,7 +30,8 @@
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
                                     has-popup js-profile-nav"
-                             data-component="identity-profile">                                                                                    <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
+                             data-component="identity-profile">
+                             <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
                                data-link-name="User profile"
                                data-toggle="popup--profile"
                                data-toggle-signed-in="true"
@@ -84,16 +83,16 @@
                             </a>
                         </div>
                     }
-                    @fragments.topNav.servicesLinks(metaData)
+                    @fragments.topNav.servicesLinks(page.metadata)
                 </div>
             </div>
 
             <div class="popup popup--search is-off js-popup--search"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
-                @if(metaData.section == "observer" && metaData.isFront) {
-                    <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
-                        @if(metaData.hasSlimHeader) {
+                @if((page.metadata.section == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
+                    <a href="@LinkTo{@page.metadata.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
+                        @if(page.metadata.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
                         } else {
                             <span class="u-h">The Observer</span>
@@ -103,7 +102,7 @@
                 } else {
                     <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
                         <span class="u-h">The Guardian</span>
-                        @if(metaData.hasSlimHeader) {
+                        @if(page.metadata.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                             <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-160", "logo")
@@ -121,12 +120,12 @@
                         }
                     </a>
                 }
-                @if(metaData.hasSlimHeader) {
-                    @fragments.nav.navigationToggle(metaData)
+                @if(page.metadata.hasSlimHeader) {
+                    @fragments.nav.navigationToggle()
                 }
             </div>
         </div>
-        @fragments.nav.navigation(metaData)
+        @fragments.nav.navigation(page)
     </div>
 
 </header>

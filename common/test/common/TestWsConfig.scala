@@ -8,7 +8,7 @@ import play.api.Play.current
 
 trait TestWsConfig {
 
-  implicit lazy val longTimeoutConfig = {
+  lazy val longTimeoutConfig = {
     val c = WS.client.underlying.asInstanceOf[AsyncHttpClient].getConfig
     val con = new Builder(c)
       .setConnectTimeout(10000)

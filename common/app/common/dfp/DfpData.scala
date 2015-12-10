@@ -5,6 +5,7 @@ import java.net.URLEncoder
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
+import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -227,8 +228,8 @@ case class GuLineItem(id: Long,
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
   val isExpired = endTime.exists(_.isBeforeNow)
-  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(DateTime.now().minusWeeks(1)))
-  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(DateTime.now().plusMonths(1)))
+  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
+  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
   val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
     targetSet.sponsoredTags ++ targetSet.advertisementFeatureTags ++ targetSet.foundationSupportedTags
@@ -258,14 +259,33 @@ case class GuLineItem(id: Long,
     }
 
     costType == "CPD" &&
-      placeholder.nonEmpty && (
+    placeholder.nonEmpty && (
       targeting.targetsSectionFrontDirectly("business") ||
-        placeholder.exists(_.targetsSectionFrontDirectly("business"))
+      placeholder.exists(_.targetsSectionFrontDirectly("business"))
       ) &&
-      targeting.geoTargetsIncluded.exists { geoTarget =>
-        geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
-      } &&
-      startTime.isBefore(DateTime.now.plusDays(1))
+    targeting.geoTargetsIncluded.exists { geoTarget =>
+      geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
+    } &&
+    startTime.isBefore(now.plusDays(1)) &&
+    (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  }
+
+  lazy val isSuitableForTopBelowNavSlot: Boolean = targeting.customTargetSets
+                                                   .exists(_.targets.exists(_.isSlot("top-below-nav")))
+
+  lazy val isSuitableForTopSlot: Boolean = {
+    costType == "CPD" &&
+    targetsNetworkOrSectionFrontDirectly &&
+    targeting.geoTargetsIncluded.exists { geoTarget =>
+      geoTarget.locationType == "COUNTRY" && (
+        geoTarget.name == "United Kingdom" ||
+        geoTarget.name == "United States" ||
+        geoTarget.name == "Australia"
+        )
+    } &&
+    creativeSizes.contains(responsiveSize) &&
+    startTime.isBefore(DateTime.now.plusDays(1)) &&
+    endTime.exists(_.isAfterNow)
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
@@ -360,9 +380,26 @@ object GuCreativeTemplateParameter {
     )(GuCreativeTemplateParameter.apply _)
 }
 
-case class GuCreative(id: Long, name: String, lastModified: DateTime, args: Map[String, String])
+case class GuCreative(
+  id: Long,
+  name: String,
+  lastModified: DateTime,
+  args: Map[String, String],
+  templateId: Option[Long],
+  snippet: Option[String]
+)
 
 object GuCreative {
+
+  def lastModified(cs: Seq[GuCreative]): Option[DateTime] = {
+    if (cs.isEmpty) None
+    else Some(cs.map(_.lastModified).maxBy(_.getMillis))
+  }
+
+  def merge(old: Seq[GuCreative], recent: Seq[GuCreative]): Seq[GuCreative] = {
+    def mapById(cs: Seq[GuCreative]): Map[Long, GuCreative] = cs.map(c => c.id -> c).toMap
+    (mapById(old) ++ mapById(recent)).values.toSeq
+  }
 
   implicit val writes = new Writes[GuCreative] {
     def writes(creative: GuCreative): JsValue = {
@@ -370,7 +407,9 @@ object GuCreative {
         "id" -> creative.id,
         "name" -> creative.name,
         "lastModified" -> creative.lastModified,
-        "args" -> creative.args
+        "args" -> creative.args,
+        "templateId" -> creative.templateId,
+        "snippet" -> creative.snippet
       )
     }
   }
@@ -379,8 +418,10 @@ object GuCreative {
     (JsPath \ "id").read[Long] and
       (JsPath \ "name").read[String] and
       (JsPath \ "lastModified").read[DateTime] and
-      (JsPath \ "args").read[Map[String, String]]
-    )(GuCreative.apply _)
+      (JsPath \ "args").read[Map[String, String]] and
+      (JsPath \ "templateId").readNullable[Long] and
+      (JsPath \ "snippet").readNullable[String]
+    ) (GuCreative.apply _)
 }
 
 case class GuCreativeTemplate(id: Long,
@@ -408,35 +449,6 @@ case class GuCreativeTemplate(id: Long,
 }
 
 object GuCreativeTemplate extends implicits.Collections {
-
-  def lastModified(templates: Seq[GuCreativeTemplate]): Option[DateTime] = {
-    val cachedLastModified = for {
-      template <- templates
-      creative <- template.creatives
-    } yield creative.lastModified
-    if (cachedLastModified.isEmpty) None
-    else Some(cachedLastModified maxBy (_.getMillis))
-  }
-
-  def merge(oldTemplates: Seq[GuCreativeTemplate],
-            newTemplates: Seq[GuCreativeTemplate]): Seq[GuCreativeTemplate] = {
-
-    def toMap(templates: Seq[GuCreativeTemplate]): Map[Long, GuCreativeTemplate] =
-      templates.groupBy(_.id).mapValues(_.head)
-
-    val oldMap = toMap(oldTemplates)
-
-    def dedup(creatives: Seq[GuCreative]): Seq[GuCreative] =
-      creatives.sortBy(_.lastModified.getMillis).reverse.distinctBy(_.id)
-
-    for (template <- newTemplates) yield {
-      val modifiedTemplate = for (oldTemplate <- oldMap.get(template.id)) yield {
-        val creatives = dedup(oldTemplate.creatives ++ template.creatives) sortBy (_.name)
-        template.copy(creatives = creatives)
-      }
-      modifiedTemplate getOrElse template
-    }
-  }
 
   implicit val writes = new Writes[GuCreativeTemplate] {
     def writes(template: GuCreativeTemplate): JsValue = {

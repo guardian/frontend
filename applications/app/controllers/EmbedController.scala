@@ -14,7 +14,7 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) => renderVideo(EmbedPage(Some(model), model.headline))
+      case Left(model) => renderVideo(EmbedPage(Some(model), model.trail.headline))
       case Right(other) => renderOther(other)
     }
   }
@@ -29,7 +29,7 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
     )
 
     val result = response map { response =>
-      val modelOption: Option[Video] = response.content.filter(_.isVideo).map(Video(_))
+      val modelOption: Option[Video] = response.content.map(Content(_)).collect{ case v: Video => v }
 
       modelOption match {
         case Some(x) => Left(x)

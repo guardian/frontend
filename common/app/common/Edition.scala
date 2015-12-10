@@ -138,8 +138,6 @@ object Editionalise {
 
 case class EditionLink(edition: Edition, path: String)
 
-
-
 object InternationalEdition {
 
   private val variants = Seq("control", "international")

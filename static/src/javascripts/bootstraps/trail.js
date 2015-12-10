@@ -18,8 +18,8 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
+    'common/modules/onward/fronts-containers',
     'common/modules/social/share-count',
-    'common/modules/onward/inject-container',
     'common/modules/experiments/ab'
 ], function (
     enhancer,
@@ -39,10 +39,15 @@ define([
     Popular,
     Related,
     TonalComponent,
+    FrontsContainers,
     shareCount,
-    injectContainer,
     ab
 ) {
+    // messy but removed within a week
+    var blogIdsCheck = (ab.getParticipations().FrontsOnArticles &&
+    (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
+    ab.testCanBeRun('FrontsOnArticles')) ? (config.page.blogIds && !(config.page.blogIds.indexOf('commentisfree') > -1)) : config.page.blogIds;
+
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
             insert();
@@ -64,7 +69,7 @@ define([
     }
 
     function initRelated() {
-        if (!(config.page.seriesId || config.page.blogIds)) {
+        if (!(config.page.seriesId || blogIdsCheck)) {
             insertOrProximity('.js-related', function () {
                 var opts = {
                     excludeTags: []
@@ -82,52 +87,32 @@ define([
                 new Related(opts).renderRelatedComponent();
             });
         }
-
-        if (ab.getParticipations().InjectNetworkFrontTest && ab.getParticipations().InjectNetworkFrontTest.variant === 'variant' && ab.testCanBeRun('InjectNetworkFrontTest')) {
-            var frontUrl;
-
-            switch (config.page.edition) {
-                case 'UK':
-                    frontUrl = '/uk.json';
-                    break;
-                case 'US':
-                    frontUrl = '/us.json';
-                    break;
-                case 'AU':
-                    frontUrl = '/au.json';
-                    break;
-                case 'INT':
-                    frontUrl = '/international.json';
-                    break;
-            }
-
-            if (config.page.seriesId || config.page.blogIds) {
-                $('.onward').insertBefore(qwery('.js-related'));
-            }
-
-            injectContainer.injectContainer(frontUrl, '.related', 'ab-network-front-loaded');
-
-            mediator.once('ab-network-front-loaded', function () {
-                var $parent = $('.facia-page');
-                $parent.addClass('ab-front-injected');
-                $parent.attr('data-link-name', $parent.attr('data-link-name') + ' | ab-front-injected');
-
-                $('.js-tabs-content', $parent).addClass('tabs__content--no-border');
-                $('.js-tabs', $parent).addClass('u-h');
-            }.bind(this));
-        }
     }
 
     function initOnwardContent() {
         insertOrProximity('.js-onward', function () {
-            if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
+            if ((config.page.seriesId || blogIdsCheck) && config.page.showRelatedContent) {
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
-                $('.js-onward').each(function (c) {
-                    new TonalComponent().fetch(c, 'html');
-                });
+                if (!(ab.getParticipations().FrontsOnArticles &&
+                    (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
+                    ab.testCanBeRun('FrontsOnArticles'))) {
+                    $('.js-onward').each(function (c) {
+                        new TonalComponent().fetch(c, 'html');
+                    });
+                }
             }
         });
+    }
+
+    function initFrontsContainers() {
+        if (config.page.section !== 'childrens-books-site' && config.page.contentType !== 'LiveBlog' && ab.getParticipations().FrontsOnArticles &&
+            (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
+            ab.testCanBeRun('FrontsOnArticles')) {
+            insertOrProximity('.js-onward', function () {
+                new FrontsContainers();
+            });
+        }
     }
 
     function initDiscussion() {
@@ -165,6 +150,7 @@ define([
             ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
+            ['c-fronts-containers', initFrontsContainers],
             ['c-onward', initOnwardContent],
             ['c-comment-adverts', commentAdverts]
         ]);

@@ -1,0 +1,30 @@
+@(metaData: model.Page)(head: Html)(body: Html)(implicit request: RequestHeader)
+
+@import conf.switches.Switches._
+@import common.InlineJs
+@import templates.inlineJS.blocking.js._
+
+<!doctype html>
+<head>
+    @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email.css")" />
+    } else {
+        <style class="js-loggable">
+        @Html(Static.css.head(Some("email")))
+        </style>
+    }
+
+    @fragments.fontDefinitions()
+
+    <script id="gu">
+    @if(FontSwitch.isSwitchedOn) {
+        @InlineJs(loadFonts().body, "loadFonts.js")
+    }
+    </script>
+
+</head>
+<html>
+    <body>
+        @body
+    </body>
+</html>

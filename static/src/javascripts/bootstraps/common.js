@@ -51,6 +51,7 @@ define([
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
+    'common/modules/email/email',
     'text!common/views/international-message.html',
     'bootstraps/identity-common',
     'lodash/collections/forEach'
@@ -105,6 +106,7 @@ define([
     pinterest,
     SaveForLater,
     membershipMessages,
+    email,
     internationalMessage,
     identity,
     forEach) {
@@ -364,6 +366,15 @@ define([
 
             showMembershipMessages: function () {
                 membershipMessages.init();
+            },
+
+            initEmail: function () {
+                email.init();
+
+                // Initalise the in-article email form (allowing for multiple)
+                forEach(document.getElementsByClassName('js-email-sub__iframe--article'), function (el) {
+                    email.init(el);
+                });
             }
         };
 
@@ -414,6 +425,7 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
+                ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh]
             ]), function (fn) {
                 fn();

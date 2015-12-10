@@ -69,7 +69,7 @@
     }
 
     .content__headline {
-        @include fs-headline(5);
+        @include fs-headline(7);
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
@@ -376,6 +376,50 @@
         background-color: colour(neutral-7);
     }
 
+    .section-image {
+        position: relative;
+
+        .caption,
+        .section-rule {
+            display: none;
+        }
+    }
+
+    .section-title,
+    .from-content-api h2 {
+        @include fs-headline(5);
+        font-weight: 200;
+        padding-bottom: .5em;
+
+        @include mq(tablet) {
+            @include fs-headline(7, true);
+        }
+    }
+
+    .section-title {
+        position: absolute;
+        z-index: 20;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .5);
+        color: #ffffff;
+        padding: .1em $gs-gutter / 2 .5em;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            padding-left: gs-span(2) + $gs-gutter * 2;
+        }
+
+        @include mq(wide) {
+            padding-left: gs-span(3) + $gs-gutter * 2;
+        }
+    }
+
     .in-body-link--immersive {
         color: colour(feature-default);
 
@@ -438,33 +482,12 @@
         @include mq(tablet) {
             padding: 0;
             border: 0;
-
-            .inline-quote {
-                position: absolute;
-                top: -1px;
-            }
-
-            .pullquote-paragraph {
-                text-indent: 1.7em;
-            }
         }
     }
 
     .element-pullquote.element--showcase {
         @include mq(tablet) {
             margin-bottom: $gs-baseline * 3;
-        }
-
-        @include mq(desktop) {
-            margin-right: -(gs-span(2));
-        }
-
-        @include mq(leftCol) {
-            margin-left: -(gs-span(1) + $gs-gutter);
-        }
-
-        @include mq(wide) {
-            margin-left: -(gs-span(2) + $gs-gutter);
         }
 
         .inline-quote svg {
@@ -474,9 +497,10 @@
             }
         }
 
-        .pullquote-paragraph {
-            @include mq(tablet) {
-                text-indent: 1.6em;
+        .inline-quote {
+            @include mq(leftCol) {
+                position: absolute;
+                left: -3.5em;
             }
         }
 
@@ -490,20 +514,47 @@
 
     .element-pullquote.element--supporting {
         @include mq(tablet) {
-            width: gs-span(4);
-            padding-right: $gs-gutter;
+            width: gs-span(3);
             border: 0;
             margin-right: $gs-gutter;
-            margin-bottom: $gs-baseline * 3;
+            margin-bottom: $gs-baseline * 2;
         }
 
         @include mq(leftCol) {
+            width: gs-span(2);
             margin-left: -(gs-span(2) + $gs-gutter);
         }
 
         @include mq(wide) {
-            width: gs-span(5) + $gs-gutter;
+            width: gs-span(3);
             margin-left: -(gs-span(3) + $gs-gutter);
+        }
+
+        .inline-quote {
+            @include mq(tablet) {
+                position: absolute;
+            }
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 1.8em;
+                height: 1em;
+            }
+        }
+
+        .pullquote-paragraph {
+            @include mq(tablet) {
+                text-indent: 1.7em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 1.25em;
+                line-height: 1.2;
+            }
         }
     }
 
@@ -553,6 +604,10 @@
                 margin-right: $gs-gutter;
             }
         }
+
+        + .section-rule {
+            display: none;
+        }
     }
 
     figure.element--showcase {
@@ -594,6 +649,10 @@
         .block-share {
             display: none !important; // To override hide on mobile
         }
+    }
+
+    .element--showcase {
+        float: none;
     }
 
     .ad-slot--inline {

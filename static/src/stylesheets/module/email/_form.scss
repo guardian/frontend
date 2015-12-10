@@ -1,0 +1,250 @@
+.email-sub {
+    @include clearfix();
+}
+
+.email-sub__iframe {
+    // Fallback for browsers that don't support calc
+    width: 100%;
+}
+
+.email-sub__iframe,
+.from-content-api .element .email-sub__iframe {
+    // pixel calculations are manual design
+    // adjustments, off grid, based on element font-size
+    width: calc(100% + #{$rounded-adjustment});
+    margin-left: -#{$rounded-adjustment / 2};
+}
+
+.email-sub__form {
+    @include clearfix();
+    @include fs-textSans(3);
+    padding: $gs-baseline 0 $gs-baseline * 2;
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+.email-sub__form--is-hidden {
+    display: none;
+}
+
+.email-sub__label {
+    color: $form-label-colour;
+    display: block;
+}
+
+.email-sub__label--is-hidden {
+    visibility: hidden;
+}
+
+// Set with JS so we can use a real label
+// instead of abusing the placeholder attr
+// but displays correctly if JS doesn't load
+.email-sub__inline-label--enabled {
+    position: relative;
+    width: 100%;
+
+    .email-sub__label {
+        line-height: 3;
+        left: 1.250em;
+        position: absolute;
+        pointer-events: none; // Ensure the text input cursor is shown
+    }
+}
+
+.email-sub__label__icon {
+    display: none; // Hidden by default
+
+    svg {
+        fill: $form-label-colour;
+        opacity: .65;
+        width: 1.143em;
+        height: .857em;
+    }
+}
+
+.email-sub__text-input {
+    border: 1px solid $form-primary-colour;
+    color: guss-colour(neutral-1, $pasteup-palette);
+    height: 3em;
+    outline: none;
+    padding: .667em 1.250em;
+}
+
+.email-sub__submit-input {
+    background-color: transparent;
+    border: 1px solid guss-colour(news-support-1, $pasteup-palette);
+    color: $form-primary-colour;
+
+    &:focus,
+    &:hover,
+    &:active {
+        border-color: $form-primary-colour;
+        cursor: pointer;
+    }
+}
+
+.email-sub__text-input,
+.email-sub__submit-input {
+    margin-bottom: $gs-baseline;
+    width: 100%;
+}
+
+.email-sub__label,
+.email-sub__submit-input,
+.email-sub__text-input {
+    @include fs-textSans(1, $size-only: true);
+    line-height: 1.5;
+}
+
+.email-sub__small {
+    @include fs-textSans(1, $size-only: true);
+    color: guss-colour(guardian-brand, $pasteup-palette);
+    display: block;
+    padding-left: $gs-baseline / 3;
+}
+
+.email-sub__message {
+    color: #ffffff;
+
+    padding-left: $icon-padding;
+    position: relative;
+
+    .inline-icon {
+        background-color: guss-colour(neutral-3, $pasteup-palette);
+        border-radius: 1000px;
+        fill: guss-colour(neutral-1, $pasteup-palette);
+        height: $icon-size;
+        left: 0;
+        position: absolute;
+        width: $icon-size;
+
+        svg {
+            height: $icon-size / 2;
+            margin-top: $icon-size / 4;
+            margin-left: $icon-size / 4;
+            width: $icon-size / 2;
+        }
+    }
+}
+
+.email-sub__message__headline,
+.email-sub__message__description {
+    @include fs-textSans(3);
+}
+
+.email-sub__message__headline {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.email-sub__message__description {
+    @include fs-textSans(1, $size-only: true);
+}
+
+/**
+* Modifications
+*/
+
+// FOOTER MODS
+.email-sub__form--footer {
+    margin-bottom: $gs-baseline;
+    padding: 0 $gs-gutter;
+
+    .email-sub__submit-input {
+        background-color: guss-colour(neutral-2, $pasteup-palette);
+        border-color: guss-colour(neutral-2, $pasteup-palette);
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+            border: 1px solid darken(guss-colour(neutral-2, $pasteup-palette), 10%);
+        }
+    }
+
+    .email-sub__small {
+        color: $form-primary-colour;
+        @include fs-textSans(1, $size-only: true);
+    }
+}
+
+// LANDING PAGE MODS
+.email-sub--landing {
+    background-color: guss-colour(guardian-brand, $pasteup-palette);
+
+    .email-sub__description {
+        padding: $gs-baseline $gs-gutter;
+    }
+}
+
+.email-sub__form--landing {
+    .email-sub__form-wrapper {
+        width: 40%;
+    }
+
+    .email-sub__text-input {
+        border-color: $form-secondary-colour;
+        border-radius: 1000px;
+
+        &:focus,
+        &:active {
+            border-color: $form-primary-colour;
+        }
+    }
+
+    .email-sub__small {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+// IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub--article {
+    border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    border-bottom: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+
+    @include mq($from: phablet) {
+        padding-right: gs-span(1);
+    }
+
+    .email-sub__message {
+        padding: $gs-baseline $gs-gutter $gs-baseline $icon-padding;
+    }
+
+    .email-sub__message__headline {
+        color: guss-colour(guardian-brand, $pasteup-palette);
+    }
+
+    .email-sub__message__description {
+        color: guss-colour(neutral-1, $pasteup-palette);
+    }
+}
+
+.email-sub__form--article {
+    .email-sub__label__icon {
+        display: inline-block;
+        margin-right: $gs-gutter / 4;
+    }
+
+    .email-sub__text-input {
+        border-color: guss-colour(neutral-1, $pasteup-palette);
+    }
+
+    .email-sub__submit-input {
+        background-color: guss-colour(guardian-brand, $pasteup-palette);
+        border-color: guss-colour(guardian-brand, $pasteup-palette);
+    }
+
+    .email-sub__label,
+    .email-sub__submit-input,
+    .email-sub__text-input {
+        @include fs-textSans(3, $size-only: true);
+    }
+
+    .email-sub__label {
+        line-height: 3;
+    }
+}
+

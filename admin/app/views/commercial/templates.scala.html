@@ -1,9 +1,9 @@
 @(env: String, templates: Seq[dfp.GuCreativeTemplate])(implicit request: RequestHeader)
 @import tools.DfpLink
+@import model.{SimplePage, MetaData}
 
 @main(
-    Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates"),
-    projectName = Option("facia")
+    SimplePage(MetaData.make("commercial-templates", "admin", "Commercial Templates", "Commercial Templates"))
 ) { } {
 
     <div class="l-side-margins">

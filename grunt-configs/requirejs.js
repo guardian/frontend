@@ -21,7 +21,6 @@ module.exports = function (grunt, options) {
                 react:                'components/react/react',
                 classnames:           'components/classnames/index',
                 reqwest:              'components/reqwest/reqwest',
-                socketio:             'components/socket.io-client/socket.io',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
                 videojs:              'components/video.js/video.min',
