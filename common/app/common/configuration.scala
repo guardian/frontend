@@ -278,6 +278,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
+    lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
+
     object magento {
       lazy val domain = configuration.getStringProperty("magento.domain")
       lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
