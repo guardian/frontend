@@ -14,6 +14,7 @@ window.curlConfig = {
             stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
+            react:                          'components/react/react',
             classnames:                     'components/classnames/index',
             enhancer:                       'components/enhancer/enhancer',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
@@ -41,9 +42,7 @@ window.curlConfig = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg',
-
-            react: '@Static.js.reactPath'
+            inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
@@ -65,15 +64,13 @@ window.curlConfig = {
             'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
-            zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+            react:                      '@Static("javascripts/components/react/react.js")',
             'facebook.js':              '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg', // noop
-
-            react: '@Static.js.reactPath'
+            inlineSvg:                  'inlineSvg' // noop
         }
     }
 };
