@@ -1,9 +1,7 @@
 package dfp
 
 import common.Edition
-import common.dfp.AdSize.responsiveSize
 import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
-import org.joda.time.DateTime
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
@@ -42,26 +40,11 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   }
 
   val topBelowNavSlotTakeovers: Seq[GuLineItem] = dateSort {
-    lineItems filter {
-      _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
-    }
+    lineItems filter (_.isSuitableForTopBelowNavSlot)
   }
 
   val topSlotTakeovers = dateSort {
-    lineItems filter { lineItem =>
-      lineItem.costType == "CPD" &&
-        lineItem.targetsNetworkOrSectionFrontDirectly &&
-        lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
-          geoTarget.locationType == "COUNTRY" && (
-            geoTarget.name == "United Kingdom" ||
-              geoTarget.name == "United States" ||
-              geoTarget.name == "Australia"
-            )
-        } &&
-        lineItem.creativeSizes.contains(responsiveSize) &&
-        lineItem.startTime.isBefore(DateTime.now.plusDays(1)) &&
-        lineItem.endTime.isDefined
-    }
+    lineItems filter (_.isSuitableForTopSlot)
   }
 
   def editionsTargeted(lineItem: GuLineItem): Seq[Edition] = {

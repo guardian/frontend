@@ -22,6 +22,26 @@ object CreativeTemplate extends Logging with implicits.Collections {
     )
   }
 
+  private[rubicon] def relabel(params: Seq[(String, String)]): Seq[(String, String)] = {
+    val (unique, duplicate) = params.groupBy {
+      case (label, _) => label
+    }.partition {
+      case (_, labelParams) => labelParams.size == 1
+    }
+
+    val relabelledDuplicates = duplicate.flatMap {
+      case (label, labelParams) =>
+        val tail = labelParams.tail.sortBy(_._2.toLong).zipWithIndex.map {
+          case ((lbl, value), index) => s"$lbl.${index + 1}" -> value
+        }
+        labelParams.head +: tail
+    }.toSeq
+
+    (unique.values.flatten ++ relabelledDuplicates).toSeq.sortBy {
+      case (_, value) => value.toLong
+    }
+  }
+
   private def findParameters(): Map[String, JsValue] = {
 
     def findParameters(
@@ -36,15 +56,13 @@ object CreativeTemplate extends Logging with implicits.Collections {
         value <- getValue(creative)
       } yield label -> value
 
-      val dedupedLabels = labelValuePairs.sortBy {
-        case (_, value) => value.toInt
-      }.distinctBy {
-        case (_, value) => value
-      }.distinctBy {
-        case (label, _) => label
-      }
+      val dedupedLabels = labelValuePairs.distinctBy { case (_, value) => value }
 
-      Json.toJson(dedupedLabels.map { case (label, value) => Map("label" -> label, "value" -> value) })
+      Json.toJson(
+        relabel(dedupedLabels).map {
+          case (label, value) => Map("label" -> label, "value" -> value)
+        }
+      )
     }
 
     def siteLabel(creative: ThirdPartyCreative): Option[String] = {
