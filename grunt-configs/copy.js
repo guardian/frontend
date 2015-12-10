@@ -40,8 +40,8 @@ module.exports = function (grunt, options) {
                         'bootstraps/commercial.js.map',
                         'enhanced-vendor.js',
                         'enhanced-vendor.js.map',
-                        'bootstraps/enhanced.js',
-                        'bootstraps/enhanced.js.map'
+                        'bootstraps/enhanced/main.js',
+                        'bootstraps/enhanced/main.js.map'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
                 }
