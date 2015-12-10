@@ -39,7 +39,7 @@ define(['helpers/injector'], function (Injector) {
                     identityApi.isUserLoggedIn = function () {return true;};
                 });
 
-                it('Performs an update if the user has no data', function () {
+                it('Performs an update if the user has missing data', function () {
                     deleteAllFeaturesData();
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).toHaveBeenCalled();
