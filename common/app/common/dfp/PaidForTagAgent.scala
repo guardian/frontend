@@ -2,7 +2,7 @@ package common.dfp
 
 import java.net.URLDecoder
 
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import common.Edition
 import model.Tag
 import model.`package`.frontKeywordIds

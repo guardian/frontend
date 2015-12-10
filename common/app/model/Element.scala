@@ -4,7 +4,7 @@ import org.joda.time.Duration
 import com.gu.contentapi.client.model.{Element => ApiElement}
 import org.apache.commons.math3.fraction.Fraction
 
-trait Element {
+sealed trait Element {
   def delegate: ApiElement
   def index: Int
   lazy val id: String = delegate.id
@@ -18,14 +18,11 @@ trait Element {
 object Element {
   def apply(theDelegate: ApiElement, elementIndex: Int): Element = {
     theDelegate.`type` match {
-      case "image" => new ImageElement(theDelegate, elementIndex)
-      case "video" => new VideoElement(theDelegate, elementIndex)
-      case "audio" => new AudioElement(theDelegate, elementIndex)
-      case "embed" => new EmbedElement(theDelegate, elementIndex)
-      case _ => new Element{
-        lazy val delegate = theDelegate
-        lazy val index = elementIndex
-      }
+      case "image" => ImageElement(theDelegate, elementIndex)
+      case "video" => VideoElement(theDelegate, elementIndex)
+      case "audio" => AudioElement(theDelegate, elementIndex)
+      case "embed" => EmbedElement(theDelegate, elementIndex)
+      case _ => DefaultElement(theDelegate, elementIndex)
     }
   }
 }
@@ -114,7 +111,8 @@ trait EmbedContainer extends Element {
    lazy val embedAssets: Seq[EmbedAsset] = delegate.assets.filter(_.`type` == "embed").map(EmbedAsset(_))
 }
 
-class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
-class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer
-class AudioElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with AudioContainer
-class EmbedElement(val delegate: ApiElement, val index: Int) extends Element with EmbedContainer
+case class ImageElement(delegate: ApiElement, index: Int) extends Element with ImageContainer
+case class VideoElement(delegate: ApiElement, index: Int) extends Element with ImageContainer with VideoContainer
+case class AudioElement(delegate: ApiElement, index: Int) extends Element with ImageContainer with AudioContainer
+case class EmbedElement(delegate: ApiElement, index: Int) extends Element with EmbedContainer
+case class DefaultElement(delegate: ApiElement, index: Int) extends Element

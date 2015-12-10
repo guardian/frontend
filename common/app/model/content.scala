@@ -2,7 +2,7 @@ package model
 
 import java.net.URL
 
-import com.gu.facia.api.utils._
+import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
@@ -18,6 +18,7 @@ import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support._
 import com.gu.contentapi.client.{model => contentapi}
+import model.pressed._
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -26,8 +27,7 @@ import scala.util.Try
 /**
  * a combination of CAPI content and things from facia tool, in one place
  */
-
-trait ContentType {
+sealed trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
@@ -64,7 +64,7 @@ final case class Content(
   imdb: Option[String],
   javascriptReferences: Seq[JsObject],
   wordCount: Int,
-  resolvedMetaData: ResolvedMetaData,
+  resolvedMetaData: fapiutils.ResolvedMetaData,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
   showFooterContainers: Boolean = false
@@ -262,7 +262,7 @@ object Content {
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.get("showInRelatedContent").contains("true"),
-      cardStyle = CardStyle.apply(apiContent, TrailMetaData.empty),
+      cardStyle = CardStyle.make(fapiutils.CardStyle(apiContent, TrailMetaData.empty)),
       shouldHideAdverts = apifields.get("shouldHideAdverts").exists(_.toBoolean),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
@@ -273,8 +273,8 @@ object Content {
       },
       hasStoryPackage = apifields.get("hasStoryPackage").exists(_.toBoolean),
       resolvedMetaData = {
-        val cardStyle = CardStyle(apiContent, TrailMetaData.empty)
-        ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle)
+        val cardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
+        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle)
       },
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {

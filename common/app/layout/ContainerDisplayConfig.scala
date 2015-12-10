@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import services.CollectionConfigWithId
 
 object ContainerDisplayConfig {

@@ -1,29 +1,30 @@
 package implicits
 
-import com.gu.contentapi.client.model.Element
-import com.gu.facia.api.models.{FaciaContent, ImageSlideshow, Replace}
 import common.dfp.DfpAgent
 import implicits.Dates._
-import implicits.FaciaContentImplicits._
 import model._
+import model.pressed._
+import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 
 import scala.util.Try
 
 object FaciaContentFrontendHelpers {
 
-  implicit class FaciaContentFrontendHelper(faciaContent: FaciaContent) {
+  implicit class FaciaContentFrontendHelper(faciaContent: PressedContent) {
 
-    def imageReplaceElement = faciaContent.image match {
+    def imageReplaceElement = faciaContent.properties.image match {
       case Some(Replace(src, width, height)) => Option(ImageOverride.createElementWithOneAsset(src, width, height))
       case _ => None
     }
 
-    def elementsWithImageOverride: List[Element] = imageReplaceElement ++: faciaContent.elements
+    def elements: Seq[Element] = faciaContent.properties.maybeContent.map(_.elements.elements).getOrElse(Nil)
 
-    def frontendElements: List[model.Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (e, i) => model.Element(e, i) }
+    def elementsWithImageOverride: Seq[Element] = imageReplaceElement ++: faciaContent.elements
 
-    def frontendTags: List[model.Tag] = faciaContent.tags.map(Tag.make(_))
+    def frontendElements: Seq[Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (el, i) => Element(el.delegate, i) }
+
+    def frontendTags: Seq[model.Tag] = faciaContent.properties.maybeContent.map(_.tags.tags).getOrElse(Nil)
 
     protected lazy val images: Seq[ImageElement] = frontendElements.flatMap { case image: ImageElement => Some(image)
     case _ => None
@@ -61,15 +62,13 @@ object FaciaContentFrontendHelpers {
 
     def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
 
-    def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.maybeSection)
+    def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
 
     lazy val shouldHidePublicationDate: Boolean = {
-      isAdvertisementFeature && faciaContent.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
+      isAdvertisementFeature && faciaContent.properties.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 
-    def url: String = faciaContent.maybeContent.map(SupportedUrl(_)).getOrElse(faciaContent.id)
-
-    def slideshow: Option[List[FaciaImageElement]] = faciaContent.image match {
+    def slideshow: Option[List[FaciaImageElement]] = faciaContent.properties.image match {
       case Some(ImageSlideshow(assets)) =>
         Option {
           assets.flatMap(asset =>
@@ -79,5 +78,19 @@ object FaciaContentFrontendHelpers {
 
     def trailSlideshow(aspectWidth: Int, aspectHeight: Int): Option[List[FaciaImageElement]] =
       slideshow.map(_.filter(image => IsRatio(aspectWidth, aspectHeight, image.width, image.height)))
+
+    def contributors: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.contributors).getOrElse(Nil)
+    def series: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.series).getOrElse(Nil)
+    def keywords: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.keywords).getOrElse(Nil)
+
+    def supporting: List[PressedContent] = faciaContent match {
+      case content: CuratedContent => content.supporting
+      case _ => Nil
+    }
+
+  }
+
+  implicit class FaciaPropertiesFrontendHelper(properties: PressedProperties) {
+      def webPublicationDate: DateTime = properties.webPublicationDateOption.getOrElse(DateTime.now)
   }
 }

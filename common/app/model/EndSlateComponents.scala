@@ -1,7 +1,7 @@
 package model
 
-import com.gu.facia.api.models.FaciaContent
-import implicits.FaciaContentImplicits._
+import model.pressed._
+import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 object EndSlateComponents {
   def fromContent(content: Content) = EndSlateComponents(
@@ -10,10 +10,10 @@ object EndSlateComponents {
     content.fields.shortUrl
   )
 
-  def fromFaciaContent(faciaContent: FaciaContent) = EndSlateComponents(
-    faciaContent.series map ( Tag.make(_) ) collectFirst { case tag:Tag => tag.metadata.id },
-    faciaContent.section,
-    faciaContent.shortUrl
+  def fromFaciaContent(faciaContent: PressedContent) = EndSlateComponents(
+    faciaContent.series collectFirst { case tag:Tag => tag.metadata.id },
+    faciaContent.properties.section,
+    faciaContent.properties.shortUrl
   )
 }
 
