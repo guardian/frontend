@@ -24,6 +24,37 @@
 
     @* NOTE the order of these includes is important  *@
     <script>
+        @* Service worker only caches the bundles (including in dev),
+        so the offline page can only ask for those. *@
+        window.curlConfig = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                'facebook.js':              '//connect.facebook.net/en_US/all.js',
+                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                text:                       'text', // noop
+                inlineSvg:                  'inlineSvg', // noop
+
+                'enhanced-vendor':          '@Static("javascripts/enhanced-vendor.js")',
+                'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
+                'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
+                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
+
+                react: '@Static.js.reactPath'
+            }
+        };
+
+        // curl will read from window.curl
+        window.curl = window.curlConfig;
+
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/app.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+
         // polyfills
         @Html(polyfills().body)
 
@@ -50,32 +81,8 @@
             @InlineJs(enableStylesheets().body, "enableStylesheets.js")
         }
 
-        @* Service worker only caches the bundles (including in dev),
-        so the offline page can only ask for those. *@
-        var curl = {
-            baseUrl: '@{Configuration.assets.path}javascripts',
-            apiName: 'require',
-            paths: {
-                'facebook.js':              '//connect.facebook.net/en_US/all.js',
-                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-                text:                       'text', // noop
-                inlineSvg:                  'inlineSvg', // noop
-
-                core:                       '@Static("javascripts/core.js")',
-                'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
-                'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
-                'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")'
-            }
-        };
-
         // cloudwatch beacons
         @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
-
-        // curl, library only
-        @Html(Static.js.curl);
-
-        // load the enhanced JS
-        @InlineJs(bootEnhanced(offlinePage.metadata).body, "bootEnhanced.js")
     </script>
 </head>
     <body

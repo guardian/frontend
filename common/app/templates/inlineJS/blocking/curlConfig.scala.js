@@ -1,8 +1,8 @@
-@(item: model.MetaData)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 
-var curl = {
+window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
     paths: {
@@ -14,7 +14,6 @@ var curl = {
             stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
-            react:                          'components/react/react',
             classnames:                     'components/classnames/index',
             enhancer:                       'components/enhancer/enhancer',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
@@ -42,15 +41,15 @@ var curl = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg'
+            inlineSvg:    'projects/common/utils/inlineSvg',
+
+            react: '@Static.js.reactPath'
         } else {
-            core:                       '@Static("javascripts/core.js")',
-            'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
+            'enhanced-vendor':          '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
             'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
             'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
             'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
-            'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
             'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
             'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
             'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
@@ -72,9 +71,11 @@ var curl = {
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg' // noop
+            inlineSvg:                  'inlineSvg', // noop
+
+            react: '@Static.js.reactPath'
         }
     }
 };
-
-@JavaScript(Static.js.curl);
+// curl will read from window.curl
+window.curl = window.curlConfig;
