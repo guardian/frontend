@@ -1,5 +1,6 @@
 /*
-This module is responsible for booting the application.
+This module is responsible for booting the application. It is concatenated with
+curl and bootstraps/standard into app.js
 
 We download the bundles in parallel, but they must be executed
 sequentially because each bundle assumes dependencies from the previous

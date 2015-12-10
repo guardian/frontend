@@ -21,7 +21,7 @@
         // Polyfill for async script
         (function (document) {
             var script = document.createElement('script');
-            script.src = '@Static("javascripts/standard.js")';
+            script.src = '@Static("javascripts/app.js")';
             var ref = document.getElementsByTagName('script')[0];
             ref.parentNode.insertBefore(script, ref);
         })(document);

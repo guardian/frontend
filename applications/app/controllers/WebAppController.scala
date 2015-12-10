@@ -51,7 +51,7 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
           Static("stylesheets/head.content.css"),
           Static("stylesheets/content.css"),
           Static("stylesheets/print.css"),
-          Static("javascripts/standard.js"),
+          Static("javascripts/app.js"),
           Static("javascripts/enhanced-vendor.js"),
           Static("javascripts/bootstraps/enhanced.js"),
           Static("javascripts/bootstraps/crosswords.js"),

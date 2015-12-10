@@ -3,7 +3,7 @@ module.exports = function (grunt, options) {
         js: {
             src: [
                 options.staticTargetDir + 'javascripts/enhanced-vendor.js',
-                options.staticTargetDir + 'javascripts/standard.js',
+                options.staticTargetDir + 'javascripts/app.js',
                 options.staticTargetDir + 'javascripts/bootstraps/*.js'
             ]
         }
