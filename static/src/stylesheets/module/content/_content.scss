@@ -651,7 +651,7 @@
 
 .paid-content--advertisement-feature-bar {
     background-color: colour(news-support-3);
-    border-top: none;
+    border-top: 0;
     padding-bottom: 0;
 }
 
@@ -665,13 +665,18 @@
         border-top: 0;
     }
 
+    .content__main {
+        padding-top: $gs-baseline;
+    }
+
     .content__header {
         background-color: colour(paid-article-header);
     }
 
     .tonal__standfirst {
         background-color: colour(paid-article-subheader);
-        padding-bottom: $gs-baseline*2;
+        padding: $gs-baseline 0 $gs-baseline*2;
+        min-height: $gs-baseline*8;
     }
 
     .ad-slot__label,
@@ -682,7 +687,6 @@
 
     .content__section-label {
         @include f-headlineSans;
-        font-weight: normal;
 
         .content__section-label__link {
             color: colour(neutral-1);
@@ -692,6 +696,10 @@
     .meta__social,
     .meta__numbers {
         border-top-color: colour(paid-article-header);
+    }
+
+    .ad-slot--paid-for-badge--article {
+        border-top: 0;
     }
 }
 
