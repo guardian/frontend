@@ -1,17 +1,17 @@
 package views.support
 
-import com.gu.facia.api.models.FaciaContent
 import common.Seqs._
 import model.Tag
-import implicits.FaciaContentImplicits._
+import model.pressed.PressedContent
+import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 object MostPopularTags {
   /** A descending list of the tags that occur most frequently within the given items of content and how frequently
     * they occur
     */
-  def apply(items: Seq[FaciaContent]): Seq[(Tag, Int)] =
+  def apply(items: Seq[PressedContent]): Seq[(Tag, Int)] =
     items
-      .flatMap(_.tags.map(Tag.make(_)))
+      .flatMap(_.frontendTags)
       .filter(_.isKeyword)
       .filterNot(_.isSectionTag)
       .frequencies
@@ -19,5 +19,5 @@ object MostPopularTags {
       .sortBy(-_._2)
 
   /** The top n tags that occur for the given items of content */
-  def topTags(items: Seq[FaciaContent]) = apply(items).map(_._1)
+  def topTags(items: Seq[PressedContent]) = apply(items).map(_._1)
 }
