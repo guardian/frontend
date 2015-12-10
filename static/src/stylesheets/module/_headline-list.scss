@@ -34,13 +34,10 @@
 }
 
 .headline-list__count {
-    position: absolute;
-    top: $gs-baseline / 5;
-    left:0;
+    float: left;
     width: gs-span(1);
     color: colour(neutral-4);
     @include font($f-serif-headline, 200, 44px);
-    letter-spacing: -2px;
 
     @include mq(mobile) {
         width: gs-span(1) - $gs-gutter / 2;
@@ -53,10 +50,14 @@
     color: colour(neutral-1);
     @include fs-headline(2);
     font-weight: 500;
-    margin-left: gs-span(1) - $gs-gutter / 2;
 
     .fc-item__title {
         margin-top: -1 * ($gs-baseline / 3);
+        margin-left: gs-span(1);
+
+        @include mq(mobile) {
+            margin-left: gs-span(1) - $gs-gutter / 2;
+        }
     }
 
     .inline-icon {
@@ -99,7 +100,7 @@
         color: colour(neutral-2);
 
         .old-article-message--clock svg {
-            fill: colour(neutral-2);
+            fill: colour(neutral-3);
             margin-bottom: -1px;
         }
     }
