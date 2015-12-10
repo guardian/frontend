@@ -46,7 +46,7 @@ window.curlConfig = {
             react: '@Static.js.reactPath'
         } else {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
-            'bootstraps/enhanced/index':         '@Static("javascripts/bootstraps/enhanced/index.js")',
+            'bootstraps/enhanced/main':         '@Static("javascripts/bootstraps/enhanced/main.js")',
             'bootstraps/enhanced/crosswords':    '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
             'bootstraps/enhanced/accessibility': '@Static("javascripts/bootstraps/enhanced/accessibility.js")',
             'bootstraps/commercial':             '@Static("javascripts/bootstraps/commercial.js")',
@@ -56,7 +56,7 @@ window.curlConfig = {
             'bootstraps/enhanced/image-content': '@Static("javascripts/bootstraps/enhanced/image-content.js")',
             'bootstraps/membership':             '@Static("javascripts/bootstraps/membership.js")',
             'bootstraps/enhanced/sudoku':        '@Static("javascripts/bootstraps/enhanced/sudoku.js")',
-            'bootstraps/enhanced/media/index':   '@Static("javascripts/bootstraps/enhanced/media/index.js")',
+            'bootstraps/enhanced/media/main':   '@Static("javascripts/bootstraps/enhanced/media/main.js")',
             'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
             'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
             'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',

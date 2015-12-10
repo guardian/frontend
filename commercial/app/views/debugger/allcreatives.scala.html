@@ -93,7 +93,7 @@
     <script>
         // window.require is assigned asynchronously
         window.addEventListener('load', function () {
-            require('bootstraps/standard/index')
+            require('bootstraps/standard/main')
                 .next(['bootstraps/commercial'])
                 .next([
                     'bean',
@@ -157,7 +157,7 @@
         var loadCommercial = function (callback) {
             window.addEventListener('load', function () {
                 // Commercial is in standard
-                require('bootstraps/standard/index')
+                require('bootstraps/standard/main')
                     .next(['bootstraps/commercial'])
                     .then(callback) ;
             });
@@ -187,7 +187,7 @@
         <script>
             function showRHColumn(component) {
                 loadCommercial(function () {
-                    require('bootstraps/standard/index')
+                    require('bootstraps/standard/main')
                         .next(['bootstraps/commercial'])
                         .next([
                             'common/utils/$'

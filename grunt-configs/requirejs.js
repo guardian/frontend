@@ -50,7 +50,7 @@ module.exports = function (grunt, options) {
                 modules: [
                     {
                         name: 'boot',
-                        include: 'bootstraps/standard/index',
+                        include: 'bootstraps/standard/main',
                         insertRequire: ['boot'],
                         exclude: [
                             'text',
@@ -61,7 +61,7 @@ module.exports = function (grunt, options) {
                         name: 'bootstraps/commercial',
                         exclude: [
                             'boot',
-                            'bootstraps/standard/index',
+                            'bootstraps/standard/main',
                             'text',
                             'inlineSvg'
                         ]
@@ -70,15 +70,15 @@ module.exports = function (grunt, options) {
                         name: 'enhanced-vendor',
                         exclude: [
                             'boot',
-                            'bootstraps/standard/index',
+                            'bootstraps/standard/main',
                             'bootstraps/commercial'
                         ]
                     },
                     {
-                        name: 'bootstraps/enhanced/index',
+                        name: 'bootstraps/enhanced/main',
                         exclude: [
                             'boot',
-                            'bootstraps/standard/index',
+                            'bootstraps/standard/main',
                             'bootstraps/commercial',
                             'enhanced-vendor',
                             'text',
@@ -94,10 +94,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/article.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -109,10 +109,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/crosswords.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -124,10 +124,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/liveblog.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -139,10 +139,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/gallery.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -154,10 +154,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/trail.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -169,10 +169,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/profile.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -184,10 +184,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/sudoku.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -199,10 +199,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/image-content.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -214,10 +214,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/facia.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -229,10 +229,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/football.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -244,10 +244,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/preferences.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ]
@@ -259,10 +259,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'vendor/stripe/stripe.min',
                     'text',
                     'inlineSvg'
@@ -288,14 +288,14 @@ module.exports = function (grunt, options) {
         },
         media: {
             options: {
-                name: 'bootstraps/enhanced/media/index',
-                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/media/index.js',
+                name: 'bootstraps/enhanced/media/main',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/media/main.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'text',
                     'inlineSvg'
                 ],
@@ -321,10 +321,10 @@ module.exports = function (grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/accessibility.js',
                 exclude: [
                     'boot',
-                    'bootstraps/standard/index',
+                    'bootstraps/standard/main',
                     'bootstraps/commercial',
                     'enhanced-vendor',
-                    'bootstraps/enhanced/index',
+                    'bootstraps/enhanced/main',
                     'bootstraps/enhanced/facia',
                     'text',
                     'inlineSvg'

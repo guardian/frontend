@@ -79,7 +79,7 @@ define([
     }
 
     if (config.isMedia || qwery('video, audio').length) {
-        require(['bootstraps/enhanced/media/index'], function (media) {
+        require(['bootstraps/enhanced/media/main'], function (media) {
             bootstrapContext('media', media);
         });
     }
