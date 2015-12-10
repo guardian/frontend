@@ -114,11 +114,13 @@ define([
 
     function onHeadlines() {
         var $li = $('.js-popular-trails .js-fc-slice-mpu-candidate-onload').first();
-        $li.removeClass('js-fc-slice-mpu-candidate-onload')
-            .addClass('fc-slice__popular-mpu')
-            .addClass('fc-slice__item--mpu-candidate');
-        sliceAdvertSlot($li, index).then(function ($slot) {
-            dfp.addSlot($slot);
+        idleFastdom.write(function () {
+            $li.removeClass('js-fc-slice-mpu-candidate-onload')
+                .addClass('fc-slice__popular-mpu')
+                .addClass('fc-slice__item--mpu-candidate');
+            sliceAdvertSlot($li, index).then(function ($slot) {
+                dfp.addSlot($slot);
+            });
         });
         mediator.off('modules:geomostpopular:ready', onHeadlines);
         mediator.off('modules:onward:geo-most-popular:ready', onHeadlines);
