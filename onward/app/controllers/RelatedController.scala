@@ -37,7 +37,7 @@ object RelatedController extends Controller with Related with Containers with Lo
 
     getRelatedByTags(edition, path, keywordIds) map {
       case related if related.items.isEmpty => JsonNotFound()
-      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "more content")
+      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related stories")
     }
   }
 
