@@ -34,6 +34,10 @@ module.exports = function () {
 
         eslintTests: {
             command: 'node dev/eslint-rules/tests/*'
+        },
+
+        touchApp: {
+            command: 'touch static/target/javascripts/app.js'
         }
     };
 };

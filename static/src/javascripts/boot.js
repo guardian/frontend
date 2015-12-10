@@ -34,11 +34,31 @@ define([
     var guardian = window.guardian;
     var config = guardian.config;
 
+    var bootStandard = function () { return promiseRequire(['bootstraps/standard', 'domReady!']); };
+
+    var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced']); };
+
+    var bootCommercial = function () {
+        return promiseRequire(['raven'])
+            .then(function (raven) {
+                // Preference pages are served via HTTPS for service worker support.
+                // These pages must not have mixed (HTTP/HTTPS) content, so
+                // we disable ads (until the day comes when all ads are HTTPS).
+                if (config.switches.commercial && !config.page.isPreferencesPage) {
+                    return promiseRequire(['bootstraps/commercial'])
+                        .then(raven.wrap(
+                            { tags: { feature: 'commercial' } },
+                            function (commercial) {
+                                commercial.init();
+                            }
+                        ));
+                }
+            });
+    };
+
     var curlConfig = window.curlConfig;
     var resolveModuleId = function (moduleId) {
-        var match = curlConfig.paths[moduleId];
-        // In dev, there will be no match.
-        return match ? match : (window.curlConfig.baseUrl + '/' + moduleId + '.js');
+        return curlConfig.paths[moduleId];
     };
 
     var xhrFetch = function (url) {
@@ -68,15 +88,24 @@ define([
         return xhrFetchAll(map(moduleIds, resolveModuleId));
     };
 
+    // We don't prefetch in dev because curl won't recognise the anonymous
+    // module definition when we execute it.
+    var preFetch = function (moduleIds) {
+        return isDev ? Promise.resolve([]) :  xhrFetchAllModules(moduleIds);
+    };
+
     var shouldRunEnhance = guardian.isModernBrowser;
 
-    var commercialResponsesPromise = xhrFetchAllModules(['bootstraps/commercial']);
+    var isDev = guardian.config.page.isDev;
+    var commercialResponsesPromise = preFetch(['bootstraps/commercial']);
     var enhancedModuleIds = [
         'enhanced-vendor',
         'bootstraps/enhanced'
     ];
     var enhancedResponsesPromise = (
-        shouldRunEnhance ? xhrFetchAllModules(enhancedModuleIds) : Promise.resolve()
+        shouldRunEnhance
+            ? preFetch(enhancedModuleIds)
+            : Promise.resolve()
     );
 
     var executeResponses = function (responses) {
@@ -85,27 +114,7 @@ define([
         });
     };
 
-    var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced']); };
-
-    var bootCommercial = function () {
-        return promiseRequire(['raven'])
-            .then(function (raven) {
-                // Preference pages are served via HTTPS for service worker support.
-                // These pages must not have mixed (HTTP/HTTPS) content, so
-                // we disable ads (until the day comes when all ads are HTTPS).
-                if (config.switches.commercial && !config.page.isPreferencesPage) {
-                    return promiseRequire(['bootstraps/commercial'])
-                        .then(raven.wrap(
-                            { tags: { feature: 'commercial' } },
-                            function (commercial) {
-                                commercial.init();
-                            }
-                        ));
-                }
-            });
-    };
-
-    promiseRequire(['bootstraps/standard', 'domReady!'])
+    bootStandard()
         .then(function () {
             return commercialResponsesPromise
                 .then(executeResponses)

@@ -131,7 +131,14 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('develop:js', function (fullCompile) {
-        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
+        grunt.task.run([
+            'copy:inlineSVGs',
+            'clean:js',
+            'copy:javascript',
+            // The app file must exist in dev to avoid compilation errors due to
+            // the SW. For testing the SW, do a proper compile.
+            'shell:touchApp'
+        ]);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
