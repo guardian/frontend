@@ -137,7 +137,7 @@ module.exports = function (grunt) {
             'copy:javascript',
             // The app file must exist in dev to avoid compilation errors due to
             // the SW. For testing the SW, do a proper compile.
-            'shell:touchApp'
+            'shell:stubAppJs'
         ]);
 
         if (isOnlyTask(this) && !fullCompile) {
