@@ -61,6 +61,8 @@ define([
         return curlConfig.paths[moduleId];
     };
 
+    // We don't use reqwest because it evals JS
+    // https://github.com/ded/reqwest/issues/131
     var xhrFetch = function (url) {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
@@ -96,7 +98,7 @@ define([
 
     var shouldRunEnhance = guardian.isModernBrowser;
 
-    var isDev = guardian.config.page.isDev;
+    var isDev = config.page.isDev;
     var commercialResponsesPromise = preFetch(['bootstraps/commercial']);
     var enhancedModuleIds = [
         'enhanced-vendor',
