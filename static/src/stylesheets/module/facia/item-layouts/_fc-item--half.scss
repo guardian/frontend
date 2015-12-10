@@ -109,9 +109,16 @@ x x x x x x x x x x x x x x x x x x
 
         @include mq(desktop) {
             @include video-play-button-size($vjs-large-button-size);
+            margin-top: $vjs-large-button-size/-2;
+            margin-left: $vjs-large-button-size/-2;
 
             &:before {
                 @include video-play-button-size($vjs-large-button-size);
+            }
+
+            &:after {
+                left: 2em;
+                top: 2em;
             }
         }
     }
