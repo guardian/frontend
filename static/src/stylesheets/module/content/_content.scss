@@ -671,6 +671,7 @@
 
     .tonal__standfirst {
         background-color: colour(paid-article-subheader);
+        padding-bottom: $gs-baseline*2;
     }
 
     .ad-slot__label,
@@ -681,10 +682,16 @@
 
     .content__section-label {
         @include f-headlineSans;
+        font-weight: normal;
 
         .content__section-label__link {
             color: colour(neutral-1);
         }
+    }
+
+    .meta__social,
+    .meta__numbers {
+        border-top-color: colour(paid-article-header);
     }
 }
 

@@ -63,7 +63,6 @@ define([
                                 opts.keywords,
                                 slotTarget
                               ));
-            console.log('renderAd', badgesConfig[sponsorship]);
 
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
 
@@ -79,8 +78,6 @@ define([
         init = function () {
             var sponsoredFrontPromise,
                 sponsoredContainersPromise;
-
-            console.log(config.switches.newCommercialContent);
 
             if (!commercialFeatures.badges) {
                 return false;

@@ -8,14 +8,6 @@
 
 @defining(model.article) { article =>
     <div class="l-side-margins">
-        @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) {
-            <div class="paid-content--advertisement-feature-bar content">
-                <div class="gs-container">
-                    <span class="paid-content--info-entry">Paid content</span>
-                    <span class="paid-content--info-entry">About</span>
-                </div>
-            </div>
-        }
         <article id="article" data-test-id="article-root"
             class="content content--article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
             @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
