@@ -10,8 +10,11 @@ import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.OneAppPerSuite
 import services.FaciaContentConvert
 import slices._
+import test.TestRequest
 
 class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
+  val testRequest = TestRequest()
+
   def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.contentToFaciaContent(
     emptyApiContent.copy(id = theUrl, webUrl = theUrl)
   )
@@ -51,10 +54,10 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
 
 
   "itemsVisible" should "return a correct count of items visible (not behind 'show more')" in {
-    Front.itemsVisible(FixedContainers.fixedMediumFastXI) shouldEqual 11
-    Front.itemsVisible(FixedContainers.fixedMediumSlowVII) shouldEqual 7
+    Front.itemsVisible(FixedContainers.fixedMediumFastXI.slices) shouldEqual 11
+    Front.itemsVisible(FixedContainers.fixedMediumSlowVII.slices) shouldEqual 7
     /** Don't know why this is called 12 when it contains 9 items ... */
-    Front.itemsVisible(FixedContainers.fixedMediumSlowXIIMpu) shouldEqual 9
+    Front.itemsVisible(FixedContainers.fixedMediumSlowXIIMpu.slices) shouldEqual 9
   }
 
   "deduplicate" should "not remove items from a dynamic container" in {
@@ -62,7 +65,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
   }
@@ -72,7 +75,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set("/one", "/two", "/three")
   }
@@ -82,7 +85,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("three")
   }
@@ -92,7 +95,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set("/one", "/two", "/three")
   }
@@ -102,7 +105,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
   }
@@ -112,7 +115,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set("/one", "/two")
   }
@@ -122,7 +125,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
   }
@@ -130,7 +133,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
   it should "not include items seen in a singleton container in the set of urls for further deduplication" in {
     val (nowSeen, _, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.thrasher), Seq(
       trailWithUrl("one")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set.empty
   }
@@ -138,7 +141,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
   it should "not remove items from a singleton container" in {
     val (_, dedupedTrails, _) = Front.deduplicate(Set("one"), Fixed(FixedContainers.thrasher), Seq(
       trailWithUrl("one")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one")
   }
@@ -148,7 +151,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set("/one", "/two")
   }
@@ -158,7 +161,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
   }
@@ -168,7 +171,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("one"),
       trailWithUrl("two"),
       trailWithUrl("three")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set("/one", "/two")
   }
@@ -176,7 +179,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
   it should "not deduplicate dream snaps" in {
     val (_, dedupedTrails, _) = Front.deduplicate(Set("one", "two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
       dreamSnapWithUrl("one")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one")
   }
@@ -189,7 +192,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       trailWithUrl("four"),
       trailWithUrl("five"),
       trailWithUrl("six")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set("/three", "/four")
   }
@@ -197,7 +200,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
   it should "not include dream snaps in the seen urls" in {
     val (nowSeen, _, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedMediumFastXI), Seq(
       dreamSnapWithUrl("one")
-    ))
+    ), isNetworkFront = false, isEditorialFront = false)(testRequest)
 
     nowSeen shouldEqual Set()
   }
