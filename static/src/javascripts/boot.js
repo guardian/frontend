@@ -1,6 +1,5 @@
 /*
-Bundles: commercial + (enhanced-vendor + enhanced)*
-* Only if we detect we should run enhance
+This module is responsible for booting the application.
 
 We download the bundles in parallel, but they must be executed
 sequentially because each bundle assumes dependencies from the previous
@@ -11,6 +10,9 @@ Now we can safely require one of those modules.
 
 Unfortunately we can't do all of this using the curl API, so we use a
 combination of ajax/eval/curl instead.
+
+Bundles we need to run: commercial + (enhanced-vendor + enhanced)*
+* Only if we detect we should run enhance
  */
 
 define([
@@ -22,7 +24,7 @@ define([
     map,
     forEach
 ) {
-    // We must cast promises because…
+    // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
     var promiseRequire = function (moduleIds) {
         return Promise.resolve(require(moduleIds));
