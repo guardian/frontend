@@ -4,7 +4,6 @@
 @import views.html.fragments.items.elements.facia_cards.title
 @import views.support._
 @import TrailCssClasses.toneClass
-@import implicits.FaciaContentImplicits._
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
 @import conf.switches.Switches.contentAgeMessageSwitch
 
@@ -39,8 +38,8 @@
                             <p class="headline-list__count">@info.rowNum</p>
                             @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
                             @if(contentAgeMessageSwitch.isSwitchedOn) {
-                                @trail.maybeContent.map { content =>
-                                    @if(content.tags.exists(_.id == "tone/news")) {
+                                @trail.properties.maybeContent.map { content =>
+                                    @if(content.tags.tags.exists(_.id == "tone/news")) {
                                         @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
                                     }
                                 }

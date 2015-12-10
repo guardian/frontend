@@ -1,9 +1,9 @@
-@(trails: Seq[com.gu.facia.api.models.FaciaContent], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false, headingLevel: Int = 2)(implicit request: RequestHeader)
+@(trails: Seq[model.pressed.PressedContent], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false, headingLevel: Int = 2)(implicit request: RequestHeader)
 
 @import views.support.Seq2zipWithRowInfo
 
 <ul class="u-unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
+        @fragments.trails.headline(trail.properties, info.rowNum, related, headingLevel = headingLevel)
     }
 </ul>

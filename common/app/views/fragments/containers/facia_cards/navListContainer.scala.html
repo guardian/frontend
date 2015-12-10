@@ -2,7 +2,6 @@
 
 @import common.LinkTo
 @import views.html.fragments.containers.facia_cards.containerHeader
-@import implicits.FaciaContentImplicits._
 @import model.SupportedUrl
 
 @containerHeader(collectionDefinition, frontProperties)
@@ -13,7 +12,7 @@
             @collectionDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
             <li class="fc-slice__item--nav-list">
                 <div class="fc-item fc-item--list-compact">
-                    <a href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.headline</a>
+                    <a href="@LinkTo(SupportedUrl.fromFaciaContent(item))" data-link-name=" | article | @index">@item.properties.headline</a>
                 </div>
             </li>
         }

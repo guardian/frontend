@@ -1,6 +1,5 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
-@import implicits.FaciaContentImplicits._
 @import crosswords.{CrosswordGrid, CrosswordPreview, TodaysCrosswordGrid}
 @import views.support.{Treat, CrosswordTreat, SnappableTreat, ClimateTreat, NormalTreat}
 @import model.SupportedUrl
@@ -17,12 +16,12 @@
                             @if(!RichRequestHeader(request).isCrosswordFront) {
                                 @CrosswordPreview.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
                             }
-                            <span class="treats__treat">@treat.headline</span>
+                            <span class="treats__treat">@treat.properties.headline</span>
                         </a>
                     }
 
                     case SnappableTreat => {
-                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat facia-snap js-snap js-snappable" data-snap-type="json.html" data-snap-uri="http://interactive.guim.co.uk/thrashers/election-treat/source.json">@treat.headline</a>
+                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.properties.headline" class="treats__treat facia-snap js-snap js-snappable" data-snap-type="json.html" data-snap-uri="http://interactive.guim.co.uk/thrashers/election-treat/source.json">@treat.properties.headline</a>
                     }
 
                     case ClimateTreat => {
@@ -30,11 +29,11 @@
                     }
 
                     case GlastoTreat => {
-                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat facia-snap js-snap js-snappable" data-snap-type="json.html" data-snap-uri="http://interactive.guim.co.uk/thrashers/glasto-treat/source.json">@treat.headline</a>
+                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.properties.headline" class="treats__treat facia-snap js-snap js-snappable" data-snap-type="json.html" data-snap-uri="http://interactive.guim.co.uk/thrashers/glasto-treat/source.json">@treat.properties.headline</a>
                     }
 
                     case NormalTreat => {
-                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat">@treat.headline</a>
+                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.properties.headline" class="treats__treat">@treat.properties.headline</a>
                     }
                 }
             </li>
