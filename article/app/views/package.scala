@@ -51,6 +51,7 @@ object BodyCleaner {
       BloggerBylineImage(article),
       LiveBlogShareButtons(article),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
+      ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner,
       MembershipEventCleaner,
