@@ -89,7 +89,8 @@ define([
                 travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
                 capiSingle:     buildComponentUrl('capi-single', this.params),
-                capi:           buildComponentUrl('capi', this.params)
+                capi:           buildComponentUrl('capi', this.params),
+                paidfor:        buildComponentUrl('paidfor', this.params)
             };
         };
 

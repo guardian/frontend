@@ -22,7 +22,6 @@ define([
     GustyleComcontent.prototype.create = function () {
         var $component;
 
-        this.params.gustyleClass = 'gu-comcontent';
         this.params.metaLabel = 'Paid Content';
         this.params.buttonLabel = 'About';
         this.params.icon = svgs('arrowdownicon');

@@ -1,6 +1,6 @@
-<a class="<%=gustyleClass%>" href="<%=clickMacro%><%=articleUrl%>" data-link-name="creative | gu style commercial content">
+<div class="gu-comcontent" data-link-name="creative | gu style commercial content">
     <div class="u-responsive-ratio inlined-image">
-        <img class="gu-image" src="<%=articleImage%>">
+        <a href="<%=clickMacro%><%=articleUrl%>"><img class="gu-image" src="<%=articleImage%>"></a>
     </div>
     <div class="gu-meta">
         <span class="gu-meta__label"><%=metaLabel%></span>
@@ -14,12 +14,12 @@
             </div>
         </div>
     </div>
-    <div class="gu-box">
+    <a href="<%=clickMacro%><%=articleUrl%>" class="gu-box">
         <h2 class="gu-title"><%=articleHeaderText%></h2>
         <p class="gu-text"><%=articleText%></p>
         <div class="gu-brand">
             <span class="gu-note"><%=note%></span>
             <img class="gu-logo" src="<%=brandLogo%>" alt="<%=brand%>">
         </div>
-    </div>
-</a>
+    </a>
+</div>
