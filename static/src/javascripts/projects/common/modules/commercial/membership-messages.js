@@ -47,7 +47,7 @@ define([
             code:          'membership-message-us',
             minVisited:    10,
             data: {
-                messageText: 'Support open, independent journalism. Become a Supporter from just £5/$8 per month',
+                messageText: 'Support open, independent journalism. Become a Supporter from just $5 per month',
                 linkText: 'Find out more'
             }
         }

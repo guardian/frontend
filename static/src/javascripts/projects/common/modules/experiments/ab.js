@@ -5,7 +5,6 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/fronts-on-articles',
     'common/modules/experiments/tests/essential-read-test-1',
     'common/modules/experiments/tests/large-top-slot',
@@ -26,7 +25,6 @@ define([
     mediator,
     store,
     mvtCookie,
-    HighCommercialComponent,
     FrontsOnArticles,
     EssentialReadTest1,
     LargeTopAd,
@@ -42,7 +40,6 @@ define([
     chain) {
 
     var TESTS = flatten([
-        new HighCommercialComponent(),
         new FrontsOnArticles(),
         new LargeTopAd(),
         new VideoPreroll(),

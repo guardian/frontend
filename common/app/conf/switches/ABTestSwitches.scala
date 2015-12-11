@@ -36,7 +36,7 @@ trait ABTestSwitches {
     "ab-video-preroll",
     "A test to see if a UK or INT audience will be interested in video pre-rolls",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 11),
+    sellByDate = new LocalDate(2016, 1, 6),
     exposeClientSide = true
   )
 }

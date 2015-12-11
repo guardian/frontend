@@ -53,7 +53,7 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'text!common/views/international-message.html',
-    'bootstraps/identity-common',
+    'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
     fastdom,

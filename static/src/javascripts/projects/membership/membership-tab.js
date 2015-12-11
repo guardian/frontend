@@ -3,8 +3,9 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'membership/payment-form'
-], function (bean, $, ajax, config, PaymentForm) {
+    'membership/payment-form',
+    'membership/formatters'
+], function (bean, $, ajax, config, PaymentForm, formatters) {
 
     var CARD_DETAILS = '.js-mem-card-details',
         CARD_CHANGE_SUCCESS_MSG = '.js-mem-card-change-success-msg',
@@ -29,34 +30,7 @@ define([
         MEMBER_INFO = '.js-mem-info',
         LOADER = '.js-mem-loader',
         IS_HIDDEN_CLASSNAME = 'is-hidden',
-        stripeForm = new PaymentForm();
-
-    function formatAmount(amount) {
-        return amount ? '£' + (amount / 100).toFixed(2) : 'FREE';
-    }
-
-    function formatDate(timestamp) {
-        var date = new Date(timestamp),
-            months = [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
-            ],
-            day = date.getDate(),
-            month = months[date.getMonth()],
-            year = date.getFullYear();
-
-        return [day, month, year].join(' ');
-    }
+        stripeForm = new PaymentForm(CARD_DETAILS, CARD_CHANGE_SUCCESS_MSG, '/me/membership-update-card');
 
     function fetchUserDetails() {
         ajax({
@@ -67,7 +41,6 @@ define([
         }).then(function (resp) {
             if (resp && resp.subscription) {
                 hideLoader();
-                setupPaymentForm();
                 populateUserDetails(resp);
             } else {
                 hideLoader();
@@ -80,28 +53,26 @@ define([
         $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
     }
 
-    function setupPaymentForm() {
-        stripeForm.init($(CARD_DETAILS)[0], $(CARD_CHANGE_SUCCESS_MSG), '/me/membership-update-card');
-    }
 
     function populateUserDetails(userDetails) {
         var intervalText = userDetails.subscription.plan.interval === 'Month' ? 'Monthly' : 'Annual',
+            glyph = userDetails.subscription.plan.currency,
             notificationTypeSelector;
 
         $(MEMBERSHIP_TIER).text(userDetails.tier);
-        $(PACKAGE_COST).text(formatAmount(userDetails.subscription.plan.amount));
-        $(DETAILS_JOIN_DATE).text(formatDate(userDetails.joinDate));
+        $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount, glyph));
+        $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
         $(PACKAGE_INTERVAL).text(intervalText);
-        $(PACKAGE_CURRENT_PERIOD_START).text(formatDate(userDetails.subscription.start));
-        $(PACKAGE_CURRENT_PERIOD_END).text(formatDate(userDetails.subscription.end));
-        $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatDate(userDetails.subscription.renewalDate));
+        $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
+        $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
+        $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatters.formatDate(userDetails.subscription.renewalDate));
 
         if (userDetails.subscription.nextPaymentDate) {
-            $(PACKAGE_NEXT_PAYMENT_DATE).text(formatDate(userDetails.subscription.nextPaymentDate));
+            $(PACKAGE_NEXT_PAYMENT_DATE).text(formatters.formatDate(userDetails.subscription.nextPaymentDate));
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
         }
 
-        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatAmount(userDetails.subscription.nextPaymentPrice));
+        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatters.formatAmount(userDetails.subscription.nextPaymentPrice, glyph));
 
         var isMonthly = userDetails.subscription.plan.interval === 'Month';
         if (userDetails.subscription.nextPaymentDate == userDetails.subscription.renewalDate || isMonthly) {

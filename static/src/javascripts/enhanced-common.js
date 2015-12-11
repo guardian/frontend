@@ -1,7 +1,5 @@
 define([
-    // 3rd party libs
-    'raven',
-    'picturefill',
+    // The following modules are here for bundling purposes only
 
     // utilities
     'common/utils/$',
