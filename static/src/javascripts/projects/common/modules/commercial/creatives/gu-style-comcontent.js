@@ -15,9 +15,11 @@ define([
     mediator,
     template,
     svgs,
-    GuStyle,
+    guStyle,
     gustyleComcontentTpl,
     merge) {
+
+    gustyleComcontentTpl = template(gustyleComcontentTpl);
 
     var GustyleComcontent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -33,11 +35,11 @@ define([
                 standFirst: (this.params.adVariant === 'content') ?
                         '<p class="gu-text">' + this.params.articleText + '</p>' : '',
                 noteOrLink: (this.params.adVariant === 'content') ?
-                        '<span class="gu-note">Brought to you by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
+                        '<span class="gu-note">Paid for by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
             };
 
-        $.create(template(gustyleComcontentTpl, { data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
-        new GuStyle(this.$adSlot, this.params).addLabel();
+        $.create(gustyleComcontentTpl({ data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
+        guStyle(this.$adSlot, this.params);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
