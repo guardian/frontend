@@ -1,0 +1,32 @@
+@import _root_.model.SimplePage
+@(commentId: Int, page: SimplePage)(implicit request: RequestHeader)
+@main(page){ }{
+
+    <form class="d-report-comment-form js-report-comment-form">
+
+        <select class="d-report-comment__field d-report-comment__field--category" name="category">
+            <option value="0">Please select</option>
+            <option value="1">Personal abuse</option>
+            <option value="2">Off topic</option>
+            <option value="3">Legal issue</option>
+            <option value="4">Trolling</option>
+            <option value="5">Hate speech</option>
+            <option value="6">Offensive/Threatening language</option>
+            <option value="7">Copyright</option>
+            <option value="8">Spam</option>
+            <option value="9">Other</option>
+        </select>
+
+        <div class="d-report-comment__comment">
+            <label class="d-report-comment__label" for="d-report-comment__reason">Reason (optional)</label>
+            <textarea class="d-report-comment__field" id="d-report-comment__reason" name="comment"></textarea>
+        </div>
+
+        <div class="d-report-comment__email">
+            <label class="d-report-comment__label" for="d-report-comment__email">Email (optional)</label>
+            <input type="text" class="d-report-comment__field" id="d-report-comment__email" name="email"></textarea>
+        </div>
+
+        <button class="d-report-comment__submit" type="submit">Report</button>
+    </form>
+}

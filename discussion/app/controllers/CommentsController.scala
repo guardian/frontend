@@ -1,6 +1,6 @@
 package controllers
 
-import model.{Cached, TinyResponse}
+import model.{MetaData, SimplePage, Cached, TinyResponse}
 import scala.concurrent.Future
 import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
@@ -44,6 +44,11 @@ object CommentsController extends DiscussionController {
   // Get the top comments for a discussion.
   def topCommentsJson(key: DiscussionKey) = Action.async { implicit request => getTopComments(key) }
   def topCommentsJsonOptions(key: DiscussionKey) = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
+
+  def reportAbuse(commentId: Int) = Action { implicit request =>
+    val page = SimplePage(MetaData.make("/reportAbuse", "Discussion", "Report Abuse", "GFE: Report Abuse"))
+    Cached(60) { Ok(views.html.discussionComments.reportComment(commentId, page)) }
+  }
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {
     val params = optParams.getOrElse(DiscussionParams(request))
