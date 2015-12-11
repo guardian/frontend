@@ -51,7 +51,7 @@
     @include fs-headline(2);
     font-weight: 500;
 
-    .fc-item__title {
+    .headline-list__text {
         margin-top: -1 * ($gs-baseline / 3);
         margin-left: gs-span(1);
 
