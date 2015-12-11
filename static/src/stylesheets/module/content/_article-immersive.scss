@@ -27,7 +27,7 @@
         z-index: 10;
 
         @include mq($until: desktop) {
-            background-color: rgba(0, 0, 0, .6);
+            background-color: lighten(colour(neutral-1), 15%);
             padding-bottom: $gs-baseline / 2;
         }
 
