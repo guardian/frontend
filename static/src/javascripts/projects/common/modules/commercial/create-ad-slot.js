@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'bonzo',
     'common/utils/config',
     'lodash/collections/map',
     'lodash/objects/assign',
@@ -100,7 +100,7 @@ define([
     };
 
     function createAdSlotElement(name, attrs, classes) {
-        return $.create('<div></div>')
+        return $(document.createElement('div'))
             .attr({
                 'id': 'dfp-ad--' + name,
                 'data-link-name': 'ad slot ' + name,
@@ -109,6 +109,7 @@ define([
             })
             .attr(attrs)
             .addClass('js-ad-slot ad-slot ad-slot--dfp ' + classes.join(' '));
+
     }
 
     return function (name, slotTypes, series, keywords, slotTarget) {
