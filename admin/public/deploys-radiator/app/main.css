@@ -1,0 +1,73 @@
+body {
+    /* Unset UAS body */
+    margin: 0;
+    padding: 1rem;
+}
+
+.deploys {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    /* Unset UAS UL */
+    padding-left: 0;
+    /* Unset UAS UL */
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.3rem;
+}
+
+.deploy {
+    width: 9em;
+    margin-right: 1em;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+.deploy h3 {
+    font-size: inherit;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.deploy ul {
+    list-style: none;
+    /* Unset UAS UL */
+    padding-left: 0;
+    margin-top: 0.5em;
+    /* Unset UAS UL */
+    margin-bottom: 0;
+}
+
+.deploy li {
+     display: block;
+}
+
+.deploy--completed {
+    background-color: hsl(120, 50%, 80%);
+}
+
+.deploy--running {
+    background-color: hsl(30, 100%, 80%);
+}
+
+.deploy--not-running {
+    background-color: hsl(0, 0%, 80%);
+}
+
+.deploy--failed {
+    background-color: hsl(0, 50%, 80%);
+}
+
+.hidden {
+    display: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
