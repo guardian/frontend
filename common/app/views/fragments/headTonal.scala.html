@@ -79,7 +79,7 @@
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">
-                    @if(showBadge && NewCommercialContent.isSwitchedOn) {
+                    @if(showBadge && NewCommercialContent.isSwitchedOn && !item.tags.isVideo) {
                         <div class="content__meta-container js-content-meta js-football-meta u-cf">
                             @fragments.commercial.badge(item)
                         </div>
