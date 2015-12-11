@@ -88,7 +88,7 @@ define([
             var $comments = $('.js-comments');
 
             fastdom.write(function () {
-                $('.submeta').append('<hr class=\'submeta__jump-to-comments-line\'/><button class=\'button button--large button--primary submeta__jump-to-comments js-move-comments\'>' + svgs('commentCount16icon') + '<span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
+                $('.submeta').append('<hr class=\'submeta__jump-to-comments-line\'/><button class=\'button button--large button--primary submeta__jump-to-comments js-move-comments\' data-link-name=\'ab-jump-to-comments-button\'>' + svgs('commentCount16icon') + '<span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
                 $comments.insertAfter(qwery('.js-fronts-network-2'));
             });
 
