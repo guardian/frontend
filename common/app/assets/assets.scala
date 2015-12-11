@@ -152,6 +152,7 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
      val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
+     val reactPath: String = "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js"
   }
 }
 

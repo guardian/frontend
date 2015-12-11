@@ -54,29 +54,62 @@
                     <amp-list height="940" layout="fixed-height" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-mf2.json">
                         <template type="amp-mustache">
                             <div class="fc-item {{toneClass}}">
-                                <a href="{{url}}" class="fc-item__link">
-                                    <div class="fc-item__image-container">
-                                        <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
+                                <div class="fc-item__image-container">
+                                    <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
+                                </div>
+                                <div class="fc-item__content">
+                                    <div class="fc-item__header">
+                                        <h2 class="fc-item__title">
+                                            <span>
+                                                {{#isVideo}}
+                                                    @fragments.inlineSvg("video-icon", "icon")
+                                                {{/isVideo}}
+                                                {{#isGallery}}
+                                                    @fragments.inlineSvg("camera", "icon")
+                                                {{/isGallery}}
+                                                {{#isAudio}}
+                                                    @fragments.inlineSvg("volume-high", "icon")
+                                                {{/isAudio}}
+                                                {{#isComment}}
+                                                    @fragments.inlineSvg("quote", "icon")
+                                                {{/isComment}}
+                                            </span>
+                                            {{headline}}
+                                        </h2>
+                                        {{#isComment}}
+                                            <div class="fc-item__byline">
+                                                {{byline}}
+                                            </div>
+                                        {{/isComment}}
                                     </div>
-                                    <div class="fc-item__content">
-                                        <h2 class="fc-item__title">{{headline}}</h2>
-                                    </div>
-                                </a>
+                                    <aside class="fc-item__meta">
+                                        <time
+                                        class="fc-item__timestamp"
+                                        data-relativeformat="short">
+                                            @fragments.inlineSvg("clock", "icon")
+                                            <span class="timestamp__text">
+                                                <span class="u-h">Published: </span>
+                                                {{webPublicationDate}}
+                                            </span>
+                                        </time>
+                                    </aside>
+                                </div>
+                                <a href="{{url}}" class="fc-item__link">{{headline}}</a>
                             </div>
                         </template>
                     </amp-list>
                 </div>
-
-                <amp-font
-                    layout="nodisplay"
-                    font-family="Guardian Egyptian Web"
-                    timeout="3000"
-                    on-load-add-class="guardian-egyptian-loaded"
-                    on-load-remove-class="guardian-egyptian-loading"
-                    on-error-remove-class="guardian-egyptian-loading"
-                    on-error-add-class="guardian-egyptian-missing">
-                </amp-font>
             }
+
+            <amp-font
+                layout="nodisplay"
+                font-family="Guardian Egyptian Web"
+                timeout="3000"
+                on-error-remove-class="guardian-egyptian-loading"
+                on-error-add-class="guardian-egyptian-missing"
+                on-load-remove-class="guardian-egyptian-loading"
+                on-load-add-class="guardian-egyptian-loaded">
+            </amp-font>
 
             @fragments.footerAMP(page)
         </div>

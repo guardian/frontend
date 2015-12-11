@@ -34,7 +34,6 @@ http://developers.theguardian.com/join-the-team.html
         class="@RenderClasses(Map(
             ("has-page-skin", page.metadata.hasPageSkin(edition)),
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
-            ("wide-localnav", navigation.map(_.repelCutout).getOrElse(false)),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
@@ -76,9 +75,9 @@ http://developers.theguardian.com/join-the-team.html
 
         @body
 
-        @********************** 
-         24x7 support training 
-        
+        @**********************
+         24x7 support training
+
          We intentionally modified the displayed section on this specific article.
          This is a failure that trainees have to diagnose in frontend.
         ************************@
@@ -86,7 +85,7 @@ http://developers.theguardian.com/join-the-team.html
             <script type="text/javascript">
                 document.querySelectorAll('[data-link-name="article section"]')[0].textContent = "Culture"
                 @***
-                 The following is a misdirection to let people think damned CAPI is causing the issue  
+                 The following is a misdirection to let people think damned CAPI is causing the issue
                 ***@
                 console.log("Error connecting to content API to retrieve section: 503")
                 console.log("Defaulting to Culture")

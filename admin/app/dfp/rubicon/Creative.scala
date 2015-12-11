@@ -35,6 +35,8 @@ object Creative extends Logging {
 
     log.info(s"Replacing creative ${origin.getId}")
 
+    def mkString(licas: Seq[LineItemCreativeAssociation]): String = licas.map(_.getLineItemId).mkString(", ")
+
     val templateCreative: Option[TemplateCreative] = {
 
       for {
@@ -95,38 +97,57 @@ object Creative extends Logging {
             }
             log.info(s"Created new template creative ${created.getId}: params ${params mkString ", "}")
 
-            val existingLicas = session.lineItemCreativeAssociations.get(
-              new StatementBuilder().where("creativeId = :creativeId").withBindVariableValue("creativeId", origin.getId)
-            )
-            if (existingLicas.isEmpty) {
-              log.warn(s"Origin creative ${origin.getId} has no line item associations")
+            val existingUnarchivedLicas = {
+              val allExistingLicas = session.lineItemCreativeAssociations.get(
+                new StatementBuilder().where("status = :status AND creativeId = :creativeId")
+                .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
+                .withBindVariableValue("creativeId", origin.getId)
+              )
+              val archivedLineItemIds = session.lineItems(
+                new StatementBuilder().where(s"lineItemId IN (${mkString(allExistingLicas)})")
+              ).filter(_.getIsArchived).map(_.getId)
+              allExistingLicas filterNot { lica =>
+                archivedLineItemIds.contains(lica.getLineItemId)
+              }
+            }
+            if (existingUnarchivedLicas.isEmpty) {
+              log.warn(s"Origin creative ${origin.getId} has no unarchived line item associations")
             } else {
-              val lineItemIds = s"${existingLicas.map(_.getLineItemId).mkString(", ")}"
-              log.info(s"Origin creative ${origin.getId} is associated with line items $lineItemIds")
+              log.info(
+                s"Origin creative ${origin.getId} is associated with " +
+                s"unarchived line items ${mkString(existingUnarchivedLicas)}"
+              )
             }
 
-            val lineItemIds = existingLicas flatMap { existingLica =>
+            val lineItemIds = existingUnarchivedLicas flatMap { existingLica =>
               val lica = new LineItemCreativeAssociation()
               lica.setLineItemId(existingLica.getLineItemId)
               lica.setCreativeId(created.getId)
+              lica.setSizes(existingLica.getSizes)
+              lica.setStartDateTimeType(existingLica.getStartDateTimeType)
+              lica.setStartDateTime(existingLica.getStartDateTime)
+              lica.setEndDateTime(existingLica.getEndDateTime)
+              lica.setManualCreativeRotationWeight(existingLica.getManualCreativeRotationWeight)
+              lica.setSequentialCreativeRotationIndex(existingLica.getSequentialCreativeRotationIndex)
               lica.setStatus(ACTIVE)
               val newLica = session.lineItemCreativeAssociations.create(Seq(lica))
               if (newLica.isEmpty)
-                log.error(s"Failed to link creative ${lica.getCreativeId} with line item ${lica.getLineItemId}")
+                log.error(s"Failed to associate creative ${lica.getCreativeId} with line item ${lica.getLineItemId}")
               newLica.headOption.map(_.getLineItemId)
             }
-            if (lineItemIds.nonEmpty)
+            if (lineItemIds.nonEmpty) {
               log.info(s"Associated creative ${created.getId} with line items ${lineItemIds.mkString(", ")}")
 
-            val numDeactivated = session.lineItemCreativeAssociations.deactivate(
-              new StatementBuilder()
-              .where("creativeId = :creativeId")
-              .withBindVariableValue("creativeId", origin.getId)
-              .toStatement
-            )
-            if (numDeactivated == lineItemIds.size && lineItemIds.nonEmpty) {
-              val lineItems = lineItemIds.mkString(", ")
-              log.info(s"Deactivated original line-item creative associations ${origin.getId} -> $lineItems")
+              val numDeactivated = session.lineItemCreativeAssociations.deactivate(
+                new StatementBuilder()
+                .where("creativeId = :creativeId")
+                .withBindVariableValue("creativeId", origin.getId)
+                .toStatement
+              )
+              if (numDeactivated == lineItemIds.size && lineItemIds.nonEmpty) {
+                val lineItems = lineItemIds.mkString(", ")
+                log.info(s"Deactivated original line-item creative associations ${origin.getId} -> $lineItems")
+              }
             }
 
             log.info(s"Finished replacing creative ${origin.getId} with creative ${created.getId}")
