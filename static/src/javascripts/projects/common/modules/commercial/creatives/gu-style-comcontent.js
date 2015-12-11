@@ -1,23 +1,16 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/template',
     'common/views/svgs',
-    'common/modules/commercial/gustyle/gustyle',
-    'text!common/views/commercial/creatives/gu-style-comcontent.html',
-    'lodash/objects/merge'
+    'text!common/views/commercial/creatives/gu-style-comcontent.html'
 ], function (
     fastdom,
     $,
-    detect,
-    mediator,
     template,
     svgs,
-    guStyle,
-    gustyleComcontentTpl,
-    merge) {
+    gustyleComcontentTpl
+) {
 
     gustyleComcontentTpl = template(gustyleComcontentTpl);
 
@@ -27,24 +20,27 @@ define([
     };
 
     GustyleComcontent.prototype.create = function () {
-        var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
-            templateOptions = {
-                clickMacro: this.params.clickMacro,
-                gustyleClass: (this.params.adVariant === 'content') ?
-                        'gu-comcontent' : 'gu-display',
-                standFirst: (this.params.adVariant === 'content') ?
-                        '<p class="gu-text">' + this.params.articleText + '</p>' : '',
-                noteOrLink: (this.params.adVariant === 'content') ?
-                        '<span class="gu-note">Paid for by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
-            };
+        var $component;
 
-        $.create(gustyleComcontentTpl({ data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
-        guStyle(this.$adSlot, this.params);
+        this.params.gustyleClass = 'gu-comcontent';
+        this.params.metaLabel = 'Paid Content';
+        this.params.buttonLabel = 'About';
+        this.params.icon = svgs('arrowdownicon');
+        this.params.infoTitle = 'Paid stories are paid for and controlled by an advertiser';
+        this.params.infoLinkText = 'Learn more about the Guardian’s funding from outside parties';
+        this.params.infoLinkUrl = 'https://www.theguardian.com/info/2014/sep/23/paid-for-content';
+        this.params.infoLinkIcon = svgs('arrowRight');
+        this.params.note = 'Paid for by:';
 
-        if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-        }
+        $component = $.create(gustyleComcontentTpl(this.params))
 
+        fastdom.write(function() {
+            $component.appendTo(this.$adSlot);
+
+            if (this.params.trackingPixel) {
+                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            }
+        }.bind(this));
     };
 
     return GustyleComcontent;

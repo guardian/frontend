@@ -1,13 +1,25 @@
-<a class="<%=data.gustyleClass%>" href="<%=data.clickMacro%><%=data.articleUrl%>" data-link-name="creative | gu style commercial content">
+<a class="<%=gustyleClass%>" href="<%=clickMacro%><%=articleUrl%>" data-link-name="creative | gu style commercial content">
     <div class="u-responsive-ratio inlined-image">
-        <img class="gu-image" src="<%=data.articleImage%>">
+        <img class="gu-image" src="<%=articleImage%>">
+    </div>
+    <div class="gu-meta">
+        <span class="gu-meta__label"><%=metaLabel%></span>
+        <div class="gu-comlabel gu-meta__more has-popup">
+            <button class="u-button-reset gu-comlabel__btn popup__toggle" data-toggle="gu-compopup--<%=dataAttr%>">
+                <%=buttonLabel%> <%=icon%>
+            </button>
+            <div class="popup is-off gu-compopup gu-compopup--<%=dataAttr%> gu-stylebox">
+                <h3 class="gu-compopup__title"><%=infoTitle%></h3>
+                <a class="gu-compopup__link" href="<%=infoLinkUrl%>"><%=infoLinkText%> <%=infoLinkIcon%></a>
+            </div>
+        </div>
     </div>
     <div class="gu-box">
-        <h2 class="gu-title"><%=data.articleHeaderText%></h2>
-        <%=data.standFirst%>
+        <h2 class="gu-title"><%=articleHeaderText%></h2>
+        <p class="gu-text"><%=articleText%></p>
         <div class="gu-brand">
-        	<%=data.noteOrLink%>
-        	<img class="gu-logo" src="<%=data.brandLogo%>" alt="<%=data.brand%>">
+            <span class="gu-note"><%=note%></span>
+            <img class="gu-logo" src="<%=brandLogo%>" alt="<%=brand%>">
         </div>
     </div>
 </a>
