@@ -23,7 +23,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET        /email                                                               controllers.EmailController.renderPage()
-GET        /email/form/$formType<footer|article>                                controllers.EmailController.renderForm(formType: String)
+GET        /email/form/$emailType<article|footer>/:listId                       controllers.EmailController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                       controllers.EmailController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailController.submit()
 OPTIONS    /email                                                               controllers.EmailController.options()

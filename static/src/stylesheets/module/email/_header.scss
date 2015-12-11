@@ -40,7 +40,7 @@
         background-color: transparent;
         border-top: 0 none;
         color: guss-colour(neutral-1, $pasteup-palette);
-        min-height: 40px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
+        min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
     }
 }
 
