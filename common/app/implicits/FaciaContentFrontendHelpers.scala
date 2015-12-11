@@ -22,45 +22,54 @@ object FaciaContentFrontendHelpers {
 
     def elementsWithImageOverride: Seq[Element] = imageReplaceElement ++: faciaContent.elements
 
-    def frontendElements: Seq[Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (el, i) => Element(el.delegate, i) }
+    def frontendElements: Seq[Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (el, i) =>
+      val properties = el.properties.copy(index = i)
+      el match {
+        case element: ImageElement => element.copy(properties = properties)
+        case element: VideoElement => element.copy(properties = properties)
+        case element: AudioElement => element.copy(properties = properties)
+        case element: EmbedElement => element.copy(properties = properties)
+        case element: DefaultElement => element.copy(properties = properties)
+      }
+    }
 
     def frontendTags: Seq[model.Tag] = faciaContent.properties.maybeContent.map(_.tags.tags).getOrElse(Nil)
 
     protected lazy val images: Seq[ImageElement] = frontendElements.flatMap { case image: ImageElement => Some(image)
     case _ => None
     }
-    lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
-    lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
+    lazy val thumbnail: Option[ImageElement] = images.find(_.properties.isThumbnail)
+    lazy val bodyImages: Seq[ImageElement] = images.filter(_.properties.isBody)
 
     private val trailPicMinDesiredSize = 460
     val AspectRatioThreshold = 0.01
 
-    def mainPicture: Option[ImageContainer] = images.find(_.isMain)
+    def mainPicture: Option[ImageElement] = images.find(_.properties.isMain)
 
     // Find a main picture crop which matches this aspect ratio.
-    def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
+    def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[Element] = {
       val desiredAspectRatio = aspectWidth.toDouble / aspectHeight
 
-      (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).map { image =>
-        image.imageCrops.filter { crop =>
+      (thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).flatMap { image =>
+        image.images.imageCrops.filter { crop =>
           aspectHeight.toDouble * crop.width != 0 &&
             Math.abs((aspectWidth.toDouble * crop.height) / (aspectHeight.toDouble * crop.width) - 1) <= AspectRatioThreshold
         } match {
           case Nil => None
-          case crops => Option(ImageContainer(crops, image.delegate, image.index))
+          case crops => Some(image)
         }
-      }.flatten.toList
+      }.toList
     }
 
-    def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPictureAll(aspectWidth, aspectHeight).headOption
+    def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[Element] = trailPictureAll(aspectWidth, aspectHeight).headOption
 
-    def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)).orElse(mainPicture).orElse(thumbnail)
+    def trailPicture: Option[ImageElement] = thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)).orElse(mainPicture).orElse(thumbnail)
 
     protected lazy val videos: Seq[VideoElement] = frontendElements.flatMap { case video: VideoElement => Some(video)
     case _ => None
     }
 
-    def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
+    def mainVideo: Option[VideoElement] = videos.find(_.properties.isMain).headOption
 
     def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
 

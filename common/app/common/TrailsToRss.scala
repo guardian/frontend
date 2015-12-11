@@ -69,7 +69,7 @@ object TrailsToRss extends implicits.Collections {
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
       val images: Seq[ImageAsset] = (trail.elements.bodyImages ++ trail.elements.mainPicture ++ trail.elements.thumbnail).flatMap { i =>
-        i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
+        i.images.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
       }.distinctBy(_.url)
 
       val modules: Seq[MediaEntryModuleImpl] = for {
@@ -170,7 +170,7 @@ object TrailsToRss extends implicits.Collections {
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
       val images: Seq[ImageAsset] = (faciaContent.elements.bodyImages ++ faciaContent.elements.mainPicture ++ faciaContent.elements.thumbnail).flatMap{ i =>
-        i.imageCrops.filter(c => c.width == 140 || c.width == 460 )
+        i.images.imageCrops.filter(c => c.width == 140 || c.width == 460 )
       }.distinctBy(_.url)
 
       val modules: Seq[MediaEntryModuleImpl] = for {

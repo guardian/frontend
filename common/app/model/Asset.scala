@@ -39,7 +39,7 @@ case class ImageAsset(delegate: Asset, index: Int) {
   } yield caption.endsWith(credit)).getOrElse(false)
 }
 
-case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {
+case class VideoAsset(private val delegate: Asset) {
 
   private lazy val fields: Map[String,String] = delegate.typeData
 

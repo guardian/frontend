@@ -36,9 +36,9 @@ object Trail {
         souped getOrElse Nil
       },
       byline = apiContent.safeFields.get("byline").map(stripHtml),
-      trailPicture = elements.thumbnail.find(_.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize))
-        .orElse(elements.mainPicture)
-        .orElse(elements.thumbnail),
+      trailPicture = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize)).map(_.images)
+        .orElse(elements.mainPicture.map(_.images))
+        .orElse(elements.thumbnail.map(_.images)),
       tags = tags,
       commercial = commercial,
       fields = fields,
@@ -58,7 +58,7 @@ final case class Trail (
   headline: String,
   byline: Option[String],
   sectionName: String,
-  trailPicture: Option[ImageContainer],
+  trailPicture: Option[ImageMedia],
   thumbnailPath: Option[String] = None,
   discussionId: Option[String] = None,
   isCommentable: Boolean = false,

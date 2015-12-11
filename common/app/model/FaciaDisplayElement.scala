@@ -45,7 +45,7 @@ object InlineImage {
     }
 }
 
-case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayElement
+case class InlineImage(imageContainer: Element) extends FaciaDisplayElement
 
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")

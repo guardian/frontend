@@ -27,7 +27,7 @@
                     @if(info.rowNum == 1) {
                         <a href="@FaciaCardHeader.fromTrail(item, None).url.get(requestHeader)?INTCMP=@containerDefinition.displayName.getOrElse("essential-read")">
                             @InlineImage.fromFaciaContent(item).map { imageContainer =>
-                                @itemImage(imageContainer.imageContainer, false, Some(ContentWidths.MainMedia.inline))
+                                @itemImage(imageContainer.imageContainer.images, false, Some(ContentWidths.MainMedia.inline))
                             }
                         </a>
                     }

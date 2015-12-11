@@ -283,7 +283,7 @@ object Content {
           None
         }
         bestOpenGraphImage
-          .orElse(elements.mainPicture.flatMap(_.largestImageUrl))
+          .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
       }
@@ -315,8 +315,10 @@ object Article {
   private def copyTrail(content: Content) = {
     content.trail.copy(
       commercial = copyCommercial(content),
-      trailPicture = content.elements.thumbnail.find(_.imageCrops.exists(_.width >= 620))
-          .orElse(content.elements.mainPicture).orElse(content.elements.videos.headOption)
+      trailPicture = content.elements.thumbnail.map(_.images)
+        .find(_.imageCrops.exists(_.width >= 620))
+        .orElse(content.elements.mainPicture.map(_.images))
+        .orElse(content.elements.videos.headOption.map(_.images))
     )
   }
 
@@ -481,7 +483,7 @@ object Audio {
 final case class Audio private (override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
-    .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
 
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.podcast.flatMap(_.subscriptionUrl))
@@ -496,14 +498,14 @@ object Video {
     val elements = content.elements
     val section = content.metadata.section
     val id = content.metadata.id
-    val source: Option[String] = elements.videos.find(_.isMain).flatMap(_.source)
+    val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
       "contentType" -> JsString(contentType),
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
-      "embeddable" -> JsBoolean(elements.videos.find(_.isMain).map(_.embeddable).getOrElse(false)),
-      "videoDuration" -> elements.videos.find(_.isMain).map{ v => JsNumber(v.duration)}.getOrElse(JsNull))
+      "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
+      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
 
     val opengraphProperties = Map(
       "og:type" -> "video",
@@ -576,7 +578,7 @@ object Gallery {
       pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
     )
     val trail = content.trail.copy(
-      trailPicture = elements.thumbnail)
+      trailPicture = elements.thumbnail.map(_.images))
 
     val openGraph: Map[String, String] = Map(
       "og:type" -> "article",
@@ -621,7 +623,7 @@ object Gallery {
         }
 
         bestOpenGraphImage
-          .orElse(lightbox.galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
+          .orElse(lightbox.galleryImages.headOption.flatMap(_.images.largestImage.flatMap(_.url)))
           .getOrElse(conf.Configuration.images.fallbackLogo)
       }
     )
@@ -634,7 +636,7 @@ final case class Gallery(
   override val content: Content,
   lightbox: GalleryLightbox) extends ContentType {
 
-  def apply(index: Int): ImageAsset = lightbox.galleryImages(index).largestImage.get
+  def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
 
 case class GalleryLightbox(
@@ -647,8 +649,8 @@ case class GalleryLightbox(
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
-  val galleryImages: Seq[ImageElement] = elements.images.filter(_.isGallery)
-  val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
+  val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
+  val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
   val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
   val size = galleryImages.size
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
@@ -658,14 +660,14 @@ case class GalleryLightbox(
   val javascriptConfig: JsObject = {
     val imageJson = for {
       container <- galleryImages
-      img <- container.largestEditorialCrop
+      img <- container.images.largestEditorialCrop
     } yield {
       JsObject(Seq(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestFor(container).getOrElse("")),
-        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.lightbox)),
+        "src" -> JsString(Item700.bestFor(container.images).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
         "role" -> JsString(img.role.toString)
@@ -692,8 +694,10 @@ case class GenericLightbox(
   shouldHideAdverts: Boolean,
   standfirst: Option[String]
 ) {
-  lazy val mainFiltered = elements.mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
-  lazy val bodyFiltered: Seq[ImageContainer] = elements.bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
+  lazy val mainFiltered = elements.mainPicture
+    .filter(_.images.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7)
+    .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
+  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
 
   val lightboxImages = if (includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
 
@@ -702,14 +706,14 @@ case class GenericLightbox(
   lazy val javascriptConfig: JsObject = {
     val imageJson = for {
       container <- lightboxImages
-      img <- container.largestEditorialCrop
+      img <- container.images.largestEditorialCrop
     } yield {
       JsObject(Seq(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestFor(container).getOrElse("")),
-        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.lightbox)),
+        "src" -> JsString(Item700.bestFor(container.images).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
         "role" -> JsString(img.role.toString)

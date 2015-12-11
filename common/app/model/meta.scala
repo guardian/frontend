@@ -408,22 +408,19 @@ final case class Elements(elements: Seq[Element]) {
   val trailPicMinDesiredSize = 460
 
   // Find a main picture crop which matches this aspect ratio.
-  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
+  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[Element] = {
 
-    (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail)
-      .map { image =>
-      image.imageCrops.filter { crop =>
+    (thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).flatMap { image: ImageElement =>
+      image.images.imageCrops.filter { crop =>
         IsRatio(aspectWidth, aspectHeight, crop.width, crop.height)
       } match {
         case Nil => None
-        case crops => Option(ImageContainer(crops, image.delegate, image.index))
+        case crops => Some(image)
       }
-    }
-      .flatten
-      .toList
+    } .toList
   }
 
-  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPictureAll(aspectWidth, aspectHeight).headOption
+  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[Element] = trailPictureAll(aspectWidth, aspectHeight).headOption
 
   /*
   Now I know you might THINK that you want to change how we get the main picture.
@@ -439,48 +436,47 @@ final case class Elements(elements: Seq[Element]) {
   // main picture is used on the content page (i.e. the article page or the video page)
 
   // if you change these rules make sure you update IMAGES.md (in this project)
-  def mainPicture: Option[ImageContainer] = images.find(_.isMain)
+  def mainPicture: Option[ImageElement] = images.find(_.properties.isMain)
 
-  lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
+  lazy val hasMainPicture = mainPicture.flatMap(_.images.imageCrops.headOption).isDefined
 
   // Currently, only Picture and Embed elements can be given the showcase role.
   lazy val hasShowcaseMainElement = {
     val showcasePicture = for {
       main  <- mainPicture
-      image <- main.largestImage
+      image <- main.images.largestImage
       role  <- image.role
     } yield role == "showcase"
 
     val showcaseEmbed = for {
       embed <- mainEmbed
-      asset <- embed.embedAssets.headOption
+      asset <- embed.embeds.embedAssets.headOption
       role <- asset.role
     } yield role == "showcase"
 
     showcasePicture.getOrElse(false) || showcaseEmbed.getOrElse(false)
   }
 
-  def mainVideo: Option[VideoElement] = videos.find(_.isMain)
-  lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
+  def mainVideo: Option[VideoElement] = videos.find(_.properties.isMain)
+  lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videos.videoAssets.headOption).isDefined
 
-  def mainAudio: Option[AudioElement] = audios.find(_.isMain)
-  lazy val hasMainAudio: Boolean = mainAudio.flatMap(_.audioAssets.headOption).isDefined
+  def mainAudio: Option[AudioElement] = audios.find(_.properties.isMain)
+  lazy val hasMainAudio: Boolean = mainAudio.flatMap(_.audio.audioAssets.headOption).isDefined
 
-  def mainEmbed: Option[EmbedElement] = embeds.find(_.isMain)
-  lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embedAssets.headOption).isDefined
+  def mainEmbed: Option[EmbedElement] = embeds.find(_.properties.isMain)
+  lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embeds.embedAssets.headOption).isDefined
 
-  lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
-  lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.isBody)
-  lazy val videoAssets: Seq[VideoAsset] = videos.flatMap(_.videoAssets)
-  lazy val audioAssets: Seq[AudioAsset] = audios.flatMap(_.audioAssets)
-  lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
-
+  lazy val bodyImages: Seq[ImageElement] = images.filter(_.properties.isBody)
+  lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.properties.isBody)
+  lazy val videoAssets: Seq[VideoAsset] = videos.flatMap(_.videos.videoAssets)
+  lazy val audioAssets: Seq[AudioAsset] = audios.flatMap(_.audio.audioAssets)
+  lazy val thumbnail: Option[ImageElement] = images.find(_.properties.isThumbnail)
 
   def elements(relation: String): Seq[Element] = relation match {
-    case "main" => elements.filter(_.isMain)
-    case "body" => elements.filter(_.isBody)
-    case "gallery" => elements.filter(_.isGallery)
-    case "thumbnail" => elements.filter(_.isThumbnail)
+    case "main" => elements.filter(_.properties.isMain)
+    case "body" => elements.filter(_.properties.isBody)
+    case "gallery" => elements.filter(_.properties.isGallery)
+    case "thumbnail" => elements.filter(_.properties.isThumbnail)
     case _ => Nil
   }
 
