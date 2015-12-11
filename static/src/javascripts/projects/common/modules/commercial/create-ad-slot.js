@@ -111,7 +111,7 @@ define([
             .addClass('js-ad-slot ad-slot ad-slot--dfp ' + classes.join(' '));
     }
 
-    return function (name, types, series, keywords, slotTarget) {
+    return function (name, slotTypes, series, keywords, slotTarget) {
         var slotName = slotTarget ? slotTarget : name,
             attributes = {},
             definition,
@@ -147,8 +147,8 @@ define([
             attributes.keywords = keywords;
         }
 
-        if (types) {
-            classes = map((isArray(types) ? types : [types]), function (type) {
+        if (slotTypes) {
+            classes = map((isArray(slotTypes) ? slotTypes : [slotTypes]), function (type) {
                 return 'ad-slot--' + type;
             });
         }
