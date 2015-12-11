@@ -66,6 +66,41 @@ define([
             textInput: 'js-email-sub__text-input',
             listIdHiddenInput: 'js-email-sub__listid-input'
         },
+        setup = function (rootEl, thisRootEl, isIframed) {
+            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
+                formInlineLabels.init(el, {
+                    textInputClass: '.js-email-sub__text-input',
+                    labelClass: '.js-email-sub__label',
+                    hiddenLabelClass: 'email-sub__label--is-hidden',
+                    labelEnabledClass: 'email-sub__inline-label--enabled'
+                });
+            });
+
+            $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                var $el = $(el),
+                    freezeHeight = ui.freezeHeight($el, false),
+                    freezeHeightReset = ui.freezeHeight($el, true),
+                    $formEl = $('.' + classes.form, el);
+
+                formSubmission.bindSubmit($formEl, {
+                    formType: $formEl.data('email-form-type'),
+                    listId: $formEl.data('email-list-id')
+                });
+
+                // If we're in an iframe, we should check whether we need to add a title and description
+                // from the data attributes on the iframe (eg: allowing us to set them from composer)
+                if (isIframed) {
+                    ui.updateForm(rootEl, $el);
+                }
+
+                // Ensure our form is the right height, both in iframe and outside
+                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+
+                mediator.on('window:resize',
+                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                );
+            });
+        },
         formSubmission = {
             bindSubmit: function ($form, analytics) {
                 var url = config.page.ajaxUrl + '/email';
@@ -92,7 +127,6 @@ define([
 
                     if (!state.submitting && validate(emailAddress)) {
                         var data = 'email=' + encodeURIComponent(emailAddress) + '&listId=' + listId;
-
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
@@ -136,6 +170,26 @@ define([
             }
         },
         ui = {
+            updateForm: function (thisRootEl, el, opts) {
+                var formData = $(thisRootEl).data(),
+                    formTitle = (opts && opts.formTitle) || formData.formTitle || false,
+                    formDescription = (opts && opts.formDescription) || formData.formDescription || false,
+                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
+
+                fastdom.write(function () {
+                    if (formTitle) {
+                        $('.js-email-sub__heading', el).text(formTitle);
+                    }
+
+                    if (formDescription) {
+                        $('.js-email-sub__description', el).text(formDescription);
+                    }
+
+                    if (removeComforter) {
+                        $('.js-email-sub__small', el).remove();
+                    }
+                });
+            },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
                     resetHeight = function () {
@@ -177,64 +231,21 @@ define([
         };
 
     return {
-            updateForm: function (thisRootEl, el, opts) {
-                var formData = $(thisRootEl).data(),
-                    formTitle = (opts && opts.formTitle) || formData.formTitle || false,
-                    formDescription = (opts && opts.formDescription) || formData.formDescription || false,
-                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
-
-                fastdom.write(function () {
-                    if (formTitle) {
-                        $('.js-email-sub__heading', el).text(formTitle);
-                    }
-
-                    if (formDescription) {
-                        $('.js-email-sub__description', el).text(formDescription);
-                    }
-
-                    if (removeComforter) {
-                        $('.js-email-sub__small', el).remove();
-                    }
-                });
-            },
-            // eg: rootEl can be a specific container or an iframe contentDocument
+            updateForm: ui.updateForm,
             init: function (rootEl) {
-                var isIframed = rootEl && rootEl.tagName === 'IFRAME',
-                    thisRootEl = (isIframed) ? rootEl.contentDocument.body : rootEl || document;
 
-                $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
-                    formInlineLabels.init(el, {
-                        textInputClass: '.js-email-sub__text-input',
-                        labelClass: '.js-email-sub__label',
-                        hiddenLabelClass: 'email-sub__label--is-hidden',
-                        labelEnabledClass: 'email-sub__inline-label--enabled'
-                    });
-                });
-
-                $('.' + classes.wrapper, thisRootEl).each(function (el) {
-                    var $el = $(el),
-                        freezeHeight = ui.freezeHeight($el, false),
-                        freezeHeightReset = ui.freezeHeight($el, true),
-                        $formEl = $('.' + classes.form, el);
-
-                    formSubmission.bindSubmit($formEl, {
-                        formType: $formEl.data('email-form-type'),
-                        listId: $formEl.data('email-list-id')
+                // We're loading through the iframe
+                if (rootEl && rootEl.tagName === 'IFRAME') {
+                    // We can listen for a lazy load or reload to catch an update
+                    setup(rootEl, rootEl.contentDocument.body, true);
+                    bean.on(rootEl, 'load', function () {
+                        setup(rootEl, rootEl.contentDocument.body, true);
                     });
 
-                    // If we're in an iframe, we should check whether we need to add a title and description
-                    // from the data attributes on the iframe (eg: allowing us to set them from composer)
-                    if (isIframed) {
-                        this.updateForm(rootEl, $el);
-                    }
+                } else {
+                    setup(rootEl, rootEl || document, false);
+                }
 
-                    // Ensure our form is the right height, both in iframe and outside
-                    (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
-
-                    mediator.on('window:resize',
-                        debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
-                    );
-                }.bind(this));
             }
         };
 });
