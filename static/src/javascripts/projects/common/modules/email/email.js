@@ -126,7 +126,7 @@ define([
                     event.preventDefault();
 
                     if (!state.submitting && validate(emailAddress)) {
-                        var data = 'email=' + emailAddress + '&listId=' + listId;
+                        var data = 'email=' + encodeURIComponent(emailAddress) + '&listId=' + listId;
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
