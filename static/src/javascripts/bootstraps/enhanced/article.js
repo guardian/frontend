@@ -13,8 +13,8 @@ define([
     'common/modules/article/chapters',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
-    'bootstraps/article-liveblog-common',
-    'bootstraps/trail'
+    'bootstraps/enhanced/article-liveblog-common',
+    'bootstraps/enhanced/trail'
 ], function (
     qwery,
     bean,

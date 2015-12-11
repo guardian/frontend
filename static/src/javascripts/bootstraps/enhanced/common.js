@@ -53,7 +53,7 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'text!common/views/international-message.html',
-    'bootstraps/identity-common',
+    'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
     fastdom,
@@ -371,8 +371,8 @@ define([
             initEmail: function () {
                 email.init();
 
-                // Initalise the in-article email form (allowing for multiple)
-                forEach(document.getElementsByClassName('js-email-sub__iframe--article'), function (el) {
+                // Initalise email forms in iframes
+                forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
                     email.init(el);
                 });
             }
