@@ -10,6 +10,7 @@ import play.api.data.Forms._
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
 import play.api.mvc.Results._
+import play.api.data.format.Formats.stringFormat
 import play.api.mvc.{Result, Action, Controller}
 import metrics.EmailSubsciptionMetrics._
 
@@ -71,7 +72,9 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
-      "listId" -> number
+      "listId" -> number,
+      "referrer" -> optional[String](of[String]),
+      "campaignCode" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
