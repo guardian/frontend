@@ -9,6 +9,7 @@ module.exports = function (grunt, options) {
                 membership:           'projects/membership',
                 bean:                 'components/bean/bean',
                 bonzo:                'components/bonzo/bonzo',
+                domReady:             'components/domready/ready',
                 enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
                 fastdom:              'components/fastdom/index',
