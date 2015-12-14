@@ -8,6 +8,7 @@ define([
     'common/modules/experiments/tests/fronts-on-articles',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
+    'common/modules/experiments/tests/alternative-related',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -27,6 +28,7 @@ define([
     FrontsOnArticles,
     LargeTopAd,
     VideoPreroll,
+    AlternativeRelated,
     flatten,
     forEach,
     keys,
@@ -40,7 +42,8 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles(),
         new LargeTopAd(),
-        new VideoPreroll()
+        new VideoPreroll(),
+        new AlternativeRelated()
     ]);
 
     var participationsKey = 'gu.ab.participations';
@@ -345,6 +348,19 @@ define([
             }
 
             return test.id && test.expiry && testCanBeRun(test);
+        },
+
+        /**
+         * returns whether the caller should treat the user as being in that variant.
+         *
+         * @param testName
+         * @param variant
+         * @returns {*|boolean|Boolean}
+         */
+        isInVariant: function (testName, variant) {
+            return ab.getParticipations()[testName] &&
+                (ab.getParticipations()[testName].variant === variant) &&
+                ab.testCanBeRun(testName);
         },
 
         shouldRunTest: shouldRunTest,
