@@ -24,7 +24,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     CountriesRefresh,
     IndustriesRefresh,
     MoneyBestBuysRefresh,
-    BooksRefresh,
     TravelOffersRefresh
   )
 

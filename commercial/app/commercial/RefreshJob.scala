@@ -1,7 +1,6 @@
 package commercial
 
 import common.{Jobs, Logging}
-import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.Industries
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
 import model.commercial.money.BestBuysAgent
@@ -68,11 +67,4 @@ object MoneyBestBuysRefresh extends RefreshJob {
   val name: String = "Best Buys"
 
   def refresh() = BestBuysAgent.refresh()
-}
-
-object BooksRefresh extends RefreshJob {
-
-  val name: String = "Books"
-
-  def refresh() = BestsellersAgent.refresh()
 }

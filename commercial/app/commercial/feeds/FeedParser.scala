@@ -1,6 +1,7 @@
 package commercial.feeds
 
 import common.ExecutionContexts
+import model.commercial.books.{BestsellersAgent, Book}
 import model.commercial.jobs.{Job, JobsAgent}
 import model.commercial.soulmates.{Member, SoulmatesAgent}
 
@@ -32,7 +33,13 @@ object FeedParser {
     }
   }
 
-  val all = Seq(jobs) ++ soulmates
+  private val bestsellers: FeedParser[Book] = new FeedParser[Book] {
+    val feedName = "general-bestsellers"
+
+    def parse(): Future[ParsedFeed[Book]] = BestsellersAgent.refresh()
+  }
+
+  val all = soulmates ++ Seq(jobs, bestsellers)
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
