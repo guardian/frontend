@@ -9,7 +9,7 @@ trait ABTestSwitches {
     "ab-alternative-related",
     "show alternative related content based on the tags to users in the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 1, 23),
+    sellByDate = new LocalDate(2016, 1, 23),
     exposeClientSide = true
   )
 
