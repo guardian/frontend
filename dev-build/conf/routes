@@ -359,7 +359,6 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
-GET            /container/essential-read/:contentSource/:edition.json                                                            controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
 GET            /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json                                           controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
