@@ -256,7 +256,7 @@ module.exports = function (grunt, options) {
         identity: {
             options: {
                 name: 'bootstraps/enhanced/membership',
-                out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/membership.js',
                 exclude: [
                     'boot',
                     'bootstraps/standard/main',
