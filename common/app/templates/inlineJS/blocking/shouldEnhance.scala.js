@@ -15,6 +15,17 @@
         }
     };
 
+    var personDemandsFeatures = function () {
+        var locationHash = window.location.hash;
+        if (locationHash === '#featureson' || locationHash === '#nocore' || locationHash === '#gu.prefs.force-core=off') return true;
+        try {
+            var preference = window.localStorage.getItem('gu.prefs.force-core') || 'unknown';
+            return /"value":"off"/.test(preference);
+        } catch (e) {
+            return false;
+        }
+    };
+
     // Guess whether the device is too old, regardless of whether it cuts the mustard
     //
     // 'older' iOS normally indicates a device with lower power (they stop being upgradeable at some point).
@@ -35,7 +46,7 @@
         return (navigator.platform === 'iPad');
     };
 
-    window.shouldEnhance = !personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isIpad());
+    window.shouldEnhance = personDemandsFeatures() || (!personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isIpad()));
     window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
 })(navigator, window);
 
