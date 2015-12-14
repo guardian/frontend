@@ -1,21 +1,18 @@
 define([
-    'common/utils/$',
+    'bonzo',
     'common/utils/config',
-    'common/utils/detect',
-    'common/utils/template',
-    'text!common/views/commercial/ad-slot.html',
     'lodash/collections/map',
+    'lodash/objects/assign',
     'lodash/objects/isArray',
-    'lodash/objects/pairs'
+    'lodash/objects/transform'
 ], function (
     $,
     config,
-    detect,
-    template,
-    adSlotTpl,
     map,
+    assign,
     isArray,
-    pairs) {
+    transform
+) {
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -102,49 +99,71 @@ define([
         }
     };
 
-    return function (name, types, series, keywords, slotTarget) {
-        var attrName,
-            slotName = slotTarget ? slotTarget : name,
+    function createAdSlotElement(name, attrs, classes) {
+        return $(document.createElement('div'))
+            .attr({
+                'id': 'dfp-ad--' + name,
+                'data-link-name': 'ad slot ' + name,
+                'data-test-id': 'ad-slot-' + name,
+                'data-name': name
+            })
+            .attr(attrs)
+            .addClass('js-ad-slot ad-slot ad-slot--dfp ' + classes.join(' '));
+
+    }
+
+    return function (name, slotTypes, series, keywords, slotTarget) {
+        var slotName = slotTarget ? slotTarget : name,
+            attributes = {},
             definition,
-            dataAttrs,
+            classes,
             $adSlot;
 
-        definition = (slotName.match(/^inline/) && slotName !== 'inline1') ? adSlotDefinitions.inline : adSlotDefinitions[slotName];
+        definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;
+        name = definition.name || name;
+
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
             definition.sizeMappings.wide = '1,1';
         }
-        dataAttrs  = {
-            label:   definition.label !== undefined ? definition.label : true,
-            refresh: definition.refresh !== undefined ? definition.refresh : true
-        };
-        $adSlot = $.create(template(
-            adSlotTpl,
-            {
-                name: definition.name || name,
-                // badges now append their index to the name
-                normalisedName: (definition.name || name).replace(/((?:ad|fo|sp)badge).*/, '$1'),
-                types: types ? map((isArray(types) ? types : [types]), function (type) {
-                    return ' ad-slot--' + type;
-                }).join('') : '',
-                sizeMappings: map(pairs(definition.sizeMappings), function (size) {
-                    return ' data-' + size[0] + '="' + size[1] + '"';
-                }).join('')
-            })
-        );
-        for (attrName in dataAttrs) {
-            if (dataAttrs[attrName] === false) {
-                $adSlot.attr('data-' + attrName, 'false');
-            }
+
+        assign(attributes, definition.sizeMappings);
+
+        if (definition.label === false) {
+            attributes.label = 'false';
         }
+
+        if (definition.refresh === false) {
+            attributes.refresh = 'false';
+        }
+
         if (slotTarget) {
-            $adSlot.attr('data-slot-target', slotTarget);
+            attributes['slot-target'] = slotTarget;
         }
+
         if (series) {
-            $adSlot.attr('data-series', series);
+            attributes.series = series;
         }
+
         if (keywords) {
-            $adSlot.attr('data-keywords', keywords);
+            attributes.keywords = keywords;
         }
+
+        if (slotTypes) {
+            classes = map((isArray(slotTypes) ? slotTypes : [slotTypes]), function (type) {
+                return 'ad-slot--' + type;
+            });
+        }
+
+        classes.push('ad-slot--' + name.replace(/((?:ad|fo|sp)badge).*/, '$1'));
+
+        $adSlot = createAdSlotElement(
+            name,
+            transform(attributes, function (result, size, key) {
+                result['data-' + key] = size;
+            }, {}),
+            classes
+        );
+
         return $adSlot[0];
     };
 
