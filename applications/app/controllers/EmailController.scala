@@ -25,8 +25,6 @@ object emailLandingPage extends StandalonePage {
     webTitle = "Email Landing Page")
 }
 
-case class EmailPage(interactive: Interactive, related: RelatedContent)
-
 case class EmailForm(email: String, listId: Int)
 
 object ListIds {
