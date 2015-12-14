@@ -450,6 +450,7 @@ final case class Article private (
 
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
+  lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   lazy val blocks = LiveBlogParser.parse(fields.body)
 }

@@ -9,11 +9,13 @@ import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
 import model._
 import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
+import play.twirl.api.Html
 import views.BodyCleaner
 import views.support._
 
@@ -52,6 +54,16 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         }
       }
       Cached(page)(JsonComponent(html))
+  }
+
+  private def numberBlocksSinceBlock(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
+    val body = Jsoup.parseBodyFragment(page.article.fields.body)
+
+    val blocksToKeep = body.getElementsByTag("div") takeWhile {
+      _.attr("id") != lastUpdateBlockId
+    }
+
+    Cached(page)(JsonComponent(("newBlocksCount", blocksToKeep.size)))
   }
 
   case class TextBlock(
@@ -104,22 +116,23 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], numNewBlocks: Option[String]) = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache
-      loadArticle(path, lastUpdate, rendered)
+      loadArticle(path, lastUpdate, rendered, numNewBlocks)
     } else MemcachedAction { implicit request =>
-      loadArticle(path, lastUpdate, rendered)
+      loadArticle(path, lastUpdate, rendered, numNewBlocks)
     }
   }
 
-  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], numNewBlocks: Option[String])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path) { model =>
-      (lastUpdate, rendered) match {
-        case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
-        case (None, Some(false)) => blockText(model, 6)
-        case (_, _) => render(path, model)
+      (lastUpdate, rendered, numNewBlocks) match {
+        case (_, _, Some(numNewBlocks)) => numberBlocksSinceBlock(model, numNewBlocks)
+        case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate)
+        case (None, Some(false), _) => blockText(model, 6)
+        case (_, _, _) => render(path, model)
       }
     }
   }

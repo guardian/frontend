@@ -154,11 +154,6 @@ define([
             blocks = qwery('.js-liveblog-body .block'),
             newestBlock = null;
 
-        if (autoUpdate.getManipulationType() === 'append') {
-            newestBlock = blocks.pop();
-        } else {
-            newestBlock = blocks.shift();
-        }
 
         // There may be no blocks at all. 'block-0' will return any new blocks found.
         id = newestBlock ? newestBlock.id : 'block-0';
@@ -214,7 +209,7 @@ define([
 
             if (config.page.isLive) {
 
-                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
+                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 15000 : 60000;
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
