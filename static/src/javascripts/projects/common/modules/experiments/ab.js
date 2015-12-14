@@ -6,7 +6,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles',
-    'common/modules/experiments/tests/essential-read-test-1',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
     'common/modules/experiments/tests/alternative-related',
@@ -27,7 +26,6 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles,
-    EssentialReadTest1,
     LargeTopAd,
     VideoPreroll,
     AlternativeRelated,
@@ -45,7 +43,6 @@ define([
         new FrontsOnArticles(),
         new LargeTopAd(),
         new VideoPreroll(),
-        new EssentialReadTest1(),
         new AlternativeRelated()
     ]);
 

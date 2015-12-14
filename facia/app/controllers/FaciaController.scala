@@ -174,64 +174,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }.getOrElse(successful(NotFound))
   }
 
-  def renderEssentialRead(contentSource: String, edition: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving essential read")
-
-    def pressedCollections: Future[Seq[PressedCollection]] = contentSource match {
-      case "automated" =>
-        val containerId = edition match {
-            case "uk" => "uk-alpha/news/regular-stories"
-            case "us" => "us-alpha/news/regular-stories"
-            case "au" => "au-alpha/news/regular-stories"
-            case _ => "10f21d96-18f6-426f-821b-19df55dfb831"
-        }
-
-        getFirstXCollections(containerId, 4).flatMap { // 4 not 3 so that we have some extra pieces of content to play with when filtering later
-          _ match {
-            case Some(x) => Future.successful(x)
-            case None => Future.failed(new RuntimeException(s"Collection doesn't exist"))
-          }
-        }
-
-      case "curated" =>
-        val containerId = edition match {
-          case "uk" => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
-          case "us" => "0295b390-8218-4eda-8bd4-2757c7d186f6"
-          case "au" => "ec4dc5bf-399c-4720-a70c-dac3d96a26d3"
-          case _ => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
-        }
-
-        getPressedCollection(containerId).map(_.toSeq)
-    }
-
-    pressedCollections.map { collections =>
-        Cached(60) {
-          val config = CollectionConfig.empty.copy(
-            displayName = Some("the-essential-read" + "-" + contentSource)
-          )
-
-          val collectionEssentials = if (contentSource == "curated") {
-            CollectionEssentials.fromMultiplePressedCollections(collections)
-          } else {
-            CollectionEssentials.fromMultiplePressedCollections(collections, 2)
-          }
-
-          val containerDefinition = FaciaContainer(
-            1,
-            EssentialRead,
-            CollectionConfigWithId("", config), // Empty string for essential read AB test
-            collectionEssentials
-          )
-
-          val html = container(containerDefinition, FrontProperties.empty)
-          if (request.isJson)
-            JsonCollection(html)
-          else
-            NotFound
-        }
-    }
-  }
-
   def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
@@ -298,14 +240,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
-      })
-    }.getOrElse(successful(None))
-
-  //this is a very short term solution for the Essential Read AB test. It will be removed afterwards, honest
-  private def getFirstXCollections(collectionId: String, take: Int): Future[Option[List[PressedCollection]]] =
-    ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
-        Some(faciaPage.collections.filterNot(_.displayName contains "sport").take(take))
       })
     }.getOrElse(successful(None))
 
