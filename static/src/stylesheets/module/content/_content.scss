@@ -722,11 +722,22 @@
         .meta__numbers .sharecount__heading,
         .tonal__main--tone-media .sharecount__value,
         .most-viewed-container--media,
-        .most-viewed-container--media .fc-item__action {
+        .most-viewed-container--media .fc-item__action,
+        .content__dateline,
+        .submeta__head {
             color: colour(neutral-2-contrasted);
 
             .i {
                 @include icon(share-android);
+            }
+        }
+
+        .byline {
+            .tone-colour {
+                color: colour(neutral-2-contrasted);
+                &:hover {
+                    color: colour(neutral-1);
+                }
             }
         }
     }
