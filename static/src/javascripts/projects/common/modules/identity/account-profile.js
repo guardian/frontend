@@ -65,7 +65,7 @@ define([
 
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
-                    require(['bootstraps/enhanced/membership', 'bootstraps/digitalpack'], function (membershipTab, digitalPackTab) {
+                    require(['bootstraps/enhanced/membership', 'bootstraps/enhanced/digitalpack'], function (membershipTab, digitalPackTab) {
                         membershipTab.init();
                         digitalPackTab.init();
                     });
