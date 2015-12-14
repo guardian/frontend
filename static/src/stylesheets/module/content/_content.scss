@@ -651,7 +651,8 @@
 
 .paid-content--advertisement-feature {
     &.content--article,
-    &.content--interactive {
+    &.content--interactive,
+    &.tonal--tone-media {
         background-color: colour(paid-article);
     }
 
@@ -694,6 +695,62 @@
 
     .ad-slot--paid-for-badge--article {
         border-top: 0;
+    }
+
+    &.tonal--tone-media {
+        .content__headline {
+            color: colour(neutral-1);
+
+            .inline-icon {
+                fill: colour(neutral-1);
+            }
+        }
+
+        .most-viewed-container--media {
+            .inline-icon {
+                fill: colour(neutral-1);
+            }
+        }
+
+        .tonal__standfirst {
+            display: none;
+        }
+
+        .ad-slot--paid-for-badge__header,
+        .ad-slot--paid-for-badge__help,
+        .byline,
+        .meta__numbers .sharecount__heading,
+        .tonal__main--tone-media .sharecount__value,
+        .most-viewed-container--media,
+        .most-viewed-container--media .fc-item__action {
+            color: colour(neutral-2-contrasted);
+
+            .i {
+                @include icon(share-android);
+            }
+        }
+    }
+
+    &.tonal--tone-media,
+    &.tonal--tone-news {
+        .save-for-later__button {
+            color: colour(neutral-2-contrasted);
+        }
+        .save-for-later__button--save,
+        .save-for-later__button--saved {
+            .inline-icon {
+                fill: #ffffff;
+                border-color: #ffffff;
+                background-color: colour(neutral-2-contrasted);
+            }
+            &:hover {
+                .inline-icon {
+                    background-color: #ffffff;
+                    fill: colour(neutral-2-contrasted);
+                    border-color: colour(neutral-2-contrasted);
+                }
+            }
+        }
     }
 }
 
