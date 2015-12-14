@@ -20,12 +20,14 @@ define([
     'Promise',
     'lodash/collections/map',
     'lodash/collections/forEach',
-    'domReady'
+    'domReady',
+    'common/utils/ajax-promise'
 ], function (
     Promise,
     map,
     forEach,
-    domReady
+    domReady,
+    ajaxPromise
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -69,39 +71,42 @@ define([
         return curlConfig.paths[moduleId];
     };
 
-    // We don't use reqwest because it evals JS
-    // https://github.com/ded/reqwest/issues/131
-    var xhrFetch = function (url) {
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        resolve(xhr);
-                    } else {
-                        reject(new Error('Bad response: ' + xhr.status + ' ' + xhr.statusText));
-                    }
-                }
-            };
-            xhr.send();
-        });
-    };
-
-    var xhrFetchAll = function (urls) {
-        return Promise.all(map(urls, function (url) {
-            return xhrFetch(url);
-        }));
-    };
-
-    var xhrFetchAllModules = function (moduleIds) {
-        return xhrFetchAll(map(moduleIds, resolveModuleId));
-    };
-
-    // We don't prefetch in dev because curl won't recognise the anonymous
-    // module definition when we execute it.
     var preFetch = function (moduleIds) {
-        return isDev ? Promise.resolve([]) :  xhrFetchAllModules(moduleIds);
+        if (isDev) {
+            // We don't prefetch in dev because curl won't recognise the anonymous
+            // module definition when we execute it.
+            return Promise.resolve([]);
+        } else {
+            var urls = map(moduleIds, resolveModuleId);
+            // IE 8 and 9 don't support requests that are cross origin *and*
+            // cross scheme due to limitations with XDomainRequest. Thus, we
+            // make all URLs protocol relative.
+            // See http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+            // If testing in dev, disable cross origin and provide an absolute
+            // url.
+            var urlToProtocolRelative = function (url) { return url.replace(/^https?:/, ''); };
+            var protocolRelativeUrls = map(urls, urlToProtocolRelative);
+            return Promise.all(map(protocolRelativeUrls, function (url) {
+                return ajaxPromise({
+                    url: url,
+                    // We have to override the type because otherwise reqwest
+                    // will infer this as JS and eval it :-(
+                    // See https://github.com/ded/reqwest/issues/131
+                    type: 'html',
+                    crossOrigin: true
+                });
+            }))
+                // We want the app to run even if prefetching fails.
+                .catch(function (error) {
+                    /* eslint-disable no-console */
+                    var console = window.console;
+                    if (console && console.error) {
+                        console.error('Caught error while prefetching.', error.stack);
+                    }
+                    /* eslint-enable no-console */
+                    return [];
+                });
+        }
     };
 
     var shouldRunEnhance = guardian.isModernBrowser;
@@ -118,23 +123,23 @@ define([
             : Promise.resolve()
     );
 
-    var executeResponses = function (responses) {
-        forEach(responses, function (response) {
-            eval(response.responseText);
+    var evalAll = function (strings) {
+        forEach(strings, function (string) {
+            eval(string);
         });
     };
 
     bootStandard()
         .then(function () {
             return commercialResponsesPromise
-                .then(executeResponses)
+                .then(evalAll)
                 // The require is async, we don't need to wait for it
                 .then(function () { bootCommercial(); });
         })
         .then(function () {
             if (shouldRunEnhance) {
                 return enhancedResponsesPromise
-                    .then(executeResponses)
+                    .then(evalAll)
                     // The require is async, we don't need to wait for it
                     .then(function () { bootEnhanced(); });
             }
