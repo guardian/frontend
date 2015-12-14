@@ -25,7 +25,11 @@ object emailLandingPage extends StandalonePage {
     webTitle = "Email Landing Page")
 }
 
-case class EmailForm(email: String, listId: Int)
+case class EmailForm(
+  email: String,
+  listId: Int,
+  referrer: Option[String],
+  campaignCode: Option[String])
 
 object ListIds {
   val testList = 3485
