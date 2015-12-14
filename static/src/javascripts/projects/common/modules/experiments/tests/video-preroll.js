@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'VideoPreroll';
         this.start = '2015-11-11';
-        this.expiry = '2015-12-11';
+        this.expiry = '2015-12-31';
         this.author = 'Zofia Korcz';
         this.description = 'A test to see if an audience from UK or INT will be interested in video pre-rolls.';
         this.audience = 0.5;

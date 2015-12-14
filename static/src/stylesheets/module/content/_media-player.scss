@@ -101,8 +101,6 @@ $ima-controls-height: 70px;
 
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
-            margin-top: $vjs-large-button-size/-2;
-            margin-left: $vjs-large-button-size/-2;
         }
 
         &:before {
@@ -113,7 +111,7 @@ $ima-controls-height: 70px;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-            background-color: rgba(51, 51, 51, .8);
+            background-color: rgba(51, 51, 51, .6);
             .gu-media-wrapper:hover &,
             .gu-media__fallback:hover & {
                 background-color: colour(media-default);
@@ -123,8 +121,8 @@ $ima-controls-height: 70px;
         &:after {
             content: '';
             position: absolute;
-            left: 2em;
-            top: 2em;
+            left: 1.85em;
+            top: 1.85em;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent colour(neutral-7);

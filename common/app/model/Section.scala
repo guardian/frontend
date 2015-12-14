@@ -26,6 +26,7 @@ object Section {
       webUrl = section.webUrl,
       url = SupportedUrl(section),
       section = sectionName,
+      pagination = pagination,
       webTitle = webTitle,
       analyticsName = s"GFE:$sectionName",
       adUnitSuffix = adUnitSuffix,
@@ -41,7 +42,6 @@ object Section {
     Section(
       metadata,
       keywordSponsorship,
-      pagination = pagination,
       isEditionalised = section.editions.length > 1)
   }
 }
@@ -49,6 +49,5 @@ object Section {
 case class Section private (
   override val metadata: MetaData,
   keywordSponsorship: KeywordSponsorshipHandling,
-  pagination: Option[Pagination],
   isEditionalised: Boolean
   ) extends StandalonePage

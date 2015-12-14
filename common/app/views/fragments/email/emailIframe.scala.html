@@ -1,0 +1,4 @@
+@(  listId: String,
+    formType: String = "footer")
+
+<iframe src="@{"/email/form/" + formType + "/" + listId}" scrolling="no" seamless id="@{formType + "__email-form"}" frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe"></iframe>

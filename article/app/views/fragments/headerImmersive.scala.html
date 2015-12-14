@@ -5,9 +5,10 @@
 @import views.support.ImgSrc
 @import layout._
 
-<header class="content__head content__head--desktop tonal__head tonal__head--@toneClass(article)">
-    <div class="gs-container content__logo-container">
-        <a href="@LinkTo{/}">
+<header class="content__head content__head--desktop tonal__head tonal__head--@toneClass(article)
+               @if(article.fields.main.nonEmpty) { is-fixed-height }">
+    <div class="content__logo-container">
+        <a class="gs-container" href="@LinkTo{/}">
             @fragments.inlineSvg("guardian-logo-160", "logo", Seq("content__logo"))
         </a>
     </div>
