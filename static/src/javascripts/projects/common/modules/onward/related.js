@@ -57,7 +57,7 @@ define([
     };
 
     Related.prototype.renderRelatedComponent = function () {
-        var relatedUrl, popularInTag, componentName, container, editionSuffix,
+        var relatedUrl, popularInTag, componentName, container,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
 
         if (config.page && config.page.hasStoryPackage) {
@@ -76,39 +76,12 @@ define([
 
                 container.setAttribute('data-component', componentName);
 
-                if (ab.getParticipations().EssentialReadTest1 &&
-                    (ab.getParticipations().EssentialReadTest1.variant === 'automated' || ab.getParticipations().EssentialReadTest1.variant === 'curated') &&
-                    ab.testCanBeRun('EssentialReadTest1')
-                ) {
-                    switch (config.page.edition) {
-                        case 'UK':
-                            editionSuffix = '/uk.json';
-                            break;
-                        case 'US':
-                            editionSuffix = '/us.json';
-                            break;
-                        case 'AU':
-                            editionSuffix = '/au.json';
-                            break;
-                        case 'INT':
-                            editionSuffix = '/international.json';
-                            break;
-                    }
+                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
-                    if (ab.getParticipations().EssentialReadTest1.variant === 'automated') {
-                        relatedUrl = '/container/essential-read/automated' + editionSuffix;
-                    } else if (ab.getParticipations().EssentialReadTest1.variant === 'curated') {
-                        relatedUrl = '/container/essential-read/curated' + editionSuffix;
-                    }
-
-                } else {
-                    relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
-
-                    if (opts.excludeTags && opts.excludeTags.length) {
-                        relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                            return 'exclude-tag=' + tag;
-                        }).join('&');
-                    }
+                if (opts.excludeTags && opts.excludeTags.length) {
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                        return 'exclude-tag=' + tag;
+                    }).join('&');
                 }
 
                 new LazyLoad({
