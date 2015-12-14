@@ -44,7 +44,24 @@ define([
     'lodash/collections/find',
     'lodash/arrays/last',
     'lodash/arrays/intersection',
-    'lodash/arrays/initial'
+    'lodash/arrays/initial',
+
+    'common/modules/commercial/creatives/branded-component',
+    'common/modules/commercial/creatives/commercial-component',
+    'common/modules/commercial/creatives/gu-style-comcontent',
+    'common/modules/commercial/creatives/expandable',
+    'common/modules/commercial/creatives/expandable-v2',
+    'common/modules/commercial/creatives/expandable-v3',
+    'common/modules/commercial/creatives/expandable-video',
+    'common/modules/commercial/creatives/expandable-video-v2',
+    'common/modules/commercial/creatives/fluid250',
+    'common/modules/commercial/creatives/fluid250-v3',
+    'common/modules/commercial/creatives/fluid250-v4',
+    'common/modules/commercial/creatives/fluid250GoogleAndroid',
+    'common/modules/commercial/creatives/foundation-funded-logo',
+    'common/modules/commercial/creatives/scrollable-mpu',
+    'common/modules/commercial/creatives/scrollable-mpu-v2',
+    'common/modules/commercial/creatives/template'
 ], function (
     bean,
     bonzo,
@@ -551,10 +568,8 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require(['bootstraps/creatives'], function () {
-                                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                        new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                                    });
+                                require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                    new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                 });
                             } else {
                                 // evil, but we own the returning js snippet

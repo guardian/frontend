@@ -51,8 +51,8 @@ object ContentFooterContainersLayout {
         Some(networkFrontContainers1),
         optional(content.trail.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
-        Some(networkFrontContainers2),
-        optional(!content.shouldHideAdverts, standardCommercialComponent)
+        optional(!content.shouldHideAdverts, standardCommercialComponent),
+        Some(networkFrontContainers2)
       ).flatten
 
       includeOutbrainPlaceholder(apartFromOutbrain)

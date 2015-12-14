@@ -6,6 +6,7 @@ creative individually.
 ## Creating a creative template
 0. Generate json using `CreativeTemplate.generate()` and write it to a file.
 0. Find *Rubicon Tags* creative template in DFP.
+0. Export old creative template in case of need to roll back.
 0. Import new json file into DFP to overwrite old creative template.
 
 ## Replacing third-party creatives with new template creatives

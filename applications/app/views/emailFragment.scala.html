@@ -1,9 +1,9 @@
 @import model.SubscriptionResult
-@(page: model.Page, result: Option[SubscriptionResult] = None)(implicit request: RequestHeader)
+@(page: model.Page, result: Option[SubscriptionResult] = None, formType: String = "footer")(implicit request: RequestHeader)
 
 @mainEmail(page){ }{
     @(result match {
         case Some(result) => fragments.email.subscriptionResult(result)
-        case None => fragments.email.emailSignUp("footer", "Subscribe to our daily email")
+        case None => fragments.email.emailSignUp(formType, "Sign up to our daily email")
     })
 }

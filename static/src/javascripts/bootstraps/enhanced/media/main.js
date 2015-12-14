@@ -17,7 +17,9 @@ define([
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
-    'bootstraps/video-player',
+    // This must be the full path because we use curl config to change it based
+    // on env
+    'bootstraps/enhanced/media/video-player',
     'text!common/views/ui/loading.html',
     'lodash/functions/debounce'
 ], function (

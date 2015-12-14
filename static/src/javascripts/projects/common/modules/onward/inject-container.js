@@ -21,6 +21,8 @@ define([
 
         return ajax({
             url: containerUrl,
+            type: 'json',
+            method: 'get',
             crossOrigin: true
         }).then(function (resp) {
             if (resp.html) {

@@ -19,13 +19,7 @@ define([
     /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
     'use strict';
 
-    function StripePaymentForm() {
-        this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
-
-        return this;
-    }
-
-    StripePaymentForm.prototype.config = {
+    var sharedConfig = {
         classes: {
             CARD_TYPE: 'js-manage-account-card-type',
             CARD_LAST4: 'js-manage-account-card-last4',
@@ -50,44 +44,60 @@ define([
             TIER_FIELD: 'js-tier-field',
             UPDATING: 'js-updating'
         },
-        DOM: {},
         data: {
             CARD_TYPE: 'data-card-type'
         }
     };
 
     /**
+     * @param {String|Element} form element or selector which is the form this is for
+     * @param {String|Element} successElement element or selector for the success element to show/hide
+     * @param {String} url The API url to hit with a new card token
+     * @returns {StripePaymentForm}
+     * @constructor
+     */
+    function StripePaymentForm(form, successElement, url) {
+        this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
+        this.$successElement = $(successElement);
+        this.context = $(form)[0];
+        this.apiUrl = url;
+        this.DOM = {};
+        this.init();
+        return this;
+    }
+
+    /**
      * @param {{last4: string, type: string}} card info
      */
     StripePaymentForm.prototype.updateCard = function (card) {
         var cardTypeClassName = card.type.toLowerCase().replace(' ', '-');
-        var cardTypeElem = this.config.DOM.CARD_TYPE;
-        $(this.config.DOM.CARD_LAST4).text(card.last4);
+        var cardTypeElem = this.DOM.CARD_TYPE;
+        $(this.DOM.CARD_LAST4).text(card.last4);
         cardTypeElem.className = cardTypeElem.className.replace(/\bi-\S+/g, '');
         $(cardTypeElem).addClass('i-' + cardTypeClassName);
     };
 
     StripePaymentForm.prototype.showCardDetailsElementWithChangeCardOption = function () {
-        $(this.config.DOM.CHANGE_CARD).removeClass(this.config.classes.HIDE);
+        $(this.DOM.CHANGE_CARD).removeClass(sharedConfig.classes.HIDE);
         this.showCardDetailsElement();
     };
 
     StripePaymentForm.prototype.showCardDetailsElement = function () {
-        $(this.context).removeClass(this.config.classes.HIDE);
+        $(this.context).removeClass(sharedConfig.classes.HIDE);
     };
 
     StripePaymentForm.prototype.toggle = function (show) {
-        var $cont = $(this.config.DOM.CARD_DETAILS_FORM_CONTAINER),
-            $button = $(this.config.DOM.CHANGE_CARD);
+        var $cont = $(this.DOM.CARD_DETAILS_FORM_CONTAINER),
+            $button = $(this.DOM.CHANGE_CARD);
 
-        show = show !== undefined ? show : $cont.hasClass(this.config.classes.IS_CLOSED);
+        show = show !== undefined ? show : $cont.hasClass(sharedConfig.classes.IS_CLOSED);
 
         if (show) {
-            $cont.removeClass(this.config.classes.IS_CLOSED);
-            $button.addClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Cancel');
+            $cont.removeClass(sharedConfig.classes.IS_CLOSED);
+            $button.addClass(sharedConfig.classes.CTA_DISABLED_CLASSNAME).text('Cancel');
         } else {
-            $cont.addClass(this.config.classes.IS_CLOSED);
-            $button.removeClass(this.config.classes.CTA_DISABLED_CLASSNAME).text('Change card');
+            $cont.addClass(sharedConfig.classes.IS_CLOSED);
+            $button.removeClass(sharedConfig.classes.CTA_DISABLED_CLASSNAME).text('Change card');
         }
     };
 
@@ -110,8 +120,9 @@ define([
     };
 
     StripePaymentForm.prototype.domElementSetup = function () {
-        for (var className in this.config.classes) {
-            this.config.DOM[className] = this.context.querySelector('.' + this.config.classes[className]);
+        this.DOM = {};
+        for (var className in sharedConfig.classes) {
+            this.DOM[className] = this.context.querySelector('.' + sharedConfig.classes[className]);
         }
     };
 
@@ -131,7 +142,7 @@ define([
             token = response.id;
 
             ajax({
-                url: config.page.userAttributesApiUrl + '/me/membership-update-card',
+                url: config.page.userAttributesApiUrl + self.apiUrl,
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
@@ -142,12 +153,12 @@ define([
                     stripeToken: token
                 }
             }).then(function success(card) {
-                $(self.config.DOM.FORM_SUBMIT).removeAttr('disabled');
+                $(self.DOM.FORM_SUBMIT).removeAttr('disabled');
                 self.stopLoader();
                 self.reset();
                 self.updateCard(card);
                 self.toggle();
-                self.successElement.removeClass(self.config.classes.HIDE);
+                self.$successElement.removeClass(sharedConfig.classes.HIDE);
 
             }, function fail(error) {
 
@@ -200,8 +211,8 @@ define([
      * @param errorMessages
      */
     StripePaymentForm.prototype.handleErrors = function (errorMessages) {
-        var $paymentErrorsElement = $(this.config.DOM.PAYMENT_ERRORS),
-            $formSubmitButton = $(this.config.DOM.FORM_SUBMIT),
+        var $paymentErrorsElement = $(this.DOM.PAYMENT_ERRORS),
+            $formSubmitButton = $(this.DOM.FORM_SUBMIT),
             errorString = '';
 
         if (errorMessages.length) {
@@ -211,14 +222,14 @@ define([
             });
 
             $paymentErrorsElement
-                .removeClass(this.config.classes.HIDE)
+                .removeClass(sharedConfig.classes.HIDE)
                 .html(errorString);
 
             $formSubmitButton.attr('disabled', true);
         } else {
             //hide errors and enable submit
             $paymentErrorsElement.html('');
-            $paymentErrorsElement.addClass(this.config.classes.HIDE);
+            $paymentErrorsElement.addClass(sharedConfig.classes.HIDE);
             $formSubmitButton.removeAttr('disabled');
         }
     };
@@ -229,23 +240,21 @@ define([
 
     StripePaymentForm.prototype.displayCardTypeImage = function (creditCardNumber) {
         var cardType = this.getCardType(creditCardNumber),
-            $creditCardImageElement = $(this.config.DOM.CREDIT_CARD_IMAGE);
+            $creditCardImageElement = $(this.DOM.CREDIT_CARD_IMAGE);
 
         $creditCardImageElement[0].className = $creditCardImageElement[0].className.replace(/\bi-\S*/gi, '');
         $creditCardImageElement.addClass('i-' + cardType);
     };
 
     StripePaymentForm.prototype.addListeners = function () {
-
         var self = this,
-            $creditCardNumberElement = $(self.config.DOM.CREDIT_CARD_NUMBER),
-            $creditCardCVCElement = $(self.config.DOM.CREDIT_CARD_CVC),
-            $creditCardExpiryMonthElement = $(self.config.DOM.CREDIT_CARD_EXPIRY_MONTH),
-            $creditCardExpiryYearElement = $(self.config.DOM.CREDIT_CARD_EXPIRY_YEAR),
-            $formElement = $(self.context);
+            $creditCardNumberElement = $(self.DOM.CREDIT_CARD_NUMBER),
+            $creditCardCVCElement = $(self.DOM.CREDIT_CARD_CVC),
+            $creditCardExpiryMonthElement = $(self.DOM.CREDIT_CARD_EXPIRY_MONTH),
+            $creditCardExpiryYearElement = $(self.DOM.CREDIT_CARD_EXPIRY_YEAR);
 
-        bean.on(this.config.DOM.CHANGE_CARD, 'click', function () {
-            self.successElement.addClass(self.config.classes.HIDE);
+        bean.on(this.DOM.CHANGE_CARD, 'click', function () {
+            self.$successElement.addClass(sharedConfig.classes.HIDE);
             self.toggle();
         });
 
@@ -295,12 +304,12 @@ define([
 
         });
 
-        bean.on($formElement[0], 'submit', function (e) {
+        bean.on(self.context, 'submit', function (e) {
             e.preventDefault();
 
             // turn month select errors on when submitting
             self.displayMonthError = true;
-            $(self.config.DOM.FORM_SUBMIT).attr('disabled', true);
+            $(self.DOM.FORM_SUBMIT).attr('disabled', true);
             var formValidationResult = self.isFormValid();
 
             if (formValidationResult.isValid) {
@@ -330,7 +339,7 @@ define([
      */
     StripePaymentForm.prototype.validateCardNumber = function ($creditCardNumberElement) {
 
-        var $element = $creditCardNumberElement || $(this.config.DOM.CREDIT_CARD_NUMBER);
+        var $element = $creditCardNumberElement || $(this.DOM.CREDIT_CARD_NUMBER);
 
         return {
             isValid: stripe.card.validateCardNumber($element.val()),
@@ -347,7 +356,7 @@ define([
      */
     StripePaymentForm.prototype.validateCVC = function ($cvcElement) {
 
-        var $element = $cvcElement || $(this.config.DOM.CREDIT_CARD_CVC);
+        var $element = $cvcElement || $(this.DOM.CREDIT_CARD_CVC);
 
         return {
             isValid: stripe.card.validateCVC($element.val()),
@@ -361,7 +370,7 @@ define([
      * @returns {boolean}
      */
     StripePaymentForm.prototype.setDisplayMonthErrorStatus = function () {
-        var $creditCardExpiryYearElement = $(this.config.DOM.CREDIT_CARD_EXPIRY_YEAR);
+        var $creditCardExpiryYearElement = $(this.DOM.CREDIT_CARD_EXPIRY_YEAR);
 
         this.displayMonthError = $creditCardExpiryYearElement[0].selectedIndex !== 0;
     };
@@ -373,8 +382,8 @@ define([
      */
     StripePaymentForm.prototype.validateExpiry = function () {
 
-        var $creditCardExpiryMonthElement = $(this.config.DOM.CREDIT_CARD_EXPIRY_MONTH),
-            $creditCardExpiryYearElement = $(this.config.DOM.CREDIT_CARD_EXPIRY_YEAR),
+        var $creditCardExpiryMonthElement = $(this.DOM.CREDIT_CARD_EXPIRY_MONTH),
+            $creditCardExpiryYearElement = $(this.DOM.CREDIT_CARD_EXPIRY_YEAR),
             today = new Date(),
             isValid = !this.displayMonthError,
             validDateEntry = function () {
@@ -456,7 +465,7 @@ define([
      */
     StripePaymentForm.prototype.manageErrors = function (validationResult) {
 
-        var paymentErrorsElement = $(this.config.DOM.PAYMENT_ERRORS)[0],
+        var paymentErrorsElement = $(this.DOM.PAYMENT_ERRORS)[0],
             paymentErrorsElementText = paymentErrorsElement.textContent,
             errors = [],
             messageIndex,
@@ -495,19 +504,19 @@ define([
     };
 
     StripePaymentForm.prototype.startLoader = function () {
-        $(this.config.DOM.UPDATING).css('display', 'inline-block');
+        $(this.DOM.UPDATING).css('display', 'inline-block');
     };
 
     StripePaymentForm.prototype.stopLoader = function () {
-        $(this.config.DOM.UPDATING).css('display', 'none');
+        $(this.DOM.UPDATING).css('display', 'none');
     };
 
     StripePaymentForm.prototype.reset = function () {
-        $(this.config.DOM.CREDIT_CARD_IMAGE)[0].className = $(this.config.DOM.CREDIT_CARD_IMAGE)[0].className.replace(/\bi-\S*/gi, '');
-        $(this.config.DOM.CREDIT_CARD_NUMBER).val('');
-        $(this.config.DOM.CREDIT_CARD_CVC).val('');
-        $(this.config.DOM.CREDIT_CARD_EXPIRY_MONTH)[0].selectedIndex = 0;
-        $(this.config.DOM.CREDIT_CARD_EXPIRY_YEAR)[0].selectedIndex = 0;
+        $(this.DOM.CREDIT_CARD_IMAGE)[0].className = $(this.DOM.CREDIT_CARD_IMAGE)[0].className.replace(/\bi-\S*/gi, '');
+        $(this.DOM.CREDIT_CARD_NUMBER).val('');
+        $(this.DOM.CREDIT_CARD_CVC).val('');
+        $(this.DOM.CREDIT_CARD_EXPIRY_MONTH)[0].selectedIndex = 0;
+        $(this.DOM.CREDIT_CARD_EXPIRY_YEAR)[0].selectedIndex = 0;
     };
 
     /**
@@ -529,9 +538,7 @@ define([
         }
     };
 
-    StripePaymentForm.prototype.init = function (form, successElement) {
-        this.context = form;
-        this.successElement = successElement;
+    StripePaymentForm.prototype.init = function () {
         this.addIconCss();
         if (this.context) {
             this.domElementSetup();

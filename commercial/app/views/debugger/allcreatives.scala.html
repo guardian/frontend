@@ -91,70 +91,76 @@
     </div>
 
     <script>
-        require('core')
-            .next([
-                'bean',
-                'common/utils/$'
-            ])
-            .then(function (
-                bean,
-                $
-            ) {
-                var $switchFronts   = $('#switchFronts'),
-                    $switchArticles = $('#switchArticles'),
-                    $rhColumn = $('.content__secondary-column');
+        // window.require is assigned asynchronously
+        window.addEventListener('load', function () {
+            require('bootstraps/standard/main')
+                .next(['bootstraps/commercial'])
+                .next([
+                    'bean',
+                    'common/utils/$'
+                ])
+                .then(function (
+                    bean,
+                    $
+                ) {
+                    var $switchFronts   = $('#switchFronts'),
+                        $switchArticles = $('#switchArticles'),
+                        $rhColumn = $('.content__secondary-column');
 
-                bean.on($switchFronts[0], 'click', function () {
-                    $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
-                    $switchArticles.removeClass('current');
-                    $switchFronts.addClass('current');
-                    $rhColumn.hide();
-                });
+                    bean.on($switchFronts[0], 'click', function () {
+                        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
+                        $switchArticles.removeClass('current');
+                        $switchFronts.addClass('current');
+                        $rhColumn.hide();
+                    });
 
-                bean.on($switchArticles[0], 'click', function () {
-                    $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
-                    $switchFronts.removeClass('current');
-                    $switchArticles.addClass('current');
-                    $rhColumn.show();
-                });
+                    bean.on($switchArticles[0], 'click', function () {
+                        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
+                        $switchFronts.removeClass('current');
+                        $switchArticles.addClass('current');
+                        $rhColumn.show();
+                    });
 
-                bean.on($('#pageSkin')[0], 'click', function () {
-                    $('body').toggleClass('has-page-skin');
-                });
+                    bean.on($('#pageSkin')[0], 'click', function () {
+                        $('body').toggleClass('has-page-skin');
+                    });
 
-                var $number        = $('#dfp-number'),
-                    itemNumClasses = ['2', '3', '4']
-                        .map(function (num) {
-                            return 'commercial--items-dfp-' + num;
-                        });
-                bean.on($number[0], 'change', function () {
-                    $('.commercial--dfp-multiple')
-                        .removeClass(itemNumClasses.join(' '))
-                        .addClass('commercial--items-dfp-' + $number.val());
-                });
+                    var $number        = $('#dfp-number'),
+                        itemNumClasses = ['2', '3', '4']
+                            .map(function (num) {
+                                return 'commercial--items-dfp-' + num;
+                            });
+                    bean.on($number[0], 'change', function () {
+                        $('.commercial--dfp-multiple')
+                            .removeClass(itemNumClasses.join(' '))
+                            .addClass('commercial--items-dfp-' + $number.val());
+                    });
 
-                var $palette    = $('#dfp-palette'),
-                    toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
-                        .map(function (tone) {
-                            return 'commercial--tone-' + tone;
-                        });
-                bean.on($palette[0], 'change', function () {
-                    $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
-                        .removeClass(toneClasses.join(' '))
-                        .addClass('commercial--tone-' + $palette.val());
-                });
+                    var $palette    = $('#dfp-palette'),
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                            .map(function (tone) {
+                                return 'commercial--tone-' + tone;
+                            });
+                    bean.on($palette[0], 'change', function () {
+                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                            .removeClass(toneClasses.join(' '))
+                            .addClass('commercial--tone-' + $palette.val());
+                    });
 
-                var $rhComponent = $('.rh-column-component');
-                bean.on($rhComponent[0], 'change', function () {
-                    showRHColumn($rhComponent.val());
+                    var $rhComponent = $('.rh-column-component');
+                    bean.on($rhComponent[0], 'change', function () {
+                        showRHColumn($rhComponent.val());
+                    });
                 });
-            });
+        });
 
         var loadCommercial = function (callback) {
-            require(['core'])
-                .next(['bootstraps/commercial'])
-                .next(['bootstraps/creatives'])
-                .then(callback) ;
+            window.addEventListener('load', function () {
+                // Commercial is in standard
+                require('bootstraps/standard/main')
+                    .next(['bootstraps/commercial'])
+                    .then(callback) ;
+            });
         };
     </script>
 
@@ -165,11 +171,45 @@
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--manual-inline"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--manual-inline"></div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Its episodic chapters may not appeal to some, but as a beach read, Twenty Thousand Leagues is the perfect book to pick up and put down. You are consistently rewarded with iconic scenes: a battle with a giant squid, an underwater funeral, a trip to Atlantis. Verne's detailed descriptions of geography and sea life fill me with a curiously Victorian sense of potential for discovering the unknown.</p>
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--inline-book"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--inline-book"></div>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
+                    <div class="ad-slot ad-slot--gu-comcontent">
+                        <div class="gu-comcontent" data-link-name="creative | gu style commercial content">
+                            <div class="u-responsive-ratio inlined-image">
+                                <a href="#">
+                                    <img class="responsive-img gu-image" alt="" srcset="https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=3dde5d6f9ca8e5af876c9506ec74a5c4 220w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=011992f9058136dace20307cc6c43093 160w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f24d14aa5bb58685a616994d0616eff2 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                </a>
+                            </div>
+                            <div class="gu-meta">
+                                <span class="gu-meta__label">Paid Content</span>
+                                <div class="gu-comlabel gu-meta__more has-popup">
+                                    <button class="u-button-reset gu-comlabel__btn popup__toggle" data-toggle="gu-compopup--<%=dataAttr%>">
+                                        About <%=icon%>
+                                    </button>
+                                    <div class="popup is-off gu-compopup gu-compopup--<%=dataAttr%> gu-stylebox">
+                                        <h3 class="gu-compopup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                                        <a class="gu-compopup__link" href="#">
+                                            Learn more about the Guardian’s funding from outside parties
+                                            <%=infoLinkIcon%>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<%=clickMacro%><%=articleUrl%>" class="gu-box">
+                                <h2 class="gu-title">How a tax haven goes bust</h2>
+                                <p class="gu-text">Jersey bet its future on finance but since 2007 it has fallen on hard times and is heading for bankruptcy. Is the island’s perilous present Britain’s bleak future?</p>
+                                <div class="gu-brand">
+                                    <span class="gu-note">Paid for by:</span>
+                                    <img class="gu-logo" src="<%=brandLogo%>" alt="<%=brand%>">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                 </div>
@@ -181,7 +221,8 @@
         <script>
             function showRHColumn(component) {
                 loadCommercial(function () {
-                    require('core')
+                    require('bootstraps/standard/main')
+                        .next(['bootstraps/commercial'])
                         .next([
                             'common/utils/$'
                         ])
@@ -240,6 +281,12 @@
                             clickMacro: '%%CLICK_URL_ESC%%',
                             omnitureId: '[%OmnitureID%]'
                         }).create();
+
+                        // new CommercialComponent(document.querySelector('.ad-slot--gu-comcontent'), {
+                        //     type: 'paidfor',
+                        //     clickMacro: '%%CLICK_URL_ESC%%',
+                        //     omnitureId: '[%OmnitureID%]'
+                        // }).create();
                     });
                 });
         </script>

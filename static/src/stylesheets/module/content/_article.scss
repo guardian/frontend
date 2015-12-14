@@ -65,14 +65,14 @@
     }
 
     .fc-container--first .fc-container__inner {
-        border-top: 1px solid colour(news-main-2);
+        border-top: 1px solid colour(news-main-2) !important;
     }
 
     .fc-container--first .fc-container__header__title {
-        border: 0;
+        border: 0 !important;
     }
 
-    .button--show-more {
+    .fc-show-more--hidden .button--show-more {
         display: none;
     }
 }

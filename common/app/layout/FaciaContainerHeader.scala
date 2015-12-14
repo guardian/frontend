@@ -34,7 +34,7 @@ object FaciaContainerHeader {
     None,
     sectionPage.metadata.description,
     dateHeadline,
-    frontHref(sectionPage.metadata.id, sectionPage.pagination)
+    frontHref(sectionPage.metadata.id, sectionPage.metadata.pagination)
   )
 
   def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
