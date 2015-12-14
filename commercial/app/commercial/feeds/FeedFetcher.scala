@@ -103,7 +103,22 @@ object FeedFetcher {
     SoulmatesAgent.agents flatMap feedFetcher
   }
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs).flatten
+  private val bestsellers: Option[FeedFetcher] = {
+    conf.Configuration.commercial.magento.domain map {
+      domain => s"http://$domain/bertrams/feed/independentsTop20"
+    } map {
+      new FeedFetcher(
+        "general-bestsellers",
+        _,
+        Map.empty,
+        2.seconds,
+        Switches.GuBookshopFeedsSwitch,
+        ResponseEncoding.utf8
+      )
+    }
+  }
+
+  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers).flatten
 }
 
 object ResponseEncoding {
