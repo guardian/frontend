@@ -46,6 +46,9 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
 
+  // true if switched on and switchboard has been read
+  def isGuaranteedSwitchedOn: Future[Boolean] = onInitialized map { _ => isSwitchedOn }
+
   def switchOn() {
     if (isSwitchedOff) {
       delegate.switchOn()

@@ -1,9 +1,10 @@
 package model.commercial.jobs
 
+import commercial.feeds.ParsedFeed
 import common.ExecutionContexts
 import model.commercial._
 
-import scala.util.control.NonFatal
+import scala.concurrent.Future
 
 object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
 
@@ -19,28 +20,26 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
     available filter (job => jobIds contains job.id)
   }
 
-  def refresh(): Unit = {
+  def refresh(): Future[ParsedFeed[Job]] = {
 
-    def populateKeywords(jobs: Seq[Job]) = jobs.map { job =>
-      val jobKeywordIds = job.sectorIds.flatMap(Industries.forIndustry).distinct
-      job.copy(keywordIdSuffixes = jobKeywordIds map Keyword.getIdSuffix)
+    val feedName = "jobs"
+
+    def withKeywords(parsedFeed: Future[ParsedFeed[Job]]): Future[ParsedFeed[Job]] = {
+      parsedFeed map { feed =>
+        val jobs = feed.contents map { job =>
+          val jobKeywordIds = job.sectorIds.flatMap(Industries.forIndustry).distinct
+          job.copy(keywordIdSuffixes = jobKeywordIds map Keyword.getIdSuffix)
+        }
+        ParsedFeed(jobs, feed.parseDuration)
+      }
     }
 
-    JobsFeed.loadAds() map { freshJobs =>
-      updateAvailableMerchandise(populateKeywords(freshJobs))
-    } recover {
-      case e: FeedSwitchOffException =>
-        log.warn(e.getMessage)
-        Nil
-      case e: FeedMissingConfigurationException =>
-        log.warn(e.getMessage)
-        Nil
-      case NonFatal(e) =>
-        log.error(e.getMessage)
-        Nil
+    val parsedFeed = withKeywords(JobsFeed.parsedJobs(feedName))
+
+    parsedFeed foreach { feed =>
+      updateAvailableMerchandise(feed.contents)
     }
-    for {freshJobs <- JobsFeed.loadAds()}
-      updateAvailableMerchandise(populateKeywords(freshJobs))
+
+    parsedFeed
   }
-
 }

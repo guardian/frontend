@@ -252,6 +252,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val masterclasses_url =
       configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
+    lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
     lazy val traveloffers_url =
       configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")

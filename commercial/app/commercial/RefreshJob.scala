@@ -1,11 +1,10 @@
 package commercial
 
-import common.{ExecutionContexts, Jobs, Logging}
+import common.{Jobs, Logging}
 import model.commercial.books.BestsellersAgent
-import model.commercial.jobs.{Industries, JobsAgent}
+import model.commercial.jobs.Industries
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
 import model.commercial.money.BestBuysAgent
-import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 
 trait RefreshJob extends Logging {
@@ -26,13 +25,6 @@ trait RefreshJob extends Logging {
   def stop(): Unit = {
     Jobs.deschedule(s"${name}RefreshJob")
   }
-}
-
-object SoulmatesRefresh extends RefreshJob with ExecutionContexts {
-
-  val name: String = "Soulmates"
-
-  def refresh() = SoulmatesAgent.refresh()
 }
 
 object MasterClassTagsRefresh extends RefreshJob {
@@ -69,13 +61,6 @@ object IndustriesRefresh extends RefreshJob {
   val name: String = "Industries"
 
   def refresh() = Industries.refresh()
-}
-
-object JobsRefresh extends RefreshJob {
-
-  val name: String = "Jobs"
-
-  def refresh() = JobsAgent.refresh()
 }
 
 object MoneyBestBuysRefresh extends RefreshJob {

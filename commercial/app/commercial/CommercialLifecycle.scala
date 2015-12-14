@@ -1,17 +1,14 @@
 package commercial
 
+import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
-import conf.CommercialConfiguration
 import conf.Configuration.commercial.merchandisingFeedsRoot
-import conf.switches.Switches.JobFeedSwitch
 import model.commercial.books.BestsellersAgent
-import model.commercial.jobs.{Industries, JobsAgent}
+import model.commercial.jobs.Industries
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
 import model.commercial.money.BestBuysAgent
-import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 import model.diagnostics.CloudWatch
-import org.joda.time.{DateTime, DateTimeZone}
 import play.api.{Application => PlayApp, GlobalSettings}
 import services.S3
 
@@ -21,35 +18,21 @@ import scala.util.{Failure, Random, Success}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
-  private val feedFetchers: Seq[FeedFetcher] = {
-    def maybeJobsUrl = {
-
-      /*
-       * Using offset time because this appears to be how the URL is constructed.
-       * With UTC time we lose the feed for 2 hours at midnight every day.
-       */
-      val feedDate = new DateTime(DateTimeZone.forOffsetHours(-2)).toString("yyyy-MM-dd")
-
-      val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
-      urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
-    }
-
-    maybeJobsUrl.foldLeft(Seq.empty[FeedFetcher]) {
-      (soFar, url) => soFar :+ new FeedFetcher("Jobs", url, Map.empty, 5.seconds, JobFeedSwitch, "UTF-8")
-    }
-  }
-
   private val refreshJobs: List[RefreshJob] = List(
-    SoulmatesRefresh,
     MasterClassTagsRefresh,
     MasterclassesRefresh,
     CountriesRefresh,
     IndustriesRefresh,
-    JobsRefresh,
     MoneyBestBuysRefresh,
     BooksRefresh,
     TravelOffersRefresh
   )
+
+  def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
+    val key = s"${feedName.toLowerCase.replaceAll("\\s+", "-")}-$eventName-time"
+    val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
+    CloudWatch.put("Commercial", Map(s"$key" -> duration))
+  }
 
   override def onStart(app: PlayApp): Unit = {
 
@@ -59,45 +42,70 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     def fetchFeed(fetcher: FeedFetcher): Unit = {
 
-      def storeFeed(feedName: String, feed: Feed): Unit =
+      val feedName = fetcher.feedName
+
+      def storeFeed(feed: Feed): Unit =
         S3.putPrivate(key = s"$merchandisingFeedsRoot/$feedName", value = feed.content, feed.contentType)
 
-      def recordFetch(feedName: String, duration: Duration): Unit = {
-        val key = s"${feedName.toLowerCase.replaceAll("\\s+", "-")}-feed-load-time"
-        CloudWatch.put("Commercial", Map(s"$key" -> duration.toMillis.toDouble))
+      def recordFetch(maybeDuration: Option[Duration]): Unit = {
+        recordEvent(feedName, "feed-load", maybeDuration)
       }
 
-      val feedName = fetcher.feedName
       val msgPrefix = s"Fetching $feedName feed"
       log.info(s"Fetching $feedName feed from ${fetcher.url} ...")
       val eventualResponse = fetcher.fetch()
       eventualResponse onFailure {
-        case FetchSwitchedOff =>
-          log.warn(s"$msgPrefix failed: ${fetcher.switch.name} switch is off")
-        case FetchTimeout =>
-          log.error(s"$msgPrefix failed: timed out after ${fetcher.timeout}")
-        case FetchFailure(Some(status), message) =>
-          log.error(s"$msgPrefix failed: HTTP status $status: $message")
-        case FetchFailure(_, message) =>
-          log.error(s"$msgPrefix failed: $message")
+        case e: SwitchOffException =>
+          log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          log.error(s"$msgPrefix failed: ${e.getMessage}")
+          recordFetch(None)
+          log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       eventualResponse onSuccess {
         case response =>
-          storeFeed(feedName, response.feed)
-          recordFetch(feedName, response.duration)
+          storeFeed(response.feed)
+          recordFetch(Some(response.duration))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
+      }
+    }
+
+    def parseFeed[T](parser: FeedParser[T]): Unit = {
+
+      val feedName = parser.feedName
+
+      def recordParse(maybeDuration: Option[Duration]): Unit = {
+        recordEvent(feedName, "feed-parse", maybeDuration)
+      }
+
+      log.info(s"Parsing $feedName feed ...")
+      val parsedFeed = parser.parse()
+      parsedFeed onFailure {
+        case NonFatal(e) =>
+          recordParse(None)
+          log.error(s"Parsing $feedName feed failed: ${e.getMessage}", e)
+      }
+      parsedFeed onSuccess {
+        case feed =>
+          recordParse(Some(feed.parseDuration))
+          log.info(s"Successfully parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
     }
 
     super.onStart(app)
 
-    for (fetcher <- feedFetchers) {
+    for (fetcher <- FeedFetcher.all) {
       val feedName = fetcher.feedName
       Jobs.deschedule(s"${feedName}FetchJob")
       Jobs.scheduleEveryNMinutes(s"${feedName}FetchJob", 15) {
         fetchFeed(fetcher)
+      }
+    }
+
+    for (parser <- FeedParser.all) {
+      val feedName = parser.feedName
+      Jobs.deschedule(s"${feedName}ParseJob")
+      Jobs.scheduleEveryNMinutes(s"${feedName}ParseJob", 15) {
+        parseFeed(parser)
       }
     }
 
@@ -106,12 +114,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
 
     AkkaAsync {
-
-      for (fetcher <- feedFetchers) {
-        fetchFeed(fetcher)
-      }
-
-      SoulmatesAgent.refresh()
 
       MasterClassTagsAgent.refresh() andThen {
         case Success(_) => MasterClassAgent.refresh()
@@ -123,23 +125,34 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
       }
 
-      Industries.refresh() andThen {
-        case Success(_) => JobsAgent.refresh()
-        case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
+      Industries.refresh() onFailure {
+        case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 
       BestBuysAgent.refresh()
 
       BestsellersAgent.refresh()
       TravelOffersRefresh.refresh()
+
+      for (fetcher <- FeedFetcher.all) {
+        fetchFeed(fetcher)
+      }
+
+      for (parser <- FeedParser.all) {
+        parseFeed(parser)
+      }
     }
   }
 
   override def onStop(app: PlayApp): Unit = {
     refreshJobs foreach (_.stop())
 
-    for (fetcher <- feedFetchers) {
+    for (fetcher <- FeedFetcher.all) {
       Jobs.deschedule(s"${fetcher.feedName}FetchJob")
+    }
+
+    for (parser <- FeedParser.all) {
+      Jobs.deschedule(s"${parser.feedName}ParseJob")
     }
 
     super.onStop(app)
