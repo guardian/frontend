@@ -28,8 +28,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     TravelOffersRefresh
   )
 
-  def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
-    val key = s"${feedName.toLowerCase.replaceAll("\\s+", "-")}-$eventName-time"
+  private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
+    val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
     CloudWatch.put("Commercial", Map(s"$key" -> duration))
   }
@@ -48,7 +48,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         S3.putPrivate(key = s"$merchandisingFeedsRoot/$feedName", value = feed.content, feed.contentType)
 
       def recordFetch(maybeDuration: Option[Duration]): Unit = {
-        recordEvent(feedName, "feed-load", maybeDuration)
+        recordEvent(feedName, "fetch", maybeDuration)
       }
 
       val msgPrefix = s"Fetching $feedName feed"
@@ -74,7 +74,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = parser.feedName
 
       def recordParse(maybeDuration: Option[Duration]): Unit = {
-        recordEvent(feedName, "feed-parse", maybeDuration)
+        recordEvent(feedName, "parse", maybeDuration)
       }
 
       log.info(s"Parsing $feedName feed ...")
