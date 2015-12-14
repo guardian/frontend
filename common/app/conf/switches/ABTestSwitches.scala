@@ -4,6 +4,15 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  val AlternativeRelated = Switch(
+    "A/B Tests",
+    "ab-alternative-related",
+    "show alternative related content based on the tags to users in the test",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 1, 23),
+    exposeClientSide = true
+  )
+
   val ABLargeTopAd = Switch(
     "A/B Tests",
     "ab-large-top-ad",
