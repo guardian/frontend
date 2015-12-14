@@ -3,6 +3,7 @@
   "version": "0.1.0 ",
   "dependencies": {
     "bean": "~1.0.14",
+    "domready": "ded/domready#v0.3.0",
     "eventEmitter": "~4.2.6",
     "fastdom": "0.8.5",
     "lodash-amd": "~2.4.1",
@@ -33,6 +34,7 @@
         }
       ],
       "lodash-amd": "bower_components/lodash-amd/compat/**",
+      "domready": "bower_components/domready/ready.js",
       "when": "bower_components/when/es6-shim/Promise.js",
       "video.js": "bower_components/video.js/dist/video.min.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/dist/videojs.ads.min.js",

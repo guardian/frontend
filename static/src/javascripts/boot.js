@@ -19,11 +19,13 @@ Bundles we need to run: commercial + (enhanced-vendor + enhanced)*
 define([
     'Promise',
     'lodash/collections/map',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'domReady'
 ], function (
     Promise,
     map,
-    forEach
+    forEach,
+    domReady
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -34,7 +36,13 @@ define([
     var guardian = window.guardian;
     var config = guardian.config;
 
-    var bootStandard = function () { return promiseRequire(['bootstraps/standard/main', 'domReady!']); };
+    var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
+
+    var bootStandard = function () {
+        return domReadyPromise.then(function () {
+            return promiseRequire(['bootstraps/standard/main']);
+        });
+    };
 
     var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced/main']); };
 
