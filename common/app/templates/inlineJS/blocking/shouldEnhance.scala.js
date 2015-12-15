@@ -26,7 +26,7 @@
         try {
             var localStorage = window.localStorage;
             if (corePref = localStorage.getItem(coreKey)) {
-                localStorage.setItem(enhanceKey, JSON.stringify({value: JSON.parse(corePref).value === 'off'}));
+                localStorage.setItem(enhanceKey, /off/.test(corePref));
                 localStorage.removeItem(coreKey);
             }
         } catch (e) {};
@@ -61,7 +61,7 @@
 
     function couldEnhance() {
         try {
-            return JSON.parse(localStorage.getItem(enhanceKey)).value !== false;
+            return !/false/.test(localStorage.getItem(enhanceKey));
         } catch (e) {};
 
         return true; // assume we're going to enhance if we can
