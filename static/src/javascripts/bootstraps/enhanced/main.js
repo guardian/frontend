@@ -151,5 +151,5 @@ define([
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
-    }
+    };
 });
