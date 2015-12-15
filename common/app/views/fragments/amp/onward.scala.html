@@ -15,17 +15,17 @@
                     <div class="fc-item__header">
                         <h2 class="fc-item__title">
                             <span>
-                                                {{#isVideo}}
-                                @fragments.inlineSvg("video-icon", "icon")
+                                {{#isVideo}}
+                                    @fragments.inlineSvg("video-icon", "icon")
                                 {{/isVideo}}
                                 {{#isGallery}}
-                                @fragments.inlineSvg("camera", "icon")
+                                    @fragments.inlineSvg("camera", "icon")
                                 {{/isGallery}}
                                 {{#isAudio}}
-                                @fragments.inlineSvg("volume-high", "icon")
+                                    @fragments.inlineSvg("volume-high", "icon")
                                 {{/isAudio}}
                                 {{#isComment}}
-                                @fragments.inlineSvg("quote", "icon")
+                                    @fragments.inlineSvg("quote", "icon")
                                 {{/isComment}}
                             </span>
                             {{headline}}

@@ -2,21 +2,12 @@ package views.support
 
 import com.gu.facia.api.models.{CuratedContent, FaciaContent}
 import model.facia.PressedCollection
-import play.api.libs.json.{JsNull, JsObject, Json, JsValue}
+import play.api.libs.json._
 import implicits.FaciaContentImplicits._
 
 object FaciaToMicroFormat2Helpers {
-  def getCollection(pressedCollection: PressedCollection): JsValue =
-    JsObject(
-      Json.obj(
-        "displayName" -> pressedCollection.displayName,
-        "href" -> pressedCollection.href,
-        "id" -> pressedCollection.id,
-        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.map(isCuratedContent)
-      )
-        .fields
-        .filterNot { case (_, v) => v == JsNull }
-    )
+  def getCollection(pressedCollection: PressedCollection): JsArray =
+    JsArray(pressedCollection.curatedPlusBackfillDeduplicated.map(isCuratedContent))
 
   def isCuratedContent(content: FaciaContent): JsValue = content match {
     case c: CuratedContent => getContent(c)
