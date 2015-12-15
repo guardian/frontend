@@ -40,11 +40,15 @@ define([
 
     var bootStandard = function () {
         return domReadyPromise.then(function () {
-            return promiseRequire(['bootstraps/standard/main']);
+            return promiseRequire(['bootstraps/standard/main'])
+                .then(function (boot) { boot(); });
         });
     };
 
-    var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced/main']); };
+    var bootEnhanced = function () {
+        return promiseRequire(['bootstraps/enhanced/main'])
+            .then(function (boot) { boot(); });
+    };
 
     var bootCommercial = function () {
         return promiseRequire(['raven'])
