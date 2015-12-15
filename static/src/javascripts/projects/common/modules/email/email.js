@@ -11,7 +11,8 @@ define([
     'lodash/functions/debounce',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html'
+    'text!common/views/email/submissionResponse.html',
+    'common/utils/robust'
 ], function (
     formInlineLabels,
     bean,
@@ -25,7 +26,8 @@ define([
     debounce,
     template,
     svgs,
-    successHtml
+    successHtml,
+    robust
 ) {
     var omniture;
 
@@ -150,11 +152,7 @@ define([
                             })
                             .then(handleSubmit(true, $form))
                             .catch(function (error) {
-                                /* eslint-disable no-console */
-                                if (window.console && console.error) {
-                                    console.error('Error posting email form', error.stack);
-                                }
-                                /* eslint-enable no-console */
+                                robust.log('c-email', error);
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
                                 handleSubmit(false, $form)();
                             });

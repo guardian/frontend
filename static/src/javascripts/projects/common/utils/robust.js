@@ -54,6 +54,7 @@ define([
     return {
         catchErrorsAndLog: catchErrorsAndLog,
         catchErrorsAndLogAll: catchErrorsAndLogAll,
-        makeBlocks: makeBlocks
+        makeBlocks: makeBlocks,
+        log: log
     };
 });
