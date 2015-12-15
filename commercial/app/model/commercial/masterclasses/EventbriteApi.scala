@@ -1,7 +1,7 @@
 package model.commercial.masterclasses
 
 import common.{ExecutionContexts, Logging}
-import conf.CommercialConfiguration
+import conf.Configuration
 import conf.switches.Switches.MasterclassFeedSwitch
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time.DateTime.now
@@ -17,7 +17,7 @@ object EventbriteApi extends ExecutionContexts with Logging {
   private val url: String = "https://www.eventbriteapi.com/v3/users/me/owned_events/"
 
   private lazy val maybeParameters: Option[Map[String, String]] = {
-    for (token <- CommercialConfiguration.masterclassesToken) yield {
+    for (token <- Configuration.commercial.masterclassesToken) yield {
       Map(
         "token" -> token,
         "status" -> "live",
