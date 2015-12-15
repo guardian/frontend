@@ -3,7 +3,8 @@
         user: com.gu.identity.model.User,
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
-        idUrlBuilder: services.IdentityUrlBuilder
+        idUrlBuilder: services.IdentityUrlBuilder,
+        showDigitalPack: Boolean
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import views.html.fragments.form.{inputField, textareaField}
@@ -38,7 +39,9 @@
 
             @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
 
-            @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
+            @if(showDigitalPack) {
+                @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
+            }
         </ol>
 
         <div class="tabs__content">
@@ -48,7 +51,9 @@
 
             @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm())
 
-            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm())
+            @if(showDigitalPack) {
+                @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm())
+            }
         </div>
     </div>
 

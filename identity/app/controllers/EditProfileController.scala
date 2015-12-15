@@ -40,7 +40,10 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   protected def displayForm(page: IdentityPage) = CSRFAddToken {
     recentlyAuthenticated.async { implicit request =>
-      profileFormsView(Omniture.tracking(page,idRequestParser(request)), ProfileForms(request.user, false))
+      profileFormsView(
+        Omniture.tracking(page,idRequestParser(request)),
+        ProfileForms(request.user, false),
+        showDigitalPack = page.id == digitalPackPage.id)
     }
   }
 
@@ -71,13 +74,13 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     }
   }
 
-  def profileFormsView(pageWithTrackingParams: IdentityPage, forms: ProfileForms)(implicit request: AuthRequest[AnyContent]) = {
+  def profileFormsView(pageWithTrackingParams: IdentityPage, forms: ProfileForms, showDigitalPack: Boolean = false)(implicit request: AuthRequest[AnyContent]) = {
     val idRequest = idRequestParser(request)
     val user = request.user
 
     Future(NoCache(Ok(views.html.profileForms(
            pageWithTrackingParams,
-           user, forms, idRequest, idUrlBuilder))))
+           user, forms, idRequest, idUrlBuilder, showDigitalPack))))
   }
 }
 
