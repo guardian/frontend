@@ -145,9 +145,9 @@ try {
                 clearInterval(checkForPageViewInterval);
 
                 var pageView = new Image();
-                pageView.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+                pageView.src = config.page.beaconUrl + "/count/pva.gif";
 
-                if (guardian.isModernBrowser && @NoBounceIndicator.isSwitchedOn) {
+                if (guardian.isModernBrowser && config.switches.noBounceIndicator) {
                     try {
                         window.sessionStorage.removeItem('gu-bounce-test');
                     } catch (e) {}
@@ -164,5 +164,5 @@ try {
     })();
 
 } catch (e) {
-    (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-pageview-error.gif';
+    (new Image()).src = config.page.beaconUrl + '/count/omniture-pageview-error.gif';
 }
