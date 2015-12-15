@@ -39,8 +39,5 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
         log.error(e.getMessage)
         Nil
     }
-    for {freshJobs <- JobsFeed.loadAds()}
-      updateAvailableMerchandise(populateKeywords(freshJobs))
   }
-
 }

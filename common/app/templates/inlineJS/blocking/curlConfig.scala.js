@@ -14,7 +14,9 @@ window.curlConfig = {
             stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
+            react:                          'components/react/react',
             classnames:                     'components/classnames/index',
+            domReady:                       'components/domready/ready',
             enhancer:                       'components/enhancer/enhancer',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
             fastclick:                      'components/fastclick/fastclick',
@@ -41,9 +43,7 @@ window.curlConfig = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg',
-
-            react: '@Static.js.reactPath'
+            inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
@@ -54,7 +54,7 @@ window.curlConfig = {
             'bootstraps/enhanced/facia':         '@Static("javascripts/bootstraps/enhanced/facia.js")',
             'bootstraps/enhanced/football':      '@Static("javascripts/bootstraps/enhanced/football.js")',
             'bootstraps/enhanced/image-content': '@Static("javascripts/bootstraps/enhanced/image-content.js")',
-            'bootstraps/membership':             '@Static("javascripts/bootstraps/membership.js")',
+            'bootstraps/enhanced/membership':    '@Static("javascripts/bootstraps/enhanced/membership.js")',
             'bootstraps/enhanced/sudoku':        '@Static("javascripts/bootstraps/enhanced/sudoku.js")',
             'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
             'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
@@ -65,15 +65,13 @@ window.curlConfig = {
             'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
-            zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+            react:                      '@Static("javascripts/components/react/react.js")',
             'facebook.js':              '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg', // noop
-
-            react: '@Static.js.reactPath'
+            inlineSvg:                  'inlineSvg' // noop
         }
     }
 };

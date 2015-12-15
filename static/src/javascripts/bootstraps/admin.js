@@ -5,7 +5,8 @@ define([
     'admin/bootstraps/browserstats',
     'admin/bootstraps/radiator',
     'admin/bootstraps/commercial',
-    'admin/bootstraps/commercial/adTests'
+    'admin/bootstraps/commercial/adTests',
+    'domReady'
 ], function (
     ajax,
     abTests,
@@ -13,10 +14,11 @@ define([
     browserstats,
     radiator,
     commercial,
-    adTests
+    adTests,
+    domReady
 ) {
 
-    require(['domReady!'], function () {
+    domReady(function () {
         ajax.setHost('');
 
         switch (window.location.pathname) {

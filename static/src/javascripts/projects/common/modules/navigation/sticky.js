@@ -438,7 +438,7 @@ define([
                 // Header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
                 this.$els.header.css({
-                    position:  'static',
+                    position:  'relative',
                     width:     '100%',
                     'margin-top': 0,
                     '-webkit-transform': 'translateY(0%)',
