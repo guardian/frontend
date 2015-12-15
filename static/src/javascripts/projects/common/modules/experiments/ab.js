@@ -9,6 +9,7 @@ define([
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
     'common/modules/experiments/tests/alternative-related',
+    'common/modules/experiments/tests/identity-sign-in-v2',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -29,6 +30,7 @@ define([
     LargeTopAd,
     VideoPreroll,
     AlternativeRelated,
+    IdentitySignInV2,
     flatten,
     forEach,
     keys,
@@ -43,7 +45,8 @@ define([
         new FrontsOnArticles(),
         new LargeTopAd(),
         new VideoPreroll(),
-        new AlternativeRelated()
+        new AlternativeRelated(),
+        new IdentitySignInV2()
     ]);
 
     var participationsKey = 'gu.ab.participations';
