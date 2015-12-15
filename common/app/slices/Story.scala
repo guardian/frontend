@@ -24,8 +24,8 @@ object Story {
   def fromFaciaContent(faciaContent: PressedContent): Story = {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
-      Try(faciaContent.properties.group.toInt).getOrElse(0),
-      faciaContent.properties.isBoosted
+      Try(faciaContent.card.group.toInt).getOrElse(0),
+      faciaContent.display.isBoosted
     )
   }
 }

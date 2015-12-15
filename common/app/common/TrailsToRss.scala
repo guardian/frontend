@@ -129,7 +129,7 @@ object TrailsToRss extends implicits.Collections {
           case _: LinkSnap => false
           case _ => true}
         .filter(_.properties.maybeContentId.isDefined)
-        .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.properties.id))
+        .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
         .flatMap(_.properties.maybeContent)
 
     fromFaciaContent(pressedPage.metadata.webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)

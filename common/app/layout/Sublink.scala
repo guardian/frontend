@@ -34,11 +34,11 @@ case class EditionalisedLink(
 object Sublink {
   def fromFaciaContent(faciaContent: PressedContent) =
     Sublink(
-      faciaContent.properties.kicker,
-      faciaContent.properties.headline,
+      faciaContent.header.kicker,
+      faciaContent.header.headline,
       EditionalisedLink.fromFaciaContent(faciaContent),
-      faciaContent.properties.cardStyle,
-      faciaContent.properties.mediaType
+      faciaContent.card.cardStyle,
+      faciaContent.card.mediaType
     )
 }
 
@@ -52,9 +52,9 @@ case class Sublink(
 
 object DiscussionSettings {
   def fromTrail(faciaContent: PressedContent) = DiscussionSettings(
-    faciaContent.properties.isCommentable,
-    faciaContent.properties.isClosedForComments,
-    faciaContent.properties.discussionId
+    faciaContent.discussion.isCommentable,
+    faciaContent.discussion.isClosedForComments,
+    faciaContent.discussion.discussionId
   )
 }
 
@@ -86,11 +86,11 @@ case class Byline(
 
 object DisplaySettings {
   def fromTrail(faciaContent: PressedContent) = DisplaySettings(
-    faciaContent.properties.isBoosted,
-    faciaContent.properties.showBoostedHeadline,
-    faciaContent.properties.showQuotedHeadline,
-    faciaContent.properties.imageHide,
-    faciaContent.properties.showLivePlayable
+    faciaContent.display.isBoosted,
+    faciaContent.display.showBoostedHeadline,
+    faciaContent.display.showQuotedHeadline,
+    faciaContent.display.imageHide,
+    faciaContent.display.showLivePlayable
   )
 }
 
@@ -134,18 +134,18 @@ case class SnapStuff(
 object FaciaCardHeader {
   def fromTrail(faciaContent: PressedContent, config: Option[CollectionConfig]) = fromTrailAndKicker(
     faciaContent,
-    faciaContent.properties.kicker,
+    faciaContent.header.kicker,
     config
   )
 
   def fromTrailAndKicker(faciaContent: PressedContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
-    faciaContent.properties.showQuotedHeadline,
-    faciaContent.properties.cardStyle == ExternalLink,
-    faciaContent.properties.isVideo,
-    faciaContent.properties.isGallery,
-    faciaContent.properties.isAudio,
+    faciaContent.display.showQuotedHeadline,
+    faciaContent.card.cardStyle == ExternalLink,
+    faciaContent.header.isVideo,
+    faciaContent.header.isGallery,
+    faciaContent.header.isAudio,
     itemKicker,
-    faciaContent.properties.headline,
+    faciaContent.header.headline,
     EditionalisedLink.fromFaciaContent(faciaContent)
   )
 }
@@ -189,9 +189,9 @@ object FaciaCard {
   }
 
   def fromTrail(faciaContent: PressedContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
-    val maybeKicker = faciaContent.properties.kicker orElse {
+    val maybeKicker = faciaContent.header.kicker orElse {
       if (showSeriesAndBlogKickers) {
-        faciaContent.properties.seriesOrBlogKicker
+        faciaContent.header.seriesOrBlogKicker
       } else {
         None
       }
@@ -205,26 +205,26 @@ object FaciaCard {
     } yield kickerText contains byline) getOrElse false
 
     ContentCard(
-      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.properties.id)),
+      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
       CutOut.fromTrail(faciaContent),
-      faciaContent.properties.cardStyle,
+      faciaContent.card.cardStyle,
       cardTypes,
       Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-      faciaContent.properties.starRating,
+      faciaContent.card.starRating,
       DiscussionSettings.fromTrail(faciaContent),
       SnapStuff.fromTrail(faciaContent),
-      faciaContent.properties.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
-      faciaContent.properties.trailText,
-      faciaContent.properties.mediaType,
+      faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
+      faciaContent.card.trailText,
+      faciaContent.card.mediaType,
       DisplaySettings.fromTrail(faciaContent),
-      faciaContent.properties.isLive,
+      faciaContent.card.isLive,
       if (config.showTimestamps) Option(DateTimestamp) else None,
-      faciaContent.properties.shortUrlPath,
+      faciaContent.card.shortUrlPath,
       useShortByline = false,
-      faciaContent.properties.group
+      faciaContent.card.group
     )
   }
 }

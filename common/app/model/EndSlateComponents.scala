@@ -13,7 +13,7 @@ object EndSlateComponents {
   def fromFaciaContent(faciaContent: PressedContent) = EndSlateComponents(
     faciaContent.series collectFirst { case tag:Tag => tag.metadata.id },
     faciaContent.properties.section,
-    faciaContent.properties.shortUrl
+    faciaContent.card.shortUrl
   )
 }
 

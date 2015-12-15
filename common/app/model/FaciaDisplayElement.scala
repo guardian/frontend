@@ -36,7 +36,7 @@ case class InlineVideo(
 
 object InlineImage {
   def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =
-    if (!faciaContent.properties.imageHide) {
+    if (!faciaContent.display.imageHide) {
       faciaContent.trailPicture(5, 3) map { picture =>
         InlineImage(picture)
       }

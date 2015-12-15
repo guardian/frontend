@@ -12,9 +12,9 @@ object SupportedUrl {
   def apply(s: ApiSection): String = s"/${s.id}"
 
   def fromFaciaContent(fc: PressedContent): String = fc match {
-    case curatedContent: CuratedContent => s"/${curatedContent.properties.href.getOrElse(fc.properties.id)}"
-    case supportingCuratedContent: SupportingCuratedContent => s"/${supportingCuratedContent.properties.href.getOrElse(fc.properties.id)}"
-    case linkSnap: LinkSnap => linkSnap.properties.href.orElse(linkSnap.snapUri).getOrElse(linkSnap.properties.id)
-    case latestSnap: LatestSnap => s"/${latestSnap.properties.maybeContent.map(_.metadata.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.properties.id)}"
+    case curatedContent: CuratedContent => s"/${curatedContent.properties.href.getOrElse(fc.card.id)}"
+    case supportingCuratedContent: SupportingCuratedContent => s"/${supportingCuratedContent.properties.href.getOrElse(fc.card.id)}"
+    case linkSnap: LinkSnap => linkSnap.properties.href.orElse(linkSnap.snapUri).getOrElse(linkSnap.card.id)
+    case latestSnap: LatestSnap => s"/${latestSnap.properties.maybeContent.map(_.metadata.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.card.id)}"
   }
 }

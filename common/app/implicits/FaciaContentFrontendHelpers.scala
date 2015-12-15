@@ -74,7 +74,7 @@ object FaciaContentFrontendHelpers {
     def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
 
     lazy val shouldHidePublicationDate: Boolean = {
-      isAdvertisementFeature && faciaContent.properties.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
+      isAdvertisementFeature && faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 
     def slideshow: Option[List[FaciaImageElement]] = faciaContent.properties.image match {
@@ -97,9 +97,6 @@ object FaciaContentFrontendHelpers {
       case _ => Nil
     }
 
-  }
-
-  implicit class FaciaPropertiesFrontendHelper(properties: PressedProperties) {
-      def webPublicationDate: DateTime = properties.webPublicationDateOption.getOrElse(DateTime.now)
+    def webPublicationDate: DateTime = faciaContent.card.webPublicationDateOption.getOrElse(DateTime.now)
   }
 }

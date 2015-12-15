@@ -101,7 +101,7 @@ object CollectionEssentials {
             1
           }
 
-          collection.curated.filter(content => (!content.properties.isLiveBlog && !content.properties.isVideo && !content.properties.isGallery)).take(actualLimit)
+          collection.curated.filter(content => (!content.properties.isLiveBlog && !content.header.isVideo && !content.header.isGallery)).take(actualLimit)
         }
       }
     }
@@ -272,7 +272,7 @@ case class FaciaContainer(
     } getOrElse "no-name"
   }
 
-  def latestUpdate = (collectionEssentials.items.flatMap(_.properties.webPublicationDateOption) ++
+  def latestUpdate = (collectionEssentials.items.flatMap(_.card.webPublicationDateOption) ++
     collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
 
   def items = collectionEssentials.items
@@ -378,7 +378,7 @@ object Front extends implicits.Collections {
           faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
-            .map(_.properties.url)
+            .map(_.header.url)
             .take(itemsVisible(containerDefinition)), faciaContentList, (Nil, Nil))
         } getOrElse {
           (seen, faciaContentList, (Nil, Nil))
@@ -394,21 +394,21 @@ object Front extends implicits.Collections {
         val nToTake = itemsVisible(containerDefinition)
         val usedInThisIteration: Seq[PressedContent] =
           faciaContentList
-            .filter(c => seen.contains(c.properties.url))
+            .filter(c => seen.contains(c.header.url))
 
        val usedButNotDeduped = usedInThisIteration
             .filter(c => !participatesInDeduplication(c))
-            .map(_.properties.url)
+            .map(_.header.url)
             .map(DedupedItem(_))
 
         val usedAndDeduped = usedInThisIteration
             .filter(participatesInDeduplication)
-            .map(_.properties.url)
+            .map(_.header.url)
             .map(DedupedItem(_))
 
-        val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.properties.url) || !participatesInDeduplication(faciaContent))
-          .distinctBy(_.properties.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.properties.url), notUsed, (usedAndDeduped, usedButNotDeduped))
+        val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.header.url) || !participatesInDeduplication(faciaContent))
+          .distinctBy(_.header.url)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.header.url), notUsed, (usedAndDeduped, usedButNotDeduped))
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
@@ -519,7 +519,7 @@ object Front extends implicits.Collections {
               LinkTo(url), // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, i) =>
-                  ListItem(position = i, url = Some(LinkTo(item.properties.url)))
+                  ListItem(position = i, url = Some(LinkTo(item.header.url)))
               }
             )
           ))
