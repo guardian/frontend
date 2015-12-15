@@ -26,7 +26,7 @@
         try {
             var localStorage = window.localStorage;
             if (corePref = localStorage.getItem(coreKey)) {
-                localStorage.setItem(enhanceKey, corePref === 'off');
+                localStorage.setItem(enhanceKey, JSON.stringify({value: JSON.parse(corePref).value === 'off'}));
                 localStorage.removeItem(coreKey);
             }
         } catch (e) {};
@@ -49,23 +49,26 @@
     function mustEnhance() {
         if (hash === '#enhance' || hash === `#${enhanceKey}=true`) return true;
         try {
-            return localStorage.getItem(enhanceKey) === 'true';
+            if (JSON.parse(localStorage.getItem(enhanceKey)).value) return true;
         } catch (e) {};
 
-        return false; // assume we don't *have* to enhance
+        return false;
+    };
+
+    function mustNotEnhance() {
+        return hash === '#standard' || hash === `#${enhanceKey}=false`;
     };
 
     function couldEnhance() {
-        if (hash === '#standard' || hash === `#${enhanceKey}=false`) return false;
         try {
-            return localStorage.getItem(enhanceKey) !== 'false';
+            return JSON.parse(localStorage.getItem(enhanceKey)).value !== false;
         } catch (e) {};
 
         return true; // assume we're going to enhance if we can
     };
 
     function weWantToEnhance() {
-        if isOlderIOSDevice() return false;
+        if (isOlderIOSDevice()) return false;
         if (isFront) return !isIpad();
         return true; // assume we want to enhance
     };
@@ -85,10 +88,10 @@
     normaliseNomenclature();
 
     // down to business
-    window.shouldEnhance = mustEnhance() || (couldEnhance() && weWantToEnhance());
+    window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() || (couldEnhance() && weWantToEnhance());
 
     // just so we can tell…
-    console && console.info && console.info(`THIS IS${window.shouldEnhance ? ' ' : ' NOT '}ENHANCED`);
+    console && console.info && console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
 })(window);
 
 
