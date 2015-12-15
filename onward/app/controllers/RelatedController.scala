@@ -10,6 +10,7 @@ import play.api.libs.json._
 import play.api.mvc.{ RequestHeader, Controller }
 import services._
 import performance.MemcachedAction
+import views.support.{Format, TrailCssClasses}
 import scala.concurrent.duration._
 
 object RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
@@ -28,7 +29,7 @@ object RelatedController extends Controller with Related with Containers with Lo
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
     related(edition, path, excludeTags) map {
       case related if related.items.isEmpty => JsonNotFound()
-      case stories if isMf2 => renderRelatedMf2(stories.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
+      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
       case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
     }
   }
@@ -64,7 +65,7 @@ object RelatedController extends Controller with Related with Containers with Lo
     val relatedTrails = trails take 8
 
     JsonComponent(
-      "items" -> JsArray(trails.map( collection => isCuratedContent(collection.faciaContent)))
+      "items" -> JsArray(relatedTrails.map( collection => isCuratedContent(collection.faciaContent)))
     )
   }
 
@@ -78,10 +79,17 @@ object RelatedController extends Controller with Related with Containers with Lo
       Json.obj(
         "headline" -> content.headline,
         "trailText" -> content.trailText,
-        "href" -> content.href,
+        "url" -> content.href,
         "thumbnail" -> content.maybeContent.flatMap(_.safeFields.get("thumbnail")),
         "id" -> content.maybeContent.map(_.id),
-        "frontPublicationDate" -> content.maybeFrontPublicationDate
+        "frontPublicationDate" -> content.maybeFrontPublicationDate,
+        "byline" -> content.byline,
+        "isComment" -> content.isComment,
+        "isVideo" -> content.isVideo,
+        "isAudio" -> content.isAudio,
+        "isGallery" -> content.isGallery,
+        "toneClass" -> TrailCssClasses.toneClass(content),
+        "showWebPublicationDate" -> false
       )
       .fields
       .filterNot{ case (_, v) => v == JsNull}

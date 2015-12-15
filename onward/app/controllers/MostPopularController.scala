@@ -99,7 +99,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
             ("isVideo", item.content.tags.isVideo),
             ("isAudio", item.content.tags.isAudio),
             ("isGallery", item.content.tags.isGallery),
-            ("webPublicationDate", Format(item.content.trail.webPublicationDate, "d MMM y"))
+            ("webPublicationDate", Format(item.content.trail.webPublicationDate, "d MMM y")),
+            ("showWebPublicationDate", true)
           )
         })
       )
