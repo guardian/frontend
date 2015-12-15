@@ -15,6 +15,13 @@
     var isFront = @item.isFront;
     var enhancedKey = 'gu.prefs.enhanced';
 
+    var preferEnhanced;
+    try {
+        preferEnhanced = JSON.parse(localStorage.getItem(enhancedKey));
+    } catch (e) {
+        preferEnhanced = null;
+    };
+
     // This has been called core, featuresoff, universal etc, and a few previous ways of
     // opting in and out existed.
     // Now we have settled on standard and enhanced, the previous methods are handled
@@ -48,10 +55,7 @@
 
     function mustEnhance() {
         if (hash === '#enhanced' || hash === `#${enhancedKey}=true`) return true;
-        try {
-            if (/true/.test(localStorage.getItem(enhancedKey)) return true;
-        } catch (e) {};
-
+        if (preferEnhanced) return true;
         return false;
     };
 
@@ -60,11 +64,7 @@
     };
 
     function couldEnhance() {
-        try {
-            return !/false/.test(localStorage.getItem(enhancedKey));
-        } catch (e) {};
-
-        return true; // assume we're going to enhance if we can
+        return preferEnhanced !== false;
     };
 
     function weWantToEnhance() {
