@@ -151,7 +151,6 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
      private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
-     val omnitureJs: String = inlineJs("assets/vendor/omniture.js")
   }
 }
 
