@@ -4,25 +4,9 @@
 @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
 
     (function (window, navigator) {
-        var enhanceOptedIn = function () {
-            try {
-                return JSON.parse(localStorage.getItem('gu.prefs.enhance')) || false;
-            } catch (e) {}
-            return false;
-        };
-
-
         function logDevice(model, device) {
             var identifier = function() {
-                var id = device + '-' + model;
-                if ((device === 'ipad' && model === 'retina')) {
-                    if (enhanceOptedIn()) {
-                        return id + '-core-opted-in';
-                    } else {
-                        return id + '-universal-fronts';
-                    }
-                }
-                return id;
+                return device + '-' + model;
             };
 
             // send immediate beacon
