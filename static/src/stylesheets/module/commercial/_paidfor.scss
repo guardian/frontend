@@ -20,43 +20,19 @@
         font-size: get-font-size(headline, 4);
     }
 
-    .fc-slice__item + .fc-slice__item:before {
-        content: none;
+    .lineitems {
+        display: flex;
     }
 
-    .commercial__kicker__label,
-    .commercial__kicker__info {
-        display: inline-block;
-        font-size: get-font-size(data, 3);
-    }
-
-    .commercial__kicker__info {
-        font-weight: 300;
-        margin-left: 10px;
-    }
-
-    .commercial__cta {
-        text-align: right;
-
-        .inline-icon {
-            fill: #495053;
-        }
-    }
-
-    .commercial__meta {
-        text-align: right;
-        color: guss-colour(neutral-2, $pasteup-palette);
-        font-size: get-font-size(data, 3);
-        @include f-textSans;
-
+    .lineitem {
+        border-left: 0;
+        
         @include mq(tablet) {
-            margin-left: $gs-gutter * .5;
-            margin-right: $gs-gutter * .5;
+            flex: 0 1 percentage(1/3);
         }
-    }
-
-    .commercial__kicker__info__toggle {
-        color: inherit;
+        @include mq(desktop) {
+            flex: 0 1 percentage(1/4);
+        }
     }
 }
 
@@ -77,51 +53,5 @@
     .fc-item__meta {
         text-align: right;
         color: colour(neutral-2);
-    }
-}
-
-.paidfor__popup-about {
-    background: guss-colour(neutral-1, $pasteup-palette);
-    box-shadow: none;
-    color: #ffffff;
-    transform: translate(-50%,0);
-    left: 50%;
-    top: 100%;
-    width: 240px;
-    padding: 16px;
-    border-radius: 4px;
-    font-weight: 700;
-
-    .popup__description {
-        font-size: get-font-size(header, 4);
-        line-height: get-line-height(header, 4);
-        margin: 0 0 1em;
-    }
-
-    .popup__link {
-        color: #676767;
-        font-size: get-font-size(textSans, 3);
-        line-height: get-line-height(textSans, 3);
-        display: block;
-
-        svg {
-            display: inline-block;
-            vertical-align: middle;
-            fill: #676767;
-        }
-    }
-
-    &::before {
-        content: '';
-        border: solid transparent;
-        border-bottom-color: guss-colour(neutral-1, $pasteup-palette);
-        border-style: solid;
-        border-width: 6px;
-        height: 0;
-        width: 0;
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translate(-50%,0);
     }
 }
