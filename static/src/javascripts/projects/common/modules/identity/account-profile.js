@@ -65,8 +65,9 @@ define([
 
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
-                    require(['bootstraps/enhanced/membership'], function (membershipTab) {
+                    require(['bootstraps/enhanced/membership', 'bootstraps/enhanced/digitalpack'], function (membershipTab, digitalPackTab) {
                         membershipTab.init();
+                        digitalPackTab.init();
                     });
 
                     $(self.classes.tabs + ' .tabs__tab a').each(function () { // enhance tab urls to work with JS tabs module
