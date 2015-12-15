@@ -1,8 +1,6 @@
 package controllers
 
 
-import com.gu.facia.api.models.{CuratedContent, FaciaContent}
-import implicits.FaciaContentImplicits._
 import common._
 import containers.Containers
 import model._
@@ -10,7 +8,7 @@ import play.api.libs.json._
 import play.api.mvc.{ RequestHeader, Controller }
 import services._
 import performance.MemcachedAction
-import views.support.{Format, TrailCssClasses}
+import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 import scala.concurrent.duration._
 
 object RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
@@ -66,33 +64,6 @@ object RelatedController extends Controller with Related with Containers with Lo
 
     JsonComponent(
       "items" -> JsArray(relatedTrails.map( collection => isCuratedContent(collection.faciaContent)))
-    )
-  }
-
-  private def isCuratedContent(content: FaciaContent): JsValue = content match {
-    case c: CuratedContent => getContent(c)
-    case _ => Json.obj()
-  }
-
-  private def getContent(content: CuratedContent): JsValue = {
-    JsObject(
-      Json.obj(
-        "headline" -> content.headline,
-        "trailText" -> content.trailText,
-        "url" -> content.href,
-        "thumbnail" -> content.maybeContent.flatMap(_.safeFields.get("thumbnail")),
-        "id" -> content.maybeContent.map(_.id),
-        "frontPublicationDate" -> content.maybeFrontPublicationDate,
-        "byline" -> content.byline,
-        "isComment" -> content.isComment,
-        "isVideo" -> content.isVideo,
-        "isAudio" -> content.isAudio,
-        "isGallery" -> content.isGallery,
-        "toneClass" -> TrailCssClasses.toneClass(content),
-        "showWebPublicationDate" -> false
-      )
-      .fields
-      .filterNot{ case (_, v) => v == JsNull}
     )
   }
 }

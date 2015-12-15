@@ -1,9 +1,8 @@
 package controllers
 
-import com.gu.facia.api.models.{FaciaContent, CuratedContent, CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
-import implicits.FaciaContentImplicits._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
@@ -11,12 +10,11 @@ import model.facia.PressedCollection
 import performance.MemcachedAction
 import play.api.libs.json._
 import play.api.mvc._
-import play.api.templates
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices._
 import views.html.fragments.containers.facia_cards.container
-import views.support.TrailCssClasses
+import views.support.FaciaToMicroFormat2Helpers.getCollection
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -113,46 +111,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         BadRequest
       })
     }
-  }
-
-  private def getCollection(pressedCollection: PressedCollection): JsValue = {
-    JsObject(
-      Json.obj(
-        "displayName" -> pressedCollection.displayName,
-        "href" -> pressedCollection.href,
-        "id" -> pressedCollection.id,
-        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.map(isCuratedContent)
-      )
-      .fields
-      .filterNot { case (_, v) => v == JsNull }
-    )
-  }
-
-  private def isCuratedContent(content: FaciaContent): JsValue = content match {
-    case c: CuratedContent => getContent(c)
-    case _ => Json.obj()
-  }
-
-  private def getContent(content: CuratedContent): JsValue = {
-    JsObject(
-      Json.obj(
-        "headline" -> content.headline,
-        "trailText" -> content.trailText,
-        "url" -> content.href,
-        "thumbnail" -> content.maybeContent.flatMap(_.safeFields.get("thumbnail")),
-        "id" -> content.maybeContent.map(_.id),
-        "frontPublicationDate" -> content.maybeFrontPublicationDate,
-        "byline" -> content.byline,
-        "isComment" -> content.isComment,
-        "isVideo" -> content.isVideo,
-        "isAudio" -> content.isAudio,
-        "isGallery" -> content.isGallery,
-        "toneClass" -> TrailCssClasses.toneClass(content),
-        "showWebPublicationDate" -> false
-      )
-      .fields
-      .filterNot{ case (_, v) => v == JsNull}
-    )
   }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
