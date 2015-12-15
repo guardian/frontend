@@ -1,22 +1,22 @@
-@(trail: model.pressed.PressedProperties, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
+@(trail: model.pressed.PressedContent, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-@import implicits.FaciaContentFrontendHelpers.FaciaPropertiesFrontendHelper
+@import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 <@element class="trail trail--headline t@rowNum"
-    @if(trail.isCommentable) {
-        @trail.discussionId.map{ id =>
+    @if(trail.discussion.isCommentable) {
+        @trail.discussion.discussionId.map{ id =>
             data-discussion-id="@id"
         }
-        data-discussion-closed="@trail.isClosedForComments"
+        data-discussion-closed="@trail.discussion.isClosedForComments"
     }
     data-link-name="trail">
 
-    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+    @fragments.relativeDate(trail.webPublicationDate, trail.card.isLive, isFront=true)
 
     <h@headingLevel class="trail__headline">
-        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+        <a href="@LinkTo{@trail.header.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @defining(Edition(request)) { edition =>
-                @cleanTrailText(trail.headline)
+                @cleanTrailText(trail.header.headline)
             }
         </a>
     </h@headingLevel>

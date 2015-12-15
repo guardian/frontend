@@ -4,6 +4,6 @@
 
 <ul class="u-unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @fragments.trails.headline(trail.properties, info.rowNum, related, headingLevel = headingLevel)
+        @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
     }
 </ul>

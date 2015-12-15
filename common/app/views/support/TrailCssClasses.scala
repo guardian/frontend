@@ -8,5 +8,5 @@ object TrailCssClasses {
 
   def toneClass(content: model.Content) = toneClassFromStyle(content.cardStyle)
   def toneClass(item: model.ContentType) = toneClassFromStyle(item.content.cardStyle)
-  def toneClass(faciaContent: PressedContent) = toneClassFromStyle(faciaContent.properties.cardStyle)
+  def toneClass(faciaContent: PressedContent) = toneClassFromStyle(faciaContent.card.cardStyle)
 }
