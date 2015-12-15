@@ -58,12 +58,16 @@ object EmailForm {
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
     listTriggers.get(form.listId).map { triggeredSendKey =>
-      WS.url(Configuration.emailSignup.url).post(Json.obj(
+      WS.url(Configuration.emailSignup.url).post(
+        JsObject(Json.obj(
         "email" -> form.email,
         "listId" -> form.listId,
         "triggeredSendKey" -> triggeredSendKey,
-        "emailGroup" -> "email-footer-test"
-      ))
+        "emailGroup" -> "email-footer-test",
+        "referrer" -> form.referrer,
+        "campaignCode" -> form.campaignCode)
+        .fields
+        .filterNot{ case (_, v) => v == JsNull}))
     }
   }
 }
