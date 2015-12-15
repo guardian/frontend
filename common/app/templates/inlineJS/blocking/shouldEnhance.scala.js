@@ -2,8 +2,8 @@
 @import conf.switches.Switches._
 
 // Determine whether we want to run the enhanced app or not.
-// It can come either from a preference in localStorage (see `enhanceKey`)
-// or from a temporary opt-in or -out override, using `#standard` or `#enhance` hash fragments.
+// It can come either from a preference in localStorage (see `enhancedKey`)
+// or from a temporary opt-in or -out override, using `#standard` or `#enhanced` hash fragments.
 
 (function (window) {
     var location = window.location;
@@ -13,7 +13,7 @@
     var platform = navigator.platform;
 
     var isFront = @item.isFront;
-    var enhanceKey = 'gu.prefs.enhance';
+    var enhancedKey = 'gu.prefs.enhanced';
 
     // This has been called core, featuresoff, universal etc, and a few previous ways of
     // opting in and out existed.
@@ -26,7 +26,7 @@
         try {
             var localStorage = window.localStorage;
             if (corePref = localStorage.getItem(coreKey)) {
-                localStorage.setItem(enhanceKey, /off/.test(corePref));
+                localStorage.setItem(enhancedKey, /off/.test(corePref));
                 localStorage.removeItem(coreKey);
             }
         } catch (e) {};
@@ -35,19 +35,19 @@
         if (hash.length) {
             // if we're trying to set an old pref, set the new one
             if ((settingCorePref = new RegExp(`^#${coreKey.replace('.', '\.')}=(on|off)$`).exec(hash)) && (corePref = settingCorePref[1])) {
-                hash = location.hash = `#${enhanceKey}=${corePref === 'off'}`;
+                hash = location.hash = `#${enhancedKey}=${corePref === 'off'}`;
             }
             // swap out the old temporary opt-in/out methods for the finalised ones
             else if (/^#(featuresoff|core)$/.test(hash)) {
                 hash = location.hash = '#standard';
             } else if (/^#(featureson|nocore)$/.test(hash)) {
-                hash = location.hash = '#enhance';
+                hash = location.hash = '#enhanced';
             }
         }
     };
 
     function mustEnhance() {
-        if (hash === '#enhance' || hash === `#${enhanceKey}=true`) return true;
+        if (hash === '#enhanced' || hash === `#${enhancedKey}=true`) return true;
         try {
             if (JSON.parse(localStorage.getItem(enhanceKey)).value) return true;
         } catch (e) {};
@@ -56,12 +56,12 @@
     };
 
     function mustNotEnhance() {
-        return hash === '#standard' || hash === `#${enhanceKey}=false`;
+        return hash === '#standard' || hash === `#${enhancedKey}=false`;
     };
 
     function couldEnhance() {
         try {
-            return !/false/.test(localStorage.getItem(enhanceKey));
+            return !/false/.test(localStorage.getItem(enhancedKey));
         } catch (e) {};
 
         return true; // assume we're going to enhance if we can
