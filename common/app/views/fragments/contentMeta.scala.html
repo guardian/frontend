@@ -56,7 +56,7 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}">
 
-    @if(showBadge && (NewCommercialContent.isSwitchedOff || item.tags.isVideo)) {
+    @if(showBadge && (NewCommercialContent.isSwitchedOff || item.tags.isVideo || item.tags.isAudio)) {
         @fragments.commercial.badge(item)
     }
 

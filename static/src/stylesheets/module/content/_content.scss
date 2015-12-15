@@ -676,7 +676,7 @@
 
     .ad-slot__label,
     .ad-slot--inline {
-        background-color: unset;
+        background-color: colour(paid-article-subheader);
         border-top: 0;
     }
 
@@ -698,7 +698,9 @@
     }
 
     &.tonal--tone-media {
-        .content__headline {
+        .content__headline,
+        .from-content-api,
+        .tonal__main .tone-colour {
             color: colour(neutral-1);
 
             .inline-icon {
@@ -706,7 +708,8 @@
             }
         }
 
-        .most-viewed-container--media {
+        .most-viewed-container--media,
+        .meta__number {
             .inline-icon {
                 fill: colour(neutral-1);
             }
@@ -720,11 +723,14 @@
         .ad-slot--paid-for-badge__help,
         .byline,
         .meta__numbers .sharecount__heading,
+        .meta__numbers .commentcount2__heading,
         .tonal__main--tone-media .sharecount__value,
+        .tonal__main--tone-media .commentcount2__value,
         .most-viewed-container--media,
         .most-viewed-container--media .fc-item__action,
         .content__dateline,
-        .submeta__head {
+        .submeta__head,
+        .content__series-label__link {
             color: colour(neutral-2-contrasted);
 
             .i {
@@ -738,6 +744,18 @@
                 &:hover {
                     color: colour(neutral-1);
                 }
+            }
+        }
+
+        .gu-media-wrapper--audio,
+        .vjs-control-bar,
+        .vjs-progress-holder:before {
+            color: colour(multimedia-main-1);
+            background: colour(paid-article-media-bg);
+
+            .podcast-meta__item__link,
+            .vjs-duration {
+                color: colour(multimedia-main-1);
             }
         }
     }
