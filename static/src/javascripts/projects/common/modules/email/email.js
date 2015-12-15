@@ -126,7 +126,12 @@ define([
                     event.preventDefault();
 
                     if (!state.submitting && validate(emailAddress)) {
-                        var data = 'email=' + encodeURIComponent(emailAddress) + '&listId=' + listId;
+                        var formData = $form.data('formData'),
+                            data =  'email=' + encodeURIComponent(emailAddress) +
+                                    '&listId=' + listId +
+                                    '&campaignCode=' + formData.campaignCode +
+                                    '&referrer=' + formData.referrer;
+
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
@@ -146,7 +151,7 @@ define([
                             .then(handleSubmit(true, $form))
                             .catch(function () {
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
-                                handleSubmit(false, $form);
+                                handleSubmit(false, $form)();
                             });
                         });
                     }
@@ -174,6 +179,7 @@ define([
                 var formData = $(thisRootEl).data(),
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
+                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
                 fastdom.write(function () {
@@ -189,6 +195,13 @@ define([
                         $('.js-email-sub__small', el).remove();
                     }
                 });
+
+                // Cache data on the form element
+                $('.js-email-sub__form', el).data('formData', {
+                    campaignCode: formCampaignCode,
+                    referrer: window.location.href
+                });
+
             },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
