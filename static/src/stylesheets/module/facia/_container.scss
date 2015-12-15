@@ -634,9 +634,10 @@ $header-image-size-desktop: 100px;
 .fc-container--lazy-load {
     @include mq($until: desktop) {
         display: none;
-    }
 
-    .is-not-modern & {
-        display: none;
+        .is-not-modern & {
+            // Unset
+            display: block;
+        }
     }
 }
