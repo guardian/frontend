@@ -151,7 +151,7 @@ define([
                             .then(handleSubmit(true, $form))
                             .catch(function () {
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
-                                handleSubmit(false, $form);
+                                handleSubmit(false, $form)();
                             });
                         });
                     }
