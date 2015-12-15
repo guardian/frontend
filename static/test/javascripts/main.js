@@ -17,7 +17,7 @@ requirejs.config({
         membership:   'projects/membership',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
-        react:        'components/react/react',
+        react:        '/base/static/public/javascripts/components/react/react',
         enhancer:     'components/enhancer/enhancer',
         EventEmitter: 'components/eventEmitter/EventEmitter',
         fastclick:    'components/fastclick/fastclick',

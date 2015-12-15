@@ -609,8 +609,6 @@
 .fc-container--advertisement-feature,
 .fc-container--foundation-supported {
     .fc-container__header + .fc-container__body {
-        margin-top: 104px;
-
         @include mq(tablet) {
             margin-top: 78px;
         }
