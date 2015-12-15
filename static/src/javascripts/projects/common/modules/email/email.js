@@ -103,7 +103,7 @@ define([
         },
         formSubmission = {
             bindSubmit: function ($form, analytics) {
-                var url = config.page.ajaxUrl + '/email';
+                var url = '/email';
                 bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
             },
             submitForm: function ($form, url, analytics) {
@@ -149,7 +149,12 @@ define([
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe successful');
                             })
                             .then(handleSubmit(true, $form))
-                            .catch(function () {
+                            .catch(function (error) {
+                                /* eslint-disable no-console */
+                                if (window.console && console.error) {
+                                    console.error('Error posting email form', error.stack);
+                                }
+                                /* eslint-enable no-console */
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
                                 handleSubmit(false, $form)();
                             });
