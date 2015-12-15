@@ -8,6 +8,29 @@ import model.{SupportedUrl, ContentType}
 import org.joda.time.DateTime
 import play.api.libs.json._
 
+object PressedContentFormats {
+  implicit val mediaTypeFormat = MediaType.mediaTypeFormat
+  implicit val cardStyleFormat = CardStyle.cardStyleFormat
+  implicit val faciaImageFormat = Image.faciaImageFormat
+
+  implicit val contentTypeFormat = model.ContentType.contentTypeFormat
+
+  implicit val itemKickerFormat = ItemKicker.itemKickerFormat
+  implicit val tagKickerFormat = ItemKicker.tagKickerFormat
+  implicit val pressedPressedCardHeader = Json.format[PressedCardHeader]
+  implicit val pressedPressedDisplaySettings = Json.format[PressedDisplaySettings]
+  implicit val pressedPressedDiscussionSettings = Json.format[PressedDiscussionSettings]
+  implicit val pressedPressedCard = Json.format[PressedCard]
+  implicit val pressedPropertiesFormat = Json.format[PressedProperties]
+
+  implicit val pressedContentFormat = PressedContent.pressedContentFormat
+
+  val latestSnapFormat = Json.format[LatestSnap]
+  val linkSnapFormat = Json.format[LinkSnap]
+  val curatedContentFormat = Json.format[CuratedContent]
+  val supportingCuratedContentFormat = Json.format[SupportingCuratedContent]
+}
+
 object CollectionConfig {
   def make(config: fapi.CollectionConfig): CollectionConfig = {
     CollectionConfig(
@@ -34,8 +57,6 @@ object CollectionConfig {
   }
 
   val empty = make(fapi.CollectionConfig.empty)
-
-  implicit val collectionConfigFormat = Json.format[CollectionConfig]
 }
 final case class CollectionConfig(
   displayName: Option[String],
@@ -71,7 +92,7 @@ object CardStyle {
     case fapiutils.DefaultCardstyle  => DefaultCardstyle
   }
 
-  implicit object CardStyleFormat extends Format[CardStyle] {
+  object cardStyleFormat extends Format[CardStyle] {
     def reads(json: JsValue) = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("SpecialReport"), _) => JsSuccess(SpecialReport)
@@ -86,7 +107,7 @@ object CardStyle {
         case JsSuccess(JsString("Letters"), _) => JsSuccess(Letters)
         case JsSuccess(JsString("ExternalLink"), _) => JsSuccess(ExternalLink)
         case JsSuccess(JsString("DefaultCardstyle"), _) => JsSuccess(DefaultCardstyle)
-        case _ => JsError("Could not convert ItemKicker")
+        case _ => JsError("Could not convert CardStyle")
       }
     }
 
@@ -128,6 +149,23 @@ object MediaType {
     case fapiutils.Gallery => Gallery
     case fapiutils.Audio => Audio
   }
+
+  object mediaTypeFormat extends Format[MediaType] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("Video"), _) => JsSuccess(Video)
+        case JsSuccess(JsString("Gallery"), _) => JsSuccess(Gallery)
+        case JsSuccess(JsString("Audio"), _) => JsSuccess(Audio)
+        case _ => JsError("Could not convert MediaType")
+      }
+    }
+
+    def writes(mediaType: MediaType) = mediaType match {
+      case Video => JsObject(Seq("type" -> JsString("Video")))
+      case Gallery => JsObject(Seq("type" -> JsString("Gallery")))
+      case Audio => JsObject(Seq("type" -> JsString("Audio")))
+    }
+  }
 }
 sealed trait MediaType
 case object Gallery extends MediaType
@@ -141,55 +179,29 @@ object PressedProperties {
 
     PressedProperties(
       isBreaking = contentProperties.isBreaking,
-      imageHide = contentProperties.imageHide,
       showMainVideo = contentProperties.showMainVideo,
       showKickerTag = contentProperties.showKickerTag,
       showByline = contentProperties.showByline,
       imageSlideshowReplace = contentProperties.imageSlideshowReplace,
       maybeContent = capiContent.map(model.Content(_)),
       maybeContentId = FaciaContentUtils.maybeContentId(content),
-      id = FaciaContentUtils.id(content),
-      kicker = FaciaContentUtils.itemKicker(content).map(ItemKicker.make),
-      headline = FaciaContentUtils.headline(content),
-      cardStyle = CardStyle.make(FaciaContentUtils.cardStyle(content)),
-      isCommentable = FaciaContentUtils.isCommentable(content),
-      isClosedForComments = FaciaContentUtils.isClosedForComments(content),
-      discussionId = FaciaContentUtils.discussionId(content),
-      isBoosted = FaciaContentUtils.isBoosted(content),
-      showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
-      showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
-      showLivePlayable = FaciaContentUtils.showLivePlayable(content),
       isLiveBlog = FaciaContentUtils.isLiveBlog(content),
-      isVideo = FaciaContentUtils.isVideo(content),
-      isAudio = FaciaContentUtils.isAudio(content),
-      isGallery = FaciaContentUtils.isGallery(content),
       isCrossword = FaciaContentUtils.isCrossword(content),
-      isLive = FaciaContentUtils.isLive(content),
-      seriesOrBlogKicker = capiContent.flatMap(item =>
-        fapiutils.ItemKicker.seriesOrBlogKicker(item).map(ItemKicker.makeTagKicker)),
       byline = FaciaContentUtils.byline(content),
       image = FaciaContentUtils.image(content).map(Image.make),
-      url = capiContent.map(SupportedUrl(_)).getOrElse(FaciaContentUtils.id(content)),
       maybeSection = FaciaContentUtils.maybeSection(content),
-      webPublicationDateOption = FaciaContentUtils.webPublicationDateOption(content),
       webTitle = FaciaContentUtils.webTitle(content),
       linkText = FaciaContentUtils.linkText(content),
       embedType = FaciaContentUtils.embedType(content),
       embedCss = FaciaContentUtils.embedCss(content),
       embedUri = FaciaContentUtils.embedUri(content),
-      mediaType = fapiutils.MediaType.fromFaciaContent(content).map(MediaType.make),
-      shortUrl = FaciaContentUtils.shortUrl(content),
-      shortUrlPath = FaciaContentUtils.shortUrlPath(content),
       section = FaciaContentUtils.section(content),
-      group = FaciaContentUtils.group(content),
-      trailText = FaciaContentUtils.trailText(content),
-      starRating = FaciaContentUtils.starRating(content),
       maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(content),
       href = FaciaContentUtils.href(content)
     )
   }
 
-  private def getProperties(content: fapi.FaciaContent): fapiutils.ContentProperties = {
+  def getProperties(content: fapi.FaciaContent): fapiutils.ContentProperties = {
     content match {
       case curatedContent: fapi.CuratedContent => curatedContent.properties
       case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.properties
@@ -197,121 +209,185 @@ object PressedProperties {
       case latestSnap: fapi.LatestSnap => latestSnap.properties
     }
   }
-
-  implicit object pressedPropertiesFormat extends Format[PressedProperties] {
-    def reads(json: JsValue) = ???
-    def writes(properties: PressedProperties) = ???
-  }
 }
+
 final case class PressedProperties(
   isBreaking: Boolean,
-  imageHide: Boolean,
   showMainVideo: Boolean,
   showKickerTag: Boolean,
   showByline: Boolean,
   imageSlideshowReplace: Boolean,
   maybeContent: Option[ContentType],
   maybeContentId: Option[String],
-  id: String,
-  kicker: Option[ItemKicker],
-  headline: String,
-  cardStyle: CardStyle,
-  isCommentable: Boolean,
-  isClosedForComments: Boolean,
-  discussionId: Option[String],
-  isBoosted: Boolean,
-  showBoostedHeadline: Boolean,
-  showQuotedHeadline: Boolean,
-  showLivePlayable: Boolean,
   isLiveBlog: Boolean,
-  isVideo: Boolean,
-  isAudio: Boolean,
-  isGallery: Boolean,
   isCrossword: Boolean,
-  isLive: Boolean,
-  seriesOrBlogKicker: Option[TagKicker],
   byline: Option[String],
   image: Option[Image],
-  url: String,
   maybeSection: Option[String],
-  webPublicationDateOption: Option[DateTime],
   webTitle: String,
   linkText: Option[String],
   embedType: Option[String],
   embedCss: Option[String],
   embedUri: Option[String],
-  mediaType: Option[MediaType],
-  shortUrl: String,
-  shortUrlPath: Option[String],
   section: String,
-  group: String,
-  trailText: Option[String],
-  starRating: Option[Int],
   maybeFrontPublicationDate: Option[Long],
   href: Option[String]
 )
 
-object PressedContent {
-  def make(content: fapi.FaciaContent): PressedContent = {
-    val properties = PressedProperties.make(content)
+object PressedCardHeader {
+  def make(content: fapi.FaciaContent): PressedCardHeader = {
+    val capiContent = FaciaContentUtils.maybeContent(content)
+    PressedCardHeader(
+      kicker = FaciaContentUtils.itemKicker(content).map(ItemKicker.make),
+      headline = FaciaContentUtils.headline(content),
+      isVideo = FaciaContentUtils.isVideo(content),
+      isAudio = FaciaContentUtils.isAudio(content),
+      isGallery = FaciaContentUtils.isGallery(content),
+      seriesOrBlogKicker = capiContent.flatMap(item =>
+        fapiutils.ItemKicker.seriesOrBlogKicker(item).map(ItemKicker.makeTagKicker)),
+      url = capiContent.map(SupportedUrl(_)).getOrElse(FaciaContentUtils.id(content))
+    )
+  }
+}
 
-    content match {
-      case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent, properties)
-      case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent, properties)
-      case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap, properties)
-      case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap, properties)
-    }
+final case class PressedCardHeader(
+  isVideo: Boolean,
+  isGallery: Boolean,
+  isAudio: Boolean,
+  kicker: Option[ItemKicker],
+  seriesOrBlogKicker: Option[TagKicker],
+  headline: String,
+  url: String
+)
+
+object PressedDisplaySettings {
+  def make(content: fapi.FaciaContent): PressedDisplaySettings = {
+    val contentProperties = PressedProperties.getProperties(content)
+    PressedDisplaySettings(
+      imageHide = contentProperties.imageHide,
+      isBoosted = FaciaContentUtils.isBoosted(content),
+      showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
+      showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
+      showLivePlayable = FaciaContentUtils.showLivePlayable(content)
+    )
+  }
+}
+
+final case class PressedDisplaySettings(
+  isBoosted: Boolean,
+  showBoostedHeadline: Boolean,
+  showQuotedHeadline: Boolean,
+  imageHide: Boolean,
+  showLivePlayable: Boolean
+)
+
+object PressedDiscussionSettings {
+  def make(content: fapi.FaciaContent): PressedDiscussionSettings = PressedDiscussionSettings(
+    isCommentable = FaciaContentUtils.isCommentable(content),
+    isClosedForComments = FaciaContentUtils.isClosedForComments(content),
+    discussionId = FaciaContentUtils.discussionId(content)
+  )
+}
+
+final case class PressedDiscussionSettings(
+  isCommentable: Boolean,
+  isClosedForComments: Boolean,
+  discussionId: Option[String]
+)
+
+object PressedCard {
+  def make(content: fapi.FaciaContent): PressedCard = PressedCard(
+    id = FaciaContentUtils.id(content),
+    cardStyle = CardStyle.make(FaciaContentUtils.cardStyle(content)),
+    isLive = FaciaContentUtils.isLive(content),
+    webPublicationDateOption = FaciaContentUtils.webPublicationDateOption(content),
+    mediaType = fapiutils.MediaType.fromFaciaContent(content).map(MediaType.make),
+    shortUrl = FaciaContentUtils.shortUrl(content),
+    shortUrlPath = FaciaContentUtils.shortUrlPath(content),
+    group = FaciaContentUtils.group(content),
+    trailText = FaciaContentUtils.trailText(content),
+    starRating = FaciaContentUtils.starRating(content)
+  )
+}
+
+final case class PressedCard(
+  id: String,
+  cardStyle: CardStyle,
+  webPublicationDateOption: Option[DateTime],
+  trailText: Option[String],
+  mediaType: Option[MediaType],
+  starRating: Option[Int],
+  shortUrlPath: Option[String],
+  shortUrl: String,
+  group: String,
+  isLive: Boolean
+)
+
+object PressedContent {
+  def make(content: fapi.FaciaContent): PressedContent = content match {
+    case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
+    case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent)
+    case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
+    case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
   }
 
-  implicit object faciaContentFormat extends Format[PressedContent] {
+  object pressedContentFormat extends Format[PressedContent] {
+
     def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("LinkSnap"), _) => JsSuccess(json.as[LinkSnap](linkSnapFormat))
-      case JsSuccess(JsString("LatestSnap"), _) => JsSuccess(json.as[LatestSnap](latestSnapFormat))
-      case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](curatedContentFormat))
-      case JsSuccess(JsString("SupportingCuratedContent"), _) => JsSuccess(json.as[SupportingCuratedContent](supportingCuratedContentFormat))
-      case _ => JsError("Could not convert FaciaContent")
+      case JsSuccess(JsString("LinkSnap"), _) => JsSuccess(json.as[LinkSnap](PressedContentFormats.linkSnapFormat))
+      case JsSuccess(JsString("LatestSnap"), _) => JsSuccess(json.as[LatestSnap](PressedContentFormats.latestSnapFormat))
+      case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](PressedContentFormats.curatedContentFormat))
+      case JsSuccess(JsString("SupportingCuratedContent"), _) => JsSuccess(json.as[SupportingCuratedContent](PressedContentFormats.supportingCuratedContentFormat))
+      case _ => JsError("Could not convert PressedContent")
     }
 
     def writes(faciaContent: PressedContent) = faciaContent match {
-      case linkSnap: LinkSnap => Json.toJson(linkSnap)(linkSnapFormat).transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "LinkSnap")
-        case JsError(_) => JsNull
-      }
-      case latestSnap: LatestSnap => Json.toJson(latestSnap)(latestSnapFormat).transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "LatestSnap")
-        case JsError(_) => JsNull
-      }
-      case content: CuratedContent => Json.toJson(content)(curatedContentFormat).transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "CuratedContent")
-        case JsError(_) => JsNull
-      }
-      case supportingContent: SupportingCuratedContent => Json.toJson(supportingContent)(supportingCuratedContentFormat).transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "SupportingCuratedContent")
-        case JsError(_) => JsNull
-      }
+      case linkSnap: LinkSnap => Json.toJson(linkSnap)(PressedContentFormats.linkSnapFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+          case JsSuccess(l, _) =>
+            l ++ Json.obj("type" -> "LinkSnap")
+          case JsError(_) => JsNull
+        }
+      case latestSnap: LatestSnap => Json.toJson(latestSnap)(PressedContentFormats.latestSnapFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+          case JsSuccess(l, _) =>
+            l ++ Json.obj("type" -> "LatestSnap")
+          case JsError(_) => JsNull
+        }
+      case content: CuratedContent => Json.toJson(content)(PressedContentFormats.curatedContentFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+          case JsSuccess(l, _) =>
+            l ++ Json.obj("type" -> "CuratedContent")
+          case JsError(_) => JsNull
+        }
+      case supporting: SupportingCuratedContent => Json.toJson(supporting)(PressedContentFormats.supportingCuratedContentFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+          case JsSuccess(l, _) =>
+            l ++ Json.obj("type" -> "SupportingCuratedContent")
+          case JsError(_) => JsNull
+        }
       case _ => JsNull
     }
   }
-
-  private val latestSnapFormat = Json.format[LatestSnap]
-  private val linkSnapFormat = Json.format[LinkSnap]
-  private val curatedContentFormat = Json.format[CuratedContent]
-  private val supportingCuratedContentFormat = Json.format[SupportingCuratedContent]
 }
 
 sealed trait PressedContent {
   def properties: PressedProperties
+  def header: PressedCardHeader
+  def card: PressedCard
+  def discussion: PressedDiscussionSettings
+  def display: PressedDisplaySettings
 }
 sealed trait Snap extends PressedContent
 
 object CuratedContent {
-  def make(content: fapi.CuratedContent, properties: PressedProperties): CuratedContent = {
+  def make(content: fapi.CuratedContent): CuratedContent = {
     CuratedContent(
-      properties = properties,
+      properties = PressedProperties.make(content),
+      header = PressedCardHeader.make(content),
+      card = PressedCard.make(content),
+      discussion = PressedDiscussionSettings.make(content),
+      display = PressedDisplaySettings.make(content),
       supportingContent = content.supportingContent.map(PressedContent.make),
       cardStyle = CardStyle.make(content.cardStyle)
     )
@@ -319,37 +395,61 @@ object CuratedContent {
 }
 final case class CuratedContent(
   override val properties: PressedProperties,
+  override val header: PressedCardHeader,
+  override val card: PressedCard,
+  override val discussion: PressedDiscussionSettings,
+  override val display: PressedDisplaySettings,
   supportingContent: List[PressedContent],
   cardStyle: CardStyle ) extends PressedContent
 
 object SupportingCuratedContent {
-  def make(content: fapi.SupportingCuratedContent, properties: PressedProperties): SupportingCuratedContent = {
+  def make(content: fapi.SupportingCuratedContent): SupportingCuratedContent = {
     SupportingCuratedContent(
-      properties = properties,
+      properties = PressedProperties.make(content),
+      header = PressedCardHeader.make(content),
+      card = PressedCard.make(content),
+      discussion = PressedDiscussionSettings.make(content),
+      display = PressedDisplaySettings.make(content),
       cardStyle = CardStyle.make(content.cardStyle)
     )
   }
 }
 final case class SupportingCuratedContent(
   override val properties: PressedProperties,
+  override val header: PressedCardHeader,
+  override val card: PressedCard,
+  override val discussion: PressedDiscussionSettings,
+  override val display: PressedDisplaySettings,
   cardStyle: CardStyle) extends PressedContent
 
 object LinkSnap {
-  def make(content: fapi.LinkSnap, properties: PressedProperties): LinkSnap = {
+  def make(content: fapi.LinkSnap): LinkSnap = {
     LinkSnap(
-      properties = properties,
+      properties = PressedProperties.make(content),
+      header = PressedCardHeader.make(content),
+      card = PressedCard.make(content),
+      discussion = PressedDiscussionSettings.make(content),
+      display = PressedDisplaySettings.make(content),
       snapUri = content.snapUri
     )
   }
 }
 final case class LinkSnap(
   override val properties: PressedProperties,
+  override val header: PressedCardHeader,
+  override val card: PressedCard,
+  override val discussion: PressedDiscussionSettings,
+  override val display: PressedDisplaySettings,
   snapUri: Option[String]) extends Snap
 
 object LatestSnap {
-  def make(content: fapi.LatestSnap, properties: PressedProperties): LatestSnap = {
+  def make(content: fapi.LatestSnap): LatestSnap = {
     LatestSnap(
-      properties = properties,
+      properties = PressedProperties.make(content),
+      header = PressedCardHeader.make(content),
+      card = PressedCard.make(content),
+      discussion = PressedDiscussionSettings.make(content),
+      display = PressedDisplaySettings.make(content),
       cardStyle = CardStyle.make(content.cardStyle),
       snapUri = content.snapUri
     )
@@ -357,12 +457,15 @@ object LatestSnap {
 }
 final case class LatestSnap(
   override val properties: PressedProperties,
+  override val header: PressedCardHeader,
+  override val card: PressedCard,
+  override val discussion: PressedDiscussionSettings,
+  override val display: PressedDisplaySettings,
   cardStyle: CardStyle,
   snapUri: Option[String]) extends Snap
 
 object KickerProperties {
   def make(kicker: fapiutils.ItemKicker): KickerProperties = KickerProperties(fapiutils.ItemKicker.kickerText(kicker))
-  implicit val kickerPropertiesFormat = Json.format[KickerProperties]
 }
 final case class KickerProperties(
   kickerText: Option[String]
@@ -391,14 +494,15 @@ object ItemKicker {
     id = kicker.id
   )
 
+  implicit val kickerPropertiesFormat = Json.format[KickerProperties]
   implicit val seriesFormat = Json.format[Series]
   private val podcastKickerFormat = Json.format[PodcastKicker]
-  private val tagKickerFormat = Json.format[TagKicker]
+  val tagKickerFormat = Json.format[TagKicker]
   private val sectionKickerFormat = Json.format[SectionKicker]
   private val freeHtmlKickerFormat = Json.format[FreeHtmlKicker]
   private val freeHtmlKickerWithLinkFormat = Json.format[FreeHtmlKickerWithLink]
 
-  implicit object itemKickerFormat extends Format[ItemKicker] {
+  object itemKickerFormat extends Format[ItemKicker] {
     def reads(json: JsValue) = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
@@ -486,7 +590,7 @@ object Image {
     case slideshow: fapi.ImageSlideshow => ImageSlideshow.make(slideshow)
   }
 
-  implicit object faciaImageFormat extends Format[Image] {
+  object faciaImageFormat extends Format[Image] {
     def reads(json: JsValue) = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](Cutout.cutoutFormat)

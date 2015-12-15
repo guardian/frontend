@@ -31,10 +31,13 @@ case class PressedCollection(
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy(c => c.properties.maybeContentId.getOrElse(c.properties.id))
+  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy(c => c.properties.maybeContentId.getOrElse(c.card.id))
 }
 
 object PressedCollection {
+
+  implicit val collectionConfigFormat = Json.format[CollectionConfig]
+  implicit val pressedContentFormat = PressedContentFormats.pressedContentFormat
   implicit val pressedCollectionFormat = Json.format[PressedCollection]
 
   def fromCollectionWithCuratedAndBackfill(

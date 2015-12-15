@@ -24,9 +24,10 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-/**
- * a combination of CAPI content and things from facia tool, in one place
- */
+
+object ContentType {
+  implicit val contentTypeFormat = julienrf.variants.Variants.format[model.ContentType]
+}
 sealed trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
