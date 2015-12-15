@@ -1,20 +1,22 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.models.{FaciaContent, CuratedContent, CollectionConfig}
 import common.FaciaMetrics._
 import common._
+import implicits.FaciaContentImplicits._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json._
 import play.api.mvc._
 import play.api.templates
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices._
 import views.html.fragments.containers.facia_cards.container
+import views.support.TrailCssClasses
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -44,6 +46,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
+
   def renderContainerJson(id: String) = renderContainer(id, false)
 
   def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = MemcachedAction { implicit request =>
@@ -90,6 +93,66 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         BadRequest
       })
     }
+  }
+
+  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
+    def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
+
+    def returnContainers(num: Int, offset: Int) = getSomeCollections("International", num, offset, "none").map { collections =>
+      Cached(60) {
+        println(collections)
+        JsonComponent(
+          "items" -> collections.getOrElse(List()).map(getCollection)
+        )
+      }
+    }
+
+    (rawNum, rawOffset) match {
+      case (Int(num), Int(offset)) => returnContainers(num, offset)
+      case _ => Future.successful(Cached(600) {
+        BadRequest
+      })
+    }
+  }
+
+  private def getCollection(pressedCollection: PressedCollection): JsValue = {
+    JsObject(
+      Json.obj(
+        "displayName" -> pressedCollection.displayName,
+        "href" -> pressedCollection.href,
+        "id" -> pressedCollection.id,
+        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.map(isCuratedContent)
+      )
+      .fields
+      .filterNot { case (_, v) => v == JsNull }
+    )
+  }
+
+  private def isCuratedContent(content: FaciaContent): JsValue = content match {
+    case c: CuratedContent => getContent(c)
+    case _ => Json.obj()
+  }
+
+  private def getContent(content: CuratedContent): JsValue = {
+    JsObject(
+      Json.obj(
+        "headline" -> content.headline,
+        "trailText" -> content.trailText,
+        "url" -> content.href,
+        "thumbnail" -> content.maybeContent.flatMap(_.safeFields.get("thumbnail")),
+        "id" -> content.maybeContent.map(_.id),
+        "frontPublicationDate" -> content.maybeFrontPublicationDate,
+        "byline" -> content.byline,
+        "isComment" -> content.isComment,
+        "isVideo" -> content.isVideo,
+        "isAudio" -> content.isAudio,
+        "isGallery" -> content.isGallery,
+        "toneClass" -> TrailCssClasses.toneClass(content),
+        "showWebPublicationDate" -> false
+      )
+      .fields
+      .filterNot{ case (_, v) => v == JsNull}
+    )
   }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
