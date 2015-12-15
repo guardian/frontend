@@ -528,7 +528,7 @@ define([
             $existing = $('#stripe-sprite'),
             $head = $('head');
 
-        if (!$existing.length) {
+        if (!$existing.length && spriteSheetUrl) {
             link.id = 'stripe-sprite';
             link.rel = 'stylesheet';
             link.type = 'text/css';
