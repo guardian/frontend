@@ -49,7 +49,7 @@
     function mustEnhance() {
         if (hash === '#enhanced' || hash === `#${enhancedKey}=true`) return true;
         try {
-            if (JSON.parse(localStorage.getItem(enhanceKey)).value) return true;
+            if (/true/.test(localStorage.getItem(enhancedKey)) return true;
         } catch (e) {};
 
         return false;
