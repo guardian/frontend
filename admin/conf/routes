@@ -31,6 +31,10 @@ POST        /press/high                                                         
 POST        /press/standard                                                                         controllers.FrontPressController.queueStandardFrequencyFrontsForPress()
 POST        /press/low                                                                              controllers.FrontPressController.queueLowFrequencyFrontsForPress()
 
+#R2 Press
+GET         /press/r2                                                                               controllers.R2PressController.pressForm()
+POST        /press/r2                                                                               controllers.R2PressController.press()
+
 # API endpoint proxying for https
 GET         /api/proxy/*path                                                                        controllers.admin.Api.proxy(path, callback)
 GET         /api/tag                                                                                controllers.admin.Api.tag(q, callback)

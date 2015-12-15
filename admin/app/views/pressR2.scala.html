@@ -1,0 +1,26 @@
+@(form: play.api.data.Form[controllers.R2PagePress])
+
+@admin_main("R2 page presser (archiver)", "TEST", isAuthed = true) {
+    <ul>
+        <li>
+            Press (archive) an individual page
+        </li>
+    </ul>
+
+    <form action="/press/r2" method="POST" class="form-horizontal redirect-form">
+        <fieldset>
+            <legend>Press (archive):</legend>
+            <div class="form-group">
+                <label for="r2url" class="control-label col-sm-1">R2 URL:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="r2url" name="r2url" value="" placeholder="http://www.theguardian.com/an/r2/path" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="controls col-sm-offset-1 col-sm-11">
+                    <input class="btn btn-default" type="submit" value="Submit" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+}
