@@ -126,7 +126,12 @@ define([
                     event.preventDefault();
 
                     if (!state.submitting && validate(emailAddress)) {
-                        var data = 'email=' + encodeURIComponent(emailAddress) + '&listId=' + listId;
+                        var formData = $form.data('formData'),
+                            data =  'email=' + encodeURIComponent(emailAddress) +
+                                    '&listId=' + listId +
+                                    '&campaignCode=' + formData.campaignCode +
+                                    '&referrer=' + formData.referrer;
+
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
@@ -174,7 +179,6 @@ define([
                 var formData = $(thisRootEl).data(),
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
-                    formReferrer = (opts && opts.formReferrer) || formData.formReferrer || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || false,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
@@ -190,13 +194,14 @@ define([
                     if (removeComforter) {
                         $('.js-email-sub__small', el).remove();
                     }
-
-                    if (formReferrer) {
-                        $('.js-email-sub__referrer-input', el).text(formReferrer);
-                    }
-
-                    $('.js-email-sub__campaigncode-input', el).text(formCampaignCode);
                 });
+
+                // Cache data on the form element
+                $('.js-email-sub__form', el).data('formData', {
+                    campaignCode: formCampaignCode || '',
+                    referrer: window.location.href
+                });
+
             },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,

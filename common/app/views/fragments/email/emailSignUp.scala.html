@@ -26,8 +26,6 @@
                 <label class="email-sub__label js-email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("email-sub__label__icon"))@labelText</label>
                 <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" required />
                 <input class="js-email-sub__listid-input" type="hidden" name="listId" value="@listId" />
-                <input class="js-email-sub__referrer-input" type="hidden" name="referrer" />
-                <input class="js-email-sub__campaigncode-input" name="campaignCode" />
             </div>
             <button type="submit" class="email-sub__submit-input button button--tertiary button--large">@submitText</button>
             <small class="email-sub__small js-email-sub__small">@smallText</small>
