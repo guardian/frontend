@@ -11,11 +11,11 @@
 
     var navigator = window.navigator;
     var platform = navigator.platform;
-    var isFront = @item.isFront;
 
+    var isFront = @item.isFront;
     var enhanceKey = 'gu.prefs.enhance';
 
-    // This has been called core, no-features, universal etc, and a few previous ways of
+    // This has been called core, featuresoff, universal etc, and a few previous ways of
     // opting in and out existed.
     // Now we have settled on standard and enhanced, the previous methods are handled
     // here, temporarily. This function can go after a while.
@@ -88,7 +88,7 @@
     normaliseNomenclature();
 
     // down to business
-    window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() || (couldEnhance() && weWantToEnhance());
+    window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
 
     // just so we can tell…
     console && console.info && console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
