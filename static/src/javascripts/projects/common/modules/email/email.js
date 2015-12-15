@@ -179,7 +179,7 @@ define([
                 var formData = $(thisRootEl).data(),
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
-                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || false,
+                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
                 fastdom.write(function () {
@@ -198,7 +198,7 @@ define([
 
                 // Cache data on the form element
                 $('.js-email-sub__form', el).data('formData', {
-                    campaignCode: formCampaignCode || '',
+                    campaignCode: formCampaignCode,
                     referrer: window.location.href
                 });
 
