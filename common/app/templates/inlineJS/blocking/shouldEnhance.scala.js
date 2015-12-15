@@ -31,8 +31,9 @@
 
         // update any `force-core` stored pref
         try {
-            var localStorage = window.localStorage;
-            if (corePref = localStorage.getItem(coreKey)) {
+            var localStorage = window.localStorage,
+                corePref = localStorage.getItem(coreKey);
+            if (corePref) {
                 localStorage.setItem(enhancedKey, /off/.test(corePref));
                 localStorage.removeItem(coreKey);
             }
@@ -41,7 +42,8 @@
         // hijack any attempt to use the old hash-fragments
         if (hash.length) {
             // if we're trying to set an old pref, set the new one
-            if ((settingCorePref = new RegExp(`^#${coreKey.replace('.', '\.')}=(on|off)$`).exec(hash)) && (corePref = settingCorePref[1])) {
+            settingCorePref = new RegExp(`^#${coreKey.replace('.', '\.')}=(on|off)$`).exec(hash);
+            if (settingCorePref && (corePref = settingCorePref[1])) {
                 hash = location.hash = `#${enhancedKey}=${corePref === 'off'}`;
             }
             // swap out the old temporary opt-in/out methods for the finalised ones
