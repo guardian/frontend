@@ -1,14 +1,11 @@
 package controllers.front
 
 import com.gu.facia.api.models._
-import common.{ExecutionContexts, Logging, S3Metrics}
-import conf.Configuration
+import common.ExecutionContexts
 import implicits.FaciaContentImplicits._
+import model.PressedPage
 import model.facia.PressedCollection
-import model.{PressedPage, _}
 import play.api.libs.json._
-import services.{CollectionConfigWithId, SecureS3Request}
-import scala.concurrent.Future
 
 trait FapiFrontJsonLite extends ExecutionContexts{
   def get(pressedPage: PressedPage): JsObject = {
