@@ -4,7 +4,7 @@ import java.lang.System._
 
 import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
+import conf.Configuration.commercial.merchandisingFeedsLatest
 import conf.switches.Switches
 import model.commercial._
 import services.S3
@@ -47,7 +47,7 @@ object MagentoBestsellersFeed extends ExecutionContexts with Logging {
     Switches.GuBookshopFeedsSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsRoot/$feedName") map { body =>
+        S3.get(s"$merchandisingFeedsLatest/$feedName") map { body =>
           val parsed = parse(XML.loadString(body)).map { book =>
             book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:")))
           }

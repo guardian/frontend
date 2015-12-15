@@ -4,7 +4,7 @@ import java.lang.System._
 
 import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
+import conf.Configuration.commercial.merchandisingFeedsLatest
 import conf.switches.Switches
 import play.api.libs.json.{JsArray, JsValue, Json}
 import services.S3
@@ -39,7 +39,7 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
     Switches.SoulmatesFeedSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsRoot/$feedName") map { body =>
+        S3.get(s"$merchandisingFeedsLatest/$feedName") map { body =>
           val parsed = parse(Json.parse(body))
           Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
         } getOrElse {

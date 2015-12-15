@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
+import conf.Configuration.commercial.merchandisingFeedsLatest
 import conf.switches.Switches
 import services.S3
 
@@ -26,7 +26,7 @@ object JobsFeed extends ExecutionContexts with Logging {
     Switches.JobFeedSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsRoot/$feedName") map { body =>
+        S3.get(s"$merchandisingFeedsLatest/$feedName") map { body =>
           val parsed = parse(XML.loadString(body.dropWhile(_ != '<')))
           Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
         } getOrElse {

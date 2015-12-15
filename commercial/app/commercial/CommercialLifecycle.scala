@@ -2,7 +2,7 @@ package commercial
 
 import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
+import conf.Configuration.commercial.merchandisingFeedsLatest
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.Industries
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
@@ -44,7 +44,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       val feedName = fetcher.feedName
 
       def storeFeed(feed: Feed): Unit =
-        S3.putPrivate(key = s"$merchandisingFeedsRoot/$feedName", value = feed.content, feed.contentType)
+        S3.putPrivate(key = s"$merchandisingFeedsLatest/$feedName", value = feed.content, feed.contentType)
 
       def recordFetch(maybeDuration: Option[Duration]): Unit = {
         recordEvent(feedName, "fetch", maybeDuration)
