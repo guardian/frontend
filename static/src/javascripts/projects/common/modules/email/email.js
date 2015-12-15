@@ -11,7 +11,8 @@ define([
     'lodash/functions/debounce',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html'
+    'text!common/views/email/submissionResponse.html',
+    'common/utils/robust'
 ], function (
     formInlineLabels,
     bean,
@@ -25,7 +26,8 @@ define([
     debounce,
     template,
     svgs,
-    successHtml
+    successHtml,
+    robust
 ) {
     var omniture;
 
@@ -103,7 +105,7 @@ define([
         },
         formSubmission = {
             bindSubmit: function ($form, analytics) {
-                var url = config.page.ajaxUrl + '/email';
+                var url = '/email';
                 bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
             },
             submitForm: function ($form, url, analytics) {
@@ -149,7 +151,8 @@ define([
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe successful');
                             })
                             .then(handleSubmit(true, $form))
-                            .catch(function () {
+                            .catch(function (error) {
+                                robust.log('c-email', error);
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
                                 handleSubmit(false, $form)();
                             });
