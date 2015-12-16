@@ -5,15 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val SyndicationLinkSwitch = Switch(
-    "Feature",
-    "syndication-link",
-    "Show syndication link in content",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 18),
-    exposeClientSide = false
-  )
-
   val contentAgeMessageSwitch = Switch(
     "Feature",
     "content-age-message",
@@ -335,6 +326,15 @@ trait FeatureSwitches {
     "Feature",
     "discussion-https",
     "in discussion we will send requests to https",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val EmailInlineInFooterSwitch = Switch(
+    "Feature",
+    "email-inline-in-footer",
+    "show the email sign-up in the footer",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

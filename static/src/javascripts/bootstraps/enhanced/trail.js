@@ -146,11 +146,11 @@ define([
         robust.catchErrorsAndLogAll([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
+            ['c-fronts-containers', initFrontsContainers],
             ['c-enhance', augmentInteractive],
             ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
-            ['c-fronts-containers', initFrontsContainers],
             ['c-onward', initOnwardContent],
             ['c-comment-adverts', commentAdverts]
         ]);

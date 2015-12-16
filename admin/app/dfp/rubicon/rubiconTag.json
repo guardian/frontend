@@ -205,14 +205,53 @@
             "label" : "RON - ATF.2",
             "value" : "136784"
         }, {
+            "label" : "139924",
+            "value" : "139924"
+        }, {
             "label" : "Business BTF.2",
             "value" : "139926"
         }, {
             "label" : "Culture ATF.1",
             "value" : "139928"
         }, {
+            "label" : "139930",
+            "value" : "139930"
+        }, {
+            "label" : "139932",
+            "value" : "139932"
+        }, {
+            "label" : "139936",
+            "value" : "139936"
+        }, {
+            "label" : "139938",
+            "value" : "139938"
+        }, {
+            "label" : "139940",
+            "value" : "139940"
+        }, {
+            "label" : "139942",
+            "value" : "139942"
+        }, {
+            "label" : "139948",
+            "value" : "139948"
+        }, {
+            "label" : "139950",
+            "value" : "139950"
+        }, {
+            "label" : "139952",
+            "value" : "139952"
+        }, {
+            "label" : "139954",
+            "value" : "139954"
+        }, {
             "label" : "Technology BTF.1",
             "value" : "139956"
+        }, {
+            "label" : "139958",
+            "value" : "139958"
+        }, {
+            "label" : "139960",
+            "value" : "139960"
         }, {
             "label" : "Culture/Tech/L&S - Premium Formats",
             "value" : "156592"

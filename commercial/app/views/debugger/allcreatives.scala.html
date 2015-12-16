@@ -91,70 +91,76 @@
     </div>
 
     <script>
-        require('core')
-            .next([
-                'bean',
-                'common/utils/$'
-            ])
-            .then(function (
-                bean,
-                $
-            ) {
-                var $switchFronts   = $('#switchFronts'),
-                    $switchArticles = $('#switchArticles'),
-                    $rhColumn = $('.content__secondary-column');
+        // window.require is assigned asynchronously
+        window.addEventListener('load', function () {
+            require('bootstraps/standard/main')
+                .next(['bootstraps/commercial'])
+                .next([
+                    'bean',
+                    'common/utils/$'
+                ])
+                .then(function (
+                    bean,
+                    $
+                ) {
+                    var $switchFronts   = $('#switchFronts'),
+                        $switchArticles = $('#switchArticles'),
+                        $rhColumn = $('.content__secondary-column');
 
-                bean.on($switchFronts[0], 'click', function () {
-                    $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
-                    $switchArticles.removeClass('current');
-                    $switchFronts.addClass('current');
-                    $rhColumn.hide();
-                });
+                    bean.on($switchFronts[0], 'click', function () {
+                        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
+                        $switchArticles.removeClass('current');
+                        $switchFronts.addClass('current');
+                        $rhColumn.hide();
+                    });
 
-                bean.on($switchArticles[0], 'click', function () {
-                    $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
-                    $switchFronts.removeClass('current');
-                    $switchArticles.addClass('current');
-                    $rhColumn.show();
-                });
+                    bean.on($switchArticles[0], 'click', function () {
+                        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
+                        $switchFronts.removeClass('current');
+                        $switchArticles.addClass('current');
+                        $rhColumn.show();
+                    });
 
-                bean.on($('#pageSkin')[0], 'click', function () {
-                    $('body').toggleClass('has-page-skin');
-                });
+                    bean.on($('#pageSkin')[0], 'click', function () {
+                        $('body').toggleClass('has-page-skin');
+                    });
 
-                var $number        = $('#dfp-number'),
-                    itemNumClasses = ['2', '3', '4']
-                        .map(function (num) {
-                            return 'commercial--items-dfp-' + num;
-                        });
-                bean.on($number[0], 'change', function () {
-                    $('.commercial--dfp-multiple')
-                        .removeClass(itemNumClasses.join(' '))
-                        .addClass('commercial--items-dfp-' + $number.val());
-                });
+                    var $number        = $('#dfp-number'),
+                        itemNumClasses = ['2', '3', '4']
+                            .map(function (num) {
+                                return 'commercial--items-dfp-' + num;
+                            });
+                    bean.on($number[0], 'change', function () {
+                        $('.commercial--dfp-multiple')
+                            .removeClass(itemNumClasses.join(' '))
+                            .addClass('commercial--items-dfp-' + $number.val());
+                    });
 
-                var $palette    = $('#dfp-palette'),
-                    toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
-                        .map(function (tone) {
-                            return 'commercial--tone-' + tone;
-                        });
-                bean.on($palette[0], 'change', function () {
-                    $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
-                        .removeClass(toneClasses.join(' '))
-                        .addClass('commercial--tone-' + $palette.val());
-                });
+                    var $palette    = $('#dfp-palette'),
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                            .map(function (tone) {
+                                return 'commercial--tone-' + tone;
+                            });
+                    bean.on($palette[0], 'change', function () {
+                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                            .removeClass(toneClasses.join(' '))
+                            .addClass('commercial--tone-' + $palette.val());
+                    });
 
-                var $rhComponent = $('.rh-column-component');
-                bean.on($rhComponent[0], 'change', function () {
-                    showRHColumn($rhComponent.val());
+                    var $rhComponent = $('.rh-column-component');
+                    bean.on($rhComponent[0], 'change', function () {
+                        showRHColumn($rhComponent.val());
+                    });
                 });
-            });
+        });
 
         var loadCommercial = function (callback) {
-            require(['core'])
-                .next(['bootstraps/commercial'])
-                .next(['bootstraps/creatives'])
-                .then(callback) ;
+            window.addEventListener('load', function () {
+                // Commercial is in standard
+                require('bootstraps/standard/main')
+                    .next(['bootstraps/commercial'])
+                    .then(callback) ;
+            });
         };
     </script>
 
@@ -181,7 +187,8 @@
         <script>
             function showRHColumn(component) {
                 loadCommercial(function () {
-                    require('core')
+                    require('bootstraps/standard/main')
+                        .next(['bootstraps/commercial'])
                         .next([
                             'common/utils/$'
                         ])

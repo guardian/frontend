@@ -1,4 +1,4 @@
-@(route: views.SocialSigninRoutes, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+@(route: views.SocialSigninRoutes, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, loginHint: Option[String] = None)(implicit request: RequestHeader)
 
 @import utils.ThirdPartyConditions
 
@@ -6,7 +6,7 @@
     <li class="social-signin__item">
         <a class="social-signin__action social-signin__action--fb"
             data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in"
-            href="@idUrlBuilder.buildOAuthUrl("/facebook/" + route.facebook.path, idRequest, ThirdPartyConditions.agreeUrlParamOpt(idRequest, idUrlBuilder))
+            href="@idUrlBuilder.buildOAuthUrl("/facebook/" + route.facebook.path, idRequest, ThirdPartyConditions.optParams(idRequest, idUrlBuilder))
             ">
             <span>@route.facebook.name with Facebook</span>
             @fragments.inlineSvg("share-facebook", "icon", List("social-signin__icon", "social-signin__icon--fb"))
@@ -15,7 +15,7 @@
     <li class="social-signin__item">
         <a class="social-signin__action social-signin__action--gplus"
             data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
-            href="@idUrlBuilder.buildOAuthUrl("/google/" + route.google.path, idRequest, ThirdPartyConditions.agreeUrlParamOpt(idRequest, idUrlBuilder))
+            href="@idUrlBuilder.buildOAuthUrl("/google/" + route.google.path, idRequest, ThirdPartyConditions.optParams(idRequest, idUrlBuilder, loginHint))
             ">
             <span>@route.google.name with Google</span>
             @fragments.inlineSvg("share-gplus", "icon", List("social-signin__icon", "social-signin__icon--gplus"))

@@ -4590,6 +4590,49 @@
         }
       }
     },
+    "grunt-contrib-concat": {
+      "version": "0.5.1",
+      "dependencies": {
+        "chalk": {
+          "version": "0.5.1",
+          "dependencies": {
+            "ansi-styles": {
+              "version": "1.1.0"
+            },
+            "escape-string-regexp": {
+              "version": "1.0.3"
+            },
+            "has-ansi": {
+              "version": "0.1.0",
+              "dependencies": {
+                "ansi-regex": {
+                  "version": "0.2.1"
+                }
+              }
+            },
+            "strip-ansi": {
+              "version": "0.3.0",
+              "dependencies": {
+                "ansi-regex": {
+                  "version": "0.2.1"
+                }
+              }
+            },
+            "supports-color": {
+              "version": "0.2.0"
+            }
+          }
+        },
+        "source-map": {
+          "version": "0.3.0",
+          "dependencies": {
+            "amdefine": {
+              "version": "1.0.0"
+            }
+          }
+        }
+      }
+    },
     "grunt-contrib-copy": {
       "version": "0.6.0",
       "dependencies": {
