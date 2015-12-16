@@ -13,7 +13,7 @@ sealed trait FeedParser[+T] extends ExecutionContexts {
 
   def feedName: String
 
-  def parse(): Future[ParsedFeed[T]]
+  def parse(getFeed: String => Option[String]): Future[ParsedFeed[T]]
 }
 
 object FeedParser {
@@ -21,7 +21,7 @@ object FeedParser {
   private val jobs: FeedParser[Job] = new FeedParser[Job] {
     val feedName = "jobs"
 
-    def parse(): Future[ParsedFeed[Job]] = JobsAgent.refresh()
+    def parse(getFeed:String => Option[String]): Future[ParsedFeed[Job]] = JobsAgent.refresh(getFeed)
   }
 
   private val soulmates: Seq[FeedParser[Member]] = {
@@ -29,7 +29,7 @@ object FeedParser {
       new FeedParser[Member] {
         val feedName = s"soulmates/${agent.groupName}"
 
-        def parse(): Future[ParsedFeed[Member]] = agent.refresh()
+        def parse(getFeed:String => Option[String]): Future[ParsedFeed[Member]] = agent.refresh(getFeed)
       }
     }
   }

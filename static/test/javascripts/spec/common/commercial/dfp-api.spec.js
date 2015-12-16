@@ -34,12 +34,8 @@ define([
                 return {
                     isEmpty: isEmpty,
                     slot: {
-                        getSlotId: function () {
-                            return {
-                                getDomId: function () {
-                                    return id;
-                                }
-                            };
+                        getSlotElementId: function () {
+                            return id;
                         }
                     },
                     size: ['300', '250']

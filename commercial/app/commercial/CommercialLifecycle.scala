@@ -2,7 +2,6 @@ package commercial
 
 import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
-import conf.Configuration.commercial.merchandisingFeedsLatest
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.Industries
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
@@ -10,7 +9,6 @@ import model.commercial.money.BestBuysAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 import model.diagnostics.CloudWatch
 import play.api.{Application => PlayApp, GlobalSettings}
-import services.S3
 
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
@@ -34,23 +32,18 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
   override def onStart(app: PlayApp): Unit = {
 
-    val randomFactor = Random.nextInt(15)
-
-    def randomStartSchedule(minsLater: Int = 0) = s"0 ${randomFactor + minsLater}/15 * * * ?"
+    def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
     def fetchFeed(fetcher: FeedFetcher): Unit = {
 
       val feedName = fetcher.feedName
-
-      def storeFeed(feed: Feed): Unit =
-        S3.putPrivate(key = s"$merchandisingFeedsLatest/$feedName", value = feed.content, feed.contentType)
 
       def recordFetch(maybeDuration: Option[Duration]): Unit = {
         recordEvent(feedName, "fetch", maybeDuration)
       }
 
       val msgPrefix = s"Fetching $feedName feed"
-      log.info(s"Fetching $feedName feed from ${fetcher.url} ...")
+      log.info(s"$msgPrefix from ${fetcher.url} ...")
       val eventualResponse = fetcher.fetch()
       eventualResponse onFailure {
         case e: SwitchOffException =>
@@ -61,7 +54,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
       eventualResponse onSuccess {
         case response =>
-          storeFeed(response.feed)
+          S3FeedStore.put(feedName, response.feed)
           recordFetch(Some(response.duration))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
@@ -76,7 +69,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
 
       log.info(s"Parsing $feedName feed ...")
-      val parsedFeed = parser.parse()
+      val parsedFeed = parser.parse(S3FeedStore.get)
       parsedFeed onFailure {
         case NonFatal(e) =>
           recordParse(None)

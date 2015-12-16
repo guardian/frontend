@@ -42,7 +42,7 @@
               <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
             }
             <div class="email-subscriptions">
-                @List("news", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
+                @List("news", "sport", "culture", "lifestyle", "comment", "more from theguardian").zipWithIndex.map { case(theme, index) =>
                   @emailListCategoryList(theme, emailSubscriptions.subscriptions.filter(_.theme == theme), index == 0)
                 }
             </div>

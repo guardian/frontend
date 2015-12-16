@@ -99,17 +99,17 @@
                         </template>
                     </amp-list>
                 </div>
-
-                <amp-font
-                    layout="nodisplay"
-                    font-family="Guardian Egyptian Web"
-                    timeout="3000"
-                    on-load-add-class="guardian-egyptian-loaded"
-                    on-load-remove-class="guardian-egyptian-loading"
-                    on-error-remove-class="guardian-egyptian-loading"
-                    on-error-add-class="guardian-egyptian-missing">
-                </amp-font>
             }
+
+            <amp-font
+                layout="nodisplay"
+                font-family="Guardian Egyptian Web"
+                timeout="3000"
+                on-error-remove-class="guardian-egyptian-loading"
+                on-error-add-class="guardian-egyptian-missing"
+                on-load-remove-class="guardian-egyptian-loading"
+                on-load-add-class="guardian-egyptian-loaded">
+            </amp-font>
 
             @fragments.footerAMP(page)
         </div>

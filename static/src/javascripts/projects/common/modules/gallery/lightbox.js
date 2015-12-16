@@ -349,8 +349,7 @@ define([
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function (interactionType) {
-                    this.trackInteraction(interactionType + ':next');
+                'next': function () {
                     this.pulseButton(this.nextBtn);
                     if (this.index === this.images.length) { // last img
                         if (this.showEndslate) {
@@ -364,8 +363,7 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'prev': function (interactionType) {
-                    this.trackInteraction(interactionType + ':previous');
+                'prev': function () {
                     this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
                         if (this.showEndslate) {
@@ -413,14 +411,12 @@ define([
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function (interactionType) {
-                    this.trackInteraction(interactionType + ':next');
+                'next': function () {
                     this.pulseButton(this.nextBtn);
                     this.index = 1;
                     this.state = 'image';
                 },
-                'prev': function (interactionType) {
-                    this.trackInteraction(interactionType + ':previous');
+                'prev': function () {
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
@@ -510,10 +506,6 @@ define([
             };
             this.endslate.fetch(qwery('.js-gallery-endslate', this.endslateEl), 'html');
         }
-    };
-
-    GalleryLightbox.prototype.trackInteraction = function (str) {
-        mediator.emit('module:clickstream:interaction', str);
     };
 
     function bootstrap() {

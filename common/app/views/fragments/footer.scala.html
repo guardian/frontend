@@ -5,6 +5,7 @@
 @import common.LinkTo
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
+@import conf.switches.Switches._
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     <div class="l-footer__primary">
@@ -33,66 +34,36 @@
         </div>
     </div>
 
-    <div class="l-footer__secondary js-footer__secondary l-footer__secondary--no-email gs-container" role="contentinfo">
+    <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
         <div class="colophon u-cf">
 
             @defining(Edition(request)) { currentEdition =>
-            <div class="footer__follow-us">
-
-                @currentEdition match {
-                    case Uk => {
-
-                        <a class="button button--tertiary button--small js-button--social" data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
-                            @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary button--small js-button--social" data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
-                            @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-
-                        @if(mvt.EmailTextTestV1.isParticipating) {
-                            <a class="button button--tertiary button--small js-button--social" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
-                                @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Guardian Today email</span></a>
-                        } else {
-                            <a class="button button--tertiary button--small js-button--social" data-link-name="uk : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
-                                @fragments.inlineSvg("share-email", "icon", Seq("i","i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
+                @if(EmailInlineInFooterSwitch.isSwitchedOn) {
+                    <div class="footer__email-container">
+                    @currentEdition match {
+                        case Uk => {
+                            @fragments.email.emailIframe("37", "footer-daily-email-uk")
                         }
-
+                        case Us => {
+                            @fragments.email.emailIframe("1493", "footer-daily-email-us")
+                        }
+                        case Au => {
+                            @fragments.email.emailIframe("1506", "footer-daily-email-au")
+                        }
+                        case International => {
+                            @fragments.email.emailIframe("37", "footer-daily-email-int")
+                        }
                     }
-
-                    case Us => {
-                        <a class="button button--tertiary button--small" data-link-name="us : footer : facebook" href="https://www.facebook.com/GuardianUs">
-                            @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary button--small" data-link-name="us : footer : twitter" href="https://twitter.com/GuardianUs">
-                            @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-                        <a class="button button--tertiary button--small" data-link-name="us : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
-                            @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
-                    }
-
-                    case Au => {
-                        <a class="button button--tertiary button--small" data-link-name="au : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
-                            @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary button--small" data-link-name="au : footer : twitter" href="https://twitter.com/GuardianAus">
-                            @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-                        <a class="button button--tertiary button--small" data-link-name="au : footer : email sign-up" href="@LinkTo {/info/2015/jan/30/guardian-australia-emails-delivered-to-your-inbox-subscribe-now}">
-                            @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">email sign up</span></a>
-                    }
-
-                    case International => {
-                        <a class="button button--tertiary button--small js-button--social" data-link-name="int : footer : facebook" href="https://www.facebook.com/theguardian">
-                            @fragments.inlineSvg("share-facebook", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Facebook</span></a>
-                        <a class="button button--tertiary button--small js-button--social" data-link-name="int : footer : twitter" href="https://twitter.com/guardian">
-                            @fragments.inlineSvg("share-twitter", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">Twitter</span></a>
-                        <a class="button button--tertiary button--small js-button--social" data-link-name="int : footer : email sign-up" href="@LinkTo {/world/2013/oct/04/1}">
-                            @fragments.inlineSvg("share-email", "icon", Seq("i", "i-left")) <span class="footer__follow-us__item">daily email sign up</span></a>
-                    }
+                    </div>
                 }
-            </div>
 
             <ul class="colophon__list">
                 @currentEdition match {
                     case Uk => {
-                        <li class="colophon__item js-colophon__item--social is-hidden"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
+                        <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
                             Facebook</a>
                         </li>
-                        <li class="colophon__item js-colophon__item--social is-hidden"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
+                        <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
                             Twitter</a>
                         </li>
                         <li class="colophon__item"><a data-link-name="uk : footer : membership" href="https://membership.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_MEMBERSHIP">
@@ -133,6 +104,12 @@
                     }
 
                     case Us => {
+                        <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/GuardianUs">
+                            Facebook</a>
+                        </li>
+                        <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/GuardianUs">
+                            Twitter</a>
+                        </li>
                         <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
                             jobs</a>
                         </li>
@@ -162,6 +139,12 @@
                     }
 
                     case Au => {
+                        <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
+                            Facebook</a>
+                        </li>
+                        <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/GuardianAus">
+                            Twitter</a>
+                        </li>
                         <li class="colophon__item"><a data-link-name="au : footer : advertising" href="@LinkTo {/advertising/guardian-australia-advertising}">
                             advertising</a>
                         </li>
@@ -203,6 +186,12 @@
                     }
 
                     case International => {
+                        <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
+                            Facebook</a>
+                        </li>
+                        <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
+                            Twitter</a>
+                        </li>
                         <li class="colophon__item js-colophon__item--social is-hidden"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
                             Facebook</a>
                         </li>

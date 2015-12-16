@@ -39,14 +39,8 @@ class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
     build(conf.id.url, path, Some(idRequest), params)
   def buildUrl(path: String, params: (String, String)*) =
     build(conf.id.url, path, None, params)
-  def buildOAuthUrl(path: String, idRequest: IdentityRequest, params: (String, String)*) =
+  def buildOAuthUrl(path: String, idRequest: IdentityRequest, params: Seq[(String, String)]) =
     build(conf.id.oauthUrl, path, Some(idRequest), params)
   def buildOAuthUrl(path: String, params: (String, String)*) =
     build(conf.id.oauthUrl, path, None, params)
-  def buildOAuthUrl(path: String, idRequest: IdentityRequest, optionalParam: Option[(String, String)]) = {
-    optionalParam match {
-      case Some(param) => build(conf.id.oauthUrl, path, Some(idRequest), Seq(param))
-      case _ => build(conf.id.oauthUrl, path, Some(idRequest))
-    }
-  }
 }

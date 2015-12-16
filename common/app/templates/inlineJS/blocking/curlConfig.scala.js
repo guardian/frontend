@@ -1,8 +1,8 @@
-@(item: model.MetaData)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 
-var curl = {
+window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
     paths: {
@@ -16,6 +16,7 @@ var curl = {
             bonzo:                          'components/bonzo/bonzo',
             react:                          'components/react/react',
             classnames:                     'components/classnames/index',
+            domReady:                       'components/domready/ready',
             enhancer:                       'components/enhancer/enhancer',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
             fastclick:                      'components/fastclick/fastclick',
@@ -32,7 +33,7 @@ var curl = {
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             svgs:                           '../inline-svgs',
-            'bootstraps/video-player':      'bootstraps/video-player-dev.js',
+            'bootstraps/enhanced/media/video-player': 'bootstraps/enhanced/media/video-player-dev.js',
             videojs:                        'components/video.js/video.min.js',
             videojsads:                     'components/videojs-contrib-ads/videojs.ads.min.js',
             videojsembed:                   'components/videojs-embed/videojs.embed.js',
@@ -44,29 +45,27 @@ var curl = {
             text:         'components/requirejs-text/text',
             inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
-            core:                       '@Static("javascripts/core.js")',
-            'bootstraps/standard':      '@Static("javascripts/bootstraps/standard.js")',
-            'bootstraps/enhanced':      '@Static("javascripts/bootstraps/enhanced.js")',
-            'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
-            'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
-            'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
-            'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
-            'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
-            'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
-            'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
-            'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
-            'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
-            'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
-            'bootstraps/media':         '@Static("javascripts/bootstraps/media.js")',
-            'bootstraps/article':       '@Static("javascripts/bootstraps/article.js")',
-            'bootstraps/liveblog':      '@Static("javascripts/bootstraps/liveblog.js")',
-            'bootstraps/trail':         '@Static("javascripts/bootstraps/trail.js")',
-            'bootstraps/gallery':       '@Static("javascripts/bootstraps/gallery.js")',
-            'bootstraps/profile':       '@Static("javascripts/bootstraps/profile.js")',
+            'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
+            'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
+            'bootstraps/enhanced/crosswords':    '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
+            'bootstraps/enhanced/accessibility': '@Static("javascripts/bootstraps/enhanced/accessibility.js")',
+            'bootstraps/commercial':             '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/enhanced/preferences':   '@Static("javascripts/bootstraps/enhanced/preferences.js")',
+            'bootstraps/enhanced/facia':         '@Static("javascripts/bootstraps/enhanced/facia.js")',
+            'bootstraps/enhanced/football':      '@Static("javascripts/bootstraps/enhanced/football.js")',
+            'bootstraps/enhanced/image-content': '@Static("javascripts/bootstraps/enhanced/image-content.js")',
+            'bootstraps/enhanced/membership':    '@Static("javascripts/bootstraps/enhanced/membership.js")',
+            'bootstraps/enhanced/sudoku':        '@Static("javascripts/bootstraps/enhanced/sudoku.js")',
+            'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
+            'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',
+            'bootstraps/enhanced/liveblog':      '@Static("javascripts/bootstraps/enhanced/liveblog.js")',
+            'bootstraps/enhanced/trail':         '@Static("javascripts/bootstraps/enhanced/trail.js")',
+            'bootstraps/enhanced/gallery':       '@Static("javascripts/bootstraps/enhanced/gallery.js")',
+            'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
             'foresee.js':               'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':             '@{Configuration.javascript.config("googletagJsUrl")}',
             stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
-            zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+            react:                      '@Static("javascripts/components/react/react.js")',
             'facebook.js':              '//connect.facebook.net/en_US/all.js',
             'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
 
@@ -76,5 +75,5 @@ var curl = {
         }
     }
 };
-
-@JavaScript(Static.js.curl);
+// curl will read from window.curl
+window.curl = window.curlConfig;

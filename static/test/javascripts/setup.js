@@ -30,7 +30,10 @@ sinon.FakeXMLHttpRequest.prototype.withCredentials = false;
 window.guardian = {
     config: {
         switches: { },
-        page: { }
+        page: { },
+        images: {
+            commercial: {}
+        }
     },
     css: {}
 };

@@ -12,7 +12,7 @@ case class SoulmatesAgent(groupName: String,
 
   private lazy val agent = AkkaAgent[Seq[Member]](Nil)
 
-  def refresh()(implicit ec: ExecutionContext): Future[ParsedFeed[Member]] = {
+  def refresh(getFeed: String => Option[String])(implicit ec: ExecutionContext): Future[ParsedFeed[Member]] = {
 
     def update(freshData: Seq[Member]): Future[Seq[Member]] = {
       agent.alter { oldData =>
@@ -21,7 +21,7 @@ case class SoulmatesAgent(groupName: String,
       }
     }
 
-    val parsedFeed = feed.parsedMembers(s"soulmates/$groupName")
+    val parsedFeed = feed.parsedMembers(s"soulmates/$groupName", getFeed)
 
     parsedFeed.foreach(feed => update(feed.contents))
 
@@ -58,10 +58,6 @@ object SoulmatesAgent {
     SoulmatesAgent("southwest", SouthwestSoulmatesFeed, Sample.default),
     SoulmatesAgent("wales", WalesSoulmatesFeed, Sample.default)
   )
-
-  def refresh()(implicit ec: ExecutionContext): Future[Seq[ParsedFeed[Member]]] = Future.sequence {
-    agents map (_.refresh())
-  }
 
   def sample(groupName: String): Seq[Member] = {
     agents.find(_.groupName == groupName) map (_.sample()) getOrElse Nil

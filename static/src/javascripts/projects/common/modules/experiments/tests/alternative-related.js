@@ -4,16 +4,16 @@ define([
     config
 ) {
     return function () {
-        this.id = 'EssentialReadTest1';
-        this.start = '2015-10-20';
-        this.expiry = '2015-12-20';
-        this.author = 'Josh Holder';
-        this.description = 'Replaces related content with the essential read';
-        this.audience = 0.3;
-        this.audienceOffset = 0.06;
+        this.id = 'AlternativeRelated';
+        this.start = '2015-12-07';
+        this.expiry = '2016-01-07';
+        this.author = 'John Duffell';
+        this.description = 'gets related content from the top tags instead of the content';
+        this.audience = 0.0;
+        this.audienceOffset = 0.2;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'the-essential-read';
+        this.dataLinkNames = '';
         this.idealOutcome = '';
 
         this.canRun = function () {
@@ -28,13 +28,7 @@ define([
                 }
             },
             {
-                id: 'curated',
-                test: function () {
-
-                }
-            },
-            {
-                id: 'automated',
+                id: 'variant',
                 test: function () {
 
                 }
