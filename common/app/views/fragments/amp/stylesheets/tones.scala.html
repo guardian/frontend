@@ -25,7 +25,8 @@
     background-color: #e6711b;
 }
 
-.tonal--tone-feature .tonal__header{
+.tonal--tone-feature .tonal__header,
+.tone-feature{
     background-color: #951c55;
 }
 
@@ -43,7 +44,7 @@
 }
 
 .tonal--tone-review .tonal__standfirst,
-.fc-item.tone-review--item {
+.tone-review--item {
     background-color: #7d7569;
 }
 
@@ -72,7 +73,7 @@
 }
 
 .tonal--tone-live .tonal__header,
-.fc-item.tone-live--item {
+.tone-live--item {
     background-color: #b51800;
 }
 
@@ -81,7 +82,7 @@
 }
 
 .tonal--tone-special-report .tonal__header,
-.fc-item.tone-special-report--item {
+.tone-special-report--item {
     background-color: #63717a;
 }
 
@@ -96,8 +97,7 @@
 .tonal--tone-comment .tonal__header,
 .tonal--tone-editorial .tonal__header,
 .tonal--tone-letters .tonal__header,
-.fc-item.tone-comment,
-.fc-item.tone-feature {
+.tone-comment {
     background-color: #efefec;
 }
 
@@ -147,7 +147,8 @@
 }
 
 .tonal--tone-feature .tonal__header .content__section-label__link,
-.tone-live--item .fc-item__meta  {
+.tone-live--item .fc-item__meta,
+.tone-feature .fc-item__meta  {
     color: #fdadba;
 }
 
@@ -307,7 +308,8 @@ color: #21a2bc;
     fill: #767676;
 }
 
-.tone-live--item .fc-item__meta svg {
+.tone-live--item .fc-item__meta svg,
+.tone-feature .fc-item__meta svg{
     fill: #fdadba;
 }
 
@@ -324,32 +326,33 @@ color: #21a2bc;
     border-bottom-color: rgba(255,255,255,0.3);
 }
 
+.tone-feature h2 {
+    color: #fff;
+}
+
 .tone-review--item .fc-item__meta,
 .tone-special-report--item .fc-item__meta {
     color: #dcdcdc;
 }
 
-.fc-item.tone-feature {
-    border-top-color: #dc2a7d;
-}
-
-.fc-item.tone-special-report--item {
+.tone-special-report--item {
     border-top-color: #aad8f1;
 }
 
-.fc-item.tone-live--item {
+.tone-live--item,
+.tone-feature {
     border-top-color: #fdadba;
 }
 
-.fc-item.tone-comment {
+.tone-comment {
     border-top-color: #e6711b;
 }
 
-.fc-item.tone-review--item,
-.fc-item.tone-media--item {
+.tone-review--item,
+.tone-media--item {
     border-top-color: #fb0;
 }
 
-.fc-item.tone-media--item {
+.tone-media--item {
     background-color: #333;
 }
