@@ -1,12 +1,12 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
+import model.pressed.CollectionConfig
 import performance.MemcachedAction
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
@@ -319,7 +319,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Cached(60) {
             val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
             val webTitle = config.displayName.getOrElse("The Guardian")
-            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}
+            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated.flatMap(_.properties.maybeContent), "", None)).as("text/xml; charset=utf8")}
         }
       case None => successful(Cached(60)(NotFound))}
   }
