@@ -678,6 +678,7 @@
     .ad-slot--inline {
         background-color: colour(paid-article-subheader);
         border-top: 0;
+        color: colour(neutral-2-contrasted);
     }
 
     .content__section-label {
@@ -715,8 +716,11 @@
             }
         }
 
-        .tonal__standfirst {
-            display: none;
+        &.content--media--audio,
+        &.content--media--video {
+            .tonal__standfirst {
+                display: none;
+            }
         }
 
         .ad-slot--paid-for-badge__header,
@@ -749,6 +753,7 @@
 
         .gu-media-wrapper--audio,
         .vjs-control-bar,
+        .vjs-embed-button:hover .vjs-control-text,
         .vjs-progress-holder:before {
             color: colour(multimedia-main-1);
             background: colour(paid-article-media-bg);
@@ -779,6 +784,22 @@
                     border-color: colour(neutral-2-contrasted);
                 }
             }
+        }
+    }
+
+    &.content--gallery {
+        .content__headline:before {
+            @include icon(camera-black-large, $with-width: false);
+        }
+
+        .content__standfirst,
+        .gallery2__caption,
+        .gallery2__credit {
+            color: colour(neutral-2-contrasted);
+        }
+
+        .ad-slot--dark {
+            background-color: colour(paid-article-subheader);
         }
     }
 }
