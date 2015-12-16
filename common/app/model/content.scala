@@ -392,13 +392,14 @@ object Article {
     val tags = content.tags
     val trail = copyTrail(content)
     val commercial = copyCommercial(content)
-    val lightbox = GenericLightbox(elements, fields, trail,
+    val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 620,
       includeBodyImages = !tags.isLiveBlog,
       id = content.metadata.id,
       headline = trail.headline,
       shouldHideAdverts = content.shouldHideAdverts,
       standfirst = fields.standfirst)
+    val lightbox = GenericLightbox(elements, fields, trail, lightboxProperties)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
     val sharelinks = copyShareLinks(content)
 
@@ -410,13 +411,15 @@ object Article {
       showFooterContainers = !tags.isLiveBlog && !content.shouldHideAdverts
     )
 
-    Article(contentOverrides, lightbox)
+    Article(contentOverrides, lightboxProperties)
   }
 }
 
 final case class Article (
   override val content: Content,
-  lightbox: GenericLightbox) extends ContentType {
+  lightboxProperties: GenericLightboxProperties) extends ContentType {
+
+  val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
   val isLiveBlog: Boolean = content.tags.isLiveBlog
   val isImmersive: Boolean = content.metadata.isImmersive
@@ -560,11 +563,12 @@ object Gallery {
     val tags = content.tags
     val section = content.metadata.section
     val id = content.metadata.id
-    val lightbox = GalleryLightbox(elements,tags,
+    val lightboxProperties = GalleryLightboxProperties(
       id = id,
       headline = content.trail.headline,
       shouldHideAdverts = content.shouldHideAdverts,
       standfirst = fields.standfirst)
+    val lightbox = GalleryLightbox(elements, tags, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
       "contentType" -> JsString(contentType),
       "gallerySize" -> JsNumber(lightbox.size),
@@ -625,24 +629,28 @@ object Gallery {
       }
     )
 
-    Gallery(contentOverrides, lightbox)
+    Gallery(contentOverrides, lightboxProperties)
   }
 }
 
 final case class Gallery(
   override val content: Content,
-  lightbox: GalleryLightbox) extends ContentType {
+  lightboxProperties: GalleryLightboxProperties) extends ContentType {
 
+  val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
   def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
+
+case class GalleryLightboxProperties(
+  id: String,
+  headline: String,
+  shouldHideAdverts: Boolean,
+  standfirst: Option[String])
 
 case class GalleryLightbox(
   elements: Elements,
   tags: Tags,
-  id: String,
-  headline: String,
-  shouldHideAdverts: Boolean,
-  standfirst: Option[String]
+  properties: GalleryLightboxProperties
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
@@ -671,32 +679,35 @@ case class GalleryLightbox(
       ))
     }
     JsObject(Seq(
-      "id" -> JsString(id),
-      "headline" -> JsString(headline),
-      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
-      "standfirst" -> JsString(standfirst.getOrElse("")),
+      "id" -> JsString(properties.id),
+      "headline" -> JsString(properties.headline),
+      "shouldHideAdverts" -> JsBoolean(properties.shouldHideAdverts),
+      "standfirst" -> JsString(properties.standfirst.getOrElse("")),
       "images" -> JsArray(imageJson)
     ))
   }
 }
 
+case class GenericLightboxProperties(
+  id: String,
+  headline: String,
+  shouldHideAdverts: Boolean,
+  standfirst: Option[String],
+  lightboxableCutoffWidth: Int,
+  includeBodyImages: Boolean)
+
 case class GenericLightbox(
   elements: Elements,
   fields: Fields,
   trail: Trail,
-  lightboxableCutoffWidth: Int,
-  includeBodyImages: Boolean,
-  id: String,
-  headline: String,
-  shouldHideAdverts: Boolean,
-  standfirst: Option[String]
+  properties: GenericLightboxProperties
 ) {
   lazy val mainFiltered = elements.mainPicture
     .filter(_.images.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7)
-    .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
-  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
+    .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
+  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
 
-  val lightboxImages = if (includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
+  val lightboxImages = if (properties.includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
 
   lazy val isMainMediaLightboxable = mainFiltered.nonEmpty
 
@@ -717,10 +728,10 @@ case class GenericLightbox(
       ))
     }
     JsObject(Seq(
-      "id" -> JsString(id),
-      "headline" -> JsString(headline),
-      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
-      "standfirst" -> JsString(standfirst.getOrElse("")),
+      "id" -> JsString(properties.id),
+      "headline" -> JsString(properties.headline),
+      "shouldHideAdverts" -> JsBoolean(properties.shouldHideAdverts),
+      "standfirst" -> JsString(properties.standfirst.getOrElse("")),
       "images" -> JsArray(imageJson)
     ))
   }
@@ -779,13 +790,14 @@ object ImageContent {
     val fields = content.fields
     val section = content.metadata.section
     val id = content.metadata.id
-    val lightbox = GenericLightbox(content.elements, content.fields, content.trail,
+    val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 940,
       includeBodyImages = false,
       id = id,
       headline = content.trail.headline,
       shouldHideAdverts = content.shouldHideAdverts,
       standfirst = fields.standfirst)
+    val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
       "contentType" -> JsString(contentType),
       "lightboxImages" -> lightbox.javascriptConfig
@@ -802,13 +814,16 @@ object ImageContent {
     val contentOverrides = content.copy(
       metadata = metadata
     )
-    ImageContent(contentOverrides, lightbox)
+    ImageContent(contentOverrides, lightboxProperties)
   }
 }
 
 final case class ImageContent(
   override val content: Content,
-  lightBox: GenericLightbox ) extends ContentType
+  lightboxProperties: GenericLightboxProperties ) extends ContentType {
+
+  val lightBox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
+}
 
 case class Tweet(id: String, images: Seq[String]) {
   val firstImage: Option[String] = images.headOption
