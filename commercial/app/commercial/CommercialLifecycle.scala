@@ -20,7 +20,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
   private val refreshJobs: List[RefreshJob] = List(
     MasterClassTagsRefresh,
-    MasterclassesRefresh,
     CountriesRefresh,
     IndustriesRefresh,
     MoneyBestBuysRefresh,

@@ -3,6 +3,7 @@ package commercial.feeds
 import common.ExecutionContexts
 import model.commercial.books.{BestsellersAgent, Book}
 import model.commercial.jobs.{Job, JobsAgent}
+import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
 import model.commercial.soulmates.{Member, SoulmatesAgent}
 
 import scala.concurrent.Future
@@ -39,7 +40,13 @@ object FeedParser {
     def parse(): Future[ParsedFeed[Book]] = BestsellersAgent.refresh()
   }
 
-  val all = soulmates ++ Seq(jobs, bestsellers)
+  private val masterclasses: FeedParser[MasterClass] = new FeedParser[MasterClass] {
+    val feedName = "masterclasses"
+
+    def parse(): Future[ParsedFeed[MasterClass]] = MasterClassAgent.refresh()
+  }
+
+  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses)
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
