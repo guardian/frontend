@@ -4,6 +4,7 @@ import com.gu.facia.api.{utils => fapiutils}
 import com.gu.contentapi.client.model.Podcast
 import common.{NavItem, SectionLink, Pagination}
 import model.facia.PressedCollection
+import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import pressed._
@@ -87,7 +88,7 @@ object MetaDataFormat {
     opengraphPropertiesOverrides: Map[String, String],
     twitterPropertiesOverrides: Map[String, String])
 
-  private val readsMetadata: Reads[MetaData] = {
+  val readsMetadata: Reads[MetaData] = {
 
     implicit val metadata1stPart: Reads[MetaDataPart1] = Json.reads[MetaDataPart1]
     implicit val metadata2ndPart: Reads[MetaDataPart2] = Json.reads[MetaDataPart2]
@@ -125,7 +126,7 @@ object MetaDataFormat {
     }
   }
 
-  private val writesMetadata: Writes[MetaData] = {
+  val writesMetadata: OWrites[MetaData] = {
 
     (Json.writes[MetaDataPart1] and Json.writes[MetaDataPart2])((meta: MetaData) => {
       // Return a tuple of MetaDataPart1 and MetaDataPart2. This is a handwritten unapply method, converting
@@ -169,37 +170,28 @@ object MetaDataFormat {
 
 object ContentTypeFormat {
 
-  implicit val metadataFormat = MetaDataFormat.format
   implicit val podcastFormat = Json.format[Podcast]
+  implicit val metadataFormat = MetaDataFormat.format
   implicit val tagFormat = Json.format[Tag]
-  implicit val tagsFormat = Json.format[Tags]
-  implicit val fieldsFormat = Json.format[Fields]
-  implicit val sharelinksFormat = Json.format[ShareLinks]
+  val tagsFormat = Json.format[Tags]
+  val fieldsFormat = Json.format[Fields]
+  val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]
   implicit val cardStyleFormat = CardStyleFormat
-  implicit val commercialFormat = Json.format[Commercial]
-
-  implicit val elementsFormat = ElementsFormat.format
   implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
-  implicit val trailFormat: Format[Trail] = Json.format[Trail]
+  private val shareLinksJsonFormat = Json.format[JsonShareLinks]
+  private val commercialJsonFormat = Json.format[JsonCommercial]
+  private val trailJsonFormat = Json.format[JsonTrail]
 
-  private case class ContentPart1(
-    trail: Trail,
-    metadata: MetaData,
-    tags: Tags,
-    commercial: Commercial,
-    elements: Elements,
-    fields: Fields,
-    sharelinks: ShareLinks,
+  // These private classes are denormalised versions of their corresponding model representations. This saves space.
+  private case class JsonContent(
     publication: String,
     internalPageCode: String,
     contributorBio: Option[String],
     starRating: Option[Int],
     allowUserGeneratedContent: Boolean,
     isExpired: Boolean,
-    productionOffice: Option[String])
-
-  private case class ContentPart2(
+    productionOffice: Option[String],
     tweets: Seq[Tweet],
     showInRelated: Boolean,
     cardStyle: CardStyle,
@@ -214,65 +206,107 @@ object ContentTypeFormat {
     rawOpenGraphImage: String,
     showFooterContainers: Boolean)
 
+  private case class JsonShareLinks(
+    elementShareOrder: List[String],
+    pageShareOrder: List[String]
+  )
+
+  private case class JsonCommercial(
+    isInappropriateForSponsorship: Boolean,
+    sponsorshipTag: Option[Tag],
+    isFoundationSupported: Boolean,
+    isAdvertisementFeature: Boolean,
+    hasMultipleSponsors: Boolean,
+    hasMultipleFeatureAdvertisers: Boolean,
+    hasInlineMerchandise: Boolean
+  )
+
+  private case class JsonTrail(
+    webPublicationDate: DateTime,
+    headline: String,
+    byline: Option[String],
+    sectionName: String,
+    trailPicture: Option[ImageMedia],
+    thumbnailPath: Option[String],
+    discussionId: Option[String],
+    isCommentable: Boolean,
+    isClosedForComments: Boolean
+  )
+
   private val readsContent: Reads[Content] = {
 
-    implicit val content1stPart: Reads[ContentPart1] = Json.reads[ContentPart1]
-    implicit val content2ndPart: Reads[ContentPart2] = Json.reads[ContentPart2]
+    val contentJson: Reads[JsonContent] = Json.reads[JsonContent]
 
     // Combine a Builder[Reads] with a function that can create Content to make a Reads[Content].
-    (content1stPart and content2ndPart) { (part1: ContentPart1, part2: ContentPart2) => Content(
-        part1.trail,
-        part1.metadata,
-        part1.tags,
-        part1.commercial,
-        part1.elements,
-        part1.fields,
-        part1.sharelinks,
-        part1.publication,
-        part1.internalPageCode,
-        part1.contributorBio,
-        part1.starRating,
-        part1.allowUserGeneratedContent,
-        part1.isExpired,
-        part1.productionOffice,
-        part2.tweets,
-        part2.showInRelated,
-        part2.cardStyle,
-        part2.shouldHideAdverts,
-        part2.witnessAssignment,
-        part2.isbn,
-        part2.imdb,
-        part2.javascriptReferences,
-        part2.wordCount,
-        part2.resolvedMetaData,
-        part2.hasStoryPackage,
-        part2.rawOpenGraphImage,
-        part2.showFooterContainers
-      )
+    (contentJson and shareLinksJsonFormat and commercialJsonFormat and trailJsonFormat and elementsFormat and metadataFormat and fieldsFormat and tagsFormat) {
+      (jsonContent: JsonContent,
+       jsonShareLinks: JsonShareLinks,
+       jsonCommercial: JsonCommercial,
+       jsonTrail: JsonTrail,
+       elements: Elements,
+       metadata: MetaData,
+       fields: Fields,
+       tags: Tags) => {
+
+       val sharelinks = ShareLinks.apply(tags, fields, metadata, jsonShareLinks.elementShareOrder, jsonShareLinks.pageShareOrder)
+       val commercial = Commercial.apply(tags, metadata,
+        jsonCommercial.isInappropriateForSponsorship,
+        jsonCommercial.sponsorshipTag,
+        jsonCommercial.isFoundationSupported,
+        jsonCommercial.isAdvertisementFeature,
+        jsonCommercial.hasMultipleSponsors,
+        jsonCommercial.hasMultipleFeatureAdvertisers,
+        jsonCommercial.hasInlineMerchandise)
+       val trail = Trail.apply(tags, commercial, fields, metadata, elements,
+        jsonTrail.webPublicationDate,
+        jsonTrail.headline,
+        jsonTrail.byline,
+        jsonTrail.sectionName,
+        jsonTrail.trailPicture,
+        jsonTrail.thumbnailPath,
+        jsonTrail.discussionId,
+        jsonTrail.isCommentable,
+        jsonTrail.isClosedForComments)
+
+       Content.apply(trail, metadata, tags, commercial, elements, fields, sharelinks,
+        jsonContent.publication,
+        jsonContent.internalPageCode,
+        jsonContent.contributorBio,
+        jsonContent.starRating,
+        jsonContent.allowUserGeneratedContent,
+        jsonContent.isExpired,
+        jsonContent.productionOffice,
+        jsonContent.tweets,
+        jsonContent.showInRelated,
+        jsonContent.cardStyle,
+        jsonContent.shouldHideAdverts,
+        jsonContent.witnessAssignment,
+        jsonContent.isbn,
+        jsonContent.imdb,
+        jsonContent.javascriptReferences,
+        jsonContent.wordCount,
+        jsonContent.resolvedMetaData,
+        jsonContent.hasStoryPackage,
+        jsonContent.rawOpenGraphImage,
+        jsonContent.showFooterContainers
+       )
+      }
     }
   }
 
   private val writesContent: Writes[Content] = {
 
-    (Json.writes[ContentPart1] and Json.writes[ContentPart2])((content: Content) => {
-      // Return a tuple of ContentPart1 and ContentPart2. This is a handwritten unapply method, converting
-      // from the big MetaData class to the smaller classes.
-      ( ContentPart1(
-          content.trail,
-          content.metadata,
-          content.tags,
-          content.commercial,
-          content.elements,
-          content.fields,
-          content.sharelinks,
+    (Json.writes[JsonContent] and Json.writes[JsonShareLinks] and Json.writes[JsonCommercial] and Json.writes[JsonTrail] and ElementsFormat.format and MetaDataFormat.writesMetadata and Json.writes[Fields] and Json.writes[Tags])((content: Content) => {
+      // Return a tuple of decomposed classes. This is a handwritten unapply method, converting
+      // from the big Content class to the smaller classes.
+      ( JsonContent.apply(
           content.publication,
           content.internalPageCode,
           content.contributorBio,
           content.starRating,
           content.allowUserGeneratedContent,
           content.isExpired,
-          content.productionOffice),
-        ContentPart2(
+          content.productionOffice,
           content.tweets,
           content.showInRelated,
           content.cardStyle,
@@ -286,14 +320,39 @@ object ContentTypeFormat {
           content.hasStoryPackage,
           content.rawOpenGraphImage,
           content.showFooterContainers
-        )
+        ),
+        JsonShareLinks.apply(content.sharelinks.elementShareOrder, content.sharelinks.pageShareOrder),
+        JsonCommercial.apply(
+          content.commercial.isInappropriateForSponsorship,
+          content.commercial.sponsorshipTag,
+          content.commercial.isFoundationSupported,
+          content.commercial.isAdvertisementFeature,
+          content.commercial.hasMultipleSponsors,
+          content.commercial.hasMultipleFeatureAdvertisers,
+          content.commercial.hasInlineMerchandise
+        ),
+        JsonTrail.apply(
+          content.trail.webPublicationDate,
+          content.trail.headline,
+          content.trail.byline,
+          content.trail.sectionName,
+          content.trail.trailPicture,
+          content.trail.thumbnailPath,
+          content.trail.discussionId,
+          content.trail.isCommentable,
+          content.trail.isClosedForComments
+        ),
+        content.elements,
+        content.metadata,
+        content.fields,
+        content.tags
       )
     })
   }
 
   implicit val contentFormat: Format[Content] = Format[Content](readsContent, writesContent)
-  implicit val lightboxFormat = Json.format[GenericLightbox]
-  implicit val galleryLightboxFormat = Json.format[GalleryLightbox]
+  implicit val lightboxFormat = Json.format[GenericLightboxProperties]
+  implicit val galleryLightboxFormat = Json.format[GalleryLightboxProperties]
 
   val articleFormat = Json.format[Article]
   val galleryFormat = Json.format[Gallery]
