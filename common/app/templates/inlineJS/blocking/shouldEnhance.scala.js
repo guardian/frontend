@@ -30,7 +30,7 @@
                 localStorage.setItem(enhancedKey, JSON.stringify({value: /off/.test(corePref)}));
                 localStorage.removeItem(coreKey);
             }
-            // a version went out that set the pref to a boolean, but
+            // previous version set the pref to a boolean, but
             // prefs use the {value: 'x'} format – correct that
             var enhancedPref = JSON.parse(localStorage.getItem(enhancedKey));
             if (typeof enhancedPref === "boolean") {
