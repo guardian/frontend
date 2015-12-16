@@ -46,7 +46,10 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
 
-  // true if switched on and switchboard has been read
+  /*
+   * If the switchboard hasn't been read yet, the "safe state" is returned instead of the real switch value. 
+   * This makes sure the switchboard has been read before returning the switch state.
+   */
   def isGuaranteedSwitchedOn: Future[Boolean] = onInitialized map { _ => isSwitchedOn }
 
   def switchOn() {
