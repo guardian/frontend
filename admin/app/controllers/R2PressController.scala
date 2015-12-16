@@ -19,7 +19,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     Ok(views.html.pressR2(pressPageForm))
   }
 
-  def press() = AuthActions.AuthActionTest { request =>
+  def press() = AuthActions.AuthActionTest { implicit request =>
     pressPageForm.bindFromRequest().get.trim match {
       case R2PagePress(r2url) if r2url.nonEmpty  => R2PagePressNotifier.enqueue(r2url)
       case _ =>
