@@ -15,18 +15,11 @@
     var isFront = @item.isFront;
     var enhancedKey = 'gu.prefs.enhanced';
 
-    var preferEnhanced;
-    try {
-        preferEnhanced = JSON.parse(localStorage.getItem(enhancedKey));
-    } catch (e) {
-        preferEnhanced = null;
-    };
-
     // This has been called core, featuresoff, universal etc, and a few previous ways of
     // opting in and out existed.
     // Now we have settled on standard and enhanced, the previous methods are handled
-    // here, temporarily. This function can go after a while.
-    function normaliseNomenclature() {
+    // here, temporarily. This can go after a while.
+    (function () {
         var coreKey = 'gu.prefs.force-core', settingCorePref, corePref;
 
         // update any `force-core` stored pref
@@ -34,8 +27,14 @@
             var localStorage = window.localStorage,
                 corePref = localStorage.getItem(coreKey);
             if (corePref) {
-                localStorage.setItem(enhancedKey, /off/.test(corePref));
+                localStorage.setItem(enhancedKey, JSON.stringify({value: /off/.test(corePref)}));
                 localStorage.removeItem(coreKey);
+            }
+            // previous version set the pref to a boolean, but
+            // prefs use the {value: 'x'} format – correct that
+            var enhancedPref = JSON.parse(localStorage.getItem(enhancedKey));
+            if (typeof enhancedPref === "boolean") {
+                localStorage.setItem(enhancedKey, JSON.stringify({value: enhancedPref}));
             }
         } catch (e) {};
 
@@ -53,6 +52,14 @@
                 hash = location.hash = '#enhanced';
             }
         }
+    })();
+    // now we should be ready for standard/enhanced
+
+    var preferEnhanced;
+    try {
+        preferEnhanced = JSON.parse(localStorage.getItem(enhancedKey)).value;
+    } catch (e) {
+        preferEnhanced = null;
     };
 
     function mustEnhance() {
@@ -85,9 +92,6 @@
     function isIpad() {
         return (platform === 'iPad');
     };
-
-    // clean up old names before checking the ones we'll expect from now on
-    normaliseNomenclature();
 
     // down to business
     window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
