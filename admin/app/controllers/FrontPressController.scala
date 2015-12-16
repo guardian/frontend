@@ -3,6 +3,7 @@ package controllers
 import common.{ExecutionContexts, Logging}
 import controllers.admin.AuthActions
 import jobs.{LowFrequency, StandardFrequency, HighFrequency, RefreshFrontsJob}
+import pagepresser.Presser
 import play.api.mvc.Controller
 
 object FrontPressController extends Controller with Logging with AuthLogging with ExecutionContexts {
@@ -28,6 +29,12 @@ object FrontPressController extends Controller with Logging with AuthLogging wit
 
   def queueLowFrequencyFrontsForPress() = AuthActions.AuthActionTest { request =>
     runJob(RefreshFrontsJob.runFrequency(LowFrequency), "low frequency")
+  }
+
+  def r2() = AuthActions.AuthActionTest { request =>
+    Presser.press("http://www.theguardian.com/technology/competition/2013/nov/01/observer-tech-monthly-student-competition", "technology/competition/2013/nov/01/observer-tech-monthly-student-competition")
+    Ok("done")
+
   }
 
   private def runJob(didRun: Boolean, jobName: String) = {

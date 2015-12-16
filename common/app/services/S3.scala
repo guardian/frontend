@@ -127,12 +127,15 @@ trait S3 extends Logging {
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
+    println(bucket)
     try {
       client.foreach(_.putObject(request))
     } catch {
-      case e: Exception =>
+      case e: Exception => {
         S3ClientExceptionsMetric.increment()
+        println(e)
         throw e
+      }
     }
   }
 }
@@ -258,4 +261,8 @@ object S3Infosec extends S3 {
   override lazy val bucket = "aws-frontend-infosec"
   val key = "blocked-email-domains.txt"
   def getBlockedEmailDomains = get(key)
+}
+
+object R2TemporaryArchiveForTesting extends S3 {
+  override lazy val bucket = "jenny-r2-temporary-archive" //todo rename
 }
