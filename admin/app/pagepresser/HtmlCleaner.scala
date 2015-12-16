@@ -19,6 +19,10 @@ object HtmlCleaner {
 
     val comments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
     comments.map(_.remove())
+
+    val promos = document.getElementById("promo")
+    if(promos != null) promos.remove()
+
     document
   }
 
