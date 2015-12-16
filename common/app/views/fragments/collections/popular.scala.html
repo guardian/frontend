@@ -50,12 +50,12 @@
                         </div>
                     </li>
                     }
+                    @if(showMPU(containerDefinition)&&info.rowNum==1) {
+                    <li class="js-fc-slice-mpu-candidate-onload">
+                    </li>
+                    }
                 </ul>
             </div>
-        }
-
-        @if(showMPU(containerDefinition)) {
-            <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
         }
 
         @if(isTabbed) {

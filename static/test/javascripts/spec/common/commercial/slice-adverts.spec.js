@@ -64,18 +64,14 @@ define([
         });
 
         it('should only create a maximum of 3 advert slots', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init().then(function () {
                 expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
                 done();
             });
         });
 
         it('should remove the "fc-slice__item--no-mpu" class', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init().then(function () {
                 $('.ad-slot', $fixtureContainer).each(function (adSlot) {
                     expect(bonzo(adSlot).parent().hasClass('fc-slice__item--no-mpu')).toBe(false);
                 });
@@ -85,15 +81,12 @@ define([
         });
 
         it('should have the correct ad names', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
-                var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
-
-                expect($adSlots[0].data('name')).toEqual('inline1');
-                expect($adSlots[1].data('name')).toEqual('inline2');
-                expect($adSlots[2].data('name')).toEqual('inline3');
-
+            sliceAdverts.init().then(function () {
+                $('.ad-slot', $fixtureContainer)
+                    .map(function (slot) { return $(slot); })
+                    .forEach(function ($adSlot, index) {
+                        expect($adSlot.data('name')).toEqual('inline' + (index + 1));
+                    });
                 done();
             });
         });
@@ -102,23 +95,18 @@ define([
             detect.getBreakpoint = function () {
                 return 'mobile';
             };
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
-                var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
-
-                expect($adSlots[0].data('name')).toEqual('inline1');
-                expect($adSlots[1].data('name')).toEqual('inline2');
-                expect($adSlots[2].data('name')).toEqual('inline3');
-
+            sliceAdverts.init().then(function () {
+                $('.ad-slot', $fixtureContainer)
+                    .map(function (slot) { return $(slot); })
+                    .forEach(function ($adSlot, index) {
+                        expect($adSlot.data('name')).toEqual('inline' + (index + 1));
+                    });
                 done();
             });
         });
 
         it('should have the correct size mappings', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init().then(function () {
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
@@ -139,10 +127,9 @@ define([
         });
 
         it('should have at least one non-advert containers between advert containers', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init().then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-second .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 done();
             });
@@ -157,12 +144,8 @@ define([
 
         it('should not add ad to first container if network front', function (done) {
             config.page.pageId = 'uk';
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init().then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
-                expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
                 done();
             });
         });
@@ -173,11 +156,8 @@ define([
             prefs[containerId] = 'closed';
             $('.fc-container-first', $fixtureContainer).attr('data-id', containerId);
             userPrefs.set('container-states', prefs);
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
-                expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
+            sliceAdverts.init().then(function () {
+                expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 done();
             });
         });
