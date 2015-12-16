@@ -9,9 +9,9 @@
             case Some(widths) => {
                 @image(
                     classes = Seq("responsive-img"),
-                    srcset = ImgSrc.srcset(imageContainer, widths),
-                    sizes = widths.sizes,
-                    src = if(inlineImage) ImgSrc.getFallbackUrl(imageContainer) else None
+                    widths = widths,
+                    maybeImageContainer = Some(imageContainer),
+                    maybeSrc = if(inlineImage) ImgSrc.getFallbackUrl(imageContainer) else None
                 )
             }
 

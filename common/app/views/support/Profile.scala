@@ -135,19 +135,19 @@ object ImgSrc extends Logging {
   }
 
   def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
-    widths.profiles.map { profile =>
-      if(ImageServerSwitch.isSwitchedOn) {
-        s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
-      } else {
-        s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
-      }
-    } mkString ", "
+    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
   }
 
-  def srcset(path: String, widths: WidthsByBreakpoint): String = {
-    widths.profiles map { profile =>
-      s"${ImgSrc(path, profile)} ${profile.width.get}w"
-    } mkString ", "
+  def srcsetForProfile(profile: Profile, imageContainer: ImageContainer): String = {
+    if(ImageServerSwitch.isSwitchedOn) {
+      s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+    } else {
+      s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get}w"
+    }
+  }
+
+  def srcsetForProfile(profile: Profile, path: String): String = {
+    s"${ImgSrc(path, profile)} ${profile.width.get}w"
   }
 
   def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {

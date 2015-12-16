@@ -260,7 +260,7 @@ case class WidthsByBreakpoint(
 ) {
   private val allBreakpoints: List[Breakpoint] = List(Wide, LeftCol, Desktop, Tablet, Phablet, MobileLandscape, Mobile)
   private val allWidths: List[Option[BrowserWidth]] = List(wide, leftCol, desktop, tablet, phablet, mobileLandscape, mobile)
-  private val breakpoints: Seq[BreakpointWidth] = allBreakpoints zip allWidths collect {
+  val breakpoints: Seq[BreakpointWidth] = allBreakpoints zip allWidths collect {
       case (breakpoint, Some(width)) => BreakpointWidth(breakpoint, width)
     }
 
@@ -276,7 +276,7 @@ case class WidthsByBreakpoint(
   } mkString ", "
 
 
-  def profiles: Seq[Profile] = (breakpoints flatMap {
+  def breakpointWidthToPixels = (breakpoint: BreakpointWidth) => breakpoint match {
     case BreakpointWidth(breakpoint, PixelWidth(pixels)) =>
       Seq(pixels)
     case BreakpointWidth(Mobile, _: PercentageWidth | _: ViewportWidth) =>
@@ -286,11 +286,11 @@ case class WidthsByBreakpoint(
       val widths: Seq[Int] = pixelWidths.dropWhile(_ > MaximumMobileImageWidth).take(SourcesToEmitOnMobile)
       widths ++ FaciaWidths.ExtraPixelWidthsForMediaMobile.map(_.get)
     case _ => Seq.empty
-  })
-  .distinct
-  .map { (browserWidth: Int) =>
-    Profile(width = Some(browserWidth))
   }
+
+  def profiles: Seq[Profile] = (breakpoints flatMap breakpointWidthToPixels)
+    .distinct
+    .map((browserWidth: Int) => Profile(width = Some(browserWidth)))
 }
 
 case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth)

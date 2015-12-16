@@ -349,13 +349,17 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
     @include mq(tablet) {
-        .fc-item__slideshow--#{$i} img {
-            animation-duration: #{$totalLoopTime}s;
-            animation-name: fc-item__slideshow--#{$i};
+        .fc-item__slideshow--#{$i} {
+            img {
+                animation-duration: #{$totalLoopTime}s;
+                animation-name: fc-item__slideshow--#{$i};
+            }
 
             @for $j from 2 through $i {
-                &:nth-child(#{$j}) {
-                    animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
+                picture:nth-child(#{$j}) {
+                    img {
+                        animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
+                    }
                 }
             }
         }

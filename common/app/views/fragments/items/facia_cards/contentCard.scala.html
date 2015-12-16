@@ -98,15 +98,15 @@ data-test-id="facia-card"
                     @imageElements.headOption.map { imageElement =>
                         @image(
                             classes = Seq("responsive-img"),
-                            srcset = ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                            sizes = item.mediaWidthsByBreakpoint.sizes,
-                            src = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
+                            widths = item.mediaWidthsByBreakpoint,
+                            maybeUrl = Some(imageElement.url),
+                            maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
                         )
                         @imageElements.tail.map { imageElement =>
                             @image(
                                 classes = Seq("responsive-img "),
-                                srcset = ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                                sizes = item.mediaWidthsByBreakpoint.sizes
+                                widths = item.mediaWidthsByBreakpoint,
+                                maybeUrl = Some(imageElement.url)
                             )
                         }
                     }
@@ -156,8 +156,8 @@ data-test-id="facia-card"
             <div class="fc-item__avatar">
                 @image(
                     classes = Seq("fc-item__avatar__media", cutOut.cssClass),
-                    srcset = ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
-                    sizes = FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes
+                    widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                    maybeUrl = Some(imageUrl)
                 )
             </div>
             }

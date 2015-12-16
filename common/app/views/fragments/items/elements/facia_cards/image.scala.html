@@ -1,10 +1,24 @@
-@(classes: Seq[String], srcset: String, sizes: String, src: Option[String] = None)
+@import layout.WidthsByBreakpoint
+@(classes: Seq[String], widths: WidthsByBreakpoint, maybeImageContainer: Option[model.ImageContainer] = None, maybeUrl: Option[String] = None, maybeSrc: Option[String] = None)
 
-<img class="@RenderClasses(classes: _*)"
-    alt=""
-    srcset="@srcset"
-    sizes="@sizes"
-    @src.map { src =>
-        src="@src"
+<picture>
+    @widths.breakpoints.map { breakpointWidth =>
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+                sizes="@breakpointWidth.width"
+                srcset="@{
+                    widths.breakpointWidthToPixels(breakpointWidth)
+                        .map(browserWidth => Profile(width = Some(browserWidth)))
+                        .map(profile => {
+                            if (maybeUrl.isDefined) {
+                                ImgSrc.srcsetForProfile(profile, maybeUrl.get)
+                            } else {
+                                ImgSrc.srcsetForProfile(profile, maybeImageContainer.get)
+                            }
+                        })
+                        .mkString(", ")
+                }" />
     }
->
+    <img class="@RenderClasses(classes: _*)"
+         alt=""
+         @maybeSrc.map { src => src="@src" } />
+</picture>
