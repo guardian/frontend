@@ -83,3 +83,17 @@
         }
     }
 }
+
+.paid-content--advertisement-feature {
+    &.facia-page {
+        background-color: colour(paid-article);
+
+        .tone-news--item.fc-item {
+            background-color: colour(paid-article-header);
+
+            .u-faux-block-link--hover {
+                background-color: colour(paid-article-subheader);
+            }
+        }
+    }
+}

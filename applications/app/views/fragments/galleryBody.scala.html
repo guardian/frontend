@@ -8,7 +8,8 @@
 
     <article class="@RenderClasses(
             Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn),
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && gallery.commercial.isAdvertisementFeature)
+            ),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(gallery)}"
         )"
         itemscope itemtype="@gallery.metadata.schemaType" role="main">

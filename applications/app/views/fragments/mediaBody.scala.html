@@ -13,7 +13,7 @@
             Map(
                 "content--has-body" -> media.fields.body.nonEmpty,
                 "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature,
-                "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && page.media.commercial.isAdvertisementFeature)
             ),
             "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
         )"
