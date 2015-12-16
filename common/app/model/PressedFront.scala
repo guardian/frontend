@@ -4,7 +4,6 @@ import com.gu.facia.api.{models => fapi}
 import implicits.CollectionsOps._
 import model.pressed._
 import org.joda.time.DateTime
-import play.api.libs.json._
 import services.CollectionConfigWithId
 
 case class PressedCollection(
@@ -35,10 +34,6 @@ case class PressedCollection(
 }
 
 object PressedCollection {
-
-  implicit val collectionConfigFormat = Json.format[CollectionConfig]
-  implicit val pressedContentFormat = PressedContentFormats.pressedContentFormat
-  implicit val pressedCollectionFormat = Json.format[PressedCollection]
 
   def fromCollectionWithCuratedAndBackfill(
       collection: com.gu.facia.api.models.Collection,

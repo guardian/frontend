@@ -1,40 +1,518 @@
 package model
 
-import org.joda.time.DateTime
+import com.gu.facia.api.{utils => fapiutils}
+import com.gu.contentapi.client.model.Podcast
+import common.{NavItem, SectionLink, Pagination}
+import model.facia.PressedCollection
 import play.api.libs.json._
-import play.api.libs.json.Json.toJson
+import play.api.libs.functional.syntax._
+import pressed._
 
-trait Formats extends implicits.Dates {
-  implicit val imageFormat: Writes[ImageAsset] = new Writes[ImageAsset] {
-    def writes(image: ImageAsset): JsValue = toJson(
-      Map(
-        ("index", toJson(image.index)),
-        ("url", toJson(image.url)),
-        ("thumbnail", toJson(image.thumbnail)),
-        ("width", toJson(image.width)),
-        ("caption", toJson(image.caption)),
-        ("altText", toJson(image.altText)),
-        ("source", toJson(image.source)),
-        ("photographer", toJson(image.photographer)),
-        ("credit", toJson(image.credit))
+object ElementsFormat {
+
+  implicit val elementPropertiesFormat = Json.format[ElementProperties]
+  implicit val imageAssetFormat = Json.format[ImageAsset]
+  implicit val videoAssetFormat = Json.format[VideoAsset]
+  implicit val audioAssetFormat = Json.format[AudioAsset]
+  implicit val embedAssetFormat = Json.format[EmbedAsset]
+
+  implicit val imageMediaFormat = Json.format[ImageMedia]
+  implicit val videoMediaFormat = Json.format[VideoMedia]
+  implicit val audioMediaFormat = Json.format[AudioMedia]
+  implicit val embedMediaFormat = Json.format[EmbedMedia]
+
+  val imageElementFormat = Json.format[ImageElement]
+  val videoElementFormat = Json.format[VideoElement]
+  val audioElementFormat = Json.format[AudioElement]
+  val embedElementFormat = Json.format[EmbedElement]
+  val defaultElementFormat = Json.format[DefaultElement]
+
+  implicit object elementFormat extends Format[Element] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("ImageElement"), _) => (json \ "item").validate[ImageElement](imageElementFormat)
+        case JsSuccess(JsString("AudioElement"), _) => (json \ "item").validate[AudioElement](audioElementFormat)
+        case JsSuccess(JsString("VideoElement"), _) => (json \ "item").validate[VideoElement](videoElementFormat)
+        case JsSuccess(JsString("EmbedElement"), _) => (json \ "item").validate[EmbedElement](embedElementFormat)
+        case JsSuccess(JsString("DefaultElement"), _) => (json \ "item").validate[DefaultElement](defaultElementFormat)
+        case _ => JsError("Could not convert ImageElement")
+      }
+    }
+
+    def writes(element: Element) = element match {
+      case image: ImageElement => JsObject(Seq("type" -> JsString("ImageElement"), "item" -> Json.toJson(image)(imageElementFormat)))
+      case audio: AudioElement => JsObject(Seq("type" -> JsString("AudioElement"), "item" -> Json.toJson(audio)(audioElementFormat)))
+      case video: VideoElement => JsObject(Seq("type" -> JsString("VideoElement"), "item" -> Json.toJson(video)(videoElementFormat)))
+      case embed: EmbedElement => JsObject(Seq("type" -> JsString("EmbedElement"), "item" -> Json.toJson(embed)(embedElementFormat)))
+      case default: DefaultElement => JsObject(Seq("type" -> JsString("DefaultElement"), "item" -> Json.toJson(default)(defaultElementFormat)))
+    }
+  }
+
+  val format = Json.format[Elements]
+}
+
+object MetaDataFormat {
+  implicit val paginationFormat = Json.format[Pagination]
+  implicit val sectionLinkFormat = Json.format[SectionLink]
+  implicit val navItemFormat = Json.format[NavItem]
+
+  private case class MetaDataPart1(
+    id: String,
+    url: String,
+    webUrl: String,
+    section: String,
+    webTitle: String,
+    analyticsName: String,
+    adUnitSuffix: String,
+    iosType: Option[String],
+    pagination: Option[Pagination],
+    description: Option[String],
+    rssPath: Option[String])
+
+  private case class MetaDataPart2(
+    contentType: String,
+    isImmersive: Boolean,
+    schemaType: Option[String],
+    cacheSeconds: Int,
+    openGraphImages: Seq[String],
+    membershipAccess: Option[String],
+    isFront: Boolean,
+    isPressedPage: Boolean,
+    hideUi: Boolean,
+    canonicalUrl: Option[String],
+    shouldGoogleIndex: Boolean,
+    title: Option[String],
+    customSignPosting: Option[NavItem],
+    javascriptConfigOverrides: Map[String, JsValue],
+    opengraphPropertiesOverrides: Map[String, String],
+    twitterPropertiesOverrides: Map[String, String])
+
+  private val readsMetadata: Reads[MetaData] = {
+
+    implicit val metadata1stPart: Reads[MetaDataPart1] = Json.reads[MetaDataPart1]
+    implicit val metadata2ndPart: Reads[MetaDataPart2] = Json.reads[MetaDataPart2]
+
+    // Combine a Builder[Reads] to a function that can create MetaData results in a Reads[MetaData].
+    (metadata1stPart and metadata2ndPart) { (part1: MetaDataPart1, part2: MetaDataPart2) => MetaData(
+        part1.id,
+        part1.url,
+        part1.webUrl,
+        part1.section,
+        part1.webTitle,
+        part1.analyticsName,
+        part1.adUnitSuffix,
+        part1.iosType,
+        part1.pagination,
+        part1.description,
+        part1.rssPath,
+        part2.contentType,
+        part2.isImmersive,
+        part2.schemaType,
+        part2.cacheSeconds,
+        part2.openGraphImages,
+        part2.membershipAccess,
+        part2.isFront,
+        part2.isPressedPage,
+        part2.hideUi,
+        part2.canonicalUrl,
+        part2.shouldGoogleIndex,
+        part2.title,
+        part2.customSignPosting,
+        part2.javascriptConfigOverrides,
+        part2.opengraphPropertiesOverrides,
+        part2.twitterPropertiesOverrides
       )
-    )
+    }
   }
 
-  implicit val galleryFormat: Writes[Gallery] = new Writes[Gallery] {
-    def writes(gallery: Gallery): JsValue = toJson(
-      Map(
-        "pictures" -> gallery.lightbox.largestCrops.map(toJson(_))
+  private val writesMetadata: Writes[MetaData] = {
+
+    (Json.writes[MetaDataPart1] and Json.writes[MetaDataPart2])((meta: MetaData) => {
+      // Return a tuple of MetaDataPart1 and MetaDataPart2. This is a handwritten unapply method, converting
+      // from the big MetaData class to the smaller classes.
+      ( MetaDataPart1(
+          meta.id,
+          meta.url,
+          meta.webUrl,
+          meta.section,
+          meta.webTitle,
+          meta.analyticsName,
+          meta.adUnitSuffix,
+          meta.iosType,
+          meta.pagination,
+          meta.description,
+          meta.rssPath),
+        MetaDataPart2(
+          meta.contentType,
+          meta.isImmersive,
+          meta.schemaType,
+          meta.cacheSeconds,
+          meta.openGraphImages,
+          meta.membershipAccess,
+          meta.isFront,
+          meta.isPressedPage,
+          meta.hideUi,
+          meta.canonicalUrl,
+          meta.shouldGoogleIndex,
+          meta.title,
+          meta.customSignPosting,
+          meta.javascriptConfigOverrides,
+          meta.opengraphPropertiesOverrides,
+          meta.twitterPropertiesOverrides
+        )
       )
-    )
+    })
   }
 
-  // Some advice at: http://markembling.info/2011/07/json-date-time
-  implicit val dateTimeFormat: Writes[DateTime] = new Writes[DateTime] {
-    def writes(datetime: DateTime) = toJson(datetime.toISODateTimeString)
+  val format: Format[MetaData] = Format[MetaData](readsMetadata, writesMetadata)
+}
+
+object ContentTypeFormat {
+
+  implicit val metadataFormat = MetaDataFormat.format
+  implicit val podcastFormat = Json.format[Podcast]
+  implicit val tagFormat = Json.format[Tag]
+  implicit val tagsFormat = Json.format[Tags]
+  implicit val fieldsFormat = Json.format[Fields]
+  implicit val sharelinksFormat = Json.format[ShareLinks]
+  implicit val tweetFormat = Json.format[Tweet]
+  implicit val cardStyleFormat = CardStyleFormat
+  implicit val commercialFormat = Json.format[Commercial]
+
+  implicit val elementsFormat = ElementsFormat.format
+  implicit val imageMediaFormat = ElementsFormat.imageMediaFormat
+  implicit val trailFormat: Format[Trail] = Json.format[Trail]
+
+  private case class ContentPart1(
+    trail: Trail,
+    metadata: MetaData,
+    tags: Tags,
+    commercial: Commercial,
+    elements: Elements,
+    fields: Fields,
+    sharelinks: ShareLinks,
+    publication: String,
+    internalPageCode: String,
+    contributorBio: Option[String],
+    starRating: Option[Int],
+    allowUserGeneratedContent: Boolean,
+    isExpired: Boolean,
+    productionOffice: Option[String])
+
+  private case class ContentPart2(
+    tweets: Seq[Tweet],
+    showInRelated: Boolean,
+    cardStyle: CardStyle,
+    shouldHideAdverts: Boolean,
+    witnessAssignment: Option[String],
+    isbn: Option[String],
+    imdb: Option[String],
+    javascriptReferences: Seq[JsObject],
+    wordCount: Int,
+    resolvedMetaData: fapiutils.ResolvedMetaData,
+    hasStoryPackage: Boolean,
+    rawOpenGraphImage: String,
+    showFooterContainers: Boolean)
+
+  private val readsContent: Reads[Content] = {
+
+    implicit val content1stPart: Reads[ContentPart1] = Json.reads[ContentPart1]
+    implicit val content2ndPart: Reads[ContentPart2] = Json.reads[ContentPart2]
+
+    // Combine a Builder[Reads] with a function that can create Content to make a Reads[Content].
+    (content1stPart and content2ndPart) { (part1: ContentPart1, part2: ContentPart2) => Content(
+        part1.trail,
+        part1.metadata,
+        part1.tags,
+        part1.commercial,
+        part1.elements,
+        part1.fields,
+        part1.sharelinks,
+        part1.publication,
+        part1.internalPageCode,
+        part1.contributorBio,
+        part1.starRating,
+        part1.allowUserGeneratedContent,
+        part1.isExpired,
+        part1.productionOffice,
+        part2.tweets,
+        part2.showInRelated,
+        part2.cardStyle,
+        part2.shouldHideAdverts,
+        part2.witnessAssignment,
+        part2.isbn,
+        part2.imdb,
+        part2.javascriptReferences,
+        part2.wordCount,
+        part2.resolvedMetaData,
+        part2.hasStoryPackage,
+        part2.rawOpenGraphImage,
+        part2.showFooterContainers
+      )
+    }
   }
 
-  implicit val metaDataFormat: Writes[MetaData] = new Writes[MetaData] {
-    def writes(item: MetaData): JsValue = toJson(item)
+  private val writesContent: Writes[Content] = {
+
+    (Json.writes[ContentPart1] and Json.writes[ContentPart2])((content: Content) => {
+      // Return a tuple of ContentPart1 and ContentPart2. This is a handwritten unapply method, converting
+      // from the big MetaData class to the smaller classes.
+      ( ContentPart1(
+          content.trail,
+          content.metadata,
+          content.tags,
+          content.commercial,
+          content.elements,
+          content.fields,
+          content.sharelinks,
+          content.publication,
+          content.internalPageCode,
+          content.contributorBio,
+          content.starRating,
+          content.allowUserGeneratedContent,
+          content.isExpired,
+          content.productionOffice),
+        ContentPart2(
+          content.tweets,
+          content.showInRelated,
+          content.cardStyle,
+          content.shouldHideAdverts,
+          content.witnessAssignment,
+          content.isbn,
+          content.imdb,
+          content.javascriptReferences,
+          content.wordCount,
+          content.resolvedMetaData,
+          content.hasStoryPackage,
+          content.rawOpenGraphImage,
+          content.showFooterContainers
+        )
+      )
+    })
   }
+
+  implicit val contentFormat: Format[Content] = Format[Content](readsContent, writesContent)
+  implicit val lightboxFormat = Json.format[GenericLightbox]
+  implicit val galleryLightboxFormat = Json.format[GalleryLightbox]
+
+  val articleFormat = Json.format[Article]
+  val galleryFormat = Json.format[Gallery]
+  val audioFormat = Json.format[Audio]
+  val videoFormat = Json.format[Video]
+  val interactiveFormat = Json.format[Interactive]
+  val imageContentFormat = Json.format[ImageContent]
+  val genericContentFormat = Json.format[GenericContent]
+
+  object format extends Format[ContentType] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("Article"), _) => (json \ "item").validate[Article](articleFormat)
+        case JsSuccess(JsString("Gallery"), _) => (json \ "item").validate[Gallery](galleryFormat)
+        case JsSuccess(JsString("Audio"), _) => (json \ "item").validate[Audio](audioFormat)
+        case JsSuccess(JsString("Video"), _) => (json \ "item").validate[Video](videoFormat)
+        case JsSuccess(JsString("Interactive"), _) => (json \ "item").validate[Interactive](interactiveFormat)
+        case JsSuccess(JsString("ImageContent"), _) => (json \ "item").validate[ImageContent](imageContentFormat)
+        case JsSuccess(JsString("GenericContent"), _) => (json \ "item").validate[GenericContent](genericContentFormat)
+        case _ => JsError("Could not convert ContentType")
+      }
+    }
+
+    def writes(content: ContentType) = content match {
+      case article: Article => JsObject(Seq("type" -> JsString("Article"), "item" -> Json.toJson(article)(articleFormat)))
+      case gallery: Gallery => JsObject(Seq("type" -> JsString("Gallery"), "item" -> Json.toJson(gallery)(galleryFormat)))
+      case audio: Audio => JsObject(Seq("type" -> JsString("Audio"), "item" -> Json.toJson(audio)(audioFormat)))
+      case video: Video => JsObject(Seq("type" -> JsString("Video"), "item" -> Json.toJson(video)(videoFormat)))
+      case interactive: Interactive => JsObject(Seq("type" -> JsString("Interactive"), "item" -> Json.toJson(interactive)(interactiveFormat)))
+      case image: ImageContent => JsObject(Seq("type" -> JsString("ImageContent"), "item" -> Json.toJson(image)(imageContentFormat)))
+      case generic: GenericContent => JsObject(Seq("type" -> JsString("GenericContent"), "item" -> Json.toJson(generic)(genericContentFormat)))
+    }
+  }
+}
+
+object CardStyleFormat extends Format[CardStyle] {
+  def reads(json: JsValue) = {
+    (json \ "type").transform[JsString](Reads.JsStringReads) match {
+      case JsSuccess(JsString("SpecialReport"), _) => JsSuccess(SpecialReport)
+      case JsSuccess(JsString("LiveBlog"), _) => JsSuccess(LiveBlog)
+      case JsSuccess(JsString("DeadBlog"), _) => JsSuccess(DeadBlog)
+      case JsSuccess(JsString("Feature"), _) => JsSuccess(Feature)
+      case JsSuccess(JsString("Editorial"), _) => JsSuccess(Editorial)
+      case JsSuccess(JsString("Comment"), _) =>  JsSuccess(Comment)
+      case JsSuccess(JsString("Media"), _) => JsSuccess(Media)
+      case JsSuccess(JsString("Analysis"), _) => JsSuccess(Analysis)
+      case JsSuccess(JsString("Review"), _) => JsSuccess(Review)
+      case JsSuccess(JsString("Letters"), _) => JsSuccess(Letters)
+      case JsSuccess(JsString("ExternalLink"), _) => JsSuccess(ExternalLink)
+      case JsSuccess(JsString("DefaultCardstyle"), _) => JsSuccess(DefaultCardstyle)
+      case _ => JsError("Could not convert CardStyle")
+    }
+  }
+
+  def writes(cardStyle: CardStyle) = cardStyle match {
+    case SpecialReport => JsObject(Seq("type" -> JsString("SpecialReport")))
+    case LiveBlog => JsObject(Seq("type" -> JsString("LiveBlog")))
+    case DeadBlog => JsObject(Seq("type" -> JsString("DeadBlog")))
+    case Feature => JsObject(Seq("type" -> JsString("Feature")))
+    case Editorial => JsObject(Seq("type" -> JsString("Editorial")))
+    case Comment => JsObject(Seq("type" -> JsString("Comment")))
+    case Media => JsObject(Seq("type" -> JsString("Media")))
+    case Analysis => JsObject(Seq("type" -> JsString("Analysis")))
+    case Review => JsObject(Seq("type" -> JsString("Review")))
+    case Letters => JsObject(Seq("type" -> JsString("Letters")))
+    case ExternalLink => JsObject(Seq("type" -> JsString("ExternalLink")))
+    case DefaultCardstyle => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
+  }
+}
+
+object MediaTypeFormat extends Format[MediaType] {
+  def reads(json: JsValue) = {
+    (json \ "type").transform[JsString](Reads.JsStringReads) match {
+      case JsSuccess(JsString("Video"), _) => JsSuccess(pressed.Video)
+      case JsSuccess(JsString("Gallery"), _) => JsSuccess(pressed.Gallery)
+      case JsSuccess(JsString("Audio"), _) => JsSuccess(pressed.Audio)
+      case _ => JsError("Could not convert MediaType")
+    }
+  }
+
+  def writes(mediaType: MediaType) = mediaType match {
+    case pressed.Video => JsObject(Seq("type" -> JsString("Video")))
+    case pressed.Gallery => JsObject(Seq("type" -> JsString("Gallery")))
+    case pressed.Audio => JsObject(Seq("type" -> JsString("Audio")))
+  }
+}
+
+object PressedContentFormat {
+
+  // This format is implicit because CuratedContent is recursively defined, so it needs a format object in scope.
+  implicit object format extends Format[PressedContent] {
+
+    def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
+      case JsSuccess(JsString("LinkSnap"), _) => JsSuccess(json.as[LinkSnap](linkSnapFormat))
+      case JsSuccess(JsString("LatestSnap"), _) => JsSuccess(json.as[LatestSnap](latestSnapFormat))
+      case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](curatedContentFormat))
+      case JsSuccess(JsString("SupportingCuratedContent"), _) => JsSuccess(json.as[SupportingCuratedContent](supportingCuratedContentFormat))
+      case _ => JsError("Could not convert PressedContent")
+    }
+
+    def writes(faciaContent: PressedContent) = faciaContent match {
+      case linkSnap: LinkSnap => Json.toJson(linkSnap)(linkSnapFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+        case JsSuccess(l, _) =>
+          l ++ Json.obj("type" -> "LinkSnap")
+        case JsError(_) => JsNull
+      }
+      case latestSnap: LatestSnap => Json.toJson(latestSnap)(latestSnapFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+        case JsSuccess(l, _) =>
+          l ++ Json.obj("type" -> "LatestSnap")
+        case JsError(_) => JsNull
+      }
+      case content: CuratedContent => Json.toJson(content)(curatedContentFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+        case JsSuccess(l, _) =>
+          l ++ Json.obj("type" -> "CuratedContent")
+        case JsError(_) => JsNull
+      }
+      case supporting: SupportingCuratedContent => Json.toJson(supporting)(supportingCuratedContentFormat)
+        .transform[JsObject](Reads.JsObjectReads) match {
+        case JsSuccess(l, _) =>
+          l ++ Json.obj("type" -> "SupportingCuratedContent")
+        case JsError(_) => JsNull
+      }
+      case _ => JsNull
+    }
+  }
+
+  implicit val mediaTypeFormat = MediaTypeFormat
+  implicit val cardStyleFormat = CardStyleFormat
+  implicit val faciaImageFormat = FaciaImageFormat.format
+  implicit val contentTypeFormat = ContentTypeFormat.format
+  implicit val itemKickerFormat = ItemKickerFormat.format
+  implicit val tagKickerFormat = ItemKickerFormat.tagKickerFormat
+  implicit val pressedPressedCardHeader = Json.format[PressedCardHeader]
+  implicit val pressedPressedDisplaySettings = Json.format[PressedDisplaySettings]
+  implicit val pressedPressedDiscussionSettings = Json.format[PressedDiscussionSettings]
+  implicit val pressedPressedCard = Json.format[PressedCard]
+  implicit val pressedPropertiesFormat = Json.format[PressedProperties]
+
+  val latestSnapFormat = Json.format[LatestSnap]
+  val linkSnapFormat = Json.format[LinkSnap]
+  val curatedContentFormat = Json.format[CuratedContent]
+  val supportingCuratedContentFormat = Json.format[SupportingCuratedContent]
+}
+
+object ItemKickerFormat {
+  implicit val kickerPropertiesFormat = Json.format[KickerProperties]
+  implicit val seriesFormat = Json.format[Series]
+  val tagKickerFormat = Json.format[TagKicker]
+
+  private val podcastKickerFormat = Json.format[PodcastKicker]
+  private val sectionKickerFormat = Json.format[SectionKicker]
+  private val freeHtmlKickerFormat = Json.format[FreeHtmlKicker]
+  private val freeHtmlKickerWithLinkFormat = Json.format[FreeHtmlKickerWithLink]
+
+  object format extends Format[ItemKicker] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
+        case JsSuccess(JsString("LiveKicker"), _) => JsSuccess(LiveKicker)
+        case JsSuccess(JsString("AnalysisKicker"), _) => JsSuccess(AnalysisKicker)
+        case JsSuccess(JsString("ReviewKicker"), _) => JsSuccess(ReviewKicker)
+        case JsSuccess(JsString("CartoonKicker"), _) => JsSuccess(CartoonKicker)
+        case JsSuccess(JsString("PodcastKicker"), _) => (json \ "series").validate[PodcastKicker](podcastKickerFormat)
+        case JsSuccess(JsString("TagKicker"), _) => (json \ "item").validate[TagKicker](tagKickerFormat)
+        case JsSuccess(JsString("SectionKicker"), _) => (json \ "item").validate[SectionKicker](sectionKickerFormat)
+        case JsSuccess(JsString("FreeHtmlKicker"), _) => (json \ "item").validate[FreeHtmlKicker](freeHtmlKickerFormat)
+        case JsSuccess(JsString("FreeHtmlKickerWithLink"), _) => (json \ "item").validate[FreeHtmlKickerWithLink](freeHtmlKickerWithLinkFormat)
+        case _ => JsError("Could not convert ItemKicker")
+      }
+    }
+
+    def writes(itemKicker: ItemKicker) = itemKicker match {
+      case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
+      case LiveKicker => JsObject(Seq("type" -> JsString("LiveKicker")))
+      case AnalysisKicker => JsObject(Seq("type" -> JsString("AnalysisKicker")))
+      case ReviewKicker => JsObject(Seq("type" -> JsString("ReviewKicker")))
+      case CartoonKicker => JsObject(Seq("type" -> JsString("CartoonKicker")))
+      case podcastKicker: PodcastKicker => JsObject(Seq("type" -> JsString("PodcastKicker"), "series" -> Json.toJson(podcastKicker)(podcastKickerFormat)))
+      case tagKicker: TagKicker => JsObject(Seq("type" -> JsString("TagKicker"), "item" -> Json.toJson(tagKicker)(tagKickerFormat)))
+      case sectionKicker: SectionKicker => JsObject(Seq("type" -> JsString("SectionKicker"), "item" -> Json.toJson(sectionKicker)(sectionKickerFormat)))
+      case freeHtmlKicker: FreeHtmlKicker => JsObject(Seq("type" -> JsString("FreeHtmlKicker"), "item" -> Json.toJson(freeHtmlKicker)(freeHtmlKickerFormat)))
+      case freeHtmlKickerWithLink: FreeHtmlKickerWithLink => JsObject(Seq("type" -> JsString("FreeHtmlKickerWithLink"), "item" -> Json.toJson(freeHtmlKickerWithLink)(freeHtmlKickerWithLinkFormat)))
+    }
+  }
+}
+
+object FaciaImageFormat {
+  implicit val cutoutFormat = Json.format[Cutout]
+  implicit val replaceFormat = Json.format[Replace]
+  implicit val slideshowFormat = Json.format[ImageSlideshow]
+
+  object format extends Format[Image] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
+        case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
+        case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](slideshowFormat)
+        case _ => JsError("Could not convert ItemKicker")
+      }
+    }
+
+    def writes(faciaImage: Image) = faciaImage match {
+      case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
+      case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
+      case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
+    }
+  }
+}
+
+object PressedCollectionFormat {
+  implicit val collectionConfigFormat = Json.format[CollectionConfig]
+  implicit val pressedContentFormat = PressedContentFormat.format
+  val format  = Json.format[PressedCollection]
+}
+
+object PressedPageFormat {
+  implicit val pressedCollection = PressedCollectionFormat.format
+  val format = Json.format[PressedPage]
 }

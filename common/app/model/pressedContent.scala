@@ -6,30 +6,6 @@ import com.gu.facia.client.models.CollectionConfigJson
 import fapiutils.FaciaContentUtils
 import model.{SupportedUrl, ContentType}
 import org.joda.time.DateTime
-import play.api.libs.json._
-
-object PressedContentFormats {
-  implicit val mediaTypeFormat = MediaType.mediaTypeFormat
-  implicit val cardStyleFormat = CardStyle.cardStyleFormat
-  implicit val faciaImageFormat = Image.faciaImageFormat
-
-  implicit val contentTypeFormat = model.ContentType.contentTypeFormat
-
-  implicit val itemKickerFormat = ItemKicker.itemKickerFormat
-  implicit val tagKickerFormat = ItemKicker.tagKickerFormat
-  implicit val pressedPressedCardHeader = Json.format[PressedCardHeader]
-  implicit val pressedPressedDisplaySettings = Json.format[PressedDisplaySettings]
-  implicit val pressedPressedDiscussionSettings = Json.format[PressedDiscussionSettings]
-  implicit val pressedPressedCard = Json.format[PressedCard]
-  implicit val pressedPropertiesFormat = Json.format[PressedProperties]
-
-  implicit val pressedContentFormat = PressedContent.pressedContentFormat
-
-  val latestSnapFormat = Json.format[LatestSnap]
-  val linkSnapFormat = Json.format[LinkSnap]
-  val curatedContentFormat = Json.format[CuratedContent]
-  val supportingCuratedContentFormat = Json.format[SupportingCuratedContent]
-}
 
 object CollectionConfig {
   def make(config: fapi.CollectionConfig): CollectionConfig = {
@@ -92,40 +68,7 @@ object CardStyle {
     case fapiutils.DefaultCardstyle  => DefaultCardstyle
   }
 
-  object cardStyleFormat extends Format[CardStyle] {
-    def reads(json: JsValue) = {
-      (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("SpecialReport"), _) => JsSuccess(SpecialReport)
-        case JsSuccess(JsString("LiveBlog"), _) => JsSuccess(LiveBlog)
-        case JsSuccess(JsString("DeadBlog"), _) => JsSuccess(DeadBlog)
-        case JsSuccess(JsString("Feature"), _) => JsSuccess(Feature)
-        case JsSuccess(JsString("Editorial"), _) => JsSuccess(Editorial)
-        case JsSuccess(JsString("Comment"), _) =>  JsSuccess(Comment)
-        case JsSuccess(JsString("Media"), _) => JsSuccess(Media)
-        case JsSuccess(JsString("Analysis"), _) => JsSuccess(Analysis)
-        case JsSuccess(JsString("Review"), _) => JsSuccess(Review)
-        case JsSuccess(JsString("Letters"), _) => JsSuccess(Letters)
-        case JsSuccess(JsString("ExternalLink"), _) => JsSuccess(ExternalLink)
-        case JsSuccess(JsString("DefaultCardstyle"), _) => JsSuccess(DefaultCardstyle)
-        case _ => JsError("Could not convert CardStyle")
-      }
-    }
 
-    def writes(cardStyle: CardStyle) = cardStyle match {
-      case SpecialReport => JsObject(Seq("type" -> JsString("SpecialReport")))
-      case LiveBlog => JsObject(Seq("type" -> JsString("LiveBlog")))
-      case DeadBlog => JsObject(Seq("type" -> JsString("DeadBlog")))
-      case Feature => JsObject(Seq("type" -> JsString("Feature")))
-      case Editorial => JsObject(Seq("type" -> JsString("Editorial")))
-      case Comment => JsObject(Seq("type" -> JsString("Comment")))
-      case Media => JsObject(Seq("type" -> JsString("Media")))
-      case Analysis => JsObject(Seq("type" -> JsString("Analysis")))
-      case Review => JsObject(Seq("type" -> JsString("Review")))
-      case Letters => JsObject(Seq("type" -> JsString("Letters")))
-      case ExternalLink => JsObject(Seq("type" -> JsString("ExternalLink")))
-      case DefaultCardstyle => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
-    }
-  }
 }
 sealed trait CardStyle {
   def toneString: String
@@ -148,23 +91,6 @@ object MediaType {
     case fapiutils.Video => Video
     case fapiutils.Gallery => Gallery
     case fapiutils.Audio => Audio
-  }
-
-  object mediaTypeFormat extends Format[MediaType] {
-    def reads(json: JsValue) = {
-      (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("Video"), _) => JsSuccess(Video)
-        case JsSuccess(JsString("Gallery"), _) => JsSuccess(Gallery)
-        case JsSuccess(JsString("Audio"), _) => JsSuccess(Audio)
-        case _ => JsError("Could not convert MediaType")
-      }
-    }
-
-    def writes(mediaType: MediaType) = mediaType match {
-      case Video => JsObject(Seq("type" -> JsString("Video")))
-      case Gallery => JsObject(Seq("type" -> JsString("Gallery")))
-      case Audio => JsObject(Seq("type" -> JsString("Audio")))
-    }
   }
 }
 sealed trait MediaType
@@ -330,45 +256,6 @@ object PressedContent {
     case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
     case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
   }
-
-  object pressedContentFormat extends Format[PressedContent] {
-
-    def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("LinkSnap"), _) => JsSuccess(json.as[LinkSnap](PressedContentFormats.linkSnapFormat))
-      case JsSuccess(JsString("LatestSnap"), _) => JsSuccess(json.as[LatestSnap](PressedContentFormats.latestSnapFormat))
-      case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](PressedContentFormats.curatedContentFormat))
-      case JsSuccess(JsString("SupportingCuratedContent"), _) => JsSuccess(json.as[SupportingCuratedContent](PressedContentFormats.supportingCuratedContentFormat))
-      case _ => JsError("Could not convert PressedContent")
-    }
-
-    def writes(faciaContent: PressedContent) = faciaContent match {
-      case linkSnap: LinkSnap => Json.toJson(linkSnap)(PressedContentFormats.linkSnapFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-          case JsSuccess(l, _) =>
-            l ++ Json.obj("type" -> "LinkSnap")
-          case JsError(_) => JsNull
-        }
-      case latestSnap: LatestSnap => Json.toJson(latestSnap)(PressedContentFormats.latestSnapFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-          case JsSuccess(l, _) =>
-            l ++ Json.obj("type" -> "LatestSnap")
-          case JsError(_) => JsNull
-        }
-      case content: CuratedContent => Json.toJson(content)(PressedContentFormats.curatedContentFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-          case JsSuccess(l, _) =>
-            l ++ Json.obj("type" -> "CuratedContent")
-          case JsError(_) => JsNull
-        }
-      case supporting: SupportingCuratedContent => Json.toJson(supporting)(PressedContentFormats.supportingCuratedContentFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-          case JsSuccess(l, _) =>
-            l ++ Json.obj("type" -> "SupportingCuratedContent")
-          case JsError(_) => JsNull
-        }
-      case _ => JsNull
-    }
-  }
 }
 
 sealed trait PressedContent {
@@ -493,45 +380,6 @@ object ItemKicker {
     url = kicker.url,
     id = kicker.id
   )
-
-  implicit val kickerPropertiesFormat = Json.format[KickerProperties]
-  implicit val seriesFormat = Json.format[Series]
-  private val podcastKickerFormat = Json.format[PodcastKicker]
-  val tagKickerFormat = Json.format[TagKicker]
-  private val sectionKickerFormat = Json.format[SectionKicker]
-  private val freeHtmlKickerFormat = Json.format[FreeHtmlKicker]
-  private val freeHtmlKickerWithLinkFormat = Json.format[FreeHtmlKickerWithLink]
-
-  object itemKickerFormat extends Format[ItemKicker] {
-    def reads(json: JsValue) = {
-      (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
-        case JsSuccess(JsString("LiveKicker"), _) => JsSuccess(LiveKicker)
-        case JsSuccess(JsString("AnalysisKicker"), _) => JsSuccess(AnalysisKicker)
-        case JsSuccess(JsString("ReviewKicker"), _) => JsSuccess(ReviewKicker)
-        case JsSuccess(JsString("CartoonKicker"), _) => JsSuccess(CartoonKicker)
-        case JsSuccess(JsString("PodcastKicker"), _) =>  (json \ "series").validate[PodcastKicker](podcastKickerFormat)
-        case JsSuccess(JsString("TagKicker"), _) => (json \ "item").validate[TagKicker](tagKickerFormat)
-        case JsSuccess(JsString("SectionKicker"), _) => (json \ "item").validate[SectionKicker](sectionKickerFormat)
-        case JsSuccess(JsString("FreeHtmlKicker"), _) => (json \ "item").validate[FreeHtmlKicker](freeHtmlKickerFormat)
-        case JsSuccess(JsString("FreeHtmlKickerWithLink"), _) => (json \ "item").validate[FreeHtmlKickerWithLink](freeHtmlKickerWithLinkFormat)
-        case _ => JsError("Could not convert ItemKicker")
-      }
-    }
-
-    def writes(itemKicker: ItemKicker) = itemKicker match {
-      case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
-      case LiveKicker => JsObject(Seq("type" -> JsString("LiveKicker")))
-      case AnalysisKicker => JsObject(Seq("type" -> JsString("AnalysisKicker")))
-      case ReviewKicker => JsObject(Seq("type" -> JsString("ReviewKicker")))
-      case CartoonKicker => JsObject(Seq("type" -> JsString("CartoonKicker")))
-      case podcastKicker: PodcastKicker => JsObject(Seq("type" -> JsString("PodcastKicker"), "series" -> Json.toJson(podcastKicker)(podcastKickerFormat)))
-      case tagKicker: TagKicker => JsObject(Seq("type" -> JsString("TagKicker"), "item" -> Json.toJson(tagKicker)(tagKickerFormat)))
-      case sectionKicker: SectionKicker => JsObject(Seq("type" -> JsString("SectionKicker"), "item" -> Json.toJson(sectionKicker)(sectionKickerFormat)))
-      case freeHtmlKicker: FreeHtmlKicker => JsObject(Seq("type" -> JsString("FreeHtmlKicker"), "item" -> Json.toJson(freeHtmlKicker)(freeHtmlKickerFormat)))
-      case freeHtmlKickerWithLink: FreeHtmlKickerWithLink => JsObject(Seq("type" -> JsString("FreeHtmlKickerWithLink"), "item" -> Json.toJson(freeHtmlKickerWithLink)(freeHtmlKickerWithLinkFormat)))
-    }
-  }
 }
 sealed trait ItemKicker {
   def properties: KickerProperties
@@ -589,23 +437,6 @@ object Image {
     case replace: fapi.Replace => Replace.make(replace)
     case slideshow: fapi.ImageSlideshow => ImageSlideshow.make(slideshow)
   }
-
-  object faciaImageFormat extends Format[Image] {
-    def reads(json: JsValue) = {
-      (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](Cutout.cutoutFormat)
-        case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](Replace.replaceFormat)
-        case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](ImageSlideshow.slideshowFormat)
-        case _ => JsError("Could not convert ItemKicker")
-      }
-    }
-
-    def writes(faciaImage: Image) = faciaImage match {
-      case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(Cutout.cutoutFormat)))
-      case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(Replace.replaceFormat)))
-      case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(ImageSlideshow.slideshowFormat)))
-    }
-  }
 }
 sealed trait Image
 
@@ -614,8 +445,6 @@ object Cutout {
       imageSrc = cutout.imageSrc,
       imageSrcHeight = cutout.imageSrcHeight,
       imageSrcWidth = cutout.imageSrcWidth)
-
-  implicit val cutoutFormat = Json.format[Cutout]
 }
 final case class Cutout(imageSrc: String, imageSrcWidth: Option[String], imageSrcHeight: Option[String]) extends Image
 
@@ -624,8 +453,6 @@ object Replace {
       imageSrc = replace.imageSrc,
       imageSrcHeight = replace.imageSrcHeight,
       imageSrcWidth = replace.imageSrcWidth)
-
-  implicit val replaceFormat = Json.format[Replace]
 }
 final case class Replace(imageSrc: String, imageSrcWidth: String, imageSrcHeight: String) extends Image
 
@@ -633,6 +460,5 @@ object ImageSlideshow {
   def make(slideshow: fapi.ImageSlideshow): ImageSlideshow = ImageSlideshow(
     assets = slideshow.assets.map(Replace.make)
   )
-  implicit val slideshowFormat = Json.format[ImageSlideshow]
 }
 final case class ImageSlideshow(assets: List[Replace]) extends Image

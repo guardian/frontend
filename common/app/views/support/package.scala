@@ -1,6 +1,5 @@
 package views.support
 
-import com.gu.facia.api.models.{LinkSnap, FaciaContent}
 import common._
 import model._
 import model.pressed.PressedContent
@@ -81,7 +80,7 @@ object ContributorLinks {
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
 }
 
-object `package` extends Formats {
+object `package` {
 
   def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 

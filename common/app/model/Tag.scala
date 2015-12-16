@@ -82,7 +82,7 @@ object Tag {
   }
 }
 
-case class Tag private (
+case class Tag (
   override val metadata: MetaData,
   tagType: String,
   sectionName: String,

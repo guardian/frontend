@@ -6,7 +6,7 @@ import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
 import common.dfp.DfpAgent
-import common.{LinkCounts, LinkTo, Reference}
+import common._
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import layout.ContentWidths.GalleryMedia
@@ -16,18 +16,14 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support._
 import com.gu.contentapi.client.{model => contentapi}
 import model.pressed._
+import views.support.{ChaptersLinksCleaner, StripHtmlTagsAndUnescapeEntities, FacebookOpenGraphImage, ImgSrc, Item700}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-
-object ContentType {
-  implicit val contentTypeFormat = julienrf.variants.Variants.format[model.ContentType]
-}
 sealed trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
@@ -418,7 +414,7 @@ object Article {
   }
 }
 
-final case class Article private (
+final case class Article (
   override val content: Content,
   lightbox: GenericLightbox) extends ContentType {
 
@@ -481,7 +477,7 @@ object Audio {
   }
 }
 
-final case class Audio private (override val content: Content) extends ContentType {
+final case class Audio (override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
@@ -533,7 +529,7 @@ object Video {
   }
 }
 
-final case class Video private (
+final case class Video (
   override val content: Content,
   source: Option[String] ) extends ContentType {
 
@@ -748,7 +744,7 @@ final case class Interactive(
 }
 
 object Interactive {
-  def apply(apiContent: contentapi.Content): Interactive = {
+  def make(apiContent: contentapi.Content): Interactive = {
     val content = Content(apiContent).content
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
