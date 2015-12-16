@@ -4,10 +4,8 @@ import java.lang.System._
 
 import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
 import conf.switches.Switches
 import play.api.libs.json.{JsArray, JsValue, Json}
-import services.S3
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -35,11 +33,11 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
     }
   }
 
-  def parsedMembers(feedName: String): Future[ParsedFeed[Member]] = {
+  def parsedMembers(feedName: String, getFeed: String => Option[String]): Future[ParsedFeed[Member]] = {
     Switches.SoulmatesFeedSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsRoot/$feedName") map { body =>
+        getFeed(feedName) map { body =>
           val parsed = parse(Json.parse(body))
           Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
         } getOrElse {

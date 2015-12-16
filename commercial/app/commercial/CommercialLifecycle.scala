@@ -2,7 +2,6 @@ package commercial
 
 import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.Industries
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
@@ -10,7 +9,6 @@ import model.commercial.money.BestBuysAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 import model.diagnostics.CloudWatch
 import play.api.{Application => PlayApp, GlobalSettings}
-import services.S3
 
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
@@ -28,6 +26,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     TravelOffersRefresh
   )
 
+  private val feedStore = S3FeedStore
+
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
     val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
@@ -41,9 +41,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     def fetchFeed(fetcher: FeedFetcher): Unit = {
 
       val feedName = fetcher.feedName
-
-      def storeFeed(feed: Feed): Unit =
-        S3.putPrivate(key = s"$merchandisingFeedsRoot/$feedName", value = feed.content, feed.contentType)
 
       def recordFetch(maybeDuration: Option[Duration]): Unit = {
         recordEvent(feedName, "fetch", maybeDuration)
@@ -61,7 +58,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
       eventualResponse onSuccess {
         case response =>
-          storeFeed(response.feed)
+          feedStore.put(feedName, response.feed)
           recordFetch(Some(response.duration))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
@@ -76,7 +73,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
 
       log.info(s"Parsing $feedName feed ...")
-      val parsedFeed = parser.parse()
+      val parsedFeed = parser.parse(feedStore.get)
       parsedFeed onFailure {
         case NonFatal(e) =>
           recordParse(None)

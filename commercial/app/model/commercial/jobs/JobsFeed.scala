@@ -5,9 +5,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsRoot
 import conf.switches.Switches
-import services.S3
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
@@ -22,11 +20,11 @@ object JobsFeed extends ExecutionContexts with Logging {
     if (jobXml \ "RecruiterName").text != "THE GUARDIAN MASTERCLASSES"
   } yield Job(jobXml)
 
-  def parsedJobs(feedName: String): Future[ParsedFeed[Job]] = {
+  def parsedJobs(feedName: String, getFeed: String => Option[String]): Future[ParsedFeed[Job]] = {
     Switches.JobFeedSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsRoot/$feedName") map { body =>
+        getFeed(feedName) map { body =>
           val parsed = parse(XML.loadString(body.dropWhile(_ != '<')))
           Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
         } getOrElse {

@@ -20,7 +20,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
     available filter (job => jobIds contains job.id)
   }
 
-  def refresh(): Future[ParsedFeed[Job]] = {
+  def refresh(getFeed: String => Option[String]): Future[ParsedFeed[Job]] = {
 
     val feedName = "jobs"
 
@@ -34,7 +34,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
       }
     }
 
-    val parsedFeed = withKeywords(JobsFeed.parsedJobs(feedName))
+    val parsedFeed = withKeywords(JobsFeed.parsedJobs(feedName, getFeed))
 
     parsedFeed foreach { feed =>
       updateAvailableMerchandise(feed.contents)
