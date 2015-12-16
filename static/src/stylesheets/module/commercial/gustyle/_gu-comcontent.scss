@@ -69,3 +69,31 @@
         vertical-align: middle;
     }
 }
+
+.gu-band {
+    background: guss-colour(paidfor-background, $frontend-palette);
+    width: 100%;
+    z-index: 1200;
+
+    .gu-meta,
+    .gu-meta__label,
+    .gu-comlabel,
+    .gu-branding {
+        display: flex;
+    }
+
+    .gu-meta__label,
+    .gu-branding {
+        align-items: center;
+        padding-left: 0;
+    }
+
+    .gu-branding {
+        padding: $gs-baseline / 2 0;
+    }
+}
+
+.gu-band__inner {
+    display: flex;
+    justify-content: space-between;
+}

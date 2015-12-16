@@ -11,6 +11,7 @@ define([
     'common/modules/commercial/top-banner-below-container',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
+    'common/modules/commercial/paidfor-band',
     'lodash/collections/forEach'
 ], function (
     Promise,
@@ -25,6 +26,7 @@ define([
     topBannerBelowContainer,
     sliceAdverts,
     thirdPartyTags,
+    paidforBand,
     forEach) {
     var modules = [
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
@@ -33,7 +35,8 @@ define([
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init]
+        ['cm-badges', badges.init],
+        ['cm-paidforBand', paidforBand.init]
     ];
 
     return {
