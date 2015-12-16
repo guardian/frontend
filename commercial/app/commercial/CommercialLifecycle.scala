@@ -36,9 +36,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
   override def onStart(app: PlayApp): Unit = {
 
-    val randomFactor = Random.nextInt(15)
-
-    def randomStartSchedule(minsLater: Int = 0) = s"0 ${randomFactor + minsLater}/15 * * * ?"
+    def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
     def fetchFeed(fetcher: FeedFetcher): Unit = {
 
