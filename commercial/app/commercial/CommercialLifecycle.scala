@@ -50,7 +50,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
 
       val msgPrefix = s"Fetching $feedName feed"
-      log.info(s"Fetching $feedName feed from ${fetcher.url} ...")
+      log.info(s"$msgPrefix from ${fetcher.url} ...")
       val eventualResponse = fetcher.fetch()
       eventualResponse onFailure {
         case e: SwitchOffException =>
