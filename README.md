@@ -184,8 +184,6 @@ If you get an error related to `node` try using a version of `node` <= `4.xx`. Y
 brew install nvm
 ```
 
-
-
 After this, you can compile the assets:
 ```
 make compile
