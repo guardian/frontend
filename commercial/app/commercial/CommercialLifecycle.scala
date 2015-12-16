@@ -26,8 +26,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     TravelOffersRefresh
   )
 
-  private val feedStore = S3FeedStore
-
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
     val key = s"${feedName.toLowerCase.replaceAll("[\\s/]+", "-")}-$eventName-time"
     val duration = maybeDuration map (_.toMillis.toDouble) getOrElse -1d
@@ -58,7 +56,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
       eventualResponse onSuccess {
         case response =>
-          feedStore.put(feedName, response.feed)
+          S3FeedStore.put(feedName, response.feed)
           recordFetch(Some(response.duration))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
@@ -73,7 +71,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
 
       log.info(s"Parsing $feedName feed ...")
-      val parsedFeed = parser.parse(feedStore.get)
+      val parsedFeed = parser.parse(S3FeedStore.get)
       parsedFeed onFailure {
         case NonFatal(e) =>
           recordParse(None)
