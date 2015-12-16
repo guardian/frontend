@@ -93,7 +93,7 @@ object FaciaContentFrontendHelpers {
     def keywords: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.keywords).getOrElse(Nil)
 
     def supporting: List[PressedContent] = faciaContent match {
-      case content: CuratedContent => content.supporting
+      case content: CuratedContent => content.supportingContent
       case _ => Nil
     }
 
