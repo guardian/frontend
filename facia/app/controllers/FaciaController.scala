@@ -98,7 +98,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
     def returnContainers(num: Int, offset: Int) = getSomeCollections("International", num, offset, "none").map { collections =>
       Cached(60) {
-        println(collections)
         JsonComponent(
           "items" -> collections.getOrElse(List()).map(getCollection)
         )
