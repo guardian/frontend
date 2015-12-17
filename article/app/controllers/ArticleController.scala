@@ -7,6 +7,7 @@ import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
+import liveblog.BlocksFor
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -33,7 +34,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _, None))
 
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
       val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
@@ -80,14 +81,19 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   }
 
-  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
+  private def render(path: String, page: PageWithStoryPackage, pageNo: Option[Int])(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       if (request.isAmp) {
         MovedPermanently(path)
       } else {
-        val htmlResponse = () => views.html.liveBlog(blog)
-        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+        val blocks = BlocksFor(blog.article.content.blocks, pageNo)
+        blocks match {
+          case Some(blocks) =>
+            val htmlResponse = () => views.html.liveBlog (blog, blocks)
+            val jsonResponse = () => views.html.fragments.liveBlogBody (blog, blocks)
+            renderFormat (htmlResponse, jsonResponse, blog, Switches.all)
+          case None => NotFound
+        }
       }
 
     case article: ArticlePage =>
@@ -104,23 +110,32 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String]) = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache
-      loadArticle(path, lastUpdate, rendered)
+      loadArticle(path, lastUpdate, rendered, page)
     } else MemcachedAction { implicit request =>
-      loadArticle(path, lastUpdate, rendered)
+      loadArticle(path, lastUpdate, rendered, page)
     }
   }
 
-  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path) { model =>
-      (lastUpdate, rendered) match {
-        case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
-        case (None, Some(false)) => blockText(model, 6)
-        case (_, _) => render(path, model)
+      (lastUpdate, rendered, page) match {
+        case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate)
+        case (None, Some(false), _) => blockText(model, 6)
+        case (_, _, Some(Int(pageNo))) => render(path, model, Some(pageNo))
+        case (_, _, _) => render(path, model, None)
       }
+    }
+  }
+
+  object Int {
+    def unapply(s : String) : Option[Int] = try {
+      Some(s.toInt)
+    } catch {
+      case _ : java.lang.NumberFormatException => None
     }
   }
 

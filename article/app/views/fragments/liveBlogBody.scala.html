@@ -1,4 +1,5 @@
-@(model: LiveBlogPage)(implicit request: RequestHeader)
+@import liveblog.BlocksFor
+@(model: LiveBlogPage, blocks: BlocksFor)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import layout.{FaciaCardAndIndex, ItemClasses}
@@ -72,7 +73,7 @@
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                @article.content.blocks.map { block =>
+                                @blocks.blocks.map { block =>
                                     <div id="block-@block.id" class="block@BlockFields(block)" data-block-contributor="@block.contributors.map { /*TODO separator?? needed?*/cont =>profile/@cont}.mkString(",")" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
                                         <p class="block-time published-time">
                                             <a href="#block-@block.id" itemprop="url" class="block-time__link">
