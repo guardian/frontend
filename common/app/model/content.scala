@@ -2,6 +2,7 @@ package model
 
 import java.net.URL
 
+import com.gu.contentapi.client.model.Blocks
 import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Parser => LiveBlogParser}
@@ -11,6 +12,8 @@ import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
+import model.Content.BodyBlocks
+import model.Content.BodyBlocks.{EventType, SummaryEvent, UnclassifiedEvent, KeyEvent}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -48,6 +51,7 @@ final case class Content(
   commercial: Commercial,
   elements: Elements,
   fields: Fields,
+  blocks: Seq[BodyBlocks],
   sharelinks: ShareLinks,
   publication: String,
   internalPageCode: String,
@@ -233,7 +237,52 @@ object Content {
     }
   }
 
-  def make(apiContent: contentapi.Content): Content = {
+  object BodyBlocks {
+    def make(blocks: Option[Blocks]): Seq[BodyBlocks] =
+    blocks.toSeq.flatMap { blocks =>
+      blocks.body.toSeq.flatMap { bodyBlocks =>
+        bodyBlocks.map { b =>
+          BodyBlocks(b.id, b.bodyHtml, b.bodyTextSummary, b.title, b.attributes, b.published, b.createdDate, b.firstPublishedDate, b.publishedDate, b.lastModifiedDate, b.contributors)
+        }
+      }
+    }
+
+    sealed trait EventType
+    case object KeyEvent extends EventType
+    case object SummaryEvent extends EventType
+    case object UnclassifiedEvent extends EventType
+  }
+
+  case class BodyBlocks(
+    id: scala.Predef.String,
+    bodyHtml: scala.Predef.String,
+    bodyTextSummary: scala.Predef.String,
+    title: scala.Option[scala.Predef.String],
+    attributes: scala.Predef.Map[scala.Predef.String, scala.Predef.String],
+    published: scala.Boolean,
+    createdDate: scala.Option[org.joda.time.DateTime],
+    firstPublishedDate: scala.Option[org.joda.time.DateTime],
+    publishedDate: scala.Option[org.joda.time.DateTime],
+    lastModifiedDate: scala.Option[org.joda.time.DateTime],
+    contributors: scala.Seq[scala.Predef.String]
+  ) {
+    lazy val eventType: EventType =
+    attributes.get("keyEvent") match {
+      case Some("true") => KeyEvent
+      case _ => attributes.get("summary") match {
+        case Some("true") => SummaryEvent
+        case _ => UnclassifiedEvent
+      }
+    }
+
+    lazy val republishedDate: Option[DateTime] = {
+      firstPublishedDate.flatMap { firstPublishedDate =>
+        publishedDate.filter(_ != firstPublishedDate)
+      }
+    }
+  }
+
+    def make(apiContent: contentapi.Content): Content = {
 
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
@@ -244,6 +293,7 @@ object Content {
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.safeFields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference(ref.id)._2)).toMap
+    val blocks = BodyBlocks.make(apiContent.blocks) // note - lossy at the moment!
 
     Content(
       elements = elements,
@@ -251,6 +301,7 @@ object Content {
       fields = fields,
       metadata = metadata,
       trail = trail,
+      blocks = blocks,
       commercial = commercial,
       sharelinks = sharelinks,
       publication = apifields.getOrElse("publication", ""),
@@ -451,6 +502,7 @@ final case class Article private (
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
+  //@deprecated("use content.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)
 }
 
