@@ -63,7 +63,13 @@ object RelatedController extends Controller with Related with Containers with Lo
     val relatedTrails = trails take 8
 
     JsonComponent(
-      "items" -> JsArray(relatedTrails.map( collection => isCuratedContent(collection.faciaContent)))
+      "items" -> JsArray(Seq(
+        Json.obj(
+          "displayName" -> "related content",
+          "showContent" -> relatedTrails.nonEmpty,
+          "content" -> relatedTrails.map( collection => isCuratedContent(collection.faciaContent))
+        )
+      ))
     )
   }
 }

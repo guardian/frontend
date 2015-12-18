@@ -96,11 +96,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
     def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
 
-    def returnContainers(num: Int, offset: Int) = getSomeCollections("International", num, offset, "none").map { collections =>
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString("international")), num, offset, "none").map { collections =>
       Cached(60) {
-        println(collections)
         JsonComponent(
-          "items" -> collections.getOrElse(List()).map(getCollection)
+          "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
         )
       }
     }

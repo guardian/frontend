@@ -6,8 +6,13 @@ import play.api.libs.json._
 import implicits.FaciaContentImplicits._
 
 object FaciaToMicroFormat2Helpers {
-  def getCollection(pressedCollection: PressedCollection): JsArray =
-    JsArray(pressedCollection.curatedPlusBackfillDeduplicated.map(isCuratedContent))
+  def getCollection(pressedCollection: PressedCollection): JsValue =
+    Json.obj(
+      "displayName" -> pressedCollection.displayName,
+      "href" -> pressedCollection.href,
+      "id" -> pressedCollection.id,
+      "showContent" -> pressedCollection.curatedPlusBackfillDeduplicated.nonEmpty,
+      "content" -> pressedCollection.curatedPlusBackfillDeduplicated.take(8).map(isCuratedContent))
 
   def isCuratedContent(content: FaciaContent): JsValue = content match {
     case c: CuratedContent => getContent(c)
