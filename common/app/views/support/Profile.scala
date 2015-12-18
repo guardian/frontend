@@ -4,7 +4,7 @@ import java.net.{URI, URISyntaxException}
 import common.Logging
 import conf.switches.Switches.ImageServerSwitch
 import conf.Configuration
-import layout.WidthsByBreakpoint
+import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
@@ -136,6 +136,18 @@ object ImgSrc extends Logging {
 
   def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
+  }
+
+  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, widths: WidthsByBreakpoint, maybeUrl: Option[String] = None, maybeImageContainer: Option[ImageContainer] = None) = {
+    widths.breakpointWidthToPixels(breakpointWidth)
+      .map(browserWidth => Profile(width = Some(browserWidth)))
+      .map { profile => {
+        maybeUrl
+          .map(url => srcsetForProfile(profile, url))
+          .orElse(maybeImageContainer.map(imageContainer => srcsetForProfile(profile, imageContainer)))
+          .getOrElse("")
+      } }
+      .mkString(", ")
   }
 
   def srcsetForProfile(profile: Profile, imageContainer: ImageContainer): String = {

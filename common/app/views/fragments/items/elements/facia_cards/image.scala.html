@@ -5,18 +5,7 @@
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                 sizes="@breakpointWidth.width"
-                srcset="@{
-                    widths.breakpointWidthToPixels(breakpointWidth)
-                        .map(browserWidth => Profile(width = Some(browserWidth)))
-                        .map(profile => {
-                            if (maybeUrl.isDefined) {
-                                ImgSrc.srcsetForProfile(profile, maybeUrl.get)
-                            } else {
-                                ImgSrc.srcsetForProfile(profile, maybeImageContainer.get)
-                            }
-                        })
-                        .mkString(", ")
-                }" />
+                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths, maybeUrl, maybeImageContainer)" />
     }
     <img class="@RenderClasses(classes: _*)"
          alt=""
