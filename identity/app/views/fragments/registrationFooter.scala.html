@@ -1,8 +1,0 @@
-@(page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
-
-<ul class="nav nav--registration identity-section" data-link-name="Registration footer">
-    <li class="nav__item"><a class="nav__link" href="http://www.theguardian.com/help/identity-faq" data-link-name="FAQ">FAQ</a></li>
-    <li class="nav__item"><a class="nav__link" href="mailto:userhelp@@theguardian.com?subject=Account%20help" data-link-name="Email Userhelp">Email Userhelp</a></li>
-    <li class="nav__item"><a class="nav__link" href="@idUrlBuilder.buildUrl("/reset", idRequest)" data-link-name="Reset password" data-test-id="reset-password">Reset password</a></li>
-    <li class="nav__item"><a class="nav__link" href="@idUrlBuilder.buildUrl("/signout", idRequest)" data-link-name="Sign out" data-test-id="sign-out">Sign out</a></li>
-</ul>
