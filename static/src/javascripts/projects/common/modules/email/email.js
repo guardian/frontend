@@ -12,7 +12,8 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/utils/detect'
 ], function (
     formInlineLabels,
     bean,
@@ -27,7 +28,8 @@ define([
     template,
     svgs,
     successHtml,
-    robust
+    robust,
+    detect
 ) {
     var omniture;
 
@@ -249,19 +251,26 @@ define([
     return {
             updateForm: ui.updateForm,
             init: function (rootEl) {
+                var browser = detect.getUserAgent.browser,
+                    version = detect.getUserAgent.version;
 
-                // We're loading through the iframe
-                if (rootEl && rootEl.tagName === 'IFRAME') {
-                    // We can listen for a lazy load or reload to catch an update
-                    setup(rootEl, rootEl.contentDocument.body, true);
-                    bean.on(rootEl, 'load', function () {
+                // If we're in lte IE9, don't run the init
+                if (browser !== 'MSIE' && [7,8,9].indexOf(version) === -1) {
+                    // We're loading through the iframe
+                    if (rootEl && rootEl.tagName === 'IFRAME') {
+                        // We can listen for a lazy load or reload to catch an update
                         setup(rootEl, rootEl.contentDocument.body, true);
-                    });
+                        bean.on(rootEl, 'load', function () {
+                            setup(rootEl, rootEl.contentDocument.body, true);
+                        });
 
+                    } else {
+                        setup(rootEl, rootEl || document, false);
+                    }
                 } else {
-                    setup(rootEl, rootEl || document, false);
+                    $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
+                    $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 }
-
             }
         };
 });
