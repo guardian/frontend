@@ -19,7 +19,7 @@ define([
      */
     var Sticky = function (element, options) {
         this.$element = bonzo(element);
-        this.$parent  = this.$element.parent();
+        this.$parent  = bonzo(this.$element.parent()[0]);
         this.opts     = defaults(options || {}, {
             top: 0
         });
@@ -37,18 +37,12 @@ define([
         var fixedTop, css, stickyHeaderHeight, that = this;
 
         stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
-
         // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
-            // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
-
-            if (fixedTop !== 0) {
-                css = {
-                    position: 'fixed',
-                    top:      fixedTop
-                };
-            }
+        if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
+            css = {
+                position: 'fixed',
+                top: this.opts.top
+            };
         } else {
             css = {
                 position: null,

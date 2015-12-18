@@ -30,7 +30,7 @@ define([
         this.breakpoint = detect.getBreakpoint();
 
         // temporarily disable on mobile
-        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
+        if (true || this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
             return;
         }
 

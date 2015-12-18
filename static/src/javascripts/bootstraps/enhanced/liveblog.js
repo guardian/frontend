@@ -22,7 +22,9 @@ define([
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/utils/ajax-promise',
+    'common/modules/ui/sticky'
 ], function (
     bean,
     bonzo,
@@ -47,11 +49,14 @@ define([
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust) {
+    robust,
+    ajax,
+    Sticky) {
     'use strict';
 
     var modules,
-        autoUpdate = null;
+        autoUpdate = null,
+        latestBlockId;
 
     function getTimelineEvents() {
         var keyEvents = qwery('.is-key-event').slice(0, 7),
@@ -150,13 +155,16 @@ define([
     }
 
     function getUpdatePath() {
-        var id,
-            blocks = qwery('.js-liveblog-body .block'),
-            newestBlock = null;
-
-
         // There may be no blocks at all. 'block-0' will return any new blocks found.
-        id = newestBlock ? newestBlock.id : 'block-0';
+        //latestBlockId ? latestBlockId
+        var id = latestBlockId ? latestBlockId : 'block-0';
+        return window.location.pathname + '.json?numNewBlocks=' + id;
+    }
+
+    function getNewBlocksPath() {
+        // There may be no blocks at all. 'block-0' will return any new blocks found.
+        //latestBlockId ? latestBlockId
+        var id = latestBlockId ? latestBlockId : 'block-0';
         return window.location.pathname + '.json?lastUpdate=' + id;
     }
 
@@ -172,7 +180,7 @@ define([
         },
 
         createTimeline: function () {
-            var timelineHTML, dropdown, topMarker,
+            var timelineHTML, dropdown,
                 allEvents = getTimelineEvents();
             if (allEvents.length > 0) {
                 timelineHTML = getTimelineHTML(allEvents);
@@ -185,7 +193,7 @@ define([
                 dropdowns.updateAria(dropdown);
 
                 if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
-                    topMarker = qwery('.js-top-marker')[0];
+                    var topMarker = qwery('.js-top-marker')[0];
                     /*eslint-disable no-new*/
                     new Affix({
                         element: qwery('.js-live-blog__timeline-container')[0],
@@ -195,6 +203,7 @@ define([
                     });
                     /*eslint-enable no-new*/
                 }
+
                 createScrollTransitions();
             }
         },
@@ -206,32 +215,103 @@ define([
         },
 
         createAutoUpdate: function () {
+            //if (config.page.isLive) {
+            //
+            //    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 15000 : 60000;
+            //    autoUpdate = new AutoUpdate({
+            //        path: getUpdatePath,
+            //        delay: timerDelay,
+            //        backoff: 2,
+            //        backoffMax: 1000 * 60 * 20,
+            //        attachTo: $('.js-liveblog-body')[0],
+            //        switches: config.switches,
+            //        manipulationType: 'prepend'
+            //    });
+            //    autoUpdate.init();
+            //}
+            //
+            //mediator.on('module:filter:toggle', function (orderedByOldest) {
+            //    if (!autoUpdate) {
+            //        return;
+            //    }
+            //    if (orderedByOldest) {
+            //        autoUpdate.setManipulationType('append');
+            //    } else {
+            //        autoUpdate.setManipulationType('prepend');
+            //    }
+            //});
 
             if (config.page.isLive) {
+                latestBlockId = $('.js-liveblog-body').data('most-recent-block');
 
-                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 15000 : 60000;
-                autoUpdate = new AutoUpdate({
-                    path: getUpdatePath,
-                    delay: timerDelay,
-                    backoff: 2,
-                    backoffMax: 1000 * 60 * 20,
-                    attachTo: $('.js-liveblog-body')[0],
-                    switches: config.switches,
-                    manipulationType: 'prepend'
+                setInterval(function() {
+                    modules.fetchUpdatesCount(latestBlockId);
+                }, 10000);
+
+                new Sticky(qwery(".blog__updates-box-tofix"), { top: 60 }).init();
+
+                bean.on(document.body, 'click', '.js-updates-button', function() {
+                    modules.toastButtonClicked(latestBlockId);
                 });
-                autoUpdate.init();
             }
+        },
 
-            mediator.on('module:filter:toggle', function (orderedByOldest) {
-                if (!autoUpdate) {
-                    return;
-                }
-                if (orderedByOldest) {
-                    autoUpdate.setManipulationType('append');
-                } else {
-                    autoUpdate.setManipulationType('prepend');
+        fetchUpdatesCount: function () {
+            return ajax({
+                url: getUpdatePath(),
+                type: 'json',
+                method: 'get',
+                crossOrigin: true
+            }).then(function (resp) {
+                if(resp.newBlocksCount > 0) {
+                    var lbOffset = $('.js-liveblog-body').offset().top,
+                        scrollPos = window.scrollY;
+
+                    if(scrollPos < lbOffset && scrollPos + window.innerHeight > lbOffset) {
+                        modules.injectNewBlocks();
+                    } else {
+                        modules.refreshUpdatesCount(resp.newBlocksCount);
+                    }
                 }
             });
+        },
+
+        toastButtonClicked: function () {
+            var $updateBox = $('.js-updates-button');
+            scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
+            $updateBox.addClass("loading");
+            modules.injectNewBlocks();
+        },
+
+        refreshUpdatesCount: function (count) {
+            var $updateBox = $('.js-updates-button'),
+                $updateBoxContainer = $('.blog__updates-box-container'),
+                $updateBoxText = $(".blog__updates-box-text", $updateBox);
+
+            $updateBox.removeClass('blog__updates-box--closed');
+            $updateBoxText.html(count + ' new updates');
+            $updateBox.addClass('blog__updates-box--open');
+            $updateBoxContainer.addClass('blog__updates-box-container--open');
+        },
+
+        injectNewBlocks: function () {
+            return ajax({
+                url: getNewBlocksPath(),
+                type: 'json',
+                method: 'get',
+                crossOrigin: true
+            }).then(function (resp) {
+                if(resp.html) {
+                    $('#' + latestBlockId).before(resp.html);
+                    latestBlockId = $(".block").first().attr("id");
+                    modules.resetToastButton();
+                }
+            });
+        },
+
+        resetToastButton: function () {
+            $('.js-updates-button').removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
+            $('.blog__updates-box-container').removeClass('blog__updates-box-container--open')
         },
 
         keepTimestampsCurrent: function () {

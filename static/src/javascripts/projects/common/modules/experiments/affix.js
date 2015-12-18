@@ -63,7 +63,7 @@ define([
             markerBottomTop = this.$markerBottom.offset().top,
             elHeight      = this.$element.dim().height,
 
-            topCheck      = scrollTop >= markerTopTop,
+            topCheck      = scrollTop >= markerTopTop - 48,
             bottomCheck   = scrollTop + elHeight < markerBottomTop,
             viewportCheck = elHeight < bonzo.viewport().height,
 
