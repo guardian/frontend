@@ -1,6 +1,6 @@
 package model.commercial.books
 
-import commercial.feeds.ParsedFeed
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial._
 import play.api.libs.functional.syntax._
@@ -57,8 +57,6 @@ object Book {
 
 object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
 
-  private lazy val feeds = Seq(MagentoBestsellersFeed)
-
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
 
   def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
@@ -76,8 +74,8 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
     bestsellers.filter(_.jacketUrl.nonEmpty).sortBy(_.position).take(10)
   }
 
-  def refresh(): Future[ParsedFeed[Book]] = {
-    val parsedFeed = MagentoBestsellersFeed.loadBestsellers()
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Book]] = {
+    val parsedFeed = MagentoBestsellersFeed.loadBestsellers(feedMetaData, feedContent)
 
     for (feed <- parsedFeed) {
       updateAvailableMerchandise(feed.contents)

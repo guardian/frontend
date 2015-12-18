@@ -2,13 +2,10 @@ package model.commercial.masterclasses
 
 import java.lang.System._
 
-import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsLatest
-import conf.switches.Switches
 import org.joda.time.DateTime.now
 import play.api.libs.json.{JsArray, JsValue, Json}
-import services.S3
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -16,28 +13,29 @@ import scala.util.control.NonFatal
 
 object EventbriteApi extends ExecutionContexts with Logging {
 
-  private val feedName = "masterclasses"
-
   def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = {
     val maybeEvents = for (JsArray(events) <- (jsValue \ "events").toOption) yield events
     maybeEvents getOrElse Nil
   }
 
-  def parseEvents(): Future[ParsedFeed[EventbriteMasterClass]] = {
-    Switches.MasterclassFeedSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+  def parseEvents(
+    feedMetaData: FeedMetaData,
+    feedContent: => Option[String]
+  ): Future[ParsedFeed[EventbriteMasterClass]] = {
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsLatest/$feedName") map { body =>
+        feedContent map { body =>
           val JsArray(pages) = Json.parse(body).as[JsArray]
           Future(ParsedFeed(
             pages flatMap parsePageOfEvents,
             Duration(currentTimeMillis - start, MILLISECONDS))
           )
         } getOrElse {
-          Future.failed(MissingFeedException(feedName))
+          Future.failed(MissingFeedException(feedMetaData.name))
         }
       } else {
-        Future.failed(SwitchOffException(Switches.JobFeedSwitch.name))
+        Future.failed(SwitchOffException(feedMetaData.switch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)

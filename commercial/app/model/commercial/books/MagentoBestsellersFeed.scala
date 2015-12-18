@@ -2,12 +2,9 @@ package model.commercial.books
 
 import java.lang.System._
 
-import commercial.feeds.{MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.feeds._
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial.merchandisingFeedsLatest
-import conf.switches.Switches
 import model.commercial._
-import services.S3
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -40,14 +37,14 @@ object MagentoBestsellersFeed extends ExecutionContexts with Logging {
     }
   }
 
-  def loadBestsellers(): Future[ParsedFeed[Book]] = {
+  def loadBestsellers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Book]] = {
 
-    val feedName = "general-bestsellers"
+    val feedName = feedMetaData.name
 
-    Switches.GuBookshopFeedsSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
-        S3.get(s"$merchandisingFeedsLatest/$feedName") map { body =>
+        feedContent map { body =>
           val parsed = parse(XML.loadString(body)).map { book =>
             book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:")))
           }
@@ -56,7 +53,7 @@ object MagentoBestsellersFeed extends ExecutionContexts with Logging {
           Future.failed(MissingFeedException(feedName))
         }
       } else {
-        Future.failed(SwitchOffException(Switches.JobFeedSwitch.name))
+        Future.failed(SwitchOffException(feedMetaData.switch.name))
       }
     } recoverWith {
       case NonFatal(e) => Future.failed(e)

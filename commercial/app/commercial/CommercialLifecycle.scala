@@ -2,9 +2,8 @@ package commercial
 
 import commercial.feeds._
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
-import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.Industries
-import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
+import model.commercial.masterclasses.MasterClassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 import model.diagnostics.CloudWatch
@@ -36,14 +35,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     def fetchFeed(fetcher: FeedFetcher): Unit = {
 
-      val feedName = fetcher.feedName
+      val feedName = fetcher.feedMetaData.name
 
       def recordFetch(maybeDuration: Option[Duration]): Unit = {
         recordEvent(feedName, "fetch", maybeDuration)
       }
 
       val msgPrefix = s"Fetching $feedName feed"
-      log.info(s"$msgPrefix from ${fetcher.url} ...")
+      log.info(s"$msgPrefix from ${fetcher.feedMetaData.url} ...")
       val eventualResponse = fetcher.fetch()
       eventualResponse onFailure {
         case e: SwitchOffException =>
@@ -62,14 +61,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     def parseFeed[T](parser: FeedParser[T]): Unit = {
 
-      val feedName = parser.feedName
+      val feedName = parser.feedMetaData.name
 
       def recordParse(maybeDuration: Option[Duration]): Unit = {
         recordEvent(feedName, "parse", maybeDuration)
       }
 
       log.info(s"Parsing $feedName feed ...")
-      val parsedFeed = parser.parse(S3FeedStore.get)
+      val parsedFeed = parser.parse(S3FeedStore.get(parser.feedMetaData.name))
       parsedFeed onFailure {
         case NonFatal(e) =>
           recordParse(None)
@@ -85,7 +84,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     super.onStart(app)
 
     for (fetcher <- FeedFetcher.all) {
-      val feedName = fetcher.feedName
+      val feedName = fetcher.feedMetaData.name
       Jobs.deschedule(s"${feedName}FetchJob")
       Jobs.scheduleEveryNMinutes(s"${feedName}FetchJob", 15) {
         fetchFeed(fetcher)
@@ -93,7 +92,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
 
     for (parser <- FeedParser.all) {
-      val feedName = parser.feedName
+      val feedName = parser.feedMetaData.name
       Jobs.deschedule(s"${feedName}ParseJob")
       Jobs.scheduleEveryNMinutes(s"${feedName}ParseJob", 15) {
         parseFeed(parser)
@@ -106,9 +105,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
     AkkaAsync {
 
-      MasterClassTagsAgent.refresh() andThen {
-        case Success(_) => MasterClassAgent.refresh()
-        case Failure(e) => log.warn(s"Failed to refresh master class tags: ${e.getMessage}")
+      MasterClassTagsAgent.refresh() onFailure {
+        case NonFatal(e) => log.warn(s"Failed to refresh master class tags: ${e.getMessage}")
       }
 
       Countries.refresh() andThen {
@@ -122,7 +120,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
       BestBuysAgent.refresh()
 
-      BestsellersAgent.refresh()
       TravelOffersRefresh.refresh()
 
       for (fetcher <- FeedFetcher.all) {
@@ -139,11 +136,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     refreshJobs foreach (_.stop())
 
     for (fetcher <- FeedFetcher.all) {
-      Jobs.deschedule(s"${fetcher.feedName}FetchJob")
+      Jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
     }
 
     for (parser <- FeedParser.all) {
-      Jobs.deschedule(s"${parser.feedName}ParseJob")
+      Jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
 
     super.onStop(app)

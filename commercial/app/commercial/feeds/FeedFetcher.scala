@@ -4,9 +4,7 @@ import java.lang.System.currentTimeMillis
 
 import com.ning.http.client.Response
 import conf.Configuration
-import conf.switches.{Switch, Switches}
 import model.commercial.soulmates.SoulmatesAgent
-import org.joda.time.{DateTime, DateTimeZone}
 import play.api.Play.current
 import play.api.libs.json.{JsArray, Json}
 import play.api.libs.ws.{WS, WSResponse}
@@ -17,45 +15,27 @@ import scala.util.control.NonFatal
 
 trait FeedFetcher {
 
-  def feedName: String
-  def url: String
-
+  def feedMetaData: FeedMetaData
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse]
 }
 
-class SingleFeedFetcher(
-  val feedName: String,
-  val url: String,
-  val parameters: Map[String, String],
-  val timeout: Duration,
-  val switch: Switch,
-  responseEncoding: String = ResponseEncoding.default
-) extends FeedFetcher {
+class SingleFeedFetcher(val feedMetaData: FeedMetaData) extends FeedFetcher {
 
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    switch.isGuaranteedSwitchedOn flatMap { reallyOn =>
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { reallyOn =>
       if (reallyOn) {
-        FeedFetcher.fetch(url, parameters, timeout, responseEncoding)
-      } else Future.failed(SwitchOffException(switch.name))
+        FeedFetcher.fetch(feedMetaData)
+      } else Future.failed(SwitchOffException(feedMetaData.switch.name))
     }
   }
 }
 
 class EventbriteMultiPageFeedFetcher(accessToken: String) extends FeedFetcher {
 
-  val feedName = "masterclasses"
-  val url = "https://www.eventbriteapi.com/v3/users/me/owned_events/"
-
-  private val baseParameters = Map(
-    "token" -> accessToken,
-    "status" -> "live",
-    "expand" -> "ticket_classes,venue"
-  )
-  private val timeout = 20.seconds
-  private val switch = Switches.MasterclassFeedSwitch
+  val feedMetaData = MasterclassesFeedMetaData(accessToken, Map.empty)
 
   def fetchPage(index: Int)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    FeedFetcher.fetch(url, baseParameters + ("page" -> index.toString), timeout, ResponseEncoding.utf8)
+    FeedFetcher.fetch(feedMetaData.copy(parameters = feedMetaData.baseParameters + ("page" -> index.toString)))
   }
 
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
@@ -104,24 +84,23 @@ class EventbriteMultiPageFeedFetcher(accessToken: String) extends FeedFetcher {
       }
     }
 
-    switch.isGuaranteedSwitchedOn flatMap { reallyOn =>
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { reallyOn =>
       if (reallyOn) {
         fetch(None, None, 0)
-      } else Future.failed(SwitchOffException(switch.name))
+      } else Future.failed(SwitchOffException(feedMetaData.switch.name))
     }
   }
 }
 
 object FeedFetcher {
 
-  def fetch(url: String, parameters: Map[String, String], timeout: Duration, responseEncoding: String)
-    (implicit executionContext: ExecutionContext): Future[FetchResponse] = {
+  def fetch(feedMetaData: FeedMetaData)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
 
     def body(response: WSResponse): String = {
-      if (responseEncoding == ResponseEncoding.default) {
+      if (feedMetaData.responseEncoding == ResponseEncoding.default) {
         response.body
       } else {
-        response.underlying[Response].getResponseBody(responseEncoding)
+        response.underlying[Response].getResponseBody(feedMetaData.responseEncoding)
       }
     }
 
@@ -131,9 +110,9 @@ object FeedFetcher {
 
     val start = currentTimeMillis()
 
-    val futureResponse = WS.url(url)
-                         .withQueryString(parameters.toSeq: _*)
-                         .withRequestTimeout(timeout.toMillis.toInt)
+    val futureResponse = WS.url(feedMetaData.url)
+                         .withQueryString(feedMetaData.parameters.toSeq: _*)
+                         .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
                          .get()
 
     futureResponse map { response =>
@@ -151,22 +130,8 @@ object FeedFetcher {
   }
 
   private val jobs: Option[FeedFetcher] = {
-
-    // url changes daily so cannot be val
-    def url = {
-
-      /*
-       * Using offset time because this appears to be how the URL is constructed.
-       * With UTC time we lose the feed for 2 hours at midnight every day.
-       */
-      val feedDate = new DateTime(DateTimeZone.forOffsetHours(-2)).toString("yyyy-MM-dd")
-
-      val urlTemplate = Configuration.commercial.jobsUrlTemplate
-      urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
-    }
-
-    url map {
-      new SingleFeedFetcher("jobs", _, Map.empty, 2.seconds, Switches.JobFeedSwitch, ResponseEncoding.utf8)
+    Configuration.commercial.jobsUrlTemplate map { template =>
+      new SingleFeedFetcher(JobsFeedMetaData(template))
     }
   }
 
@@ -174,14 +139,7 @@ object FeedFetcher {
 
     def feedFetcher(agent: SoulmatesAgent): Option[FeedFetcher] = {
       Configuration.commercial.soulmatesApiUrl map { url =>
-        new SingleFeedFetcher(
-          s"soulmates/${agent.groupName}",
-          s"$url/${agent.feed.path}",
-          Map.empty,
-          2.seconds,
-          Switches.SoulmatesFeedSwitch,
-          ResponseEncoding.utf8
-        )
+        new SingleFeedFetcher(SoulmatesFeedMetaData(url, agent))
       }
     }
 
@@ -189,17 +147,8 @@ object FeedFetcher {
   }
 
   private val bestsellers: Option[FeedFetcher] = {
-    Configuration.commercial.magento.domain map {
-      domain => s"http://$domain/bertrams/feed/independentsTop20"
-    } map {
-      new SingleFeedFetcher(
-        "general-bestsellers",
-        _,
-        Map.empty,
-        2.seconds,
-        Switches.GuBookshopFeedsSwitch,
-        ResponseEncoding.utf8
-      )
+    Configuration.commercial.magento.domain map { domain =>
+      new SingleFeedFetcher(BestsellersFeedMetaData(domain))
     }
   }
 

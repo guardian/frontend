@@ -1,6 +1,6 @@
 package model.commercial.masterclasses
 
-import commercial.feeds.ParsedFeed
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import model.commercial._
 
@@ -48,7 +48,7 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
     Future.sequence(futureMasterclasses)
   }
 
-  def refresh(): Future[ParsedFeed[MasterClass]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[MasterClass]] = {
 
     def populateKeywordIds(events: Seq[EventbriteMasterClass]):Seq[EventbriteMasterClass] = {
       val populated = events map { event =>
@@ -82,7 +82,7 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
       updateAvailableMerchandise(freshData)
     }
 
-    val parsedFeed = EventbriteApi.parseEvents() flatMap { feed =>
+    val parsedFeed = EventbriteApi.parseEvents(feedMetaData, feedContent) flatMap { feed =>
       wrapEventbriteWithContentApi(populateKeywordIds(feed.contents.filter(_.isOpen))) map { masterclasses =>
         ParsedFeed(masterclasses, feed.parseDuration)
       }
