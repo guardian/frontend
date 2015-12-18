@@ -244,13 +244,13 @@ define([
             if (config.page.isLive) {
                 latestBlockId = $('.js-liveblog-body').data('most-recent-block');
 
-                setInterval(function() {
+                setInterval(function () {
                     modules.fetchUpdatesCount(latestBlockId);
                 }, 10000);
 
                 new Sticky(qwery(".blog__updates-box-tofix"), { top: 60 }).init();
 
-                bean.on(document.body, 'click', '.js-updates-button', function() {
+                bean.on(document.body, 'click', '.js-updates-button', function () {
                     modules.toastButtonClicked(latestBlockId);
                 });
             }
@@ -263,11 +263,11 @@ define([
                 method: 'get',
                 crossOrigin: true
             }).then(function (resp) {
-                if(resp.newBlocksCount > 0) {
+                if (resp.newBlocksCount > 0) {
                     var lbOffset = $('.js-liveblog-body').offset().top,
                         scrollPos = window.scrollY;
 
-                    if(scrollPos < lbOffset && scrollPos + window.innerHeight > lbOffset) {
+                    if (scrollPos < lbOffset && scrollPos + window.innerHeight > lbOffset) {
                         modules.injectNewBlocks();
                     } else {
                         modules.refreshUpdatesCount(resp.newBlocksCount);
@@ -301,10 +301,10 @@ define([
                 method: 'get',
                 crossOrigin: true
             }).then(function (resp) {
-                if(resp.html) {
+                if (resp.html) {
                     $('#' + latestBlockId).before(resp.html);
                     latestBlockId = $(".block").first().attr("id");
-                    setTimeout(function() {
+                    setTimeout(function () {
                         modules.resetToastButton();
                     }, 1000);
                     RelativeDates.init();

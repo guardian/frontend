@@ -581,7 +581,7 @@ $timeline-width: 15px;
     z-index: 900;
     padding-bottom: $gs-baseline;
     text-align: center;
-    transition: transform 0.3s ease-in-out;
+    transition: transform .3s ease-in-out;
     transform: translateY(-60px);
 
     .blog__updates-box-container--open & {
@@ -592,7 +592,7 @@ $timeline-width: 15px;
 .blog__updates-box {
     @include fs-textSans(1);
     background-color: colour(live-main-2);
-    color: #fff;
+    color: #ffffff;
     box-sizing: border-box;
     overflow: hidden;
     border: 0;
@@ -615,7 +615,7 @@ $timeline-width: 15px;
         margin-top: 10px;
         opacity: 1;
         padding-left: $gs-gutter * 5/4;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity .3s ease-in-out;
     }
 
     svg {
@@ -629,7 +629,7 @@ $timeline-width: 15px;
 
     &.loading {
         max-width: 36px;
-        transition: max-width 0.3s ease-in-out;
+        transition: max-width .3s ease-in-out;
 
         .blog__updates-box-text {
             opacity: 0;
@@ -651,7 +651,7 @@ $timeline-width: 15px;
 }
 
 .blog__updates-box-container {
-    padding-bottom: 0.75rem;
+    padding-bottom: .75rem;
     height: $gs-baseline*3; // was 0, for testing
 
     &.blog__updates-box-container--open {
