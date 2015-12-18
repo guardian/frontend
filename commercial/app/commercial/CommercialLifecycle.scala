@@ -5,13 +5,13 @@ import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
 import model.commercial.jobs.Industries
 import model.commercial.masterclasses.MasterClassTagsAgent
 import model.commercial.money.BestBuysAgent
-import model.commercial.travel.{Countries, TravelOffersAgent}
+import model.commercial.travel.Countries
 import model.diagnostics.CloudWatch
 import play.api.{Application => PlayApp, GlobalSettings}
 
 import scala.concurrent.duration._
+import scala.util.Random
 import scala.util.control.NonFatal
-import scala.util.{Failure, Random, Success}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
@@ -19,8 +19,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     MasterClassTagsRefresh,
     CountriesRefresh,
     IndustriesRefresh,
-    MoneyBestBuysRefresh,
-    TravelOffersRefresh
+    MoneyBestBuysRefresh
   )
 
   private def recordEvent(feedName: String, eventName: String, maybeDuration: Option[Duration]): Unit = {
@@ -109,9 +108,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case NonFatal(e) => log.warn(s"Failed to refresh master class tags: ${e.getMessage}")
       }
 
-      Countries.refresh() andThen {
-        case Success(_) => TravelOffersAgent.refresh()
-        case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
+      Countries.refresh() onFailure {
+        case NonFatal(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
       }
 
       Industries.refresh() onFailure {
@@ -119,8 +117,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
 
       BestBuysAgent.refresh()
-
-      TravelOffersRefresh.refresh()
 
       for (fetcher <- FeedFetcher.all) {
         fetchFeed(fetcher)
