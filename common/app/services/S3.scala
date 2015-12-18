@@ -263,6 +263,6 @@ object S3Infosec extends S3 {
   def getBlockedEmailDomains = get(key)
 }
 
-object R2TemporaryArchiveForTesting extends S3 {
-  override lazy val bucket = "jenny-r2-temporary-archive" //todo rename
+object R2Archive extends S3 {
+  override lazy val bucket = "r2-archive"
 }
