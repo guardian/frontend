@@ -6,13 +6,17 @@
 
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
+    <article id="article" class="@RenderClasses(
             Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
                 "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && gallery.commercial.isAdvertisementFeature)
             ),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(gallery)}"
         )"
         itemscope itemtype="@gallery.metadata.schemaType" role="main">
+
+        @if(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
 
         @fragments.headTonal(gallery)
 

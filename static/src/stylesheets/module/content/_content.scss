@@ -683,6 +683,7 @@
 
     .content__section-label {
         @include f-headlineSans;
+        font-weight: 400;
 
         .content__section-label__link {
             color: colour(neutral-1);

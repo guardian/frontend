@@ -5,7 +5,7 @@ define([
 ], function (fastdom, Promise, sticky) {
     function init(header) {
         return new Promise(function(resolve) {
-            sticky.stick(document.querySelector('#article > .gu-band'));
+            sticky.stick(document.querySelector('.facia-page > .gu-band, #article > .gu-band'));
             resolve();
         });
     }

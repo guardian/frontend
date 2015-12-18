@@ -85,11 +85,15 @@
     .gu-meta__label,
     .gu-branding {
         align-items: center;
-        padding-left: 0;
+    }
+
+    .gu-meta__label,
+    .gu-meta__more > .popup__toggle {
+        padding: $gs-baseline / 3 $gs-gutter / 2;
     }
 
     .gu-branding {
-        padding: $gs-baseline / 2 0;
+        padding: $gs-baseline / 2 $gs-gutter / 2;
     }
 }
 

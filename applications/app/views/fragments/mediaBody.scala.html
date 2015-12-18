@@ -19,6 +19,10 @@
         )"
         itemscope itemtype="@media.metadata.schemaType" role="main">
 
+        @if(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
+
         @fragments.headTonal(media)
 
         <div class="content__main tonal__main tonal__main--@toneClass(media)">
