@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/video-preroll',
     'common/modules/experiments/tests/alternative-related',
     'common/modules/experiments/tests/identity-sign-in-v2',
+    'common/modules/experiments/tests/rtrt-email-form-article-promo',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -31,6 +32,7 @@ define([
     VideoPreroll,
     AlternativeRelated,
     IdentitySignInV2,
+    RtrtEmailFormArticlePromo,
     flatten,
     forEach,
     keys,
@@ -46,7 +48,8 @@ define([
         new LargeTopAd(),
         new VideoPreroll(),
         new AlternativeRelated(),
-        new IdentitySignInV2()
+        new IdentitySignInV2(),
+        new RtrtEmailFormArticlePromo()
     ]);
 
     var participationsKey = 'gu.ab.participations';
