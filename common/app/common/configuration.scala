@@ -367,6 +367,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object r2Press {
     lazy val sqsQueueUrl = configuration.getStringProperty("admin.r2.page.press.sqs.queue.url")
+    lazy val pressRateInMinutes = configuration.getIntegerProperty("admin.r2.page.press.rate.minutes").getOrElse(15)
   }
 
   object memcached {

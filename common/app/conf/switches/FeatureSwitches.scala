@@ -349,4 +349,12 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val R2PagePressServiceSwitch = Switch(
+    "Feature",
+    "r2-page-press-service",
+    "When ON, the R2 page press service will monitor the queue and press pages to S3",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 14),
+    exposeClientSide = false
+  )
 }
