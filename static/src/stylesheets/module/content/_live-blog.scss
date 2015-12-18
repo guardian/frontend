@@ -646,7 +646,7 @@ $timeline-width: 15px;
         transform: rotate(0deg);
     }
     to {
-        transform: rotate(360deg);
+        transform: rotate(-360deg);
     }
 }
 
@@ -931,4 +931,8 @@ $timeline-width: 15px;
     &:active {
         background-color: darken(colour(live-accent), 7%);
     }
+}
+
+.l-header--is-slim .navigation {
+    display: none !important;
 }

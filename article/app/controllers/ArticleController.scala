@@ -59,7 +59,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def numberBlocksSinceBlock(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
     val body = Jsoup.parseBodyFragment(page.article.fields.body)
 
-    val blocksToKeep = body.getElementsByTag("div") takeWhile {
+    val blocksToKeep = body.getElementsByClass("block") takeWhile {
       _.attr("id") != lastUpdateBlockId
     }
 

@@ -157,14 +157,14 @@ define([
     function getUpdatePath() {
         // There may be no blocks at all. 'block-0' will return any new blocks found.
         //latestBlockId ? latestBlockId
-        var id = latestBlockId ? latestBlockId : 'block-0';
+        var id = 'block-0';
         return window.location.pathname + '.json?numNewBlocks=' + id;
     }
 
     function getNewBlocksPath() {
         // There may be no blocks at all. 'block-0' will return any new blocks found.
         //latestBlockId ? latestBlockId
-        var id = latestBlockId ? latestBlockId : 'block-0';
+        var id = 'block-0';
         return window.location.pathname + '.json?lastUpdate=' + id;
     }
 
@@ -304,7 +304,10 @@ define([
                 if(resp.html) {
                     $('#' + latestBlockId).before(resp.html);
                     latestBlockId = $(".block").first().attr("id");
-                    modules.resetToastButton();
+                    setTimeout(function() {
+                        modules.resetToastButton();
+                    }, 1000);
+                    RelativeDates.init();
                 }
             });
         },
