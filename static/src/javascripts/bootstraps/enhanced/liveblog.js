@@ -55,7 +55,7 @@ define([
     'use strict';
 
     var modules,
-        autoUpdate = null,
+        //autoUpdate = null,
         latestBlockId;
 
     function getTimelineEvents() {
@@ -314,7 +314,7 @@ define([
 
         resetToastButton: function () {
             $('.js-updates-button').removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
-            $('.blog__updates-box-container').removeClass('blog__updates-box-container--open')
+            $('.blog__updates-box-container').removeClass('blog__updates-box-container--open');
         },
 
         keepTimestampsCurrent: function () {
