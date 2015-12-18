@@ -254,17 +254,17 @@ object Content {
   }
 
   case class BodyBlocks(
-    id: scala.Predef.String,
-    bodyHtml: scala.Predef.String,
-    bodyTextSummary: scala.Predef.String,
-    title: scala.Option[scala.Predef.String],
-    attributes: scala.Predef.Map[scala.Predef.String, scala.Predef.String],
+    id: String,
+    bodyHtml: String,
+    bodyTextSummary: String,
+    title: Option[String],
+    attributes: Map[String, String],
     published: scala.Boolean,
-    createdDate: scala.Option[org.joda.time.DateTime],
-    firstPublishedDate: scala.Option[org.joda.time.DateTime],
-    publishedDate: scala.Option[org.joda.time.DateTime],
-    lastModifiedDate: scala.Option[org.joda.time.DateTime],
-    contributors: scala.Seq[scala.Predef.String]
+    createdDate: Option[DateTime],
+    firstPublishedDate: Option[DateTime],
+    publishedDate: Option[DateTime],
+    lastModifiedDate: Option[DateTime],
+    contributors: Seq[String]
   ) {
     lazy val eventType: EventType =
     attributes.get("keyEvent") match {

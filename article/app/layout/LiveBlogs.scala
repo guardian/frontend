@@ -23,10 +23,13 @@ object LiveBlogDateFormat {
 
   def apply(dateTime: DateTime)(implicit request: RequestHeader) = {
     val fullDate = ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(dateTime)
-    val hhmm = dateTime.toString(DateTimeFormat.forPattern("HH:mm").withZone(Edition(request).timezone))
-    val ampm = dateTime.toString(DateTimeFormat.forPattern("h.mma").withZone(Edition(request).timezone)).toLowerCase(Locale.ENGLISH)
-    val gmt = dateTime.toString(DateTimeFormat.forPattern("z").withZone(Edition(request).timezone))
+    val hhmm = useFormat("HH:mm", dateTime)
+    val ampm = useFormat("h.mma", dateTime).toLowerCase(Locale.ENGLISH)
+    val gmt = useFormat("z", dateTime)
     (fullDate, hhmm, ampm, gmt)
   }
+
+  def useFormat(format: String, dateTime: DateTime)(implicit request: RequestHeader) =
+    dateTime.toString(DateTimeFormat.forPattern(format).withZone(Edition(request).timezone))
 
 }

@@ -92,7 +92,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)
             val jsonResponse = () => views.html.fragments.liveBlogBody (blog, blocks)
-            renderFormat (htmlResponse, jsonResponse, blog, Switches.all)
+            renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
           case None => NotFound
         }
       }
@@ -111,7 +111,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String] = None) = {
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[Int] = None) = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache
@@ -121,14 +121,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     }
   }
 
-  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String])(implicit request: RequestHeader): Future[Result] = {
-    import scala.concurrent.duration._
-    page.map(s => Try(s.toInt).toOption) match {
-      case Some(Some(pageNo)) =>
+  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[Int])(implicit request: RequestHeader): Future[Result] = {
+    page match {
+      case Some(pageNo) =>
         mapModel(path) {
           render(path, _, Some(pageNo))
         }
-      case Some(None) => Future.successful(Cached(1.hours)(BadRequest))
       case None =>
         mapModel(path) { model =>
           (lastUpdate, rendered) match {
