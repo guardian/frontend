@@ -34,8 +34,8 @@ define([
         this.canRun = function () {
             //Tests for fronts, editions optional.
             var host = window.location.host,
-                escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), // Escape anything that will mess up the regex
-                urlRegex = new RegExp("^https?:\/\/" + escapedHost + "\/(uk\/|us\/|au\/)?([a-z-])+$", "gi"),
+                escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
+                urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/)?([a-z-])+$', 'gi'),
                 browser = detect.getUserAgent.browser,
                 version = detect.getUserAgent.version;
 
