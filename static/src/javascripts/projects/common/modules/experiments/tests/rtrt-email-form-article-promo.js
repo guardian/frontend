@@ -6,8 +6,8 @@ define([
     'fastdom',
     'common/modules/email/email',
     'common/utils/detect',
-    'lodash/collections/contains'
-
+    'lodash/collections/contains',
+    'common/utils/config'
 ], function (
     $,
     bean,
@@ -16,7 +16,8 @@ define([
     fastdom,
     email,
     detect,
-    contains
+    contains,
+    config
 ) {
     return function () {
         this.id = 'RtrtEmailFormArticlePromo';
@@ -39,8 +40,8 @@ define([
                 browser = detect.getUserAgent.browser,
                 version = detect.getUserAgent.version;
 
-            // User referred from a front, is not logged in and not lte IE9
-            return urlRegex.test(document.referrer) && !Id.isUserLoggedIn() && !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+            // User referred from a front in the UK edition, is not logged in and not lte IE9
+            return urlRegex.test(document.referrer) && !Id.isUserLoggedIn() && config.page.edition === 'UK' && !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
         };
 
         this.variants = [
