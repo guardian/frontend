@@ -3,7 +3,6 @@ package controllers
 import common.{ExecutionContexts, Logging}
 import controllers.admin.AuthActions
 import jobs.{LowFrequency, StandardFrequency, HighFrequency, RefreshFrontsJob}
-import pagepresser.Presser
 import play.api.mvc.Controller
 
 object FrontPressController extends Controller with Logging with AuthLogging with ExecutionContexts {
