@@ -32,7 +32,7 @@ define([
     var sectionsToLoadSectionFronts = ['commentisfree', 'sport', 'football', 'fashion', 'lifeandstyle', 'education', 'culture', 'business', 'technology', 'politics', 'environment', 'travel', 'film', 'media', 'money', 'society', 'science', 'music', 'books', 'stage', 'cities', 'tv-and-radio', 'artanddesign', 'global-development'],
         loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false,
         edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase(),
-        isOneAndThree = ab.getParticipations().FrontsOnArticles && ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree';
+        isOneAndThree = ab.getParticipations().FrontsOnArticles2 && ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree';
 
     function FrontsContainers() {
         moveComments();

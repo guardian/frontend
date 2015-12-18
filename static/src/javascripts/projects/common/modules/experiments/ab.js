@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/fronts-on-articles',
+    'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/video-preroll',
     'common/modules/experiments/tests/alternative-related',
@@ -26,7 +26,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    FrontsOnArticles,
+    FrontsOnArticles2,
     LargeTopAd,
     VideoPreroll,
     AlternativeRelated,
@@ -42,7 +42,7 @@ define([
     chain) {
 
     var TESTS = flatten([
-        new FrontsOnArticles(),
+        new FrontsOnArticles2(),
         new LargeTopAd(),
         new VideoPreroll(),
         new AlternativeRelated(),
