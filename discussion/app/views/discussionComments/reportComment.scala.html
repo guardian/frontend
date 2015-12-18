@@ -2,31 +2,56 @@
 @(commentId: Int, page: SimplePage)(implicit request: RequestHeader)
 @main(page){ }{
 
-    <form class="d-report-comment-form js-report-comment-form">
+    <div class="l-side-margins">
+        <article class="content content--article tonal tonal--tone-news" role="main">
+            <header class="content__head tonal__head tonal__head--tone-news">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                                @*<a class="tone-colour" data-link-name="article section" href="@LinkTo("/crosswords")">Crosswords</a>*@
+                            </div>
+                        </div>
+                        <h1 itemprop="headline" class="content__headline js-score">Report Abuse</h1>
+                    </div>
+                </div>
+            </header>
+        </article>
 
-        <select class="d-report-comment__field d-report-comment__field--category" name="category">
-            <option value="0">Please select</option>
-            <option value="1">Personal abuse</option>
-            <option value="2">Off topic</option>
-            <option value="3">Legal issue</option>
-            <option value="4">Trolling</option>
-            <option value="5">Hate speech</option>
-            <option value="6">Offensive/Threatening language</option>
-            <option value="7">Copyright</option>
-            <option value="8">Spam</option>
-            <option value="9">Other</option>
-        </select>
+        <div class="content__main tonal__main tonal__main--tone-news">
+            <div class="gs-container">
+                <div class="content__main-column">
 
-        <div class="d-report-comment__comment">
-            <label class="d-report-comment__label" for="d-report-comment__reason">Reason (optional)</label>
-            <textarea class="d-report-comment__field" id="d-report-comment__reason" name="comment"></textarea>
+
+                    <form class="form" method="post">
+                        <fieldset class="fieldset">
+                            <div class="form-fields__inline">
+                        <label class="label" for="category">Category</label>
+                        <select class="fieldset__fields" name="category">
+                            <option value="0">Please select</option>
+                            <option value="1">Personal abuse</option>
+                            <option value="2">Off topic</option>
+                            <option value="3">Legal issue</option>
+                            <option value="4">Trolling</option>
+                            <option value="5">Hate speech</option>
+                            <option value="6">Offensive/Threatening language</option>
+                            <option value="7">Copyright</option>
+                            <option value="8">Spam</option>
+                            <option value="9">Other</option>
+                        </select>
+
+                            <label class="label" for="reason">Reason (optional)</label>
+                            <textarea class="fieldset__fields" id="reason" name="comment"></textarea>
+
+                            <label class="label" for="email">Email (optional)</label>
+                            <textarea type="text" class="email" id="email" name="email"></textarea>
+                            </div>
+                        <button class="submit-input" type="submit">Report</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="d-report-comment__email">
-            <label class="d-report-comment__label" for="d-report-comment__email">Email (optional)</label>
-            <input type="text" class="d-report-comment__field" id="d-report-comment__email" name="email"></textarea>
-        </div>
-
-        <button class="d-report-comment__submit" type="submit">Report</button>
-    </form>
-}
+        }
