@@ -23,7 +23,7 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
         fields = None)
     ).elements
 
-    images.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
+    images.mainPicture.flatMap(_.images.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
   }
 
   def thumbnailFixture(crops: (Int, Int)*) = FixtureTemplates.emptyElement.copy(
@@ -48,7 +48,9 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).elements.trailPicture(5, 3).map(_.delegate) shouldEqual Some(theImage)
+    ).elements.trailPicture(5, 3).map(_.images.allImages.headOption.exists( image =>
+      image.width == 504 && image.height == 300
+    )) shouldBe Some(true)
   }
 
   it should "reject images more than 1% from the desired aspect ratio" in {
@@ -58,7 +60,7 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
       FixtureTemplates.emptyApiContent.copy(
         elements = Some(List(theImage))
       )
-    ).elements.trailPicture(5, 3).map(_.delegate) shouldEqual None
+    ).elements.trailPicture(5, 3) shouldEqual None
   }
 
   it should "not die if an image has 0 height or width" in {

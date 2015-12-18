@@ -121,7 +121,8 @@ object PressedProperties {
       embedUri = FaciaContentUtils.embedUri(content),
       section = FaciaContentUtils.section(content),
       maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(content),
-      href = FaciaContentUtils.href(content)
+      href = FaciaContentUtils.href(content),
+      webUrl = FaciaContentUtils.webUrl(content)
     )
   }
 
@@ -155,7 +156,8 @@ final case class PressedProperties(
   embedUri: Option[String],
   section: String,
   maybeFrontPublicationDate: Option[Long],
-  href: Option[String]
+  href: Option[String],
+  webUrl: Option[String]
 )
 
 object PressedCardHeader {

@@ -236,7 +236,7 @@ object Content {
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.safeFields
-    val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, ref.id)).toMap
+    val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
 
     Content(
       elements = elements,
