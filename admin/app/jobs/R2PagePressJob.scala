@@ -32,6 +32,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
             //TODO - Send the URL to the fetcher & cleaner
             //TODO - Send the cleaned HTML to S3
             //TODO - Update the redirects DynamoDB table
+            queue.delete(message.handle)
           }
         }
         log.info("R2PagePressJob: finished")
