@@ -22,12 +22,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFrontsOnArticles = Switch(
+  val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
-    "ab-fronts-on-articles",
+    "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 30),
+    sellByDate = new LocalDate(2016, 1, 30),
     exposeClientSide = true
   )
 

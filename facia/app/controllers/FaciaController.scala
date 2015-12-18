@@ -8,13 +8,13 @@ import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json._
 import play.api.mvc._
-import play.api.templates
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices._
 import views.html.fragments.containers.facia_cards.container
+import views.support.FaciaToMicroFormat2Helpers.getCollection
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -44,6 +44,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
+
   def renderContainerJson(id: String) = renderContainer(id, false)
 
   def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = MemcachedAction { implicit request =>
@@ -81,6 +82,25 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         } else {
           NotFound
         }
+      }
+    }
+
+    (rawNum, rawOffset) match {
+      case (Int(num), Int(offset)) => returnContainers(num, offset)
+      case _ => Future.successful(Cached(600) {
+        BadRequest
+      })
+    }
+  }
+
+  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
+    def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
+
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString("international")), num, offset, "none").map { collections =>
+      Cached(60) {
+        JsonComponent(
+          "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
+        )
       }
     }
 
