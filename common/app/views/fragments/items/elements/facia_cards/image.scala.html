@@ -5,7 +5,7 @@
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                 sizes="@breakpointWidth.width"
-                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths, maybeUrl, maybeImageContainer)" />
+                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybeUrl, maybeImageContainer)" />
     }
     <img class="@RenderClasses(classes: _*)"
          alt=""

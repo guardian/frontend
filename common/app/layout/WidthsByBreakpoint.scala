@@ -261,11 +261,8 @@ case class WidthsByBreakpoint(
   private val allBreakpoints: List[Breakpoint] = List(Wide, LeftCol, Desktop, Tablet, Phablet, MobileLandscape, Mobile)
   private val allWidths: List[Option[BrowserWidth]] = List(wide, leftCol, desktop, tablet, phablet, mobileLandscape, mobile)
   val breakpoints: Seq[BreakpointWidth] = allBreakpoints zip allWidths collect {
-      case (breakpoint, Some(width)) => BreakpointWidth(breakpoint, width)
-    }
-
-  private val MaximumMobileImageWidth = 620
-  private val SourcesToEmitOnMobile = 3
+    case (breakpoint, Some(width)) => BreakpointWidth(breakpoint, width)
+  }
 
   def sizes: String = breakpoints map {
     case BreakpointWidth(Mobile, imageWidth) =>
@@ -275,22 +272,24 @@ case class WidthsByBreakpoint(
       s"(min-width: ${breakpoint.minWidth.get}px) $imageWidth"
   } mkString ", "
 
+  def profiles: Seq[Profile] = (breakpoints flatMap(_.toPixels(breakpoints)))
+    .distinct
+    .map((browserWidth: Int) => Profile(width = Some(browserWidth)))
+}
 
-  def breakpointWidthToPixels = (breakpoint: BreakpointWidth) => breakpoint match {
+case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth) {
+  private val MaximumMobileImageWidth = 620
+  private val SourcesToEmitOnMobile = 3
+
+  def toPixels = (breakpointWidths: Seq[BreakpointWidth]) => this match {
     case BreakpointWidth(breakpoint, PixelWidth(pixels)) =>
       Seq(pixels)
     case BreakpointWidth(Mobile, _: PercentageWidth | _: ViewportWidth) =>
       // Percentage and viewport widths are not explicitly associated with any pixel widths that could be used with a srcset.
       // So we create a series of profiles by combining usable widths in the class with predefined sensible widths.
-      val pixelWidths = breakpoints.collect { case BreakpointWidth(_,width: PixelWidth) => width.get }
+      val pixelWidths = breakpointWidths.collect { case BreakpointWidth(_,width: PixelWidth) => width.get }
       val widths: Seq[Int] = pixelWidths.dropWhile(_ > MaximumMobileImageWidth).take(SourcesToEmitOnMobile)
       widths ++ FaciaWidths.ExtraPixelWidthsForMediaMobile.map(_.get)
     case _ => Seq.empty
   }
-
-  def profiles: Seq[Profile] = (breakpoints flatMap breakpointWidthToPixels)
-    .distinct
-    .map((browserWidth: Int) => Profile(width = Some(browserWidth)))
 }
-
-case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth)
