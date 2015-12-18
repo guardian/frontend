@@ -15,7 +15,7 @@ define([
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
     'common/modules/live/filter',
-    'common/modules/ui/autoupdate',
+    //'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
@@ -42,7 +42,7 @@ define([
     liveblogAdverts,
     Affix,
     LiveFilter,
-    AutoUpdate,
+    //AutoUpdate,
     dropdowns,
     lastModified,
     NotificationCounter,
@@ -248,7 +248,7 @@ define([
                     modules.fetchUpdatesCount(latestBlockId);
                 }, 10000);
 
-                new Sticky(qwery(".blog__updates-box-tofix"), { top: 60 }).init();
+                new Sticky(qwery('.blog__updates-box-tofix'), { top: 60 }).init();
 
                 bean.on(document.body, 'click', '.js-updates-button', function () {
                     modules.toastButtonClicked(latestBlockId);
@@ -279,14 +279,14 @@ define([
         toastButtonClicked: function () {
             var $updateBox = $('.js-updates-button');
             scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
-            $updateBox.addClass("loading");
+            $updateBox.addClass('loading');
             modules.injectNewBlocks();
         },
 
         refreshUpdatesCount: function (count) {
             var $updateBox = $('.js-updates-button'),
                 $updateBoxContainer = $('.blog__updates-box-container'),
-                $updateBoxText = $(".blog__updates-box-text", $updateBox);
+                $updateBoxText = $('.blog__updates-box-text', $updateBox);
 
             $updateBox.removeClass('blog__updates-box--closed');
             $updateBoxText.html(count + ' new updates');
@@ -303,7 +303,7 @@ define([
             }).then(function (resp) {
                 if (resp.html) {
                     $('#' + latestBlockId).before(resp.html);
-                    latestBlockId = $(".block").first().attr("id");
+                    latestBlockId = $('.block').first().attr('id');
                     setTimeout(function () {
                         modules.resetToastButton();
                     }, 1000);

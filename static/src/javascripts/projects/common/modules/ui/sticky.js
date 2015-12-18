@@ -34,9 +34,9 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, that = this;
+        var css, that = this;
 
-        stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
+        //stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
             css = {
