@@ -10,7 +10,7 @@
             @content.elements.trailPicture(5, 3).map{ image =>
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio">
-                        <img class="responsive-img" src="@Item140.bestFor(image)" alt="" />
+                        <img class="responsive-img" src="@Item140.bestFor(image.images)" alt="" />
                     </div>
                 </div>
             }
@@ -21,6 +21,7 @@
                         @fragments.inlineSvg("video-icon", "icon", List("yellow"))
                         @v.videoLinkText
                     }
+                    case _ => { }
                 }
             </h4>
         </a>

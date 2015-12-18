@@ -6,6 +6,7 @@ import common._
 import conf.LiveContentApi.getResponse
 import conf._
 import model._
+import model.pressed.PressedContent
 import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
@@ -46,7 +47,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
       }
   }
 
-  private def renderTopStoriesPage(trails: Seq[FaciaContent])(implicit request: RequestHeader) = {
+  private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val page = SimplePage( MetaData.make(
       "top-stories",
       "top-stories",
@@ -67,7 +68,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     }
   }
 
-  private def renderTopStoriesTrails(trails: Seq[FaciaContent])(implicit request: RequestHeader) = {
+  private def renderTopStoriesTrails(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
     val response = if (request.getQueryString("view") == Some("link"))
       () => views.html.fragments.trailblocks.link(trails, trailsLength)
