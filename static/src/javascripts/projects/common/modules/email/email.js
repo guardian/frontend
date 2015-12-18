@@ -254,8 +254,11 @@ define([
                 var browser = detect.getUserAgent.browser,
                     version = detect.getUserAgent.version;
 
-                // If we're in lte IE9, don't run the init
-                if (browser !== 'MSIE' && [7,8,9].indexOf(version) === -1) {
+                // If we're in lte IE9, don't run the init and adjust the footer
+                if (browser === 'MSIE' && [7,8,9].indexOf(version) !== -1) {
+                    $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
+                    $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
+                } else {
                     // We're loading through the iframe
                     if (rootEl && rootEl.tagName === 'IFRAME') {
                         // We can listen for a lazy load or reload to catch an update
@@ -267,9 +270,6 @@ define([
                     } else {
                         setup(rootEl, rootEl || document, false);
                     }
-                } else {
-                    $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
-                    $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 }
             }
         };
