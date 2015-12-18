@@ -1,5 +1,6 @@
 package model
 
+import com.gu.contentapi.client.model.{CrosswordPosition, CrosswordCreator, CrosswordDimensions}
 import com.gu.facia.api.{utils => fapiutils}
 import common.{NavItem, SectionLink, Pagination}
 import model.facia.PressedCollection
@@ -355,6 +356,11 @@ object ContentTypeFormat {
   implicit val contentFormat: Format[Content] = Format[Content](readsContent, writesContent)
   implicit val lightboxFormat = Json.format[GenericLightboxProperties]
   implicit val galleryLightboxFormat = Json.format[GalleryLightboxProperties]
+  implicit val crosswordDimensionsFormat = Json.format[CrosswordDimensions]
+  implicit val crosswordCreatorFormat = Json.format[CrosswordCreator]
+  implicit val crosswordPositionFormat = Json.format[CrosswordPosition]
+  implicit val entryFormat = Json.format[Entry]
+  implicit val crosswordDataFormat = Json.format[CrosswordData]
 
   val articleFormat = Json.format[Article]
   val galleryFormat = Json.format[Gallery]
@@ -363,6 +369,7 @@ object ContentTypeFormat {
   val interactiveFormat = Json.format[Interactive]
   val imageContentFormat = Json.format[ImageContent]
   val genericContentFormat = Json.format[GenericContent]
+  val crosswordContentFormat = Json.format[CrosswordContent]
 
   object format extends Format[ContentType] {
     def reads(json: JsValue) = {
@@ -374,6 +381,7 @@ object ContentTypeFormat {
         case JsSuccess(JsString("Interactive"), _) => (json \ "item").validate[Interactive](interactiveFormat)
         case JsSuccess(JsString("ImageContent"), _) => (json \ "item").validate[ImageContent](imageContentFormat)
         case JsSuccess(JsString("GenericContent"), _) => (json \ "item").validate[GenericContent](genericContentFormat)
+        case JsSuccess(JsString("CrosswordContent"), _) => (json \ "item").validate[CrosswordContent](crosswordContentFormat)
         case _ => JsError("Could not convert ContentType")
       }
     }
@@ -386,6 +394,7 @@ object ContentTypeFormat {
       case interactive: Interactive => JsObject(Seq("type" -> JsString("Interactive"), "item" -> Json.toJson(interactive)(interactiveFormat)))
       case image: ImageContent => JsObject(Seq("type" -> JsString("ImageContent"), "item" -> Json.toJson(image)(imageContentFormat)))
       case generic: GenericContent => JsObject(Seq("type" -> JsString("GenericContent"), "item" -> Json.toJson(generic)(genericContentFormat)))
+      case crossword: CrosswordContent => JsObject(Seq("type" -> JsString("CrosswordContent"), "item" -> Json.toJson(crossword)(crosswordContentFormat)))
     }
   }
 }

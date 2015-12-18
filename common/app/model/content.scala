@@ -824,6 +824,32 @@ final case class ImageContent(
   val lightBox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 }
 
+object CrosswordContent {
+  def make(crossword: CrosswordData, apicontent: contentapi.Content) = {
+
+    val content = Content(apicontent)
+    val contentType= GuardianContentTypes.Crossword
+
+    val metadata = content.metadata.copy(
+      id = crossword.id,
+      section = "crosswords",
+      analyticsName = crossword.id,
+      webTitle = crossword.name,
+      contentType = contentType,
+      iosType = None,
+      javascriptConfigOverrides = Map("contentType" -> JsString(contentType))
+    )
+
+    val contentOverrides = content.content.copy(metadata = metadata)
+
+    CrosswordContent(contentOverrides, crossword)
+  }
+}
+
+final case class CrosswordContent(
+  override val content: Content,
+  crossword: CrosswordData ) extends ContentType
+
 case class Tweet(id: String, images: Seq[String]) {
   val firstImage: Option[String] = images.headOption
 }
