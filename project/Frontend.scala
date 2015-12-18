@@ -123,23 +123,6 @@ object Frontend extends Build with Prototypes {
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests)
 
-  val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      filters,
-      identityModel,
-      identityRequest,
-      identityCookie,
-      seeGuice,
-      guice,
-      liftJson,
-      commonsHttpClient,
-      slf4jExt,
-      exactTargetClient,
-      nScalaTime,
-      dispatch
-    )
-  )
-
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
@@ -154,7 +137,6 @@ object Frontend extends Build with Prototypes {
       sport,
       discussion,
       diagnostics,
-      identity,
       admin,
       commercial,
       onward
@@ -209,7 +191,6 @@ object Frontend extends Build with Prototypes {
     router,
     diagnostics,
     admin,
-    identity,
     commercial,
     onward,
     archive,
