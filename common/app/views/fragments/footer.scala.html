@@ -39,7 +39,7 @@
 
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn) {
-                    <div class="footer__email-container">
+                    <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
                             @fragments.email.emailIframe("37", "footer-daily-email-uk")
