@@ -253,7 +253,6 @@ define([
             init: function (rootEl) {
                 var browser = detect.getUserAgent.browser,
                     version = detect.getUserAgent.version;
-                
                 // If we're in lte IE9, don't run the init and adjust the footer
                 if (browser === 'MSIE' && ['7','8','9'].indexOf(version + '') !== -1) {
                     $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
