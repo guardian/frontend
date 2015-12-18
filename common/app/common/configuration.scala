@@ -277,8 +277,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
-    lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
-
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
 
