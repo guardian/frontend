@@ -1,11 +1,11 @@
 @import layout.WidthsByBreakpoint
-@(classes: Seq[String], widths: WidthsByBreakpoint, maybeImageContainer: Option[model.ImageContainer] = None, maybeUrl: Option[String] = None, maybeSrc: Option[String] = None)
+@(classes: Seq[String], widths: WidthsByBreakpoint, maybeImageContainer: Option[model.ImageContainer] = None, maybePath: Option[String] = None, maybeSrc: Option[String] = None)
 
 <picture>
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                 sizes="@breakpointWidth.width"
-                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybeUrl, maybeImageContainer)" />
+                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageContainer)" />
     }
     <img class="@RenderClasses(classes: _*)"
          alt=""

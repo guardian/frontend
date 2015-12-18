@@ -138,11 +138,11 @@ object ImgSrc extends Logging {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybeUrl: Option[String] = None, maybeImageContainer: Option[ImageContainer] = None) = {
+  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageContainer: Option[ImageContainer] = None) = {
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth)))
       .map { profile => {
-        maybeUrl
+        maybePath
           .map(url => srcsetForProfile(profile, url))
           .orElse(maybeImageContainer.map(imageContainer => srcsetForProfile(profile, imageContainer)))
           .getOrElse("")

@@ -99,14 +99,14 @@ data-test-id="facia-card"
                         @image(
                             classes = Seq("responsive-img"),
                             widths = item.mediaWidthsByBreakpoint,
-                            maybeUrl = Some(imageElement.url),
+                            maybePath = Some(imageElement.url),
                             maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
                         )
                         @imageElements.tail.map { imageElement =>
                             @image(
                                 classes = Seq("responsive-img "),
                                 widths = item.mediaWidthsByBreakpoint,
-                                maybeUrl = Some(imageElement.url)
+                                maybePath = Some(imageElement.url)
                             )
                         }
                     }
@@ -157,7 +157,7 @@ data-test-id="facia-card"
                 @image(
                     classes = Seq("fc-item__avatar__media", cutOut.cssClass),
                     widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
-                    maybeUrl = Some(imageUrl)
+                    maybePath = Some(imageUrl)
                 )
             </div>
             }
