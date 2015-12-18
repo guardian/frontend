@@ -31,12 +31,6 @@ object FrontPressController extends Controller with Logging with AuthLogging wit
     runJob(RefreshFrontsJob.runFrequency(LowFrequency), "low frequency")
   }
 
-  def r2() = AuthActions.AuthActionTest { request =>
-    Presser.press("http://www.theguardian.com/technology/competition/2013/nov/01/observer-tech-monthly-student-competition", "technology/competition/2013/nov/01/observer-tech-monthly-student-competition")
-    Ok("done")
-
-  }
-
   private def runJob(didRun: Boolean, jobName: String) = {
     if(didRun) Ok(s"Pushed $jobName fronts to the SQS queue")
     else InternalServerError("Could not push to the SQS queue, is there an SNS topic set? (frontPressSns)")
