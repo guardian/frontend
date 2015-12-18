@@ -274,6 +274,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         case image: ImageContent => image.copy(content = slimContent)
         case gallery: Gallery => gallery.copy(content = slimContent)
         case generic: GenericContent => generic.copy(content = slimContent)
+        case crossword: CrosswordContent => crossword.copy(content = slimContent)
       }
     }
     val slimProperties = pressedContent.properties.copy(maybeContent = slimMaybeContent)
