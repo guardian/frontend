@@ -66,34 +66,41 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         recordEvent(feedName, "parse", maybeDuration)
       }
 
-      log.info(s"Parsing $feedName feed ...")
+      val msgPrefix = s"Parsing $feedName feed"
+      log.info(s"$msgPrefix ...")
       val parsedFeed = parser.parse(S3FeedStore.get(parser.feedMetaData.name))
       parsedFeed onFailure {
+        case e: SwitchOffException =>
+          log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
           recordParse(None)
-          log.error(s"Parsing $feedName feed failed: ${e.getMessage}", e)
+          log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       parsedFeed onSuccess {
         case feed =>
           recordParse(Some(feed.parseDuration))
-          log.info(s"Successfully parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
+          log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
     }
 
     super.onStart(app)
 
+    def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
+
     for (fetcher <- FeedFetcher.all) {
       val feedName = fetcher.feedMetaData.name
-      Jobs.deschedule(s"${feedName}FetchJob")
-      Jobs.scheduleEveryNMinutes(s"${feedName}FetchJob", 15) {
+      val jobName = mkJobName(feedName, "fetch")
+      Jobs.deschedule(jobName)
+      Jobs.scheduleEveryNMinutes(jobName, 15) {
         fetchFeed(fetcher)
       }
     }
 
     for (parser <- FeedParser.all) {
       val feedName = parser.feedMetaData.name
-      Jobs.deschedule(s"${feedName}ParseJob")
-      Jobs.scheduleEveryNMinutes(s"${feedName}ParseJob", 15) {
+      val jobName = mkJobName(feedName, "parse")
+      Jobs.deschedule(jobName)
+      Jobs.scheduleEveryNMinutes(jobName, 15) {
         parseFeed(parser)
       }
     }
