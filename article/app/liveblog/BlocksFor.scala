@@ -1,11 +1,10 @@
 package liveblog
 
-import model.Content.BodyBlocks
-
+import model.liveblog.BodyBlock
 
 object BlocksFor {
 
-  def apply(blocks: Seq[BodyBlocks], page: Option[Int]): Option[BlocksFor] = {
+  def apply(blocks: Seq[BodyBlock], page: Option[Int]): Option[BlocksFor] = {
     page match {
       case Some(pageNo) => None
       case None => Some(BlocksFor(blocks, 1))//TODO use page to produce different blocks
@@ -14,4 +13,4 @@ object BlocksFor {
 
 }
 
-case class BlocksFor(blocks: Seq[BodyBlocks], pageNo: Int)// TODO prev/next
+case class BlocksFor(blocks: Seq[BodyBlock], pageNo: Int)// TODO prev/next

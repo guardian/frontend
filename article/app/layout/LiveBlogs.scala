@@ -3,15 +3,15 @@ package layout
 import java.util.Locale
 
 import common.Edition
-import model.Content.BodyBlocks
-import model.Content.BodyBlocks.{KeyEvent, UnclassifiedEvent, SummaryEvent}
+import model.liveblog.BodyBlock
+import model.liveblog.BodyBlock.{UnclassifiedEvent, KeyEvent, SummaryEvent}
 import org.joda.time._
 import org.joda.time.format._
 import play.api.mvc.RequestHeader
 
 object BlockFields {
 
-  def apply(block: BodyBlocks) = block.eventType match {
+  def apply(block: BodyBlock) = block.eventType match {
     case SummaryEvent => " is-summary"
     case KeyEvent => " is-key-event"
     case UnclassifiedEvent => ""
