@@ -27,7 +27,7 @@ trait ABTestSwitches {
     "ab-fronts-on-articles",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 30),
+    sellByDate = new LocalDate(2015, 1, 30),
     exposeClientSide = true
   )
 
