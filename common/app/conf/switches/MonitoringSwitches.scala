@@ -21,7 +21,7 @@ trait MonitoringSwitches {
     "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
     safeState = On,
     never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val MetricsSwitch = Switch(

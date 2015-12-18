@@ -51,10 +51,12 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
           Static("stylesheets/head.content.css"),
           Static("stylesheets/content.css"),
           Static("stylesheets/print.css"),
-          Static("javascripts/core.js"),
-          Static("javascripts/bootstraps/standard.js"),
-          Static("javascripts/bootstraps/enhanced.js"),
-          Static("javascripts/bootstraps/crosswords.js")
+          Static("javascripts/app.js"),
+          Static("javascripts/enhanced-vendor.js"),
+          Static("javascripts/bootstraps/enhanced/main.js"),
+          Static("javascripts/bootstraps/enhanced/crosswords.js"),
+          Static("javascripts/bootstraps/commercial.js"),
+          Static.js.reactPath
         ).map(asset => JsString(asset.toString)))
       ))))
     }

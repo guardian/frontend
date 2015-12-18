@@ -53,7 +53,7 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'text!common/views/international-message.html',
-    'bootstraps/identity-common',
+    'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
     fastdom,
@@ -135,6 +135,7 @@ define([
             initialiseStickyHeader: function () {
                 if (config.switches.viewability
                     && !(config.page.isProd && config.page.contentType === 'Interactive')
+                    && !config.page.sponsorshipType === "sponsoredfeatures"
                     && config.page.contentType !== 'Crossword'
                     && config.page.pageId !== 'offline-page') {
                     sticky.init();

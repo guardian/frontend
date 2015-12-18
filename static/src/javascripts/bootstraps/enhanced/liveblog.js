@@ -20,8 +20,8 @@ define([
     'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
-    'bootstraps/article-liveblog-common',
-    'bootstraps/trail',
+    'bootstraps/enhanced/article-liveblog-common',
+    'bootstraps/enhanced/trail',
     'common/utils/robust'
 ], function (
     bean,
