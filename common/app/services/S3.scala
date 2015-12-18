@@ -127,15 +127,12 @@ trait S3 extends Logging {
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
-    println(bucket)
     try {
       client.foreach(_.putObject(request))
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         S3ClientExceptionsMetric.increment()
-        println(e)
         throw e
-      }
     }
   }
 }
