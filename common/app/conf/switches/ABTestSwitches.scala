@@ -48,4 +48,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 1, 15),
     exposeClientSide = true
   )
+
+  val ABRtrtEmailFormArticlePromo = Switch(
+    "A/B Tests",
+    "ab-rtrt-email-form-article-promo",
+    "Testing the email sign up from the bottom of articles of user referred from fronts",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 17),
+    exposeClientSide = true
+  )
 }
