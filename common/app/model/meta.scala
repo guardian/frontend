@@ -509,10 +509,10 @@ final case class Tags(
 
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
-  private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
+  private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.properties.tagType == tagType)
 
   lazy val keywords: Seq[Tag] = tagsOfType("keyword")
-  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.tagType == "keyword")
+  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.properties.tagType == "keyword")
   lazy val contributors: Seq[Tag] = tagsOfType("contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
   lazy val series: Seq[Tag] = tagsOfType("series")
@@ -534,7 +534,7 @@ final case class Tags(
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
-  lazy val isPodcast = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.podcast.isDefined))
+  lazy val isPodcast = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.properties.podcast.isDefined))
   lazy val isAudio = types.exists(_.id == Tags.Audio)
   lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
@@ -550,7 +550,7 @@ final case class Tags(
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.exists(t => t.id == "sport/england-cricket-team") &&

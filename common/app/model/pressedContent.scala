@@ -67,8 +67,6 @@ object CardStyle {
     case fapiutils.ExternalLink => ExternalLink
     case fapiutils.DefaultCardstyle  => DefaultCardstyle
   }
-
-
 }
 sealed trait CardStyle {
   def toneString: String
