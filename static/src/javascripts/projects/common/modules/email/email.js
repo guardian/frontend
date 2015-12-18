@@ -9,6 +9,7 @@ define([
     'Promise',
     'common/utils/mediator',
     'lodash/functions/debounce',
+    'lodash/collections/contains',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
@@ -25,6 +26,7 @@ define([
     Promise,
     mediator,
     debounce,
+    contains,
     template,
     svgs,
     successHtml,
@@ -254,7 +256,7 @@ define([
                 var browser = detect.getUserAgent.browser,
                     version = detect.getUserAgent.version;
                 // If we're in lte IE9, don't run the init and adjust the footer
-                if (browser === 'MSIE' && ['7','8','9'].indexOf(version + '') !== -1) {
+                if (browser === 'MSIE' && contains(['7','8','9'], version + '')) {
                     $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
                     $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 } else {
