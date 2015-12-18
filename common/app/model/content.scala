@@ -61,14 +61,13 @@ final case class Content(
   imdb: Option[String],
   javascriptReferences: Seq[JsObject],
   wordCount: Int,
-  resolvedMetaData: fapiutils.ResolvedMetaData,
+  showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
   showFooterContainers: Boolean = false
 ) {
 
   lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
-  lazy val showByline = resolvedMetaData.showByline
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
   lazy val isSeries: Boolean = tags.series.nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
@@ -120,9 +119,9 @@ final case class Content(
     }
   }
 
-  lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.twitterHandle)
+  lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.properties.twitterHandle)
 
-  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.tagType == "blog" }
+  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
     if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
@@ -237,7 +236,7 @@ object Content {
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.safeFields
-    val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference(ref.id)._2)).toMap
+    val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, ref.id)).toMap
 
     Content(
       elements = elements,
@@ -269,9 +268,9 @@ object Content {
         Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
       },
       hasStoryPackage = apifields.get("hasStoryPackage").exists(_.toBoolean),
-      resolvedMetaData = {
+      showByline = {
         val cardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle)
+        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline
       },
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
@@ -485,8 +484,8 @@ final case class Audio (override val content: Content) extends ContentType {
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
 
-  private lazy val podcastTag: Option[Tag] = tags.tags.find(_.podcast.nonEmpty)
-  lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.podcast.flatMap(_.subscriptionUrl))
+  private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
+  lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
 }
 

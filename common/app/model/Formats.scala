@@ -1,7 +1,6 @@
 package model
 
 import com.gu.facia.api.{utils => fapiutils}
-import com.gu.contentapi.client.model.Podcast
 import common.{NavItem, SectionLink, Pagination}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
@@ -170,8 +169,11 @@ object MetaDataFormat {
 
 object ContentTypeFormat {
 
-  implicit val podcastFormat = Json.format[Podcast]
   implicit val metadataFormat = MetaDataFormat.format
+  implicit val paginationFormat = MetaDataFormat.paginationFormat
+  implicit val podcastFormat = Json.format[Podcast]
+  implicit val referenceFormat = Json.format[Reference]
+  implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
   val fieldsFormat = Json.format[Fields]
@@ -201,7 +203,7 @@ object ContentTypeFormat {
     imdb: Option[String],
     javascriptReferences: Seq[JsObject],
     wordCount: Int,
-    resolvedMetaData: fapiutils.ResolvedMetaData,
+    showByline: Boolean,
     hasStoryPackage: Boolean,
     rawOpenGraphImage: String,
     showFooterContainers: Boolean)
@@ -285,7 +287,7 @@ object ContentTypeFormat {
         jsonContent.imdb,
         jsonContent.javascriptReferences,
         jsonContent.wordCount,
-        jsonContent.resolvedMetaData,
+        jsonContent.showByline,
         jsonContent.hasStoryPackage,
         jsonContent.rawOpenGraphImage,
         jsonContent.showFooterContainers
@@ -316,7 +318,7 @@ object ContentTypeFormat {
           content.imdb,
           content.javascriptReferences,
           content.wordCount,
-          content.resolvedMetaData,
+          content.showByline,
           content.hasStoryPackage,
           content.rawOpenGraphImage,
           content.showFooterContainers
