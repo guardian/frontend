@@ -20,6 +20,7 @@ import views.support._
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
+import scala.util.Try
 
 trait PageWithStoryPackage extends ContentPage {
   def article: Article
@@ -110,7 +111,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String]) = {
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String] = None) = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache
@@ -121,21 +122,21 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[String])(implicit request: RequestHeader): Future[Result] = {
-    mapModel(path) { model =>
-      (lastUpdate, rendered, page) match {
-        case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate)
-        case (None, Some(false), _) => blockText(model, 6)
-        case (_, _, Some(Int(pageNo))) => render(path, model, Some(pageNo))
-        case (_, _, _) => render(path, model, None)
-      }
-    }
-  }
-
-  object Int {
-    def unapply(s : String) : Option[Int] = try {
-      Some(s.toInt)
-    } catch {
-      case _ : java.lang.NumberFormatException => None
+    import scala.concurrent.duration._
+    page.map(s => Try(s.toInt).toOption) match {
+      case Some(Some(pageNo)) =>
+        mapModel(path) {
+          render(path, _, Some(pageNo))
+        }
+      case Some(None) => Future.successful(Cached(1.hours)(BadRequest))
+      case None =>
+        mapModel(path) { model =>
+          (lastUpdate, rendered) match {
+            case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
+            case (None, Some(false)) => blockText(model, 6)
+            case (_, _) => render(path, model, None)
+          }
+        }
     }
   }
 
