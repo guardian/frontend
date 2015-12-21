@@ -1,8 +1,4 @@
 .gu-comlabel__btn {
-
-}
-
-.gu-comlabel__btn {
     @include f-textSans;
     @include font-size(14, 18);
 
@@ -12,14 +8,14 @@
     width: auto;
     padding: 5px 5px 1px;
     z-index: $zindex-modal;
-    background-color: #fff;
+    background-color: $gustyle-tone;
     border: 0;
     font-weight: bold;
     text-transform: uppercase;
 
     &.is-active:before {
         top: $gs-baseline * 2;
-        border-bottom-color: #fff;
+        border-bottom-color: $gustyle-tone;
     }
 
     &:after {

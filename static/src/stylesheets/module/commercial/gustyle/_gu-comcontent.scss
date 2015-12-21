@@ -34,7 +34,7 @@
 
 .gu-note {
     @include f-textSans;
-    @include font-size(13, 18);    @include mq(leftCol) {
+    @include font-size(13, 18);
 
     color: colour(neutral-2);
 }

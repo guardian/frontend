@@ -35,9 +35,12 @@ define([
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-topBannerBelowContainer', topBannerBelowContainer.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-badges', badges.init],
-        ['cm-paidforBand', paidforBand.init]
+        ['cm-badges', badges.init]
     ];
+
+    if (config.swicthes.newCommercialContent) {
+        modules.push(['cm-paidforBand', paidforBand.init]);
+    }
 
     return {
         init: function () {
