@@ -1,15 +1,10 @@
-@(form: play.api.data.Form[controllers.R2PagePress])
+@(form: play.api.data.Form[controllers.admin.R2PagePress])
+@import conf.switches.Switches.R2PagePressServiceSwitch
 
 @admin_main("R2 page presser (archiver)", "TEST", isAuthed = true) {
-    <ul>
-        <li>
-            Press (archive) an individual page
-        </li>
-    </ul>
-
     <form action="/press/r2" method="POST" class="form-horizontal redirect-form">
         <fieldset>
-            <legend>Press (archive):</legend>
+            <legend>Press (archive) an individual page</legend>
             <div class="form-group">
                 <label for="r2url" class="control-label col-sm-1">R2 URL:</label>
                 <div class="col-sm-6">
@@ -18,7 +13,13 @@
             </div>
             <div class="form-group">
                 <div class="controls col-sm-offset-1 col-sm-11">
-                    <input class="btn btn-default" type="submit" value="Submit" />
+                    @if(R2PagePressServiceSwitch.isSwitchedOn) {
+                        <input class="btn btn-default" type="submit" value="Press" />
+                    } else {
+                        <div class="col-sm-6">
+                            This feature is currently switched off (use the switchboard to re-enable it)
+                        </div>
+                    }
                 </div>
             </div>
         </fieldset>

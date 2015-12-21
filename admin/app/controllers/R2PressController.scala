@@ -1,7 +1,7 @@
-package controllers
+package controllers.admin
 
 import common.{ExecutionContexts, Logging}
-import controllers.admin.AuthActions
+import controllers.AuthLogging
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.Controller
