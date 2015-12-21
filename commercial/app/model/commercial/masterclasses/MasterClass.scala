@@ -1,6 +1,6 @@
 package model.commercial.masterclasses
 
-import model.ImageContainer
+import model.ImageElement
 import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
@@ -8,8 +8,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import play.api.libs.json._
 
-case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageContainer])
-
+case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageElement])
 
 object EventbriteMasterClass {
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"

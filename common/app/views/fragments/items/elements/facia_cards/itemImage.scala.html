@@ -1,4 +1,4 @@
-@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
+@(imageMedia: model.ImageMedia, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
 @import views.html.fragments.items.elements.facia_cards.image
@@ -10,13 +10,13 @@
                 @image(
                     classes = Seq("responsive-img"),
                     widths = widths,
-                    maybeImageContainer = Some(imageContainer),
-                    maybeSrc = if(inlineImage) ImgSrc.getFallbackUrl(imageContainer) else None
+                    maybeImageMedia = Some(imageMedia),
+                    maybeSrc = if(inlineImage) ImgSrc.getFallbackUrl(imageMedia) else None
                 )
             }
 
             case _ => {
-                <img src="@ImgSrc.getFallbackUrl(imageContainer)">
+                <img src="@ImgSrc.getFallbackUrl(imageMedia)">
             }
         }
     </div>

@@ -5,7 +5,7 @@
 @import views.support.ImgSrc
 
 @(
-    picture: model.ImageContainer,
+    picture: model.ImageMedia,
     lightboxIndex: Option[Int] = None,
     isShowcase: Boolean = false,
     isFeature: Boolean = false,
@@ -83,7 +83,7 @@
 
 }
 
-@image(picture: model.ImageContainer, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
+@image(picture: model.ImageMedia, widths: WidthsByBreakpoint, imageOption: Option[ImageAsset], isMain: Boolean) = {
 
 @if(amp) {
     @picture.largestImage.map { largestImage =>
@@ -112,7 +112,7 @@
         @widths.breakpoints.map { breakpointWidth =>
             <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                     sizes="@breakpointWidth.width"
-                    srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageContainer = Some(picture))" />
+                    srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
         }
         <!--[if IE 9]></video><![endif]-->
         <img class="@if(isMain) {maxed responsive-img} else {gu-image}"
@@ -129,7 +129,7 @@
 
 }
 
-@caption(picture: model.ImageContainer, imageOption: Option[ImageAsset], isMain: Boolean) = {
+@caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
             <figcaption class="caption@if(isMain){ caption--main} caption--img" itemprop="description">

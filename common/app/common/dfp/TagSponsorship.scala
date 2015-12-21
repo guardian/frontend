@@ -28,7 +28,7 @@ case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: 
     tags contains endPart
   }
 
-  def hasTag(tag: Tag): Boolean = tag.tagType match {
+  def hasTag(tag: Tag): Boolean = tag.properties.tagType match {
     case "keyword" => hasTagId(keywords, tag.id)
     case "series" => hasTagId(series, tag.id)
     case "contributor" => hasTagId(contributors, tag.id)

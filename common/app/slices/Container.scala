@@ -1,6 +1,6 @@
 package slices
 
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import common.Logging
 import model.facia.PressedCollection
 

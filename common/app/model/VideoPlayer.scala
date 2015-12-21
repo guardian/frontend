@@ -13,7 +13,7 @@ case class VideoPlayer(
   overrideIsRatioHd: Option[Boolean] = None,
   embedPath: Option[String] = None
 ) {
-  def poster = profile.bestFor(video).getOrElse(Static("images/media-holding.jpg").path)
+  def poster = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg").path)
 
   /** Width and height are always defined for video profile, so this is OK. */
   def width = profile.width.get
@@ -23,5 +23,5 @@ case class VideoPlayer(
 
   def isRatioHd = overrideIsRatioHd getOrElse profile.isRatioHD
 
-  def blockVideoAds = video.blockVideoAds
+  def blockVideoAds = video.videos.blockVideoAds
 }
