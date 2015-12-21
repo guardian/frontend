@@ -1,7 +1,7 @@
 @(header: layout.FaciaCardHeader, classes: Seq[String])(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import com.gu.facia.api.utils._
+@import model.pressed._
 
 @* TODO: this is only used by dream snaps now (see title.scala.html for the actual kicker branching code for
    elsewhere). Given that, how much of the below do we need? *@
@@ -31,11 +31,11 @@
         @makeSpan("Analysis")
     }
 
-    case PodcastKicker(Some(series)) => {
+    case PodcastKicker(_, Some(series)) => {
         @makeLink(series.url, series.name)
     }
 
-    case PodcastKicker(None) => {
+    case PodcastKicker(_, None) => {
         @makeSpan("Podcast")
     }
 
@@ -43,19 +43,19 @@
         @makeSpan("Review")
     }
 
-    case TagKicker(tagName, tagLink, _) => {
+    case TagKicker(_, tagName, tagLink, _) => {
         @makeLink(tagLink, tagName)
     }
 
-    case SectionKicker(sectionName, sectionLink) => {
+    case SectionKicker(_, sectionName, sectionLink) => {
         @makeLink(sectionLink, sectionName)
     }
 
-    case FreeHtmlKickerWithLink(html, link) => {
+    case FreeHtmlKickerWithLink(_, html, link) => {
         @makeLink(link, html)
     }
 
-    case FreeHtmlKicker(html) => {
+    case FreeHtmlKicker(_, html) => {
         @makeSpan(html)
     }
 }

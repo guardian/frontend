@@ -30,7 +30,7 @@ object InteractiveController extends Controller with RendersItemResponse with Lo
     )
 
     val result = response map { response =>
-      val interactive = response.content map {Interactive(_)}
+      val interactive = response.content map {Interactive.make}
       val page = interactive.map(i => InteractivePage(i, RelatedContent(i, response)))
 
       ModelOrResult(page, response)

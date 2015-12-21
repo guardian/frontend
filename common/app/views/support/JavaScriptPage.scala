@@ -5,6 +5,7 @@ import common.{Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
 import model._
+import implicits.Dates.DateTime2ToCommonDateFormats
 import org.joda.time.DateTime
 import play.api.Play
 import play.api.Play.current

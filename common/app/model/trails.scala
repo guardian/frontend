@@ -27,18 +27,10 @@ object Trail {
       thumbnailPath = apiContent.safeFields.get("thumbnail").map(ImgSrc(_, Naked)),
       isCommentable = apiContent.safeFields.get("commentable").exists(_.toBoolean),
       isClosedForComments = !apiContent.safeFields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow),
-      leadingParagraphs = {
-        val body = apiContent.safeFields.get("body")
-        val souped = body flatMap { body =>
-          val souped = Jsoup.parseBodyFragment(body).body().select("p")
-          Option(souped) map { _.toList }
-        }
-        souped getOrElse Nil
-      },
       byline = apiContent.safeFields.get("byline").map(stripHtml),
-      trailPicture = elements.thumbnail.find(_.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize))
-        .orElse(elements.mainPicture)
-        .orElse(elements.thumbnail),
+      trailPicture = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize)).map(_.images)
+        .orElse(elements.mainPicture.map(_.images))
+        .orElse(elements.thumbnail.map(_.images)),
       tags = tags,
       commercial = commercial,
       fields = fields,
@@ -58,12 +50,11 @@ final case class Trail (
   headline: String,
   byline: Option[String],
   sectionName: String,
-  trailPicture: Option[ImageContainer],
+  trailPicture: Option[ImageMedia],
   thumbnailPath: Option[String] = None,
   discussionId: Option[String] = None,
   isCommentable: Boolean = false,
-  isClosedForComments: Boolean = false,
-  leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
+  isClosedForComments: Boolean = false
 ){
   /** TODO - this should be set in the Facia tool */
   lazy val showByline: Boolean = tags.isComment

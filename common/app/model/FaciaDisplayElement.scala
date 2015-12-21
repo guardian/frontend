@@ -1,25 +1,24 @@
 package model
 
-import com.gu.facia.api.models.FaciaContent
 import conf.Configuration
 import conf.switches.Switches
 import implicits.FaciaContentFrontendHelpers._
-import implicits.FaciaContentImplicits._
 import layout.ItemClasses
+import model.pressed.PressedContent
 
 object FaciaDisplayElement {
-  def fromFaciaContentAndCardType(faciaContent: FaciaContent, itemClasses: ItemClasses): Option[FaciaDisplayElement] = {
+  def fromFaciaContentAndCardType(faciaContent: PressedContent, itemClasses: ItemClasses): Option[FaciaDisplayElement] = {
     faciaContent.mainVideo match {
-      case Some(videoElement) if faciaContent.showMainVideo =>
+      case Some(videoElement) if faciaContent.properties.showMainVideo =>
         Some(InlineVideo(
           videoElement,
-          faciaContent.webTitle,
+          faciaContent.properties.webTitle,
           EndSlateComponents.fromFaciaContent(faciaContent).toUriPath,
           InlineImage.fromFaciaContent(faciaContent)
         ))
-      case _ if faciaContent.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
-        faciaContent.maybeContentId map CrosswordSvg
-      case _ if faciaContent.imageSlideshowReplace && itemClasses.canShowSlideshow =>
+      case _ if faciaContent.properties.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
+        faciaContent.properties.maybeContentId map CrosswordSvg
+      case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
@@ -36,8 +35,8 @@ case class InlineVideo(
 ) extends FaciaDisplayElement
 
 object InlineImage {
-  def fromFaciaContent(faciaContent: FaciaContent): Option[InlineImage] =
-    if (!faciaContent.imageHide) {
+  def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =
+    if (!faciaContent.display.imageHide) {
       faciaContent.trailPicture(5, 3) map { picture =>
         InlineImage(picture)
       }
@@ -46,7 +45,7 @@ object InlineImage {
     }
 }
 
-case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayElement
+case class InlineImage(imageContainer: Element) extends FaciaDisplayElement
 
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")
@@ -55,7 +54,7 @@ case class CrosswordSvg(id: String) extends FaciaDisplayElement {
 }
 
 object InlineSlideshow {
-  def fromFaciaContent(faciaContent: FaciaContent): Option[InlineSlideshow] =
+  def fromFaciaContent(faciaContent: PressedContent): Option[InlineSlideshow] =
     for (s <- faciaContent.slideshow) yield InlineSlideshow(s)
 }
 

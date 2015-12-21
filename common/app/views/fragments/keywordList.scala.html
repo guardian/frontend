@@ -11,7 +11,7 @@
            data-link-name="keyword: @keyword.id"
            itemprop="keywords">
                @keyword.name
-               @if(keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.sectionName) }
+               @if(keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
         </a>
     </li>
 }

@@ -2,20 +2,19 @@ package frontpress
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.GuardianContentClient
-import com.gu.contentapi.client.model._
+import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
-import com.gu.facia.api.models.{Collection, CuratedContent, _}
+import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import common.Edition
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common._
 import conf.{Configuration, LiveContentApi}
 import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
-import implicits.FaciaContentFrontendHelpers._
 import model.facia.PressedCollection
-import model.{FrontProperties, PressedPage, SeoData}
-import org.jsoup.Jsoup
+import model.pressed._
+import model._
+import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.libs.json._
 import services.{ConfigAgent, S3FrontsApi}
 import views.support.{Item460, Item140, Naked}
@@ -56,7 +55,7 @@ object LiveFapiFrontPress extends FapiFrontPress {
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity) =
-    FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
+    FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
 object DraftFapiFrontPress extends FapiFrontPress {
@@ -78,11 +77,10 @@ object DraftFapiFrontPress extends FapiFrontPress {
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity) =
-    FAPI.draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
+    FAPI.draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
 trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
-  import model.facia.FapiJsonFormats._
 
   implicit val capiClient: GuardianContentClient
   implicit val apiClient: ApiClient
@@ -91,7 +89,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
-    adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[FaciaContent]]
+    adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[PressedContent]]
 
   val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode,internalPageCode"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
@@ -108,31 +106,34 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       .showTags("all")
       .showReferences(references)
 
-  def generateFrontJsonFromFapiClient(): Response[JsValue] =
-    for {
-      frontsSet <- FAPI.getFronts()
-    } yield Json.toJson(frontsSet.toList)
-
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
       curatedCollection <- collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
       backfill <- getBackfill(collection)
-      treats <- FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
+      treats <- getTreats(collection)
     } yield
       PressedCollection.fromCollectionWithCuratedAndBackfill(
         collection,
-        curatedCollection.map(slimElements).map(slimBody),
-        backfill.map(slimElements).map(slimBody),
-        treats.map(slimElements).map(slimBody))
+        curatedCollection.map(slimContent),
+        backfill.map(slimContent),
+        treats.map(slimContent))
 
-  private def getBackfill(collection: Collection): Response[List[FaciaContent]] =
+  private def getTreats(collection: Collection): Response[List[PressedContent]] = {
+    FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery).map(_.map(PressedContent.make))
+  }
+
+  private def getBackfill(collection: Collection): Response[List[PressedContent]] = {
     collection
       .collectionConfig
       .apiQuery
       .map { query =>
-      FAPI.backfill(query, collection, searchApiQuery, itemApiQuery)}
-      .getOrElse{Response.Right(Nil)}
+        FAPI.backfill(query, collection, searchApiQuery, itemApiQuery)
+      }
+      .getOrElse {
+        Response.Right(Nil)
+      }.map(_.map(PressedContent.make))
+  }
 
   private def getCollectionIdsForPath(path: String): Response[List[String]] =
     for(
@@ -209,46 +210,81 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
 
-  def mapContent(faciaContent: FaciaContent)(f: Content => Content): FaciaContent =
-    faciaContent match {
-      case curatedContent: CuratedContent => curatedContent.copy(content = f(curatedContent.content))
-      case supporting: SupportingCuratedContent => supporting.copy(content = f(supporting.content))
-      case linkSnap: LinkSnap => linkSnap
-      case latestSnap: LatestSnap => latestSnap.copy(latestContent = latestSnap.latestContent.map(f))}
+  private def mapContent(content: PressedContent)(f: ContentType => ContentType): PressedContent = {
+    val mappedContent: Option[ContentType] = content.properties.maybeContent.map(f)
+    val mappedProperties = content.properties.copy(maybeContent = mappedContent)
 
-
-  def slimElements(faciaContent: FaciaContent): FaciaContent = {
-    val slimElements: Option[List[Element]] =
-      Option(
-        faciaContent.trailPictureAll(5, 3).map { imageContainer =>
-          val naked = Naked.elementFor(imageContainer)
-
-          //These sizes are used in RSS
-          val size140 = Item140.elementFor(imageContainer)
-          val size460 = Item460.elementFor(imageContainer)
-
-          imageContainer.delegate.copy(assets =
-            (naked ++ size140 ++ size460).map(_.delegate).toList
-          )} ++
-          faciaContent.mainVideo.map(_.delegate))
-        .filter(_.nonEmpty)
-
-    mapContent(faciaContent)(c => c.copy(elements = slimElements))
-  }
-
-  //This is used to slim the body key in fields of the CAPI Content type
-  //We only need the first two elements of the body which is used by RSS
-  def slimBody(faciaContent: FaciaContent): FaciaContent = {
-    mapContent(faciaContent){ content =>
-      val newFields = content.fields.map { fieldsMap =>
-        val newBody = fieldsMap.get("body").map {body =>
-          "body" -> HTML.takeFirstNElements(body, 2)
-         }
-        newBody.fold(fieldsMap)(fieldsMap + _)
-      }
-      content.copy(fields = newFields)
+    content match {
+      case curatedContent: CuratedContent => curatedContent.copy(properties = mappedProperties)
+      case supporting: SupportingCuratedContent => supporting.copy(properties = mappedProperties)
+      case linkSnap: LinkSnap => linkSnap.copy(properties = mappedProperties)
+      case latestSnap: LatestSnap => latestSnap.copy(properties = mappedProperties)
     }
   }
 
+  def slimContent(pressedContent: PressedContent): PressedContent = {
+    val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
+      val slimElements: Seq[Option[Element]] = content.elements.trailPictureAll(5, 3).map { element =>
+        val naked = Naked.elementFor(element.images)
+
+        //These sizes are used in RSS
+        val size140 = Item140.elementFor(element.images)
+        val size460 = Item460.elementFor(element.images)
+
+        val paredImages = ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
+
+        val slimElement: Element = element match {
+          case image: ImageElement => image.copy(images = paredImages)
+          case video: VideoElement => video.copy(images = paredImages)
+          case audio: AudioElement => audio.copy(images = paredImages)
+          case embed: EmbedElement => embed.copy(images = paredImages)
+          case default: DefaultElement => default.copy(images = paredImages)
+        }
+        Some(slimElement)
+      }
+      val elements = Elements.apply((slimElements :+ content.elements.mainVideo).flatten)
+      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2))
+
+      val slimTrailPicture = content.trail.trailPicture.map { imageMedia =>
+        val naked = Naked.elementFor(imageMedia)
+
+        //These sizes are used in RSS
+        val size140 = Item140.elementFor(imageMedia)
+        val size460 = Item460.elementFor(imageMedia)
+
+        ImageMedia.make(Seq(naked ++ size140 ++ size460).flatten.distinct)
+      }
+
+      val slimTrail = content.trail.copy(trailPicture = slimTrailPicture)
+
+      // Clear the config fields, because they are not used by facia. That is, the config of
+      // an individual card is not used to render a facia front page.
+      val slimMetadata = content.metadata.copy(
+        javascriptConfigOverrides = Map(),
+        opengraphPropertiesOverrides = Map(),
+        twitterPropertiesOverrides = Map())
+
+      val slimContent = content.content.copy(metadata = slimMetadata, elements = elements, fields = slimFields, trail = slimTrail)
+
+      content match {
+        case article: Article => article.copy(content = slimContent)
+        case video: Video => video.copy(content = slimContent)
+        case audio: Audio => audio.copy(content = slimContent)
+        case interactive: Interactive => interactive.copy(content = slimContent)
+        case image: ImageContent => image.copy(content = slimContent)
+        case gallery: Gallery => gallery.copy(content = slimContent)
+        case generic: GenericContent => generic.copy(content = slimContent)
+        case crossword: CrosswordContent => crossword.copy(content = slimContent)
+      }
+    }
+    val slimProperties = pressedContent.properties.copy(maybeContent = slimMaybeContent)
+
+    pressedContent match {
+      case curatedContent: CuratedContent => curatedContent.copy(properties = slimProperties)
+      case supporting: SupportingCuratedContent => supporting.copy(properties = slimProperties)
+      case linkSnap: LinkSnap => linkSnap.copy(properties = slimProperties)
+      case latestSnap: LatestSnap => latestSnap.copy(properties = slimProperties)
+    }
+  }
 
 }

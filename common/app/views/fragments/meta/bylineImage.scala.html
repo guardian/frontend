@@ -4,7 +4,7 @@
 @import common.RichRequestHeader
 
 @tags.contributors.headOption.map { profile =>
-    @profile.contributorLargeImagePath.map{ src =>
+    @profile.properties.contributorLargeImagePath.map{ src =>
         <div class="byline-img">
         @if(request.isAmp) {
             @if(model.Tags(tags.tones).isComment) {

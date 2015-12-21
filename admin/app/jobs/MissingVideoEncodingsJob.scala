@@ -43,16 +43,13 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
         .pageSize(100)
      ) map {
         response =>
-            response.results map { Content(_) } collect { case v: Video => v }
+            response.results.map(Content.apply).collect { case v: Video => v }
      }
 
      apiVideoResponse.onSuccess {
        case allVideoContent =>
          val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
-           val videoAssets = video.elements.elements.filter(_.isMain)
-             .map {
-             element => element.delegate.assets.filter(_.`type` == "video")
-           }.flatMap(asset => asset).map(_.file).flatten
+           val videoAssets = video.elements.videos.filter(_.properties.isMain).flatMap(_.videos.videoAssets).map(_.url).flatten
 
            val missingVideoAsssets = Future.sequence(
              videoAssets.map { encoding =>
