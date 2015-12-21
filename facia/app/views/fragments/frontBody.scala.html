@@ -23,6 +23,10 @@
                 }
             role="main">
 
+                @if(NewCommercialContent.isSwitchedOn && isAdFeature){
+                    @fragments.guBand()
+                }
+
                 @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
 
                     @collections.map { containerDefinition =>

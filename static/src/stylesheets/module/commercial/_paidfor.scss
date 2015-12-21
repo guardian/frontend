@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Paid for component
+   ========================================================================== */
+.commercial--paidfor {
+
+    .commercial__header,
+    .commercial__title,
+    .rich-link__header {
+        @include f-headlineSans;
+    }
+
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .commercial__header {
+        overflow: visible;
+    }
+
+    .commercial__title {
+        font-size: get-font-size(headline, 4);
+    }
+
+    .commercial__meta,
+    .rich-link__meta {
+        color: colour(neutral-2);
+        font-size: get-font-size(data, 3);
+        @include f-textSans;
+        text-align: right;
+    }
+
+    .commercial__meta {
+        padding: $gs-baseline / 3  0;
+    }
+
+    .commercial__cta {
+        left: auto;
+        width: auto;
+    }
+
+    .rich-link__meta {
+        padding: $gs-baseline / 3  $gs-gutter / 4;
+    }
+
+    .lineitems {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+    .lineitem {
+        border-left: 0;
+        flex: 0 1 100%;
+        display: flex;
+        margin-bottom: $gs-baseline / 2;
+
+        @include mq(tablet) {
+            flex: 0 1 percentage(1/3);
+        }
+        @include mq(desktop) {
+            flex: 0 1 percentage(1/4);
+        }
+    }
+}
+
+.tone-paidfor--item {
+    background: #ccc;
+
+    .rich-link__container:before {
+        background: guss-colour(paidfor-background, $frontend-palette);
+    }
+}

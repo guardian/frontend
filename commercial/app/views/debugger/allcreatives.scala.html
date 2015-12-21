@@ -91,70 +91,76 @@
     </div>
 
     <script>
-        require('core')
-            .next([
-                'bean',
-                'common/utils/$'
-            ])
-            .then(function (
-                bean,
-                $
-            ) {
-                var $switchFronts   = $('#switchFronts'),
-                    $switchArticles = $('#switchArticles'),
-                    $rhColumn = $('.content__secondary-column');
+        // window.require is assigned asynchronously
+        window.addEventListener('load', function () {
+            require('bootstraps/standard/main')
+                .next(['bootstraps/commercial'])
+                .next([
+                    'bean',
+                    'common/utils/$'
+                ])
+                .then(function (
+                    bean,
+                    $
+                ) {
+                    var $switchFronts   = $('#switchFronts'),
+                        $switchArticles = $('#switchArticles'),
+                        $rhColumn = $('.content__secondary-column');
 
-                bean.on($switchFronts[0], 'click', function () {
-                    $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
-                    $switchArticles.removeClass('current');
-                    $switchFronts.addClass('current');
-                    $rhColumn.hide();
-                });
+                    bean.on($switchFronts[0], 'click', function () {
+                        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
+                        $switchArticles.removeClass('current');
+                        $switchFronts.addClass('current');
+                        $rhColumn.hide();
+                    });
 
-                bean.on($switchArticles[0], 'click', function () {
-                    $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
-                    $switchFronts.removeClass('current');
-                    $switchArticles.addClass('current');
-                    $rhColumn.show();
-                });
+                    bean.on($switchArticles[0], 'click', function () {
+                        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
+                        $switchFronts.removeClass('current');
+                        $switchArticles.addClass('current');
+                        $rhColumn.show();
+                    });
 
-                bean.on($('#pageSkin')[0], 'click', function () {
-                    $('body').toggleClass('has-page-skin');
-                });
+                    bean.on($('#pageSkin')[0], 'click', function () {
+                        $('body').toggleClass('has-page-skin');
+                    });
 
-                var $number        = $('#dfp-number'),
-                    itemNumClasses = ['2', '3', '4']
-                        .map(function (num) {
-                            return 'commercial--items-dfp-' + num;
-                        });
-                bean.on($number[0], 'change', function () {
-                    $('.commercial--dfp-multiple')
-                        .removeClass(itemNumClasses.join(' '))
-                        .addClass('commercial--items-dfp-' + $number.val());
-                });
+                    var $number        = $('#dfp-number'),
+                        itemNumClasses = ['2', '3', '4']
+                            .map(function (num) {
+                                return 'commercial--items-dfp-' + num;
+                            });
+                    bean.on($number[0], 'change', function () {
+                        $('.commercial--dfp-multiple')
+                            .removeClass(itemNumClasses.join(' '))
+                            .addClass('commercial--items-dfp-' + $number.val());
+                    });
 
-                var $palette    = $('#dfp-palette'),
-                    toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
-                        .map(function (tone) {
-                            return 'commercial--tone-' + tone;
-                        });
-                bean.on($palette[0], 'change', function () {
-                    $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
-                        .removeClass(toneClasses.join(' '))
-                        .addClass('commercial--tone-' + $palette.val());
-                });
+                    var $palette    = $('#dfp-palette'),
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                            .map(function (tone) {
+                                return 'commercial--tone-' + tone;
+                            });
+                    bean.on($palette[0], 'change', function () {
+                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                            .removeClass(toneClasses.join(' '))
+                            .addClass('commercial--tone-' + $palette.val());
+                    });
 
-                var $rhComponent = $('.rh-column-component');
-                bean.on($rhComponent[0], 'change', function () {
-                    showRHColumn($rhComponent.val());
+                    var $rhComponent = $('.rh-column-component');
+                    bean.on($rhComponent[0], 'change', function () {
+                        showRHColumn($rhComponent.val());
+                    });
                 });
-            });
+        });
 
         var loadCommercial = function (callback) {
-            require(['core'])
-                .next(['bootstraps/commercial'])
-                .next(['bootstraps/creatives'])
-                .then(callback) ;
+            window.addEventListener('load', function () {
+                // Commercial is in standard
+                require('bootstraps/standard/main')
+                    .next(['bootstraps/commercial'])
+                    .then(callback) ;
+            });
         };
     </script>
 
@@ -165,11 +171,46 @@
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--manual-inline"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--manual-inline"></div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Its episodic chapters may not appeal to some, but as a beach read, Twenty Thousand Leagues is the perfect book to pick up and put down. You are consistently rewarded with iconic scenes: a battle with a giant squid, an underwater funeral, a trip to Atlantis. Verne's detailed descriptions of geography and sea life fill me with a curiously Victorian sense of potential for discovering the unknown.</p>
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--inline-book"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--inline-book"></div>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
+                    <div class="ad-slot ad-slot--gu-comcontent">
+                        <div class="gu-comcontent" data-link-name="creative | gu style commercial content">
+                            <div class="u-responsive-ratio inlined-image">
+                                <a href="<%=clickMacro%><%=articleUrl%>">
+                                    <img class="responsive-img gu-image" alt="" srcset="https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=3dde5d6f9ca8e5af876c9506ec74a5c4 220w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=011992f9058136dace20307cc6c43093 160w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f24d14aa5bb58685a616994d0616eff2 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                </a>
+                            </div>
+                            <div class="gu-meta">
+                                <span class="gu-meta__label">Paid Content</span>
+                                <div class="gu-comlabel gu-meta__more has-popup">
+                                    <button class="u-button-reset gu-comlabel__btn popup__toggle" data-toggle="gu-compopup--test1">
+                                        About
+                                        <svg width="12" height="9" viewBox="-0.525 -4 24 18"><path d="M23.2.7L12.7 9.1l-1.1.9-1.1-.898L0 .7.5 0l11.1 6.3L22.7 0l.5.7z"/></svg>
+                                    </button>
+                                    <div class="popup is-off gu-compopup gu-compopup--test1 gu-stylebox">
+                                        <h3 class="gu-compopup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                                        <a class="gu-compopup__link" href="#">
+                                            Learn more about the Guardian’s funding from outside parties
+                                            <svg width="30" height="30" viewBox="0 0 30 30"><path d="M22.8 14.6l-7.6-7.6-.7.7 5.5 6.6h-14v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"></path></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<%=clickMacro%><%=articleUrl%>" class="gu-box">
+                                <h2 class="gu-title">Discover the beauty and culture of Mauritius</h2>
+                                <p class="gu-text">From sandy beaches and tropical forests to colourful festivals and super-fresh seafood.</p>
+                                <div class="gu-brand">
+                                    <span class="gu-note">Paid for by:</span>
+                                    <img class="gu-logo" src="<%=brandLogo%>" alt="<%=brand%>">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                 </div>
@@ -181,7 +222,8 @@
         <script>
             function showRHColumn(component) {
                 loadCommercial(function () {
-                    require('core')
+                    require('bootstraps/standard/main')
+                        .next(['bootstraps/commercial'])
                         .next([
                             'common/utils/$'
                         ])
@@ -240,6 +282,12 @@
                             clickMacro: '%%CLICK_URL_ESC%%',
                             omnitureId: '[%OmnitureID%]'
                         }).create();
+
+                        // new CommercialComponent(document.querySelector('.ad-slot--gu-comcontent'), {
+                        //     type: 'paidfor',
+                        //     clickMacro: '%%CLICK_URL_ESC%%',
+                        //     omnitureId: '[%OmnitureID%]'
+                        // }).create();
                     });
                 });
         </script>
@@ -641,6 +689,230 @@
             });
         </script>
     }
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="#">
+                Merchandising: paid for articles component
+            </a>
+        </h2>
+    </div>
+    <div class="fc-container fc-container--commercial" data-node-uid="1">
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component">
+            <div class="commercial commercial--paidfor commercial--tone-paidfor">
+                <div class="commercial__inner">
+                    <div class="commercial__header">
+                        <div class="gu-meta">
+                            <span class="gu-meta__label">Paid Content</span>
+                            <div class="gu-comlabel gu-meta__more has-popup">
+                                <button class="u-button-reset gu-comlabel__btn popup__toggle" data-toggle="gu-compopup--test2">
+                                    About <svg width="12" height="9" viewBox="-0.525 -4 24 18"><path d="M23.2.7L12.7 9.1l-1.1.9-1.1-.898L0 .7.5 0l11.1 6.3L22.7 0l.5.7z"/></svg>
+                                </button>
+                                <div class="popup is-off gu-compopup gu-compopup--test2 gu-stylebox">
+                                    <h3 class="gu-compopup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                                    <a class="gu-compopup__link" href="#">
+                                        Learn more about the Guardian’s funding from outside parties
+                                        <svg width="30" height="30" viewBox="0 0 30 30"><path d="M22.8 14.6l-7.6-7.6-.7.7 5.5 6.6h-14v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"></path></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="commercial__title">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                        </h3>
+                        <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">
+                            <svg width="100" height="31" viewBox="10 150 370 115"><path fill="#15162E" d="M177.34 158.38h1.73v83.3l6.92 3.23v6H150.7v-6l6.92-3.2v-69.84l-7.26-3.35v-5.86l26.96-4.26zM203.26 206.54h-10.02V189.7c6.1-1.94 13.37-4.94 24.66-4.94 17.28 0 27.65 5.07 27.65 19.6v37.44l6.8 3.23v4.84c-2.07 1.15-6.9 2.65-12.1 2.65-6.68 0-12.67-2.2-13.7-9.1h-.6c-2.87 5.75-10.47 9.2-18.54 9.2-11.4 0-18.54-7.36-18.54-18.08 0-13.25 8.53-15.9 22.82-18.32l12.32-2.07v-8.65c0-8.18-2.42-12.33-10.7-12.33-1.05 0-4.16.12-5.54.23l-4.5 13.14zM224 221.06l-4.95.46c-4.95.46-9 3.8-9 9.9 0 7.16 3.93 9.46 8.08 9.46 2.3 0 4.72-1.15 5.88-2.42v-17.4zM280.93 192.25h.8c3.7-3.92 9.8-7.5 18.1-7.5 11.06 0 22.7 8.88 22.7 32.85 0 26.27-14.98 35.03-34.92 35.03-11.97 0-22.57-2.53-28.1-5.76v-75.02l-7.15-3.22v-5.88l26.85-4.26h1.73v33.75zm19.13 26.97c0-17.4-4.73-21.9-11.4-21.9-3.47 0-5.9.8-7.73 1.73v43.67c1.26 1.04 3.22 2.2 7.02 2.2 8.07 0 12.1-7.27 12.1-25.7zM326.2 248.48v-17.05h9.1l3.7 10.72c1.5 1.38 6.68 2.07 10.37 2.07 6.1 0 10.37-1.38 10.37-6.45 0-4.73-1.62-6.7-8.53-8.18l-7.82-1.74c-11.87-2.65-17.4-12.1-17.4-21.66 0-12.33 8.4-21.44 27.42-21.44 7.6 0 15.33 1.15 20.4 3.34V204h-9l-2.76-8.87c-1.5-.8-6-1.6-9.45-1.6-5.07 0-8.53 2.4-8.53 6.33 0 3.8 1.73 6.1 8.87 7.6l7.6 1.62c12.45 2.64 17.18 10.94 17.18 20.74 0 13.48-8.53 22.7-29.04 22.7-6.92 0-16.25-1.4-22.47-4.04z"/><path fill="#15162E" d="M84.4 174.22c0-16.57-4.95-19.1-11.05-19.1-5.94 0-10.9 2.23-10.9 19.1s4.96 18.35 10.9 18.35c5.96 0 11.05-1.77 11.05-18.35m-21.83 63.2c-7.57 0-9.8 5.6-9.8 9.75-.02 6 5.38 11.53 21.1 11.53 17.9 0 22.76-5.04 22.76-11.6 0-5.72-4.3-9.67-11.53-9.67H62.57zM48.2 152.55c-20.85 9.58-35.3 30.62-35.3 55.04 0 16.57 6.66 31.58 17.44 42.52l-.03-.88c0-10.8 10.54-14.8 19.88-16.72-8.9-1.94-13.2-8.3-13.2-14.8 0-8.73 9.77-16.26 14.52-19.5l-.57-.32c-8.3-4.57-13.8-12.7-13.8-23.66 0-9.4 4.1-16.77 11.06-21.68m85.78 55.04c0-24.95-15.1-46.37-36.64-55.64 7.2 4.7 11.58 11.9 11.9 21.12.13.72.2 1.4.2 2.05 0 18.06-14.7 27.66-36.1 27.66-5.5 0-9.2-.3-13.65-1.63-2.1 1.48-3.73 3.85-3.73 6.07 0 2.96 2.68 5.34 5.95 5.34h29.7c18.42 0 27.47 7.53 27.47 23.8 0 5.43-1.1 10.3-3.33 14.5 11.23-10.98 18.2-26.3 18.2-43.26"/></svg>
+                        </a>
+                    </div>
+                    <div class="commercial__body">
+                        <ul class="lineitems">
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <aside class="rich-link__meta">
+                                            Paid for by <img src="gourmet.png">
+                                        </aside>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <aside class="rich-link__meta">
+                                            Paid for by <img src="gourmet.png">
+                                        </aside>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <aside class="rich-link__meta">
+                                            Paid for by <img src="gourmet.png">
+                                        </aside>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <aside class="rich-link__meta">
+                                            Paid for by <img src="gourmet.png">
+                                        </aside>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="fc-container fc-container--commercial" data-node-uid="1">
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component">
+            <div class="commercial commercial--paidfor commercial--tone-paidfor">
+                <div class="commercial__inner">
+                    <div class="commercial__header">
+                        <div class="gu-meta">
+                            <span class="gu-meta__label">Paid Content</span>
+                            <div class="gu-comlabel gu-meta__more has-popup">
+                                <button class="u-button-reset gu-comlabel__btn popup__toggle" data-toggle="gu-compopup--test3">
+                                    About <svg width="12" height="9" viewBox="-0.525 -4 24 18"><path d="M23.2.7L12.7 9.1l-1.1.9-1.1-.898L0 .7.5 0l11.1 6.3L22.7 0l.5.7z"/></svg>
+                                </button>
+                                <div class="popup is-off gu-compopup gu-compopup--test3 gu-stylebox">
+                                    <h3 class="gu-compopup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                                    <a class="gu-compopup__link" href="#">
+                                        Learn more about the Guardian’s funding from outside parties
+                                        <svg width="30" height="30" viewBox="0 0 30 30"><path d="M22.8 14.6l-7.6-7.6-.7.7 5.5 6.6h-14v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"></path></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="commercial__title">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                        </h3>
+                        <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">
+                            <svg width="100" height="31" viewBox="10 150 370 115"><path fill="#15162E" d="M177.34 158.38h1.73v83.3l6.92 3.23v6H150.7v-6l6.92-3.2v-69.84l-7.26-3.35v-5.86l26.96-4.26zM203.26 206.54h-10.02V189.7c6.1-1.94 13.37-4.94 24.66-4.94 17.28 0 27.65 5.07 27.65 19.6v37.44l6.8 3.23v4.84c-2.07 1.15-6.9 2.65-12.1 2.65-6.68 0-12.67-2.2-13.7-9.1h-.6c-2.87 5.75-10.47 9.2-18.54 9.2-11.4 0-18.54-7.36-18.54-18.08 0-13.25 8.53-15.9 22.82-18.32l12.32-2.07v-8.65c0-8.18-2.42-12.33-10.7-12.33-1.05 0-4.16.12-5.54.23l-4.5 13.14zM224 221.06l-4.95.46c-4.95.46-9 3.8-9 9.9 0 7.16 3.93 9.46 8.08 9.46 2.3 0 4.72-1.15 5.88-2.42v-17.4zM280.93 192.25h.8c3.7-3.92 9.8-7.5 18.1-7.5 11.06 0 22.7 8.88 22.7 32.85 0 26.27-14.98 35.03-34.92 35.03-11.97 0-22.57-2.53-28.1-5.76v-75.02l-7.15-3.22v-5.88l26.85-4.26h1.73v33.75zm19.13 26.97c0-17.4-4.73-21.9-11.4-21.9-3.47 0-5.9.8-7.73 1.73v43.67c1.26 1.04 3.22 2.2 7.02 2.2 8.07 0 12.1-7.27 12.1-25.7zM326.2 248.48v-17.05h9.1l3.7 10.72c1.5 1.38 6.68 2.07 10.37 2.07 6.1 0 10.37-1.38 10.37-6.45 0-4.73-1.62-6.7-8.53-8.18l-7.82-1.74c-11.87-2.65-17.4-12.1-17.4-21.66 0-12.33 8.4-21.44 27.42-21.44 7.6 0 15.33 1.15 20.4 3.34V204h-9l-2.76-8.87c-1.5-.8-6-1.6-9.45-1.6-5.07 0-8.53 2.4-8.53 6.33 0 3.8 1.73 6.1 8.87 7.6l7.6 1.62c12.45 2.64 17.18 10.94 17.18 20.74 0 13.48-8.53 22.7-29.04 22.7-6.92 0-16.25-1.4-22.47-4.04z"/><path fill="#15162E" d="M84.4 174.22c0-16.57-4.95-19.1-11.05-19.1-5.94 0-10.9 2.23-10.9 19.1s4.96 18.35 10.9 18.35c5.96 0 11.05-1.77 11.05-18.35m-21.83 63.2c-7.57 0-9.8 5.6-9.8 9.75-.02 6 5.38 11.53 21.1 11.53 17.9 0 22.76-5.04 22.76-11.6 0-5.72-4.3-9.67-11.53-9.67H62.57zM48.2 152.55c-20.85 9.58-35.3 30.62-35.3 55.04 0 16.57 6.66 31.58 17.44 42.52l-.03-.88c0-10.8 10.54-14.8 19.88-16.72-8.9-1.94-13.2-8.3-13.2-14.8 0-8.73 9.77-16.26 14.52-19.5l-.57-.32c-8.3-4.57-13.8-12.7-13.8-23.66 0-9.4 4.1-16.77 11.06-21.68m85.78 55.04c0-24.95-15.1-46.37-36.64-55.64 7.2 4.7 11.58 11.9 11.9 21.12.13.72.2 1.4.2 2.05 0 18.06-14.7 27.66-36.1 27.66-5.5 0-9.2-.3-13.65-1.63-2.1 1.48-3.73 3.85-3.73 6.07 0 2.96 2.68 5.34 5.95 5.34h29.7c18.42 0 27.47 7.53 27.47 23.8 0 5.43-1.1 10.3-3.33 14.5 11.23-10.98 18.2-26.3 18.2-43.26"/></svg>
+                        </a>
+                    </div>
+                    <div class="commercial__body">
+                        <ul class="lineitems">
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="lineitem">
+                                <div class="rich-link tone-paidfor--item">
+                                    <div class="rich-link__container">
+                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                        </div>
+                                        <div class="rich-link__header">
+                                            <h2 class="rich-link__title">
+                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
+                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <aside class="commercial__meta">
+                            Paid for by <img src="ben-jerrys.png">
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @Seq(
         Map(

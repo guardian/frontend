@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
-    'bootstraps/trail',
+    'bootstraps/enhanced/trail',
     'lodash/functions/debounce'
 ], function (
     bean,

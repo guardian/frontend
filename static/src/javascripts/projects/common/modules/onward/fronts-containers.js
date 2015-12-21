@@ -32,7 +32,7 @@ define([
     var sectionsToLoadSectionFronts = ['commentisfree', 'sport', 'football', 'fashion', 'lifeandstyle', 'education', 'culture', 'business', 'technology', 'politics', 'environment', 'travel', 'film', 'media', 'money', 'society', 'science', 'music', 'books', 'stage', 'cities', 'tv-and-radio', 'artanddesign', 'global-development'],
         loadSection = (contains(sectionsToLoadSectionFronts, config.page.section)) ? true : false,
         edition = (config.page.edition === 'INT') ? 'international' : config.page.edition.toLowerCase(),
-        isOneAndThree = ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree';
+        isOneAndThree = ab.getParticipations().FrontsOnArticles && ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree';
 
     function FrontsContainers() {
         moveComments();
@@ -89,7 +89,7 @@ define([
 
             fastdom.write(function () {
                 $('.submeta').append('<hr class=\'submeta__jump-to-comments-line\'/><button class=\'button button--large button--primary submeta__jump-to-comments js-move-comments\'>' + svgs('commentCount16icon') + '<span class=\'submeta__jump-to-comments-text\'>View comments</span></button>');
-                $comments.insertAfter(qwery('.js-network-fronts-containers'));
+                $comments.insertAfter(qwery('.js-fronts-network-2'));
             });
 
             bean.on(document.body, 'click', '.js-move-comments', function () {

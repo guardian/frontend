@@ -11,6 +11,7 @@ define([
     'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/collections/map',
     'lodash/objects/pick',
@@ -27,6 +28,7 @@ define([
     mediator,
     LazyLoad,
     Tabs,
+    toggles,
     isArray,
     map,
     pick,
@@ -89,13 +91,17 @@ define([
                 travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
                 capiSingle:     buildComponentUrl('capi-single', this.params),
-                capi:           buildComponentUrl('capi', this.params)
+                capi:           buildComponentUrl('capi', this.params),
+                paidfor:        buildComponentUrl('paidfor', this.params)
             };
         };
 
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
+        },
+        paidfor: function (el) {
+            toggles.init();
         }
     };
 

@@ -11,6 +11,22 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
+    @Html(curlConfig().body)
+
+    @if(play.Play.isDev()) {
+        @Html(Static.js.curl);
+
+        require(['boot']);
+    } else {
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/app.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+    }
+
     // render-critical blocking JS
 
     // polyfills
@@ -41,10 +57,4 @@
 
     // cloudwatch beacons
     @InlineJs(cloudwatchBeacons(page.metadata).body, "cloudwatchBeacons.js")
-
-    // curl
-    @Html(curl(page.metadata).body)
-
-    // load the enhanced JS
-    @InlineJs(bootEnhanced(page.metadata).body, "bootEnhanced.js")
 </script>

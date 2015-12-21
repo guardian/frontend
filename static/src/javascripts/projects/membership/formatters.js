@@ -1,7 +1,7 @@
 define([], function () {
     return {
-        formatAmount: function (amount) {
-            return amount ? '£' + (amount / 100).toFixed(2) : 'FREE';
+        formatAmount: function (amount, glyph) {
+            return amount ? glyph + (amount / 100).toFixed(2) : 'FREE';
         },
         formatDate: function (timestamp) {
             var options = {

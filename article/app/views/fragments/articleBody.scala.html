@@ -27,6 +27,10 @@
                 }
             </div>
 
+            @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+                @fragments.guBand()
+            }
+
             @fragments.headTonal(article)
 
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {

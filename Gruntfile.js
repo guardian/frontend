@@ -123,7 +123,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'uglify:javascript']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -131,7 +131,14 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('develop:js', function (fullCompile) {
-        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
+        grunt.task.run([
+            'copy:inlineSVGs',
+            'clean:js',
+            'copy:javascript',
+            // The app file must exist in dev to avoid compilation errors due to
+            // the SW. For testing the SW, do a proper compile.
+            'shell:stubAppJs'
+        ]);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -158,7 +165,7 @@ module.exports = function (grunt) {
         if (!options.isDev && requirejsName !== 'common') {
             grunt.task.run('requirejs:common');
         }
-        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'asset_hash']);
+        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'concat:app', 'uglify:javascript', 'asset_hash']);
     }
     for (var requireTaskName in grunt.config('requirejs')) {
         if (requireTaskName !== 'options') {
