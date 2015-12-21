@@ -764,6 +764,24 @@
                 color: colour(multimedia-main-1);
             }
         }
+
+        .vjs-control-content {
+            &:before {
+                @include icon(expand--black);
+            }
+        }
+
+        .vjs-fullscreen-control {
+            .vjs-control-text:before {
+                @include icon(expand--black);
+            }
+        }
+
+        .vjs-fullscreen-control {
+            .vjs-control-text:before {
+                @include icon(volume-high-black);
+            }
+        }
     }
 
     &.tonal--tone-media,
