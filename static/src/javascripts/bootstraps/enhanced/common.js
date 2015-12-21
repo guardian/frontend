@@ -135,7 +135,6 @@ define([
             initialiseStickyHeader: function () {
                 if (config.switches.viewability
                     && !(config.page.isProd && config.page.contentType === 'Interactive')
-                    && !config.page.sponsorshipType === 'sponsoredfeatures'
                     && config.page.contentType !== 'Crossword'
                     && config.page.pageId !== 'offline-page') {
                     sticky.init();

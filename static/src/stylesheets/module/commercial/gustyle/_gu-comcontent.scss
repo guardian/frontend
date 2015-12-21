@@ -1,103 +1,135 @@
-.ad-slot--gu-comcontent {
-    float: left;
-    margin: 5px $gs-gutter $gs-baseline 0;
-    clear: both;
-    overflow: visible;
+.gu-image-container {
+    background-color: colour(neutral-8);
+}
 
-    @include mq($until: mobileLandscape) {
-        width: $gs-gutter * 6.5;
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
-    }
+%gu-style-box {
+    padding: $gs-baseline / 2;
+}
 
-    @include mq(mobileLandscape) {
-        width: gs-span(3);
-    }
+.gu-box {
+    @extend %gu-style-box;
+}
 
-    @include mq(leftCol) {
-        margin-left: -1 * (gs-span(2) + $gs-gutter);
-    }
+.gu-title {
+    @include f-headlineSans;
+    @include font-size(21, 26);
 
-    @include mq(wide) {
-        margin-left: -1 * (gs-span(3) + $gs-gutter);
+    color: colour(neutral-1);
+    padding-bottom: $gs-baseline;
+    text-align: left;
+}
+
+.gu-text {
+    @include f-textSans;
+    @include font-size(14, 18);
+
+    color: colour(neutral-2);
+    text-align: left;
+    margin-bottom: $gs-row-height;
+}
+
+.gu-brand {
+    text-align: right;
+}
+
+.gu-note {
+    @include f-textSans;
+    @include font-size(13, 18);    @include mq(leftCol) {
+
+    color: colour(neutral-2);
+}
+
+.gu-logo {
+    width: 40%;
+    vertical-align: sub;
+}
+
+.gu-image {
+    width: 100%;
+    display: block;
+}
+
+.gu-external-icon {
+    float: right;
+    svg {
+        fill: #ffffff;
+        margin: 0 5px;
+        width: 15px;
+        height: 15px;
+        vertical-align: sub;
     }
 }
 
 .gu-comcontent {
-    background: #cccccc;
-
-    &,
-    h2 {
-        @include f-headlineSans;
-    }
-
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: guss-colour(paidfor-background, $frontend-palette);
-        height: 1px;
-        z-index: 5;
-    }
-}
-
-.gu-box {
-    color: inherit;
     display: block;
-    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
+    background-color: colour(neutral-8);
+    border-top: 1px solid $gustyle-tone;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
 
-    &:hover,
-    &:focus {
+    &:hover {
+        background-color: colour(neutral-6);
         text-decoration: none;
+
+        .gu-image {
+            background-color: #000000;
+            opacity: .9;
+        }
     }
 }
 
-.gu-title {
-    font-weight: 400;
-    padding-bottom: .5em;
+.gu-display {
+    min-height: 400px;
+    position: relative;
+
+    .gu-box {
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        padding: $gs-gutter/2;
+    }
+
+    .gu-title {
+        padding-bottom: $gs-baseline/2;
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .button {
+        float: left;
+        color: #ffffff;
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
+    }
+
 }
 
-.gu-brand {
-    color: #767676;
-    text-align: right;
-    font-size: get-font-size(data, 3);
-    @include f-textSans;
+$mobile-max-container-width: gs-span(8);
+@include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
-    img {
-        vertical-align: middle;
-    }
-}
+.gu-style {
+    width: auto;
+    margin-left: $gs-gutter / 2;
+    margin-right: $gs-gutter / 2;
 
-.gu-band {
-    background: guss-colour(paidfor-background, $frontend-palette);
-    width: 100%;
-    z-index: 1200;
-
-    .gu-meta,
-    .gu-meta__label,
-    .gu-comlabel,
-    .gu-branding {
-        display: flex;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 
-    .gu-meta__label,
-    .gu-branding {
-        align-items: center;
+    @include mq(containerWidestMobile) {
+        margin: 0 auto;
+        width: $mobile-max-container-width;
     }
 
-    .gu-meta__label,
-    .gu-meta__more > .popup__toggle {
-        padding: $gs-baseline / 3 $gs-gutter / 2;
+    @include mq(tablet) {
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
     }
 
-    .gu-branding {
-        padding: $gs-baseline / 2 $gs-gutter / 2;
+    @include mq(desktop) {
+        width: 300px;
     }
-}
-
-.gu-band__inner {
-    display: flex;
-    justify-content: space-between;
 }

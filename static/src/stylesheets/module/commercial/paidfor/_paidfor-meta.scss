@@ -1,22 +1,22 @@
-.gu-meta {
+.paidfor-meta {
     background: guss-colour(paidfor-background, $frontend-palette);
     font-size: get-font-size(data, 3);
     @include f-textSans;
 }
 
 
-.gu-meta__label,
-.gu-meta__more {
+.paidfor-meta__label,
+.paidfor-meta__more {
     display: inline-block;
     font-size: get-font-size(data, 3);
 }
 
-.gu-meta__label,
-.gu-meta__more > .popup__toggle {
+.paidfor-meta__label,
+.paidfor-meta__more > .popup__toggle {
     padding: $gs-baseline / 3 $gs-gutter / 4;
 }
 
-.gu-meta__label {
+.paidfor-meta__label {
     font-weight: 700;
 
     .commercial__header & {
@@ -24,7 +24,7 @@
     }
 }
 
-.gu-comlabel .popup__toggle {
+.paidfor-label .popup__toggle {
     border-left: 1px solid rgba(0, 0, 0, .2);
     border-right: 1px solid rgba(0, 0, 0, .2);
 

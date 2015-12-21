@@ -1,18 +1,23 @@
 define([
     'fastdom',
     'common/utils/$',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/gu-style-comcontent.html'
+    'common/modules/commercial/gustyle/gustyle',
+    'text!common/views/commercial/creatives/gu-style-comcontent.html',
+    'lodash/objects/merge'
 ], function (
     fastdom,
     $,
+    detect,
+    mediator,
     template,
     svgs,
-    gustyleComcontentTpl
-) {
-
-    gustyleComcontentTpl = template(gustyleComcontentTpl);
+    GuStyle,
+    gustyleComcontentTpl,
+    merge) {
 
     var GustyleComcontent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
@@ -20,26 +25,23 @@ define([
     };
 
     GustyleComcontent.prototype.create = function () {
-        var $component;
+        var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
+            templateOptions = {
+                clickMacro: this.params.clickMacro,
+                gustyleClass: (this.params.adVariant === 'content') ?
+                        'gu-comcontent' : 'gu-display',
+                standFirst: (this.params.adVariant === 'content') ?
+                        '<p class="gu-text">' + this.params.articleText + '</p>' : '',
+                noteOrLink: (this.params.adVariant === 'content') ?
+                        '<span class="gu-note">Brought to you by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
+            };
 
-        this.params.metaLabel = 'Paid Content';
-        this.params.buttonLabel = 'About';
-        this.params.icon = svgs('arrowdownicon');
-        this.params.infoTitle = 'Paid stories are paid for and controlled by an advertiser';
-        this.params.infoLinkText = 'Learn more about the Guardian’s funding from outside parties';
-        this.params.infoLinkUrl = 'https://www.theguardian.com/info/2014/sep/23/paid-for-content';
-        this.params.infoLinkIcon = svgs('arrowRight');
-        this.params.note = 'Paid for by:';
+        $.create(template(gustyleComcontentTpl, { data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
+        new GuStyle(this.$adSlot, this.params).addLabel();
 
-        $component = $.create(gustyleComcontentTpl(this.params));
-
-        fastdom.write(function () {
-            $component.appendTo(this.$adSlot);
-
-            if (this.params.trackingPixel) {
-                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-            }
-        }, this);
+        if (this.params.trackingPixel) {
+            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+        }
     };
 
     return GustyleComcontent;

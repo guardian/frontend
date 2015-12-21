@@ -1,51 +1,29 @@
 .gu-compopup {
-    background: guss-colour(neutral-1, $pasteup-palette);
-    box-shadow: none;
-    color: #ffffff;
-    transform: translate(-50%, 0);
-    left: 50%;
-    top: 100%;
-    width: 240px;
-    padding: 16px;
-    border-radius: 4px;
-    font-weight: 700;
-    z-index: 5;
+    @include f-textSans;
+    @extend %gu-style-box;
+    width: 80%;
+    top: ($gs-baseline / 2) * 3 + $gs-row-height / 2;
+    left: auto;
+    right: $gs-baseline / 2;
+    z-index: $zindex-modal;
+    text-align: left;
+    background-color: $gustyle-tone;
+}
 
-    &,
-    h3 {
-        @include f-headlineSans;
-    }
+.gu-compopup__title {
+    @include font-size(13, 18);
+    margin: 0;
+    font-family: inherit;
+    font-weight: bold;
+}
 
-    &::before {
-        content: '';
-        border: solid transparent;
-        border-bottom-color: guss-colour(neutral-1, $pasteup-palette);
-        border-style: solid;
-        border-width: 6px;
-        height: 0;
-        width: 0;
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-
-    .gu-compopup__title {
-        font-size: get-font-size(header, 4);
-        line-height: get-line-height(header, 4);
-        margin: 0 0 1em;
-    }
+.gu-compopup__text {
+    @include font-size(13, 15);
 }
 
 .gu-compopup__link {
-    color: #676767;
-    font-size: get-font-size(textSans, 3);
-    line-height: get-line-height(textSans, 3);
-    display: block;
-
-    svg {
-        display: inline-block;
-        vertical-align: middle;
-        fill: #676767;
-    }
+    @include font-size(13, 15);
+    font-weight: bold;
+    color: colour(neutral-1);
+    float: left;
 }
