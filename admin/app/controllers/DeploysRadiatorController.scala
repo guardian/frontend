@@ -68,7 +68,7 @@ object BuildJson {
 object DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests{
 
   def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = AuthActions.AuthActionTest.async {
-    val url = s"${Configuration.riffraff.url}/history"
+    val url = s"${Configuration.riffraff.url}/api/history"
 
     WS.url(url)
       .withQueryString(
