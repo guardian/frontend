@@ -92,7 +92,7 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
             'li',
             { className: `deploy deploy--${deployGroup.status.split(' ').join('-').toLowerCase()}` },
             [
-                h('h3', [
+                h('h2', [
                     h('a', { href: createBuildLink(deployGroup.build) }, `${deployGroup.build}`)
                 ]),
                 // Only show project names if we have multiple deployed groups
@@ -129,7 +129,7 @@ const renderGroupDeployListNode = (deploys: List<DeployRecord>) => {
     return h('div', {}, [
         ih('ul', { className: 'deploys' }, currentDeployGroupNodes),
         exp(notRunningDeploys.size > 0) && [
-            h('h3', 'Queue'),
+            h('h2', 'Queue'),
             ih('ul', {}, createDeployGroup(notRunningDeploys)
                 .map((groupDeploys, deployGroup) => (
                     h('li', [
@@ -173,8 +173,9 @@ const renderPage: (
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
         return h('body', {}, [
             h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
+            h('hr', {}, []),
             exp(commits.length > 0) && h('div', [
-                h('h2', [
+                h('h1', [
                     'Difference (',
                     h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
                     '...',
@@ -190,9 +191,9 @@ const renderPage: (
                 )))
             ]),
 
-            h('h2', 'CODE'),
+            h('h1', 'CODE'),
             renderGroupDeployListNode(codeDeploys),
-            h('h2', 'PROD'),
+            h('h1', 'PROD'),
             renderGroupDeployListNode(prodDeploys)
         ])
     }
