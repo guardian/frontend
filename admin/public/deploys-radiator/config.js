@@ -33,12 +33,12 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "core-js": "npm:core-js@1.2.6",
     "hyperscript-helpers": "npm:hyperscript-helpers@2.0.2",
-    "immutable": "npm:immutable@3.7.5",
-    "ts": "github:frankwallis/plugin-typescript@2.4.2",
+    "immutable": "npm:immutable@3.7.6",
+    "ts": "github:frankwallis/plugin-typescript@2.4.3",
     "vdom-virtualize": "npm:vdom-virtualize@1.0.1",
     "virtual-dom": "npm:virtual-dom@2.1.1",
-    "github:frankwallis/plugin-typescript@2.4.2": {
-      "typescript": "npm:typescript@1.7.3"
+    "github:frankwallis/plugin-typescript@2.4.3": {
+      "typescript": "npm:typescript@1.7.5"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"

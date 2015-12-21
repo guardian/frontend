@@ -1,4 +1,4 @@
-/// <reference path="../jspm_packages/npm/immutable@3.7.5/dist/immutable.d.ts" />
+/// <reference path="../jspm_packages/npm/immutable@3.7.6/dist/immutable.d.ts" />
 
 // Typed records taken from
 // https://github.com/facebook/immutable-js/issues/341#issuecomment-147940378
