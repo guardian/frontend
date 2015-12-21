@@ -106,12 +106,20 @@
         >
     }
 
-    <img src="@ImgSrc.getFallbackUrl(picture)"
-    srcset="@ImgSrc.srcset(picture, widths)"
-    sizes="@widths.sizes"
-    class="@if(isMain) {maxed responsive-img} else {gu-image}"
-    itemprop="contentUrl"
-    alt="@imageOption.flatMap(_.altText).getOrElse("")" />
+    <picture>
+        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+        @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+                    sizes="@breakpointWidth.width"
+                    srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageContainer = Some(picture))" />
+        }
+        <!--[if IE 9]></video><![endif]-->
+        <img class="@if(isMain) {maxed responsive-img} else {gu-image}"
+             itemprop="contentUrl"
+             alt="@imageOption.flatMap(_.altText).getOrElse("")"
+             src="@ImgSrc.getFallbackUrl(picture)" />
+    </picture>
 
     @picture.largestImage.map{ largestImage =>
         </div>
