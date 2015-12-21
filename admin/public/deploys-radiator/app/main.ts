@@ -282,12 +282,16 @@ const run = () => {
         return getDifference(prodCommit, codeCommit).then(gitHubCommits => gitHubCommits.reverse());
     });
 
-    Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
+    return Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
         .then(([ deploysPair, deployPair, commits ]) => renderPage(deploysPair, deployPair, commits))
         .then(updateDom);
 };
 
 
 const intervalSeconds = 10;
-setInterval(run, intervalSeconds * 1000);
-run();
+const update = (): Promise<void> => {
+    return run()
+        .then(() => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000)))
+        .then(update);
+};
+update();
