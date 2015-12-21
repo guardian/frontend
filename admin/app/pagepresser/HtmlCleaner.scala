@@ -1,6 +1,6 @@
 package pagepresser
 
-import org.jsoup.nodes.Document
+import org.jsoup.nodes.{Node, Document}
 import scala.collection.JavaConversions._
 
 object HtmlCleaner {
@@ -10,6 +10,10 @@ object HtmlCleaner {
     removeGoogleSearchBox(document)
     removeShareLinks(document)
     removeRelatedComponent(document)
+    removeScriptTags(document)
+    removeIdentityUserDetailsTab(document)
+    removeInitiallyOffPlaceHolderTags(document)
+    removeNoScriptTags(document)
   }
 
   def removeAds(document: Document): Document = {
@@ -32,6 +36,26 @@ object HtmlCleaner {
   def removeRelatedComponent(document: Document): Document = {
     val element = document.getElementById("related")
     element.remove()
+    document
+  }
+
+  def removeScriptTags(document: Document): Document = {
+    document.getElementsByTag("script").remove()
+    document
+  }
+
+  def removeIdentityUserDetailsTab(document: Document): Document = {
+    document.getElementsByClass("user-details").remove()
+    document
+  }
+
+  def removeInitiallyOffPlaceHolderTags(document: Document): Document = {
+    document.getElementsByClass("initially-off").remove()
+    document
+  }
+
+  def removeNoScriptTags(document: Document): Document = {
+    document.getElementsByTag("noscript").remove()
     document
   }
 
