@@ -38,7 +38,7 @@ define([
         ['cm-badges', badges.init]
     ];
 
-    if (config.swicthes.newCommercialContent) {
+    if (config.switches.newCommercialContent) {
         modules.push(['cm-paidforBand', paidforBand.init]);
     }
 

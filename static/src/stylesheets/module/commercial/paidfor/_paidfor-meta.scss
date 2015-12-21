@@ -33,6 +33,13 @@
         content: none;
     }
 
+    svg {
+        width: 12px;
+        height: 9px;
+        fill: #333333;
+
+    }
+
     &.is-active svg {
         transform: rotate(180deg);
     }

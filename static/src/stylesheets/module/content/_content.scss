@@ -1,3 +1,6 @@
+@import '../../icons/video-icons-sprite';
+@import '../../icons/video-icons-svg';
+
 .content {
     border-top: 1px solid #ffffff;
     padding-top: 0;
@@ -765,22 +768,28 @@
             }
         }
 
-        .vjs-control-content {
-            &:before {
-                @include icon(expand--black);
+        .vjs-embed-button {
+            .vjs-control-content {
+                &:before {
+                    @include icon(embed--black);
+                }
             }
         }
 
         .vjs-fullscreen-control {
             .vjs-control-text:before {
-                @include icon(expand--black);
+                @include icon(expand-black);
             }
         }
 
-        .vjs-fullscreen-control {
+        .vjs-volume-menu-button {
             .vjs-control-text:before {
                 @include icon(volume-high-black);
             }
+        }
+
+        .vjs-volume-bar:before {
+            background: #333333;
         }
     }
 
@@ -820,6 +829,16 @@
         .ad-slot--dark {
             background-color: colour(paid-article-subheader);
         }
+    }
+
+    &.content--media--audio {
+        .content__headline:before {
+            @include icon(volume-high-black, $with-width: false);
+        }
+    }
+
+    .fc-item__title svg {
+        fill: guss-colour(multimedia-main-2, $pasteup-palette);
     }
 }
 
