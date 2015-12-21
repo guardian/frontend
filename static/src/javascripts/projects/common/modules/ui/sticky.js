@@ -25,7 +25,7 @@ define([
         if (candidates.length === 1) {
             stickyHeaderHeight = (config.switches.viewability
                 && !(config.page.isProd && config.page.contentType === 'Interactive')
-                && !config.page.sponsorshipType === "sponsoredfeatures"
+                && !config.page.sponsorshipType === 'sponsoredfeatures'
                 && config.page.contentType !== 'Crossword'
                 && config.page.pageId !== 'offline-page') ?
                 document.querySelector('.js-navigation').offsetHeight :
@@ -86,7 +86,7 @@ define([
                         css: {
                             paddingTop: null
                         }
-                    })
+                    });
                 }
             }
         }
@@ -95,10 +95,9 @@ define([
             while (writes.length) {
                 var w = writes.shift();
                 for (var attr in w.css) {
-                    if (!w.css.hasOwnProperty(attr)) {
-                        continue;
+                    if (w.css.hasOwnProperty(attr)) {
+                        w.element.style[attr] = w.css[attr];
                     }
-                    w.element.style[attr] = w.css[attr];
                 }
             }
         });
