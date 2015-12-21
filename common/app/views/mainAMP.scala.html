@@ -2,7 +2,6 @@
 @import common.{AnalyticsHost, LinkTo}
 @import conf.Configuration
 @import views.support.OmnitureAnalyticsData
-@import org.joda.time.DateTime
 
 <!doctype html>
 <html AMP>
@@ -46,59 +45,11 @@
             @body
 
             @if(page.metadata.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
-
-                <div class="fc-container__inner">
-                    <div class="fc-container__header__title">
-                        <span>popular</span>
-                    </div>
-                    <amp-list height="940" layout="fixed-height" src="@if(Play.isDev) {https://www.thegulocal.com} else {@Configuration.ajax.url}/most-read-mf2.json">
-                        <template type="amp-mustache">
-                            <div class="fc-item {{toneClass}}">
-                                <div class="fc-item__image-container">
-                                    <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
-                                </div>
-                                <div class="fc-item__content">
-                                    <div class="fc-item__header">
-                                        <h2 class="fc-item__title">
-                                            <span>
-                                                {{#isVideo}}
-                                                    @fragments.inlineSvg("video-icon", "icon")
-                                                {{/isVideo}}
-                                                {{#isGallery}}
-                                                    @fragments.inlineSvg("camera", "icon")
-                                                {{/isGallery}}
-                                                {{#isAudio}}
-                                                    @fragments.inlineSvg("volume-high", "icon")
-                                                {{/isAudio}}
-                                                {{#isComment}}
-                                                    @fragments.inlineSvg("quote", "icon")
-                                                {{/isComment}}
-                                            </span>
-                                            {{headline}}
-                                        </h2>
-                                        {{#isComment}}
-                                            <div class="fc-item__byline">
-                                                {{byline}}
-                                            </div>
-                                        {{/isComment}}
-                                    </div>
-                                    <aside class="fc-item__meta">
-                                        <time
-                                        class="fc-item__timestamp"
-                                        data-relativeformat="short">
-                                            @fragments.inlineSvg("clock", "icon")
-                                            <span class="timestamp__text">
-                                                <span class="u-h">Published: </span>
-                                                {{webPublicationDate}}
-                                            </span>
-                                        </time>
-                                    </aside>
-                                </div>
-                                <a href="{{url}}" class="fc-item__link">{{headline}}</a>
-                            </div>
-                        </template>
-                    </amp-list>
-                </div>
+                @fragments.amp.onward("related-mf2/" + page.metadata.id + ".json")
+                @fragments.amp.onward("container-mf2/1/0/international.json")
+                @fragments.amp.onward("most-read-mf2.json")
+                @fragments.amp.onward("container-mf2/1/1/international.json")
+                @fragments.amp.onward("container-mf2/1/2/international.json")
             }
 
             <amp-font

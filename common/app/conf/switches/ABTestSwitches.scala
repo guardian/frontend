@@ -22,12 +22,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFrontsOnArticles = Switch(
+  val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
-    "ab-fronts-on-articles",
+    "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 30),
+    sellByDate = new LocalDate(2016, 1, 30),
     exposeClientSide = true
   )
 
@@ -37,6 +37,24 @@ trait ABTestSwitches {
     "A test to see if a UK or INT audience will be interested in video pre-rolls",
     safeState = Off,
     sellByDate = new LocalDate(2016, 1, 6),
+    exposeClientSide = true
+  )
+
+  val ABIdentitySignInV2 = Switch(
+    "A/B Tests",
+    "ab-identity-sign-in-v2",
+    "New sign in page variant for Identity",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 15),
+    exposeClientSide = true
+  )
+
+  val ABRtrtEmailFormArticlePromo = Switch(
+    "A/B Tests",
+    "ab-rtrt-email-form-article-promo",
+    "Testing the email sign up from the bottom of articles of user referred from fronts",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 17),
     exposeClientSide = true
   )
 }

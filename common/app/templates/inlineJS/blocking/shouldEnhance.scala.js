@@ -1,54 +1,104 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.switches.Switches._
 
-(function (navigator, window) {
-    // Enable manual optin to core functionality/optout of enhancement
-    var personPrefersCore = function () {
-        var locationHash = window.location.hash;
-        if (locationHash === '#featuresoff' || locationHash === '#core' || locationHash === '#gu.prefs.force-core=on') return true;
-        if (locationHash === '#featureson' || locationHash === '#nocore' || locationHash === '#gu.prefs.force-core=off') return false;
+// Determine whether we want to run the enhanced app or not.
+// It can come either from a preference in localStorage (see `enhancedKey`)
+// or from a temporary opt-in or -out override, using `#standard` or `#enhanced` hash fragments.
+
+(function (window) {
+    var location = window.location;
+    var hash = location.hash;
+
+    var navigator = window.navigator;
+    var platform = navigator.platform;
+
+    var isFront = @item.isFront;
+    var enhancedKey = 'gu.prefs.enhanced';
+
+    // This has been called core, featuresoff, universal etc, and a few previous ways of
+    // opting in and out existed.
+    // Now we have settled on standard and enhanced, the previous methods are handled
+    // here, temporarily. This can go after a while.
+    (function () {
+        var coreKey = 'gu.prefs.force-core', settingCorePref, corePref;
+
+        // update any `force-core` stored pref
         try {
-            var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
-            return /"value":"on"/.test(preference);
-        } catch (e) {
-            return false;
+            var localStorage = window.localStorage,
+                corePref = localStorage.getItem(coreKey);
+            if (corePref) {
+                localStorage.setItem(enhancedKey, JSON.stringify({value: /off/.test(corePref)}));
+                localStorage.removeItem(coreKey);
+            }
+            // previous version set the pref to a boolean, but
+            // prefs use the {value: 'x'} format – correct that
+            var enhancedPref = JSON.parse(localStorage.getItem(enhancedKey));
+            if (typeof enhancedPref === "boolean") {
+                localStorage.setItem(enhancedKey, JSON.stringify({value: enhancedPref}));
+            }
+        } catch (e) {};
+
+        // hijack any attempt to use the old hash-fragments
+        if (hash.length) {
+            // if we're trying to set an old pref, set the new one
+            settingCorePref = new RegExp(`^#${coreKey.replace('.', '\.')}=(on|off)$`).exec(hash);
+            if (settingCorePref && (corePref = settingCorePref[1])) {
+                hash = location.hash = `#${enhancedKey}=${corePref === 'off'}`;
+            }
+            // swap out the old temporary opt-in/out methods for the finalised ones
+            else if (/^#(featuresoff|core)$/.test(hash)) {
+                hash = location.hash = '#standard';
+            } else if (/^#(featureson|nocore)$/.test(hash)) {
+                hash = location.hash = '#enhanced';
+            }
         }
+    })();
+    // now we should be ready for standard/enhanced
+
+    var preferEnhanced;
+    try {
+        preferEnhanced = JSON.parse(localStorage.getItem(enhancedKey)).value;
+    } catch (e) {
+        preferEnhanced = null;
     };
 
-    var personDemandsFeatures = function () {
-        var locationHash = window.location.hash;
-        if (locationHash === '#featureson' || locationHash === '#nocore' || locationHash === '#gu.prefs.force-core=off') return true;
-        try {
-            var preference = window.localStorage.getItem('gu.prefs.force-core') || 'unknown';
-            return /"value":"off"/.test(preference);
-        } catch (e) {
-            return false;
-        }
-    };
-
-    // Guess whether the device is too old, regardless of whether it cuts the mustard
-    //
-    // 'older' iOS normally indicates a device with lower power (they stop being upgradeable at some point).
-    // We won't run all javascript on these.
-    // For usage stats see http://david-smith.org/iosversionstats/
-    //
-    // NOTE: this moves people into a category where they do not get important things such as commenting
-    var isOlderIOSDevice = function () {
-
-        if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
-            // I'm intentionally being a bit over zealous in the detection department here
-            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
-        }
+    function mustEnhance() {
+        if (hash === '#enhanced' || hash === `#${enhancedKey}=true`) return true;
+        if (preferEnhanced) return true;
         return false;
     };
 
-    var isIpad = function() {
-        return (navigator.platform === 'iPad');
+    function mustNotEnhance() {
+        return hash === '#standard' || hash === `#${enhancedKey}=false`;
     };
 
-    window.shouldEnhance = personDemandsFeatures() || (!personPrefersCore() && !isOlderIOSDevice() && !(@item.isFront && isIpad()));
-    window.shouldEnhance || console && console.info && console.info("THIS IS CORE");
-})(navigator, window);
+    function couldEnhance() {
+        return preferEnhanced !== false;
+    };
+
+    function weWantToEnhance() {
+        if (isOlderIOSDevice()) return false;
+        if (isFront) return !isIpad();
+        return true; // assume we want to enhance
+    };
+
+    // If this is an older iOS, we assume it's an older device (they stop being upgradeable at some point).
+    // Old here means iOS 3-6.
+    // For usage stats see http://david-smith.org/iosversionstats/
+    function isOlderIOSDevice() {
+        return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
+    };
+
+    function isIpad() {
+        return (platform === 'iPad');
+    };
+
+    // down to business
+    window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
+
+    // just so we can tell…
+    console && console.info && console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
+})(window);
 
 
 

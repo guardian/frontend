@@ -289,6 +289,10 @@ case class GuLineItem(id: Long,
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
+
+  lazy val isAdFeatureLogo: Boolean = targeting.customTargetSets exists {
+    _.targets exists (_.isAdvertisementFeatureSlot)
+  }
 }
 
 object GuLineItem {
@@ -446,6 +450,7 @@ case class GuCreativeTemplate(id: Long,
     replaceParameters(snippet, creative.args.toSeq)
   }
 
+  lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }
 
 object GuCreativeTemplate extends implicits.Collections {

@@ -9,9 +9,12 @@ define([
     'Promise',
     'common/utils/mediator',
     'lodash/functions/debounce',
+    'lodash/collections/contains',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html'
+    'text!common/views/email/submissionResponse.html',
+    'common/utils/robust',
+    'common/utils/detect'
 ], function (
     formInlineLabels,
     bean,
@@ -23,9 +26,12 @@ define([
     Promise,
     mediator,
     debounce,
+    contains,
     template,
     svgs,
-    successHtml
+    successHtml,
+    robust,
+    detect
 ) {
     var omniture;
 
@@ -103,7 +109,7 @@ define([
         },
         formSubmission = {
             bindSubmit: function ($form, analytics) {
-                var url = config.page.ajaxUrl + '/email';
+                var url = '/email';
                 bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
             },
             submitForm: function ($form, url, analytics) {
@@ -126,7 +132,12 @@ define([
                     event.preventDefault();
 
                     if (!state.submitting && validate(emailAddress)) {
-                        var data = 'email=' + encodeURIComponent(emailAddress) + '&listId=' + listId;
+                        var formData = $form.data('formData'),
+                            data =  'email=' + encodeURIComponent(emailAddress) +
+                                    '&listId=' + listId +
+                                    '&campaignCode=' + formData.campaignCode +
+                                    '&referrer=' + formData.referrer;
+
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
@@ -144,9 +155,10 @@ define([
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe successful');
                             })
                             .then(handleSubmit(true, $form))
-                            .catch(function () {
+                            .catch(function (error) {
+                                robust.log('c-email', error);
                                 omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
-                                handleSubmit(false, $form);
+                                handleSubmit(false, $form)();
                             });
                         });
                     }
@@ -174,6 +186,7 @@ define([
                 var formData = $(thisRootEl).data(),
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
+                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
                 fastdom.write(function () {
@@ -189,6 +202,13 @@ define([
                         $('.js-email-sub__small', el).remove();
                     }
                 });
+
+                // Cache data on the form element
+                $('.js-email-sub__form', el).data('formData', {
+                    campaignCode: formCampaignCode,
+                    referrer: window.location.href
+                });
+
             },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
@@ -233,19 +253,25 @@ define([
     return {
             updateForm: ui.updateForm,
             init: function (rootEl) {
-
-                // We're loading through the iframe
-                if (rootEl && rootEl.tagName === 'IFRAME') {
-                    // We can listen for a lazy load or reload to catch an update
-                    setup(rootEl, rootEl.contentDocument.body, true);
-                    bean.on(rootEl, 'load', function () {
-                        setup(rootEl, rootEl.contentDocument.body, true);
-                    });
-
+                var browser = detect.getUserAgent.browser,
+                    version = detect.getUserAgent.version;
+                // If we're in lte IE9, don't run the init and adjust the footer
+                if (browser === 'MSIE' && contains(['7','8','9'], version + '')) {
+                    $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
+                    $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 } else {
-                    setup(rootEl, rootEl || document, false);
-                }
+                    // We're loading through the iframe
+                    if (rootEl && rootEl.tagName === 'IFRAME') {
+                        // We can listen for a lazy load or reload to catch an update
+                        setup(rootEl, rootEl.contentDocument.body, true);
+                        bean.on(rootEl, 'load', function () {
+                            setup(rootEl, rootEl.contentDocument.body, true);
+                        });
 
+                    } else {
+                        setup(rootEl, rootEl || document, false);
+                    }
+                }
             }
         };
 });
