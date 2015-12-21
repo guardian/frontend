@@ -40,7 +40,7 @@ module.exports = function () {
             command: 'touch static/target/javascripts/app.js'
         },
 
-        installDeploysRadiator: {
+        makeDeploysRadiator: {
             command: [
                 'npm install',
                 './node_modules/.bin/jspm install',
