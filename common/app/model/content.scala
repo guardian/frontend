@@ -9,6 +9,7 @@ import common.dfp.DfpAgent
 import common._
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -182,8 +183,11 @@ final case class Content(
     } else None
 
     val cricketMeta = if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
-      Some(("cricketMatch", JsString(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
-    } else None
+      List(
+        CricketTeams.teamFor(this).map(_.wordsForUrl).map(wordsForUrl => "cricketTeam" -> JsString(wordsForUrl)),
+        Some(("cricketMatchDate", JsString(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
+      )
+    } else Nil
 
     val (seriesMeta, seriesIdMeta) = tags.series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map { series =>
       (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
@@ -191,10 +195,9 @@ final case class Content(
 
     val meta = List[Option[(String, JsValue)]](
       rugbyMeta,
-      cricketMeta,
       seriesMeta,
       seriesIdMeta
-    )
+    ) ++ cricketMeta
     meta.flatten.toMap
   }
 

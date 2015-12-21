@@ -9,9 +9,12 @@ define([
     'Promise',
     'common/utils/mediator',
     'lodash/functions/debounce',
+    'lodash/collections/contains',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html'
+    'text!common/views/email/submissionResponse.html',
+    'common/utils/robust',
+    'common/utils/detect'
 ], function (
     formInlineLabels,
     bean,
@@ -23,9 +26,12 @@ define([
     Promise,
     mediator,
     debounce,
+    contains,
     template,
     svgs,
-    successHtml
+    successHtml,
+    robust,
+    detect
 ) {
     var omniture;
 
@@ -63,14 +69,50 @@ define([
             wrapper: 'js-email-sub',
             form: 'js-email-sub__form',
             inlineLabel: 'js-email-sub__inline-label',
-            textInput: 'js-email-sub__text-input'
+            textInput: 'js-email-sub__text-input',
+            listIdHiddenInput: 'js-email-sub__listid-input'
+        },
+        setup = function (rootEl, thisRootEl, isIframed) {
+            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
+                formInlineLabels.init(el, {
+                    textInputClass: '.js-email-sub__text-input',
+                    labelClass: '.js-email-sub__label',
+                    hiddenLabelClass: 'email-sub__label--is-hidden',
+                    labelEnabledClass: 'email-sub__inline-label--enabled'
+                });
+            });
+
+            $('.' + classes.wrapper, thisRootEl).each(function (el) {
+                var $el = $(el),
+                    freezeHeight = ui.freezeHeight($el, false),
+                    freezeHeightReset = ui.freezeHeight($el, true),
+                    $formEl = $('.' + classes.form, el);
+
+                formSubmission.bindSubmit($formEl, {
+                    formType: $formEl.data('email-form-type'),
+                    listId: $formEl.data('email-list-id')
+                });
+
+                // If we're in an iframe, we should check whether we need to add a title and description
+                // from the data attributes on the iframe (eg: allowing us to set them from composer)
+                if (isIframed) {
+                    ui.updateForm(rootEl, $el);
+                }
+
+                // Ensure our form is the right height, both in iframe and outside
+                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
+
+                mediator.on('window:resize',
+                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                );
+            });
         },
         formSubmission = {
-            bindSubmit: function ($form) {
-                var url = config.page.ajaxUrl + '/email';
-                bean.on($form[0], 'submit', this.submitForm($form, url));
+            bindSubmit: function ($form, analytics) {
+                var url = '/email';
+                bean.on($form[0], 'submit', this.submitForm($form, url, analytics));
             },
-            submitForm: function ($form, url) {
+            submitForm: function ($form, url, analytics) {
                 /**
                  * simplistic email address validation to prevent misfired
                  * omniture events
@@ -84,17 +126,22 @@ define([
                 }
 
                 return function (event) {
-                    var emailAddress = $('.' + classes.textInput, $form).val();
+                    var emailAddress = $('.' + classes.textInput, $form).val(),
+                        listId = $('.' + classes.listIdHiddenInput, $form).val();
 
                     event.preventDefault();
 
                     if (!state.submitting && validate(emailAddress)) {
-                        var data = 'email=' + encodeURIComponent(emailAddress);
+                        var formData = $form.data('formData'),
+                            data =  'email=' + encodeURIComponent(emailAddress) +
+                                    '&listId=' + listId +
+                                    '&campaignCode=' + formData.campaignCode +
+                                    '&referrer=' + formData.referrer;
 
                         state.submitting = true;
 
                         return getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe clicked');
+                            omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe clicked');
 
                             return ajax({
                                 url: url,
@@ -105,12 +152,13 @@ define([
                                 }
                             })
                             .then(function () {
-                                omniture.trackLinkImmediate('rtrt | email form inline | footer | subscribe successful');
+                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | subscribe successful');
                             })
                             .then(handleSubmit(true, $form))
-                            .catch(function () {
-                                omniture.trackLinkImmediate('rtrt | email form inline | footer | error');
-                                handleSubmit(false, $form);
+                            .catch(function (error) {
+                                robust.log('c-email', error);
+                                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | error');
+                                handleSubmit(false, $form)();
                             });
                         });
                     }
@@ -134,6 +182,34 @@ define([
             }
         },
         ui = {
+            updateForm: function (thisRootEl, el, opts) {
+                var formData = $(thisRootEl).data(),
+                    formTitle = (opts && opts.formTitle) || formData.formTitle || false,
+                    formDescription = (opts && opts.formDescription) || formData.formDescription || false,
+                    formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
+                    removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
+
+                fastdom.write(function () {
+                    if (formTitle) {
+                        $('.js-email-sub__heading', el).text(formTitle);
+                    }
+
+                    if (formDescription) {
+                        $('.js-email-sub__description', el).text(formDescription);
+                    }
+
+                    if (removeComforter) {
+                        $('.js-email-sub__small', el).remove();
+                    }
+                });
+
+                // Cache data on the form element
+                $('.js-email-sub__form', el).data('formData', {
+                    campaignCode: formCampaignCode,
+                    referrer: window.location.href
+                });
+
+            },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
                     resetHeight = function () {
@@ -145,7 +221,7 @@ define([
                     },
                     getHeight = function () {
                         fastdom.read(function () {
-                            wrapperHeight = $wrapper.dim().height;
+                            wrapperHeight = $wrapper[0].clientHeight;
                         });
                     },
                     setHeight = function () {
@@ -175,33 +251,27 @@ define([
         };
 
     return {
-        // eg: rootEl can be a specific container or an iframe contentDocument
-        init: function (rootEl) {
-            var isIframed = rootEl && rootEl.tagName === 'IFRAME',
-                thisRootEl = (isIframed) ? rootEl.contentDocument.body : rootEl || document;
+            updateForm: ui.updateForm,
+            init: function (rootEl) {
+                var browser = detect.getUserAgent.browser,
+                    version = detect.getUserAgent.version;
+                // If we're in lte IE9, don't run the init and adjust the footer
+                if (browser === 'MSIE' && contains(['7','8','9'], version + '')) {
+                    $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
+                    $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
+                } else {
+                    // We're loading through the iframe
+                    if (rootEl && rootEl.tagName === 'IFRAME') {
+                        // We can listen for a lazy load or reload to catch an update
+                        setup(rootEl, rootEl.contentDocument.body, true);
+                        bean.on(rootEl, 'load', function () {
+                            setup(rootEl, rootEl.contentDocument.body, true);
+                        });
 
-            $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
-                formInlineLabels.init(el, {
-                    textInputClass: '.js-email-sub__text-input',
-                    labelClass: '.js-email-sub__label',
-                    hiddenLabelClass: 'email-sub__label--is-hidden',
-                    labelEnabledClass: 'email-sub__inline-label--enabled'
-                });
-            });
-
-            $('.' + classes.wrapper, thisRootEl).each(function (el) {
-                var $el = $(el),
-                    freezeHeight = ui.freezeHeight($el, false),
-                    freezeHeightReset = ui.freezeHeight($el, true);
-
-                formSubmission.bindSubmit($('.' + classes.form, el));
-
-                // Ensure our form is the right height, both in iframe and outside
-                (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
-                mediator.on('window:resize',
-                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
-                );
-            });
-        }
-    };
+                    } else {
+                        setup(rootEl, rootEl || document, false);
+                    }
+                }
+            }
+        };
 });

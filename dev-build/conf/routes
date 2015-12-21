@@ -33,7 +33,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailController.renderPage()
-GET            /email/form                                                                                                       controllers.EmailController.renderForm()
+GET            /email/form/$emailType<article|footer>/:listId                                                                    controllers.EmailController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailController.options()
@@ -100,6 +100,8 @@ GET            /top-stories.json                                                
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
+GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
+GET            /related-alt/*path.json                                                                                           controllers.RelatedController.renderTags(path)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
@@ -123,8 +125,8 @@ GET            /info/tech-feedback                                              
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
 
 # Sport
-GET            /sport/cricket/match/:matchId.json                                                                                controllers.CricketMatchController.renderMatchIdJson(matchId)
-GET            /sport/cricket/match/:matchId                                                                                     controllers.CricketMatchController.renderMatchId(matchId)
+GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET            /sport/cricket/match/:matchDate/:teamId                                                                           controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET            /football/fixtures/more/:year/:month/:day.json                                                                    football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET            /football/fixtures/more/:year/:month/:day                                                                         football.controllers.FixturesController.moreFixturesFor(year, month, day)
@@ -359,8 +361,8 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
-GET            /container/essential-read/:contentSource/:edition.json                                                            controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
-GET            /container/*path/some/:num/:offset/:size.json                                                                     controllers.FaciaController.renderSomeFrontContainers(path, num, offset, size)
+GET            /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json                                           controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
+GET            /container-mf2/:num/:offset/*path.json                                                                            controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)

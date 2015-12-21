@@ -75,20 +75,6 @@ object ItemKickerImplicits {
       case FreeHtmlKicker(_, body) => None
       case FreeHtmlKickerWithLink(_, body, url) => Option(url)
     }
-
-//    This is for the essential read AB test and should be deleted or refactored afterwards
-    def EssentialReadShouldUseKicker: Boolean = itemKicker match {
-      case BreakingNewsKicker => true
-      case LiveKicker => false
-      case AnalysisKicker => false
-      case ReviewKicker => false
-      case CartoonKicker => false
-      case PodcastKicker(_, _) => false
-      case TagKicker(_, _, _, _) => true
-      case SectionKicker(_, _, _) => true
-      case FreeHtmlKicker(_, _) => true
-      case FreeHtmlKickerWithLink(_, _, _) => true
-    }
   }
 
 }

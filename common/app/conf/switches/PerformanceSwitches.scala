@@ -38,7 +38,7 @@ trait PerformanceSwitches {
     "soft-purge-switch",
     "If this switch is on then articles will be automatically soft purged them from the CDN",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 15),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -47,7 +47,7 @@ trait PerformanceSwitches {
     "long-cache-switch",
     "If this switch is on then articles will get a longer cache time",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 15),
+    sellByDate = never,
     exposeClientSide = false
   )
 

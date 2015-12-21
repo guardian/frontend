@@ -1,0 +1,272 @@
+/* Edit profile manage-account tab
+   ========================================================================== */
+.manage-account-tab {
+    padding-bottom: $gs-baseline*2;
+
+    .show-updating {
+        display: inline-block;
+    }
+
+    .manage-account-loader {
+        text-align: center;
+        min-height: 200px;
+        margin-top: $gs-baseline*4;
+    }
+
+    /* Up sell
+    ========================================================================== */
+    .manage-account-up-sell {
+        padding: $gs-gutter*2;
+    }
+
+    .manage-account-up-sell__heading {
+        margin-bottom: $gs-baseline;
+    }
+
+    .manage-account-up-sell__content {
+        margin-bottom: 18px;
+    }
+
+    /* Details
+       ========================================================================== */
+    .details-list {
+        padding-top: $gs-baseline*2;
+    }
+
+    .details-list--lower {
+        padding-top: 0;
+    }
+
+    .details-list__item {
+        margin-bottom: $gs-baseline;
+    }
+
+    /* Card Details
+   ========================================================================== */
+    .card-details {
+        padding: 8px 4px 8px $gs-baseline;
+    }
+
+    .card-type-display {
+        display: inline-block;
+        height: 35px;
+        width: 54px;
+        vertical-align: middle;
+    }
+
+    /* manage-account CTA
+   ========================================================================== */
+    .manage-account-cta {
+        width: $gs-baseline*10;
+        margin: ($gs-baseline/2) 0 0;
+        display: block;
+
+        @include mq(tablet) {
+            float: right;
+            margin: 0;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+
+    .manage-account-cta--disabled {
+        background: none;
+        color: colour(news-default);
+
+        &:hover,
+        &:focus {
+            background: none;
+            text-decoration: underline;
+        }
+        &:active {
+            color: colour(news-accent);
+        }
+    }
+
+    /* Header
+       ========================================================================== */
+    .manage-account-header {
+        @include fs-header(3);
+    }
+
+    .manage-account-header--highlight {
+        padding: 15px 0 15px 4px;
+        margin: 32px 0 15px;
+        background-color: #fff8e5;
+        border-top: 1px solid colour(comment-accent);
+        border-bottom: 1px solid colour(comment-accent);
+    }
+
+    .subscription-changed-title {
+        @include fs-header(3);
+        border-top: 1px solid colour(neutral-4);
+        padding: 15px 0 20px;
+        margin-top: $gs-gutter*2;
+    }
+
+    /* Change Summary and package
+   ========================================================================== */
+    .change-summary {
+        padding-bottom: 80px;
+
+        @include mq(tablet) {
+            display: table;
+            width: 100%;
+        }
+
+        .summary {
+            background-color: colour(neutral-8);
+        }
+
+        .summary-arrow {
+            transform: rotate(90deg);
+            background-size: 18px 16px;
+            width: 18px;
+            height: 16px;
+
+            @include mq(tablet) {
+                transform: rotate(0deg);
+            }
+
+            @include mq(desktop) {
+                background-size: 26px 24px;
+                width: 26px;
+                height: 24px;
+            }
+        }
+
+        .package {
+            @include mq(tablet) {
+                display: table-cell;
+                margin: 0;
+                vertical-align: top;
+                width: 46%;
+            }
+        }
+
+        .package-direction {
+            margin: $gs-baseline;
+            text-align: center;
+        }
+    }
+
+    .summary-header {
+        display: block;
+        @include fs-textSans(4);
+        color: #ffffff;
+        height: 30px;
+        padding: 0 0 0 $gs-baseline;
+        line-height: 30px;
+    }
+
+    .summary-header--current {
+        background-color: colour(neutral-2);
+    }
+    .summary-header--target {
+        background-color: colour(news-accent);
+    }
+
+    .summary-package {
+        height: 57px;
+        border-top: 1px solid colour(neutral-4);
+        border-bottom: 1px solid colour(neutral-4);
+
+        .summary-package__icon-container {
+            display: inline-block;
+            vertical-align: middle;
+            height: 28px;
+            line-height: 54px;
+            padding: 0 6px 0 12px;
+        }
+
+        .summary-package__icon {
+            display: inline-block;
+            vertical-align: middle;
+            background-size: 28px 28px;
+            height: 28px;
+            width: 28px;
+        }
+
+        .summary-package__tier {
+            @include fs-header(2);
+            display: inline-block;
+            vertical-align: top;
+            line-height: 57px;
+        }
+    }
+
+    .summary-meta {
+        padding: 15px 0 30px $gs-baseline;
+
+        .summary-meta__label,
+        .summary-meta__data {
+            display: inline-block;
+
+            @include mq(tablet, desktop) {
+                display: block;
+                margin-bottom: $gs-baseline;
+            }
+        }
+
+        .summary-meta__label {
+            @include fs-bodyHeading(2);
+            width: 50%;
+        }
+
+        .summary-meta__data {
+            @include fs-bodyCopy(2);
+        }
+    }
+
+    /* Credit card change form
+   ========================================================================== */
+    .manage-account-tab__change-cc-form {
+        overflow: hidden;
+        max-height: 424px;
+        transition: all .25s ease-in-out;
+
+        &.is-closed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .form__error {
+            margin: 0 0 $gs-baseline;
+        }
+
+        .is-updating {
+            vertical-align: middle;
+            margin-top: 0;
+        }
+
+        /* Stripe credit card types
+           ========================================================================== */
+
+        $small-card: 32px;
+        $large-card: 35px;
+
+        .manage-account-tab__credit-card-container {
+            position: relative;
+        }
+
+        .manage-account-tab__card-types--in-field {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            width: 54px;
+            height: $large-card;
+        }
+
+        @include mq(tablet) {
+            .manage-account-tab__card-types--in-field {
+                width: 49px !important;
+                height: $small-card !important;
+                background-size: 49px $small-card;
+            }
+        }
+    }
+}

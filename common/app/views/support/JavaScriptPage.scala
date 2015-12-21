@@ -35,6 +35,8 @@ object JavaScriptPage {
     val sponsorshipType = content.flatMap(_.commercial.sponsorshipType).map("sponsorshipType" -> JsString(_))
     val sponsorshipTag = content.flatMap(_.commercial.sponsorshipTag).map( tag => "sponsorshipTag" -> JsString(tag.name))
     val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
+    val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
+    val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
     val commercialMetaData = Map(
       "oasHost" -> JsString("oas.theguardian.com"),
@@ -69,6 +71,8 @@ object JavaScriptPage {
       ("assetsPath", JsString(Configuration.assets.path)),
       ("isPreview", JsBoolean(environment.isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
+      ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
+      ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl))
     )
   }

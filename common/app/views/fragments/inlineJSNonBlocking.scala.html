@@ -1,3 +1,5 @@
+@()(implicit request: RequestHeader)
+
 @**
  * Use this fragment to add JavaScript that can improve the perceived rendering speed
  * but that is too blocking / risky to be put in the `head` of the document
@@ -8,7 +10,7 @@
 @import templates.inlineJS.nonBlocking.js._
 
 <script>
-// non-blocking JS to improve the perceived rendereding speed
+// non-blocking JS to improve the perceived rendering speed
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load
     @InlineJs(getUsername().body, "getUsername.js")

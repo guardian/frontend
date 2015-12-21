@@ -10,12 +10,15 @@ $avatarPadding: $gs-gutter / 2;
 .discussion {
     margin-bottom: $gs-baseline * 2;
     min-height: $gs-baseline * 16;
-    // To offset the anchor link to accomodate the sticky nav
-    padding-top: $gs-baseline*5;
-    margin-top: $gs-baseline*-5;
 
     .pagination_legend {
         display: none !important; // overriding .hide-on-mobile-inline
+    }
+
+    @include mq(tablet) {
+        // To offset the anchor link to accomodate the sticky nav
+        padding-top: $gs-baseline*5;
+        margin-top: $gs-baseline*-5;
     }
 }
 

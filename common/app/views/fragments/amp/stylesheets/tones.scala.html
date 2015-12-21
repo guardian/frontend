@@ -25,7 +25,8 @@
     background-color: #e6711b;
 }
 
-.tonal--tone-feature .tonal__header {
+.tonal--tone-feature .tonal__header,
+.fc-item.tone-feature{
     background-color: #951c55;
 }
 
@@ -42,7 +43,8 @@
     background-color: #615b52;
 }
 
-.tonal--tone-review .tonal__standfirst {
+.tonal--tone-review .tonal__standfirst,
+.tone-review--item {
     background-color: #7d7569;
 }
 
@@ -70,7 +72,8 @@
     background-color: #6e7e88;
 }
 
-.tonal--tone-live .tonal__header {
+.tonal--tone-live .tonal__header,
+.fc-item.tone-live--item {
     background-color: #b51800;
 }
 
@@ -78,7 +81,8 @@
     background-color: #ffbb00;
 }
 
-.tonal--tone-special-report .tonal__header {
+.tonal--tone-special-report .tonal__header,
+.fc-item.tone-special-report--item {
     background-color: #63717a;
 }
 
@@ -92,7 +96,8 @@
 
 .tonal--tone-comment .tonal__header,
 .tonal--tone-editorial .tonal__header,
-.tonal--tone-letters .tonal__header {
+.tonal--tone-letters .tonal__header,
+.fc-item.tone-comment {
     background-color: #efefec;
 }
 
@@ -115,11 +120,12 @@
 .tonal--tone-letters .tonal__header .content__section-label__link,
 .tonal--tone-comment .tonal__main .element-pullquote cite,
 .tonal--tone-letters .tonal__main .element-pullquote cite,
-.tonal--tone-comment .tonal__main .drop-cap {
+.tonal--tone-comment .tonal__main .drop-cap,
+.tone-comment .fc-item__byline {
     color: #e6711b;
 }
 
-.tonal--tone-feature .tone-colour, 
+.tonal--tone-feature .tone-colour,
 .tonal--tone-feature .tonal__main .element-pullquote cite,
 .tonal--tone-feature .tonal__main .drop-cap {
     color: #951c55;
@@ -140,7 +146,9 @@
     border-bottom-color: rgba(234,234,234,0.3);
 }
 
-.tonal--tone-feature .tonal__header .content__section-label__link {
+.tonal--tone-feature .tonal__header .content__section-label__link,
+.fc-item.tone-live--item .fc-item__meta,
+.fc-item.tone-feature .fc-item__meta  {
     color: #fdadba;
 }
 
@@ -194,7 +202,11 @@
 .tonal--tone-special-report .tonal__header .content__series-label__link,
 .tonal--tone-live .tonal__header .content__section-label__link,
 .tonal--tone-letters .tonal__standfirst,
-.tonal--tone-letters .tonal__standfirst .content__standfirst {
+.tonal--tone-letters .tonal__standfirst .content__standfirst,
+.tone-media--item .fc-item__title,
+.tone-review--item .fc-item__title,
+.tone-live--item .fc-item__title,
+.tone-special-report--item .fc-item__title {
     color: #fff;
 }
 
@@ -226,7 +238,7 @@ color: #21a2bc;
 }
 
 .tonal--tone-dead .tonal__standfirst .u-underline {
-    color: #b51800; 
+    color: #b51800;
     border-bottom-color: rgba(72,72,72,0.3);
 }
 
@@ -286,6 +298,21 @@ color: #21a2bc;
     fill: #63717a;
 }
 
+.fc-item.tone-media--item .fc-item__header svg,
+.fc-item.tone-review--item .fc-item__header svg{
+    fill: #fb0;
+    margin-right: .1em;
+}
+
+.inline-quote svg {
+    fill: #767676;
+}
+
+.fc-item.tone-live--item .fc-item__meta svg,
+.fc-item.tone-feature .fc-item__meta svg{
+    fill: #fdadba;
+}
+
 .tonal--tone-comment .tonal__standfirst .u-underline,
 .tonal--tone-feature .tonal__standfirst .u-underline,
 .tonal--tone-review .tonal__standfirst .u-underline,
@@ -299,3 +326,33 @@ color: #21a2bc;
     border-bottom-color: rgba(255,255,255,0.3);
 }
 
+.fc-item.tone-feature h2 {
+    color: #fff;
+}
+
+.fc-item.tone-review--item .fc-item__meta,
+.fc-item.tone-special-report--item .fc-item__meta {
+    color: #dcdcdc;
+}
+
+.fc-item.tone-special-report--item {
+    border-top-color: #aad8f1;
+}
+
+.fc-item.tone-live--item,
+.fc-item.tone-feature {
+    border-top-color: #fdadba;
+}
+
+.fc-item.tone-comment {
+    border-top-color: #e6711b;
+}
+
+.fc-item.tone-review--item,
+.fc-item.tone-media--item {
+    border-top-color: #fb0;
+}
+
+.fc-item.tone-media--item {
+    background-color: #333;
+}

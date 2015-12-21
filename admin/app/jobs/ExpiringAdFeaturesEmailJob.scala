@@ -3,7 +3,7 @@ package jobs
 import common.Logging
 import common.dfp.GuLineItem
 import conf.Configuration.commercial.{adOpsTeam, adTechTeam, gLabsTeam}
-import dfp.DfpDataHydrator
+import dfp.DfpApi
 import org.joda.time.DateTime.now
 import services.EmailService
 
@@ -12,7 +12,7 @@ object ExpiringAdFeaturesEmailJob extends Logging {
   def run(): Unit = {
 
     val adFeatures: Seq[GuLineItem] =
-      new DfpDataHydrator().loadAdFeatures(
+      DfpApi.readAdFeatureLogoLineItems(
         expiredSince = now().minusWeeks(1),
         expiringBefore = now().plusMonths(1)
       ).sortBy { lineItem =>

@@ -259,3 +259,7 @@ object S3Infosec extends S3 {
   val key = "blocked-email-domains.txt"
   def getBlockedEmailDomains = get(key)
 }
+
+object R2Archive extends S3 {
+  override lazy val bucket = "r2-archive-test"
+}

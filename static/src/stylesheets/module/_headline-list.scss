@@ -51,7 +51,7 @@
     @include fs-headline(2);
     font-weight: 500;
 
-    .fc-item__title {
+    .headline-list__text {
         margin-top: -1 * ($gs-baseline / 3);
         margin-left: gs-span(1);
 
@@ -100,8 +100,8 @@
         color: colour(neutral-2);
 
         .old-article-message--clock svg {
-            fill: colour(neutral-2);
-            stroke: #ffffff;
+            fill: colour(neutral-3);
+            margin-bottom: -1px;
         }
     }
 

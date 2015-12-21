@@ -4,6 +4,7 @@ import com.gu.contentapi.client.{model => contentapi}
 import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import cricketPa.CricketTeams
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -553,8 +554,8 @@ final case class Tags(
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
 
   lazy val isCricketLiveBlog = isLiveBlog &&
-    tags.exists(t => t.id == "sport/england-cricket-team") &&
-    tags.exists(t => t.id == "sport/over-by-over-reports")
+    tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
+    tags.map(_.id).contains("sport/over-by-over-reports")
 
   lazy val isRugbyMatch = (isMatchReport || isLiveBlog) &&
     tags.exists(t => t.id == "sport/rugby-union")

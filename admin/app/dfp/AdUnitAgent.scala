@@ -10,12 +10,11 @@ import scala.util.Try
 object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
   override def loadFreshData() = Try {
-    DfpServiceRegistry().fold(Map[String, GuAdUnit]()) { serviceRegistry =>
-      val session = new SessionWrapper(serviceRegistry.session)
+    val maybeData = for (session <- SessionWrapper()) yield {
 
       val statementBuilder = new StatementBuilder()
-        .where("status = :status")
-        .withBindVariableValue("status", InventoryStatus._ACTIVE)
+                             .where("status = :status")
+                             .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
       val dfpAdUnits = session.adUnits(statementBuilder)
 
@@ -34,6 +33,7 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
         id -> GuAdUnit(id, path)
       }.toMap
     }
-  }
 
+    maybeData getOrElse Map.empty
+  }
 }
