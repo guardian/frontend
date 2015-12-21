@@ -3,7 +3,7 @@
 @import '../components/pasteup-buttons/src/_mixins';
 
 $c-background: #2b3a42;
-$c-text: #333;
+$c-text: #333333;
 $c-accent: #f4e225;
 $c-accent-dark: #fbae15;
 
@@ -41,13 +41,12 @@ $c-accent-dark: #fbae15;
 }
 
 .keep-it-in-the-ground__image {
-    background-image: url("http://interactive.guim.co.uk/thrashers/keep-it-in-the-ground-header/hashed/bg.418e6adc.jpg");
+    background-image: url('http://interactive.guim.co.uk/thrashers/keep-it-in-the-ground-header/hashed/bg.418e6adc.jpg');
     width: 100%;
-    background-size: 130%;
+    background-size: 110%;
     background-position: center top;
     padding-top: 42%;
     height: 0;
-    background-size: 110%;
 
     @include mq($until: tablet) {
         padding-left: $gs-gutter;
@@ -98,14 +97,14 @@ $c-accent-dark: #fbae15;
     font-size: 1.5rem;
     line-height: 1.1;
     max-width: 700px;
-    color: white;
+    color: #ffffff;
     margin-top: 6px;
     padding-right: 50px;
     margin-bottom: 1.5em;
 
     @include mq(phablet, desktop) {
         margin-left: 140px;
-        border-left: 1px solid rgba(white, 0.4);
+        border-left: 1px solid mix(#fff, $c-background, 30%);
         margin-top: 0;
         padding-top: 6px;
         padding-left: 10px;
@@ -145,7 +144,7 @@ $c-accent-dark: #fbae15;
     font-size: 14px;
     line-height: 18px;
     font-family: $f-sans-serif-headline;
-    color: rgba(white, 0.4);
+    color: mix(#fff, $c-background, 30%);
 
     @include mq(phablet, desktop) {
         padding-left: $gs-gutter/2;
@@ -164,7 +163,7 @@ $c-accent-dark: #fbae15;
 }
 
 .keep-it-in-the-ground__logo {
-    fill: white;
+    fill: #ffffff;
     width: 80px;
     height: auto;
     position: absolute;
