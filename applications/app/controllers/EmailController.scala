@@ -37,6 +37,68 @@ object ListIds {
   val guardianTodayUk = 37
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
+
+  val theBestOfCiF = 2313
+  val theFiver = 218
+  val mediaBriefing = 217
+  val greenLight = 28
+  val povertyMatters = 113
+  val theLongRead = 3322
+  val morningMail = 2636
+  val australianPolitics = 1866
+
+  val theBreakdown = 219
+  val theSpin = 220
+
+  val sleeveNotes = 39
+  val closeUp = 40
+  val filmToday = 1950
+  val bookmarks = 3039
+  val artWeekly = 99
+
+  val zipFile = 1902
+  val theFlyer = 2211
+  val moneyTalks = 1079
+  val fashionStatement = 105
+  val crosswordEditorUpdate = 101
+  val theObserverFoodMonthly = 248
+
+  val firstDogOnTheMoon = 2635
+  val bestOfOpinionAUS = 2976
+  val bestOfOpinionUS = 3228
+
+  val theGuardianMasterclasses = 3561
+  val theGuardianGardener = 3562
+  val theGuardianBookshop = 3563
+
+  val all: List[Int] = List(
+    theBestOfCiF,
+   theFiver,
+   mediaBriefing,
+   greenLight,
+   povertyMatters,
+   theLongRead,
+   morningMail,
+   australianPolitics,
+   theBreakdown,
+   theSpin,
+   sleeveNotes,
+   closeUp,
+   filmToday,
+   bookmarks,
+   artWeekly,
+   zipFile,
+   theFlyer,
+   moneyTalks,
+   fashionStatement,
+   crosswordEditorUpdate,
+   theObserverFoodMonthly,
+   firstDogOnTheMoon,
+   bestOfOpinionAUS,
+   bestOfOpinionUS,
+   theGuardianMasterclasses,
+   theGuardianGardener,
+   theGuardianBookshop)
 }
 
 object EmailTypes {
