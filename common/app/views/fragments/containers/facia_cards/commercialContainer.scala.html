@@ -1,0 +1,14 @@
+@(container: slices.CommercialContainer, containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+
+@import slices.{SingleCampaign, MultiCampaign}
+
+@container match {
+    case SingleCampaign(_) => {
+        <!-- TODO implement a single campaign -->
+        @standardContainer(containerDefinition, frontProperties)
+    }
+    case MultiCampaign(_) => {
+        <!-- TODO implement a multi campaign -->
+        @standardContainer(containerDefinition, frontProperties)
+    }
+}
