@@ -220,18 +220,29 @@ const getBuild = (build: number): Promise<BuildRecord> => (
         }))
 );
 
+interface GitHubErrorJson {
+    message: string;
+}
+
 const gitHubApiHost = 'https://api.github.com';
 const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>> => (
     fetch(`${gitHubApiHost}/repos/guardian/frontend/compare/${base}...${head}`)
-        .then((response): Promise<GitHubCompareJson> => response.json())
-        .then(json => json.commits)
-        .then(gitHubCommitsJson => gitHubCommitsJson.map((gitHubCommitJson): GitHubCommit => (
-            {
-                url: gitHubCommitJson.html_url,
-                authorName: gitHubCommitJson.commit.author.name,
-                message: gitHubCommitJson.commit.message
+        .then(response => {
+            if (response.ok) {
+                return response.clone().json<GitHubCompareJson>()
+                    .then(json => json.commits)
+                    .then(gitHubCommitsJson => gitHubCommitsJson.map((gitHubCommitJson): GitHubCommit => (
+                        {
+                            url: gitHubCommitJson.html_url,
+                            authorName: gitHubCommitJson.commit.author.name,
+                            message: gitHubCommitJson.commit.message
+                        }
+                    )));
+            } else {
+                return response.clone().json<GitHubErrorJson>()
+                    .then(json => Promise.reject(new Error(json.message)));
             }
-        )))
+        })
 );
 
 const run = () => {
