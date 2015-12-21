@@ -2,11 +2,14 @@
 @(classes: Seq[String], widths: WidthsByBreakpoint, maybeImageContainer: Option[model.ImageContainer] = None, maybePath: Option[String] = None, maybeSrc: Option[String] = None)
 
 <picture>
+    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+    <!--[if IE 9]><video style="display: none;"><![endif]-->
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                 sizes="@breakpointWidth.width"
                 srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageContainer)" />
     }
+    <!--[if IE 9]></video><![endif]-->
     <img class="@RenderClasses(classes: _*)"
          alt=""
          @maybeSrc.map { src => src="@src" } />
