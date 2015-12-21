@@ -1,0 +1,19 @@
+@(id: String)(implicit request: RequestHeader)
+
+@import views.support.Basher
+
+@if(Basher.fromId(id) != None) {
+    <div class="facia-basher" data-link-name="basher">
+        @conf.Static.css.inline("KeepItInTheGround").map { css =>
+            <style>
+                @Html(css)
+            </style>
+        }
+
+        @Basher.fromId(id) match {
+            case KeepItInTheGround => {
+                @fragments.bashers.uk_environment()
+            }
+        }
+    </div>
+}
