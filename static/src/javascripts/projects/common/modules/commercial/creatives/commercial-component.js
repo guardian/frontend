@@ -100,7 +100,7 @@ define([
         bestbuy: function (el) {
             new Tabs().init(el);
         },
-        paidfor: function (el) {
+        paidfor: function () {
             toggles.init();
         }
     };

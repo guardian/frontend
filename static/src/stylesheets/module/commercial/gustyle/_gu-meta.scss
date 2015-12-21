@@ -25,8 +25,8 @@
 }
 
 .gu-comlabel .popup__toggle {
-    border-left: 1px solid rgba(0,0,0,.2);
-    border-right: 1px solid rgba(0,0,0,.2);
+    border-left: 1px solid rgba(0, 0, 0, .2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
 
     &:before,
     &:after {
@@ -38,7 +38,7 @@
     }
 
     .commercial__header & {
-        border: none;
+        border: 0;
         font-weight: 400;
     }
 }

@@ -31,15 +31,15 @@ define([
         this.params.infoLinkIcon = svgs('arrowRight');
         this.params.note = 'Paid for by:';
 
-        $component = $.create(gustyleComcontentTpl(this.params))
+        $component = $.create(gustyleComcontentTpl(this.params));
 
-        fastdom.write(function() {
+        fastdom.write(function () {
             $component.appendTo(this.$adSlot);
 
             if (this.params.trackingPixel) {
                 this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
             }
-        }.bind(this));
+        }, this);
     };
 
     return GustyleComcontent;
