@@ -167,6 +167,7 @@ object PressedCardHeader {
       kicker = FaciaContentUtils.itemKicker(content).map(ItemKicker.make),
       headline = FaciaContentUtils.headline(content),
       isVideo = FaciaContentUtils.isVideo(content),
+      isComment = FaciaContentUtils.isComment(content),
       isAudio = FaciaContentUtils.isAudio(content),
       isGallery = FaciaContentUtils.isGallery(content),
       seriesOrBlogKicker = capiContent.flatMap(item =>
@@ -178,6 +179,7 @@ object PressedCardHeader {
 
 final case class PressedCardHeader(
   isVideo: Boolean,
+  isComment: Boolean,
   isGallery: Boolean,
   isAudio: Boolean,
   kicker: Option[ItemKicker],
