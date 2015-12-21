@@ -5,7 +5,10 @@ import scala.concurrent.Future
 import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
 import discussion.{UnthreadedCommentPage, ThreadedCommentPage, DiscussionParams}
-import discussion.model.{BlankComment, DiscussionKey}
+import discussion.model.{BlankComment, DiscussionKey, DiscussionAbuseReport}
+import play.api.data._
+import model.NoCache
+
 
 object CommentsController extends DiscussionController {
 
@@ -45,9 +48,26 @@ object CommentsController extends DiscussionController {
   def topCommentsJson(key: DiscussionKey) = Action.async { implicit request => getTopComments(key) }
   def topCommentsJsonOptions(key: DiscussionKey) = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
 
-  def reportAbuse(commentId: Int) = Action { implicit request =>
+  def reportAbuseForm(commentId: Int) = Action { implicit request =>
     val page = SimplePage(MetaData.make("/reportAbuse", "Discussion", "Report Abuse", "GFE: Report Abuse"))
     Cached(60) { Ok(views.html.discussionComments.reportComment(commentId, page)) }
+  }
+
+
+
+  def reportAbuseSubmission(commentId: Int)  = Action { implicit request =>
+
+    val userForm = Form(
+      Forms.mapping(
+        "categoryId" -> Forms.number,
+        "commentId" -> Forms.number,
+        "reason" -> Forms.text,
+        "email" -> Forms.text
+      )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
+    )
+
+  val result =  userForm.bindFromRequest().get
+    NoCache(Ok(result.toString))
   }
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {

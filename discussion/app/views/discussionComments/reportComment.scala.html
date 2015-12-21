@@ -1,4 +1,5 @@
 @import _root_.model.SimplePage
+@import conf.Configuration.discussion
 @(commentId: Int, page: SimplePage)(implicit request: RequestHeader)
 @main(page){ }{
 
@@ -9,7 +10,6 @@
                     <div class="content__main-column">
                         <div class="content__labels">
                             <div class="content__section-label">
-                                @*<a class="tone-colour" data-link-name="article section" href="@LinkTo("/crosswords")">Crosswords</a>*@
                             </div>
                         </div>
                         <h1 itemprop="headline" class="content__headline js-score">Report Abuse</h1>
@@ -21,13 +21,14 @@
         <div class="content__main tonal__main tonal__main--tone-news">
             <div class="gs-container">
                 <div class="content__main-column">
-
-
-                    <form class="form" method="post">
+                    <form class="form" method="post" action="/discussion/report-abuse/@commentId">
+                        <input type="hidden" name="D2-X-UID" value="zHoBy6HNKsk">
+                        <input type="hidden" name="GU-Client" value="@conf.Configuration.discussion.apiClientHeader">
+                        <input type="hidden" name="commentId" value="@commentId">
                         <fieldset class="fieldset">
                             <div class="form-fields__inline">
                         <label class="label" for="category">Category</label>
-                        <select class="fieldset__fields" name="category">
+                        <select class="fieldset__fields" name="categoryId" id="categoryId">
                             <option value="0">Please select</option>
                             <option value="1">Personal abuse</option>
                             <option value="2">Off topic</option>
@@ -41,12 +42,13 @@
                         </select>
 
                             <label class="label" for="reason">Reason (optional)</label>
-                            <textarea class="fieldset__fields" id="reason" name="comment"></textarea>
+                            <textarea class="fieldset__fields" id="reason" name="reason"></textarea>
 
                             <label class="label" for="email">Email (optional)</label>
-                            <textarea type="text" class="email" id="email" name="email"></textarea>
+                            <input type="email" class="email" id="email" name="email" />
                             </div>
                         <button class="submit-input" type="submit">Report</button>
+
                         </fieldset>
                     </form>
                 </div>
