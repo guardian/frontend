@@ -14,7 +14,7 @@
 
                     @image.elements.mainPicture.map { picture =>
                         @fragments.img(
-                            picture,
+                            picture.images,
                             lightboxIndex = if(image.lightBox.isMainMediaLightboxable) Some(1) else None,
                             widthsByBreakpoint = ImageContentMedia.inline
                         )

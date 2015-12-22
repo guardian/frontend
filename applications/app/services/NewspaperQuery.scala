@@ -2,12 +2,13 @@ package services
 
 import _root_.model.Content
 import com.gu.contentapi.client.model.{Content => ApiContent, Tag}
-import com.gu.facia.api.models.{LinkSnap, CollectionConfig, FaciaContent}
 import com.gu.facia.api.utils.{ResolvedMetaData, ContentProperties}
+import com.gu.facia.api.{models => fapi}
 import common._
 import conf.LiveContentApi
 import implicits.Dates
 import layout.{CollectionEssentials, FaciaContainer}
+import model.pressed.{CollectionConfig, LinkSnap, PressedContent}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeConstants, DateTime, DateTimeZone}
 import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
@@ -114,7 +115,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
   }
 
   private def bookSectionContainer(dataId: Option[String], containerName: Option[String],
-                                   containerDescription: Option[String], trails: Seq[FaciaContent], index: Int, linkSnaps: List[LinkSnap]): FaciaContainer = {
+                                   containerDescription: Option[String], trails: Seq[PressedContent], index: Int, linkSnaps: List[LinkSnap]): FaciaContainer = {
     val containerDefinition = trails.length match {
       case 1 => FixedContainers.fixedSmallSlowI
       case 2 => FixedContainers.fixedSmallSlowII
@@ -154,7 +155,8 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       val displayFormat = d.toString(dateForFrontPagePattern)
       val hrefDateFormat = d.toString(hrefFormat).toLowerCase
       val href = if(d.getDayOfWeek == DateTimeConstants.SUNDAY) s"/theobserver/$hrefDateFormat" else s"/theguardian/$hrefDateFormat"
-      LinkSnap("no-id", None, "no-snap-type", None, None, Some(displayFormat), Some(href), None, "group", None, ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default), None, None)
+      val fapiSnap = fapi.LinkSnap("no-id", None, "no-snap-type", None, None, Some(displayFormat), Some(href), None, "group", None, ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default), None, None)
+      LinkSnap.make(fapiSnap)
     }
   }
 }

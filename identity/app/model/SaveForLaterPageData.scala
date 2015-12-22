@@ -1,7 +1,6 @@
 package model
 
 import com.google.inject.{Inject, Singleton}
-import com.gu.facia.api.models.{FaciaContent, CollectionConfig}
 import com.gu.identity.model.{SavedArticle, SavedArticles}
 import common.{ExecutionContexts, Edition, Pagination}
 import conf.LiveContentApi
@@ -9,13 +8,14 @@ import conf.LiveContentApi._
 import layout.{ItemClasses, FaciaCard, ContentCard}
 import services.{FaciaContentConvert, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 import implicits.Articles._
+import pressed.{PressedContent, CollectionConfig}
 import cards._
 
 import scala.concurrent.Future
 
 case class SaveForLaterItem (
   content: ContentType,
-  faciaContent: FaciaContent,
+  faciaContent: PressedContent,
   savedArticle: SavedArticle) extends Ordered[SaveForLaterItem] {
 
   def compare(other: SaveForLaterItem) : Int = other.savedArticle.date.compareTo(this.savedArticle.date)

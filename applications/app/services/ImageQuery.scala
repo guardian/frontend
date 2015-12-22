@@ -17,8 +17,9 @@ trait ImageQuery extends ConciergeRepository {
       .showFields("all")
     ) map { response: ItemResponse =>
         val mainContent = response.content.filter(_.isImageContent).map(Content(_))
-        mainContent.map { case content: ImageContent =>
-          Left(ImageContentPage(content, RelatedContent(content, response)))
+        mainContent.map {
+          case content: ImageContent => Left(ImageContentPage(content, RelatedContent(content, response)))
+          case _ => Right(NotFound)
         }.getOrElse(Right(NotFound))
       }
 

@@ -2,13 +2,13 @@ package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import com.gu.facia.api.models.CollectionConfig
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model._
+import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.Fixed

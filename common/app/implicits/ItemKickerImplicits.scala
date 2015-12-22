@@ -1,6 +1,6 @@
 package implicits
 
-import com.gu.facia.api.utils._
+import model.pressed._
 
 object ItemKickerImplicits {
   val fcSublinkKicker = "fc-sublink__kicker"
@@ -17,11 +17,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => Set(fcSublinkKicker)
       case ReviewKicker => Set(fcSublinkKicker)
       case CartoonKicker => Set(fcSublinkKicker)
-      case PodcastKicker(series) => Set(fcSublinkKicker)
-      case TagKicker(name, url, id) => Set(fcSublinkKicker)
-      case SectionKicker(name, url) => Set(fcSublinkKicker)
-      case FreeHtmlKicker(body) => Set(fcSublinkKicker)
-      case FreeHtmlKickerWithLink(body, url) => Set(fcSublinkKicker)
+      case PodcastKicker(_, series) => Set(fcSublinkKicker)
+      case TagKicker(_, name, url, id) => Set(fcSublinkKicker)
+      case SectionKicker(_, name, url) => Set(fcSublinkKicker)
+      case FreeHtmlKicker(_, body) => Set(fcSublinkKicker)
+      case FreeHtmlKickerWithLink(_, body, url) => Set(fcSublinkKicker)
     }
 
     def linkClasses: Set[String] = itemKicker match {
@@ -30,11 +30,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => Set(fcItemKicker)
       case ReviewKicker => Set(fcItemKicker)
       case CartoonKicker => Set(fcItemKicker)
-      case PodcastKicker(series) => Set(fcItemKicker)
-      case TagKicker(name, url, id) => Set(fcItemKicker)
-      case SectionKicker(name, url) => Set(fcItemKicker)
-      case FreeHtmlKicker(body) => Set(fcItemKicker)
-      case FreeHtmlKickerWithLink(body, url) => Set(fcItemKicker)
+      case PodcastKicker(_, series) => Set(fcItemKicker)
+      case TagKicker(_, name, url, id) => Set(fcItemKicker)
+      case SectionKicker(_, name, url) => Set(fcItemKicker)
+      case FreeHtmlKicker(_, body) => Set(fcItemKicker)
+      case FreeHtmlKickerWithLink(_, body, url) => Set(fcItemKicker)
     }
 
     def kickerHtml: String = itemKicker match {
@@ -43,11 +43,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => "Analysis"
       case ReviewKicker => "Review"
       case CartoonKicker => "Cartoon"
-      case PodcastKicker(series) => series.map(_.name).getOrElse("Podcast")
-      case TagKicker(name, url, id) => name
-      case SectionKicker(name, url) => name
-      case FreeHtmlKicker(body) => body
-      case FreeHtmlKickerWithLink(body, url) => body
+      case PodcastKicker(_, series) => series.map(_.name).getOrElse("Podcast")
+      case TagKicker(_, name, url, id) => name
+      case SectionKicker(_, name, url) => name
+      case FreeHtmlKicker(_, body) => body
+      case FreeHtmlKickerWithLink(_, body, url) => body
     }
 
     def sublinkKickerHtml: String = itemKicker match {
@@ -56,11 +56,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => kickerHtml
       case ReviewKicker => kickerHtml
       case CartoonKicker => kickerHtml
-      case PodcastKicker(series) => kickerHtml
-      case TagKicker(name, url, id) => kickerHtml
-      case SectionKicker(name, url) => kickerHtml
-      case FreeHtmlKicker(body) => kickerHtml
-      case FreeHtmlKickerWithLink(body, url) => kickerHtml
+      case PodcastKicker(_, series) => kickerHtml
+      case TagKicker(_, name, url, id) => kickerHtml
+      case SectionKicker(_, name, url) => kickerHtml
+      case FreeHtmlKicker(_, body) => kickerHtml
+      case FreeHtmlKickerWithLink(_, body, url) => kickerHtml
     }
 
     def link: Option[String] = itemKicker match {
@@ -69,11 +69,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => None
       case ReviewKicker => None
       case CartoonKicker => None
-      case PodcastKicker(series) => series.map(_.url)
-      case TagKicker(name, url, id) => Option(url)
-      case SectionKicker(name, url) => Option(url)
-      case FreeHtmlKicker(body) => None
-      case FreeHtmlKickerWithLink(body, url) => Option(url)
+      case PodcastKicker(_, series) => series.map(_.url)
+      case TagKicker(_, name, url, id) => Option(url)
+      case SectionKicker(_, name, url) => Option(url)
+      case FreeHtmlKicker(_, body) => None
+      case FreeHtmlKickerWithLink(_, body, url) => Option(url)
     }
   }
 

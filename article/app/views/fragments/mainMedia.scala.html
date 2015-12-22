@@ -29,7 +29,7 @@
                         ), true, amp = amp)
                     }
 
-                    @mainVideo.caption.map { caption =>
+                    @mainVideo.videos.caption.map { caption =>
                         <figcaption class="caption caption--main" itemprop="description">@Html(caption)</figcaption>
                     }
                 </figure>
@@ -37,7 +37,7 @@
         } else {
             @article.elements.mainPicture.map { picture =>
                 @fragments.img(
-                    picture,
+                    picture.images,
                     if(article.lightbox.isMainMediaLightboxable) Some(1) else None,
                     article.elements.hasShowcaseMainElement,
                     article.tags.isFeature,

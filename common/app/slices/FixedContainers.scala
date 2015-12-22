@@ -1,8 +1,7 @@
 package slices
 
-import com.gu.facia.api.models.FaciaContent
 import conf.Configuration
-import model.Content
+import model.pressed.PressedContent
 
 object TagContainers {
 
@@ -116,7 +115,7 @@ object DynamicContainers {
     ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false))
   )
 
-  def apply(collectionType: Option[String], items: Seq[FaciaContent]): Option[ContainerDefinition] = {
+  def apply(collectionType: Option[String], items: Seq[PressedContent]): Option[ContainerDefinition] = {
     for {
       typ <- collectionType
       dynamicContainer <- all.get(typ)

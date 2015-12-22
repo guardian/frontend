@@ -1,14 +1,13 @@
 package layout
 
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
 import common.dfp.{DfpAgent, SponsorshipTag}
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import implicits.FaciaContentFrontendHelpers._
-import implicits.FaciaContentImplicits._
 import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
+import model.pressed.{PressedContent, CollectionConfig}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -79,7 +78,7 @@ object CollectionEssentials {
     if (collection.curated.isEmpty) Some(9) else None
   )
 
-  def fromFaciaContent(trails: Seq[FaciaContent]) = CollectionEssentials(
+  def fromFaciaContent(trails: Seq[PressedContent]) = CollectionEssentials(
     trails,
     Nil,
     None,
@@ -92,8 +91,8 @@ object CollectionEssentials {
 }
 
 case class CollectionEssentials(
-  items: Seq[FaciaContent],
-  treats: Seq[FaciaContent],
+  items: Seq[PressedContent],
+  treats: Seq[PressedContent],
   displayName: Option[String],
   href: Option[String],
   lastUpdated: Option[String],
@@ -203,7 +202,7 @@ object FaciaContainer {
     hasShowMoreEnabled = !config.config.hideShowMore
   )
 
-  def forStoryPackage(dataId: String, items: Seq[FaciaContent], title: String, href: Option[String] = None) = {
+  def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None) = {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
@@ -244,12 +243,10 @@ case class FaciaContainer(
     } getOrElse "no-name"
   }
 
-  def latestUpdate = (collectionEssentials.items.flatMap(_.webPublicationDateOption) ++
+  def latestUpdate = (collectionEssentials.items.flatMap(_.card.webPublicationDateOption) ++
     collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
 
   def items = collectionEssentials.items
-
-  def contentItems = items collect { case c: FaciaContent => c }
 
   def withTimeStamps = transformCards(_.withTimeStamp)
 
@@ -331,7 +328,7 @@ object Front extends implicits.Collections {
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
   // Never de-duplicate snaps.
-  def participatesInDeduplication(faciaContent: FaciaContent) = faciaContent.embedType.isEmpty
+  def participatesInDeduplication(faciaContent: PressedContent) = faciaContent.properties.embedType.isEmpty
 
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
@@ -340,8 +337,8 @@ object Front extends implicits.Collections {
   def deduplicate(
     seen: Set[TrailUrl],
     container: Container,
-    faciaContentList: Seq[FaciaContent]
-    ): (Set[TrailUrl], Seq[FaciaContent], (Seq[DedupedItem], Seq[DedupedItem])) = {
+    faciaContentList: Seq[PressedContent]
+    ): (Set[TrailUrl], Seq[PressedContent], (Seq[DedupedItem], Seq[DedupedItem])) = {
     container match {
       case Dynamic(dynamicContainer) =>
         /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
@@ -352,7 +349,7 @@ object Front extends implicits.Collections {
           faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
-            .map(_.url)
+            .map(_.header.url)
             .take(itemsVisible(containerDefinition)), faciaContentList, (Nil, Nil))
         } getOrElse {
           (seen, faciaContentList, (Nil, Nil))
@@ -366,23 +363,23 @@ object Front extends implicits.Collections {
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val usedInThisIteration: Seq[FaciaContent] =
+        val usedInThisIteration: Seq[PressedContent] =
           faciaContentList
-            .filter(c => seen.contains(c.url))
+            .filter(c => seen.contains(c.header.url))
 
        val usedButNotDeduped = usedInThisIteration
             .filter(c => !participatesInDeduplication(c))
-            .map(_.url)
+            .map(_.header.url)
             .map(DedupedItem(_))
 
         val usedAndDeduped = usedInThisIteration
             .filter(participatesInDeduplication)
-            .map(_.url)
+            .map(_.header.url)
             .map(DedupedItem(_))
 
-        val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.url) || !participatesInDeduplication(faciaContent))
-          .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed, (usedAndDeduped, usedButNotDeduped))
+        val notUsed = faciaContentList.filter(faciaContent => !seen.contains(faciaContent.header.url) || !participatesInDeduplication(faciaContent))
+          .distinctBy(_.header.url)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.header.url), notUsed, (usedAndDeduped, usedButNotDeduped))
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
@@ -493,7 +490,7 @@ object Front extends implicits.Collections {
               LinkTo(url), // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, i) =>
-                  ListItem(position = i, url = Some(LinkTo(item.url)))
+                  ListItem(position = i, url = Some(LinkTo(item.header.url)))
               }
             )
           ))

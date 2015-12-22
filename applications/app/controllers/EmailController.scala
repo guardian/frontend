@@ -10,6 +10,7 @@ import play.api.data.Forms._
 import play.api.libs.ws.{WSResponse, WS}
 import play.api.libs.json._
 import play.api.mvc.Results._
+import play.api.data.format.Formats.stringFormat
 import play.api.mvc.{Result, Action, Controller}
 import metrics.EmailSubsciptionMetrics._
 
@@ -25,9 +26,11 @@ object emailLandingPage extends StandalonePage {
     webTitle = "Email Landing Page")
 }
 
-case class EmailPage(interactive: Interactive, related: RelatedContent)
-
-case class EmailForm(email: String, listId: Int)
+case class EmailForm(
+  email: String,
+  listId: Int,
+  referrer: Option[String],
+  campaignCode: Option[String])
 
 object ListIds {
   val testList = 3485
@@ -55,12 +58,16 @@ object EmailForm {
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
     listTriggers.get(form.listId).map { triggeredSendKey =>
-      WS.url(Configuration.emailSignup.url).post(Json.obj(
+      WS.url(Configuration.emailSignup.url).post(
+        JsObject(Json.obj(
         "email" -> form.email,
         "listId" -> form.listId,
         "triggeredSendKey" -> triggeredSendKey,
-        "emailGroup" -> "email-footer-test"
-      ))
+        "emailGroup" -> "email-footer-test",
+        "referrer" -> form.referrer,
+        "campaignCode" -> form.campaignCode)
+        .fields
+        .filterNot{ case (_, v) => v == JsNull}))
     }
   }
 }
@@ -69,7 +76,9 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
-      "listId" -> number
+      "listId" -> number,
+      "referrer" -> optional[String](of[String]),
+      "campaignCode" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)
   )
 

@@ -44,9 +44,9 @@ define([
     ab
 ) {
     // messy but removed within a week
-    var blogIdsCheck = (ab.getParticipations().FrontsOnArticles &&
-    (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
-    ab.testCanBeRun('FrontsOnArticles')) ? (config.page.blogIds && !(config.page.blogIds.indexOf('commentisfree') > -1)) : config.page.blogIds;
+    var blogIdsCheck = (ab.getParticipations().FrontsOnArticles2 &&
+    (ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles2.variant === 'twoAndTwo') &&
+    ab.testCanBeRun('FrontsOnArticles2')) ? (config.page.blogIds && !(config.page.blogIds.indexOf('commentisfree') > -1)) : config.page.blogIds;
 
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -94,9 +94,9 @@ define([
             if ((config.page.seriesId || blogIdsCheck) && config.page.showRelatedContent) {
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
-                if (!(ab.getParticipations().FrontsOnArticles &&
-                    (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
-                    ab.testCanBeRun('FrontsOnArticles'))) {
+                if (!(ab.getParticipations().FrontsOnArticles2 &&
+                    (ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles2.variant === 'twoAndTwo') &&
+                    ab.testCanBeRun('FrontsOnArticles2'))) {
                     $('.js-onward').each(function (c) {
                         new TonalComponent().fetch(c, 'html');
                     });
@@ -106,9 +106,9 @@ define([
     }
 
     function initFrontsContainers() {
-        if (config.page.section !== 'childrens-books-site' && config.page.contentType !== 'LiveBlog' && ab.getParticipations().FrontsOnArticles &&
-            (ab.getParticipations().FrontsOnArticles.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles.variant === 'twoAndTwo') &&
-            ab.testCanBeRun('FrontsOnArticles')) {
+        if (config.page.section !== 'childrens-books-site' && config.page.contentType !== 'LiveBlog' && ab.getParticipations().FrontsOnArticles2 &&
+            (ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles2.variant === 'twoAndTwo') &&
+            ab.testCanBeRun('FrontsOnArticles2')) {
             insertOrProximity('.js-onward', function () {
                 new FrontsContainers();
             });

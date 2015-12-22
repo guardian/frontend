@@ -39,19 +39,19 @@
 
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn) {
-                    <div class="footer__email-container">
+                    <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
-                            @fragments.email.emailIframe("37")
+                            @fragments.email.emailIframe("37", "footer-daily-email-uk")
                         }
                         case Us => {
-                            @fragments.email.emailIframe("1493")
+                            @fragments.email.emailIframe("1493", "footer-daily-email-us")
                         }
                         case Au => {
-                            @fragments.email.emailIframe("1506")
+                            @fragments.email.emailIframe("1506", "footer-daily-email-au")
                         }
                         case International => {
-                            @fragments.email.emailIframe("37")
+                            @fragments.email.emailIframe("37", "footer-daily-email-int")
                         }
                     }
                     </div>
