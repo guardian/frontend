@@ -118,7 +118,7 @@ object EmailForm {
     ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.allWithoutTrigger.map(_ -> None).toMap
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
-    listIdsWithMaybeTrigger.get(form.listId).flatten.map { triggeredSendKey: Int =>
+    listIdsWithMaybeTrigger.get(form.listId).map { triggeredSendKey: Option[Int] =>
       WS.url(Configuration.emailSignup.url).post(
         JsObject(Json.obj(
         "email" -> form.email,
