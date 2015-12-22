@@ -1,6 +1,7 @@
 package controllers
 
 import model.{MetaData, SimplePage, Cached, TinyResponse}
+import play.api.data.Forms._
 import scala.concurrent.Future
 import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
@@ -57,12 +58,13 @@ object CommentsController extends DiscussionController {
 
   def reportAbuseSubmission(commentId: Int)  = Action { implicit request =>
 
+
     val userForm = Form(
       Forms.mapping(
-        "categoryId" -> Forms.number,
+        "categoryId" -> Forms.number(min = 1, max = 9),
         "commentId" -> Forms.number,
-        "reason" -> Forms.text,
-        "email" -> Forms.text
+        "reason" -> optional(Forms.text(maxLength = 250)),
+        "email" -> optional(Forms.email)
       )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
     )
 

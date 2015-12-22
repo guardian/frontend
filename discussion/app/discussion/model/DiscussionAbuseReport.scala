@@ -1,3 +1,3 @@
 package discussion.model
 
-case class DiscussionAbuseReport(categoryId: Int, commentId: Int, reason: String, email: String)
+case class DiscussionAbuseReport(categoryId: Int, commentId: Int, reason: Option[String], email: Option[String])
