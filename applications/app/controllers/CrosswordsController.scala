@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
-import common.{Edition, ExecutionContexts}
+import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model._
@@ -14,7 +14,7 @@ import services.{IndexPageItem, IndexPage}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait CrosswordController extends Controller with ExecutionContexts {
+trait CrosswordController extends Controller with Logging with ExecutionContexts {
   def noResults()(implicit request: RequestHeader): Result
 
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
@@ -24,7 +24,10 @@ trait CrosswordController extends Controller with ExecutionContexts {
         crossword <- content.crossword }
        yield f(crossword, content)
        maybeCrossword getOrElse noResults
-    } recover { case _ => noResults }
+    } recover { case t: Throwable =>
+              log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
+              noResults
+    }
   }
 
   def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[Result] = {
@@ -118,10 +121,10 @@ object CrosswordSearchController extends CrosswordController {
   }
 
   def lookup() = Action.async { implicit request =>
-    lookupForm.bindFromRequest.get match {
-      case CrosswordLookup(crosswordType, id) => renderCrosswordPage(crosswordType, id)
-      case _ => Future.successful(noResults)
-    }
+    lookupForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(noResults),
+      lookUpData => renderCrosswordPage(lookUpData.crosswordType, lookUpData.id)
+    )
   }
 
   case class CrosswordSearch(crosswordType: String,
