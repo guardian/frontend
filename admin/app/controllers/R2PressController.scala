@@ -4,21 +4,17 @@ import java.io.File
 
 import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
-import play.api.data.Form
-import play.api.data.Forms._
 import play.api.mvc.Controller
 import services.R2PagePressNotifier
 
 case class R2PagePress(r2url: String) {
-  lazy val trim = this.copy(r2url = r2url.trim)
+  def trim = this.copy(r2url = r2url.trim)
 }
 
 object R2PressController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  val pressPageForm = Form(mapping("r2url" -> text)(R2PagePress.apply)(R2PagePress.unapply))
-
   def pressForm() = AuthActions.AuthActionTest { implicit request =>
-    Ok(views.html.pressR2(pressPageForm))
+    Ok(views.html.pressR2())
   }
 
   def batchUpload() = AuthActions.AuthActionTest { implicit request =>
@@ -32,7 +28,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
       }
     }
     uploadedFile.foreach(pressFile)
-    Ok(views.html.pressR2(pressPageForm))
+    Ok(views.html.pressR2())
   }
 
   private def pressFile(file: File): Unit = {
@@ -40,7 +36,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     val lines = try {
       source.getLines().foreach { line =>
         if (line.nonEmpty) {
-          //TODO: validation?
+          //TODO: other validation?
           R2PagePressNotifier.enqueue(line)
         }
       }
@@ -51,11 +47,15 @@ object R2PressController extends Controller with Logging with AuthLogging with E
   }
 
   def press() = AuthActions.AuthActionTest { implicit request =>
-    pressPageForm.bindFromRequest().get.trim match {
-      case R2PagePress(r2url) if r2url.nonEmpty  => R2PagePressNotifier.enqueue(r2url)
-      case _ =>
+    request.body.asFormUrlEncoded.foreach { form =>
+      form("r2url").foreach { r2Url =>
+        r2Url.trim match {
+          // TODO: other validation?
+          case url if url.nonEmpty => R2PagePressNotifier.enqueue(url)
+          case _ =>
+        }
+      }
     }
-
     SeeOther(routes.R2PressController.pressForm().url)
   }
 
