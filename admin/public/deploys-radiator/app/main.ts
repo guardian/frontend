@@ -29,7 +29,7 @@ let currentTree = h('div', {}, []);
 let rootNode = create(currentTree);
 document.body.appendChild(rootNode);
 
-const updateDom = (newTree: VirtualDOM.VNode): any => {
+const updateDom = (newTree: VirtualDOM.VNode): void => {
     const patches = diff(currentTree, newTree);
     rootNode = patch(rootNode, patches);
     currentTree = newTree;
@@ -58,7 +58,7 @@ const getMostRecentDeploys = (deploys: List<DeployRecord>): List<DeployRecord> =
 
 // Used in hyperscript because children cannot be booleans
 // https://github.com/Matt-Esch/virtual-dom/issues/326
-const exp = (condition: boolean): boolean | any => condition ? true : undefined;
+const exp = (condition: boolean): boolean | void => condition ? true : undefined;
 
 const teamCityHost = 'http://teamcity.gu-web.net:8111';
 const createBuildLink = (build: number) => (
@@ -240,7 +240,7 @@ const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>>
         })
 );
 
-const run = () => {
+const run = (): Promise<void> => {
     const deploysPromise = Promise.all([
         getDeploys('CODE'),
         getDeploys('PROD')
