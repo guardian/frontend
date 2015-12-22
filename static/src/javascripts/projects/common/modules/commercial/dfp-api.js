@@ -367,22 +367,15 @@ define([
             } else {
                 var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
-                    animating = false;
+                    scrollBottom = scrollTop + viewportHeight,
+                    depth = 0.5;
 
-                if (!animating) {
-                    animating = true;
-                    window.requestAnimationFrame(function () {
-                        var scrollBottom = scrollTop + viewportHeight,
-                            depth = 0.5;
-                        animating = false;
-                        chain(slots).and(keys).and(forEach, function (slot) {
-                            // if the position of the ad is above the viewport - offset (half screen size)
-                            if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
-                                loadSlot(slot);
-                            }
-                        });
-                    });
-                }
+                chain(slots).and(keys).and(forEach, function (slot) {
+                    // if the position of the ad is above the viewport - offset (half screen size)
+                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
+                        loadSlot(slot);
+                    }
+                });
             }
         },
         loadSlot = function (slot) {
