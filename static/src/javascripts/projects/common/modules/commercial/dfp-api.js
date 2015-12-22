@@ -129,6 +129,7 @@ define([
     /**
      * Private variables
      */
+    var LAZYLOAD_TIMEOUT     = 200;
     var resizeTimeout,
         adSlotSelector       = '.js-ad-slot',
         displayed            = false,
@@ -295,7 +296,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            mediator.on('window:throttledScroll', lazyLoad);
+            window.addEventListener('scroll', lazyLoad);
             instantLoad();
             lazyLoad();
         },
@@ -361,23 +362,30 @@ define([
                 }
             });
         },
-        lazyLoad = function () {
+        lazyLoad = debounce(function () {
             if (slots.length === 0) {
-                mediator.off('window:throttledScroll', lazyLoad);
+                window.removeEventListener('scroll', lazyLoad);
             } else {
-                var scrollTop    = window.pageYOffset,
+                var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
-                    scrollBottom = scrollTop + viewportHeight,
-                    depth = 0.5;
+                    animating = false;
 
-                chain(slots).and(keys).and(forEach, function (slot) {
-                    // if the position of the ad is above the viewport - offset (half screen size)
-                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
-                        loadSlot(slot);
-                    }
-                });
+                if( !animating ) {
+                    animating = true;
+                    window.requestAnimationFrame(function() {
+                        var scrollBottom = scrollTop + viewportHeight,
+                            depth = 0.5;
+                        animating = false;
+                        chain(slots).and(keys).and(forEach, function (slot) {
+                            // if the position of the ad is above the viewport - offset (half screen size)
+                            if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
+                                loadSlot(slot);
+                            }
+                        });
+                    });
+                }
             }
-        },
+        }, LAZYLOAD_TIMEOUT),
         loadSlot = function (slot) {
             googletag.display(slot);
             slots = chain(slots).and(omit, slot).value();
