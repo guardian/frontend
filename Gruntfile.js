@@ -154,6 +154,7 @@ module.exports = function (grunt) {
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
+        'makeDeploysRadiator',
         'asset_hash',
         'compile:conf'
     ]);
