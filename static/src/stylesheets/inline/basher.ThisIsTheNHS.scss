@@ -1,0 +1,80 @@
+@import '../_vars';
+@import '../_mixins';
+@import '../components/pasteup-buttons/src/_mixins';
+
+$c-background: colour(news-support-3);
+$c-dark-blue: darken(colour(news-support-2), 10%);
+$c-black: colour(neutral-1);
+$c-accent: colour(comment-main-2);
+
+.facia-basher {
+    position: relative;
+    width: 100%;
+    background-color: $c-background;
+    overflow: hidden;
+    z-index: 20;
+    padding: $gs-baseline 0;
+}
+
+.this-is-the-nhs {
+    height: gs-height(8);
+
+    .title {
+        position: relative;
+        z-index: 4;
+        @include f-headline;
+        font-weight: 200;
+        font-size: 88px;
+        line-height: 96px;
+    }
+
+    .title--first {
+        color: white;
+    }
+
+    .title--second {
+        color: black;
+        text-indent: $gs-gutter * 2;
+    }
+
+    .description {
+        position: absolute;
+        bottom: 0;
+        width: gs-span(5);
+        @include fs-header(3);
+        color: #ffffff;
+    }
+
+    .stripe {
+        position: absolute;
+        top: 0;
+        height: gs-height(2);
+        width: 100%;
+    }
+
+    .stripe--blue {
+        background-color: $c-dark-blue;
+    }
+
+    .stripe--white {
+        background-color: #ffffff;
+        top: gs-height(2) + $gs-baseline;
+    }
+
+    .line {
+        display: flex;
+        position: absolute;
+        top: -$gs-baseline;
+        width: 100%;
+    }
+
+    .line__middle {
+        width: 1470px;
+    }
+
+    .line__left,
+    .line__right {
+        background-color: $c-accent;
+        flex-grow: 2;
+    }
+}

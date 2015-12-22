@@ -4,7 +4,7 @@
 
 @if(Basher.fromId(id) != None) {
     <div class="facia-basher" data-link-name="basher">
-        @conf.Static.css.inline("KeepItInTheGround").map { css =>
+        @conf.Static.css.inline(Basher.fromId(id).toString).map { css =>
             <style>
                 @Html(css)
             </style>
@@ -13,6 +13,9 @@
         @Basher.fromId(id) match {
             case KeepItInTheGround => {
                 @fragments.bashers.KeepItInTheGround()
+            }
+            case ThisIsTheNHS => {
+                @fragments.bashers.ThisIsTheNHS()
             }
         }
     </div>

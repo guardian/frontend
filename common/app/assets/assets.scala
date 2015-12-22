@@ -86,6 +86,7 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
        val knownInlines : PartialFunction[String,String] =
        {
          case "story-package" => "story-package.css"
+         case "ThisIsTheNHS" => "basher.ThisIsTheNHS.css"
          case "KeepItInTheGround" => "basher.KeepItInTheGround.css"
        }
        knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }
