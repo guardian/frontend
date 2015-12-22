@@ -1,5 +1,7 @@
 package pagepresser
 
+import com.netaporter.uri.Uri.parse
+
 import org.jsoup.nodes.{Node, Document}
 import scala.collection.JavaConversions._
 
@@ -10,11 +12,38 @@ object HtmlCleaner {
     removeGoogleSearchBox(document)
     removeShareLinks(document)
     removeRelatedComponent(document)
-    removeScriptTags(document)
     removeIdentityUserDetailsTab(document)
     removeInitiallyOffPlaceHolderTags(document)
+
+    //fetch omniture data before stripping it. then rea-dd it for simple page tracking
+    val omnitureQueryString = fetchOmnitureTags(document)
+    removeScriptTags(document)
     removeNoScriptTags(document)
+    createSimplePageTracking(document, omnitureQueryString)
+
   }
+
+  def createSimplePageTracking(document: Document, omnitureParameters: String): Document = {
+    //todo update where the r2-pressed page is
+    val omnitureTag = "<!---Omniture page tracking for pressed page ---> <script>window.trackingQueryParams = '" + omnitureParameters +"';</script><script src=\"./r2-pressed-page.js\"></script>"
+
+    document.body().append(omnitureTag)
+    document
+  }
+
+  def fetchOmnitureTags(document: Document): String = {
+    val omnitureCode = document.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")
+    val params = parse(omnitureCode).query.paramMap
+
+    val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns", "c19").contains(key)) ++
+      Map("AQB" -> List("1"), "ndh" -> List("1"), "ce" -> List("UTF-8"), "cpd" -> List("2"), "AQE" -> List("1"), "v14" -> List("D=r"), "v9" -> List("D=g"))
+
+    requiredParams.flatMap { case ((key: String, value: Seq[String])) =>
+      for (v <- value) yield s"$key=$v"
+    }.mkString("&")
+  }
+
+
 
   def removeAds(document: Document): Document = {
     val elements = document.getElementById("sub-header")
