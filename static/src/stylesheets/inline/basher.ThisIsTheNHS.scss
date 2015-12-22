@@ -21,7 +21,7 @@ $c-accent: colour(comment-main-2);
 
     .title {
         position: relative;
-        z-index: 4;
+        z-index: 8;
         @include f-headline;
         font-weight: 200;
         font-size: 88px;
@@ -29,11 +29,11 @@ $c-accent: colour(comment-main-2);
     }
 
     .title--first {
-        color: white;
+        color: #ffffff;
     }
 
     .title--second {
-        color: black;
+        color: $c-black;
         text-indent: $gs-gutter * 2;
     }
 
@@ -47,6 +47,7 @@ $c-accent: colour(comment-main-2);
 
     .stripe {
         position: absolute;
+        z-index: 5;
         top: 0;
         height: gs-height(2);
         width: 100%;
@@ -54,6 +55,8 @@ $c-accent: colour(comment-main-2);
 
     .stripe--blue {
         background-color: $c-dark-blue;
+        width: 140%;
+        margin-left: -(gs-span(2));
     }
 
     .stripe--white {
@@ -61,20 +64,104 @@ $c-accent: colour(comment-main-2);
         top: gs-height(2) + $gs-baseline;
     }
 
+    .grid .stripe--white {
+        width: gs-span(2);
+        z-index: 2;
+    }
+
     .line {
-        display: flex;
-        position: absolute;
+        position: relative;
+        z-index: 10;
         top: -$gs-baseline;
+        left: 40px;
+    }
+
+    .line__image {
+        position: absolute;
+        top: -99999px;
+        left: -99999px;
+        bottom: -99999px;
+        right: -99999px;
+        margin: auto;
+
+        path {
+            animation: drawInLine 5s ease-out;
+            animation-fill-mode: forwards;
+            stroke-dasharray: 4400;
+            stroke-dashoffset: 4400;
+        }
+    }
+
+    @keyframes drawInLine {
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    .grid {
+        position: absolute;
+        z-index: 7;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: gs-span(10) + $gs-gutter;
+        background-image: url('http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/12/22/1450798738371/hands.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-color: lighten($c-background, 10%);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .baseline {
+        background-color: $c-background;
+        position: absolute;
+        z-index: 3;
+        top: gs-height(2);
+        height: $gs-baseline;
         width: 100%;
+
+        @for $i from 1 through 3 {
+            &.baseline--#{$i} {
+                top: gs-height($i * 2);
+            }
+        }
     }
 
-    .line__middle {
-        width: 1470px;
+    .gutter {
+        background-color: $c-background;
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        bottom: 0;
+        left: gs-span(2);
+        width: $gs-gutter;
+
+        @for $i from 1 through 6 {
+            &.gutter--#{$i} {
+                left: gs-span(($i * 2) - 2);
+            }
+        }
     }
 
-    .line__left,
-    .line__right {
-        background-color: $c-accent;
-        flex-grow: 2;
+    .circle {
+        position: absolute;
+        z-index: 15;
+        left: gs-span(14) + ($gs-gutter * 1.5);
+        top: gs-height(4) + ($gs-baseline / 2);
+        width: 44px;
+        height: 44px;
+        margin-left: -22px;
+        margin-top: -22px;
+        border-radius: 50%;
+        background-color: #ffffff;
+    }
+
+    .circle--lower {
+        top: auto;
+        bottom: -30px;
+        left: 808px;
     }
 }
