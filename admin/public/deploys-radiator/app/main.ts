@@ -3,10 +3,7 @@
 /// <reference path="../manual-typings/vdom-virtualize.d.ts" />
 /// <reference path="../manual-typings/immutable.d.ts" />
 
-import domToVdom from 'vdom-virtualize';
-import { diff } from 'virtual-dom';
-import { patch } from 'virtual-dom';
-import { h } from 'virtual-dom';
+import { diff, patch, h, create } from 'virtual-dom';
 import {
     Deploy, DeployRecord, createDeployRecord,
     Build, BuildRecord, createBuildRecord,
@@ -27,8 +24,9 @@ const ih =
         h(tagName, options, children.toJS())
     );
 
-let rootNode = document.body;
-let currentTree = domToVdom(rootNode);
+let currentTree = h('div', {}, []);
+let rootNode = create(currentTree);
+document.body.appendChild(rootNode);
 
 const updateDom = (newTree: VirtualDOM.VNode): any => {
     const patches = diff(currentTree, newTree);
@@ -171,7 +169,7 @@ const renderPage: (
         commits
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
-        return h('body', {}, [
+        return h('div', { id: 'root' }, [
             h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
             h('hr', {}, []),
             exp(commits.length > 0) && h('div', [

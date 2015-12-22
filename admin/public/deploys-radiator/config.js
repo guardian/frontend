@@ -35,7 +35,6 @@ System.config({
     "hyperscript-helpers": "npm:hyperscript-helpers@2.0.2",
     "immutable": "npm:immutable@3.7.6",
     "ts": "github:frankwallis/plugin-typescript@2.4.3",
-    "vdom-virtualize": "npm:vdom-virtualize@1.0.1",
     "virtual-dom": "npm:virtual-dom@2.1.1",
     "github:frankwallis/plugin-typescript@2.4.3": {
       "typescript": "npm:typescript@1.7.5"
@@ -91,9 +90,6 @@ System.config({
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:vdom-virtualize@1.0.1": {
-      "virtual-dom": "npm:virtual-dom@2.1.1"
     },
     "npm:virtual-dom@2.1.1": {
       "browser-split": "npm:browser-split@0.0.1",
