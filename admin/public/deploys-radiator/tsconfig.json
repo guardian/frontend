@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "noImplicitAny": true,
-        "module": "system",
-        "outDir": "./target"
-    },
-    "files": ["./app/main.ts"]
+        "module": "system"
+    }
 }
