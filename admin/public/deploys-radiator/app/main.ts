@@ -12,7 +12,6 @@ import {
     GitHubCompareJson, GitHubCommitJson, GitHubCommit,
     GitHubErrorJson
 } from './model';
-
 import { List, Map, Record, Iterable } from 'immutable';
 
 const { fetch } = window;
