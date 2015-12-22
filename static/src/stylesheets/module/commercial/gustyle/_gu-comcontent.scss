@@ -22,7 +22,7 @@
 .gu-text {
     @include f-textSans;
     @include font-size(14, 18);
-    
+
     color: colour(neutral-2);
     text-align: left;
     margin-bottom: $gs-row-height;
@@ -36,7 +36,7 @@
     @include f-textSans;
     @include font-size(13, 18);
 
-    color: colour(neutral-2);   
+    color: colour(neutral-2);
 }
 
 .gu-logo {
@@ -50,7 +50,7 @@
 }
 
 .gu-external-icon {
-    float: right; 
+    float: right;
     svg {
         fill: #ffffff;
         margin: 0 5px;
@@ -92,7 +92,7 @@
 
     .gu-title {
         padding-bottom: $gs-baseline/2;
-        
+
         a {
             color: #ffffff;
         }

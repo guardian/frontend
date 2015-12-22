@@ -1,66 +1,110 @@
 define([
-    'bonzo',
-    'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'fastdom',
-    'lodash/objects/defaults',
-    'lodash/functions/bindAll'
+    'lodash/objects/defaults'
 ], function (
-    bonzo,
-    $,
     config,
     mediator,
     fastdom,
-    defaults,
-    bindAll) {
+    defaults
+) {
+    var candidates = [], stickyHeaderHeight;
+
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
-    var Sticky = function (element, options) {
-        this.$element = bonzo(element);
-        this.$parent  = this.$element.parent();
-        this.opts     = defaults(options || {}, {
-            top: 0
+    function stick(element, options) {
+        var id = candidates.push({
+            element: element,
+            options: defaults(options || {}, {
+                top: 0
+            })
         });
 
-        bindAll(this, 'updatePosition');
-    };
+        if (candidates.length === 1) {
+            stickyHeaderHeight = (config.switches.viewability
+                && !(config.page.isProd && config.page.contentType === 'Interactive')
+                && !config.page.sponsorshipType === 'sponsoredfeatures'
+                && config.page.contentType !== 'Crossword'
+                && config.page.pageId !== 'offline-page') ?
+                document.querySelector('.js-navigation').offsetHeight :
+                0;
+            mediator.on('window:throttledScroll', update);
+            fastdom.read(update);
+        }
 
-    Sticky.prototype.init = function () {
-        mediator.on('window:throttledScroll', this.updatePosition);
-        // kick off an initial position update
-        fastdom.read(this.updatePosition);
-    };
+        return id;
+    }
 
-    Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, that = this;
+    function unstick(id) {
+        candidates.splice(id, 1);
 
-        stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
+        if (candidates.length === 0) {
+            mediator.off('window:throttledScroll', update);
+        }
+    }
 
-        // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
-            // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
+    function update() {
+        var writes = [];
+        for (var i = 0; i < candidates.length; i++) {
+            var element = candidates[i].element,
+                options = candidates[i].options,
+                prect   = element.parentNode.getBoundingClientRect();
+            var fixedTop;
+            // have we scrolled past the element
+            if (prect.top <= options.top + stickyHeaderHeight) {
+                // make sure the element stays within its parent
+                fixedTop = Math.min(options.top, prect.bottom - element.offsetHeight) + 'px';
 
-            if (fixedTop !== 0) {
-                css = {
-                    position: 'fixed',
-                    top:      fixedTop
-                };
+                if (element.style.position !== 'fixed' || element.style.top !== fixedTop) {
+                    writes.push({
+                        element: element,
+                        css: {
+                            position: 'fixed',
+                            top:      fixedTop
+                        }
+                    });
+                    writes.push({
+                        element: element.parentNode,
+                        css: {
+                            paddingTop: element.offsetHeight + 'px'
+                        }
+                    });
+                }
+            } else {
+                if (element.style.position === 'fixed') {
+                    writes.push({
+                        element: element,
+                        css: {
+                            position: null,
+                            top:      null
+                        }
+                    });
+                    writes.push({
+                        element: element.parentNode,
+                        css: {
+                            paddingTop: null
+                        }
+                    });
+                }
             }
-        } else {
-            css = {
-                position: null,
-                top:      null
-            };
         }
 
         fastdom.write(function () {
-            that.$element.css(css);
+            while (writes.length) {
+                var w = writes.shift();
+                for (var attr in w.css) {
+                    if (w.css.hasOwnProperty(attr)) {
+                        w.element.style[attr] = w.css[attr];
+                    }
+                }
+            }
         });
+    }
+
+    return {
+        stick: stick,
+        unstick: unstick
     };
-
-    return Sticky;
-
 });

@@ -4,13 +4,15 @@
 @import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches._
 
 @defining(model.article) { article =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
             @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
-            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
+            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}
+            @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){paid-content--advertisement-feature}"
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -24,6 +26,10 @@
                     <link itemprop="sameAs" href="http://www.theguardian.com">
                 }
             </div>
+
+            @if(article.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+                @fragments.guBand()
+            }
 
             @fragments.headTonal(article)
 

@@ -8,7 +8,7 @@ define([
     qwery,
     $,
     config,
-    Sticky,
+    sticky,
     defaults) {
 
     var mpuHeight = 275,
@@ -27,7 +27,7 @@ define([
         }
         articleBodyOffset = config.page.hasShowcaseMainElement ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
         this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-        new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+        sticky.stick(this.$adSlot[0], { top: this.opts.top });
     };
 
     return StickyMpu;
