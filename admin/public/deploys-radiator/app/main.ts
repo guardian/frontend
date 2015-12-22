@@ -252,7 +252,7 @@ const run = (): Promise<void> => {
         const latestCodeDeploy = currentCodeDeploys
             .sortBy(deploy => deploy.build)
             .last();
-        const blacklistProdDeploys = List(['static', 'router', 'training-preview', 'preview', 'facia-press']);
+        const blacklistProdDeploys = List(['static', 'router', 'training-preview', 'facia-press']);
         const oldestProdDeploy = currentProdDeploys
             .filter(deploy => !blacklistProdDeploys.contains(deploy.projectName))
             .sortBy(deploy => deploy.build)
