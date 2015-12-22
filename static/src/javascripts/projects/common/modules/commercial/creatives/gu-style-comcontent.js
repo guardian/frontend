@@ -42,6 +42,7 @@ define([
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
+
     };
 
     return GustyleComcontent;

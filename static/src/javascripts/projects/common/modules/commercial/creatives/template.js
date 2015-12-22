@@ -1,6 +1,5 @@
 define([
     'common/utils/$',
-    'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
 
@@ -15,7 +14,6 @@ define([
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
-    config,
     template,
     svgs
 ) {
@@ -35,7 +33,6 @@ define([
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
-        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by:' : 'Brought to you by:';
     };
 
     Template.prototype.create = function () {

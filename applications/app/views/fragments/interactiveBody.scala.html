@@ -1,7 +1,6 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches.NewCommercialContent
 
 @body(page.interactive, page.interactive.metadata.isImmersive)
 
@@ -15,20 +14,15 @@
 
 @body(interactive: model.Interactive, isImmersive: Boolean) = {
     <div class="l-side-margins">
-        <article id="article" class="@RenderClasses(
+        <article class="@RenderClasses(
                 Map(
                     "content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature,
                     "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
-                    "content--foundation-supported" -> interactive.commercial.isFoundationSupported,
-                    "paid-content--advertisement-feature" -> (interactive.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+                    "content--foundation-supported" -> interactive.commercial.isFoundationSupported
                 ),
                 "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
             )"
             itemscope itemtype="@interactive.metadata.schemaType" role="main">
-
-            @if(interactive.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
-                @fragments.guBand()
-            }
 
             @fragments.headDefault(interactive, showBadge = true)
 
