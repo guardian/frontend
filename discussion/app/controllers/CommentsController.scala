@@ -67,9 +67,19 @@ object CommentsController extends DiscussionController {
         "email" -> optional(Forms.email)
       )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
     )
+    userForm.bindFromRequest.fold(
+      formWithErrors => BadRequest(formWithErrors.errors.mkString(", ")),
+      userData => {
+        Ok(userData.toString)
+      }
+    )
 
-  val result =  userForm.bindFromRequest().get
-    NoCache(Ok(result.toString))
+
+
+    //  val result =  userForm.bindFromRequest().get
+    //    NoCache(Ok(result.toString))
+    //  }
+
   }
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {
