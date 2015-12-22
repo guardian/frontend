@@ -129,7 +129,6 @@ define([
     /**
      * Private variables
      */
-    var LAZYLOAD_TIMEOUT     = 200;
     var resizeTimeout,
         adSlotSelector       = '.js-ad-slot',
         displayed            = false,
@@ -296,7 +295,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            window.addEventListener('scroll', lazyLoad);
+            mediator.on('window:throttledScroll', lazyLoad);
             instantLoad();
             lazyLoad();
         },
@@ -362,9 +361,9 @@ define([
                 }
             });
         },
-        lazyLoad = debounce(function () {
+        lazyLoad = function () {
             if (slots.length === 0) {
-                window.removeEventListener('scroll', lazyLoad);
+                mediator.off('window:throttledScroll', lazyLoad);
             } else {
                 var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
@@ -385,7 +384,7 @@ define([
                     });
                 }
             }
-        }, LAZYLOAD_TIMEOUT),
+        },
         loadSlot = function (slot) {
             googletag.display(slot);
             slots = chain(slots).and(omit, slot).value();
