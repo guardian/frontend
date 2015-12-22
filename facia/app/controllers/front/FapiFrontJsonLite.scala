@@ -1,12 +1,10 @@
 package controllers.front
 
 import common.ExecutionContexts
+import model.PressedPage
 import model.facia.PressedCollection
-import model._
 import model.pressed._
-import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import play.api.libs.json._
-import scala.concurrent.Future
 
 trait FapiFrontJsonLite extends ExecutionContexts{
   def get(pressedPage: PressedPage): JsObject = {

@@ -72,7 +72,7 @@ object EmailForm {
   }
 }
 
-object EmailController extends Controller with ExecutionContexts with Logging {
+object EmailSignupController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
