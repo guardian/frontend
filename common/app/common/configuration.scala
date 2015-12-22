@@ -242,6 +242,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+    lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
 
@@ -336,6 +337,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader,
+      "discussionD2Uid" -> discussion.d2Uid,
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
