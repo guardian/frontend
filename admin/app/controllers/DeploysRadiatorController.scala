@@ -95,7 +95,7 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
 
   def getBuild(number: String) = AuthActions.AuthActionTest.async {
     val apiPath = "/guestAuth/app/rest"
-    val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number"
+    val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any"
 
     WS.url(url)
       .withHeaders("Accept" -> "application/json")
