@@ -26,6 +26,7 @@ $c-accent: colour(comment-main-2);
         font-weight: 200;
         font-size: 88px;
         line-height: 96px;
+        margin-left: $gs-gutter;
     }
 
     .title--first {
@@ -43,6 +44,7 @@ $c-accent: colour(comment-main-2);
         width: gs-span(5);
         @include fs-header(3);
         color: #ffffff;
+        margin-left: $gs-gutter;
     }
 
     .stripe {
@@ -59,6 +61,12 @@ $c-accent: colour(comment-main-2);
         margin-left: -(gs-span(2));
     }
 
+    .grid .stripe--blue {
+        right: $gs-gutter;
+        width: gs-span(4);
+        z-index: 2;
+    }
+
     .stripe--white {
         background-color: #ffffff;
         top: gs-height(2) + $gs-baseline;
@@ -66,6 +74,7 @@ $c-accent: colour(comment-main-2);
 
     .grid .stripe--white {
         width: gs-span(2);
+        left: $gs-gutter;
         z-index: 2;
     }
 
@@ -87,6 +96,7 @@ $c-accent: colour(comment-main-2);
         path {
             animation: drawInLine 5s ease-out;
             animation-fill-mode: forwards;
+            animation-delay: 1s;
             stroke-dasharray: 4400;
             stroke-dashoffset: 4400;
         }
@@ -104,15 +114,37 @@ $c-accent: colour(comment-main-2);
         top: 0;
         bottom: 0;
         right: 0;
-        width: gs-span(10) + $gs-gutter;
-        background-image: url('http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/12/22/1450798738371/hands.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-color: lighten($c-background, 10%);
+        width: gs-span(10) + ($gs-gutter * 2);
+        background-color: #9be2de;
         list-style: none;
         margin: 0;
         padding: 0;
+        overflow: hidden;
+    }
+
+    .hand {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: auto;
+        animation: handFade 3s cubic-bezier(.35, .5, 0, 1);
+        animation-fill-mode: forwards;
+    }
+
+    .hand--left {
+        left: 0;
+        transform: translateY(-40px);
+    }
+
+    .hand--right {
+        right: 0;
+        transform: translateY(40px);
+    }
+
+    @keyframes handFade {
+        to {
+            transform: translateY(0)
+        }
     }
 
     .baseline {
@@ -123,7 +155,7 @@ $c-accent: colour(comment-main-2);
         height: $gs-baseline;
         width: 100%;
 
-        @for $i from 1 through 3 {
+        @for $i from 1 through 4 {
             &.baseline--#{$i} {
                 top: gs-height($i * 2);
             }
@@ -136,12 +168,12 @@ $c-accent: colour(comment-main-2);
         z-index: 3;
         top: 0;
         bottom: 0;
-        left: gs-span(2);
+        left: 0;
         width: $gs-gutter;
 
-        @for $i from 1 through 6 {
+        @for $i from 2 through 6 {
             &.gutter--#{$i} {
-                left: gs-span(($i * 2) - 2);
+                left: gs-span(($i * 2) - 2) + $gs-gutter;
             }
         }
     }
