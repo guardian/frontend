@@ -97,3 +97,7 @@ export interface GitHubCommit {
     authorName: string;
     message: string;
 }
+
+export interface GitHubErrorJson {
+    message: string;
+}

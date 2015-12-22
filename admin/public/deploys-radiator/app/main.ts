@@ -9,7 +9,8 @@ import {
     Build, BuildRecord, createBuildRecord,
     DeployGroup, DeployGroupRecord, createDeployGroupRecord,
     DeployJson, BuildJson, Commit,
-    GitHubCompareJson, GitHubCommitJson, GitHubCommit
+    GitHubCompareJson, GitHubCommitJson, GitHubCommit,
+    GitHubErrorJson
 } from './model';
 
 import { List, Map, Record, Iterable } from 'immutable';
@@ -217,10 +218,6 @@ const getBuild = (build: number): Promise<BuildRecord> => (
             commits: build.commits
         }))
 );
-
-interface GitHubErrorJson {
-    message: string;
-}
 
 const gitHubApiHost = 'https://api.github.com';
 const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>> => (
