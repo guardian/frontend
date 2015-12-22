@@ -1,9 +1,9 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
 import common._
 import feed.MostViewedAudioAgent
 import layout.{CollectionEssentials, FaciaContainer}
+import model.pressed.CollectionConfig
 import model.{RelatedContentItem, Cached, FrontProperties}
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId

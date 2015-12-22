@@ -1,8 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
-import com.gu.facia.api.models._
-import implicits.FaciaContentImplicits._
+import model.pressed._
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.
 object SupportedUrl {
@@ -12,10 +11,10 @@ object SupportedUrl {
 
   def apply(s: ApiSection): String = s"/${s.id}"
 
-  def fromFaciaContent(fc: FaciaContent): String = fc match {
-    case curatedContent: CuratedContent => s"/${curatedContent.href.getOrElse(fc.id)}"
-    case supportingCuratedContent: SupportingCuratedContent => s"/${supportingCuratedContent.href.getOrElse(fc.id)}"
-    case linkSnap: LinkSnap => linkSnap.href.orElse(linkSnap.snapUri).getOrElse(linkSnap.id)
-    case latestSnap: LatestSnap => s"/${latestSnap.latestContent.map(_.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.id)}"
+  def fromFaciaContent(fc: PressedContent): String = fc match {
+    case curatedContent: CuratedContent => s"/${curatedContent.properties.href.getOrElse(fc.card.id)}"
+    case supportingCuratedContent: SupportingCuratedContent => s"/${supportingCuratedContent.properties.href.getOrElse(fc.card.id)}"
+    case linkSnap: LinkSnap => linkSnap.properties.href.orElse(linkSnap.snapUri).getOrElse(linkSnap.card.id)
+    case latestSnap: LatestSnap => s"/${latestSnap.properties.maybeContent.map(_.metadata.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.card.id)}"
   }
 }

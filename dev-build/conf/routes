@@ -23,20 +23,20 @@ OPTIONS        /accept-beacon                                                   
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg               controllers.CrosswordsController.thumbnail(crosswordType: String, id: Int)
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id                   controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
-GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id        controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET            /email                                                                                                            controllers.EmailController.renderPage()
-GET            /email/form/$emailType<article|footer>/:listId                                                                    controllers.EmailController.renderForm(emailType: String, listId: Int)
-GET            /email/:result                                                                                                    controllers.EmailController.subscriptionResult(result: String)
-POST           /email                                                                                                            controllers.EmailController.submit()
-OPTIONS        /email                                                                                                            controllers.EmailController.options()
+GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
+GET            /email/form/$emailType<article|footer>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
+POST           /email                                                                                                            controllers.EmailSignupController.submit()
+OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
 
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks

@@ -1,7 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
-import com.gu.facia.api.models.FaciaContent
+import model.pressed.PressedContent
 import services.FaciaContentConvert
 
 object RelatedContentItem {
@@ -12,14 +12,14 @@ object RelatedContentItem {
 
 case class RelatedContentItem (
   content: ContentType,
-  faciaContent: FaciaContent
+  faciaContent: PressedContent
 )
 
 case class RelatedContent (
   items: Seq[RelatedContentItem]
   ) {
   val hasStoryPackage: Boolean = items.nonEmpty
-  val faciaItems: Seq[FaciaContent] = items.map(_.faciaContent)
+  val faciaItems: Seq[PressedContent] = items.map(_.faciaContent)
 }
 
 object RelatedContent {

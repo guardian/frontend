@@ -1,10 +1,8 @@
 package slices
 
-import com.gu.facia.api.models.FaciaContent
 import common.Maps._
+import model.pressed.PressedContent
 import play.api.libs.json.Json
-import implicits.FaciaContentImplicits._
-import services.FaciaContentConvert
 
 import scala.util.Try
 
@@ -23,11 +21,11 @@ object Story {
     }
   }
 
-  def fromFaciaContent(faciaContent: FaciaContent): Story = {
+  def fromFaciaContent(faciaContent: PressedContent): Story = {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
-      Try(faciaContent.group.toInt).getOrElse(0),
-      faciaContent.properties.exists(_.isBoosted)
+      Try(faciaContent.card.group.toInt).getOrElse(0),
+      faciaContent.display.isBoosted
     )
   }
 }

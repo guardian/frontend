@@ -45,7 +45,7 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
     trail.fields.linkText should be("Some article")
     trail.metadata.url should be("/foo/2012/jan/07/bar")
-    trail.elements.mainPicture.flatMap(_.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
+    trail.elements.mainPicture.flatMap(_.images.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
   }
 
   "Tags" should "understand tag types" in {
@@ -78,7 +78,7 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
                                               image("test-image-1","body", "body picture 2", 50, 0),
                                               image("test-image-2","main", "main picture 1", 50, 0)))
 
-    testContent.elements.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
+    testContent.elements.mainPicture.flatMap(_.images.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
   }
 
   it should "detect if content is commentable" in{
