@@ -1,3 +1,4 @@
+// Promise.all type definition improvements, as per
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/7138
 declare module Promise {
 
