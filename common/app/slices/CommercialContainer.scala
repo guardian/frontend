@@ -1,13 +1,13 @@
 package slices
 
-object CommercialContainer {
+object CommercialContainerType {
   val all: Map[String, Container] = Map(
     ("commercial/single-campaign", Commercial(SingleCampaign(FixedContainers.fixedSmallSlowIV))),
     ("commercial/multi-campaign", Commercial(MultiCampaign(FixedContainers.fixedSmallSlowIV)))
   )
 }
 
-sealed trait CommercialContainer
+sealed trait CommercialContainerType
 
-case class SingleCampaign(get: ContainerDefinition) extends CommercialContainer
-case class MultiCampaign(get: ContainerDefinition) extends CommercialContainer
+case class SingleCampaign(get: ContainerDefinition) extends CommercialContainerType
+case class MultiCampaign(get: ContainerDefinition) extends CommercialContainerType
