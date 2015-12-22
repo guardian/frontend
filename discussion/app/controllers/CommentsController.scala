@@ -2,13 +2,17 @@ package controllers
 
 import model.{MetaData, SimplePage, Cached, TinyResponse}
 import play.api.data.Forms._
-import scala.concurrent.Future
+import play.api.libs.ws.{WS, WSResponse}
+import scala.concurrent.{Await, Future}
 import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
 import discussion.{UnthreadedCommentPage, ThreadedCommentPage, DiscussionParams}
 import discussion.model.{BlankComment, DiscussionKey, DiscussionAbuseReport}
 import play.api.data._
 import model.NoCache
+import scala.concurrent.duration._
+import scala.language.postfixOps
+import play.api.Play.current
 
 
 object CommentsController extends DiscussionController {
@@ -55,6 +59,18 @@ object CommentsController extends DiscussionController {
   }
 
 
+  def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
+    val keys = abuseReport.getClass.getDeclaredFields.map(_.getName)
+    val values = DiscussionAbuseReport.unapply(abuseReport).get.productIterator.toSeq
+    (for(k <- keys; v <- values) yield (k -> Seq(v.toString))).toMap
+  }
+
+  def postAbuseReportToDiscussionApi(abuseReport: DiscussionAbuseReport): Future[WSResponse] = {
+    val url = s"${conf.Configuration.discussion.apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
+    WS.url(url).withHeaders("D2-X-UID" -> conf.Configuration.discussion.d2Uid).post((abuseReportToMap(abuseReport)))
+  }
+
+
 
   def reportAbuseSubmission(commentId: Int)  = Action { implicit request =>
 
@@ -70,15 +86,12 @@ object CommentsController extends DiscussionController {
     userForm.bindFromRequest.fold(
       formWithErrors => BadRequest(formWithErrors.errors.mkString(", ")),
       userData => {
-        Ok(userData.toString)
+        Await.result(postAbuseReportToDiscussionApi(userData), 2 seconds) match {
+          case success if success.status == 200 => Ok(success.body)
+          case error => Ok(s"Call to DAPI failed: ${error.body}" )
+        }
       }
     )
-
-
-
-    //  val result =  userForm.bindFromRequest().get
-    //    NoCache(Ok(result.toString))
-    //  }
 
   }
 
