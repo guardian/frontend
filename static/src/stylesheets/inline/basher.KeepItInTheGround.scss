@@ -104,7 +104,7 @@ $c-accent-dark: #fbae15;
 
     @include mq(phablet, desktop) {
         margin-left: 140px;
-        border-left: 1px solid mix(#fff, $c-background, 30%);
+        border-left: 1px solid mix(#ffffff, $c-background, 30%);
         margin-top: 0;
         padding-top: 6px;
         padding-left: 10px;
@@ -144,7 +144,7 @@ $c-accent-dark: #fbae15;
     font-size: 14px;
     line-height: 18px;
     font-family: $f-sans-serif-headline;
-    color: mix(#fff, $c-background, 30%);
+    color: mix(#ffffff, $c-background, 30%);
 
     @include mq(phablet, desktop) {
         padding-left: $gs-gutter/2;
