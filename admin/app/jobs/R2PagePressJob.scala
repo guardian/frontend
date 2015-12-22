@@ -9,7 +9,7 @@ import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
 import play.api.libs.json.Json
 import play.api.libs.ws.WS
-import services.R2Archive
+import services.{PagePresses, R2Archive}
 import pagepresser.HtmlCleaner._
 import play.api.Play.current
 
@@ -51,8 +51,8 @@ object R2PagePressJob extends ExecutionContexts with Logging {
             R2Archive.putPublic(url, cleanedHtmlString, "text/html")
             R2Archive.get(url).foreach { result =>
               if (result == cleanedHtmlString) {
-                // TODO: update DynamoDB
-                log.info(s"Pressed $urlIn as $url BUT DON'T FORGET TO UPDATE DYNAMODB!")
+                PagePresses.set(urlIn, url)
+                log.info(s"Pressed $urlIn as $url")
               } else {
                 log.error(s"Pressed data did not match original for $url")
               }
