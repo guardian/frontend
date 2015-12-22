@@ -6,13 +6,13 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "virtual-dom/virtual-dom.d.ts": {
-      "commit": "5a8fc5ee71701431e4fdbb80c506e3c13f85a9ff"
+      "commit": "4c41545030eba44b27ce7209112dbf862f6b1d78"
     },
     "whatwg-fetch/whatwg-fetch.d.ts": {
-      "commit": "5a8fc5ee71701431e4fdbb80c506e3c13f85a9ff"
+      "commit": "4c41545030eba44b27ce7209112dbf862f6b1d78"
     },
     "es6-promise/es6-promise.d.ts": {
-      "commit": "5a8fc5ee71701431e4fdbb80c506e3c13f85a9ff"
+      "commit": "4c41545030eba44b27ce7209112dbf862f6b1d78"
     }
   }
 }
