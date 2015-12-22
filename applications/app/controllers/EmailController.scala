@@ -73,32 +73,32 @@ object ListIds {
 
   val all: List[Int] = List(
     theBestOfCiF,
-   theFiver,
-   mediaBriefing,
-   greenLight,
-   povertyMatters,
-   theLongRead,
-   morningMail,
-   australianPolitics,
-   theBreakdown,
-   theSpin,
-   sleeveNotes,
-   closeUp,
-   filmToday,
-   bookmarks,
-   artWeekly,
-   zipFile,
-   theFlyer,
-   moneyTalks,
-   fashionStatement,
-   crosswordEditorUpdate,
-   theObserverFoodMonthly,
-   firstDogOnTheMoon,
-   bestOfOpinionAUS,
-   bestOfOpinionUS,
-   theGuardianMasterclasses,
-   theGuardianGardener,
-   theGuardianBookshop)
+    theFiver,
+    mediaBriefing,
+    greenLight,
+    povertyMatters,
+    theLongRead,
+    morningMail,
+    australianPolitics,
+    theBreakdown,
+    theSpin,
+    sleeveNotes,
+    closeUp,
+    filmToday,
+    bookmarks,
+    artWeekly,
+    zipFile,
+    theFlyer,
+    moneyTalks,
+    fashionStatement,
+    crosswordEditorUpdate,
+    theObserverFoodMonthly,
+    firstDogOnTheMoon,
+    bestOfOpinionAUS,
+    bestOfOpinionUS,
+    theGuardianMasterclasses,
+    theGuardianGardener,
+    theGuardianBookshop)
 }
 
 object EmailTypes {
@@ -115,8 +115,7 @@ object EmailForm {
     ListIds.testList -> Some(2529),
     ListIds.guardianTodayUk -> Some(2529),
     ListIds.guardianTodayUs -> Some(2564),
-    ListIds.guardianTodayAu -> Some(2563)
-  )
+    ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.all.map(_ -> None).toMap
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
     listIdsWithMaybeTrigger.get(form.listId).flatten.map { triggeredSendKey: Int =>
