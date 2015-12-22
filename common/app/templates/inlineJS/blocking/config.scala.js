@@ -27,13 +27,6 @@ window.guardian = {
         },
         "tests": { @JavaScript(mvt.ActiveTests.getJavascriptConfig) },
         "modules": { },
-        "images": {
-            "commercial": {
-                "brandedComponentJobs": "@Static("images/commercial/branded-component-jobs.png")",
-                "brandedComponentSoulmatesM": "@Static("images/commercial/soulmates-male.jpg")",
-                "brandedComponentSoulmatesF": "@Static("images/commercial/soulmates-female.jpg")"
-            }
-        },
         "stylesheets": {
             "fonts": {
                 "hintingCleartype": {
