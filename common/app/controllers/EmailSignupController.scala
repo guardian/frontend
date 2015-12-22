@@ -71,7 +71,7 @@ object ListIds {
   val theGuardianGardener = 3562
   val theGuardianBookshop = 3563
 
-  val all: List[Int] = List(
+  val allWithoutTrigger: List[Int] = List(
     theBestOfCiF,
     theFiver,
     mediaBriefing,
@@ -115,7 +115,7 @@ object EmailForm {
     ListIds.testList -> Some(2529),
     ListIds.guardianTodayUk -> Some(2529),
     ListIds.guardianTodayUs -> Some(2564),
-    ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.all.map(_ -> None).toMap
+    ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.allWithoutTrigger.map(_ -> None).toMap
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
     listIdsWithMaybeTrigger.get(form.listId).flatten.map { triggeredSendKey: Int =>
