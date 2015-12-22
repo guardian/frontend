@@ -8,5 +8,8 @@
     <link rel="stylesheet" href="@UncachedAssets.at("deploys-radiator/target/main.css")">
 </head>
 <body>
+    <script>
+        window.gitHubAccessToken = '@conf.Configuration.github.token';
+    </script>
     <script src="@UncachedAssets.at("deploys-radiator/target/main.js")"></script>
 </body>

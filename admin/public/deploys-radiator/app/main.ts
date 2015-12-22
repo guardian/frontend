@@ -2,6 +2,7 @@
 /// <reference path="../manual-typings/es6-promise.d.ts" />
 /// <reference path="../manual-typings/vdom-virtualize.d.ts" />
 /// <reference path="../manual-typings/immutable.d.ts" />
+/// <reference path="../manual-typings/custom-window.d.ts" />
 
 import { diff, patch, h, create } from 'virtual-dom';
 import {
@@ -220,7 +221,7 @@ const getBuild = (build: number): Promise<BuildRecord> => (
 
 const gitHubApiHost = 'https://api.github.com';
 const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>> => (
-    fetch(`${gitHubApiHost}/repos/guardian/frontend/compare/${base}...${head}`)
+    fetch(`${gitHubApiHost}/repos/guardian/frontend/compare/${base}...${head}`, { headers: { 'Authorization': `token ${window.gitHubAccessToken}` } })
         .then(response => {
             if (response.ok) {
                 return response.clone().json<GitHubCompareJson>()
