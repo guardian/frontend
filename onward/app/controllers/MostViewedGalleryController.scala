@@ -1,9 +1,9 @@
 package controllers
 
-import com.gu.facia.api.models.{Groups, CollectionConfig}
 import common._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
+import model.pressed.CollectionConfig
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 import play.api.mvc.{RequestHeader, Controller, Action}
@@ -15,7 +15,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
     displayName = Some("more galleries"),
-    groups = Some(Groups(List("multimedia/gallery")))
+    groups = Some(List("multimedia/gallery"))
   )
 
   val featuredSeries = Seq(

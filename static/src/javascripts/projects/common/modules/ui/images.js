@@ -16,7 +16,7 @@ function (
     var images = {
 
         upgradePictures: function (context) {
-            var images = [].slice.call($('img[srcset]', context || document.body));
+            var images = [].slice.call($('img[srcset], picture img', context || document.body));
             picturefill({ elements: images });
         },
 

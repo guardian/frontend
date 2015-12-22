@@ -58,7 +58,7 @@ data-test-id="facia-card"
                     <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
                         <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
                         @itemImage(
-                            fallbackImage.imageContainer,
+                            fallbackImage.imageContainer.images,
                             inlineImage = containerIndex == 0 && index < 4,
                             widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                         )
@@ -78,7 +78,7 @@ data-test-id="facia-card"
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
                 @itemImage(
-                    fallbackImage.imageContainer,
+                    fallbackImage.imageContainer.images,
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
@@ -86,7 +86,7 @@ data-test-id="facia-card"
 
             case Some(InlineImage(imageContainer)) => {
                 @itemImage(
-                    imageContainer,
+                    imageContainer.images,
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
@@ -98,15 +98,15 @@ data-test-id="facia-card"
                     @imageElements.headOption.map { imageElement =>
                         @image(
                             classes = Seq("responsive-img"),
-                            srcset = ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                            sizes = item.mediaWidthsByBreakpoint.sizes,
-                            src = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
+                            widths = item.mediaWidthsByBreakpoint,
+                            maybePath = Some(imageElement.url),
+                            maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
                         )
                         @imageElements.tail.map { imageElement =>
                             @image(
                                 classes = Seq("responsive-img "),
-                                srcset = ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
-                                sizes = item.mediaWidthsByBreakpoint.sizes
+                                widths = item.mediaWidthsByBreakpoint,
+                                maybePath = Some(imageElement.url)
                             )
                         }
                     }
@@ -156,8 +156,8 @@ data-test-id="facia-card"
             <div class="fc-item__avatar">
                 @image(
                     classes = Seq("fc-item__avatar__media", cutOut.cssClass),
-                    srcset = ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
-                    sizes = FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes
+                    widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                    maybePath = Some(imageUrl)
                 )
             </div>
             }

@@ -1,4 +1,4 @@
-@(trails: Seq[com.gu.facia.api.models.FaciaContent], containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit request: RequestHeader, config: com.gu.facia.api.models.CollectionConfig)
+@(trails: Seq[model.pressed.PressedContent], containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit request: RequestHeader, config: model.pressed.CollectionConfig)
 
 @import views.html.fragments.containers.facia_cards.{slice, date}
 @import views.support.{GetClasses, PreviousAndNext}
