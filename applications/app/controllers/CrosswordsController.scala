@@ -14,16 +14,16 @@ import services.{IndexPageItem, IndexPage}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait CrosswordPageController extends Controller with ExecutionContexts {
+trait CrosswordController extends Controller with ExecutionContexts {
   def noResults()(implicit request: RequestHeader): Result
 
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all")).map { response =>
-      val maybeCrossword = for {
+       val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
-      yield f(crossword, content)
-      maybeCrossword getOrElse noResults
+       yield f(crossword, content)
+       maybeCrossword getOrElse noResults
     } recover { case _ => noResults }
   }
 
@@ -31,13 +31,13 @@ trait CrosswordPageController extends Controller with ExecutionContexts {
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
-          CrosswordSvg(crossword, None, None, false)
+         CrosswordSvg(crossword, None, None, false)
       )))
     }
   }
 }
 
-object CrosswordsController extends CrosswordPageController {
+object CrosswordPageController extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
 
@@ -69,7 +69,7 @@ object CrosswordsController extends CrosswordPageController {
   }
 }
 
-object CrosswordSearchController extends CrosswordPageController {
+object CrosswordSearchController extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
