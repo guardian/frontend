@@ -83,10 +83,14 @@ object VideoSiteMap extends ExecutionContexts {
         val imageUrl: String = item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
 
+        val contentLocation: Option[String] = item.elements.mainVideo.flatMap(_.videos.encodings.find(_.format == "video/mp4")).map { encoding =>
+          encoding.url
+        }
+
         Url(
           location = item.metadata.webUrl,
           thumbnail_loc = item.elements.thumbnail.flatMap(thumbnail => Naked.bestFor(thumbnail.images)),
-          content_loc = item.source,
+          content_loc = contentLocation,
           title = item.trail.headline,
           description = item.fields.trailText,
           duration = item.elements.mainVideo.map(_.videos.duration).getOrElse(0),
