@@ -1,7 +1,6 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 @import common.Edition
 @import conf.switches.Switches.SponsoredSwitch
-@import conf.switches.Switches.NewCommercialContent
 @import model.{Video, Audio, Gallery, Interactive, Article}
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
@@ -48,17 +47,13 @@
                                     Sponsored by:
                                 }
                             } else {
-                                @if(isAdFeature && NewCommercialContent.isSwitchedOn) {
-                                    Paid for by:
+                                @if(isAdFeature) {
+                                    Brought to you by:
                                 } else {
-                                    @if(isAdFeature) {
-                                        Brought to you by:
-                                    } else {
-                                        @content.commercial.sponsorshipTag.map { tag =>
-                                            @tag.name is supported by:
-                                        }.getOrElse {
-                                            Supported by:
-                                        }
+                                    @content.commercial.sponsorshipTag.map { tag =>
+                                        @tag.name is supported by:
+                                    }.getOrElse {
+                                        Supported by:
                                     }
                                 }
                             }

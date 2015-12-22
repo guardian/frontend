@@ -139,17 +139,3 @@
     guss-colour(maps-main-1, $pasteup-palette),
     guss-colour(maps-support-2, $pasteup-palette)
 );
-
-/* .commercial--tone-paidfor */
-@include tone-commercial(
-    paidfor,
-    guss-colour(paidfor-background, $frontend-palette),
-    guss-colour(paidfor-background, $frontend-palette),
-    $backgroundColour: #ebebeb
-);
-
-.commercial--tone-paidfor {
-    .commercial__inner {
-        background: #f5f5f5;
-    }
-}
