@@ -63,11 +63,7 @@ define([
     };
 
     Toggles.prototype.getTarget = function (control) {
-        var targetId = bonzo(control).attr('aria-controls');
         var targetClass = bonzo(control).data('toggle');
-        if (targetId) {
-            return document.getElementById(targetId);
-        }
         if (targetClass) {
             return document.body.querySelector('.' + targetClass);
         }

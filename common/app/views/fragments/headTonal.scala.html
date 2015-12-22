@@ -1,8 +1,7 @@
-@(item: model.ContentType, showBadge: Boolean = true)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
-@import conf.switches.Switches.NewCommercialContent
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
@@ -67,7 +66,7 @@
                     </div>
                 }
 
-                @if(showBadge && NewCommercialContent.isSwitchedOff) {
+                @if(showBadge) {
                     @fragments.commercial.badge(item)
                 }
 
@@ -79,11 +78,6 @@
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">
-                    @if(showBadge && NewCommercialContent.isSwitchedOn && !item.tags.isVideo) {
-                        <div class="content__meta-container js-content-meta js-football-meta u-cf">
-                            @fragments.commercial.badge(item)
-                        </div>
-                    }
                     @if(!item.tags.isVideo) {
                         @fragments.standfirst(item)
                     }
