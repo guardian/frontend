@@ -22,7 +22,7 @@ trait CrosswordPageController extends Controller with ExecutionContexts {
       val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
-        yield f(crossword, content)
+      yield f(crossword, content)
       maybeCrossword getOrElse noResults
     } recover { case _ => noResults }
   }
@@ -31,7 +31,7 @@ trait CrosswordPageController extends Controller with ExecutionContexts {
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
-        CrosswordSvg(crossword, None, None, false)
+          CrosswordSvg(crossword, None, None, false)
       )))
     }
   }
