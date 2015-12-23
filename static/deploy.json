@@ -27,7 +27,7 @@
     },
     "recipes":{
         "default":{
-            "depends" : ["abTestsFileUpload", "staticFilesUpload", "staticFilesNonHashedUpload"]
+            "depends" : ["abTestsFileUpload", "staticFilesUpload", "staticFilesR2Upload"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
