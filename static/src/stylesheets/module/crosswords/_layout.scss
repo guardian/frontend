@@ -142,7 +142,7 @@
 
 .crossword__links {
     @include mq(leftCol) {
-        top: $gs-baseline * -3;
+        top: $gs-baseline * -2;
     }
 
     position: relative;
