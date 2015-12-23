@@ -48,10 +48,10 @@ object HtmlCleaner {
   def removeAds(document: Document): Document = {
     val elements = document.getElementById("sub-header")
     val ads = elements.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
-    ads.map(_.remove())
+    ads.foreach(_.remove())
 
     val comments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
-    comments.map(_.remove())
+    comments.foreach(_.remove())
 
     val promos = document.getElementById("promo")
     if(promos != null) promos.remove()
