@@ -8,7 +8,7 @@
                 "cacheControl":"public, max-age=315360000"
             }
         },
-        "frontend-static-non-hashed":{
+        "frontend-static-r2":{
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
             "data":{
@@ -32,8 +32,8 @@
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         },
-        "staticFilesNonHashedUpload":{
-            "actionsBeforeApp": ["frontend-static-non-hashed.uploadStaticFiles"]
+        "staticFilesR2Upload":{
+            "actionsBeforeApp": ["frontend-static-r2.uploadStaticFiles"]
         },
         "abTestsFileUpload":{
             "actionsBeforeApp": ["frontend-abtests.uploadStaticFiles"]
