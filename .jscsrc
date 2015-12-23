@@ -14,6 +14,10 @@
         "static/src/javascripts/vendor/**/*.js",
         "static/src/javascripts/projects/common/utils/atob.js",
         "static/src/javascripts/projects/common/utils/picturefill.js",
-        "static/test/javascripts/components/**/*.js"
+        "static/test/javascripts/components/**/*.js",
+        "static/src/deploys-radiator/node_modules/**",
+        "static/src/deploys-radiator/jspm_packages/**",
+        "static/src/deploys-radiator/target/**",
+        "static/src/deploys-radiator/config.js"
     ]
 }
