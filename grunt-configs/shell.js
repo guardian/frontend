@@ -45,11 +45,12 @@ module.exports = function () {
                 'npm install',
                 './node_modules/.bin/jspm install',
                 './node_modules/.bin/tsd install',
-                'npm run build'
+                'npm run build',
+                'cp -r ./target ../../target/deploys-radiator'
             ].join(' && '),
             options: {
                 execOptions: {
-                    cwd: 'admin/public/deploys-radiator'
+                    cwd: 'static/src/deploys-radiator'
                 }
             }
         }
