@@ -3,6 +3,7 @@
 /// <reference path="../manual-typings/vdom-virtualize.d.ts" />
 /// <reference path="../manual-typings/immutable.d.ts" />
 /// <reference path="../manual-typings/custom-window.d.ts" />
+/// <reference path="../jspm_packages/npm/monapt@0.5.0/dist/monapt.d.ts" />
 
 import { diff, patch, h, create } from 'virtual-dom';
 import {
@@ -14,6 +15,9 @@ import {
     GitHubErrorJson
 } from './model';
 import { List, Map, Record, Iterable } from 'immutable';
+import { Option, Some, None } from 'monapt';
+
+const headOption = <A>(array: Array<A>): Option<A> => Option(array[0]);
 
 const { fetch } = window;
 
@@ -181,13 +185,41 @@ const renderPage: (
                     h('span', { title: 'Latest CODE deploy' }, `${latestCodeDeploy.build}`),
                     ')'
                 ]),
-                // TODO: Group consecutive by author
-                h('ul', (
-                    commits.map(commit => (h('li', [
-                        h('a', { href: commit.url }, commit.message),
-                        ` by ${commit.authorName}`
-                    ]))
-                )))
+                ih('ul', {}, (
+                    commits
+                        .reduce((accumulator: List<[string, List<GitHubCommit>]>, currentCommit: GitHubCommit, currentIndex: number): List<[string, List<GitHubCommit>]> => {
+                            const isNotEmpty: boolean = ! accumulator.isEmpty();
+                            const previousGroup = accumulator.last();
+                            const maybePreviousAuthorName: Option<string> = isNotEmpty ? headOption(previousGroup) : None;
+                            return maybePreviousAuthorName
+                                .flatMap(previousAuthorName => {
+                                    if (previousAuthorName === currentCommit.authorName) {
+                                        const currentCommitsByAuthor = previousGroup[1];
+                                        const index = accumulator.indexOf(previousGroup);
+                                        return new Some(accumulator.set(index, [ previousAuthorName, currentCommitsByAuthor.push(currentCommit) ]))
+                                    } else {
+                                        return None;
+                                    }
+                                })
+                                .getOrElse(() => accumulator.push([ currentCommit.authorName, List([ currentCommit ]) ]))
+                        }, List<[string, List<GitHubCommit>]>())
+                        .map(([ authorName, commits ]) => (
+                            h('li', [
+                                h('h2', authorName),
+                                ih('ul', {}, (
+                                    commits
+                                        .map(commit => (
+                                            h('li', [
+                                                h('a', { href: commit.url }, commit.message),
+                                                ` by ${commit.authorName}`
+                                            ]))
+                                        )
+                                        .toList()
+                                ))
+                            ])
+                        ))
+                        .toList()
+                ))
             ]),
 
             h('h1', 'CODE'),
