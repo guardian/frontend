@@ -122,6 +122,10 @@
     .meta__extras--crossword & {
         @include mq(tablet) {
             float: right;
+            margin-top: $gs-baseline * -2;
+            border-left: 1px solid colour(neutral-7);
+            padding-left: $gs-gutter / 2;
+
         }
     }
     &:last-child {
