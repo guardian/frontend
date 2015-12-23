@@ -301,12 +301,14 @@ const run = (): Promise<void> => {
     ));
 
     const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => {
-        // TODO: Don't lookup
-        // List().headOption
-        const prodCommit = prodBuild.commits[0].sha;
-        const codeCommit = codeBuild.commits[0].sha;
-        // This assumes prod comes before code
-        return getDifference(prodCommit, codeCommit).then(gitHubCommits => gitHubCommits.reverse());
+        const maybeProdCommit = headOption(prodBuild.commits);
+        const maybeCodeCommit = headOption(codeBuild.commits);
+        return maybeProdCommit
+            .flatMap(prodCommit => maybeCodeCommit.map(codeCommit => (
+                // This assumes prod comes before code
+                getDifference(prodCommit.sha, codeCommit.sha).then(gitHubCommits => gitHubCommits.reverse())
+            )))
+            .getOrElse(() => Promise.resolve([]))
     });
 
     return Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
