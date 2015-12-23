@@ -370,7 +370,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object r2Press {
     lazy val sqsQueueUrl = configuration.getStringProperty("admin.r2.page.press.sqs.queue.url")
+    lazy val sqsTakedownQueueUrl = configuration.getStringProperty("admin.r2.page.press.takedown.sqs.queue.url")
     lazy val pressRateInMinutes = configuration.getIntegerProperty("admin.r2.page.press.rate.minutes").getOrElse(15)
+    lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(20)
+    lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(50)
   }
 
   object memcached {
@@ -385,6 +388,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val videoEncodingsSns: String = configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
     lazy val r2PressSns: Option[String] = configuration.getStringProperty("r2press.sns.topic")
+    lazy val r2PressTakedownSns: Option[String] = configuration.getStringProperty("r2press.takedown.sns.topic")
 
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {

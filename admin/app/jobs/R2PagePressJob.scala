@@ -14,7 +14,8 @@ import pagepresser.HtmlCleaner._
 import play.api.Play.current
 
 object R2PagePressJob extends ExecutionContexts with Logging {
-  val waitTimeSeconds = 20
+  val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
+  val maxMessages = Configuration.r2Press.pressQueueMaxMessages
 
   val queue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsQueueUrl map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
@@ -27,13 +28,33 @@ object R2PagePressJob extends ExecutionContexts with Logging {
     throw new RuntimeException("Required property 'r2Press.sqsQueueUrl' not set")
   }
 
+  val takedownQueue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsTakedownQueueUrl map { queueUrl =>
+    val credentials = Configuration.aws.mandatoryCredentials
+
+    TextMessageQueue[SNSNotification](
+      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      queueUrl
+    )
+  }) getOrElse {
+    throw new RuntimeException("Required property 'r2Press.sqsTakedownQueueUrl' not set")
+  }
+
   def run() {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
       log.info("R2PagePressJob starting")
       try {
-        queue.receive(new ReceiveMessageRequest().withWaitTimeSeconds(waitTimeSeconds)) map ( _ foreach press )
+        queue.receive(new ReceiveMessageRequest()
+                          .withWaitTimeSeconds(waitTimeSeconds)
+                          .withMaxNumberOfMessages(maxMessages)
+        ).map ( _ foreach press )
+
+        takedownQueue.receive(new ReceiveMessageRequest()
+                                  .withWaitTimeSeconds(waitTimeSeconds)
+                                  .withMaxNumberOfMessages(maxMessages)
+        ).map ( _ foreach takedown )
+
       } catch {
-        case e: Exception => log.error(s"### Failed to decode r2 url: ${e.getMessage}", e)
+        case e: Exception => log.error(s"Failed to decode r2 url: ${e.getMessage}", e)
       }
     } else {
       log.info("R2PagePressJob is switched OFF")
@@ -64,10 +85,21 @@ object R2PagePressJob extends ExecutionContexts with Logging {
         }
       }
     } else {
-      log.error(s"### invalid url: $urlIn")
+      log.error(s"Invalid url: $urlIn")
     }
     // TODO: only delete if everything is ok?
     queue.delete(message.handle)
+  }
+
+  private def takedown(message: Message[String]) {
+    val urlIn = (Json.parse(message.get) \ "Message").as[String]
+    if (urlIn.nonEmpty) {
+      PagePresses.remove(urlIn)
+    } else {
+      log.error(s"Invalid url: $urlIn")
+    }
+    // TODO: only delete if everything is ok?
+    takedownQueue.delete(message.handle)
   }
 
 }
