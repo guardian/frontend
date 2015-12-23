@@ -8,6 +8,14 @@
                 "cacheControl":"public, max-age=315360000"
             }
         },
+        "frontend-static-r2":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"aws-frontend-static",
+                "cacheControl":"public, max-age=3600"
+            }
+        },
         "frontend-abtests":{
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
@@ -19,10 +27,13 @@
     },
     "recipes":{
         "default":{
-            "depends" : ["abTestsFileUpload", "staticFilesUpload"]
+            "depends" : ["abTestsFileUpload", "staticFilesUpload", "staticFilesR2Upload"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
+        },
+        "staticFilesR2Upload":{
+            "actionsBeforeApp": ["frontend-static-r2.uploadStaticFiles"]
         },
         "abTestsFileUpload":{
             "actionsBeforeApp": ["frontend-abtests.uploadStaticFiles"]
