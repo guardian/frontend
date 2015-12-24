@@ -51,7 +51,7 @@ object FaciaContainerHeader {
     if (tagPage.isFootballTeam) {
       MetaDataHeader(
         tagPage.metadata.webTitle,
-        tagPage.footballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
+        tagPage.properties.footballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
         tagPage.metadata.description,
         dateHeadline,
         frontHref(tagPage.id, tagPage.metadata.pagination)
@@ -60,7 +60,7 @@ object FaciaContainerHeader {
       MetaDataHeader(
         tagPage.metadata.webTitle,
         tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
-        Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.metadata.description,
+        tagPage.properties.bio.filter(_.nonEmpty) orElse tagPage.metadata.description,
         dateHeadline,
         frontHref(tagPage.id, tagPage.metadata.pagination)
       )

@@ -2,7 +2,7 @@
 
 @import dfp.{Keyword, Series}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage, Commercial}
 @import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.GetClasses
 
@@ -53,6 +53,10 @@
 
                 case MostPopular => {
                     @mostPopularContainer(containerDefinition, frontProperties)
+                }
+
+                case slices.Commercial(container) => {
+                    @commercialContainer(container, containerDefinition, frontProperties)
                 }
             }
         </div>

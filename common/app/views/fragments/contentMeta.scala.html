@@ -18,7 +18,7 @@
     @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
     @if(item.content.tags.contributors.length == 1) {
-        @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+        @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
         @fragments.meta.contactAuthor(item.tags)
     }
 
@@ -53,8 +53,8 @@
     @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
-    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
-    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}">
+    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
+    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
     @if(showBadge) {
         @fragments.commercial.badge(item)

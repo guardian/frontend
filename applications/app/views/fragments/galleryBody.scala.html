@@ -59,9 +59,9 @@
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
                 <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                srcset="@ImgSrc.srcset(imageElement, GalleryMedia.inline)"
+                srcset="@ImgSrc.srcset(imageElement.images, GalleryMedia.inline)"
                 sizes="@GalleryMedia.inline.sizes"
-                src="@ImgSrc.getFallbackUrl(imageElement)"
+                src="@ImgSrc.getFallbackUrl(imageElement.images)"
                 alt="@image.altText.getOrElse("")"
                 itemprop="contentUrl" />
 

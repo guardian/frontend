@@ -3,51 +3,70 @@ package model
 import com.gu.contentapi.client.model.Asset
 import views.support.{Orientation, Naked, ImgSrc}
 
-case class ImageAsset(delegate: Asset, index: Int) {
-  private lazy val fields: Map[String, String] = delegate.typeData
+object ImageAsset {
+  def make(asset: Asset, index: Int): ImageAsset = {
+    ImageAsset(
+      index = index,
+      fields = asset.typeData,
+      mediaType = asset.`type`,
+      mimeType = asset.mimeType,
+      url = asset.file )
+  }
+}
 
-  lazy val mediaType: String = delegate.`type`
-  lazy val mimeType: Option[String] = delegate.mimeType
+case class ImageAsset(
+  index: Int,
+  fields: Map[String, String],
+  mediaType: String,
+  mimeType: Option[String],
+  url: Option[String]) {
 
-  lazy val url: Option[String] = delegate.file
-  lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
+  val path: Option[String] = url.map(ImgSrc(_, Naked))
 
-  lazy val thumbnail: Option[String] = fields.get("thumbnail")
-  lazy val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
+  val thumbnail: Option[String] = fields.get("thumbnail")
+  val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
 
-  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
-  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
+  val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
+  val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
   lazy val ratio: Int = width/height
-  lazy val role: Option[String] = fields.get("role")
-  lazy val orientation: Orientation = Orientation.fromDimensions(width, height)
+  val role: Option[String] = fields.get("role")
+  val orientation: Orientation = Orientation.fromDimensions(width, height)
 
-  lazy val caption: Option[String] = fields.get("caption")
-  lazy val altText: Option[String] = fields.get("altText")
-  lazy val mediaId: Option[String] = fields.get("mediaId")
+  val caption: Option[String] = fields.get("caption")
+  val altText: Option[String] = fields.get("altText")
+  val mediaId: Option[String] = fields.get("mediaId")
 
-  lazy val source: Option[String] = fields.get("source")
-  lazy val photographer: Option[String] = fields.get("photographer")
-  lazy val credit: Option[String] = fields.get("credit")
-  lazy val displayCredit: Boolean = fields.get("displayCredit").contains("true")
-  lazy val isMaster: Boolean = fields.get("isMaster").contains("true")
+  val source: Option[String] = fields.get("source")
+  val photographer: Option[String] = fields.get("photographer")
+  val credit: Option[String] = fields.get("credit")
+  val displayCredit: Boolean = fields.get("displayCredit").contains("true")
+  val isMaster: Boolean = fields.get("isMaster").contains("true")
 
-  def showCaption = caption.exists(_.trim.nonEmpty) || (displayCredit && credit.nonEmpty)
+  val showCaption: Boolean = caption.exists(_.trim.nonEmpty) || (displayCredit && credit.nonEmpty)
 
-  lazy val creditEndsWithCaption = (for {
+  val creditEndsWithCaption = (for {
     credit <- credit
     caption <- caption
   } yield caption.endsWith(credit)).getOrElse(false)
 }
 
-case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {
+object VideoAsset {
+  def make(asset: Asset): VideoAsset = {
+    VideoAsset(
+      fields = asset.typeData,
+      mimeType = asset.mimeType,
+      url = asset.file )
+  }
+}
 
-  private lazy val fields: Map[String,String] = delegate.typeData
+case class VideoAsset(
+  fields: Map[String,String],
+  url: Option[String],
+  mimeType: Option[String]) {
 
-  lazy val url: Option[String] = delegate.file
-  lazy val mimeType: Option[String] = delegate.mimeType
-  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
-  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
-  lazy val encoding: Option[Encoding] = {
+  val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
+  val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
+  val encoding: Option[Encoding] = {
     (url, mimeType) match {
       case (Some(url), Some(mimeType)) => Some(Encoding(url, mimeType))
       case _ => None
@@ -55,38 +74,52 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   }
 
   // The video duration in seconds
-  lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
+  val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
                            (fields.get("durationMinutes").getOrElse("0").toInt * 60)
-  lazy val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
+  val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
-  lazy val source: Option[String] = fields.get("source")
-  lazy val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
-  lazy val caption: Option[String] = fields.get("caption")
+  val source: Option[String] = fields.get("source")
+  val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
+  val caption: Option[String] = fields.get("caption")
 }
 
-case class AudioAsset(private val delegate: Asset) {
+object AudioAsset {
+  def make(asset: Asset): AudioAsset = {
+    AudioAsset(
+      fields = asset.typeData,
+      mimeType = asset.mimeType,
+      url = asset.file )
+  }
+}
 
-  private lazy val fields: Map[String,String] = delegate.typeData
-
-  lazy val url: Option[String] = delegate.file
-  lazy val mimeType: Option[String] = delegate.mimeType
+case class AudioAsset(
+  fields: Map[String,String],
+  url: Option[String],
+  mimeType: Option[String]) {
 
   // The audio duration in seconds
-  lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
+  val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
     (fields.get("durationMinutes").getOrElse("0").toInt * 60)
 }
 
-case class EmbedAsset(private val delegate: Asset) {
+object EmbedAsset {
+  def make(asset: Asset): EmbedAsset = {
+    EmbedAsset(
+      fields = asset.typeData,
+      url = asset.file )
+  }
+}
 
-  private lazy val fields: Map[String,String] = delegate.typeData
+case class EmbedAsset(
+  fields: Map[String,String],
+  url: Option[String]) {
 
-  lazy val url: Option[String] = delegate.file
-  lazy val iframeUrl: Option[String] = fields.get("iframeUrl")
-  lazy val scriptName: Option[String] = fields.get("scriptName")
-  lazy val source: Option[String] = fields.get("source")
-  lazy val scriptUrl: Option[String] = fields.get("scriptUrl")
-  lazy val caption: Option[String] = fields.get("caption")
-  lazy val html: Option[String] = fields.get("html")
-  lazy val embedType: Option[String] = fields.get("embedType")
-  lazy val role: Option[String] = fields.get("role")
+  val iframeUrl: Option[String] = fields.get("iframeUrl")
+  val scriptName: Option[String] = fields.get("scriptName")
+  val source: Option[String] = fields.get("source")
+  val scriptUrl: Option[String] = fields.get("scriptUrl")
+  val caption: Option[String] = fields.get("caption")
+  val html: Option[String] = fields.get("html")
+  val embedType: Option[String] = fields.get("embedType")
+  val role: Option[String] = fields.get("role")
 }

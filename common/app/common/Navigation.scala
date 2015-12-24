@@ -8,7 +8,7 @@ case class SectionLink(zone: String, title: String, breadcrumbTitle: String, hre
     s"/${page.metadata.section}" == href ||
     (Edition.all.exists(_.id.toLowerCase == page.metadata.id.toLowerCase) && href == "/")
 
-  def currentForIncludingAllTags(tags: Tags): Boolean = tags.tags.exists(t => s"/${t.id}" == href)
+  def currentForIncludingAllTags(tags: Tags): Boolean = tags.tags.exists(t => s"/${t.metadata.id}" == href)
 }
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {

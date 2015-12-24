@@ -169,6 +169,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val token = configuration.getStringProperty("github.token")
   }
 
+  object teamcity {
+    lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
+  }
+
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =

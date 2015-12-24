@@ -110,6 +110,10 @@ GET         /radiator                                                           
 GET         /radiator/pingdom                                                                       controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
+GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
+GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
+
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                          controllers.admin.RedirectController.redirectPost()

@@ -2,7 +2,6 @@
 
 @import views.support._
 @import views.support.`package`.Seq2zipWithRowInfo
-@import implicits.FaciaContentImplicits._
 @import implicits.FaciaContentFrontendHelpers._
 @import common.LinkTo
 @import views.support.ImgSrc
@@ -13,13 +12,13 @@
         <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular geo @countryCode">
             @popular.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
                 <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">
-                    <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.url}">
+                    <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.header.url}">
                          @trail.trailPicture(5, 3).map{ image =>
                             <div class="right-most-popular-item__img media__img">
-                                <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(image)" alt="" />
+                                <img class="responsiveimg" src="@ImgSrc.getFallbackUrl(image.images)" alt="" />
                             </div>
                          }
-                         <h4 class="right-most-popular-item__headline media__body">@trail.linkText</h4>
+                         <h4 class="right-most-popular-item__headline media__body">@trail.properties.linkText</h4>
                     </a>
                 </li>
             }

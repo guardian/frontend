@@ -42,12 +42,12 @@ import test.{TestRequest, ConfiguredTestSuite}
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(8)
+    containers.size should be(14)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (10)
+    topContainer.size should be (17)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/2015/oct/05/objects-at-an-exhibition-aurora-collon-review")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/musicblog/2015/may/27/stone-roses-spike-island-the-reality")
 
   }
 

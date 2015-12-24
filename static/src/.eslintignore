@@ -4,3 +4,8 @@
 **/javascripts/vendor/**/*.js
 **/javascripts/projects/common/utils/atob.js
 **/javascripts/projects/common/utils/picturefill.js
+
+**/deploys-radiator/node_modules
+**/deploys-radiator/jspm_packages
+**/deploys-radiator/target
+**/deploys-radiator/config.js

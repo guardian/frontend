@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "system"
+    }
+}
