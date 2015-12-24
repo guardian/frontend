@@ -3,20 +3,28 @@ package controllers
 import model.{MetaData, SimplePage, Cached, TinyResponse}
 import play.api.data.Forms._
 import play.api.libs.ws.{WS, WSResponse}
-import scala.concurrent.{Await, Future}
-import common.JsonComponent
+import scala.concurrent.{Future}
+import common.{ExecutionContexts, JsonComponent}
 import play.api.mvc.{ Action, RequestHeader, Result }
 import discussion.{UnthreadedCommentPage, ThreadedCommentPage, DiscussionParams}
 import discussion.model.{BlankComment, DiscussionKey, DiscussionAbuseReport}
 import play.api.data._
 import model.NoCache
-import scala.concurrent.duration._
-import scala.language.postfixOps
 import play.api.Play.current
-import scalaz.Unzip
+import play.api.data.validation._
 
+import scala.util.control.NonFatal
 
-object CommentsController extends DiscussionController {
+object CommentsController extends DiscussionController with ExecutionContexts {
+
+  val userForm = Form(
+    Forms.mapping(
+      "categoryId" -> Forms.number.verifying(ReportAbuseFormValidation.validCategoryConstraint),
+      "commentId" -> Forms.number,
+      "reason" -> optional(Forms.text.verifying("Reason must be 250 characters or fewer", input => Constraints.maxLength(250)(input) == Valid)),
+      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress == Valid))
+    )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
+  )
 
   // Used for jump to comment, comment hash location.
   def commentContextJson(id: Int) = Action.async { implicit request =>
@@ -54,9 +62,11 @@ object CommentsController extends DiscussionController {
   def topCommentsJson(key: DiscussionKey) = Action.async { implicit request => getTopComments(key) }
   def topCommentsJsonOptions(key: DiscussionKey) = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
 
+
+  val reportAbusePage = SimplePage(MetaData.make("/reportAbuse", "Discussion", "Report Abuse", "GFE: Report Abuse"))
   def reportAbuseForm(commentId: Int) = Action { implicit request =>
-    val page = SimplePage(MetaData.make("/reportAbuse", "Discussion", "Report Abuse", "GFE: Report Abuse"))
-    Cached(60) { Ok(views.html.discussionComments.reportComment(commentId, page)) }
+
+    Cached(60) { Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm)) }
   }
 
 
@@ -71,29 +81,32 @@ object CommentsController extends DiscussionController {
   def postAbuseReportToDiscussionApi(abuseReport: DiscussionAbuseReport): Future[WSResponse] = {
     val url = s"${conf.Configuration.discussion.apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, "GU-Client" -> conf.Configuration.discussion.apiClientHeader)
-     WS.url(url).withHeaders(headers: _*).post((abuseReportToMap(abuseReport)))
+     WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post((abuseReportToMap(abuseReport)))
   }
 
+  object ReportAbuseFormValidation {
+    val validCategory = (_: Int) match {
+      case 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 => Valid
+      case _ => Invalid("Please choose a category")
+    }
 
+    val validCategoryConstraint = Constraint("valid categoryId")(validCategory)
+    val genericErrorMessage = "Something went wrong, please try again later."
 
-  def reportAbuseSubmission(commentId: Int)  = Action { implicit request =>
+  }
 
+  def reportAbuseSubmission(commentId: Int)  = Action.async { implicit request =>
 
-    val userForm = Form(
-      Forms.mapping(
-        "categoryId" -> Forms.number(min = 1, max = 9),
-        "commentId" -> Forms.number,
-        "reason" -> optional(Forms.text(maxLength = 250)),
-        "email" -> optional(Forms.email)
-      )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
-    )
     userForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(formWithErrors.errors.mkString(", ")),
+      formWithErrors => Future.successful(BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors))),
       userData => {
-        Await.result(postAbuseReportToDiscussionApi(userData), 2 seconds) match {
-          case success if success.status == 200 => Ok(success.body)
-          case error => Ok(s"Call to DAPI failed: ${error.body}" )
-        }
+        postAbuseReportToDiscussionApi(userData).map {
+          case success if success.status == 200 => NoCache(Ok(success.body))
+          case error => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
+        }.recover({
+          case NonFatal(e) => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
+        })
+
       }
     )
 
