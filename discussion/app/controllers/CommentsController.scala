@@ -13,6 +13,7 @@ import model.NoCache
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import play.api.Play.current
+import scalaz.Unzip
 
 
 object CommentsController extends DiscussionController {
@@ -60,14 +61,17 @@ object CommentsController extends DiscussionController {
 
 
   def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
-    val keys = abuseReport.getClass.getDeclaredFields.map(_.getName)
-    val values = DiscussionAbuseReport.unapply(abuseReport).get.productIterator.toSeq
-    (for(k <- keys; v <- values) yield (k -> Seq(v.toString))).toMap
+  Map("categoryId" -> Seq(abuseReport.categoryId.toString),
+          "commentId" -> Seq(abuseReport.commentId.toString),
+          "reason" -> abuseReport.reason.toSeq,
+          "email" -> abuseReport.email.toSeq)
   }
+
 
   def postAbuseReportToDiscussionApi(abuseReport: DiscussionAbuseReport): Future[WSResponse] = {
     val url = s"${conf.Configuration.discussion.apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
-    WS.url(url).withHeaders("D2-X-UID" -> conf.Configuration.discussion.d2Uid).post((abuseReportToMap(abuseReport)))
+    val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, "GU-Client" -> conf.Configuration.discussion.apiClientHeader)
+     WS.url(url).withHeaders(headers: _*).post((abuseReportToMap(abuseReport)))
   }
 
 
