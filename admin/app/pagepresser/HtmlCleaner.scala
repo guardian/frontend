@@ -64,33 +64,38 @@ object HtmlCleaner {
 
   def removeRelatedComponent(document: Document): Document = {
     val element = document.getElementById("related")
-    element.remove()
+    if(element != null) element.remove()
     document
   }
 
   def removeScriptTags(document: Document): Document = {
-    document.getElementsByTag("script").remove()
+    val element = document.getElementsByTag("script")
+    if(element != null) element.remove()
+
     document
   }
 
   def removeIdentityUserDetailsTab(document: Document): Document = {
-    document.getElementsByClass("user-details").remove()
+    val element = document.getElementsByClass("user-details")
+    if(element != null) element.remove()
     document
   }
 
   def removeInitiallyOffPlaceHolderTags(document: Document): Document = {
-    document.getElementsByClass("initially-off").remove()
+    val element = document.getElementsByClass("initially-off")
+    if(element != null) element.remove()
     document
   }
 
   def removeNoScriptTags(document: Document): Document = {
-    document.getElementsByTag("noscript").remove()
+    val element = document.getElementsByTag("noscript")
+    if(element != null) element.remove()
     document
   }
 
   private def removeByClass(document: Document, className: String): Document = {
     val element = document.getElementsByClass(className)
-    element.remove()
+    if(element != null) element.remove()
     document
   }
 }
