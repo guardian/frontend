@@ -16,15 +16,9 @@ object Presser extends Logging{
       response.status match {
         case 200 => {
 
-          println("200")
-          val originalBody = response.body
-          val parse = Jsoup.parse(originalBody)
-        //  println(parse)
-          val cleanedHtml = HtmlCleaner.clean(parse)
 
-          println("--- hello")
-          println(cleanedHtml)
-          println("--- bb")
+          val originalBody = response.body
+          val cleanedHtml = HtmlCleaner.clean(Jsoup.parse(originalBody))
 
           if(Switches.r2PressToS3Switch.isSwitchedOn) {
             val path = request.uri.getPath
