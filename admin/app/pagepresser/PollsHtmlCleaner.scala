@@ -31,19 +31,27 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
     fetchPoll(pollUrl).foreach { poll =>
 
-        poll.questions.foreach { question =>
-          val mostAnsweredAnswerId = question.answers.tail.foldLeft(question.answers.head)((r, a) => if (r.count > a.count) r else a)
+      poll.questions.foreach { question =>
+        val mostAnsweredAnswerId = question.answers.tail.foldLeft(question.answers.head)((r, a) => if (r.count > a.count) r else a)
 
-          for (answer <- question.answers) yield {
-            val answerPercentage = Math.round(answer.count / question.count * 100)
-            document.getElementById(s"a-${answer.id}").getElementsByClass("container").foreach { element =>
-                element.tagName("div")
-                element.attr("title", s"Votes cast: ${answer.count} ($answerPercentage%)")
-
+        for (answer <- question.answers) yield {
+          val answerPercentage = Math.round(answer.count / question.count * 100)
+          document.getElementById(s"a-${answer.id}").getElementsByClass("container").foreach { element =>
+            element.tagName("div")
+            element.attr("title", s"Votes cast: ${answer.count} ($answerPercentage%)")
+            element.getElementsByClass("poll-result-bg").foreach { barResult =>
+              if(answer.id == mostAnsweredAnswerId.id) barResult.attr("class", "poll-result-bg leader")
+              barResult.attr("style", s"width: $answerPercentage")
             }
+            element.getElementsByClass("poll-result-figure").foreach { value =>
+              if(answerPercentage > 70) value.attr("class", "poll-result-figure large")
+              value.text(s"$answerPercentage%")
+            }
+
           }
         }
       }
+    }
     document
 
   }
