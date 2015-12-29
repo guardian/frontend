@@ -15,10 +15,8 @@ object Presser extends Logging{
     request.get().map { response =>
       response.status match {
         case 200 => {
-
-
           val originalBody = response.body
-          val cleanedHtml = HtmlCleaner.clean(Jsoup.parse(originalBody))
+          val cleanedHtml = BasicHtmlCleaner.clean(Jsoup.parse(originalBody))
 
           if(Switches.r2PressToS3Switch.isSwitchedOn) {
             val path = request.uri.getPath

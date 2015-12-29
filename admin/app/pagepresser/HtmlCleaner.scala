@@ -1,11 +1,14 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
+import org.jsoup.nodes.Document
 
-import org.jsoup.nodes.{Node, Document}
 import scala.collection.JavaConversions._
 
-object HtmlCleaner {
+
+object BasicHtmlCleaner extends HtmlCleaner
+
+trait HtmlCleaner {
 
   def clean(document: Document): Document = {
     removeAds(document)
@@ -42,8 +45,6 @@ object HtmlCleaner {
       for (v <- value) yield s"$key=$v"
     }.mkString("&")
   }
-
-
 
   def removeAds(document: Document): Document = {
     val elements = document.getElementById("sub-header")
