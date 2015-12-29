@@ -314,18 +314,20 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__slideshow {
-    img {
+    picture {
         @include mq($until: tablet) {
-            &:nth-child(1n+2) {
+            &:nth-child(1n+2) img {
                 display: none;
             }
         }
 
-        @include mq(tablet) {
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            animation-direction: normal;
-            opacity: 0;
+        img {
+            @include mq(tablet) {
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+                animation-direction: normal;
+                opacity: 0;
+            }
         }
     }
 }
