@@ -320,14 +320,14 @@ $fc-item-gutter: $gs-gutter / 4;
                 display: none;
             }
         }
+    }
 
-        img {
-            @include mq(tablet) {
-                animation-timing-function: linear;
-                animation-iteration-count: infinite;
-                animation-direction: normal;
-                opacity: 0;
-            }
+    img {
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
         }
     }
 }
