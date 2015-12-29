@@ -210,7 +210,7 @@ const renderPage: (
                                     commits
                                         .map(commit => (
                                             h('li', [
-                                                h('a', { href: commit.url }, commit.message),
+                                                h('a', { href: commit.url }, headOption(commit.message.split('\n')).getOrElse(() => '')),
                                                 ` by ${commit.authorName}`
                                             ]))
                                         )
