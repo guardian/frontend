@@ -43,7 +43,7 @@ define([
         fastdom.read(this.updatePosition, this);
     };
 
-    Sticky.prototype.initGeometry = function() {
+    Sticky.prototype.initGeometry = function () {
         this.elementHeight = this.element.offsetHeight;
     }
 
