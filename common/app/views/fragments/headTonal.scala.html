@@ -2,6 +2,7 @@
 
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
+@import conf.switches.Switches._
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
@@ -66,7 +67,7 @@
                     </div>
                 }
 
-                @if(showBadge) {
+                @if(showBadge && NewCommercialContent.isSwitchedOff) {
                     @fragments.commercial.badge(item)
                 }
 
@@ -78,6 +79,11 @@
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">
+                    @if(showBadge && NewCommercialContent.isSwitchedOn && item.commercial.isAdvertisementFeature) {
+                        <div class="content__meta-container js-content-meta js-football-meta u-cf">
+                            @fragments.commercial.badge(item)
+                        </div>
+                    }
                     @if(!item.tags.isVideo) {
                         @fragments.standfirst(item)
                     }

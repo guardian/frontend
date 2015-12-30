@@ -136,6 +136,7 @@ define([
                 if (config.switches.viewability
                     && !(config.page.isProd && config.page.contentType === 'Interactive')
                     && config.page.contentType !== 'Crossword'
+                    && !config.switches.newCommercialContent
                     && config.page.pageId !== 'offline-page') {
                     sticky.init();
                 }
