@@ -35,7 +35,7 @@ define([
 
     function renderData(data) {
         var stockValues = map(data.stocks, function (stockValue) {
-            return template(stockValueTemplate, {
+            return stockValueTemplate({
                 name: stockValue.name,
                 deltaClass: 'stocks__stock-value--' + stockValue.trend,
                 price: stockValue.price,
@@ -48,13 +48,16 @@ define([
             });
         }).join('');
 
-        return template(stocksTemplate, {
+        return stocksTemplate({
             stocks: stockValues
         });
     }
 
     return function () {
         var $container = $('.js-container--first .js-container__header');
+        if (typeof stockValueTemplate === 'string') {
+            stockValueTemplate = template(stockValueTemplate);
+        }
 
         if (isBusinessFront() && $container) {
             getStocksData().then(function (data) {

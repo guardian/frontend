@@ -32,6 +32,11 @@ define([
                 widgetCodeImage,
                 widgetCodeText;
 
+            // PRE-COMPILE lodash template
+            if (typeof outbrainTpl === 'string') {
+                outbrainTpl = template(outbrainTpl);
+            }
+
             breakpoint = (contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {
                 desktop: {
@@ -67,11 +72,11 @@ define([
 
             fastdom.write(function () {
                 $outbrain.css('display', 'block');
-                $container.append($.create(template(outbrainTpl, { widgetCode: widgetCode })));
+                $container.append($.create(outbrainTpl({ widgetCode: widgetCode })));
 
                 if (breakpoint !== 'mobile') {
                     widgetCodeText  = widgetConfig[breakpoint].text[section];
-                    $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
+                    $container.append($.create(outbrainTpl({ widgetCode: widgetCodeText })));
                 }
 
                 this.tracking(widgetCode);

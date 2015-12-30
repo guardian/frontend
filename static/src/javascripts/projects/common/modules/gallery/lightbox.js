@@ -58,10 +58,17 @@ define([
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
+        // PRE-COMPILE LODASH TEMPLATES
+        if (typeof blockSharingTpl === 'string') {
+            blockSharingTpl = template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''));
+            buttonTpl = template(buttonTpl);
+            shareButtonTpl = template(shareButtonTpl);
+            shareButtonMobileTpl = template(shareButtonMobileTpl);
+        }
+
         // TEMPLATE
         function generateButtonHTML(label) {
-            var tmpl = buttonTpl;
-            return template(tmpl, {label: label});
+            return buttonTpl({label: label});
         }
 
         this.galleryLightboxHtml =
@@ -154,15 +161,15 @@ define([
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
             }];
 
-        return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
+        return blockSharingTpl({
             articleType: 'gallery',
             count: this.images.length,
             index: i,
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: map(shareItems, template.bind(null, shareButtonTpl)).join(''),
-            shareButtonsMobile: map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
+            shareButtons: map(shareItems, shareButtonTpl).join(''),
+            shareButtonsMobile: map(shareItems, shareButtonMobileTpl).join('')
         });
     };
 

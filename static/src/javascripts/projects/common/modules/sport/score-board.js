@@ -24,7 +24,11 @@ define([
         this.pageType = context.pageType;
         this.parent = context.parent;
 
-        this.placeholder = bonzo.create(template(scoreContainerHtml, {
+        if (typeof scoreContainerHtml === 'string') {
+            scoreContainerHtml = template(scoreContainerHtml);
+        }
+
+        this.placeholder = bonzo.create(scoreContainerHtml({
             loadingState: this.pageType !== 'report' ? ' score__loading--live' : ''
         }))[0];
 

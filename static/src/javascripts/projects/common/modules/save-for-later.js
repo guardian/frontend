@@ -61,6 +61,12 @@ define([
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
 
+        // pre-compile lodash templates
+        if (typeof saveLink === 'string') {
+            saveLink = template(saveLink);
+            saveButton = template(saveButton);
+        }
+
         bindAll(this,
             'save',
             'delete',
@@ -145,11 +151,11 @@ define([
                 config: config
             };
             if (options.url) {
-                $saver.html(template(saveLink,
+                $saver.html(saveLink(
                     assign({ url: options.url }, templateData))
                 );
             } else {
-                $saver.html(template(saveButton, templateData));
+                $saver.html(saveButton(templateData));
 
                 bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
                     this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,

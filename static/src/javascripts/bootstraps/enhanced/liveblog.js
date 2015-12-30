@@ -121,17 +121,22 @@ define([
         }
     }
 
+    var keyEventTemplate = '<li class="timeline__item" data-event-id="<%=id%>">' +
+            '<a class="timeline__link" href="#<%=id%>" data-event-id="<%=id%>">' +
+            '<span class="timeline__date"><%=time%></span><span class="timeline__title u-underline"><%=title%></span></a></li>';
+
     function createKeyEventHTML(el) {
-        var keyEventTemplate = '<li class="timeline__item" data-event-id="<%=id%>">' +
-                '<a class="timeline__link" href="#<%=id%>" data-event-id="<%=id%>">' +
-                '<span class="timeline__date"><%=time%></span><span class="timeline__title u-underline"><%=title%></span></a></li>',
-            data = {
+        var data = {
                 id: el.getAttribute('id'),
                 title: $('.block-title', el).text(),
                 time: $('.block-time__link', el).html()
             };
 
-        return template(keyEventTemplate, data);
+        if (typeof keyEventTemplate === 'string') {
+            keyEventTemplate = template(keyEventTemplate);
+        }
+
+        return keyEventTemplate(data);
     }
 
     function getTimelineHTML(events) {

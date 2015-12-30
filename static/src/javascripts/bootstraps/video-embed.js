@@ -63,7 +63,10 @@ define([
             pageId: config.page.pageId,
             icon: svgs('marque36icon')
         };
-        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        if (typeof titlebarTmpl === 'string') {
+            titlebarTmpl = template(titlebarTmpl);
+        }
+        $('.vjs-control-bar').after(titlebarTmpl(data));
         bean.on($('.vjs-title-bar')[0], 'click', function (e) {
             omniture.logTag({
                 tag: 'Embed | title bar',

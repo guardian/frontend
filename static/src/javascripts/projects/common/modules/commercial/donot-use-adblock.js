@@ -61,7 +61,7 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'adblock message variant ' + message.id,
             siteMessageCloseBtn: 'hide'
-        }).show(template(messageTemplate, {
+        }).show(messageTemplate({
             linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
             messageText: message.messageText,
             linkText: message.linkText,
@@ -118,6 +118,8 @@ define([
             showAdblockMessage();
             showAdblockBanner();
         }
+
+        messageTemplate = template(messageTemplate);
     }
 
     return {

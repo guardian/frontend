@@ -66,7 +66,7 @@ define([
             relTime = 'Updated just now';
         }
 
-        return template(blockTemplate, {
+        return blockTemplate({
             ariaHidden: !block.isNew,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
@@ -153,6 +153,8 @@ define([
     }
 
     function show() {
+        // pre-compile lodash template
+        blockTemplate = template(blockTemplate);
         return fastdomPromise.read(function () {
             var elementsById = {};
 

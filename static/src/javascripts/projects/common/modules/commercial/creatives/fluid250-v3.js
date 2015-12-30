@@ -26,6 +26,10 @@ define([
         this.$adSlot = $adSlot;
         this.params = params;
 
+        if (typeof fluid250Tpl === 'string') {
+            fluid250Tpl = template(fluid250Tpl);
+        }
+
         bindAll(this, 'updateBgPosition');
     };
 
@@ -91,7 +95,7 @@ define([
                     '<div class="ad-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: 50% 0; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             };
 
-        $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
+        $.create(fluid250Tpl({ data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');

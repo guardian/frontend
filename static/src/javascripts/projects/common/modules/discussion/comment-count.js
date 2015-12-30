@@ -39,10 +39,10 @@ define([
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
-            content: commentCountContentTemplate,
-            contentImmersive: commentCountContentImmersiveTemplate
-        },
-        defaultTemplate = commentCountTemplate;
+            content: template(commentCountContentTemplate),
+            contentImmersive: template(commentCountContentImmersiveTemplate),
+            default_: template(commentCountTemplate)
+        };
 
     function getElementsIndexedById(context) {
         var elements = qwery('[' + attributeName + ']', context);
@@ -76,7 +76,7 @@ define([
                 }
 
                 format = $node.data('commentcount-format');
-                html = template(templates[format] || defaultTemplate, {
+                html = (templates[format] || templates.default_).call(null, {
                     url: url,
                     icon: svgs('commentCount16icon', ['inline-tone-fill']),
                     count: formatters.integerCommas(c.count)

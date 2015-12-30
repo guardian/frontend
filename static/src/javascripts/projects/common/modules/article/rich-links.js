@@ -81,8 +81,11 @@ define([
             !isSensitive &&
             !isDuplicate
         ) {
+            if (typeof richLinkTagTmpl === 'string') {
+                richLinkTagTmpl = template(richLinkTagTmpl);
+            }
             return spaceFiller.insertAtFirstSpace(getSpacefinderRules(), function (para) {
-                $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                $insertedEl = $.create(richLinkTagTmpl({href: config.page.richLink}));
                 $insertedEl.insertBefore(para);
             }).then(function (didInsert) {
                 if (didInsert) {

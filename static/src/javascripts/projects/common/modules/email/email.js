@@ -173,7 +173,7 @@ define([
                         submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.',
                         submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
-                    submissionHtml = template(successHtml, submissionMessage);
+                    submissionHtml = successHtml(submissionMessage);
 
                 fastdom.write(function () {
                     $form.addClass('email-sub__form--is-hidden');
@@ -260,6 +260,8 @@ define([
                     $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
                     $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 } else {
+                    // pre-compile lodash template
+                    successHtml = template(successHtml);
                     // We're loading through the iframe
                     if (rootEl && rootEl.tagName === 'IFRAME') {
                         // We can listen for a lazy load or reload to catch an update

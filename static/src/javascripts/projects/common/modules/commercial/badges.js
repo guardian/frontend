@@ -43,13 +43,10 @@ define([
         },
         addPreBadge  = function ($adSlot, header, sponsor) {
             if (sponsor) {
-                $adSlot.append(template(
-                    badgeTpl,
-                    {
-                        header:  header,
-                        sponsor: sponsor
-                    }
-                ));
+                $adSlot.append(badgeTpl({
+                    header:  header,
+                    sponsor: sponsor
+                }));
             }
         },
         renderAd = function (container, sponsorship, opts) {
@@ -78,6 +75,11 @@ define([
         init = function () {
             var sponsoredFrontPromise,
                 sponsoredContainersPromise;
+
+            // pre-compile lodash template
+            if (typeof badgeTpl === 'string') {
+                badgeTpl = template(badgeTpl);
+            }
 
             if (!commercialFeatures.badges) {
                 return false;

@@ -18,11 +18,15 @@ define([
     var Fluid250GoogleAndroid = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
+
+        if (typeof fluid250GoogleAndroidTpl === 'string') {
+            fluid250GoogleAndroidTpl = template(fluid250GoogleAndroidTpl);
+        }
     };
 
     Fluid250GoogleAndroid.prototype.create = function () {
 
-        $.create(template(fluid250GoogleAndroidTpl, this.params)).appendTo(this.$adSlot);
+        $.create(fluid250GoogleAndroidTpl(this.params)).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');

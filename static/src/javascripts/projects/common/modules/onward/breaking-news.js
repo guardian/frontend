@@ -111,13 +111,14 @@ define([
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
                     marque36icon = svgs('marque36icon');
                     closeIcon = svgs('closeCentralIcon');
+                    alertHtml = template(alertHtml);
 
                     forEach(alerts, function (article) {
                         var el;
 
                         article.marque36icon = marque36icon;
                         article.closeIcon = closeIcon;
-                        el = bonzo.create(template(alertHtml, article));
+                        el = bonzo.create(alertHtml(article));
 
                         bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
                             fastdom.write(function () {

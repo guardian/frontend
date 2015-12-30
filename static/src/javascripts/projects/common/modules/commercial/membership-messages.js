@@ -83,10 +83,12 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide'
-        }).show(template(messageTemplate, data));
+        }).show(messageTemplate(data));
     }
 
     function init() {
+        messageTemplate = template(messageTemplate);
+
         var message = messages[config.page.edition];
         if (message && canShow(message)) {
             show(config.page.edition, message);

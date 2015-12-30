@@ -42,6 +42,10 @@ define([
             this.openedHeight = 300;
         }
 
+        if (typeof expandableV3Tpl === 'string') {
+            expandableV3Tpl = template(expandableV3Tpl);
+        }
+
         bindAll(this, 'updateBgPosition', 'listener');
     };
 
@@ -158,7 +162,7 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             },
-            $expandableV3 = $.create(template(expandableV3Tpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
+            $expandableV3 = $.create(expandableV3Tpl({ data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {

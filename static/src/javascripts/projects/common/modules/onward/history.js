@@ -103,6 +103,10 @@ define([
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
+    // pre-compile lodash templates
+    viewTag = template(viewTag);
+    viewMegaNav = template(viewMegaNav);
+
     function saveHistory(history) {
         historyCache = history;
         return storage.local.set(storageKeyHistory, history);
@@ -361,7 +365,7 @@ define([
         tags = getPopularFiltered();
 
         if (tags.length) {
-            tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
+            tagsHTML = viewMegaNav({tags: tags.map(tagHtml).join('')});
             fastdom.write(function () {
                 getMegaNav().prepend(tagsHTML);
             });
@@ -397,7 +401,7 @@ define([
     }
 
     function tagHtml(tag, index) {
-        return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
+        return viewTag({id: tag[0], name: tag[1], index: index + 1});
     }
 
     return {

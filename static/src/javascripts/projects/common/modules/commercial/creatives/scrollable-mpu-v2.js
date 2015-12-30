@@ -22,6 +22,10 @@ define([
         this.$adSlot = $adSlot;
         this.params  = params;
 
+        if (typeof scrollableMpuTpl === 'string') {
+            scrollableMpuTpl = template(scrollableMpuTpl);
+        }
+
         bindAll(this, 'updateBgPosition');
     };
 
@@ -65,7 +69,7 @@ define([
             trackingPixelImg: this.params.trackingPixel ?
                 '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
         };
-        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+        this.$scrollableMpu = $.create(scrollableMpuTpl(templateOptions)).appendTo(this.$adSlot);
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position

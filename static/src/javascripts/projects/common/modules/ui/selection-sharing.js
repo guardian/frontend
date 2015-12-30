@@ -38,10 +38,10 @@ define([
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
-        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
+        twitterHrefTemplate = template('https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>'),
         twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
-        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
+        emailHrefTemplate = template('mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>'),
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     updateSelection = function () {
@@ -70,11 +70,11 @@ define([
                 twitterMessage = twitterMessage.slice(0, twitterMessageLimit - 1) + '…';
             }
 
-            twitterHref = template(twitterHrefTemplate, {
+            twitterHref = twitterHrefTemplate({
                 text: encodeURI(twitterMessage),
                 url: encodeURI(twitterShortUrl)
             });
-            emailHref = template(emailHrefTemplate, {
+            emailHref = emailHrefTemplate({
                 subject: encodeURI(config.page.webTitle),
                 selection: encodeURI(range.toString()),
                 url: encodeURI(emailShortUrl)

@@ -26,10 +26,14 @@ define([
         this.quoteAuthor = opts.quoteAuthor || '';
         this.imageAuthor = opts.imageAuthor || '';
         this.customCssClass = opts.customCssClass || '';
+
+        if (typeof adblockStickyMessage === 'string') {
+            adblockStickyMessage = template(adblockStickyMessage);
+        }
     };
 
     AdblockBanner.prototype.show = function () {
-        var bannerTmpl = template(adblockStickyMessage,
+        var bannerTmpl = adblockStickyMessage(
             {
                 supporterLink: this.supporterLink,
                 quoteText: this.quoteText,

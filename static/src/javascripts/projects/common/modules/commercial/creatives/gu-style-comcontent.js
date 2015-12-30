@@ -22,6 +22,10 @@ define([
     var GustyleComcontent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
+
+        if (typeof gustyleComcontentTpl == 'string') {
+            gustyleComcontentTpl = template(gustyleComcontentTpl);
+        }
     };
 
     GustyleComcontent.prototype.create = function () {
@@ -36,7 +40,7 @@ define([
                         '<span class="gu-note">Brought to you by:</span>' : '<a href="' + this.params.articleUrl + '" class="button button--tertiary button--medium">' + this.params.linkLabel + ' ' + externalLinkIcon + '</a>'
             };
 
-        $.create(template(gustyleComcontentTpl, { data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
+        $.create(gustyleComcontentTpl({ data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
         new GuStyle(this.$adSlot, this.params).addLabel();
 
         if (this.params.trackingPixel) {

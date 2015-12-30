@@ -21,6 +21,10 @@ define([
     svgs,
     deleteButtonAllTmp) {
     return function SavedForLater() {
+        if (typeof deleteButtonAllTmp === 'string') {
+            deleteButtonAllTmp = template(deleteButtonAllTmp);
+        }
+
         this.init = function () {
             var self = this,
                 deleteAll = $('.js-save-for-later__delete-all')[0];
@@ -39,7 +43,7 @@ define([
                 var $button = bonzo(qwery('.js-save-for-later__delete-all')[0]);
 
                 fastdom.write(function () {
-                    $button.html(template(deleteButtonAllTmp, {
+                    $button.html(deleteButtonAllTmp({
                         icon: svgs('crossIcon'),
                         state: state,
                         dataLinkName: 'saved | remove all' + (state === 'confirm' ? ' | confirm' : '')
