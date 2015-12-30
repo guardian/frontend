@@ -48,17 +48,17 @@
                                     Sponsored by:
                                 }
                             } else {
-                                @if(isAdFeature && NewCommercialContent.isSwitchedOn) {
-                                    Paid for by:
-                                } else {
-                                    @if(isAdFeature) {
-                                        Brought to you by:
+                                @if(isAdFeature) {
+                                    @if(NewCommercialContent.isSwitchedOn) {
+                                        Paid for by:
                                     } else {
-                                        @content.commercial.sponsorshipTag.map { tag =>
-                                            @tag.name is supported by:
-                                        }.getOrElse {
-                                            Supported by:
-                                        }
+                                        Brought to you by:
+                                    }
+                                } else {
+                                    @content.commercial.sponsorshipTag.map { tag =>
+                                        @tag.name is supported by:
+                                    }.getOrElse {
+                                        Supported by:
                                     }
                                 }
                             }

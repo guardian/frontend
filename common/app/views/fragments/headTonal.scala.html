@@ -67,7 +67,7 @@
                     </div>
                 }
 
-                @if(showBadge && NewCommercialContent.isSwitchedOff) {
+                @if(showBadge && (NewCommercialContent.isSwitchedOff || !item.commercial.isAdvertisementFeature)) {
                     @fragments.commercial.badge(item)
                 }
 

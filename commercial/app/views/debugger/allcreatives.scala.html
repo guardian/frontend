@@ -128,23 +128,23 @@
                     var $number        = $('#dfp-number'),
                         itemNumClasses = ['2', '3', '4']
                             .map(function (num) {
-                                return 'commercial--items-dfp-' num;
+                                return 'commercial--items-dfp-' + num;
                             });
                     bean.on($number[0], 'change', function () {
                         $('.commercial--dfp-multiple')
                             .removeClass(itemNumClasses.join(' '))
-                            .addClass('commercial--items-dfp-' $number.val());
+                            .addClass('commercial--items-dfp-' + $number.val());
                     });
 
                     var $palette    = $('#dfp-palette'),
                         toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
                             .map(function (tone) {
-                                return 'commercial--tone-' tone;
+                                return 'commercial--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
                         $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
                             .removeClass(toneClasses.join(' '))
-                            .addClass('commercial--tone-' $palette.val());
+                            .addClass('commercial--tone-' + $palette.val());
                     });
 
                     var $rhComponent = $('.rh-column-component');
@@ -190,7 +190,7 @@
                                 <div class="paidfor-label paidfor-meta__more has-popup">
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test1">
                                         About
-                                        @fragments.inlineSvg("glabs-logo-small", "logo")
+                                        @fragments.inlineSvg("arrow-down", "icon")
                                     </button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--test1">
                                         <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
@@ -671,7 +671,7 @@
     <div class="fc-container__inner">
         <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
-                Merchandising: commercial component (soulmates) feed
+                Merchandising: commercial component (soulmates) + feed
             </a>
         </h2>
         <form class="js-soulmates-feed">
