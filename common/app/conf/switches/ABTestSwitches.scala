@@ -18,7 +18,7 @@ trait ABTestSwitches {
     "ab-large-top-ad",
     "Testing the difference of user behaviour based on large top ad format",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 31),
+    sellByDate = new LocalDate(2016, 1, 13),
     exposeClientSide = true
   )
 
