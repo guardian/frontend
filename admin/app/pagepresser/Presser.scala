@@ -10,13 +10,13 @@ import services.{R2ArchiveOriginals, R2Archive}
 
 object Presser extends Logging{
 
-  def press(url: String) = {
+  def press(url: String, cleaner: HtmlCleaner) = {
     val request = WS.url(url)
     request.get().map { response =>
       response.status match {
         case 200 => {
           val originalBody = response.body
-          val cleanedHtml = BasicHtmlCleaner.clean(Jsoup.parse(originalBody))
+          val cleanedHtml = cleaner.clean(Jsoup.parse(originalBody))
 
           if(Switches.r2PressToS3Switch.isSwitchedOn) {
             val path = request.uri.getPath
