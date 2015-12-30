@@ -41,7 +41,7 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
             element.attr("title", s"Votes cast: ${answer.count} ($answerPercentage%)")
             element.getElementsByClass("poll-result-bg").foreach { barResult =>
               if(answer.id == mostAnsweredAnswerId.id) barResult.attr("class", "poll-result-bg leader")
-              barResult.attr("style", s"width: $answerPercentage")
+              barResult.attr("style", s"width: $answerPercentage%")
             }
             element.getElementsByClass("poll-result-figure").foreach { value =>
               if(answerPercentage > 70) value.attr("class", "poll-result-figure large")
