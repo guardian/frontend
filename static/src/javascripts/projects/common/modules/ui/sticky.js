@@ -45,10 +45,10 @@ define([
 
     Sticky.prototype.initGeometry = function () {
         this.elementHeight = this.element.offsetHeight;
-    }
+    };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, elementRect;
+        var fixedTop, css, stickyHeaderHeight, parentRect;
 
         stickyHeaderHeight = header && header !== this.element ? header.offsetHeight : 0;
         parentRect = this.parent.getBoundingClientRect();
