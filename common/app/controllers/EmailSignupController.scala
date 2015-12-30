@@ -37,6 +37,68 @@ object ListIds {
   val guardianTodayUk = 37
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
+
+  val theBestOfCiF = 2313
+  val theFiver = 218
+  val mediaBriefing = 217
+  val greenLight = 28
+  val povertyMatters = 113
+  val theLongRead = 3322
+  val morningMail = 2636
+  val australianPolitics = 1866
+
+  val theBreakdown = 219
+  val theSpin = 220
+
+  val sleeveNotes = 39
+  val closeUp = 40
+  val filmToday = 1950
+  val bookmarks = 3039
+  val artWeekly = 99
+
+  val zipFile = 1902
+  val theFlyer = 2211
+  val moneyTalks = 1079
+  val fashionStatement = 105
+  val crosswordEditorUpdate = 101
+  val theObserverFoodMonthly = 248
+
+  val firstDogOnTheMoon = 2635
+  val bestOfOpinionAUS = 2976
+  val bestOfOpinionUS = 3228
+
+  val theGuardianMasterclasses = 3561
+  val theGuardianGardener = 3562
+  val theGuardianBookshop = 3563
+
+  val allWithoutTrigger: List[Int] = List(
+    theBestOfCiF,
+    theFiver,
+    mediaBriefing,
+    greenLight,
+    povertyMatters,
+    theLongRead,
+    morningMail,
+    australianPolitics,
+    theBreakdown,
+    theSpin,
+    sleeveNotes,
+    closeUp,
+    filmToday,
+    bookmarks,
+    artWeekly,
+    zipFile,
+    theFlyer,
+    moneyTalks,
+    fashionStatement,
+    crosswordEditorUpdate,
+    theObserverFoodMonthly,
+    firstDogOnTheMoon,
+    bestOfOpinionAUS,
+    bestOfOpinionUS,
+    theGuardianMasterclasses,
+    theGuardianGardener,
+    theGuardianBookshop)
 }
 
 object EmailTypes {
@@ -49,15 +111,14 @@ object EmailForm {
   /**
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
-  val listTriggers = Map(
-    ListIds.testList -> 2529,
-    ListIds.guardianTodayUk -> 2529,
-    ListIds.guardianTodayUs -> 2564,
-    ListIds.guardianTodayAu -> 2563
-  )
+  val listIdsWithMaybeTrigger: Map[Int, Option[Int]] = Map(
+    ListIds.testList -> Some(2529),
+    ListIds.guardianTodayUk -> Some(2529),
+    ListIds.guardianTodayUs -> Some(2564),
+    ListIds.guardianTodayAu -> Some(2563)) ++ controllers.ListIds.allWithoutTrigger.map(_ -> None).toMap
 
   def submit(form: EmailForm): Option[Future[WSResponse]] = {
-    listTriggers.get(form.listId).map { triggeredSendKey =>
+    listIdsWithMaybeTrigger.get(form.listId).map { triggeredSendKey: Option[Int] =>
       WS.url(Configuration.emailSignup.url).post(
         JsObject(Json.obj(
         "email" -> form.email,
@@ -72,7 +133,7 @@ object EmailForm {
   }
 }
 
-object EmailController extends Controller with ExecutionContexts with Logging {
+object EmailSignupController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -87,8 +148,9 @@ object EmailController extends Controller with ExecutionContexts with Logging {
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
-    Cached(60)(Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
-  }
+    EmailForm.listIdsWithMaybeTrigger.lift(listId) match {
+      case Some(_) => Cached(60)(Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+      case None => NotFound(s"List id $listId does not exist")}}
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {

@@ -1,58 +1,61 @@
-@(title: String, path: String)
+@(path: String)
 @import conf.Configuration
 
-<div class="fc-container__inner">
-    <div class="fc-container__header__title">
-        <span>@title</span>
-    </div>
-    @* must be served by localhost, not thegulocal *@
-    <amp-list layout="responsive" height="80" width="320" src="@Configuration.ajax.url/@path">
-        <template type="amp-mustache">
-            <div class="fc-item {{toneClass}}">
-                <div class="fc-item__image-container">
-                    <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
+@* must be served by localhost, not thegulocal *@
+<amp-list layout="responsive" height="80" width="320" src="@Configuration.ajax.url/@path">
+    <template type="amp-mustache">
+        {{#showContent}}
+            <div class="fc-container__inner">
+                <div class="fc-container__header__title">
+                    <span>{{displayName}}</span>
                 </div>
-                <div class="fc-item__content">
-                    <div class="fc-item__header">
-                        <h2 class="fc-item__title">
-                            <span>
-                                {{#isVideo}}
-                                    @fragments.inlineSvg("video-icon", "icon")
-                                {{/isVideo}}
-                                {{#isGallery}}
-                                    @fragments.inlineSvg("camera", "icon")
-                                {{/isGallery}}
-                                {{#isAudio}}
-                                    @fragments.inlineSvg("volume-high", "icon")
-                                {{/isAudio}}
-                                {{#isComment}}
-                                    @fragments.inlineSvg("quote", "icon")
-                                {{/isComment}}
-                            </span>
-                            {{headline}}
-                        </h2>
-                        {{#isComment}}
-                        <div class="fc-item__byline">
-                                                {{byline}}
+                {{#content}}
+                    <div class="fc-item {{toneClass}}">
+                        <div class="fc-item__image-container">
+                            <amp-img src="{{thumbnail}}" layout="fixed" width=126 height=75></amp-img>
                         </div>
-                        {{/isComment}}
+                        <div class="fc-item__content">
+                            <div class="fc-item__header">
+                                <h2 class="fc-item__title">
+                                    <span>
+                                        {{#isVideo}}
+                                            @fragments.inlineSvg("video-icon", "icon")
+                                        {{/isVideo}}
+                                        {{#isGallery}}
+                                            @fragments.inlineSvg("camera", "icon")
+                                        {{/isGallery}}
+                                        {{#isAudio}}
+                                            @fragments.inlineSvg("volume-high", "icon")
+                                        {{/isAudio}}
+                                        {{#isComment}}
+                                            @fragments.inlineSvg("quote", "icon")
+                                        {{/isComment}}
+                                    </span>
+                                    {{headline}}
+                                </h2>
+                                {{#isComment}}
+                                <div class="fc-item__byline">
+                                    {{byline}}
+                                </div>
+                                {{/isComment}}
+                            </div>
+                            <aside class="fc-item__meta">
+                                <time class="fc-item__timestamp" data-relativeformat="short">
+                                    @fragments.inlineSvg("clock", "icon")
+                                    {{#showWebPublicationDate}}
+                                        <span class="timestamp__text">
+                                            <span class="u-h">Published: </span>
+                                            {{webPublicationDate}}
+                                        </span>
+                                    {{/showWebPublicationDate}}
+                                </time>
+                            </aside>
+                        </div>
+                        <a href="{{url}}" class="fc-item__link">{{headline}}</a>
                     </div>
-                    <aside class="fc-item__meta">
-                        <time
-                            class="fc-item__timestamp"
-                            data-relativeformat="short">
-                                @fragments.inlineSvg("clock", "icon")
-                            {{#showWebPublicationDate}}
-                                <span class="timestamp__text">
-                                    <span class="u-h">Published: </span>
-                                    {{webPublicationDate}}
-                                </span>
-                            {{/showWebPublicationDate}}
-                        </time>
-                    </aside>
-                </div>
-                <a href="{{url}}" class="fc-item__link">{{headline}}</a>
+                {{/content}}
             </div>
-        </template>
-    </amp-list>
-</div>
+        {{/showContent}}
+    </template>
+</amp-list>
+

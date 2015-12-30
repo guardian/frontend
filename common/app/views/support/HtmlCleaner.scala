@@ -99,7 +99,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- figure.getElementsByTag("img").headOption
       if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
-      image <- container.largestImage
+      image <- container.images.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
       val relation = if (article.isLiveBlog) {
@@ -128,12 +128,12 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
         index <- Some(article.lightbox.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
-        crop <- container.largestEditorialCrop
+        crop <- container.images.largestEditorialCrop
         if !article.isLiveBlog
       } yield (index, crop)
 
       val html = views.html.fragments.img(
-        container,
+        container.images,
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
@@ -147,16 +147,16 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     body
   }
 
-  def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
+  def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
     val srcImagePath = new java.net.URL(src).getPath()
-    val imageContainers = article.elements.bodyImages.filter(_.id == id)
+    val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
 
     // Try to match the container based on both URL and media ID.
-    val fullyMatchedImage: Option[ImageContainer] = {
+    val fullyMatchedImage: Option[ImageElement] = {
       for {
         container <- imageContainers
-        asset <- container.imageCrops
+        asset <- container.images.imageCrops
         url <- asset.url
         if url.contains(srcImagePath)
       } yield { container }
@@ -410,6 +410,24 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
     if(isImmersive) {
       document.getElementsByTag("a").foreach{ a =>
         a.addClass("in-body-link--immersive")
+      }
+    }
+    document
+  }
+}
+
+case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("h2").foreach{ h2 =>
+        val beforeH2 = h2.previousElementSibling()
+        if (beforeH2 != null) {
+          if(beforeH2.hasClass("element--immersive")) {
+            beforeH2.addClass("section-image")
+            beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
+            h2.remove()
+          }
+        }
       }
     }
     document

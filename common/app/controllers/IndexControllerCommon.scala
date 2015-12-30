@@ -5,7 +5,7 @@ import common._
 import model._
 import performance.MemcachedAction
 import play.api.mvc._
-import services.{FaciaContentConvert, Index, IndexPage}
+import services.{Index, IndexPage}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future

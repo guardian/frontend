@@ -1,18 +1,17 @@
 package model
 
 import com.gu.contentapi.client.model.{Asset, Element => ApiElement}
-import org.joda.time.DateTime
 
 object ImageOverride {
 
-  def createElementWithOneAsset(imageSrc: String, width: Option[String], height: Option[String]): ApiElement = {
+  def createElementWithOneAsset(imageSrc: String, width: Option[String], height: Option[String]): Element = {
     val widthAndHeightMap = (for {
       w <- width
       h <- height
     } yield Map("width" -> w, "height" -> h))
       .getOrElse(Map.empty)
 
-    ApiElement(
+    val contentApiElement = ApiElement(
       id = "override",
       relation = "thumbnail",
       `type` = "image",
@@ -24,9 +23,10 @@ object ImageOverride {
         typeData = widthAndHeightMap
       ))
     )
+    Element(contentApiElement, 0)
   }
 
-  def createElementWithOneAsset(imageSrc: String, width: String, height: String): ApiElement =
+  def createElementWithOneAsset(imageSrc: String, width: String, height: String): Element =
     createElementWithOneAsset(imageSrc, Option(width), Option(height))
 
 }

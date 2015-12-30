@@ -6,7 +6,8 @@ class AdminTestSuite extends Suites (
   new football.SiteControllerTest,
   new football.TablesControllerTest,
   new indexes.TagPagesTest,
-  new services.AdminHealthCheckTest ) with SingleServerSuite {
+  new services.AdminHealthCheckTest,
+  new pagepresser.HtmlCleanerTest  ) with SingleServerSuite {
 
   override lazy val port: Int = controllers.HealthCheck.testPort
 }

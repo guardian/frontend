@@ -1,11 +1,12 @@
 package common.dfp
 
 import com.gu.contentapi.client.model.{Tag => ApiTag}
-import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
 import common.editions.Us
 import model.Tag
+import model.pressed.CollectionConfig
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
@@ -156,7 +157,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   private def apiQuery(apiQuery: String) = {
-    CollectionConfig.fromCollectionJson(CollectionConfigJson.withDefaults(apiQuery = Some(apiQuery)))
+    CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(CollectionConfigJson.withDefaults(apiQuery = Some(apiQuery))))
   }
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {

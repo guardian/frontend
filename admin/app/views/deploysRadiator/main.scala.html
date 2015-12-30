@@ -1,0 +1,15 @@
+@()
+
+@import controllers.admin.routes.UncachedAssets
+
+<!DOCTYPE html>
+<head>
+    <title>Deploys</title>
+    <link rel="stylesheet" href="@Static("deploys-radiator/main.css")">
+</head>
+<body>
+    <script>
+        window.gitHubAccessToken = '@conf.Configuration.github.token';
+    </script>
+    <script src="@Static("deploys-radiator/main.js")"></script>
+</body>

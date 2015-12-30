@@ -438,7 +438,6 @@
     .from-content-api h2 {
         @include fs-headline(5);
         font-weight: 200;
-        padding-bottom: .5em;
 
         @include mq(tablet) {
             @include fs-headline(7, true);

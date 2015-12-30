@@ -171,11 +171,11 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 
 # Email paths
-GET        /email                                                                              controllers.EmailController.renderPage()
-GET        /email/form/$emailType<article|footer>/:listId                                      controllers.EmailController.renderForm(emailType: String, listId: Int)
-GET        /email/:result                                                                      controllers.EmailController.subscriptionResult(result: String)
-POST       /email                                                                              controllers.EmailController.submit()
-OPTIONS    /email                                                                              controllers.EmailController.options()
+GET        /email                                                                              controllers.EmailSignupController.renderPage()
+GET        /email/form/$emailType<article|footer>/:listId                                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
+POST       /email                                                                              controllers.EmailSignupController.submit()
+OPTIONS    /email                                                                              controllers.EmailSignupController.options()
 
 # Weather - OLD
 GET        /weather/city/:id.json                                                              weather.controllers.WeatherController.forCity(id)

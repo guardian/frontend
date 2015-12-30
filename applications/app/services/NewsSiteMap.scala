@@ -76,7 +76,7 @@ object NewsSiteMap extends ExecutionContexts {
         item <- resp.results.map(Content.apply)
       } yield {
         val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
-        val sectionTag = item.content.seriesTag.toList.filter(tag => !keywordTags.contains(tag.sectionName)).map(_.metadata.webTitle)
+        val sectionTag = item.content.seriesTag.toList.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)
         val keywords = (keywordTags ++ sectionTag).mkString(", ")
 
         val genres = item.tags.tones.flatMap(_.metadata.webTitle match {
@@ -86,7 +86,7 @@ object NewsSiteMap extends ExecutionContexts {
           case _ => None
         }).mkString(", ")
 
-        val imageUrl: String = item.elements.mainPicture.flatMap(_.largestEditorialCrop.flatMap(_.url))
+        val imageUrl: String = item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
 
         Url(

@@ -1,7 +1,6 @@
 package services
 
-import com.gu.facia.api.models.{FaciaContent, CollectionConfig}
-import com.gu.facia.api.utils.{CartoonKicker, ReviewKicker, TagKicker}
+import com.gu.facia.api.{models => fapi}
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -9,6 +8,7 @@ import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
 import model.meta.{ItemList, ListItem}
+import model.pressed._
 import org.joda.time.{DateTimeZone, DateTime}
 import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
@@ -144,7 +144,7 @@ object IndexPage {
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
-          case TagKicker(_, _, id) if indexPage.isTagWithId(id) => None
+          case TagKicker(_, _, _, id) if indexPage.isTagWithId(id) => None
           case otherKicker => Some(otherKicker)
         })
       })
@@ -171,7 +171,7 @@ object IndexPageItem {
 }
 case class IndexPageItem(
   item: ContentType,
-  faciaItem: FaciaContent
+  faciaItem: PressedContent
 )
 
 case class IndexPage(
@@ -182,7 +182,7 @@ case class IndexPage(
   tzOverride: Option[DateTimeZone] = None) {
 
   val trails: Seq[Content] = contents.map(_.item.content)
-  val faciaTrails: Seq[FaciaContent] = contents.map(_.faciaItem)
+  val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)
   val commercial: Commercial = Commercial.make(page.metadata, tags)
 
   private def isSectionKeyword(sectionId: String, id: String) = Set(
@@ -209,7 +209,7 @@ case class IndexPage(
 
   def forcesDayView = page match {
     case tag: Tag if tag.metadata.section == "crosswords" => false
-    case tag: Tag => Set("series", "blog").contains(tag.tagType)
+    case tag: Tag => Set("series", "blog").contains(tag.properties.tagType)
     case _ => false
   }
 
