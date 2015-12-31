@@ -120,9 +120,11 @@
     }
 
     .meta__extras--crossword & {
-        border-left: 1px solid colour(neutral-7);
-        float: right;
-        padding-left: $gs-gutter / 2;
+        @include mq(tablet) {
+            border-left: 1px solid colour(neutral-7);
+            float: right;
+            padding-left: $gs-gutter / 2;
+        }
 
         @include mq(leftCol) {
             margin-top: $gs-baseline * -2;
