@@ -146,7 +146,6 @@
     }
 
     position: relative;
-
     top: $gs-baseline * -2;
     font-family: $f-sans-serif-text;
     font-size: 15px;
@@ -164,7 +163,6 @@
     @include mq($from: leftCol) {
         display: none;
     }
-
 }
 
 .crossword__meta-setter {
