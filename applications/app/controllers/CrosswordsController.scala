@@ -57,6 +57,16 @@ object CrosswordPageController extends CrosswordController {
     }
   }
 
+  def printableCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+    withCrossword(crosswordType, id) { (crossword, content) =>
+      Cached(60)(Ok(views.html.printableCrossword(
+        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
+        CrosswordSvg(crossword, None, None, false),
+        new LocalDate().getYear()
+      )))
+    }
+  }
+
   def thumbnail(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, _) =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
