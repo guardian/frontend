@@ -146,6 +146,7 @@
     }
 
     position: relative;
+
     top: $gs-baseline * -2;
     font-family: $f-sans-serif-text;
     font-size: 15px;
@@ -172,8 +173,7 @@
     }
 
     @include mq(mobile, $until: leftCol) {
-        visibility: hidden;
-        height: auto;
+        display: none;
     }
 }
 
