@@ -363,7 +363,7 @@ define([
             if (slots.length === 0) {
                 mediator.off('window:throttledScroll', lazyLoad);
             } else {
-                var scrollTop    = window.pageYOffset,
+                var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;

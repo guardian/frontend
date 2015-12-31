@@ -30,7 +30,10 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "oauth_token", // for generating Magento tokens for bookshop service
     "oauth_verifier", // for generating Magento tokens for bookshop service
     "query", // testing the weather locations endpoint
-    "rel" // used by browsersync
+    "rel", // used by browsersync
+    "pageSize",
+    "projectName",
+    "stage"
   )
 
   val commercialParams = Seq(
