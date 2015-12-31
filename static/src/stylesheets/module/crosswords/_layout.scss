@@ -160,10 +160,17 @@
 }
 
 .crossword__meta-setter {
-    margin-top: ($gs-baseline * 6) + 2;
+    @include mq(leftCol) {
+        margin-top: ($gs-baseline * 6) + 2;
+    }
+
+    @include mq(mobile, $until: leftCol) {
+        visibility: hidden;
+        height: auto;
+    }
 }
 
 .content__dateline-crossword {
-    margin-right: $gs-baseline * 9.5;
-    float: right;
+    min-height: 0px;
+    display: inline;
 }
