@@ -125,10 +125,6 @@
             float: right;
             padding-left: $gs-gutter / 2;
         }
-
-        @include mq(leftCol) {
-            margin-top: $gs-baseline * -2;
-        }
     }
 
     &:last-child {
