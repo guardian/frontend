@@ -25,7 +25,7 @@ define([
         'manual-inline': arguments[8],
         'manual-multiple': arguments[9],
         'manual-single': arguments[10]
-    }
+    };
 
     /**
      * Create simple templated creatives

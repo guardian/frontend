@@ -41,7 +41,7 @@ define([
         templates = {
             content: template(commentCountContentTemplate),
             contentImmersive: template(commentCountContentImmersiveTemplate),
-            default_: template(commentCountTemplate)
+            'default': template(commentCountTemplate)
         };
 
     function getElementsIndexedById(context) {
@@ -76,7 +76,7 @@ define([
                 }
 
                 format = $node.data('commentcount-format');
-                html = (templates[format] || templates.default_).call(null, {
+                html = (templates[format] || templates.default).call(null, {
                     url: url,
                     icon: svgs('commentCount16icon', ['inline-tone-fill']),
                     count: formatters.integerCommas(c.count)
