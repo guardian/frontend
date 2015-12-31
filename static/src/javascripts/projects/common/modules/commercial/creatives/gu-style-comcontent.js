@@ -3,17 +3,15 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
-    'text!common/views/commercial/creatives/gu-style-comcontent.html',
+    'ldsh!common/views/commercial/creatives/gu-style-comcontent',
     'lodash/objects/merge'
 ], function (
     fastdom,
     $,
     detect,
     mediator,
-    template,
     svgs,
     GuStyle,
     gustyleComcontentTpl,
@@ -22,10 +20,6 @@ define([
     var GustyleComcontent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
-
-        if (typeof gustyleComcontentTpl == 'string') {
-            gustyleComcontentTpl = template(gustyleComcontentTpl);
-        }
     };
 
     GustyleComcontent.prototype.create = function () {

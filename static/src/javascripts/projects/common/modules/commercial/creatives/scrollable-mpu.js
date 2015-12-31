@@ -3,15 +3,13 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/scrollable-mpu.html',
+    'ldsh!common/views/commercial/creatives/scrollable-mpu',
     'lodash/functions/bindAll'
 ], function (
     fastdom,
     $,
     detect,
     mediator,
-    template,
     scrollableMpuTpl,
     bindAll) {
 
@@ -21,10 +19,6 @@ define([
     var ScrollableMpu = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
-
-        if (typeof scrollableMpuTpl === 'string') {
-            scrollableMpuTpl = template(scrollableMpuTpl);
-        }
 
         bindAll(this, 'updateBgPosition');
     };

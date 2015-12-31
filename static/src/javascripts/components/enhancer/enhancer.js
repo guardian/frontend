@@ -1,5 +1,5 @@
-define(function () {
-
+define(function (
+) {
     /**
      * Render a DOM Node that supports progressive enhancement via a
      * boot.js script.

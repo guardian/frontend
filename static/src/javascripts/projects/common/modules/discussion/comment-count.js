@@ -6,11 +6,10 @@ define([
     'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/discussion/comment-count.html',
-    'text!common/views/discussion/comment-count--content.html',
-    'text!common/views/discussion/comment-count--content-immersive.html',
+    'ldsh!common/views/discussion/comment-count',
+    'ldsh!common/views/discussion/comment-count--content',
+    'ldsh!common/views/discussion/comment-count--content-immersive',
     'lodash/collections/groupBy',
     'lodash/collections/forEach',
     'lodash/collections/sortBy',
@@ -25,7 +24,6 @@ define([
     ajax,
     formatters,
     mediator,
-    template,
     svgs,
     commentCountTemplate,
     commentCountContentTemplate,
@@ -39,9 +37,9 @@ define([
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
-            content: template(commentCountContentTemplate),
-            contentImmersive: template(commentCountContentImmersiveTemplate),
-            'default': template(commentCountTemplate)
+            content: commentCountContentTemplate,
+            contentImmersive: commentCountContentImmersiveTemplate,
+            'default': commentCountTemplate
         };
 
     function getElementsIndexedById(context) {

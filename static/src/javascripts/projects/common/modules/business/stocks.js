@@ -2,17 +2,15 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/business/stock-value.html',
-    'text!common/views/business/stocks.html',
+    'ldsh!common/views/business/stock-value',
+    'ldsh!common/views/business/stocks',
     'lodash/collections/contains',
     'lodash/collections/map'
 ], function (
     $,
     ajax,
     config,
-    template,
     svgs,
     stockValueTemplate,
     stocksTemplate,
@@ -55,9 +53,6 @@ define([
 
     return function () {
         var $container = $('.js-container--first .js-container__header');
-        if (typeof stockValueTemplate === 'string') {
-            stockValueTemplate = template(stockValueTemplate);
-        }
 
         if (isBusinessFront() && $container) {
             getStocksData().then(function (data) {

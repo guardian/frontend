@@ -4,12 +4,11 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/utils/fastdom-idle',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-api',
-    'text!common/views/commercial/badge.html',
+    'ldsh!common/views/commercial/badge',
     'lodash/collections/map'
 ], function (
     bonzo,
@@ -17,7 +16,6 @@ define([
     Promise,
     $,
     config,
-    template,
     idleFastdom,
     createAdSlot,
     commercialFeatures,
@@ -75,11 +73,6 @@ define([
         init = function () {
             var sponsoredFrontPromise,
                 sponsoredContainersPromise;
-
-            // pre-compile lodash template
-            if (typeof badgeTpl === 'string') {
-                badgeTpl = template(badgeTpl);
-            }
 
             if (!commercialFeatures.badges) {
                 return false;

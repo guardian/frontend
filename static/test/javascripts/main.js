@@ -38,7 +38,8 @@ requirejs.config({
         svgs:         '../inline-svgs',
         // plugins
         text:         'components/requirejs-text/text',
-        inlineSvg:    'projects/common/utils/inlineSvg'
+        inlineSvg:    'projects/common/utils/inlineSvg',
+        ldsh:         'components/lodash-template-loader/loader'
     },
     shim: {
         googletag: {

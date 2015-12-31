@@ -6,9 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-video.html',
+    'ldsh!common/views/commercial/creatives/expandable-video',
     'lodash/objects/merge'
 ], function (
     bean,
@@ -18,7 +17,6 @@ define([
     detect,
     mediator,
     storage,
-    template,
     svgs,
     ExpandableVideoTpl,
     merge) {
@@ -37,10 +35,6 @@ define([
         } else {
             this.closedHeight = 150;
             this.openedHeight = 300;
-        }
-
-        if (typeof ExpandableVideoTpl === 'string') {
-            ExpandableVideoTpl = template(ExpandableVideoTpl);
         }
     };
 

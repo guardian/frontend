@@ -3,22 +3,20 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/live-events-thrasher.html'
+    'ldsh!common/views/commercial/live-events-thrasher'
 ], function (
     bean,
     fastdom,
     $,
     config,
-    template,
     svgs,
     adfreeThrasherTemplate) {
     var AdfreeThrasher = function (options) {
         var opts = options || {};
         this.$container = opts.$container;
 
-        this.thrasherTmpl = template(adfreeThrasherTemplate,
+        this.thrasherTmpl = adfreeThrasherTemplate(
             {
                 surveyHeader: 'Stream all Guardian Live events right from your home',
                 marque36icon: svgs('marque36icon'),

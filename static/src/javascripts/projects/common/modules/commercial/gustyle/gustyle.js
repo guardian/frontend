@@ -1,15 +1,13 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
-    'text!common/views/commercial/gustyle/label.html',
+    'ldsh!common/views/commercial/gustyle/label',
     'lodash/objects/merge'
 ], function (
     fastdom,
     $,
-    template,
     Toggles,
     svgs,
     labelTpl,
@@ -17,10 +15,6 @@ define([
     var Gustyle = function ($slot, params) {
         this.$slot = $slot;
         this.params  = params;
-
-        if (typeof labelTpl === 'string') {
-            labelTpl = template(labelTpl);
-        }
     };
 
     Gustyle.prototype.addLabel = function () {

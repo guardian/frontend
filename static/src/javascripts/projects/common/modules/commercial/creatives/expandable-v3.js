@@ -6,9 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-v3.html',
+    'ldsh!common/views/commercial/creatives/expandable-v3',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (
@@ -19,7 +18,6 @@ define([
     detect,
     mediator,
     storage,
-    template,
     svgs,
     expandableV3Tpl,
     bindAll,
@@ -40,10 +38,6 @@ define([
         } else {
             this.closedHeight = 150;
             this.openedHeight = 300;
-        }
-
-        if (typeof expandableV3Tpl === 'string') {
-            expandableV3Tpl = template(expandableV3Tpl);
         }
 
         bindAll(this, 'updateBgPosition', 'listener');

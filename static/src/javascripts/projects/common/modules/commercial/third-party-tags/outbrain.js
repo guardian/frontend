@@ -4,9 +4,8 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/identity/api',
-    'text!common/views/commercial/outbrain.html',
+    'ldsh!common/views/commercial/outbrain',
     'lodash/collections/contains'
 ], function (
     fastdom,
@@ -14,7 +13,6 @@ define([
     config,
     detect,
     mediator,
-    template,
     identity,
     outbrainTpl,
     contains
@@ -31,11 +29,6 @@ define([
                 widgetCode,
                 widgetCodeImage,
                 widgetCodeText;
-
-            // PRE-COMPILE lodash template
-            if (typeof outbrainTpl === 'string') {
-                outbrainTpl = template(outbrainTpl);
-            }
 
             breakpoint = (contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
             widgetConfig = {

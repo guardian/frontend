@@ -4,8 +4,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250.html',
+    'ldsh!common/views/commercial/creatives/fluid250',
     'lodash/objects/merge'
 ], function (
     bean,
@@ -13,16 +12,11 @@ define([
     $,
     mediator,
     storage,
-    template,
     fluid250Tpl,
     merge) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
-
-        if (typeof fluid250Tpl === 'string') {
-            fluid250Tpl = template(fluid250Tpl);
-        }
     };
 
     Fluid250.prototype.create = function () {

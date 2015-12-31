@@ -1,13 +1,11 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adblock-sticky-message.html'
+    'ldsh!common/views/commercial/adblock-sticky-message'
 ], function (
     fastdom,
     $,
-    template,
     svgs,
     adblockStickyMessage) {
 
@@ -26,10 +24,6 @@ define([
         this.quoteAuthor = opts.quoteAuthor || '';
         this.imageAuthor = opts.imageAuthor || '';
         this.customCssClass = opts.customCssClass || '';
-
-        if (typeof adblockStickyMessage === 'string') {
-            adblockStickyMessage = template(adblockStickyMessage);
-        }
     };
 
     AdblockBanner.prototype.show = function () {

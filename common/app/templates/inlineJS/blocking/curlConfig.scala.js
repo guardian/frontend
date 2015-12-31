@@ -43,7 +43,8 @@ window.curlConfig = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg'
+            inlineSvg:    'projects/common/utils/inlineSvg',
+            ldsh:         'components/lodash-template-loader/loader'
         } else {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',

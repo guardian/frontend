@@ -7,11 +7,10 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'text!common/views/breaking-news.html',
+    'ldsh!common/views/breaking-news',
     'lodash/collections/forEach',
     'lodash/objects/isArray',
     'lodash/collections/filter',
@@ -27,7 +26,6 @@ define([
     ajax,
     config,
     storage,
-    template,
     relativeDates,
     omniture,
     svgs,
@@ -111,7 +109,6 @@ define([
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
                     marque36icon = svgs('marque36icon');
                     closeIcon = svgs('closeCentralIcon');
-                    alertHtml = template(alertHtml);
 
                     forEach(alerts, function (article) {
                         var el;

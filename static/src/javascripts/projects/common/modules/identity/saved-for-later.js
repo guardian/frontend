@@ -6,9 +6,8 @@ define([
     'fastdom',
     'common/utils/config',
     'common/utils/mediator',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/save-for-later/delete-all-button.html'
+    'ldsh!common/views/save-for-later/delete-all-button'
 ], function (
     $,
     qwery,
@@ -17,14 +16,9 @@ define([
     fastdom,
     config,
     mediator,
-    template,
     svgs,
     deleteButtonAllTmp) {
     return function SavedForLater() {
-        if (typeof deleteButtonAllTmp === 'string') {
-            deleteButtonAllTmp = template(deleteButtonAllTmp);
-        }
-
         this.init = function () {
             var self = this,
                 deleteAll = $('.js-save-for-later__delete-all')[0];

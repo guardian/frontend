@@ -5,8 +5,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/expandable.html',
+    'ldsh!common/views/commercial/creatives/expandable',
     'lodash/functions/bindAll'
 ], function (
     bean,
@@ -15,7 +14,6 @@ define([
     $,
     mediator,
     storage,
-    template,
     expandableTpl,
     bindAll) {
 
@@ -28,10 +26,6 @@ define([
         this.isClosed     = true;
         this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
         this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
-
-        if (typeof expandableTpl === 'string') {
-            expandableTpl = template(expandableTpl);
-        }
 
         bindAll(this, 'listener');
     };

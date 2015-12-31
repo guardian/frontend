@@ -10,9 +10,8 @@ define([
     'common/utils/mediator',
     'lodash/functions/debounce',
     'lodash/collections/contains',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html',
+    'ldsh!common/views/email/submissionResponse',
     'common/utils/robust',
     'common/utils/detect'
 ], function (
@@ -27,7 +26,6 @@ define([
     mediator,
     debounce,
     contains,
-    template,
     svgs,
     successHtml,
     robust,
@@ -260,8 +258,6 @@ define([
                     $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
                     $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 } else {
-                    // pre-compile lodash template
-                    successHtml = template(successHtml);
                     // We're loading through the iframe
                     if (rootEl && rootEl.tagName === 'IFRAME') {
                         // We can listen for a lazy load or reload to catch an update

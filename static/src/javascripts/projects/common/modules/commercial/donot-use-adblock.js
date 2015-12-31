@@ -3,14 +3,13 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/commercial/adblock-messages',
     'common/modules/adblock-banner',
     'common/modules/onward/history',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
-    'text!common/views/membership-message.html',
+    'ldsh!common/views/membership-message',
     'common/views/svgs',
     'lodash/collections/sample',
     'lodash/collections/filter',
@@ -20,7 +19,6 @@ define([
     config,
     detect,
     storage,
-    template,
     adblockMsg,
     AdblockBanner,
     history,
@@ -118,8 +116,6 @@ define([
             showAdblockMessage();
             showAdblockBanner();
         }
-
-        messageTemplate = template(messageTemplate);
     }
 
     return {

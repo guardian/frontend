@@ -6,8 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-v4.html',
+    'ldsh!common/views/commercial/creatives/fluid250-v4',
     'lodash/objects/merge'
 ], function (
     bean,
@@ -17,16 +16,11 @@ define([
     detect,
     mediator,
     storage,
-    template,
     fluid250Tpl,
     merge) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
-
-        if (typeof fluid250Tpl === 'string') {
-            fluid250Tpl = template(fluid250Tpl);
-        }
     };
 
     Fluid250.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();

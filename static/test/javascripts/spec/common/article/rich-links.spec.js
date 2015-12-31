@@ -4,16 +4,14 @@ define([
     'helpers/fixtures',
 
     'common/utils/$',
-    'common/utils/template',
 
-    'text!common/views/content/richLinkTag.html'
+    'ldsh!common/views/content/richLinkTag'
 ], function (
     Promise,
     Injector,
     fixtures,
 
     $,
-    template,
 
     richLinkTagTmpl
 ) {
@@ -87,7 +85,7 @@ define([
                         var richLinkElements = getRichLinkElements();
                         expect(richLinkElements.length).toBe(1);
                         expect(richLinkElements[0].outerHTML)
-                            .toBe(template(richLinkTagTmpl, { href: config.page.richLink }).trim());
+                            .toBe(richLinkTagTmpl({ href: config.page.richLink }).trim());
 
                         done();
                     });
@@ -130,7 +128,7 @@ define([
                 describe('given an existing rich link with the same URL', function () {
                     // No need to clean because the parent element is reset after each
                     beforeEach(function () {
-                        var existingRichLinkElement = $.create(template(richLinkTagTmpl, { href: config.page.richLink }));
+                        var existingRichLinkElement = $.create(richLinkTagTmpl({ href: config.page.richLink }));
 
                         articleBodyFixtureElement.append(existingRichLinkElement);
                     });

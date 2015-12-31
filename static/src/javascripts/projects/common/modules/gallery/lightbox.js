@@ -8,18 +8,17 @@ define([
     'common/utils/detect',
     'common/utils/fsm',
     'common/utils/mediator',
-    'common/utils/template',
     'common/utils/url',
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
     'common/views/svgs',
-    'text!common/views/content/block-sharing.html',
-    'text!common/views/content/button.html',
+    'ldsh!common/views/content/block-sharing',
+    'ldsh!common/views/content/button',
+    'ldsh!common/views/content/share-button',
+    'ldsh!common/views/content/share-button-mobile',
     'text!common/views/content/endslate.html',
     'text!common/views/content/loader.html',
-    'text!common/views/content/share-button.html',
-    'text!common/views/content/share-button-mobile.html',
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
@@ -34,7 +33,6 @@ define([
     detect,
     FiniteStateMachine,
     mediator,
-    template,
     url,
     Component,
     blockSharing,
@@ -42,10 +40,10 @@ define([
     svgs,
     blockSharingTpl,
     buttonTpl,
-    endslateTpl,
-    loaderTpl,
     shareButtonTpl,
     shareButtonMobileTpl,
+    endslateHtml,
+    loaderHtml,
     map,
     throttle,
     forEach,
@@ -57,14 +55,6 @@ define([
         this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType === 'Gallery';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
-
-        // PRE-COMPILE LODASH TEMPLATES
-        if (typeof blockSharingTpl === 'string') {
-            blockSharingTpl = template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''));
-            buttonTpl = template(buttonTpl);
-            shareButtonTpl = template(shareButtonTpl);
-            shareButtonMobileTpl = template(shareButtonMobileTpl);
-        }
 
         // TEMPLATE
         function generateButtonHTML(label) {
@@ -251,7 +241,7 @@ define([
                 $img = bonzo(this.$images[i]);
                 if (!$img.attr('src')) {
                     $img.parent()
-                        .append(bonzo.create(loaderTpl));
+                        .append(bonzo.create(loaderHtml));
 
                     $img.attr('src', imageContent.src);
                     $img.attr('srcset', imageContent.srcsets);
@@ -500,7 +490,7 @@ define([
 
     GalleryLightbox.prototype.loadEndslate = function () {
         if (!this.endslate.rendered) {
-            this.endslateEl = bonzo.create(endslateTpl);
+            this.endslateEl = bonzo.create(endslateHtml);
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';

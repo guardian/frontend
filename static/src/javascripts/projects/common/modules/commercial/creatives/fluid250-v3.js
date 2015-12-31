@@ -6,8 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-v3.html',
+    'ldsh!common/views/commercial/creatives/fluid250-v3',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (
@@ -18,17 +17,12 @@ define([
     detect,
     mediator,
     storage,
-    template,
     fluid250Tpl,
     bindAll,
     merge) {
     var Fluid250 = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
-
-        if (typeof fluid250Tpl === 'string') {
-            fluid250Tpl = template(fluid250Tpl);
-        }
 
         bindAll(this, 'updateBgPosition');
     };

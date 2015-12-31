@@ -4,11 +4,10 @@ define([
     'common/utils/ajax',
     'common/utils/storage',
     'common/modules/ui/relativedates',
-    'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'text!facia/views/liveblog-block.html',
+    'ldsh!facia/views/liveblog-block',
     'lodash/arrays/compact',
     'lodash/objects/isUndefined',
     'lodash/collections/forEach',
@@ -23,7 +22,6 @@ define([
     ajax,
     storage,
     relativeDates,
-    template,
     mediator,
     detect,
     fastdomPromise,
@@ -153,8 +151,6 @@ define([
     }
 
     function show() {
-        // pre-compile lodash template
-        blockTemplate = template(blockTemplate);
         return fastdomPromise.read(function () {
             var elementsById = {};
 

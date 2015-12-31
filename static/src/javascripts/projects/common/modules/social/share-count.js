@@ -5,10 +5,9 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/formatters',
-    'common/utils/template',
     'common/views/svgs',
     'text!common/views/content/share-count.html',
-    'text!common/views/content/share-count-immersive.html'
+    'ldsh!common/views/content/share-count-immersive'
 ], function (
     reportError,
     $,
@@ -16,7 +15,6 @@ define([
     detect,
     config,
     formatters,
-    template,
     svgs,
     shareCountTemplate,
     shareCountImmersiveTemplate
@@ -25,7 +23,9 @@ define([
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
-        tooltip = template('Facebook: <%=facebook%>'),
+        tooltip = function (data) {
+            return 'Facebook: ' + data.facebook;
+        },
         counts = {
             facebook: 'n/a'
         };
@@ -78,9 +78,6 @@ define([
     }
 
     return function () {
-        // pre-compile lodash template
-        shareCountImmersiveTemplate = template(shareCountImmersiveTemplate);
-
         // asking for social counts in preview "leaks" upcoming URLs to social sites.
         // when they then crawl them they get 404s which affects later sharing.
         // don't call counts in preview

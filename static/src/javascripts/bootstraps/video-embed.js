@@ -8,7 +8,6 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
-    'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/component',
     'common/modules/video/tech-order',
@@ -16,7 +15,7 @@ define([
     'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html',
+    'ldsh!common/views/media/titlebar',
     'lodash/functions/debounce'
 ], function (
     bean,
@@ -27,7 +26,6 @@ define([
     $,
     config,
     deferToAnalytics,
-    template,
     omniture,
     Component,
     techOrder,
@@ -63,9 +61,6 @@ define([
             pageId: config.page.pageId,
             icon: svgs('marque36icon')
         };
-        if (typeof titlebarTmpl === 'string') {
-            titlebarTmpl = template(titlebarTmpl);
-        }
         $('.vjs-control-bar').after(titlebarTmpl(data));
         bean.on($('.vjs-title-bar')[0], 'click', function (e) {
             omniture.logTag({

@@ -6,12 +6,11 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/utils/storage',
     'common/utils/url',
     'common/modules/experiments/ab',
-    'text!common/views/history/tag.html',
-    'text!common/views/history/mega-nav.html',
+    'ldsh!common/views/history/tag',
+    'ldsh!common/views/history/mega-nav',
     'lodash/objects/isObject',
     'lodash/objects/isNumber',
     'lodash/collections/find',
@@ -32,7 +31,6 @@ define([
     fastdom,
     $,
     config,
-    template,
     storage,
     url,
     ab,
@@ -102,10 +100,6 @@ define([
 
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
-
-    // pre-compile lodash templates
-    viewTag = template(viewTag);
-    viewMegaNav = template(viewMegaNav);
 
     function saveHistory(history) {
         historyCache = history;

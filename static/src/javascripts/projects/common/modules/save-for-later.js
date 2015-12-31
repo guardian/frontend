@@ -7,11 +7,12 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html',
+    'ldsh!common/views/save-for-later/save-link',
+    'ldsh!common/views/save-for-later/save-button',
+    'ldsh!common/views/save-for-later/save-url',
+    'ldsh!common/views/save-for-later/save-article-url',
     'lodash/functions/bindAll',
     'lodash/objects/assign',
     'lodash/collections/forEach',
@@ -26,11 +27,12 @@ define([
     detect,
     config,
     mediator,
-    template,
     identity,
     svgs,
     saveLink,
     saveButton,
+    saveUrl,
+    saveArticleUrl,
     bindAll,
     assign,
     forEach,
@@ -60,12 +62,6 @@ define([
 
         this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
-
-        // pre-compile lodash templates
-        if (typeof saveLink === 'string') {
-            saveLink = template(saveLink);
-            saveButton = template(saveButton);
-        }
 
         bindAll(this,
             'save',
@@ -117,7 +113,7 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = template('<%= idUrl%>/save-content?INTCMP=DOTCOM_ARTICLE_SFL&returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                var url = saveUrl({
                     idUrl: config.page.idUrl,
                     returnUrl: encodeURIComponent(document.location.href),
                     shortUrl: shortUrl,
@@ -357,7 +353,7 @@ define([
     };
 
     SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
-        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
+        var url = saveArticleUrl({
             idUrl: config.page.idUrl,
             returnUrl: encodeURIComponent(document.location.href),
             shortUrl: shortUrl,

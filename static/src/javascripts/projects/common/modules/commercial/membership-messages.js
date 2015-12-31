@@ -1,9 +1,8 @@
 define([
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/ui/message',
-    'text!common/views/membership-message.html',
+    'ldsh!common/views/membership-message',
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
@@ -11,7 +10,6 @@ define([
 ], function (
     config,
     storage,
-    template,
     Message,
     messageTemplate,
     svgs,
@@ -87,8 +85,6 @@ define([
     }
 
     function init() {
-        messageTemplate = template(messageTemplate);
-
         var message = messages[config.page.edition];
         if (message && canShow(message)) {
             show(config.page.edition, message);

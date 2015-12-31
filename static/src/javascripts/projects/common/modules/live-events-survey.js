@@ -3,19 +3,17 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/live-events-survey.html'
+    'ldsh!common/views/commercial/live-events-survey'
 ], function (
     bean,
     fastdom,
     $,
     config,
-    template,
     svgs,
     adfreeSurveyTemplate) {
     var AdfreeSurvey = function () {
-        this.bannerTmpl = template(adfreeSurveyTemplate,
+        this.bannerTmpl = adfreeSurveyTemplate(
             {
                 surveyHeader: 'Live stream all the Guardian Live events',
                 surveyText: 'From <em>£5 a month</em> join exclusive Guardian events, watch the debates that shape our stories and support our journalism.',
@@ -46,4 +44,3 @@ define([
 
     return AdfreeSurvey;
 });
-

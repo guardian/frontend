@@ -1,9 +1,8 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
-    'text!common/views/commercial/creatives/logo-foundation-funded.html',
-    'text!common/views/commercial/creatives/logo-foundation-funded-partners.html'
+    'ldsh!common/views/commercial/creatives/logo-foundation-funded',
+    'ldsh!common/views/commercial/creatives/logo-foundation-funded-partners'
 ], function (
     $,
     config,
@@ -32,10 +31,6 @@ define([
 
     Template.prototype.create = function () {
         var templateName = 'logo-foundation-funded' + (this.params.hasPartners ? '-partners' : '');
-        if (typeof templates[templateName] === 'string') {
-            templates[templateName] = template(templates[templateName]);
-        }
-
         var creativeHtml = templates[templateName](this.params);
 
         $.create(creativeHtml)
