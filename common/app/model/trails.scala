@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.{model => contentapi}
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import implicits.Dates._
 import org.joda.time.DateTime
 import org.jsoup.Jsoup

@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.{model => contentapi}
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -19,7 +19,7 @@ object Commercial {
     model.Commercial(
       tags = tags,
       metadata = metadata,
-      isInappropriateForSponsorship = apiContent.safeFields.get("isInappropriateForSponsorship").exists(_.toBoolean),
+      isInappropriateForSponsorship = apiContent.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false),
       sponsorshipTag = DfpAgent.sponsorshipTag(tags.tags, section),
       isFoundationSupported = DfpAgent.isFoundationSupported(tags.tags, section),
       isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags.tags, section),
@@ -80,15 +80,15 @@ final case class Commercial(
 object Fields {
   def make(apiContent: contentapi.Content) = {
     Fields (
-      trailText = apiContent.safeFields.get("trailText"),
+      trailText = apiContent.fields.flatMap(_.trailText),
       linkText = apiContent.webTitle,
-      shortUrl = apiContent.safeFields.getOrElse("shortUrl", ""),
-      standfirst = apiContent.safeFields.get("standfirst"),
-      main = apiContent.safeFields.getOrElse("main",""),
-      body = apiContent.safeFields.getOrElse("body",""),
-      lastModified = apiContent.safeFields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now),
-      displayHint = apiContent.safeFields.getOrElse("displayHint", ""),
-      isLive = apiContent.safeFields.get("liveBloggingNow").exists(_.toBoolean)
+      shortUrl = apiContent.fields.flatMap(_.shortUrl).getOrElse(""),
+      standfirst = apiContent.fields.flatMap(_.standfirst),
+      main = apiContent.fields.flatMap(_.main).getOrElse(""),
+      body = apiContent.fields.flatMap(_.body).getOrElse(""),
+      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.dateTime.toString.parseISODateTime).getOrElse(DateTime.now),
+      displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
+      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
     )
   }
 }
@@ -166,10 +166,10 @@ object MetaData {
       webUrl = apiContent.webUrl,
       section = section,
       webTitle = apiContent.webTitle,
-      membershipAccess = apiContent.safeFields.get("membershipAccess"),
+      membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
       analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section,
-      description = apiContent.safeFields.get("trailText"),
+      description = apiContent.fields.flatMap(_.trailText),
       cacheSeconds = {
         if (fields.isLive) 5
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 10

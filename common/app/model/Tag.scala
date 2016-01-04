@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast => ApiPodcast, Reference => ApiReference}
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag, Podcast => ApiPodcast, Reference => ApiReference}
 import common.{RelativePathEscaper, Pagination}
 import conf.Configuration
 import contentapi.SectionTagLookUp
@@ -120,7 +120,7 @@ object TagProperties {
     TagProperties(
       id = tag.id,
       url = SupportedUrl(tag),
-      tagType = tag.`type`,
+      tagType = tag.`type`.name,
       sectionId = tag.sectionId.getOrElse("global"),
       sectionName = tag.sectionName.getOrElse("global"),
       webTitle = tag.webTitle,
