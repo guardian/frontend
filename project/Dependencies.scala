@@ -26,7 +26,7 @@ object Dependencies {
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val contentApiClient = "com.gu" %% "content-api-client" % "6.10"
+  val contentApiClient = "com.gu" %% "content-api-client" % "7.11"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.4.1"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
