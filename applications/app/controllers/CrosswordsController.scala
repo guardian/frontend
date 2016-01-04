@@ -59,7 +59,7 @@ object CrosswordPageController extends CrosswordController {
 
   def printableCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(60)(Ok(views.html.printableCrossword(
+      Cached(3.days)(Ok(views.html.printableCrossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         CrosswordSvg(crossword, None, None, false),
         new LocalDate().getYear()
