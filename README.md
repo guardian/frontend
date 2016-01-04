@@ -212,7 +212,7 @@ This also can take a while the first time.
 
 Now check that you are up and running by hitting the following URLs:
 
-* [http://localhost:9000/film](http://localhost:9000/film)
+* [http://localhost:9000/media](http://localhost:9000/media)
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 
