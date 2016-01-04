@@ -24,9 +24,18 @@ $c-accent: colour(comment-main-2);
         z-index: 8;
         @include f-headline;
         font-weight: 200;
-        font-size: 88px;
-        line-height: 96px;
+        font-size: 72px;
+        line-height: 80px;
         margin-left: $gs-gutter;
+
+        @include mq(desktop) {
+            font-size: 77px;
+            line-height: 96px;
+        }
+
+        @include mq(leftCol) {
+            font-size: 88px;
+        }
     }
 
     .title--first {
@@ -35,7 +44,10 @@ $c-accent: colour(comment-main-2);
 
     .title--second {
         color: $c-black;
-        text-indent: $gs-gutter * 2;
+
+        @include mq(leftCol) {
+            text-indent: $gs-gutter * 2;
+        }
     }
 
     .description {
@@ -51,14 +63,21 @@ $c-accent: colour(comment-main-2);
         position: absolute;
         z-index: 5;
         top: 0;
-        height: gs-height(2);
+        height: 72px;
         width: 100%;
+
+        @include mq(tablet) {
+            height: gs-height(2);
+        }
     }
 
     .stripe--blue {
         background-color: $c-dark-blue;
-        width: 140%;
-        margin-left: -(gs-span(2));
+
+        @include mq(tablet) {
+            width: 140%;
+            margin-left: -(gs-span(2));
+        }
     }
 
     .grid .stripe--blue {
@@ -68,21 +87,38 @@ $c-accent: colour(comment-main-2);
     }
 
     .stripe--white {
+        width: calc(100% - 20px);
+        top: $gs-baseline * 7;
         background-color: #ffffff;
-        top: gs-height(2) + $gs-baseline;
+
+        @include mq(tablet) {
+            top: gs-height(2) + $gs-baseline;
+        }
+
+        @include mq(leftCol) {
+            margin-left: $gs-gutter;
+        }
     }
 
     .grid .stripe--white {
         width: gs-span(2);
-        left: $gs-gutter;
         z-index: 2;
+        margin-left: $gs-gutter;
     }
 
     .line {
         position: relative;
         z-index: 10;
         top: -$gs-baseline;
-        left: 40px;
+        left: 200px;
+
+        @include mq(leftCol) {
+            left: 120px;
+        }
+
+        @include mq(wide) {
+            left: 40px;
+        }
     }
 
     .line__image {
@@ -114,12 +150,21 @@ $c-accent: colour(comment-main-2);
         top: 0;
         bottom: 0;
         right: 0;
-        width: gs-span(10) + ($gs-gutter * 2);
+        width: gs-span(8) + ($gs-gutter * 2);
         background-color: #9be2de;
         list-style: none;
         margin: 0;
         padding: 0;
         overflow: hidden;
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+
+        @include mq(wide) {
+            width: gs-span(10) + ($gs-gutter * 2);
+        }
     }
 
     .hand {
@@ -132,13 +177,21 @@ $c-accent: colour(comment-main-2);
     }
 
     .hand--left {
-        left: 0;
+        left: -60px;
         transform: translateY(-40px);
+
+        @include mq(wide) {
+            right: 0;
+        }
     }
 
     .hand--right {
-        right: 0;
+        right: -130px;
         transform: translateY(40px);
+
+        @include mq(wide) {
+            right: 0;
+        }
     }
 
     @keyframes handFade {
