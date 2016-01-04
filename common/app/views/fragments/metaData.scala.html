@@ -7,6 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
+@import conf.switches.Switches.AmpSwitch
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -35,7 +36,7 @@
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
     @Page.getContentPage(page).map { content =>
-        @if(content.item.tags.isArticle && !content.item.tags.isLiveBlog && !content.metadata.isImmersive) {
+        @if(content.item.tags.isArticle && !content.item.tags.isLiveBlog && !content.metadata.isImmersive && AmpSwitch.isSwitchedOn) {
             <link rel="amphtml" href="@LinkTo{/@page.metadata.id/amp}">
         }
     }
