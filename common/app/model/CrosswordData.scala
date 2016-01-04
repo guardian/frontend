@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
@@ -33,7 +33,14 @@ object Entry {
     entry.length.getOrElse(0),
     entry.group.getOrElse(Seq()),
     entry.position.getOrElse(CrosswordPosition(0,0)),
-    entry.separatorLocations,
+    entry.separatorLocations.map(separatorLocations => (
+      separatorLocations.map(separatorLocation => (
+        for (
+          separator <- separatorLocation.separator;
+          locations <- separatorLocation.locations
+        ) yield (separator, locations)
+      )).flatten.toMap
+    )),
     entry.solution
   )
 }
@@ -114,10 +121,10 @@ object CrosswordData {
       crossword.number,
       crossword.name,
       crossword.creator,
-      dateFormatUTC.parseDateTime(crossword.date),
+      dateFormatUTC.parseDateTime(crossword.date.dateTime.toString),
       sortedNewEntries,
       crossword.dimensions,
-      crossword.`type`,
+      crossword.`type`.name,
       crossword.pdf,
       crossword.instructions
     )
