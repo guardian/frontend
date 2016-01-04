@@ -139,6 +139,9 @@ define([
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
                     sticky.init();
+                    config.page.hasStickyHeader = true;
+                } else {
+                    config.page.hasStickyHeader = false;
                 }
             },
 
