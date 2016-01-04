@@ -18,7 +18,10 @@ var stripTrailing = function(prop) {
 
 // Define the plugin using the CommonJS syntax.
 define(function(require, exports) {
-  var _ = require("lodash/main");
+  var template = require("lodash/utilities/template");
+  var clone    = require("lodash/objects/clone");
+  var extend   = require("lodash/objects/assign");
+  var templateSettings = require("lodash/utilities/templateSettings");
 
   exports.version = "1.0.1";
 
@@ -68,7 +71,7 @@ define(function(require, exports) {
 
       // Read in the file synchronously, as RequireJS expects, and return the
       // contents.  Process as a Lo-Dash template.
-      buildMap[name] = _.template(contents);
+      buildMap[name] = template(contents);
 
       return load();
     }
@@ -79,13 +82,13 @@ define(function(require, exports) {
     // Wait for it to load.
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
-        var templateSettings = _.clone(settings.templateSettings);
+        var templateSettings = clone(settings.templateSettings);
 
         // Attach the sourceURL.
         templateSettings.sourceURL = url;
 
         // Process as a Lo-Dash template and cache.
-        buildMap[name] = _.template(xhr.responseText);
+        buildMap[name] = template(xhr.responseText);
 
         // Return the compiled template.
         load(buildMap[name]);
@@ -135,7 +138,7 @@ define(function(require, exports) {
 
   function configure(config) {
     // Default settings point to the project root and using html files.
-    var settings = _.extend({
+    var settings = extend({
       ext: ".html",
       root: config.baseUrl,
       templateSettings: {}
@@ -149,7 +152,7 @@ define(function(require, exports) {
     }
 
     // Set the custom passed in template settings.
-    _.extend(_.templateSettings, settings.templateSettings);
+    extend(templateSettings, settings.templateSettings);
 
     return settings;
   }
