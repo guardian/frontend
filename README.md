@@ -393,3 +393,4 @@ Further documentation notes and useful items can be found in [docs](docs).
 - [sbteclipse](https://github.com/typesafehub/sbteclipse)
 - [sbt-idea](https://github.com/mpeltonen/sbt-idea)
 - [magenta](https://github.com/guardian/deploy)
+ignore this bit of text
