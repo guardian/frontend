@@ -178,7 +178,7 @@
 
 .meta__extras--crossword {
     .meta__numbers {
-        border-bottom: 0;
+        border-bottom: 0 none;
         padding-bottom: 0;
     }
 
@@ -187,6 +187,6 @@
 .content__dateline-crossword {
     min-height: 0px;
     display: inline;
-    border-top: none;
+    border-top: 0;
 }
 
