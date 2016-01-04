@@ -555,6 +555,23 @@
         min-height: 0;
         padding-bottom: 0;
     }
+
+    .content__labels--crossword & {
+        @include mq(leftCol) {
+            margin-top: ($gs-baseline * 6) + 2;
+        }
+
+        @include mq(mobile, $until: leftCol) {
+            display: none;
+        }
+
+    }
+
+    .crossword__links & {
+        @include mq($from: leftCol) {
+            display: none;
+        }
+    }
 }
 
 .drop-cap {

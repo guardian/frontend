@@ -160,22 +160,6 @@
     margin: $gs-baseline 0;
 }
 
-.crossword__setter {
-    @include mq($from: leftCol) {
-        display: none;
-    }
-}
-
-.crossword__meta-setter {
-    @include mq(leftCol) {
-        margin-top: ($gs-baseline * 6) + 2;
-    }
-
-    @include mq(mobile, $until: leftCol) {
-        display: none;
-    }
-}
-
 .meta__extras--crossword {
     .meta__numbers {
         border-bottom: 0 none;
