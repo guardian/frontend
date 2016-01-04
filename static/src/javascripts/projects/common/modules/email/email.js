@@ -9,10 +9,12 @@ define([
     'Promise',
     'common/utils/mediator',
     'lodash/functions/debounce',
+    'lodash/collections/contains',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/utils/detect'
 ], function (
     formInlineLabels,
     bean,
@@ -24,10 +26,12 @@ define([
     Promise,
     mediator,
     debounce,
+    contains,
     template,
     svgs,
     successHtml,
-    robust
+    robust,
+    detect
 ) {
     var omniture;
 
@@ -249,19 +253,25 @@ define([
     return {
             updateForm: ui.updateForm,
             init: function (rootEl) {
-
-                // We're loading through the iframe
-                if (rootEl && rootEl.tagName === 'IFRAME') {
-                    // We can listen for a lazy load or reload to catch an update
-                    setup(rootEl, rootEl.contentDocument.body, true);
-                    bean.on(rootEl, 'load', function () {
-                        setup(rootEl, rootEl.contentDocument.body, true);
-                    });
-
+                var browser = detect.getUserAgent.browser,
+                    version = detect.getUserAgent.version;
+                // If we're in lte IE9, don't run the init and adjust the footer
+                if (browser === 'MSIE' && contains(['7','8','9'], version + '')) {
+                    $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
+                    $('.js-footer__email-container', '.js-footer__secondary').addClass('is-hidden');
                 } else {
-                    setup(rootEl, rootEl || document, false);
-                }
+                    // We're loading through the iframe
+                    if (rootEl && rootEl.tagName === 'IFRAME') {
+                        // We can listen for a lazy load or reload to catch an update
+                        setup(rootEl, rootEl.contentDocument.body, true);
+                        bean.on(rootEl, 'load', function () {
+                            setup(rootEl, rootEl.contentDocument.body, true);
+                        });
 
+                    } else {
+                        setup(rootEl, rootEl || document, false);
+                    }
+                }
             }
         };
 });

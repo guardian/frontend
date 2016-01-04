@@ -13,7 +13,7 @@
             height="3"
             layout="responsive"
         >
-            @player.video.encodings.map { encoding =>
+            @player.video.videos.encodings.map { encoding =>
                 @defining(AmpVideoSrcCleaner(VideoEncodingUrlCleaner(encoding.url))) { url =>
                     <source src='@url' type="@encoding.format" />
                 }
@@ -33,19 +33,19 @@
                 data-auto-play="@player.autoPlay"
                 data-show-end-slate="@(player.showEndSlate && showEndSlate)"
                 poster="@player.poster"
-                data-duration="@player.video.duration.toString()"
-                data-media-id="@player.video.id"
+                data-duration="@player.video.videos.duration.toString()"
+                data-media-id="@player.video.properties.id"
                 data-end-slate="@player.endSlatePath"
                 data-block-video-ads="@player.blockVideoAds"
-                data-embeddable="@player.video.embeddable"
+                data-embeddable="@player.video.videos.embeddable"
                 @player.embedPath.map{ p => data-embed-path="@p" }
                 preload="none"
             >
-                @player.video.encodings.map { encoding =>
+                @player.video.videos.encodings.map { encoding =>
                     <source src="@VideoEncodingUrlCleaner(encoding.url)" type="@encoding.format" />
                 }
 
-                @player.video.encodings.find(_.format == "video/mp4").map { encoding =>
+                @player.video.videos.encodings.find(_.format == "video/mp4").map { encoding =>
                     <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement-cdn.swf")" width="@player.width" height="@player.height">
                         <param name="allowFullScreen" value="true" />
                         <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />

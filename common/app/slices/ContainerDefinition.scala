@@ -1,6 +1,6 @@
 package slices
 
-import com.gu.facia.api.models.FaciaContent
+import model.pressed.PressedContent
 
 sealed trait MobileShowMore
 
@@ -24,11 +24,14 @@ object ContainerDefinition {
     customCssClasses = Set.empty
   )
 
-  def fromContainer(container: Container, items: Seq[FaciaContent]) = container match {
+  def fromContainer(container: Container, items: Seq[PressedContent]) = container match {
     case Dynamic(dynamicContainer) =>
       dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
 
     case Fixed(containerDefinition) => Some(containerDefinition)
+
+    case Commercial(SingleCampaign(containerDefinition)) => Some(containerDefinition)
+    case Commercial(MultiCampaign(containerDefinition)) => Some(containerDefinition)
 
     case _ => None
   }

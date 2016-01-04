@@ -53,7 +53,6 @@ object Dependencies {
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.0"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_2-4-0" % "0.2.6"
-  val playJsonVariants = "org.julienrf" %% "play-json-variants" % "0.2"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"
   val romeModules = "org.rometools" % "rome-modules" % "1.0"

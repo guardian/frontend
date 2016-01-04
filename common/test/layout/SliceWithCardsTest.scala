@@ -1,7 +1,7 @@
 package layout
 
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports

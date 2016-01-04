@@ -43,7 +43,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
   def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
     val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == NewspaperQuery.FRONT_PAGE_DISPLAY_NAME)
-    frontContainer.flatMap(_.contentItems).isEmpty && otherContainer.flatMap(_.contentItems).isEmpty
+    frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
   def allOn(path: String, day: String, month: String, year: String) = Action {

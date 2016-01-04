@@ -1,10 +1,9 @@
 package test
 
-import com.gu.facia.api.models.CollectionConfig
-import com.gu.facia.api.models.FaciaContent
 import common.editions.{Au, Uk, Us}
 import common.{AkkaAgent, Edition}
 import controllers.front.Front
+import model.pressed.{CollectionConfig, PressedContent}
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
@@ -12,7 +11,7 @@ import services.FaciaContentConvert
 import com.gu.contentapi.client.model.{Content => ApiContent}
 
 object TestContent {
-  def newFaciaContent(u: String): FaciaContent = {
+  def newFaciaContent(u: String): PressedContent = {
     val content = ApiContent(
       id = u,
       sectionId = None,
@@ -77,11 +76,11 @@ trait FaciaTestData extends ModelHelper {
     )
 
 
-  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map TestContent.newFaciaContent
-  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map TestContent.newFaciaContent
-  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map TestContent.newFaciaContent
+  val ukFrontTrails: Seq[PressedContent]= ukFrontTrailIds map TestContent.newFaciaContent
+  val usFrontTrails: Seq[PressedContent]= usFrontTrailIds map TestContent.newFaciaContent
+  val auFrontTrails: Seq[PressedContent]= auFrontTrailIds map TestContent.newFaciaContent
 
-  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map TestContent.newFaciaContent
+  val cultureFrontTrails: Seq[PressedContent] = cultureTrailIds map TestContent.newFaciaContent
 
   val ukFaciaPage: PressedPage = PressedPage(
     id = "uk",

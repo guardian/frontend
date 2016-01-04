@@ -9,7 +9,7 @@ define([
         this.expiry = '2016-01-07';
         this.author = 'John Duffell';
         this.description = 'gets related content from the top tags instead of the content';
-        this.audience = 0.0;
+        this.audience = 0.02;
         this.audienceOffset = 0.2;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
