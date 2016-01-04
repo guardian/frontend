@@ -61,4 +61,4 @@ window.guardian = {
 @@*/
 
 // must always be set before the Omniture file is parsed
-window.s_account = '@OmnitureAnalyticsAccount(page)';
+window.s_account = '@OmnitureAnalyticsAccount(page.metadata)';
