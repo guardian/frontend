@@ -16,7 +16,7 @@
             <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
             @if( gridVisable ) {
                 <div class="crossword__links">
-                    <a target="_blank" href="@LinkTo(s"/crosswords/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}/print")">Print</a>
+                    <a target="_blank" href="@LinkTo(s"/crosswords/print/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Print</a>
 
                     @crosswordPage.crossword.pdf.map { pdf =>
                             | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
