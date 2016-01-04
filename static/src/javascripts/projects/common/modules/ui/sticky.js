@@ -11,14 +11,11 @@ define([
     fastdom,
     defaults) {
 
-    var header = config.switches.viewability
-        && !(config.page.isProd && config.page.contentType === 'Interactive')
-        && config.page.contentType !== 'Crossword'
-        && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
-        && config.page.pageId !== 'offline-page' ?
-        document.querySelector('.js-navigation') :
-        config.switches.newCommercialContent && config.page.isAdvertisementFeature ?
+    var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
+    var header = isNewCommercialContent ?
         document.querySelector('.paidfor-band') :
+        config.page.hasStickyHeader ?
+        document.querySelector('.js-navigation') :
         null;
 
     /**
