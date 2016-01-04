@@ -143,12 +143,13 @@
 .crossword__links {
     @include mq(leftCol) {
         top: $gs-baseline * -2;
+        padding-bottom: $gs-baseline / 3;
     }
 
     position: relative;
     top: $gs-baseline * -2;
     font-family: $f-sans-serif-text;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .js-crossword-link {
@@ -175,7 +176,17 @@
     }
 }
 
+.meta__extras--crossword {
+    .meta__numbers {
+        border-bottom: 0 none;
+        padding-bottom: 0;
+    }
+
+}
+
 .content__dateline-crossword {
     min-height: 0px;
     display: inline;
+    border-top: none;
 }
+

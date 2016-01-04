@@ -1,0 +1,11 @@
+@(crosswordPage: crosswords.CrosswordPage)
+@crosswordPage.crossword.creator.map { creator =>
+
+	<div class="crossword__meta-setter">
+	    <p class="byline" data-link-name="byline" data-component="meta-byline">
+	    Set by: <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+	        <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="crossword-creator" href="@creator.webUrl"><span itemprop="name">@creator.name</span></a>
+	    </span>
+	    </p>
+	</div>
+}
