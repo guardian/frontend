@@ -1,10 +1,12 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordCreator, CrosswordDimensions, Crossword}
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
+
+case class CrosswordPosition(x: Int, y: Int)
 
 object Entry {
   implicit val positionWrites = Json.writes[CrosswordPosition]
@@ -32,7 +34,7 @@ object Entry {
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
     entry.group.getOrElse(Seq()),
-    entry.position.getOrElse(CrosswordPosition(0,0)),
+    entry.position.map(position => CrosswordPosition(position.x, position.y)).getOrElse(CrosswordPosition(0,0)),
     entry.separatorLocations.map(separatorLocations => (
       separatorLocations.map(separatorLocation => (
         for (
