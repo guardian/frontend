@@ -59,9 +59,9 @@ Install each of the things listed below:
 
 #### Configuration files
 
-You need 3 files on your machine.
+You need 4 files on your machine.
 
-1. `/etc/gu/install_vars`
+* `/etc/gu/install_vars`
 ```
 STAGE=DEV
 ```
@@ -71,6 +71,13 @@ STAGE=DEV
 	[frontend.properties](https://drive.google.com/a/guardian.co.uk/#search/frontend.properties) contains the content.
 
     Ask your team mates to share it with you if you don't get any results.
+
+* `~/.aws/config`
+
+```
+[profile nextgen]
+region = eu-west-1
+```
 
 * `~/.aws/credentials`
 
