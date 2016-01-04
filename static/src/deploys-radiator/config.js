@@ -34,6 +34,7 @@ System.config({
     "core-js": "npm:core-js@1.2.6",
     "hyperscript-helpers": "npm:hyperscript-helpers@2.0.2",
     "immutable": "npm:immutable@3.7.6",
+    "monapt": "npm:monapt@0.5.0",
     "ts": "github:frankwallis/plugin-typescript@2.4.3",
     "virtual-dom": "npm:virtual-dom@2.1.1",
     "github:frankwallis/plugin-typescript@2.4.3": {
