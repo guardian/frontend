@@ -1,6 +1,6 @@
 package contentapi
 
-import com.gu.contentapi.client.model.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, AssetType, TagType, ElementType}
 
 /** Quite often we base tests on pieces of content from Content API, where we only care that a few of the fields are
   * set.
@@ -12,7 +12,7 @@ object FixtureTemplates {
     id = "",
     sectionId = None,
     sectionName = None,
-    webPublicationDateOption = None,
+    webPublicationDate = None,
     webTitle = "",
     webUrl = "",
     apiUrl = "",
@@ -21,7 +21,7 @@ object FixtureTemplates {
 
   val emptyTag = ApiTag(
     "",
-    "",
+    TagType(0),
     None,
     None,
     "",
@@ -32,15 +32,15 @@ object FixtureTemplates {
   val emptyElement = ApiElement(
     "",
     "",
-    "",
+    ElementType(0),
     None,
     Nil
   )
 
   val emptyAsset = ApiAsset(
-    "",
+    AssetType(0),
     None,
     None,
-    Map.empty
+    None
   )
 }
