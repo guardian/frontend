@@ -1,7 +1,11 @@
-**/stylesheets/**/*.js
-**/javascripts/bower_components/**/*.js
-**/javascripts/components/**/*.js
-**/javascripts/vendor/**/*.js
+# Folder specific config all lives in here because you can't currently
+# extend these files:
+# https://github.com/eslint/eslint/issues/2824
+
+**/stylesheets
+**/javascripts/bower_components
+**/javascripts/components
+**/javascripts/vendor
 **/javascripts/projects/common/utils/atob.js
 **/javascripts/projects/common/utils/picturefill.js
 
