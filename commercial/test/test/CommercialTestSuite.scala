@@ -1,12 +1,13 @@
 package test
 
 import model.commercial._
+import model.commercial.books.MagentoBestsellersFeedTest
 import org.scalatest.Suites
 
 class CommercialTestSuite extends Suites (
   new services.CommercialHealthcheckTest,
   new controllers.commercial.TravelOffersTest,
-  new books.BestsellersApiTest,
+  new MagentoBestsellersFeedTest,
   new books.MagentoExceptionTest,
   new jobs.JobTest,
   new masterclasses.EventbriteMasterClassFeedParsingTest,

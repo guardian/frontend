@@ -30,6 +30,9 @@ object ContainerDefinition {
 
     case Fixed(containerDefinition) => Some(containerDefinition)
 
+    case Commercial(SingleCampaign(containerDefinition)) => Some(containerDefinition)
+    case Commercial(MultiCampaign(containerDefinition)) => Some(containerDefinition)
+
     case _ => None
   }
 

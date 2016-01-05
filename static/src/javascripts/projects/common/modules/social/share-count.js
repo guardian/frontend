@@ -25,10 +25,9 @@ define([
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
-        tooltip = 'Facebook: <%=facebook%> \nTwitter: <%=twitter%>',
+        tooltip = 'Facebook: <%=facebook%>',
         counts = {
-            facebook: 'n/a',
-            twitter: 'n/a'
+            facebook: 'n/a'
         };
 
     function incrementShareCount(amount) {
@@ -93,17 +92,6 @@ define([
                 }).then(function (resp) {
                     var count = resp.shares || 0;
                     counts.facebook = count;
-                    addToShareCount(count);
-                    updateTooltip();
-                });
-                ajax({
-                    url: 'https://cdn.api.twitter.com/1/urls/count.json?url=' + url,
-                    type: 'jsonp',
-                    method: 'get',
-                    crossOrigin: true
-                }).then(function (resp) {
-                    var count = resp.count || 0;
-                    counts.twitter = count;
                     addToShareCount(count);
                     updateTooltip();
                 });

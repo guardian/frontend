@@ -154,6 +154,7 @@ module.exports = function (grunt) {
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
+        'makeDeploysRadiator',
         'asset_hash',
         'compile:conf'
     ]);
@@ -216,5 +217,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
+    grunt.registerTask('makeDeploysRadiator', 'shell:makeDeploysRadiator');
 
 };

@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
-import common.{Edition, ExecutionContexts}
+import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model._
@@ -14,18 +14,23 @@ import services.{IndexPageItem, IndexPage}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-object CrosswordsController extends Controller with ExecutionContexts {
+trait CrosswordController extends Controller with Logging with ExecutionContexts {
+  def noResults()(implicit request: RequestHeader): Result
+
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
     LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all")).map { response =>
        val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
        yield f(crossword, content)
-       maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
-    } recover { case _ => InternalServerError("Content API query returned an error.") }
+       maybeCrossword getOrElse noResults
+    } recover { case t: Throwable =>
+              log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
+              noResults
+    }
   }
 
-  def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.crossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
@@ -33,12 +38,31 @@ object CrosswordsController extends Controller with ExecutionContexts {
       )))
     }
   }
+}
+
+object CrosswordPageController extends CrosswordController {
+
+  def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
+
+  def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+    renderCrosswordPage(crosswordType, id)
+  }
 
   def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(Ok(views.html.accessibleCrossword(
         new CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         AccessibleCrosswordRows(crossword)
+      )))
+    }
+  }
+
+  def printableCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+    withCrossword(crosswordType, id) { (crossword, content) =>
+      Cached(3.days)(Ok(views.html.printableCrossword(
+        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
+        CrosswordSvg(crossword, None, None, false),
+        new LocalDate().getYear()
       )))
     }
   }
@@ -58,7 +82,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
   }
 }
 
-object CrosswordSearchController extends Controller with ExecutionContexts {
+object CrosswordSearchController extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
@@ -70,6 +94,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
 
   val lookupForm = Form(
     mapping(
+      "crossword_type" -> nonEmptyText,
       "id" -> number
     )(CrosswordLookup.apply)(CrosswordLookup.unapply)
   )
@@ -106,22 +131,10 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
   }
 
   def lookup() = Action.async { implicit request =>
-    lookupForm.bindFromRequest.get match {
-      case CrosswordLookup(id) =>
-        val search = LiveContentApi.search(Edition(request))
-          .section("crosswords")
-          .orderBy("oldest") // puzzles are posted before solutions
-          .q(id.toString)
-
-        LiveContentApi.getResponse(search).map { response =>
-          response.results match {
-            case Nil    => noResults
-            case c :: _ => Redirect(s"/${c.id}")
-          }
-        }
-
-      case _ => Future.successful(noResults)
-    }
+    lookupForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(noResults),
+      lookUpData => renderCrosswordPage(lookUpData.crosswordType, lookUpData.id)
+    )
   }
 
   case class CrosswordSearch(crosswordType: String,
@@ -132,7 +145,7 @@ object CrosswordSearchController extends Controller with ExecutionContexts {
     val toDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
   }
 
-  case class CrosswordLookup(id: Int)
+  case class CrosswordLookup(crosswordType: String, id: Int)
 }
 
 object CrosswordPreferencesController extends Controller with PreferenceController {
