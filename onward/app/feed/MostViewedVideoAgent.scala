@@ -44,7 +44,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         .ids(contentIds)
         .pageSize(20)
       ).map{ r =>
-        val videoContent: List[client.model.Content] = r.results.filter(_.isVideo)
+        val videoContent: List[client.model.v1.Content] = r.results.filter(_.isVideo)
         log.info(s"Number of video content items from CAPI: ${videoContent.size}")
         videoContent.map(Content(_)).collect { case v: Video => v }
       }
