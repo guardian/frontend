@@ -1,7 +1,7 @@
 package services
 
 import _root_.model.Content
-import com.gu.contentapi.client.model.{Content => ApiContent, Tag}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag}
 import com.gu.facia.api.utils.{ResolvedMetaData, ContentProperties}
 import com.gu.facia.api.{models => fapi}
 import common._
@@ -131,7 +131,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
     ).copy(hasShowMoreEnabled = false)
   }
 
-  private def getNewspaperPageNumber(content: ApiContent) = content.fields.getOrElse(Map.empty).get("newspaperPageNumber").map(_.toInt)
+  private def getNewspaperPageNumber(content: ApiContent) = content.fields.flatMap(_.newspaperPageNumber)
 
   def lowercaseDisplayName(s: String) = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
 

@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
