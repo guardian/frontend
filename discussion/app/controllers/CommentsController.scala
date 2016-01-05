@@ -69,6 +69,13 @@ object CommentsController extends DiscussionController with ExecutionContexts {
     Cached(60) { Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm)) }
   }
 
+  val reportAbuseThankYouPage = SimplePage(MetaData.make("/reportAbuseThankYou", "Discussion", "Report Abuse Thank You", "GFE: Report Abuse Thank You"))
+
+
+  def reportAbuseThankYou(commentId: Int) = Action { implicit request =>
+
+    Cached(60) { Ok(views.html.discussionComments.reportCommentThankYou(commentId, reportAbuseThankYouPage)) }
+  }
 
   def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
   Map("categoryId" -> Seq(abuseReport.categoryId.toString),
@@ -101,7 +108,7 @@ object CommentsController extends DiscussionController with ExecutionContexts {
       formWithErrors => Future.successful(BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors))),
       userData => {
         postAbuseReportToDiscussionApi(userData).map {
-          case success if success.status == 200 => NoCache(Ok(success.body))
+          case success if success.status == 200 => NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
           case error => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
         }.recover({
           case NonFatal(e) => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))

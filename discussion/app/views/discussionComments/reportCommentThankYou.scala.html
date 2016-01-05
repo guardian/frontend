@@ -1,0 +1,34 @@
+@import _root_.model.SimplePage
+@import conf.Configuration
+@(commentId: Int, page: SimplePage)(implicit request: RequestHeader)
+@main(page) { } {
+
+
+    <div class="l-side-margins">
+        <article class="content content--article tonal tonal--tone-news" role="main">
+            <header class="content__head tonal__head tonal__head--tone-news">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                            </div>
+                        </div>
+                        <h1 itemprop="headline" class="content__headline js-score">Thank You</h1>
+                    </div>
+                </div>
+            </header>
+        </article>
+
+        <div class="content__main tonal__main tonal__main--tone-news">
+            <div class="gs-container">
+                <div class="content__main-column">
+                 Thank you for your report. <a href="@Configuration.discussion.url/comment-permalink/@commentId">Return to comment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
