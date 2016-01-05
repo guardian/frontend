@@ -21,13 +21,13 @@ object Trail {
     metadata: MetaData,
     apiContent: contentapi.Content) = {
     Trail(
-      webPublicationDate = apiContent.webPublicationDateOption.getOrElse(DateTime.now),
-      headline = apiContent.safeFields.getOrElse("headline", ""),
+      webPublicationDate = apiContent.webPublicationDate.map(date => new DateTime(date.dateTime)).getOrElse(DateTime.now),
+      headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
       sectionName = apiContent.sectionName.getOrElse(""),
-      thumbnailPath = apiContent.safeFields.get("thumbnail").map(ImgSrc(_, Naked)),
-      isCommentable = apiContent.safeFields.get("commentable").exists(_.toBoolean),
-      isClosedForComments = !apiContent.safeFields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow),
-      byline = apiContent.safeFields.get("byline").map(stripHtml),
+      thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked)),
+      isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
+      isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(date => new DateTime(date.dateTime)).exists(_.isAfterNow),
+      byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
       trailPicture = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize)).map(_.images)
         .orElse(elements.mainPicture.map(_.images))
         .orElse(elements.thumbnail.map(_.images)),
