@@ -513,14 +513,14 @@ final case class Tags(
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.properties.tagType == tagType)
 
-  lazy val keywords: Seq[Tag] = tagsOfType("keyword")
-  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.properties.tagType == "keyword")
-  lazy val contributors: Seq[Tag] = tagsOfType("contributor")
+  lazy val keywords: Seq[Tag] = tagsOfType("Keyword")
+  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.properties.tagType == "Keyword")
+  lazy val contributors: Seq[Tag] = tagsOfType("Contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
-  lazy val series: Seq[Tag] = tagsOfType("series")
-  lazy val blogs: Seq[Tag] = tagsOfType("blog")
-  lazy val tones: Seq[Tag] = tagsOfType("tone")
-  lazy val types: Seq[Tag] = tagsOfType("type")
+  lazy val series: Seq[Tag] = tagsOfType("Series")
+  lazy val blogs: Seq[Tag] = tagsOfType("Blog")
+  lazy val tones: Seq[Tag] = tagsOfType("Tone")
+  lazy val types: Seq[Tag] = tagsOfType("Type")
 
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
@@ -552,7 +552,7 @@ final case class Tags(
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&

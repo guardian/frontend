@@ -31,10 +31,10 @@ object Element {
     val images = ImageMedia.make(capiElement, properties)
 
     capiElement.`type`.name match {
-      case "image" => ImageElement(properties, images)
-      case "video" => VideoElement(properties, images, VideoMedia.make(capiElement))
-      case "audio" => AudioElement(properties, images, AudioMedia.make(capiElement))
-      case "embed" => EmbedElement(properties, images, EmbedMedia.make(capiElement))
+      case "Image" => ImageElement(properties, images)
+      case "Video" => VideoElement(properties, images, VideoMedia.make(capiElement))
+      case "Audio" => AudioElement(properties, images, AudioMedia.make(capiElement))
+      case "Embed" => EmbedElement(properties, images, EmbedMedia.make(capiElement))
       case _ => DefaultElement(properties, images)
     }
   }
@@ -47,7 +47,7 @@ sealed trait Element {
 
 object ImageMedia {
   def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia = ImageMedia(
-    allImages = capiElement.assets.filter(_.`type` == "image").map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
+    allImages = capiElement.assets.filter(_.`type`.name == "Image").map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
   )
   def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
     allImages = crops
@@ -79,7 +79,7 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
 
 object VideoMedia {
   def make(capiElement: ApiElement): VideoMedia = VideoMedia(
-    videoAssets = capiElement.assets.filter(_.`type` == "video").map(VideoAsset.make).sortBy(-_.width).toList
+    videoAssets = capiElement.assets.filter(_.`type`.name == "Video").map(VideoAsset.make).sortBy(-_.width).toList
   )
 }
 final case class VideoMedia(videoAssets: List[VideoAsset]) {
@@ -106,7 +106,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
 
 object AudioMedia {
   def make(capiElement: ApiElement): AudioMedia = AudioMedia(
-    audioAssets = capiElement.assets.filter(_.`type` == "audio").map(AudioAsset.make).toList
+    audioAssets = capiElement.assets.filter(_.`type`.name == "Audio").map(AudioAsset.make).toList
   )
 }
 final case class AudioMedia(audioAssets: List[AudioAsset]) {
@@ -122,7 +122,7 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
 
 object EmbedMedia {
   def make(capiElement: ApiElement): EmbedMedia = EmbedMedia(
-    embedAssets = capiElement.assets.filter(_.`type` == "embed").map(EmbedAsset.make)
+    embedAssets = capiElement.assets.filter(_.`type`.name == "Embed").map(EmbedAsset.make)
   )
 }
 final case class EmbedMedia(embedAssets: Seq[EmbedAsset])
