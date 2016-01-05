@@ -19,7 +19,7 @@ object Title {
       case c: ContentPage =>
         s"${c.metadata.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.metadata.webTitle, Option(c.item.trail.sectionName))}"
       case t: Tag     =>
-        s"${Localisation(t.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.metadata.webTitle, Option(t.sectionName))}"
+        s"${Localisation(t.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.metadata.webTitle, Option(t.properties.sectionName))}"
       case s: Section =>
         s"${Localisation(s.metadata.webTitle)}${pagination(page)}"
       case _          =>

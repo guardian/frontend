@@ -38,6 +38,22 @@ module.exports = function () {
 
         stubAppJs: {
             command: 'touch static/target/javascripts/app.js'
+        },
+
+        makeDeploysRadiator: {
+            command: [
+                'npm install',
+                './node_modules/.bin/jspm install',
+                './node_modules/.bin/tsd install',
+                'npm run build',
+                'mkdir -p ../../target/deploys-radiator',
+                'cp ./target/** ../../target/deploys-radiator'
+            ].join(' && '),
+            options: {
+                execOptions: {
+                    cwd: 'static/src/deploys-radiator'
+                }
+            }
         }
     };
 };

@@ -1,7 +1,7 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 
 
-@import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media, CardStyle}
+@import model.pressed.{Comment, DefaultCardstyle, Feature, Media}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RichLinkContributor, Item460, RenderClasses}
 
@@ -55,7 +55,7 @@
             </div>
             @if(content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage) {
                 @content.tags.contributors.headOption.map { profile =>
-                    @profile.contributorLargeImagePath.map{ image =>
+                    @profile.properties.contributorLargeImagePath.map{ image =>
                         <div class="rich-link__byline-img">
                             <img class="rich-link__byline-img__img" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
                         </div>

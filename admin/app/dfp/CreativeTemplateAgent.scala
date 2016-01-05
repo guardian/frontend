@@ -13,7 +13,7 @@ object CreativeTemplateAgent {
   def refresh(): Future[Seq[GuCreativeTemplate]] = {
     cache alterOff { oldData =>
       if (DfpCachingSwitch.isSwitchedOn) {
-        val freshData = DfpApi.loadActiveCreativeTemplates()
+        val freshData = DfpApi.readActiveCreativeTemplates()
         if (freshData.nonEmpty) freshData else oldData
       } else oldData
     }

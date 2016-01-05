@@ -7,13 +7,13 @@ import conf.Configuration
 import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 import scala.language.postfixOps
 
 object PressedPage {
 
-  implicit val pressedPageFormat = Json.format[PressedPage]
+  implicit val pressedPageFormat = PressedPageFormat.format
 
   def makeMetadata(id: String, seoData: SeoData, frontProperties: FrontProperties, collections: List[PressedCollection]): MetaData = {
     def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =

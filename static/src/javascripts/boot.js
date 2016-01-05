@@ -18,12 +18,14 @@ Bundles we need to run: commercial + (enhanced-vendor + enhanced)*
 
 define([
     'Promise',
-    'lodash/collections/map',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'domReady',
+    'common/utils/pre-fetch-modules'
 ], function (
     Promise,
-    map,
-    forEach
+    forEach,
+    domReady,
+    preFetchModules
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -34,9 +36,19 @@ define([
     var guardian = window.guardian;
     var config = guardian.config;
 
-    var bootStandard = function () { return promiseRequire(['bootstraps/standard/main', 'domReady!']); };
+    var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
-    var bootEnhanced = function () { return promiseRequire(['bootstraps/enhanced/main']); };
+    var bootStandard = function () {
+        return domReadyPromise.then(function () {
+            return promiseRequire(['bootstraps/standard/main'])
+                .then(function (boot) { boot(); });
+        });
+    };
+
+    var bootEnhanced = function () {
+        return promiseRequire(['bootstraps/enhanced/main'])
+            .then(function (boot) { boot(); });
+    };
 
     var bootCommercial = function () {
         return promiseRequire(['raven'])
@@ -56,77 +68,38 @@ define([
             });
     };
 
-    var curlConfig = window.curlConfig;
-    var resolveModuleId = function (moduleId) {
-        return curlConfig.paths[moduleId];
-    };
 
-    // We don't use reqwest because it evals JS
-    // https://github.com/ded/reqwest/issues/131
-    var xhrFetch = function (url) {
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        resolve(xhr);
-                    } else {
-                        reject(new Error('Bad response: ' + xhr.status + ' ' + xhr.statusText));
-                    }
-                }
-            };
-            xhr.send();
-        });
-    };
-
-    var xhrFetchAll = function (urls) {
-        return Promise.all(map(urls, function (url) {
-            return xhrFetch(url);
-        }));
-    };
-
-    var xhrFetchAllModules = function (moduleIds) {
-        return xhrFetchAll(map(moduleIds, resolveModuleId));
-    };
-
-    // We don't prefetch in dev because curl won't recognise the anonymous
-    // module definition when we execute it.
-    var preFetch = function (moduleIds) {
-        return isDev ? Promise.resolve([]) :  xhrFetchAllModules(moduleIds);
-    };
 
     var shouldRunEnhance = guardian.isModernBrowser;
 
-    var isDev = config.page.isDev;
-    var commercialResponsesPromise = preFetch(['bootstraps/commercial']);
+    var commercialResponsesPromise = preFetchModules(['bootstraps/commercial']);
     var enhancedModuleIds = [
         'enhanced-vendor',
         'bootstraps/enhanced/main'
     ];
     var enhancedResponsesPromise = (
         shouldRunEnhance
-            ? preFetch(enhancedModuleIds)
+            ? preFetchModules(enhancedModuleIds)
             : Promise.resolve()
     );
 
-    var executeResponses = function (responses) {
-        forEach(responses, function (response) {
-            eval(response.responseText);
+    var evalAll = function (strings) {
+        forEach(strings, function (string) {
+            eval(string);
         });
     };
 
     bootStandard()
         .then(function () {
             return commercialResponsesPromise
-                .then(executeResponses)
+                .then(evalAll)
                 // The require is async, we don't need to wait for it
                 .then(function () { bootCommercial(); });
         })
         .then(function () {
             if (shouldRunEnhance) {
                 return enhancedResponsesPromise
-                    .then(executeResponses)
+                    .then(evalAll)
                     // The require is async, we don't need to wait for it
                     .then(function () { bootEnhanced(); });
             }

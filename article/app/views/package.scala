@@ -51,6 +51,7 @@ object BodyCleaner {
       BloggerBylineImage(article),
       LiveBlogShareButtons(article),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
+      ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner,
       MembershipEventCleaner,
@@ -64,7 +65,7 @@ object BodyCleaner {
       VideoEmbedCleaner(article)
     )
     val ampOnlyCleaners = List(
-      AmpAdCleaner,
+      AmpAdCleaner(edition, request.uri, article),
       AmpEmbedCleaner(article)
     )
     withJsoup(BulletCleaner(html))((if (amp) ampOnlyCleaners else nonAmpCleaners) ++ cleaners :_*)

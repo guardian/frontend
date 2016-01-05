@@ -1,3 +1,4 @@
+import commercial.CommercialLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf._

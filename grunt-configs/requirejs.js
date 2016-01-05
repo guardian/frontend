@@ -9,6 +9,7 @@ module.exports = function (grunt, options) {
                 membership:           'projects/membership',
                 bean:                 'components/bean/bean',
                 bonzo:                'components/bonzo/bonzo',
+                domReady:             'components/domready/ready',
                 enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
                 fastdom:              'components/fastdom/index',
@@ -256,7 +257,7 @@ module.exports = function (grunt, options) {
         identity: {
             options: {
                 name: 'bootstraps/enhanced/membership',
-                out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
+                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/membership.js',
                 exclude: [
                     'boot',
                     'bootstraps/standard/main',

@@ -31,12 +31,14 @@
     <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
 
     <div class="tabs u-cf identity-section">
-        <ol class="tabs__container js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
+        <ol class="tabs__container tabs__container--multiple js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
             @tab(1, "Public", "/public/edit", None)
 
             @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
 
             @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
+
+            @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
         </ol>
 
         <div class="tabs__content">
@@ -45,6 +47,8 @@
             @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
 
             @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm())
+
+            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm())
         </div>
     </div>
 

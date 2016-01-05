@@ -5,24 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val SyndicationLinkSwitch = Switch(
-    "Feature",
-    "syndication-link",
-    "Show syndication link in content",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 18),
-    exposeClientSide = false
-  )
-
-  val contentAgeMessageSwitch = Switch(
-    "Feature",
-    "content-age-message",
-    "Show old content message on... old content (tagged tone/news)",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 6),
-    exposeClientSide = false
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",

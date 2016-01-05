@@ -8,7 +8,7 @@ case class SectionLink(zone: String, title: String, breadcrumbTitle: String, hre
     s"/${page.metadata.section}" == href ||
     (Edition.all.exists(_.id.toLowerCase == page.metadata.id.toLowerCase) && href == "/")
 
-  def currentForIncludingAllTags(tags: Tags): Boolean = tags.tags.exists(t => s"/${t.id}" == href)
+  def currentForIncludingAllTags(tags: Tags): Boolean = tags.tags.exists(t => s"/${t.metadata.id}" == href)
 }
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
@@ -141,6 +141,7 @@ trait Navigation {
   val markets = SectionLink("business", "markets", "Markets", "/business/stock-markets")
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
   val ussustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/us/sustainable-business")
+  val ausustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/au/sustainable-business")
   val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/us-small-business")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
   val investing = SectionLink("business", "investing", "Investing", "/business/investing")

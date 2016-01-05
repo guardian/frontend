@@ -56,6 +56,7 @@ POST        /dev/switchboard                                                    
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
+GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
 GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
 
@@ -102,6 +103,10 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                       controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
+
+GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
+GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()

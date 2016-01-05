@@ -4,39 +4,48 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
+  val AlternativeRelated = Switch(
+    "A/B Tests",
+    "ab-alternative-related",
+    "show alternative related content based on the tags to users in the test",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 23),
+    exposeClientSide = true
+  )
+
   val ABLargeTopAd = Switch(
     "A/B Tests",
     "ab-large-top-ad",
     "Testing the difference of user behaviour based on large top ad format",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 31),
+    sellByDate = new LocalDate(2016, 1, 13),
     exposeClientSide = true
   )
 
-  val ABFrontsOnArticles = Switch(
+  val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
-    "ab-fronts-on-articles",
+    "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 30),
+    sellByDate = new LocalDate(2016, 1, 30),
     exposeClientSide = true
   )
 
-  val ABEssentialReadTest1 = Switch(
+  val ABIdentitySignInV2 = Switch(
     "A/B Tests",
-    "ab-essential-read-test-1",
-    "Show the essential read instead of related content",
+    "ab-identity-sign-in-v2",
+    "New sign in page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 15),
+    sellByDate = new LocalDate(2016, 1, 15),
     exposeClientSide = true
   )
 
-  val ABVideoPreroll = Switch(
+  val ABRtrtEmailFormArticlePromo = Switch(
     "A/B Tests",
-    "ab-video-preroll",
-    "A test to see if a UK or INT audience will be interested in video pre-rolls",
+    "ab-rtrt-email-form-article-promo",
+    "Testing the email sign up from the bottom of articles of user referred from fronts",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 6),
+    sellByDate = new LocalDate(2016, 1, 17),
     exposeClientSide = true
   )
 }

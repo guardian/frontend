@@ -666,6 +666,10 @@
 .meta__extras {
     position: relative;
     clear: both;
+
+    .content__head__crosswords & {
+        clear: none;
+    }
 }
 
 .meta__social {
