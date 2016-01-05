@@ -86,21 +86,21 @@ define([
             var that = this;
             setInterval(function () {
                 return ajax({
-                    url: window.location.pathname + '.json?numNewBlocks=' + ((that.latestBlockId) ? that.penultimate : 'block-0'),
+                    url: window.location.pathname + '.json?lastUpdate=' + ((that.latestBlockId) ? that.penultimate : 'block-0'),
                     type: 'json',
                     method: 'get',
                     crossOrigin: true
                 }).then(function (resp) {
-                    mediator.emit('modules:autoupdate:unread', resp.newBlocksCount);
+                    mediator.emit('modules:autoupdate:unread', resp.numNewBlocks);
 
-                    if (resp.newBlocksCount > 0) {
+                    if (resp.numNewBlocks> 0) {
                         var lbOffset = that.$liveblogBody.offset().top,
                             scrollPos = window.scrollY;
 
                         if (scrollPos < lbOffset && scrollPos + window.innerHeight > lbOffset) {
                             that.blocks.injectNew();
                         } else {
-                            that.button.refresh(resp.newBlocksCount);
+                            that.button.refresh(resp.numNewBlocks);
                         }
                     }
                 });
@@ -111,7 +111,7 @@ define([
             injectNew: function () {
                 var that = this;
                 return ajax({
-                    url: window.location.pathname + '.json?lastUpdate=' + ((that.latestBlockId) ? that.penultimate : 'block-0'),
+                    url: window.location.pathname + '.json?lastUpdate=' + ((that.latestBlockId) ? that.penultimate : 'block-0') + '&showBlocks=true',
                     type: 'json',
                     method: 'get',
                     crossOrigin: true
@@ -142,6 +142,7 @@ define([
 
         this.button = {
             refresh: function (count) {
+                var updateText = (count > 1) ? ' new updates' : ' new update';
                 this.$updateBox.removeClass('blog__updates-box--closed').addClass('blog__updates-box--open');
                 this.$updateBoxText.html(count + ' new updates');
                 this.$updateBoxContainer.addClass('blog__updates-box-container--open');

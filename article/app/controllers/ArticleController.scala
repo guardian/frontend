@@ -37,7 +37,13 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
 
-  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
+  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String, showBlocks: Option[Boolean])(implicit request: RequestHeader) = {
+      val blocksToKeep = Jsoup.parseBodyFragment(page.article.fields.body).getElementsByClass("block") takeWhile {
+        _.attr("id") != lastUpdateBlockId
+      }
+
+      Cached(page)(JsonComponent(("newBlocksCount", blocksToKeep.size)))
+
       val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
@@ -53,17 +59,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           }
         }
       }
-      Cached(page)(JsonComponent(html))
-  }
 
-  private def numberBlocksSinceBlock(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-    val body = Jsoup.parseBodyFragment(page.article.fields.body)
-
-    val blocksToKeep = body.getElementsByClass("block") takeWhile {
-      _.attr("id") != lastUpdateBlockId
-    }
-
-    Cached(page)(JsonComponent(("newBlocksCount", blocksToKeep.size)))
+      if(showBlocks.getOrElse(false)) {
+        Cached(page)(JsonComponent(("html", html),("numNewBlocks", blocksToKeep.size)))
+      } else {
+        Cached(page)(JsonComponent(("numNewBlocks", blocksToKeep.size)))
+      }
   }
 
   case class TextBlock(
@@ -116,21 +117,20 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], numNewBlocks: Option[String]) = {
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean]) = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache
-      loadArticle(path, lastUpdate, rendered, numNewBlocks)
+      loadArticle(path, lastUpdate, rendered, showBlocks)
     } else MemcachedAction { implicit request =>
-      loadArticle(path, lastUpdate, rendered, numNewBlocks)
+      loadArticle(path, lastUpdate, rendered, showBlocks)
     }
   }
 
-  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], numNewBlocks: Option[String])(implicit request: RequestHeader): Future[Result] = {
+  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path) { model =>
-      (lastUpdate, rendered, numNewBlocks) match {
-        case (_, _, Some(numNewBlocks)) => numberBlocksSinceBlock(model, numNewBlocks)
-        case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate)
+      (lastUpdate, rendered, showBlocks) match {
+        case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate, showBlocks)
         case (None, Some(false), _) => blockText(model, 6)
         case (_, _, _) => render(path, model)
       }
