@@ -7,7 +7,7 @@ import implicits.Requests
 import model.NoCache
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import play.api.libs.ws.WS
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
 
@@ -67,7 +67,7 @@ object BuildJson {
 
 object DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests{
 
-  def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = AuthActions.AuthActionTest.async {
+  def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = Action.async {
     val url = s"${Configuration.riffraff.url}/api/history"
 
     WS.url(url)
@@ -93,7 +93,7 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
     }
   }
 
-  def getBuild(number: String) = AuthActions.AuthActionTest.async {
+  def getBuild(number: String) = Action.async {
     val apiPath = "/guestAuth/app/rest"
     val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any"
 
@@ -122,7 +122,7 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
     }
   }
 
-  def renderDeploysRadiator() = AuthActions.AuthActionTest {
+  def renderDeploysRadiator() = Action {
     NoCache(Ok(views.html.deploysRadiator.main()))
   }
 
