@@ -1,4 +1,5 @@
 @import _root_.model.SimplePage
+@import views.html.fragments.reportCommentForm
 
 
 @(commentId: Int, page: SimplePage, userForm: Form[discussion.model.DiscussionAbuseReport], errorMessage: Option[String] = None)(implicit request: RequestHeader)
@@ -23,69 +24,7 @@
         <div class="content__main tonal__main tonal__main--tone-news">
             <div class="gs-container">
                 <div class="content__main-column">
-                    @if(errorMessage) {
-                        <div class="form-field--error">
-                            <label class="label">@errorMessage.get</label>
-                        </div>
-                    }
-                    @defining(userForm.error("categoryId")) { categoryIdError =>
-                        @defining(userForm.error("email")) { emailError =>
-                            @defining(userForm.error("reason")) { reasonError =>
-
-                                @helper.form(controllers.routes.CommentsController.reportAbuseSubmission(commentId), 'class -> "form") {
-                                    <fieldset class="fieldset">
-                                        <div class="fieldset__heading" />
-                                        <input type="hidden" name="commentId" value="@commentId">
-                                        <div class="fieldset__fields">
-                                            <div class="form-field @{if(categoryIdError) "form-field--error"}}">
-                                                <label class="label" for="categoryId">Category</label>
-
-
-                                                <select class="select select--wide" name="categoryId" id="categoryId">
-                                                    <option value="0" selected="selected">Please select</option>
-                                                    <option value="1">Personal abuse</option>
-                                                    <option value="2">Off topic</option>
-                                                    <option value="3">Legal issue</option>
-                                                    <option value="4">Trolling</option>
-                                                    <option value="5">Hate speech</option>
-                                                    <option value="6">Offensive/Threatening language</option>
-                                                    <option value="7">Copyright</option>
-                                                    <option value="8">Spam</option>
-                                                    <option value="9">Other</option>
-                                                </select>
-                                @if(categoryIdError) {
-                                    <p class="form-field__error-message">@categoryIdError.get.message</p>
-                                }
-                                            </div>
-
-                            <div class="form-field @{if(reasonError) {"form-field--error"}}">
-                            <label class="label" for="reason">Reason</label><span class="form-note">(optional)</span>
-                                            <textarea class="fieldset__fields" id="reason" name="reason"></textarea>
-                                @if(reasonError) {
-                                    <p class="form-field__error-message">@reasonError.get.message</p>
-                                }
-                            </div>
-
-                            <div class="form-field @{if(emailError) {"form-field--error"}}">
-                                            <label class="label" for="email">Email</label><span class="form-note">(optional)</span>
-                                            <input type="email" class="email" id="email" name="email" />
-                                @if(emailError) {
-                                    <p class="form-field__error-message">@emailError.get.message</p>
-                                }
-                                </div>
-                                        </div>
-                                    </fieldset>
-                                <fieldset class="fieldset fieldset--simple">
-                                    <div class="fieldset__heading"></div>
-                                    <div class="fieldset__fields">
-                                        <div class="actions">
-                                            <button type="submit" class="button button--primary button--large">Report</button>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                }
-                        }
-                    }
+                    @reportCommentForm(commentId,userForm,errorMessage)
                 </div>
             </div>
         </div>
