@@ -3,9 +3,10 @@
 @import '../components/pasteup-buttons/src/_mixins';
 
 $c-background: colour(news-support-3);
-$c-dark-blue: darken(colour(news-support-2), 10%);
+$c-blue: darken(colour(news-support-2), 10%);
+$c-dark-blue: colour(news-support-6);
 $c-black: colour(neutral-1);
-$c-accent: colour(comment-main-2);
+$c-accent: colour(multimedia-main-2);
 
 .facia-basher {
     position: relative;
@@ -20,43 +21,55 @@ $c-accent: colour(comment-main-2);
     height: gs-height(8);
 
     .title {
-        position: relative;
+        position: absolute;
         z-index: 8;
         @include f-headline;
         font-weight: 200;
         font-size: 72px;
-        line-height: 80px;
+        line-height: 1.5;
         margin-left: $gs-gutter;
 
         @include mq(desktop) {
             font-size: 77px;
-            line-height: 96px;
+            line-height: 1.5;
         }
 
         @include mq(leftCol) {
             font-size: 88px;
+            line-height: 1.35;
         }
     }
 
     .title--first {
         color: #ffffff;
+        top: gs-height(2);
     }
 
     .title--second {
         color: $c-black;
+        top: gs-height(4);
 
         @include mq(leftCol) {
-            text-indent: $gs-gutter * 2;
+            left: 51px;
         }
     }
 
     .description {
         position: absolute;
-        bottom: 0;
-        width: gs-span(5);
-        @include fs-header(3);
+        bottom: $gs-baseline * 3;
+        width: gs-span(4);
+        @include fs-header(1);
         color: #ffffff;
         margin-left: $gs-gutter;
+
+        @include mq(tablet) {
+            top: 0;
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(5);
+            @include fs-header(3);
+        }
     }
 
     .stripe {
@@ -71,28 +84,46 @@ $c-accent: colour(comment-main-2);
         }
     }
 
-    .stripe--blue {
+    .grid .stripe {
+        z-index: 2;
+    }
+
+    .stripe--dark-blue {
         background-color: $c-dark-blue;
+        display: none;
+        width: gs-span(2);
+        right: -(gs-span(2));
 
         @include mq(tablet) {
-            width: 140%;
+            display: block;
+        }
+    }
+
+    .grid .stripe--dark-blue {
+        right: $gs-gutter;
+        width: gs-span(2);
+
+        @include mq(wide) {
+            width: gs-span(4);
+        }
+    }
+
+    .stripe--blue {
+        background-color: $c-blue;
+        top: gs-height(2) + $gs-baseline;
+
+        @include mq(tablet) {
+            width: gs-span(8);
             margin-left: -(gs-span(2));
         }
     }
 
-    .grid .stripe--blue {
-        right: $gs-gutter;
-        width: gs-span(4);
-        z-index: 2;
-    }
-
     .stripe--white {
         width: calc(100% - 20px);
-        top: $gs-baseline * 7;
         background-color: #ffffff;
 
         @include mq(tablet) {
-            top: gs-height(2) + $gs-baseline;
+            top: gs-height(4) + $gs-baseline;
         }
 
         @include mq(leftCol) {
@@ -102,22 +133,26 @@ $c-accent: colour(comment-main-2);
 
     .grid .stripe--white {
         width: gs-span(2);
-        z-index: 2;
         margin-left: $gs-gutter;
     }
 
     .line {
         position: relative;
         z-index: 10;
-        top: -$gs-baseline;
-        left: 200px;
+        left: 300px;
+        bottom: -140px;
+
+        @include mq(tablet) {
+            bottom: -205px;
+            left: 200px;
+        }
 
         @include mq(leftCol) {
-            left: 120px;
+            left: 175px;
         }
 
         @include mq(wide) {
-            left: 40px;
+            left: 96px;
         }
     }
 
@@ -129,12 +164,17 @@ $c-accent: colour(comment-main-2);
         right: -99999px;
         margin: auto;
 
+        @include mq($until: tablet) {
+            width: 1200px;
+        }
+
         path {
             animation: drawInLine 5s ease-out;
             animation-fill-mode: forwards;
             animation-delay: 1s;
             stroke-dasharray: 4400;
             stroke-dashoffset: 4400;
+            stroke: $c-accent;
         }
     }
 
@@ -234,19 +274,22 @@ $c-accent: colour(comment-main-2);
     .circle {
         position: absolute;
         z-index: 15;
-        left: gs-span(14) + ($gs-gutter * 1.5);
-        top: gs-height(4) + ($gs-baseline / 2);
+        right: gs-span(4) + 8px;
+        top: gs-height(4) + ($gs-baseline / 2) - 22px;
         width: 44px;
         height: 44px;
-        margin-left: -22px;
-        margin-top: -22px;
         border-radius: 50%;
         background-color: #ffffff;
+
+        @include mq(wide) {
+            right: gs-span(2) + 8px;
+        }
     }
 
     .circle--lower {
         top: auto;
         bottom: -30px;
-        left: 808px;
+        right: gs-span(6) + 8px;
+        background-color: $c-dark-blue;
     }
 }
