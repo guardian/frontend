@@ -34,7 +34,7 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var css, that = this;
+        var css, that = this, message;
 
         //stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
         // have we scrolled past the element
@@ -43,16 +43,27 @@ define([
                 position: 'fixed',
                 top: this.opts.top
             };
+            message = 'fixed';
         } else {
             css = {
                 position: null,
                 top:      null
             };
+            message = 'unfixed';
         }
+
+        if(this.opts.emit && this.lastMessage && message !== this.lastMessage) {
+            this.emitMessage(message);
+        }
+        this.lastMessage = message;
 
         fastdom.write(function () {
             that.$element.css(css);
         });
+    };
+
+    Sticky.prototype.emitMessage = function (message) {
+        mediator.emit('modules:' + this.$element.attr('id') + ':' + message);
     };
 
     return Sticky;

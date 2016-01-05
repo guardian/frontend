@@ -69,7 +69,7 @@
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                                 <div class="blog__updates-box-container">
-                                    <div class="blog__updates-box-tofix">
+                                    <div id="liveblog-updates-button" class="blog__updates-box-tofix">
                                         <a class="blog__updates-box blog__updates-box--closed js-updates-button button button--large">
                                             <span class="blog__updates-box-text"></span>
                                             <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48H0z" fill="none"/><path fill="#fff" d="M24 10V2L14 12l10 10v-8c6.63 0 12 5.37 12 12s-5.37 12-12 12-12-5.37-12-12H8c0 8.84 7.16 16 16 16s16-7.16 16-16-7.16-16-16-16z"/></svg>

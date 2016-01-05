@@ -577,15 +577,35 @@ $timeline-width: 15px;
 }
 
 .blog__updates-box-tofix {
-    width: 620px;
     z-index: 900;
     padding-bottom: $gs-baseline;
     text-align: center;
     transition: transform .3s ease-in-out;
     transform: translateY(-60px);
+    width: 100%;
 
     .blog__updates-box-container--open & {
         transform: translateY(0);
+    }
+
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+
+    @include mq(tablet) {
+        width: gs-span(9);
+    }
+
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(10);
+    }
+
+    @include mq(wide) {
+        width: gs-span(8);
     }
 }
 

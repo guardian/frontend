@@ -14,17 +14,13 @@ define([
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
-    'common/modules/live/filter',
-    //'common/modules/ui/autoupdate',
+    'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
-    'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust',
-    'common/utils/ajax-promise',
-    'common/modules/ui/sticky'
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
@@ -41,17 +37,13 @@ define([
     richLinks,
     liveblogAdverts,
     Affix,
-    LiveFilter,
-    //AutoUpdate,
+    AutoUpdate,
     dropdowns,
     lastModified,
-    NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust,
-    ajax,
-    Sticky) {
+    robust) {
     'use strict';
 
     var modules,
@@ -154,29 +146,13 @@ define([
         return recursiveRender(events, '');
     }
 
-    function getUpdatePath() {
-        // There may be no blocks at all. 'block-0' will return any new blocks found.
-        //latestBlockId ? latestBlockId
-        var id = 'block-0';
-        return window.location.pathname + '.json?numNewBlocks=' + id;
-    }
-
-    function getNewBlocksPath() {
-        // There may be no blocks at all. 'block-0' will return any new blocks found.
-        //latestBlockId ? latestBlockId
-        var id = 'block-0';
-        return window.location.pathname + '.json?lastUpdate=' + id;
-    }
-
     modules = {
-
         initAdverts: function () {
             liveblogAdverts.init();
         },
 
         createFilter: function () {
             new LiveFilter($('.js-blog-blocks')[0]).ready();
-            new NotificationCounter().init();
         },
 
         createTimeline: function () {
@@ -215,106 +191,15 @@ define([
         },
 
         createAutoUpdate: function () {
-            //if (config.page.isLive) {
-            //
-            //    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 15000 : 60000;
-            //    autoUpdate = new AutoUpdate({
-            //        path: getUpdatePath,
-            //        delay: timerDelay,
-            //        backoff: 2,
-            //        backoffMax: 1000 * 60 * 20,
-            //        attachTo: $('.js-liveblog-body')[0],
-            //        switches: config.switches,
-            //        manipulationType: 'prepend'
-            //    });
-            //    autoUpdate.init();
-            //}
-            //
-            //mediator.on('module:filter:toggle', function (orderedByOldest) {
-            //    if (!autoUpdate) {
-            //        return;
-            //    }
-            //    if (orderedByOldest) {
-            //        autoUpdate.setManipulationType('append');
-            //    } else {
-            //        autoUpdate.setManipulationType('prepend');
-            //    }
-            //});
-
             if (config.page.isLive) {
-                latestBlockId = $('.js-liveblog-body').data('most-recent-block');
-
-                setInterval(function () {
-                    modules.fetchUpdatesCount(latestBlockId);
-                }, 10000);
-
-                new Sticky(qwery('.blog__updates-box-tofix'), { top: 60 }).init();
-
-                bean.on(document.body, 'click', '.js-updates-button', function () {
-                    modules.toastButtonClicked(latestBlockId);
+                var autoUpdate = new AutoUpdate({
+                    backoff: 2,
+                    backoffMax: 1000 * 60 * 20,
+                    attachTo: $('.js-liveblog-body')[0],
+                    switches: config.switches
                 });
+                autoUpdate.init();
             }
-        },
-
-        fetchUpdatesCount: function () {
-            return ajax({
-                url: getUpdatePath(),
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
-            }).then(function (resp) {
-                if (resp.newBlocksCount > 0) {
-                    var lbOffset = $('.js-liveblog-body').offset().top,
-                        scrollPos = window.scrollY;
-
-                    if (scrollPos < lbOffset && scrollPos + window.innerHeight > lbOffset) {
-                        modules.injectNewBlocks();
-                    } else {
-                        modules.refreshUpdatesCount(resp.newBlocksCount);
-                    }
-                }
-            });
-        },
-
-        toastButtonClicked: function () {
-            var $updateBox = $('.js-updates-button');
-            scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
-            $updateBox.addClass('loading');
-            modules.injectNewBlocks();
-        },
-
-        refreshUpdatesCount: function (count) {
-            var $updateBox = $('.js-updates-button'),
-                $updateBoxContainer = $('.blog__updates-box-container'),
-                $updateBoxText = $('.blog__updates-box-text', $updateBox);
-
-            $updateBox.removeClass('blog__updates-box--closed');
-            $updateBoxText.html(count + ' new updates');
-            $updateBox.addClass('blog__updates-box--open');
-            $updateBoxContainer.addClass('blog__updates-box-container--open');
-        },
-
-        injectNewBlocks: function () {
-            return ajax({
-                url: getNewBlocksPath(),
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
-            }).then(function (resp) {
-                if (resp.html) {
-                    $('#' + latestBlockId).before(resp.html);
-                    latestBlockId = $('.block').first().attr('id');
-                    setTimeout(function () {
-                        modules.resetToastButton();
-                    }, 1000);
-                    RelativeDates.init();
-                }
-            });
-        },
-
-        resetToastButton: function () {
-            $('.js-updates-button').removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
-            $('.blog__updates-box-container').removeClass('blog__updates-box-container--open');
         },
 
         keepTimestampsCurrent: function () {
@@ -325,7 +210,6 @@ define([
                 },
                 60000
             );
-
         },
 
         accessibility: function () {
@@ -337,7 +221,6 @@ define([
         robust.catchErrorsAndLogAll([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
-            ['lb-filter',     modules.createFilter],
             ['lb-timeline',   modules.createTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
