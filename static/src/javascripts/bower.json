@@ -22,8 +22,7 @@
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.3",
     "videojs-embed": "0.3.3",
     "videojs-ima": "guardian/videojs-ima#0.2.1",
-    "classnames": "~2.2.0",
-    "lodash-template-loader": "~1.0.1"
+    "classnames": "~2.2.0"
   },
   "install": {
     "path": "components",
@@ -35,7 +34,6 @@
         }
       ],
       "lodash-amd": "bower_components/lodash-amd/compat/**",
-      "lodash-template-loader": "bower_components/lodash-template-loader/loader.js",
       "domready": "bower_components/domready/ready.js",
       "when": "bower_components/when/es6-shim/Promise.js",
       "video.js": "bower_components/video.js/dist/video.min.js",

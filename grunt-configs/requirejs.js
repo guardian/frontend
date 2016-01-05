@@ -32,7 +32,7 @@ module.exports = function (grunt, options) {
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
-                ldsh:                 'components/lodash-template-loader/loader',
+                ldsh:                 'projects/common/utils/lodash-loader',
 
                 'react':              'empty:',
                 'ophan/ng':           'empty:'
