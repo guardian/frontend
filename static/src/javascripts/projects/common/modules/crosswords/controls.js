@@ -64,7 +64,7 @@ define([
                     'Anagram helper'
                 ));
 
-                if(hasSolutions) {
+                if (hasSolutions) {
                     controls.clue.unshift(React.createElement(
                         'button', {
                             className: buttonClassName + ' ' + buttonCurrentClassName,
