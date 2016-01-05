@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'common/modules/ui/toggles',
     'common/views/svgs',
-    'ldsh!common/views/commercial/gustyle/label',
+    'ldsh!common/views/commercial/gustyle/label.html',
     'lodash/objects/merge'
 ], function (
     fastdom,

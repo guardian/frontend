@@ -2,7 +2,7 @@ define([
     'fastdom',
     'common/utils/$',
     'common/views/svgs',
-    'ldsh!common/views/commercial/adblock-sticky-message'
+    'ldsh!common/views/commercial/adblock-sticky-message.html'
 ], function (
     fastdom,
     $,

@@ -3,8 +3,8 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/views/svgs',
-    'ldsh!common/views/business/stock-value',
-    'ldsh!common/views/business/stocks',
+    'ldsh!common/views/business/stock-value.html',
+    'ldsh!common/views/business/stocks.html',
     'lodash/collections/contains',
     'lodash/collections/map'
 ], function (

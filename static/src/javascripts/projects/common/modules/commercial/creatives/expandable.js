@@ -5,7 +5,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'ldsh!common/views/commercial/creatives/expandable',
+    'ldsh!common/views/commercial/creatives/expandable.html',
     'lodash/functions/bindAll'
 ], function (
     bean,

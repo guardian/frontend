@@ -10,7 +10,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'ldsh!common/views/breaking-news',
+    'ldsh!common/views/breaking-news.html',
     'lodash/collections/forEach',
     'lodash/objects/isArray',
     'lodash/collections/filter',

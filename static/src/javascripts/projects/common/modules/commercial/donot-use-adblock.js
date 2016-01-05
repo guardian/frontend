@@ -9,7 +9,7 @@ define([
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
-    'ldsh!common/views/membership-message',
+    'ldsh!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample',
     'lodash/collections/filter',

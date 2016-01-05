@@ -7,7 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/views/svgs',
-    'ldsh!common/views/commercial/creatives/expandable-video-v2',
+    'ldsh!common/views/commercial/creatives/expandable-video-v2.html',
     'lodash/objects/merge'
 ], function (
     bean,

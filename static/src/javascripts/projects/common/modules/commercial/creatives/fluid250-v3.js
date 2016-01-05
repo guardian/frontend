@@ -6,7 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'ldsh!common/views/commercial/creatives/fluid250-v3',
+    'ldsh!common/views/commercial/creatives/fluid250-v3.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (

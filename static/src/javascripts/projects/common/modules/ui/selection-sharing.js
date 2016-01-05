@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'ldsh!common/views/ui/selection-sharing',
+    'ldsh!common/views/ui/selection-sharing.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/functions/throttle',

@@ -96,7 +96,7 @@ define(['./internals/isNative'], function(isNative) {
      * @memberOf _.support
      * @type boolean
      */
-    support.funcDecomp = !isNative(window.WinRTError) && reThis.test(function() { return this; });
+    support.funcDecomp = typeof window !== "undefined" && !isNative(window.WinRTError) && reThis.test(function() { return this; });
 
     /**
      * Detect if `Function#name` is supported (all but IE).

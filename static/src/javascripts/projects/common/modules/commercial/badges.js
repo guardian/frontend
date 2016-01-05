@@ -8,7 +8,7 @@ define([
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-api',
-    'ldsh!common/views/commercial/badge',
+    'ldsh!common/views/commercial/badge.html',
     'lodash/collections/map'
 ], function (
     bonzo,

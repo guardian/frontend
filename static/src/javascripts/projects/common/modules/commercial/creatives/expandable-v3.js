@@ -7,7 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/views/svgs',
-    'ldsh!common/views/commercial/creatives/expandable-v3',
+    'ldsh!common/views/commercial/creatives/expandable-v3.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (

@@ -3,7 +3,7 @@ define([
     'common/utils/detect',
     'common/utils/$',
     'common/modules/component',
-    'ldsh!common/views/sport/score-container'
+    'ldsh!common/views/sport/score-container.html'
 ], function (
     bonzo,
     detect,

@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
-    'ldsh!common/views/commercial/creatives/fluid250',
+    'ldsh!common/views/commercial/creatives/fluid250.html',
     'lodash/objects/merge'
 ], function (
     bean,

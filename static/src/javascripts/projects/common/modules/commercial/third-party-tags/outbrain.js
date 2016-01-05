@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/identity/api',
-    'ldsh!common/views/commercial/outbrain',
+    'ldsh!common/views/commercial/outbrain.html',
     'lodash/collections/contains'
 ], function (
     fastdom,

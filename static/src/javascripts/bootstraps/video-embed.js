@@ -15,7 +15,7 @@ define([
     'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
-    'ldsh!common/views/media/titlebar',
+    'ldsh!common/views/media/titlebar.html',
     'lodash/functions/debounce'
 ], function (
     bean,

@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/views/svgs',
-    'ldsh!common/views/commercial/live-events-survey'
+    'ldsh!common/views/commercial/live-events-survey.html'
 ], function (
     bean,
     fastdom,

@@ -7,7 +7,7 @@ define([
     'common/utils/formatters',
     'common/views/svgs',
     'text!common/views/content/share-count.html',
-    'ldsh!common/views/content/share-count-immersive'
+    'ldsh!common/views/content/share-count-immersive.html'
 ], function (
     reportError,
     $,

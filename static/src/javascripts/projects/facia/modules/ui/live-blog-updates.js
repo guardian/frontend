@@ -7,7 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'ldsh!facia/views/liveblog-block',
+    'ldsh!facia/views/liveblog-block.html',
     'lodash/arrays/compact',
     'lodash/objects/isUndefined',
     'lodash/collections/forEach',
