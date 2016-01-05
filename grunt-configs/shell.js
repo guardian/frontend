@@ -46,7 +46,8 @@ module.exports = function () {
                 './node_modules/.bin/jspm install',
                 './node_modules/.bin/tsd install',
                 'npm run build',
-                'cp -r ./target ../../target/deploys-radiator'
+                'mkdir -p ../../target/deploys-radiator',
+                'cp ./target/** ../../target/deploys-radiator'
             ].join(' && '),
             options: {
                 execOptions: {

@@ -59,9 +59,9 @@ Install each of the things listed below:
 
 #### Configuration files
 
-You need 3 files on your machine.
+You need 4 files on your machine.
 
-1. `/etc/gu/install_vars`
+* `/etc/gu/install_vars`
 ```
 STAGE=DEV
 ```
@@ -72,6 +72,13 @@ STAGE=DEV
 
     Ask your team mates to share it with you if you don't get any results.
 
+* `~/.aws/config`
+
+```
+[profile nextgen]
+region = eu-west-1
+```
+
 * `~/.aws/credentials`
 
 	Ask your team mate to create an account for you and securely send you the access key. For security, you must enable MFA - ask if you're not sure what this means.
@@ -79,7 +86,6 @@ STAGE=DEV
 [nextgen]
 aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
 aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
-region=eu-west-1
 ```
 
 #### [Homebrew](http://brew.sh/)
@@ -213,7 +219,7 @@ This also can take a while the first time.
 
 Now check that you are up and running by hitting the following URLs:
 
-* [http://localhost:9000/film](http://localhost:9000/film)
+* [http://localhost:9000/media](http://localhost:9000/media)
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 

@@ -14,12 +14,12 @@ const DEST = `${DIRECTORIES.hash}/stylesheets`;
 
 gulp.task('watch:css', (done) => {
     gulp.watch([
-            `${SRC}/*.css`,
+            `${SRC}/**/*.css`,
             `!${SRC}/ie9.*.css`,
             `!${SRC}/old-ie.*.css`,
             `!${SRC}/webfonts-*.css`
         ], (event) => {
-            gulp.src(event.path)
+            gulp.src(event.path, {base: SRC})
                 .pipe(sourcemaps.init({loadMaps: true}))
                 .pipe(postcss([
                     autoprefixer(),

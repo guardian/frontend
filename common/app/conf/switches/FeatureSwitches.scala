@@ -5,15 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val contentAgeMessageSwitch = Switch(
-    "Feature",
-    "content-age-message",
-    "Show old content message on... old content (tagged tone/news)",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 6),
-    exposeClientSide = false
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -340,4 +331,12 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val AmpSwitch = Switch(
+    "Server-side A/B Tests",
+    "amp-switch",
+    "If this switch is on, link to amp pages will be in the metadata for articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
 }

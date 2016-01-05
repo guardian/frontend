@@ -1,6 +1,6 @@
 package model.commercial.soulmates
 
-import commercial.feeds.ParsedFeed
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.AkkaAgent
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -12,7 +12,8 @@ case class SoulmatesAgent(groupName: String,
 
   private lazy val agent = AkkaAgent[Seq[Member]](Nil)
 
-  def refresh(getFeed: String => Option[String])(implicit ec: ExecutionContext): Future[ParsedFeed[Member]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])
+    (implicit ec: ExecutionContext): Future[ParsedFeed[Member]] = {
 
     def update(freshData: Seq[Member]): Future[Seq[Member]] = {
       agent.alter { oldData =>
@@ -21,7 +22,7 @@ case class SoulmatesAgent(groupName: String,
       }
     }
 
-    val parsedFeed = feed.parsedMembers(s"soulmates/$groupName", getFeed)
+    val parsedFeed = feed.parsedMembers(feedMetaData, feedContent)
 
     parsedFeed.foreach(feed => update(feed.contents))
 

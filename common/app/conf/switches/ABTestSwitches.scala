@@ -18,7 +18,7 @@ trait ABTestSwitches {
     "ab-large-top-ad",
     "Testing the difference of user behaviour based on large top ad format",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 31),
+    sellByDate = new LocalDate(2016, 1, 13),
     exposeClientSide = true
   )
 
@@ -28,15 +28,6 @@ trait ABTestSwitches {
     "Injects fronts on articles for the test",
     safeState = Off,
     sellByDate = new LocalDate(2016, 1, 30),
-    exposeClientSide = true
-  )
-
-  val ABVideoPreroll = Switch(
-    "A/B Tests",
-    "ab-video-preroll",
-    "A test to see if a UK or INT audience will be interested in video pre-rolls",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 6),
     exposeClientSide = true
   )
 
