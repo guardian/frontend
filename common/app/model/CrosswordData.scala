@@ -36,18 +36,7 @@ object Entry {
     entry.length.getOrElse(0),
     entry.group.getOrElse(Seq()),
     entry.position.map(position => CrosswordPosition(position.x, position.y)).getOrElse(CrosswordPosition(0,0)),
-    entry.separatorLocations.map(separatorLocations => {
-      val maybeLocations = separatorLocations.map(separatorLocation => {
-        for (
-          separator <- separatorLocation.separator;
-          locations <- separatorLocation.locations
-        ) yield (separator, locations)
-      })
-      val pairs = maybeLocations collect {
-        case Some(v) => v
-      }
-      pairs.toMap
-    }),
+    entry.separatorLocations.map(_.toMap),
     entry.solution
   )
 }
