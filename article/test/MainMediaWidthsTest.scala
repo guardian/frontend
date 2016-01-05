@@ -1,6 +1,6 @@
 package test
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, Asset}
+import com.gu.contentapi.client.model.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, Block, Blocks, Asset}
 import layout.ContentWidths.{LiveBlogMedia, MainMedia}
 import org.joda.time.DateTime
 import org.scalatest._
@@ -65,7 +65,8 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("tone/minutebyminute", "tone")),
-      elements = None
+      elements = None,
+      blocks = Some(Blocks.apply(None, Some(Seq(Block("","","",None,Map(), false, None, None, None,None,Nil,None,None, Nil)))))
     )
 
     val content = Content.make(item)
