@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -86,7 +87,7 @@ object Fields {
       standfirst = apiContent.fields.flatMap(_.standfirst),
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
-      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.dateTime.toString.parseISODateTime).getOrElse(DateTime.now),
+      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
     )
