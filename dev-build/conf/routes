@@ -25,7 +25,7 @@ OPTIONS        /accept-beacon                                                   
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
-GET            /crosswords/print/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id             controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id/print             controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
 GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
