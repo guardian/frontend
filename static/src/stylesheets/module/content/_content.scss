@@ -821,6 +821,14 @@
         .gallery2__caption,
         .gallery2__credit {
             color: colour(neutral-2-contrasted);
+
+            a {
+                color: colour(guardian-brand);
+
+                &:hover {
+                    border-bottom-color: colour(guardian-brand);
+                }
+            }
         }
 
         .ad-slot--dark {
