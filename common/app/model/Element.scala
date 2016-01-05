@@ -30,7 +30,7 @@ object Element {
     val properties = ElementProperties.make(capiElement, elementIndex)
     val images = ImageMedia.make(capiElement, properties)
 
-    capiElement.`type` match {
+    capiElement.`type`.name match {
       case "image" => ImageElement(properties, images)
       case "video" => VideoElement(properties, images, VideoMedia.make(capiElement))
       case "audio" => AudioElement(properties, images, AudioMedia.make(capiElement))
