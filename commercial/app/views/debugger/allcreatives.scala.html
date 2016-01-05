@@ -185,6 +185,38 @@
         </div>
 
         <script>
+            function showRHColumn(component) {
+                loadCommercial(function () {
+                    require('bootstraps/standard/main')
+                        .next(['bootstraps/commercial'])
+                        .next([
+                            'common/utils/$'
+                        ])
+                        .then(function (
+                            $
+                        ) {
+                        $('.content__secondary-column').empty();
+
+                        require(['common/modules/commercial/creatives/branded-component'])
+                            .then(function(
+                                BrandedComponent
+                            ) {
+                                new BrandedComponent($('.branded-component-' + component), {
+                                    type: component,
+                                    clickMacro: '%%CLICK_URL_ESC%%',
+                                    omnitureId: '[%OmnitureID%]'
+                                }, {
+                                    force: true
+                                }).create();
+                            });
+                        });
+                });
+            }
+
+            showRHColumn('soulmates');
+        </script>
+
+        <script>
             loadCommercial(function () {
                 require(['common/modules/commercial/creatives/template'])
                     .then(function(
@@ -652,18 +684,22 @@
                 ("relevance", "high"),
                 ("Toneclass", "commercial--tone-brand"),
                 ("offer1title", "Offer 1 Title"),
+                ("offer1linktext", "Offer 1 Link Text"),
                 ("offer1url", "http://www.theguardian.com/uk"),
                 ("offer1meta", "Offer 1 Meta"),
                 ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("offer2title", "Offer 2 Title"),
+                ("offer2linktext", "Offer 2 Link Text"),
                 ("offer2url", "http://www.theguardian.com/uk"),
                 ("offer2meta", "Offer 1 Meta"),
                 ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("offer3title", "Offer 3 Title"),
+                ("offer3linktext", "Offer 3 Link Text"),
                 ("offer3url", "http://www.theguardian.com/uk"),
                 ("offer3meta", "Offer 1 Meta"),
                 ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("offer4title", "Offer 4 Title"),
+                ("offer4linktext", "Offer 4 Link Text"),
                 ("offer4url", "http://www.theguardian.com/uk"),
                 ("offer4meta", "Offer 1 Meta"),
                 ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),

@@ -13,19 +13,25 @@
 
 define([
     'raven',
+    'fastdom',
+    'common/modules/user-prefs',
     'common/modules/experiments/ab',
     'common/modules/ui/images',
     'common/utils/storage',
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/mediator',
     'common/modules/identity/api'
 ], function (
     raven,
+    fastdom,
+    userPrefs,
     ab,
     images,
     storage,
     $,
     ajax,
+    mediator,
     identity
 ) {
     return function () {
@@ -128,6 +134,29 @@ define([
             alreadyVisted = storage.local.get('gu.alreadyVisited') || 0;
             storage.local.set('gu.alreadyVisited', alreadyVisted + 1);
         }
+
+        // Adds a global window:throttledScroll event to mediator, which throttles
+        // scroll events until there's a spare animationFrame.
+        // Callbacks of all listeners to window:throttledScroll are run in a
+        // fastdom.read, meaning they can all perform DOM reads for free
+        // (after the first one that needs layout triggers it).
+        // However, this means it's VITAL that all writes in callbacks are delegated to fastdom
+        var running = false;
+        function onScroll() {
+            if (!running) {
+                running = true;
+                fastdom.read(function () {
+                    mediator.emitEvent('window:throttledScroll');
+                    running = false;
+                });
+            }
+        }
+        window.addEventListener('scroll', userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window ?
+            function () {
+                window.requestIdleCallback(onScroll);
+            } :
+            onScroll
+        );
 
         //
         // Membership access
