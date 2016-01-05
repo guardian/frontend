@@ -1,7 +1,7 @@
 {
   "name": "pasteup-forms",
   "description": "Forms component in the Pasteup collection",
-  "version": "5.0.7",
+  "version": "6.0.2",
   "main": [
     "_forms.scss",
     "_forms.config.scss",
@@ -19,18 +19,20 @@
     "guss-grid-system": "~1.2.1",
     "sass-mq": "~3.0.0",
     "guss-css3": "~2.2.1",
-    "guss-webfonts": "~3.0.0"
+    "guss-webfonts": "~3.0.0",
+    "guss-rem": "~1.2.0",
+    "pasteup-buttons": "~0.5.0"
   },
   "devDependencies": {
     "Cortana": "~1.2.7"
   },
-  "_release": "5.0.7",
+  "_release": "6.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "5.0.7",
-    "commit": "0b9a3ef1bd08b07a1b9b2b1486f6226f8b46e9b0"
+    "tag": "6.0.2",
+    "commit": "3c98e72fdbb7d1f497b2e69af20c0681b0f8cf50"
   },
   "_source": "git://github.com/guardian/pasteup-forms.git",
-  "_target": "~5.0.0",
+  "_target": "~6.0.0",
   "_originalSource": "pasteup-forms"
 }

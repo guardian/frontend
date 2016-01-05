@@ -1,8 +1,8 @@
-// Fieldset
+// Form
 // ============================================================================
 
 /**
- * Fieldset's `border-top` style.
+ * Form's `border-top` style.
  *
  * @type List
  *
@@ -10,22 +10,70 @@
  *
  * @group forms
  */
-$pasteup-forms-fieldset-border-top: 1px solid guss-colour(neutral-7, $pasteup-palette) !default;
+$pasteup-forms-form-border-top: 1px solid guss-colour(guardian-brand, $pasteup-palette) !default;
 
 
-// Text field (eg: textarea and text fields)
+// Fieldset
 // ============================================================================
 
 /**
- * Text fields' `font-family`.
+ * Fieldset's `border-bottom` style.
  *
  * @type List
  *
- * @requires {variable} f-sans-serif-text
+ * @requires {function} guss-colour
  *
  * @group forms
  */
-$pasteup-forms-fields-font-family: $f-sans-serif-text !default;
+$pasteup-forms-fieldset-border-bottom: 1px solid guss-colour(guardian-brand, $pasteup-palette) !default;
+
+/**
+ * Fieldset's `background-color`.
+ *
+ * @type Color
+ *
+ * @requires {function} guss-colour
+ *
+ * @group forms
+ */
+$pasteup-forms-fieldset-background-colour: guss-colour(neutral-8, $pasteup-palette) !default;
+
+/**
+ * Fieldset headline's `color`.
+ *
+ * @type Color
+ *
+ * @requires {function} guss-colour
+ *
+ * @group forms
+ */
+$pasteup-forms-fieldset-headline-colour: guss-colour(neutral-1, $pasteup-palette) !default;
+
+/**
+ * Fieldset num's `color`.
+ *
+ * @type Color
+ *
+ * @requires {function} guss-colour
+ *
+ * @group forms
+ */
+$pasteup-forms-fieldset-num-colour: guss-colour(news-main-2, $pasteup-palette) !default;
+
+
+// Text fields (eg: textarea and text input), labels and notes
+// ============================================================================
+
+/**
+ * Label's `color`.
+ *
+ * @type Color
+ *
+ * @requires {function} guss-colour
+ *
+ * @group forms
+ */
+$pasteup-forms-label-colour: guss-colour(neutral-1, $pasteup-palette) !default;
 
 /**
  * Text fields' `color`.
@@ -36,7 +84,7 @@ $pasteup-forms-fields-font-family: $f-sans-serif-text !default;
  *
  * @group forms
  */
-$pasteup-forms-fields-colour: guss-colour(neutral-1, $pasteup-palette) !default;
+$pasteup-forms-input-colour: guss-colour(neutral-1, $pasteup-palette) !default;
 
 /**
  * Text fields' `border-color`.
@@ -47,7 +95,7 @@ $pasteup-forms-fields-colour: guss-colour(neutral-1, $pasteup-palette) !default;
  *
  * @group forms
  */
-$pasteup-forms-fields-border-colour: guss-colour(neutral-4, $pasteup-palette) !default;
+$pasteup-forms-input-border-colour: guss-colour(neutral-4, $pasteup-palette) !default;
 
 /**
  * Text fields' `border-color` when field is focused.
@@ -58,14 +106,25 @@ $pasteup-forms-fields-border-colour: guss-colour(neutral-4, $pasteup-palette) !d
  *
  * @group forms
  */
-$pasteup-forms-fields-border-colour-focus: guss-colour(neutral-2, $pasteup-palette) !default;
+$pasteup-forms-input-border-colour-focus: guss-colour(guardian-brand, $pasteup-palette) !default;
+
+/**
+ * Note's `color`.
+ *
+ * @type Color
+ *
+ * @requires {function} guss-colour
+ *
+ * @group forms
+ */
+$pasteup-forms-note-colour: guss-colour(neutral-2, $pasteup-palette) !default;
 
 
-// Error
+// Errors
 // ============================================================================
 
 /**
- * Form error `color`.
+ * Label's error `color`.
  *
  * @type Color
  *
@@ -73,43 +132,47 @@ $pasteup-forms-fields-border-colour-focus: guss-colour(neutral-2, $pasteup-palet
  *
  * @group forms
  */
-$pasteup-forms-error-colour: guss-colour(error, $pasteup-palette) !default;
+$pasteup-forms-error-label-colour: guss-colour(error, $pasteup-palette) !default;
 
 /**
- * Form error `background-color`.
+ * Input's error `color`.
  *
  * @type Color
  *
+ * @requires {function} guss-colour
+ *
  * @group forms
  */
-$pasteup-forms-error-background: #fdf4f3 !default;
+$pasteup-forms-error-input-colour: guss-colour(error, $pasteup-palette) !default;
 
 /**
- * Form error `border-color`.
+ * Input's error `border-color`.
  *
  * @type Color
  *
+ * @requires {function} guss-colour
+ *
  * @group forms
  */
-$pasteup-forms-error-border-colour: lighten($pasteup-forms-error-colour, 35%) !default;
+$pasteup-forms-error-input-border-colour: guss-colour(error, $pasteup-palette) !default;
 
 /**
- * Form error fields `border-color`.
+ * Error message's `color`.
  *
  * @type Color
  *
- * @requires {variable} pasteup-forms-error-colour
+ * @requires {function} guss-colour
  *
  * @group forms
  */
-$pasteup-forms-error-field-border-colour: $pasteup-forms-error-colour !default;
+$pasteup-forms-error-message-colour: guss-colour(error, $pasteup-palette) !default;
 
 
-// Success
+// Pseudo radio buttons
 // ============================================================================
 
 /**
- * Form success `color`.
+ * Pseudo radio's `color`.
  *
  * @type Color
  *
@@ -117,32 +180,10 @@ $pasteup-forms-error-field-border-colour: $pasteup-forms-error-colour !default;
  *
  * @group forms
  */
-$pasteup-forms-success-colour: guss-colour(success, $pasteup-palette) !default;
+$pasteup-forms-radio-colour: guss-colour(neutral-4, $pasteup-palette) !default;
 
 /**
- * Form success `background-color`.
- *
- * @type Color
- *
- * @group forms
- */
-$pasteup-forms-success-background: lighten($pasteup-forms-success-colour, 70%)  !default;
-
-/**
- * Form success `border-color`.
- *
- * @type Color
- *
- * @group forms
- */
-$pasteup-forms-success-border-colour: lighten($pasteup-forms-success-colour, 35%) !default;
-
-
-// Submit
-// ============================================================================
-
-/**
- * Submit button `background-color`.
+ * Pseudo radio's `color` when checked.
  *
  * @type Color
  *
@@ -150,37 +191,37 @@ $pasteup-forms-success-border-colour: lighten($pasteup-forms-success-colour, 35%
  *
  * @group forms
  */
-$pasteup-forms-submit-background: guss-colour(news-main-1, $pasteup-palette) !default;
+$pasteup-forms-radio-colour-checked: guss-colour(guardian-brand, $pasteup-palette) !default;
 
 /**
- * Submit button `background-color` when focused.
+ * Pseudo radio's `border` style.
  *
- * @type Color
- *
- * @requires {variable} pasteup-forms-submit-background
- *
- * @group forms
- */
-$pasteup-forms-submit-background-focus: darken($pasteup-forms-submit-background, 5%) !default;
-
-/**
- * Submit button `background-color` when active.
- *
- * @type Color
+ * @type List
  *
  * @requires {function} guss-colour
  *
  * @group forms
  */
-$pasteup-forms-submit-background-active: guss-colour(neutral-1, $pasteup-palette) !default;
+$pasteup-forms-radio-border: 1px solid transparent !default;
 
 /**
- * Submit button `background-color` when disabled.
+ * Pseudo radio's `border-color` when hovered.
  *
- * @type Color
+ * @type List
  *
  * @requires {function} guss-colour
  *
  * @group forms
  */
-$pasteup-forms-submit-background-disabled: guss-colour(neutral-5, $pasteup-palette) !default;
+$pasteup-forms-radio-border-hover: 1px solid guss-colour(neutral-2, $pasteup-palette) !default;
+
+/**
+ * Pseudo radio's `border-color` when checked.
+ *
+ * @type List
+ *
+ * @requires {function} guss-colour
+ *
+ * @group forms
+ */
+$pasteup-forms-radio-border-checked: 1px solid guss-colour(guardian-brand, $pasteup-palette) !default;
