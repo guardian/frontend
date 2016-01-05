@@ -1,6 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordDimensions => ApiCrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, Crossword}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
@@ -35,14 +36,18 @@ object Entry {
     entry.length.getOrElse(0),
     entry.group.getOrElse(Seq()),
     entry.position.map(position => CrosswordPosition(position.x, position.y)).getOrElse(CrosswordPosition(0,0)),
-    entry.separatorLocations.map(separatorLocations => (
-      separatorLocations.map(separatorLocation => (
+    entry.separatorLocations.map(separatorLocations => {
+      val maybeLocations = separatorLocations.map(separatorLocation => {
         for (
           separator <- separatorLocation.separator;
           locations <- separatorLocation.locations
         ) yield (separator, locations)
-      )).flatten.toMap
-    )),
+      })
+      val pairs = maybeLocations collect {
+        case Some(v) => v
+      }
+      pairs.toMap
+    }),
     entry.solution
   )
 }
@@ -127,19 +132,19 @@ object CrosswordData {
 
     // Revert back to the original order
     val sortedNewEntries = entries.flatMap(entry => newEntries.find(_.id == entry.id))
-
+    val crosswordType = crossword.`type`.name.toLowerCase
 
     CrosswordData(
-      s"${crossword.`type`}/${crossword.number.toString}",
+      s"$crosswordType/${crossword.number.toString}",
       crossword.number,
       crossword.name,
       creator = (for (
         creator <- crossword.creator
       ) yield CrosswordCreator(creator.name, creator.webUrl)),
-      dateFormatUTC.parseDateTime(crossword.date.dateTime.toString),
+      crossword.date.toJodaDateTime,
       sortedNewEntries,
       CrosswordDimensions(crossword.dimensions.cols, crossword.dimensions.rows),
-      crossword.`type`.name,
+      crosswordType,
       crossword.pdf,
       crossword.instructions
     )
