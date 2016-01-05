@@ -163,13 +163,6 @@ object Frontend extends Build with Prototypes {
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
-  val faciaEndToEnd = application("facia-end-to-end")
-    .dependsOn(facia, faciaPress)
-    .aggregate(facia, faciaPress)
-    .settings(
-      javaOptions in Runtime += "-Dconfig.file=facia-end-to-end/conf/facia-end-to-end.application.conf"
-    )
-
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD
   val standalone = application("standalone").dependsOn(
