@@ -1,6 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.pressed.PressedContent
 import services.FaciaContentConvert
 
