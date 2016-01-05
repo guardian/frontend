@@ -46,7 +46,6 @@ final case class Content(
   commercial: Commercial,
   elements: Elements,
   fields: Fields,
-  blocks: Seq[BodyBlock],
   sharelinks: ShareLinks,
   publication: String,
   internalPageCode: String,
@@ -242,7 +241,6 @@ object Content {
     val sharelinks = ShareLinks(tags, fields, metadata)
     val apifields = apiContent.safeFields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
-    val blocks = BodyBlock.make(apiContent.blocks) // note - lossy at the moment!
 
     Content(
       elements = elements,
@@ -250,7 +248,6 @@ object Content {
       fields = fields,
       metadata = metadata,
       trail = trail,
-      blocks = blocks,
       commercial = commercial,
       sharelinks = sharelinks,
       publication = apifields.getOrElse("publication", ""),
@@ -427,7 +424,7 @@ final case class Article (
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
-  val isLiveBlog: Boolean = content.tags.isLiveBlog
+  val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isImmersive: Boolean = content.metadata.isImmersive
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption

@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.{CrosswordPosition, CrosswordCreator, Cros
 import com.gu.facia.api.{utils => fapiutils}
 import common.{NavItem, SectionLink, Pagination}
 import model.facia.PressedCollection
+import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -177,6 +178,7 @@ object ContentTypeFormat {
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
+  implicit val bodyBlockFormat = Json.format[BodyBlock]
   val fieldsFormat = Json.format[Fields]
   val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]

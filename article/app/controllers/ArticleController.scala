@@ -87,7 +87,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         MovedPermanently(path)
       } else {
-        val blocks = BlocksFor(blog.article.content.blocks, pageNo)
+        val blocks = BlocksFor(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)
@@ -111,50 +111,50 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[Int] = None) = {
-    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
-      // we cannot sensibly decache memcached (does not support surogate keys)
-      // so if we are doing the 'soft purge' don't memcache
-      loadArticle(path, lastUpdate, rendered, page)
-    } else MemcachedAction { implicit request =>
-      loadArticle(path, lastUpdate, rendered, page)
+  def renderLive(path: String, page: Option[Int] = None) =
+    LongCacheAction { implicit request =>
+      mapModel(path, true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+        render(path, _, page)
+      }
+    }
+
+  def renderJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+    LongCacheAction { implicit request =>
+      mapModel(path) { model =>
+        (lastUpdate, rendered) match {
+          case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
+          case (None, Some(false)) => blockText(model, 6)
+          case (_, _) => render(path, model, None)
+        }
+      }
     }
   }
 
-  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean], page: Option[Int])(implicit request: RequestHeader): Future[Result] = {
-    page match {
-      case Some(pageNo) =>
-        mapModel(path) {
-          render(path, _, Some(pageNo))
-        }
-      case None =>
-        mapModel(path) { model =>
-          (lastUpdate, rendered) match {
-            case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
-            case (None, Some(false)) => blockText(model, 6)
-            case (_, _) => render(path, model, None)
-          }
-        }
+  def renderArticle(path: String) = {
+    LongCacheAction { implicit request =>
+      mapModel(path) {
+        render(path, _, None)
+      }
     }
   }
 
-  def mapModel(path: String)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path) map redirect recover convertApiExceptions map {
+  def mapModel(path: String, blocks: Boolean = false)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, blocks) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
+  private def lookup(path: String, blocks: Boolean)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    getResponse(LiveContentApi.item(path, edition)
+    val capiItem = LiveContentApi.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
-      .showBlocks("body")
-    )
+    val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
+    getResponse(capiItemWithBlocks)
 
   }
 
@@ -174,4 +174,16 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     ModelOrResult(content, response)
   }
 
+}
+
+object LongCacheAction {
+  def apply[X](block: RequestHeader => Future[Result]) = {
+    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
+      // we cannot sensibly decache memcached (does not support surogate keys)
+      // so if we are doing the 'soft purge' don't memcache
+      block(request)
+    } else MemcachedAction { implicit request =>
+      block(request)
+    }
+  }
 }

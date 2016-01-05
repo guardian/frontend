@@ -5,6 +5,7 @@ import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
+import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -86,6 +87,7 @@ object Fields {
       standfirst = apiContent.safeFields.get("standfirst"),
       main = apiContent.safeFields.getOrElse("main",""),
       body = apiContent.safeFields.getOrElse("body",""),
+      blocks = BodyBlock.make(apiContent.blocks), // note - lossy at the moment!
       lastModified = apiContent.safeFields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now),
       displayHint = apiContent.safeFields.getOrElse("displayHint", ""),
       isLive = apiContent.safeFields.get("liveBloggingNow").exists(_.toBoolean)
@@ -100,6 +102,7 @@ final case class Fields(
   standfirst: Option[String],
   main: String,
   body: String,
+  blocks: Seq[BodyBlock],
   lastModified: DateTime,
   displayHint: String,
   isLive: Boolean
