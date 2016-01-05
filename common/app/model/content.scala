@@ -122,7 +122,7 @@ final case class Content(
 
   lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.properties.twitterHandle)
 
-  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "blog" }
+  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
 
   lazy val sectionLabelLink : String = {
     if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
@@ -256,8 +256,8 @@ object Content {
       allowUserGeneratedContent = apifields.flatMap(_.allowUgc).getOrElse(false),
       isExpired = apiContent.isExpired.getOrElse(false),
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
-      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "tweet").map{ tweet =>
-        val images = tweet.assets.filter(_.`type`.name == "image").map(_.file).flatten
+      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map{ tweet =>
+        val images = tweet.assets.filter(_.`type`.name == "Image").map(_.file).flatten
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
