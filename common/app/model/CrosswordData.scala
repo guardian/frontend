@@ -130,7 +130,7 @@ object CrosswordData {
 
 
     CrosswordData(
-      s"${crossword.`type`}/${crossword.number.toString}",
+      s"${crossword.`type`.name}/${crossword.number.toString}",
       crossword.number,
       crossword.name,
       creator = (for (

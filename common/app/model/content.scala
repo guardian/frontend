@@ -256,8 +256,8 @@ object Content {
       allowUserGeneratedContent = apifields.flatMap(_.allowUgc).getOrElse(false),
       isExpired = apiContent.isExpired.getOrElse(false),
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
-      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type` == "tweet").map{ tweet =>
-        val images = tweet.assets.filter(_.`type` == "image").map(_.file).flatten
+      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "tweet").map{ tweet =>
+        val images = tweet.assets.filter(_.`type`.name == "image").map(_.file).flatten
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),

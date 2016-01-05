@@ -85,7 +85,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   private def createBookSections(contentList: List[ApiContent]): List[BookSectionContent] = {
     val tagWithContent: List[TagWithContent] = contentList.flatMap { content =>
-      content.tags.find(_.`type` == "newspaper-book-section").map(t => TagWithContent(t, content))
+      content.tags.find(_.`type`.name == "newspaper-book-section").map(t => TagWithContent(t, content))
     }
 
     //group content by booksection tag type
