@@ -18,11 +18,11 @@ object ImageOverride {
       id = "override",
       relation = "thumbnail",
       // Image
-      `type` = ElementType(0),
+      `type` = ElementType.Image,
       galleryIndex = None,
       assets = List(Asset(
         // Image
-        `type` = AssetType(0),
+        `type` = AssetType.Image,
         mimeType = Option("image/jpg"),
         file = Option(imageSrc),
         typeData = widthAndHeightMap

@@ -21,7 +21,7 @@ object FixtureTemplates {
 
   val emptyTag = ApiTag(
     "",
-    TagType(0),
+    TagType.Keyword,
     None,
     None,
     "",
@@ -32,13 +32,13 @@ object FixtureTemplates {
   val emptyElement = ApiElement(
     "",
     "",
-    ElementType(0),
+    ElementType.Text,
     None,
     Nil
   )
 
   val emptyAsset = ApiAsset(
-    AssetType(0),
+    AssetType.Image,
     None,
     None,
     None
