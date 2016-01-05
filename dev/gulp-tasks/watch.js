@@ -14,7 +14,7 @@ const DEST = `${DIRECTORIES.hash}/stylesheets`;
 
 gulp.task('watch:css', (done) => {
     gulp.watch([
-            `${SRC}/*.css`,
+            `${SRC}/**/*.css`,
             `!${SRC}/ie9.*.css`,
             `!${SRC}/old-ie.*.css`,
             `!${SRC}/webfonts-*.css`
