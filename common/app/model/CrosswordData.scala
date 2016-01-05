@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordCreator, CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordDimensions => ApiCrosswordDimensions, Crossword}
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
@@ -62,6 +62,16 @@ case class Entry(
   lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
 }
 
+case class CrosswordCreator(
+  name: String,
+  webUrl: String
+)
+
+case class CrosswordDimensions(
+  cols: Int,
+  rows: Int
+)
+
 object CrosswordData {
 
   private val dateFormatUTC = ISODateTimeFormat.dateParser().withZone(DateTimeZone.UTC)
@@ -118,14 +128,17 @@ object CrosswordData {
     // Revert back to the original order
     val sortedNewEntries = entries.flatMap(entry => newEntries.find(_.id == entry.id))
 
+
     CrosswordData(
       s"${crossword.`type`}/${crossword.number.toString}",
       crossword.number,
       crossword.name,
-      crossword.creator,
+      creator = (for (
+        creator <- crossword.creator
+      ) yield CrosswordCreator(creator.name, creator.webUrl)),
       dateFormatUTC.parseDateTime(crossword.date.dateTime.toString),
       sortedNewEntries,
-      crossword.dimensions,
+      CrosswordDimensions(crossword.dimensions.cols, crossword.dimensions.rows),
       crossword.`type`.name,
       crossword.pdf,
       crossword.instructions
