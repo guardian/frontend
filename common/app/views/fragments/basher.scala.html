@@ -5,9 +5,13 @@
 @if(Basher.fromId(id) != None) {
     <div class="facia-basher" data-link-name="basher">
         @conf.Static.css.inline(Basher.fromId(id).toString).map { css =>
-            <style>
-                @Html(css)
-            </style>
+            @if(play.Play.isDev()) {
+                <link rel="stylesheet" type="text/css" href="@Static("stylesheets/inline/basher." + Basher.fromId(id).toString + ".css")" />
+            } else {
+                <style class="js-loggable">
+                    @Html(css)
+                </style>
+            }
         }
 
         @Basher.fromId(id) match {
