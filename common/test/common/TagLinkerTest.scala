@@ -1,6 +1,6 @@
 package common
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, TagType}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, ContentFields, TagType}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import common.editions.Uk
 import model.{Content, Article}
@@ -83,7 +83,7 @@ class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
   private def sensitiveArticle(tags: ApiTag*) = {
-    val contentApiItem = contentApi(tags.toList).copy(fields = Some(Map("showInRelatedContent" -> "false")))
+    val contentApiItem = contentApi(tags.toList).copy(fields = Some(ContentFields(showInRelatedContent = Some(true))))
 
     val content = Content.make(contentApiItem)
     Article.make(content)
@@ -99,7 +99,7 @@ class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
       tags = tags,
-      fields = Some(Map("showInRelatedContent" -> "true"))
+      fields = Some(ContentFields(showInRelatedContent = Some(true)))
   )
 
   private def article(tags: ApiTag*) = {
