@@ -11,70 +11,34 @@ category: Common
 <form class="form">
     <fieldset class="fieldset">
         <div class="fieldset__heading">
-            <h2 class="fieldset__headline">Form Heading</h2>
-            <div class="fieldset__note">Form Note. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-        </div>
-        <div class="fieldset__fields">
-            <div class="form-field">
-                <label class="label" for="field-1">Label</label>
-                <input type="text" class="input-text" name="field-1" id="field-1">
-            </div>
-            <div class="form-field">
-                <label class="label label--inline" for="field-2">Another label</label>
-                <span class="form-note">(optional)</span>
-                <input type="text" class="input-text" name="field-2" id="field-2">
-                <div class="form-note">Lorem ipsum dolor sit amet</div>
-            </div>
-            <div class="form-field form-field--error">
-                <label class="label" for="field-3">Error field</label>
-                <input type="text" class="input-text" name="field-3" id="field-3">
-                <p class="form-field__error-message">This field has an error</p>
-            </div>
-            <div class="form-field">
-                <label class="label" for="option-one">
-                    <input type="radio" class="pseudo-radio-input" name="field-4" id="option-one" value="option-one" checked="checked">
-                    <div class="pseudo-radio">
-                        <div class="pseudo-radio__header">Option one</div>
-                        <p class="pseudo-radio__note">Lorem ipsum dolor sit amet</p>
-                    </div>
-                </label>
-                <label class="label" for="option-two">
-                    <input type="radio" class="pseudo-radio-input" name="field-4" id="option-two" value="option-two">
-                    <div class="pseudo-radio">
-                        <div class="pseudo-radio__header">Option two</div>
-                        <p class="pseudo-radio__note">Consectetur adipisicing elit</p>
-                    </div>
-                </label>
-            </div>
-            <div class="form-field">
-                <div class="checkbox">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit:
-                    <label class="label">
-                        <input type="checkbox">
-                        Checkbox one
-                    </label>
-                    <label class="label">
-                        <input type="checkbox">
-                        Checkbox two
-                    </label>
-                </div>
-            </div>
-            <div class="form-field">
-                <label class="label" for="field-5">Select label</label>
-                <select class="select select--wide" id="field-5">
-                    <option val="1">Lorem ipsum dolor sit amet</option>
-                    <option val="2">Consectetur adipisicing elit</option>
-                </select>
+            <h2 class="form__heading">
+                Form Heading
+            </h2>
+            <div class="form__note">
+                Form Note. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, ratione!
             </div>
         </div>
-    </fieldset>
-    <fieldset class="fieldset fieldset--simple">
-        <div class="fieldset__heading"></div>
         <div class="fieldset__fields">
-            <p class="form-note">By joining Guardian Membership, you are agreeing to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</p>
-            <div class="actions">
-                <button type="submit" class="button button--primary button--large">Submit</button>
-            </div>
+            <ul>
+                <li class="form-field">
+                    <label class="label" for="field-1">Label</label>
+                    <input class="text-input" name="field-1" />
+                </li>
+                <li class="form-field">
+                    <label class="label" for="field-2">Another label</label>
+                    <input class="text-input" name="field-2" />
+                </li>
+                <li class="form-field">
+                    <div class="form-field__note">
+                        <a href="#">Forgotten your password?</a>
+                    </div>
+                    <button type="submit" class="submit-input">Submit</button>
+                    <label class="check-label check-label--helper">
+                        <input type="checkbox" />
+                        Remember me
+                    </label>
+                </li>
+            </ul>
         </div>
     </fieldset>
 </form>
@@ -96,276 +60,239 @@ category: Common
  *
  * @group forms
  */
-
-// Form
-// ============================================================================
-
 .form {
-    margin-bottom: 0;
-    border-top: $pasteup-forms-form-border-top;
+    margin-top: $gs-baseline*2;
+    margin-bottom: $gs-baseline*2;
 }
 
-// Form Fieldset
-// ============================================================================
+.form__heading {
+    @include fs-bodyHeading(3);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form__note,
+.form-field__note {
+    font-family: $pasteup-forms-fields-font-family;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
 
 .fieldset {
     border: 0;
-    padding: 0;
-    margin: 0;
-    border-bottom: $pasteup-forms-fieldset-border-bottom;
+    border-top: $pasteup-forms-fieldset-border-top;
     display: table;
-    background-color: $pasteup-forms-fieldset-background-colour;
-}
-
-.fieldset--single {
-    .fieldset__heading {
-        display: block;
-        padding-right: $gs-gutter / 2;
-        width: auto;
-    }
-
-    .fieldset__fields {
-        padding-left: $gs-gutter / 2;
-        width: auto;
-    }
-}
-
-.fieldset--simple {
-    background-color: transparent;
-    border-bottom: 0;
-
-    .fieldset__fields {
-        padding-top: $gs-gutter / 2;
-    }
-}
-
-.fieldset--no-background {
-    background-color: transparent;
-}
-
-.fieldset__heading {
-    vertical-align: top;
-    padding: ($gs-baseline / 2) ($gs-baseline) ($gs-baseline * 2) ($gs-gutter / 2);
-
-    @include mq(tablet) {
-        display: table-cell;
-        box-sizing: border-box;
-        width: gs-span(4) + $gs-gutter;
-        padding-right: ($gs-gutter * 2);
-    }
-}
-
-.fieldset__headline {
-    color: $pasteup-forms-fieldset-headline-colour;
-    @include fs-header(3);
+    padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
     margin: 0;
 }
 
-.fieldset__num {
-    margin-right: $gs-gutter/4;
-    color: $pasteup-forms-fieldset-num-colour;
-}
-
-
-.fieldset__note {
-    @include fs-textSans(2);
-    color: $pasteup-forms-note-colour;
-}
-
-.fieldset__fields {
-    vertical-align: top;
-    padding: ($gs-gutter / 2) ($gs-gutter / 2) ($gs-baseline * 2);
-
-    @include mq(tablet) {
+@include mq(desktop) {
+    .fieldset__heading {
         display: table-cell;
-        box-sizing: border-box;
-        width: gs-span(5);
-        padding-left: 0;
+        padding-right: $gs-gutter*5;
+        width: gs-span(3);
+        vertical-align: top;
+    }
+
+    .fieldset__fields {
+        display: table-cell;
+        vertical-align: top;
+        width: gs-span(6);
     }
 }
 
-
-// Form field
-// ============================================================================
-
-.form-field {
-    margin-bottom: ($gs-baseline);
-}
-
-.form-field--no-margin {
+.form-fields-group .form-field {
     margin-bottom: 0;
 }
 
-.form-field--error {
-    .label {
-        color: $pasteup-forms-error-label-colour;
-    }
-
-    .input-text,
-    .input-text:focus,
-    .input-textarea,
-    .input-textarea:focus {
-        border-color: $pasteup-forms-error-input-border-colour;
-    }
+.form-field {
+    list-style: none;
+    margin: 0 0 $gs-baseline*2;
+    padding: 0;
 }
 
-.form-field__error-message {
-    @include fs-data(3);
-    color: $pasteup-forms-error-message-colour;
-    margin-top: 2px;
-    margin-bottom: ($gs-baseline / 2);
-}
+.form-field__submit {
+    .form-field__note {
+        margin: 0 0 $gs-baseline*2;
 
-.form-note {
-    @include fs-textSans(1);
-    color: $pasteup-forms-note-colour;
-    padding-top: ($gs-baseline / 2);
-    margin-bottom: ($gs-baseline / 2);
-}
-
-.form-note--left {
-    @include mq(tablet) {
-        float: left;
-    }
-}
-
-.form-note--right {
-    @include mq(tablet) {
-        text-align: right;
-        margin-left: ($gs-gutter);
-    }
-}
-
-.form-note--underneath {
-    margin-top: ($gs-baseline / 2);
-}
-
-// Form labels and inputs
-// ============================================================================
-
-.label {
-    @include fs-bodyCopy(2);
-    color: $pasteup-forms-label-colour;
-    cursor: pointer;
-    display: block;
-}
-
-.label--inline {
-    display: inline-block;
-}
-
-.input-text,
-.input-textarea {
-    color: $pasteup-forms-input-colour;
-    border: 1px solid $pasteup-forms-input-border-colour;
-    @include f-textSans;
-    font-size: inherit;
-    line-height: inherit;
-    padding: 8px 8px 7px;
-    outline: none;
-    box-sizing: border-box;
-    width: 100%;
-    -webkit-appearance: none;
-
-    &:focus {
-        border-color: $pasteup-forms-input-border-colour-focus;
-    }
-}
-
-.input-text--small {
-    width: 30%;
-}
-
-.input-text--xsmall {
-    width: 15%;
-}
-
-.input-textarea {
-    resize: vertical;
-}
-
-.input-textarea--deep {
-    min-height: gs-height(4);
-}
-
-.select {
-    font: inherit;
-}
-
-// width needed for iphone so select doesn't exceed screen width
-.select--wide {
-    width: 100%;
-}
-
-.select--minimal {
-    border: 0;
-    outline: 0;
-    background-color: transparent;
-    font-weight: bold;
-}
-
-// Checkbox
-// ============================================================================
-
-.checkbox {
-    @include fs-textSans(3);
-
-    .label {
-        font: inherit;
-    }
-}
-
-// Psuedo radio form inputs
-// ============================================================================
-
-.pseudo-radio {
-    box-sizing: border-box;
-    width: 100%;
-    border: $pasteup-forms-radio-border;
-    padding: ($gs-baseline) ($gs-gutter) ($gs-baseline) ($gs-baseline * 3);
-    position: relative;
-
-    &:hover {
-        border: $pasteup-forms-radio-border-hover;
-    }
-
-    &:before {
-        @include border-radius(50%);
-        content: ' ';
-        background-color: $pasteup-forms-radio-colour;
-        width: ($gs-baseline + 4);
-        height: ($gs-baseline + 4);
-        display: block;
-        position: absolute;
-        left: ($gs-baseline);
-        top: ($gs-baseline + 1);
-    }
-}
-
-.pseudo-radio-input {
-    display: none;
-
-    &:checked + .pseudo-radio {
-        border: $pasteup-forms-radio-border-checked;
-
-        &:before {
-            background-color: $pasteup-forms-radio-colour-checked;
+        @include mq(desktop) {
+            float: right;
+            width: 60%;
+            margin: 0;
         }
     }
 }
 
-.pseudo-radio__label {
-    @include fs-bodyCopy(2);
-    line-height: 1.2;
-}
-
-.pseudo-radio__header {
-    @include fs-bodyHeading(2);
-    line-height: 1.2;
-    margin-bottom: ($gs-baseline / 2);
-}
-
-.pseudo-radio__note {
-    @include fs-textSans(3);
+.form-field--no-margin {
     margin: 0;
 }
+
+.form-field--error {
+    .label {
+        color: $pasteup-forms-error-colour;
+    }
+
+    .text-input,
+    .text-input:focus {
+        border-color: $pasteup-forms-error-field-border-colour;
+    }
+}
+
+.form__error {
+    @include fs-textSans(2);
+    background-color: $pasteup-forms-error-background;
+    border-bottom: 1px solid $pasteup-forms-error-border-colour;
+    border-top: 1px solid $pasteup-forms-error-border-colour;
+    color: $pasteup-forms-error-colour;
+    margin-top: 6px;
+    padding: 7px ($gs-baseline/3)*2;
+}
+
+.form__success {
+    @include fs-textSans(2);
+    background-color: $pasteup-forms-success-background;
+    border-bottom: 1px solid $pasteup-forms-success-border-colour;
+    border-top: 1px solid $pasteup-forms-success-border-colour;
+    color: $pasteup-forms-success-colour;
+    margin-top: $gs-baseline/2;
+    padding: 7px ($gs-baseline/3)*2;
+}
+
+.form-field__error {
+    color: $pasteup-forms-error-colour;
+    margin-top: $gs-baseline/2;
+}
+
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: $gs-baseline/2;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+    margin-left: $gs-gutter;
+}
+
+.form-fields__inline {
+    ul {
+        margin: 0;
+        padding: 0;
+
+        .form-field {
+            display: inline-block;
+        }
+    }
+
+    .form-fields__heading {
+        @include fs-bodyHeading(3, true);
+        margin: 0 0 $gs-baseline;
+        display: block;
+    }
+}
+
+.form-fields--date-of-birth .form-field {
+    margin: 0 18px 0 0;
+}
+
+.label {
+    cursor: pointer;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.text-input,
+.textarea {
+    border: 1px solid $pasteup-forms-fields-border-colour;
+    @include box-shadow(none);
+    @include box-sizing(border-box);
+    color: $pasteup-forms-fields-colour;
+    display: inline-block;
+    font-family: $pasteup-forms-fields-font-family;
+    padding: 8px 8px 7px;
+    font-size: 16px;
+    line-height: 1.4;
+    outline: none;
+    @include border-radius(0);
+    width: 100%;
+    -webkit-appearance: none;
+
+    &:focus {
+        border-color: $pasteup-forms-fields-border-colour-focus;
+    }
+
+    @include mq(tablet) {
+        font-size: 14px;
+    }
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.textarea--no-resize {
+    min-height: ($gs-baseline/3)*20;
+    resize: none;
+}
+
+.textarea--mid {
+    min-height: $gs-baseline*9;
+}
+
+.textarea--long {
+    min-height: ($gs-baseline/3)*40;
+}
+
+.submit-input {
+    background: $pasteup-forms-submit-background;
+    border: 0 none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0 $gs-gutter 0 0;
+    min-width: gs-span(2);
+    padding: 11px $gs-gutter/2;
+    outline: none;
+    text-align: center;
+
+    &:hover,
+    &:focus {
+        background: $pasteup-forms-submit-background-focus;
+    }
+
+    &:active {
+        background: $pasteup-forms-submit-background-active;
+    }
+}
+
+.submit-input[disabled] {
+    background: $pasteup-forms-submit-background-disabled;
+}
+
+.check-label,
+.radio-label {
+    display: block;
+    font-family: $pasteup-forms-fields-font-family;
+    font-size: 14px;
+    margin-bottom: $gs-baseline/3;
+    padding-left: $gs-gutter;
+}
+
+.check-label--helper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+[type=checkbox],
+[type=radio] {
+    float: left;
+    height: 13px;
+    margin-left: -$gs-gutter;
+    margin-top: 2px;
+    width: 13px;
+}
+
