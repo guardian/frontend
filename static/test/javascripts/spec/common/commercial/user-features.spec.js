@@ -62,6 +62,15 @@ define(['helpers/injector'], function (Injector) {
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).not.toHaveBeenCalled();
                 });
+
+                it('Performs an update if membership-frontend wipes just the paying-member cookie', function () {
+                    // Set everything except paying-member cookie
+                    setAllFeaturesData({isExpired: true});
+                    cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+
+                    userFeatures.refresh();
+                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                });
             });
 
             describe('If user signed out', function () {
@@ -179,7 +188,7 @@ define(['helpers/injector'], function (Injector) {
                 expect(cookies.get(PERSISTENCE_KEYS.ADFREE_COOKIE)).toBe('false');
             });
 
-            it('Records whether the user has a paying relationship with the Guardian', function () {
+            it('Puts the paying-member state in a cookie, so that membership-frontend can wipe it', function () {
                 serverResponse.adblockMessage = true;
                 userFeatures._persistResponse(serverResponse);
                 expect(cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('false');

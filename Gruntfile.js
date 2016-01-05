@@ -149,14 +149,16 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
+    var identity = function (x) { return x; };
     grunt.registerTask('compile-assets', [
         'compile:css',
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
+        !options.isDev && 'makeDeploysRadiator',
         'asset_hash',
         'compile:conf'
-    ]);
+    ].filter(identity));
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task

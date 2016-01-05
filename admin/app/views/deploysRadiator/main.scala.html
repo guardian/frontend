@@ -5,11 +5,11 @@
 <!DOCTYPE html>
 <head>
     <title>Deploys</title>
-    <link rel="stylesheet" href="@UncachedAssets.at("deploys-radiator/target/main.css")">
+    <link rel="stylesheet" href="@Static("deploys-radiator/main.css")">
 </head>
 <body>
     <script>
         window.gitHubAccessToken = '@conf.Configuration.github.token';
     </script>
-    <script src="@UncachedAssets.at("deploys-radiator/target/main.js")"></script>
+    <script src="@Static("deploys-radiator/main.js")"></script>
 </body>

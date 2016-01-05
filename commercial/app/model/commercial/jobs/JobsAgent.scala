@@ -1,6 +1,6 @@
 package model.commercial.jobs
 
-import commercial.feeds.ParsedFeed
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial._
 
@@ -20,9 +20,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
     available filter (job => jobIds contains job.id)
   }
 
-  def refresh(getFeed: String => Option[String]): Future[ParsedFeed[Job]] = {
-
-    val feedName = "jobs"
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Job]] = {
 
     def withKeywords(parsedFeed: Future[ParsedFeed[Job]]): Future[ParsedFeed[Job]] = {
       parsedFeed map { feed =>
@@ -34,7 +32,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
       }
     }
 
-    val parsedFeed = withKeywords(JobsFeed.parsedJobs(feedName, getFeed))
+    val parsedFeed = withKeywords(JobsFeed.parsedJobs(feedMetaData, feedContent))
 
     parsedFeed foreach { feed =>
       updateAvailableMerchandise(feed.contents)
