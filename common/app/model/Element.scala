@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.{Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{Element => ApiElement}
 import org.apache.commons.math3.fraction.Fraction
 
 object ElementProperties {
@@ -79,7 +79,7 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
 
 object VideoMedia {
   def make(capiElement: ApiElement): VideoMedia = VideoMedia(
-    videoAssets = capiElement.assets.filter(_.`type` == "video").map(VideoAsset.make).sortBy(-_.width)
+    videoAssets = capiElement.assets.filter(_.`type` == "video").map(VideoAsset.make).sortBy(-_.width).toList
   )
 }
 final case class VideoMedia(videoAssets: List[VideoAsset]) {
@@ -106,7 +106,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
 
 object AudioMedia {
   def make(capiElement: ApiElement): AudioMedia = AudioMedia(
-    audioAssets = capiElement.assets.filter(_.`type` == "audio").map(AudioAsset.make)
+    audioAssets = capiElement.assets.filter(_.`type` == "audio").map(AudioAsset.make).toList
   )
 }
 final case class AudioMedia(audioAssets: List[AudioAsset]) {
