@@ -165,8 +165,14 @@
         border-bottom: 0 none;
         padding-bottom: 0;
     }
-
 }
+
+/*
+.crossword__meta-setter {
+    @include mq(leftCol) {
+        margin-bottom: ($gs-baseline * -2) ;
+    }
+} */
 
 .content__dateline-crossword {
     min-height: 0px;
