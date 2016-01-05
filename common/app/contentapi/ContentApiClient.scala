@@ -52,7 +52,12 @@ trait QueryDefaults extends implicits.Collections {
         val editorsPicks = r.editorsPicks.map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff.toDateTimeAtStartOfDay).map(Content(_)).take(1)
+            r.leadContent.filter(content => {
+              content.webPublicationDate
+                .map(date => new DateTime(date.dateTime))
+                .map(_ >= leadContentCutOff.toDateTimeAtStartOfDay)
+                .exists(identity)
+            }).map(Content(_)).take(1)
           else
             Nil
 
