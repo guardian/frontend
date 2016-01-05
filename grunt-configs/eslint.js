@@ -17,7 +17,6 @@ module.exports = function () {
                 src: ['**/*.js']
             }],
             options: {
-                // https://github.com/eslint/eslint/issues/2824
                 ignorePath: 'static/test/javascripts/.eslintignore',
                 quiet: true
             }
@@ -29,7 +28,6 @@ module.exports = function () {
                 src: ['**/*.js']
             }],
             options: {
-                // https://github.com/eslint/eslint/issues/2824
                 ignorePath: 'static/src/.eslintignore',
                 quiet: true
             }
