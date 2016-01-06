@@ -147,7 +147,7 @@
     }
 
     position: relative;
-    top: $gs-baseline * -2;
+    top: $gs-baseline * -1;
     font-family: $f-sans-serif-text;
     font-size: 15px;
 }
@@ -167,9 +167,6 @@
     }
 }
 
-//    border-top: 1px dotted colour(neutral-5);
-
-
 .content__dateline-crossword {
     min-height: 0px;
     display: inline;
@@ -178,6 +175,7 @@
 
 .crossword__meta {
     .crossword__links & {
+        border-top: 1px dotted colour(neutral-5);
         @include mq($from: leftCol) {
             display: none;
         }
