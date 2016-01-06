@@ -92,7 +92,7 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
     Content(notCommentable).trail.isCommentable should be(false)
 
     val commentable = article.copy(fields = Some(ContentFields(commentable = Some(true))))
-    commentable.fields.flatMap(_.commentable) should be(Some("true"))
+    commentable.fields.flatMap(_.commentable) should be(Some(true))
     Content(commentable).trail.isCommentable should be(true)
 
   }
