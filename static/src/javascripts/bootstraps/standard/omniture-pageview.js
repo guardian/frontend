@@ -1,3 +1,7 @@
+/*
+global s:true
+global guardian:true
+*/
 try {
     (function () {
         var config = guardian.config,
@@ -6,7 +10,7 @@ try {
             now = new Date(),
             webPublicationDate = config.page.webPublicationDate;
 
-        var getChannel = function() {
+        var getChannel = function () {
             if (config.page.contentType === 'Network Front') {
                 return 'Network Front';
             } else if (isEmbed) {
@@ -141,16 +145,18 @@ try {
             // to check if the intial beacon has been successfully sent
             var img = window['s_i_' + window.s_account.split(',').join('_')];
 
-            if (typeof(img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
+            if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                 clearInterval(checkForPageViewInterval);
 
                 var pageView = new Image();
-                pageView.src = config.page.beaconUrl + "/count/pva.gif";
+                pageView.src = config.page.beaconUrl + '/count/pva.gif';
 
                 if (guardian.isModernBrowser && config.switches.noBounceIndicator) {
                     try {
                         window.sessionStorage.removeItem('gu-bounce-test');
-                    } catch (e) {}
+                    } catch (e) {
+                        // Do nothing
+                    }
                 }
 
 
@@ -164,5 +170,5 @@ try {
     })();
 
 } catch (e) {
-    (new Image()).src = config.page.beaconUrl + '/count/omniture-pageview-error.gif';
+    (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
 }
