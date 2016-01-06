@@ -111,9 +111,9 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
           (response.json).validate[BuildJson] match {
             case JsSuccess(buildJson, _) =>
               Ok(Json.toJson(Build(
-                number,
-                s"${buildJson.buildType.projectName}::${buildJson.buildType.name}",
-                buildJson.`artifact-dependencies`.build.headOption.map(b => b.number),
+                number = number,
+                projectName = s"${buildJson.buildType.projectName}::${buildJson.buildType.name}",
+                parentNumber = buildJson.`artifact-dependencies`.build.headOption.map(b => b.number),
                 revision = buildJson.revisions.revision.headOption.map(_.version).getOrElse(throw new RuntimeException("Missing revision")),
                 commits = buildJson.changes.change.map(change => Commit(change.version, change.username, change.comment))
               )))
@@ -121,8 +121,8 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
               log.error(errors.toString())
               InternalServerError
           }
-        case error =>
-          log.error(s"Invalid status code from TeamCity: $error")
+        case statusCode =>
+          log.error(s"Invalid status code from TeamCity: $statusCode")
           InternalServerError
       }
     }
