@@ -22,32 +22,6 @@
 
     @* NOTE the order of these includes is important  *@
     <script>
-        // polyfills
-        @Html(polyfills().body)
-
-        // determine whether to run enhanced JS
-        @InlineJs(shouldEnhance(offlinePage.metadata).body, "shouldEnhance.js")
-
-        // page config
-        @Html(config(offlinePage).body)
-
-        // apply render conditions
-        @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
-
-        // try and load fonts before we use the stylesheets
-        @if(FontSwitch.isSwitchedOn) {
-            @InlineJs(loadFonts().body, "loadFonts.js")
-        }
-
-        @if(AsyncCss.isSwitchedOn) {
-            // enable non-blocking stylesheets
-            // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
-            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
-        }
-
-        // cloudwatch beacons
-        @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
-
         @* Service worker only caches the bundles (including in dev),
         so the offline page can only ask for those. *@
         window.curlConfig = {
@@ -78,6 +52,35 @@
             var ref = document.getElementsByTagName('script')[0];
             ref.parentNode.insertBefore(script, ref);
         })(document);
+
+        // polyfills
+        @Html(polyfills().body)
+
+        // determine whether to run enhanced JS
+        @InlineJs(shouldEnhance(offlinePage.metadata).body, "shouldEnhance.js")
+
+        // page config
+        @Html(config(offlinePage).body)
+
+        // analytics code
+        @InlineJs(analytics().body, "analytics.js")
+
+        // apply render conditions
+        @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
+
+        // try and load fonts before we use the stylesheets
+        @if(FontSwitch.isSwitchedOn) {
+            @InlineJs(loadFonts().body, "loadFonts.js")
+        }
+
+        @if(AsyncCss.isSwitchedOn) {
+            // enable non-blocking stylesheets
+            // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        }
+
+        // cloudwatch beacons
+        @InlineJs(cloudwatchBeacons(offlinePage.metadata).body, "cloudwatchBeacons.js")
     </script>
 </head>
     <body
