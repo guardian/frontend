@@ -19,7 +19,7 @@ import org.scalatest.time.{Millis, Span}
         maybeCrossword shouldBe defined
         val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
 
-        crossword.entries.size should be (4)
+        crossword.entries.size should be (30)
 
         val entriesMap = crossword.entries.map(entry => (entry.id, entry)).toMap
 
