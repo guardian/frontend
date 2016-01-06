@@ -42,7 +42,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers with SingleServerSuite {
     val html = "<html><head></head><body> some text </body></html>"
     val expectedDoc = Jsoup.parse("<html><head></head><body> some text <!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?ns=guardian&ndh=1&c19=GUK&AQE=1&ch=Music&ce=UTF-8&AQB=1&cpd=2&v9=D=g&pageName=Culture:Music:Womad+2013:Competition:win-womad-tickets:1918994&v14=D=r\" width=\"1\" height=\"1\"/></body></html>")
 
-    val actualResult = HtmlCleaner.createSimplePageTracking(Jsoup.parse(html), "ns=guardian&ndh=1&c19=GUK&AQE=1&ch=Music&ce=UTF-8&AQB=1&cpd=2&v9=D=g&pageName=Culture:Music:Womad+2013:Competition:win-womad-tickets:1918994&v14=D=r")
+    val actualResult = BasicHtmlCleaner.createSimplePageTracking(Jsoup.parse(html), "ns=guardian&ndh=1&c19=GUK&AQE=1&ch=Music&ce=UTF-8&AQB=1&cpd=2&v9=D=g&pageName=Culture:Music:Womad+2013:Competition:win-womad-tickets:1918994&v14=D=r")
     actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
   }
 
