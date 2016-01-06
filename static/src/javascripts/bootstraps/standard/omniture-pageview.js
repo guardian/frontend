@@ -2,8 +2,8 @@
 global s:true
 global guardian:true
 */
-try {
-    (function () {
+(function () {
+    try {
         var config = guardian.config,
             isEmbed = !!guardian.isEmbed,
             tpA = s.getTimeParting('n', '+0'),
@@ -167,8 +167,8 @@ try {
         setTimeout(function () {
             clearInterval(checkForPageViewInterval);
         }, 10000);
-    })();
 
-} catch (e) {
-    (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
-}
+    } catch (e) {
+        (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
+    }
+})();
