@@ -2,7 +2,7 @@
 
 @import views.support.Basher
 
-@if(Basher.fromId(id) != None) {
+@Basher.fromId(id).map { id =>
     <div class="facia-basher" data-link-name="basher">
         @conf.Static.css.inline("KeepItInTheGround").map { css =>
             <style>
@@ -10,7 +10,7 @@
             </style>
         }
 
-        @Basher.fromId(id) match {
+        @id match {
             case KeepItInTheGround => {
                 @fragments.bashers.KeepItInTheGround()
             }
