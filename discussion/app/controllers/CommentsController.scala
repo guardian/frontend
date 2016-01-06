@@ -3,6 +3,7 @@ package controllers
 import model.{MetaData, SimplePage, Cached, TinyResponse}
 import play.api.data.Forms._
 import play.api.libs.ws.{WS, WSResponse}
+import play.filters.csrf.{CSRFComponents, CSRFCheck, CSRFAddToken}
 import scala.concurrent.{Future}
 import common.{ExecutionContexts, JsonComponent}
 import play.api.mvc.{ Action, RequestHeader, Result }
@@ -64,9 +65,14 @@ object CommentsController extends DiscussionController with ExecutionContexts {
 
 
   val reportAbusePage = SimplePage(MetaData.make("/reportAbuse", "Discussion", "Report Abuse", "GFE: Report Abuse"))
-  def reportAbuseForm(commentId: Int) = Action { implicit request =>
+  def reportAbuseForm(commentId: Int) = CSRFAddToken {
+    Action {
+      implicit request =>
 
-    Cached(60) { Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm)) }
+        Cached(60) {
+          Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm))
+        }
+    }
   }
 
   val reportAbuseThankYouPage = SimplePage(MetaData.make("/reportAbuseThankYou", "Discussion", "Report Abuse Thank You", "GFE: Report Abuse Thank You"))
@@ -102,21 +108,22 @@ object CommentsController extends DiscussionController with ExecutionContexts {
 
   }
 
-  def reportAbuseSubmission(commentId: Int)  = Action.async { implicit request =>
+  def reportAbuseSubmission(commentId: Int)  =  CSRFCheck {
+    Action.async { implicit request =>
 
-    userForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors))),
-      userData => {
-        postAbuseReportToDiscussionApi(userData).map {
-          case success if success.status == 200 => NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
-          case error => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
-        }.recover({
-          case NonFatal(e) => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
-        })
+      userForm.bindFromRequest.fold(
+        formWithErrors => Future.successful(BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors))),
+        userData => {
+          postAbuseReportToDiscussionApi(userData).map {
+            case success if success.status == 200 => NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
+            case error => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
+          }.recover({
+            case NonFatal(e) => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
+          })
 
-      }
-    )
-
+        }
+      )
+    }
   }
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {

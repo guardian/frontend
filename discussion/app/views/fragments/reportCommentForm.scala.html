@@ -9,11 +9,12 @@
         @defining(userForm.error("reason")) { reasonError =>
 
             @helper.form(controllers.routes.CommentsController.reportAbuseSubmission(commentId), 'class -> "form") {
+            @helper.CSRF.formField
                 <fieldset class="fieldset">
                     <div class="fieldset__heading" />
                     <input type="hidden" name="commentId" value="@commentId">
                     <div class="fieldset__fields">
-                        <div class="form-field @{if(categoryIdError) "form-field--error"}}">
+                        <div class="form-field @{if(categoryIdError) {"form-field--error"}}">
         <label class="label" for="categoryId">Category</label>
 
 
@@ -61,4 +62,5 @@
             </fieldset>
         }
     }
+}
 }
