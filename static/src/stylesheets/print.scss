@@ -50,15 +50,6 @@ figure {
     min-height: 0 !important;
     background-color: #ffffff !important;
     color: #000000 !important;
-
-    // These things have dimensions set as attributes in HTML. When overriden by
-    // CSS, there is no way to undo the CSS to re-use original dimensions
-    // provided by those attributes, so instead we just never set the CSS on
-    // those elements.
-    &:not(rect) {
-        width: 100% !important;
-        height: auto !important;
-    }
 }
 
 .content__meta-container {

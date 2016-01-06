@@ -5,7 +5,6 @@
 @import views.support._
 @import TrailCssClasses.toneClass
 @import views.support.MostPopular.{showMPU, tabsPaneCssClass}
-@import conf.switches.Switches.contentAgeMessageSwitch
 
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test" data-test-id="popular-in">
@@ -38,11 +37,9 @@
                             <p class="headline-list__count">@info.rowNum</p>
                             <div class="headline-list__text">
                                 @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
-                                @if(contentAgeMessageSwitch.isSwitchedOn) {
-                                    @trail.properties.maybeContent.map { content =>
-                                        @if(content.tags.tags.exists(_.id == "tone/news")) {
-                                            @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
-                                        }
+                                @trail.properties.maybeContent.map { content =>
+                                    @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
                                     }
                                 }
                             </div>

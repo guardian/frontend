@@ -37,7 +37,7 @@ trait CommercialSwitches {
     "fluid-adverts",
     "Enable fluid ads, which occupy 100% of the width of their parent container but have a fixed height",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 15),
+    sellByDate = new LocalDate(2016, 2, 15),
     exposeClientSide = true
   )
 
@@ -154,7 +154,7 @@ trait CommercialSwitches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2016, 1, 6),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -245,15 +245,6 @@ trait CommercialSwitches {
     "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
     sellByDate = new LocalDate(2016, 1, 31),
-    exposeClientSide = true
-  )
-
-  val MembershipMessages = Switch(
-    "Commercial",
-    "membership-messages",
-    "Display a message to regular readers promoting Membership",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 11, 30),
     exposeClientSide = true
   )
 

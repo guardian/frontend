@@ -419,7 +419,12 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
     if (article.content.showInRelated) {
 
-      val paragraphs = doc.getElementsByTag("p")
+      // Get all paragraphs which are not contained in a pullquote
+      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
+        p.parents.exists( ancestor =>
+          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+        )
+      )
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
@@ -493,6 +498,24 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
     if(isImmersive) {
       document.getElementsByTag("a").foreach{ a =>
         a.addClass("in-body-link--immersive")
+      }
+    }
+    document
+  }
+}
+
+case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("h2").foreach{ h2 =>
+        val beforeH2 = h2.previousElementSibling()
+        if (beforeH2 != null) {
+          if(beforeH2.hasClass("element--immersive")) {
+            beforeH2.addClass("section-image")
+            beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
+            h2.remove()
+          }
+        }
       }
     }
     document
