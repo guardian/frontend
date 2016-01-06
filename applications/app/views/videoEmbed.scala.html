@@ -98,6 +98,7 @@
 
                     @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
                     window.s_account = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
+
                     @Html(templates.inlineJS.blocking.js.omniture().body)
 
                     var curl = {
