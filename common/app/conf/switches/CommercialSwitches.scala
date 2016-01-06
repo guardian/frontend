@@ -154,7 +154,7 @@ trait CommercialSwitches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2016, 1, 6),
+    sellByDate = never,
     exposeClientSide = false
   )
 
