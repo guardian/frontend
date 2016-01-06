@@ -27,8 +27,8 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     elements = None)
 
   val articleTag = Tag(
-    id = "id",
-    `type` = TagType.Keyword,
+    id = "type/article",
+    `type` = TagType.Type,
     webTitle = "the title",
     webUrl = "http://foo.bar",
     apiUrl = "http://foo.bar")
