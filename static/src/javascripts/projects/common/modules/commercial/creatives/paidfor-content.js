@@ -1,20 +1,16 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
-    'text!common/views/commercial/creatives/paidfor-content.html'
+    'template!common/views/commercial/creatives/paidfor-content.html'
 ], function (
     fastdom,
     $,
-    template,
     svgs,
     Toggles,
     paidforTpl
 ) {
-
-    paidforTpl = template(paidforTpl);
 
     var PaidforContent = function ($adSlot, params) {
         this.$adSlot = $adSlot;
