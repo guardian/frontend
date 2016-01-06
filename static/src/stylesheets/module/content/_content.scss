@@ -31,7 +31,7 @@
 
         // Restrict line-length to 8-cols, but make other content full-width
         .content__article-body {
-            padding-right: gs-span(1) $gs-gutter;
+            padding-right: gs-span(1) + $gs-gutter;
 
             .ad-slot {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
@@ -263,7 +263,7 @@
         z-index: 2;
 
         @include mq($until: mobileLandscape) {
-            margin-left: -(gs-span(1) $gs-gutter);
+            margin-left: -(gs-span(1) + $gs-gutter);
             margin-right: -($gs-gutter * 2);
         }
 
@@ -280,7 +280,7 @@
         }
 
         @include mq(desktop) {
-            right: gs-span(1) $gs-gutter;
+            right: gs-span(1) + $gs-gutter;
         }
     }
 
@@ -310,7 +310,7 @@
 
         .content__headline {
             @include mq(mobileLandscape) {
-                padding-right: gs-span(2) $gs-gutter;
+                padding-right: gs-span(2) + $gs-gutter;
             }
 
             @include mq(desktop) {
