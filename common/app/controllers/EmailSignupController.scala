@@ -71,6 +71,8 @@ object ListIds {
   val theGuardianGardener = 3562
   val theGuardianBookshop = 3563
 
+  val theNHS = 3573
+
   val allWithoutTrigger: List[Int] = List(
     theBestOfCiF,
     theFiver,
@@ -98,7 +100,8 @@ object ListIds {
     bestOfOpinionUS,
     theGuardianMasterclasses,
     theGuardianGardener,
-    theGuardianBookshop)
+    theGuardianBookshop,
+    theNHS)
 }
 
 object EmailTypes {
