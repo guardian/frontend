@@ -4,15 +4,15 @@
 
 @Basher.fromId(id).map { fromId =>
     <div class="facia-basher" data-link-name="basher">
-        @conf.Static.css.inline(fromId.toString).map { css =>
             @if(play.Play.isDev()) {
                 <link rel="stylesheet" type="text/css" href="@Static("stylesheets/inline/basher." + fromId.toString + ".css")" />
             } else {
                 <style class="js-loggable">
-                    @Html(css)
+                    @conf.Static.css.inline(fromId.toString).map { css =>
+                        @Html(css)
+                    }
                 </style>
             }
-        }
 
         @fromId match {
             case KeepItInTheGround => {
