@@ -7,15 +7,17 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
+import pagepresser.{PollsHtmlCleaner, BasicHtmlCleaner}
 import play.api.libs.json.Json
 import play.api.libs.ws.WS
 import services.{PagePresses, R2Archive}
-import pagepresser.HtmlCleaner._
 import play.api.Play.current
 
 object R2PagePressJob extends ExecutionContexts with Logging {
   val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   val maxMessages = Configuration.r2Press.pressQueueMaxMessages
+
+  val cleaners = Seq(BasicHtmlCleaner, PollsHtmlCleaner)
 
   val queue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsQueueUrl map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
@@ -64,18 +66,24 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   private def press(message: Message[String]) {
     val urlIn = (Json.parse(message.get) \ "Message").as[String]
     if (urlIn.nonEmpty) {
-      val url = urlIn.replace("https://", "").replace("http://","")
       WS.url(urlIn).get().map { response =>
         response.status match {
           case 200 => {
-            val cleanedHtmlString = clean(Jsoup.parse(response.body)).toString
-            R2Archive.putPublic(url, cleanedHtmlString, "text/html")
-            R2Archive.get(url).foreach { result =>
+            val document = Jsoup.parse(response.body)
+            val cleanedHtmlString = cleaners.filter(_.canClean(document))
+              .map(_.clean(document))
+              .headOption
+              .getOrElse(document)
+              .toString
+            val pressAsUrl = urlIn.replace("https://", "").replace("http://","")
+
+            R2Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
+            R2Archive.get(pressAsUrl).foreach { result =>
               if (result == cleanedHtmlString) {
-                PagePresses.set(urlIn, url)
-                log.info(s"Pressed $urlIn as $url")
+                PagePresses.set(urlIn, pressAsUrl)
+                log.info(s"Pressed $urlIn as $pressAsUrl")
               } else {
-                log.error(s"Pressed data did not match original for $url")
+                log.error(s"Pressed data did not match original for $pressAsUrl")
               }
             }
           }

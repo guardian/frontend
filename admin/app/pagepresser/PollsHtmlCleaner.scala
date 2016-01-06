@@ -21,9 +21,20 @@ case class Answer(id: Int, question: Int, count: Double)
 
 object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
-  override def clean(document: Document): Document = {
-    super.clean(document)
-    fetchAndPressPollResult(document)
+  override def canClean(document: Document): Boolean = {
+    document.getElementsByAttribute("data-poll-url").nonEmpty
+  }
+
+  override def clean(document: Document) = {
+    if(canClean(document)){
+      pollClean(document)
+    } else {
+      document
+    }
+  }
+
+  private def pollClean(document: Document): Document = {
+    fetchAndPressPollResult(BasicHtmlCleaner.basicClean(document))
   }
 
   def fetchAndPressPollResult(document: Document): Document = {
