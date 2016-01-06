@@ -1,64 +1,80 @@
 define([
     'bonzo',
-    'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'fastdom',
-    'lodash/objects/defaults',
-    'lodash/functions/bindAll'
+    'lodash/objects/defaults'
 ], function (
     bonzo,
-    $,
     config,
     mediator,
     fastdom,
-    defaults,
-    bindAll) {
+    defaults) {
+
+    var isNewCommercialContent = config.switches.newCommercialContent && config.page.isAdvertisementFeature;
+    var header = isNewCommercialContent ?
+        document.querySelector('.paidfor-band') :
+        config.page.hasStickyHeader ?
+        document.querySelector('.js-navigation') :
+        null;
+
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
     var Sticky = function (element, options) {
-        this.$element = bonzo(element);
-        this.$parent  = this.$element.parent();
+        this.element  = element;
+        this.parent   = element.parentNode;
+        this.sticky   = false;
+        this.bottom   = false;
         this.opts     = defaults(options || {}, {
             top: 0
         });
-
-        bindAll(this, 'updatePosition');
+        this.stickyCss = { position: 'fixed', top: this.opts.top };
+        this.unstickyCss = { position: null, top: null };
     };
 
     Sticky.prototype.init = function () {
-        mediator.on('window:throttledScroll', this.updatePosition);
+        mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
-        fastdom.read(this.updatePosition);
+        fastdom.read(this.initGeometry, this);
+        fastdom.read(this.updatePosition, this);
+    };
+
+    Sticky.prototype.initGeometry = function () {
+        this.elementHeight = this.element.offsetHeight;
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, that = this;
+        var fixedTop, css, stickyHeaderHeight, parentRect;
 
-        stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
+        stickyHeaderHeight = header && header !== this.element ? header.offsetHeight : 0;
+        parentRect = this.parent.getBoundingClientRect();
 
         // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
+        if (parentRect.top < this.opts.top + stickyHeaderHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
-
-            if (fixedTop !== 0) {
-                css = {
-                    position: 'fixed',
-                    top:      fixedTop
-                };
+            fixedTop = Math.min(this.opts.top, parentRect.bottom - this.elementHeight);
+            if (this.sticky && fixedTop < this.opts.top) {
+                css = { top: fixedTop };
+                this.bottom = true;
+            } else if (!this.sticky || this.bottom) {
+                css = this.stickyCss;
+                this.sticky = true;
+                this.bottom = false;
             }
         } else {
-            css = {
-                position: null,
-                top:      null
-            };
+            if (this.sticky) {
+                css = this.unstickyCss;
+                this.sticky = false;
+                this.bottom = false;
+            }
         }
 
-        fastdom.write(function () {
-            that.$element.css(css);
-        });
+        if (css) {
+            fastdom.write(function () {
+                bonzo(this.element).css(css);
+            }, this);
+        }
     };
 
     return Sticky;
