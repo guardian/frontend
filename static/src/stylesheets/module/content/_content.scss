@@ -558,7 +558,7 @@
 
     .content__labels--crossword & {
         @include mq(leftCol) {
-            margin-top: ($gs-baseline * 6) + 2;
+            margin-top: ($gs-baseline * 6) + 7;
             min-height: 0;
             padding-bottom: 0;
         }

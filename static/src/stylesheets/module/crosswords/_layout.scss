@@ -140,7 +140,7 @@
     }
 }
 
-.crossword__links {
+.crossword__links-related {
     @include mq(leftCol) {
         top: $gs-baseline * -2;
         padding-bottom: $gs-baseline / 3;
@@ -149,7 +149,7 @@
     position: relative;
     top: $gs-baseline * -2;
     font-family: $f-sans-serif-text;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .js-crossword-link {
@@ -167,16 +167,26 @@
     }
 }
 
-/*
-.crossword__meta-setter {
-    @include mq(leftCol) {
-        margin-bottom: ($gs-baseline * -2) ;
-    }
-} */
+//    border-top: 1px dotted colour(neutral-5);
+
 
 .content__dateline-crossword {
     min-height: 0px;
     display: inline;
     border-top: 0;
+}
+
+.crossword__meta {
+    .crossword__links & {
+        @include mq($from: leftCol) {
+            display: none;
+        }
+    }
+
+    .content__labels--crossword & {
+        @include mq(mobile, $until: leftCol) {
+            display: none;
+        }
+    }
 }
 
