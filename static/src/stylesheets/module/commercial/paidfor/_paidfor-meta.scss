@@ -1,0 +1,51 @@
+.paidfor-meta {
+    background: guss-colour(paidfor-background, $frontend-palette);
+    font-size: get-font-size(data, 3);
+    @include f-textSans;
+}
+
+
+.paidfor-meta__label,
+.paidfor-meta__more {
+    display: inline-block;
+    font-size: get-font-size(data, 3);
+}
+
+.paidfor-meta__label,
+.paidfor-meta__more > .popup__toggle {
+    padding: $gs-baseline / 3 $gs-gutter / 4;
+}
+
+.paidfor-meta__label {
+    font-weight: 700;
+
+    .commercial__header & {
+        padding-left: 0;
+    }
+}
+
+.paidfor-label .popup__toggle {
+    border-left: 1px solid rgba(0, 0, 0, .2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
+
+    &:before,
+    &:after {
+        content: none;
+    }
+
+    svg {
+        width: 12px;
+        height: 9px;
+        fill: #333333;
+
+    }
+
+    &.is-active svg {
+        transform: rotate(180deg);
+    }
+
+    .commercial__header & {
+        border: 0;
+        font-weight: 400;
+    }
+}

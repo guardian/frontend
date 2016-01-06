@@ -27,9 +27,9 @@ trait HtmlCleaner {
 
   }
 
-  def createSimplePageTracking(document: Document, omnitureParameters: String): Document = {
-    //todo update where the r2-pressed page is
-    val omnitureTag = "<!---Omniture page tracking for pressed page ---> <script>window.trackingQueryParams = '" + omnitureParameters +"';</script><script src=\"./r2-pressed-page.js\"></script>"
+  def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
+    val omnitureTag = "<!---Omniture page tracking for pressed page ---> <img src=\"https://hits-secure.theguardian.com/b/ss/guardiangu-network/1/JS-1.4.1/s985205503180623100?" + omnitureQueryString + "\" width=\"1\" height=\"1\"/>"
+
 
     document.body().append(omnitureTag)
     document

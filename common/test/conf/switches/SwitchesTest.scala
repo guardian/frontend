@@ -1,5 +1,6 @@
 package conf.switches
 
+import org.joda.time.LocalDate
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
@@ -22,10 +23,10 @@ class SwitchesTest extends FlatSpec with Matchers {
   }
 
   // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
-  //they should "be deleted once expired" in {
-  //  Switches.all foreach {
-  //    case Switch(_, id, _, _, sellByDate, _) => assert(sellByDate.isAfter(new LocalDate()), id)
-  //    case TimerSwitch(_, id, _, _, sellByDate, _, _) => assert(sellByDate.isAfter(new LocalDate()), id)
-  //  }
-  //}
+  they should "be deleted once expired" in {
+    Switches.all foreach {
+      case Switch(_, id, _, _, sellByDate, _) => assert(sellByDate.isAfter(LocalDate.now()), id)
+      case TimerSwitch(_, id, _, _, sellByDate, _, _) => assert(sellByDate.isAfter(LocalDate.now()), id)
+    }
+  }
 }

@@ -45,8 +45,11 @@ define([
     'lodash/arrays/last',
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
+
+    'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
+    'common/modules/commercial/creatives/paidfor-content',
     'common/modules/commercial/creatives/expandable',
     'common/modules/commercial/creatives/expandable-v2',
     'common/modules/commercial/creatives/expandable-v3',
@@ -566,6 +569,9 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
+                                if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
+                                    creativeConfig.name = 'paidfor-content';
+                                }
                                 require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                     new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                 });

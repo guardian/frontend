@@ -135,4 +135,7 @@ case class CrosswordData(
   crosswordType: String,
   pdf: Option[String],
   instructions: Option[String]
-)
+) {
+  val acrossEntries = entries.filter(_.direction == "across")
+  val downEntries = entries.filter(_.direction == "down")
+}
