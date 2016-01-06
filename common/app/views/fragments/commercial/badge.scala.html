@@ -2,6 +2,7 @@
 @import common.Edition
 @import conf.switches.Switches.SponsoredSwitch
 @import model.{Video, Audio, Gallery, Interactive, Article}
+@import conf.switches.Switches.NewCommercialContent
 
 @defining(content.commercial.isSponsored(Some(Edition(request))),
     content.commercial.isAdvertisementFeature,
@@ -48,7 +49,11 @@
                                 }
                             } else {
                                 @if(isAdFeature) {
-                                    Brought to you by:
+                                    @if(NewCommercialContent.isSwitchedOn) {
+                                        Paid for by:
+                                    } else {
+                                        Brought to you by:
+                                    }
                                 } else {
                                     @content.commercial.sponsorshipTag.map { tag =>
                                         @tag.name is supported by:

@@ -31,7 +31,7 @@
 
         // Restrict line-length to 8-cols, but make other content full-width
         .content__article-body {
-            padding-right: gs-span(1) + $gs-gutter;
+            padding-right: gs-span(1) $gs-gutter;
 
             .ad-slot {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
@@ -263,7 +263,7 @@
         z-index: 2;
 
         @include mq($until: mobileLandscape) {
-            margin-left: -(gs-span(1) + $gs-gutter);
+            margin-left: -(gs-span(1) $gs-gutter);
             margin-right: -($gs-gutter * 2);
         }
 
@@ -280,7 +280,7 @@
         }
 
         @include mq(desktop) {
-            right: gs-span(1) + $gs-gutter;
+            right: gs-span(1) $gs-gutter;
         }
     }
 
@@ -310,7 +310,7 @@
 
         .content__headline {
             @include mq(mobileLandscape) {
-                padding-right: gs-span(2) + $gs-gutter;
+                padding-right: gs-span(2) $gs-gutter;
             }
 
             @include mq(desktop) {
@@ -340,7 +340,7 @@
             margin-bottom: $gs-baseline/3;
         }
 
-        + * {
+        * {
             margin-top: .6em;
         }
     }
@@ -407,7 +407,7 @@
     }
 
     @include mq(leftCol) {
-        min-height: gs-height(1) + $gs-baseline;
+        min-height: gs-height(1) $gs-baseline;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
@@ -649,6 +649,204 @@
     }
 }
 
+.paid-content--advertisement-feature {
+    &.content--article,
+    &.content--interactive,
+    &.tonal--tone-media {
+        background-color: colour(paid-article);
+    }
+
+    &.content {
+        border-top: 0;
+    }
+
+    .content__main {
+        padding-top: $gs-baseline;
+    }
+
+    .content__header {
+        background-color: colour(paid-article-header);
+    }
+
+    .tonal__standfirst {
+        background-color: colour(paid-article-subheader);
+        padding: $gs-baseline 0 $gs-baseline*2;
+        min-height: $gs-baseline*8;
+    }
+
+    .ad-slot__label,
+    .ad-slot--inline {
+        background-color: colour(paid-article-subheader);
+        border-top: 0;
+        color: colour(neutral-2-contrasted);
+    }
+
+    .content__section-label {
+        @include f-headlineSans;
+        font-weight: 400;
+
+        .content__section-label__link {
+            color: colour(neutral-1);
+        }
+    }
+
+    .meta__social,
+    .meta__numbers {
+        border-top-color: colour(paid-article-header);
+    }
+
+    .ad-slot--paid-for-badge--article {
+        border-top: 0;
+    }
+
+    &.tonal--tone-media {
+        .content__headline,
+        .from-content-api,
+        .tonal__main .tone-colour {
+            color: colour(neutral-1);
+
+            .inline-icon {
+                fill: colour(neutral-1);
+            }
+        }
+
+        .most-viewed-container--media,
+        .meta__number {
+            .inline-icon {
+                fill: colour(neutral-1);
+            }
+        }
+
+        &.content--media--audio,
+        &.content--media--video {
+            .tonal__standfirst {
+                display: none;
+            }
+        }
+
+        .ad-slot--paid-for-badge__header,
+        .ad-slot--paid-for-badge__help,
+        .byline,
+        .meta__numbers .sharecount__heading,
+        .meta__numbers .commentcount2__heading,
+        .tonal__main--tone-media .sharecount__value,
+        .tonal__main--tone-media .commentcount2__value,
+        .most-viewed-container--media,
+        .most-viewed-container--media .fc-item__action,
+        .content__dateline,
+        .submeta__head,
+        .content__series-label__link {
+            color: colour(neutral-2-contrasted);
+
+            .i {
+                @include icon(share-android);
+            }
+        }
+
+        .byline {
+            .tone-colour {
+                color: colour(neutral-2-contrasted);
+                &:hover {
+                    color: colour(neutral-1);
+                }
+            }
+        }
+
+        .gu-media-wrapper--audio,
+        .vjs-control-bar,
+        .vjs-embed-button:hover .vjs-control-text,
+        .vjs-progress-holder:before {
+            color: colour(multimedia-main-1);
+            background: colour(paid-article-media-bg);
+
+            .podcast-meta__item__link,
+            .vjs-duration {
+                color: colour(multimedia-main-1);
+            }
+        }
+
+        .vjs-embed-button {
+            .vjs-control-content {
+                &:before {
+                    @include icon(embed--black);
+                }
+            }
+        }
+
+        .vjs-fullscreen-control {
+            .vjs-control-text:before {
+                @include icon(expand-black);
+            }
+        }
+
+        .vjs-volume-menu-button {
+            .vjs-control-text:before {
+                @include icon(volume-high-black);
+            }
+        }
+
+        .vjs-volume-bar:before {
+            background: #333333;
+        }
+    }
+
+    &.tonal--tone-media,
+    &.tonal--tone-news {
+        .save-for-later__button {
+            color: colour(neutral-2-contrasted);
+        }
+        .save-for-later__button--save,
+        .save-for-later__button--saved {
+            .inline-icon {
+                fill: #ffffff;
+                border-color: #ffffff;
+                background-color: colour(neutral-2-contrasted);
+            }
+            &:hover {
+                .inline-icon {
+                    background-color: #ffffff;
+                    fill: colour(neutral-2-contrasted);
+                    border-color: colour(neutral-2-contrasted);
+                }
+            }
+        }
+    }
+
+    &.content--gallery {
+        .content__headline:before {
+            @include icon(camera-black-large, $with-width: false);
+        }
+
+        .content__standfirst,
+        .gallery2__caption,
+        .gallery2__credit {
+            color: colour(neutral-2-contrasted);
+
+            a {
+                color: colour(guardian-brand);
+
+                &:hover {
+                    border-bottom-color: colour(guardian-brand);
+                }
+            }
+        }
+
+        .ad-slot--dark {
+            background-color: colour(paid-article-subheader);
+        }
+    }
+
+    &.content--media--audio {
+        .content__headline:before {
+            @include icon(volume-high-black, $with-width: false);
+        }
+    }
+
+    .fc-item__title svg {
+        fill: guss-colour(multimedia-main-2, $pasteup-palette);
+    }
+}
+
 .meta__body {
     @include mq(leftCol) {
         clear: left;
@@ -871,4 +1069,3 @@
         }
     }
 }
-
