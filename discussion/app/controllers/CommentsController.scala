@@ -3,10 +3,10 @@ package controllers
 import model.{MetaData, SimplePage, Cached, TinyResponse}
 import play.api.data.Forms._
 import play.api.libs.ws.{WS, WSResponse}
-import play.filters.csrf.{CSRFComponents, CSRFCheck, CSRFAddToken}
+import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import scala.concurrent.{Future}
 import common.{ExecutionContexts, JsonComponent}
-import play.api.mvc.{ Action, RequestHeader, Result }
+import play.api.mvc.{Cookie, Action, RequestHeader, Result}
 import discussion.{UnthreadedCommentPage, ThreadedCommentPage, DiscussionParams}
 import discussion.model.{BlankComment, DiscussionKey, DiscussionAbuseReport}
 import play.api.data._
@@ -91,10 +91,12 @@ object CommentsController extends DiscussionController with ExecutionContexts {
   }
 
 
-  def postAbuseReportToDiscussionApi(abuseReport: DiscussionAbuseReport): Future[WSResponse] = {
+  def postAbuseReportToDiscussionApi(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie]): Future[WSResponse] = {
     val url = s"${conf.Configuration.discussion.apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, "GU-Client" -> conf.Configuration.discussion.apiClientHeader)
-     WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post((abuseReportToMap(abuseReport)))
+    if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
+    WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post(abuseReportToMap(abuseReport))
+
   }
 
   object ReportAbuseFormValidation {
@@ -110,11 +112,11 @@ object CommentsController extends DiscussionController with ExecutionContexts {
 
   def reportAbuseSubmission(commentId: Int)  =  CSRFCheck {
     Action.async { implicit request =>
-
+    val scGuU = request.cookies.get("SC_GU_U")
       userForm.bindFromRequest.fold(
         formWithErrors => Future.successful(BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors))),
         userData => {
-          postAbuseReportToDiscussionApi(userData).map {
+          postAbuseReportToDiscussionApi(userData, scGuU).map {
             case success if success.status == 200 => NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
             case error => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
           }.recover({
