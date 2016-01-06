@@ -1,5 +1,6 @@
 package model.commercial.books
 
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial._
 import play.api.libs.functional.syntax._
@@ -7,7 +8,6 @@ import play.api.libs.json.Reads._
 import play.api.libs.json.{JsPath, Reads}
 
 import scala.concurrent.Future
-import scala.util.control.NonFatal
 
 case class Book(title: String,
                 author: Option[String],
@@ -57,8 +57,6 @@ object Book {
 
 object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
 
-  private lazy val feeds = Seq(MagentoBestsellersFeed)
-
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
 
   def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
@@ -76,28 +74,13 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
     bestsellers.filter(_.jacketUrl.nonEmpty).sortBy(_.position).take(10)
   }
 
-  def refresh(): Unit = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Book]] = {
+    val parsedFeed = MagentoBestsellersFeed.loadBestsellers(feedMetaData, feedContent)
 
-    val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
-      feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
-        (soFar, feed) =>
-          soFar :+ feed.loadBestsellers().recover {
-            case e: FeedSwitchOffException =>
-              log.warn(e.getMessage)
-              Nil
-            case e: FeedMissingConfigurationException =>
-              log.warn(e.getMessage)
-              Nil
-            case NonFatal(e) =>
-              log.error(e.getMessage)
-              Nil
-          }
-      }
+    for (feed <- parsedFeed) {
+      updateAvailableMerchandise(feed.contents)
     }
 
-    for (books <- bookListsLoading) {
-      updateAvailableMerchandise(books.flatten.distinct)
-    }
+    parsedFeed
   }
-
 }

@@ -1,0 +1,50 @@
+.printable-crossword {
+    width: 18cm;
+    margin: 10px;
+}
+
+.printable-crossword__title {
+    font-size: 18px;
+}
+
+.printable-crossword__instructions {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.printable-crossword__grid {
+    width: 436px; // tried and tested width from R2
+    height: 436px;
+
+    .crossword__grid-background {
+        fill: #7f7f7f;
+    }
+}
+
+.printable-crossword__clues {
+    width: 49%;
+    float: left;
+    font-size: 12px;
+
+    &:first-of-type {
+        margin-right: 2%;
+    }
+}
+
+.printable-crossword__clues__title {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.printable-crossword__clues__list {
+    margin: 0;
+    list-style-type: none;
+}
+
+.printable-crossword__clue__number {
+    font-weight: bold;
+}
+
+.printable-crossword__copyright {
+    clear: both;
+}

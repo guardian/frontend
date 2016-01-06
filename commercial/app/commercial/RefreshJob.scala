@@ -1,9 +1,8 @@
 package commercial
 
 import common.{Jobs, Logging}
-import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.Industries
-import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
+import model.commercial.masterclasses.MasterClassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 
@@ -34,13 +33,6 @@ object MasterClassTagsRefresh extends RefreshJob {
   def refresh() = MasterClassTagsAgent.refresh()
 }
 
-object MasterclassesRefresh extends RefreshJob {
-
-  val name: String = "Masterclasses"
-
-  def refresh() = MasterClassAgent.refresh()
-}
-
 object CountriesRefresh extends RefreshJob {
 
   val name: String = "Countries"
@@ -68,11 +60,4 @@ object MoneyBestBuysRefresh extends RefreshJob {
   val name: String = "Best Buys"
 
   def refresh() = BestBuysAgent.refresh()
-}
-
-object BooksRefresh extends RefreshJob {
-
-  val name: String = "Books"
-
-  def refresh() = BestsellersAgent.refresh()
 }
