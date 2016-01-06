@@ -19,7 +19,8 @@ module.exports = function (grunt, options) {
                         src = "try { \n" + src + "\n} catch (e) {(new Image()).src = window.guardian.config.page.beaconUrl + '/count/omniture-library-error.gif';}"
                     }
                     return src;
-                }
+                },
+                separator: ';\n'
             }
         }
     };
