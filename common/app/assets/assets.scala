@@ -1,8 +1,6 @@
 package common.Assets
 
 import java.net.URL
-import java.io.File
-
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import org.apache.commons.io.IOUtils
@@ -18,29 +16,18 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, assetMap: String) {
-  def apply(path: String): Asset = {
+class AssetMap(base: String) {
 
-    // Avoid memoizing the asset map in Dev.
-    if (Play.current.mode == Mode.Dev) {
-      assets().getOrElse(path, if (new File(s"static/src/$path").exists()) {
-        Asset(path)
-      } else {
-        throw AssetNotFoundException(path)
-      })
-    } else {
-      memoizedAssets(path)
-    }
-  }
+  def apply(path: String): Asset = memoizedAssets(path)
 
   def assets(): Map[String, Asset] = {
 
     // Use the grunt-generated asset map in Dev.
     val json: String = if (Play.current.mode == Mode.Dev) {
-      val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
+      val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
       IOUtils.toString(assetMapUri)
     } else {
-      val url = AssetFinder(assetMap)
+      val url = AssetFinder("assets/assets.map")
       IOUtils.toString(url)
     }
     val paths: Map[String, String] = Json.parse(json).validate[Map[String, String]] match {
@@ -54,8 +41,8 @@ class AssetMap(base: String, assetMap: String) {
   private lazy val memoizedAssets = assets()
 }
 
-class Assets(base: String, assetMapPath: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMapPath)
+class Assets(base: String) extends Logging {
+  val lookup = new AssetMap(base)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
