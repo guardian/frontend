@@ -1,5 +1,6 @@
 @(item: model.ContentType, showBadge: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches._
+@import conf.switches.Switches.SaveForLaterSwitch
+@import conf.switches.Switches.NewCommercialContent
 @import model._
 @import views.support.ContentOldAgeDescriber
 
@@ -30,10 +31,8 @@
         <div class="meta__social" data-component="share">
             @fragments.social(item, "top")
         </div>
-        @if(contentAgeMessageSwitch.isSwitchedOn) {
-            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
-            }
+        @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+            @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
         }
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
@@ -56,7 +55,7 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
-    @if(showBadge) {
+    @if(showBadge && (NewCommercialContent.isSwitchedOff || (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature)))) {
         @fragments.commercial.badge(item)
     }
 

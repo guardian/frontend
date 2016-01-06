@@ -283,7 +283,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
-    lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
+    private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
+    lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
+
+    lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
+    lazy val jobsUrlTemplate = configuration.getStringProperty("jobs.api.url.template")
+    lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
+    lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
 
     object magento {
       lazy val domain = configuration.getStringProperty("magento.domain")
