@@ -2,37 +2,32 @@ package test
 
 import model.{Entry, CrosswordData}
 import org.scalatest._
-import play.api.libs.json.Json
-import crosswords._
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.time.{Millis, Span}
 
-import com.gu.contentapi.client.model._
-
-import scala.io.Source
-
-@DoNotDiscover class CrosswordDataTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite {
+@DoNotDiscover class CrosswordDataTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite with ScalaFutures {
 
   "CrosswordData" - {
     "fromCrossword should normalize separators for grouped entries" in {
-      val crosswordData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("crosswords/cryptic-crossword.json")).mkString
-      val crosswordJson = Json.parse(crosswordData)
 
-      implicit val creatorReads = Json.reads[CrosswordCreator]
-      implicit val positionReads = Json.reads[CrosswordPosition]
-      implicit val dimensionsReads = Json.reads[CrosswordDimensions]
-      implicit val entryReads = Json.reads[CrosswordEntry]
-      implicit val reads = Json.reads[Crossword]
+      implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
+      val futureCrossword = controllers.CrosswordPageController.getCrossword("cryptic", 26666)(TestRequest("crosswords/cryptic/26666"))
 
-      val capiCrossword = crosswordJson.as[Crossword]
-      val crossword = CrosswordData.fromCrossword(capiCrossword)
-      
-      crossword.entries.size should be (4)
+      whenReady(futureCrossword) { result =>
 
-      val entriesMap = crossword.entries.map(entry => (entry.id, entry)).toMap
+        val maybeCrossword = result.content.flatMap(_.crossword)
+        maybeCrossword shouldBe defined
+        val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
 
-      entriesMap.get("2-down").get.separatorLocations.get.get(",").get should be (Seq(4, 8))
-      entriesMap.get("10-across").get.separatorLocations.get.get(",").get should be (Seq(3, 9))
-      entriesMap.get("23-down").get.separatorLocations.get.get(",").get should be (Seq(4))
-      entriesMap.get("21-across").get.separatorLocations.get.get(",").get should be (Seq(4, 7))
+        crossword.entries.size should be (4)
+
+        val entriesMap = crossword.entries.map(entry => (entry.id, entry)).toMap
+
+        entriesMap.get("2-down").get.separatorLocations.get.get(",").get should be (Seq(4, 8))
+        entriesMap.get("10-across").get.separatorLocations.get.get(",").get should be (Seq(3, 9))
+        entriesMap.get("23-down").get.separatorLocations.get.get(",").get should be (Seq(4))
+        entriesMap.get("21-across").get.separatorLocations.get.get(",").get should be (Seq(4, 7))
+      }
     }
 
     "formatHumanNumber should format clue numbers correctly" in {
