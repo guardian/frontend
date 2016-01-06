@@ -37,6 +37,7 @@ define(['./isNative', '../utilities/noop'], function(isNative, noop) {
   var setBindData = !defineProperty ? noop : function(func, value) {
     descriptor.value = value;
     defineProperty(func, '__bindData__', descriptor);
+    descriptor.value = null;
   };
 
   return setBindData;
