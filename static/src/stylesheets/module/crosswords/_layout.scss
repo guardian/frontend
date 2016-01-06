@@ -164,6 +164,12 @@
     .meta__numbers {
         border-bottom: 0 none;
         padding-bottom: 0;
+
+        @include mq(mobile, $until: tablet) {
+            border-top: none;
+            margin-top: ($gs-baseline * -4) + 2px;
+            margin-right: $gs-gutter * 3;
+        }
     }
 }
 
