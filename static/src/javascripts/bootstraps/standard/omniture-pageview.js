@@ -1,11 +1,10 @@
 /*
 global s:true
-global guardian:true
 */
-(function () {
+(function (window, document) {
     try {
-        var config = guardian.config,
-            isEmbed = !!guardian.isEmbed,
+        var config = window.guardian.config,
+            isEmbed = !!window.guardian.isEmbed,
             tpA = s.getTimeParting('n', '+0'),
             now = new Date(),
             webPublicationDate = config.page.webPublicationDate;
@@ -91,7 +90,7 @@ global guardian:true
         s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
         // the operating system
-        s.eVar58 = navigator.platform || 'unknown';
+        s.eVar58 = window.navigator.platform || 'unknown';
 
         // the number of Guardian links inside the body
         if (config.page.inBodyInternalLinkCount) {
@@ -112,7 +111,7 @@ global guardian:true
         // Set Page View Event
         s.events = s.apl(s.events, 'event4', ',', 2);
 
-        s.prop56 = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
+        s.prop56 = window.guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
 
         /* Set Time Parting Day and Hour Combination - 0 = GMT */
         s.prop20 = tpA[2] + ':' + tpA[1];
@@ -139,19 +138,19 @@ global guardian:true
         // `s.t()` records a page view so should only be called once
         s.t();
 
-        var checkForPageViewInterval = setInterval(function () {
+        var checkForPageViewInterval = window.setInterval(function () {
             // s_i_guardiangu-network is a globally defined Image() object created by Omniture
             // It does not sit in the DOM tree, and seems to be the only surefire way
             // to check if the intial beacon has been successfully sent
             var img = window['s_i_' + window.s_account.split(',').join('_')];
 
             if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
-                clearInterval(checkForPageViewInterval);
+                window.clearInterval(checkForPageViewInterval);
 
                 var pageView = new Image();
                 pageView.src = config.page.beaconUrl + '/count/pva.gif';
 
-                if (guardian.isModernBrowser && config.switches.noBounceIndicator) {
+                if (window.guardian.isModernBrowser && config.switches.noBounceIndicator) {
                     try {
                         window.sessionStorage.removeItem('gu-bounce-test');
                     } catch (e) {
@@ -164,11 +163,11 @@ global guardian:true
         }, 100);
 
         // Give up after 10 seconds
-        setTimeout(function () {
-            clearInterval(checkForPageViewInterval);
+        window.setTimeout(function () {
+            window.clearInterval(checkForPageViewInterval);
         }, 10000);
 
     } catch (e) {
-        (new Image()).src = guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
+        (new Image()).src = window.guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
     }
-})();
+})(window, document);
