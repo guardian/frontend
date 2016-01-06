@@ -1,15 +1,7 @@
-@(item: Option[model.MetaData])
+@()
 
 @import conf.Static
 @import conf.Configuration
-@import views.support.OmnitureAnalyticsAccount
-
-@item.map{ item =>
-    <script>
-        @* must always be set before the Omniture file is parsed *@
-        window.s_account = '@OmnitureAnalyticsAccount(item)';
-    </script>
-}
 
 <script>
     // this behaviour is duplicated in app.js by /grunt-configs/concat.js
