@@ -83,7 +83,7 @@ class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
   private def sensitiveArticle(tags: ApiTag*) = {
-    val contentApiItem = contentApi(tags.toList).copy(fields = Some(ContentFields(showInRelatedContent = Some(true))))
+    val contentApiItem = contentApi(tags.toList).copy(fields = Some(ContentFields(showInRelatedContent = Some(false))))
 
     val content = Content.make(contentApiItem)
     Article.make(content)

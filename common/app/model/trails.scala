@@ -8,6 +8,7 @@ import org.scala_tools.time.Imports._
 import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
 import views.support.{Naked, ImgSrc}
 import scala.collection.JavaConversions._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
 /**
  * additional information needed to display something on a facia page from CAPI
@@ -21,12 +22,12 @@ object Trail {
     metadata: MetaData,
     apiContent: contentapi.Content) = {
     Trail(
-      webPublicationDate = apiContent.webPublicationDate.map(date => new DateTime(date.dateTime)).getOrElse(DateTime.now),
+      webPublicationDate = apiContent.webPublicationDate.map(_.toJodaDateTime).getOrElse(DateTime.now),
       headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
       sectionName = apiContent.sectionName.getOrElse(""),
       thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked)),
       isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
-      isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(date => new DateTime(date.dateTime)).exists(_.isAfterNow),
+      isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJodaDateTime).exists(_.isAfterNow),
       byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
       trailPicture = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize)).map(_.images)
         .orElse(elements.mainPicture.map(_.images))
