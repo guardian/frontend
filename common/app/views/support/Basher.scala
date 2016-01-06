@@ -1,15 +1,12 @@
 package views.support
 
 object Basher {
-    def fromId(id: String) = {
-        if (id == "environment/series/keep-it-in-the-ground") {
-            KeepItInTheGround
-        } else if (id == "society") {
-            ThisIsTheNHS
-        } else {
-            None
-        }
-    }
+    val bashersById = Map(
+        "environment/series/keep-it-in-the-ground" -> KeepItInTheGround
+        "society" -> ThisIsTheNHS
+    )
+
+    def fromId(id: String) = bashersById.get(id)
 }
 
 sealed trait Basher

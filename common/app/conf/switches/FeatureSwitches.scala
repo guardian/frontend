@@ -331,4 +331,21 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val AmpSwitch = Switch(
+    "Server-side A/B Tests",
+    "amp-switch",
+    "If this switch is on, link to amp pages will be in the metadata for articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+  val r2PressToS3Switch = Switch(
+    "Feature",
+    "r2-press-page-to-s3",
+    "when switched on this will press the original and cleaned up R2 page to S3",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 1),
+    exposeClientSide = false
+  )
+
 }
