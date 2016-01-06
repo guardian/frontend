@@ -359,9 +359,9 @@
         > li:before {
             position: absolute;
             left: -16px;
-            content: counter(li)'.';
+            content: counter(li);
             counter-increment: li;
-            @include fs-header(1);
+            @include fs-header(1, true);
             color: colour(neutral-3);
 
             @include mq(tablet) {
