@@ -8,7 +8,7 @@ define([
     'common/utils/detect',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'ldsh!common/views/ui/video-ads-skip-overlay.html',
+    'template!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle'
 ], function (

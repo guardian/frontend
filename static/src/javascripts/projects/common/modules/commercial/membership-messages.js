@@ -2,7 +2,7 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/modules/ui/message',
-    'ldsh!common/views/membership-message.html',
+    'template!common/views/membership-message.html',
     'common/views/svgs',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',

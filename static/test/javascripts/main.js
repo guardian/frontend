@@ -39,7 +39,7 @@ requirejs.config({
         // plugins
         text:         'components/requirejs-text/text',
         inlineSvg:    'projects/common/utils/inlineSvg',
-        ldsh:         'projects/common/utils/lodash-loader'
+        template:     'projects/common/utils/lodash-loader'
     },
     shim: {
         googletag: {

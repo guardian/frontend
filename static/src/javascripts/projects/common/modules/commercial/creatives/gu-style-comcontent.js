@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
-    'ldsh!common/views/commercial/creatives/gu-style-comcontent.html',
+    'template!common/views/commercial/creatives/gu-style-comcontent.html',
     'lodash/objects/merge'
 ], function (
     fastdom,

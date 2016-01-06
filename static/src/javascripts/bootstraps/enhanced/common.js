@@ -10,7 +10,6 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
@@ -52,7 +51,7 @@ define([
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
-    'text!common/views/international-message.html',
+    'template!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -65,7 +64,6 @@ define([
     cookies,
     detect,
     mediator,
-    template,
     url,
     robust,
     storage,
@@ -323,7 +321,7 @@ define([
                 if (config.page.edition === 'INT' && config.page.pageId === 'international') {
                     new Message('international-with-survey-new', {
                         pinOnHide: true
-                    }).show(template(internationalMessage, {}));
+                    }).show(internationalMessage());
                 }
             },
 

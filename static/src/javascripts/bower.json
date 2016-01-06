@@ -40,7 +40,7 @@
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/dist/videojs.ads.min.js",
       "videojs-ima": "bower_components/videojs-ima/src/videojs.ima.js",
       "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
-      "videojs-embed": "bower_components/videojs-embed/dist/videojs.embed.js"
+      "videojs-embed" : "bower_components/videojs-embed/dist/videojs.embed.js"
     }
   }
 }

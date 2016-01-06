@@ -1,8 +1,8 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'ldsh!common/views/commercial/creatives/logo-foundation-funded.html',
-    'ldsh!common/views/commercial/creatives/logo-foundation-funded-partners.html'
+    'template!common/views/commercial/creatives/logo-foundation-funded.html',
+    'template!common/views/commercial/creatives/logo-foundation-funded-partners.html'
 ], function (
     $,
     config,

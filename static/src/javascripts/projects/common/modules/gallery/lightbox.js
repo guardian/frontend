@@ -13,12 +13,12 @@ define([
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
     'common/views/svgs',
-    'ldsh!common/views/content/block-sharing.html',
-    'ldsh!common/views/content/button.html',
-    'ldsh!common/views/content/share-button.html',
-    'ldsh!common/views/content/share-button-mobile.html',
-    'text!common/views/content/endslate.html',
-    'text!common/views/content/loader.html',
+    'template!common/views/content/block-sharing.html',
+    'template!common/views/content/button.html',
+    'template!common/views/content/share-button.html',
+    'template!common/views/content/share-button-mobile.html',
+    'template!common/views/content/endslate.html',
+    'template!common/views/content/loader.html',
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
@@ -42,8 +42,8 @@ define([
     buttonTpl,
     shareButtonTpl,
     shareButtonMobileTpl,
-    endslateHtml,
-    loaderHtml,
+    endslateTpl,
+    loaderTpl,
     map,
     throttle,
     forEach,
@@ -241,7 +241,7 @@ define([
                 $img = bonzo(this.$images[i]);
                 if (!$img.attr('src')) {
                     $img.parent()
-                        .append(bonzo.create(loaderHtml));
+                        .append(bonzo.create(loaderTpl()));
 
                     $img.attr('src', imageContent.src);
                     $img.attr('srcset', imageContent.srcsets);
@@ -490,7 +490,7 @@ define([
 
     GalleryLightbox.prototype.loadEndslate = function () {
         if (!this.endslate.rendered) {
-            this.endslateEl = bonzo.create(endslateHtml);
+            this.endslateEl = bonzo.create(endslateTpl());
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';

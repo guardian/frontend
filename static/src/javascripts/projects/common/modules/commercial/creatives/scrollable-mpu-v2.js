@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
-    'ldsh!common/views/commercial/creatives/scrollable-mpu-v2.html',
+    'template!common/views/commercial/creatives/scrollable-mpu-v2.html',
     'lodash/functions/bindAll'
 ], function (
     fastdom,

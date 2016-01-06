@@ -11,7 +11,7 @@ define([
     'lodash/functions/debounce',
     'lodash/collections/contains',
     'common/views/svgs',
-    'ldsh!common/views/email/submissionResponse.html',
+    'template!common/views/email/submissionResponse.html',
     'common/utils/robust',
     'common/utils/detect'
 ], function (

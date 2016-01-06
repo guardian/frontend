@@ -14,8 +14,8 @@ define([
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/views/svgs',
-    'text!common/views/ui/loading.html',
-    'ldsh!common/views/media/titlebar.html',
+    'template!common/views/ui/loading.html',
+    'template!common/views/media/titlebar.html',
     'lodash/functions/debounce'
 ], function (
     bean,
@@ -37,7 +37,7 @@ define([
     debounce) {
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl();
     }
 
     function createVideoPlayer(el, options) {

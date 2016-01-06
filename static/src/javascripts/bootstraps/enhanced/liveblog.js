@@ -22,7 +22,7 @@ define([
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
     'common/utils/robust',
-    'ldsh!common/views/liveblog/key-event.html'
+    'template!common/views/liveblog/key-event.html'
 ], function (
     bean,
     bonzo,

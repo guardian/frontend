@@ -6,8 +6,8 @@ define([
     'common/utils/config',
     'common/utils/formatters',
     'common/views/svgs',
-    'text!common/views/content/share-count.html',
-    'ldsh!common/views/content/share-count-immersive.html'
+    'template!common/views/content/share-count.html',
+    'template!common/views/content/share-count-immersive.html'
 ], function (
     reportError,
     $,
@@ -47,14 +47,14 @@ define([
 
     function addToShareCount(val) {
         if ($shareCountEls.hasClass('js-sharecount-immersive')) {
-            shareCountTemplate = shareCountImmersiveTemplate({
-                icon: svgs('share')
-            });
+            shareCountTemplate = shareCountImmersiveTemplate;
         }
 
         $shareCountEls
             .removeClass('u-h')
-            .html(shareCountTemplate)
+            .html(shareCountTemplate({
+                icon: svgs('share')
+            }))
             .css('display', '');
 
         $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el

@@ -7,7 +7,7 @@ define([
     'common/utils/mediator',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'ldsh!facia/views/button-toggle.html'
+    'template!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,

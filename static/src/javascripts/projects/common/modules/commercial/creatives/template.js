@@ -1,14 +1,14 @@
 define([
     'common/utils/$',
     'common/views/svgs',
-    'ldsh!common/views/commercial/creatives/ad-feature-mpu.html',
-    'ldsh!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'ldsh!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
-    'ldsh!common/views/commercial/creatives/logo-ad-feature.html',
-    'ldsh!common/views/commercial/creatives/logo-sponsored.html',
-    'ldsh!common/views/commercial/creatives/manual-inline.html',
-    'ldsh!common/views/commercial/creatives/manual-multiple.html',
-    'ldsh!common/views/commercial/creatives/manual-single.html'
+    'template!common/views/commercial/creatives/ad-feature-mpu.html',
+    'template!common/views/commercial/creatives/ad-feature-mpu-large.html',
+    'template!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
+    'template!common/views/commercial/creatives/logo-ad-feature.html',
+    'template!common/views/commercial/creatives/logo-sponsored.html',
+    'template!common/views/commercial/creatives/manual-inline.html',
+    'template!common/views/commercial/creatives/manual-multiple.html',
+    'template!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
     svgs
