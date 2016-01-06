@@ -5,9 +5,7 @@ module.exports = function (grunt, options) {
                 // make sure omniture handles an error
                 // this image fallback is duplicated in /common/app/views/fragments/omnitureScript.scala.html
                 if (path.match(/vendor\/omniture\.js/)) {
-                    src = 'try { \n'
-                        + src
-                        + '\n} catch (e) {(new Image()).src = window.guardian.config.page.beaconUrl + "/count/omniture-library-error.gif";}';
+                    src = 'try {' + src + '} catch (e) {(new Image()).src = window.guardian.config.page.beaconUrl + "/count/omniture-library-error.gif";}';
                 }
                 return src;
             },
