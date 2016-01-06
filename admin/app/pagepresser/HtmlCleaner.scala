@@ -1,24 +1,28 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
+import org.jsoup.nodes.Document
 
-import org.jsoup.nodes.{Node, Document}
 import scala.collection.JavaConversions._
 
-object HtmlCleaner {
+
+object BasicHtmlCleaner extends HtmlCleaner
+
+trait HtmlCleaner {
 
   def clean(document: Document): Document = {
     removeAds(document)
-    removeGoogleSearchBox(document)
-    removeShareLinks(document)
+    removeByClass(document, "top-search-box")
+    removeByClass(document, "share-links")
     removeRelatedComponent(document)
-    removeIdentityUserDetailsTab(document)
-    removeInitiallyOffPlaceHolderTags(document)
+    removeByClass(document, "user-details")
+    removeByClass(document, "initially-off")
+    removeByClass(document, "comment-count")
 
     //fetch omniture data before stripping it. then rea-dd it for simple page tracking
     val omnitureQueryString = fetchOmnitureTags(document)
-    removeScriptTags(document)
-    removeNoScriptTags(document)
+    removeByTagName(document, "script")
+    removeByTagName(document, "noscript")
     createSimplePageTracking(document, omnitureQueryString)
 
   }
@@ -43,15 +47,13 @@ object HtmlCleaner {
     }.mkString("&")
   }
 
-
-
   def removeAds(document: Document): Document = {
     val elements = document.getElementById("sub-header")
     val ads = elements.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
     ads.foreach(_.remove())
 
-    val comments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
-    comments.foreach(_.remove())
+    val htmlComments = elements.childNodes().filter(node => node.nodeName().equals("#comment"))
+    htmlComments.foreach(_.remove())
 
     val promos = document.getElementById("promo")
     if(promos != null) promos.remove()
@@ -59,43 +61,19 @@ object HtmlCleaner {
     document
   }
 
-  def removeGoogleSearchBox(document: Document): Document = removeByClass(document, "top-search-box")
-  def removeShareLinks(document: Document): Document = removeByClass(document, "share-links")
-
   def removeRelatedComponent(document: Document): Document = {
     val element = document.getElementById("related")
     if(element != null) element.remove()
     document
   }
 
-  def removeScriptTags(document: Document): Document = {
-    val element = document.getElementsByTag("script")
-    if(element != null) element.remove()
-
-    document
-  }
-
-  def removeIdentityUserDetailsTab(document: Document): Document = {
-    val element = document.getElementsByClass("user-details")
-    if(element != null) element.remove()
-    document
-  }
-
-  def removeInitiallyOffPlaceHolderTags(document: Document): Document = {
-    val element = document.getElementsByClass("initially-off")
-    if(element != null) element.remove()
-    document
-  }
-
-  def removeNoScriptTags(document: Document): Document = {
-    val element = document.getElementsByTag("noscript")
-    if(element != null) element.remove()
-    document
-  }
-
   private def removeByClass(document: Document, className: String): Document = {
-    val element = document.getElementsByClass(className)
-    if(element != null) element.remove()
+    document.getElementsByClass(className).foreach(_.remove())
+    document
+  }
+
+  private def removeByTagName(document: Document, tagName: String): Document = {
+    document.getElementsByTag(tagName).foreach(_.remove())
     document
   }
 }
