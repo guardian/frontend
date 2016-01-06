@@ -4,18 +4,24 @@
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches._
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
+    <article id="article" class="@RenderClasses(
             Map(
                 "content--has-body" -> media.fields.body.nonEmpty,
-                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature
+                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && page.media.commercial.isAdvertisementFeature)
             ),
             "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
         )"
         itemscope itemtype="@media.metadata.schemaType" role="main">
+
+        @if(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
 
         @fragments.headTonal(media)
 
