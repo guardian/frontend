@@ -1,13 +1,12 @@
 @()
 
 @import conf.Static
-@import conf.Configuration
 
 <script>
-    // this behaviour is duplicated in app.js by /grunt-configs/concat.js
+    // this image fallback is duplicated in app.js by /grunt-configs/concat.js
     try {
         @Html(Static.js.omnitureJs)
     } catch (e) {
-        (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-library-error.gif';
+        (new Image()).src = window.guardian.config.page.beaconUrl + '/count/omniture-library-error.gif';
     }
 </script>

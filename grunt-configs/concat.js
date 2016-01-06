@@ -14,7 +14,7 @@ module.exports = function (grunt, options) {
             options: {
                 process: function (src, path) {
                     // make sure omniture handles an error
-                    // behaviour is duplicated in /common/app/views/fragments/omnitureScript.scala.html
+                    // this image fallback is duplicated in /common/app/views/fragments/omnitureScript.scala.html
                     if (path.match(/vendor\/omniture\.js/)) {
                         src = "try { \n" + src + "\n} catch (e) {(new Image()).src = window.guardian.config.page.beaconUrl + '/count/omniture-library-error.gif';}"
                     }
