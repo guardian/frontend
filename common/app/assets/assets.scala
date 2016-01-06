@@ -16,7 +16,7 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String) {
+class AssetMap(base: String, assetMap: String = "assets/assets.map") {
 
   def apply(path: String): Asset = memoizedAssets(path)
 
@@ -27,7 +27,7 @@ class AssetMap(base: String) {
       val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
       IOUtils.toString(assetMapUri)
     } else {
-      val url = AssetFinder("assets/assets.map")
+      val url = AssetFinder(assetMap)
       IOUtils.toString(url)
     }
     val paths: Map[String, String] = Json.parse(json).validate[Map[String, String]] match {
