@@ -84,7 +84,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       if (request.isAmp) {
-        MovedPermanently(path)
+        NotFound
       } else {
         val htmlResponse = () => views.html.liveBlog(blog)
         val jsonResponse = () => views.html.fragments.liveBlogBody(blog)

@@ -69,6 +69,11 @@ class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
     cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling?.</a>""")
   }
 
+  it should "not link tags in an article pullquote" in {
+    val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<aside class="element-pullquote"><p>Cycling is an awesome sport.</p></aside>"""))
+    cleaned.firstPara should be ("""Cycling is an awesome sport.""")
+  }
+
   it should "not link tags in articles that should be excluded from related content" in {
     val cleaned = new TagLinker(sensitiveArticle(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Cycling is an awesome sport.</p>"""))
     cleaned.firstPara should be ("""Cycling is an awesome sport.""")
