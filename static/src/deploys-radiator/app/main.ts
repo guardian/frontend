@@ -247,6 +247,7 @@ const getBuild = (build: number): Promise<BuildRecord> => (
         .then(build => createBuildRecord({
             number: Number(build.number),
             projectName: build.projectName,
+            revision: build.revision,
             commits: build.commits
         }))
 );
@@ -300,16 +301,9 @@ const run = (): Promise<void> => {
         ])
     ));
 
-    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => {
-        const maybeProdCommit = headOption(prodBuild.commits);
-        const maybeCodeCommit = headOption(codeBuild.commits);
-        return maybeProdCommit
-            .flatMap(prodCommit => maybeCodeCommit.map(codeCommit => (
-                // This assumes prod comes before code
-                getDifference(prodCommit.sha, codeCommit.sha).then(gitHubCommits => gitHubCommits.reverse())
-            )))
-            .getOrElse(() => Promise.resolve([]))
-    });
+    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => (
+        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse())
+    ));
 
     return Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
         .then(([ deploysPair, deployPair, commits ]) => renderPage(deploysPair, deployPair, commits))

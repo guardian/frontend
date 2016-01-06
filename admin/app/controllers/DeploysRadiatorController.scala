@@ -20,7 +20,7 @@ case class Deploy(
   status: String,
   time: String)
 case class Commit(sha: String, username: String, message: String)
-case class Build(number: String, projectName: String, parentNumber: Option[String], commits: List[Commit])
+case class Build(number: String, projectName: String, parentNumber: Option[String], revision: String, commits: List[Commit])
 
 object Deploy {
   implicit val format = Json.format[Deploy]
@@ -39,7 +39,11 @@ case class ChangeJson(version: String, username: String, comment: String)
 case class ChangesJson(change: List[ChangeJson])
 case class ArtifactDependenciesBuildJson(number: String)
 case class ArtifactDependenciesJson(build: List[ArtifactDependenciesBuildJson])
-case class BuildJson(buildType: BuildTypeJson, changes: ChangesJson, `artifact-dependencies`: ArtifactDependenciesJson)
+case class RevisionJson(version: String)
+object RevisionJson { implicit val format = Json.format[RevisionJson] }
+case class RevisionsJson(revision: List[RevisionJson])
+object RevisionsJson { implicit val format = Json.format[RevisionsJson] }
+case class BuildJson(buildType: BuildTypeJson, changes: ChangesJson, `artifact-dependencies`: ArtifactDependenciesJson, revisions: RevisionsJson)
 
 object BuildTypeJson {
   implicit val format = Json.format[BuildTypeJson]
@@ -99,7 +103,7 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
 
     WS.url(url)
       .withHeaders("Accept" -> "application/json")
-      .withQueryString("fields" -> "buildType(name,projectName),changes(change(username,comment,version)),artifact-dependencies(build(number))")
+      .withQueryString("fields" -> "buildType(name,projectName),revisions(revision(version)),changes(change(username,comment,version)),artifact-dependencies(build(number))")
       .get()
       .map { response =>
       response.status match {
@@ -110,7 +114,9 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
                 number,
                 s"${buildJson.buildType.projectName}::${buildJson.buildType.name}",
                 buildJson.`artifact-dependencies`.build.headOption.map(b => b.number),
-                buildJson.changes.change.map(change => Commit(change.version, change.username, change.comment)))))
+                revision = buildJson.revisions.revision.headOption.map(_.version).getOrElse(throw new RuntimeException("Missing revision")),
+                commits = buildJson.changes.change.map(change => Commit(change.version, change.username, change.comment))
+              )))
             case JsError(errors) =>
               log.error(errors.toString())
               InternalServerError
