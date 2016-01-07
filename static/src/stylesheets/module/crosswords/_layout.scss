@@ -140,13 +140,14 @@
     }
 }
 
-.crossword__links {
+.crossword__links-related {
     @include mq(leftCol) {
         top: $gs-baseline * -2;
+        padding-bottom: $gs-baseline / 3;
     }
 
     position: relative;
-    top: $gs-baseline * -2;
+    top: $gs-baseline * -1;
     font-family: $f-sans-serif-text;
     font-size: 15px;
 }
@@ -159,23 +160,36 @@
     margin: $gs-baseline 0;
 }
 
-.crossword__setter {
-    @include mq($from: leftCol) {
-        display: none;
-    }
-}
+.meta__extras--crossword {
+    .meta__numbers {
+        border-bottom: 0;
+        padding-bottom: 0;
 
-.crossword__meta-setter {
-    @include mq(leftCol) {
-        margin-top: ($gs-baseline * 6) + 2;
-    }
-
-    @include mq(mobile, $until: leftCol) {
-        display: none;
+        @include mq(mobile, $until: tablet) {
+            border-top: 0;
+            margin-top: ($gs-baseline * -4) + 2px;
+            margin-right: $gs-gutter * 3;
+        }
     }
 }
 
 .content__dateline-crossword {
     min-height: 0px;
     display: inline;
+    border-top: 0;
+}
+
+.crossword__meta {
+    .crossword__links & {
+        border-top: 1px dotted colour(neutral-5);
+        @include mq($from: leftCol) {
+            display: none;
+        }
+    }
+
+    .content__labels--crossword & {
+        @include mq(mobile, $until: leftCol) {
+            display: none;
+        }
+    }
 }
