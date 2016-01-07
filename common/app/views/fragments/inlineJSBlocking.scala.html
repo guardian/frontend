@@ -41,6 +41,7 @@
     // do this last so that any config stuff it needs is definitely on `window.`
     @Html(curlConfig().body)
     @if(play.Play.isDev()) {
+        @Html(omniture().body)
         @Html(Static.js.curl);
         require(['boot']);
     } else {
