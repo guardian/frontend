@@ -43,15 +43,11 @@
                                                         <li class="lineitem">
                                                             <div class="rich-link tone-paidfor--item">
                                                                  <div class="rich-link__container">
-                                                                     <div class="fc-item__image-container u-responsive-ratio">
-                                                                         @for(InlineImage(imageContainer) <- content.displayElement) {
-                                                                             @itemImage(imageContainer.images)
-                                                                         }
-                                                                     </div>
+                                                                     @for(InlineImage(imageContainer) <- content.displayElement) {
+                                                                         @itemImage(imageContainer.images)
+                                                                     }
                                                                      <div class="rich-link__header">
-                                                                         <h2 class="rich-link__title">
-                                                                             <a class="rich-link__link">@title(content.header, card.index, container.index)</a>
-                                                                         </h2>
+                                                                         @title(content.header, card.index, container.index)
                                                                      </div>
                                                                      <div class="rich-link__standfirst u-cf">@for(text <- content.trailText) {@Html(text)}</div>
                                                                      <a class="rich-link__link u-faux-block-link__overlay" @Html(content.header.url.hrefWithRel)>@RemoveOuterParaHtml(content.header.headline)</a>
@@ -112,11 +108,9 @@
                                                         <li class="lineitem">
                                                             <div class="rich-link tone-paidfor--item">
                                                                 <div class="rich-link__container">
-                                                                    <div class="fc-item__image-container u-responsive-ratio">
-                                                                        @for(InlineImage(imageContainer) <- content.displayElement) {
-                                                                            @itemImage(imageContainer.images)
-                                                                        }
-                                                                    </div>
+                                                                    @for(InlineImage(imageContainer) <- content.displayElement) {
+                                                                        @itemImage(imageContainer.images)
+                                                                    }
                                                                     <div class="rich-link__header">
                                                                         <h2 class="rich-link__title">
                                                                             <a class="rich-link__link">@title(content.header, card.index, container.index)</a>

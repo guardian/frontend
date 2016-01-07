@@ -21,6 +21,11 @@
         font-size: get-font-size(headline, 4);
     }
 
+    .u-faux-block-link--hover,
+    .u-faux-block-link__cta {
+        text-decoration: none;
+    }
+
     .commercial__meta,
     .rich-link__meta {
         color: colour(neutral-2);
