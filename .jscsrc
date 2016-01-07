@@ -1,3 +1,6 @@
+// Folder specific config all lives in here because you can't currently
+// extend these files:
+// https://github.com/jscs-dev/node-jscs/issues/1106
 {
     "preset": "crockford",
     "disallowQuotedKeysInObjects": null,
@@ -8,12 +11,16 @@
         "static/src/javascripts/projects/common/modules/discussion/comment-box.js",
         "static/src/javascripts/projects/common/modules/discussion/comments.js",
         "static/src/javascripts/projects/common/modules/discussion/loader.js",
-        "static/src/stylesheets/**/*.js",
-        "static/src/javascripts/bower_components/**/*.js",
-        "static/src/javascripts/components/**/*.js",
-        "static/src/javascripts/vendor/**/*.js",
+        "static/src/stylesheets/**",
+        "static/src/javascripts/bower_components/**",
+        "static/src/javascripts/components/**",
+        "static/src/javascripts/vendor/**",
         "static/src/javascripts/projects/common/utils/atob.js",
         "static/src/javascripts/projects/common/utils/picturefill.js",
-        "static/test/javascripts/components/**/*.js"
+        "static/test/javascripts/components/**",
+        "static/src/deploys-radiator/node_modules/**",
+        "static/src/deploys-radiator/jspm_packages/**",
+        "static/src/deploys-radiator/target/**",
+        "static/src/deploys-radiator/config.js"
     ]
 }

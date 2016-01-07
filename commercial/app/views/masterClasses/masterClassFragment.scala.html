@@ -17,7 +17,7 @@
                 href="@clickMacro@masterClass.eventBriteEvent.guardianUrl"
                 data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-class-@masterClass.eventBriteEvent.name">
                     @masterClass.mainPicture.map{ picture =>
-                        @Item300.bestFor(picture).map{ url =>
+                        @Item300.bestFor(picture.images).map{ url =>
                             <div class="lineitem__image-right">
                                 <div class="lineitem__image-crop">
                                     <img class="lineitem__image" src="@url" alt="" />

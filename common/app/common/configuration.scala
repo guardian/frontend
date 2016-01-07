@@ -169,6 +169,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val token = configuration.getStringProperty("github.token")
   }
 
+  object teamcity {
+    lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
+  }
+
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
@@ -246,6 +250,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object commercial {
+
+    lazy val testDomain =
+      if (environment.isProd) "http://m.code.dev-theguardian.com"
+      else configuration.getStringProperty("guardian.page.host") getOrElse ""
+
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")

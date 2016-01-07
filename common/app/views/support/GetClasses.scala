@@ -1,6 +1,6 @@
 package views.support
 
-import com.gu.facia.api.utils.{Audio, Gallery, Video}
+import model.pressed.{Audio, Gallery, Video}
 import conf.switches.Switches.SaveForLaterSwitch
 import layout._
 import slices.{Dynamic, DynamicSlowMPU}

@@ -7,9 +7,9 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/large-top-slot',
-    'common/modules/experiments/tests/video-preroll',
     'common/modules/experiments/tests/alternative-related',
     'common/modules/experiments/tests/identity-sign-in-v2',
+    'common/modules/experiments/tests/rtrt-email-form-article-promo',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -28,9 +28,9 @@ define([
     mvtCookie,
     FrontsOnArticles2,
     LargeTopAd,
-    VideoPreroll,
     AlternativeRelated,
     IdentitySignInV2,
+    RtrtEmailFormArticlePromo,
     flatten,
     forEach,
     keys,
@@ -44,9 +44,9 @@ define([
     var TESTS = flatten([
         new FrontsOnArticles2(),
         new LargeTopAd(),
-        new VideoPreroll(),
         new AlternativeRelated(),
-        new IdentitySignInV2()
+        new IdentitySignInV2(),
+        new RtrtEmailFormArticlePromo()
     ]);
 
     var participationsKey = 'gu.ab.participations';

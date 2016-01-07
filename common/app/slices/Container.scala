@@ -1,6 +1,6 @@
 package slices
 
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import common.Logging
 import model.facia.PressedCollection
 
@@ -14,7 +14,9 @@ object Container extends Logging {
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
-  ) ++ FixedContainers.all.mapValues(Fixed.apply)
+  ) ++
+    FixedContainers.all.mapValues(Fixed.apply) ++
+    CommercialContainerType.all
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
@@ -57,3 +59,4 @@ case class Fixed(get: ContainerDefinition) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
+case class Commercial(get: CommercialContainerType) extends Container

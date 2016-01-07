@@ -263,3 +263,7 @@ object S3Infosec extends S3 {
 object R2Archive extends S3 {
   override lazy val bucket = "r2-archive-test"
 }
+
+object R2ArchiveOriginals extends S3 {
+  override lazy val bucket = "r2-archive-originals"
+}

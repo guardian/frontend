@@ -77,19 +77,23 @@ object VideoSiteMap extends ExecutionContexts {
         item <- resp.results.map(Content.apply).collect({ case video:Video => video })
       } yield {
         val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
-        val sectionTag = item.content.seriesTag.filter(tag => !keywordTags.contains(tag.sectionName)).map(_.metadata.webTitle)
+        val sectionTag = item.content.seriesTag.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)
 
 
-        val imageUrl: String = item.elements.mainPicture.flatMap(_.largestEditorialCrop.flatMap(_.url))
+        val imageUrl: String = item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
+
+        val contentLocation: Option[String] = item.elements.mainVideo.flatMap(_.videos.encodings.find(_.format == "video/mp4")).map { encoding =>
+          encoding.url
+        }
 
         Url(
           location = item.metadata.webUrl,
-          thumbnail_loc = item.elements.thumbnail.flatMap(Naked.bestFor),
-          content_loc = item.source,
+          thumbnail_loc = item.elements.thumbnail.flatMap(thumbnail => Naked.bestFor(thumbnail.images)),
+          content_loc = contentLocation,
           title = item.trail.headline,
           description = item.fields.trailText,
-          duration = item.elements.mainVideo.map(_.duration).getOrElse(0),
+          duration = item.elements.mainVideo.map(_.videos.duration).getOrElse(0),
           publication = item.trail.webPublicationDate,
           tags = keywordTags ++ sectionTag,
           category = item.metadata.section)

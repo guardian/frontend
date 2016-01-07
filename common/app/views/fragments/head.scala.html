@@ -12,5 +12,16 @@
 
 <link rel="prefetch" href="@Static("javascripts/app.js")">
 
+@*
+Protect against ReferenceErrors in IE:
+`window.console` only exists when the dev tools are open. If you reference
+something that doesn't exist, JavaScript will throw a `ReferenceError`. Here, we
+ensure console always exists one can safely reference it.
+Example: http://output.jsbin.com/jodureg/1
+*@
+<script>
+    window.console = window.console || undefined;
+</script>
+
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking(page)

@@ -4,18 +4,24 @@
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches._
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
+    <article id="article" class="@RenderClasses(
             Map(
                 "content--has-body" -> media.fields.body.nonEmpty,
-                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature
+                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && page.media.commercial.isAdvertisementFeature)
             ),
             "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
         )"
         itemscope itemtype="@media.metadata.schemaType" role="main">
+
+        @if(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
 
         @fragments.headTonal(media)
 
@@ -25,9 +31,9 @@
                     <div class="media-body">
 
                         @media match {
-                            case audio: Audio if audio.elements.mainAudio.exists(_.imageCrops.nonEmpty) => {
+                            case audio: Audio if audio.elements.mainAudio.exists(_.images.imageCrops.nonEmpty) => {
                                 @media.elements.mainAudio.map { audio =>
-                                    @fragments.img(audio)
+                                    @fragments.img(audio.images)
                                 }
                             }
                             case _ => { }
@@ -61,13 +67,13 @@
                                         <meta itemprop="name" content="@video.metadata.webTitle" />
                                         <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
                                         @video.elements.mainVideo.map { mv =>
-                                            <meta itemprop="duration" content="@mv.ISOduration" />
-                                            <meta itemprop="height" content="@mv.height" />
-                                            <meta itemprop="width" content="@mv.width" />
+                                            <meta itemprop="duration" content="@mv.videos.ISOduration" />
+                                            <meta itemprop="height" content="@mv.videos.height" />
+                                            <meta itemprop="width" content="@mv.videos.width" />
                                         }
                                         <meta itemprop="requiresSubscription" content="false" />
                                         <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
-                                        @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
+                                        @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
                                         @video.elements.mainVideo.map { videoElement =>
                                             @fragments.media.video(VideoPlayer(
                                                 videoElement,
@@ -81,6 +87,7 @@
                                         }
                                     </figure>
                                 }
+                                case _ => { }
                             }
                         </div>
 
@@ -90,7 +97,7 @@
                                     case v: Video => {
                                         @fragments.standfirst(v)
                                     }
-                                    case a: Audio => { }
+                                    case _ => { }
                                 }
                             </div>
 

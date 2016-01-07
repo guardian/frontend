@@ -10,6 +10,10 @@ class ContentOldAgeDescriber {
     message(content.trail.webPublicationDate)
   }
 
+  def apply(content: model.ContentType): String = {
+    message(content.trail.webPublicationDate)
+  }
+
   def apply(apiContent: com.gu.contentapi.client.model.Content): String = {
     message(apiContent.webPublicationDate)
   }

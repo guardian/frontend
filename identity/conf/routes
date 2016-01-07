@@ -50,3 +50,11 @@ GET         /saved-for-later                        @controllers.SaveContentCont
 POST        /saved-for-later                        @controllers.SaveContentController.deleteSavedContentItemFromPage
 GET         /agree/:groupCode                       @controllers.ThirdPartyConditionsController.renderAgree(groupCode: String)
 POST        /agree/:groupCode                       @controllers.ThirdPartyConditionsController.agree(groupCode: String, returnUrl: Option[String])
+
+
+#Email Footer signup routes
+GET        /email                                                               controllers.EmailSignupController.renderPage()
+GET        /email/form/$emailType<article|footer>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
+POST       /email                                                               controllers.EmailSignupController.submit()
+OPTIONS    /email                                                               controllers.EmailSignupController.options()

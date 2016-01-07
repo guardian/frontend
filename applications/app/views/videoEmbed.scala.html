@@ -44,13 +44,13 @@
                     <meta itemprop="name" content="@video.metadata.webTitle" />
                     <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
                     @video.elements.mainVideo.map { mv =>
-                        <meta itemprop="duration" content="@mv.ISOduration" />
-                        <meta itemprop="height" content="@mv.height" />
-                        <meta itemprop="width" content="@mv.width" />
+                        <meta itemprop="duration" content="@mv.videos.ISOduration" />
+                        <meta itemprop="height" content="@mv.videos.height" />
+                        <meta itemprop="width" content="@mv.videos.width" />
                     }
                     <meta itemprop="requiresSubscription" content="no" />
                     <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
-                    @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
+                    @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
                     @video.elements.mainVideo.map { videoElement =>
                         @fragments.media.video(VideoPlayer(
                             videoElement,

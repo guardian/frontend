@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'LargeTopAd';
         this.start = '2015-10-27';
-        this.expiry = '2015-12-31';
+        this.expiry = '2016-01-13';
         this.author = 'Steve Vadocz';
         this.description = 'This will opt out 1% of US users from the large top ad format.';
         this.audience = 0.01;
