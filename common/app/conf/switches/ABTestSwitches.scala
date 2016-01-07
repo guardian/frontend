@@ -53,7 +53,7 @@ trait ABTestSwitches {
     "A/B Tests",
     "ab-remove-sticky-nav",
     "Removes the sticky nav (0% test)",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 2, 28),
     exposeClientSide = true
   )
