@@ -4,9 +4,8 @@ define([
     'common/utils/config',
     'common/modules/analytics/omniture',
     'lodash/objects/values',
-    'common/utils/chain',
-    'common/modules/experiments/ab'
-], function (qwery, config, omniture, values, chain, ab) {
+    'common/utils/chain'
+], function (qwery, config, omniture, values, chain) {
 
     function OmnitureMedia(player) {
 
