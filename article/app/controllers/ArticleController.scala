@@ -36,7 +36,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
 
-  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
+  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader): Result = {
       val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
@@ -71,7 +71,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       (__ \ "body").write[String]
     )(unlift(TextBlock.unapply))
 
-  private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader) = page match {
+  private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
     case LiveBlogPage(liveBlog, _) =>
       val blocks = liveBlog.blocks.collect {
         case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
@@ -81,7 +81,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   }
 
-  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
+  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader): Result = page match {
     case blog: LiveBlogPage =>
       if (request.isAmp) {
         NotFound
@@ -105,7 +105,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]): Action[AnyContent] = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache
@@ -148,9 +148,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
    * convert a response into something we can render, and return it
    * optionally, throw a response if we know it's not right to send the content
    * @param response
-   * @return
+   * @return Either[PageWithStoryPackage, Result]
    */
-  def redirect(response: ItemResponse)(implicit request: RequestHeader) = {
+  def redirect(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val content: Option[PageWithStoryPackage] = supportedContent.map {
       case liveBlog: Article if liveBlog.isLiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
