@@ -123,12 +123,15 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
 object EmbedMedia {
   def make(capiElement: ApiElement): EmbedMedia = {
     EmbedMedia(
-      embedAssets = capiElement.assets.filter(asset =>
-        // HOTFIX: Updated CAPI client represents Embed assets types as Image asset types.
-        // This hotfix circumvents this so we can continue to render content correctly, e.g.
-        // http://localhost:9000/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney
-        asset.`type`.name == "Embed" || (asset.`type`.name == "Image" && asset.file.getOrElse("").endsWith("/boot.js"))
-      ).map(EmbedAsset.make)
+      embedAssets = capiElement.assets
+        .filter(asset =>
+          // HOTFIX: Updated CAPI client represents Embed assets types as Image asset types.
+          // This hotfix circumvents this so we can continue to render content correctly, e.g.
+          // http://localhost:9000/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney
+          asset.`type`.name == "Embed" || (conf.switches.Switches.CapiEmbedHotfixSwitch.isSwitchedOn &&
+            asset.`type`.name == "Image" && asset.file.getOrElse("").endsWith("/boot.js"))
+        )
+        .map(EmbedAsset.make)
     )
   }
 }
