@@ -2,7 +2,7 @@ package indexes
 
 import common.Logging
 import common.Maps._
-import com.gu.contentapi.client.model.Tag
+import com.gu.contentapi.client.model.v1.Tag
 import model.{TagDefinition, TagIndexPage}
 import common.StringEncodings.asAscii
 

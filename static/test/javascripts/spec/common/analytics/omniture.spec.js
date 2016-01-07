@@ -113,7 +113,7 @@ define([
             omniture.go();
             mediator.emit('module:clickstream:click', clickSpec);
 
-            expect(s.tl).toHaveBeenCalledTwice();
+            expect(s.tl).toHaveBeenCalledOnce();
         });
 
         it('should not log clickstream events with an invalidTarget', function () {

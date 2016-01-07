@@ -1,6 +1,6 @@
 package contentapi
 
-import com.gu.contentapi.client.model.Section
+import com.gu.contentapi.client.model.v1.Section
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.LiveContentApi
 import LiveContentApi.getResponse

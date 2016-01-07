@@ -9,13 +9,14 @@ import contentapi.FixtureTemplates.emptyApiContent
 import IndexPageGrouping.fromContent
 import common.JodaTime._
 import test.ConfiguredTestSuite
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 
 @DoNotDiscover class IndexPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val timeZone = DateTimeZone.forOffsetHours(0)
 
   def makeFixture(dateTime: DateTime) = Content(
     emptyApiContent.copy(
-      id = UUID.randomUUID().toString, webPublicationDateOption = Some(dateTime)
+      id = UUID.randomUUID().toString, webPublicationDate = Some(dateTime.toCapiDateTime)
     )
   )
 

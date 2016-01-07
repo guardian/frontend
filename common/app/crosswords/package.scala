@@ -1,4 +1,4 @@
-import com.gu.contentapi.client.model.{CrosswordPosition, CrosswordEntry}
+import com.gu.contentapi.client.model.v1.{CrosswordPosition, CrosswordEntry}
 
 package object crosswords {
 
