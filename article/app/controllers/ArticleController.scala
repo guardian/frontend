@@ -29,6 +29,7 @@ trait PageWithStoryPackage extends ContentPage {
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class LiveBlogPage(article: Article, related: RelatedContent) extends PageWithStoryPackage
+case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -81,14 +82,24 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   }
 
+  private def noAMP(renderPage: Result)(implicit  request: RequestHeader): Result = {
+    if (request.isAmp) NotFound
+    else renderPage
+  }
+
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader): Result = page match {
     case blog: LiveBlogPage =>
-      if (request.isAmp) {
-        NotFound
-      } else {
+      noAMP {
         val htmlResponse = () => views.html.liveBlog(blog)
         val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
         renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+      }
+
+    case minute: MinutePage =>
+      noAMP {
+        val htmlResponse = () => views.html.minute(minute)
+        val jsonResponse = () => views.html.fragments.minuteBody(minute)
+        renderFormat(htmlResponse, jsonResponse, minute, Switches.all)
       }
 
     case article: ArticlePage =>
@@ -153,6 +164,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   def redirect(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val content: Option[PageWithStoryPackage] = supportedContent.map {
+      case minute: Article if minute.tags.isUSMinuteSeries => MinutePage(minute, RelatedContent(minute, response))
       case liveBlog: Article if liveBlog.isLiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
       case article: Article => ArticlePage(article, RelatedContent(article, response))
     }
