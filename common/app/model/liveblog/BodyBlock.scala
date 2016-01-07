@@ -1,8 +1,13 @@
 package model.liveblog
 
+import java.util.Locale
+
 import com.gu.contentapi.client.model.Blocks
+import common.Edition
 import model.liveblog.BodyBlock._
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import play.api.mvc.RequestHeader
 
 object BodyBlock {
 
@@ -27,7 +32,7 @@ case class BodyBlock(
   bodyTextSummary: String,
   title: Option[String],
   attributes: Map[String, String],
-  published: scala.Boolean,
+  published: Boolean,
   createdDate: Option[DateTime],
   firstPublishedDate: Option[DateTime],
   publishedDate: Option[DateTime],
@@ -43,9 +48,33 @@ case class BodyBlock(
       }
     }
 
-  lazy val republishedDate: Option[DateTime] = {
+  lazy val eventClass = eventType match {
+    case SummaryEvent => " is-summary"
+    case KeyEvent => " is-key-event"
+    case UnclassifiedEvent => ""
+  }
+
+  def republishedDate(implicit request: RequestHeader): Option[LiveBlogDate] = {
     firstPublishedDate.flatMap { firstPublishedDate =>
       publishedDate.filter(_ != firstPublishedDate)
     }
-  }
+  }.map(LiveBlogDate.apply)
+
+  def publishedCreatedDate(implicit request: RequestHeader) = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply)
+
 }
+
+object LiveBlogDate {
+  def apply(dateTime: DateTime)(implicit request: RequestHeader): LiveBlogDate = {
+    val fullDate = ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(dateTime)
+    val hhmm = useFormat("HH:mm", dateTime)
+    val ampm = useFormat("h.mma", dateTime).toLowerCase(Locale.ENGLISH)
+    val gmt = useFormat("z", dateTime)
+    LiveBlogDate(fullDate, hhmm, ampm, gmt)
+  }
+
+  private def useFormat(format: String, dateTime: DateTime)(implicit request: RequestHeader) =
+    dateTime.toString(DateTimeFormat.forPattern(format).withZone(Edition(request).timezone))
+
+}
+case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: String)

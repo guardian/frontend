@@ -453,7 +453,7 @@ final case class Article (
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
-  //@deprecated("use content.blocks", "")
+  //@deprecated("use content.fields.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)
 }
 

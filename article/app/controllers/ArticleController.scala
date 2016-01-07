@@ -7,7 +7,7 @@ import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
-import liveblog.BlocksFor
+import liveblog.BodyBlocks$
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -87,7 +87,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         NotFound
       } else {
-        val blocks = BlocksFor(blog.article.content.fields.blocks, pageNo)
+        val blocks = BodyBlocks(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)

@@ -1,10 +1,10 @@
-@import _root_.liveblog.BlocksFor
-@(model: LiveBlogPage, blocks: BlocksFor)(implicit request: RequestHeader)
+@import _root_.liveblog.BodyBlocks$
+@import model.liveblog.LiveBlogDate
+@(model: LiveBlogPage, blocks: BodyBlocks)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.BodyCleaner
-@import layout.BlockFields
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
 
@@ -74,14 +74,12 @@
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                                 @blocks.blocks.map { block =>
-                                    <div id="block-@block.id" class="block@BlockFields(block)" data-block-contributor="@block.contributors.map { /*TODO separator?? needed?*/cont =>profile/@cont}.mkString(",")" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+                                    <div id="block-@block.id" class="block@block.eventClass" data-block-contributor="@block.contributors.map { /*TODO separator?? needed?*/cont =>profile/@cont}.mkString(",")" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
                                         <p class="block-time published-time">
                                             <a href="#block-@block.id" itemprop="url" class="block-time__link">
-                                                @block.firstPublishedDate.orElse(block.createdDate).map { createdDate =>
-                                                    @defining(layout.LiveBlogDateFormat(createdDate)) { case (createdDate, hhmm, ampm, gmt) =>
-                                                        <time datetime="@createdDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
-                                                        <span class="block-time__absolute">@hhmm</span>
-                                                    }
+                                                @block.publishedCreatedDate.map { case LiveBlogDate(createdDate, hhmm, ampm, gmt) =>
+                                                    <time datetime="@createdDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
+                                                    <span class="block-time__absolute">@hhmm</span>
                                                 }
                                             </a>
                                         </p>
@@ -96,12 +94,10 @@
                                         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
                                             @BodyCleaner(article, block.bodyHtml, amp = false)
                                         </div>
-                                        @block.republishedDate.map { republishedDate =>
-                                            @defining(layout.LiveBlogDateFormat(republishedDate)) { case (republishedDate, hhmm, ampm, gmt) =>
-                                                <p class="block-time updated-time">Updated
-                                                    <time datetime="@republishedDate">at @ampm @gmt</time>
-                                                </p>
-                                            }
+                                        @block.republishedDate.map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
+                                            <p class="block-time updated-time">Updated
+                                                <time datetime="@republishedDate">at @ampm @gmt</time>
+                                            </p>
                                         }
                                         @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(Some(s"block-${block.id}")), article.metadata.contentType)
                                     </div>
