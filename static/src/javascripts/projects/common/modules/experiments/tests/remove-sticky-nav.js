@@ -1,7 +1,5 @@
 define([
-    'common/utils/config'
 ], function (
-    config
 ) {
     return function () {
         this.id = 'RemoveStickyNav';
