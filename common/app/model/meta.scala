@@ -87,7 +87,7 @@ object Fields {
       standfirst = apiContent.safeFields.get("standfirst"),
       main = apiContent.safeFields.getOrElse("main",""),
       body = apiContent.safeFields.getOrElse("body",""),
-      blocks = BodyBlock.make(apiContent.blocks), // note - lossy at the moment!
+      blocks = BodyBlock.make(apiContent.blocks),
       lastModified = apiContent.safeFields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now),
       displayHint = apiContent.safeFields.getOrElse("displayHint", ""),
       isLive = apiContent.safeFields.get("liveBloggingNow").exists(_.toBoolean)

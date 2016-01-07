@@ -111,7 +111,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderLive(path: String, page: Option[Int] = None) =
+  def renderLiveBlog(path: String, page: Option[Int] = None) =
     LongCacheAction { implicit request =>
       mapModel(path, true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
         render(path, _, page)
@@ -177,7 +177,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 }
 
 object LongCacheAction {
-  def apply[X](block: RequestHeader => Future[Result]) = {
+  def apply(block: RequestHeader => Future[Result]) = {
     if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
       // we cannot sensibly decache memcached (does not support surogate keys)
       // so if we are doing the 'soft purge' don't memcache

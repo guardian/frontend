@@ -23,5 +23,5 @@ GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/
 GET     /*path.json                 controllers.ArticleController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean])
 GET     /*path/amp                  controllers.ArticleController.renderArticle(path)
 # temp route for live blogs so we can paginate without getting the blocks for all articles
-GET     /$path<[^/]+/(blog/)?live/.*> controllers.ArticleController.renderLive(path, page: Option[Int])
+GET     /$path<[^/]+/(blog/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[Int])
 GET     /*path                      controllers.ArticleController.renderArticle(path)
