@@ -1,3 +1,4 @@
+@(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)
 @import conf.switches.Switches.R2PagePressServiceSwitch
 
 @admin_main("R2 page presser (archiver)", "TEST", isAuthed = true) {
@@ -27,6 +28,13 @@
                     }
                 </div>
             </div>
+            @if(urlMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                        @urlMsgs.mkString
+                    </div>
+                </div>
+            }
         </fieldset>
     </form>
 
@@ -56,6 +64,13 @@
                 }
                 </div>
             </div>
+            @if(fileMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                        @fileMsgs.mkString
+                    </div>
+                </div>
+            }
         </fieldset>
     </form>
 

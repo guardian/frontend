@@ -13,8 +13,8 @@ case class R2PagePress(r2url: String) {
 
 object R2PressController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def pressForm() = AuthActions.AuthActionTest { implicit request =>
-    Ok(views.html.pressR2())
+  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = AuthActions.AuthActionTest { implicit request =>
+    Ok(views.html.pressR2(urlMsgs, fileMsgs))
   }
 
   def batchUpload() = AuthActions.AuthActionTest { implicit request =>
@@ -28,14 +28,26 @@ object R2PressController extends Controller with Logging with AuthLogging with E
         tmpFile
       }
     }
-    uploadedFile.foreach(file => pressFile(file, isBatchTakedown(body)))
-    Ok(views.html.pressR2())
+    val msgs = if(uploadedFile.nonEmpty) {
+      val results = uploadedFile.map(file => {
+        try {
+          pressFile(file, isBatchTakedown(body))
+        } catch {
+          case e: Exception => List(s"Error processing ${file.getName} - ${e.getMessage}")
+        }
+      })
+      results.getOrElse(List.empty)
+    } else {
+      List("File was not uploaded")
+    }
+
+    Ok(views.html.pressR2(fileMsgs = msgs, urlMsgs = List.empty))
   }
 
-  private def pressFile(file: File, isTakedown: Boolean): Unit = {
+  private def pressFile(file: File, isTakedown: Boolean): List[String] = {
     val source = scala.io.Source.fromFile(file)
     try {
-      source.getLines().foreach { line =>
+      source.getLines().map { line =>
         if (line.nonEmpty) {
           //TODO: other validation?
           if (isTakedown) {
@@ -43,8 +55,10 @@ object R2PressController extends Controller with Logging with AuthLogging with E
           } else {
             R2PagePressNotifier.enqueue(line)
           }
+        } else {
+          "* empty line *"
         }
-      }
+      }.toList
     } finally {
       source.close()
       file.delete()
@@ -53,8 +67,8 @@ object R2PressController extends Controller with Logging with AuthLogging with E
 
   def press() = AuthActions.AuthActionTest { implicit request =>
     val body = request.body
-    body.asFormUrlEncoded.foreach { form =>
-      form("r2url").foreach { r2Url =>
+    val result = body.asFormUrlEncoded.map { form =>
+      form("r2url").map { r2Url =>
         r2Url.trim match {
           // TODO: other validation?
           case url if url.nonEmpty => {
@@ -64,11 +78,12 @@ object R2PressController extends Controller with Logging with AuthLogging with E
               R2PagePressNotifier.enqueue(url)
             }
           }
-          case _ =>
+          case _ => "URL was not specified"
         }
       }
-    }
-    SeeOther(routes.R2PressController.pressForm().url)
+    }.map(_.toList).getOrElse(List.empty)
+    //SeeOther(routes.R2PressController.pressForm(urlMsg = result).url)
+    Ok(views.html.pressR2(urlMsgs = result, fileMsgs = List.empty))
   }
 
   private def isTakedown(body: AnyContent) = {
