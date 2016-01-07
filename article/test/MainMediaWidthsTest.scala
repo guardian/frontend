@@ -1,6 +1,7 @@
 package test
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, Block, Blocks, Asset}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import layout.ContentWidths.{LiveBlogMedia, MainMedia}
 import org.joda.time.DateTime
 import org.scalatest._
@@ -13,7 +14,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -31,18 +32,18 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
     val imageElement = ApiElement(
       "test-picture",
       "main",
-      "image",
+      ElementType.Image,
       Some(0),
       List(Asset(
-        "image",
+        AssetType.Image,
         Some("image/jpeg"),
         Some("http://www.foo.com/bar"),
-        Map("caption" -> "caption", "width" -> "55", "role" -> "showcase"))))
+        Some(AssetFields(caption = Some("caption"), width = Some(55), role = Some("showcase"))))))
 
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -60,11 +61,11 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tag("tone/minutebyminute", "tone")),
+      tags = List(tag("tone/minutebyminute", TagType.Tone)),
       elements = None,
       blocks = Some(Blocks.apply(None, Some(Seq(Block("","","",None,Map(), false, None, None, None,None,Nil,None,None, Nil)))))
     )
@@ -79,22 +80,22 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
     val imageElement = ApiElement(
       "test-picture",
       "main",
-      "image",
+      ElementType.Image,
       Some(0),
       List(Asset(
-        "image",
+        AssetType.Image,
         Some("image/jpeg"),
         Some("http://www.foo.com/bar"),
-        Map("caption" -> "caption", "width" -> "55", "role" -> "showcase"))))
+        Some(AssetFields(caption = Some("caption"), width = Some(55), role = Some("showcase"))))))
 
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tag("tone/features", "tone")),
+      tags = List(tag("tone/features", TagType.Tone)),
       elements = Some(List(imageElement))
     )
 
@@ -104,7 +105,7 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
     MainMediaWidths(article) shouldEqual MainMedia.featureShowcase
   }
 
-  private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
+  private def tag(id: String = "/id", tagType: TagType = TagType.Keyword, name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
   }

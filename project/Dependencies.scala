@@ -26,13 +26,13 @@ object Dependencies {
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val contentApiClient = "com.gu" %% "content-api-client" % "6.10"
+  val contentApiClient = "com.gu" %% "content-api-client" % "7.12"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.4.1"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.60"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.60"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.63"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.63"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
@@ -60,6 +60,7 @@ object Dependencies {
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.5" % Test
   val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
+  val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seeGuice = "com.tzavellas" % "sse-guice" % "0.7.1"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"

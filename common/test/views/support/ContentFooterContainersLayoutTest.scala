@@ -5,6 +5,7 @@ import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{RelatedContentItem, RelatedContent}
 import org.scalatest.{FlatSpec, Matchers}
 import play.twirl.api.Html
+import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
 
 class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
@@ -15,16 +16,16 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
                           commentable: Boolean = true,
                           seriesId: Option[String] = None,
                           blogId: Option[String] = None): RelatedContentItem = {
-    val seriesTag = for (id <- seriesId) yield emptyTag.copy(id = s"$id/$id", `type` = "series")
-    val blogTag = for (id <- blogId) yield emptyTag.copy(id = s"$id/$id", `type` = "blog")
-    val articleType = Some(emptyTag.copy(id = "type/article", `type` = "type"))
+    val seriesTag = for (id <- seriesId) yield emptyTag.copy(id = s"$id/$id", `type` = TagType.Series)
+    val blogTag = for (id <- blogId) yield emptyTag.copy(id = s"$id/$id", `type` = TagType.Blog)
+    val articleType = Some(emptyTag.copy(id = "type/article", `type` = TagType.Type))
 
     val tags = List(seriesTag, blogTag, articleType).flatten
     RelatedContentItem(emptyApiContent.copy(
-      fields = Some(Map(
-      "showInRelatedContent" -> showInRelatedContent.toString,
-      "shouldHideAdverts" -> shouldHideAdverts.toString,
-      "commentable" -> commentable.toString
+      fields = Some(ContentFields(
+        showInRelatedContent = Some(showInRelatedContent),
+        shouldHideAdverts = Some(shouldHideAdverts),
+        commentable = Some(commentable)
       )),
       tags = tags
     ))

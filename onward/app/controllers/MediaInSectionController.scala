@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -36,7 +36,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
     val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
     def isCurrentStory(content: ApiContent) =
-      content.safeFields.get("shortUrl").exists(!_.equals(currentShortUrl))
+      content.fields.flatMap(_.shortUrl).exists(!_.equals(currentShortUrl))
 
     val promiseOrResponse = getResponse(LiveContentApi.search(edition)
       .section(sectionId)

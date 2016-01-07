@@ -1,7 +1,5 @@
 package model
 
-import com.gu.contentapi.client.model.{CrosswordPosition, CrosswordCreator, CrosswordDimensions}
-import com.gu.facia.api.{utils => fapiutils}
 import common.{NavItem, SectionLink, Pagination}
 import model.facia.PressedCollection
 import model.liveblog.BodyBlock

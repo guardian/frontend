@@ -115,7 +115,8 @@ object Frontend extends Build with Prototypes {
       lodash,
       react,
       awsElasticloadbalancing,
-      awsSes
+      awsSes,
+      scalaUri
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
@@ -161,13 +162,6 @@ object Frontend extends Build with Prototypes {
     ).settings(
       RoutesKeys.routesImport += "bindables._",
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
-    )
-
-  val faciaEndToEnd = application("facia-end-to-end")
-    .dependsOn(facia, faciaPress)
-    .aggregate(facia, faciaPress)
-    .settings(
-      javaOptions in Runtime += "-Dconfig.file=facia-end-to-end/conf/facia-end-to-end.application.conf"
     )
 
   // this app has a very limited set.

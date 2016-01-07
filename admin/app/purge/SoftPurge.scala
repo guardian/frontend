@@ -11,10 +11,10 @@ import implicits.Dates
 import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, GlobalSettings}
-import com.gu.contentapi.client.model.{Content => ApiContent}
 import conf.switches.Switches.{SoftPurgeSwitch, LongCacheSwitch }
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
 trait SoftPurge extends GlobalSettings {
 
@@ -64,10 +64,10 @@ object CdnPurge extends ExecutionContexts with Dates with Logging {
       .useDate("last-modified")
       .pageSize(51)
       .showFields("last-modified")
-    ).map(_.results.filter(_.id != "canary").map { content =>
-        val lastMod = content.safeFields("lastModified").parseISODateTime
+    ).map(_.results.filter(_.id != "canary").flatMap { content =>
+        val maybeLastMod = content.fields.flatMap(_.lastModified).map(_.toJodaDateTime)
         val path = s"/${content.id}"
-        LastChange(SurrogateKey(path), lastMod.getMillis)
+        maybeLastMod.flatMap(lastMod => Some(LastChange(SurrogateKey(path), lastMod.getMillis)))
       }
     )
   }
