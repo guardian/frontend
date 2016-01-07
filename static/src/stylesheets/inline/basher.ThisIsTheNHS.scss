@@ -57,7 +57,13 @@ $c-accent: colour(multimedia-main-2);
         @include mq(tablet) {
             top: gs-height(2);
             right: auto;
+            left: gs-span(3);
         }
+
+        @include mq(desktop) {
+            left: auto;
+        }
+
     }
 
     .title--second {
@@ -94,7 +100,7 @@ $c-accent: colour(multimedia-main-2);
         @include fs-header(1);
         color: #ffffff;
         margin: 0 $gs-gutter / 2;
-        letter-spacing: -0.2px;
+        letter-spacing: -.2px;
 
         @include mq(mobileLandscape) {
             margin-left: $gs-gutter;
@@ -333,7 +339,7 @@ $c-accent: colour(multimedia-main-2);
 
     @keyframes handFade {
         to {
-            transform: translateY(0)
+            transform: translateY(0);
         }
     }
 
