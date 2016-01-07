@@ -36,12 +36,12 @@ object R2PressController extends Controller with Logging with AuthLogging with E
           case e: Exception => List(s"Error processing ${file.getName} - ${e.getMessage}")
         }
       })
-      results.getOrElse(List.empty)
+      List(s"File uploaded as ${uploadedFile.map(_.getName).getOrElse("")}") ::: results.getOrElse(List.empty)
     } else {
       List("File was not uploaded")
     }
 
-    Ok(views.html.pressR2(fileMsgs = msgs, urlMsgs = List.empty))
+    Ok(views.html.pressR2(fileMsgs = msgs))
   }
 
   private def pressFile(file: File, isTakedown: Boolean): List[String] = {
@@ -82,8 +82,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
         }
       }
     }.map(_.toList).getOrElse(List.empty)
-    //SeeOther(routes.R2PressController.pressForm(urlMsg = result).url)
-    Ok(views.html.pressR2(urlMsgs = result, fileMsgs = List.empty))
+    Ok(views.html.pressR2(urlMsgs = result))
   }
 
   private def isTakedown(body: AnyContent) = {
