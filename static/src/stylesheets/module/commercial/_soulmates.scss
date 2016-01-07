@@ -8,19 +8,53 @@ $c-soulmates-high: colour(neutral-1);
 .commercial--soulmates {
     background-color: $c-soulmatesBackground;
 
+    .commercial__inner {
+        background-repeat: no-repeat;
+        background-position: bottom 68px right 0px;
+        min-height: 10px;
+
+        @include mq(desktop) {
+            min-height: 200px;
+            background-position: bottom 52px right 0px;
+        }
+
+        @include mq(wide) {
+            min-height: 260px;
+            background-position: bottom 69px right 0px;
+
+            .has-page-skin & {
+                min-height: 248px;
+                background-position: bottom 52px left 0px;
+            }
+        }
+
+        @include mq($until: leftCol) {
+            background-image: none;
+        }
+    }
+
     .commercial--multi__header {
         background-color: $c-soulmates-high;
         margin-bottom: $gs-baseline/3;
     }
 
     .commercial__header {
-        padding: $gs-baseline/2 $gs-gutter/2 0;
-        border-bottom: 1px solid $c-soulmatesBorder;
+        background-color: #332e2e;
 
-        @include mq(leftCol) {
-            padding-left: 0;
-            padding-right: 0;
-            border-bottom: 0;
+        .has-page-skin & {
+            padding-bottom: $gs-baseline/2;
+        }        
+
+        .inline-marque-54 {
+            @include mq($until: leftCol) {
+                display: none;
+            }
+
+            @include mq(wide) {
+                .has-page-skin & {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -31,114 +65,195 @@ $c-soulmates-high: colour(neutral-1);
     }
 
     .i-soulmates-title-background {
-        padding-top: $gs-baseline*2;
+        padding-top: 0;
         background-repeat: no-repeat;
+        background: none;
+        height: auto;
+        width: auto;
+        float: left;
 
         @include mq(leftCol) {
-            padding-top: $gs-baseline*2;
             overflow: hidden;
-            width: auto;
-            height: auto;
-        }
-
-        @include mq(wide) {
-            padding-top: $gs-baseline*3;
         }
 
         .svg & {
             background-size: cover;
-
-            @include mq($until: leftCol) {
-                width: gs-span(2);
-                height: $gs-baseline*2.5;
-            }
-        }
-
-        @include mq(wide) {
-            .has-page-skin & {
-                .svg & {
-                    width: gs-span(2);
-                    height: $gs-baseline*2.5;
-                    padding-top: $gs-baseline*2;
-                }
-            }
         }
     }
 
     .commercial__title {
-        text-align: center;
         min-height: 0;
+        width: 120px;
+
+        .commercial--multi & {
+            text-align: center;
+            width: 100%;
+        }
     }
 
-    .inline-logo-soulmates {
-        width: 86px;
-        height: 18px;
+    .logo--soulmates_large {
 
-        .svg & {
-            background-size: contain;
+        svg {
+            width: 100px;
+            height: 21px;
+            padding-top: 4px;
 
-            @include mq(wide) {
+            @include mq(mobileLandscape) {
+                width: 120px;
+                height: 28px;
+                padding: 0;
+            }
+
+            @include mq(leftCol, $until: wide) {
                 width: 100px;
                 height: 21px;
             }
-        }
-        @include mq(wide) {
-            .has-page-skin & {
-                width: 86px;
-                height: 18px;
-            }
+
         }
     }
 
     .commercial__explainer {
-        @include fs-header(1);
-        line-height: 1;
-        color: $c-soulmates-high;
-        position: absolute;
-        bottom: 0;
-        left: $gs-gutter * 8;
+        @include fs-headline(2);
+        font-weight: bold;
+        color: #ffffff;
         width: auto;
         padding: 0;
-        text-align: center;
-
-        @include mq(mobileLandscape) {
-            left: $gs-gutter * 8;
-        }
+        margin: 0;
+        position: static;
+        display: none;
 
         @include mq(leftCol) {
-            position: static;
-            color: #ffffff;
-            margin: $gs-baseline*2 auto;
-            width: gs-span(2);
+            margin-bottom: $gs-baseline;
+            display: block;
+
+            .has-page-skin & {
+                display: none;
+            }
+
+            span {
+                display: block;
+            }
+        }
+
+        @include mq(desktop) {
+            @include fs-headline(1);
+            font-weight: bold;
         }
 
         @include mq(wide) {
+            @include fs-headline(2);
+            font-weight: bold;
+
             .has-page-skin & {
-                color: $c-soulmates-high;
-                position: absolute;
-                bottom: 0;
-                left: $gs-gutter * 8;
-                margin-bottom: $gs-baseline*(2/3);
-                width: auto;
+                position: static;
+                margin: 0;
+                color: #ffffff;
+
+                span {
+                    display: inline;
+                }
             }
         }
+
+    }
+
+    .commercial__ctas {
+        position: absolute;
+        bottom: $gs-gutter;
+        left: $gs-gutter;
+
+        @include mq($until: leftCol) {
+            position: static;
+            float: right;
+            border-left: 1px solid #666666;
+            margin: $gs-baseline/2 0;
+            padding-left: $gs-baseline;
+            width: 50%;
+
+            @include mq(mobileLandscape) {
+                width: 33.33%;
+                height: auto;
+            }
+
+            @include mq(tablet) {
+                width: 15%;
+            }
+
+        }
+
+        @include mq(desktop) {
+            bottom: $gs-baseline;
+        }
+
+        @include mq(wide) {
+            bottom: $gs-gutter;
+
+            .has-page-skin & {
+                width: 15%;
+                position: static;
+                float: right;
+                border-left: 1px solid #666666;
+                margin: $gs-baseline/2 0;
+                padding-left: $gs-baseline;
+            }
+        }
+
     }
 
     .commercial__cta {
         display: none;
         width: $gs-gutter * 6;
+        display: block;
+        position: static;
+    }
 
-        @include mq(leftCol) {
+    .icon__cta {
+        width: auto;
+        display: block;
+        clear: both;
+        overflow: hidden;
+
+        .commercial__cta__label {
+            @include fs-data(1);
+            float: left;
+            line-height: 20px;
+            width: auto;
             display: block;
-            position: static;
-            margin: $gs-baseline auto;
-        }
 
-        @include mq(wide) {
-            .has-page-skin & {
-                display: none;
+            @include mq(320px, $until: 479px) {
+                width: 90px;
+            }
+
+            @include mq(leftCol, $until: wide) {
+                width: 90px;
+            }
+
+            @include mq(wide) {
+                @include fs-data(2);
+                line-height: 20px;
+
+                .has-page-skin & {
+                    @include fs-data(1);
+                    line-height: 20px;
+                }
             }
         }
+        .commercial__cta__icon {
+            width: 28px;
+            height: 20px;
+            float: left;
+        }
+
+    }
+
+    .commercial__hline {
+        display: block;
+        width: 20px;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #666;
+        margin: 18px 0 7px 0;
+        padding: 0; 
     }
 
     /* Line items */
