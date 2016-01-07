@@ -171,7 +171,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
-        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`))
+        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`.name))
 
       val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
       (seoData, frontProperties)

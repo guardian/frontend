@@ -1,6 +1,7 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
+import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
@@ -17,16 +18,20 @@ import scala.concurrent.duration._
 trait CrosswordController extends Controller with Logging with ExecutionContexts {
   def noResults()(implicit request: RequestHeader): Result
 
-  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all")).map { response =>
+  def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
+    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
+  }
+
+  def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
+    getCrossword(crosswordType, id).map { response =>
        val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
        yield f(crossword, content)
        maybeCrossword getOrElse noResults
     } recover { case t: Throwable =>
-              log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
-              noResults
+      log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
+      noResults
     }
   }
 

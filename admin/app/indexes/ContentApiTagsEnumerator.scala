@@ -6,7 +6,8 @@ import conf.LiveContentApi
 import LiveContentApi.getResponse
 
 import scala.concurrent.Future
-import com.gu.contentapi.client.model.{Tag, TagsResponse}
+import com.gu.contentapi.client.model.v1.Tag
+import com.gu.contentapi.client.model.TagsResponse
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.iteratee.{Enumeratee, Enumerator}

@@ -7,8 +7,9 @@ import model.pressed.{CollectionConfig, PressedContent}
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import services.FaciaContentConvert
-import com.gu.contentapi.client.model.{Content => ApiContent}
 
 object TestContent {
   def newFaciaContent(u: String): PressedContent = {
@@ -16,12 +17,12 @@ object TestContent {
       id = u,
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(DateTime.now),
+      webPublicationDate = Some(DateTime.now.toCapiDateTime),
       webTitle = "",
       webUrl = "",
       apiUrl = "",
       elements = None,
-      fields = Some(Map("liveBloggingNow" -> "true"))
+      fields = Some(ContentFields(liveBloggingNow = Some(true)))
     )
     FaciaContentConvert.contentToFaciaContent(content)
   }
