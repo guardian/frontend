@@ -557,8 +557,10 @@
     }
 
     .content__labels--crossword & {
+
+        //aligns byline for crosswords, with social sharing buttons past tablet
         @include mq(leftCol) {
-            margin-top: ($gs-baseline * 6) + 7;
+            margin-top: ($gs-baseline * 6) + 7px;
             min-height: 0;
             padding-bottom: 0;
         }
