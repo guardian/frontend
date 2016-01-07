@@ -2,11 +2,12 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.v1.{Blocks, BlockAttributes => ApiBlockAttributes}
+import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, Blocks}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition
 import model.liveblog.BodyBlock._
-import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
 
 object BodyBlock {
@@ -21,10 +22,10 @@ object BodyBlock {
             bodyBlock.title,
             BlockAttributes.make(bodyBlock.attributes),
             bodyBlock.published,
-            bodyBlock.createdDate.map(d => new DateTime(d.dateTime)),
-            bodyBlock.firstPublishedDate.map(d => new DateTime(d.dateTime)),
-            bodyBlock.publishedDate.map(d => new DateTime(d.dateTime)),
-            bodyBlock.lastModifiedDate.map(d => new DateTime(d.dateTime)),
+            bodyBlock.createdDate.map(_.toJodaDateTime),
+            bodyBlock.firstPublishedDate.map(_.toJodaDateTime),
+            bodyBlock.publishedDate.map(_.toJodaDateTime),
+            bodyBlock.lastModifiedDate.map(_.toJodaDateTime),
             bodyBlock.contributors)
         }
       }
