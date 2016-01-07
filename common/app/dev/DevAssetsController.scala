@@ -25,12 +25,15 @@ object DevAssetsController extends Controller with ExecutionContexts {
     }
 
     // In dev mode we must consistently reload the asset map, to account for changes to the map.
-    val resolvedPath = findDevAsset.lift(
-      localAssets.lookup
+
+    val maybeAssetMapPath = localAssets.lookup
         .assets()
         .get(path)
         .map(_.path)
-        .getOrElse(path)
+
+    val resolvedPath = findDevAsset.lift(
+      // Use the asset map path if we have one, otherwise use the provided path
+      maybeAssetMapPath.getOrElse(path)
     ).getOrElse {
       throw AssetNotFoundException(path)
     }
