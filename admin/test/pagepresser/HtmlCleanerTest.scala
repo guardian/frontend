@@ -2,10 +2,10 @@ package pagepresser
 
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.{SingleServerSuite, ConfiguredTestSuite}
+import test.{ConfiguredTestSuite}
 import scala.io.Source
 
-class HtmlCleanerTest extends FlatSpec with Matchers with SingleServerSuite {
+@DoNotDiscover class HtmlCleanerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   "BasicHtmlCleaner" should "remove ad slots from a page that will be pressed" in {
     val originalSource = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("pagepresser/r2/pageWithAdSlots.html"))
