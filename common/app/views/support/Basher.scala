@@ -2,7 +2,7 @@ package views.support
 
 object Basher {
     val bashersById = Map(
-        "environment/series/keep-it-in-the-ground" -> KeepItInTheGround
+        "environment/series/keep-it-in-the-ground" -> KeepItInTheGround,
         "society" -> ThisIsTheNHS
     )
 

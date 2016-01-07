@@ -18,18 +18,26 @@ $c-accent: colour(multimedia-main-2);
 }
 
 .this-is-the-nhs {
-    height: gs-height(8);
+    height: gs-height(5) - $gs-baseline;
+
+    @include mq(tablet) {
+        height: gs-height(6);
+    }
+
+    @include mq(desktop) {
+        height: gs-height(8);
+    }
 
     .title {
         position: absolute;
         z-index: 8;
         @include f-headline;
         font-weight: 200;
-        font-size: 72px;
+        font-size: 62px;
         line-height: 1.5;
         margin-left: $gs-gutter;
 
-        @include mq(desktop) {
+        @include mq(tablet) {
             font-size: 77px;
             line-height: 1.5;
         }
@@ -42,12 +50,37 @@ $c-accent: colour(multimedia-main-2);
 
     .title--first {
         color: #ffffff;
-        top: gs-height(2);
+        top: 60px;
+        right: 40%;
+        margin-right: $gs-gutter / 2;
+
+        @include mq(tablet) {
+            top: gs-height(2);
+            right: auto;
+        }
     }
 
     .title--second {
         color: $c-black;
-        top: gs-height(4);
+        top: 120px + $gs-baseline;
+        left: 20%;
+        margin-left: $gs-gutter / 2;
+        width: gs-span(4) - 10px;
+
+        @include mq(mobileLandscape) {
+            left: 40%;
+        }
+
+        @include mq(tablet) {
+            left: gs-span(4);
+            top: gs-height(4);
+            width: auto;
+        }
+
+        @include mq(desktop) {
+            margin-left: $gs-gutter;
+            left: 0;
+        }
 
         @include mq(leftCol) {
             left: 51px;
@@ -56,19 +89,25 @@ $c-accent: colour(multimedia-main-2);
 
     .description {
         position: absolute;
-        bottom: $gs-baseline * 3;
-        width: gs-span(4);
+        top: 0;
+        max-width: gs-span(4);
         @include fs-header(1);
         color: #ffffff;
-        margin-left: $gs-gutter;
+        margin: 0 $gs-gutter / 2;
+        letter-spacing: -0.2px;
 
-        @include mq(tablet) {
-            top: 0;
+        @include mq(mobileLandscape) {
+            margin-left: $gs-gutter;
         }
 
-        @include mq(leftCol) {
-            width: gs-span(5);
+        @include mq(tablet) {
+            max-width: gs-span(5);
             @include fs-header(3);
+        }
+
+        @include mq(desktop, leftCol) {
+            @include fs-header(1);
+            max-width: gs-span(4);
         }
     }
 
@@ -76,7 +115,7 @@ $c-accent: colour(multimedia-main-2);
         position: absolute;
         z-index: 5;
         top: 0;
-        height: 72px;
+        height: 60px;
         width: 100%;
 
         @include mq(tablet) {
@@ -90,12 +129,17 @@ $c-accent: colour(multimedia-main-2);
 
     .stripe--dark-blue {
         background-color: $c-dark-blue;
-        display: none;
-        width: gs-span(2);
-        right: -(gs-span(2));
+        width: gs-span(5) + $gs-gutter;
+        left: gs-span(4) + $gs-gutter;
 
         @include mq(tablet) {
-            display: block;
+            left: gs-span(5) + $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            left: auto;
+            right: -(gs-span(2));
+            width: gs-span(2);
         }
     }
 
@@ -110,41 +154,57 @@ $c-accent: colour(multimedia-main-2);
 
     .stripe--blue {
         background-color: $c-blue;
-        top: gs-height(2) + $gs-baseline;
+        top: 60px + $gs-baseline;
+        right: 40%;
 
         @include mq(tablet) {
             width: gs-span(8);
+            top: gs-height(2) + $gs-baseline;
+            right: auto;
             margin-left: -(gs-span(2));
         }
     }
 
     .stripe--white {
-        width: calc(100% - 20px);
         background-color: #ffffff;
+        top: 120px + $gs-baseline * 2;
+        left: 20%;
+
+        @include mq(mobileLandscape) {
+            left: 40%;
+        }
 
         @include mq(tablet) {
             top: gs-height(4) + $gs-baseline;
+            left: gs-width(3);
+            width: calc(100% - 20px);
         }
 
-        @include mq(leftCol) {
-            margin-left: $gs-gutter;
+        @include mq(desktop) {
+            left: 0;
+            width: gs-span(6) + $gs-gutter;
         }
     }
 
     .grid .stripe--white {
         width: gs-span(2);
-        margin-left: $gs-gutter;
+        left: $gs-gutter;
     }
 
     .line {
         position: relative;
         z-index: 10;
-        left: 300px;
-        bottom: -140px;
+        bottom: -205px;
+        left: 200px;
+        display: none;
 
         @include mq(tablet) {
-            bottom: -205px;
-            left: 200px;
+            display: block;
+        }
+
+        @include mq(tablet, desktop) {
+            bottom: -109px;
+            left: 540px;
         }
 
         @include mq(leftCol) {
@@ -164,10 +224,6 @@ $c-accent: colour(multimedia-main-2);
         right: -99999px;
         margin: auto;
 
-        @include mq($until: tablet) {
-            width: 1200px;
-        }
-
         path {
             animation: drawInLine 5s ease-out;
             animation-fill-mode: forwards;
@@ -185,17 +241,24 @@ $c-accent: colour(multimedia-main-2);
     }
 
     .grid {
-        position: absolute;
         z-index: 7;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .grid-background {
+        background-color: #9be2de;
+        z-index: 2;
+    }
+
+    .grid,
+    .grid-background {
+        position: absolute;
         top: 0;
         bottom: 0;
         right: 0;
         width: gs-span(8) + ($gs-gutter * 2);
-        background-color: #9be2de;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
         display: none;
 
         @include mq(desktop) {
@@ -212,25 +275,59 @@ $c-accent: colour(multimedia-main-2);
         top: 0;
         bottom: 0;
         width: auto;
-        animation: handFade 3s cubic-bezier(.35, .5, 0, 1);
-        animation-fill-mode: forwards;
+
+        @include mq(tablet, desktop) {
+            display: none;
+        }
+
+        @include mq(desktop) {
+            animation: handFade 3s cubic-bezier(.35, .5, 0, 1);
+            animation-fill-mode: forwards;
+            z-index: 4;
+        }
     }
 
     .hand--left {
-        left: -60px;
-        transform: translateY(-40px);
+        right: -20px;
+        height: 104px;
+        top: 36px;
+        transform: rotate(120deg);
+
+        @include mq(desktop) {
+            transform: none;
+            height: gs-span(3);
+            top: 0;
+            right: gs-span(5);
+        }
 
         @include mq(wide) {
-            right: 0;
+            height: auto;
+            right: gs-span(6);
         }
     }
 
     .hand--right {
-        right: -130px;
-        transform: translateY(40px);
+        left: -44px;
+        right: 200px;
+        height: 100px;
+        transform: rotate(100deg);
+        top: 162px;
+
+        @include mq(mobileLandscape) {
+            left: -10px;
+            transform: rotate(120deg);
+        }
+
+        @include mq(desktop) {
+            transform: none;
+            height: gs-span(3);
+            left: auto;
+            right: 0;
+        }
 
         @include mq(wide) {
-            right: 0;
+            height: auto;
+            right: -20px;
         }
     }
 
@@ -248,7 +345,7 @@ $c-accent: colour(multimedia-main-2);
         height: $gs-baseline;
         width: 100%;
 
-        @for $i from 1 through 4 {
+        @for $i from 1 through 5 {
             &.baseline--#{$i} {
                 top: gs-height($i * 2);
             }
@@ -274,12 +371,28 @@ $c-accent: colour(multimedia-main-2);
     .circle {
         position: absolute;
         z-index: 15;
-        right: gs-span(4) + 8px;
-        top: gs-height(4) + ($gs-baseline / 2) - 22px;
+        right: -10px;
+        top: 180px;
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        background-color: #ffffff;
+        background-color: $c-accent;
+        display: none;
+
+        @include mq(mobileLandscape) {
+            display: block;
+        }
+
+        @include mq(tablet) {
+            background-color: #ffffff;
+            right: gs-span(2);
+            top: gs-height(2) - 22px;
+        }
+
+        @include mq(desktop) {
+            right: gs-span(4) + 8px;
+            top: gs-height(4) + ($gs-baseline / 2) - 22px;
+        }
 
         @include mq(wide) {
             right: gs-span(2) + 8px;
@@ -287,9 +400,19 @@ $c-accent: colour(multimedia-main-2);
     }
 
     .circle--lower {
-        top: auto;
-        bottom: -30px;
-        right: gs-span(6) + 8px;
+        top: 108px;
+        left: 20px;
         background-color: $c-dark-blue;
+
+        @include mq(tablet) {
+            top: auto;
+            bottom: -22px;
+        }
+
+        @include mq(desktop) {
+            left: auto;
+            bottom: -30px;
+            right: gs-span(6) + 8px;
+        }
     }
 }
