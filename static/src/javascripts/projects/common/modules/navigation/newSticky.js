@@ -2,39 +2,43 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/mediator',
-    'lodash/functions/bindAll'
+    'lodash/functions/bindAll',
+    'common/utils/detect'
 ], function (
     fastdom,
     $,
     mediator,
-    bindAll) {
+    bindAll,
+    detect) {
 
     function StickyHeader() {
 
     }
 
     StickyHeader.prototype.init = function () {
-        fastdom.read(function () {
-            this.$adBanner = $('.js-top-banner-above-nav');
-            this.$header = $('.js-header');
-            this.headerHeight = this.$header.height();
-            this.adHeight = this.$adBanner.height();
-        }.bind(this));
+        if (detect.getBreakpoint() !== 'mobile') {
+            fastdom.read(function () {
+                this.$adBanner = $('.js-top-banner-above-nav');
+                this.$header = $('.js-header');
+                this.headerHeight = this.$header.height();
+                this.adHeight = this.$adBanner.height();
+            }.bind(this));
 
-        fastdom.write(function () {
-            this.$adBanner.css({
-                'width': '100%',
-                'z-index': '1020'
-            });
+            fastdom.write(function () {
+                this.$adBanner.css({
+                    'width': '100%',
+                    'z-index': '1020'
+                });
 
-            this.$header.css({
-                'z-index': '1019'
-            });
-        }.bind(this));
+                this.$header.css({
+                    'z-index': '1019'
+                });
+            }.bind(this));
 
-        bindAll(this, 'stickOrUnstick', 'updateHeights');
+            bindAll(this, 'stickOrUnstick', 'updateHeights');
 
-        mediator.on('window:throttledScroll', this.stickOrUnstick);
+            mediator.on('window:throttledScroll', this.stickOrUnstick);
+        }
     };
 
     StickyHeader.prototype.stickOrUnstick = function () {
