@@ -1,5 +1,4 @@
 @(crosswordPage: crosswords.CrosswordPage, gridVisable: Boolean = true)(implicit requestHeader: RequestHeader)
-@import views.support.AuFriendlyFormat
 @import common.LinkTo
 @import conf.switches.Switches.SaveForLaterSwitch
 
@@ -20,9 +19,9 @@
                     <div class="crossword__links-related">
                         <a target="_blank" href="@LinkTo(s"/crosswords/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}/print")">Print</a>
 
-                        @crosswordPage.crossword.pdf.map { pdf =>
-                                | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
-                        }
+                    @crosswordPage.crossword.pdf.map { pdf =>
+                            | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
+                    }
 
                         | <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Accessible version</a>
                     </div>
