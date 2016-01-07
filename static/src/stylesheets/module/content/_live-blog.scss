@@ -639,12 +639,12 @@ $timeline-width: 15px;
     }
 
     svg {
-        height: 24px;
-        width: 24px;
+        height: 20px;
+        width: 20px;
         display: inline-block;
         position: absolute;
-        top: 6px;
-        left: 6px;
+        top: 8px;
+        left: 10px;
     }
 
     &.loading {
@@ -666,7 +666,7 @@ $timeline-width: 15px;
         transform: rotate(0deg);
     }
     to {
-        transform: rotate(-360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -953,6 +953,3 @@ $timeline-width: 15px;
     }
 }
 
-.l-header--is-slim .navigation {
-    display: none !important;
-}

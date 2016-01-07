@@ -14,6 +14,8 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{TextNode, Element, Document}
 import play.api.mvc.RequestHeader
 
+import implicits.Requests._
+
 import scala.collection.JavaConversions._
 
 trait HtmlCleaner {
@@ -247,6 +249,10 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
 case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
   def clean(body: Document): Document = {
     if (article.isLiveBlog) {
+      if(!request.isJson) {
+        body.getElementsByClass("block").first().remove()
+      }
+
       body.select(".block").foreach { el =>
         val blockId = el.id()
         val shares = article.sharelinks.elementShares(Some(blockId))

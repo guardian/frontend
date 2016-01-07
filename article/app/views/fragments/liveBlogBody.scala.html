@@ -4,6 +4,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.BodyCleaner
 @import layout.{FaciaCardAndIndex, ItemClasses}
+@import org.jsoup.Jsoup
 @import views.html.fragments.items.facia_cards.item
 
 @defining(model.article) {  article =>
@@ -72,7 +73,14 @@
                                     <div id="liveblog-updates-button" class="blog__updates-box-tofix">
                                         <a class="blog__updates-box blog__updates-box--closed js-updates-button button button--large">
                                             <span class="blog__updates-box-text"></span>
-                                            <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48H0z" fill="none"/><path fill="#fff" d="M24 10V2L14 12l10 10v-8c6.63 0 12 5.37 12 12s-5.37 12-12 12-12-5.37-12-12H8c0 8.84 7.16 16 16 16s16-7.16 16-16-7.16-16-16-16z"/></svg>
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                                                <g>
+                                                    <path fill="#FFFFFF" d="M12,0.5c6.4,0,11.5,5.1,11.5,11.5c0,6.3-5.2,11.5-11.5,11.5c-3.5,0-6.6-1.5-8.7-4l-0.7,4H1.3v-6.9l0.5-0.5
+		h6.7v1.3L4.7,18c1.8,2.1,4.3,3.4,7.3,3.4c5.2,0,9.4-4.2,9.4-9.4c0-5.2-4.2-9.5-9.4-9.5c-3.2,0-6,1.6-7.7,4L3.6,6.8L2.7,6.2L2.5,5.5
+		C4.6,2.5,8.1,0.5,12,0.5L12,0.5z"/>
+                                                </g>
+                                            </svg>
                                         </a>
                                     </div>
                                 </div>
