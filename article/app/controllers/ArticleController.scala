@@ -7,7 +7,7 @@ import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
-import liveblog.BodyBlocks$
+import liveblog.BodyBlocks
 import model._
 import org.joda.time.DateTime
 import org.jsoup.nodes.Document
@@ -20,7 +20,6 @@ import views.support._
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
-import scala.util.Try
 
 trait PageWithStoryPackage extends ContentPage {
   def article: Article
