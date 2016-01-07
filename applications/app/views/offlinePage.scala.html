@@ -62,9 +62,6 @@
         // page config
         @Html(config(offlinePage).body)
 
-        // analytics code
-        @InlineJs(analytics().body, "analytics.js")
-
         // apply render conditions
         @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
 
