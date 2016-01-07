@@ -45,9 +45,9 @@
         counter-reset: li;
     }
     > ol > li:before {
-        content: counter(li)'.';
+        content: counter(li);
         counter-increment: li;
-        @include fs-header(1);
+        @include fs-header(1, true);
         margin-right: 4px;
 
         @include mq(tablet) {
