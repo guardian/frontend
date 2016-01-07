@@ -10,12 +10,12 @@ import play.Play
 
 object DevAssetsController extends Controller with ExecutionContexts {
   // This asset map is used for finding files on local disk.
-  private val localAssets = new common.Assets.Assets("static/hash/")
+  private val localAssets = new common.Assets.Assets(base = "")
 
-  private val findDevAsset: PartialFunction[String, Asset] = {
-    case path if new File(s"static/hash/$path").exists() => Asset(s"static/hash/$path")
-    case path if new File(s"static/src/$path").exists() => Asset(s"static/src/$path")
-    case path if new File(s"static/public/$path").exists() => Asset(s"static/public/$path")
+  private val findDevAsset: PartialFunction[String, String] = {
+    case path if new File(s"static/hash/$path").exists() => s"static/hash/$path"
+    case path if new File(s"static/src/$path").exists() => s"static/src/$path"
+    case path if new File(s"static/public/$path").exists() => s"static/public/$path"
   }
 
   def at(path: String): Action[AnyContent] = Action { implicit request =>
@@ -25,11 +25,20 @@ object DevAssetsController extends Controller with ExecutionContexts {
     }
 
     // In dev mode we must consistently reload the asset map, to account for changes to the map.
-    val asset = localAssets.lookup.assets().getOrElse(path, findDevAsset.lift(path).getOrElse {
-        throw AssetNotFoundException(path)
-      })
 
-    val resolved = new File(asset.path).toURI.toURL
+    val maybeAssetMapPath = localAssets.lookup
+        .assets()
+        .get(path)
+        .map(_.path)
+
+    val resolvedPath = findDevAsset.lift(
+      // Use the asset map path if we have one, otherwise use the provided path
+      maybeAssetMapPath.getOrElse(path)
+    ).getOrElse {
+      throw AssetNotFoundException(path)
+    }
+
+    val resolved = new File(resolvedPath).toURI.toURL
 
     Result(
       ResponseHeader(OK, Map(CONTENT_TYPE -> contentType.getOrElse(BINARY))),
