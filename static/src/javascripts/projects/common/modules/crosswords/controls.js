@@ -44,33 +44,14 @@ define([
                 }));
             }
 
-            // HIGHLIGHTED CLUE CONTROLS
-            if (hasFocus && hasSolutions) {
+            // HIGHLIGHTED CLUE CONTROLS  - published solution
+            if (hasFocus) {
                 controls.clue.unshift(React.createElement('button', {
                     className: buttonClassName + ' ' + buttonCurrentClassName,
                     onClick: this.props.onClearSingle,
                     key: 'clear-single',
                     'data-link-name': 'Clear this'
                 }, 'Clear this'));
-
-                controls.clue.unshift(React.createElement(
-                    'button', {
-                        className: buttonClassName + ' ' + buttonCurrentClassName,
-                        onClick: this.props.onCheat,
-                        key: 'cheat',
-                        'data-link-name': 'Reveal this'
-                    },
-                    'Reveal this'
-                ));
-                controls.clue.unshift(React.createElement(
-                    'button', {
-                        className: buttonClassName + ' ' + buttonCurrentClassName,
-                        onClick: this.props.onCheck,
-                        key: 'check',
-                        'data-link-name': 'Check this'
-                    },
-                    'Check this'
-                ));
 
                 // anagram helper
                 controls.clue.push(React.createElement(
@@ -82,6 +63,27 @@ define([
                     },
                     'Anagram helper'
                 ));
+
+                if (hasSolutions) {
+                    controls.clue.unshift(React.createElement(
+                        'button', {
+                            className: buttonClassName + ' ' + buttonCurrentClassName,
+                            onClick: this.props.onCheat,
+                            key: 'cheat',
+                            'data-link-name': 'Reveal this'
+                        },
+                        'Reveal this'
+                    ));
+                    controls.clue.unshift(React.createElement(
+                        'button', {
+                            className: buttonClassName + ' ' + buttonCurrentClassName,
+                            onClick: this.props.onCheck,
+                            key: 'check',
+                            'data-link-name': 'Check this'
+                        },
+                        'Check this'
+                    ));
+                }
             }
 
             return React.createElement(

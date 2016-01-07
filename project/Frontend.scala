@@ -115,7 +115,8 @@ object Frontend extends Build with Prototypes {
       lodash,
       react,
       awsElasticloadbalancing,
-      awsSes
+      awsSes,
+      scalaUri
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"

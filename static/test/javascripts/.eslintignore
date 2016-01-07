@@ -1,1 +1,4 @@
+# Folder specific config all lives in here because you can't currently
+# extend these files:
+# https://github.com/eslint/eslint/issues/2824
 **/components/**/*.js

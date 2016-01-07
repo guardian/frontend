@@ -419,7 +419,12 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
     if (article.content.showInRelated) {
 
-      val paragraphs = doc.getElementsByTag("p")
+      // Get all paragraphs which are not contained in a pullquote
+      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
+        p.parents.exists( ancestor =>
+          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+        )
+      )
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'

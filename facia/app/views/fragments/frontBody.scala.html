@@ -29,6 +29,8 @@
 
                 @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
 
+                    @fragments.basher(faciaPage.id)
+
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }

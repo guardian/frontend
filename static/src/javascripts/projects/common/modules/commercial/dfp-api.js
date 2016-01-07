@@ -45,6 +45,8 @@ define([
     'lodash/arrays/last',
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
+
+    'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
     'common/modules/commercial/creatives/paidfor-content',
@@ -364,7 +366,7 @@ define([
             if (slots.length === 0) {
                 mediator.off('window:throttledScroll', lazyLoad);
             } else {
-                var scrollTop    = window.pageYOffset,
+                var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
