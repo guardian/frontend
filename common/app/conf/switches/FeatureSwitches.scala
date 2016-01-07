@@ -210,7 +210,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 1),
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = false
   )
 
@@ -228,7 +228,7 @@ trait FeatureSwitches {
     "ipad-split-capabilities",
     "If switched on then this gives older ipads the stripped down front but full articles",
     safeState = On,
-    sellByDate = new LocalDate(2015, 12, 1),
+    sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = false
   )
 
@@ -320,6 +320,32 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val EmailInlineInFooterSwitch = Switch(
+    "Feature",
+    "email-inline-in-footer",
+    "show the email sign-up in the footer",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val AmpSwitch = Switch(
+    "Server-side A/B Tests",
+    "amp-switch",
+    "If this switch is on, link to amp pages will be in the metadata for articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+  val r2PressToS3Switch = Switch(
+    "Feature",
+    "r2-press-page-to-s3",
+    "when switched on this will press the original and cleaned up R2 page to S3",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 1),
+    exposeClientSide = false
   )
 
 }

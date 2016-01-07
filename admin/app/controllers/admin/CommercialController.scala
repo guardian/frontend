@@ -6,12 +6,24 @@ import conf.Configuration.environment
 import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.{CreativeTemplateAgent, DfpDataHydrator}
-import model.{Content, NoCache, Page}
+import dfp.{CreativeTemplateAgent, DfpApi}
+import model._
 import ophan.SurgingContentAgent
-import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.{JsString, Json}
 import play.api.mvc.Controller
+import services.FaciaContentConvert
 import tools._
+
+case class CommercialPage() extends StandalonePage {
+  override val metadata = MetaData.make(
+    id = "commercial-templates",
+    section = "admin",
+    webTitle = "Commercial Templates",
+    analyticsName = "Commercial Templates",
+    javascriptConfigOverrides = Map(
+      "keywordIds" -> JsString("live-better"),
+      "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
+}
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
@@ -28,7 +40,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
-    val specialAdUnits = DfpDataHydrator().loadSpecialAdunits(Configuration.commercial.dfpAdUnitRoot)
+    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 
@@ -67,20 +79,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
       LiveContentApi.search(Edition(request))
         .pageSize(2)
     ).map { response  =>
-      response.results.map {
-        Content(_)
+      response.results.map { item =>
+        FaciaContentConvert.contentToFaciaContent(item)
       }
     }
     trailsFuture map { trails =>
-      object CommercialPage {
-        def apply() = new Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates", None, None) {
-          override def metaData: Map[String, JsValue] = super.metaData ++
-            List(
-              "keywordIds" -> JsString("live-better"),
-              "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")
-            )
-        }
-      }
       NoCache(Ok(views.html.commercial.sponsoredContainers(environment.stage, CommercialPage(), trails)))
     }
   }

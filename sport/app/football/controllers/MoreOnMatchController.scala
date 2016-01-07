@@ -3,8 +3,9 @@ package football.controllers
 import common._
 import conf.LiveContentApi
 import feed.Competitions
+import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
-import model.{Cached, Content, Trail}
+import model.{ContentType, Cached, Content}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
@@ -15,10 +16,15 @@ import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 
-case class Report(trail: Trail, name: String)
+case class Report(trail: FootballMatchTrail, name: String)
 
-case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
-    minByMin: Option[Trail], preview: Option[Trail], stats: Trail, currentPage: Option[Trail]) {
+case class MatchNav(
+  theMatch: FootballMatch,
+  matchReport: Option[FootballMatchTrail],
+  minByMin: Option[FootballMatchTrail],
+  preview: Option[FootballMatchTrail],
+  stats: FootballMatchTrail,
+  currentPage: Option[FootballMatchTrail]) {
 
   // do not count stats as a report (stats will always be there)
   lazy val hasReports = hasReport || hasMinByMin || hasPreview
@@ -38,7 +44,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
 
     val maybeResponse: Option[Future[Result]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
-      val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
+      val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
 
       val group = theMatch.round.name.flatMap {
@@ -82,7 +88,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     response map { Cached(60) }
   }
 
-  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
+  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[ContentType]] = {
     val matchDate = theMatch.date.toLocalDate
 
     getResponse(LiveContentApi.search(Edition(request))
@@ -130,27 +136,28 @@ object MoreOnMatchController extends Controller with Football with Requests with
   }
 
   //for our purposes we expect exactly 2 football teams
-  private def hasExactlyTwoTeams(content: Content) = content.tags.count(_.isFootballTeam) == 2
+  private def hasExactlyTwoTeams(content: ContentType) = content.tags.tags.count(_.isFootballTeam) == 2
 
-  private def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[Content]): (Option[Trail], Option[Trail], Option[Trail], Trail) = {
+  private def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[ContentType]):
+    (Option[FootballMatchTrail], Option[FootballMatchTrail], Option[FootballMatchTrail], FootballMatchTrail) = {
     val matchDate = theMatch.date.toLocalDate
     val matchReport = related.find { c =>
-      c.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate.toDateTimeAtStartOfDay &&
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate.toDateTimeAtStartOfDay &&
         c.matchReport && !c.minByMin && !c.preview
     }
     val minByMin = related.find { c =>
-      c.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate &&
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate &&
         c.matchReport && c.minByMin && !c.preview
     }
     val preview = related.find { c =>
-      c.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
         (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
     }
-    val stats: Trail = theMatch
-    (matchReport, minByMin, preview, stats)
+    val stats: FootballMatchTrail = FootballMatchTrail.toTrail(theMatch)
+    (matchReport.map(FootballMatchTrail.toTrail), minByMin.map(FootballMatchTrail.toTrail), preview.map(FootballMatchTrail.toTrail), stats)
   }
 
-  private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
+  private def populateNavModel(theMatch: FootballMatch, related: Seq[ContentType])(implicit request: RequestHeader) = {
     val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
 
     val currentPage = request.getParameter("page").flatMap { pageId =>

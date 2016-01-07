@@ -18,7 +18,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
       val mediaTitle = element.attr("data-video-name")
 
       if (!shortUrl.isEmpty) {
-        val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl, mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, article.sharelinks.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl, mediaPath = Some(mediaPath), title = mediaTitle), article.metadata.contentType)
         element.child(0).after(html.toString())
         element.addClass("fig--has-shares")
         element.addClass("fig--narrow-caption")
@@ -49,6 +49,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         val mediaId = element.attr("data-media-id")
 
         val asset = findVideoFromId(mediaId)
+        val video = findVideoApiElement(mediaId)
 
         element.getElementsByTag("source").remove()
 
@@ -61,7 +62,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         element.append(sourceHTML)
 
         // add the poster url
-        asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
+        video.map(_.images).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
           element.attr("poster", url)
         }
 
@@ -77,8 +78,8 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         })
 
         findVideoApiElement(mediaId).foreach { videoElement =>
-          element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-          if (!canonicalUrl.isEmpty && videoElement.embeddable) {
+          element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)
+          if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
             element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
           } else {
@@ -105,9 +106,9 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
     document
   }
 
-  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
+  def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
-  def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
+  def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType.contains("video/mp4"))
 
-  def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
+  def findVideoApiElement(id:String): Option[VideoElement] = article.elements.bodyVideos.find(_.properties.id == id)
 }

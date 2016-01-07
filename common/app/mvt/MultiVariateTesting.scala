@@ -18,22 +18,15 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object EmailTextTestControl extends TestDefinition(
-  List(Variant1),
-  "email-text-test-control",
-  "Control for testing a different version of the email text in the footer",
-  new LocalDate(2015, 12, 15)
-)
-
-object EmailTextTestV1 extends TestDefinition(
-  List(Variant2),
-  "email-text-test-v1",
-  "Tests a different version of the email text in the footer - Guardian today email",
-  new LocalDate(2015, 12, 15)
+object TopBannerPosition extends TestDefinition(
+  List(Variant4),
+  "top-banner-position",
+  "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
+  new LocalDate(2016, 1, 25)
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(EmailTextTestControl, EmailTextTestV1)
+  val tests: Seq[TestDefinition] = List(TopBannerPosition)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 

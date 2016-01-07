@@ -62,7 +62,8 @@ GET        /embed/card/*path.json                                               
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
+GET        /sport/cricket/match/:matchDate/:teamId.json                                        controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET        /sport/cricket/match/:matchDate/:teamId                                             controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day                                                football.controllers.FixturesController.allFixturesFor(year, month, day)
@@ -168,6 +169,13 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                         
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                      controllers.ImageContentController.renderJson(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
+
+# Email paths
+GET        /email                                                                              controllers.EmailSignupController.renderPage()
+GET        /email/form/$emailType<article|footer>/:listId                                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
+POST       /email                                                                              controllers.EmailSignupController.submit()
+OPTIONS    /email                                                                              controllers.EmailSignupController.options()
 
 # Weather - OLD
 GET        /weather/city/:id.json                                                              weather.controllers.WeatherController.forCity(id)

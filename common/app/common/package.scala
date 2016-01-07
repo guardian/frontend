@@ -7,6 +7,7 @@ import com.gu.contentapi.client.GuardianContentApiError
 import contentapi.ErrorResponseHandler.isCommercialExpiry
 import conf.switches.SwitchTrait
 import model.{Cached, NoCache}
+import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
@@ -42,6 +43,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       NoCache(GatewayTimeout(timeout.getMessage))
     case error =>
       log.info(s"Content api exception: ${error.getMessage}")
+      log.info(s"Content api stack trace: ${ExceptionUtils.getStackTrace(error)}")
       Option(error.getCause).map { cause =>
         log.info(s"Content api exception cause: ", cause)
       }
@@ -53,16 +55,16 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
           Only the once you actually render is used
    */
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData)(implicit request: RequestHeader) = Cached(metaData) {
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader) = Cached(page) {
     if (request.isJson)
       JsonComponent(jsonResponse())
     else
       Ok(htmlResponse())
   }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[SwitchTrait])(implicit request: RequestHeader) = Cached(metaData) {
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[SwitchTrait])(implicit request: RequestHeader) = Cached(page) {
     if (request.isJson)
-      JsonComponent(metaData, jsonResponse())
+      JsonComponent(page, jsonResponse())
     else
       Ok(htmlResponse())
   }
@@ -79,26 +81,4 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   }
 }
 
-object Reference {
-  def apply(s: String) = {
-    val parts = s.split("/")
-    parts(0) -> parts.drop(1).mkString("/")
-  }
 
-  def toJavaScript(s: String) = {
-    val (k, v) = apply(s)
-
-    /** Yeah ... so ... in the JavaScript references are represented like this:
-      *
-      * "references":[{"esaFootballTeam":"/football/team/48"},{"optaFootballTournament":"5/2012"}57"} ... ]
-      *
-      * See for example the source of
-      * http://www.theguardian.com/football/live/2014/aug/20/maribor-v-celtic-champions-league-play-off-live-report
-      *
-      * Seems pretty STRANGE.
-      *
-      * TODO: figure out if this is actually being used. If so, refactor it.
-      */
-    JsObject(Seq(k -> JsString(RelativePathEscaper.escapeLeadingSlashFootballPaths(v))))
-  }
-}

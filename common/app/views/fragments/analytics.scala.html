@@ -1,4 +1,4 @@
-@(page: model.MetaData)( implicit request:RequestHeader)
+@(page: model.Page)( implicit request:RequestHeader)
 @import conf.Configuration
 @import common.AnalyticsHost
 @import views.support.{OmnitureAnalyticsData, OmnitureAnalyticsAccount}
@@ -30,7 +30,7 @@
                 var ophanScript = document.createElement('script'),
                         sc = document.getElementsByTagName('script')[0];
 
-                ophanScript.src = '@Static("javascripts/bootstraps/ophan.js")';
+                ophanScript.src = '@Static("javascripts/bootstraps/enhanced/ophan.js")';
                 ophanScript.async = true;
                 sc.parentNode.insertBefore(ophanScript, sc);
             }

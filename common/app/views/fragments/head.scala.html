@@ -1,16 +1,27 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
-@import conf.Static
-@import conf.Configuration
-@import views.support.OmnitureAnalyticsData
+@(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+@import model.Page.getContent
 
 <meta charset="utf-8" />
-<title>@views.support.Title(metaData)</title>
+<title>@views.support.Title(page)</title>
 
-@fragments.metaData(metaData)
+@fragments.metaData(page)
 @head
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
-@fragments.stylesheets(projectName)
+@fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
+
+<link rel="prefetch" href="@Static("javascripts/app.js")">
+
+@*
+Protect against ReferenceErrors in IE:
+`window.console` only exists when the dev tools are open. If you reference
+something that doesn't exist, JavaScript will throw a `ReferenceError`. Here, we
+ensure console always exists one can safely reference it.
+Example: http://output.jsbin.com/jodureg/1
+*@
+<script>
+    window.console = window.console || undefined;
+</script>
 
 @* inline JS - blocking *@
-@fragments.inlineJSBlocking(metaData)
+@fragments.inlineJSBlocking(page)

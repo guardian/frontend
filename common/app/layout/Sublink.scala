@@ -1,20 +1,18 @@
 package layout
 
-import com.gu.facia.api.models._
-import com.gu.facia.api.utils.{ExternalLink, MediaType, CardStyle, ItemKicker}
+import model.pressed._
 import common.{Edition, LinkTo}
-import implicits.FaciaContentImplicits._
-import implicits.FaciaContentFrontendHelpers._
 import model._
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.support._
+import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 import scala.Function.const
 
 object EditionalisedLink {
-  def fromFaciaContent(faciaContent: FaciaContent) =
+  def fromFaciaContent(faciaContent: PressedContent) =
     EditionalisedLink(SupportedUrl.fromFaciaContent(faciaContent))
 }
 
@@ -34,13 +32,13 @@ case class EditionalisedLink(
 }
 
 object Sublink {
-  def fromFaciaContent(faciaContent: FaciaContent) =
+  def fromFaciaContent(faciaContent: PressedContent) =
     Sublink(
-      faciaContent.itemKicker,
-      faciaContent.headline,
+      faciaContent.header.kicker,
+      faciaContent.header.headline,
       EditionalisedLink.fromFaciaContent(faciaContent),
-      faciaContent.cardStyle,
-      MediaType.fromFaciaContent(faciaContent)
+      faciaContent.card.cardStyle,
+      faciaContent.card.mediaType
     )
 }
 
@@ -53,10 +51,10 @@ case class Sublink(
 )
 
 object DiscussionSettings {
-  def fromTrail(faciaContent: FaciaContent) = DiscussionSettings(
-    faciaContent.isCommentable,
-    faciaContent.isClosedForComments,
-    faciaContent.discussionId
+  def fromTrail(faciaContent: PressedContent) = DiscussionSettings(
+    faciaContent.discussion.isCommentable,
+    faciaContent.discussion.isClosedForComments,
+    faciaContent.discussion.discussionId
   )
 }
 
@@ -73,7 +71,7 @@ case class Byline(
   private def primaryContributor = {
     if (contributorTags.length > 2) {
       contributorTags.sortBy({ tag =>
-        get.indexOf(tag.webTitle) match {
+        get.indexOf(tag.metadata.webTitle) match {
           case -1 => Int.MaxValue
           case n => n
         }
@@ -83,16 +81,16 @@ case class Byline(
     }
   }
 
-  def shortByline = primaryContributor map { tag => s"${tag.webTitle} and others" } getOrElse get
+  def shortByline = primaryContributor map { tag => s"${tag.metadata.webTitle} and others" } getOrElse get
 }
 
 object DisplaySettings {
-  def fromTrail(faciaContent: FaciaContent) = DisplaySettings(
-    faciaContent.isBoosted,
-    faciaContent.showBoostedHeadline,
-    faciaContent.showQuotedHeadline,
-    faciaContent.imageHide,
-    faciaContent.showLivePlayable
+  def fromTrail(faciaContent: PressedContent) = DisplaySettings(
+    faciaContent.display.isBoosted,
+    faciaContent.display.showBoostedHeadline,
+    faciaContent.display.showQuotedHeadline,
+    faciaContent.display.imageHide,
+    faciaContent.display.showLivePlayable
   )
 }
 
@@ -112,12 +110,12 @@ case object FrontendLinkSnap extends SnapType
 case object FrontendOtherSnap extends SnapType
 
 object SnapStuff {
-  def fromTrail(faciaContent: FaciaContent): Option[SnapStuff] = {
+  def fromTrail(faciaContent: PressedContent): Option[SnapStuff] = {
     lazy val snapData = SnapData(faciaContent)
-    faciaContent.embedType match {
-      case Some("latest") => Option(SnapStuff(snapData, faciaContent.embedCss, FrontendLatestSnap))
-      case Some("link") => Option(SnapStuff(snapData, faciaContent.embedCss, FrontendLinkSnap))
-      case Some(s) => Option(SnapStuff(snapData, faciaContent.embedCss, FrontendOtherSnap))
+    faciaContent.properties.embedType match {
+      case Some("latest") => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap))
+      case Some("link") => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap))
+      case Some(s) => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap))
       case None => None}}
 }
 
@@ -134,20 +132,20 @@ case class SnapStuff(
 }
 
 object FaciaCardHeader {
-  def fromTrail(faciaContent: FaciaContent, config: Option[CollectionConfig]) = fromTrailAndKicker(
+  def fromTrail(faciaContent: PressedContent, config: Option[CollectionConfig]) = fromTrailAndKicker(
     faciaContent,
-    faciaContent.itemKicker,
+    faciaContent.header.kicker,
     config
   )
 
-  def fromTrailAndKicker(faciaContent: FaciaContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
-    faciaContent.showQuotedHeadline,
-    faciaContent.cardStyle == ExternalLink,
-    faciaContent.isVideo,
-    faciaContent.isGallery,
-    faciaContent.isAudio,
+  def fromTrailAndKicker(faciaContent: PressedContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
+    faciaContent.display.showQuotedHeadline,
+    faciaContent.card.cardStyle == ExternalLink,
+    faciaContent.header.isVideo,
+    faciaContent.header.isGallery,
+    faciaContent.header.isAudio,
     itemKicker,
-    faciaContent.headline,
+    faciaContent.header.headline,
     EditionalisedLink.fromFaciaContent(faciaContent)
   )
 }
@@ -186,14 +184,14 @@ case object TimeTimestamp extends FaciaCardTimestamp {
 }
 
 object FaciaCard {
-  private def getByline(faciaContent: FaciaContent) = faciaContent.byline.filter(const(faciaContent.showByline)) map { byline =>
-    Byline(byline, faciaContent.contributors.map(Tag.apply(_)))
+  private def getByline(faciaContent: PressedContent) = faciaContent.properties.byline.filter(const(faciaContent.properties.showByline)) map { byline =>
+    Byline(byline, faciaContent.contributors)
   }
 
-  def fromTrail(faciaContent: FaciaContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
-    val maybeKicker = faciaContent.itemKicker orElse {
+  def fromTrail(faciaContent: PressedContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
+    val maybeKicker = faciaContent.header.kicker orElse {
       if (showSeriesAndBlogKickers) {
-        faciaContent.maybeContent.flatMap(com.gu.facia.api.utils.ItemKicker.seriesOrBlogKicker)
+        faciaContent.header.seriesOrBlogKicker
       } else {
         None
       }
@@ -202,31 +200,31 @@ object FaciaCard {
     /** If the kicker contains the byline, don't display it */
     val suppressByline = (for {
       kicker <- maybeKicker
-      kickerText <- ItemKicker.kickerText(kicker)
-      byline <- faciaContent.byline
+      kickerText <- kicker.properties.kickerText
+      byline <- faciaContent.properties.byline
     } yield kickerText contains byline) getOrElse false
 
     ContentCard(
-      faciaContent.maybeContentId.orElse(Option(faciaContent.id)),
+      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
       CutOut.fromTrail(faciaContent),
-      faciaContent.cardStyle,
+      faciaContent.card.cardStyle,
       cardTypes,
       Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-      faciaContent.starRating,
+      faciaContent.card.starRating,
       DiscussionSettings.fromTrail(faciaContent),
       SnapStuff.fromTrail(faciaContent),
-      faciaContent.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
-      faciaContent.trailText,
-      MediaType.fromFaciaContent(faciaContent),
+      faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
+      faciaContent.card.trailText,
+      faciaContent.card.mediaType,
       DisplaySettings.fromTrail(faciaContent),
-      faciaContent.isLive,
+      faciaContent.card.isLive,
       if (config.showTimestamps) Option(DateTimestamp) else None,
-      faciaContent.shortUrlPath,
+      faciaContent.card.shortUrlPath,
       useShortByline = false,
-      faciaContent.group
+      faciaContent.card.group
     )
   }
 }

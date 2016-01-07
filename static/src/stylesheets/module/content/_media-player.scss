@@ -101,8 +101,6 @@ $ima-controls-height: 70px;
 
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
-            margin-top: $vjs-large-button-size/-2;
-            margin-left: $vjs-large-button-size/-2;
         }
 
         &:before {
@@ -113,7 +111,7 @@ $ima-controls-height: 70px;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-            background-color: rgba(51, 51, 51, .8);
+            background-color: rgba(51, 51, 51, .6);
             .gu-media-wrapper:hover &,
             .gu-media__fallback:hover & {
                 background-color: colour(media-default);
@@ -123,8 +121,8 @@ $ima-controls-height: 70px;
         &:after {
             content: '';
             position: absolute;
-            left: 2em;
-            top: 2em;
+            left: 1.85em;
+            top: 1.85em;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent colour(neutral-7);
@@ -1043,5 +1041,75 @@ $ima-controls-height: 70px;
 
     &:hover {
         @include icon(expand-yellow);
+    }
+}
+
+.fc-item--media {
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: $gs-baseline*2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+
+    &.fc-item {
+        width: 25%;
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 $gs-gutter/2;
+    }
+
+    + .fc-item {
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1px solid colour(neutral-2);
+        }
+    }
+
+    .fc-item__container {
+        margin-top: -$gs-baseline;
+    }
+
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__action {
+        display: block;
+        padding-top: $gs-baseline;
+        color: colour(neutral-5);
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+        &:visited,
+        &:active {
+            color: darken(colour(neutral-5), 20%);
+        }
+    }
+
+    .fc-item__title {
+        @include fs-headline(1);
+        font-weight: 500;
+        text-align: left; //Required for end slate items
+        @include text-clamp(3, get-line-height(headline, 1));
+        height: get-line-height(headline, 1) * 3;
+        .inline-video-icon {
+            fill: colour(media-default);
+            svg {
+                height: .75em;
+                width: 1.1em;
+                margin-right: .3em;
+                position: relative;
+            }
+        }
     }
 }

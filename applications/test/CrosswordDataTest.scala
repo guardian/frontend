@@ -1,5 +1,6 @@
 package test
 
+import model.{Entry, CrosswordData}
 import org.scalatest._
 import play.api.libs.json.Json
 import crosswords._
@@ -35,10 +36,10 @@ import scala.io.Source
     }
 
     "formatHumanNumber should format clue numbers correctly" in {
-      crosswords.Entry.formatHumanNumber("2") should be (Some("2"))
-      crosswords.Entry.formatHumanNumber("1,28") should be (Some("1, 28"))
-      crosswords.Entry.formatHumanNumber("10,15,20down") should be (Some("10, 15, 20 down"))
-      crosswords.Entry.formatHumanNumber("2,3,4,5across") should be (Some("2, 3, 4, 5 across"))
+      Entry.formatHumanNumber("2") should be (Some("2"))
+      Entry.formatHumanNumber("1,28") should be (Some("1, 28"))
+      Entry.formatHumanNumber("10,15,20down") should be (Some("10, 15, 20 down"))
+      Entry.formatHumanNumber("2,3,4,5across") should be (Some("2, 3, 4, 5 across"))
     }
   }
 }

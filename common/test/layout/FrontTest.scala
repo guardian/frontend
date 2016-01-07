@@ -1,25 +1,20 @@
 package layout
 
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import com.gu.facia.api.models.{FaciaContent, LatestSnap}
+import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
-import implicits.FaciaContentImplicits._
-import model.Content
+import model.pressed.{LatestSnap, PressedContent}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import services.FaciaContentConvert
 import slices._
 
-class FrontTest extends FlatSpec with Matchers {
-  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontendContentToFaciaContent(new Content(
-      emptyApiContent.copy(id = theUrl, webUrl = theUrl)
-    ) {
-      override lazy val url: String = theUrl
-
-      override lazy val webUrl: String = theUrl
-    }
-  )
+class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
+  def trailWithUrl(theUrl: String): PressedContent = {
+    FaciaContentConvert.contentToFaciaContent(emptyApiContent.copy(id = theUrl, webUrl = theUrl))
+  }
 
   def dreamSnapWithUrl(theUrl: String) = {
     val content: ApiContent = new ApiContent(
@@ -36,7 +31,7 @@ class FrontTest extends FlatSpec with Matchers {
       references = Nil,
       isExpired = None)
 
-    LatestSnap(
+    val fapiLatestSnap = fapi.LatestSnap(
       id = theUrl,
       maybeFrontPublicationDate = None,
       cardStyle = DefaultCardstyle,
@@ -50,10 +45,10 @@ class FrontTest extends FlatSpec with Matchers {
       image = None,
       properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
       byline = None,
-      kicker = None)}
+      kicker = None)
 
-
-
+    LatestSnap.make(fapiLatestSnap)
+  }
 
   "itemsVisible" should "return a correct count of items visible (not behind 'show more')" in {
     Front.itemsVisible(FixedContainers.fixedMediumFastXI) shouldEqual 11
@@ -69,7 +64,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("three")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("one", "two", "three")
   }
 
   it should "include items seen in a dynamic container in the set of urls for further deduplication" in {
@@ -89,7 +84,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("three")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("three")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("three")
   }
 
   it should "include items seen in a fixed container in the set of urls for further deduplication" in {
@@ -109,7 +104,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("three")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("one", "two", "three")
   }
 
   it should "not include items seen in a nav list in the set of urls for further deduplication" in {
@@ -129,7 +124,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("three")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("one", "two", "three")
   }
 
   it should "not include items seen in a singleton container in the set of urls for further deduplication" in {
@@ -145,7 +140,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("one")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("one")
   }
 
   it should "not include items seen in a nav media list in the set of urls for further deduplication" in {
@@ -165,7 +160,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("three")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one", "two", "three")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("one", "two", "three")
   }
 
   it should "not include items seen in most popular in the set of urls for further deduplication" in {
@@ -183,7 +178,7 @@ class FrontTest extends FlatSpec with Matchers {
       dreamSnapWithUrl("one")
     ))
 
-    dedupedTrails.flatMap(_.webUrl) shouldEqual Seq("one")
+    dedupedTrails.flatMap(_.properties.webUrl) shouldEqual Seq("one")
   }
 
   it should "not skip dream snaps when considering items visible to be added to the set of seen urls" in {

@@ -3,31 +3,37 @@
 @import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
-@import views.support.TrailCssClasses.articleToneClass
+@import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches._
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
+    <article id="article" class="@RenderClasses(
             Map(
-                "content--has-body" -> media.body.nonEmpty,
-                "content--advertisement-feature" -> page.media.isAdvertisementFeature
+                "content--has-body" -> media.fields.body.nonEmpty,
+                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && page.media.commercial.isAdvertisementFeature)
             ),
-            "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${articleToneClass(media)}"
+            "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
         )"
-        itemscope itemtype="@media.schemaType" role="main">
+        itemscope itemtype="@media.metadata.schemaType" role="main">
+
+        @if(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
 
         @fragments.headTonal(media)
 
-        <div class="content__main tonal__main tonal__main--@articleToneClass(media)">
+        <div class="content__main tonal__main tonal__main--@toneClass(media)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                     <div class="media-body">
 
                         @media match {
-                            case audio: Audio if audio.mainAudio.exists(_.imageCrops.nonEmpty) => {
-                                @media.mainAudio.map { audio =>
-                                    @fragments.img(audio)
+                            case audio: Audio if audio.elements.mainAudio.exists(_.images.imageCrops.nonEmpty) => {
+                                @media.elements.mainAudio.map { audio =>
+                                    @fragments.img(audio.images)
                                 }
                             }
                             case _ => { }
@@ -37,11 +43,11 @@
                             @media match {
                                 case audio: Audio => {
                                     <figure data-component="main audio">
-                                    @audio.mainAudio.map { audioElement =>
+                                    @audio.elements.mainAudio.map { audioElement =>
                                         @fragments.media.audio(AudioPlayer(
                                             audio,
                                             audioElement,
-                                            audio.headline,
+                                            audio.trail.headline,
                                             autoPlay = false
                                         ))
                                     }
@@ -49,30 +55,30 @@
                                 }
                                 case video: Video => {
                                     <figure data-component="main video">
-                                        <meta itemprop="name" content="@Html(video.headline)"/>
-                                        <meta itemprop="headline" content="@Html(video.headline)"/>
-                                        <meta itemprop="url" content="@LinkTo(video.url)"/>
-                                        @video.trailText.map{ t =>
+                                        <meta itemprop="name" content="@Html(video.trail.headline)"/>
+                                        <meta itemprop="headline" content="@Html(video.trail.headline)"/>
+                                        <meta itemprop="url" content="@LinkTo(video.metadata.url)"/>
+                                        @video.fields.trailText.map{ t =>
                                             <meta itemprop="description" content="@StripHtmlTags(t)" />
                                             <meta itemprop="about" content="@StripHtmlTags(t)" />
                                         }
 
-                                        <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
-                                        <meta itemprop="name" content="@video.webTitle" />
-                                        <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
-                                        @video.mainVideo.map { mv =>
-                                            <meta itemprop="duration" content="@mv.ISOduration" />
-                                            <meta itemprop="height" content="@mv.height" />
-                                            <meta itemprop="width" content="@mv.width" />
+                                        <meta itemprop="datePublished" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+                                        <meta itemprop="name" content="@video.metadata.webTitle" />
+                                        <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+                                        @video.elements.mainVideo.map { mv =>
+                                            <meta itemprop="duration" content="@mv.videos.ISOduration" />
+                                            <meta itemprop="height" content="@mv.videos.height" />
+                                            <meta itemprop="width" content="@mv.videos.width" />
                                         }
                                         <meta itemprop="requiresSubscription" content="false" />
-                                        <meta itemprop="image" content="@Html(video.openGraphImage)" />
-                                        @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
-                                        @video.mainVideo.map { videoElement =>
+                                        <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
+                                        @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
+                                        @video.elements.mainVideo.map { videoElement =>
                                             @fragments.media.video(VideoPlayer(
                                                 videoElement,
                                                 Video640,
-                                                video.headline,
+                                                video.trail.headline,
                                                 autoPlay = true,
                                                 showControlsAtStart = true,
                                                 endSlatePath = video.endSlatePath,
@@ -81,6 +87,7 @@
                                         }
                                     </figure>
                                 }
+                                case _ => { }
                             }
                         </div>
 
@@ -90,19 +97,17 @@
                                     case v: Video => {
                                         @fragments.standfirst(v)
                                     }
-                                    case a: Audio => { }
+                                    case _ => { }
                                 }
                             </div>
 
                             @fragments.contentMeta(media)
 
                             @media match {
-                                case a: Audio => {
-                                    @a.body.map { b =>
-                                        <div class="from-content-api">
-                                            @Html(b)
-                                        </div>
-                                    }
+                                case a: Audio if a.fields.body.nonEmpty => {
+                                    <div class="from-content-api">
+                                        @Html(a.fields.body)
+                                    </div>
                                 }
                                 case _ => { }
                             }
@@ -119,7 +124,7 @@
                             <div class="js-video-components-container"></div>
                         </div>
                     }
-                    case a: Audio if a.body.nonEmpty => {
+                    case a: Audio if a.fields.body.nonEmpty => {
                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
                             aria-hidden="true">
                             @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250")))
@@ -133,7 +138,7 @@
 
     @if(mediaType != "video") {
         <div class="fc-container fc-container--media">
-            <div class="js-media-popular tonal--@articleToneClass(media)">
+            <div class="js-media-popular tonal--@toneClass(media)">
                 <div class="fc-container fc-container--popular">
                     <div class="fc-container__inner">
                         <div class="fc-container__header">
@@ -150,6 +155,5 @@
 
 <div class="l-side-margins">
     @fragments.contentFooter(media, page.related, "media")
-
-    }
 </div>
+}

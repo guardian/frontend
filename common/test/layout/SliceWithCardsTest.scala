@@ -1,16 +1,17 @@
 package layout
 
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import com.gu.facia.api.models.CollectionConfig
+import model.pressed.CollectionConfig
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import services.FaciaContentConvert
 import slices.DesktopBehaviour
 
-class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with OneAppPerSuite {
   val NumberOfFixtures = 40
 
   def nthApiContent(n: Int): ApiContent = ApiContent(
@@ -27,29 +28,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
     references = Nil,
     isExpired = None)
 
-  val cardFixtures = (1 to NumberOfFixtures) map { n =>
-    IndexedTrail(FaciaContentConvert.frontendContentToFaciaContent(
-      new Content(
-        nthApiContent(n)) {
-          override lazy val webPublicationDate: Imports.DateTime = DateTime.now
-
-          override lazy val url: String = s"$n"
-
-          override lazy val isLive: Boolean = false
-
-          override lazy val section: String = ""
-
-          override lazy val trailText: Option[String] = None
-
-          //sectionId
-          override lazy val sectionName: String = ""
-
-          override lazy val linkText: String = ""
-
-          override lazy val headline: String = ""
-
-          override lazy val webUrl: String = s"$n"
-      }), n)
+  lazy val cardFixtures = (1 to NumberOfFixtures) map { n =>
+    IndexedTrail(FaciaContentConvert.contentToFaciaContent(nthApiContent(n)), n)
   }
 
   "a slice" should "consume as many items as the columns it aggregates consume" in {
@@ -77,10 +57,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         showSeriesAndBlogKickers = false
       )
 
-      def idFromTrail(trail: Trail) = trail match {
-        case c: Content => Some(c.id)
-        case _ => None
-      }
+      def idFromTrail(trail: Trail) = trail.metadata.id
 
       slice.columns.map(_.cards).flatten.map(_.index) ++ remaining.map(_.index) shouldEqual cardFixtures.map(_.index)
     }

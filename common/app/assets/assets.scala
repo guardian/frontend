@@ -1,7 +1,6 @@
 package common.Assets
 
 import java.net.URL
-
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import org.apache.commons.io.IOUtils
@@ -17,26 +16,15 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, assetMap: String) {
-  def apply(path: String): Asset = {
+class AssetMap(base: String, assetMap: String = "assets/assets.map") {
 
-    // Avoid memoizing the asset map in Dev.
-    if (Play.current.mode == Mode.Dev) {
-      if (path.startsWith("javascripts")) {
-        Asset(path)
-      } else {
-        assets().getOrElse(path, throw AssetNotFoundException(path))
-      }
-    } else {
-      memoizedAssets(path)
-    }
-  }
+  def apply(path: String): Asset = memoizedAssets(path)
 
   def assets(): Map[String, Asset] = {
 
     // Use the grunt-generated asset map in Dev.
     val json: String = if (Play.current.mode == Mode.Dev) {
-      val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
+      val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
       IOUtils.toString(assetMapUri)
     } else {
       val url = AssetFinder(assetMap)
@@ -53,8 +41,8 @@ class AssetMap(base: String, assetMap: String) {
   private lazy val memoizedAssets = assets()
 }
 
-class Assets(base: String, assetMapPath: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMapPath)
+class Assets(base: String) extends Logging {
+  val lookup = new AssetMap(base)
   def apply(path: String): Asset = lookup(path)
 
   object inlineSvg {
@@ -85,6 +73,7 @@ class Assets(base: String, assetMapPath: String = "assets/assets.map") extends L
        val knownInlines : PartialFunction[String,String] =
        {
          case "story-package" => "story-package.css"
+         case "KeepItInTheGround" => "basher.KeepItInTheGround.css"
        }
        knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }
     }
@@ -164,5 +153,5 @@ object AssetFinder {
 
 case class AssetNotFoundException(assetPath: String) extends Exception {
   override val getMessage: String =
-    s"Cannot find asset $assetPath. You probably need to run 'make compile'."
+    s"Cannot find asset $assetPath. Have you got the right path? Or do you need to run 'make compile', or 'make compile-dev'?."
 }

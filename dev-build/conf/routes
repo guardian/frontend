@@ -23,20 +23,21 @@ OPTIONS        /accept-beacon                                                   
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg               controllers.CrosswordsController.thumbnail(crosswordType: String, id: Int)
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id                   controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
-GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id        controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|special|genius|speedy>/:id/print                  controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET            /email                                                                                                            controllers.EmailController.renderPage()
-GET            /email/form                                                                                                       controllers.EmailController.renderForm()
-GET            /email/:result                                                                                                    controllers.EmailController.subscriptionResult(result: String)
-POST           /email                                                                                                            controllers.EmailController.submit()
-OPTIONS        /email                                                                                                            controllers.EmailController.options()
+GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
+GET            /email/form/$emailType<article|footer>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
+POST           /email                                                                                                            controllers.EmailSignupController.submit()
+OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
 
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
@@ -92,6 +93,7 @@ GET            /most-read-facebook.json                                         
 GET            /most-read-twitter.json                                                                                           controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
+GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 
@@ -99,6 +101,8 @@ GET            /top-stories.json                                                
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
+GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
+GET            /related-alt/*path.json                                                                                           controllers.RelatedController.renderTags(path)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
@@ -122,8 +126,8 @@ GET            /info/tech-feedback                                              
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
 
 # Sport
-GET            /sport/cricket/match/:matchId.json                                                                                controllers.CricketMatchController.renderMatchIdJson(matchId)
-GET            /sport/cricket/match/:matchId                                                                                     controllers.CricketMatchController.renderMatchId(matchId)
+GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET            /sport/cricket/match/:matchDate/:teamId                                                                           controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET            /football/fixtures/more/:year/:month/:day.json                                                                    football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET            /football/fixtures/more/:year/:month/:day                                                                         football.controllers.FixturesController.moreFixturesFor(year, month, day)
@@ -219,6 +223,9 @@ GET            /deduped/*path                                                   
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
 GET            /radiator/pingdom                                                                                                 controllers.admin.RadiatorController.pingdom()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
+GET            /deploys-radiator/api/deploys                                                                                     controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET            /deploys-radiator/api/builds/:number                                                                              controllers.admin.DeploysRadiatorController.getBuild(number)
+GET            /deploys-radiator                                                                                                 controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
 GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
 GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET            /troubleshoot/pages                                                                                               controllers.admin.TroubleshooterController.index()
@@ -312,12 +319,17 @@ GET            /commercial/magento/books                                        
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
+GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
+GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /offline-page.json                                                                                                controllers.WebAppController.offlinePage()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
-
+GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
+GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
+GET            /index/contributors                                                                                               controllers.TagIndexController.contributors()
+GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 
@@ -353,7 +365,8 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
-GET            /container/essential-read/:contentSource/:edition.json                                                            controllers.FaciaController.renderEssentialRead(contentSource: String, edition: String)
+GET            /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json                                           controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
+GET            /container-mf2/:num/:offset/*path.json                                                                            controllers.FaciaController.renderSomeFrontContainersMf2(num, offset, path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)

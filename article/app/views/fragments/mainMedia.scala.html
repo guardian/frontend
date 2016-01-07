@@ -6,41 +6,41 @@
 @import views.support.Video640
 @import views.{BodyCleaner, MainCleaner}
 
-@if(article.hasMainEmbed || article.elements("main").isEmpty) {
+@if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
     <div class="media-primary">
-        @MainCleaner(article, article.main, amp)
+        @MainCleaner(article, article.fields.main, amp)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
-        @if(article.hasMainVideo) {
-            @article.mainVideo.map { mainVideo =>
+        @if(article.elements.hasMainVideo) {
+            @article.elements.mainVideo.map { mainVideo =>
                 <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                 class="media-primary media-content">
-                    @article.mainVideo.map { video =>
+                    @article.elements.mainVideo.map { video =>
                         @fragments.media.video(VideoPlayer(
                             video,
                             Video640,
-                            article.headline,
+                            article.trail.headline,
                             autoPlay = false,
                             showControlsAtStart = true,
-                            endSlatePath = EndSlateComponents.fromContent(article).toUriPath,
+                            endSlatePath = EndSlateComponents.fromContent(article.content).toUriPath,
                             overrideIsRatioHd = None,
-                            embedPath = article.mainVideoCanonicalPath
+                            embedPath = article.content.mainVideoCanonicalPath
                         ), true, amp = amp)
                     }
 
-                    @mainVideo.caption.map { caption =>
+                    @mainVideo.videos.caption.map { caption =>
                         <figcaption class="caption caption--main" itemprop="description">@Html(caption)</figcaption>
                     }
                 </figure>
             }
         } else {
-            @article.mainPicture.map { picture =>
+            @article.elements.mainPicture.map { picture =>
                 @fragments.img(
-                    picture,
-                    if(article.isMainMediaLightboxable) Some(1) else None,
-                    article.hasShowcaseMainElement,
-                    article.isFeature,
+                    picture.images,
+                    if(article.lightbox.isMainMediaLightboxable) Some(1) else None,
+                    article.elements.hasShowcaseMainElement,
+                    article.tags.isFeature,
                     MainMediaWidths(article),
                     amp = amp
                 )

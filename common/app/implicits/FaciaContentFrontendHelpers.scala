@@ -1,75 +1,83 @@
 package implicits
 
-import com.gu.contentapi.client.model.Element
-import com.gu.facia.api.models.{FaciaContent, ImageSlideshow, Replace}
 import common.dfp.DfpAgent
 import implicits.Dates._
-import implicits.FaciaContentImplicits._
 import model._
+import model.pressed._
+import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 
 import scala.util.Try
 
 object FaciaContentFrontendHelpers {
 
-  implicit class FaciaContentFrontendHelper(faciaContent: FaciaContent) {
+  implicit class FaciaContentFrontendHelper(faciaContent: PressedContent) {
 
-    def imageReplaceElement = faciaContent.image match {
+    def imageReplaceElement = faciaContent.properties.image match {
       case Some(Replace(src, width, height)) => Option(ImageOverride.createElementWithOneAsset(src, width, height))
       case _ => None
     }
 
-    def elementsWithImageOverride: List[Element] = imageReplaceElement ++: faciaContent.elements
+    def elements: Seq[Element] = faciaContent.properties.maybeContent.map(_.elements.elements).getOrElse(Nil)
 
-    def frontendElements: List[model.Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (e, i) => model.Element(e, i) }
+    def elementsWithImageOverride: Seq[Element] = imageReplaceElement ++: faciaContent.elements
 
-    def frontendTags: List[model.Tag] = faciaContent.tags.map(Tag.apply(_))
+    def frontendElements: Seq[Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (el, i) =>
+      val properties = el.properties.copy(index = i)
+      el match {
+        case element: ImageElement => element.copy(properties = properties)
+        case element: VideoElement => element.copy(properties = properties)
+        case element: AudioElement => element.copy(properties = properties)
+        case element: EmbedElement => element.copy(properties = properties)
+        case element: DefaultElement => element.copy(properties = properties)
+      }
+    }
+
+    def frontendTags: Seq[model.Tag] = faciaContent.properties.maybeContent.map(_.tags.tags).getOrElse(Nil)
 
     protected lazy val images: Seq[ImageElement] = frontendElements.flatMap { case image: ImageElement => Some(image)
     case _ => None
     }
-    lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
-    lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
+    lazy val thumbnail: Option[ImageElement] = images.find(_.properties.isThumbnail)
+    lazy val bodyImages: Seq[ImageElement] = images.filter(_.properties.isBody)
 
     private val trailPicMinDesiredSize = 460
     val AspectRatioThreshold = 0.01
 
-    def mainPicture: Option[ImageContainer] = images.find(_.isMain)
+    def mainPicture: Option[ImageElement] = images.find(_.properties.isMain)
 
     // Find a main picture crop which matches this aspect ratio.
-    def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
+    def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[Element] = {
       val desiredAspectRatio = aspectWidth.toDouble / aspectHeight
 
-      (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).map { image =>
-        image.imageCrops.filter { crop =>
+      (thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail).flatMap { image =>
+        image.images.imageCrops.filter { crop =>
           aspectHeight.toDouble * crop.width != 0 &&
             Math.abs((aspectWidth.toDouble * crop.height) / (aspectHeight.toDouble * crop.width) - 1) <= AspectRatioThreshold
         } match {
           case Nil => None
-          case crops => Option(ImageContainer(crops, image.delegate, image.index))
+          case crops => Some(image)
         }
-      }.flatten.toList
+      }.toList
     }
 
-    def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPictureAll(aspectWidth, aspectHeight).headOption
+    def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[Element] = trailPictureAll(aspectWidth, aspectHeight).headOption
 
-    def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)).orElse(mainPicture).orElse(thumbnail)
+    def trailPicture: Option[ImageElement] = thumbnail.find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize)).orElse(mainPicture).orElse(thumbnail)
 
     protected lazy val videos: Seq[VideoElement] = frontendElements.flatMap { case video: VideoElement => Some(video)
     case _ => None
     }
 
-    def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
+    def mainVideo: Option[VideoElement] = videos.find(_.properties.isMain).headOption
 
-    def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.maybeSection)
+    def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
 
     lazy val shouldHidePublicationDate: Boolean = {
-      isAdvertisementFeature && faciaContent.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
+      isAdvertisementFeature && faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 
-    def url: String = faciaContent.maybeContent.map(SupportedUrl(_)).getOrElse(faciaContent.id)
-
-    def slideshow: Option[List[FaciaImageElement]] = faciaContent.image match {
+    def slideshow: Option[List[FaciaImageElement]] = faciaContent.properties.image match {
       case Some(ImageSlideshow(assets)) =>
         Option {
           assets.flatMap(asset =>
@@ -79,5 +87,16 @@ object FaciaContentFrontendHelpers {
 
     def trailSlideshow(aspectWidth: Int, aspectHeight: Int): Option[List[FaciaImageElement]] =
       slideshow.map(_.filter(image => IsRatio(aspectWidth, aspectHeight, image.width, image.height)))
+
+    def contributors: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.contributors).getOrElse(Nil)
+    def series: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.series).getOrElse(Nil)
+    def keywords: Seq[Tag] = faciaContent.properties.maybeContent.map(_.tags.keywords).getOrElse(Nil)
+
+    def supporting: List[PressedContent] = faciaContent match {
+      case content: CuratedContent => content.supportingContent
+      case _ => Nil
+    }
+
+    def webPublicationDate: DateTime = faciaContent.card.webPublicationDateOption.getOrElse(DateTime.now)
   }
 }

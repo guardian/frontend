@@ -101,7 +101,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- figure.getElementsByTag("img").headOption
       if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
-      image <- container.largestImage
+      image <- container.images.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
       val relation = if (article.isLiveBlog) {
@@ -129,17 +129,17 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
-        index <- Some(article.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
-        crop <- container.largestEditorialCrop
+        index <- Some(article.lightbox.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
+        crop <- container.images.largestEditorialCrop
         if !article.isLiveBlog
       } yield (index, crop)
 
       val html = views.html.fragments.img(
-        container,
+        container.images,
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{case (index, crop) => (article.elementShares(Some(s"img-$index"), crop.url), article.contentType) },
+        shareInfo = lightboxInfo.map{case (index, crop) => (article.sharelinks.elementShares(Some(s"img-$index"), crop.url), article.metadata.contentType) },
         amp = amp
       ).toString()
 
@@ -149,16 +149,16 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
     body
   }
 
-  def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
+  def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
     val srcImagePath = new java.net.URL(src).getPath()
-    val imageContainers = article.bodyImages.filter(_.id == id)
+    val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
 
     // Try to match the container based on both URL and media ID.
-    val fullyMatchedImage: Option[ImageContainer] = {
+    val fullyMatchedImage: Option[ImageElement] = {
       for {
         container <- imageContainers
-        asset <- container.imageCrops
+        asset <- container.images.imageCrops
         url <- asset.url
         if url.contains(srcImagePath)
       } yield { container }
@@ -233,7 +233,7 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
       body.select(".block").foreach { el =>
         val contributorId = el.attributes().get("data-block-contributor")
         if (contributorId.nonEmpty) {
-          article.tags.find(_.id == contributorId).map{ contributorTag =>
+          article.tags.tags.find(_.id == contributorId).map{ contributorTag =>
             val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
             el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
           }
@@ -249,9 +249,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockId = el.id()
-        val shares = article.elementShares(Some(blockId))
+        val shares = article.sharelinks.elementShares(Some(blockId))
 
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.metadata.contentType)
 
         el.append(html.toString())
       }
@@ -417,13 +417,18 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
   def clean(doc: Document): Document = {
 
-    if (article.showInRelated) {
+    if (article.content.showInRelated) {
 
-      val paragraphs = doc.getElementsByTag("p")
+      // Get all paragraphs which are not contained in a pullquote
+      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
+        p.parents.exists( ancestor =>
+          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+        )
+      )
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
-      article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
+      article.tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
 
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
@@ -437,7 +442,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
           paragraphsWithMatchers.foreach { case (matcher, p) =>
             val tagLink = doc.createElement("a")
-            tagLink.attr("href", LinkTo(keyword.url, edition))
+            tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
             tagLink.attr("data-component", "auto-linked-tag")
@@ -499,8 +504,25 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
+case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isImmersive) {
+      document.getElementsByTag("h2").foreach{ h2 =>
+        val beforeH2 = h2.previousElementSibling()
+        if (beforeH2 != null) {
+          if(beforeH2.hasClass("element--immersive")) {
+            beforeH2.addClass("section-image")
+            beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
+            h2.remove()
+          }
+        }
+      }
+    }
+    document
+  }
+}
 
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
   private def setDropCap(p: Element): String = {
     p.html.replaceFirst(
       "^([\"'“‘]*[a-zA-Z])(.{199,})",
@@ -509,7 +531,6 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
   }
 
   override def clean(document: Document): Document = {
-
     if(isFeature) {
       val children = document.body().children().toList
       children.headOption match {
@@ -521,12 +542,13 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     }
 
     document.getElementsByTag("h2").foreach{ h2 =>
-        if (h2.text() == "* * *" && isImmersive) {
-            h2.tagName("hr").addClass("section-rule").html("")
+        if (isImmersive && h2.text() == "* * *") {
+            h2.before("""<hr class="section-rule" />""")
             val next = h2.nextElementSibling()
             if (next.nodeName() == "p") {
                 next.html(setDropCap(next))
             }
+            h2.remove()
         }
     }
     document

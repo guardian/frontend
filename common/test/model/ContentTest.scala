@@ -4,8 +4,9 @@ import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => 
 import common.Edition
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 
-class ContentTest extends FlatSpec with Matchers with implicits.Dates {
+class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implicits.Dates {
   "Trail" should "be populated properly" in {
     val imageElement = ApiElement(
       "test-picture",
@@ -40,28 +41,23 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
       elements = Some(elements)
     )
 
-    val trail: Trail = Content(content)
+    val trail: ContentType = Content(content)
 
-    trail.linkText should be("Some article")
-    trail.url should be("/foo/2012/jan/07/bar")
-    trail.mainPicture.flatMap(_.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
+    trail.fields.linkText should be("Some article")
+    trail.metadata.url should be("/foo/2012/jan/07/bar")
+    trail.elements.mainPicture.flatMap(_.images.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
   }
 
   "Tags" should "understand tag types" in {
 
-    val theKeywords = Seq(Tag(tag("/keyword1", "keyword")), Tag(tag("/keyword2", "keyword")))
-    val theSeries = Seq(Tag(tag("/series", "series")))
-    val theContributors = Seq(Tag(tag("/contributor", "contributor")))
-    val theTones = Seq(Tag(tag("/tone", "tone")))
-    val theBlogs = Seq(Tag(tag("/blog", "blog")))
-    val theTypes = Seq(Tag(tag("/type", "type")))
+    val theKeywords = Seq(Tag.make(tag("/keyword1", "keyword")), Tag.make(tag("/keyword2", "keyword")))
+    val theSeries = Seq(Tag.make(tag("/series", "series")))
+    val theContributors = Seq(Tag.make(tag("/contributor", "contributor")))
+    val theTones = Seq(Tag.make(tag("/tone", "tone")))
+    val theBlogs = Seq(Tag.make(tag("/blog", "blog")))
+    val theTypes = Seq(Tag.make(tag("/type", "type")))
 
-    val tags = new Tags {
-      override val tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes
-      override def isSponsored(maybeEdition: Option[Edition]): Boolean = false
-      override val isFoundationSupported: Boolean = false
-      override val isAdvertisementFeature: Boolean = false
-    }
+    val tags = Tags(tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes)
 
     tags.keywords should be(theKeywords)
 
@@ -82,40 +78,40 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
                                               image("test-image-1","body", "body picture 2", 50, 0),
                                               image("test-image-2","main", "main picture 1", 50, 0)))
 
-    testContent.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
+    testContent.elements.mainPicture.flatMap(_.images.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
   }
 
   it should "detect if content is commentable" in{
     val noFields = article.copy(fields = None)
-    Content(noFields).isCommentable should be(false)
+    Content(noFields).trail.isCommentable should be(false)
 
     val notCommentable= article.copy(fields = Some(Map("commentable" -> "false")))
-    Content(notCommentable).isCommentable should be(false)
+    Content(notCommentable).trail.isCommentable should be(false)
 
     val commentable = article.copy(fields = Some(Map("commentable" -> "true")))
     commentable.safeFields.get("commentable") should be(Some("true"))
-    Content(commentable).isCommentable should be(true)
+    Content(commentable).trail.isCommentable should be(true)
 
   }
 
   it should "detect if content is closed for comments" in{
     val noFields = article.copy(fields = None)
-    Content(noFields).isClosedForComments should be(true)
+    Content(noFields).trail.isClosedForComments should be(true)
 
     val future = new DateTime().plusDays(3).toISODateTimeNoMillisString
     val openComments= article.copy(fields = Some(Map("commentCloseDate" -> future)))
-    Content(openComments).isClosedForComments should be(false)
+    Content(openComments).trail.isClosedForComments should be(false)
 
     val past = new DateTime().minus(3).toISODateTimeNoMillisString
     val closedComments = article.copy(fields = Some(Map("commentCloseDate" -> past)))
-    Content(closedComments).isClosedForComments should be(true)
+    Content(closedComments).trail.isClosedForComments should be(true)
   }
 
   it should "realise that it should not show ads" in {
     val sensitive = article.copy(fields =  Some(Map("shouldHideAdverts" -> "true")))
 
-    Content(article).shouldHideAdverts should be(false)
-    Content(sensitive).shouldHideAdverts should be(true)
+    Content(article).content.shouldHideAdverts should be(false)
+    Content(sensitive).content.shouldHideAdverts should be(true)
   }
 
   it should "detect if article requires membershipAccess" in {
@@ -134,13 +130,13 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
       elements = None
     )
 
-    Content(membershipArticle).requiresMembershipAccess should be(true)
+    Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
 
     val noAccess = article.copy(fields = None)
-    Content(noAccess).requiresMembershipAccess should be(false)
+    Content(noAccess).metadata.requiresMembershipAccess should be(false)
 
     val outsideMembership = article.copy(fields = Some(Map("membershipAccess" -> "members-only")))
-    Content(outsideMembership).requiresMembershipAccess should be(false)
+    Content(outsideMembership).metadata.requiresMembershipAccess should be(false)
 
   }
 
@@ -149,24 +145,25 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
   }
 
-  private def content(contentType: String, elements: List[ApiElement]): Content = {
-    Content(
-      ApiContent(
-        id = "/content",
-        sectionId = None,
-        sectionName = None,
-        webPublicationDateOption = Some(DateTime.now),
-        webTitle = "webTitle",
-        webUrl = "webUrl",
-        apiUrl = "apiUrl",
-        tags = List(tag(s"type/$contentType")),
-        elements = Some(elements)
-      )
-    )
+  private def content(contentType: String, elements: List[ApiElement]): ContentType = {
+    Content(contentApi(contentType, elements))
   }
 
-  private val article: ApiContent =
-    content("article", Nil).delegate
+  private val article = contentApi("article", Nil)
+
+  private def contentApi(contentType: String, elements: List[ApiElement]): ApiContent = {
+    ApiContent(
+      id = "/content",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(DateTime.now),
+      webTitle = "webTitle",
+      webUrl = "webUrl",
+      apiUrl = "apiUrl",
+      tags = List(tag(s"type/$contentType")),
+      elements = Some(elements)
+    )
+  }
 
   private def image(  id: String,
                       relation: String,

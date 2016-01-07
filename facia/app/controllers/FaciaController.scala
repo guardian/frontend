@@ -1,19 +1,20 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
 import model._
 import model.facia.PressedCollection
+import model.pressed.CollectionConfig
 import performance.MemcachedAction
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices._
 import views.html.fragments.containers.facia_cards.container
+import views.support.FaciaToMicroFormat2Helpers.getCollection
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -43,7 +44,73 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
+
   def renderContainerJson(id: String) = renderContainer(id, false)
+
+  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = MemcachedAction { implicit request =>
+    def getEditionFromString(edition: String) = {
+      val editionToFilterBy = edition match {
+        case "international" => "int"
+        case _ => edition
+      }
+
+      Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
+    }
+
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString(edition)), num, offset, sectionNameToFilter).map { collections =>
+      Cached(60) {
+        val containers = collections.getOrElse(List()).zipWithIndex.map { case (collection: PressedCollection, index) =>
+
+          val containerLayout = if(collection.collectionType.contains("mpu")) {
+              Fixed(FixedContainers.frontsOnArticles)
+            } else {
+              Container.resolve(collection.collectionType)
+            }
+
+          val containerDefinition = FaciaContainer(
+            index,
+            containerLayout,
+            CollectionConfigWithId("", CollectionConfig.empty),
+            CollectionEssentials.fromPressedCollection(collection).copy(treats = Nil)
+          )
+
+          container(containerDefinition, FrontProperties.empty)
+        }
+
+        if(request.isJson) {
+          JsonCollection(Html(containers.mkString))
+        } else {
+          NotFound
+        }
+      }
+    }
+
+    (rawNum, rawOffset) match {
+      case (Int(num), Int(offset)) => returnContainers(num, offset)
+      case _ => Future.successful(Cached(600) {
+        BadRequest
+      })
+    }
+  }
+
+  def renderSomeFrontContainersMf2(rawNum: String, rawOffset: String, path: String) = MemcachedAction { implicit request =>
+    def getEditionFromString(edition: String) = Edition.all.find(_.id.toLowerCase() == "int").getOrElse(Edition.all.head)
+
+    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString("international")), num, offset, "none").map { collections =>
+      Cached(60) {
+        JsonComponent(
+          "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
+        )
+      }
+    }
+
+    (rawNum, rawOffset) match {
+      case (Int(num), Int(offset)) => returnContainers(num, offset)
+      case _ => Future.successful(Cached(600) {
+        BadRequest
+      })
+    }
+  }
 
   def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
 
@@ -127,64 +194,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }.getOrElse(successful(NotFound))
   }
 
-  def renderEssentialRead(contentSource: String, edition: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving essential read")
-
-    def pressedCollections: Future[Seq[PressedCollection]] = contentSource match {
-      case "automated" =>
-        val containerId = edition match {
-            case "uk" => "uk-alpha/news/regular-stories"
-            case "us" => "us-alpha/news/regular-stories"
-            case "au" => "au-alpha/news/regular-stories"
-            case _ => "10f21d96-18f6-426f-821b-19df55dfb831"
-        }
-
-        getFirstXCollections(containerId, 4).flatMap { // 4 not 3 so that we have some extra pieces of content to play with when filtering later
-          _ match {
-            case Some(x) => Future.successful(x)
-            case None => Future.failed(new RuntimeException(s"Collection doesn't exist"))
-          }
-        }
-
-      case "curated" =>
-        val containerId = edition match {
-          case "uk" => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
-          case "us" => "0295b390-8218-4eda-8bd4-2757c7d186f6"
-          case "au" => "ec4dc5bf-399c-4720-a70c-dac3d96a26d3"
-          case _ => "2b4a1ca9-7af9-453e-accc-6870d3a3ec74"
-        }
-
-        getPressedCollection(containerId).map(_.toSeq)
-    }
-
-    pressedCollections.map { collections =>
-        Cached(60) {
-          val config = CollectionConfig.empty.copy(
-            displayName = Some("the-essential-read" + "-" + contentSource)
-          )
-
-          val collectionEssentials = if (contentSource == "curated") {
-            CollectionEssentials.fromMultiplePressedCollections(collections)
-          } else {
-            CollectionEssentials.fromMultiplePressedCollections(collections, 2)
-          }
-
-          val containerDefinition = FaciaContainer(
-            1,
-            EssentialRead,
-            CollectionConfigWithId("", config), // Empty string for essential read AB test
-            collectionEssentials
-          )
-
-          val html = container(containerDefinition, FrontProperties.empty)
-          if (request.isJson)
-            JsonCollection(html)
-          else
-            NotFound
-        }
-    }
-  }
-
   def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
@@ -198,7 +207,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             if (preserveLayout)
               Container.resolve(collection.collectionType)
             else
-              Fixed(FixedContainers.fixedMediumFastXII)
+              Fixed(FixedContainers.fixedSmallSlowVI)
           }
 
           val containerDefinition = FaciaContainer(
@@ -254,13 +263,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(successful(None))
 
-  //this is a very short term solution for the Essential Read AB test. It will be removed afterwards, honest
-  private def getFirstXCollections(collectionId: String, take: Int): Future[Option[List[PressedCollection]]] =
-    ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
-        Some(faciaPage.collections.filterNot(_.displayName contains "sport").take(take))
+        // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
+        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).drop(offset).take(num))
       })
-    }.getOrElse(successful(None))
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
@@ -271,7 +278,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Cached(60) {
             val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
             val webTitle = config.displayName.getOrElse("The Guardian")
-            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}
+            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated.flatMap(_.properties.maybeContent), "", None)).as("text/xml; charset=utf8")}
         }
       case None => successful(Cached(60)(NotFound))}
   }
@@ -279,6 +286,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderAgentContents = Action {
     Ok(ConfigAgent.contentsAsJsonString)
+  }
+}
+
+object Int {
+  def unapply(s : String) : Option[Int] = try {
+    Some(s.toInt)
+  } catch {
+    case _ : java.lang.NumberFormatException => None
   }
 }
 

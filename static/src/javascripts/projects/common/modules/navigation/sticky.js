@@ -49,7 +49,8 @@ define([
         this.isMobile = contains(this.breakpoint, 'mobile');
         this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.noTopBanner = !commercialFeatures.topBannerAd;
+        this.inTopBannerAbTest = config.tests && config.tests.topBannerPosition;
+        this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || this.inTopBannerAbTest;
         this.isProfilePage = config.page.section === 'identity';
 
         bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
@@ -130,7 +131,7 @@ define([
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
             return 'updatePositionMobile';
-        } else if (adblockMsg.noAdblockMsg()) { // if paying member uses adblock, dont show the messages
+        } else if (adblockMsg.noAdblockMsg() || this.inTopBannerAbTest) { // if paying member uses adblock, dont show the messages
             return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
             return 'updatePositionApple';
@@ -437,7 +438,7 @@ define([
                 // Header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
                 this.$els.header.css({
-                    position:  'static',
+                    position:  'relative',
                     width:     '100%',
                     'margin-top': 0,
                     '-webkit-transform': 'translateY(0%)',

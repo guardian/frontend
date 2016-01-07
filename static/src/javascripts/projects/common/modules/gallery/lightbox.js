@@ -23,7 +23,8 @@ define([
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
-    'common/utils/chain'
+    'common/utils/chain',
+    'common/utils/load-css-promise'
 ], function (
     bean,
     bonzo,
@@ -49,7 +50,8 @@ define([
     map,
     throttle,
     forEach,
-    chain) {
+    chain,
+    loadCssPromise) {
 
     function GalleryLightbox() {
 
@@ -349,8 +351,7 @@ define([
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function (interactionType) {
-                    this.trackInteraction(interactionType + ':next');
+                'next': function () {
                     this.pulseButton(this.nextBtn);
                     if (this.index === this.images.length) { // last img
                         if (this.showEndslate) {
@@ -364,8 +365,7 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'prev': function (interactionType) {
-                    this.trackInteraction(interactionType + ':previous');
+                'prev': function () {
                     this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
                         if (this.showEndslate) {
@@ -413,14 +413,12 @@ define([
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function (interactionType) {
-                    this.trackInteraction(interactionType + ':next');
+                'next': function () {
                     this.pulseButton(this.nextBtn);
                     this.index = 1;
                     this.state = 'image';
                 },
-                'prev': function (interactionType) {
-                    this.trackInteraction(interactionType + ':previous');
+                'prev': function () {
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
@@ -512,45 +510,43 @@ define([
         }
     };
 
-    GalleryLightbox.prototype.trackInteraction = function (str) {
-        mediator.emit('module:clickstream:interaction', str);
-    };
-
     function bootstrap() {
-        if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
-            var lightbox,
-                galleryId,
-                match,
-                galleryHash = window.location.hash,
-                images = config.page.lightboxImages,
-                res;
+        loadCssPromise.then(function () {
+            if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
+                var lightbox,
+                    galleryId,
+                    match,
+                    galleryHash = window.location.hash,
+                    images = config.page.lightboxImages,
+                    res;
 
-            bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
-                e.preventDefault();
+                bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
+                    e.preventDefault();
 
-                var $el = bonzo(e.currentTarget),
-                    galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                    galleryHrefParts = galleryHref.split('#img-'),
-                    parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
-                    galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+                    var $el = bonzo(e.currentTarget),
+                        galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
+                        galleryHrefParts = galleryHref.split('#img-'),
+                        parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
+                        galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+                    lightbox = lightbox || new GalleryLightbox();
+
+                    lightbox.loadGalleryfromJson(images, galleryIndex);
+                });
+
                 lightbox = lightbox || new GalleryLightbox();
-
-                lightbox.loadGalleryfromJson(images, galleryIndex);
-            });
-
-            lightbox = lightbox || new GalleryLightbox();
-            galleryId = '/' + config.page.pageId;
-            match = /\?index=(\d+)/.exec(document.location.href);
-            if (match) { // index specified so launch lightbox at that index
-                url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
-            } else {
-                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
-                if (res) {
-                    lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
+                galleryId = '/' + config.page.pageId;
+                match = /\?index=(\d+)/.exec(document.location.href);
+                if (match) { // index specified so launch lightbox at that index
+                    url.pushUrl(null, document.title, galleryId, true); // lets back work properly
+                    lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
+                } else {
+                    res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                    if (res) {
+                        lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
+                    }
                 }
             }
-        }
+        });
     }
 
     return {

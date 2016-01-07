@@ -1,27 +1,17 @@
 package views.support.cleaner
 
+import common.Edition
+import model.{Tag, Article}
 import org.jsoup.nodes.{Document, Element}
+import play.api.libs.json.Json
 import views.support.HtmlCleaner
 
-import scala.annotation.tailrec
 import scala.collection.JavaConversions._
 
-object AmpAdCleaner extends HtmlCleaner {
-
+object AmpAdCleaner {
   val AD_LIMIT = 2
   val CHARS_BETWEEN_ADS = 700
   val DONT_INTERLEAVE_SMALL_PARA = 50
-
-  def adAfter(element: Element) = {
-    element.after("""<div class="amp-ad-container"><amp-ad width=300 height=250 type="doubleclick" json='{"targeting":{"sc":["1"]}}' data-slot="/59666047/theguardian.com/uk"></amp-ad></div>""")
-  }
-
-  object AdRepel {
-    def apply(before: Int, after: Int, element: Element): AdRepel = {
-      AdRepel(before, after, element.text().length, element)
-    }
-  }
-  case class AdRepel(before: Int, after: Int, length: Int, element: Element)
 
   def findElementsNeedingAdsAfter(children: List[Element]): List[Element] = {
 
@@ -86,11 +76,59 @@ object AmpAdCleaner extends HtmlCleaner {
 
   }
 
+  object AdRepel {
+    def apply(before: Int, after: Int, element: Element): AdRepel = {
+      AdRepel(before, after, element.text().length, element)
+    }
+  }
+  case class AdRepel(before: Int, after: Int, length: Int, element: Element)
+
+}
+
+case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
+
+  private def parseIds(items: Seq[Tag]) = {
+    items.map { item =>
+      if (item.id == "uk/uk") {
+        item.id
+      } else {
+        val keyword = item.id.split("/").last
+        keyword.replaceAll("""/[+s]+/g""", "-").toLowerCase()
+      }
+    }
+  }
+
+  def adAfter(element: Element) = {
+    val section = article.metadata.section
+    val dataSlot = s"/59666047/theguardian.com/$section"
+
+    val json = Json.obj(
+      "targeting" -> Json.obj(
+        "url" -> uri,
+        "edition" -> edition.id.toLowerCase(),
+        "se" -> parseIds(article.trail.tags.series).mkString(","),
+        "ct" -> article.metadata.contentType,
+        "p" -> "ng",
+        "k" -> parseIds(article.trail.tags.keywords).mkString(","),
+        "co" -> parseIds(article.trail.tags.contributors).mkString(","),
+        "bl" -> parseIds(article.trail.tags.blogs).mkString(",")
+      )
+    )
+
+    val ampAd = <div class="amp-ad-container">
+          <amp-ad width="300" height="250" type="doubleclick"
+                  json={json.toString()}
+                  data-slot={dataSlot}>
+          </amp-ad>
+      </div>
+
+    element.after(ampAd.toString())
+  }
+
   override def clean(document: Document): Document = {
     val children = document.body().children().toList
-    val adsAfterAndEnd = findElementsNeedingAdsAfter(children)
+    val adsAfterAndEnd = AmpAdCleaner.findElementsNeedingAdsAfter(children)
     adsAfterAndEnd.foreach(adAfter) // side effects =(
     document
   }
-
 }

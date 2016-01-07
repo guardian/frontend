@@ -3,14 +3,14 @@ package views.support
 import com.gu.contentapi.client.model.{Asset, Content, Element, Tag}
 import conf.Configuration
 import conf.switches.Switches.ImageServerSwitch
-import model.{ImageAsset, ImageContainer}
+import model.{ImageMedia, ImageAsset}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 
+class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
 
-class ImgSrcTest extends FlatSpec with Matchers  {
-
-  val imageHost = Configuration.images.path
+  lazy val imageHost = Configuration.images.path
 
   val asset = Asset(
     "image",
@@ -35,18 +35,18 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     elements = Some(List(element))
   )
 
-  val imageAsset = ImageAsset(asset, 1)
+  val imageAsset = ImageAsset.make(asset, 1)
 
-  val image = ImageContainer(Seq(imageAsset), element, imageAsset.index) // yep null, sorry but the tests don't need it
+  val image = ImageMedia.apply(Seq(imageAsset))
 
-  val mediaImageAsset = ImageAsset(Asset(
+  val mediaImageAsset = ImageAsset.make(Asset(
     "image",
     Some("image/jpeg"),
     Some("http://media.guim.co.uk/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"),
     Map.empty[String, String]
   ), 1)
 
-  val mediaImage = ImageContainer(Seq(mediaImageAsset), element, mediaImageAsset.index)
+  val mediaImage = ImageMedia.apply(Seq(mediaImageAsset))
 
 
   "ImgSrc" should "convert the URL of a static image to the resizing endpoint with a /static prefix" in {
@@ -66,19 +66,19 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
   it should "convert the URL of the image if it is a PNG" in {
     ImageServerSwitch.switchOn()
-    val pngImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)), element, 0)
+    val pngImage = ImageMedia.apply(Seq(ImageAsset.make(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)))
     Item700.bestFor(pngImage) should be (Some(s"$imageHost/img/static/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png?w=700&q=85&auto=format&sharp=10&s=454c03a065f89e05748e41457c3bcb32"))
   }
 
   it should "not convert the URL of the image if it is a GIF (we do not support animated GIF)" in {
     ImageServerSwitch.switchOn()
-    val gifImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), element, 0)
+    val gifImage = ImageMedia.apply(Seq(ImageAsset.make(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)))
     Item700.bestFor(gifImage) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
   }
 
   it should "not convert the URL of the image if it is not one of ours" in {
     ImageServerSwitch.switchOn()
-    val someoneElsesImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), element, 0)
+    val someoneElsesImage = ImageMedia(Seq(ImageAsset.make(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)))
     Item700.bestFor(someoneElsesImage) should be (Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
   }
 }

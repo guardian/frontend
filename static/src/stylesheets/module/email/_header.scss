@@ -1,3 +1,8 @@
+.email-sub__heading {
+    @include fs-headline(3, $size-only: true);
+    padding-left: $gs-baseline / 3;
+}
+
 .email-sub__heading-emph {
     color: guss-colour(guardian-brand, $pasteup-palette);
 }
@@ -6,7 +11,7 @@
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
     background-color: guss-colour(guardian-brand, $pasteup-palette);
-    padding-top: $gs-baseline;
+    padding: 0 0 0 $gs-baseline / 3;
 }
 
 .email-sub__description-emph {
@@ -14,13 +19,28 @@
     font-weight: bold;
 }
 
-// LANDING PAGE MODS
-.email-sub__header--landing {
+// LANDING AND IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub__header--landing,
+.email-sub__header--article {
     background-color: $form-primary-colour;
     @include fs-headline(2);
 
     .email-sub__heading {
-        margin: $gs-baseline 0;
+        margin: $gs-baseline / 2 0 $gs-baseline;
+    }
+}
+
+// IN-ARTICLE (COMPOSER) PAGE MODS
+.email-sub__header--article {
+    .email-sub__heading {
+        color: guss-colour(guardian-brand, $pasteup-palette);
+    }
+
+    .email-sub__description {
+        background-color: transparent;
+        border-top: 0 none;
+        color: guss-colour(neutral-1, $pasteup-palette);
+        min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
     }
 }
 
@@ -30,7 +50,6 @@
         color: #ffffff;
         @include fs-textSans(3);
         margin-bottom: $gs-baseline;
-        padding-left: $gs-baseline / 3;
     }
 }
 

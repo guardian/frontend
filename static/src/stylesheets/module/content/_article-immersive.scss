@@ -23,10 +23,26 @@
     }
 
     .content__logo-container {
-        z-index: 2;
+        position: relative;
+        z-index: 10;
+
+        @include mq($until: desktop) {
+            background-color: lighten(colour(neutral-1), 15%);
+            padding-bottom: $gs-baseline / 2;
+        }
+
+        .gs-container {
+            overflow: auto;
+            display: block;
+
+            @include mq(desktop) {
+                overflow: visible;
+            }
+        }
     }
 
     .content__logo {
+        display: block;
         float: right;
         width: gs-span(2) + $gs-gutter;
         height: auto;
@@ -69,14 +85,14 @@
     }
 
     .content__headline {
-        @include fs-headline(5);
+        @include fs-headline(9);
         font-weight: 200;
         line-height: 1;
         padding-top: $gs-baseline / 2;
         padding-bottom: 1.5rem;
 
         @include mq(desktop) {
-            font-size: 3.25rem;
+            font-size: 4rem;
         }
     }
 
@@ -87,20 +103,21 @@
     .content__standfirst {
         position: relative;
         padding-top: .33em;
+        padding-bottom: .5rem;
         margin-bottom: 0;
         color: #ffffff;
 
         @include mq(desktop) {
             padding-bottom: 1rem;
+        }
 
-            &:before {
-                content: '';
-                position: absolute;
-                top: 0;
-                height: 2px;
-                width: gs-span(2);
-                background-color: rgba(255, 255, 255, .2);
-            }
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 2px;
+            width: gs-span(2);
+            background-color: rgba(255, 255, 255, .2);
         }
 
         a {
@@ -114,56 +131,6 @@
         }
     }
 
-    .content__head--desktop {
-        height: 100vh;
-        max-height: 800px;
-    }
-
-    .content__header {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
-    @include mq($until: desktop) {
-        .content__head--mobile {
-            position: relative;
-            display: table-cell;
-            vertical-align: bottom;
-            background-position: center center;
-            background-size: cover;
-        }
-
-        .content__head--desktop {
-            background-image: none !important;
-        }
-
-        .content__header {
-            display: table;
-            width: 100%;
-            height: 100%;
-        }
-
-        .content__wrapper--standfirst {
-            display: table-row-group;
-            height: 1px;
-        }
-    }
-
-    @include mq(desktop) {
-        .content__head--desktop {
-            position: relative;
-            background-position: center center;
-            background-size: cover;
-            max-height: initial;
-        }
-
-        .content__head--mobile {
-            background-image: none !important;
-        }
-    }
-
     .content__loading {
         position: absolute;
         top: 0;
@@ -172,6 +139,7 @@
         bottom: 0;
         background-color: colour(neutral-5);
         color: colour(neutral-1);
+        display: none;
     }
 
     .content__loading-animation {
@@ -198,6 +166,87 @@
 
         .fenced-rendered {
             opacity: 1;
+        }
+    }
+
+    .is-fixed-height {
+        &.content__head--desktop {
+            height: 100vh;
+            max-height: 800px;
+        }
+
+        .content__header {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        @include mq($until: desktop) {
+            .content__head--mobile {
+                position: relative;
+                display: table-cell;
+                vertical-align: bottom;
+                background-position: center center;
+                background-size: cover;
+            }
+
+            &.content__head--desktop {
+                background-image: none !important;
+            }
+
+            .content__header {
+                display: table;
+                width: 100%;
+                height: 100%;
+            }
+
+            .content__wrapper--standfirst {
+                display: table-row-group;
+                height: 1px;
+            }
+        }
+
+        @include mq(desktop) {
+            &.content__head--desktop {
+                position: relative;
+                background-position: center center;
+                background-size: cover;
+                max-height: initial;
+            }
+
+            .content__head--mobile {
+                background-image: none !important;
+            }
+        }
+
+        .content__logo-container {
+            background-color: transparent;
+            padding-bottom: 0;
+
+            .gs-container {
+                overflow: visible;
+            }
+        }
+
+        .content__headline {
+            @include fs-headline(7, true);
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 3.25rem;
+            }
+        }
+
+        .content__standfirst:before {
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+
+        // Should be removed when capi returns a no-id element for code embeds in main media
+        .content__loading {
+            display: block;
         }
     }
 
@@ -376,6 +425,49 @@
         background-color: colour(neutral-7);
     }
 
+    .section-image {
+        position: relative;
+
+        .caption,
+        .section-rule {
+            display: none;
+        }
+    }
+
+    .section-title,
+    .from-content-api h2 {
+        @include fs-headline(5);
+        font-weight: 200;
+
+        @include mq(tablet) {
+            @include fs-headline(7, true);
+        }
+    }
+
+    .section-title {
+        position: absolute;
+        z-index: 20;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .5);
+        color: #ffffff;
+        padding: .1em $gs-gutter / 2 .5em;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            padding-left: gs-span(2) + $gs-gutter * 2;
+        }
+
+        @include mq(wide) {
+            padding-left: gs-span(3) + $gs-gutter * 2;
+        }
+    }
+
     .in-body-link--immersive {
         color: colour(feature-default);
 
@@ -438,33 +530,12 @@
         @include mq(tablet) {
             padding: 0;
             border: 0;
-
-            .inline-quote {
-                position: absolute;
-                top: -1px;
-            }
-
-            .pullquote-paragraph {
-                text-indent: 1.7em;
-            }
         }
     }
 
     .element-pullquote.element--showcase {
         @include mq(tablet) {
             margin-bottom: $gs-baseline * 3;
-        }
-
-        @include mq(desktop) {
-            margin-right: -(gs-span(2));
-        }
-
-        @include mq(leftCol) {
-            margin-left: -(gs-span(1) + $gs-gutter);
-        }
-
-        @include mq(wide) {
-            margin-left: -(gs-span(2) + $gs-gutter);
         }
 
         .inline-quote svg {
@@ -474,9 +545,10 @@
             }
         }
 
-        .pullquote-paragraph {
-            @include mq(tablet) {
-                text-indent: 1.6em;
+        .inline-quote {
+            @include mq(leftCol) {
+                position: absolute;
+                left: -3.5em;
             }
         }
 
@@ -490,20 +562,47 @@
 
     .element-pullquote.element--supporting {
         @include mq(tablet) {
-            width: gs-span(4);
-            padding-right: $gs-gutter;
+            width: gs-span(3);
             border: 0;
             margin-right: $gs-gutter;
-            margin-bottom: $gs-baseline * 3;
+            margin-bottom: $gs-baseline * 2;
         }
 
         @include mq(leftCol) {
+            width: gs-span(2);
             margin-left: -(gs-span(2) + $gs-gutter);
         }
 
         @include mq(wide) {
-            width: gs-span(5) + $gs-gutter;
+            width: gs-span(3);
             margin-left: -(gs-span(3) + $gs-gutter);
+        }
+
+        .inline-quote {
+            @include mq(tablet) {
+                position: absolute;
+            }
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 1.8em;
+                height: 1em;
+            }
+        }
+
+        .pullquote-paragraph {
+            @include mq(tablet) {
+                text-indent: 1.7em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 1.25em;
+                line-height: 1.2;
+            }
         }
     }
 
@@ -552,6 +651,10 @@
             @include mq(tablet) {
                 margin-right: $gs-gutter;
             }
+        }
+
+        + .section-rule {
+            display: none;
         }
     }
 

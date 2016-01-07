@@ -1,5 +1,5 @@
 define([
-    'bootstraps/accessibility',
+    'bootstraps/enhanced/accessibility',
     'common/modules/accessibility/main',
     'common/modules/accessibility/helpers',
     'common/utils/storage',

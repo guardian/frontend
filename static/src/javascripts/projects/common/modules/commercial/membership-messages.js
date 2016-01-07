@@ -37,7 +37,7 @@ define([
             data: {
                 messageText: [
                     'Thank you for reading the Guardian.',
-                    'Help keep our journalism free and independent by becoming a Supporter for just £5 a month.'
+                    'Become a Supporter today for just £49 per year and we will donate £1 to the Guardian Charity Appeal 2015.'
                 ].join(' '),
                 linkText: 'Join'
             }
@@ -47,7 +47,7 @@ define([
             code:          'membership-message-us',
             minVisited:    10,
             data: {
-                messageText: 'Support open, independent journalism. Become a Supporter from just £5/$8 per month',
+                messageText: 'Support open, independent journalism. Become a Supporter from just $5 per month',
                 linkText: 'Find out more'
             }
         }

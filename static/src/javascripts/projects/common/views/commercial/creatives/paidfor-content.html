@@ -1,0 +1,28 @@
+<div class="paidfor-content" data-link-name="creative | gu style commercial content">
+    <div class="u-responsive-ratio inlined-image">
+        <a href="<%=clickMacro%><%=articleUrl%>"><img class="gu-image" src="<%=articleImage%>"></a>
+    </div>
+    <div class="paidfor-meta">
+        <span class="paidfor-meta__label">Paid Content</span>
+        <div class="paidfor-label paidfor-meta__more has-popup">
+            <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--<%=dataAttr%>">
+                About <%=icon%>
+            </button>
+            <div class="popup is-off paidfor-popup paidfor-popup--<%=dataAttr%>">
+                <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content">
+                    Learn more about the Guardian’s funding from outside parties
+                    <%=infoLinkIcon%>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box">
+        <h2 class="paidfor-title"><%=articleHeaderText%></h2>
+        <p class="paidfor-text"><%=articleText%></p>
+        <div class="paidfor-brand">
+            <span class="paidfor-note">Paid for by:</span>
+            <img class="paidfor-logo" src="<%=brandLogo%>" alt="<%=brand%>">
+        </div>
+    </a>
+</div>

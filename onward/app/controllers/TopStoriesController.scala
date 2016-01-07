@@ -6,8 +6,8 @@ import common._
 import conf.LiveContentApi.getResponse
 import conf._
 import model._
+import model.pressed.PressedContent
 import play.api.mvc.{Action, Controller, RequestHeader}
-import services.FaciaContentConvert
 
 import scala.concurrent.Future
 
@@ -16,7 +16,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
-      topStories map { stories => renderTopStoriesPage(stories.map(FaciaContentConvert.frontendContentToFaciaContent)) }
+      topStories map { stories => renderTopStoriesPage(stories.faciaItems) }
     }
 
     response map { _ getOrElse NotFound }
@@ -24,20 +24,22 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   def renderTrails() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
-      topStories map { stories => renderTopStoriesTrails(stories.map(FaciaContentConvert.frontendContentToFaciaContent)) }
+      topStories map { stories => renderTopStoriesTrails(stories.faciaItems) }
     }
 
     response map { _ getOrElse NotFound }
   }
 
-  private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
+  private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
     getResponse(LiveContentApi.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
-        response.editorsPicks map { Content(_) } match {
+        response.editorsPicks map { item =>
+          RelatedContentItem(item)
+        } match {
           case Nil => None
-          case picks => Some(picks)
+          case picks => Some(RelatedContent(picks))
         }
       } recover { case GuardianContentApiError(404, message, _) =>
         log.info(s"Got a 404 while calling content api: $message")
@@ -45,13 +47,13 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
       }
   }
 
-  private def renderTopStoriesPage(trails: Seq[FaciaContent])(implicit request: RequestHeader) = {
-    val page = new Page(
+  private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
+    val page = SimplePage( MetaData.make(
       "top-stories",
       "top-stories",
       "Top Stories",
       "GFE:Top Stories"
-    )
+    ))
 
     val htmlResponse = () => views.html.topStories(page, trails)
     val jsonResponse = () => views.html.fragments.topStoriesBody(trails)
@@ -66,7 +68,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     }
   }
 
-  private def renderTopStoriesTrails(trails: Seq[FaciaContent])(implicit request: RequestHeader) = {
+  private def renderTopStoriesTrails(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
     val response = if (request.getQueryString("view") == Some("link"))
       () => views.html.fragments.trailblocks.link(trails, trailsLength)

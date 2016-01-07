@@ -1,4 +1,5 @@
 import com.gu.googleauth.{FilterExemption, UserIdentity}
+import commercial.CommercialLifecycle
 import common.ExecutionContexts
 import common.dfp.FaciaDfpAgentLifecycle
 import conf._

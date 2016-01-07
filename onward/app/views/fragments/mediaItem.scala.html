@@ -1,4 +1,4 @@
-@(content: model.Media, index: Number)(implicit request: RequestHeader)
+@(content: model.ContentType, index: Number)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import model.{Audio, Video}
@@ -6,21 +6,22 @@
 
 <li class="fc-item fc-item--media">
     <div class="fc-item__container">
-        <a class="fc-item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
-            @content.trailPicture(5, 3).map{ image =>
+        <a class="fc-item__action" href="@LinkTo{@content.metadata.url}" data-link-name="item @index">
+            @content.elements.trailPicture(5, 3).map{ image =>
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio">
-                        <img class="responsive-img" src="@Item140.bestFor(image)" alt="" />
+                        <img class="responsive-img" src="@Item140.bestFor(image.images)" alt="" />
                     </div>
                 </div>
             }
             <h4 class="fc-item__title">
                 @content match {
-                    case a: Audio => { @a.webTitle }
+                    case a: Audio => { @a.metadata.webTitle }
                     case v: Video => {
                         @fragments.inlineSvg("video-icon", "icon", List("yellow"))
                         @v.videoLinkText
                     }
+                    case _ => { }
                 }
             </h4>
         </a>

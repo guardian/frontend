@@ -2,17 +2,18 @@ package common
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 import common.editions.Uk
-import model.Article
+import model.{Content, Article}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
 import scala.collection.JavaConversions._
 
-class TagLinkerTest extends FlatSpec with Matchers {
+class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   implicit val edition = Uk
   implicit val request = FakeRequest("GET", "/")
@@ -67,6 +68,11 @@ class TagLinkerTest extends FlatSpec with Matchers {
     cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class=" u-underline">Cycling?.</a>""")
   }
 
+  it should "not link tags in an article pullquote" in {
+    val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<aside class="element-pullquote"><p>Cycling is an awesome sport.</p></aside>"""))
+    cleaned.firstPara should be ("""Cycling is an awesome sport.""")
+  }
+
   it should "not link tags in articles that should be excluded from related content" in {
     val cleaned = new TagLinker(sensitiveArticle(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Cycling is an awesome sport.</p>"""))
     cleaned.firstPara should be ("""Cycling is an awesome sport.""")
@@ -80,21 +86,32 @@ class TagLinkerTest extends FlatSpec with Matchers {
   private def tag(id: String, name: String) = new ApiTag(id, "keyword", webTitle = name, webUrl = "does not matter",
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
-  private def sensitiveArticle(tags: ApiTag*) = new Article(
-    article(tags:_*).delegate.copy(fields = Some(Map("showInRelatedContent" -> "false")))
+  private def sensitiveArticle(tags: ApiTag*) = {
+    val contentApiItem = contentApi(tags.toList).copy(fields = Some(Map("showInRelatedContent" -> "false")))
+
+    val content = Content.make(contentApiItem)
+    Article.make(content)
+  }
+
+  private def contentApi(tags: List[ApiTag]) = ApiContent(
+      id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDateOption = Some(new DateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      elements = None,
+      tags = tags,
+      fields = Some(Map("showInRelatedContent" -> "true"))
   )
 
-  private def article(tags: ApiTag*) = new Article(ApiContent(id = "foo/2012/jan/07/bar",
-    sectionId = None,
-    sectionName = None,
-    webPublicationDateOption = Some(new DateTime),
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    elements = None,
-    tags = tags.toList,
-    fields = Some(Map("showInRelatedContent" -> "true"))
-  ))
+  private def article(tags: ApiTag*) = {
+    val contentApiItem = contentApi(tags.toList)
+
+    val content = Content.make(contentApiItem)
+    Article.make(content)
+  }
 
   private def souped(s: String) = Jsoup.parseBodyFragment(s)
 }

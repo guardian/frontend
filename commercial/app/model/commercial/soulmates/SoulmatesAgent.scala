@@ -1,5 +1,6 @@
 package model.commercial.soulmates
 
+import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.AkkaAgent
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -11,7 +12,8 @@ case class SoulmatesAgent(groupName: String,
 
   private lazy val agent = AkkaAgent[Seq[Member]](Nil)
 
-  def refresh()(implicit ec: ExecutionContext): Future[Seq[Member]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])
+    (implicit ec: ExecutionContext): Future[ParsedFeed[Member]] = {
 
     def update(freshData: Seq[Member]): Future[Seq[Member]] = {
       agent.alter { oldData =>
@@ -20,7 +22,11 @@ case class SoulmatesAgent(groupName: String,
       }
     }
 
-    feed.loadAds() flatMap update
+    val parsedFeed = feed.parsedMembers(feedMetaData, feedContent)
+
+    parsedFeed.foreach(feed => update(feed.contents))
+
+    parsedFeed
   }
 
   def sample(): Seq[Member] = filter(agent.get())
@@ -33,7 +39,7 @@ object SoulmatesAgent {
   lazy val menAgent = SoulmatesAgent("men", MaleSoulmatesFeed, Sample.take6)
   lazy val newMenAgent = SoulmatesAgent("new-men", NewMenSoulmatesFeed, Sample.take6)
 
-  private lazy val agents = Seq(
+  lazy val agents = Seq(
     womenAgent,
     newWomenAgent,
     menAgent,
@@ -53,9 +59,6 @@ object SoulmatesAgent {
     SoulmatesAgent("southwest", SouthwestSoulmatesFeed, Sample.default),
     SoulmatesAgent("wales", WalesSoulmatesFeed, Sample.default)
   )
-
-  def refresh()(implicit ec: ExecutionContext): Future[Seq[Seq[Member]]] =
-    Future.sequence(agents map (_.refresh()))
 
   def sample(groupName: String): Seq[Member] = {
     agents.find(_.groupName == groupName) map (_.sample()) getOrElse Nil

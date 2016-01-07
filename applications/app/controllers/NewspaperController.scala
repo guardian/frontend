@@ -2,7 +2,7 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import layout.FaciaContainer
-import model.{Page, Cached, MetaData}
+import model.{SimplePage, Cached, MetaData}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
@@ -10,7 +10,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
   def latestGuardianNewspaper() = Action.async { implicit request =>
 
-    val guardianPage = Page("theguardian", "todayspaper", "Main section | News | The Guardian", "GFE: Newspaper books Main Section")
+    val guardianPage = SimplePage(MetaData.make("theguardian", "todayspaper", "Main section | News | The Guardian", "GFE: Newspaper books Main Section"))
     val todaysPaper = NewspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(Ok(views.html.newspaperPage(tp)))
@@ -18,7 +18,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 
   def latestObserverNewspaper() = Action.async { implicit request =>
-    val observerPage = Page("theobserver", "theobserver", "Main section | From the Observer | The Guardian", "GFE: Observer Newspaper books Main Section")
+    val observerPage = SimplePage(MetaData.make("theobserver", "theobserver", "Main section | From the Observer | The Guardian", "GFE: Observer Newspaper books Main Section"))
 
     val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
@@ -29,8 +29,8 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   def newspaperForDate(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
 
     val page = path match {
-      case "theguardian" => Page("theguardian", "todayspaper", "Top Stories | From the Guardian | The Guardian", "GFE: Newspaper books Top Stories")
-      case "theobserver" => Page("theobserver", "theobserver", "News | From the Observer | The Guardian", "GFE: Observer Newspaper books Top Stories")
+      case "theguardian" => SimplePage(MetaData.make("theguardian", "todayspaper", "Top Stories | From the Guardian | The Guardian", "GFE: Newspaper books Top Stories"))
+      case "theobserver" => SimplePage(MetaData.make("theobserver", "theobserver", "News | From the Observer | The Guardian", "GFE: Observer Newspaper books Top Stories"))
     }
 
     val paper = NewspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))
@@ -43,7 +43,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
 
   def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
     val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == NewspaperQuery.FRONT_PAGE_DISPLAY_NAME)
-    frontContainer.flatMap(_.contentItems).isEmpty && otherContainer.flatMap(_.contentItems).isEmpty
+    frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
   def allOn(path: String, day: String, month: String, year: String) = Action {
@@ -51,4 +51,4 @@ object NewspaperController extends Controller with Logging with ExecutionContext
   }
 }
 
-case class TodayNewspaper(page: MetaData, bookSections: Seq[FaciaContainer])
+case class TodayNewspaper(page: SimplePage, bookSections: Seq[FaciaContainer])

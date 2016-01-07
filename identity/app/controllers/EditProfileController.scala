@@ -13,7 +13,7 @@ import play.api.i18n.{ MessagesApi, I18nSupport }
 import play.api.mvc.{AnyContent, Controller, Request}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdentityRequest, _}
-import tracking.{Omniture, TrackingParams}
+import tracking.Omniture
 import utils.SafeLogging
 
 import scala.concurrent.Future
@@ -28,26 +28,26 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   import authenticatedActions._
 
-  type OmniPage = IdentityPage with Omniture
-
   protected val accountPage = IdentityPage("/account/edit", "Edit Account Details", "edit account details")
   protected val publicPage = IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
   protected val membershipPage = IdentityPage("/membership/edit", "Membership", "edit membership details")
+  protected val digitalPackPage = IdentityPage("/digitalpack/edit", "Digital Pack", "edit digital pack details")
 
   def displayPublicProfileForm = displayForm(publicPage)
   def displayAccountForm = displayForm(accountPage)
   def displayMembershipForm = displayForm(membershipPage)
+  def displayDigitalPackForm = displayForm(digitalPackPage)
 
-  protected def displayForm(page: OmniPage) = CSRFAddToken {
+  protected def displayForm(page: IdentityPage) = CSRFAddToken {
     recentlyAuthenticated.async { implicit request =>
-      profileFormsView(page.tracking, ProfileForms(request.user, false))
+      profileFormsView(Omniture.tracking(page,idRequestParser(request)), ProfileForms(request.user, false))
     }
   }
 
   def submitPublicProfileForm() = submitForm(publicPage)
   def submitAccountForm() = submitForm(accountPage)
 
-  def submitForm(page: OmniPage) = CSRFCheck {
+  def submitForm(page: IdentityPage) = CSRFCheck {
     authActionWithUser.async {
       implicit request =>
         val idRequest = idRequestParser(request)
@@ -66,17 +66,17 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val futureForms = futureFormOpt getOrElse Future.successful(forms)
         futureForms flatMap {
           forms =>
-            profileFormsView(page.accountEdited, forms)
+            profileFormsView(Omniture.accountEdited(page, idRequest), forms)
         }
     }
   }
 
-  def profileFormsView(pageWithTrackingParamsFor: IdentityRequest => IdentityPage with TrackingParams, forms: ProfileForms)(implicit request: AuthRequest[AnyContent]) = {
+  def profileFormsView(pageWithTrackingParams: IdentityPage, forms: ProfileForms)(implicit request: AuthRequest[AnyContent]) = {
     val idRequest = idRequestParser(request)
     val user = request.user
 
     Future(NoCache(Ok(views.html.profileForms(
-           pageWithTrackingParamsFor(idRequest),
+           pageWithTrackingParams,
            user, forms, idRequest, idUrlBuilder))))
   }
 }

@@ -1,23 +1,22 @@
 @(index: services.IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader)
 
-@import com.gu.facia.api.models.CollectionConfig
+@import model.pressed.CollectionConfig
 @import views.support.PreviousAndNext
 @import layout.{ContainerLayout, ContainerDisplayConfig}
-@import services.FaciaContentConvert
 
 @main(index.page, projectName = Option("facia")){  }{
 <div class="l-side-margins">
     <div data-link-name="Front" role="main" class="fc-container">
         @fragments.containers.index(
-            index.trails,
+            index.faciaTrails,
             ContainerLayout.singletonFromContainerDefinition(
                 slices.TagContainers.allTagPageSlices(index.trails.length),
                 ContainerDisplayConfig.empty,
-                index.trails.map(FaciaContentConvert.frontendContentToFaciaContent)
+                index.faciaTrails
             ),
             0,
             index.date,
-            index.page,
+            index.page.metadata,
             nav,
             index.tzOverride
         )(request, CollectionConfig.empty)

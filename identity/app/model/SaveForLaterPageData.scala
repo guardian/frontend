@@ -1,27 +1,27 @@
 package model
 
 import com.google.inject.{Inject, Singleton}
-import com.gu.facia.api.models.CollectionConfig
 import com.gu.identity.model.{SavedArticle, SavedArticles}
 import common.{ExecutionContexts, Edition, Pagination}
 import conf.LiveContentApi
 import conf.LiveContentApi._
 import layout.{ItemClasses, FaciaCard, ContentCard}
-import model.{Content => ApiContent}
 import services.{FaciaContentConvert, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 import implicits.Articles._
+import pressed.{PressedContent, CollectionConfig}
 import cards._
 
 import scala.concurrent.Future
 
 case class SaveForLaterItem (
-  content: Content,
+  content: ContentType,
+  faciaContent: PressedContent,
   savedArticle: SavedArticle) extends Ordered[SaveForLaterItem] {
 
   def compare(other: SaveForLaterItem) : Int = other.savedArticle.date.compareTo(this.savedArticle.date)
 
   val contentCard = FaciaCard.fromTrail(
-    FaciaContentConvert.frontendContentToFaciaContent(content),
+    faciaContent,
     CollectionConfig.empty,
     ItemClasses(mobile = cards.SavedForLater, tablet = cards.SavedForLater),
     showSeriesAndBlogKickers = false
@@ -52,10 +52,11 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
 
       val items = r.results.flatMap { result =>
         for {
-          content <- Some(ApiContent(result))
-          article <- articles.find( article => article.id == content.id)
+          content <- Some(Content(result))
+          faciaContent <- Some(FaciaContentConvert.contentToFaciaContent(result))
+          article <- articles.find( article => article.id == content.metadata.id)
         } yield {
-          SaveForLaterItem(content, article)
+          SaveForLaterItem(content, faciaContent, article)
         }
       }
 

@@ -20,12 +20,14 @@ import views.support._
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
-trait ArticleWithStoryPackage {
+trait PageWithStoryPackage extends ContentPage {
   def article: Article
   def related: RelatedContent
+  override lazy val item = article
 }
-case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
-case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
+
+case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
+case class LiveBlogPage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
@@ -33,8 +35,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
 
-  private def renderLatestFrom(model: ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(model.article, model.article.body, amp = false)) {
+  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
+      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
             val blocksToKeep = d.getElementsByTag("div") takeWhile {
@@ -49,7 +51,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           }
         }
       }
-      Cached(model.article)(JsonComponent(html))
+      Cached(page)(JsonComponent(html))
   }
 
   case class TextBlock(
@@ -68,28 +70,28 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       (__ \ "body").write[String]
     )(unlift(TextBlock.unapply))
 
-  private def blockText(model: ArticleWithStoryPackage, number: Int)(implicit request: RequestHeader) = model match {
+  private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader) = page match {
     case LiveBlogPage(liveBlog, _) =>
       val blocks = liveBlog.blocks.collect {
         case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
       }.take(number)
-      Cached(model.article)(JsonComponent(("blocks" -> Json.toJson(blocks))))
+      Cached(page)(JsonComponent(("blocks" -> Json.toJson(blocks))))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
 
   }
 
-  private def render(path: String, model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
+  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       if (request.isAmp) {
-        MovedPermanently(path)
+        NotFound
       } else {
         val htmlResponse = () => views.html.liveBlog(blog)
         val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
       }
 
     case article: ArticlePage =>
-      val htmlResponse = () => if (request.isAmp) {
+      val htmlResponse = () => if (request.isAmp && !article.article.isImmersive) {
         views.html.articleAMP(article)
       } else {
           if (article.article.isImmersive) {
@@ -99,7 +101,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           }
       }
       val jsonResponse = () => views.html.fragments.articleBody(article)
-      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+      renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
   def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
@@ -122,7 +124,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     }
   }
 
-  def mapModel(path: String)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+  def mapModel(path: String)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
@@ -149,8 +151,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
    */
   def redirect(response: ItemResponse)(implicit request: RequestHeader) = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
-    val content: Option[ArticleWithStoryPackage] = supportedContent.map {
-      case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
+    val content: Option[PageWithStoryPackage] = supportedContent.map {
+      case liveBlog: Article if liveBlog.isLiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
       case article: Article => ArticlePage(article, RelatedContent(article, response))
     }
 

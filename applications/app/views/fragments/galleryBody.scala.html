@@ -1,38 +1,45 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
-@import views.support.TrailCssClasses.articleToneClass
+@import views.support.TrailCssClasses.toneClass
 @import layout.ContentWidths.GalleryMedia
 @import views.support.ImgSrc
+@import conf.switches.Switches._
 
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
-            Map("content--advertisement-feature" -> gallery.isAdvertisementFeature),
-            "content", "content--media", "content--gallery", "tonal", s"tonal--${articleToneClass(gallery)}"
+    <article id="article" class="@RenderClasses(
+            Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && gallery.commercial.isAdvertisementFeature)
+            ),
+            "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(gallery)}"
         )"
-        itemscope itemtype="@gallery.schemaType" role="main">
+        itemscope itemtype="@gallery.metadata.schemaType" role="main">
 
-        @fragments.headTonal(gallery)
+        @if(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
 
-        <div class="content__main tonal__main tonal__main--@articleToneClass(gallery)">
+        @fragments.headTonal(gallery, gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
+
+        <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--gallery">
-                    @fragments.witnessCallToAction(gallery)
+                    @fragments.witnessCallToAction(gallery.content)
                     @fragments.contentMeta(gallery)
                     <ul class="gallery2">
-                    @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                        @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
+                    @gallery.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                        @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.lightbox.imageContainer(row.rowNum - 1))
                     }
                     </ul>
-                    @fragments.witnessCallToAction(gallery)
+                    @fragments.witnessCallToAction(gallery.content)
                     @fragments.submeta(gallery)
                 </div>
             </div>
         </div>
     </article>
 
-    @if(gallery.showInRelated) {
+    @if(gallery.content.showInRelated) {
         <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
-            <div class="js-gallery-most-popular tonal--@articleToneClass(gallery)">
+            <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
                 <div class="fc-container">
                     <div class="fc-container__inner">
                         <div class="fc-container__header">
@@ -54,14 +61,14 @@
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
             <a class="gallery2__img-container js-gallerythumbs @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
-                href="@LinkTo{@gallery.url#img-@rowNum}"
+                href="@LinkTo{@gallery.metadata.url#img-@rowNum}"
 
                 data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
                 <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                srcset="@ImgSrc.srcset(imageElement, GalleryMedia.inline)"
+                srcset="@ImgSrc.srcset(imageElement.images, GalleryMedia.inline)"
                 sizes="@GalleryMedia.inline.sizes"
-                src="@ImgSrc.getFallbackUrl(imageElement)"
+                src="@ImgSrc.getFallbackUrl(imageElement.images)"
                 alt="@image.altText.getOrElse("")"
                 itemprop="contentUrl" />
 
@@ -78,13 +85,13 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.elementShares(Some("img-" + rowNum.toString), image.path), gallery.contentType)
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.sharelinks.elementShares(Some("img-" + rowNum.toString), image.path), gallery.metadata.contentType)
             </div>
 
         </figure>
     </li>
 
-    @if(!gallery.shouldHideAdverts && rowNum % adInterval == 0) {
+    @if(!gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
         @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
             <li class="gallery2__item gallery2__item--advert">
                 @defining(if(adSlot == "inline1") Option("300,250") else None) { mpuSlotSize =>

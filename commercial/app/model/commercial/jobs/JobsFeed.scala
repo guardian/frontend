@@ -1,29 +1,17 @@
 package model.commercial.jobs
 
+import java.lang.System.currentTimeMillis
+import java.util.concurrent.TimeUnit.MILLISECONDS
+
+import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.CommercialConfiguration
-import conf.switches.Switches.JobFeedSwitch
-import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
-import org.joda.time._
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
+import scala.concurrent.duration.Duration
+import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
 object JobsFeed extends ExecutionContexts with Logging {
-
-  // url changes daily so cannot be val
-  def maybeUrl = {
-
-    /*
-     * Using offset time because this appears to be how the URL is constructed.
-     * With UTC time we lose the feed for 2 hours at midnight every day.
-     */
-    val feedDate = new DateTime(DateTimeZone.forOffsetHours(-2)).toString("yyyy-MM-dd")
-
-    val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
-    urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
-  }
 
   def parse(xml: Elem): Seq[Job] = for {
     jobXml <- xml \\ "Job"
@@ -31,22 +19,21 @@ object JobsFeed extends ExecutionContexts with Logging {
     if (jobXml \ "RecruiterName").text != "THE GUARDIAN MASTERCLASSES"
   } yield Job(jobXml)
 
-  def loadAds(): Future[Seq[Job]] = {
-    maybeUrl map { url =>
-    val request = FeedRequest(
-      feedName = "Jobs",
-      switch = JobFeedSwitch,
-      url,
-      responseEncoding = Some("utf-8"),
-      timeout = 30.seconds
-    )
-    FeedReader.readSeq[Job](request) { body =>
-      parse(XML.loadString(body.dropWhile(_ != '<')))
-    }
-    } getOrElse {
-      log.warn(s"Missing URL for Jobs feed")
-      Future.failed(FeedMissingConfigurationException("Jobs"))
+  def parsedJobs(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Job]] = {
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+      if (switchedOn) {
+        val start = currentTimeMillis
+        feedContent map { body =>
+          val parsed = parse(XML.loadString(body.dropWhile(_ != '<')))
+          Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
+        } getOrElse {
+          Future.failed(MissingFeedException(feedMetaData.name))
+        }
+      } else {
+        Future.failed(SwitchOffException(feedMetaData.switch.name))
+      }
+    } recoverWith {
+      case NonFatal(e) => Future.failed(e)
     }
   }
-
 }

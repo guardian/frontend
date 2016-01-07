@@ -1,29 +1,26 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
-@import common.{LinkTo, Localisation}
-@import conf.switches.Switches._
-@import views.support.TrailCssClasses.articleToneClass
-@import com.gu.facia.client.models.CollectionConfigJson
+@import common.LinkTo
+@import views.support.TrailCssClasses.toneClass
 @import views.BodyCleaner
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
-@import services.FaciaContentConvert
 
 @defining(model.article) {  article =>
 <div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
-        class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
-        itemscope itemtype="@article.schemaType" role="main">
+        class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
+        itemscope itemtype="@article.metadata.schemaType" role="main">
 
-        <meta itemprop="url" content="@LinkTo(article.url)">
+        <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
-        <header class="content__head tonal__head tonal__head--@articleToneClass(article)">
+        <header class="content__head tonal__head tonal__head--@toneClass(article)">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         @fragments.meta.metaInline(article)
-                        <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
+                        <h1 itemprop="headline" class="content__headline js-score">@Html(article.trail.headline)</h1>
                     </div>
                 </div>
             </div>
@@ -34,14 +31,14 @@
                         @fragments.standfirst(article)
 
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.lastModified" data-relativeformat="med"></time>
+                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
+        <div class="content__main tonal__main tonal__main--@toneClass(article)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
                     <div class="js-sport-tabs js-football-meta football-tabs content__mobile-full-width"></div>
@@ -49,7 +46,7 @@
 
                     @fragments.mainMedia(article)
 
-                    @fragments.witnessCallToAction(article)
+                    @fragments.witnessCallToAction(article.content)
 
                     <div class="blog__left-col">
 
@@ -70,11 +67,11 @@
 
                     @fragments.dropdown("Live feed", Some("live-feed"), true) {
                         <div class="js-article__container" data-component="body">
-                            @fragments.liveFilter(article.isLive)
+                            @fragments.liveFilter(article.fields.isLive)
 
-                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
-                                itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-                                @BodyCleaner(article, article.body, amp = false)
+                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-test-id="live-blog-blocks"
+                                itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
+                                @BodyCleaner(article, article.fields.body, amp = false)
                             </div>
                         </div>
 
@@ -92,10 +89,10 @@
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
                             <ul class="u-unstyled fc-slice fc-slice--single-col">
-                                @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
+                                @model.related.faciaItems.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
                                         FaciaCardAndIndex.fromTrail(
-                                            FaciaContentConvert.frontendContentToFaciaContent(trail),
+                                            trail,
                                             ItemClasses.liveBlogMore,
                                             index
                                         ).transformCard(_.withTimeStamp),

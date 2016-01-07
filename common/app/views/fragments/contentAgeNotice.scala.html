@@ -1,0 +1,9 @@
+@(ageMessage: String)(implicit request: RequestHeader)
+
+@if(ageMessage.nonEmpty) {
+    <div class="old-article-message">
+        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+        This article is <strong>@ageMessage old</strong>
+    </div>
+}
+

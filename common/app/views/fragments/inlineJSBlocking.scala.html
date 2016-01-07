@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 @import conf.switches.Switches._
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
@@ -7,20 +7,36 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@fragments.omnitureScript(Some(metaData))
+@fragments.omnitureScript(Some(page.metadata))
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
+    @Html(curlConfig().body)
+
+    @if(play.Play.isDev()) {
+        @Html(Static.js.curl);
+
+        require(['boot']);
+    } else {
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/app.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+    }
+
     // render-critical blocking JS
 
     // polyfills
     @Html(polyfills().body)
 
     // determine whether to run enhanced JS
-    @InlineJs(shouldEnhance(metaData).body, "shouldEnhance.js")
+    @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
 
     // page config
-    @Html(config(metaData).body)
+    @Html(config(page).body)
 
     // analytics code
     @InlineJs(analytics().body, "analytics.js")
@@ -40,11 +56,5 @@
     }
 
     // cloudwatch beacons
-    @InlineJs(cloudwatchBeacons(metaData).body, "cloudwatchBeacons.js")
-
-    // curl
-    @Html(curl(metaData).body)
-
-    // load the enhanced JS
-    @InlineJs(bootEnhanced(metaData).body, "bootEnhanced.js")
+    @InlineJs(cloudwatchBeacons(page.metadata).body, "cloudwatchBeacons.js")
 </script>

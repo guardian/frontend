@@ -1,7 +1,6 @@
 package services
 
-import com.gu.facia.api.models.CollectionConfig
-import com.gu.facia.api.utils.{CartoonKicker, ReviewKicker, TagKicker}
+import com.gu.facia.api.{models => fapi}
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -9,9 +8,11 @@ import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
 import model.meta.{ItemList, ListItem}
+import model.pressed._
 import org.joda.time.{DateTimeZone, DateTime}
 import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 
 import scala.Function.const
 import scalaz.std.list._
@@ -47,11 +48,11 @@ object IndexPage {
     case _ => None
   }
 
-  def makeFront(indexPage: IndexPage, edition: Edition) = {
+  def makeFront(indexPage: IndexPage, edition: Edition): Front = {
     val isCartoonPage = indexPage.isTagWithId("type/cartoon")
     val isReviewPage = indexPage.isTagWithId("tone/reviews")
 
-    val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails)
+    val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails.map(_.trail))
 
     val grouped = if (isSlow || indexPage.forcesDayView)
       IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
@@ -61,7 +62,9 @@ object IndexPage {
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
         val collection = CollectionEssentials.fromFaciaContent(
-          grouping.items.map(FaciaContentConvert.frontendContentToFaciaContent)
+          grouping.items.flatMap { item =>
+            indexPage.contents.find(_.item.metadata.id == item.metadata.id).map(_.faciaItem)
+          }
         )
 
         val mpuContainer = (if (isSlow)
@@ -95,7 +98,7 @@ object IndexPage {
       containerDefinitions,
       ContainerLayoutContext(
         Set.empty,
-        hideCutOuts = indexPage.page.isContributorPage
+        hideCutOuts = indexPage.tags.isContributorPage
       )
     )
 
@@ -136,12 +139,12 @@ object IndexPage {
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = timeStampDisplay,
-          byline = if (indexPage.page.isContributorPage) None else card.byline,
+          byline = if (indexPage.tags.isContributorPage) None else card.byline,
           useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
-          case TagKicker(_, _, id) if indexPage.isTagWithId(id) => None
+          case TagKicker(_, _, _, id) if indexPage.isTagWithId(id) => None
           case otherKicker => Some(otherKicker)
         })
       })
@@ -150,19 +153,38 @@ object IndexPage {
 
   def makeLinkedData(indexPage: IndexPage)(implicit request: RequestHeader): ItemList = {
     ItemList(
-      LinkTo(indexPage.page.url),
+      LinkTo(indexPage.page.metadata.url),
       indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
-          ListItem(position = index, url = Some(LinkTo(trail.url)))
+          ListItem(position = index, url = Some(LinkTo(trail.metadata.url)))
       }
     )
   }
 
 }
+object IndexPageItem {
+  def apply(content: ApiContent): IndexPageItem = {
+    IndexPageItem(
+      Content(content),
+      FaciaContentConvert.contentToFaciaContent(content))
+  }
+}
+case class IndexPageItem(
+  item: ContentType,
+  faciaItem: PressedContent
+)
 
-case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now,
-                     tzOverride: Option[DateTimeZone] = None) {
+case class IndexPage(
+  page: Page,
+  contents: Seq[IndexPageItem],
+  tags: Tags = Tags(Nil),
+  date: DateTime = DateTime.now,
+  tzOverride: Option[DateTimeZone] = None) {
+
+  val trails: Seq[Content] = contents.map(_.item.content)
+  val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)
+  val commercial: Commercial = Commercial.make(page.metadata, tags)
+
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),
     Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
@@ -170,7 +192,7 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
 
   def isTagWithId(id: String) = page match {
     case section: Section =>
-      isSectionKeyword(section.id, id)
+      isSectionKeyword(section.metadata.id, id)
 
     case tag: Tag => tag.id == id
 
@@ -186,14 +208,14 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def forcesDayView = page match {
-    case tag: Tag if tag.section == "crosswords" => false
-    case tag: Tag => Set("series", "blog").contains(tag.tagType)
+    case tag: Tag if tag.metadata.section == "crosswords" => false
+    case tag: Tag => Set("series", "blog").contains(tag.properties.tagType)
     case _ => false
   }
 
   def idWithoutEdition = page match {
-    case section: Section if section.isEditionalised => Paths.stripEditionIfPresent(section.id)
-    case other => other.id
+    case section: Section if section.isEditionalised => Paths.stripEditionIfPresent(section.metadata.id)
+    case other => other.metadata.id
   }
 
   def allPath = s"/$idWithoutEdition"

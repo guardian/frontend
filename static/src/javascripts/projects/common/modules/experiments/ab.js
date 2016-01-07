@@ -5,13 +5,11 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/inject-network-front-test-2',
-    'common/modules/experiments/tests/reach-dummy-test-2',
-    'common/modules/experiments/tests/essential-read-test-1',
+    'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/large-top-slot',
-    'common/modules/experiments/tests/video-preroll',
-    'common/modules/experiments/tests/rtrt-email-form-inline-footer',
+    'common/modules/experiments/tests/alternative-related',
+    'common/modules/experiments/tests/identity-sign-in-v2',
+    'common/modules/experiments/tests/rtrt-email-form-article-promo',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -28,13 +26,11 @@ define([
     mediator,
     store,
     mvtCookie,
-    HighCommercialComponent,
-    InjectNetworkFrontTest2,
-    ReachDummyTest2,
-    EssentialReadTest1,
+    FrontsOnArticles2,
     LargeTopAd,
-    VideoPreroll,
-    RtrtEmailFormInlineFooter,
+    AlternativeRelated,
+    IdentitySignInV2,
+    RtrtEmailFormArticlePromo,
     flatten,
     forEach,
     keys,
@@ -46,13 +42,11 @@ define([
     chain) {
 
     var TESTS = flatten([
-        new HighCommercialComponent(),
-        new InjectNetworkFrontTest2(),
-        new ReachDummyTest2(),
+        new FrontsOnArticles2(),
         new LargeTopAd(),
-        new VideoPreroll(),
-        new EssentialReadTest1(),
-        new RtrtEmailFormInlineFooter()
+        new AlternativeRelated(),
+        new IdentitySignInV2(),
+        new RtrtEmailFormArticlePromo()
     ]);
 
     var participationsKey = 'gu.ab.participations';
@@ -357,6 +351,19 @@ define([
             }
 
             return test.id && test.expiry && testCanBeRun(test);
+        },
+
+        /**
+         * returns whether the caller should treat the user as being in that variant.
+         *
+         * @param testName
+         * @param variant
+         * @returns {*|boolean|Boolean}
+         */
+        isInVariant: function (testName, variant) {
+            return ab.getParticipations()[testName] &&
+                (ab.getParticipations()[testName].variant === variant) &&
+                ab.testCanBeRun(testName);
         },
 
         shouldRunTest: shouldRunTest,

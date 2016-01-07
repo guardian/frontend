@@ -7,23 +7,27 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
+GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
+GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
+
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
-GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id     controllers.CrosswordsController.accessibleCrossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|special|genius|speedy>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET        /email                                                               controllers.EmailController.renderPage()
-GET        /email/form                                                          controllers.EmailController.renderForm()
-GET        /email/:result                                                       controllers.EmailController.subscriptionResult(result: String)
-POST       /email                                                               controllers.EmailController.submit()
-OPTIONS    /email                                                               controllers.EmailController.options()
+GET        /email                                                               controllers.EmailSignupController.renderPage()
+GET        /email/form/$emailType<article|footer>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
+POST       /email                                                               controllers.EmailSignupController.submit()
+OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)
@@ -37,6 +41,9 @@ GET        /preferences                                                         
 
 GET        /crosswords/optin                                                    controllers.CrosswordPreferencesController.crosswordsOptIn
 GET        /crosswords/optout                                                   controllers.CrosswordPreferencesController.crosswordsOptOut
+
+GET        /https/optin                                                         controllers.HTTPSCookieController.optIn()
+GET        /https/optout                                                        controllers.HTTPSCookieController.optOut()
 
 # Web App paths
 GET        /offline-page.json                                                   controllers.WebAppController.offlinePage()

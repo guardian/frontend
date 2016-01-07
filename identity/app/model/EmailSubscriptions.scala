@@ -119,35 +119,35 @@ object EmailSubscriptions {
   )
 
   def moreFromTheguardianEmails(subscribedListIds: Iterable[String] = None) = List(
-    // More from theguardian
+    // Guardian favourites
     EmailSubscription(
-      "The Guardian Masterclasses",
-      "more from theguardian",
+      "Guardian Masterclasses",
+      "guardian favourites",
       "Courses and training",
-      "News on the latest courses and special offers from the Guardian's learning programme, plus inspiring tips on everything from journalism, to food business and creative writing, delivered to your inbox twice a week.",
-      "",
-      "3388",
-      subscribedTo = subscribedListIds.exists{ x => x == "3388" }
+      "News on the latest classes, blog content and competitions from the Guardian's learning programme. Plus inspiring tips from world-class tutors on everything from journalism and creative writing to culture and general knowledge, delivered to your inbox three times per week.",
+      "3 times per week",
+      "3561",
+      subscribedTo = subscribedListIds.exists{ x => x == "3561" }
     ),
 
     EmailSubscription(
-      "The Guardian Gardener",
-      "more from theguardian",
+      "Guardian Gardener",
+      "guardian favourites",
       "Gardening",
-      "Sign up to receive the latest offers from the Guardian Garden Centre. Get tips and seasonal advice from our expert gardeners and shop for bulbs, plants and garden hardware.",
+      "Tips and seasonal advice from our expert gardeners to help you care for any green space: whether you have acres or plant pots. Plus shop for bulbs, plants and garden hardware sourced from our favourite independent suppliers.",
       "1-2 times per week",
-      "3389",
-      subscribedTo = subscribedListIds.exists{ x => x == "3389" }
+      "3562",
+      subscribedTo = subscribedListIds.exists{ x => x == "3562" }
     ),
 
     EmailSubscription(
-      "The Guardian Bookshop",
-      "more from theguardian",
+      "Guardian Bookshop",
+      "guardian favourites",
       "Books",
       "Every week you’ll receive our hand-picked edits of books we know you’ll enjoy. From thought-provoking collections, round-ups of the Guardian and Observer weekend reviews and special offers plus from time to time we’ll give you first preview of the books we publish and new and noteworthy titles to look out for each month.",
       "Every Wednesday, Saturday and Sunday",
-      "3394",
-      subscribedTo = subscribedListIds.exists{ x => x == "3394" }
+      "3563",
+      subscribedTo = subscribedListIds.exists{ x => x == "3563" }
     )
   )
 

@@ -2,23 +2,74 @@ package model
 
 import com.gu.facia.api.models._
 import common.dfp.{AdSize, AdSlot, DfpAgent}
-import common.{Edition, NavItem}
+import common.Edition
 import conf.Configuration
 import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 import scala.language.postfixOps
 
 object PressedPage {
-  implicit val pressedPageFormat = Json.format[PressedPage]
+
+  implicit val pressedPageFormat = PressedPageFormat.format
+
+  def makeMetadata(id: String, seoData: SeoData, frontProperties: FrontProperties, collections: List[PressedCollection]): MetaData = {
+    def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
+      o.map(value => Map(key -> value)).getOrElse(Map())
+
+    val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
+    val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
+    val keywordIds: Seq[String] = frontKeywordIds(id)
+    val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
+
+    val faciaPageMetaData: Map[String, JsValue] = Map(
+      "keywords" -> JsString(seoData.webTitle.capitalize),
+      "keywordIds" -> JsString(keywordIds.mkString(",")),
+      "contentType" -> JsString(contentType)
+    ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
+
+    val openGraph: Map[String, String] = Map(
+      "og:image" -> Configuration.images.fallbackLogo) ++
+      optionalMapEntry("og:description", seoData.description)  ++
+      optionalMapEntry("og:image", frontProperties.imageUrl)
+
+    val twitterProperties: Map[String, String] = Map("twitter:card" -> "summary")
+
+    MetaData.make(
+      id = id,
+      section = seoData.navSection,
+      webTitle = seoData.webTitle,
+      //For network fronts we want the string "Network Front"
+      //This allows us to change webTitle in tool easily on fronts
+      analyticsName = if (isNetworkFront)
+          s"GFE:${GuardianContentTypes.NetworkFront}"
+        else
+          s"GFE:${seoData.webTitle.capitalize}",
+      description = seoData.description,
+      isFront = true,
+      isPressedPage = true,
+      title = seoData.title,
+      contentType = contentType,
+      adUnitSuffix = Some(AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, seoData.navSection)),
+      customSignPosting = FaciaSignpostingOverrides(id),
+      iosType = Some("front"),
+      javascriptConfigOverrides = faciaPageMetaData,
+      opengraphPropertiesOverrides = openGraph,
+      twitterPropertiesOverrides = twitterProperties
+    )
+  }
 }
 
-case class PressedPage(id: String,
-                     seoData: SeoData,
-                     frontProperties: FrontProperties,
-                     collections: List[PressedCollection]) extends MetaData with AdSuffixHandlingForFronts {
+case class PressedPage (
+  id: String,
+  seoData: SeoData,
+  frontProperties: FrontProperties,
+  collections: List[PressedCollection]) extends StandalonePage {
+
+  override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
+
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.
     *
@@ -45,77 +96,30 @@ case class PressedPage(id: String,
       s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
     }
   }
+  val navSection: String = metadata.section
+  val keywordIds: Seq[String] = frontKeywordIds(id)
 
-  override lazy val description: Option[String] = seoData.description
-  override lazy val section: String = seoData.navSection
-  lazy val navSection: String = section
-
-  //For network fronts we want the string "Network Front"
-  //This allows us to change webTitle in tool easily on fronts
-  override lazy val analyticsName: String =
-    if (isNetworkFront)
-      s"GFE:${GuardianContentTypes.NetworkFront}"
-    else
-      s"GFE:${seoData.webTitle.capitalize}"
-
-  override lazy val webTitle: String = seoData.webTitle
-  override lazy val title: Option[String] = seoData.title
-
-  lazy val keywordIds: Seq[String] = frontKeywordIds(id)
-
-  override lazy val isFront = true
-
-  override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
-  lazy val faciaPageMetaData: Map[String, JsValue] = Map(
-    "keywords" -> JsString(webTitle.capitalize),
-    "keywordIds" -> JsString(keywordIds.mkString(",")),
-    "contentType" -> JsString(contentType)
-  ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
-
-  val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
-
-  override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
-
-  override def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
-    keywordIds exists (DfpAgent.isSponsored(_, Some(section), maybeEdition))
-  override def hasMultipleSponsors = false // Todo: need to think about this
-  override lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
-      Some(section)))
-  override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
-  override lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
-      Some(section)))
-  override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
-  override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
-
-  override def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = {
-    DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
+   def sponsorshipType: Option[String] = {
+    if (isSponsored(None)) {
+      Option("sponsoredfeatures")
+    } else if (isAdvertisementFeature) {
+      Option("advertisement-features")
+    } else if (isFoundationSupported) {
+      Option("foundation-features")
+    } else {
+      None
+    }
   }
 
-  override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
-    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
-  }
-  override def omitMPUsFromContainers(edition: Edition): Boolean = {
-    DfpAgent.omitMPUsFromContainers(id, edition)
-  }
-
-  val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
+  def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
+    keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.section), maybeEdition))
+  def hasMultipleSponsors = false // Todo: need to think about this
+  val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
+      Some(metadata.section)))
+  def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
+  val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
+      Some(metadata.section)))
+  def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
-
-  override def openGraph: Map[String, String] = super.openGraph ++ Map(
-    "og:image" -> Configuration.facebook.imageFallback) ++
-    optionalMapEntry("og:description", description)  ++
-    optionalMapEntry("og:image", frontProperties.imageUrl)
-
-
-  override def cards: List[(String, String)] = super.cards ++
-    List("twitter:card" -> "summary")
-
-  override def customSignPosting: Option[NavItem] = FaciaSignpostingOverrides(id)
-
-  private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
-    o.map(value => Map(key -> value)).getOrElse(Map())
-
-  override def iosType = Some("front")
-
 }

@@ -1,25 +1,26 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.ContentType)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
+@import common.LinkTo
 @import conf.switches.Switches.SaveForLaterSwitch
 @import common.RichRequestHeader
 
 @toneLink = {
-    @if(content.isArticle && !content.isLiveBlog) {
-        @content.tones.headOption.map { tone =>
+    @if(content.tags.isArticle && !content.tags.isLiveBlog) {
+        @content.tags.tones.headOption.map { tone =>
             <a class="submeta__tone button button--small button--tag @content.tagTone.map("button--tone-" + _).getOrElse("button--secondary")"
-            href="@LinkTo(tone.url)" data-link-name="tone: @tone.name" itemprop="keywords">More @tone.name.toLowerCase </a>
+            href="@LinkTo(tone.metadata.url)" data-link-name="tone: @tone.name" itemprop="keywords">More @tone.name.toLowerCase </a>
         }
     }
 }
 
 @if(!request.isAmp) {
     <div class="submeta">
-        @if(content.keywords.filterNot(_.isSectionTag).nonEmpty) {
+        @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
             <hr/>
             <div data-link-name="keywords" data-component="keywords">
                 @toneLink
                 <h2 class="submeta__head">Topics</h2>
-                @fragments.keywordList(content.keywords, tone = content.tagTone)
+                @fragments.keywordList(content.tags.keywords, tone = content.tagTone)
             </div>
         }
         @if(content.showBottomSocialButtons) {
@@ -32,6 +33,7 @@
                     <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
                 }
                 @fragments.syndication(content)
+
             </div>
         } else {
             @fragments.syndication(content)

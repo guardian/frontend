@@ -1,12 +1,12 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
 import common._
 import feed.MostViewedAudioAgent
 import layout.{CollectionEssentials, FaciaContainer}
-import model.{Audio, Cached, FrontProperties}
+import model.pressed.CollectionConfig
+import model.{RelatedContentItem, Cached, FrontProperties}
 import play.api.mvc.{Action, Controller, RequestHeader}
-import services.{CollectionConfigWithId, FaciaContentConvert}
+import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
 object MostViewedAudioController extends Controller with Logging with ExecutionContexts {
@@ -24,17 +24,17 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
     }
   }
 
-  private def getMostViewedAudio()(implicit request: RequestHeader): Seq[Audio] = {
+  private def getMostViewedAudio()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
     MostViewedAudioAgent.mostViewedAudio().take(size)
   }
 
-  private def getMostViewedPodcast()(implicit request: RequestHeader): Seq[Audio] = {
+  private def getMostViewedPodcast()(implicit request: RequestHeader): Seq[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
     MostViewedAudioAgent.mostViewedPodcast().take(size)
   }
 
-  private def renderMostViewedAudio(audios: Seq[Audio], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
+  private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
     val dataId = s"$mediaType/most-viewed"
     val displayName = Some(s"popular in $mediaType")
     val config = CollectionConfig.empty.copy(displayName = displayName)
@@ -44,7 +44,7 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
         1,
         Fixed(FixedContainers.fixedSmallSlowIV),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(audios map FaciaContentConvert.frontendContentToFaciaContent take 4, Nil, displayName, None, None, None)
+        CollectionEssentials(audios.map(_.faciaContent) take 4, Nil, displayName, None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
     )(request)

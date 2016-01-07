@@ -3,7 +3,8 @@ import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import metrics.FrontendMetric
+import jobs.SiteMapLifecycle
+import metrics.{FrontendMetric, EmailSubsciptionMetrics}
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
@@ -17,7 +18,8 @@ object Global extends WithFilters(Filters.common: _*)
   with IndexListingsLifecycle
   with SectionsLookUpLifecycle
   with SwitchboardLifecycle
-  with CorsErrorHandler {
+  with CorsErrorHandler
+  with SiteMapLifecycle {
   override lazy val applicationName = "frontend-applications"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
@@ -25,6 +27,13 @@ object Global extends WithFilters(Filters.common: _*)
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
     ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
-    ContentApiMetrics.ContentApiErrorMetric
+    ContentApiMetrics.ContentApiErrorMetric,
+    EmailSubsciptionMetrics.EmailSubmission,
+    EmailSubsciptionMetrics.EmailFormError,
+    EmailSubsciptionMetrics.NotAccepted,
+    EmailSubsciptionMetrics.APIHTTPError,
+    EmailSubsciptionMetrics.APINetworkError,
+    EmailSubsciptionMetrics.ListIDError,
+    EmailSubsciptionMetrics.AllEmailSubmission
   )
 }

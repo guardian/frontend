@@ -15,6 +15,7 @@
                                 <li><a href="@controllers.admin.routes.ContentPerformanceController.renderVideoEncodingsDashboard()">Video</a></li>
                             </ul>
                         </li>
+                        <li><a href="@controllers.admin.routes.AnalyticsController.renderQuality()">Quality dashboard</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,6 +30,7 @@
                         <li><a href="/dev/switchboard">Switchboard</a></li>
                         <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()">Radiator</a></li>
                         <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()?features=external">Radiator (external)</a></li>
+                        <li><a href="@controllers.admin.routes.DeploysRadiatorController.renderDeploysRadiator()">Deploys Radiator</a></li>
                         <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
                         <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear images</a></li>
                         <li><a href="@controllers.cache.routes.PageDecacheController.renderPageDecacheForm()">Clear page (content)</a></li>

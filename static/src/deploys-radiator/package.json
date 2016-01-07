@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "jspm bundle-sfx app/main target/main.js && cp app/main.css target/main.css"
+  },
+  "jspm": {
+    "dependencies": {
+      "hyperscript-helpers": "npm:hyperscript-helpers@^2.0.1",
+      "immutable": "npm:immutable@^3.7.5",
+      "monapt": "npm:monapt@^0.5.0",
+      "ts": "github:frankwallis/plugin-typescript@^2.1.2",
+      "virtual-dom": "npm:virtual-dom@^2.1.1"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  },
+  "dependencies": {
+    "jspm": "^0.16.15",
+    "tsd": "^0.6.5"
+  }
+}

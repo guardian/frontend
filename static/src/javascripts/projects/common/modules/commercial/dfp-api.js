@@ -17,6 +17,7 @@ define([
     'common/utils/user-timing',
     'common/utils/sha1',
     'common/utils/fastdom-idle',
+    'common/utils/cookies',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -43,7 +44,25 @@ define([
     'lodash/collections/find',
     'lodash/arrays/last',
     'lodash/arrays/intersection',
-    'lodash/arrays/initial'
+    'lodash/arrays/initial',
+
+    'common/modules/commercial/creatives/branded-component',
+    'common/modules/commercial/creatives/commercial-component',
+    'common/modules/commercial/creatives/gu-style-comcontent',
+    'common/modules/commercial/creatives/paidfor-content',
+    'common/modules/commercial/creatives/expandable',
+    'common/modules/commercial/creatives/expandable-v2',
+    'common/modules/commercial/creatives/expandable-v3',
+    'common/modules/commercial/creatives/expandable-video',
+    'common/modules/commercial/creatives/expandable-video-v2',
+    'common/modules/commercial/creatives/fluid250',
+    'common/modules/commercial/creatives/fluid250-v3',
+    'common/modules/commercial/creatives/fluid250-v4',
+    'common/modules/commercial/creatives/fluid250GoogleAndroid',
+    'common/modules/commercial/creatives/foundation-funded-logo',
+    'common/modules/commercial/creatives/scrollable-mpu',
+    'common/modules/commercial/creatives/scrollable-mpu-v2',
+    'common/modules/commercial/creatives/template'
 ], function (
     bean,
     bonzo,
@@ -59,6 +78,7 @@ define([
     userTiming,
     sha1,
     idleFastdom,
+    cookies,
     StickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -346,7 +366,7 @@ define([
             if (slots.length === 0) {
                 mediator.off('window:throttledScroll', lazyLoad);
             } else {
-                var scrollTop    = window.pageYOffset,
+                var scrollTop = window.pageYOffset,
                     viewportHeight = bonzo.viewport().height,
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
@@ -404,24 +424,28 @@ define([
                 adUnit         = adUnitOverride ?
                     ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
                 id             = $adSlot.attr('id'),
-                sizeMapping    = defineSlotSizes($adSlot),
+                slot,
+                size,
+                sizeMapping;
+
+            if ($adSlot.data('out-of-page')) {
+                slot = googletag.defineOutOfPageSlot(adUnit, id);
+            } else if ($adSlot.data('fluid') && cookies.get('adtest') === 'tm2') {
+                $adSlot.addClass('ad-slot--fluid');
+                sizeMapping = defineSlotSizes($adSlot);
+                // SizeMappingBuilder does not handle 'fluid' very well,
+                // so instead we add it manually ourselves to the end of each array of sizes
+                forEach(sizeMapping, function (sizeMap) { sizeMap[1].push('fluid'); });
+                slot = googletag.defineSlot(adUnit, 'fluid', id).defineSizeMapping(sizeMapping);
+            } else {
+                sizeMapping = defineSlotSizes($adSlot);
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = uniq(
-                    flatten(sizeMapping, true, function (map) {
-                        return map[1];
-                    }),
-                    function (size) {
-                        return size[0] + '-' + size[1];
-                    }
-                ),
-                slot = (
-                    $adSlot.data('out-of-page') ?
-                        googletag.defineOutOfPageSlot(adUnit, id) :
-                        googletag.defineSlot(adUnit, size, id)
-                    )
-                    .addService(googletag.pubads())
-                    .defineSizeMapping(sizeMapping)
-                    .setTargeting('slot', slotTarget);
+                size = uniq(
+                    flatten(sizeMapping, true, function (map) { return map[1]; }),
+                    function (size) { return size[0] + '-' + size[1]; }
+                );
+                slot = googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
+            }
 
             if ($adSlot.data('series')) {
                 slot.setTargeting('se', parseKeywords($adSlot.data('series')));
@@ -430,6 +454,9 @@ define([
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
             }
+
+            slot.addService(googletag.pubads())
+                .setTargeting('slot', slotTarget);
 
             // Add to the array of ads to be refreshed (when the breakpoint changes)
             // only if it's `data-refresh` attribute isn't set to false.
@@ -444,7 +471,7 @@ define([
         },
         parseAd = function (event) {
             var size,
-                slotId = event.slot.getSlotId().getDomId(),
+                slotId = event.slot.getSlotElementId(),
                 $slot = $('#' + slotId),
                 $placeholder,
                 $adSlotContent;
@@ -542,10 +569,11 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require(['bootstraps/creatives'], function () {
-                                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                        new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                                    });
+                                if (config.switches.newCommercialContent && creativeConfig.name === 'gu-style-comcontent') {
+                                    creativeConfig.name = 'paidfor-content';
+                                }
+                                require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                    new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                 });
                             } else {
                                 // evil, but we own the returning js snippet

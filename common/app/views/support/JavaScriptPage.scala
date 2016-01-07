@@ -4,17 +4,22 @@ import common.Maps.RichMap
 import common.{Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
-import model.{CommercialExpiryPage, Content, MetaData}
+import model._
+import implicits.Dates.DateTime2ToCommonDateFormats
 import org.joda.time.DateTime
 import play.api.Play
 import play.api.Play.current
-import play.api.libs.json.{JsBoolean, JsString, Json}
+import play.api.libs.json.{JsValue, JsBoolean, JsString, Json}
 import play.api.mvc.RequestHeader
 
-case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
+object JavaScriptPage {
 
-  def get = {
+  def get(page: Page)(implicit request: RequestHeader): JsValue = Json.toJson(getMap(page))
+
+  def getMap(page: Page)(implicit request: RequestHeader): Map[String,JsValue] = {
     val edition = Edition(request)
+    val metaData = page.metadata
+    val content: Option[Content] = Page.getContent(page).map(_.content)
 
     // keeping this here for now as we use it for the "opt in" message
     val internationalEdition = InternationalEdition(request) map { edition =>
@@ -26,6 +31,12 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
     }
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
+    val isInappropriateForSponsorship = content.exists(_.commercial.isInappropriateForSponsorship)
+    val sponsorshipType = content.flatMap(_.commercial.sponsorshipType).map("sponsorshipType" -> JsString(_))
+    val sponsorshipTag = content.flatMap(_.commercial.sponsorshipTag).map( tag => "sponsorshipTag" -> JsString(tag.name))
+    val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
+    val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
+    val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
     val commercialMetaData = Map(
       "oasHost" -> JsString("oas.theguardian.com"),
@@ -34,20 +45,21 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
       "hasBelowTopNavSlot" -> JsBoolean(metaData.hasAdInBelowTopNavSlot(edition)),
-      "shouldHideAdverts" -> JsBoolean(metaData match {
-        case c: Content if c.shouldHideAdverts => true
-        case CommercialExpiryPage(_) => true
+      "shouldHideAdverts" -> JsBoolean(page match {
+        case c: ContentPage if c.item.content.shouldHideAdverts => true
+        case c: CommercialExpiryPage => true
         case _ => false
       }),
-      "isInappropriateForSponsorship" -> JsBoolean(metaData.isInappropriateForSponsorship)
-    ) ++ metaData.sponsorshipType.map { sponsorshipType =>
-      Map("sponsorshipType" -> JsString(sponsorshipType))
-    }.getOrElse(Nil) ++
-      metaData.sponsorshipTag.map { tag =>
-        Map("sponsorshipTag" -> JsString(tag.name))
-      }.getOrElse(Nil)
+      "isInappropriateForSponsorship" -> JsBoolean(isInappropriateForSponsorship)
+    ) ++ sponsorshipType ++ sponsorshipTag
 
-    Json.toJson(metaData.metaData ++ config ++ internationalEdition ++ commercialMetaData ++ Map(
+    val javascriptConfig = page match {
+      case c: ContentPage => c.getJavascriptConfig
+      case s: StandalonePage => s.getJavascriptConfig
+      case _ => Map()
+    }
+
+    javascriptConfig ++ config ++ internationalEdition ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(Play.isDev)),
@@ -58,12 +70,10 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("isPreview", JsBoolean(environment.isPreview)),
-      ("allowUserGeneratedContent", JsBoolean(metaData match {
-        case c: Content if c.allowUserGeneratedContent => true
-        case _ => false
-      })),
+      ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
+      ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
+      ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl))
-    ))
+    )
   }
-
 }

@@ -1,8 +1,7 @@
 package views.support
 
-import com.gu.facia.api.models.{FaciaContent, Cutout}
 import common.Logging
-import implicits.FaciaContentImplicits._
+import model.pressed.{PressedContent, Cutout}
 
 import scala.util.{Failure, Success, Try}
 
@@ -10,8 +9,8 @@ object CutOut extends Logging {
   /* If a CutOut comes with width and height, it's proabably coming from facia-tool
      Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
    */
-  def fromTrail(faciaContent: FaciaContent): Option[CutOut] = {
-    faciaContent.image match {
+  def fromTrail(faciaContent: PressedContent): Option[CutOut] = {
+    faciaContent.properties.image match {
       case Some(Cutout(src, Some(width), Some(height))) =>
         Try((width.toInt, height.toInt)) match {
           case Success((w, h)) => Option(CutOut(src, Orientation.fromDimensions(w, h)))

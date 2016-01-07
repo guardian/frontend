@@ -50,7 +50,7 @@ object Au extends Edition(
       NavItem(economy, economyLocalNav),
       NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(media),
-      NavItem(environment, Seq(cities, globalDevelopment)),
+      NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness)),
       NavItem(science),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
@@ -71,6 +71,6 @@ object Au extends Edition(
     NavItem(economy, economyLocalNav),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(media),
-    NavItem(environment, Seq(cities, globalDevelopment))
+    NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness))
   )
 }

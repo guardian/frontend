@@ -1,7 +1,7 @@
 package slices
 
 import conf.Configuration
-import model.Content
+import model.pressed.PressedContent
 
 object TagContainers {
 
@@ -59,6 +59,8 @@ object FixedContainers {
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
 
+  val frontsOnArticles = slices(QuarterQuarterQlQl)
+
   val fastIndexPageMpuII = slices(TTMpu)
   val fastIndexPageMpuIV = slices(TTlMpu)
   val fastIndexPageMpuVI = slices(TlTlMpu)
@@ -113,11 +115,11 @@ object DynamicContainers {
     ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false))
   )
 
-  def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {
+  def apply(collectionType: Option[String], items: Seq[PressedContent]): Option[ContainerDefinition] = {
     for {
       typ <- collectionType
       dynamicContainer <- all.get(typ)
-      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromContent))
+      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
     } yield definition
   }
 }

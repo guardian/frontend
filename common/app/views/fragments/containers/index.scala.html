@@ -1,4 +1,4 @@
-@(trails: Seq[Content], containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit request: RequestHeader, config: com.gu.facia.api.models.CollectionConfig)
+@(trails: Seq[model.pressed.PressedContent], containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit request: RequestHeader, config: model.pressed.CollectionConfig)
 
 @import views.html.fragments.containers.facia_cards.{slice, date}
 @import views.support.{GetClasses, PreviousAndNext}
@@ -38,6 +38,6 @@
                 }
             </div>
         </div>
-        @fragments.trendingTopics(trails.map(FaciaContentConvert.frontendContentToFaciaContent), page.id)
+        @fragments.trendingTopics(trails, page.id)
     </section>
 }

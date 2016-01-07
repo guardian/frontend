@@ -123,7 +123,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function (fullCompile) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'uglify:javascript']);
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'uglify:javascript']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -131,7 +131,14 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('develop:js', function (fullCompile) {
-        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
+        grunt.task.run([
+            'copy:inlineSVGs',
+            'clean:js',
+            'copy:javascript',
+            // The app file must exist in dev to avoid compilation errors due to
+            // the SW. For testing the SW, do a proper compile.
+            'shell:stubAppJs'
+        ]);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -142,14 +149,16 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
+    var identity = function (x) { return x; };
     grunt.registerTask('compile-assets', [
         'compile:css',
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
         'compile:flash',
+        !options.isDev && 'makeDeploysRadiator',
         'asset_hash',
         'compile:conf'
-    ]);
+    ].filter(identity));
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task
@@ -158,7 +167,7 @@ module.exports = function (grunt) {
         if (!options.isDev && requirejsName !== 'common') {
             grunt.task.run('requirejs:common');
         }
-        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'asset_hash']);
+        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'concat:app', 'uglify:javascript', 'asset_hash']);
     }
     for (var requireTaskName in grunt.config('requirejs')) {
         if (requireTaskName !== 'options') {
@@ -209,5 +218,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
+    grunt.registerTask('makeDeploysRadiator', 'shell:makeDeploysRadiator');
 
 };

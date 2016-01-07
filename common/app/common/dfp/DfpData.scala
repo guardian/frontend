@@ -5,6 +5,7 @@ import java.net.URLEncoder
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
+import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -227,8 +228,8 @@ case class GuLineItem(id: Long,
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
   val isExpired = endTime.exists(_.isBeforeNow)
-  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(DateTime.now().minusWeeks(1)))
-  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(DateTime.now().plusMonths(1)))
+  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
+  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
   val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
     targetSet.sponsoredTags ++ targetSet.advertisementFeatureTags ++ targetSet.foundationSupportedTags
@@ -258,17 +259,40 @@ case class GuLineItem(id: Long,
     }
 
     costType == "CPD" &&
-      placeholder.nonEmpty && (
+    placeholder.nonEmpty && (
       targeting.targetsSectionFrontDirectly("business") ||
-        placeholder.exists(_.targetsSectionFrontDirectly("business"))
+      placeholder.exists(_.targetsSectionFrontDirectly("business"))
       ) &&
-      targeting.geoTargetsIncluded.exists { geoTarget =>
-        geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
-      } &&
-      startTime.isBefore(DateTime.now.plusDays(1))
+    targeting.geoTargetsIncluded.exists { geoTarget =>
+      geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
+    } &&
+    startTime.isBefore(now.plusDays(1)) &&
+    (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  }
+
+  lazy val isSuitableForTopBelowNavSlot: Boolean = targeting.customTargetSets
+                                                   .exists(_.targets.exists(_.isSlot("top-below-nav")))
+
+  lazy val isSuitableForTopSlot: Boolean = {
+    costType == "CPD" &&
+    targetsNetworkOrSectionFrontDirectly &&
+    targeting.geoTargetsIncluded.exists { geoTarget =>
+      geoTarget.locationType == "COUNTRY" && (
+        geoTarget.name == "United Kingdom" ||
+        geoTarget.name == "United States" ||
+        geoTarget.name == "Australia"
+        )
+    } &&
+    creativeSizes.contains(responsiveSize) &&
+    startTime.isBefore(DateTime.now.plusDays(1)) &&
+    endTime.exists(_.isAfterNow)
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
+
+  lazy val isAdFeatureLogo: Boolean = targeting.customTargetSets exists {
+    _.targets exists (_.isAdvertisementFeatureSlot)
+  }
 }
 
 object GuLineItem {
@@ -426,6 +450,7 @@ case class GuCreativeTemplate(id: Long,
     replaceParameters(snippet, creative.args.toSeq)
   }
 
+  lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }
 
 object GuCreativeTemplate extends implicits.Collections {

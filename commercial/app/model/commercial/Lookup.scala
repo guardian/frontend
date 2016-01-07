@@ -5,13 +5,13 @@ import common.Edition.defaultEdition
 import common.{ExecutionContexts, Logging}
 import conf.LiveContentApi
 import LiveContentApi.getResponse
-import model.{Content, ImageContainer}
+import model.{ImageElement, ContentType, Content}
 
 import scala.concurrent.Future
 
 object Lookup extends ExecutionContexts with Logging {
 
-  def content(contentId: String): Future[Option[Content]] = {
+  def content(contentId: String): Future[Option[ContentType]] = {
     val response = try {
       getResponse(LiveContentApi.item(contentId, defaultEdition))
     } catch {
@@ -26,7 +26,7 @@ object Lookup extends ExecutionContexts with Logging {
     }
   }
 
-  def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[Content]] = {
+  def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
       val shortIds = shortUrls map (_.stripPrefix("http://").stripPrefix("gu.com").stripPrefix("/")) mkString ","
       getResponse(LiveContentApi.search(defaultEdition).ids(shortIds)) map {
@@ -35,14 +35,14 @@ object Lookup extends ExecutionContexts with Logging {
     } else Future.successful(Nil)
   }
 
-  def latestContentByKeyword(keywordId: String, maxItemCount: Int): Future[Seq[Content]] = {
+  def latestContentByKeyword(keywordId: String, maxItemCount: Int): Future[Seq[ContentType]] = {
     getResponse(LiveContentApi.search(defaultEdition).tag(keywordId).pageSize(maxItemCount).orderBy("newest")) map {
       _.results map (Content(_))
     }
   }
 
-  def mainPicture(contentId: String): Future[Option[ImageContainer]] = {
-    content(contentId) map (_ flatMap (_.mainPicture))
+  def mainPicture(contentId: String): Future[Option[ImageElement]] = {
+    content(contentId) map (_ flatMap (_.elements.mainPicture))
   }
 
   def keyword(term: String, section: Option[String] = None): Future[Seq[Tag]] = {

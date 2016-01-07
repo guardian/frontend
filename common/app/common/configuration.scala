@@ -169,6 +169,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val token = configuration.getStringProperty("github.token")
   }
 
+  object teamcity {
+    lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
+  }
+
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
@@ -183,7 +187,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
-    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
+    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
+    lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
+    lazy val membersDataApiUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
@@ -195,6 +201,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    val fallbackLogo = Static("images/fallback-logo.png").path
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
@@ -224,7 +231,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
-    lazy val imageFallback = Static("images/facebook/fallback-logo.png").path
   }
 
   object ios {
@@ -244,19 +250,28 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object commercial {
+
+    lazy val testDomain =
+      if (environment.isProd) "http://m.code.dev-theguardian.com"
+      else configuration.getStringProperty("guardian.page.host") getOrElse ""
+
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url =
       configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
+    lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
     lazy val traveloffers_url =
       configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
     lazy val guMerchandisingAdvertiserId =
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
-    private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
+    // root dir relative to S3 bucket
+    private lazy val commercialRoot = {
+      configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
+    }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
@@ -272,6 +287,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
+
+    private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
+    lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
+
+    lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
+    lazy val jobsUrlTemplate = configuration.getStringProperty("jobs.api.url.template")
+    lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
+    lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
 
     object magento {
       lazy val domain = configuration.getStringProperty("magento.domain")

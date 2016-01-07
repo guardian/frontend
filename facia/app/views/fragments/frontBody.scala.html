@@ -1,21 +1,18 @@
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.RenderClasses
+@import conf.switches.Switches._
 
 @defining((faciaPage.isSponsored(Some(Edition(request))),
         faciaPage.isAdvertisementFeature,
         faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
-
-            @if(faciaPage.id.endsWith("crosswords")) {
-                @crosswordsOptOutBanner()
-            }
-
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
                 "fc-container--advertisement-feature" -> isAdFeature,
-                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
+                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded),
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && isAdFeature)
             ), "facia-page")"
             data-link-name="Front | @request.path"
                 @faciaPage.sponsor.map { sponsor =>
@@ -26,13 +23,19 @@
                 }
             role="main">
 
+            @if(NewCommercialContent.isSwitchedOn && isAdFeature){
+                @fragments.guBand()
+            }
+
                 @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
+
+                    @fragments.basher(faciaPage.id)
 
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }
 
-                    @defining(layout.Front.makeLinkedData(faciaPage.url, collections)) { linkedData =>
+                    @defining(layout.Front.makeLinkedData(faciaPage.metadata.url, collections)) { linkedData =>
                         <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
                             @Html(model.meta.LinkedData.toJson(linkedData))
                         </script>

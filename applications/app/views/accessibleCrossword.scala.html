@@ -4,9 +4,6 @@
 
 @main(crosswordPage) { } {
     <div class="l-side-margins">
-
-        @fragments.crosswordsOptOutBanner()
-
         <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
             @crosswordMetaHeader(crosswordPage, false)
 
@@ -23,12 +20,12 @@
                             <div class="crossword__clues">
                                 <div class="crossword__clues--across">
                                     <h3 class="crossword__clues-header">Across</h3>
-                                    @accessibleCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                    @accessibleCrosswordEntries(crosswordPage.crossword.acrossEntries)
                                 </div>
 
                                 <div class="crossword__clues--down">
                                     <h3 class="crossword__clues-header">Down</h3>
-                                    @accessibleCrosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                    @accessibleCrosswordEntries(crosswordPage.crossword.downEntries)
                                 </div>
                             </div>
                         </div>
