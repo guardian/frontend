@@ -1,23 +1,28 @@
 package model
 
-import com.gu.contentapi.client.model.{Asset, Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{Asset, Element => ApiElement, AssetFields, AssetType, ElementType}
+
+import scala.util.Try
 
 object ImageOverride {
 
   def createElementWithOneAsset(imageSrc: String, width: Option[String], height: Option[String]): Element = {
-    val widthAndHeightMap = (for {
-      w <- width
-      h <- height
-    } yield Map("width" -> w, "height" -> h))
-      .getOrElse(Map.empty)
+    val widthAndHeightMap = for {
+      wString <- width
+      wInt <- Try(wString.toInt).toOption
+      hString <- height
+      hInt <- Try(hString.toInt).toOption
+    } yield AssetFields(width = Some(wInt), height = Some(hInt))
 
     val contentApiElement = ApiElement(
       id = "override",
       relation = "thumbnail",
-      `type` = "image",
+      // Image
+      `type` = ElementType.Image,
       galleryIndex = None,
       assets = List(Asset(
-        `type` = "image",
+        // Image
+        `type` = AssetType.Image,
         mimeType = Option("image/jpg"),
         file = Option(imageSrc),
         typeData = widthAndHeightMap

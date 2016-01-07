@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.model.Content
+import com.gu.contentapi.client.model.v1.Content
 import common.Edition
 import model.{RelatedContentItem, RelatedContent}
 import scala.concurrent.Future

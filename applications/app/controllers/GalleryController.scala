@@ -1,6 +1,7 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.model.ItemResponse
 import common._
 import conf.LiveContentApi.getResponse
 import conf._

@@ -1,6 +1,6 @@
 package model.commercial
 
-import com.gu.contentapi.client.model.Tag
+import com.gu.contentapi.client.model.v1.Tag
 import common.Edition.defaultEdition
 import common.{ExecutionContexts, Logging}
 import conf.LiveContentApi

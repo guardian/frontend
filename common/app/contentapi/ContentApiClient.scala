@@ -2,7 +2,8 @@ package contentapi
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
-import com.gu.contentapi.client.model.{ErrorResponse, ItemQuery, ItemResponse, SearchQuery}
+import com.gu.contentapi.client.model.ErrorResponse
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.switches.Switches
 import scala.concurrent.{ExecutionContext, Future}
@@ -52,7 +53,12 @@ trait QueryDefaults extends implicits.Collections {
         val editorsPicks = r.editorsPicks.map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff.toDateTimeAtStartOfDay).map(Content(_)).take(1)
+            r.leadContent.filter(content => {
+              content.webPublicationDate
+                .map(date => date.toJodaDateTime)
+                .map(_ >= leadContentCutOff.toDateTimeAtStartOfDay)
+                .exists(identity)
+            }).map(Content(_)).take(1)
           else
             Nil
 

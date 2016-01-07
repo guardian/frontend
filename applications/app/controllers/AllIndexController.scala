@@ -12,6 +12,7 @@ import org.joda.time.{DateTimeZone, DateTime}
 import implicits.{ItemResponses, Dates}
 import LiveContentApi.getResponse
 import common.Edition.defaultEdition
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
@@ -114,7 +115,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
         .fromDate(date)
         .orderBy("oldest")
     ).map{ item =>
-      item.results.headOption.map(_.webPublicationDate.withZone(DateTimeZone.UTC))
+      item.results.headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
     }
     result.recover{ case e: Exception =>
       log.error(e.getMessage, e)

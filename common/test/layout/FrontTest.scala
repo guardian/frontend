@@ -1,6 +1,7 @@
 package layout
 
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
@@ -17,11 +18,11 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   def dreamSnapWithUrl(theUrl: String) = {
-    val content: ApiContent = new ApiContent(
+    val content: ApiContent = ApiContent(
       id = theUrl,
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Option(DateTime.now()),
+      webPublicationDate = Some(DateTime.now().toCapiDateTime),
       webTitle = "",
       webUrl = theUrl,
       apiUrl = "",

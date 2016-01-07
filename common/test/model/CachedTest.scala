@@ -1,6 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import conf.switches.Switches
 import conf.switches.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
@@ -102,15 +103,14 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val content = Content(ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
-      fields = Some(Map(
-        "lastModified" -> lastModified.toISODateTimeNoMillisString,
-        "liveBloggingNow" -> live.toString)
-      )
+      fields = Some(ContentFields(
+        lastModified = Some(lastModified.toCapiDateTime),
+        liveBloggingNow = Some(live)))
     ))
     model.SimpleContentPage(content)
   }

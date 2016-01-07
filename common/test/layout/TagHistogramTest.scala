@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.contentapi.client.model.Tag
+import com.gu.contentapi.client.model.v1.Tag
 import contentapi.FixtureTemplates
 import model.Content
 import org.scalatest.{Matchers, FlatSpec}
