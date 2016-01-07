@@ -31,6 +31,7 @@ define([
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
+    'common/modules/navigation/newSticky',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -86,6 +87,7 @@ define([
     CookieRefresh,
     navigation,
     sticky,
+    newSticky,
     Profile,
     Search,
     history,
@@ -138,10 +140,12 @@ define([
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    sticky.init();
-                    config.page.hasStickyHeader = true;
-                } else {
-                    config.page.hasStickyHeader = false;
+
+                    if(ab.isInVariant('RemoveStickyNav', 'new')) {
+                        newSticky.init();
+                    } else {
+                        sticky.init();
+                    }
                 }
             },
 

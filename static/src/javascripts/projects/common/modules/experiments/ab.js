@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
+    'common/modules/experiments/tests/remove-sticky-nav',
     'common/modules/experiments/tests/large-top-slot',
     'common/modules/experiments/tests/alternative-related',
     'common/modules/experiments/tests/identity-sign-in-v2',
@@ -27,6 +28,7 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
+    RemoveStickyNav,
     LargeTopAd,
     AlternativeRelated,
     IdentitySignInV2,
@@ -46,7 +48,8 @@ define([
         new LargeTopAd(),
         new AlternativeRelated(),
         new IdentitySignInV2(),
-        new RtrtEmailFormArticlePromo()
+        new RtrtEmailFormArticlePromo(),
+        new RemoveStickyNav()
     ]);
 
     var participationsKey = 'gu.ab.participations';
