@@ -141,7 +141,7 @@ define([
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
 
-                    if(ab.isInVariant('RemoveStickyNav', 'new')) {
+                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
                         newSticky.init();
                     } else {
                         sticky.init();
