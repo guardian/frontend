@@ -40,7 +40,9 @@
     // finally, load the standard.js app async
     // do this last so that any config stuff it needs is definitely on `window.`
     @Html(curlConfig().body)
+
     @if(play.Play.isDev()) {
+        // in prod, these are concatenated in /grunt-configs/concat.js
         @Html(omniture().body)
         @Html(Static.js.curl);
         require(['boot']);
