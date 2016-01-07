@@ -2,7 +2,7 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.Blocks
+import com.gu.contentapi.client.model.v1.{Blocks, BlockAttributes => ApiBlockAttributes}
 import common.Edition
 import model.liveblog.BodyBlock._
 import org.joda.time.{DateTimeZone, DateTime}
@@ -15,7 +15,17 @@ object BodyBlock {
     maybeBlocks.toSeq.flatMap { blocks =>
       blocks.body.toSeq.flatMap { maybeBodyBlocks =>
         maybeBodyBlocks.map { bodyBlock =>
-          BodyBlock(bodyBlock.id, bodyBlock.bodyHtml, bodyBlock.bodyTextSummary, bodyBlock.title, bodyBlock.attributes, bodyBlock.published, bodyBlock.createdDate, bodyBlock.firstPublishedDate, bodyBlock.publishedDate, bodyBlock.lastModifiedDate, bodyBlock.contributors)
+          BodyBlock(bodyBlock.id,
+            bodyBlock.bodyHtml,
+            bodyBlock.bodyTextSummary,
+            bodyBlock.title,
+            BlockAttributes.make(bodyBlock.attributes),
+            bodyBlock.published,
+            bodyBlock.createdDate.map(d => new DateTime(d.dateTime)),
+            bodyBlock.firstPublishedDate.map(d => new DateTime(d.dateTime)),
+            bodyBlock.publishedDate.map(d => new DateTime(d.dateTime)),
+            bodyBlock.lastModifiedDate.map(d => new DateTime(d.dateTime)),
+            bodyBlock.contributors)
         }
       }
     }
@@ -31,7 +41,7 @@ case class BodyBlock(
   bodyHtml: String,
   bodyTextSummary: String,
   title: Option[String],
-  attributes: Map[String, String],
+  attributes: BlockAttributes,
   published: Boolean,
   createdDate: Option[DateTime],
   firstPublishedDate: Option[DateTime],
@@ -40,13 +50,9 @@ case class BodyBlock(
   contributors: Seq[String]
 ) {
   lazy val eventType: EventType =
-    attributes.get("keyEvent") match {
-      case Some("true") => KeyEvent
-      case _ => attributes.get("summary") match {
-        case Some("true") => SummaryEvent
-        case _ => UnclassifiedEvent
-      }
-    }
+    if (attributes.keyEvent) KeyEvent
+    else if (attributes.summary) SummaryEvent
+    else UnclassifiedEvent
 
   lazy val eventClass = eventType match {
     case SummaryEvent => " is-summary"
@@ -78,3 +84,10 @@ object LiveBlogDate {
 
 }
 case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: String)
+
+object BlockAttributes {
+  def make(blockAttributes: ApiBlockAttributes) =
+    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false))
+}
+
+case class BlockAttributes(keyEvent: Boolean, summary: Boolean)
