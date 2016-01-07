@@ -88,7 +88,7 @@ define([
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // Do not perform a same-page track link when there isn't a tag.
-            if (!spec.tag) {
+            if (spec.tag) {
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
                 delay = spec.samePage ? true : spec.target;
                 this.trackLink(delay, spec.tag, {customEventProperties: spec.customEventProperties});
