@@ -256,6 +256,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       else configuration.getStringProperty("guardian.page.host") getOrElse ""
 
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
+    lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
+    lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url =
@@ -279,6 +281,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
+    lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
+    lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
     lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers-v1.json"
