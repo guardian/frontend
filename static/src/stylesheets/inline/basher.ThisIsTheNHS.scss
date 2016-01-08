@@ -31,12 +31,21 @@ $c-accent: colour(multimedia-main-2);
 
 .this-is-the-nhs__title {
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.this-is-the-nhs__title-line {
+    position: absolute;
     z-index: 8;
     @include f-headline;
     font-weight: 200;
     font-size: 62px;
     line-height: 1.5;
     margin-left: $gs-gutter;
+    color: #ffffff;
 
     @include mq(tablet) {
         font-size: 77px;
@@ -49,7 +58,7 @@ $c-accent: colour(multimedia-main-2);
     }
 }
 
-.this-is-the-nhs__title--first {
+.this-is-the-nhs__title-line--first {
     color: #ffffff;
     top: 60px;
     right: 40%;
@@ -67,7 +76,7 @@ $c-accent: colour(multimedia-main-2);
 
 }
 
-.this-is-the-nhs__title--second {
+.this-is-the-nhs__title-line--second {
     color: $c-black;
     top: 120px + $gs-baseline;
     left: 20%;
