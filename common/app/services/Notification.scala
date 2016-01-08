@@ -73,6 +73,14 @@ object FrontPressNotification extends Notification {
   lazy val topic: String = Configuration.aws.frontPressSns.getOrElse("")
 }
 
+object R2PressNotification extends Notification {
+  lazy val topic: String = Configuration.aws.r2PressSns.getOrElse("")
+}
+
+object R2PressedPageTakedownNotification extends Notification {
+  lazy val topic: String = Configuration.aws.r2PressTakedownSns.getOrElse("")
+}
+
 object MissingVideoEncodings extends Notification {
   lazy val topic: String = "arn:aws:sns:eu-west-1:642631414762:frontend-missingVideoEncodingsNotificationTopic"
 
