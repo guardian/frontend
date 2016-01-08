@@ -253,7 +253,11 @@ $c-soulmates-high: colour(neutral-1);
         border: 0;
         border-top: 1px solid #666666;
         margin: 18px 0 7px;
-        padding: 0; 
+        padding: 0;
+
+        @include mq($until: leftCol) {
+            display: none;
+        }
     }
 
     /* Line items */
