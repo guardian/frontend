@@ -130,7 +130,7 @@ define([
     /**
      * Private variables
      */
-    var resizeTimeout,
+    var resizeTimeout        = 2000,
         adSlotSelector       = '.js-ad-slot',
         displayed            = false,
         rendered             = false,
@@ -310,8 +310,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
         setupAdvertising = function () {
-            resizeTimeout = 2000;
-
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
