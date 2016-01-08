@@ -11,7 +11,7 @@ define([
     mediator,
     detect) {
 
-    return function() {
+    return function () {
         if (detect.getBreakpoint() !== 'mobile') {
             fastdom.read(function () {
                 var adId = 'dfp-ad--top-above-nav',
@@ -20,7 +20,7 @@ define([
                     oldAdHeight = $adBanner.height(),
                     headerHeight = $header.height();
 
-                var topAdRenderedPromise = new Promise(function(resolve) {
+                var topAdRenderedPromise = new Promise(function (resolve) {
                     mediator.on('modules:commercial:dfp:rendered', function (event) {
                         if (event.slot.getSlotElementId() === adId) {
                             resolve();
@@ -29,8 +29,8 @@ define([
                 });
 
                 var oldAdHeightPromise = Promise.resolve(oldAdHeight);
-                var newAdHeightPromise = topAdRenderedPromise.then(function() {
-                    return fastdom.read(function() {
+                var newAdHeightPromise = topAdRenderedPromise.then(function () {
+                    return fastdom.read(function () {
                         var adSlotPadding = parseInt($('#' + adId, $adBanner).css('padding-bottom')) * 2;
                         // We must read the iframe attribute height to avoid reading the clientHeight mid-transition
                         return Number($('iframe', $adBanner).attr('height')) + adSlotPadding;
