@@ -1,6 +1,7 @@
-@(model: LiveBlogPage)(implicit request: RequestHeader)
+@import _root_.liveblog.BodyBlocks
+@(model: LiveBlogPage, blocks: BodyBlocks)(implicit request: RequestHeader)
 
 @main(model){
 }{
-    @fragments.liveBlogBody(model)
+    @fragments.liveBlogBody(model, blocks)
 }
