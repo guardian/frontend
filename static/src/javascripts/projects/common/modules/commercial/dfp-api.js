@@ -188,6 +188,7 @@ define([
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
                 recordFirstAdRendered();
+                debugger;
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
