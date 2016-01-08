@@ -55,15 +55,30 @@
 
     .lineitem {
         border-left: 0;
-        flex: 0 1 100%;
+        flex: 0 1 percentage(1/2);
         display: flex;
         margin-bottom: $gs-baseline / 2;
 
+        &:nth-child(n+3) {
+            display: none;
+        }
         @include mq(tablet) {
             flex: 0 1 percentage(1/3);
+
+            &:nth-child(n+3) {
+                display: block;
+            }
+
+            &:nth-child(n+4) {
+                display: none;
+            }
         }
         @include mq(desktop) {
             flex: 0 1 percentage(1/4);
+
+            &:nth-child(n+4) {
+                display: block;
+            }
         }
     }
 }
