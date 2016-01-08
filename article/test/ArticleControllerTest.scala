@@ -131,4 +131,9 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     val result = route(app, request).head
     contentAsString(result) should include ("\"internationalEdition\":\"international\"")
   }
+
+  "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>
+    import browser._
+    $(".media-primary > .element-interactive").getAttributes("data-interactive") should endWith ("boot.js")
+  }
 }

@@ -10,9 +10,4 @@ import scala.collection.JavaConversions._
     $("meta[name='twitter:card']").getAttributes("content").head should be ("summary_large_image")
     $("meta[name='twitter:title']").getAttributes("content").head should be ("Get to know Marco Rubio, your latest (experienced!) candidate for president")
   }
-
-  it should "provide a boot.js script element as a main embed" in goTo("us-news/2015/dec/04/the-county-kern-county-california-deputies-tactics") { browser =>
-    import browser._
-    $(".media-primary > element-interactive").getAttributes("data-interactive").head should be ("boot.js")
-  }
 }
