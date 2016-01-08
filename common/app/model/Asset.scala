@@ -1,14 +1,41 @@
 package model
 
-import com.gu.contentapi.client.model.Asset
+import com.gu.contentapi.client.model.v1.Asset
 import views.support.{Orientation, Naked, ImgSrc}
+
+object Helpers {
+  def assetFieldsToMap(asset: Asset): Map[String, String] =
+    Map(
+      "altText" -> asset.typeData.flatMap(_.altText),
+      "blockAds" -> asset.typeData.flatMap(_.blockAds).map(_.toString),
+      "caption" -> asset.typeData.flatMap(_.caption),
+      "credit" -> asset.typeData.flatMap(_.credit),
+      "displayCredit" -> asset.typeData.flatMap(_.displayCredit).map(_.toString),
+      "durationMinutes" -> asset.typeData.flatMap(_.durationMinutes).map(_.toString),
+      "durationSeconds" -> asset.typeData.flatMap(_.durationSeconds).map(_.toString),
+      "embeddable" -> asset.typeData.flatMap(_.embeddable).map(_.toString),
+      "height" -> asset.typeData.flatMap(_.height).map(_.toString),
+      "isMaster" -> asset.typeData.flatMap(_.isMaster).map(_.toString),
+      "mediaId" -> asset.typeData.flatMap(_.mediaId),
+      "photographer" -> asset.typeData.flatMap(_.photographer),
+      "role" -> asset.typeData.flatMap(_.role),
+      "source" -> asset.typeData.flatMap(_.source),
+      "thumbnail" -> asset.typeData.flatMap(_.thumbnailUrl),
+      "width" -> asset.typeData.flatMap(_.width).map(_.toString),
+      "iframeUrl" -> asset.typeData.flatMap(_.iframeUrl),
+      "scriptUrl" -> asset.typeData.flatMap(_.scriptUrl),
+      "scriptName" -> asset.typeData.flatMap(_.scriptName),
+      "html" -> asset.typeData.flatMap(_.html),
+      "embedType" -> asset.typeData.flatMap(_.embedType)
+    ).collect{ case(k, Some(v)) => (k,v) }
+}
 
 object ImageAsset {
   def make(asset: Asset, index: Int): ImageAsset = {
     ImageAsset(
       index = index,
-      fields = asset.typeData,
-      mediaType = asset.`type`,
+      fields = Helpers.assetFieldsToMap(asset),
+      mediaType = asset.`type`.name,
       mimeType = asset.mimeType,
       url = asset.file )
   }
@@ -53,7 +80,7 @@ case class ImageAsset(
 object VideoAsset {
   def make(asset: Asset): VideoAsset = {
     VideoAsset(
-      fields = asset.typeData,
+      fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
       url = asset.file )
   }
@@ -86,7 +113,7 @@ case class VideoAsset(
 object AudioAsset {
   def make(asset: Asset): AudioAsset = {
     AudioAsset(
-      fields = asset.typeData,
+      fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
       url = asset.file )
   }
@@ -105,7 +132,7 @@ case class AudioAsset(
 object EmbedAsset {
   def make(asset: Asset): EmbedAsset = {
     EmbedAsset(
-      fields = asset.typeData,
+      fields = Helpers.assetFieldsToMap(asset),
       url = asset.file )
   }
 }

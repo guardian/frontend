@@ -250,6 +250,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object commercial {
+
+    lazy val testDomain =
+      if (environment.isProd) "http://m.code.dev-theguardian.com"
+      else configuration.getStringProperty("guardian.page.host") getOrElse ""
+
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")

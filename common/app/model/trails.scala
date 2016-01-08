@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.{model => contentapi}
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import implicits.Dates._
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -8,6 +8,7 @@ import org.scala_tools.time.Imports._
 import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
 import views.support.{Naked, ImgSrc}
 import scala.collection.JavaConversions._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
 /**
  * additional information needed to display something on a facia page from CAPI
@@ -21,13 +22,13 @@ object Trail {
     metadata: MetaData,
     apiContent: contentapi.Content) = {
     Trail(
-      webPublicationDate = apiContent.webPublicationDateOption.getOrElse(DateTime.now),
-      headline = apiContent.safeFields.getOrElse("headline", ""),
+      webPublicationDate = apiContent.webPublicationDate.map(_.toJodaDateTime).getOrElse(DateTime.now),
+      headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
       sectionName = apiContent.sectionName.getOrElse(""),
-      thumbnailPath = apiContent.safeFields.get("thumbnail").map(ImgSrc(_, Naked)),
-      isCommentable = apiContent.safeFields.get("commentable").exists(_.toBoolean),
-      isClosedForComments = !apiContent.safeFields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow),
-      byline = apiContent.safeFields.get("byline").map(stripHtml),
+      thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked)),
+      isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
+      isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJodaDateTime).exists(_.isAfterNow),
+      byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
       trailPicture = elements.thumbnail.find(_.images.imageCrops.exists(_.width >= elements.trailPicMinDesiredSize)).map(_.images)
         .orElse(elements.mainPicture.map(_.images))
         .orElse(elements.thumbnail.map(_.images)),

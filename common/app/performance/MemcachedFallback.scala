@@ -18,10 +18,11 @@ object MemcacheTypeclass {
   }
 
   object MemcacheKey {
-    implicit object ContentMemcacheKey extends MemcacheKey[com.gu.contentapi.client.model.Content] {
-      def key(c: com.gu.contentapi.client.model.Content): Option[String] =
-        c.fields.flatMap(_.get("internalPageCode"))
-          .filter(_.nonEmpty)
+    implicit object ContentMemcacheKey extends MemcacheKey[com.gu.contentapi.client.model.v1.Content] {
+      def key(c: com.gu.contentapi.client.model.v1.Content): Option[String] =
+        c.fields.map(_.internalPageCode)
+          .filter(x => x.nonEmpty)
+          .map(x => x.toString)
           .map(InternalCode.toFormattedInternalPageCode)}}
 }
 

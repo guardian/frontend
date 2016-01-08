@@ -5,6 +5,15 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
+  val CapiEmbedHotfixSwitch = Switch(
+    "Feature",
+    "capi-embed-hotfix",
+    "Applies hotfix for broken embeds due to CAPI upgrade",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 11),
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -210,7 +219,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 10),
+    sellByDate = new LocalDate(2016, 4, 10),
     exposeClientSide = false
   )
 
