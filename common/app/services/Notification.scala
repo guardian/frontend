@@ -37,17 +37,14 @@ trait Notification extends Logging with ExecutionContexts {
 
   private def sendAsync(request: PublishRequest) = AkkaAsync {
     log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
-    sns match {
-      case Some(client) =>
-          client.publishFuture(request) onComplete {
-            case Success(_) =>
-              log.info(s"Successfully published SNS notification: ${request.getSubject}:${request.getMessage}")
+    sns foreach { client =>
+      client.publishFuture(request) onComplete {
+        case Success(_) =>
+          log.info(s"Successfully published SNS notification: ${request.getSubject}:${request.getMessage}")
 
-            case Failure(error) =>
-              log.error(s"Failed to publish SNS notification: ${request.getSubject}:${request.getMessage}", error)
-          }
-      case None =>
-        log.error(s"There is NO SNS client available")
+        case Failure(error) =>
+          log.error(s"Failed to publish SNS notification: ${request.getSubject}:${request.getMessage}", error)
+      }
     }
   }
 }
