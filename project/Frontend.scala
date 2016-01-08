@@ -32,6 +32,8 @@ object Frontend extends Build with Prototypes {
       guardianConfiguration,
       jacksonCore,
       jacksonMapper,
+      jodaConvert,
+      jodaTime,
       jSoup,
       liftJson,
       playGoogleAuth,
