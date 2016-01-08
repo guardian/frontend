@@ -12,7 +12,7 @@ define([
     detect) {
 
     function StickyHeader() {
-
+        this.init();
     }
 
     StickyHeader.prototype.init = function () {

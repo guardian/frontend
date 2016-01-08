@@ -142,7 +142,7 @@ define([
                     && config.page.pageId !== 'offline-page') {
 
                     if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        newSticky.init();
+                        new newSticky();
                     } else {
                         sticky.init();
                     }
