@@ -87,7 +87,7 @@ define([
     CookieRefresh,
     navigation,
     sticky,
-    newSticky,
+    NewSticky,
     Profile,
     Search,
     history,
@@ -142,7 +142,7 @@ define([
                     && config.page.pageId !== 'offline-page') {
 
                     if (ab.isInVariant('RemoveStickyNav', 'new')) {
-                        new newSticky();
+                        new NewSticky();
                     } else {
                         sticky.init();
                     }
