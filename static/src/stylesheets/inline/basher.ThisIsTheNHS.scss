@@ -27,398 +27,398 @@ $c-accent: colour(multimedia-main-2);
     @include mq(desktop) {
         height: gs-height(8);
     }
+}
 
-    .title {
-        position: absolute;
-        z-index: 8;
-        @include f-headline;
-        font-weight: 200;
-        font-size: 62px;
+.this-is-the-nhs__title {
+    position: absolute;
+    z-index: 8;
+    @include f-headline;
+    font-weight: 200;
+    font-size: 62px;
+    line-height: 1.5;
+    margin-left: $gs-gutter;
+
+    @include mq(tablet) {
+        font-size: 77px;
         line-height: 1.5;
+    }
+
+    @include mq(leftCol) {
+        font-size: 88px;
+        line-height: 1.35;
+    }
+}
+
+.this-is-the-nhs__title--first {
+    color: #ffffff;
+    top: 60px;
+    right: 40%;
+    margin-right: $gs-gutter / 2;
+
+    @include mq(tablet) {
+        top: gs-height(2);
+        right: auto;
+        left: gs-span(3);
+    }
+
+    @include mq(desktop) {
+        left: auto;
+    }
+
+}
+
+.this-is-the-nhs__title--second {
+    color: $c-black;
+    top: 120px + $gs-baseline;
+    left: 20%;
+    margin-left: $gs-gutter / 2;
+    width: gs-span(4) - 10px;
+
+    @include mq(mobileLandscape) {
+        left: 40%;
+    }
+
+    @include mq(tablet) {
+        left: gs-span(4);
+        top: gs-height(4);
+        width: auto;
+    }
+
+    @include mq(desktop) {
         margin-left: $gs-gutter;
-
-        @include mq(tablet) {
-            font-size: 77px;
-            line-height: 1.5;
-        }
-
-        @include mq(leftCol) {
-            font-size: 88px;
-            line-height: 1.35;
-        }
+        left: 0;
     }
 
-    .title--first {
-        color: #ffffff;
-        top: 60px;
-        right: 40%;
-        margin-right: $gs-gutter / 2;
+    @include mq(leftCol) {
+        left: 51px;
+    }
+}
 
-        @include mq(tablet) {
-            top: gs-height(2);
-            right: auto;
-            left: gs-span(3);
-        }
+.this-is-the-nhs__description {
+    position: absolute;
+    top: 0;
+    max-width: gs-span(4);
+    @include fs-header(1);
+    color: #ffffff;
+    margin: 0 $gs-gutter / 2;
+    letter-spacing: -.2px;
 
-        @include mq(desktop) {
-            left: auto;
-        }
-
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
     }
 
-    .title--second {
-        color: $c-black;
-        top: 120px + $gs-baseline;
-        left: 20%;
-        margin-left: $gs-gutter / 2;
-        width: gs-span(4) - 10px;
-
-        @include mq(mobileLandscape) {
-            left: 40%;
-        }
-
-        @include mq(tablet) {
-            left: gs-span(4);
-            top: gs-height(4);
-            width: auto;
-        }
-
-        @include mq(desktop) {
-            margin-left: $gs-gutter;
-            left: 0;
-        }
-
-        @include mq(leftCol) {
-            left: 51px;
-        }
+    @include mq(tablet) {
+        max-width: gs-span(5);
+        @include fs-header(3);
     }
 
-    .description {
-        position: absolute;
-        top: 0;
-        max-width: gs-span(4);
+    @include mq(desktop, leftCol) {
         @include fs-header(1);
-        color: #ffffff;
-        margin: 0 $gs-gutter / 2;
-        letter-spacing: -.2px;
+        max-width: gs-span(4);
+    }
+}
 
-        @include mq(mobileLandscape) {
-            margin-left: $gs-gutter;
-        }
+.this-is-the-nhs__stripe {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    height: 60px;
+    width: 100%;
 
-        @include mq(tablet) {
-            max-width: gs-span(5);
-            @include fs-header(3);
-        }
-
-        @include mq(desktop, leftCol) {
-            @include fs-header(1);
-            max-width: gs-span(4);
-        }
+    @include mq(tablet) {
+        height: gs-height(2);
     }
 
-    .stripe {
-        position: absolute;
-        z-index: 5;
-        top: 0;
-        height: 60px;
-        width: 100%;
-
-        @include mq(tablet) {
-            height: gs-height(2);
-        }
-    }
-
-    .grid .stripe {
+    .this-is-the-nhs__grid & {
         z-index: 2;
     }
+}
 
-    .stripe--dark-blue {
-        background-color: $c-dark-blue;
-        width: gs-span(5) + $gs-gutter;
-        left: gs-span(4) + $gs-gutter;
+.this-is-the-nhs__stripe--dark-blue {
+    background-color: $c-dark-blue;
+    width: gs-span(5) + $gs-gutter;
+    left: gs-span(4) + $gs-gutter;
 
-        @include mq(tablet) {
-            left: gs-span(5) + $gs-gutter;
-        }
-
-        @include mq(desktop) {
-            left: auto;
-            right: -(gs-span(2));
-            width: gs-span(2);
-        }
+    @include mq(tablet) {
+        left: gs-span(5) + $gs-gutter;
     }
 
-    .grid .stripe--dark-blue {
+    @include mq(desktop) {
+        left: auto;
+        right: -(gs-span(2));
+        width: gs-span(2);
+    }
+
+    .this-is-the-nhs__grid & {
         right: $gs-gutter;
         width: gs-span(2);
-
+    
         @include mq(wide) {
             width: gs-span(4);
         }
     }
+}
 
-    .stripe--blue {
-        background-color: $c-blue;
-        top: 60px + $gs-baseline;
-        right: 40%;
+.this-is-the-nhs__stripe--blue {
+    background-color: $c-blue;
+    top: 60px + $gs-baseline;
+    right: 40%;
 
-        @include mq(tablet) {
-            width: gs-span(8);
-            top: gs-height(2) + $gs-baseline;
-            right: auto;
-            margin-left: -(gs-span(2));
-        }
+    @include mq(tablet) {
+        width: gs-span(8);
+        top: gs-height(2) + $gs-baseline;
+        right: auto;
+        margin-left: -(gs-span(2));
+    }
+}
+
+.this-is-the-nhs__stripe--white {
+    background-color: #ffffff;
+    top: 120px + $gs-baseline * 2;
+    left: 20%;
+
+    @include mq(mobileLandscape) {
+        left: 40%;
     }
 
-    .stripe--white {
-        background-color: #ffffff;
-        top: 120px + $gs-baseline * 2;
-        left: 20%;
-
-        @include mq(mobileLandscape) {
-            left: 40%;
-        }
-
-        @include mq(tablet) {
-            top: gs-height(4) + $gs-baseline;
-            left: gs-width(3);
-            width: calc(100% - 20px);
-        }
-
-        @include mq(desktop) {
-            left: 0;
-            width: gs-span(6) + $gs-gutter;
-        }
+    @include mq(tablet) {
+        top: gs-height(4) + $gs-baseline;
+        left: gs-width(3);
+        width: calc(100% - 20px);
     }
 
-    .grid .stripe--white {
+    @include mq(desktop) {
+        left: 0;
+        width: gs-span(6) + $gs-gutter;
+    }
+
+    .this-is-the-nhs__grid & {
         width: gs-span(2);
         left: $gs-gutter;
     }
+}
 
-    .line {
-        position: relative;
-        z-index: 10;
-        bottom: -205px;
-        left: 200px;
+.this-is-the-nhs__line {
+    position: relative;
+    z-index: 10;
+    bottom: -205px;
+    left: 200px;
+    display: none;
+
+    @include mq(tablet) {
+        display: block;
+    }
+
+    @include mq(tablet, desktop) {
+        bottom: -109px;
+        left: 540px;
+    }
+
+    @include mq(leftCol) {
+        left: 175px;
+    }
+
+    @include mq(wide) {
+        left: 96px;
+    }
+}
+
+.this-is-the-nhs__line__image {
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
+    bottom: -99999px;
+    right: -99999px;
+    margin: auto;
+
+    path {
+        animation: drawInLine 5s ease-out;
+        animation-fill-mode: forwards;
+        animation-delay: 1s;
+        stroke-dasharray: 4400;
+        stroke-dashoffset: 4400;
+        stroke: $c-accent;
+    }
+}
+
+@keyframes drawInLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.this-is-the-nhs__grid {
+    z-index: 7;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.this-is-the-nhs__grid-background {
+    background-color: #9be2de;
+    z-index: 2;
+}
+
+.this-is-the-nhs__grid,
+.this-is-the-nhs__grid-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: gs-span(8) + ($gs-gutter * 2);
+    display: none;
+
+    @include mq(desktop) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        width: gs-span(10) + ($gs-gutter * 2);
+    }
+}
+
+.this-is-the-nhs__hand {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: auto;
+
+    @include mq(tablet, desktop) {
         display: none;
-
-        @include mq(tablet) {
-            display: block;
-        }
-
-        @include mq(tablet, desktop) {
-            bottom: -109px;
-            left: 540px;
-        }
-
-        @include mq(leftCol) {
-            left: 175px;
-        }
-
-        @include mq(wide) {
-            left: 96px;
-        }
     }
 
-    .line__image {
-        position: absolute;
-        top: -99999px;
-        left: -99999px;
-        bottom: -99999px;
-        right: -99999px;
-        margin: auto;
-
-        path {
-            animation: drawInLine 5s ease-out;
-            animation-fill-mode: forwards;
-            animation-delay: 1s;
-            stroke-dasharray: 4400;
-            stroke-dashoffset: 4400;
-            stroke: $c-accent;
-        }
+    @include mq(desktop) {
+        animation: handFade 3s cubic-bezier(.35, .5, 0, 1);
+        animation-fill-mode: forwards;
+        z-index: 4;
     }
+}
 
-    @keyframes drawInLine {
-        to {
-            stroke-dashoffset: 0;
-        }
-    }
+.this-is-the-nhs__hand--left {
+    right: -20px;
+    height: 104px;
+    top: 36px;
+    transform: rotate(120deg);
 
-    .grid {
-        z-index: 7;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .grid-background {
-        background-color: #9be2de;
-        z-index: 2;
-    }
-
-    .grid,
-    .grid-background {
-        position: absolute;
+    @include mq(desktop) {
+        transform: none;
+        height: gs-span(3);
         top: 0;
-        bottom: 0;
-        right: 0;
-        width: gs-span(8) + ($gs-gutter * 2);
-        display: none;
-
-        @include mq(desktop) {
-            display: block;
-        }
-
-        @include mq(wide) {
-            width: gs-span(10) + ($gs-gutter * 2);
-        }
+        right: gs-span(5);
     }
 
-    .hand {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: auto;
-
-        @include mq(tablet, desktop) {
-            display: none;
-        }
-
-        @include mq(desktop) {
-            animation: handFade 3s cubic-bezier(.35, .5, 0, 1);
-            animation-fill-mode: forwards;
-            z-index: 4;
-        }
+    @include mq(wide) {
+        height: auto;
+        right: gs-span(6);
     }
+}
 
-    .hand--left {
-        right: -20px;
-        height: 104px;
-        top: 36px;
+.this-is-the-nhs__hand--right {
+    left: -44px;
+    right: 200px;
+    height: 100px;
+    transform: rotate(100deg);
+    top: 162px;
+
+    @include mq(mobileLandscape) {
+        left: -10px;
         transform: rotate(120deg);
-
-        @include mq(desktop) {
-            transform: none;
-            height: gs-span(3);
-            top: 0;
-            right: gs-span(5);
-        }
-
-        @include mq(wide) {
-            height: auto;
-            right: gs-span(6);
-        }
     }
 
-    .hand--right {
-        left: -44px;
-        right: 200px;
-        height: 100px;
-        transform: rotate(100deg);
-        top: 162px;
-
-        @include mq(mobileLandscape) {
-            left: -10px;
-            transform: rotate(120deg);
-        }
-
-        @include mq(desktop) {
-            transform: none;
-            height: gs-span(3);
-            left: auto;
-            right: 0;
-        }
-
-        @include mq(wide) {
-            height: auto;
-            right: -20px;
-        }
+    @include mq(desktop) {
+        transform: none;
+        height: gs-span(3);
+        left: auto;
+        right: 0;
     }
 
-    @keyframes handFade {
-        to {
-            transform: translateY(0);
+    @include mq(wide) {
+        height: auto;
+        right: -20px;
+    }
+}
+
+@keyframes handFade {
+    to {
+        transform: translateY(0);
+    }
+}
+
+.this-is-the-nhs__baseline {
+    background-color: $c-background;
+    position: absolute;
+    z-index: 3;
+    top: gs-height(2);
+    height: $gs-baseline;
+    width: 100%;
+
+    @for $i from 1 through 5 {
+        &.this-is-the-nhs__baseline--#{$i} {
+            top: gs-height($i * 2);
         }
     }
+}
 
-    .baseline {
-        background-color: $c-background;
-        position: absolute;
-        z-index: 3;
-        top: gs-height(2);
-        height: $gs-baseline;
-        width: 100%;
+.this-is-the-nhs__gutter {
+    background-color: $c-background;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: $gs-gutter;
 
-        @for $i from 1 through 5 {
-            &.baseline--#{$i} {
-                top: gs-height($i * 2);
-            }
+    @for $i from 2 through 6 {
+        &.this-is-the-nhs__gutter--#{$i} {
+            left: gs-span(($i * 2) - 2) + $gs-gutter;
         }
     }
+}
 
-    .gutter {
-        background-color: $c-background;
-        position: absolute;
-        z-index: 3;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: $gs-gutter;
+.this-is-the-nhs__circle {
+    position: absolute;
+    z-index: 15;
+    right: -10px;
+    top: 180px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: $c-accent;
+    display: none;
 
-        @for $i from 2 through 6 {
-            &.gutter--#{$i} {
-                left: gs-span(($i * 2) - 2) + $gs-gutter;
-            }
-        }
+    @include mq(mobileLandscape) {
+        display: block;
     }
 
-    .circle {
-        position: absolute;
-        z-index: 15;
-        right: -10px;
-        top: 180px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background-color: $c-accent;
-        display: none;
-
-        @include mq(mobileLandscape) {
-            display: block;
-        }
-
-        @include mq(tablet) {
-            background-color: #ffffff;
-            right: gs-span(2);
-            top: gs-height(2) - 22px;
-        }
-
-        @include mq(desktop) {
-            right: gs-span(4) + 8px;
-            top: gs-height(4) + ($gs-baseline / 2) - 22px;
-        }
-
-        @include mq(wide) {
-            right: gs-span(2) + 8px;
-        }
+    @include mq(tablet) {
+        background-color: #ffffff;
+        right: gs-span(2);
+        top: gs-height(2) - 22px;
     }
 
-    .circle--lower {
-        top: 108px;
-        left: 20px;
-        background-color: $c-dark-blue;
+    @include mq(desktop) {
+        right: gs-span(4) + 8px;
+        top: gs-height(4) + ($gs-baseline / 2) - 22px;
+    }
 
-        @include mq(tablet) {
-            top: auto;
-            bottom: -22px;
-        }
+    @include mq(wide) {
+        right: gs-span(2) + 8px;
+    }
+}
 
-        @include mq(desktop) {
-            left: auto;
-            bottom: -30px;
-            right: gs-span(6) + 8px;
-        }
+.this-is-the-nhs__circle--lower {
+    top: 108px;
+    left: 20px;
+    background-color: $c-dark-blue;
+
+    @include mq(tablet) {
+        top: auto;
+        bottom: -22px;
+    }
+
+    @include mq(desktop) {
+        left: auto;
+        bottom: -30px;
+        right: gs-span(6) + 8px;
     }
 }
