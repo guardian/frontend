@@ -17,6 +17,11 @@ $c-guardian-services-action: #ffffff;
     @include mq(mobile) {
         background: colour(guardian-brand);
     }
+
+    .js-on & {
+        margin-top: 126px;
+        transition: margin 1s cubic-bezier(0, 0, 0, 0.985);
+    }
 }
 
 .l-header--is-slim {

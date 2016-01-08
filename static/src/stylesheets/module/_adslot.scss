@@ -66,6 +66,12 @@
     background-color: colour(neutral-8);
     display: none;
 
+    .js-on & {
+        position: fixed;
+        z-index: 1020;
+        width: 100%;
+    }
+
     &.top-banner-ad-container--below-nav {
         border-bottom-width: 1px;
 

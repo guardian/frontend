@@ -138,7 +138,7 @@ define([
                     && config.page.contentType !== 'Crossword'
                     && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    sticky.init();
+                    sticky();
                     config.page.hasStickyHeader = true;
                 } else {
                     config.page.hasStickyHeader = false;
@@ -359,6 +359,7 @@ define([
 
                 ['c-cookies-banner', cookiesBanner.init],
                 ['c-identity', identity],
+                ['c-sticky-header', modules.initialiseStickyHeader],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-test-cookie', modules.testCookie],
@@ -369,7 +370,6 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-header', modules.initialiseStickyHeader],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
