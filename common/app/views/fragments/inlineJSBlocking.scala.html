@@ -44,6 +44,9 @@
     @if(play.Play.isDev()) {
         // in prod, these are concatenated in /grunt-configs/concat.js
         @Html(omniture().body)
+        </script>
+        <script src="@Static("javascripts/bootstraps/standard/omniture-pageview.js")"></script>
+        <script>
         @Html(Static.js.curl);
         require(['boot']);
     } else {

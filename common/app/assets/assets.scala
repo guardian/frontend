@@ -33,17 +33,18 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
         case Some(_) => accumulator
         case None => accumulator + (entry -> Asset(base + entry))
       })
-    
+
     if (Play.current.mode == Mode.Dev) {
       // Use the grunt-generated asset map in Dev.
       val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
       val serviceWorkerWhitelist = Seq(
         "javascripts/app.js",
-        "javascripts/enhanced-vendor.js",
         "javascripts/bootstraps/enhanced/main.js",
         "javascripts/bootstraps/enhanced/crosswords.js",
-        "javascripts/bootstraps/commercial.js",
-        "javascripts/components/react/react.js"
+        "javascripts/bootstraps/commercial.js",,
+        "javascripts/bootstraps/standard/omniture-pageview.js"
+        "javascripts/components/react/react.js",
+        "javascripts/enhanced-vendor.js"
       )
       // We reference these files using the asset map in dev, but because they're not compiled,
       // they don't exist as entries in the asset map.
