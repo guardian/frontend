@@ -312,9 +312,10 @@ const run = (): Promise<void> => {
 
 
 const intervalSeconds = 10;
+const wait = (): Promise<{}> => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000));
 const update = (): Promise<void> => {
     return run()
-        .then(() => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000)))
+        .then(wait, wait)
         .then(update);
 };
 update();
