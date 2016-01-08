@@ -39,6 +39,7 @@ trait Notification extends Logging with ExecutionContexts {
     log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
     sns match {
       case Some(client) =>
+          log.info(s"SNS notification with client $client")
           client.publishFuture(request) onComplete {
             case Success(_) =>
               log.info(s"Successfully published SNS notification: ${request.getSubject}:${request.getMessage}")
