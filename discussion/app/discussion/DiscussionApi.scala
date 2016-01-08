@@ -18,7 +18,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
-  protected val defaultParams = List()
+  protected val defaultParams = List("api-key" -> "dotcom")
   protected val pageSize: String = "10"
 
   def endpointUrl(relativePath: String, params: List[(String, Any)] = List()) = { //Using List for params because order is important for caching reason

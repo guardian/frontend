@@ -27,16 +27,16 @@ import scala.language.postfixOps
 
   "Should do get request on correct URL for comments count" in {
     val shortUrlIds = "p/3tycg"
-    waitFor(urlValidator(s"/getCommentCounts?short-urls=$shortUrlIds").commentCounts(shortUrlIds))
+    waitFor(urlValidator(s"/getCommentCounts?short-urls=$shortUrlIds&api-key=dotcom").commentCounts(shortUrlIds))
   }
   "Should do get request on correct URL for comment" in {
     val id = 15724322
     val displayThreaded = "true"
-    waitFor(urlValidator(s"/comment/$id?displayResponses=true&displayThreaded=$displayThreaded").commentFor(id, Some(displayThreaded)))
+    waitFor(urlValidator(s"/comment/$id?displayResponses=true&displayThreaded=$displayThreaded&api-key=dotcom").commentFor(id, Some(displayThreaded)))
   }
 
   "Should do GET request on correct URL for topComments " in {
-    val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true"
+    val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true&api-key=dotcom"
 
     waitFor(urlValidator(expectedUrl).commentsFor(DiscussionKey("p/3tycg"), DiscussionParams(
       orderBy = "newest",
@@ -49,7 +49,7 @@ import scala.language.postfixOps
   }
 
   "Should do GET request on correct URL for comments " in {
-    val expectedUrl: String = "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&displayThreaded=false&showSwitches=true"
+    val expectedUrl: String = "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&displayThreaded=false&showSwitches=true&api-key=dotcom"
 
     waitFor(urlValidator(expectedUrl).commentsFor(DiscussionKey("p/3tycg"), DiscussionParams(
       orderBy = "newest",
@@ -72,27 +72,27 @@ import scala.language.postfixOps
       topComments = false,
       displayThreaded = false
     )
-    val expectedUrl = s"/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}&displayThreaded=${params.displayThreaded}"
+    val expectedUrl = s"/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}&displayThreaded=${params.displayThreaded}&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).commentContext(id, params))
 
   }
 
   "Should do GET request on correct URL for my profile" in {
-    waitFor(urlValidator("/profile/me").myProfile(Headers()))
+    waitFor(urlValidator("/profile/me?api-key=dotcom").myProfile(Headers()))
   }
 
   "Should do GET request on correct URL for profile comments" in {
     val userId = "10000001"
     val orderBy = "newest"
     val page = "1"
-    val expectedUrl = s"/profile/$userId/comments?pageSize=10&page=$page&orderBy=$orderBy&showSwitches=true&displayHighlighted=true"
+    val expectedUrl = s"/profile/$userId/comments?pageSize=10&page=$page&orderBy=$orderBy&showSwitches=true&displayHighlighted=true&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).profileComments(userId = userId, page = page, orderBy = orderBy, picks = true))
   }
 
   "Should do GET request on correct URL for profile replies" in {
     val userId = "10000001"
     val page = "1"
-    val expectedUrl = s"/profile/$userId/replies?pageSize=10&page=$page&orderBy=newest&showSwitches=true"
+    val expectedUrl = s"/profile/$userId/replies?pageSize=10&page=$page&orderBy=newest&showSwitches=true&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).profileReplies(userId = userId, page = page))
   }
 
@@ -100,14 +100,14 @@ import scala.language.postfixOps
     val userId = "10000001"
     val page = "1"
     val query = "fakeQuery"
-    val expectedUrl = s"/search/profile/$userId?q=$query&page=$page"
+    val expectedUrl = s"/search/profile/$userId?q=$query&page=$page&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).profileSearch(userId = userId, q = query, page = page))
   }
 
   "Should do GET request on correct URL for profile discussions" in {
     val userId = "10000001"
     val page = "1"
-    val expectedUrl = s"/profile/$userId/discussions?pageSize=10&page=$page&orderBy=newest&showSwitches=true"
+    val expectedUrl = s"/profile/$userId/discussions?pageSize=10&page=$page&orderBy=newest&showSwitches=true&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).profileDiscussions(userId = userId, page = page))
   }
 
