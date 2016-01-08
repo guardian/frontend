@@ -24,6 +24,7 @@
     .u-faux-block-link--hover,
     .u-faux-block-link__cta {
         text-decoration: none;
+        background-color: colour(paid-article-subheader);
     }
 
     .commercial__meta,
@@ -68,7 +69,7 @@
 }
 
 .tone-paidfor--item {
-    background: #cccccc;
+    background: colour(paid-article-subheader);
 
     .rich-link__container:before {
         background: guss-colour(paidfor-background, $frontend-palette);
