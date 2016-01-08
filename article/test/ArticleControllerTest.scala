@@ -12,35 +12,35 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
   "Article Controller" should "200 when content type is article" in {
-    val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(TestRequest(articleUrl))
+    val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest(articleUrl))
     status(result) should be(200)
   }
 
   it should "200 when content type is live blog" in {
-    val result = controllers.ArticleController.renderArticle(liveBlogUrl, None, None)(TestRequest(liveBlogUrl))
+    val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     status(result) should be(200)
   }
 
   it should "count in body links" in {
-    val result = controllers.ArticleController.renderArticle(liveBlogUrl, None, None)(TestRequest(liveBlogUrl))
+    val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     val body = contentAsString(result)
     body should include(""""inBodyInternalLinkCount":38""")
     body should include(""""inBodyExternalLinkCount":42""")
   }
 
   it should "200 when content type is sudoku" in {
-    val result = controllers.ArticleController.renderArticle(sudokuUrl, None, None)(TestRequest(sudokuUrl))
+    val result = controllers.ArticleController.renderArticle(sudokuUrl)(TestRequest(sudokuUrl))
     status(result) should be(200)
   }
 
   it should "not cache 404s" in {
-    val result = controllers.ArticleController.renderArticle("oops", None, None)(TestRequest())
+    val result = controllers.ArticleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
     header("Cache-Control", result).head should be ("no-cache")
   }
 
   it should "redirect for short urls" in {
-    val result = controllers.ArticleController.renderArticle("p/39heg", None, None)(TestRequest("/p/39heg"))
+    val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
@@ -49,14 +49,14 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(fakeRequest)
+    val result = controllers.ArticleController.renderJson(articleUrl, None, None)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "internal redirect unsupported content to classic" in {
-    val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video", None, None)(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
+    val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
@@ -67,7 +67,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.renderArticle("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None)(fakeRequest)
+    val result = controllers.ArticleController.renderJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None)(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)
