@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.v1.{Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{Element => ApiElement, AssetType}
 import org.apache.commons.math3.fraction.Fraction
 
 object ElementProperties {
@@ -124,13 +124,7 @@ object EmbedMedia {
   def make(capiElement: ApiElement): EmbedMedia = {
     EmbedMedia(
       embedAssets = capiElement.assets
-        .filter(asset =>
-          // HOTFIX: Updated CAPI client represents Embed assets types as Image asset types.
-          // This hotfix circumvents this so we can continue to render content correctly, e.g.
-          // http://localhost:9000/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney
-          asset.`type`.name == "Embed" || (conf.switches.Switches.CapiEmbedHotfixSwitch.isSwitchedOn &&
-            asset.`type`.name == "Image" && asset.file.getOrElse("").endsWith("/boot.js"))
-        )
+        .filter(_.`type` == AssetType.Embed)
         .map(EmbedAsset.make)
     )
   }
