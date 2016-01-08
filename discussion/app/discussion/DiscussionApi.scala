@@ -10,6 +10,7 @@ import discussion.util.Http
 import play.api.libs.ws.WSResponse
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import discussion.model.CommentCount
+import com.netaporter.uri.dsl._
 
 trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
@@ -17,12 +18,17 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
+  protected val defaultParams = List()
   protected val pageSize: String = "10"
+
+  def endpointUrl(relativePath: String, params: List[(String, Any)] = List()) = { //Using List for params because order is important for caching reason
+    (apiRoot + relativePath).addParams(params ++ defaultParams).toString()
+  }
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: WSResponse) =
       s"Discussion API: Error loading comment count ids: $ids status: ${response.status} message: ${response.statusText}"
-    val apiUrl = s"$apiRoot/getCommentCounts?short-urls=$ids"
+    val apiUrl = endpointUrl("/getCommentCounts", List(("short-urls", ids)))
 
     getJsonOrError(apiUrl, onError) map {
       json =>
@@ -34,21 +40,24 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   def commentFor(id: Int, displayThreaded: Option[String]  = None): Future[Comment] = {
-
-    val url = s"$apiRoot/comment/$id?displayResponses=true" +
-      displayThreaded.map{ dt => "&displayThreaded=" + dt  }.getOrElse("")
+    val parameters = List(
+      "displayResponses" -> "true",
+      "displayThreaded" -> displayThreaded)
+    val url = endpointUrl(s"/comment/$id", parameters)
     getCommentJsonForId(id, url)
   }
 
   def commentsFor(key: DiscussionKey, params: DiscussionParams): Future[DiscussionComments] = {
-    // displayThreaded=true can return an error on old discussions.
-    val url = s"$apiRoot/discussion/$key" + (if(params.topComments) "/topcomments" else "")+
-                    s"""|?pageSize=${params.pageSize}
-                    |&page=${params.page}
-                    |&orderBy=${params.orderBy}
-                    |${if(params.displayThreaded) "" else "&displayThreaded=false"}
-                    |&showSwitches=true""".stripMargin.replace("\n", "")+
-                    params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
+    val parameters = List(
+      "pageSize" -> params.pageSize,
+      "page" -> params.page,
+      "orderBy" -> params.orderBy,
+      "displayThreaded" -> (params.displayThreaded match {
+        case false => "false"
+        case _ => None}),
+      "showSwitches" -> "true")
+    val path = s"/discussion/$key" + (if(params.topComments) "/topcomments" else "")
+    val url = endpointUrl(path, parameters)
 
     getJsonForUri(key, url)
   }
@@ -56,11 +65,15 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def commentContext(id: Int, params: DiscussionParams): Future[(DiscussionKey, String)] = {
     def onError(r: WSResponse) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/comment/$id/context" +
-                   s"""?pageSize=${params.pageSize}
-                      |&orderBy=${params.orderBy}
-                      |${if(params.displayThreaded) "" else "&displayThreaded=false"}
-                      |""".stripMargin.replace("\n", "")
+
+    val parameters = List(
+      "pageSize" -> params.pageSize,
+      "orderBy" -> params.orderBy,
+      "displayThreaded" -> (params.displayThreaded match {
+        case false => "false"
+        case _ => None}))
+    val path = s"/comment/$id/context"
+    val apiUrl = endpointUrl(path, parameters)
 
     getJsonOrError(apiUrl, onError) map { json =>
         (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
@@ -70,7 +83,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def myProfile(headers: Headers): Future[Profile] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/profile/me"
+    val apiUrl = endpointUrl("/profile/me")
     val authHeader = AuthHeaders.filterHeaders(headers).toSeq
 
     getJsonOrError(apiUrl, onError, authHeader: _*) map {
@@ -82,7 +95,17 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def profileComments(userId: String, page: String, orderBy: String = "newest", picks: Boolean = false): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading comments for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/profile/$userId/comments?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true"+ (if(picks) "&displayHighlighted")
+    val parameters = List(
+      "pageSize" -> pageSize,
+      "page" -> page,
+      "orderBy" -> orderBy,
+      "showSwitches" -> "true",
+      "displayHighlighted" -> (picks match {
+        case true => "true"
+        case false => None
+      }))
+    val path = s"/profile/$userId/comments"
+    val apiUrl = endpointUrl(path, parameters)
 
     getJsonOrError(apiUrl, onError) map {
       json => ProfileComments(json)
@@ -92,7 +115,13 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def profileReplies(userId: String, page: String): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading replies for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/profile/$userId/replies?pageSize=$pageSize&page=$page&orderBy=newest&showSwitches=true"
+    val parameters = List(
+      "pageSize" -> pageSize,
+      "page" -> page,
+      "orderBy" -> "newest",
+      "showSwitches" -> "true")
+    val path = s"/profile/$userId/replies"
+    val apiUrl = endpointUrl(path, parameters)
 
     getJsonOrError(apiUrl, onError) map {
       json => ProfileReplies(json)
@@ -102,8 +131,11 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def profileSearch(userId: String, q: String, page: String): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading search User $userId, Query: $q. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val urlQ = URLEncoder.encode(q, "UTF-8")
-    val apiUrl = s"$apiRoot/search/profile/$userId?q=$urlQ&page=$page"
+    val parameters = List(
+      "q" -> URLEncoder.encode(q, "UTF-8"),
+      "page" -> page)
+    val path = s"/search/profile/$userId"
+    val apiUrl = endpointUrl(path, parameters)
 
     getJsonOrError(apiUrl, onError) map {
       json => ProfileComments(json)
@@ -113,7 +145,13 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def profileDiscussions(userId: String, page: String): Future[ProfileDiscussions] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading discussions for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/profile/$userId/discussions?pageSize=$pageSize&page=$page&orderBy=newest&showSwitches=true"
+    val parameters = List(
+      "pageSize" -> pageSize,
+      "page" -> page,
+      "orderBy" -> "newest",
+      "showSwitches" -> "true")
+    val path = s"/profile/$userId/discussions"
+    val apiUrl = endpointUrl(path, parameters)
 
     getJsonOrError(apiUrl, onError) map {
       json => ProfileDiscussions(json)
@@ -149,8 +187,10 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*) =
+  override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*) = {
+    println(url)
     super.getJsonOrError(url, onError, headers :+ guClientHeader: _*)
+  }
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
 }

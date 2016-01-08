@@ -85,7 +85,7 @@ import scala.language.postfixOps
     val userId = "10000001"
     val orderBy = "newest"
     val page = "1"
-    val expectedUrl = s"/profile/$userId/comments?pageSize=10&page=$page&orderBy=$orderBy&showSwitches=true&displayHighlighted"
+    val expectedUrl = s"/profile/$userId/comments?pageSize=10&page=$page&orderBy=$orderBy&showSwitches=true&displayHighlighted=true"
     waitFor(urlValidator(expectedUrl).profileComments(userId = userId, page = page, orderBy = orderBy, picks = true))
   }
 
