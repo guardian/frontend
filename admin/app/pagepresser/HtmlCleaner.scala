@@ -21,10 +21,20 @@ trait HtmlCleaner {
 
     //fetch omniture data before stripping it. then rea-dd it for simple page tracking
     val omnitureQueryString = fetchOmnitureTags(document)
-    removeByTagName(document, "script")
+    removeScriptsTagsExceptInteractives(document)
     removeByTagName(document, "noscript")
     createSimplePageTracking(document, omnitureQueryString)
 
+  }
+
+  def removeScriptsTagsExceptInteractives(document: Document): Document = {
+    val scripts = document.getElementsByTag("script")
+    val scriptsWithoutInteractives = scripts.filterNot { e =>
+      val parentIds = e.parents().map( p => p.id()).toList
+      parentIds.contains("interactive-content")
+    }.toList
+    scriptsWithoutInteractives.foreach(_.remove())
+    document
   }
 
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
