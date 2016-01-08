@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.model.Content
+import com.gu.contentapi.client.model.v1.Content
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils.{ContentProperties, ResolvedMetaData, ItemKicker}
 import com.gu.facia.client.models.TrailMetaData

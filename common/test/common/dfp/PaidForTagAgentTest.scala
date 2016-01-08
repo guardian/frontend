@@ -1,6 +1,6 @@
 package common.dfp
 
-import com.gu.contentapi.client.model.{Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType => ApiTagType}
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
@@ -15,7 +15,7 @@ import scala.util.Random
 
 class PaidForTagAgentTest extends FlatSpec with Matchers {
 
-  private def toTag(tagType: String, tagId: String, sectionId: Option[String] = None): Tag = {
+  private def toTag(tagType: ApiTagType, tagId: String, sectionId: Option[String] = None): Tag = {
     Tag.make(ApiTag(id = tagId,
       `type` = tagType,
       sectionId = sectionId,
@@ -24,11 +24,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       apiUrl = "url"))
   }
   private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag =
-    toTag("keyword", tagId, sectionId)
+    toTag(ApiTagType.Keyword, tagId, sectionId)
   private def toSeries(tagId: String, sectionId: Option[String] = None): Tag =
-    toTag("series", tagId, sectionId)
+    toTag(ApiTagType.Series, tagId, sectionId)
   private val adFeatureToneTagId = "tone/advertisement-features"
-  private val adFeatureTone = toTag("tone", adFeatureToneTagId, None)
+  private val adFeatureTone = toTag(ApiTagType.Tone, adFeatureToneTagId, None)
 
   private def toLineItem(state: String = "DELIVERING",
                          editionId: Option[String] = None,

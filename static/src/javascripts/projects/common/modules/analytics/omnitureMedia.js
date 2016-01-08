@@ -4,9 +4,8 @@ define([
     'common/utils/config',
     'common/modules/analytics/omniture',
     'lodash/objects/values',
-    'common/utils/chain',
-    'common/modules/experiments/ab'
-], function (qwery, config, omniture, values, chain, ab) {
+    'common/utils/chain'
+], function (qwery, config, omniture, values, chain) {
 
     function OmnitureMedia(player) {
 
@@ -39,7 +38,6 @@ define([
                 // extra events with no set ordering
                 duration: 'event57'
             },
-            abTestParticipation = ab.makeOmnitureTag(),
             trackingVars = [
                 // these tracking vars are specific to media events.
                 'eVar11',   // embedded or on platform
@@ -71,6 +69,7 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
+            omniture.populateEventProperties(eventName || event);
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
             // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
@@ -80,14 +79,11 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = omniture.getStandardProps() + ',' + chain(trackingVars).join(',');
-            s.linkTrackEvents = values(events).join(',');
-            s.events = event;
+            s.linkTrackVars += ',' + chain(trackingVars).join(',');
+            s.linkTrackEvents +=  ',' + values(events).join(',');
+            s.events += ',' + event;
             s.tl(true, 'o', eventName || event);
-            s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
-
-            s.list1 = abTestParticipation;
-
+            s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = s.eVar74 = undefined;
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -105,8 +101,6 @@ define([
 
             s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
-
-            s.list1 = abTestParticipation;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 

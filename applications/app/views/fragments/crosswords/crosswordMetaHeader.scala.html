@@ -1,54 +1,33 @@
 @(crosswordPage: crosswords.CrosswordPage, gridVisable: Boolean = true)(implicit requestHeader: RequestHeader)
-@import views.support.AuFriendlyFormat
 @import common.LinkTo
 @import conf.switches.Switches.SaveForLaterSwitch
 
-<header class="content__head content__head__crosswords tonal__head tonal__head--tone-news">
+<header class="content__head content__head--crossword tonal__head tonal__head--tone-news">
     <div class="gs-container">
         <div class="content__main-column">
-            <div class="content__labels">
+            <div class="content__labels content__labels--crossword">
                 <div class="content__section-label">
                     <a class="tone-colour" data-link-name="article section" href="@LinkTo("/crosswords")">Crosswords</a>
                 </div>
-
-                @crosswordPage.crossword.creator.map { creator =>
-                    <div class="crossword__meta-setter">
-                        <p class="byline" data-link-name="byline" data-component="meta-byline">
-                        Set by: <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
-                            <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="crossword-creator" href="@creator.webUrl"><span itemprop="name">@creator.name</span></a>
-                        </span>
-                        </p>
-                    </div>
-                }
+                @crosswordMeta(crosswordPage)
             </div>
 
 
             <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
             @if( gridVisable ) {
                 <div class="crossword__links">
-                    <a target="_blank" href="@LinkTo(s"/crosswords/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}/print")">Print</a>
+                    <div class="crossword__links-related">
+                        <a target="_blank" href="@LinkTo(s"/crosswords/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}/print")">Print</a>
 
                     @crosswordPage.crossword.pdf.map { pdf =>
                             | <a class="crossword__link" href="@pdf" target="_blank">PDF version</a>
                     }
 
-                    | <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Accessible version</a>
-                    | <div class="content__dateline content__dateline-crossword">
-                        <time itemprop="datePublished" datetime="@crosswordPage.crossword.date.toString("yyyy-MM-dd'T'HH:mm:ssZ"))"
-                        data-timestamp="@crosswordPage.crossword.date.getMillis" class="content__dateline-wpd js-wpd">
-                            @crosswordPage.crossword.date.toString("EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(crosswordPage.crossword.date)</span>
-                        </time>
+                        | <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Accessible version</a>
                     </div>
-                    @crosswordPage.crossword.creator.map { creator =>
-                        <div class="crossword__setter">
-                            <p>
-                                    <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="crossword-creator" href="@creator.webUrl"><span itemprop="name">@creator.name</span></a>
-                            </p>
-                        </div>
-                    }
+                    @crosswordMeta(crosswordPage)
                 </div>
             }
-
 
             <div class="meta__extras meta__extras--crossword">
                 <div class="meta__social" data-component="share">

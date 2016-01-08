@@ -1,6 +1,6 @@
 package indexes
 
-import com.gu.contentapi.client.model.{Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType}
 import model.{TagDefinition, TagIndexPage}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
@@ -59,7 +59,7 @@ import scala.concurrent.duration._
     def tagFixture(webTitle: String) =
       ApiTag(
         "id/id",
-        "",
+        TagType.Type,
         None,
         None,
         webTitle,

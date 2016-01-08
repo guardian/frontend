@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.{Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{Element => ApiElement}
 import org.apache.commons.math3.fraction.Fraction
 
 object ElementProperties {
@@ -30,11 +30,11 @@ object Element {
     val properties = ElementProperties.make(capiElement, elementIndex)
     val images = ImageMedia.make(capiElement, properties)
 
-    capiElement.`type` match {
-      case "image" => ImageElement(properties, images)
-      case "video" => VideoElement(properties, images, VideoMedia.make(capiElement))
-      case "audio" => AudioElement(properties, images, AudioMedia.make(capiElement))
-      case "embed" => EmbedElement(properties, images, EmbedMedia.make(capiElement))
+    capiElement.`type`.name match {
+      case "Image" => ImageElement(properties, images)
+      case "Video" => VideoElement(properties, images, VideoMedia.make(capiElement))
+      case "Audio" => AudioElement(properties, images, AudioMedia.make(capiElement))
+      case "Embed" => EmbedElement(properties, images, EmbedMedia.make(capiElement))
       case _ => DefaultElement(properties, images)
     }
   }
@@ -47,7 +47,7 @@ sealed trait Element {
 
 object ImageMedia {
   def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia = ImageMedia(
-    allImages = capiElement.assets.filter(_.`type` == "image").map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
+    allImages = capiElement.assets.filter(_.`type`.name == "Image").map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
   )
   def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
     allImages = crops
@@ -79,7 +79,7 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
 
 object VideoMedia {
   def make(capiElement: ApiElement): VideoMedia = VideoMedia(
-    videoAssets = capiElement.assets.filter(_.`type` == "video").map(VideoAsset.make).sortBy(-_.width)
+    videoAssets = capiElement.assets.filter(_.`type`.name == "Video").map(VideoAsset.make).sortBy(-_.width).toList
   )
 }
 final case class VideoMedia(videoAssets: List[VideoAsset]) {
@@ -106,7 +106,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
 
 object AudioMedia {
   def make(capiElement: ApiElement): AudioMedia = AudioMedia(
-    audioAssets = capiElement.assets.filter(_.`type` == "audio").map(AudioAsset.make)
+    audioAssets = capiElement.assets.filter(_.`type`.name == "Audio").map(AudioAsset.make).toList
   )
 }
 final case class AudioMedia(audioAssets: List[AudioAsset]) {
@@ -121,9 +121,19 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
 }
 
 object EmbedMedia {
-  def make(capiElement: ApiElement): EmbedMedia = EmbedMedia(
-    embedAssets = capiElement.assets.filter(_.`type` == "embed").map(EmbedAsset.make)
-  )
+  def make(capiElement: ApiElement): EmbedMedia = {
+    EmbedMedia(
+      embedAssets = capiElement.assets
+        .filter(asset =>
+          // HOTFIX: Updated CAPI client represents Embed assets types as Image asset types.
+          // This hotfix circumvents this so we can continue to render content correctly, e.g.
+          // http://localhost:9000/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney
+          asset.`type`.name == "Embed" || (conf.switches.Switches.CapiEmbedHotfixSwitch.isSwitchedOn &&
+            asset.`type`.name == "Image" && asset.file.getOrElse("").endsWith("/boot.js"))
+        )
+        .map(EmbedAsset.make)
+    )
+  }
 }
 final case class EmbedMedia(embedAssets: Seq[EmbedAsset])
 

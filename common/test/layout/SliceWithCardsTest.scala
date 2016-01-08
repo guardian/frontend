@@ -1,8 +1,9 @@
 package layout
 
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import model.pressed.CollectionConfig
-import model.{Content, Trail}
+import model.Trail
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
@@ -18,7 +19,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
     id = "id",
     sectionId = None,
     sectionName = None,
-    webPublicationDateOption = Option(DateTime.now()),
+    webPublicationDate = Some(DateTime.now().toCapiDateTime),
     webTitle = "",
     webUrl = s"$n",
     apiUrl = s"$n",

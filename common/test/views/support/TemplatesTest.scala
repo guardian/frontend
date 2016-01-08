@@ -1,6 +1,6 @@
 package views.support
 
-import com.gu.contentapi.client.model.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import common.Edition
 import common.editions.Uk
 import conf.Configuration
@@ -27,9 +27,9 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   "typeOrTone" should "ignore Article and find Video" in {
     val tags = Tags(tags = Seq(
-        Tag.make(tag(id = "type/article", tagType = "type")),
-        Tag.make(tag(id = "tone/foo", tagType = "tone")),
-        Tag.make(tag(id = "type/video", tagType = "type"))
+        Tag.make(tag(id = "type/article", tagType = TagType.Type)),
+        Tag.make(tag(id = "tone/foo", tagType = TagType.Tone)),
+        Tag.make(tag(id = "type/video", tagType = TagType.Type))
       ))
 
     tags.typeOrTone.get.id should be("type/video")
@@ -37,8 +37,8 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   it should "find tone when only content type is Article" in {
     val tags = Tags(tags = Seq(
-        Tag.make(tag(id = "type/article", tagType = "type")),
-        Tag.make(tag(id = "tone/foo", tagType = "tone"))
+        Tag.make(tag(id = "type/article", tagType = TagType.Type)),
+        Tag.make(tag(id = "tone/foo", tagType = TagType.Tone))
       ))
     tags.typeOrTone.get.id should be("tone/foo")
   }
@@ -169,7 +169,7 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
     StripHtmlTags("This is \"sarcasm\" & so is \"this\"") should be("This is &quot;sarcasm&quot; &amp; so is &quot;this&quot;")
   }
 
-  private def tag(name: String = "name", tagType: String = "keyword", id: String = "/id") = {
+  private def tag(name: String = "name", tagType: TagType = TagType.Keyword, id: String = "/id") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)
   }
@@ -210,20 +210,20 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
                                    """
 
   private def asset(caption: String, width: Int, height: Int, mediaId: String): ApiAsset = {
-    ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map(
-      "caption" -> caption,
-      "width" -> width.toString,
-      "height" -> height.toString,
-      "mediaId" -> mediaId
-    ))
+    ApiAsset(AssetType.Image, Some("image/jpeg"), Some("http://www.foo.com/bar"), Some(AssetFields(
+      caption = Some(caption),
+      width = Some(width),
+      height = Some(height),
+      mediaId = Some(mediaId)
+    )))
   }
 
   val testImages: List[ApiElement] = List(
-    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("test caption", 140, 100, "gu-image-1"))),
-    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("test caption", 250, 100, "gu-image-2"))),
-    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("test caption", 600, 100, "gu-image-3"))),
-    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("test caption", 500, 100, "gu-image-4"))),
-    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
+    ApiElement("gu-image-1", "body", ElementType.Image, Some(0), List(asset("test caption", 140, 100, "gu-image-1"))),
+    ApiElement("gu-image-2", "body", ElementType.Image, Some(0), List(asset("test caption", 250, 100, "gu-image-2"))),
+    ApiElement("gu-image-3", "body", ElementType.Image, Some(0), List(asset("test caption", 600, 100, "gu-image-3"))),
+    ApiElement("gu-image-4", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 100, "gu-image-4"))),
+    ApiElement("gu-image-5", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
   )
 
   val testContent = {
@@ -231,11 +231,11 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
       id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = None,
+      webPublicationDate = None,
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      fields = Some(Map("shortUrl" -> "http://gu.com/p/439az")),
+      fields = Some(ContentFields(shortUrl = Some("http://gu.com/p/439az"))),
       elements = Some(testImages)
     ))
     Article.make(content)

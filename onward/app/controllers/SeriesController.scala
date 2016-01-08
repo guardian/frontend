@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -34,7 +34,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     log.info(s"Fetching content in series: $seriesId the ShortUrl $currentShortUrl" )
 
     def isCurrentStory(content: ApiContent) =
-      content.safeFields.get("shortUrl").exists(_.equals(currentShortUrl))
+      content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
 
     val seriesResponse: Future[Option[Series]] = getResponse(LiveContentApi.item(seriesId, edition)
       .showFields("all")

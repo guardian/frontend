@@ -555,6 +555,27 @@
         min-height: 0;
         padding-bottom: 0;
     }
+
+    .content__labels--crossword & {
+
+        //aligns byline for crosswords, with social sharing buttons past tablet
+        @include mq(leftCol) {
+            margin-top: ($gs-baseline * 6) + 7px;
+            min-height: 0;
+            padding-bottom: 0;
+        }
+
+        @include mq(mobile, $until: leftCol) {
+            display: none;
+        }
+
+    }
+
+    .crossword__links & {
+        @include mq($from: leftCol) {
+            display: none;
+        }
+    }
 }
 
 .drop-cap {
@@ -865,7 +886,7 @@
     position: relative;
     clear: both;
 
-    .content__head__crosswords & {
+    .content__head--crossword & {
         clear: none;
     }
 }

@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast => ApiPodcast, Reference => ApiReference}
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag, Podcast => ApiPodcast, Reference => ApiReference}
 import common.{RelativePathEscaper, Pagination}
 import conf.Configuration
 import contentapi.SectionTagLookUp
@@ -120,7 +120,7 @@ object TagProperties {
     TagProperties(
       id = tag.id,
       url = SupportedUrl(tag),
-      tagType = tag.`type`,
+      tagType = tag.`type`.name,
       sectionId = tag.sectionId.getOrElse("global"),
       sectionName = tag.sectionName.getOrElse("global"),
       webTitle = tag.webTitle,
@@ -172,11 +172,11 @@ case class Tag (
   val isContributor: Boolean = metadata.id.startsWith("profile/")
   val id: String = metadata.id
   val name: String = metadata.webTitle
-  val isSeries: Boolean = properties.tagType == "series"
-  val isBlog: Boolean = properties.tagType == "blog"
+  val isSeries: Boolean = properties.tagType == "Series"
+  val isBlog: Boolean = properties.tagType == "Blog"
   val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.section)
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
-  val isKeyword = properties.tagType == "keyword"
+  val isKeyword = properties.tagType == "Keyword"
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))

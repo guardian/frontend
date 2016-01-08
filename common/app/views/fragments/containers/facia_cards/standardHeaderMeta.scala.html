@@ -8,7 +8,7 @@
 @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
     <div class="fc-container__header  @if(containerDefinition.customHeader.isEmpty) {js-container__header}">
         @title.map { title =>
-            @defining(frontProperties.editorialType.contains("contributor")) { isContributor =>
+            @defining(frontProperties.editorialType.contains("Contributor")) { isContributor =>
                 <div class="@RenderClasses(Map(
                     "fc-container__header__title" -> true,
                     "tone-comment" -> isContributor,

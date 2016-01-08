@@ -29,9 +29,9 @@ case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: 
   }
 
   def hasTag(tag: Tag): Boolean = tag.properties.tagType match {
-    case "keyword" => hasTagId(keywords, tag.id)
-    case "series" => hasTagId(series, tag.id)
-    case "contributor" => hasTagId(contributors, tag.id)
+    case "Keyword" => hasTagId(keywords, tag.id)
+    case "Series" => hasTagId(series, tag.id)
+    case "Contributor" => hasTagId(contributors, tag.id)
     case _ => false
   }
 
