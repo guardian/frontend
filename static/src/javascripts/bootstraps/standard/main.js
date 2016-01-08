@@ -21,7 +21,9 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/utils/url',
+    'common/utils/cookies'
 ], function (
     raven,
     fastdom,
@@ -32,7 +34,9 @@ define([
     $,
     ajax,
     mediator,
-    identity
+    identity,
+    url,
+    cookies
 ) {
     return function () {
         var guardian = window.guardian;
@@ -112,6 +116,20 @@ define([
             ab.segmentUser();
             ab.run();
         }
+
+        //
+        // Set adtest query if url param declares it.
+        //
+        var setAdTestCookie = function () {
+            var queryParams = url.getUrlVars();
+            if (queryParams.adtest === 'clear') {
+                cookies.remove('adtest');
+            } else if (queryParams.adtest) {
+                cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+            }
+        };
+        setAdTestCookie();
+
 
         //
         // Images

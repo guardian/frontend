@@ -274,15 +274,6 @@ define([
                 }
             },
 
-            adTestCookie: function () {
-                var queryParams = url.getUrlVars();
-                if (queryParams.adtest === 'clear') {
-                    cookies.remove('adtest');
-                } else if (queryParams.adtest) {
-                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
-                }
-            },
-
             initOpenOverlayOnClick: function () {
                 var offset;
 
@@ -375,7 +366,6 @@ define([
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-test-cookie', modules.testCookie],
-                ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
                 ['c-breaking-news', modules.loadBreakingNews],
                 ['c-block-link', fauxBlockLink],
