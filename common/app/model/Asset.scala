@@ -48,7 +48,7 @@ case class ImageAsset(
   mimeType: Option[String],
   url: Option[String]) {
 
-  val path: Option[String] = url.map(ImgSrc(_, Naked))
+  lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
 
   val thumbnail: Option[String] = fields.get("thumbnail")
   val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))

@@ -89,7 +89,7 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging {
 
-  private val imageHost = Configuration.images.path
+  private lazy val imageHost = Configuration.images.path
 
   private case class HostMapping(prefix: String, token: String)
 
