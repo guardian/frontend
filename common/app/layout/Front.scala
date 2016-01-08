@@ -1,13 +1,12 @@
 package layout
 
-import common.dfp.{DfpAgent, SponsorshipTag}
+import common.dfp._
 import common.{Edition, LinkTo}
 import conf.switches.Switches
-import implicits.FaciaContentFrontendHelpers._
 import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
-import model.pressed.{PressedContent, CollectionConfig}
+import model.pressed.{CollectionConfig, PressedContent}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -109,6 +108,43 @@ object ContainerCommercialOptions {
     omitMPU = false
   )
 
+  def fromCollection(collection: CollectionEssentials) = {
+
+    val firstItem = collection.items.headOption
+
+    firstItem flatMap (_.properties.maybeContent) flatMap { content =>
+
+      val winningTagPair = DfpAgent.winningTagPair(
+        capiTags = content.tags.tags,
+        sectionId = Some(content.metadata.section),
+        edition = None
+      )
+
+      winningTagPair map { tagPair =>
+        val capiTag = tagPair.capiTag
+        val dfpTag = tagPair.dfpTag
+
+        val sponsorshipTag = {
+          val maybeTagType = capiTag.properties.tagType match {
+            case "series" => Some(Series)
+            case "keyword" => Some(Keyword)
+            case _ => None
+          }
+          maybeTagType map (tagType => SponsorshipTag(tagType, tagId = capiTag.id))
+        }
+
+        ContainerCommercialOptions(
+          isSponsored = dfpTag.paidForType == Sponsored,
+          isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+          isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+          sponsorshipTag,
+          sponsorshipType = Some(dfpTag.paidForType.name),
+          omitMPU = false
+        )
+      }
+    } getOrElse empty
+  }
+
   val empty = ContainerCommercialOptions(
     isSponsored = false,
     isAdvertisementFeature = false,
@@ -191,6 +227,8 @@ object FaciaContainer {
     // popular containers should never be sponsored
     container match {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
+      case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
+      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.empty
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description.map(DescriptionMetaHeader),
