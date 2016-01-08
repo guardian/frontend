@@ -41,8 +41,8 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
         "javascripts/app.js",
         "javascripts/bootstraps/enhanced/main.js",
         "javascripts/bootstraps/enhanced/crosswords.js",
-        "javascripts/bootstraps/commercial.js",,
-        "javascripts/bootstraps/standard/omniture-pageview.js"
+        "javascripts/bootstraps/commercial.js",
+        "javascripts/bootstraps/standard/omniture-pageview.js",
         "javascripts/components/react/react.js",
         "javascripts/enhanced-vendor.js"
       )
