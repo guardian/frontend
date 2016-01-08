@@ -92,6 +92,7 @@ class Assets(base: String) extends Logging {
        val knownInlines : PartialFunction[String,String] =
        {
          case "story-package" => "story-package.css"
+         case "ThisIsTheNHS" => "basher.ThisIsTheNHS.css"
          case "KeepItInTheGround" => "basher.KeepItInTheGround.css"
        }
        knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }
