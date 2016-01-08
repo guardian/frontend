@@ -37,7 +37,7 @@
 
         <div class="form-field @{if(reasonError) {"form-field--error"}}">
             <label class="label" for="reason">Reason</label><span class="form-note">(optional)</span>
-            <textarea class="fieldset__fields" id="reason" name="reason"></textarea>
+            <textarea class="input-textarea" id="reason" name="reason" maxlength="250"></textarea>
             @if(reasonError) {
                 <p class="form-field__error-message">@reasonError.get.message</p>
             }
@@ -45,7 +45,7 @@
 
         <div class="form-field @{if(emailError) {"form-field--error"}}">
             <label class="label" for="email">Email</label><span class="form-note">(optional)</span>
-            <input type="email" class="email" id="email" name="email" />
+            <input type="email" class="input-text" id="email" name="email" />
             @if(emailError) {
                 <p class="form-field__error-message">@emailError.get.message</p>
             }
