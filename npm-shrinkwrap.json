@@ -4482,6 +4482,20 @@
     "grunt-autoprefixer": {
       "version": "3.0.3",
       "dependencies": {
+        "autoprefixer-core": {
+          "version": "5.2.1",
+          "dependencies": {
+            "browserslist": {
+              "version": "0.4.0"
+            },
+            "num2fraction": {
+              "version": "1.2.2"
+            },
+            "caniuse-db": {
+              "version": "1.0.30000350"
+            }
+          }
+        },
         "chalk": {
           "version": "1.0.0",
           "dependencies": {

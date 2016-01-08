@@ -243,7 +243,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         Some(slimElement)
       }
       val elements = Elements.apply((slimElements :+ content.elements.mainVideo).flatten)
-      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
+      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2))
 
       val slimTrailPicture = content.trail.trailPicture.map { imageMedia =>
         val naked = Naked.elementFor(imageMedia)
