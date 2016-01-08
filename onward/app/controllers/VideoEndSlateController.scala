@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -24,7 +24,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching video content in section: $sectionId" )
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
+    def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
 
     val promiseOrResponse = getResponse(LiveContentApi.search(edition)
       .section(sectionId)
@@ -66,7 +66,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
+    def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
 
     val promiseOrResponse = getResponse(LiveContentApi.item(seriesId, edition)
       .tag("type/video")

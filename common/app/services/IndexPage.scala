@@ -12,7 +12,7 @@ import model.pressed._
 import org.joda.time.{DateTimeZone, DateTime}
 import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 
 import scala.Function.const
 import scalaz.std.list._
@@ -209,7 +209,7 @@ case class IndexPage(
 
   def forcesDayView = page match {
     case tag: Tag if tag.metadata.section == "crosswords" => false
-    case tag: Tag => Set("series", "blog").contains(tag.properties.tagType)
+    case tag: Tag => Set("Series", "Blog").contains(tag.properties.tagType)
     case _ => false
   }
 

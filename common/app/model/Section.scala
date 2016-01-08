@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.{Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import play.api.libs.json.{JsString, JsValue}
 

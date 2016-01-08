@@ -1,7 +1,8 @@
 package services
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Section => ApiSection}
+import com.gu.contentapi.client.model.{ItemResponse, SearchResponse}
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse

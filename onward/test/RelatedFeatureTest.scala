@@ -24,7 +24,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
         Then("I should see the related links")
-        $("[itemprop=mainContentOfPage]").find("li") should have length 8
+        $("[itemprop=mainContentOfPage]").find("li") should have length 2
       }
     }
   }

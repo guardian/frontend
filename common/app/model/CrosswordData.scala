@@ -1,10 +1,13 @@
 package model
 
-import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, Crossword}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
+
+case class CrosswordPosition(x: Int, y: Int)
 
 object Entry {
   implicit val positionWrites = Json.writes[CrosswordPosition]
@@ -32,8 +35,8 @@ object Entry {
     entry.direction.getOrElse(""),
     entry.length.getOrElse(0),
     entry.group.getOrElse(Seq()),
-    entry.position.getOrElse(CrosswordPosition(0,0)),
-    entry.separatorLocations,
+    entry.position.map(position => CrosswordPosition(position.x, position.y)).getOrElse(CrosswordPosition(0,0)),
+    entry.separatorLocations.map(_.toMap),
     entry.solution
   )
 }
@@ -52,6 +55,16 @@ case class Entry(
 ) extends CrosswordGridColumnNotation {
   lazy val startPosition = s"${(position.y + 1).toString}${columnsByLetters(position.x)}"
 }
+
+case class CrosswordCreator(
+  name: String,
+  webUrl: String
+)
+
+case class CrosswordDimensions(
+  cols: Int,
+  rows: Int
+)
 
 object CrosswordData {
 
@@ -108,16 +121,19 @@ object CrosswordData {
 
     // Revert back to the original order
     val sortedNewEntries = entries.flatMap(entry => newEntries.find(_.id == entry.id))
+    val crosswordType = crossword.`type`.name.toLowerCase
 
     CrosswordData(
-      s"${crossword.`type`}/${crossword.number.toString}",
+      s"$crosswordType/${crossword.number.toString}",
       crossword.number,
       crossword.name,
-      crossword.creator,
-      dateFormatUTC.parseDateTime(crossword.date),
+      creator = (for (
+        creator <- crossword.creator
+      ) yield CrosswordCreator(creator.name, creator.webUrl)),
+      crossword.date.toJodaDateTime,
       sortedNewEntries,
-      crossword.dimensions,
-      crossword.`type`,
+      CrosswordDimensions(crossword.dimensions.cols, crossword.dimensions.rows),
+      crosswordType,
       crossword.pdf,
       crossword.instructions
     )
