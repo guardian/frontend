@@ -3,10 +3,10 @@ package layout
 import common.dfp._
 import common.{Edition, LinkTo}
 import conf.switches.Switches
-import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
 import model.pressed.{CollectionConfig, PressedContent}
+import model.{ContentType, PressedPage}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -108,21 +108,21 @@ object ContainerCommercialOptions {
     omitMPU = false
   )
 
-  def fromCollection(collection: CollectionEssentials) = {
+  def fromCollection(collection: CollectionEssentials): ContainerCommercialOptions = {
 
-    val firstItem = collection.items.headOption
+    def mkFromFirstItemInCollection(item: PressedContent): Option[ContainerCommercialOptions] = {
 
-    firstItem flatMap (_.properties.maybeContent) flatMap { content =>
+      def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
+        DfpAgent.winningTagPair(
+          capiTags = content.tags.tags,
+          sectionId = Some(content.metadata.section),
+          edition = None
+        )
+      }
 
-      val winningTagPair = DfpAgent.winningTagPair(
-        capiTags = content.tags.tags,
-        sectionId = Some(content.metadata.section),
-        edition = None
-      )
-
-      winningTagPair map { tagPair =>
-        val capiTag = tagPair.capiTag
-        val dfpTag = tagPair.dfpTag
+      def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): ContainerCommercialOptions = {
+        val capiTag = tagProps.capiTag
+        val dfpTag = tagProps.dfpTag
 
         val sponsorshipTag = {
           val maybeTagType = capiTag.properties.tagType match {
@@ -142,7 +142,11 @@ object ContainerCommercialOptions {
           omitMPU = false
         )
       }
-    } getOrElse empty
+
+      item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+    }
+
+    collection.items.headOption flatMap mkFromFirstItemInCollection getOrElse empty
   }
 
   val empty = ContainerCommercialOptions(
