@@ -5,15 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val CapiEmbedHotfixSwitch = Switch(
-    "Feature",
-    "capi-embed-hotfix",
-    "Applies hotfix for broken embeds due to CAPI upgrade",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 11),
-    exposeClientSide = false
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
