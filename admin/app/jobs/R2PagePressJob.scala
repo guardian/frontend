@@ -10,7 +10,7 @@ import org.jsoup.Jsoup
 import pagepresser.{PollsHtmlCleaner, BasicHtmlCleaner}
 import play.api.libs.json.Json
 import play.api.libs.ws.WS
-import services.{PagePresses, R2Archive}
+import services.{R2ArchiveOriginals, PagePresses, R2Archive}
 import play.api.Play.current
 
 object R2PagePressJob extends ExecutionContexts with Logging {
@@ -69,22 +69,46 @@ object R2PagePressJob extends ExecutionContexts with Logging {
       WS.url(urlIn).get().map { response =>
         response.status match {
           case 200 => {
-            val document = Jsoup.parse(response.body)
-            val cleanedHtmlString = cleaners.filter(_.canClean(document))
-              .map(_.clean(document))
-              .headOption
-              .getOrElse(document)
-              .toString
+            val originalSource = response.body
             val pressAsUrl = urlIn.replace("https://", "").replace("http://","")
 
-            R2Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
-            R2Archive.get(pressAsUrl).foreach { result =>
-              if (result == cleanedHtmlString) {
-                PagePresses.set(urlIn, pressAsUrl)
-                log.info(s"Pressed $urlIn as $pressAsUrl")
-              } else {
-                log.error(s"Pressed data did not match original for $pressAsUrl")
+            try {
+              if (R2ArchiveOriginals.get(pressAsUrl).isEmpty) {
+                try {
+                  R2ArchiveOriginals.putPublic(pressAsUrl, originalSource, "text/html")
+                  log.info(s"Original page source saved for $urlIn")
+                } catch {
+                  case e: Exception => log.error(s"Cannot write original page source for $urlIn to bucket ${R2ArchiveOriginals.bucket} (${e.getMessage})")
+                }
               }
+            } catch {
+              case e: Exception => log.error(s"Cannot read from bucket ${R2ArchiveOriginals.bucket} (${e.getMessage}) while pressing $urlIn")
+            }
+
+            val archiveDocument = Jsoup.parse(originalSource)
+            val cleanedHtmlString = cleaners.filter(_.canClean(archiveDocument))
+              .map(_.clean(archiveDocument))
+              .headOption
+              .getOrElse(archiveDocument)
+              .toString
+
+            try {
+              R2Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
+            } catch {
+              case e: Exception => log.error(s"Cannot write to bucket ${R2Archive.bucket} (${e.getMessage}) while pressing $urlIn")
+            }
+
+            try {
+              R2Archive.get(pressAsUrl).foreach { result =>
+                if (result == cleanedHtmlString) {
+                  PagePresses.set(urlIn, pressAsUrl)
+                  log.info(s"Pressed $urlIn as $pressAsUrl")
+                } else {
+                  log.error(s"Pressed data did not match original for $pressAsUrl")
+                }
+              }
+            } catch {
+              case e: Exception => log.error(s"Cannot read from bucket ${R2Archive.bucket} (${e.getMessage}) while pressing $urlIn")
             }
           }
           case non200 => {
