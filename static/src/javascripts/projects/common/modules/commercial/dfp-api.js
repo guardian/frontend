@@ -309,12 +309,8 @@ define([
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
         },
-        setupAdvertising = function (options) {
-            var opts = defaults(options || {}, {
-                resizeTimeout: 2000
-            });
-
-            resizeTimeout = opts.resizeTimeout;
+        setupAdvertising = function () {
+            resizeTimeout = 2000;
 
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
@@ -347,9 +343,9 @@ define([
         /**
          * Public functions
          */
-        init = function (options) {
+        init = function () {
             if (commercialFeatures.dfpAdvertising) {
-                setupAdvertising(options);
+                setupAdvertising();
             } else {
                 $(adSlotSelector).remove();
             }
