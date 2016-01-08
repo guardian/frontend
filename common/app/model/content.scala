@@ -11,7 +11,6 @@ import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.liveblog.BodyBlock
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -424,7 +423,7 @@ final case class Article (
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
-  val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
+  val isLiveBlog: Boolean = content.tags.isLiveBlog
   val isImmersive: Boolean = content.metadata.isImmersive
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
@@ -453,7 +452,6 @@ final case class Article (
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
-  //@deprecated("use content.fields.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)
 }
 

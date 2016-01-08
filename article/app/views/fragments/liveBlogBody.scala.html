@@ -1,12 +1,10 @@
-@import _root_.liveblog.BodyBlocks
-@import model.liveblog.LiveBlogDate
-@(model: LiveBlogPage, blocks: BodyBlocks)(implicit request: RequestHeader)
+@(model: LiveBlogPage)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import layout.{FaciaCardAndIndex, ItemClasses}
-@import views.BodyCleaner
-@import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
+@import views.BodyCleaner
+@import layout.{FaciaCardAndIndex, ItemClasses}
+@import views.html.fragments.items.facia_cards.item
 
 @defining(model.article) {  article =>
 <div class="l-side-margins">
@@ -73,35 +71,7 @@
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                @blocks.blocks.map { block =>
-                                    <div id="block-@block.id" class="block@block.eventClass" data-block-contributor="@block.contributors.map { /*TODO separator?? needed?*/cont =>profile/@cont}.mkString(",")" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
-                                        <p class="block-time published-time">
-                                            <a href="#block-@block.id" itemprop="url" class="block-time__link">
-                                                @block.publishedCreatedDate.map { case LiveBlogDate(createdDate, hhmm, ampm, gmt) =>
-                                                    <time datetime="@createdDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
-                                                    <span class="block-time__absolute">@hhmm</span>
-                                                }
-                                            </a>
-                                        </p>
-                                        @block.title.map { title =>
-                                            <h2 class="block-title" itemprop="headline">@title</h2>
-                                        }
-                                        @block.contributors.map { contributorId =>
-                                            @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
-                                                @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-                                            }
-                                        }
-                                        <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-                                            @BodyCleaner(article, block.bodyHtml, amp = false)
-                                        </div>
-                                        @block.republishedDate.map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
-                                            <p class="block-time updated-time">Updated
-                                                <time datetime="@republishedDate">at @ampm @gmt</time>
-                                            </p>
-                                        }
-                                        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(Some(s"block-${block.id}")), article.metadata.contentType)
-                                    </div>
-                                }
+                                @BodyCleaner(article, article.fields.body, amp = false)
                             </div>
                         </div>
 
