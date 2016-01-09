@@ -56,7 +56,7 @@ export const createDeployGroupRecord = Record<DeployGroup>({
 }, 'DeployGroup');
 
 
-export interface DeployJson {
+interface DeployJson {
     build: string;
     uuid: string;
     projectName: string;
@@ -64,11 +64,21 @@ export interface DeployJson {
     time: string;
 }
 
-export interface BuildJson {
+export interface DeploysJson {
+    status: string;
+    response: Array<DeployJson>;
+}
+
+interface BuildResponseJson {
     number: string;
     projectName: string;
     revision: string;
     commits: Array<CommitJson>
+}
+
+export interface BuildJson {
+    status: string;
+    response: BuildResponseJson;
 }
 
 interface CommitJson {
