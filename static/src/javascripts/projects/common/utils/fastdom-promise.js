@@ -5,20 +5,22 @@ define([
     fastdom,
     Promise
 ) {
-    function fastDomAction(action, fn) {
-        return new Promise(function (resolve) {
-            fastdom[action](function () {
-                resolve(fn());
+    function promisify(fdaction) {
+        return function(fn, ctx) {
+            return new Promise(function (resolve, reject) {
+                fdaction(function () {
+                    try {
+                        resolve(fn());
+                    } catch (e) {
+                        reject(e);
+                    }
+                }, ctx);
             });
-        });
+        }
     }
 
     return {
-        read: function (fn) {
-            return fastDomAction('read', fn);
-        },
-        write: function (fn) {
-            return fastDomAction('write', fn);
-        }
+        read: promisify(fastdom.read),
+        write: promisify(fastdom.write)
     };
 });
