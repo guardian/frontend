@@ -75,7 +75,7 @@ define([
 
                 mediator.on('window:throttledScroll', render);
                 render();
-                topAdRenderedPromise.then(render);
+                newAdHeightPromise.then(render);
 
                 newAdHeightPromise.then(function (adHeight) {
                     var diff = adHeight - oldAdHeight;
