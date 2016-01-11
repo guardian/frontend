@@ -31,6 +31,7 @@ When you are happy with everything on code:
 * command for the above is curl -v -X POST -H 'Content-Length: 0' http://localhost:9000/press/draft/all
 * deploy training/preview and check they still work
 * deploy facia etc
+* turn off the facia-press-on-demand switches again
 * have a beer
 
 ### Old facia can use new format, new facia can use the old: N, N
