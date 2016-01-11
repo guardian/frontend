@@ -1,6 +1,6 @@
 package conf.switches
 
-import org.joda.time.LocalDate
+import org.joda.time.{DateTimeConstants, LocalDate}
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
@@ -16,17 +16,21 @@ class SwitchesTest extends FlatSpec with Matchers {
   }
 
   they should "have a description" in {
-    Switches.all foreach {
-      case Switch(_, _, description, _, _, _) => description.trim should not be("")
-      case TimerSwitch(_, _, description, _, _, _, _) => description.trim should not be("")
-    }
+    Switches.all foreach { _.description.trim should not be("") }
   }
 
   // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
   they should "be deleted once expired" in {
-    Switches.all foreach {
-      case Switch(_, id, _, _, sellByDate, _) => assert(sellByDate.isAfter(LocalDate.now()), id)
-      case TimerSwitch(_, id, _, _, sellByDate, _, _) => assert(sellByDate.isAfter(LocalDate.now()), id)
+    Switches.all foreach { switch =>
+      assert(switch.sellByDate.isAfter(LocalDate.now()), switch.name)
+    }
+  }
+
+  they should "have weekday expiry dates" in {
+    Switches.all foreach { switch =>
+     val day = switch.sellByDate.getDayOfWeek()
+     val isWeekend = day == DateTimeConstants.SATURDAY || day == DateTimeConstants.SUNDAY
+     assert(!isWeekend, switch.name)
     }
   }
 }
