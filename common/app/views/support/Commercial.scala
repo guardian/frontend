@@ -82,42 +82,38 @@ object Commercial {
   object containerCard {
 
     case class SponsorDataAttributes(
-      sponsorshipType: Option[String],
+      sponsorshipType: String,
       seriesId: Option[String],
       keywordId: Option[String]
     )
 
-    def cardsAndSponsorDataAttributes(container: FaciaContainer): Seq[(Option[ContentCard], SponsorDataAttributes)] = {
+    def cardsAndSponsorDataAttributes(container: FaciaContainer):
+    Seq[(Option[ContentCard], Option[SponsorDataAttributes])] = {
 
-      def sponsorDataAttributes(item: PressedContent): SponsorDataAttributes = {
+      def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
 
-        def mkFromItem(item: PressedContent): Option[SponsorDataAttributes] = {
-
-          def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
-            DfpAgent.winningTagPair(
-              capiTags = content.tags.tags,
-              sectionId = Some(content.metadata.section),
-              edition = None
-            )
-          }
-
-          def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
-            val capiTag = tagProps.capiTag
-            val dfpTag = tagProps.dfpTag
-
-            def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
-
-            SponsorDataAttributes(
-              sponsorshipType = Some(dfpTag.paidForType.name),
-              seriesId = tagId(_.isSeries),
-              keywordId = tagId(_.isKeyword)
-            )
-          }
-
-          item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+        def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
+          DfpAgent.winningTagPair(
+            capiTags = content.tags.tags,
+            sectionId = Some(content.metadata.section),
+            edition = None
+          )
         }
 
-        mkFromItem(item) getOrElse SponsorDataAttributes(sponsorshipType = None, seriesId = None, keywordId = None)
+        def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
+          val capiTag = tagProps.capiTag
+          val dfpTag = tagProps.dfpTag
+
+          def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
+
+          SponsorDataAttributes(
+            sponsorshipType = dfpTag.paidForType.name,
+            seriesId = tagId(_.isSeries),
+            keywordId = tagId(_.isKeyword)
+          )
+        }
+
+        item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
       }
 
       val contentCards = container.containerLayout map {
