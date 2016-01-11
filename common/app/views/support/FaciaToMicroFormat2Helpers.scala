@@ -23,7 +23,7 @@ object FaciaToMicroFormat2Helpers {
       Json.obj(
         "headline" -> content.header.headline,
         "trailText" -> content.card.trailText,
-        "url" -> content.properties.href,
+        "url" -> content.header.url,
         "thumbnail" -> content.properties.maybeContent.flatMap(_.trail.thumbnailPath),
         "id" -> content.properties.maybeContent.map(_.metadata.id),
         "frontPublicationDate" -> content.properties.maybeFrontPublicationDate,
