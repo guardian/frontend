@@ -68,6 +68,7 @@ GET            /analytics/commercial/templates                                  
 GET            /analytics/commercial/sponsored-containers                                                                        controllers.admin.CommercialController.sponsoredContainers()
 GET            /analytics/commercial/adtests                                                                                     controllers.admin.CommercialController.renderAdTests()
 GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
+GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
 # Discussion
 GET            /discussion/comment-counts                                                                                        controllers.CommentCountController.commentCount(shortUrls: String)
