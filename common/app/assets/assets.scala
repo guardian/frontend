@@ -48,7 +48,10 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
       // We reference these files using the asset map in dev, but because they're not compiled,
       // they don't exist as entries in the asset map.
       // To test the service worker in dev, one must compile the JS.
-      val whitelist = Seq("javascripts/bootstraps/enhanced/ophan.js") ++ serviceWorkerWhitelist
+      val whitelist = Seq(
+        "javascripts/bootstraps/enhanced/ophan.js",
+        "javascripts/bootstraps/admin.js"
+      ) ++ serviceWorkerWhitelist
       val map = jsonToAssetMap(IOUtils.toString(assetMapUri))
       addIfMissing(map, whitelist)
     } else {
@@ -92,6 +95,7 @@ class Assets(base: String) extends Logging {
        val knownInlines : PartialFunction[String,String] =
        {
          case "story-package" => "story-package.css"
+         case "ThisIsTheNHS" => "basher.ThisIsTheNHS.css"
          case "KeepItInTheGround" => "basher.KeepItInTheGround.css"
        }
        knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }

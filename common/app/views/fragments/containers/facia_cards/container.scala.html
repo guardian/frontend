@@ -1,9 +1,9 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
 
-@import dfp.{Keyword, Series}
+@import common.dfp.{Keyword, Series}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage, Commercial}
-@import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
+@import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.GetClasses
 
 @defining(containerDefinition.displayName, containerDefinition.faciaComponentName) { case (title, componentName) =>
