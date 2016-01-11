@@ -1,6 +1,7 @@
 package crosswords
 
-import com.gu.contentapi.client.model.v1.{CrosswordPosition, CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{CrosswordDimensions, Crossword}
+import model.CrosswordPosition
 
 object CrosswordSvg extends CrosswordGridDataOrdering {
   val BorderSize = 1
