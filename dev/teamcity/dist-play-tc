@@ -12,10 +12,12 @@ set -x
 ./dev/teamcity/sbt-tc "project root" compile assets test
 testPassed=$?
 
+set +u
 if [[ $BUILD_IS_PERSONAL == 'true' ]]; then
     echo "personal build complete."
     exit $testPassed
 fi
+set -u
 
 if [[ $testPassed -eq 0 ]]; then
     echo "sbt passed, performing riff raff upload."
