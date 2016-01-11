@@ -40,28 +40,31 @@ define([
 
                 var render = function () {
                     getLatestAdHeight().then(function (adHeight) {
-                        fastdom.write(function () {
-                            if (window.scrollY === 0) {
-                                // Reset
-                                $header.css('margin-top', '');
-                                $adBanner.css({
-                                    'position': '',
-                                    'top': ''
-                                });
-                            } else {
-                                if (window.scrollY > (headerHeight)) {
+                        fastdom.read(function () {
+                            var scrollY = window.scrollY;
+                            fastdom.write(function () {
+                                if (scrollY === 0) {
+                                    // Reset
+                                    $header.css('margin-top', '');
                                     $adBanner.css({
-                                        'position': 'absolute',
-                                        'top': headerHeight + 'px'
+                                        'position': '',
+                                        'top': ''
                                     });
                                 } else {
-                                    $adBanner.css({
-                                        'position': 'fixed',
-                                        'top': 0
-                                    });
+                                    if (scrollY > headerHeight) {
+                                        $adBanner.css({
+                                            'position': 'absolute',
+                                            'top': headerHeight + 'px'
+                                        });
+                                    } else {
+                                        $adBanner.css({
+                                            'position': 'fixed',
+                                            'top': 0
+                                        });
+                                    }
+                                    $header.css('margin-top', adHeight + 'px');
                                 }
-                                $header.css('margin-top', adHeight + 'px');
-                            }
+                            });
                         });
                     });
                 };
@@ -77,11 +80,13 @@ define([
                 topAdRenderedPromise
                     .then(getLatestAdHeight)
                     .then(function (newAdHeight) {
-                        var diff = newAdHeight - oldAdHeight;
+                        fastdom.read(function () {
+                            var diff = newAdHeight - oldAdHeight;
 
-                        if (window.scrollY !== 0) {
-                            window.scrollTo(window.scrollX, window.scrollY + diff);
-                        }
+                            if (window.scrollY !== 0) {
+                                window.scrollTo(window.scrollX, window.scrollY + diff);
+                            }
+                        });
                     });
             });
         }
