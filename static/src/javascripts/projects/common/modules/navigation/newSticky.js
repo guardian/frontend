@@ -28,17 +28,14 @@ define([
                     });
                 });
 
-                var oldAdHeightPromise = Promise.resolve(oldAdHeight);
-                var newAdHeightPromise = topAdRenderedPromise.then(function () {
+                var getLatestAdHeight = function () {
                     return fastdom.read(function () {
                         var adSlotPadding = parseInt($('#' + adId, $adBanner).css('padding-bottom')) * 2;
                         // We must read the iframe attribute height to avoid reading the clientHeight mid-transition
-                        return Number($('iframe', $adBanner).attr('height')) + adSlotPadding;
+                        var iframeHeightStr = $('iframe', $adBanner).attr('height');
+                        var newAdHeight = Number(iframeHeightStr) + adSlotPadding;
+                        return iframeHeightStr ? newAdHeight : oldAdHeight;
                     });
-                });
-
-                var getLatestAdHeight = function () {
-                    return Promise.race([newAdHeightPromise, oldAdHeightPromise]);
                 };
 
                 var render = function () {
@@ -75,15 +72,17 @@ define([
 
                 mediator.on('window:throttledScroll', render);
                 render();
-                newAdHeightPromise.then(render);
+                topAdRenderedPromise.then(render);
 
-                newAdHeightPromise.then(function (adHeight) {
-                    var diff = adHeight - oldAdHeight;
+                topAdRenderedPromise
+                    .then(getLatestAdHeight)
+                    .then(function (newAdHeight) {
+                        var diff = newAdHeight - oldAdHeight;
 
-                    if (window.scrollY !== 0) {
-                        window.scrollTo(window.scrollX, window.scrollY + diff);
-                    }
-                });
+                        if (window.scrollY !== 0) {
+                            window.scrollTo(window.scrollX, window.scrollY + diff);
+                        }
+                    });
             });
         }
     };
