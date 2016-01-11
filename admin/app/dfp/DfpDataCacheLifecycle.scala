@@ -58,6 +58,18 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
       def run(): Future[Unit] = DfpAdUnitCacheJob.run()
     },
 
+    new Job[Unit] {
+      val name: String = "DFP-Mobile-Apps-Ad-Units-Update"
+      val interval: Int = 60
+      def run(): Future[Unit] = DfpMobileAppAdUnitCacheJob.run()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-Facebook-IA-Ad-Units-Update"
+      val interval: Int = 60
+      def run(): Future[Unit] = DfpFacebookIaAdUnitCacheJob.run()
+    },
+
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
       val interval: Int = 15

@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import scala.collection.JavaConversions._
 
 @DoNotDiscover class ArticleControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
@@ -130,5 +131,10 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
       )
     val result = route(app, request).head
     contentAsString(result) should include ("\"internationalEdition\":\"international\"")
+  }
+
+  "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>
+    import browser._
+    $(".media-primary > .element-interactive").getAttributes("data-interactive").head should endWith ("boot.js")
   }
 }

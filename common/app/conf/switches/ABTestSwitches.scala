@@ -9,7 +9,7 @@ trait ABTestSwitches {
     "ab-alternative-related",
     "show alternative related content based on the tags to users in the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 23),
+    sellByDate = new LocalDate(2016, 1, 25),
     exposeClientSide = true
   )
 
@@ -27,7 +27,7 @@ trait ABTestSwitches {
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 30),
+    sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = true
   )
 
@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "ab-rtrt-email-form-article-promo",
     "Testing the email sign up from the bottom of articles of user referred from fronts",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 17),
+    sellByDate = new LocalDate(2016, 1, 18),
     exposeClientSide = true
   )
 }

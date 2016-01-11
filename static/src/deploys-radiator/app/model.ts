@@ -26,6 +26,7 @@ export interface Build {
     number: number;
     // TODO: This is confusing, same name as deploy.projectName
     projectName: string;
+    revision: string;
     commits: Array<Commit>
 }
 
@@ -39,6 +40,7 @@ export type BuildRecord = Record.IRecord<Build>;
 export const createBuildRecord = Record<Build>({
     number: undefined,
     projectName: undefined,
+    revision: undefined,
     commits: undefined,
 }, 'Build');
 
@@ -54,7 +56,7 @@ export const createDeployGroupRecord = Record<DeployGroup>({
 }, 'DeployGroup');
 
 
-export interface DeployJson {
+interface DeployJson {
     build: string;
     uuid: string;
     projectName: string;
@@ -62,10 +64,21 @@ export interface DeployJson {
     time: string;
 }
 
-export interface BuildJson {
+export interface DeploysJson {
+    status: string;
+    response: Array<DeployJson>;
+}
+
+interface BuildResponseJson {
     number: string;
     projectName: string;
+    revision: string;
     commits: Array<CommitJson>
+}
+
+export interface BuildJson {
+    status: string;
+    response: BuildResponseJson;
 }
 
 interface CommitJson {

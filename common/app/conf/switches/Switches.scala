@@ -34,7 +34,7 @@ trait Initializable[T] extends ExecutionContexts with Logging {
 }
 
 
-trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
+sealed trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
   val group: String
   val name: String
   val description: String
@@ -82,22 +82,6 @@ case class Switch(
   sellByDate: LocalDate,
   exposeClientSide: Boolean
 ) extends SwitchTrait
-
-case class TimerSwitch(
-  group: String,
-  name: String,
-  description: String,
-  safeState: SwitchState,
-  sellByDate: LocalDate,
-  activePeriods: Seq[Interval],
-  exposeClientSide: Boolean
-) extends SwitchTrait with Logging {
-
-  def isSwitchedOnAndActive: Boolean = {
-    val active = activePeriods.exists(_.containsNow())
-    isSwitchedOn && (environment.isNonProd || active)
-  }
-}
 
 object Switch {
   val switches = AkkaAgent[List[SwitchTrait]](Nil)
