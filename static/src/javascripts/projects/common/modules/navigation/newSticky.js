@@ -28,43 +28,41 @@ define([
                     });
                 });
 
-                var oldAdHeightPromise = Promise.resolve(oldAdHeight);
-                var newAdHeightPromise = topAdRenderedPromise.then(function () {
+                var getLatestAdHeight = function () {
                     return fastdom.read(function () {
                         var adSlotPadding = parseInt($('#' + adId, $adBanner).css('padding-bottom')) * 2;
                         // We must read the iframe attribute height to avoid reading the clientHeight mid-transition
-                        return Number($('iframe', $adBanner).attr('height')) + adSlotPadding;
+                        var iframeHeightStr = $('iframe', $adBanner).attr('height');
+                        var newAdHeight = Number(iframeHeightStr) + adSlotPadding;
+                        return iframeHeightStr ? newAdHeight : oldAdHeight;
                     });
-                });
-
-                var getLatestAdHeight = function () {
-                    return Promise.race([newAdHeightPromise, oldAdHeightPromise]);
                 };
 
                 var render = function () {
                     getLatestAdHeight().then(function (adHeight) {
-                        fastdom.write(function () {
-                            if (window.scrollY === 0) {
+                        fastdom.read(function () {
+                            var scrollY = window.scrollY;
+                            fastdom.write(function () {
                                 // Reset
                                 $header.css('margin-top', '');
                                 $adBanner.css({
                                     'position': '',
                                     'top': ''
                                 });
-                            } else {
-                                if (window.scrollY > (headerHeight)) {
-                                    $adBanner.css({
-                                        'position': 'absolute',
-                                        'top': headerHeight + 'px'
-                                    });
-                                } else {
-                                    $adBanner.css({
-                                        'position': 'fixed',
-                                        'top': 0
-                                    });
+
+                                // Set
+                                if (scrollY > 0) {
+                                    if (scrollY > headerHeight) {
+                                        $adBanner.css({
+                                            'position': 'absolute',
+                                            'top': headerHeight + 'px'
+                                        });
+                                    } else {
+                                        $adBanner.css('position', 'fixed');
+                                    }
+                                    $header.css('margin-top', adHeight + 'px');
                                 }
-                                $header.css('margin-top', adHeight + 'px');
-                            }
+                            });
                         });
                     });
                 };
@@ -79,13 +77,17 @@ define([
 
                 // Adjust the scroll position to compensate for the margin-top added to the header. This prevents the page moving around
                 // This lives here because adjusting the scroll position only helps when the ad is already fixed and the animation doesn't scroll the main page
-                newAdHeightPromise.then(function (adHeight) {
-                    var diff = adHeight - oldAdHeight;
+                topAdRenderedPromise
+                    .then(getLatestAdHeight)
+                    .then(function (newAdHeight) {
+                        fastdom.read(function () {
+                            var diff = newAdHeight - oldAdHeight;
 
-                    if (window.scrollY !== 0) {
-                        window.scrollTo(window.scrollX, window.scrollY + diff);
-                    }
-                });
+                            if (window.scrollY !== 0) {
+                                window.scrollTo(window.scrollX, window.scrollY + diff);
+                            }
+                        });
+                    });
             });
         }
     };
