@@ -2,7 +2,6 @@
 
 set -o xtrace
 set -o nounset
-set -o errexit
 
 echo "Dist play jars."
 
@@ -10,6 +9,19 @@ set +x
 echo "##teamcity[progressStart 'sbt test and dist']"
 set -x
 
-./dev/teamcity/sbt-tc "project root" compile assets test riffRaffUpload
+./dev/teamcity/sbt-tc "project root" compile assets test
+testPassed=$?
+
+if [[ $BUILD_IS_PERSONAL == 'true' ]]; then
+    echo "personal build complete."
+    exit $testPassed
+fi
+
+if [[ $testPassed -eq 0 ]]; then
+    echo "sbt passed, performing riff raff upload."
+    ./dev/teamcity/sbt-tc "project root" riffRaffUpload
+else
+    echo "sbt tests failed, riff raff upload not performed."
+fi
 
 echo "Done disting."
