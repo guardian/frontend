@@ -5,15 +5,6 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
-  val CapiEmbedHotfixSwitch = Switch(
-    "Feature",
-    "capi-embed-hotfix",
-    "Applies hotfix for broken embeds due to CAPI upgrade",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 11),
-    exposeClientSide = false
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -348,13 +339,13 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-  val r2PressToS3Switch = Switch(
+
+  val R2PagePressServiceSwitch = Switch(
     "Feature",
-    "r2-press-page-to-s3",
-    "when switched on this will press the original and cleaned up R2 page to S3",
+    "r2-page-press-service",
+    "When ON, the R2 page press service will monitor the queue and press pages to S3",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 1, 21),
     exposeClientSide = false
   )
-
 }

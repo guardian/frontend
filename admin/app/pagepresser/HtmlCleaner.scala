@@ -1,16 +1,31 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
+import common.Logging
 import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
 
+abstract class HtmlCleaner extends Logging {
+  def canClean(document: Document): Boolean
+  def clean(document: Document): Document
+}
 
-object BasicHtmlCleaner extends HtmlCleaner
+object BasicHtmlCleaner extends HtmlCleaner {
 
-trait HtmlCleaner {
+  override def canClean(document: Document) = {
+    document.getElementsByAttribute("data-poll-url").isEmpty
+  }
 
-  def clean(document: Document): Document = {
+  override def clean(document: Document) = {
+    if (canClean(document)) {
+      basicClean(document)
+    } else {
+      document
+    }
+  }
+
+  def basicClean(document: Document): Document = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
