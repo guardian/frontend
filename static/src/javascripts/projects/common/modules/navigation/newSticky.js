@@ -77,6 +77,8 @@ define([
                 render();
                 topAdRenderedPromise.then(render);
 
+                // Adjust the scroll position to compensate for the margin-top added to the header. This prevents the page moving around
+                // This lives here because adjusting the scroll position only helps when the ad is already fixed and the animation doesn't scroll the main page
                 newAdHeightPromise.then(function (adHeight) {
                     var diff = adHeight - oldAdHeight;
 
