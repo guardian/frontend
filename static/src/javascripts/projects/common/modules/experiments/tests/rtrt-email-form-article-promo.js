@@ -87,7 +87,7 @@ define([
             {
                 id: 'three-paras-from-bottom',
                 test: function () {
-                    var articleParas = $('p', '.js-article__body'),
+                    var articleParas = $('.js-article__body > p'),
                         para = $(articleParas[articleParas.length - 3]); // This is a little bit heavy handed but should be ok for test.
 
                     injectEmailForm(para, 'insertBefore');
