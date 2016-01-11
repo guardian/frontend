@@ -43,24 +43,22 @@ define([
                         fastdom.read(function () {
                             var scrollY = window.scrollY;
                             fastdom.write(function () {
-                                if (scrollY === 0) {
-                                    // Reset
-                                    $header.css('margin-top', '');
-                                    $adBanner.css({
-                                        'position': '',
-                                        'top': ''
-                                    });
-                                } else {
+                                // Reset
+                                $header.css('margin-top', '');
+                                $adBanner.css({
+                                    'position': '',
+                                    'top': ''
+                                });
+
+                                // Set
+                                if (scrollY > 0) {
                                     if (scrollY > headerHeight) {
                                         $adBanner.css({
                                             'position': 'absolute',
                                             'top': headerHeight + 'px'
                                         });
                                     } else {
-                                        $adBanner.css({
-                                            'position': 'fixed',
-                                            'top': 0
-                                        });
+                                        $adBanner.css('position', 'fixed');
                                     }
                                     $header.css('margin-top', adHeight + 'px');
                                 }
