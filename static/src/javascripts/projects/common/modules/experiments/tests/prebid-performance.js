@@ -1,8 +1,4 @@
-define([
-    'common/utils/config'
-], function (
-    config
-) {
+define([], function () {
     return function () {
         this.id = 'PrebidPerformance';
         this.start = '2016-01-11';
