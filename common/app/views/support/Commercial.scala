@@ -2,9 +2,11 @@ package views.support
 
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
-import common.dfp.{AdSize, AdSlot, TopAboveNavSlot, TopSlot}
+import common.dfp._
 import conf.switches.Switches._
-import model.{MetaData, Page}
+import layout.{ColumnAndCards, ContentCard, FaciaContainer}
+import model.pressed.PressedContent
+import model.{ContentType, MetaData, Page, Tag}
 
 object Commercial {
 
@@ -74,6 +76,64 @@ object Commercial {
 
     def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
       hasAdOfSize(TopSlot, responsiveSize, metaData, edition)
+    }
+  }
+
+  object containerCard {
+
+    case class SponsorDataAttributes(
+      sponsorshipType: Option[String],
+      seriesId: Option[String],
+      keywordId: Option[String]
+    )
+
+    def cardsAndSponsorDataAttributes(container: FaciaContainer): Seq[(Option[ContentCard], SponsorDataAttributes)] = {
+
+      def sponsorDataAttributes(item: PressedContent): SponsorDataAttributes = {
+
+        def mkFromItem(item: PressedContent): Option[SponsorDataAttributes] = {
+
+          def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
+            DfpAgent.winningTagPair(
+              capiTags = content.tags.tags,
+              sectionId = Some(content.metadata.section),
+              edition = None
+            )
+          }
+
+          def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): SponsorDataAttributes = {
+            val capiTag = tagProps.capiTag
+            val dfpTag = tagProps.dfpTag
+
+            def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
+
+            SponsorDataAttributes(
+              sponsorshipType = Some(dfpTag.paidForType.name),
+              seriesId = tagId(_.isSeries),
+              keywordId = tagId(_.isKeyword)
+            )
+          }
+
+          item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+        }
+
+        mkFromItem(item) getOrElse SponsorDataAttributes(sponsorshipType = None, seriesId = None, keywordId = None)
+      }
+
+      val contentCards = container.containerLayout map {
+        _.slices flatMap {
+          _.columns flatMap { case ColumnAndCards(_, cards) =>
+            cards map {
+              _.item match {
+                case card: ContentCard => Some(card)
+                case _ => None
+              }
+            }
+          }
+        }
+      } getOrElse Nil
+
+      contentCards zip (container.collectionEssentials.items map sponsorDataAttributes)
     }
   }
 }
