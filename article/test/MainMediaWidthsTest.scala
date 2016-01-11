@@ -66,7 +66,8 @@ class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually w
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("tone/minutebyminute", TagType.Tone)),
-      elements = None
+      elements = None,
+      blocks = Some(Blocks.apply(None, Some(Seq(Block("","","",None, BlockAttributes(), false, None, None, None,None,Nil,None,None, Nil)))))
     )
 
     val content = Content.make(item)
