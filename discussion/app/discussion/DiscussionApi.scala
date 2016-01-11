@@ -177,7 +177,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*) = {
-    println(url)
     super.getJsonOrError(url, onError, headers :+ guClientHeader: _*)
   }
 
