@@ -14,9 +14,7 @@ define([
     fastdom,
     defaults,
     bindAll) {
-    /**
-     * @todo: check if browser natively supports "position: sticky"
-     */
+
     var Sticky = function (element, options) {
         this.$element = bonzo(element);
         this.$parent  = bonzo(this.$element.parent()[0]);
@@ -36,8 +34,6 @@ define([
     Sticky.prototype.updatePosition = function () {
         var css, that = this, message;
 
-        //stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
-        // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
             css = {
                 position: 'fixed',

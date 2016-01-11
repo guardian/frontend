@@ -630,7 +630,7 @@ $timeline-width: 15px;
 
     .blog__updates-box-text {
         display: inline-block;
-        font-weight: 300;
+        font-weight: 700;
         float: right;
         margin-top: 10px;
         opacity: 1;
@@ -644,7 +644,7 @@ $timeline-width: 15px;
         display: inline-block;
         position: absolute;
         top: 8px;
-        left: 10px;
+        left: 8px;
     }
 
     &.loading {
