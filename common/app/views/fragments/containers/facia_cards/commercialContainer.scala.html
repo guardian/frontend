@@ -33,7 +33,7 @@
                             <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">@inlineSvg("glabs-logo", "logo")</a>
                         </div>
                         <div class="commercial__body">
-                            <ul class="lineitems">
+                            <ul class="lineitems js-container__header">
                                 @for(layout <- container.containerLayout) {
                                     @for( slice <- layout.slices) {
                                         @for(ColumnAndCards(_, cards) <- slice.columns) {
@@ -66,7 +66,6 @@
                                     }
                                 }
                             </ul>
-                            <aside class="commercial__meta">Paid for by <img src="ben-jerrys.png"></aside>
                         </div>
                     </div>
                 </div>
