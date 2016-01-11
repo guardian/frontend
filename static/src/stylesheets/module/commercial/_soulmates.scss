@@ -220,14 +220,6 @@ $c-soulmates-high: colour(neutral-1);
             width: auto;
             display: block;
 
-            @include mq(320px, $until: 479px) {
-                width: 90px;
-            }
-
-            @include mq(leftCol, $until: wide) {
-                width: 90px;
-            }
-
             @include mq(wide) {
                 @include fs-data(2);
                 line-height: 20px;
