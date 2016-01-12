@@ -25,7 +25,7 @@ define([
     }
 
     function stopListening() {
-        mediator.on('modules:autoupdate:updates', onUpdate);
+        mediator.off('modules:autoupdate:updates', onUpdate);
     }
 
     function getSpaceFillerRules(windowHeight, update) {
