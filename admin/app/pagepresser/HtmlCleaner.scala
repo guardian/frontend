@@ -5,6 +5,7 @@ import common.Logging
 import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
+import scala.io.Source
 
 abstract class HtmlCleaner extends Logging {
   def canClean(document: Document): Boolean
@@ -36,10 +37,26 @@ object BasicHtmlCleaner extends HtmlCleaner {
 
     //fetch omniture data before stripping it. then rea-dd it for simple page tracking
     val omnitureQueryString = fetchOmnitureTags(document)
-    removeByTagName(document, "script")
+    removeScriptsTagsExceptInteractives(document)
     removeByTagName(document, "noscript")
     createSimplePageTracking(document, omnitureQueryString)
 
+  }
+
+  def removeScriptsTagsExceptInteractives(document: Document): Document = {
+    val scripts = document.getElementsByTag("script")
+    val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
+      val parentIds = e.parents().map(p => p.id()).toList
+      parentIds.contains("interactive-content")
+    }
+    nonInteractiveScripts.toList.foreach(_.remove())
+
+    interactiveScripts.toList.map { interactiveElement =>
+      if (interactiveElement.html().contains("swfobject")) {
+        addSwfObjectScript(document)
+      }
+    }
+    document
   }
 
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
@@ -91,4 +108,24 @@ object BasicHtmlCleaner extends HtmlCleaner {
     document.getElementsByTag(tagName).foreach(_.remove())
     document
   }
+
+  private def addSwfObjectScript(document: Document): Document = {
+
+    val swfScriptOpt = try {
+      val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
+      Some(source)
+
+    } catch {
+      case ex: Exception => {
+        log.error(ex.getMessage)
+        None
+      }
+    }
+    swfScriptOpt.foreach { script =>
+      val html = "<script type=\"text/javascript\">" + script + "</script>"
+      document.head().append(html)
+    }
+    document
+  }
+
 }
