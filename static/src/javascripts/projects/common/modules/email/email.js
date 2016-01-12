@@ -97,6 +97,7 @@ define([
                 // from the data attributes on the iframe (eg: allowing us to set them from composer)
                 if (isIframed) {
                     ui.updateForm(rootEl, $el);
+                    ui.setTone($el);
                 }
 
                 // Ensure our form is the right height, both in iframe and outside
@@ -209,6 +210,19 @@ define([
                     referrer: window.location.href
                 });
 
+            },
+            setTone: function ($el) {
+                var toneClass = 'tonal__main--tone-',
+                    toneClassRegexp = new RegExp('(' + toneClass + ')([a-z-]+)'),
+                    tone;
+
+                if ($el.hasClass('js-email-sub--article')) {
+                    // Get tone from class
+                    tone = $('.tonal__main')[0].className.match(toneClassRegexp)[2];
+                    fastdom.write(function () {
+                        $el.addClass('email-sub--tone-' + tone);
+                    });
+                }
             },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
