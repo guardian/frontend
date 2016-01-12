@@ -59,3 +59,6 @@ window.guardian = {
     guardian.config.page.ajaxUrl = guardian.config.page.ajaxUrl.replace(/^https:/, '');
 @@end
 @@*/
+
+// must always be set before the Omniture file is parsed
+window.s_account = '@OmnitureAnalyticsAccount(page.metadata)';

@@ -1,16 +1,12 @@
-@()
-@import conf.Static
-@import org.joda.time.DateTime
-@import conf.switches.Switches.NoBounceIndicator
-
-try {
-
-    (function(){
-
-        var config  = guardian.config,
-            isEmbed = !!guardian.isEmbed,
-            tpA     = s.getTimeParting('n', '+0'),
-            now      = new Date(),
+/*
+global s:true
+*/
+(function (window, document) {
+    try {
+        var config = window.guardian.config,
+            isEmbed = !!window.guardian.isEmbed,
+            tpA = s.getTimeParting('n', '+0'),
+            now = new Date(),
             webPublicationDate = config.page.webPublicationDate;
 
         var getChannel = function () {
@@ -22,7 +18,7 @@ try {
             return config.page.section || '';
         };
 
-        @* http://www.electrictoolbox.com/pad-number-zeroes-javascript/ *@
+        // http://www.electrictoolbox.com/pad-number-zeroes-javascript/
         var pad = function (number, length) {
             var str = '' + number;
             while (str.length < length) {
@@ -34,39 +30,29 @@ try {
         s.trackingServer = 'hits.theguardian.com';
         s.trackingServerSecure = 'hits-secure.theguardian.com';
 
-        /* Omniture library version */
-        s.prop62    = 'Guardian JS-1.4.1 20140914';
+        // Omniture library version
+        s.prop62 = 'Guardian JS-1.4.1 20140914';
 
         // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
         s.cookieDomainPeriods = '2';
-
         s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com';
-
         s.ce = 'UTF-8';
-        s.pageName  = config.page.analyticsName;
-
-        s.prop1     = config.page.headline || '';
-
-        s.prop3     = config.page.publication || '';
-
-        s.prop6     = config.page.author || '';
-
-        s.prop13    = config.page.series || '';
+        s.pageName = config.page.analyticsName;
+        s.prop1 = config.page.headline || '';
+        s.prop3 = config.page.publication || '';
+        s.prop6 = config.page.author || '';
+        s.prop13 = config.page.series || '';
 
         // getting clientWidth causes a reflow, so avoid using if possible
-        s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
-            + 'x'
-            + (window.innerHeight || document.documentElement.clientHeight);
+        s.eVar21 = (window.innerWidth || document.documentElement.clientWidth) + 'x' + (window.innerHeight || document.documentElement.clientHeight);
 
+        s.prop4 = config.page.keywords || '';
+        s.prop8 = config.page.pageCode || '';
+        s.prop9 = config.page.contentType || '';
+        s.prop10 = config.page.tones || '';
+        s.prop25 = config.page.blogs || '';
 
-        s.prop4     = config.page.keywords || '';
-        s.prop8     = config.page.pageCode || '';
-        s.prop9     = config.page.contentType || '';
-        s.prop10    = config.page.tones || '';
-
-        s.prop25    = config.page.blogs || '';
-
-        s.channel   = getChannel();
+        s.channel = getChannel();
 
         if (isEmbed) {
             s.eVar11 = s.prop11 = 'Embedded';
@@ -81,7 +67,7 @@ try {
             s.events = s.apl(s.events, 'event46', ',');
         }
 
-        if (config.page.section === 'identity')  {
+        if (config.page.section === 'identity') {
             s.prop11 = 'Users';
             s.prop9 = 'userid';
             s.eVar27 = config.page.omnitureErrorMessage || '';
@@ -95,8 +81,8 @@ try {
             s.prop64 = config.page.productionOffice;
         }
 
-        s.prop65    = config.page.headline || '';
-        s.eVar70    = config.page.headline || '';
+        s.prop65 = config.page.headline || '';
+        s.eVar70 = config.page.headline || '';
 
         if (s.getParamValue('INTCMP') !== '') {
             s.eVar50 = s.getParamValue('INTCMP');
@@ -104,7 +90,7 @@ try {
         s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
         // the operating system
-        s.eVar58 = navigator.platform || 'unknown';
+        s.eVar58 = window.navigator.platform || 'unknown';
 
         // the number of Guardian links inside the body
         if (config.page.inBodyInternalLinkCount) {
@@ -120,26 +106,25 @@ try {
         s.eVar75 = config.page.wordCount || 0;
 
         s.prop19 = 'frontend';
-        s.prop67    = 'nextgen-served';
+        s.prop67 = 'nextgen-served';
 
         // Set Page View Event
-        s.events    = s.apl(s.events, 'event4', ',', 2);
+        s.events = s.apl(s.events, 'event4', ',', 2);
 
-        s.prop56    = guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
+        s.prop56 = window.guardian.isModernBrowser ? 'Javascript' : 'Partial Javascript';
 
         /* Set Time Parting Day and Hour Combination - 0 = GMT */
-        s.prop20    = tpA[2] + ':' + tpA[1];
-        s.eVar20    = 'D=c20';
+        s.prop20 = tpA[2] + ':' + tpA[1];
+        s.eVar20 = 'D=c20';
 
-        @*
-          eVar1 contains today's date
-          in the Omniture backend it only ever holds the first
-          value a user gets, so in effect it is the first time
-          we saw this user
-        *@
+
+        // eVar1 contains today's date
+        // in the Omniture backend it only ever holds the first
+        // value a user gets, so in effect it is the first time
+        // we saw this user
         s.eVar1 = now.getFullYear() + '/' + pad(now.getMonth() + 1, 2) + '/' + pad(now.getDate(), 2);
 
-        s.prop7     = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
+        s.prop7 = webPublicationDate ? new Date(webPublicationDate).toISOString().substr(0, 10).replace(/-/g, '/') : '';
 
         if (webPublicationDate) {
             s.prop30 = 'content';
@@ -147,33 +132,30 @@ try {
             s.prop30 = 'non-content';
         }
 
-        s.prop47    = config.page.edition || '';
+        s.prop47 = config.page.edition || '';
 
-        @*
-            this makes the call to Omniture.
-            `s.t()` records a page view so should only be called once
-        *@
-
+        // this makes the call to Omniture.
+        // `s.t()` records a page view so should only be called once
         s.t();
 
-
-        var checkForPageViewInterval = setInterval(function () {
-            @*
-                s_i_guardiangu-network is a globally defined Image() object created by Omniture
-                It does not sit in the DOM tree, and seems to be the only surefire way
-                to check if the intial beacon has been successfully sent
-            *@
+        var checkForPageViewInterval = window.setInterval(function () {
+            // s_i_guardiangu-network is a globally defined Image() object created by Omniture
+            // It does not sit in the DOM tree, and seems to be the only surefire way
+            // to check if the intial beacon has been successfully sent
             var img = window['s_i_' + window.s_account.split(',').join('_')];
+
             if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
-                clearInterval(checkForPageViewInterval);
+                window.clearInterval(checkForPageViewInterval);
 
                 var pageView = new Image();
-                pageView.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+                pageView.src = config.page.beaconUrl + '/count/pva.gif';
 
-                if (guardian.isModernBrowser && @NoBounceIndicator.isSwitchedOn) {
+                if (window.guardian.isModernBrowser && config.switches.noBounceIndicator) {
                     try {
                         window.sessionStorage.removeItem('gu-bounce-test');
-                    } catch (e) { }
+                    } catch (e) {
+                        // Do nothing
+                    }
                 }
 
 
@@ -181,15 +163,11 @@ try {
         }, 100);
 
         // Give up after 10 seconds
-        setTimeout(function () {
-            clearInterval(checkForPageViewInterval);
+        window.setTimeout(function () {
+            window.clearInterval(checkForPageViewInterval);
         }, 10000);
 
-
-    })();
-
-} catch(e) {
-    (new Image()).src = '@{Configuration.debug.beaconUrl}/count/omniture-pageview-error.gif';
-}
-
-
+    } catch (e) {
+        (new Image()).src = window.guardian.config.page.beaconUrl + '/count/omniture-pageview-error.gif';
+    }
+})(window, document);

@@ -20,8 +20,6 @@
     @* We don't use the inlineJSBlocking template because we need to specify
     our own paths *@
 
-    @fragments.omnitureScript(Some(offlinePage.metadata))
-
     @* NOTE the order of these includes is important  *@
     <script>
         @* Service worker only caches the bundles (including in dev),
@@ -63,9 +61,6 @@
 
         // page config
         @Html(config(offlinePage).body)
-
-        // analytics code
-        @InlineJs(analytics().body, "analytics.js")
 
         // apply render conditions
         @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")

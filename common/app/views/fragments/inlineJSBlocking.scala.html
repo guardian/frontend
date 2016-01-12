@@ -7,26 +7,8 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@fragments.omnitureScript(Some(page.metadata))
-
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-    @Html(curlConfig().body)
-
-    @if(play.Play.isDev()) {
-        @Html(Static.js.curl);
-
-        require(['boot']);
-    } else {
-        // Polyfill for async script
-        (function (document) {
-            var script = document.createElement('script');
-            script.src = '@Static("javascripts/app.js")';
-            var ref = document.getElementsByTagName('script')[0];
-            ref.parentNode.insertBefore(script, ref);
-        })(document);
-    }
-
     // render-critical blocking JS
 
     // polyfills
@@ -37,9 +19,6 @@
 
     // page config
     @Html(config(page).body)
-
-    // analytics code
-    @InlineJs(analytics().body, "analytics.js")
 
     // apply render conditions
     @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
@@ -57,4 +36,26 @@
 
     // cloudwatch beacons
     @InlineJs(cloudwatchBeacons(page.metadata).body, "cloudwatchBeacons.js")
+
+    // finally, load the standard.js app async
+    // do this last so that any config stuff it needs is definitely on `window.`
+    @Html(curlConfig().body)
+
+    @if(play.Play.isDev()) {
+        // in prod, these are concatenated in /grunt-configs/concat.js
+        @Html(omniture().body)
+        </script>
+        <script src="@Static("javascripts/bootstraps/standard/omniture-pageview.js")"></script>
+        <script>
+        @Html(Static.js.curl);
+        require(['boot']);
+    } else {
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/app.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+    }
 </script>
