@@ -10,7 +10,7 @@ define([
             return new Promise(function (resolve, reject) {
                 fdaction(function () {
                     try {
-                        resolve(fn());
+                        resolve(fn.call(this));
                     } catch (e) {
                         reject(e);
                     }
