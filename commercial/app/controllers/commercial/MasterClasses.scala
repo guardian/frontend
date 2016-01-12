@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
+import model.commercial.masterclasses.MasterClassAgent
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
@@ -19,7 +19,7 @@ object MasterClasses extends Controller with implicits.Requests {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
 
-          jsonFormat.result(views.html.masterClasses.masterClasses(masterclasses.take(4), omnitureId, clickMacro))
+          jsonFormat.result(views.html.masterClasses.masterClasses(masterclasses, omnitureId, clickMacro))
         }
       }
     }
