@@ -6,9 +6,13 @@ define([
     Promise
 ) {
     function fastDomAction(action, fn) {
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             fastdom[action](function () {
-                resolve(fn());
+                try {
+                    resolve(fn());
+                } catch (e) {
+                    reject(e);
+                }
             });
         });
     }

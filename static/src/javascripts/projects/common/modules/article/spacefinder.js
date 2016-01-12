@@ -1,7 +1,6 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/$',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'qwery',
     'bonzo',
     'bean',
@@ -15,7 +14,6 @@ define([
     'common/utils/chain',
     'lodash/objects/forOwn'
 ], function (
-    $,
     fastdom,
     qwery,
     bonzo,

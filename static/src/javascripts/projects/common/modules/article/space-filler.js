@@ -1,13 +1,10 @@
-/* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/$',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'Promise',
     'raven',
     'common/modules/article/spacefinder'
 ], function (
-    $,
-    idleFastdom,
+    fastdom,
     Promise,
     raven,
     spacefinder
