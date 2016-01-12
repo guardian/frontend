@@ -44,7 +44,7 @@ sealed trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
+  def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
   /*
    * If the switchboard hasn't been read yet, the "safe state" is returned instead of the real switch value.
