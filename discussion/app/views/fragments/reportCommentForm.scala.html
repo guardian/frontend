@@ -4,19 +4,20 @@
         <label class="label">@errorMessage.get</label>
     </div>
 }
+
 @defining(
     userForm.apply("email").value,
     userForm.error("categoryId"),
     userForm.error("email"),
     userForm.error("reason")
-) { formValidationErrors =>
+) { case (emailInput: Option[String], categoryError: Option[FormError], emailError: Option[FormError], reasonError: Option[FormError]) =>
                 @helper.form(controllers.routes.CommentsController.reportAbuseSubmission(commentId), 'class -> "form") {
                     @helper.CSRF.formField
                     <fieldset class="fieldset">
                         <div class="fieldset__heading" />
                         <input type="hidden" name="commentId" value="@commentId">
                         <div class="fieldset__fields">
-                            <div class="form-field @{if(formValidationErrors._2) {"form-field--error"}}">
+                            <div class="form-field @{if(categoryError) {"form-field--error"}}">
                                 <label class="label" for="categoryId">Category</label>
 
 
@@ -32,24 +33,24 @@
                                     <option value="8">Spam</option>
                                     <option value="9">Other</option>
                                 </select>
-                                @if(formValidationErrors._2) {
-                                    <p class="form-field__error-message">@formValidationErrors._2.get.message</p>
+                                @if(categoryError) {
+                                    <p class="form-field__error-message">@categoryError.get.message</p>
                                 }
                             </div>
 
-                            <div class="form-field @{if(formValidationErrors._4) {"form-field--error"}}">
+                            <div class="form-field @{if(reasonError) {"form-field--error"}}">
                                 <label class="label" for="reason">Reason</label><span class="form-note">(optional)</span>
                                 <textarea class="input-textarea" id="reason" name="reason" maxlength="250"></textarea>
-                                @if(formValidationErrors._4) {
-                                    <p class="form-field__error-message">@formValidationErrors._4.get.message</p>
+                                @if(reasonError) {
+                                    <p class="form-field__error-message">@reasonError.get.message</p>
                                 }
                             </div>
 
-                            <div class="form-field @{if(formValidationErrors._3) {"form-field--error"}}">
+                            <div class="form-field @{if(emailError) {"form-field--error"}}">
                                 <label class="label" for="email">Email</label><span class="form-note">(optional)</span>
-                                <input type="email" class="input-text" id="email" name="email" value="@formValidationErrors._1" />
-                                @if(formValidationErrors._3) {
-                                    <p class="form-field__error-message">@formValidationErrors._3.get.message</p>
+                                <input type="email" class="input-text" id="email" name="email" value="@emailInput" />
+                                @if(emailError) {
+                                    <p class="form-field__error-message">@emailError.get.message</p>
                                 }
                             </div>
                         </div>
