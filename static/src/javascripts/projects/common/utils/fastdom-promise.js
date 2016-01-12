@@ -6,7 +6,7 @@ define([
     Promise
 ) {
     function promisify(fdaction) {
-        return function(fn, ctx) {
+        return function (fn, ctx) {
             return new Promise(function (resolve, reject) {
                 fdaction(function () {
                     try {
@@ -16,7 +16,7 @@ define([
                     }
                 }, ctx);
             });
-        }
+        };
     }
 
     return {
