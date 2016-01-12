@@ -4,7 +4,7 @@ define([
     return function () {
         this.id = 'RemoveStickyNav';
         this.start = '2015-1-07';
-        this.expiry = '2016-2-30';
+        this.expiry = '2016-3-1';
         this.author = 'Josh Holder';
         this.description = '0% AB test for removing the sticky nav';
         this.audience = 0.0;
