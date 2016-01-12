@@ -29,7 +29,7 @@ define([
                 test: noop
             },
             {
-                id: 'active',
+                id: 'variant',
                 test: noop
             }
         ];
