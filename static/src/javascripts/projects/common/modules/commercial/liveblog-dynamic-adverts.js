@@ -72,7 +72,7 @@ define([
         return spaceFiller.fillSpace(rules, insertAds)
             .then(function (ads) {
                 if (ads) {
-                    firstSlot = ads[0].previousSibling;
+                    firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
                 }
             })
             .then(startListening);
