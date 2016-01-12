@@ -258,10 +258,12 @@ object S3Infosec extends S3 {
   def getBlockedEmailDomains = get(key)
 }
 
-object R2Archive extends S3 {
-  override lazy val bucket = "r2-archive-test"
+// TODO: Replace references to S3ArchiveTest with S3Archive when ready for PROD deployment (and delete the S3ArchiveTest object).
+//       S3ArchiveOriginals is new for this work so doesn't need to be changed
+object S3ArchiveTest extends S3 {
+  override lazy val bucket = "aws-frontend-archive-test"
 }
 
-object R2ArchiveOriginals extends S3 {
-  override lazy val bucket = "r2-archive-originals"
+object S3ArchiveOriginals extends S3 {
+  override lazy val bucket = "aws-frontend-archive-originals"
 }
