@@ -1,4 +1,8 @@
-define([], function () {
+define([
+    'lodash/utilities/noop'
+], function (
+    noop
+) {
     return function () {
         this.id = 'PrebidPerformance';
         this.start = '2016-01-11';
@@ -7,8 +11,8 @@ define([], function () {
         this.description = 'run prebid.js header-bidding auctions before displaying DFP advertising';
 
         // todo What should these be?
-        this.audience = 0.02;
-        this.audienceOffset = 0.2;
+        this.audience = 0.01;
+        this.audienceOffset = 0.1;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -22,15 +26,11 @@ define([], function () {
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-
-                }
+                test: noop
             },
             {
                 id: 'active',
-                test: function () {
-
-                }
+                test: noop
             }
         ];
     };
