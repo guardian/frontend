@@ -91,7 +91,7 @@ trait CommercialSwitches {
     "liveblog-dynamic-adverts",
     "Dynamically insert inline adverts on liveblogs",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 14),
+    sellByDate = new LocalDate(2016, 2, 14),
     exposeClientSide = true
   )
 
