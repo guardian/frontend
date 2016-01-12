@@ -20,7 +20,7 @@ define([
     }
 
     return {
-        read: promisify(fastdom.read),
-        write: promisify(fastdom.write)
+        read: promisify(fastdom.read.bind(fastdom)),
+        write: promisify(fastdom.write.bind(fastdom))
     };
 });
