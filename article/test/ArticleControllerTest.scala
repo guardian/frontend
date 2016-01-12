@@ -50,7 +50,7 @@ import scala.collection.JavaConversions._
     val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.ArticleController.renderJson(articleUrl, None, None)(fakeRequest)
+    val result = controllers.ArticleController.renderJson(articleUrl)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
@@ -68,7 +68,7 @@ import scala.collection.JavaConversions._
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.renderJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None)(fakeRequest)
+    val result = controllers.ArticleController.renderLiveBlogJson("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"), None)(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)

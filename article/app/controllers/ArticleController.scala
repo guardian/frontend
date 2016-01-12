@@ -118,14 +118,22 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       }
     }
 
-  def renderJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
     LongCacheAction { implicit request =>
-      mapModel(path) { model =>
+      mapModel(path, true) { model =>
         (lastUpdate, rendered) match {
           case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
           case (None, Some(false)) => blockText(model, 6)
           case (_, _) => render(path, model, None)
         }
+      }
+    }
+  }
+
+  def renderJson(path: String) = {
+    LongCacheAction { implicit request =>
+      mapModel(path) {
+        render(path, _, None)
       }
     }
   }
