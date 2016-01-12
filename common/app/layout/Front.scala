@@ -125,10 +125,10 @@ object ContainerCommercialOptions {
         val dfpTag = tagProps.dfpTag
 
         val sponsorshipTag = {
-          val maybeTagType = capiTag.properties.tagType match {
-            case "series" => Some(Series)
-            case "keyword" => Some(Keyword)
-            case _ => None
+          val maybeTagType = {
+            if (capiTag.isSeries) Some(Series)
+            else if (capiTag.isKeyword) Some(Keyword)
+            else None
           }
           maybeTagType map (tagType => SponsorshipTag(tagType, tagId = capiTag.id))
         }
