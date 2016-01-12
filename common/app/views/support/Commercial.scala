@@ -87,8 +87,9 @@ object Commercial {
       keywordId: Option[String]
     )
 
-    def cardsAndSponsorDataAttributes(container: FaciaContainer):
-    Seq[(Option[ContentCard], Option[SponsorDataAttributes])] = {
+    case class CardWithSponsorDataAttributes(card: ContentCard, sponsorData: Option[SponsorDataAttributes])
+
+    def mkCardsWithSponsorDataAttributes(container: FaciaContainer): Seq[CardWithSponsorDataAttributes] = {
 
       def sponsorDataAttributes(item: PressedContent): Option[SponsorDataAttributes] = {
 
@@ -129,7 +130,10 @@ object Commercial {
         }
       } getOrElse Nil
 
-      contentCards zip (container.collectionEssentials.items map sponsorDataAttributes)
+      contentCards zip container.collectionEssentials.items flatMap {
+        case (card, content) =>
+          card map (CardWithSponsorDataAttributes(_, sponsorDataAttributes(content)))
+      }
     }
   }
 }

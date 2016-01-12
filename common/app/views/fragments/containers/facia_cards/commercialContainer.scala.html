@@ -102,37 +102,35 @@
                         </div>
                         <div class="commercial__body">
                             <ul class="lineitems">
-                                @for((maybeCard, maybeSponsorData) <- Commercial.containerCard.cardsAndSponsorDataAttributes(container)) {
-                                    @for(card <- maybeCard) {
-                                        @for(sponsorData <- maybeSponsorData) {
-                                            <li class="lineitem js-sponsored-container"
-                                                data-sponsorship="@sponsorData.sponsorshipType"
-                                                @for(seriesId <- sponsorData.seriesId) {
-                                                    data-series="@seriesId"
-                                                }
-                                                @for( keywordId <- sponsorData.keywordId) {
-                                                    data-keywords="@keywordId"
-                                                }
-                                            >
-                                                <div class="rich-link tone-paidfor--item">
-                                                    <div class="rich-link__container js-container__header">
-                                                        <div class="fc-item__image-container u-responsive-ratio">
-                                                        @for( InlineImage(imageContainer) <- card.displayElement) {
-                                                            @itemImage(imageContainer.images)
-                                                        }
-                                                        </div>
-                                                        <div class="rich-link__header">
-                                                            <h2 class="rich-link__title">
-                                                                <a class="rich-link__link">@title(card.header, 0, container.index)</a>
-                                                            </h2>
-                                                        </div>
-                                                        <div class="rich-link__standfirst u-cf">@for( text <- card.trailText) {@Html(text)}</div>
-                                                        <a class="rich-link__link u-faux-block-link__overlay" @Html(card.header.url.hrefWithRel)>@RemoveOuterParaHtml(card.header.headline)</a>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container)) {
+                                    <li class="lineitem js-sponsored-container"
+                                        @for(sponsorData <- cardWithSponsorData.sponsorData) {
+                                            data-sponsorship="@sponsorData.sponsorshipType"
+                                            @for(seriesId <- sponsorData.seriesId) {
+                                                data-series="@seriesId"
+                                            }
+                                            @for( keywordId <- sponsorData.keywordId) {
+                                                data-keywords="@keywordId"
+                                            }
                                         }
-                                    }
+                                    >
+                                        <div class="rich-link tone-paidfor--item">
+                                            <div class="rich-link__container js-container__header">
+                                                <div class="fc-item__image-container u-responsive-ratio">
+                                                @for( InlineImage(imageContainer) <- cardWithSponsorData.card.displayElement) {
+                                                    @itemImage(imageContainer.images)
+                                                }
+                                                </div>
+                                                <div class="rich-link__header">
+                                                    <h2 class="rich-link__title">
+                                                        <a class="rich-link__link">@title(cardWithSponsorData.card.header, 0, container.index)</a>
+                                                    </h2>
+                                                </div>
+                                                <div class="rich-link__standfirst u-cf">@for( text <- cardWithSponsorData.card.trailText) {@Html(text)}</div>
+                                                <a class="rich-link__link u-faux-block-link__overlay" @Html(cardWithSponsorData.card.header.url.hrefWithRel)>@RemoveOuterParaHtml(cardWithSponsorData.card.header.headline)</a>
+                                            </div>
+                                        </div>
+                                    </li>
                                 }
                             </ul>
                         </div>
