@@ -65,9 +65,8 @@ define([
                 //
 
                 mediator.on('window:throttledScroll', render);
-                //$(document.body).css('background-color','#f6f6f6');
                 render();
-                topAdRenderedPromise.then(function() {
+                topAdRenderedPromise.then(function () {
                     $header.css('transition', 'margin-top 0.5s cubic-bezier(0, 0, 0, 0.985)');
                 }).then(render);
 
