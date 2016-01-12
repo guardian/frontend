@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLargeTopAd = Switch(
-    "A/B Tests",
-    "ab-large-top-ad",
-    "Testing the difference of user behaviour based on large top ad format",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 13),
-    exposeClientSide = true
-  )
-
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
     "ab-fronts-on-articles2",
