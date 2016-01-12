@@ -43,25 +43,18 @@ define([
                         fastdom.read(function () {
                             var scrollY = window.scrollY;
                             fastdom.write(function () {
-                                // Reset
-                                $header.css('margin-top', '');
-                                $adBanner.css({
-                                    'position': '',
-                                    'top': ''
-                                });
-
-                                // Set
-                                if (scrollY > 0) {
-                                    if (scrollY > headerHeight) {
-                                        $adBanner.css({
-                                            'position': 'absolute',
-                                            'top': headerHeight + 'px'
-                                        });
-                                    } else {
-                                        $adBanner.css('position', 'fixed');
-                                    }
-                                    $header.css('margin-top', adHeight + 'px');
+                                if (scrollY > headerHeight) {
+                                    $adBanner.css({
+                                        'position': 'absolute',
+                                        'top': headerHeight + 'px'
+                                    });
+                                } else {
+                                    $adBanner.css({
+                                        'position': 'fixed',
+                                        'top': 0
+                                    });
                                 }
+                                $header.css('margin-top', adHeight + 'px');
                             });
                         });
                     });
@@ -72,8 +65,11 @@ define([
                 //
 
                 mediator.on('window:throttledScroll', render);
+                //$(document.body).css('background-color','#f6f6f6');
                 render();
-                topAdRenderedPromise.then(render);
+                topAdRenderedPromise.then(function() {
+                    $header.css('transition', 'margin-top 0.5s cubic-bezier(0, 0, 0, 0.985)');
+                }).then(render);
 
                 // Adjust the scroll position to compensate for the margin-top added to the header. This prevents the page moving around
                 // This lives here because adjusting the scroll position only helps when the ad is already fixed and the animation doesn't scroll the main page
