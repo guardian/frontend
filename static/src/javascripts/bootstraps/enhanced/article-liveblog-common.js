@@ -43,9 +43,7 @@ define([
         });
     }
 
-    function initTruncateAndTwitter() {
-        // Ensure that truncation occurs before the tweet upgrading.
-        truncate();
+    function initTwitter() {
         twitter.init();
         twitter.enhanceTweets();
     }
@@ -54,7 +52,7 @@ define([
         robust.catchErrorsAndLogAll([
             ['trail-article', initOpenCta],
             ['trail-fence', initFence],
-            ['trail-twitter', initTruncateAndTwitter],
+            ['trail-twitter', initTwitter],
             ['trail-sharing', selectionSharing.init],
             ['trail-last-modified', lastModified]
         ]);

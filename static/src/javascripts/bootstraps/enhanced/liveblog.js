@@ -212,7 +212,7 @@ define([
 
         createAutoUpdate: function () {
 
-            if (config.page.isLive) {
+            if (config.page.isLive && window.location.search === "") {
 
                 var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                 autoUpdate = new AutoUpdate({

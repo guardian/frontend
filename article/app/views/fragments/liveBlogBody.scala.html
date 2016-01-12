@@ -1,6 +1,6 @@
 @import _root_.liveblog.BodyBlocks
-@import model.liveblog.LiveBlogDate
-@(model: LiveBlogPage, blocks: BodyBlocks)(implicit request: RequestHeader)
+@import model.liveblog.{LiveBlogDate, BodyBlock}
+@(model: LiveBlogPage, blocks: BodyBlocks[BodyBlock])(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import layout.{FaciaCardAndIndex, ItemClasses}
@@ -103,6 +103,21 @@
                                     </div>
                                 }
                             </div>
+
+                            <div class="live-navigation">
+                                @blocks.earlier.map { earlierBlock =>
+                                    <a href="/@{article.content.metadata.id}?page=@earlierBlock"
+                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
+                                        data-link-name="next page">
+                                        @fragments.inlineSvg("plus", "icon")
+                                        View older updates
+                                    </a>
+                                }
+                                @*blocks.later.suffix.map { suffix =>
+                                    <a href="/@{article.content.metadata.id}@suffix">Newer posts</a>
+                                }*@
+                            </div>
+
                         </div>
 
                         @fragments.submeta(article)
