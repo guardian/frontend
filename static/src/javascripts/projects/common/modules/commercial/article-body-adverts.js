@@ -18,6 +18,8 @@ define([
     cloneDeep) {
     function getRules() {
         return {
+            bodySelector: '.js-article__body',
+            slotSelector: ' > p',
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
             minBelow: 300,
             selectors: {
@@ -62,19 +64,19 @@ define([
         }
 
         function tryAddingAdvert() {
-            return spaceFiller.insertAtFirstSpace(getLongArticleRules(), function (para) {
+            return spaceFiller.fillSpace(getLongArticleRules(), function (paras) {
                 adNames.push(['inline' + (ads.length + 1), 'inline']);
-                insertAdAtPara(para);
+                insertAdAtPara(paras);
             });
         }
     }
 
-    function insertAdAtPara(para) {
+    function insertAdAtPara(paras) {
         var adName = adNames[ads.length],
             $ad    = $.create(createAdSlot(adName[0], adName[1]));
 
         ads.push($ad);
-        $ad.insertBefore(para);
+        $ad.insertBefore(paras[0]);
     }
 
     var ads = [],
@@ -87,9 +89,9 @@ define([
             var rules = getRules();
 
             if (config.page.hasInlineMerchandise) {
-                spaceFiller.insertAtFirstSpace(getInlineMerchRules(), function (para) {
+                spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
                     adNames.unshift(['im', 'im']);
-                    insertAdAtPara(para);
+                    insertAdAtPara(paras);
                 });
             }
 
@@ -108,7 +110,7 @@ define([
             }
 
             function tryAddingAdvert() {
-                return spaceFiller.insertAtFirstSpace(rules, insertAdAtPara);
+                return spaceFiller.fillSpace(rules, insertAdAtPara);
             }
         };
 

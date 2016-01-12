@@ -28,32 +28,86 @@ define([
     chain,
     forOwn) {
     // find spaces in articles for inserting ads and other inline content
-    var bodySelector = '.js-article__body',
-        // minAbove and minBelow are measured in px from the top of the paragraph element being tested
-        defaultRules = { // these are written for adverts
-            minAbove: 250, // minimum from para to top of article
-            minBelow: 300, // minimum from (top of) para to bottom of article
-            clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
-            selectors: { // custom rules using selectors. format:
-                //'.selector': {
-                //   minAbove: <min px above para to bottom of els matching selector>,
-                //   minBelow: <min px below (top of) para to top of els matching selector> }
-                ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
-                ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
-            }
+    // minAbove and minBelow are measured in px from the top of the paragraph element being tested
+    var defaultRules = { // these are written for adverts
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 250, // minimum from para to top of article
+        minBelow: 300, // minimum from (top of) para to bottom of article
+        clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
+        selectors: { // custom rules using selectors. format:
+            //'.selector': {
+            //   minAbove: <min px above para to bottom of els matching selector>,
+            //   minBelow: <min px below (top of) para to top of els matching selector> }
+            ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
+            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
         },
-        // test one element vs another for the given rules
-        _testElem = function (para, other, rules) {
-            var isMinAbove = para.top - other.bottom >= rules.minAbove,
-                isMinBelow = other.top - para.top >= rules.minBelow;
-            return isMinAbove || isMinBelow;
-        },
-        // test one element vs an array of other elements for the given rules
-        _testElems = function (para, others, rules) {
-            return chain(others).and(every, function (other) {
-                return _testElem(para, other, rules);
-            }).valueOf();
-        };
+        // filter:(slot:Element, index:Integer, slots:Collection<Element>) -> Boolean
+        // will run each slot through this fn to check if it must be counted in
+        filter: null,
+        // startAt:Element
+        // will remove slots before this one
+        startAt: null,
+        // stopAt:Element
+        // will remove slots from this one on
+        stopAt: null,
+        // reverse:Boolean
+        // will reverse the order of slots (this is useful for lazy loaded content)
+        reverse: false
+    },
+    imagesLoaded,
+    richLinksUpgraded;
+
+    function onImagesLoaded(body) {
+        var notLoaded = filter(qwery('img', body), function (img) {
+            return !img.complete;
+        });
+
+        return imagesLoaded || (imagesLoaded = Promise.race([
+            Promise.all(map(notLoaded, function (img) {
+                return new Promise(function (resolve) {
+                    bean.on(img, 'load', resolve);
+                });
+            })),
+            new Promise(function (resolve) {
+                window.setTimeout(resolve, 5000);
+            })
+        ]));
+    }
+
+    function onRichLinksUpgraded(body) {
+        return richLinksUpgraded || (richLinksUpgraded = Promise.race([
+            new Promise(function (resolve, reject) {
+                var unloaded = qwery('.element-rich-link--not-upgraded', body);
+
+                if (!unloaded.length) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            }).catch(function () {
+                return new Promise(function (resolve) {
+                    mediator.once('rich-link:loaded', resolve);
+                });
+            }),
+            new Promise(function (resolve) {
+                window.setTimeout(resolve, 5000);
+            })
+        ]));
+    }
+
+    // test one element vs another for the given rules
+    function _testElem(rules, elem, other) {
+        var isMinAbove = elem.top - other.bottom >= rules.minAbove,
+            isMinBelow = other.top - elem.top >= rules.minBelow;
+
+        return isMinAbove || isMinBelow;
+    }
+
+    // test one element vs an array of other elements for the given rules
+    function _testElems(rules, elem, others) {
+        return every(others, curry(_testElem)(rules, elem));
+    }
 
     function _mapElementToDimensions(el) {
         return {
@@ -154,9 +208,11 @@ define([
 
     // Rather than calling this directly, use spaceFiller to inject content into the page.
     // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
-    function getParaWithSpace(rules, debug) {
-        var bodyBottom, paraElems, slots;
+    function findSpace(rules) {
+        var body;
+
         rules = rules || defaultRules;
+        body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
 
         // get all immediate children
         return getReady().then(function () {
@@ -189,7 +245,7 @@ define([
     }
 
     return {
-        getParaWithSpace: getParaWithSpace,
+        findSpace: findSpace,
         _testElem: _testElem, // exposed for unit testing
         _testElems: _testElems // exposed for unit testing
     };
