@@ -43,7 +43,7 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new RemoveStickyNav()
+        new RemoveStickyNav(),
         new AlternativeRelated(),
         new IdentitySignInV2(),
         new RtrtEmailFormArticlePromo()
