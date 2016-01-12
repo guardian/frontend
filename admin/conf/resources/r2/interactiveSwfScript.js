@@ -1,4 +1,3 @@
-//this is for R2 interactives that need a swfobect (taken from R2-frontend gu-core.js)
 var swfobject = function () {
     function a() {
         if (P)
