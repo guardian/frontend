@@ -26,7 +26,8 @@ define([
                     toHTTPS(config.page.host + '/guardianapis/discussion/discussion-api') :
                 config.page.host + '/guardianapis/discussion/discussion-api') :
                 root),
-            clientHeader: config.page.discussionApiClientHeader
+            clientHeader: config.page.discussionApiClientHeader,
+            d2Uid: config.page.discussionD2Uid
         };
 
     /**
@@ -51,7 +52,7 @@ define([
             crossOrigin: true,
             data: data,
             headers: {
-                'D2-X-UID': 'zHoBy6HNKsk',
+                'D2-X-UID': Api.d2Uid,
                 'GU-Client': Api.clientHeader
             },
             withCredentials: true

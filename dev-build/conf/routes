@@ -88,6 +88,9 @@ GET            /discussion/profile/:id/replies.json                             
 GET            /discussion/profile/:id/picks.json                                                                                controllers.ProfileActivityController.profilePicks(id: String)
 GET            /discussion/profile/:id/witness.json                                                                              controllers.WitnessActivityController.witnessActivity(id: String)
 GET            /open/cta/article/*discussionKey.json                                                                             controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+GET            /discussion/report-abuse/:commentId/thankyou                                                                      controllers.CommentsController.reportAbuseThankYou(commentId: Int)
+GET            /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseForm(commentId: Int)
+POST           /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseSubmission(commentId: Int)
 
 # Onward
 GET            /most-read-facebook.json                                                                                          controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
