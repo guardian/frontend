@@ -108,7 +108,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
         "edition" -> edition.id.toLowerCase(),
         "se" -> parseIds(article.trail.tags.series).mkString(","),
         "ct" -> article.metadata.contentType,
-        "p" -> "ng",
+        "p" -> "amp",
         "k" -> parseIds(article.trail.tags.keywords).mkString(","),
         "co" -> parseIds(article.trail.tags.contributors).mkString(","),
         "bl" -> parseIds(article.trail.tags.blogs).mkString(",")
