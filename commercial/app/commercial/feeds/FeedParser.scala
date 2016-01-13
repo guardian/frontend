@@ -6,6 +6,7 @@ import model.commercial.books.{BestsellersAgent, Book}
 import model.commercial.jobs.{Job, JobsAgent}
 import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
 import model.commercial.soulmates.{Member, SoulmatesAgent}
+import model.commercial.travel.{TravelOffer, TravelOffersAgent}
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
@@ -65,7 +66,18 @@ object FeedParser {
     }
   }
 
-  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses).flatten
+  private val travelOffers: Option[FeedParser[TravelOffer]] = {
+    Configuration.commercial.traveloffers_url map { url =>
+      new FeedParser[TravelOffer] {
+
+        val feedMetaData = TravelOffersFeedMetaData(url)
+
+        def parse(feedContent: => Option[String]) = TravelOffersAgent.refresh(feedMetaData, feedContent)
+      }
+    }
+  }
+
+  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses, travelOffers).flatten
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
