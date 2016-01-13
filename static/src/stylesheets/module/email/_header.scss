@@ -44,6 +44,15 @@
     }
 }
 
+// TONE SPECIFIC MODS
+@each $toneClass, $toneColour in $tones {
+    .email-sub--tone-#{$toneClass} {
+        .email-sub__heading {
+            color: $toneColour;
+        }
+    }
+}
+
 // FOOTER MODS
 .email-sub__header--footer {
     .email-sub__heading {

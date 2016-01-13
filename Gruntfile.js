@@ -21,7 +21,6 @@ module.exports = function (grunt) {
         staticTargetDir: './static/target/',
         staticSrcDir:    './static/src/',
         staticHashDir:   './static/hash/',
-        staticPublic:    './static/public/',
         testConfDir:     './static/test/javascripts/conf/',
         requirejsDir:    './static/requirejs',
         webfontsDir:     './static/src/stylesheets/components/guss-webfonts/webfonts/'
