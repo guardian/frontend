@@ -82,6 +82,9 @@ define([], function () {
                         case 'set-height':
                             iframe.height = message.value;
                             break;
+                        case 'embed-size':
+                            // AMP specific resizing
+                            break;
                         case 'navigate':
                             document.location.href = message.value;
                             break;
