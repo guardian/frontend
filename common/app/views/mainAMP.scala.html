@@ -8,6 +8,8 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
+            <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote.html">
+
         @fragments.metaData(page, true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page.metadata)
@@ -26,6 +28,7 @@
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body class="guardian-egyptian-loading">
+
         @defining(s"${request.host}${request.path}") { path =>
             @defining({
                 val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
