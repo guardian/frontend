@@ -43,10 +43,9 @@ define([
         var options = assign({
             'backoff':          1, // 1 = no backoff
             'backoffMax':       1000 * 60 * 20 // 20 mins
-        }, opts);
+            }, opts);
 
         this.updateDelay = 10000;
-        var that = this;
 
         this.init = function () {
             this.$liveblogBody = $('.js-liveblog-body');
@@ -62,6 +61,7 @@ define([
             this.requiredOffset = 12;
 
             this.checkForUpdates();
+            detect.initPageVisibility();
 
             new NotificationCounter().init();
             new Sticky(qwery('.blog__updates-box-tofix'), { top: this.requiredOffset, emit: true }).init();
@@ -75,67 +75,73 @@ define([
                 this.blocks.injectNew();
             }.bind(this));
 
+            mediator.on('modules:detect:pagevisibility:visible', function () {
+                console.log('foo');
+                //this.on(); // reset backoff
+                this.blocks.revealNewElements();
+            }.bind(this));
+
             bindAll(this, 'checkForUpdates')
         };
 
         this.checkForUpdates = function () {
-            var that = this;
-
             return ajax({
                 url: window.location.pathname + '.json?lastUpdate=' + ((this.latestBlockId) ? this.latestBlockId : 'block-0') + '&showBlocks=true',
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
             }).then(function (resp) {
-                mediator.emit('modules:autoupdate:unread', resp.numNewBlocks);
                 if (resp.numNewBlocks > 0) {
-                    var lbOffset = that.$liveblogBody.offset().top,
+                    var lbOffset = this.$liveblogBody.offset().top,
                         scrollPos = window.scrollY;
+
+                    this.blocks.newBlocks = resp.html;
+
+                    mediator.emit('modules:autoupdate:unread', resp.numNewBlocks);
 
                     //if top of the liveblog is in or below the viewport, then inject the new posts in without Toast
                     if (scrollPos < lbOffset) {
-                        that.blocks.injectNew();
+                        this.blocks.injectNew();
                     } else {
-                        that.button.refresh(resp.numNewBlocks);
+                        this.button.refresh(resp.numNewBlocks);
                     }
                 }
-            }).then(function () {
-                setTimeout(that.checkForUpdates, that.updateDelay);
-            });
+            }.bind(this)).then(function () {
+                setTimeout(this.checkForUpdates, this.updateDelay);
+            }.bind(this));
         };
 
         this.blocks = {
+            newBlocks: '',
             injectNew: function () {
-                var that = this;
-                return ajax({
-                    url: window.location.pathname + '.json?lastUpdate=' + ((this.latestBlockId) ? this.latestBlockId : 'block-0') + '&showBlocks=true',
-                    type: 'json',
-                    method: 'get',
-                    crossOrigin: true
-                }).then(function (resp) {
-                    if (resp.html) {
-                        //clean up blocks before insertion
-                        var resultHtml = $.create('<div>' + resp.html + '</div>')[0],
-                            elementsToAdd;
+                if (this.blocks.newBlocks) {
+                    //clean up blocks before insertion
+                    var resultHtml = $.create('<div>' + this.blocks.newBlocks + '</div>')[0],
+                        elementsToAdd;
 
-                        bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                        elementsToAdd = toArray(resultHtml.children);
+                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                    elementsToAdd = toArray(resultHtml.children);
 
-                        //insert new blocks and animate
-                        $('#' + that.latestBlockId).before(elementsToAdd);
-                        $('.autoupdate--hidden', that.$liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
+                    //insert new blocks and animate
+                    $('#' + this.latestBlockId).before(elementsToAdd);
 
-                        //set the latest block id equal to the first block in the DOM
-                        that.latestBlockId = $('.block').first().attr('id');
-
-                        mediator.emit('modules:autoupdate:unread', 0);
-                        RelativeDates.init();
+                    if(detect.pageVisible()) {
+                        this.blocks.revealNewElements();
                     }
-                }).then(function() {
-                    setTimeout(function() {
-                        that.button.reset();
-                    }, 600);
-                });
+
+                    this.latestBlockId = $('.block').first().attr('id');
+
+                    this.blocks.newBlocks = '';
+
+                    RelativeDates.init();
+
+                    setTimeout(function () {
+                        this.button.reset();
+                    }.bind(this), 600);
+                }
+            }.bind(this),
+            revealNewElements: function () {
+                $('.autoupdate--hidden', this.$liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
             }.bind(this)
         };
 
