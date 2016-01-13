@@ -58,15 +58,12 @@ define([
     }
 
     function insertAds(slots) {
-        var adSlots = [];
-        for (var i = 0; i < slots.length; i++) {
+        for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
             var $slot = bonzo(slots[i]);
             var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline'));
             $slot.after($adSlot);
             dfp.addSlot($adSlot);
-            adSlots.push($adSlot[0]);
         }
-        return adSlots;
     }
 
     function fill(rules) {
