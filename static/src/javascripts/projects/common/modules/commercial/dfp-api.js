@@ -525,7 +525,6 @@ define([
             if (slots[slotId] && !slots[slotId].isRendered) {
                 slots[slotId].isLoading = false;
                 slots[slotId].isRendered = true;
-                slots[slotId].slot = null;
             }
 
             if (every(slots, 'isRendered')) {
