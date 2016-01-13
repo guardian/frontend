@@ -913,6 +913,7 @@
 
     @Seq(
         Map(
+            ("id", "manual1"),
             ("type", "single"),
             ("creativeId", "10025607"),
             ("args", Json.obj(
@@ -933,6 +934,7 @@
             ))
         ),
         Map(
+            ("id", "multiple1"),
             ("type", "multiple"),
             ("creativeId", "10025847"),
             ("args", Json.obj(
@@ -970,6 +972,7 @@
             ))
         ),
         Map(
+            ("id", "multiple2"),
             ("type", "multiple"),
             ("creativeId", "10025847"),
             ("args", Json.obj(
@@ -1012,14 +1015,14 @@
                 </a>
             </h2>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
         <script>
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
                         require(['common/modules/commercial/creatives/template'])
                             .then(function (Template) {
-                                new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
+                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
                         });
                     });

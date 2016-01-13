@@ -1,7 +1,7 @@
 <div class="commercial commercial--dfp commercial--dfp-multiple <%=Toneclass%> commercial--items-dfp-<%=offeramount%>" role="complementary" data-link-name="creative | ad multiple manual | <%=omnitureId%>">
     <div class="commercial__inner">
         <div class="commercial__header">
-            <% if (!soulmates) { %>
+            <% if (base__url.indexOf('soulmates') === -1) { %>
             <h3 class="commercial__title">
                 <a href="<%=clickMacro%><%=base__url%>" data-link-name="title">
                     <%=marque54icon%><%=logoguardian%>
@@ -19,8 +19,9 @@
             <div class="i--commercial i-soulmates-title-background">
                 <%=marque54icon%>
                 <h3 class="commercial__title logo--soulmates_large">
-                    <=%logosoulmates%>
-                    <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+                    <%=logosoulmates%>
+                    <span class="u-h">The Guardian</span>
+                    <span class="u-h">Soulmates</span>
                 </h3>
                 <hr class="commercial__hline" />
                 <p class="commercial__explainer">Meet someone <span><em>worth</em> meeting</span></p>
