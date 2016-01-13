@@ -14,7 +14,7 @@ define([
     'common/modules/article/twitter',
     'common/modules/live/notification-bar',
     'lodash/objects/assign',
-    'common/modules/ui/sticky',
+    'common/modules/ui/simpleSticky',
     'common/utils/scroller',
     'lodash/collections/toArray',
     'lodash/functions/bindAll',
@@ -82,7 +82,7 @@ define([
             var that = this;
 
             return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + ((this.latestBlockId) ? this.latestBlockId : 'block-0'),
+                url: window.location.pathname + '.json?lastUpdate=' + ((this.latestBlockId) ? this.latestBlockId : 'block-0') + '&showBlocks=true',
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
@@ -132,7 +132,9 @@ define([
                         RelativeDates.init();
                     }
                 }).then(function() {
-                    that.button.reset();
+                    setTimeout(function() {
+                        that.button.reset();
+                    }, 600);
                 });
             }.bind(this)
         };
@@ -145,8 +147,8 @@ define([
                 this.$updateBoxContainer.addClass('blog__updates-box-container--open');
             }.bind(this),
             reset: function () {
-                $('.js-updates-button').removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
-                $('.blog__updates-box-container').removeClass('blog__updates-box-container--open');
+                this.$updateBox.removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
+                this.$updateBoxContainer.removeClass('blog__updates-box-container--open');
             }.bind(this),
             onClick: function () {
                 scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
