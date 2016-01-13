@@ -2,14 +2,15 @@
 
 @import common.LinkTo
 @import views.support.TrailCssClasses.toneClass
+@import views.BodyCleaner
 
-@defining(model.article) { article =>
+@defining(model.article) {  article =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
-            class="content content--article content--immersive tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+        class="content content--article content--immersive tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
             @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
-            itemscope itemtype="@article.metadata.schemaType" role="main">
+        itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
@@ -18,6 +19,33 @@
 
             @fragments.headerImmersive(article)
 
+            <div class="content__main tonal__main tonal__main--@toneClass(article)">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--minutearticle">
+
+                        @fragments.mainMedia(article)
+
+                        @fragments.dropdown("Live feed", Some("live-feed"), true) {
+                            <div class="js-article__container" data-component="body">
+
+                                <div class="js-liveblog-body u-cf from-content-api js-blog-blocks" data-test-id="live-blog-blocks"
+                                itemprop="{articleBody}">
+                                @BodyCleaner(article, article.fields.body, amp = false)
+                                </div>
+                            </div>
+
+                            @fragments.submeta(article)
+
+                            <div class="after-article js-after-article"></div>
+
+                            <div class="js-bottom-marker"></div>
+                        }
+                    </div>
+                </div>
+            </div>
         </article>
-    </div>
+
+        @fragments.contentFooter(article, model.related)
+
 }
+</div>
