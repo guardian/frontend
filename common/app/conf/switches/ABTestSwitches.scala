@@ -27,7 +27,7 @@ trait ABTestSwitches {
     "ab-identity-sign-in-v2",
     "New sign in page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 15),
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 
