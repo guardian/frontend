@@ -51,7 +51,7 @@ define([
                                 } else {
                                     $adBanner.css({
                                         'position': 'fixed',
-                                        'top': 0
+                                        'top': ''
                                     });
                                 }
                                 $header.css('margin-top', adHeight + 'px');
@@ -67,6 +67,7 @@ define([
                 mediator.on('window:throttledScroll', render);
                 render();
                 topAdRenderedPromise.then(function () {
+                    // wait for top ad to render before adding transition, otherwise we also transition initial margin-top
                     fastdom.read(function () {
                         if (window.scrollY === 0) {
                             fastdom.write(function () {
