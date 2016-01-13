@@ -64,7 +64,7 @@ define([
                 // Side effects
                 //
 
-                mediator.on('window:scroll', render);
+                mediator.on('window:throttledScroll', render);
                 render();
                 topAdRenderedPromise.then(function () {
                     fastdom.read(function () {
