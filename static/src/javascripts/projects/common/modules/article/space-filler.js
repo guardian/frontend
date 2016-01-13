@@ -31,7 +31,8 @@ define([
 
         function insertionPromise(slots) {
             return fastdom.write(function () {
-                return writer(slots);
+                writer(slots);
+                return true;
             });
         }
     }
