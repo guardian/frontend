@@ -64,10 +64,16 @@ define([
                 // Side effects
                 //
 
-                mediator.on('window:throttledScroll', render);
+                mediator.on('window:scroll', render);
                 render();
                 topAdRenderedPromise.then(function () {
-                    $header.css('transition', 'margin-top 0.5s cubic-bezier(0, 0, 0, 0.985)');
+                    fastdom.read(function () {
+                        if (window.scrollY === 0) {
+                            fastdom.write(function () {
+                                $header.css('transition', 'margin-top 0.75s cubic-bezier(0, 0, 0, 0.985)');
+                            });
+                        }
+                    });
                 }).then(render);
 
                 // Adjust the scroll position to compensate for the margin-top added to the header. This prevents the page moving around
