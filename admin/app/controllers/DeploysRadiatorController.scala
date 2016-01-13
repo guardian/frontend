@@ -140,7 +140,11 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
 
     WS.url(url)
       .withHeaders("Accept" -> "application/json")
-      .withQueryString("fields" -> "number,buildType(name,projectName),revisions(revision(version)),changes(change(username,comment,version)),artifact-dependencies(build(number))")
+      .withQueryString("fields" -> List(
+        "number", "buildType(name,projectName)",
+        "revisions(revision(version))", "changes(change(username,comment,version))",
+        "artifact-dependencies(build(number))"
+      ).mkString(","))
       .get()
       .map { response =>
         response.status match {
