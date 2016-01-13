@@ -902,7 +902,6 @@ $comment-recommend-button-size: 19px;
    ======================================================= */
 
 .d-report-comment-form {
-    position: absolute;
     top: 0;
     right: 0;
     z-index: $zindex-content;
@@ -912,6 +911,11 @@ $comment-recommend-button-size: 19px;
     border: 2px solid colour(neutral-6);
     background: #ffffff;
 }
+
+.d-comment .d-report-comment-form {
+    position: absolute;
+}
+
 .d-report-comment__label,
 .d-report-comment__field {
     box-sizing: border-box;

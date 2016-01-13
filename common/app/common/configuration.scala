@@ -242,6 +242,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+    lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
 
@@ -289,8 +290,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
-
-    lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
@@ -340,6 +339,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader,
+      "discussionD2Uid" -> discussion.d2Uid,
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),

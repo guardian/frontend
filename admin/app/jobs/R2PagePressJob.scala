@@ -10,7 +10,7 @@ import org.jsoup.Jsoup
 import pagepresser.{PollsHtmlCleaner, BasicHtmlCleaner}
 import play.api.libs.json.Json
 import play.api.libs.ws.WS
-import services.{R2ArchiveOriginals, PagePresses, R2Archive}
+import services.{S3Archive, S3ArchiveOriginals, PagePresses}
 import play.api.Play.current
 
 object R2PagePressJob extends ExecutionContexts with Logging {
@@ -73,16 +73,16 @@ object R2PagePressJob extends ExecutionContexts with Logging {
             val pressAsUrl = urlIn.replace("https://", "").replace("http://","")
 
             try {
-              if (R2ArchiveOriginals.get(pressAsUrl).isEmpty) {
+              if (S3ArchiveOriginals.get(pressAsUrl).isEmpty) {
                 try {
-                  R2ArchiveOriginals.putPublic(pressAsUrl, originalSource, "text/html")
+                  S3ArchiveOriginals.putPublic(pressAsUrl, originalSource, "text/html")
                   log.info(s"Original page source saved for $urlIn")
                 } catch {
-                  case e: Exception => log.error(s"Cannot write original page source for $urlIn to bucket ${R2ArchiveOriginals.bucket} (${e.getMessage})")
+                  case e: Exception => log.error(s"Cannot write original page source for $urlIn to bucket ${S3ArchiveOriginals.bucket} (${e.getMessage})")
                 }
               }
             } catch {
-              case e: Exception => log.error(s"Cannot read from bucket ${R2ArchiveOriginals.bucket} (${e.getMessage}) while pressing $urlIn")
+              case e: Exception => log.error(s"Cannot read from bucket ${S3ArchiveOriginals.bucket} (${e.getMessage}) while pressing $urlIn")
             }
 
             val archiveDocument = Jsoup.parse(originalSource)
@@ -93,22 +93,23 @@ object R2PagePressJob extends ExecutionContexts with Logging {
               .toString
 
             try {
-              R2Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
+              S3Archive.putPublic(pressAsUrl, cleanedHtmlString, "text/html")
             } catch {
-              case e: Exception => log.error(s"Cannot write to bucket ${R2Archive.bucket} (${e.getMessage}) while pressing $urlIn")
+              case e: Exception => log.error(s"Cannot write to bucket ${S3Archive.bucket} (${e.getMessage}) while pressing $urlIn")
             }
 
             try {
-              R2Archive.get(pressAsUrl).foreach { result =>
+              S3Archive.get(pressAsUrl).foreach { result =>
                 if (result == cleanedHtmlString) {
                   PagePresses.set(urlIn, pressAsUrl)
                   log.info(s"Pressed $urlIn as $pressAsUrl")
+                  queue.delete(message.handle)
                 } else {
-                  log.error(s"Pressed data did not match original for $pressAsUrl")
+                  log.error(s"Pressed HTML did not match cleaned HTML for $pressAsUrl")
                 }
               }
             } catch {
-              case e: Exception => log.error(s"Cannot read from bucket ${R2Archive.bucket} (${e.getMessage}) while pressing $urlIn")
+              case e: Exception => log.error(s"Cannot read from bucket ${S3Archive.bucket} (${e.getMessage}) while pressing $urlIn")
             }
           }
           case non200 => {
@@ -119,19 +120,20 @@ object R2PagePressJob extends ExecutionContexts with Logging {
     } else {
       log.error(s"Invalid url: $urlIn")
     }
-    // TODO: only delete if everything is ok?
-    queue.delete(message.handle)
   }
 
   private def takedown(message: Message[String]) {
     val urlIn = (Json.parse(message.get) \ "Message").as[String]
-    if (urlIn.nonEmpty) {
-      PagePresses.remove(urlIn)
-    } else {
-      log.error(s"Invalid url: $urlIn")
+    try {
+      if (urlIn.nonEmpty) {
+        PagePresses.remove(urlIn)
+        takedownQueue.delete(message.handle)
+      } else {
+        log.error(s"Invalid url: $urlIn")
+      }
+    } catch {
+      case e: Exception => log.error(s"Cannot take down $urlIn: ${e.getMessage}")
     }
-    // TODO: only delete if everything is ok?
-    takedownQueue.delete(message.handle)
   }
 
 }
