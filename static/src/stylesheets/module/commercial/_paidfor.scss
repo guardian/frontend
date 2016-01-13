@@ -49,7 +49,7 @@
     }
 
     .lineitems {
-        @include flex-display;
+        display: flex;
         flex-flow: row nowrap;
     }
 
