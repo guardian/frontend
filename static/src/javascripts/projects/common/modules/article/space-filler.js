@@ -37,9 +37,9 @@ define([
         }
     }
 
-    fillSpace.reset = function() {
+    fillSpace.reset = function () {
         lastIteration = Promise.resolve(false);
-    }
+    };
 
     function onInsertionError(e) {
         raven.captureException(e);
