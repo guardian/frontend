@@ -8,6 +8,8 @@
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.{itemImage, title}
 @import views.support.RemoveOuterParaHtml
+@import views.support.ImgSrc
+@import views.html.fragments.items.elements.facia_cards.image
 
     @containerType match {
 
@@ -33,14 +35,14 @@
                             <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">@inlineSvg("glabs-logo", "logo")</a>
                         </div>
                         <div class="commercial__body">
-                            <ul class="lineitems js-container__header">
+                            <ul class="lineitems l-row l-row--cols-4 js-container__header">
                                 @for(layout <- container.containerLayout) {
                                     @for( slice <- layout.slices) {
                                         @for(ColumnAndCards(_, cards) <- slice.columns) {
                                             @for(card <- cards) {
                                                 @card.item match {
                                                     case content: ContentCard => {
-                                                        <li class="lineitem">
+                                                        <li class="lineitem l-row__item l-row__item--span-1">
                                                             <div class="rich-link tone-paidfor--item">
                                                                  <div class="rich-link__container">
                                                                      @for(InlineImage(imageContainer) <- content.displayElement) {
@@ -97,14 +99,14 @@
                             <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">@inlineSvg("glabs-logo", "logo")</a>
                         </div>
                         <div class="commercial__body">
-                            <ul class="lineitems">
+                            <ul class="lineitems l-row l-row--cols-4">
                                 @for(layout <- container.containerLayout) {
                                     @for( slice <- layout.slices) {
                                         @for(ColumnAndCards(_, cards) <- slice.columns) {
                                             @for(card <- cards) {
                                                 @card.item match {
                                                     case content: ContentCard => {
-                                                        <li class="lineitem">
+                                                        <li class="lineitem l-row__item l-row__item--span-1">
                                                             <div class="rich-link tone-paidfor--item">
                                                                 <div class="rich-link__container">
                                                                     @for(InlineImage(imageContainer) <- content.displayElement) {

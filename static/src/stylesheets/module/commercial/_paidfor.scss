@@ -49,13 +49,13 @@
     }
 
     .lineitems {
-        //@include flex-display;
-        //flex-flow: row nowrap;
+        @include flex-display;
+        flex-flow: row nowrap;
     }
 
     .lineitem {
         border-left: 0;
-        //flex: 0 1 percentage(1/2);
+        flex: 0 1 percentage(1/2);
         margin-bottom: $gs-baseline / 2;
 
         &:nth-child(n+3) {
