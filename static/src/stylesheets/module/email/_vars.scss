@@ -5,3 +5,17 @@ $form-label-colour: guss-colour(neutral-2, $pasteup-palette);
 $icon-size: 30px;
 $icon-padding: $icon-size + ($gs-gutter / 2);
 $rounded-adjustment: .66em;
+
+$tones: (
+    (analysis, darken(colour(analysis-accent), 15%)),
+    (comment, colour(comment-default)),
+    (dead, colour(live-default)),
+    (editorial, colour(guardian-brand)),
+    (feature, colour(feature-default)),
+    (letters, colour(comment-default)),
+    (live, colour(live-default)),
+    (media, colour(media-default)),
+    (news, colour(news-default)),
+    (review, darken(colour(review-background), 10%)),
+    (special-report, colour(news-support-1))
+);
