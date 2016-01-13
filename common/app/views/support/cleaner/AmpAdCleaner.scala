@@ -100,7 +100,8 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
 
   def adAfter(element: Element) = {
     val section = article.metadata.section
-    val dataSlot = s"/59666047/theguardian.com/$section"
+    val contentType = article.metadata.contentType.toLowerCase
+    val dataSlot = s"/59666047/theguardian.com/$section/$contentType/amp"
 
     val json = Json.obj(
       "targeting" -> Json.obj(
