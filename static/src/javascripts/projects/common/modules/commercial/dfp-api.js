@@ -271,6 +271,7 @@ define([
                 }).and(map, function ($adSlot) {
                     return [$adSlot.attr('id'), {
                         isRendered: false,
+                        isLoading: false,
                         slot: defineSlot($adSlot)
                     }];
                 }).and(zipObject).valueOf();
@@ -365,15 +366,18 @@ define([
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
 
-                chain(slots).and(keys).and(forEach, function (slot) {
-                    // if the position of the ad is above the viewport - offset (half screen size)
-                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
-                        loadSlot(slot);
-                    }
+                chain(slots).and(keys).and(filter, function (slot) {
+                    return !slots[slot].isLoading &&
+                        !slots[slot].isRendered &&
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
+                }).and(forEach, function (slot) {
+                    loadSlot(slot);
                 });
             }
         },
         loadSlot = function (slot) {
+            slots[slot].isLoading = true;
             googletag.display(slot);
             displayed = true;
         },
@@ -382,6 +386,7 @@ define([
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
                         isRendered: false,
+                        isLoading: false,
                         slot: defineSlot($adSlot)
                     };
                     loadSlot(slotId);
@@ -518,6 +523,7 @@ define([
         },
         allAdsRendered = function (slotId) {
             if (slots[slotId] && !slots[slotId].isRendered) {
+                slots[slotId].isLoading = false;
                 slots[slotId].isRendered = true;
             }
 
