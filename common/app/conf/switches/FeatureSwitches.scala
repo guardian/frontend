@@ -331,6 +331,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val UseAtomsSwitch = Switch(
+    "Feature",
+    "use-atoms",
+    "use atoms from content api to enhance content",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val AmpSwitch = Switch(
     "Server-side A/B Tests",
     "amp-switch",
