@@ -50,10 +50,10 @@ define([
             expect(liveblogDynamicAdverts).toBeDefined();
         });
 
-        it('should insert ads every ' + liveblogDynamicAdverts.settings.INTERVAL + 'th block', function () {
+        it('should insert ads every 5th block', function () {
             liveblogDynamicAdverts.init().then(function () {
                 slotsCounter = body.querySelectorAll('.ad-slot').length;
-                var candidates = document.querySelectorAll('.js-liveblog-body > *:nth-child(1+' + liveblogDynamicAdverts.settings.INTERVAL + 'n)');
+                var candidates = document.querySelectorAll('.js-liveblog-body > *:nth-child(1+5n)');
                 var allSlots =
                     Array.prototype.every.call(candidates, function (c) { return c.classList.contains('ad-slot'); }) &&
                     candidates.length === slotsCounter;

@@ -92,10 +92,6 @@ define([
     }
 
     return {
-        init: init,
-        settings: {
-            INTERVAL: INTERVAL,
-            OFFSET: OFFSET
-        }
+        init: init
     };
 });
