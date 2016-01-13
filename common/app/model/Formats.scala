@@ -1,6 +1,7 @@
 package model
 
 import common.{NavItem, SectionLink, Pagination}
+import model.content.{Atoms, Atom, Quiz}
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
 import org.joda.time.DateTime
@@ -176,6 +177,8 @@ object ContentTypeFormat {
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
+  implicit val quizFormat = Json.format[Quiz]
+  implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
   val fieldsFormat = Json.format[Fields]
@@ -208,7 +211,8 @@ object ContentTypeFormat {
     showByline: Boolean,
     hasStoryPackage: Boolean,
     rawOpenGraphImage: String,
-    showFooterContainers: Boolean)
+    showFooterContainers: Boolean,
+    atoms: Option[Atoms])
 
   private case class JsonShareLinks(
     elementShareOrder: List[String],
@@ -250,7 +254,8 @@ object ContentTypeFormat {
        elements: Elements,
        metadata: MetaData,
        fields: Fields,
-       tags: Tags) => {
+       tags: Tags
+       ) => {
 
        val sharelinks = ShareLinks.apply(tags, fields, metadata, jsonShareLinks.elementShareOrder, jsonShareLinks.pageShareOrder)
        val commercial = Commercial.apply(tags, metadata,
@@ -273,6 +278,7 @@ object ContentTypeFormat {
         jsonTrail.isClosedForComments)
 
        Content.apply(trail, metadata, tags, commercial, elements, fields, sharelinks,
+        jsonContent.atoms,
         jsonContent.publication,
         jsonContent.internalPageCode,
         jsonContent.contributorBio,
@@ -323,7 +329,8 @@ object ContentTypeFormat {
           content.showByline,
           content.hasStoryPackage,
           content.rawOpenGraphImage,
-          content.showFooterContainers
+          content.showFooterContainers,
+          content.atoms
         ),
         JsonShareLinks.apply(content.sharelinks.elementShareOrder, content.sharelinks.pageShareOrder),
         JsonCommercial.apply(

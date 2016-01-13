@@ -11,6 +11,7 @@ import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
+import model.content.{Quiz, Atoms}
 import model.liveblog.BodyBlock
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -47,6 +48,7 @@ final case class Content(
   elements: Elements,
   fields: Fields,
   sharelinks: ShareLinks,
+  atoms: Option[Atoms],
   publication: String,
   internalPageCode: String,
   contributorBio: Option[String],
@@ -194,10 +196,16 @@ final case class Content(
       (Some("series", JsString(series.name)), Some("seriesId", JsString(series.id)))
     } getOrElse (None,None)
 
+    val atomsMeta = atoms.map { atoms =>
+      val atomIdentifiers = atoms.all.collect { case quiz: Quiz => JsString(quiz.id) }
+      ("atoms", JsArray(atomIdentifiers))
+    }
+
     val meta = List[Option[(String, JsValue)]](
       rugbyMeta,
       seriesMeta,
-      seriesIdMeta
+      seriesIdMeta,
+      atomsMeta
     ) ++ cricketMeta
     meta.flatten.toMap
   }
@@ -239,6 +247,7 @@ object Content {
     val commercial = Commercial.make(metadata, tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
+    val atoms = Atoms.make(apiContent)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
 
@@ -250,6 +259,7 @@ object Content {
       elements = elements,
       fields = fields,
       sharelinks = sharelinks,
+      atoms = atoms,
       publication = apifields.flatMap(_.publication).getOrElse(""),
       internalPageCode = apifields.flatMap(_.internalPageCode).map(_.toString).getOrElse(""),
       contributorBio = apifields.flatMap(_.contributorBio),
