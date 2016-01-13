@@ -38,27 +38,47 @@ define([
                     });
                 };
 
-                var render = function (firstRender) {
+                var previousAdHeight = oldAdHeight;
+                var render = function (options) {
+                    var firstRender = options && options.firstRender;
                     getLatestAdHeight().then(function (adHeight) {
-                        var scrollY = window.scrollY;
                         fastdom.read(function () {
-                            // Reset
-                            $header.css('transition', '');
-                            $adBanner.css('top', '');
+                            var scrollY = window.scrollY;
+                            var scrollX = window.scrollX;
 
-                            if (scrollY > headerHeight) {
-                                $adBanner.css({
-                                    'position': 'absolute',
-                                    'top': headerHeight + 'px'
-                                });
-                            } else {
-                                $adBanner.css({ 'position': 'fixed' });
-                            }
+                            fastdom.write(function () {
+                                // Reset
+                                $header.css('transition', '');
+                                $adBanner.css('top', '');
 
-                            $header.css('margin-top', adHeight + 'px');
-                            if (scrollY === 0 && !firstRender) {
-                                $header.css('transition', 'margin-top 0.75s cubic-bezier(0, 0, 0, 0.985)');
-                            }
+                                // Set
+                                if (scrollY > headerHeight) {
+                                    $adBanner.css({
+                                        'position': 'absolute',
+                                        'top': headerHeight + 'px'
+                                    });
+                                } else {
+                                    $adBanner.css({ 'position': 'fixed' });
+                                }
+
+                                $header.css('margin-top', adHeight + 'px');
+
+                                var scrollIsAtTop = scrollY === 0;
+                                // Avoid an initial transition when we apply the margin top for the first time
+                                if (scrollIsAtTop && !firstRender) {
+                                    // If the user is at the top of the page, we want to transition
+                                    // the change
+                                    $header.css('transition', 'margin-top 0.75s cubic-bezier(0, 0, 0, 0.985)');
+                                } else {
+                                    // If the user is not at the top, we want to offset their scroll position
+                                    var diff = adHeight - previousAdHeight;
+                                    if (diff > 0) {
+                                        window.scrollTo(scrollX, scrollY + diff);
+                                    }
+                                }
+
+                                previousAdHeight = adHeight;
+                            });
                         });
                     });
                 };
@@ -68,22 +88,8 @@ define([
                 //
 
                 mediator.on('window:throttledScroll', render);
-                render(true);
+                render({ firstRender: true });
                 topAdRenderedPromise.then(render);
-
-                // Adjust the scroll position to compensate for the margin-top added to the header. This prevents the page moving around
-                // This lives here because adjusting the scroll position only helps when the ad is already fixed and the animation doesn't scroll the main page
-                topAdRenderedPromise
-                    .then(getLatestAdHeight)
-                    .then(function (newAdHeight) {
-                        fastdom.read(function () {
-                            var diff = newAdHeight - oldAdHeight;
-
-                            if (window.scrollY !== 0) {
-                                window.scrollTo(window.scrollX, window.scrollY + diff);
-                            }
-                        });
-                    });
             });
         }
     };
