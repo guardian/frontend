@@ -472,6 +472,14 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
   }
 }
 
+case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    // US Minute articles use liveblog blocks but we don't want to show timestamps
+    if (article.isUSMinute) document.getElementsByClass("published-time").foreach(_.remove)
+    document
+  }
+}
+
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
