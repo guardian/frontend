@@ -9,64 +9,66 @@ import scala.collection.JavaConversions._
 class BodyBlocksTest extends FlatSpec with Matchers {
 
    "BodyBlocks" should "allow 1 block on one page" in {
-     val result = BodyBlocks(Seq(()), None)
+     val result = BodyBlocks(2, 0)(Seq(()), None)
 
      result should be(Some(BodyBlocks(Seq(()), NoPage, None)))
 
    }
 
-  "BodyBlocks" should "allow 19 blocks on one page" in {
-    val blocks = Seq.fill(19)(())
-    val result = BodyBlocks(blocks, None)
+  "BodyBlocks" should "allow 3 blocks on one page" in {
+    val blocks = Seq.fill(3)(())
+    val result = BodyBlocks(2, 0)(blocks, None)
 
     result should be(Some(BodyBlocks(blocks, NoPage, None)))
 
   }
 
-  "BodyBlocks" should "put 20 blocks on two pages (main page)" in {
-    val blocks = Seq.fill(20)(()).zipWithIndex.map(_._2).map {
-      case x: Int if (x < 10) => s"new $x"
+  "BodyBlocks" should "put 4 blocks on two pages (main page)" in {
+    val blocks = Seq.fill(4)(()).zipWithIndex.map(_._2).map {
+      case x: Int if x < 2 => s"new $x"
       case x: Int => s"old $x"
     }
-    val result = BodyBlocks(blocks, None)
+    val result = BodyBlocks(2, 0)(blocks, None)
 
-    val expected = blocks.take(10)
+    val expected = blocks.take(2)
 
     result should be(Some(BodyBlocks(expected, NoPage, Some(1))))
 
   }
 
-  "BodyBlocks" should "put 20 blocks on two pages (page 1 - oldest)" in {
-    val blocks = Seq.fill(20)(()).zipWithIndex.map(_._2).map {
-      case x: Int if (x < 10) => s"new $x"
+  "BodyBlocks" should "put 4 blocks on two pages (page 1 - oldest)" in {
+    val blocks = Seq.fill(4)(()).zipWithIndex.map(_._2).map {
+      case x: Int if x < 2 => s"new $x"
       case x: Int => s"old $x"
     }
-    val result = BodyBlocks(blocks, Some(1))
+    val result = BodyBlocks(2, 0)(blocks, Some(1))
 
-    val expected = blocks.takeRight(10)
+    val expected = blocks.takeRight(2)
 
     result should be(Some(BodyBlocks(expected, FirstPage, None)))
 
   }
 
-  "BodyBlocks" should "put 21 blocks on two pages (main page)" in {
-    val blocks = Seq.fill(21)(()).zipWithIndex.map(_._2)
-    val result = BodyBlocks(blocks, None)
+  "BodyBlocks" should "put 5 blocks on two pages (main page)" in {
+    val blocks = Seq.fill(5)(()).zipWithIndex.map(_._2)
+    val result = BodyBlocks(2, 0)(blocks, None)
 
-    val expected = blocks.take(11)
+    val expected = blocks.take(3)
 
     result should be(Some(BodyBlocks(expected, NoPage, Some(1))))
 
   }
 
-  "BodyBlocks" should "put 21 blocks on two pages (page 1 - oldest)" in {
-    val blocks = Seq.fill(21)(()).zipWithIndex.map(_._2)
-    val result = BodyBlocks(blocks, Some(1))
+  "BodyBlocks" should "put 5 blocks on two pages (page 1 - oldest)" in {
+    val blocks = Seq.fill(5)(()).zipWithIndex.map(_._2)
+    val result = BodyBlocks(2, 0)(blocks, Some(1))
 
-    val expected = blocks.takeRight(10)
+    val expected = blocks.takeRight(2)
 
     result should be(Some(BodyBlocks(expected, FirstPage, None)))
 
   }
+
+  // FIXME should really test the preload too
 
 }

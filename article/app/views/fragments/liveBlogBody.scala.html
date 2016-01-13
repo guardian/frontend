@@ -109,13 +109,16 @@
                                     <a href="/@{article.content.metadata.id}?page=@earlierBlock"
                                         class="u-button-reset button button--large button--show-more liveblog__show-more"
                                         data-link-name="next page">
-                                        @fragments.inlineSvg("plus", "icon")
-                                        View older updates
+                                        Go to older updates
                                     </a>
                                 }
-                                @*blocks.later.suffix.map { suffix =>
-                                    <a href="/@{article.content.metadata.id}@suffix">Newer posts</a>
-                                }*@
+                                @blocks.later.suffix.map { suffix =>
+                                    <a href="/@{article.content.metadata.id}@suffix"
+                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
+                                        data-link-name="previous page">
+                                        Go to newer updates
+                                    </a>
+                                }
                             </div>
 
                         </div>
