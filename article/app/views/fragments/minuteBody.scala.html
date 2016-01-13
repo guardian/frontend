@@ -1,3 +1,23 @@
-@(model: MinutePage)
+@(model: MinutePage)(implicit request: RequestHeader)
 
-<h1>this is a minute page</h1>
+@import common.LinkTo
+@import views.support.TrailCssClasses.toneClass
+
+@defining(model.article) { article =>
+    <div class="l-side-margins">
+        <article id="article" data-test-id="article-root"
+            class="content content--article content--immersive tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+            @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
+            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
+            itemscope itemtype="@article.metadata.schemaType" role="main">
+            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
+            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="The Guardian">
+                <link itemprop="sameAs" href="http://www.theguardian.com">
+            </div>
+
+            @fragments.headerImmersive(article)
+
+        </article>
+    </div>
+}
