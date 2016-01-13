@@ -41,18 +41,22 @@ define([
             ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
             ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
         },
+
         // filter:(slot:Element, index:Integer, slots:Collection<Element>) -> Boolean
         // will run each slot through this fn to check if it must be counted in
         filter: null,
+
         // startAt:Element
         // will remove slots before this one
         startAt: null,
+
         // stopAt:Element
         // will remove slots from this one on
         stopAt: null,
-        // reverse:Boolean
+
+        // fromBotton:Boolean
         // will reverse the order of slots (this is useful for lazy loaded content)
-        reverse: false
+        fromBottom: false
     },
     imagesLoaded,
     richLinksUpgraded;
@@ -184,7 +188,7 @@ define([
         function getSlots() {
             var bodyBottom = body.offsetHeight;
             var slots = qwery(rules.bodySelector + rules.slotSelector);
-            if (rules.reverse) {
+            if (rules.fromBottom) {
                 slots.reverse();
             }
             if (rules.startAt) {

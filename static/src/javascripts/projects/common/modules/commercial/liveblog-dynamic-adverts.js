@@ -34,7 +34,7 @@ define([
         return {
             bodySelector: '.js-liveblog-body',
             slotSelector: ' > .block',
-            reverse: update,
+            fromBottom: update,
             startAt: update ? firstSlot : null,
             minAbove: update ? 0 : windowHeight * OFFSET,
             minBelow: 0,
