@@ -75,7 +75,12 @@ object BasicHtmlCleaner extends HtmlCleaner {
       Map("AQB" -> List("1"), "ndh" -> List("1"), "ce" -> List("UTF-8"), "cpd" -> List("2"), "AQE" -> List("1"), "v14" -> List("D=r"), "v9" -> List("D=g"))
 
     requiredParams.flatMap { case ((key: String, value: Seq[String])) =>
-      for (v <- value) yield s"$key=$v"
+      for (v <- value) yield {
+        val updatedValue = if(v.contains("&")) {
+          v.replace("&", "%26")
+        } else v
+        s"$key=$updatedValue"
+      }
     }.mkString("&")
   }
 

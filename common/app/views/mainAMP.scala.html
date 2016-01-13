@@ -28,7 +28,6 @@
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body class="guardian-egyptian-loading">
-
         @defining(s"${request.host}${request.path}") { path =>
             @defining({
                 val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
