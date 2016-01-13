@@ -1,6 +1,7 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import conf.Configuration
 
 sealed trait Atom {
   def id: String
@@ -38,7 +39,10 @@ final case class Answer(
 final case class Quiz(
   override val id: String,
   questions: Seq[Question]
-) extends Atom
+) extends Atom {
+
+  val postUrl = s"/atom/quiz/$id"
+}
 
 object Atoms {
   def make(content: contentapi.Content): Option[Atoms] = {

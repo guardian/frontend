@@ -1,5 +1,6 @@
 @(quiz: _root_.model.content.Quiz)
 <form>
+    @quiz.postUrl
     @quiz.questions.map { question =>
         <div>@question.text</div>
     }
