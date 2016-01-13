@@ -45,7 +45,7 @@ http://developers.theguardian.com/join-the-team.html
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!(page.metadata.isImmersive && getContent(page).exists(_.tags.isArticle))) {
+        @if(!(page.metadata.hasNoHeader && getContent(page).exists(_.tags.isArticle))) {
             @if(!mvt.TopBannerPosition.isParticipating) {
                 @if(showAdverts) {
                     @fragments.commercial.topBanner(page.metadata, edition)

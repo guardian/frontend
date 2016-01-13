@@ -375,7 +375,8 @@ object Article {
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
-      twitterPropertiesOverrides = twitterProperties
+      twitterPropertiesOverrides = twitterProperties,
+      isMinute = content.tags.isUSMinuteSeries
     )
   }
 

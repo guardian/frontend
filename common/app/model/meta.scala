@@ -223,7 +223,8 @@ final case class MetaData (
   customSignPosting: Option[NavItem] = None,
   javascriptConfigOverrides: Map[String, JsValue] = Map(),
   opengraphPropertiesOverrides: Map[String, String] = Map(),
-  twitterPropertiesOverrides: Map[String, String] = Map()
+  twitterPropertiesOverrides: Map[String, String] = Map(),
+  isMinute: Boolean = false
 ){
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
@@ -246,6 +247,8 @@ final case class MetaData (
   }
 
   val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
+
+  val hasNoHeader: Boolean = (isImmersive || isMinute)
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
