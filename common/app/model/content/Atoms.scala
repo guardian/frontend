@@ -2,7 +2,9 @@ package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
 
-sealed trait Atom
+sealed trait Atom {
+  def id: String
+}
 
 object Quiz {
   def make(atom: contentapi.QuizAtom): Quiz = {
@@ -10,7 +12,7 @@ object Quiz {
   }
 }
 final case class Quiz(
-  id: String
+  override val id: String
 ) extends Atom
 
 object Atoms {

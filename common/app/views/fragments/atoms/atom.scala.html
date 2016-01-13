@@ -1,0 +1,9 @@
+@(model: _root_.model.content.Atom)
+@import _root_.model.content.Quiz
+
+@{
+    model match {
+        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz)
+        case _ =>
+    }
+}

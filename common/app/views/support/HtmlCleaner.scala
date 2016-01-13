@@ -8,6 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
+import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -527,6 +528,29 @@ object ChaptersLinksCleaner extends HtmlCleaner {
 
       if(Viewability.isSwitchedOn) {
         h2.attr("class", "anchor-link-fix")
+      }
+    }
+    document
+  }
+}
+
+case class AtomsCleaner(atoms: Option[Atoms]) extends HtmlCleaner {
+  private def findAtom(id: String): Option[Atom] = {
+    atoms.flatMap(_.all.find(_.id == id))
+  }
+
+  override def clean(document: Document): Document = {
+    //if (UseAtomsSwitch.isSwitchedOn) {
+    if (true){
+      for {
+        atomContainer <- document.getElementsByClass("element-atom")
+        bodyElement <- atomContainer.getElementsByTag("gu-atom")
+        atomId <- Some(bodyElement.attr("data-atom-id"))
+        atomData <- findAtom(atomId)
+      } {
+        val html = views.html.fragments.atoms.atom(atomData).toString()
+        bodyElement.remove()
+        atomContainer.append(html)
       }
     }
     document

@@ -221,6 +221,7 @@ final case class Content(
     "twitter:image" -> rawOpenGraphImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
+  val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
 }
 
 object Content {
