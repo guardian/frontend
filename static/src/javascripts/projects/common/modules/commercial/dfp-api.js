@@ -375,7 +375,6 @@ define([
         },
         loadSlot = function (slot) {
             googletag.display(slot);
-            slots = chain(slots).and(omit, slot).value();
             displayed = true;
         },
         addSlot = function ($adSlot) {
@@ -385,7 +384,7 @@ define([
                         isRendered: false,
                         slot: defineSlot($adSlot)
                     };
-                    googletag.display(slotId);
+                    loadSlot(slotId);
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
