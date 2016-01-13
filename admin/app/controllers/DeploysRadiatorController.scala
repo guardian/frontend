@@ -136,7 +136,7 @@ object DeploysRadiatorController extends Controller with Logging with AuthLoggin
 
   def getTeamCityBuild(number: String): Future[ApiResponse[JsValue]] = {
     val apiPath = "/guestAuth/app/rest"
-    val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any"
+    val url = s"${Configuration.teamcity.host}${apiPath}/builds/number:$number,state:any,canceled(any)"
 
     WS.url(url)
       .withHeaders("Accept" -> "application/json")
