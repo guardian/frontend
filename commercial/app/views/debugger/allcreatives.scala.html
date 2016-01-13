@@ -143,7 +143,7 @@
                                 return 'commercial--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
-                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                        $('#multiple1, .commercial--dfp-single, .commercial--v-high')
                             .removeClass(toneClasses.join(' '))
                             .addClass('commercial--tone-' + $palette.val());
                     });
@@ -982,7 +982,8 @@
                 ("viewalltext", "View all text"),
                 ("offeramount", "offer-amount"),
                 ("relevance", "high"),
-                ("Toneclass", "commercial--tone-brand"),
+                ("Toneclass", "commercial--tone-soulmates"),
+                ("HeaderToneclass", "commercial__header--soulmates"),
                 ("offer1title", "Offer 1 Title"),
                 ("offer1linktext", "Offer 1 Link Text"),
                 ("offer1url", "http://www.theguardian.com/uk"),
