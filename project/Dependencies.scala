@@ -7,9 +7,7 @@ object Dependencies {
   val identityLibVersion = "3.46"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
-
-  // Check SES works before upgrading this
-  val awsVersion = "1.9.16"
+  val awsVersion = "1.10.37"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -26,13 +24,13 @@ object Dependencies {
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val contentApiClient = "com.gu" %% "content-api-client" % "7.12"
+  val contentApiClient = "com.gu" %% "content-api-client" % "7.13"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.4.1"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.63"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.63"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.66"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.66"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"

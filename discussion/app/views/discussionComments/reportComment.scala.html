@@ -1,0 +1,36 @@
+@import _root_.model.SimplePage
+@import views.html.fragments.reportCommentForm
+
+
+@(commentId: Int, page: SimplePage, userForm: Form[discussion.model.DiscussionAbuseReport], errorMessage: Option[String] = None)(implicit request: RequestHeader)
+@main(page) { } {
+
+
+    <div class="l-side-margins">
+        <article class="content content--article tonal tonal--tone-news" role="main">
+            <header class="content__head tonal__head tonal__head--tone-news">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                            </div>
+                        </div>
+                        <h1 itemprop="headline" class="content__headline js-score">Report Abuse</h1>
+                    </div>
+                </div>
+            </header>
+        </article>
+
+        <div class="content__main tonal__main tonal__main--tone-news">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    @reportCommentForm(commentId,userForm,errorMessage)
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

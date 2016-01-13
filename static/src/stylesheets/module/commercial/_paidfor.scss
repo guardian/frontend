@@ -54,6 +54,7 @@
     }
 
     .lineitem {
+        display: flex;
         border-left: 0;
         flex: 0 1 percentage(1/2);
         margin-bottom: $gs-baseline / 2;
@@ -65,7 +66,7 @@
             flex: 0 1 percentage(1/3);
 
             &:nth-child(n+3) {
-                display: block;
+                display: flex;
             }
 
             &:nth-child(n+4) {
@@ -76,18 +77,47 @@
             flex: 0 1 percentage(1/4);
 
             &:nth-child(n+4) {
-                display: block;
+                display: flex;
             }
         }
     }
 
     .ad-slot--paid-for-badge--front {
         float: right;
+        margin-bottom: $gs-baseline;
+    }
+
+    &.commercial--paidfor-single .ad-slot--paid-for-badge--front {
+        width: $left-column + $gs-gutter * 3;
+        margin-right: $gs-gutter;
+    }
+
+    &.commercial--paidfor-multi .ad-slot--paid-for-badge--front {
+        width: $left-column;
+        margin-right: $gs-gutter;
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
+    }
+
+    .fc-item__kicker {
+        &:after {
+            color: colour(neutral-2);
+        }
+    }
+
+    .inline-icon {
+        fill: colour(neutral-2);
     }
 }
 
 .tone-paidfor--item {
     background: colour(paid-article-subheader);
+    flex: 0 1 auto;
 
     .rich-link__container:before {
         background: guss-colour(paidfor-background, $frontend-palette);

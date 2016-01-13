@@ -88,6 +88,9 @@ function s_doPlugins(s) {
 
     // Previous Site section
 	s.prop71 = s.getPreviousValue(s.channel,"s_prev_ch");
+	
+	s.prop50="D=User-Agent" // captures the user-agent string
+    s.prop49="D=s_vi" // captures the s_vi (visitor ID) cookie value
 
     /* Copy pageName into eVar7 */
 //    if (s.pageName && !s.eVar7) {

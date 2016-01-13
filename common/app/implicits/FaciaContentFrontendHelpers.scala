@@ -71,7 +71,8 @@ object FaciaContentFrontendHelpers {
 
     def mainVideo: Option[VideoElement] = videos.find(_.properties.isMain).headOption
 
-    def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
+    lazy val isAdvertisementFeature: Boolean =
+      DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
 
     lazy val shouldHidePublicationDate: Boolean = {
       isAdvertisementFeature && faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))

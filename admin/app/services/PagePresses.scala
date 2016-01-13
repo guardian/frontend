@@ -9,7 +9,7 @@ import play.api.Play.current
 import play.api.Play
 
 object PagePresses extends Logging {
-  private lazy val table = if (Configuration.environment.isProd) "redirects" else "redirects-DEV"
+  private lazy val table = if (Configuration.environment.isNonProd) "redirects-CODE" else "redirects"
 
   private lazy val client = {
     val client = new AmazonDynamoDBClient(Configuration.aws.mandatoryCredentials)

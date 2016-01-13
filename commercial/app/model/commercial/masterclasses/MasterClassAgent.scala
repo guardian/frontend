@@ -12,12 +12,14 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
 
     def startDateSort: (MasterClass) => Long = _.eventBriteEvent.startDate.getMillis
 
-    lazy val defaultClasses = available.sortBy(startDateSort) take 4
+    def subList(masterclasses: Seq[MasterClass]): Seq[MasterClass] = masterclasses take 4
+
+    lazy val defaultClasses = subList(available.sortBy(startDateSort))
     val targeted = available filter { masterclass =>
       Keyword.idSuffixesIntersect(segment.context.keywords,
         masterclass.eventBriteEvent.keywordIdSuffixes)
     }
-    val toShow = (targeted.sortBy(startDateSort) ++ defaultClasses) take 4
+    val toShow = subList(targeted.sortBy(startDateSort) ++ defaultClasses)
     toShow sortBy startDateSort
   }
 
