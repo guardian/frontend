@@ -17,6 +17,7 @@ define([
 ) {
     var INTERVAL = 5;      // number of posts between ads
     var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
+    var MAX_ADS = 8;       // maximum number of ads to display
 
     var slotCounter = 0, windowHeight, firstSlot;
 
@@ -70,12 +71,20 @@ define([
 
     function fill(rules) {
         return spaceFiller.fillSpace(rules, insertAds)
-            .then(function (ads) {
-                if (ads) {
-                    firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
+            .then(function (result) {
+                if (slotCounter === MAX_ADS) {
+                    result = false;
                 }
+                return result;
             })
-            .then(startListening);
+            .then(function (result) {
+                if (result) {
+                    firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
+                    startListening();
+                } else {
+                    firstSlot = null;
+                }
+            });
     }
 
     function onUpdate() {
