@@ -1,4 +1,6 @@
-@(model: _root_.model.content.Quiz)
+@(quiz: _root_.model.content.Quiz)
 <form>
-    @model.id
+    @quiz.questions.map { question =>
+        <div>@question.text</div>
+    }
 </form>

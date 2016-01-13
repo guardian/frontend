@@ -1,7 +1,7 @@
 package model
 
 import common.{NavItem, SectionLink, Pagination}
-import model.content.{Atoms, Atom, Quiz}
+import model.content._
 import model.facia.PressedCollection
 import model.liveblog.{BlockAttributes, BodyBlock}
 import org.joda.time.DateTime
@@ -177,6 +177,8 @@ object ContentTypeFormat {
   implicit val tagPropertiesFormat = Json.format[TagProperties]
   implicit val tagFormat = Json.format[Tag]
   val tagsFormat = Json.format[Tags]
+  implicit val answerFormat = Json.format[Answer]
+  implicit val questionFormat = Json.format[Question]
   implicit val quizFormat = Json.format[Quiz]
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]

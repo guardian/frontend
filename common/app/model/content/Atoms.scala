@@ -7,12 +7,37 @@ sealed trait Atom {
 }
 
 object Quiz {
-  def make(atom: contentapi.QuizAtom): Quiz = {
-    Quiz(id = atom.id)
+  def make(quiz: contentapi.QuizAtom): Quiz = {
+    val questions = quiz.data.content.questions.map { question =>
+      val answers = question.answers.map { answer =>
+        Answer(
+          text = answer.answerText,
+          reveal = answer.revealText,
+          weight = answer.weight.toInt)
+      }
+      Question(
+        text = question.questionText,
+        answers = answers)
+    }
+
+    Quiz(
+      id = quiz.id,
+      questions = questions
+      )
   }
 }
+final case class Question(
+  text: String,
+  answers: Seq[Answer])
+
+final case class Answer(
+  text: String,
+  reveal: Option[String],
+  weight: Int
+)
 final case class Quiz(
-  override val id: String
+  override val id: String,
+  questions: Seq[Question]
 ) extends Atom
 
 object Atoms {
