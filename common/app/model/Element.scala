@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.v1.{Element => ApiElement, AssetType}
+import com.gu.contentapi.client.model.v1.{Element => ApiElement, ElementType, AssetType}
 import org.apache.commons.math3.fraction.Fraction
 
 object ElementProperties {
@@ -30,11 +30,11 @@ object Element {
     val properties = ElementProperties.make(capiElement, elementIndex)
     val images = ImageMedia.make(capiElement, properties)
 
-    capiElement.`type`.name match {
-      case "Image" => ImageElement(properties, images)
-      case "Video" => VideoElement(properties, images, VideoMedia.make(capiElement))
-      case "Audio" => AudioElement(properties, images, AudioMedia.make(capiElement))
-      case "Embed" => EmbedElement(properties, images, EmbedMedia.make(capiElement))
+    capiElement.`type` match {
+      case ElementType.Image => ImageElement(properties, images)
+      case ElementType.Video => VideoElement(properties, images, VideoMedia.make(capiElement))
+      case ElementType.Audio => AudioElement(properties, images, AudioMedia.make(capiElement))
+      case ElementType.Embed => EmbedElement(properties, images, EmbedMedia.make(capiElement))
       case _ => DefaultElement(properties, images)
     }
   }
