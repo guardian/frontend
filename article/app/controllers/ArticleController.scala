@@ -186,7 +186,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   def redirect(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val content: Option[PageWithStoryPackage] = supportedContent.map {
-      case minute: Article if minute.tags.isUSMinuteSeries => MinutePage(minute, RelatedContent(minute, response))
+      case minute: Article if minute.isUSMinute => MinutePage(minute, RelatedContent(minute, response))
       case liveBlog: Article if liveBlog.isLiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
       case article: Article => ArticlePage(article, RelatedContent(article, response))
     }

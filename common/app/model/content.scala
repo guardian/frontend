@@ -427,6 +427,7 @@ final case class Article (
 
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isImmersive: Boolean = content.metadata.isImmersive
+  val isUSMinute: Boolean = content.tags.isUSMinuteSeries
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
