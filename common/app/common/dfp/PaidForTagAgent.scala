@@ -2,10 +2,10 @@ package common.dfp
 
 import java.net.URLDecoder
 
-import model.pressed.CollectionConfig
 import common.Edition
 import model.Tag
 import model.`package`.frontKeywordIds
+import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
@@ -207,6 +207,14 @@ trait PaidForTagAgent {
 
   def getSponsor(capiTagId: String): Option[String] = {
     findWinningDfpTag(currentPaidForTags, capiTagId, None, None) flatMap (_.lineItems.head.sponsor)
+  }
+
+  def winningTagPair(
+    capiTags: Seq[Tag],
+    sectionId: Option[String],
+    edition: Option[Edition]
+  ): Option[CapiTagAndDfpTag] = {
+    findWinningTagPair(currentPaidForTags, capiTags, sectionId, edition)
   }
 }
 

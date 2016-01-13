@@ -191,8 +191,8 @@ category: Common
 
 .selection-sharing {
     position: absolute;
+    margin-top: -$gs-baseline * 3;
     top: 0;
-    padding-top: $gs-baseline / 3;
     opacity: 0;
     visibility: hidden;
     transition: opacity .15s ease;

@@ -4,7 +4,7 @@ import common.{Jobs, Logging}
 import model.commercial.jobs.Industries
 import model.commercial.masterclasses.MasterClassTagsAgent
 import model.commercial.money.BestBuysAgent
-import model.commercial.travel.{Countries, TravelOffersAgent}
+import model.commercial.travel.Countries
 
 trait RefreshJob extends Logging {
 
@@ -39,13 +39,6 @@ object CountriesRefresh extends RefreshJob {
 
   def refresh() = Countries.refresh()
 
-}
-
-object TravelOffersRefresh extends RefreshJob {
-
-  val name: String = "TravelOffers"
-
-  def refresh() = TravelOffersAgent.refresh()
 }
 
 object IndustriesRefresh extends RefreshJob {

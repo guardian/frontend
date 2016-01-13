@@ -64,3 +64,10 @@ case class MasterclassesFeedMetaData(accessToken: String, override val parameter
   override val timeout = 20.seconds
   val switch = Switches.MasterclassFeedSwitch
 }
+
+case class TravelOffersFeedMetaData(url: String) extends FeedMetaData {
+
+  override def name: String = "travel-offers"
+
+  override def switch: Switch = Switches.TravelOffersFeedSwitch
+}

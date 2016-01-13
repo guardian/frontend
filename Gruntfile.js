@@ -134,10 +134,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'copy:inlineSVGs',
             'clean:js',
-            'copy:javascript',
-            // The app file must exist in dev to avoid compilation errors due to
-            // the SW. For testing the SW, do a proper compile.
-            'shell:stubAppJs'
+            'copy:javascript'
         ]);
 
         if (isOnlyTask(this) && !fullCompile) {

@@ -1,26 +1,24 @@
 package services
 
-import com.gu.googleauth.UserIdentity
-import com.gu.pandomainauth.model.User
-import conf.Configuration
-import common.Logging
-import com.amazonaws.services.s3.AmazonS3Client
-import com.amazonaws.services.s3.model._
-import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
-import com.amazonaws.util.StringInputStream
-import conf.switches.Switches
-import scala.io.{Codec, Source}
-import org.joda.time.DateTime
-import play.Play
-import play.api.libs.ws.{WSRequest, WS}
+import java.io._
+import java.util.zip.GZIPOutputStream
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
-import sun.misc.BASE64Encoder
+
 import com.amazonaws.auth.AWSSessionCredentials
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
+import com.amazonaws.services.s3.model._
+import com.amazonaws.util.StringInputStream
+import common.Logging
 import common.S3Metrics.S3ClientExceptionsMetric
-import com.gu.googleauth.UserIdentity
-import java.util.zip.GZIPOutputStream
-import java.io._
+import conf.Configuration
+import org.joda.time.DateTime
+import play.Play
+import play.api.libs.ws.{WS, WSRequest}
+import sun.misc.BASE64Encoder
+
+import scala.io.{Codec, Source}
 
 trait S3 extends Logging {
 
@@ -250,7 +248,7 @@ trait SecureS3Request extends implicits.Dates with Logging {
 object SecureS3Request extends SecureS3Request
 
 object S3Archive extends S3 {
- override lazy val bucket = "aws-frontend-archive"
+ override lazy val bucket = if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"
  def getHtml(path: String) = get(path)
 }
 
@@ -260,10 +258,6 @@ object S3Infosec extends S3 {
   def getBlockedEmailDomains = get(key)
 }
 
-object R2Archive extends S3 {
-  override lazy val bucket = "r2-archive-test"
-}
-
-object R2ArchiveOriginals extends S3 {
-  override lazy val bucket = "r2-archive-originals"
+object S3ArchiveOriginals extends S3 {
+  override lazy val bucket = if (Configuration.environment.isNonProd) "aws-frontend-archive-code-originals" else "aws-frontend-archive-originals"
 }

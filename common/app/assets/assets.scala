@@ -22,20 +22,42 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
 
   def assets(): Map[String, Asset] = {
 
-    // Use the grunt-generated asset map in Dev.
-    val json: String = if (Play.current.mode == Mode.Dev) {
-      val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
-      IOUtils.toString(assetMapUri)
-    } else {
-      val url = AssetFinder(assetMap)
-      IOUtils.toString(url)
-    }
-    val paths: Map[String, String] = Json.parse(json).validate[Map[String, String]] match {
-      case JsSuccess(m, _) => m
+    def jsonToAssetMap(json: String): Map[String, Asset] = Json.parse(json).validate[Map[String, String]] match {
+      case JsSuccess(m, _) => m mapValues { path => Asset(base + path) }
       case JsError(_) => Map.empty
     }
 
-    paths mapValues { path => Asset(base + path) }
+    // Given a map, add a pair for missing entries where key and value are identical
+    def addIfMissing(map: Map[String, Asset], entries: Seq[String]): Map[String, Asset] =
+      entries.foldLeft(map)((accumulator, entry) => accumulator.get(entry) match {
+        case Some(_) => accumulator
+        case None => accumulator + (entry -> Asset(base + entry))
+      })
+    
+    if (Play.current.mode == Mode.Dev) {
+      // Use the grunt-generated asset map in Dev.
+      val assetMapUri = new java.io.File(s"static/hash/assets/assets.map").toURI
+      val serviceWorkerWhitelist = Seq(
+        "javascripts/app.js",
+        "javascripts/enhanced-vendor.js",
+        "javascripts/bootstraps/enhanced/main.js",
+        "javascripts/bootstraps/enhanced/crosswords.js",
+        "javascripts/bootstraps/commercial.js",
+        "javascripts/components/react/react.js"
+      )
+      // We reference these files using the asset map in dev, but because they're not compiled,
+      // they don't exist as entries in the asset map.
+      // To test the service worker in dev, one must compile the JS.
+      val whitelist = Seq(
+        "javascripts/bootstraps/enhanced/ophan.js",
+        "javascripts/bootstraps/admin.js"
+      ) ++ serviceWorkerWhitelist
+      val map = jsonToAssetMap(IOUtils.toString(assetMapUri))
+      addIfMissing(map, whitelist)
+    } else {
+      val url = AssetFinder(assetMap)
+      jsonToAssetMap(IOUtils.toString(url))
+    }
   }
 
   private lazy val memoizedAssets = assets()
@@ -73,6 +95,7 @@ class Assets(base: String) extends Logging {
        val knownInlines : PartialFunction[String,String] =
        {
          case "story-package" => "story-package.css"
+         case "ThisIsTheNHS" => "basher.ThisIsTheNHS.css"
          case "KeepItInTheGround" => "basher.KeepItInTheGround.css"
        }
        knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }

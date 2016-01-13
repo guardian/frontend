@@ -32,10 +32,11 @@ object Frontend extends Build with Prototypes {
       guardianConfiguration,
       jacksonCore,
       jacksonMapper,
+      jodaConvert,
+      jodaTime,
       jSoup,
       liftJson,
       playGoogleAuth,
-      panDomainAuth,
       quartzScheduler,
       rome,
       romeModules,
@@ -92,6 +93,9 @@ object Frontend extends Build with Prototypes {
   val image = application("image")
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      scalaUri
+    ),
     TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 

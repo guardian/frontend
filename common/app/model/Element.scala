@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.v1.{Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{Element => ApiElement, AssetType}
 import org.apache.commons.math3.fraction.Fraction
 
 object ElementProperties {
@@ -121,9 +121,13 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
 }
 
 object EmbedMedia {
-  def make(capiElement: ApiElement): EmbedMedia = EmbedMedia(
-    embedAssets = capiElement.assets.filter(_.`type`.name == "Embed").map(EmbedAsset.make)
-  )
+  def make(capiElement: ApiElement): EmbedMedia = {
+    EmbedMedia(
+      embedAssets = capiElement.assets
+        .filter(_.`type` == AssetType.Embed)
+        .map(EmbedAsset.make)
+    )
+  }
 }
 final case class EmbedMedia(embedAssets: Seq[EmbedAsset])
 
