@@ -27,6 +27,7 @@ h2 {
 .deploy {
     width: 9em;
     margin-right: 1em;
+    margin-bottom: 1em;
     box-sizing: border-box;
     padding: 1em;
 }
@@ -79,8 +80,14 @@ a:hover {
     text-decoration: underline;
 }
 
-div > div {
+/*Clearfix*/
+.row {
+    overflow: hidden;
+}
+
+.col {
     float: left;
-    width: 31%;
-    margin: 0 1%;
+    width: 33.333%;
+    box-sizing: border-box;
+    padding-right: 1rem;
 }
