@@ -20,7 +20,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
+    'template!common/views/ui/loading.html',
     'lodash/functions/debounce'
 ], function (
     bean,
@@ -65,7 +65,7 @@ define([
     }
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl();
     }
 
     function upgradeVideoPlayerAccessibility(player) {

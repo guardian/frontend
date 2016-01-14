@@ -6,8 +6,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
-    'text!common/views/ui/selection-sharing.html',
+    'template!common/views/ui/selection-sharing.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
@@ -20,7 +19,6 @@ define([
     config,
     detect,
     mediator,
-    template,
     sharingTemplate,
     svgs,
     debounce,
@@ -30,7 +28,7 @@ define([
     var $body = bonzo(document.body),
         twitterIcon = svgs('shareTwitter', ['icon']),
         emailIcon = svgs('shareEmail', ['icon']),
-        selectionSharing = template(sharingTemplate, {
+        selectionSharing = sharingTemplate({
             twitterIcon: twitterIcon,
             emailIcon: emailIcon
         }),
@@ -38,10 +36,14 @@ define([
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
-        twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
+        twitterHrefTemplate = function (data) {
+            return 'https://twitter.com/intent/tweet?text=%E2%80%9C' + data.text + '%E2%80%9D&url=' + data.url;
+        },
         twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
-        emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
+        emailHrefTemplate = function (data) {
+            return 'mailto:?subject=' + data.subject + '&body=%E2%80%9C' + data.selection + '%E2%80%9D ' + data.url;
+        },
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     updateSelection = function () {
@@ -70,14 +72,14 @@ define([
                 twitterMessage = twitterMessage.slice(0, twitterMessageLimit - 1) + '…';
             }
 
-            twitterHref = template(twitterHrefTemplate, {
-                text: encodeURI(twitterMessage),
-                url: encodeURI(twitterShortUrl)
+            twitterHref = twitterHrefTemplate({
+                text: encodeURIComponent(twitterMessage),
+                url: encodeURIComponent(twitterShortUrl)
             });
-            emailHref = template(emailHrefTemplate, {
-                subject: encodeURI(config.page.webTitle),
-                selection: encodeURI(range.toString()),
-                url: encodeURI(emailShortUrl)
+            emailHref = emailHrefTemplate({
+                subject: encodeURIComponent(config.page.webTitle),
+                selection: encodeURIComponent(range.toString()),
+                url: encodeURIComponent(emailShortUrl)
             });
 
             $twitterAction.attr('href', twitterHref);

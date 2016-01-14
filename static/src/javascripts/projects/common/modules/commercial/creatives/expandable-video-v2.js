@@ -6,9 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-video-v2.html',
+    'template!common/views/commercial/creatives/expandable-video-v2.html',
     'lodash/objects/merge'
 ], function (
     bean,
@@ -18,7 +17,6 @@ define([
     detect,
     mediator,
     storage,
-    template,
     svgs,
     ExpandableVideoTpl,
     merge) {
@@ -35,7 +33,6 @@ define([
             this.closedHeight = 150;
             this.openedHeight = 300;
         }
-
     };
 
     ExpandableVideo.prototype.create = function () {
@@ -52,7 +49,7 @@ define([
                 videoEmbed: (this.params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>' : ''
             },
-            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) })),
+            $ExpandableVideo = $.create(ExpandableVideoTpl({ data: merge(this.params, showmoreArrow, showmorePlus, videoSource) })),
             domPromise = new Promise(function (resolve) {
                 fastdom.write(function () {
 

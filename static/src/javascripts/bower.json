@@ -6,7 +6,7 @@
     "domready": "ded/domready#v0.3.0",
     "eventEmitter": "~4.2.6",
     "fastdom": "0.8.5",
-    "lodash-amd": "~2.4.1",
+    "lodash-amd": "regiskuckaertz/lodash-amd#2.4.2",
     "fence": "~0.2.11",
     "bonzo": "~2.0.0",
     "curl": "~0.8.9",

@@ -1,16 +1,20 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
-
-    // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/logo-foundation-funded.html',
-    'text!common/views/commercial/creatives/logo-foundation-funded-partners.html'
+    'template!common/views/commercial/creatives/logo-foundation-funded.html',
+    'template!common/views/commercial/creatives/logo-foundation-funded-partners.html'
 ], function (
     $,
     config,
-    template
+    template,
+    logoFoundationFundedTpl,
+    logoFoundationFundedPartnersTpl
 ) {
+
+    var templates = {
+        'logo-foundation-funded': logoFoundationFundedTpl,
+        'logo-foundation-funded-partners': logoFoundationFundedPartnersTpl
+    };
 
     /**
      * Create the foundation logo
@@ -27,13 +31,10 @@ define([
 
     Template.prototype.create = function () {
         var templateName = 'logo-foundation-funded' + (this.params.hasPartners ? '-partners' : '');
+        var creativeHtml = templates[templateName](this.params);
 
-        require(['text!common/views/commercial/creatives/' + templateName + '.html'], function (creativeTpl) {
-            var creativeHtml = template(creativeTpl, this.params);
-
-            $.create(creativeHtml)
-                .appendTo(this.$adSlot);
-        }.bind(this));
+        $.create(creativeHtml)
+            .appendTo(this.$adSlot);
     };
 
     return Template;
