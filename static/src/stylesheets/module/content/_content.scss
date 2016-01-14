@@ -807,7 +807,21 @@
         }
 
         .vjs-volume-bar:before {
-            background: colour(neutral-1);
+            background-color: colour(neutral-1);
+        }
+
+        .end-slate-container--video {
+            background-color: colour(paid-article);
+
+            .end-slate-container__heading {
+                color: colour(news-support-7);
+            }
+
+            .fc-item__container {
+                &:before {
+                    background: colour(neutral-2);
+                }
+            }
         }
     }
 
