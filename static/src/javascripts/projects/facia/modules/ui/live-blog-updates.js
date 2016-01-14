@@ -4,11 +4,10 @@ define([
     'common/utils/ajax',
     'common/utils/storage',
     'common/modules/ui/relativedates',
-    'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'text!facia/views/liveblog-block.html',
+    'template!facia/views/liveblog-block.html',
     'lodash/arrays/compact',
     'lodash/objects/isUndefined',
     'lodash/collections/forEach',
@@ -23,7 +22,6 @@ define([
     ajax,
     storage,
     relativeDates,
-    template,
     mediator,
     detect,
     fastdomPromise,
@@ -66,7 +64,7 @@ define([
             relTime = 'Updated just now';
         }
 
-        return template(blockTemplate, {
+        return blockTemplate({
             ariaHidden: !block.isNew,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,

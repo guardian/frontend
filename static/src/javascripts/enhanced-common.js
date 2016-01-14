@@ -10,7 +10,6 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/storage',
-    'common/utils/template',
     'common/utils/url',
     'common/utils/fastdom-errors',
 

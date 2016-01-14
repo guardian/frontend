@@ -8,15 +8,14 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
-    'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/views/svgs',
-    'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html',
+    'template!common/views/ui/loading.html',
+    'template!common/views/media/titlebar.html',
     'lodash/functions/debounce'
 ], function (
     bean,
@@ -27,7 +26,6 @@ define([
     $,
     config,
     deferToAnalytics,
-    template,
     omniture,
     Component,
     techOrder,
@@ -39,7 +37,7 @@ define([
     debounce) {
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl();
     }
 
     function createVideoPlayer(el, options) {
@@ -63,7 +61,7 @@ define([
             pageId: config.page.pageId,
             icon: svgs('marque36icon')
         };
-        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        $('.vjs-control-bar').after(titlebarTmpl(data));
         bean.on($('.vjs-title-bar')[0], 'click', function (e) {
             omniture.logTag({
                 tag: 'Embed | title bar',

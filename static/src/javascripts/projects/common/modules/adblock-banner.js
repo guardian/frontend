@@ -1,13 +1,11 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adblock-sticky-message.html'
+    'template!common/views/commercial/adblock-sticky-message.html'
 ], function (
     fastdom,
     $,
-    template,
     svgs,
     adblockStickyMessage) {
 
@@ -29,7 +27,7 @@ define([
     };
 
     AdblockBanner.prototype.show = function () {
-        var bannerTmpl = template(adblockStickyMessage,
+        var bannerTmpl = adblockStickyMessage(
             {
                 supporterLink: this.supporterLink,
                 quoteText: this.quoteText,

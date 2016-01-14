@@ -7,10 +7,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
-    'text!common/views/content/richLinkTag.html',
+    'template!common/views/content/richLinkTag.html',
     'lodash/collections/contains'
 ], function (
     fastdom,
@@ -21,7 +20,6 @@ define([
     config,
     detect,
     mediator,
-    template,
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
@@ -82,7 +80,7 @@ define([
             !isDuplicate
         ) {
             return spaceFiller.insertAtFirstSpace(getSpacefinderRules(), function (para) {
-                $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                $insertedEl = $.create(richLinkTagTmpl({href: config.page.richLink}));
                 $insertedEl.insertBefore(para);
             }).then(function (didInsert) {
                 if (didInsert) {
