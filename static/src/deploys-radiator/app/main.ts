@@ -222,10 +222,14 @@ const renderPage: (
                 ))
             ]),
 
-            h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys),
-            h('h1', 'PROD'),
-            renderGroupDeployListNode(prodDeploys)
+            h('div', [
+                h('h1', 'CODE'),
+                renderGroupDeployListNode(codeDeploys)
+                ]),
+            h('div', [
+                h('h1', 'PROD'),
+                renderGroupDeployListNode(prodDeploys)
+            ])
         ])
     }
 

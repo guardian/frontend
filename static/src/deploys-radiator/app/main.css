@@ -4,6 +4,10 @@ body {
     padding: 1rem;
 }
 
+h1 {
+    font-size: 3em;
+}
+
 .deploys {
     list-style: none;
     display: flex;
@@ -24,7 +28,7 @@ body {
 }
 
 .deploy h2 {
-    font-size: inherit;
+    font-size: 3em;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
@@ -70,4 +74,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+div > div {
+    float: left;
+    width: 31%;
+    margin: 0 1%;
 }
