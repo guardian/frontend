@@ -70,7 +70,7 @@
                     data-comment-id="@comment.id"
                     data-user-id="@comment.profile.userId"
                     data-recommend-count="@comment.numRecommends"
-                    title="@comment.numRecommends recommendations">
+                    title="@comment.numRecommends recommendations" data-link-name="Recommend comment">
                     <button class="u-button-reset d-comment__recommend-button rounded-icon">
                         <span class="d-comment__recommend-pulse"></span>
                         @fragments.inlineSvg("arrow-up-white", "icon")
@@ -100,7 +100,7 @@
                 </div>
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions d-comment__actions--left modern-visible">
-                        <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@Configuration.discussion.url/comment-permalink/@comment.id"
+                        <a class="d-comment__action d-comment__action--reply" data-link-name="Comment permalink" href="https://profile.theguardian.com/signin?returnUrl=@Configuration.discussion.url/comment-permalink/@comment.id"
                                 data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                             @fragments.inlineSvg("reply", "icon", List("blue"))
                             Reply
@@ -110,12 +110,12 @@
 
                         <button class="u-button-reset d-comment__action d-comment__action--pick d-staff-required" role="button"
                             data-comment-id="@comment.id"
-                            data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</button>
+                            data-comment-highlighted="@comment.isHighlighted" data-link-name="Pick comment">@if(comment.isHighlighted){Unpick}else{Pick}</button>
 
                     </div>
 
                     <div class="report-comment-container js-report-comment-container d-comment__action d-comment__action--report">
-                        <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" rel="nofollow" class="js-report-comment" data-comment-id="@comment.id" target="_blank">Report</a>
+                        <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" rel="nofollow" class="js-report-comment" data-comment-id="@comment.id" target="_blank" data-link-name="Open report abuse">Report</a>
                     </div>
                 }
             </div>
