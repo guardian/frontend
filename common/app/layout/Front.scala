@@ -99,14 +99,22 @@ case class CollectionEssentials(
 )
 
 object ContainerCommercialOptions {
-  def fromConfig(config: CollectionConfig) = ContainerCommercialOptions(
-    DfpAgent.isSponsored(config),
-    DfpAgent.isAdvertisementFeature(config),
-    DfpAgent.isFoundationSupported(config),
-    DfpAgent.sponsorshipTag(config),
-    DfpAgent.sponsorshipType(config),
-    omitMPU = false
-  )
+  def fromConfig(config: CollectionConfig) = {
+    DfpAgent.findContainerCapiTagIdAndDfpTag(config) map { tagData =>
+      val capiTagId = tagData.capiTagId
+      val dfpTag = tagData.dfpTag
+
+      ContainerCommercialOptions(
+        isSponsored = dfpTag.paidForType == Sponsored,
+        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+        isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+        sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
+        sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),
+        sponsorshipType = Some(dfpTag.paidForType.name),
+        omitMPU = false
+      )
+    } getOrElse empty
+  }
 
   def fromCollection(collection: CollectionEssentials): ContainerCommercialOptions = {
 
@@ -137,6 +145,7 @@ object ContainerCommercialOptions {
           isSponsored = dfpTag.paidForType == Sponsored,
           isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
           isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+          sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
           sponsorshipTag,
           sponsorshipType = Some(dfpTag.paidForType.name),
           omitMPU = false
@@ -153,6 +162,7 @@ object ContainerCommercialOptions {
     isSponsored = false,
     isAdvertisementFeature = false,
     isFoundationSupported = false,
+    sponsor = None,
     sponsorshipTag = None,
     sponsorshipType = None,
     omitMPU = false
@@ -165,6 +175,7 @@ case class ContainerCommercialOptions(
   isSponsored: Boolean,
   isAdvertisementFeature: Boolean,
   isFoundationSupported: Boolean,
+  sponsor: Option[String],
   sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String],
   omitMPU: Boolean
