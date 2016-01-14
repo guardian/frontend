@@ -87,7 +87,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         NotFound
       } else {
-        val blocks = BodyBlocks(blog.article.content.fields.blocks, pageNo)
+        val PAGINATION_ENABLED_TAGS = Seq("business/series/guardian-business-live", "politics/series/politics-live-with-andrew-sparrow")
+        val pageSize = if (blog.article.content.tags.tags.exists(tag => PAGINATION_ENABLED_TAGS.contains(tag.id))) 10 else 300
+        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10/* = 29, also update in truncate-liveblog.js*/)(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)
@@ -113,14 +115,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderLiveBlog(path: String, page: Option[Int] = None) =
     LongCacheAction { implicit request =>
-      mapModel(path, true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+      mapModel(path, blocks = true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
         render(path, _, page)
       }
     }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
     LongCacheAction { implicit request =>
-      mapModel(path, true) { model =>
+      mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
           case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
           case (None, Some(false)) => blockText(model, 6)
