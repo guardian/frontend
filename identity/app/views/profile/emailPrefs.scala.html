@@ -68,17 +68,6 @@
 
                         </li>
 
-                        <li class="form-field @if((emailPrefsForm("statusFields.receiveGnmMarketing").errors ++ emailPrefsForm("statusFields.receive3rdPartyMarketing").errors).nonEmpty) {form-field--error}">
-                            <label class="label">Would you like to receive information from the Guardian and their partners?</label>
-                            <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
-
-                            <div class="form-fields-group">
-                                @checkboxField(Checkbox(emailPrefsForm("statusFields.receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
-                                @checkboxField(Checkbox(emailPrefsForm("statusFields.receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
-                            </div>
-
-                        </li>
-
                         <li>
                             <button type="submit" class="submit-input" data-link-name="Save email preferences">Save</button>
                         </li>

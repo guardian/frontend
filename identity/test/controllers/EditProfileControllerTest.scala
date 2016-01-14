@@ -88,6 +88,46 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     }
   }
 
+  "Given the submitPrivacyForm method is called" - {
+    val receive3rdPartyMarketing = false
+    val receiveGnmMarketing = true
+
+    "with a valid CSRF request" - Fake{
+      val fakeRequest = FakeCSRFRequest()
+        .withFormUrlEncodedBody(
+          "receiveGnmMarketing" -> receiveGnmMarketing.toString,
+          "receive3rdPartyMarketing" -> receive3rdPartyMarketing.toString
+        )
+
+      val updatedUser = user.copy(
+        statusFields = StatusFields(
+          receiveGnmMarketing = Some(receiveGnmMarketing),
+          receive3rdPartyMarketing = Some(receive3rdPartyMarketing)
+        )
+      )
+      when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+        .thenReturn(Future.successful(Right(updatedUser)))
+
+      val result = controller.submitPrivacyForm().apply(fakeRequest)
+
+      Await.result(result, 10.seconds)
+
+      "then the user should be saved on the ID API" in {
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
+
+        userUpdate.statusFields.value.receive3rdPartyMarketing.value should equal(receive3rdPartyMarketing)
+        userUpdate.statusFields.value.receiveGnmMarketing.value should equal(receiveGnmMarketing)
+      }
+
+      "then a status 200 should be returned" in {
+        status(result) should be(200)
+      }
+
+    }
+  }
+
   "Given the submitAccountForm method is called" - {
     object FakeRequestAccountData {
       val primaryEmailAddress = "john.smith@bobmail.com"

@@ -1,0 +1,42 @@
+@(idUrlBuilder: services.IdentityUrlBuilder,
+  idRequest: services.IdentityRequest,
+  user: com.gu.identity.model.User,
+  privacyForm: Form[form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@import views.html.fragments.form.{checkboxField}
+@import form.IdFormHelpers._
+@import helper._
+
+
+<form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    @views.html.helper.CSRF.formField
+
+    @if(privacyForm.globalError.isDefined) {
+        <div class="form__error">@privacyForm.globalErrors.map(_.message).mkString(", ")</div>
+    }
+
+    <fieldset class="fieldset">
+
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Marketing</h2>
+        </div>
+
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+                <li class="form-field">
+                    <label class="label">Would you like to receive information from the Guardian and their partners?</label>
+                    <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
+
+                    <div class="form-fields-group">
+                        @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
+                        @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
+                    </div>
+                </ul>
+                <li>
+                    <button type="submit" class="submit-input" data-link-name="Save privacy preferences">Save changes</button>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+</form>
