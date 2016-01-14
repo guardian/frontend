@@ -4,8 +4,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/template',
     'common/modules/identity/api',
-    'template!common/views/commercial/outbrain.html',
+    'text!common/views/commercial/outbrain.html',
     'lodash/collections/contains'
 ], function (
     fastdom,
@@ -13,6 +14,7 @@ define([
     config,
     detect,
     mediator,
+    template,
     identity,
     outbrainTpl,
     contains
@@ -65,11 +67,11 @@ define([
 
             fastdom.write(function () {
                 $outbrain.css('display', 'block');
-                $container.append($.create(outbrainTpl({ widgetCode: widgetCode })));
+                $container.append($.create(template(outbrainTpl, { widgetCode: widgetCode })));
 
                 if (breakpoint !== 'mobile') {
                     widgetCodeText  = widgetConfig[breakpoint].text[section];
-                    $container.append($.create(outbrainTpl({ widgetCode: widgetCodeText })));
+                    $container.append($.create(template(outbrainTpl, { widgetCode: widgetCodeText })));
                 }
 
                 this.tracking(widgetCode);

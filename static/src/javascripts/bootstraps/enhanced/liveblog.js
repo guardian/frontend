@@ -8,6 +8,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
+    'common/utils/template',
     'common/utils/url',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
@@ -21,8 +22,7 @@ define([
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust',
-    'template!common/views/liveblog/key-event.html'
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
@@ -33,6 +33,7 @@ define([
     detect,
     mediator,
     scroller,
+    template,
     url,
     accessibility,
     richLinks,
@@ -46,8 +47,7 @@ define([
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust,
-    keyEventTemplate) {
+    robust) {
     'use strict';
 
     var modules,
@@ -122,13 +122,16 @@ define([
     }
 
     function createKeyEventHTML(el) {
-        var data = {
+        var keyEventTemplate = '<li class="timeline__item" data-event-id="<%=id%>">' +
+                '<a class="timeline__link" href="#<%=id%>" data-event-id="<%=id%>">' +
+                '<span class="timeline__date"><%=time%></span><span class="timeline__title u-underline"><%=title%></span></a></li>',
+            data = {
                 id: el.getAttribute('id'),
                 title: $('.block-title', el).text(),
                 time: $('.block-time__link', el).html()
             };
 
-        return keyEventTemplate(data);
+        return template(keyEventTemplate, data);
     }
 
     function getTimelineHTML(events) {
