@@ -1,7 +1,29 @@
-@(quiz: _root_.model.content.Quiz)
-<form>
-    @quiz.postUrl
-    @quiz.questions.map { question =>
-        <div>@question.text</div>
+@import _root_.model.content._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+@(quiz: Quiz)
+
+<form action="@quiz.postUrl" method="POST">
+
+    @quiz.questions.zipWithIndex.map { case (data, questionIndex) =>
+        @question(data, questionIndex, QuizForm.form(s"answers[$questionIndex]"))
     }
+    <button class="button" type="submit">Submit answers</button>
 </form>
+
+@question(question: _root_.model.content.Question, order: Int, field: play.api.data.Field) = {
+    <fieldset>
+        <legend>@question.text</legend>
+            @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
+                <dl>
+                    <dt>
+                        <label for="question-@order-answer-@answerIndex">@{answer.text}</label>
+                    </dt>
+                    <dd>
+                        <input type="radio" name="answers[@order]" id="question-@order-answer-@answerIndex" value="@{answer.text}">
+                    </dd>
+                </dl>
+            }
+    </fieldset>
+}

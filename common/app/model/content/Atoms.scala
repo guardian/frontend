@@ -1,7 +1,8 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import conf.Configuration
+import play.api.data._
+import play.api.data.Forms._
 
 sealed trait Atom {
   def id: String
@@ -42,6 +43,15 @@ final case class Quiz(
 ) extends Atom {
 
   val postUrl = s"/atom/quiz/$id"
+}
+
+object QuizForm {
+  case class UserAnswers(answers: List[String])
+  val form = Form(
+    mapping(
+      "answers" -> list(text)
+    )(UserAnswers.apply)(UserAnswers.unapply)
+  )
 }
 
 object Atoms {
