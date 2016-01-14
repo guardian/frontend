@@ -58,6 +58,7 @@ GET            /weatherapi/forecast/:id.json                                    
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
+GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
 GET            /analytics/commercial                                                                                             controllers.admin.CommercialController.renderCommercial()
 GET            /analytics/commercial/specialadunits                                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
 GET            /analytics/commercial/sponsorships                                                                                controllers.admin.CommercialController.renderPaidForTags()
@@ -87,6 +88,9 @@ GET            /discussion/profile/:id/replies.json                             
 GET            /discussion/profile/:id/picks.json                                                                                controllers.ProfileActivityController.profilePicks(id: String)
 GET            /discussion/profile/:id/witness.json                                                                              controllers.WitnessActivityController.witnessActivity(id: String)
 GET            /open/cta/article/*discussionKey.json                                                                             controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+GET            /discussion/report-abuse/:commentId/thankyou                                                                      controllers.CommentsController.reportAbuseThankYou(commentId: Int)
+GET            /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseForm(commentId: Int)
+POST           /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseSubmission(commentId: Int)
 
 # Onward
 GET            /most-read-facebook.json                                                                                          controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
@@ -401,6 +405,9 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                         
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Articles
-GET            /*path.json                                                                                                       controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
-GET            /*path/amp                                                                                                        controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
-GET            /*path                                                                                                            controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET     /*path.json                 controllers.ArticleController.renderJson(path)
+GET     /*path/amp                  controllers.ArticleController.renderArticle(path)
+# temp route for live blogs so we can paginate without getting the blocks for all articles
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[Int])
+GET     /*path                      controllers.ArticleController.renderArticle(path)

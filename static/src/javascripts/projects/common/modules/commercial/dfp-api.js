@@ -130,7 +130,7 @@ define([
     /**
      * Private variables
      */
-    var resizeTimeout,
+    var resizeTimeout        = 2000,
         adSlotSelector       = '.js-ad-slot',
         displayed            = false,
         rendered             = false,
@@ -271,6 +271,7 @@ define([
                 }).and(map, function ($adSlot) {
                     return [$adSlot.attr('id'), {
                         isRendered: false,
+                        isLoading: false,
                         slot: defineSlot($adSlot)
                     }];
                 }).and(zipObject).valueOf();
@@ -309,13 +310,7 @@ define([
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
         },
-        setupAdvertising = function (options) {
-            var opts = defaults(options || {}, {
-                resizeTimeout: 2000
-            });
-
-            resizeTimeout = opts.resizeTimeout;
-
+        setupAdvertising = function () {
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
@@ -347,9 +342,9 @@ define([
         /**
          * Public functions
          */
-        init = function (options) {
+        init = function () {
             if (commercialFeatures.dfpAdvertising) {
-                setupAdvertising(options);
+                setupAdvertising();
             } else {
                 $(adSlotSelector).remove();
             }
@@ -371,17 +366,19 @@ define([
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
 
-                chain(slots).and(keys).and(forEach, function (slot) {
-                    // if the position of the ad is above the viewport - offset (half screen size)
-                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
-                        loadSlot(slot);
-                    }
+                chain(slots).and(keys).and(filter, function (slot) {
+                    return !slots[slot].isLoading &&
+                        !slots[slot].isRendered &&
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
+                }).and(forEach, function (slot) {
+                    loadSlot(slot);
                 });
             }
         },
         loadSlot = function (slot) {
+            slots[slot].isLoading = true;
             googletag.display(slot);
-            slots = chain(slots).and(omit, slot).value();
             displayed = true;
         },
         addSlot = function ($adSlot) {
@@ -389,9 +386,10 @@ define([
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
                         isRendered: false,
+                        isLoading: false,
                         slot: defineSlot($adSlot)
                     };
-                    googletag.display(slotId);
+                    loadSlot(slotId);
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
@@ -525,6 +523,7 @@ define([
         },
         allAdsRendered = function (slotId) {
             if (slots[slotId] && !slots[slotId].isRendered) {
+                slots[slotId].isLoading = false;
                 slots[slotId].isRendered = true;
             }
 

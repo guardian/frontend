@@ -1,16 +1,32 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
+import common.Logging
 import org.jsoup.nodes.Document
 
 import scala.collection.JavaConversions._
+import scala.io.Source
 
+abstract class HtmlCleaner extends Logging {
+  def canClean(document: Document): Boolean
+  def clean(document: Document): Document
+}
 
-object BasicHtmlCleaner extends HtmlCleaner
+object BasicHtmlCleaner extends HtmlCleaner {
 
-trait HtmlCleaner {
+  override def canClean(document: Document) = {
+    document.getElementsByAttribute("data-poll-url").isEmpty
+  }
 
-  def clean(document: Document): Document = {
+  override def clean(document: Document) = {
+    if (canClean(document)) {
+      basicClean(document)
+    } else {
+      document
+    }
+  }
+
+  def basicClean(document: Document): Document = {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
@@ -21,10 +37,26 @@ trait HtmlCleaner {
 
     //fetch omniture data before stripping it. then rea-dd it for simple page tracking
     val omnitureQueryString = fetchOmnitureTags(document)
-    removeByTagName(document, "script")
+    removeScriptsTagsExceptInteractives(document)
     removeByTagName(document, "noscript")
     createSimplePageTracking(document, omnitureQueryString)
 
+  }
+
+  def removeScriptsTagsExceptInteractives(document: Document): Document = {
+    val scripts = document.getElementsByTag("script")
+    val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
+      val parentIds = e.parents().map(p => p.id()).toList
+      parentIds.contains("interactive-content")
+    }
+    nonInteractiveScripts.toList.foreach(_.remove())
+
+    interactiveScripts.toList.map { interactiveElement =>
+      if (interactiveElement.html().contains("swfobject")) {
+        addSwfObjectScript(document)
+      }
+    }
+    document
   }
 
   def createSimplePageTracking(document: Document, omnitureQueryString: String): Document = {
@@ -43,7 +75,12 @@ trait HtmlCleaner {
       Map("AQB" -> List("1"), "ndh" -> List("1"), "ce" -> List("UTF-8"), "cpd" -> List("2"), "AQE" -> List("1"), "v14" -> List("D=r"), "v9" -> List("D=g"))
 
     requiredParams.flatMap { case ((key: String, value: Seq[String])) =>
-      for (v <- value) yield s"$key=$v"
+      for (v <- value) yield {
+        val updatedValue = if(v.contains("&")) {
+          v.replace("&", "%26")
+        } else v
+        s"$key=$updatedValue"
+      }
     }.mkString("&")
   }
 
@@ -76,4 +113,24 @@ trait HtmlCleaner {
     document.getElementsByTag(tagName).foreach(_.remove())
     document
   }
+
+  private def addSwfObjectScript(document: Document): Document = {
+
+    val swfScriptOpt = try {
+      val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
+      Some(source)
+
+    } catch {
+      case ex: Exception => {
+        log.error(ex.getMessage)
+        None
+      }
+    }
+    swfScriptOpt.foreach { script =>
+      val html = "<script type=\"text/javascript\">" + script + "</script>"
+      document.head().append(html)
+    }
+    document
+  }
+
 }

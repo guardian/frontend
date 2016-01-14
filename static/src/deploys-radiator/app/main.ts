@@ -10,7 +10,7 @@ import {
     Deploy, DeployRecord, createDeployRecord,
     Build, BuildRecord, createBuildRecord,
     DeployGroup, DeployGroupRecord, createDeployGroupRecord,
-    DeployJson, BuildJson, Commit,
+    DeploysJson, BuildJson, Commit,
     GitHubCompareJson, GitHubCommitJson, GitHubCommit,
     GitHubErrorJson
 } from './model';
@@ -222,18 +222,22 @@ const renderPage: (
                 ))
             ]),
 
-            h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys),
-            h('h1', 'PROD'),
-            renderGroupDeployListNode(prodDeploys)
+            h('div', [
+                h('h1', 'CODE'),
+                renderGroupDeployListNode(codeDeploys)
+                ]),
+            h('div', [
+                h('h1', 'PROD'),
+                renderGroupDeployListNode(prodDeploys)
+            ])
         ])
     }
 
 const apiPath = '/deploys-radiator/api';
 const getDeploys = (stage: string): Promise<List<DeployRecord>> => (
     fetch(`${apiPath}/deploys?projectName=dotcom:&stage=${stage}&pageSize=200`, { credentials: 'same-origin' })
-        .then((response): Promise<Array<DeployJson>> => response.json())
-        .then(deploys => List(deploys.map(deploy => createDeployRecord({
+        .then((response): Promise<DeploysJson> => response.json())
+        .then(deploys => List(deploys.response.map(deploy => createDeployRecord({
             build: Number(deploy.build),
             uuid: deploy.uuid,
             projectName: deploy.projectName.replace(/^dotcom:/, ''),
@@ -244,9 +248,11 @@ const getDeploys = (stage: string): Promise<List<DeployRecord>> => (
 const getBuild = (build: number): Promise<BuildRecord> => (
     fetch(`${apiPath}/builds/${build}`, { credentials: 'same-origin' })
         .then((response): Promise<BuildJson> => response.json())
+        .then(build => build.response)
         .then(build => createBuildRecord({
             number: Number(build.number),
             projectName: build.projectName,
+            revision: build.revision,
             commits: build.commits
         }))
 );
@@ -300,16 +306,9 @@ const run = (): Promise<void> => {
         ])
     ));
 
-    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => {
-        const maybeProdCommit = headOption(prodBuild.commits);
-        const maybeCodeCommit = headOption(codeBuild.commits);
-        return maybeProdCommit
-            .flatMap(prodCommit => maybeCodeCommit.map(codeCommit => (
-                // This assumes prod comes before code
-                getDifference(prodCommit.sha, codeCommit.sha).then(gitHubCommits => gitHubCommits.reverse())
-            )))
-            .getOrElse(() => Promise.resolve([]))
-    });
+    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => (
+        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse())
+    ));
 
     return Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
         .then(([ deploysPair, deployPair, commits ]) => renderPage(deploysPair, deployPair, commits))
@@ -318,9 +317,10 @@ const run = (): Promise<void> => {
 
 
 const intervalSeconds = 10;
+const wait = (): Promise<{}> => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000));
 const update = (): Promise<void> => {
     return run()
-        .then(() => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000)))
+        .then(wait, wait)
         .then(update);
 };
 update();
