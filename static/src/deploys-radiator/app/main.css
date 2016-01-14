@@ -4,10 +4,6 @@ body {
     padding: 1rem;
 }
 
-h1 {
-    font-size: 3em;
-}
-
 .deploys {
     list-style: none;
     display: flex;
@@ -28,7 +24,7 @@ h1 {
 }
 
 .deploy h2 {
-    font-size: 3em;
+    font-size: 2.5rem;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
