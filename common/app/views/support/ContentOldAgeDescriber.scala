@@ -1,6 +1,7 @@
 package views.support
 
 import java.util.concurrent.TimeUnit
+import model.pressed.CuratedContent
 import org.joda.time.DateTime
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
@@ -17,6 +18,10 @@ class ContentOldAgeDescriber {
 
   def apply(apiContent: com.gu.contentapi.client.model.v1.Content): String = {
     message(apiContent.webPublicationDate.map(_.toJodaDateTime))
+  }
+
+  def apply(curatedContent: CuratedContent): String = {
+    message(curatedContent.card.webPublicationDateOption)
   }
 
   private def message(maybePubDate: Option[DateTime]) = {

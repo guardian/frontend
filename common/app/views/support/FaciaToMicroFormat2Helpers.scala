@@ -18,7 +18,10 @@ object FaciaToMicroFormat2Helpers {
     case _ => Json.obj()
   }
 
-  private def getContent(content: CuratedContent): JsValue =
+  private def getContent(content: CuratedContent): JsValue = {
+    lazy val toneClass = TrailCssClasses.toneClass(content)
+    lazy val webPublicationDate = if (toneClass == "tone-news") ContentOldAgeDescriber(content) else ""
+
     JsObject(
       Json.obj(
         "headline" -> content.header.headline,
@@ -26,14 +29,15 @@ object FaciaToMicroFormat2Helpers {
         "url" -> content.header.url,
         "thumbnail" -> content.properties.maybeContent.flatMap(_.trail.thumbnailPath),
         "id" -> content.properties.maybeContent.map(_.metadata.id),
-        "frontPublicationDate" -> content.properties.maybeFrontPublicationDate,
         "byline" -> content.properties.byline,
         "isComment" -> content.header.isComment,
         "isVideo" -> content.header.isVideo,
         "isAudio" -> content.header.isAudio,
         "isGallery" -> content.header.isGallery,
-        "toneClass" -> TrailCssClasses.toneClass(content),
-        "showWebPublicationDate" -> false)
+        "toneClass" -> toneClass,
+        "webPublicationDate" -> webPublicationDate,
+        "showWebPublicationDate" -> !webPublicationDate.isEmpty)
       .fields
-      .filterNot{ case (_, v) => v == JsNull})
+      .filterNot { case (_, v) => v == JsNull })
+  }
 }
