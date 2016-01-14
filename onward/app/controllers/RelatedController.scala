@@ -28,29 +28,16 @@ object RelatedController extends Controller with Related with Containers with Lo
     related(edition, path, excludeTags) map {
       case related if related.items.isEmpty => JsonNotFound()
       case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
-      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
+      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis))
     }
   }
 
-  /*
-  give the first 2 from each tag excluding the current article
-   */
-  def renderTags(path: String) = MemcachedAction { implicit request =>
-    val edition = Edition(request)
-    val keywordIds = request.queryString.getOrElse("keywordIds", Nil).flatMap(_.split(","))
-
-    getRelatedByTags(edition, path, keywordIds) map {
-      case related if related.items.isEmpty => JsonNotFound()
-      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "further reading")
-    }
-  }
-
-  private def renderRelated(trails: Seq[RelatedContentItem], title: String)(implicit request: RequestHeader) = Cached(30.minutes) {
+  private def renderRelated(trails: Seq[RelatedContentItem])(implicit request: RequestHeader) = Cached(30.minutes) {
     val relatedTrails = trails take 8
 
     if (request.isJson) {
       val html = views.html.fragments.containers.facia_cards.container(
-        onwardContainer(title, relatedTrails.map(_.faciaContent)),
+        onwardContainer("related content", relatedTrails.map(_.faciaContent)),
         FrontProperties.empty
       )(request)
       JsonComponent("html" -> html)

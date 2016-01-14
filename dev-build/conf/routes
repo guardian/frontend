@@ -106,7 +106,6 @@ GET            /top-stories/trails.json                                         
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /related-alt/*path.json                                                                                           controllers.RelatedController.renderTags(path)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)

@@ -5,10 +5,10 @@ define([
 ) {
     return function () {
         this.id = 'AlternativeRelated';
-        this.start = '2015-12-07';
-        this.expiry = '2016-01-07';
-        this.author = 'John Duffell';
-        this.description = 'gets related content from the top tags instead of the content';
+        this.start = '2016-01-13';
+        this.expiry = '2016-01-29';
+        this.author = 'Maria Chiorean';
+        this.description = 'Gets related content in using 3 new variants';
         this.audience = 0.02;
         this.audienceOffset = 0.2;
         this.successMeasure = '';
@@ -28,7 +28,19 @@ define([
                 }
             },
             {
-                id: 'variant',
+                id: 'tags-only',
+                test: function () {
+
+                }
+            },
+            {
+                id: 'tags-headline',
+                test: function () {
+
+                }
+            },
+            {
+                id: 'in-body-links',
                 test: function () {
 
                 }
