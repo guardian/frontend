@@ -7,11 +7,12 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html',
+    'template!common/views/save-for-later/save-link.html',
+    'template!common/views/save-for-later/save-button.html',
+    'template!common/views/save-for-later/save-url.html',
+    'template!common/views/save-for-later/save-article-url.html',
     'lodash/functions/bindAll',
     'lodash/objects/assign',
     'lodash/collections/forEach',
@@ -26,11 +27,12 @@ define([
     detect,
     config,
     mediator,
-    template,
     identity,
     svgs,
     saveLink,
     saveButton,
+    saveUrl,
+    saveArticleUrl,
     bindAll,
     assign,
     forEach,
@@ -111,7 +113,7 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = template('<%= idUrl%>/save-content?INTCMP=DOTCOM_ARTICLE_SFL&returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                var url = saveUrl({
                     idUrl: config.page.idUrl,
                     returnUrl: encodeURIComponent(document.location.href),
                     shortUrl: shortUrl,
@@ -145,11 +147,11 @@ define([
                 config: config
             };
             if (options.url) {
-                $saver.html(template(saveLink,
+                $saver.html(saveLink(
                     assign({ url: options.url }, templateData))
                 );
             } else {
-                $saver.html(template(saveButton, templateData));
+                $saver.html(saveButton(templateData));
 
                 bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
                     this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
@@ -351,7 +353,7 @@ define([
     };
 
     SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
-        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
+        var url = saveArticleUrl({
             idUrl: config.page.idUrl,
             returnUrl: encodeURIComponent(document.location.href),
             shortUrl: shortUrl,

@@ -6,10 +6,9 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html',
+    'template!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle'
 ], function (
@@ -19,7 +18,6 @@ define([
     $,
     config,
     detect,
-    template,
     OmnitureMedia,
     history,
     adsSkipOverlayTmpl,
@@ -241,7 +239,7 @@ define([
                     this.ima.getAdsManager().stop();
                 },
                 init: function () {
-                    var skipButton = template(adsSkipOverlayTmpl, { skipTimeout: skipTimeout });
+                    var skipButton = adsSkipOverlayTmpl({ skipTimeout: skipTimeout });
 
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);

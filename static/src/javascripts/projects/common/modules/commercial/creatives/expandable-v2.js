@@ -6,9 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/expandable-v2.html',
+    'template!common/views/commercial/creatives/expandable-v2.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (
@@ -19,7 +18,6 @@ define([
     detect,
     mediator,
     storage,
-    template,
     svgs,
     expandableV2Tpl,
     bindAll,
@@ -135,7 +133,7 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
+            $expandablev2 = $.create(expandableV2Tpl({ data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {

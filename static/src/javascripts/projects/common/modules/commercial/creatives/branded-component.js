@@ -2,17 +2,15 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/branded-component-jobs.html',
-    'text!common/views/commercial/creatives/branded-component-membership.html',
-    'text!common/views/commercial/creatives/branded-component-soulmates.html',
+    'template!common/views/commercial/creatives/branded-component-jobs.html',
+    'template!common/views/commercial/creatives/branded-component-membership.html',
+    'template!common/views/commercial/creatives/branded-component-soulmates.html',
     'lodash/objects/defaults'
 ], function (
     qwery,
     $,
     config,
-    template,
     svgs,
     brandedComponentJobsTpl,
     brandedComponentMembershipTpl,
@@ -71,7 +69,7 @@ define([
         templateConfig.config.clickMacro = this.params.clickMacro;
         templateConfig.config.omnitureId = this.params.omnitureId;
 
-        $.create(template(templateConfig.template, templateConfig.config))
+        $.create(templateConfig.template(templateConfig.config))
             .appendTo($rightHandCol);
     };
 
