@@ -56,7 +56,8 @@ object BodyCleaner {
       PullquoteCleaner,
       CmpParamCleaner,
       ImmersiveLinks(article.isImmersive),
-      TimestampCleaner(article)
+      TimestampCleaner(article),
+      MinuteCleaner(article)
     )
     val nonAmpCleaners = List(
       VideoEmbedCleaner(article)
