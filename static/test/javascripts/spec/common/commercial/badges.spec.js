@@ -2,7 +2,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
-    'lodash/utilities/template',
+    'common/utils/template',
     'helpers/fixtures',
     'helpers/injector'
 ], function (

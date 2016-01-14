@@ -6,7 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
-    'template!common/views/commercial/creatives/fluid250-v3.html',
+    'common/utils/template',
+    'text!common/views/commercial/creatives/fluid250-v3.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge'
 ], function (
@@ -17,6 +18,7 @@ define([
     detect,
     mediator,
     storage,
+    template,
     fluid250Tpl,
     bindAll,
     merge) {
@@ -89,7 +91,7 @@ define([
                     '<div class="ad-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: 50% 0; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             };
 
-        $.create(fluid250Tpl({ data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
+        $.create(template(fluid250Tpl, { data: merge(this.params, templateOptions, videoDesktop, scrollingbg) })).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');

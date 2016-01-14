@@ -6,10 +6,11 @@ define([
     'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
+    'common/utils/template',
     'common/views/svgs',
-    'template!common/views/discussion/comment-count.html',
-    'template!common/views/discussion/comment-count--content.html',
-    'template!common/views/discussion/comment-count--content-immersive.html',
+    'text!common/views/discussion/comment-count.html',
+    'text!common/views/discussion/comment-count--content.html',
+    'text!common/views/discussion/comment-count--content-immersive.html',
     'lodash/collections/groupBy',
     'lodash/collections/forEach',
     'lodash/collections/sortBy',
@@ -24,6 +25,7 @@ define([
     ajax,
     formatters,
     mediator,
+    template,
     svgs,
     commentCountTemplate,
     commentCountContentTemplate,
@@ -38,9 +40,9 @@ define([
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
             content: commentCountContentTemplate,
-            contentImmersive: commentCountContentImmersiveTemplate,
-            'default': commentCountTemplate
-        };
+            contentImmersive: commentCountContentImmersiveTemplate
+        },
+        defaultTemplate = commentCountTemplate;
 
     function getElementsIndexedById(context) {
         var elements = qwery('[' + attributeName + ']', context);
@@ -74,7 +76,7 @@ define([
                 }
 
                 format = $node.data('commentcount-format');
-                html = (templates[format] || templates.default).call(null, {
+                html = template(templates[format] || defaultTemplate, {
                     url: url,
                     icon: svgs('commentCount16icon', ['inline-tone-fill']),
                     count: formatters.integerCommas(c.count)
