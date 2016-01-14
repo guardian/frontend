@@ -9,6 +9,10 @@
         @include f-headlineSans;
     }
 
+    .rich-link__standfirst {
+        @include fs-textSans(4);
+    }
+
     .fc-item__image-container {
         display: block;
     }
