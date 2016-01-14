@@ -72,7 +72,8 @@ window.curlConfig = {
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg' // noop
+            inlineSvg:                  'inlineSvg', // noop
+            template:                   'template'
         }
     }
 };
