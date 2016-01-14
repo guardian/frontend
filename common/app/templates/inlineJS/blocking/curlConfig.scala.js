@@ -43,8 +43,7 @@ window.curlConfig = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg',
-            template:     'projects/common/utils/lodash-loader'
+            inlineSvg:    'projects/common/utils/inlineSvg'
         } else {
             'enhanced-vendor':                   '@Static("javascripts/enhanced-vendor.js")',
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
@@ -72,8 +71,7 @@ window.curlConfig = {
 
             // plugins
             text:                       'text', // noop
-            inlineSvg:                  'inlineSvg', // noop
-            template:                   'template'
+            inlineSvg:                  'inlineSvg' // noop
         }
     }
 };

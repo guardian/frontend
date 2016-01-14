@@ -4,6 +4,7 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/storage',
+    'common/utils/template',
     'common/modules/user-prefs',
     'common/modules/ui/message',
     'common/utils/mediator'
@@ -13,6 +14,7 @@ define([
     cookies,
     detect,
     storage,
+    template,
     userPrefs,
     Message,
     mediator

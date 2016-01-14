@@ -10,8 +10,9 @@ define([
     'common/utils/mediator',
     'lodash/functions/debounce',
     'lodash/collections/contains',
+    'common/utils/template',
     'common/views/svgs',
-    'template!common/views/email/submissionResponse.html',
+    'text!common/views/email/submissionResponse.html',
     'common/utils/robust',
     'common/utils/detect'
 ], function (
@@ -26,6 +27,7 @@ define([
     mediator,
     debounce,
     contains,
+    template,
     svgs,
     successHtml,
     robust,
@@ -172,7 +174,7 @@ define([
                         submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.',
                         submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
-                    submissionHtml = successHtml(submissionMessage);
+                    submissionHtml = template(successHtml, submissionMessage);
 
                 fastdom.write(function () {
                     $form.addClass('email-sub__form--is-hidden');
