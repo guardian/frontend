@@ -7,7 +7,8 @@ define([
     'common/modules/email/email',
     'common/utils/detect',
     'lodash/collections/contains',
-    'common/utils/config'
+    'common/utils/config',
+    'lodash/collections/every'
 ], function (
     $,
     bean,
@@ -17,7 +18,8 @@ define([
     email,
     detect,
     contains,
-    config
+    config,
+    every
 ) {
     return function () {
         this.id = 'RtrtEmailFormArticlePromoV2';
@@ -32,7 +34,10 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'Email sign-up is increased';
 
-        var $articleBody = $('.js-article__body');
+        var $articleBody = $('.js-article__body'),
+            isParagraph = function ($el) {
+                return $el.nodeName && $el.nodeName === 'P';
+            };
 
         this.canRun = function () {
             //Tests for fronts, editions optional.
@@ -42,13 +47,7 @@ define([
                 browser = detect.getUserAgent.browser,
                 version = detect.getUserAgent.version,
                 allArticleEls = $('> *', $articleBody),
-                lastFiveElsParas = true;
-
-            for (var i = allArticleEls.length - 1; i > allArticleEls.length - 6; i--) {
-                if (allArticleEls[i] && allArticleEls[i].nodeName !== 'P') {
-                    lastFiveElsParas = false;
-                }
-            }
+                lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph);
 
             // User referred from a front, is not logged in and not lte IE9
             return lastFiveElsParas && urlRegex.test(document.referrer) && !Id.isUserLoggedIn() && !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
