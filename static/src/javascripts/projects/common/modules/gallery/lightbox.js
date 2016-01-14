@@ -8,17 +8,18 @@ define([
     'common/utils/detect',
     'common/utils/fsm',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/url',
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
     'common/views/svgs',
-    'template!common/views/content/block-sharing.html',
-    'template!common/views/content/button.html',
-    'template!common/views/content/share-button.html',
-    'template!common/views/content/share-button-mobile.html',
-    'template!common/views/content/endslate.html',
-    'template!common/views/content/loader.html',
+    'text!common/views/content/block-sharing.html',
+    'text!common/views/content/button.html',
+    'text!common/views/content/endslate.html',
+    'text!common/views/content/loader.html',
+    'text!common/views/content/share-button.html',
+    'text!common/views/content/share-button-mobile.html',
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
@@ -34,6 +35,7 @@ define([
     detect,
     FiniteStateMachine,
     mediator,
+    template,
     url,
     Component,
     blockSharing,
@@ -41,10 +43,10 @@ define([
     svgs,
     blockSharingTpl,
     buttonTpl,
-    shareButtonTpl,
-    shareButtonMobileTpl,
     endslateTpl,
     loaderTpl,
+    shareButtonTpl,
+    shareButtonMobileTpl,
     map,
     throttle,
     forEach,
@@ -60,7 +62,8 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            return buttonTpl({label: label});
+            var tmpl = buttonTpl;
+            return template(tmpl, {label: label});
         }
 
         this.galleryLightboxHtml =
@@ -153,15 +156,15 @@ define([
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
             }];
 
-        return blockSharingTpl({
+        return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
             articleType: 'gallery',
             count: this.images.length,
             index: i,
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: map(shareItems, shareButtonTpl).join(''),
-            shareButtonsMobile: map(shareItems, shareButtonMobileTpl).join('')
+            shareButtons: map(shareItems, template.bind(null, shareButtonTpl)).join(''),
+            shareButtonsMobile: map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
         });
     };
 
@@ -243,7 +246,7 @@ define([
                 $img = bonzo(this.$images[i]);
                 if (!$img.attr('src')) {
                     $img.parent()
-                        .append(bonzo.create(loaderTpl()));
+                        .append(bonzo.create(loaderTpl));
 
                     $img.attr('src', imageContent.src);
                     $img.attr('srcset', imageContent.srcsets);
@@ -492,7 +495,7 @@ define([
 
     GalleryLightbox.prototype.loadEndslate = function () {
         if (!this.endslate.rendered) {
-            this.endslateEl = bonzo.create(endslateTpl());
+            this.endslateEl = bonzo.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';

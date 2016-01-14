@@ -5,9 +5,10 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/formatters',
+    'common/utils/template',
     'common/views/svgs',
-    'template!common/views/content/share-count.html',
-    'template!common/views/content/share-count-immersive.html'
+    'text!common/views/content/share-count.html',
+    'text!common/views/content/share-count-immersive.html'
 ], function (
     reportError,
     $,
@@ -15,6 +16,7 @@ define([
     detect,
     config,
     formatters,
+    template,
     svgs,
     shareCountTemplate,
     shareCountImmersiveTemplate
@@ -23,9 +25,7 @@ define([
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
-        tooltip = function (data) {
-            return 'Facebook: ' + data.facebook;
-        },
+        tooltip = 'Facebook: <%=facebook%>',
         counts = {
             facebook: 'n/a'
         };
@@ -42,19 +42,19 @@ define([
     }
 
     function updateTooltip() {
-        $shareCountEls.attr('title', tooltip(counts));
+        $shareCountEls.attr('title', template(tooltip, counts));
     }
 
     function addToShareCount(val) {
         if ($shareCountEls.hasClass('js-sharecount-immersive')) {
-            shareCountTemplate = shareCountImmersiveTemplate;
+            shareCountTemplate = template(shareCountImmersiveTemplate, {
+                icon: svgs('share')
+            });
         }
 
         $shareCountEls
             .removeClass('u-h')
-            .html(shareCountTemplate({
-                icon: svgs('share')
-            }))
+            .html(shareCountTemplate)
             .css('display', '');
 
         $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el

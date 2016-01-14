@@ -3,13 +3,14 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
+    'common/utils/template',
     'common/modules/commercial/adblock-messages',
     'common/modules/adblock-banner',
     'common/modules/onward/history',
     'common/modules/ui/message',
     'common/modules/experiments/ab',
     'common/modules/navigation/navigation',
-    'template!common/views/membership-message.html',
+    'text!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample',
     'lodash/collections/filter',
@@ -19,6 +20,7 @@ define([
     config,
     detect,
     storage,
+    template,
     adblockMsg,
     AdblockBanner,
     history,
@@ -59,7 +61,7 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'adblock message variant ' + message.id,
             siteMessageCloseBtn: 'hide'
-        }).show(messageTemplate({
+        }).show(template(messageTemplate, {
             linkHref: adblockLink + '?INTCMP=adb-mv-' + message.id,
             messageText: message.messageText,
             linkText: message.linkText,
