@@ -138,9 +138,7 @@ You can stop and start the test using our [switchboard](https://frontend.gutools
 
 To see the test in action locally: `localhost:9000/[articleId]#ab-[testName]=[variantName]`
 
-To see the tests you are part of: open the Dev Console -> Resources -> Local Storage -> choose `http://localhost:9000` -> check the `gu.ab.participations` row.
-
-Tip: To make sure your code is compiled, before running `./sbt`, try `make compile-dev`. This might save you lots of time debugging why your changes don't show.
+To see the tests you are part of: open the Dev Console -> Resources -> Local Storage -> choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row.
 
 ## Analysis of the test data
 
