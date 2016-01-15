@@ -71,6 +71,7 @@
         width: 100%;
         transform: translateZ(0);
         will-change: transform;
+        position: relative;
     }
 
     &.top-banner-ad-container--below-nav {
@@ -119,7 +120,6 @@
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
-    transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
@@ -178,8 +178,13 @@
     .top-banner-ad-container--desktop & {
         margin: 0 auto;
         display: none;
-        min-height: 90 + ($gs-row-height / 2);
+        min-height: 90px;
         padding-bottom: $gs-row-height / 2;
+        padding-top: $gs-row-height / 2;
+
+        .ad-slot__label {
+            margin-top: -$gs-row-height / 2;
+        }
 
         .ad-below-nav & {
             min-height: 0;
