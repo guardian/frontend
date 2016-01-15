@@ -69,7 +69,7 @@ object CommentsController extends DiscussionController with ExecutionContexts {
     Action {
       implicit request =>
 
-        Cached(60) {
+        NoCache {
           Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm))
         }
     }
