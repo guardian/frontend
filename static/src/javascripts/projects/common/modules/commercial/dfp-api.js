@@ -384,7 +384,7 @@ define([
         },
         loadSlot = function (slotKey) {
             if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
-                prebidService.loadSlot(slotKey).then(function () {
+                prebidService.loadSlots(slotKey).then(function () {
                     displayed = true;
                 });
                 slots[slotKey].isLoading = true;

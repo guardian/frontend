@@ -38,24 +38,42 @@ define([
             return ['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'].indexOf(slot) === -1;
         };
 
-        this.loadSlot = function (slotElementId) {
-            return new Promise(function (resolve) {
-                window.pbjs.que.push(function () {
-                    pbjs.addAdUnits([new PrebidAdUnit(slotElementId)]);
-                    pbjs.requestBids({bidsBackHandler : function () {
-                        //console.log('Bids for', slotElementId, JSON.stringify(arguments[0]));
-                        displayWinner();
-                    }});
+        var pendingAdverts = new Promise.resolve(true);
 
-                    function displayWinner() {
-                        pbjs.setTargetingForGPTAsync(slotElementId);
-                        googletag.display(slotElementId);
-                        resolve();
-                    }
+        this.loadSlots = function (slotIds) {
+            slotIds = Array.isArray(slotIds) ? slotIds : [slotIds];
+            slotIds = filter(slotIds, this.slotIsInTest);
+
+            var pbjsAdUnits = map(slotIds, function (id) {
+                return new PrebidAdUnit(id);
+            });
+
+            pendingAdverts = pendingAdverts.then(function loadNextSet() {
+                console.log('Loading', JSON.stringify(slotIds));
+
+                return new Promise(function (resolve) {
+                    window.pbjs.que.push(function () {
+                        pbjs.addAdUnits(pbjsAdUnits);
+                        pbjs.requestBids({
+                            bidsBackHandler : function () {
+                                slotIds.forEach(function (id) {
+                                    displayAdUnit(id);
+                                });
+                                resolve();
+                            }
+                        });
+                    });
                 });
             });
-        };
 
+            function displayAdUnit (slotId) {
+                pbjs.setTargetingForGPTAsync(slotId);
+                googletag.display(slotId);
+                console.log('Completed', slotId, window.performance.now());
+            }
+
+            return pendingAdverts;
+        }
 
     }
 
