@@ -5,11 +5,11 @@ define([
 ) {
     return function () {
         this.id = 'RelatedVariants';
-        this.start = '2016-01-13';
-        this.expiry = '2016-01-29';
+        this.start = '2016-01-15';
+        this.expiry = '2016-01-25';
         this.author = 'Maria Chiorean';
         this.description = 'Gets related content in using 3 new variants';
-        this.audience = 0.02;
+        this.audience = 0.0;
         this.audienceOffset = 0.2;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
