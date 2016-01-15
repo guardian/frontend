@@ -27,8 +27,6 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     toTag(ApiTagType.Keyword, tagId, sectionId)
   private def toSeries(tagId: String, sectionId: Option[String] = None): Tag =
     toTag(ApiTagType.Series, tagId, sectionId)
-  private val adFeatureToneTagId = "tone/advertisement-features"
-  private val adFeatureTone = toTag(ApiTagType.Tone, adFeatureToneTagId, None)
 
   private def toLineItem(state: String = "DELIVERING",
                          editionId: Option[String] = None,
@@ -154,6 +152,22 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
     override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = Map
       .empty
+
+    private def isPaidFor(config: CollectionConfig, paidForType: PaidForType): Boolean = {
+      findContainerCapiTagIdAndDfpTag(config) exists (_.dfpTag.paidForType == paidForType)
+    }
+
+    def isSponsored(config: CollectionConfig): Boolean = {
+      isPaidFor(config, Sponsored)
+    }
+
+    def isAdvertisementFeature(config: CollectionConfig): Boolean = {
+      isPaidFor(config, AdvertisementFeature)
+    }
+
+    def isFoundationSupported(config: CollectionConfig): Boolean = {
+      isPaidFor(config, FoundationFunded)
+    }
   }
 
   private def apiQuery(apiQuery: String) = {

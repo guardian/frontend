@@ -119,10 +119,12 @@
 
                 @media match {
                     case v: Video => {
-                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
+                        @if(!(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)) {
+                            <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
                             aria-hidden="true">
-                            <div class="js-video-components-container"></div>
-                        </div>
+                                <div class="js-video-components-container"></div>
+                            </div>
+                        }
                     }
                     case a: Audio if a.fields.body.nonEmpty => {
                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
@@ -136,7 +138,7 @@
         </div>
     </article>
 
-    @if(mediaType != "video") {
+    @if(mediaType != "video" && (mediaType != "audio" && page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)) {
         <div class="fc-container fc-container--media">
             <div class="js-media-popular tonal--@toneClass(media)">
                 <div class="fc-container fc-container--popular">
