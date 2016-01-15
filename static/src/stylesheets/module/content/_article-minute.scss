@@ -2,7 +2,11 @@ $us-minute-highlight-colour: #eb1e25;
 $us-minute-main-colour: #104f75;
 $us-minute-contrast-color: #ffffff;
 
-.content__main-column--minutearticle {
+.content--minute-article {
+    border-top: 0 none;
+}
+
+.content__main-column--minute-article {
     margin: 0 auto;
 }
 
