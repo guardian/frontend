@@ -122,7 +122,7 @@ define([
                 // Side effects
                 //
 
-                fastdom.write(function() {
+                fastdom.write(function () {
                     // will move into stylesheets when productionised
                     $adBanner.css({'overflow': 'hidden', 'transition': 'max-height 1s cubic-bezier(0, 0, 0, 0.985)'});
 
