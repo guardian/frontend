@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'RelatedVariants';
         this.start = '2016-01-15';
-        this.expiry = '2016-01-25';
+        this.expiry = '2016-02-15';
         this.author = 'Maria Chiorean';
         this.description = 'Gets related content in using 3 new variants';
         this.audience = 0.0;
