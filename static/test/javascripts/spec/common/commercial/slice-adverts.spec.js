@@ -42,6 +42,9 @@ define([
                 config.page = {
                     pageId: 'uk/commentisfree'
                 };
+                config.tests = {
+                    topBannerPosition: false
+                };
 
                 detect.getBreakpoint = function () {
                     return 'desktop';
@@ -64,6 +67,17 @@ define([
         });
 
         it('should only create a maximum of 3 advert slots', function (done) {
+            sliceAdverts.init();
+
+            fastdom.defer(function () {
+                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
+                done();
+            });
+        });
+
+        it('should create a maximum of 4 advert slots inside topBannerPosition AB test', function (done) {
+            config.tests.topBannerPosition = false;
+
             sliceAdverts.init();
 
             fastdom.defer(function () {
