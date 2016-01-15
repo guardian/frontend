@@ -69,7 +69,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       val result = controller.submitPublicProfileForm().apply(fakeRequest)
 
-      Await.result(result, 10.seconds)
+      Await.result(result, 2.seconds)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
@@ -110,7 +110,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       val result = controller.submitPrivacyForm().apply(fakeRequest)
 
-      Await.result(result, 10.seconds)
+      Await.result(result, 2.seconds)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
@@ -233,7 +233,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         .thenReturn(Future.successful(Right(updatedUser)))
 
       val result = controller.submitAccountForm().apply(fakeRequest)
-      Await.result(result, 1.seconds)
+      Await.result(result, 2.second)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
