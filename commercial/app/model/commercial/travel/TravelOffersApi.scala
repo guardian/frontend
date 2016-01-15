@@ -1,12 +1,14 @@
 package model.commercial.travel
 
+import java.lang.System.currentTimeMillis
+
+import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.commercial._
-import conf.switches.Switches._
 import org.joda.time.format.DateTimeFormat
-import services.S3
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.util.control.NonFatal
 import scala.xml.{Elem, Node, XML}
 
 object TravelOffersApi extends ExecutionContexts with Logging {
@@ -37,18 +39,22 @@ object TravelOffersApi extends ExecutionContexts with Logging {
 
   def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "offer") map buildOffer
 
-  def loadAds(): Future[Seq[TravelOffer]] = {
-    if (TravelOffersFeedSwitch.isSwitchedOn) {
-      val reply: Option[String] = S3.get(travelOffersS3Key)
-      val result: Seq[TravelOffer] = reply.fold(Seq[TravelOffer]()) { r =>
-        val elems = XML.loadString(r)
-        parse(elems)
+  def parseOffers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
+    feedMetaData.switch.isGuaranteedSwitchedOn flatMap { switchedOn =>
+      if (switchedOn) {
+        val start = System.currentTimeMillis
+        feedContent map { body =>
+          val elems = XML.loadString(body)
+          val parsed = parse(elems)
+          Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
+        } getOrElse {
+          Future.failed(MissingFeedException(feedMetaData.name))
+        }
+      } else {
+        Future.failed(SwitchOffException(feedMetaData.switch.name))
       }
-      Future.successful(result)
-    } else {
-      log.warn(s"Reading Travel Offers feed failed: Switch is off")
-      Future.successful(Nil)
+    } recoverWith {
+      case NonFatal(e) => Future.failed(e)
     }
   }
-
 }

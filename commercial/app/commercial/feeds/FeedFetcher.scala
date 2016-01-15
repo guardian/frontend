@@ -155,7 +155,12 @@ object FeedFetcher {
   private val masterclasses: Option[FeedFetcher] =
     Configuration.commercial.masterclassesToken map (new EventbriteMultiPageFeedFetcher(_))
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers, masterclasses).flatten
+  private val travelOffers: Option[FeedFetcher] =
+    Configuration.commercial.traveloffers_url map { url =>
+      new SingleFeedFetcher(TravelOffersFeedMetaData(url))
+    }
+
+  val all: Seq[FeedFetcher] = soulmates ++ Seq(jobs, bestsellers, masterclasses, travelOffers).flatten
 }
 
 object ResponseEncoding {

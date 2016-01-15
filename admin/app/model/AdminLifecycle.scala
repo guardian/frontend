@@ -18,9 +18,9 @@ trait AdminLifecycle extends GlobalSettings with Logging {
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
   lazy val adminPressJobLowPushRateInMinutes: Int = Configuration.faciatool.adminPressJobLowPushRateInMinutes
   lazy val adminRebuildIndexRateInMinutes: Int = Configuration.indexes.adminRebuildIndexRateInMinutes
-  lazy val r2PagePressRateInMinutes: Int = Configuration.r2Press.pressRateInMinutes
+  lazy val r2PagePressRateInSeconds: Int = Configuration.r2Press.pressRateInSeconds
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
 
     //every 0, 30 seconds past the minute
     Jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
@@ -37,7 +37,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       FastlyCloudwatchLoadJob.run()
     }
 
-    Jobs.scheduleEveryNMinutes("R2PagePressJob", r2PagePressRateInMinutes) {
+    Jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {
       R2PagePressJob.run()
     }
 
@@ -60,11 +60,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
     Jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
       RebuildIndexJob.run()
-    }
-
-    // every 1, 31 minutes past the hour, 14 seconds past the minute (e.g 13:01:14, 13:31:14)
-    Jobs.schedule("TravelOffersCacheJob", "14 1/30 * * * ? *") {
-      TravelOffersCacheJob.run()
     }
 
     // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
@@ -95,14 +90,13 @@ trait AdminLifecycle extends GlobalSettings with Logging {
 
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     Jobs.deschedule("AdminLoadJob")
     Jobs.deschedule("LoadBalancerLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
     Jobs.deschedule("R2PagePressJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
     Jobs.deschedule("FrontPressJob")
-    Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("MatchDayRecorderJob")
     Jobs.deschedule("SentryReportJob")
@@ -115,19 +109,18 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("ExpiringSwitchesEmailJob")
   }
 
-  override def onStart(app: play.api.Application) {
+  override def onStart(app: play.api.Application): Unit = {
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
 
     AkkaAsync {
       RebuildIndexJob.run()
-      TravelOffersCacheJob.run()
       VideoEncodingsJob.run()
     }
   }
 
-  override def onStop(app: play.api.Application) {
+  override def onStop(app: play.api.Application): Unit = {
     descheduleJobs()
     CloudWatch.shutdown()
     EmailService.shutdown()

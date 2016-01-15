@@ -38,6 +38,8 @@ object JavaScriptPage {
     val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
+    val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
+
     val commercialMetaData = Map(
       "oasHost" -> JsString("oas.theguardian.com"),
       "oasUrl" -> JsString(Configuration.oas.url),
@@ -73,7 +75,8 @@ object JavaScriptPage {
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
       ("membershipAccess", JsString(membershipAccess)),
-      ("idWebAppUrl", JsString(Configuration.id.oauthUrl))
+      ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
+      ("cardStyle", JsString(cardStyle))
     )
   }
 }

@@ -13,15 +13,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABLargeTopAd = Switch(
-    "A/B Tests",
-    "ab-large-top-ad",
-    "Testing the difference of user behaviour based on large top ad format",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 13),
-    exposeClientSide = true
-  )
-
   val ABFrontsOnArticles2 = Switch(
     "A/B Tests",
     "ab-fronts-on-articles2",
@@ -36,7 +27,7 @@ trait ABTestSwitches {
     "ab-identity-sign-in-v2",
     "New sign in page variant for Identity",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 15),
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 
@@ -46,6 +37,15 @@ trait ABTestSwitches {
     "Testing the email sign up from the bottom of articles of user referred from fronts",
     safeState = Off,
     sellByDate = new LocalDate(2016, 1, 21),
+    exposeClientSide = true
+  )
+
+  val ABRemoveStickyNav = Switch(
+    "A/B Tests",
+    "ab-remove-sticky-nav",
+    "Removes the sticky nav (0% test)",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 }

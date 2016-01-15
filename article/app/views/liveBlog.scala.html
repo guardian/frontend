@@ -1,7 +1,16 @@
 @import _root_.liveblog.BodyBlocks
-@(model: LiveBlogPage, blocks: BodyBlocks)(implicit request: RequestHeader)
+@import model.liveblog.BodyBlock
+@(model: LiveBlogPage, blocks: BodyBlocks[BodyBlock])(implicit request: RequestHeader)
+
+@import common.LinkTo
 
 @main(model){
+    @blocks.earlier.map { earlierBlock =>
+        <link rel="next" href="@LinkTo{ /@{model.article.content.metadata.id}?page=@earlierBlock }">
+    }
+    @blocks.later.suffix.map { suffix =>
+        <link rel="prev" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
+    }
 }{
     @fragments.liveBlogBody(model, blocks)
 }
