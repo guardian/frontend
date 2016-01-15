@@ -69,6 +69,8 @@
     .js-on & {
         z-index: 1022;
         width: 100%;
+        transform: translateZ(0);
+        will-change: transform;
     }
 
     &.top-banner-ad-container--below-nav {

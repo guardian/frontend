@@ -1,7 +1,7 @@
 @(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)
 @import conf.switches.Switches.R2PagePressServiceSwitch
 
-@admin_main("R2 page presser (archiver)", "TEST", isAuthed = true) {
+@admin_main("R2 page presser (archiver)", conf.Configuration.environment.stage, isAuthed = true) {
     <form action="/press/r2" method="POST" class="form-horizontal redirect-form">
         <fieldset>
             <legend>Press (archive) an individual page</legend>

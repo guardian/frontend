@@ -172,7 +172,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    
 
 # Email paths
 GET        /email                                                                              controllers.EmailSignupController.renderPage()
-GET        /email/form/$emailType<article|footer>/:listId                                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer|plain>/:listId                                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                                              controllers.EmailSignupController.submit()
 OPTIONS    /email                                                                              controllers.EmailSignupController.options()
@@ -188,7 +188,7 @@ GET        /weatherapi/city.json                                                
 GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
 # Articles
-GET        /*path.json                                                                         controllers.ArticleController.renderArticle(path)
+GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean])
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

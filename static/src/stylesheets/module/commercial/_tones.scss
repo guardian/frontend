@@ -140,6 +140,13 @@
     guss-colour(maps-support-2, $pasteup-palette)
 );
 
+/* .commercial--tone-gardening */
+@include tone-commercial(
+    soulmates,
+    guss-colour(soulmates-colour, $frontend-palette),
+    guss-colour(soulmates-accent-colour, $frontend-palette)
+);
+
 /* .commercial--tone-paidfor */
 @include tone-commercial(
     paidfor,

@@ -36,14 +36,14 @@ import scala.language.postfixOps
   }
 
   "Should do GET request on correct URL for topComments " in {
-    val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true&api-key=dotcom"
+    val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true&maxResponses=5&api-key=dotcom"
 
     waitFor(urlValidator(expectedUrl).commentsFor(DiscussionKey("p/3tycg"), DiscussionParams(
       orderBy = "newest",
       page = "1",
       pageSize = "50",
-      maxResponses = None,
       topComments = true,
+      maxResponses = Some("5"),
       displayThreaded = true
     )))
   }
@@ -56,7 +56,6 @@ import scala.language.postfixOps
       page = "1",
       pageSize = "50",
       maxResponses = None,
-      topComments = false,
       displayThreaded = false
     )))
   }
@@ -68,8 +67,6 @@ import scala.language.postfixOps
       orderBy = "newest",
       page = "1",
       pageSize = "50",
-      maxResponses = None,
-      topComments = false,
       displayThreaded = false
     )
     val expectedUrl = s"/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}&displayThreaded=${params.displayThreaded}&api-key=dotcom"
