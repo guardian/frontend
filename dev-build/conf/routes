@@ -336,7 +336,7 @@ GET            /index/contributors                                              
 GET            /index/contributors/*contributor                                                                                  controllers.TagIndexController.contributor(contributor)
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
-POST           /atom/quiz/:id                                                                                                    controllers.QuizController.submit(id)
+POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()

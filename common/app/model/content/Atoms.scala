@@ -9,7 +9,7 @@ sealed trait Atom {
 }
 
 object Quiz {
-  def make(quiz: contentapi.QuizAtom): Quiz = {
+  def make(path: String, quiz: contentapi.QuizAtom): Quiz = {
     val questions = quiz.data.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
@@ -24,6 +24,7 @@ object Quiz {
 
     Quiz(
       id = quiz.id,
+      path = path,
       questions = questions
       )
   }
@@ -39,10 +40,11 @@ final case class Answer(
 )
 final case class Quiz(
   override val id: String,
+  path: String,
   questions: Seq[Question]
 ) extends Atom {
 
-  val postUrl = s"/atom/quiz/$id"
+  val postUrl = s"/atom/quiz/$id/$path"
 }
 
 object QuizForm {
@@ -57,7 +59,7 @@ object QuizForm {
 object Atoms {
   def make(content: contentapi.Content): Option[Atoms] = {
     content.atoms.map { atoms =>
-      Atoms(quizzes = atoms.quiz.map(Quiz.make).toList)
+      Atoms(quizzes = atoms.quiz.map(Quiz.make(content.id, _)).toList)
     }
   }
 }

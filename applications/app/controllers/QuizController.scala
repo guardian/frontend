@@ -3,35 +3,48 @@ package controllers
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
-import model.{Content, GenericContent}
-import model.content.QuizForm
+import model._
+import model.content.{Quiz, Atoms, QuizForm}
 import play.api.mvc.{Result, RequestHeader, Action, Controller}
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-case class QuizAnswersPage(atom: GenericContent) extends model.ContentPage {
-  override val item = atom
+case class QuizAnswersPage(
+  answers: QuizForm.UserAnswers,
+  quiz: Quiz) extends model.StandalonePage {
+  override val metadata = MetaData.make("quiz atom", "quizzes", "Quiz atom", "GFE: Quizzes")
 }
 
 object QuizController extends Controller with ExecutionContexts with Logging {
 
-  def submit(id: String) = Action.async { implicit request =>
+  def submit(quizId: String, path: String) = Action.async { implicit request =>
 
       QuizForm.form.bindFromRequest.fold(
         errors => Future.successful(InternalServerError("error")),
-        form => renderAnswersPage(id, form)
+        form => renderQuiz(quizId, path, form)
       )
 
   }
 
-  private def renderAnswersPage(quiz: String, answers: QuizForm.UserAnswers)(implicit request: RequestHeader): Future[Result] = {
+  private def renderQuiz(quizId: String, path: String, answers: QuizForm.UserAnswers)(implicit request: RequestHeader): Future[Result] = {
     val edition = Edition(request)
 
-    log.info(s"Fetching quiz atom: $quiz for edition ${edition.id}: ${RequestLog(request)}")
-    val capiItem = LiveContentApi.item(s"atom/quiz/$quiz", edition).showAtoms("all")
-    getResponse(capiItem) map { itemResponse =>
-      //Ok(views.html.quizAnswerPage())
-      Ok("OK")
+    log.info(s"Fetching quiz atom: $quizId from content id: $path: ${RequestLog(request)}")
+    val capiQuery = LiveContentApi.item(path, edition).showAtoms("all")
+    val result = getResponse(capiQuery) map { itemResponse =>
+      val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>
+
+        val quiz = Atoms.make(content).flatMap(_.quizzes.find(_.id == quizId))
+        quiz.map(QuizAnswersPage(answers, _))
+      }
+
+      maybePage.toLeft(NotFound)
+    }
+    result recover convertApiExceptions map {
+      case Left(page) => Ok(views.html.quizAnswerPage(page))
+      case Right(other) => RenderOtherStatus(other)
     }
   }
+
 }

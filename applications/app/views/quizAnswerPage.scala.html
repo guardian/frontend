@@ -2,5 +2,7 @@
 
 @(page: QuizAnswersPage)(implicit request: RequestHeader)
 
-@main(page) { } { }
+@main(page) { } {
+    @page.answers.answers.mkString(", ")
+}
 

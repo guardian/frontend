@@ -57,7 +57,7 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all    controllers.NewspaperController.allOn(path, day, month, year)
 
 # Atoms
-POST       /atom/quiz/:id                                                       controllers.QuizController.submit(id)
+POST       /atom/quiz/:id/*path                                                 controllers.QuizController.submit(id, path)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
