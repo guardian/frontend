@@ -22,6 +22,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
+    'common/modules/commercial/prebid-test/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -83,6 +84,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     dfpOphanTracking,
+    prebidService,
     geoMostPopular,
     ab,
     beacon,
@@ -318,6 +320,10 @@ define([
                 require(['js!googletag.js']);
             }
 
+            if (prebidService.testEnabled) {
+                prebidService.loadDependencies();
+            }
+
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
 
             window.googletag.cmd.push(function () {
@@ -376,10 +382,18 @@ define([
                 });
             }
         },
-        loadSlot = function (slot) {
-            slots[slot].isLoading = true;
-            googletag.display(slot);
-            displayed = true;
+        loadSlot = function (slotKey) {
+            if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
+                prebidService.loadSlot(slotKey).then(function () {
+                    displayed = true;
+                });
+                slots[slotKey].isLoading = true;
+            } else {
+                // original implementation
+                slots[slotKey].isLoading = true;
+                googletag.display(slotKey);
+                displayed = true;
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
