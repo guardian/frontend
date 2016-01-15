@@ -58,7 +58,7 @@ define([
             try {
                 var fn = template(content);
                 if (config.isBuild) {
-                    buildMap[name] = fn;
+                    buildMap[name] = fn.source;
                 }
                 onload(fn);
             } catch (error) {
@@ -80,9 +80,14 @@ define([
 
     function write(pluginName, moduleName, write) {
         if (buildMap.hasOwnProperty(moduleName)) {
-            var content = buildMap[moduleName].toString();
-            write('define("' + pluginName + '!' + moduleName  +
-                '", function () { return ' + content + '});\n');
+            var content = buildMap[moduleName];
+            write.asModule(
+                pluginName + '!' + moduleName,
+                'define(["lodash/utilities/escape"], function(e) {\n' +
+                'var _ = { escape: e };\n' +
+                'return ' + content + ';\n' +
+                '});\n'
+            );
         }
     }
 
