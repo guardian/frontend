@@ -4,7 +4,7 @@ import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
 import model._
-import model.content.{Quiz, Atoms, QuizForm}
+import model.content.{QuizSubmissionResult, Quiz, Atoms, QuizForm}
 import play.api.mvc.{Result, RequestHeader, Action, Controller}
 import views.support.RenderOtherStatus
 
@@ -14,6 +14,8 @@ case class QuizAnswersPage(
   answers: QuizForm.UserAnswers,
   quiz: Quiz) extends model.StandalonePage {
   override val metadata = MetaData.make("quiz atom", "quizzes", "Quiz atom", "GFE: Quizzes")
+
+  val results: QuizSubmissionResult = quiz.submitAnswers(answers)
 }
 
 object QuizController extends Controller with ExecutionContexts with Logging {

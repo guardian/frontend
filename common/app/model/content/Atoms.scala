@@ -1,6 +1,7 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import model.content.QuizForm.UserAnswer
 import play.api.data._
 import play.api.data.Forms._
 
@@ -45,10 +46,59 @@ final case class Quiz(
 ) extends Atom {
 
   val postUrl = s"/atom/quiz/$id/$path"
+
+  // Resolves an answer posted by the user to a Question-Answer pair defined by the content Atom.
+  private def findQuizDataFor(userInput: UserAnswer): Option[(Question, Answer)] = {
+    val quizQuestion = questions.zipWithIndex.find {
+      case (question, questionIndex) => questionIndex == userInput.questionIndex
+    }
+
+    val quizAnswer = quizQuestion.flatMap { case (question, _) =>
+      question.answers.zipWithIndex.find {
+        case (answer, answerIndex) => answer.text == userInput.answerText && answerIndex == userInput.answerIndex
+      }
+    }
+
+    for {
+      (q, _) <- quizQuestion
+      (a, _) <- quizAnswer
+    } yield { (q,a) }
+  }
+
+  def submitAnswers(userAnswers: QuizForm.UserAnswers): QuizSubmissionResult = {
+    val validAnswers = userAnswers.parsed.flatMap(findQuizDataFor)
+    QuizSubmissionResult(validAnswers)
+  }
 }
 
+final case class QuizSubmissionResult(
+  entries: Seq[(Question, Answer)]
+)
+
 object QuizForm {
-  case class UserAnswers(answers: List[String])
+
+  // each answer is expected in the format "Q1##A2##Answer Text"
+  private val answerFormat = """Q(\d*)##A(\d*)##(.*)""".r
+
+  case class UserAnswers(answers: List[String]) {
+    val parsed: Seq[UserAnswer] = {
+      val validAnswers = for { answer <- answers } yield {
+        answer match {
+          case answerFormat(questionIndex, answerIndex, answerText) => Some(UserAnswer(
+            questionIndex.toInt,
+            answerIndex.toInt,
+            answerText))
+          case _ => None
+        }
+      }
+      validAnswers.flatten
+    }
+  }
+  case class UserAnswer(
+    questionIndex: Int,
+    answerIndex: Int,
+    answerText: String
+  )
   val form = Form(
     mapping(
       "answers" -> list(text)

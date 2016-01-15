@@ -3,6 +3,10 @@
 @(page: QuizAnswersPage)(implicit request: RequestHeader)
 
 @main(page) { } {
-    @page.answers.answers.mkString(", ")
+    @page.results.entries.map { case (question, answer) =>
+        <div>
+            @question.text you answered: @answer.text
+        </div>
+    }
 }
 

@@ -21,7 +21,7 @@
                         <label for="question-@order-answer-@answerIndex">@{answer.text}</label>
                     </dt>
                     <dd>
-                        <input type="radio" name="answers[@order]" id="question-@order-answer-@answerIndex" value="@{answer.text}">
+                        <input type="radio" name="answers[@order]" id="question-@order-answer-@answerIndex" value="Q@{order}##A@{answerIndex}##@{answer.text}">
                     </dd>
                 </dl>
             }
