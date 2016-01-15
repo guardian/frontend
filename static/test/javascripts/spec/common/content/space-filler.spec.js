@@ -56,7 +56,7 @@ define([
             });
         });
 
-        it('If it finds a space, it resolves the promise with the return value of the writer', function (done) {
+        it('If it finds a space, it resolves the promise with `true`', function (done) {
             mockSpacefinderResult = document.createElement('p');
             var insertion = spaceFiller.fillSpace(mockRules, function () { return true; });
 

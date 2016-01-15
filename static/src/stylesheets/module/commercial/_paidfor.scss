@@ -9,6 +9,10 @@
         @include f-headlineSans;
     }
 
+    .rich-link__standfirst {
+        @include fs-textSans(4);
+    }
+
     .fc-item__image-container {
         display: block;
     }
@@ -19,6 +23,12 @@
 
     .commercial__title {
         font-size: get-font-size(headline, 4);
+    }
+
+    .u-faux-block-link--hover,
+    .u-faux-block-link__cta {
+        text-decoration: none;
+        background-color: colour(paid-article-subheader);
     }
 
     .commercial__meta,
@@ -44,26 +54,74 @@
 
     .lineitems {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row nowrap;
     }
 
     .lineitem {
-        border-left: 0;
-        flex: 0 1 100%;
         display: flex;
+        border-left: 0;
+        flex: 0 1 percentage(1/2);
         margin-bottom: $gs-baseline / 2;
 
+        &:nth-child(n+3) {
+            display: none;
+        }
         @include mq(tablet) {
             flex: 0 1 percentage(1/3);
+
+            &:nth-child(n+3) {
+                display: flex;
+            }
+
+            &:nth-child(n+4) {
+                display: none;
+            }
         }
         @include mq(desktop) {
             flex: 0 1 percentage(1/4);
+
+            &:nth-child(n+4) {
+                display: flex;
+            }
         }
+    }
+
+    .ad-slot--paid-for-badge--front {
+        float: right;
+        margin-bottom: $gs-baseline;
+    }
+
+    &.commercial--paidfor-single .ad-slot--paid-for-badge--front {
+        width: $left-column + $gs-gutter * 3;
+        margin-right: $gs-gutter;
+    }
+
+    &.commercial--paidfor-multi .ad-slot--paid-for-badge--front {
+        width: $left-column;
+        margin-right: $gs-gutter;
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
+    }
+
+    .fc-item__kicker {
+        &:after {
+            color: colour(neutral-2);
+        }
+    }
+
+    .inline-icon {
+        fill: colour(neutral-2);
     }
 }
 
 .tone-paidfor--item {
-    background: #cccccc;
+    background: colour(paid-article-subheader);
+    flex: 0 1 auto;
 
     .rich-link__container:before {
         background: guss-colour(paidfor-background, $frontend-palette);
