@@ -79,11 +79,11 @@ define([
                             $header.css({ 'margin-top': state.adHeight });
 
                             $adBanner.css({ 'max-height': state.adHeight });
-                            var userHasScrolledPastHeader = scrollY > headerHeight;
+                            var userHasScrolledPastHeader = scrollY > state.headerHeight;
                             if (userHasScrolledPastHeader) {
                                 $adBanner.css({
                                     'position': 'absolute',
-                                    'top': headerHeight
+                                    'top': state.headerHeight
                                 });
                             } else {
                                 $adBanner.css({ 'position': 'fixed' });
@@ -112,7 +112,8 @@ define([
                             return render({
                                 adHeight: adHeight,
                                 previousAdHeight: previousAdHeight || adHeight,
-                                firstRender: options.firstRender || false
+                                firstRender: options.firstRender || false,
+                                headerHeight: headerHeight
                             }).then(function () {
                                 previousAdHeight = adHeight;
                             });
