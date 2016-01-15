@@ -8,8 +8,10 @@ define([
     'common/modules/experiments/ab',
     'common/utils/config',
     'common/utils/detect',
+    'lodash/collections/filter',
     'lodash/collections/find',
-    'lodash/collections/findLast'
+    'lodash/collections/findLast',
+    'lodash/collections/map'
 ], function (
     Promise,
     bonzo,
@@ -17,8 +19,10 @@ define([
     ab,
     config,
     detect,
+    filter,
     find,
-    findLast
+    findLast,
+    map
 ) {
     function PrebidTestService() {
         window.pbjs = window.pbjs || {que : []};
@@ -38,10 +42,8 @@ define([
             return new Promise(function (resolve) {
                 window.pbjs.que.push(function () {
                     pbjs.addAdUnits([new PrebidAdUnit(slotElementId)]);
-                    pbjs.requestBids({bidsBackHandler : function (bids) {
-                        if (config.page.isDev) {
-                            logResponses(slotElementId, bids);
-                        }
+                    pbjs.requestBids({bidsBackHandler : function () {
+                        //console.log('Bids for', slotElementId, JSON.stringify(arguments[0]));
                         displayWinner();
                     }});
 
@@ -57,25 +59,14 @@ define([
 
     }
 
-    function logResponses(slotElementId, bids) {
-        for (var bid in bids) {
-            if (bids.hasOwnProperty(bid)) {
-                var values = bids[bid].bids.map(function(x) {
-                    return [x.statusMessage, x.cpm, x.adUrl]
-                });
-                console.log(slotElementId, JSON.stringify(values));
-            }
-        }
-    }
-
     function PrebidAdUnit(slotElementId) {
         this.code = slotElementId;
 
         this.sizes = getSlotAdSizes(slotElementId);
-        console.log('mapping', slotElementId, JSON.stringify(this.sizes));
+        //console.log('mapping', slotElementId, JSON.stringify(this.sizes));
 
         this.bids = getAppnexusBids(this.sizes);
-        console.log('mapping', slotElementId, JSON.stringify(this.bids));
+        //console.log('mapping', slotElementId, JSON.stringify(this.bids));
     }
 
     function setupPrebidTargeting() {
@@ -91,7 +82,7 @@ define([
                 }, {
                     key : 'hb_adid',
                     val : function (bidResponse) {
-                        return bidResponse.adId
+                        return bidResponse.adId;
                     }
                 }]
             }
@@ -99,27 +90,31 @@ define([
     }
 
     function getAppnexusBids(slotSizes) {
-        return placements
-            .filter(function matchEdition(placement) {
-                return placement.edition === config.page.edition;
-            })
-            .filter(function matchViewport(placement) {
-                return detect.isBreakpoint(placement.breakpoint);
-            })
-            .filter(function matchSlotSize(placement) {
-                return find(slotSizes, function(slotSize) {
-                    return slotSize[0] === placement.width && slotSize[1] === placement.height;
-                });
-            })
-            .map(function toPrebidPlacement(placement) {
-                return {
-                    bidder : 'appnexus',
-                    params : {
-                        placementId : placement.id,
-                        referrer : 'http://www.theguardian.com/uk'
-                    }
-                };
+        var slotPlacements = placements;
+
+        slotPlacements = filter(slotPlacements, function matchEdition(placement) {
+            return placement.edition === config.page.edition;
+        });
+
+        slotPlacements = filter(slotPlacements, function matchViewport(placement) {
+            return detect.isBreakpoint(placement.breakpoint);
+        });
+
+        slotPlacements = filter(slotPlacements, function matchSlotSize(placement) {
+            return find(slotSizes, function (slotSize) {
+                return slotSize[0] === placement.width && slotSize[1] === placement.height;
             });
+        });
+
+        return map(slotPlacements, function toPrebidPlacement(placement) {
+            return {
+                bidder : 'appnexus',
+                params : {
+                    placementId : placement.id,
+                    referrer : 'http://www.theguardian.com/uk'
+                }
+            };
+        });
     }
 
     function getSlotAdSizes(slotElementId) {
