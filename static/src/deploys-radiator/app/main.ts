@@ -174,10 +174,10 @@ const renderPage: (
         commits
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
-        return h('div', { id: 'root' }, [
+        return h('.row#root', {}, [
             h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
             h('hr', {}, []),
-            exp(commits.length > 0) && h('div', [
+            exp(commits.length > 0) && h('.col', [
                 h('h1', [
                     'Difference (',
                     h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
@@ -222,10 +222,14 @@ const renderPage: (
                 ))
             ]),
 
-            h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys),
-            h('h1', 'PROD'),
-            renderGroupDeployListNode(prodDeploys)
+            h('.col', [
+                h('h1', 'CODE'),
+                renderGroupDeployListNode(codeDeploys)
+            ]),
+            h('.col', [
+                h('h1', 'PROD'),
+                renderGroupDeployListNode(prodDeploys)
+            ])
         ])
     }
 
