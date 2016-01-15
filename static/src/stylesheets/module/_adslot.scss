@@ -120,6 +120,12 @@
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
+
+    .new-sticky-ad & {
+        // overwrite if in the new sticky ad AB test
+        transition: none;
+    }
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {

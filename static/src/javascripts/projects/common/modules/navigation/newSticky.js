@@ -126,6 +126,7 @@ define([
 
                 fastdom.write(function () {
                     // will move into stylesheets when productionised
+                    $(document.body).addClass('new-sticky-ad');
                     $adBanner.css({'overflow': 'hidden', 'transition': 'max-height 1s cubic-bezier(0, 0, 0, 0.985)'});
 
                     update({ firstRender: true }).then(function () {
