@@ -136,6 +136,12 @@ can follow our standard [contributing guidelines](https://github.com/guardian/fr
 
 You can stop and start the test using our [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
 
+To see the test in action locally: `localhost:9000/[articleId]#ab-[testName]=[variantName]`
+
+To see the tests you are part of: open the Dev Console -> Resources -> Local Storage -> choose `http://localhost:9000` -> check the `gu.ab.participations` row.
+
+Tip: To make sure your code is compiled, before running `./sbt`, try `make compile-dev`. This might save you lots of time debugging why your changes don't show.
+
 ## Analysis of the test data
 
 ### Omniture
