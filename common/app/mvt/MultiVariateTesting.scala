@@ -22,7 +22,7 @@ object TopBannerPosition extends TestDefinition(
   List(Variant4),
   "top-banner-position",
   "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
-  new LocalDate(2016, 1, 25)
+  new LocalDate(2016, 2, 25)
 )
 
 object ActiveTests extends Tests {
