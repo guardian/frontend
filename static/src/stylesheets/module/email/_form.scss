@@ -251,6 +251,8 @@
 
 // PLAIN MODS
 .email-sub__form--plain {
+    padding: 0;
+
     .email-sub__text-input {
         border-color: guss-colour(guardian-brand, $pasteup-palette);
     }
