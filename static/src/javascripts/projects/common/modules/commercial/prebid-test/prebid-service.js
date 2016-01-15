@@ -11,6 +11,7 @@ define([
     'lodash/collections/filter',
     'lodash/collections/find',
     'lodash/collections/findLast',
+    'lodash/collections/forEach',
     'lodash/collections/map'
 ], function (
     Promise,
@@ -22,6 +23,7 @@ define([
     filter,
     find,
     findLast,
+    forEach,
     map
 ) {
     function PrebidTestService() {
@@ -42,7 +44,6 @@ define([
 
         this.loadSlots = function (slotIds) {
             slotIds = Array.isArray(slotIds) ? slotIds : [slotIds];
-            slotIds = filter(slotIds, this.slotIsInTest);
 
             var pbjsAdUnits = map(slotIds, function (id) {
                 return new PrebidAdUnit(id);
@@ -56,9 +57,9 @@ define([
                         pbjs.addAdUnits(pbjsAdUnits);
                         pbjs.requestBids({
                             bidsBackHandler : function () {
-                                slotIds.forEach(function (id) {
-                                    displayAdUnit(id);
-                                });
+                                // We are not actually going to use the bid responses; this test purely validates performance
+                                forEach(slotIds, googletag.display);
+                                console.log('Showing', JSON.stringify(slotIds));
                                 resolve();
                             }
                         });
@@ -66,14 +67,8 @@ define([
                 });
             });
 
-            function displayAdUnit (slotId) {
-                pbjs.setTargetingForGPTAsync(slotId);
-                googletag.display(slotId);
-                console.log('Completed', slotId, window.performance.now());
-            }
-
             return pendingAdverts;
-        }
+        };
 
     }
 
@@ -153,9 +148,9 @@ define([
 
         var sizeMappingString = $slot.data(largestValidBreakpointDefinition);
         var sizeStrings = sizeMappingString.split('|');
-        return sizeStrings.map(function (sizeString) {
+        return map(sizeStrings, function (sizeString) {
             var dimensions = sizeString.split(',');
-            return dimensions.map(function (widthOrHeightString) {
+            return map(dimensions, function (widthOrHeightString) {
                 return parseInt(widthOrHeightString, 10);
             });
         });
