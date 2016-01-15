@@ -17,8 +17,8 @@ define([
     ab,
     config,
     detect,
-    _find,
-    _findLast
+    find,
+    findLast
 ) {
     function PrebidTestService() {
         window.pbjs = window.pbjs || {que : []};
@@ -107,7 +107,7 @@ define([
                 return detect.isBreakpoint(placement.breakpoint);
             })
             .filter(function matchSlotSize(placement) {
-                return _find(slotSizes, function(slotSize) {
+                return find(slotSizes, function(slotSize) {
                     return slotSize[0] === placement.width && slotSize[1] === placement.height;
                 });
             })
@@ -134,7 +134,7 @@ define([
             return breakpoint.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         });
 
-        var largestValidBreakpointDefinition = _findLast(validBreakpointKeys, function (key) {
+        var largestValidBreakpointDefinition = findLast(validBreakpointKeys, function (key) {
             return $slot.data(key) !== undefined;
         });
 
