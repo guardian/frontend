@@ -4,7 +4,7 @@ define([
     config
 ) {
     return function () {
-        this.id = 'AlternativeRelated';
+        this.id = 'RelatedVariants';
         this.start = '2016-01-13';
         this.expiry = '2016-01-29';
         this.author = 'Maria Chiorean';

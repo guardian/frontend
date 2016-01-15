@@ -25,7 +25,8 @@ object RelatedController extends Controller with Related with Containers with Lo
   def render(path: String, isMf2: Boolean = false) = MemcachedAction { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
-    related(edition, path, excludeTags) map {
+    val relatedType = request.queryString.getOrElse("related-type", Nil)
+    related(edition, path, excludeTags, relatedType) map {
       case related if related.items.isEmpty => JsonNotFound()
       case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
       case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis))

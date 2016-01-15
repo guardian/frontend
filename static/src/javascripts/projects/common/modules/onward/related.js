@@ -59,7 +59,6 @@ define([
     Related.prototype.renderRelatedComponent = function () {
         var relatedUrl, popularInTag, componentName, container,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
-
         if (config.page && config.page.hasStoryPackage) {
             new Expandable({
                 dom: document.body.querySelector('.related-trails'),
@@ -75,12 +74,11 @@ define([
                 register.begin(componentName);
 
                 container.setAttribute('data-component', componentName);
-
-                if (ab.isInVariant('AlternativeRelated', 'tags-only')) {
+                if (ab.isInVariant('RelatedVariants', 'tags-only')) {
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=tags-only';
-                } else if (ab.isInVariant('AlternativeRelated', 'tags-headline')){
+                } else if (ab.isInVariant('RelatedVariants', 'tags-headline')){
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=tags-headline';
-                } else if (ab.isInVariant('AlternativeRelated', 'in-body-links')){
+                } else if (ab.isInVariant('RelatedVariants', 'in-body-links')){
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=in-body-links';
                 } else {
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
