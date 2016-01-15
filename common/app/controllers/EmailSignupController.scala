@@ -108,6 +108,7 @@ object EmailTypes {
   val footer = "footer"
   val article = "article"
   val landing = "landing"
+  val plain = "plain"
 }
 
 object EmailForm {
