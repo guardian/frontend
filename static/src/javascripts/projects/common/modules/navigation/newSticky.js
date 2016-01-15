@@ -59,11 +59,11 @@ define([
                 };
 
                 var render = function (state) {
-                    fastdom.read(function () {
+                    return fastdom.read(function () {
                         var scrollY = window.scrollY;
                         var scrollX = window.scrollX;
 
-                        fastdom.write(function () {
+                        return fastdom.write(function () {
                             // Reset so we have a clean slate
                             $header.css({
                                 'transition': '',
@@ -108,13 +108,14 @@ define([
                 var update = (function () {
                     var previousAdHeight;
                     return function (options) {
-                        getCachedAdHeight().then(function (adHeight) {
-                            render({
+                        return getCachedAdHeight().then(function (adHeight) {
+                            return render({
                                 adHeight: adHeight,
                                 previousAdHeight: previousAdHeight || adHeight,
                                 firstRender: options.firstRender || false
+                            }).then(function () {
+                                previousAdHeight = adHeight;
                             });
-                            previousAdHeight = adHeight;
                         });
                     };
                 })();
@@ -127,10 +128,11 @@ define([
                     // will move into stylesheets when productionised
                     $adBanner.css({'overflow': 'hidden', 'transition': 'max-height 1s cubic-bezier(0, 0, 0, 0.985)'});
 
-                    update({ firstRender: true });
-                    window.addEventListener('scroll', function () { update({}); });
-                    newAdHeightPromise
-                        .then(function () { update({}); });
+                    update({ firstRender: true }).then(function () {
+                        window.addEventListener('scroll', function () { update({}); });
+                        newAdHeightPromise
+                            .then(function () { update({}); });
+                    });
                 });
             });
         }
