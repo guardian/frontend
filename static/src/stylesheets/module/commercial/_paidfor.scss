@@ -99,13 +99,6 @@
     &.commercial--paidfor-multi .ad-slot--paid-for-badge--front {
         width: $left-column;
         margin-right: $gs-gutter;
-        border-top-color: colour(neutral-2);
-
-        .ad-slot--paid-for-badge__link {
-            &:after {
-                border-bottom-color: colour(neutral-2);
-            }
-        }
     }
 
     .fc-item__kicker {
@@ -125,5 +118,15 @@
 
     .rich-link__container:before {
         background: guss-colour(paidfor-background, $frontend-palette);
+    }
+}
+
+.ad-slot--paid-for-badge--front {
+    border-top-color: colour(neutral-2);
+
+    .ad-slot--paid-for-badge__link {
+        &:after {
+            border-bottom-color: colour(neutral-2);
+        }
     }
 }
