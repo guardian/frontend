@@ -29,9 +29,9 @@ define([
     var Template = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
-        this.params.soulmates = params.Toneclass.indexOf('soulmates') !== -1;
 
         if (this.params.Toneclass) {
+            this.params.soulmates = params.Toneclass.indexOf('soulmates') !== -1;
             this.params.HeaderToneclass = 'commercial__header--' + this.params.Toneclass.replace('commercial--tone-', '');
         }
 
