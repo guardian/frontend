@@ -71,11 +71,23 @@ object BasicHtmlCleaner extends HtmlCleaner {
     val omnitureCode = document.getElementById("omnitureNoScript").getElementsByTag("img").attr("src")
     val params = parse(omnitureCode).query.paramMap
 
-    val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns", "c19").contains(key)) ++
-      Map("AQB" -> List("1"), "ndh" -> List("1"), "ce" -> List("UTF-8"), "cpd" -> List("2"), "AQE" -> List("1"), "v14" -> List("D=r"), "v9" -> List("D=g"))
+    val requiredParams: Map[String, Seq[String]] = params.filterKeys(key => List("pageName", "ch", "g", "ns").contains(key)) ++
+      Map("AQB" -> List("1"),
+          "ndh" -> List("1"),
+          "c19" -> List("frontendarchive"),
+          "ce" -> List("UTF-8"),
+          "cpd" -> List("2"),
+          "AQE" -> List("1"),
+          "v14" -> List("D=r"),
+          "v9" -> List("D=g"))
 
     requiredParams.flatMap { case ((key: String, value: Seq[String])) =>
-      for (v <- value) yield s"$key=$v"
+      for (v <- value) yield {
+        val updatedValue = if(v.contains("&")) {
+          v.replace("&", "%26")
+        } else v
+        s"$key=$updatedValue"
+      }
     }.mkString("&")
   }
 
