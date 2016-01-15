@@ -50,8 +50,6 @@ define([
             });
 
             pendingAdverts = pendingAdverts.then(function loadNextSet() {
-                console.log('Loading', JSON.stringify(slotIds));
-
                 return new Promise(function (resolve) {
                     window.pbjs.que.push(function () {
                         pbjs.addAdUnits(pbjsAdUnits);
@@ -59,7 +57,6 @@ define([
                             bidsBackHandler : function () {
                                 // We are not actually going to use the bid responses; this test purely validates performance
                                 forEach(slotIds, googletag.display);
-                                console.log('Showing', JSON.stringify(slotIds));
                                 resolve();
                             }
                         });
@@ -74,12 +71,8 @@ define([
 
     function PrebidAdUnit(slotElementId) {
         this.code = slotElementId;
-
         this.sizes = getSlotAdSizes(slotElementId);
-        //console.log('mapping', slotElementId, JSON.stringify(this.sizes));
-
         this.bids = getAppnexusBids(this.sizes);
-        //console.log('mapping', slotElementId, JSON.stringify(this.bids));
     }
 
     function setupPrebidTargeting() {
