@@ -144,7 +144,7 @@ define([
         }
 
         // enforce selector rules
-        if (rules.selector) {
+        if (rules.selectors) {
             forOwn(rules.selectors, function (params, selector) {
                 filtered = filtered.then(function (slots) {
                     return fastdom.read(function () {
