@@ -752,8 +752,6 @@
         .meta__numbers .commentcount2__heading,
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value,
-        .most-viewed-container--media,
-        .most-viewed-container--media .fc-item__action,
         .content__dateline,
         .submeta__head,
         .content__series-label__link {
@@ -821,6 +819,10 @@
                 &:before {
                     background: colour(neutral-2);
                 }
+            }
+
+            .fc-item__action {
+                color: colour(neutral-2-contrasted);
             }
         }
     }
