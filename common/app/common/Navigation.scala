@@ -142,7 +142,7 @@ trait Navigation {
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
   val ussustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/us/sustainable-business")
   val ausustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/au/sustainable-business")
-  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/us-small-business")
+  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/the-power-of-small")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
   val investing = SectionLink("business", "investing", "Investing", "/business/investing")
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
