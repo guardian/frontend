@@ -76,9 +76,9 @@ define([
                 container.setAttribute('data-component', componentName);
                 if (ab.isInVariant('RelatedVariants', 'tags-only')) {
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=tags-only';
-                } else if (ab.isInVariant('RelatedVariants', 'tags-headline')){
+                } else if (ab.isInVariant('RelatedVariants', 'tags-headline')) {
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=tags-headline';
-                } else if (ab.isInVariant('RelatedVariants', 'in-body-links')){
+                } else if (ab.isInVariant('RelatedVariants', 'in-body-links')) {
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json?related-type=in-body-links';
                 } else {
                     relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
