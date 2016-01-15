@@ -4,12 +4,12 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val AlternativeRelated = Switch(
+  val RelatedVariants = Switch(
     "A/B Tests",
-    "ab-alternative-related",
-    "show alternative related content based on the tags to users in the test",
+    "ab-related-variants",
+    "show related content based on the new variants",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 25),
+    sellByDate = new LocalDate(2016, 2, 15),
     exposeClientSide = true
   )
 
