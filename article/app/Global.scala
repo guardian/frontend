@@ -6,6 +6,7 @@ import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.NewspaperBooksAndSectionsAutoRefresh
+import services.NecMergiturHackService
 
 object Global
   extends WithFilters(Filters.common: _*)
@@ -15,7 +16,8 @@ object Global
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
   with CorsErrorHandler
-  with SwitchboardLifecycle {
+  with SwitchboardLifecycle
+  with NecMergiturHackService {
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
