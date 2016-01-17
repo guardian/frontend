@@ -16,6 +16,7 @@ define([
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
+    'lodash/collections/mapValues',
     'lodash/collections/find',
     'lodash/objects/pick',
     'common/utils/chain'
@@ -37,6 +38,7 @@ define([
     some,
     filter,
     map,
+    mapValues,
     find,
     pick,
     chain) {
@@ -367,6 +369,12 @@ define([
         },
 
         shouldRunTest: shouldRunTest,
+
+        getTestsAndVariants: function () {
+            return mapValues(getParticipations(), function (test) {
+                return test.variant;
+            });
+        },
 
         // testing
         reset: function () {

@@ -263,5 +263,19 @@ define([
 
         });
 
+        describe('getTestsAndVariants', function () {
+            it('Expresses the running tests and variants as a simple object', function () {
+                localStorage.setItem(
+                    participationsKey,
+                    '{ "value": { "FooTest": { "variant": "foo" }, "BarTest": { "variant": "bar" } } }'
+                );
+
+                expect(ab.getTestsAndVariants()).toEqual({
+                    FooTest : 'foo',
+                    BarTest : 'bar'
+                });
+            });
+        });
+
     });
 });

@@ -5,17 +5,23 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/dfp-api',
+    'common/modules/experiments/ab',
+    'lodash/collections/map',
     'lodash/collections/reduce',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'lodash/objects/pairs'
 ], function (
     bean,
     fastdom,
     $,
     config,
     detect,
+    map,
     dfp,
+    ab,
     reduce,
-    assign) {
+    assign,
+    pairs) {
 
     function objToString(obj) {
         return reduce(obj, function (str, value, key) {
@@ -54,7 +60,8 @@ define([
                     page: window.location,
                     width: window.innerWidth,
                     adBlock: detect.adblockInUse(),
-                    devicePixelRatio: window.devicePixelRatio
+                    devicePixelRatio: window.devicePixelRatio,
+                    abTests : summariseAbTests()
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
                     + objToString(assign(props, storedValues))
@@ -84,6 +91,17 @@ define([
                 return accu;
             }
         }, {});
+    }
+
+    function summariseAbTests() {
+        var testAndVariantPairs = pairs(ab.getTestsAndVariants());
+        if (testAndVariantPairs.length === 0) {
+            return 'No tests running';
+        } else {
+            return map(testAndVariantPairs, function (pair) {
+                return pair[0] + '=' + pair[1];
+            }).join(', ');
+        }
     }
 
     /**
