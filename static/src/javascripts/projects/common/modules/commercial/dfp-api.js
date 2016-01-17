@@ -292,8 +292,12 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(keys(slots).shift());
-            displayed = true;
+            if (prebidService.testEnabled) {
+                loadSlot(keys(slots).shift());
+            } else {
+                googletag.display(keys(slots).shift());
+                displayed = true;
+            }
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
@@ -384,16 +388,19 @@ define([
         },
         loadSlot = function (slotKey) {
             if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
-                prebidService.loadSlots(slotKey).then(function () {
-                    displayed = true;
-                });
-                slots[slotKey].isLoading = true;
+                prebidAndLoadSlot(slotKey);
             } else {
                 // original implementation
                 slots[slotKey].isLoading = true;
                 googletag.display(slotKey);
                 displayed = true;
             }
+        },
+        prebidAndLoadSlot = function (slotKey) {
+            slots[slotKey].isLoading = true;
+            prebidService.loadSlots(slotKey).then(function () {
+                displayed = true;
+            });
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
