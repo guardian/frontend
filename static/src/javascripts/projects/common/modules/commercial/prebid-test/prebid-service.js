@@ -28,7 +28,6 @@ define([
 ) {
     function PrebidTestService() {
         window.pbjs = window.pbjs || {que : []};
-        window.pbjs.que.push(setupPrebidTargeting);
 
         this.testEnabled = ab.isInVariant('PrebidPerformance', 'variant');
 
@@ -73,26 +72,6 @@ define([
         this.code = slotElementId;
         this.sizes = getSlotAdSizes(slotElementId);
         this.bids = getAppnexusBids(this.sizes);
-    }
-
-    function setupPrebidTargeting() {
-        pbjs.bidderSettings = {
-            standard : {
-                alwaysUseBid : false,
-                adserverTargeting : [{
-                    key : 'hb_pb',
-                    val : function () {
-                        // Match key-value targeting for DFP prebid test line item
-                        return '1.50';
-                    }
-                }, {
-                    key : 'hb_adid',
-                    val : function (bidResponse) {
-                        return bidResponse.adId;
-                    }
-                }]
-            }
-        };
     }
 
     function getAppnexusBids(slotSizes) {
