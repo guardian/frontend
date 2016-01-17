@@ -1,13 +1,9 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes}
-import com.gu.contentapi.client.model.v1.{Block => ApiBlock}
-import com.gu.contentapi.client.model.v1.{Blocks => ApiBlocks}
 import com.gu.contentapi.client.model.ItemResponse
 import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
-import model.liveblog.LiveBlogDate
 import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
@@ -20,7 +16,6 @@ import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import services.{Event => NecMergiturHackEvent, NecMergiturHackAgent}
 import views.BodyCleaner
 import views.support._
 
@@ -127,7 +122,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
     LongCacheAction { implicit request =>
-      println("render live blog")
       mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
           case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
@@ -169,113 +163,9 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       .showTags("all")
       .showFields("all")
       .showReferences("all")
-
     val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
+    getResponse(capiItemWithBlocks)
 
-    getResponse(capiItemWithBlocks).map { itemResponse => 
-
-      /*
-          The hack demo the ability for news media to support efficently the diffusion of 
-          official urgent instructions in case of an emergency.
-         
-          As the event is organised by the Paris city council, we use the last december paris attack liveblog to demo the featue
-
-       */ 
-      if (path == "world/live/2015/nov/13/shootings-reported-in-eastern-paris-live") {
-
-        val alertEvents = NecMergiturHackAgent.getEvents()
-
-        println("Events retrieved" + alertEvents)
-
-        val alertBlocks = alertEvents.map(e => createNecMergiturBlock(e))
-
-        /* 
-           we update the model:
-            - blocks: we add alerts blocks created
-            - liveBloggingNow: we set the blog as live to have auto updates
-            - body: we have to add divs with ids of the events as some code still use inlined body rather than blocks
-         */
-        itemResponse.copy(content = itemResponse.content.map { content =>
-          content.copy(blocks = content.blocks.map { contentblocks =>
-            contentblocks.copy(body = contentblocks.body.map { bodyBlocks =>
-              alertBlocks ++: bodyBlocks
-            }) 
-          },
-          fields = content.fields.map(f => f.copy(liveBloggingNow = Some(true), body = f.body.map(b => alertEvents.map(createBlockHtml).mkString + b)))
-          )
-        })
-      } else {
-
-        itemResponse
-      }
-    }
-
-  }
-
-
-  private def createNecMergiturBlock(event: NecMergiturHackEvent): ApiBlock = {
-    
-    import com.gu.contentapi.client.utils.CapiModelEnrichment._
-
-
-    ApiBlock(
-
-      id = "block-" + event.id,
-      bodyHtml = createBlockBodyHtml(event),
-      bodyTextSummary = "Summary: nothing for the moment",
-      title = Some("Message from french authorities"),
-      attributes = ApiBlockAttributes(
-        keyEvent = Some(true),
-        summary = Some(true),
-        title = Some("Attributes title")
-      ),
-
-      published = true,
-      createdDate = Some(event.published.toCapiDateTime),
-      firstPublishedDate = Some(event.published.toCapiDateTime),
-      publishedDate = Some(event.published.toCapiDateTime),
-      lastModifiedDate = Some(event.published.toCapiDateTime),
-      contributors = Nil,
-      createdBy = None, //TODO name of authorities
-      lastModifiedBy = None, //TODO automatic
-      elements = Nil
-    )
-  }
-
-  private def createBlockHtml(event: NecMergiturHackEvent)(implicit request: RequestHeader): String = {
-    
-    val liveBlogDate = LiveBlogDate(event.published)
-    val bodyHtml = createBlockBodyHtml(event)
-
-    s"""
-    <div id="block-${event.id}" class="block is-key-event" data-block-contributor="">
-     <p class="block-time published-time">
-
-     <time datetime="${liveBlogDate.fullDate}" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">${liveBlogDate.ampm} <span class="timezone">${liveBlogDate.gmt}</span></time>
-      <span class="block-time__absolute">${liveBlogDate.hhmm}</span>
-      </p>
-      <h2 class="block-title">Message from french authorities</h2>
-       <div class="block-elements">
-        ${bodyHtml}
-      </div>
-    </div>
-    """
-    
-  } 
-
-  private def createBlockBodyHtml(event: NecMergiturHackEvent): String = {
-    val hackeventLogo = "https://www.data.gouv.fr/s/images/aa/295d5ad6344917bfa87a5dc4be326d.png"
-    s"""
-      <div style='width:55em'>
-          <div style='float:left; width:10em'> <img src='${hackeventLogo}' style='width:10em'></img></div>
-          <div style='float:left; width:23em'>
-            
-            <p>${event.message}</p>
-            <p style='font-size:0.75rem;color:#767676'> Information displayed above is not a genuine information, but <a href='https://twitter.com/search?vertical=default&q=%23NecMergitur' class='underline'>an experiment</a> of how information from authorities
-            could be relayed by digital newspapers</p>
-            </div>
-      </div>
-    """
   }
 
   /**
