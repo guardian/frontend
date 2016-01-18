@@ -50,7 +50,7 @@ define([
             message = 'unfixed';
         }
 
-        if(this.opts.emit && this.lastMessage && message !== this.lastMessage) {
+        if (this.opts.emit && this.lastMessage && message !== this.lastMessage) {
             this.emitMessage(message);
         }
         this.lastMessage = message;

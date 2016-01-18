@@ -45,7 +45,7 @@ define([
         var options = assign({
             'backoff':          1, // 1 = no backoff
             'backoffMax':       1000 * 60 * 20 // 20 mins
-            }, opts);
+        }, opts);
 
         this.updateDelay = 10000;
 
@@ -70,7 +70,7 @@ define([
             new Sticky(qwery('.blog__updates-box-tofix'), { top: this.requiredOffset, emit: true }).init();
 
             bean.on(document.body, 'click', '.js-updates-button', function () {
-                if(this.isLivePage) {
+                if (this.isLivePage) {
                     console.log('isLive');
                     this.button.livePageOnClick();
                 } else {
@@ -80,7 +80,7 @@ define([
             }.bind(this));
 
             mediator.on('modules:liveblog-updates-button:unfixed', function () {
-                if(this.isLivePage) {
+                if (this.isLivePage) {
                     this.$updateBox.addClass('loading');
                     this.blocks.injectNew();
                 }
@@ -138,7 +138,7 @@ define([
                     //insert new blocks and animate
                     $('.blog__updates-box-container').after(elementsToAdd);
 
-                    if(detect.pageVisible()) {
+                    if (detect.pageVisible()) {
                         this.blocks.revealNewElements();
                     }
 

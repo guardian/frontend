@@ -69,7 +69,7 @@ define([
 
         var setUpListeners = function () {
             bean.on(document.body, 'click', '.js-updates-button', function () {
-                if(isLivePage) {
+                if (isLivePage) {
                     scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
                     $updateBox.addClass('loading');
                     injectNewBlocks();
@@ -79,7 +79,7 @@ define([
             });
 
             mediator.on('modules:liveblog-updates-button:unfixed', function () {
-                if(isLivePage) {
+                if (isLivePage) {
                     $updateBox.addClass('loading');
                     injectNewBlocks();
                 }

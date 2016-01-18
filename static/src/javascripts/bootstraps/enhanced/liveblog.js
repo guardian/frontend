@@ -197,7 +197,7 @@ define([
         },
 
         createAutoUpdate: function () {
-            //if (config.page.isive) {
+            if (config.page.isLive) {
                 AutoUpdate({
                     backoff: 2,
                     backoffMax: 1000 * 60 * 20,
@@ -205,7 +205,7 @@ define([
                     switches: config.switches
                 });
                 //autoUpdate.init();
-            //}
+            }
         },
 
         keepTimestampsCurrent: function () {
