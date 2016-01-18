@@ -53,7 +53,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
           }
         }
       }
-      Cached(page)(JsonComponent(html))
+    page.article.fields.blocks.takeWhile(_.id != lastUpdateBlockId).map
+      Cached(page)(JsonComponent(("html" -> html), ("timeline" -> ))
   }
 
   case class TextBlock(
@@ -88,8 +89,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         NotFound
       } else {
         val PAGINATION_ENABLED_TAGS = Seq("business/series/guardian-business-live", "politics/series/politics-live-with-andrew-sparrow")
-        val pageSize = if (blog.article.content.tags.tags.exists(tag => PAGINATION_ENABLED_TAGS.contains(tag.id))) 10 else 300
-        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10/* = 29, also update in truncate-liveblog.js*/)(blog.article.content.fields.blocks, pageNo)
+        val pageSize = if (blog.article.content.tags.tags.exists(tag => PAGINATION_ENABLED_TAGS.contains(tag.id))) 2 else 300
+        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 0/* = 29, also update in truncate-liveblog.js*/)(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)

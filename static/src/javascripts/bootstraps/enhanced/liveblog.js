@@ -226,23 +226,13 @@ define([
                     delay: timerDelay,
                     backoff: 2,
                     backoffMax: 1000 * 60 * 20,
-                    attachTo: $('.js-liveblog-body')[0],
-                    switches: config.switches,
-                    manipulationType: 'prepend'
+                    attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
+                    responseField: ['html', 'timeline'],
+                    switches: config.switches
                 });
                 autoUpdate.init();
             }
 
-            mediator.on('module:filter:toggle', function (orderedByOldest) {
-                if (!autoUpdate) {
-                    return;
-                }
-                if (orderedByOldest) {
-                    autoUpdate.setManipulationType('append');
-                } else {
-                    autoUpdate.setManipulationType('prepend');
-                }
-            });
         },
 
         keepTimestampsCurrent: function () {
@@ -266,10 +256,10 @@ define([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
             ['lb-filter',     modules.createFilter],
-            ['lb-timeline',   modules.createTimeline],
+            //['lb-timeline',   modules.createTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
-            ['lb-updates',    modules.handleUpdates],
+            //['lb-updates',    modules.handleUpdates],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
 
