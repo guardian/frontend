@@ -1,6 +1,8 @@
-@(page: model.Page)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, related: model.RelatedContent)(body: Html)(implicit request: RequestHeader)
+
 @import common.{AnalyticsHost, LinkTo}
 @import conf.Configuration
+@import model.Page
 @import views.support.OmnitureAnalyticsData
 
 <!doctype html>
@@ -18,9 +20,7 @@
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
-        @if(page.metadata.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition") {
-            <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
-        }
+        <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
         @if(page.metadata.id == "info/developer-blog/2015/jan/05/delivering-continuous-delivery-continuously") {
             <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
         }
@@ -52,13 +52,22 @@
 
             @body
 
-            @if(page.metadata.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition"){
-                @fragments.amp.onward("related-mf2/" + page.metadata.id + ".json")
-                @fragments.amp.onward("container-mf2/1/0/international.json")
-                @fragments.amp.onward("most-read-mf2.json")
-                @fragments.amp.onward("container-mf2/1/1/international.json")
-                @fragments.amp.onward("container-mf2/1/2/international.json")
+            @Page.getContentPage(page).map { content =>
+                @if(!content.item.tags.series.isEmpty) {
+                    @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
+                } else {
+                    @if(content.item.content.hasStoryPackage) {
+                        @fragments.amp.storyPackageAmp(related)
+                    } else {
+                        @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
+                    }
+                }
             }
+
+            @fragments.amp.onwardTemplateAmp("container-mf2/1/0/international.json")
+            @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
+            @fragments.amp.onwardTemplateAmp("container-mf2/1/1/international.json")
+            @fragments.amp.onwardTemplateAmp("container-mf2/1/2/international.json")
 
             <amp-font
                 layout="nodisplay"
