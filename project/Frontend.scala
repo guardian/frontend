@@ -195,6 +195,10 @@ object Frontend extends Build with Prototypes {
     .dependsOn(commonWithTests)
     .aggregate(common)
 
+  val adminJobs = application("admin-jobs")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val main = root().aggregate(
     common,
     facia,
@@ -213,6 +217,7 @@ object Frontend extends Build with Prototypes {
     archive,
     preview,
     trainingPreview,
-    rss
+    rss,
+    adminJobs
   )
 }
