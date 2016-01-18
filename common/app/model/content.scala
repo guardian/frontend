@@ -11,13 +11,14 @@ import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
+import model.liveblog.BodyBlock
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import com.gu.contentapi.client.{model => contentapi}
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import model.pressed._
 import views.support.{ChaptersLinksCleaner, StripHtmlTagsAndUnescapeEntities, FacebookOpenGraphImage, ImgSrc, Item700}
 
@@ -122,7 +123,7 @@ final case class Content(
 
   lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.properties.twitterHandle)
 
-  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "blog" }
+  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
 
   lazy val sectionLabelLink : String = {
     if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
@@ -238,31 +239,31 @@ object Content {
     val commercial = Commercial.make(metadata, tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
-    val apifields = apiContent.safeFields
+    val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
 
     Content(
-      elements = elements,
-      tags = tags,
-      fields = fields,
-      metadata = metadata,
       trail = trail,
+      metadata = metadata,
+      tags = tags,
       commercial = commercial,
+      elements = elements,
+      fields = fields,
       sharelinks = sharelinks,
-      publication = apifields.getOrElse("publication", ""),
-      internalPageCode = apifields.getOrElse("internalPageCode", ""),
-      contributorBio = apifields.get("contributorBio"),
-      starRating = apifields.get("starRating").flatMap(s => Try(s.toInt).toOption),
-      allowUserGeneratedContent = apifields.get("allowUgc").exists(_.toBoolean),
+      publication = apifields.flatMap(_.publication).getOrElse(""),
+      internalPageCode = apifields.flatMap(_.internalPageCode).map(_.toString).getOrElse(""),
+      contributorBio = apifields.flatMap(_.contributorBio),
+      starRating = apifields.flatMap(_.starRating),
+      allowUserGeneratedContent = apifields.flatMap(_.allowUgc).getOrElse(false),
       isExpired = apiContent.isExpired.getOrElse(false),
-      productionOffice = apifields.get("productionOffice"),
-      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type` == "tweet").map{ tweet =>
-        val images = tweet.assets.filter(_.`type` == "image").map(_.file).flatten
+      productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
+      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map{ tweet =>
+        val images = tweet.assets.filter(_.`type`.name == "Image").map(_.file).flatten
         Tweet(tweet.id, images)
       },
-      showInRelated = apifields.get("showInRelatedContent").contains("true"),
+      showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
       cardStyle = CardStyle.make(fapiutils.CardStyle(apiContent, TrailMetaData.empty)),
-      shouldHideAdverts = apifields.get("shouldHideAdverts").exists(_.toBoolean),
+      shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
       imdb = references.get("imdb"),
@@ -270,7 +271,7 @@ object Content {
       wordCount = {
         Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
       },
-      hasStoryPackage = apifields.get("hasStoryPackage").exists(_.toBoolean),
+      hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       showByline = {
         val cardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
         fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline
@@ -423,7 +424,7 @@ final case class Article (
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
-  val isLiveBlog: Boolean = content.tags.isLiveBlog
+  val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isImmersive: Boolean = content.metadata.isImmersive
 
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
@@ -452,6 +453,7 @@ final case class Article (
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
+  //@deprecated("use content.fields.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)
   lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
@@ -783,7 +785,7 @@ object Interactive {
     )
     Interactive(
       contentOverrides,
-      maybeBody = apiContent.safeFields.get("body"))
+      maybeBody = apiContent.fields.flatMap(_.body))
   }
 }
 

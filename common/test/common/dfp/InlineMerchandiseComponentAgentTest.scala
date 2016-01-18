@@ -1,12 +1,12 @@
 package common.dfp
 
-import com.gu.contentapi.client.model.{Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType => ApiTagType}
 import model.Tag
 import org.scalatest.{FlatSpec, Matchers}
 
 class InlineMerchandiseComponentAgentTest extends FlatSpec with Matchers {
 
-  private def toTag(tagType: String, tagId: String, sectionId: Option[String] = None): Tag = {
+  private def toTag(tagType: ApiTagType, tagId: String, sectionId: Option[String] = None): Tag = {
     Tag.make(ApiTag(id = tagId,
       `type` = tagType,
       sectionId = sectionId,
@@ -14,10 +14,10 @@ class InlineMerchandiseComponentAgentTest extends FlatSpec with Matchers {
       webUrl = "url",
       apiUrl = "url"))
   }
-  private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag = toTag("keyword",
+  private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag = toTag(ApiTagType.Keyword,
     tagId,
     sectionId)
-  private def toSeries(tagId: String, sectionId: Option[String] = None): Tag = toTag("series",
+  private def toSeries(tagId: String, sectionId: Option[String] = None): Tag = toTag(ApiTagType.Series,
     tagId,
     sectionId)
 

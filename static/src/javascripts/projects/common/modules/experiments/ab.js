@@ -6,8 +6,8 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/large-top-slot',
-    'common/modules/experiments/tests/alternative-related',
+    'common/modules/experiments/tests/remove-sticky-nav',
+    'common/modules/experiments/tests/related-variants',
     'common/modules/experiments/tests/identity-sign-in-v2',
     'common/modules/experiments/tests/rtrt-email-form-article-promo',
     'lodash/arrays/flatten',
@@ -27,8 +27,8 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
-    LargeTopAd,
-    AlternativeRelated,
+    RemoveStickyNav,
+    RelatedVariants,
     IdentitySignInV2,
     RtrtEmailFormArticlePromo,
     flatten,
@@ -43,8 +43,8 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new LargeTopAd(),
-        new AlternativeRelated(),
+        new RemoveStickyNav(),
+        new RelatedVariants(),
         new IdentitySignInV2(),
         new RtrtEmailFormArticlePromo()
     ]);

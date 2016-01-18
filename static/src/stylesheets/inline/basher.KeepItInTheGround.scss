@@ -1,0 +1,207 @@
+@import '../_vars';
+@import '../_mixins';
+@import '../components/pasteup-buttons/src/_mixins';
+
+$c-background: #2b3a42;
+$c-text: #333333;
+$c-accent: #f4e225;
+$c-accent-dark: #fbae15;
+
+.facia-basher {
+    position: relative;
+    width: 100%;
+    background-color: $c-background;
+    overflow: hidden;
+}
+
+.keep-it-in-the-ground {
+    @include mq(desktop) {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+    }
+}
+
+.keep-it-in-the-ground__content {
+    position: relative;
+    background: $c-background;
+    padding: 0 $gs-gutter/2;
+    margin-bottom: $gs-baseline/2;
+
+    @include mq(mobileLandscape) {
+        padding: 0 $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        width: gs-span(4) + $gs-gutter;
+        display: table-cell;
+        vertical-align: top;
+        padding-left: 0;
+    }
+}
+
+.keep-it-in-the-ground__image {
+    background-image: url('https://interactive.guim.co.uk/thrashers/keep-it-in-the-ground-header/hashed/bg.418e6adc.jpg');
+    width: 100%;
+    background-size: 110%;
+    background-position: center top;
+    padding-top: 42%;
+    height: 0;
+
+    @include mq($until: tablet) {
+        padding-left: $gs-gutter;
+        margin-left: -($gs-gutter/2);
+    }
+
+    @include mq(phablet) {
+        height: 300px;
+        padding-top: 0;
+    }
+
+    @include mq(desktop) {
+        display: table-cell;
+        height: 500px;
+        background-size: 130%;
+    }
+}
+
+.keep-it-in-the-ground__copy {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    padding-right: $gs-gutter/2;
+    margin-right: $gs-gutter;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+
+    @include mq(phablet) {
+        margin-right: 100px;
+    }
+
+    @include mq(leftCol) {
+        left: 170px;
+        border-left: 1px solid $c-text;
+        padding-left: $gs-gutter/2;
+    }
+
+    @include mq(wide) {
+        left: 250px;
+    }
+}
+
+.keep-it-in-the-ground__headline {
+    font-family: $f-serif-headline;
+    font-weight: 200;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    max-width: 700px;
+    color: #ffffff;
+    margin-top: 6px;
+    padding-right: 50px;
+    margin-bottom: 1.5em;
+
+    @include mq(phablet, desktop) {
+        margin-left: 140px;
+        border-left: 1px solid mix(#ffffff, $c-background, 30%);
+        margin-top: 0;
+        padding-top: 6px;
+        padding-left: 10px;
+        padding-right: 150px;
+    }
+
+    @include mq(desktop) {
+        font-size: 2rem;
+        padding-left: $gs-gutter/2;
+    }
+
+    strong {
+        color: $c-accent;
+    }
+}
+
+.keep-it-in-the-ground__button {
+    background-color: $c-accent;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+
+    @include mq(desktop) {
+        width: 30px;
+        height: 30px;
+    }
+
+    svg {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.keep-it-in-the-ground__credit {
+    font-size: 14px;
+    line-height: 18px;
+    font-family: $f-sans-serif-headline;
+    color: mix(#ffffff, $c-background, 30%);
+
+    @include mq(phablet, desktop) {
+        padding-left: $gs-gutter/2;
+        margin-left: gs-span(2);
+
+        .credit-break {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        position: absolute;
+        bottom: 0;
+        left: $gs-gutter/2;
+    }
+}
+
+.keep-it-in-the-ground__logo {
+    fill: #ffffff;
+    width: 80px;
+    height: auto;
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+
+    @include mq(phablet, desktop) {
+        left: $gs-gutter;
+        top: 8px;
+        width: 70px;
+    }
+
+    @include mq(desktop) {
+        left: auto;
+        top: auto;
+        width: 100px;
+        right: 20px;
+        bottom: 12px;
+    }
+}
+
+.keep-it-in-the-ground__anchor {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10 !important;
+
+    &:hover ~ .keep-it-in-the-ground__content {
+        strong {
+            color: $c-accent-dark;
+        }
+    
+        .keep-it-in-the-ground__button {
+            background-color: $c-accent-dark;
+        }
+    }
+}

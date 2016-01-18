@@ -15,8 +15,8 @@ define([
     var header = isNewCommercialContent ?
         document.querySelector('.paidfor-band') :
         config.page.hasStickyHeader ?
-            document.querySelector('.js-navigation') :
-            null;
+        document.querySelector('.js-navigation') :
+        null;
 
     /**
      * @todo: check if browser natively supports "position: sticky"

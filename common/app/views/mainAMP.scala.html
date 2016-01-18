@@ -8,6 +8,8 @@
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
         <meta charset="utf-8">
+        <meta name="amp-3p-iframe-src" content="https://static.theguardian.com/amp/remote-3.html">
+
         @fragments.metaData(page, true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page.metadata)
@@ -18,6 +20,9 @@
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         @if(page.metadata.id == "australia-news/postcolonial-blog/2015/jul/21/enduring-controversy-bp-sponsorship-ignites-new-row-over-british-museums-indigenous-exhibition") {
             <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
+        }
+        @if(page.metadata.id == "info/developer-blog/2015/jan/05/delivering-continuous-delivery-continuously") {
+            <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
         }
         <style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
@@ -32,6 +37,9 @@
                 <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
                 <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
             }
+        }
+        @if(page.metadata.id == "info/developer-blog/2015/jan/05/delivering-continuous-delivery-continuously") {
+            <amp-analytics config="https://j.ophan.co.uk/amp.json"></amp-analytics>
         }
 
         <div class="main-body">

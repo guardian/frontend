@@ -20,6 +20,9 @@ GET     /_cdn_healthcheck           controllers.CdnHealthcheckController.healthc
 #  e.g. /theguardian/2015/nov/03/mainsection
 GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                 controllers.PublicationController.publishedOn(publication, year, month, day, tail)
 
-GET     /*path.json                 controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
-GET     /*path/amp                  controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
-GET     /*path                      controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
+GET     /*path.json                 controllers.ArticleController.renderJson(path)
+GET     /*path/amp                  controllers.ArticleController.renderArticle(path)
+# temp route for live blogs so we can paginate without getting the blocks for all articles
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[Int])
+GET     /*path                      controllers.ArticleController.renderArticle(path)

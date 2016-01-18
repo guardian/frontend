@@ -37,7 +37,7 @@ trait CommercialSwitches {
     "fluid-adverts",
     "Enable fluid ads, which occupy 100% of the width of their parent container but have a fixed height",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 12, 15),
+    sellByDate = new LocalDate(2016, 2, 15),
     exposeClientSide = true
   )
 
@@ -83,6 +83,15 @@ trait CommercialSwitches {
     "Show inline adverts on liveblogs",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val LiveblogDynamicAdvertsSwitch = Switch(
+    "Commercial",
+    "liveblog-dynamic-adverts",
+    "Dynamically insert inline adverts on liveblogs",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 15),
     exposeClientSide = true
   )
 
@@ -154,7 +163,7 @@ trait CommercialSwitches {
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
-    sellByDate = new LocalDate(2016, 1, 6),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -244,7 +253,7 @@ trait CommercialSwitches {
     "advert-opt-out",
     "Enable adfree experience. See with cookie 'gu_adfree_user' = true",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 31),
+    sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = true
   )
 
@@ -253,7 +262,7 @@ trait CommercialSwitches {
     "new-commercial-content",
     "New commercial content designs",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 31),
+    sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = true
   )
 }

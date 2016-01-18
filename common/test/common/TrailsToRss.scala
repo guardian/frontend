@@ -4,7 +4,8 @@ import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 
 import scala.util.Try
 import scala.xml._
@@ -64,12 +65,12 @@ class TrailsToRssTest extends FlatSpec with Matchers with OneAppPerSuite {
       sectionName = None,
       webUrl = "",
       apiUrl = "",
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       elements = None,
       webTitle = customTitle getOrElse "hello …",
-      fields = Some(Map(
-        "liveBloggingNow" -> "true",
-        "byline" -> "Chadders"))
+      fields = Some(ContentFields(
+        liveBloggingNow = Some(true),
+        byline = Some("Chadders")))
     )
     model.Content(contentItem).trail
   }

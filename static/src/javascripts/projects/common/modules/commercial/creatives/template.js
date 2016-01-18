@@ -1,5 +1,6 @@
 define([
     'common/utils/$',
+    'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
 
@@ -14,6 +15,7 @@ define([
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
+    config,
     template,
     svgs
 ) {
@@ -28,11 +30,19 @@ define([
         this.$adSlot = $adSlot;
         this.params  = params;
 
+        if (this.params.Toneclass) {
+            this.params.soulmates = params.Toneclass.indexOf('soulmates') !== -1;
+            this.params.HeaderToneclass = 'commercial__header--' + this.params.Toneclass.replace('commercial--tone-', '');
+        }
+
         this.params.marque36icon = svgs('marque36icon');
         this.params.marque54icon = svgs('marque54icon');
+        this.params.logosoulmates = svgs('logosoulmates');
+        this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
+        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by:' : 'Brought to you by:';
     };
 
     Template.prototype.create = function () {

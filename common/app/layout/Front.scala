@@ -1,13 +1,12 @@
 package layout
 
-import common.dfp.{DfpAgent, SponsorshipTag}
+import common.dfp._
 import common.{Edition, LinkTo}
 import conf.switches.Switches
-import implicits.FaciaContentFrontendHelpers._
-import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
-import model.pressed.{PressedContent, CollectionConfig}
+import model.pressed.{CollectionConfig, PressedContent}
+import model.{ContentType, PressedPage}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -100,19 +99,70 @@ case class CollectionEssentials(
 )
 
 object ContainerCommercialOptions {
-  def fromConfig(config: CollectionConfig) = ContainerCommercialOptions(
-    DfpAgent.isSponsored(config),
-    DfpAgent.isAdvertisementFeature(config),
-    DfpAgent.isFoundationSupported(config),
-    DfpAgent.sponsorshipTag(config),
-    DfpAgent.sponsorshipType(config),
-    omitMPU = false
-  )
+  def fromConfig(config: CollectionConfig) = {
+    DfpAgent.findContainerCapiTagIdAndDfpTag(config) map { tagData =>
+      val capiTagId = tagData.capiTagId
+      val dfpTag = tagData.dfpTag
+
+      ContainerCommercialOptions(
+        isSponsored = dfpTag.paidForType == Sponsored,
+        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+        isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+        sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
+        sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),
+        sponsorshipType = Some(dfpTag.paidForType.name),
+        omitMPU = false
+      )
+    } getOrElse empty
+  }
+
+  def fromCollection(collection: CollectionEssentials): ContainerCommercialOptions = {
+
+    def mkFromFirstItemInCollection(item: PressedContent): Option[ContainerCommercialOptions] = {
+
+      def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
+        DfpAgent.winningTagPair(
+          capiTags = content.tags.tags,
+          sectionId = Some(content.metadata.section),
+          edition = None
+        )
+      }
+
+      def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): ContainerCommercialOptions = {
+        val capiTag = tagProps.capiTag
+        val dfpTag = tagProps.dfpTag
+
+        val sponsorshipTag = {
+          val maybeTagType = {
+            if (capiTag.isSeries) Some(Series)
+            else if (capiTag.isKeyword) Some(Keyword)
+            else None
+          }
+          maybeTagType map (tagType => SponsorshipTag(tagType, tagId = capiTag.id))
+        }
+
+        ContainerCommercialOptions(
+          isSponsored = dfpTag.paidForType == Sponsored,
+          isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+          isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+          sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
+          sponsorshipTag,
+          sponsorshipType = Some(dfpTag.paidForType.name),
+          omitMPU = false
+        )
+      }
+
+      item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
+    }
+
+    collection.items.headOption flatMap mkFromFirstItemInCollection getOrElse empty
+  }
 
   val empty = ContainerCommercialOptions(
     isSponsored = false,
     isAdvertisementFeature = false,
     isFoundationSupported = false,
+    sponsor = None,
     sponsorshipTag = None,
     sponsorshipType = None,
     omitMPU = false
@@ -125,6 +175,7 @@ case class ContainerCommercialOptions(
   isSponsored: Boolean,
   isAdvertisementFeature: Boolean,
   isFoundationSupported: Boolean,
+  sponsor: Option[String],
   sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String],
   omitMPU: Boolean
@@ -191,6 +242,8 @@ object FaciaContainer {
     // popular containers should never be sponsored
     container match {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
+      case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
+      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.empty
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description.map(DescriptionMetaHeader),

@@ -21,7 +21,7 @@ define([
     twitter,
     find) {
     var truncatedClass = 'truncated-block',
-        minVisibleBlocks = detect.getBreakpoint() === 'mobile' ? 5 : 10,
+        minVisibleBlocks = 29,
         blocks = qwery('.block'),
         truncatedBlocks = blocks.slice(minVisibleBlocks),
         $truncatedBlocks = bonzo(truncatedBlocks);

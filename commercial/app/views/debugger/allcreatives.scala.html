@@ -77,6 +77,7 @@
                     <option value="shop">Shop</option>
                     <option value="money">Money</option>
                     <option value="gardening">Gardening</option>
+                    <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
             <dt>Component in the RH column</dt>
@@ -137,12 +138,12 @@
                     });
 
                     var $palette    = $('#dfp-palette'),
-                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening', 'soulmates']
                             .map(function (tone) {
                                 return 'commercial--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
-                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                        $('#multiple1, .commercial--dfp-single, .commercial--v-high')
                             .removeClass(toneClasses.join(' '))
                             .addClass('commercial--tone-' + $palette.val());
                     });
@@ -171,11 +172,46 @@
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--manual-inline"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--manual-inline"></div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Its episodic chapters may not appeal to some, but as a beach read, Twenty Thousand Leagues is the perfect book to pick up and put down. You are consistently rewarded with iconic scenes: a battle with a giant squid, an underwater funeral, a trip to Atlantis. Verne's detailed descriptions of geography and sea life fill me with a curiously Victorian sense of potential for discovering the unknown.</p>
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--inline-book"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--inline-book"></div>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
+                    <div class="ad-slot ad-slot--paidfor">
+                        <div class="paidfor-content" data-link-name="creative | gu style commercial content">
+                            <div class="u-responsive-ratio inlined-image">
+                                <a href="<%=clickMacro%><%=articleUrl%>">
+                                    <img class="responsive-img paidfor-image" alt="" srcset="https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=3dde5d6f9ca8e5af876c9506ec74a5c4 220w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=011992f9058136dace20307cc6c43093 160w, https://i.guim.co.uk/img/media/ff0066cea8e1d1f77cd252c688defa1c0086f8a2/0_33_4256_2553/master/4256.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f24d14aa5bb58685a616994d0616eff2 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
+                                </a>
+                            </div>
+                            <div class="paidfor-meta">
+                                <span class="paidfor-meta__label">Paid Content</span>
+                                <div class="paidfor-label paidfor-meta__more has-popup">
+                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test1">
+                                        About
+                                        @fragments.inlineSvg("arrow-down", "icon")
+                                    </button>
+                                    <div class="popup is-off paidfor-popup paidfor-popup--test1">
+                                        <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
+                                        <a class="paidfor-popup__link" href="#">
+                                            Learn more about the Guardian’s funding from outside parties
+                                            @fragments.inlineSvg("arrow-right", "icon")
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box">
+                                <h2 class="paidfor-title">Discover the beauty and culture of Mauritius</h2>
+                                <p class="paidfor-text">From sandy beaches and tropical forests to colourful festivals and super-fresh seafood.</p>
+                                <div class="paidfor-brand">
+                                    <span class="paidfor-note">Paid for by:</span>
+                                    <img class="paidfor-logo" src="<%=brandLogo%>" alt="<%=brand%>">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                 </div>
@@ -251,7 +287,7 @@
                 });
         </script>
     </article>
-
+    
     <div class="fc-container__inner">
         <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
@@ -651,6 +687,7 @@
 
     @Seq(
         Map(
+            ("id", "manual1"),
             ("type", "single"),
             ("creativeId", "10025607"),
             ("args", Json.obj(
@@ -671,6 +708,7 @@
             ))
         ),
         Map(
+            ("id", "multiple1"),
             ("type", "multiple"),
             ("creativeId", "10025847"),
             ("args", Json.obj(
@@ -684,18 +722,58 @@
                 ("relevance", "high"),
                 ("Toneclass", "commercial--tone-brand"),
                 ("offer1title", "Offer 1 Title"),
+                ("offer1linktext", "Offer 1 Link Text"),
                 ("offer1url", "http://www.theguardian.com/uk"),
                 ("offer1meta", "Offer 1 Meta"),
                 ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("offer2title", "Offer 2 Title"),
+                ("offer2linktext", "Offer 2 Link Text"),
                 ("offer2url", "http://www.theguardian.com/uk"),
                 ("offer2meta", "Offer 1 Meta"),
                 ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("offer3title", "Offer 3 Title"),
+                ("offer3linktext", "Offer 3 Link Text"),
                 ("offer3url", "http://www.theguardian.com/uk"),
                 ("offer3meta", "Offer 1 Meta"),
                 ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
                 ("offer4title", "Offer 4 Title"),
+                ("offer4linktext", "Offer 4 Link Text"),
+                ("offer4url", "http://www.theguardian.com/uk"),
+                ("offer4meta", "Offer 1 Meta"),
+                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
+        ),
+        Map(
+            ("id", "multiple2"),
+            ("type", "multiple"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "manual-multiple"),
+                ("base__url", "https://soulmates.theguardian.com"),
+                ("offerlinktext", "Offer link text"),
+                ("viewalltext", "View all text"),
+                ("offeramount", "offer-amount"),
+                ("relevance", "high"),
+                ("Toneclass", "commercial--tone-soulmates"),
+                ("offer1title", "Offer 1 Title"),
+                ("offer1linktext", "Offer 1 Link Text"),
+                ("offer1url", "http://www.theguardian.com/uk"),
+                ("offer1meta", "Offer 1 Meta"),
+                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer2title", "Offer 2 Title"),
+                ("offer2linktext", "Offer 2 Link Text"),
+                ("offer2url", "http://www.theguardian.com/uk"),
+                ("offer2meta", "Offer 1 Meta"),
+                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer3title", "Offer 3 Title"),
+                ("offer3linktext", "Offer 3 Link Text"),
+                ("offer3url", "http://www.theguardian.com/uk"),
+                ("offer3meta", "Offer 1 Meta"),
+                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer4title", "Offer 4 Title"),
+                ("offer4linktext", "Offer 4 Link Text"),
                 ("offer4url", "http://www.theguardian.com/uk"),
                 ("offer4meta", "Offer 1 Meta"),
                 ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
@@ -711,14 +789,14 @@
                 </a>
             </h2>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
         <script>
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
                         require(['common/modules/commercial/creatives/template'])
                             .then(function (Template) {
-                                new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
+                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
                         });
                     });

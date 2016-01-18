@@ -210,7 +210,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 10),
+    sellByDate = new LocalDate(2016, 4, 11),
     exposeClientSide = false
   )
 
@@ -331,4 +331,21 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val AmpSwitch = Switch(
+    "Server-side A/B Tests",
+    "amp-switch",
+    "If this switch is on, link to amp pages will be in the metadata for articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val R2PagePressServiceSwitch = Switch(
+    "Feature",
+    "r2-page-press-service",
+    "When ON, the R2 page press service will monitor the queue and press pages to S3",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 21),
+    exposeClientSide = false
+  )
 }

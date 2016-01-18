@@ -1,0 +1,77 @@
+@(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)
+@import conf.switches.Switches.R2PagePressServiceSwitch
+
+@admin_main("R2 page presser (archiver)", conf.Configuration.environment.stage, isAuthed = true) {
+    <form action="/press/r2" method="POST" class="form-horizontal redirect-form">
+        <fieldset>
+            <legend>Press (archive) an individual page</legend>
+            <div class="form-group">
+                <label for="r2url" class="control-label col-sm-1">R2 URL:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="r2url" name="r2url" value="" placeholder="http://www.theguardian.com/an/r2/path" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="is-takedown" class="control-label col-sm-1">Takedown:</label>
+                <div class="col-sm-6">
+                    <input type="checkbox" class="form-control" id="is-takedown" name="is-takedown"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="controls col-sm-offset-1 col-sm-11">
+                    @if(R2PagePressServiceSwitch.isSwitchedOn) {
+                        <input class="btn btn-default" type="submit" value="Press" />
+                    } else {
+                        <div class="col-sm-6">
+                            This feature is currently switched off (use the switchboard to re-enable it)
+                        </div>
+                    }
+                </div>
+            </div>
+            @if(urlMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                        @urlMsgs.mkString
+                    </div>
+                </div>
+            }
+        </fieldset>
+    </form>
+
+    <form action="/press/r2/batchupload" method="POST" class="form-horizontal redirect-form" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Press a batch of pages from a file of urls</legend>
+            <div class="form-group">
+                <label for="r2urlfile" class="control-label col-sm-1">File:</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" id="r2urlfile" name="r2urlfile" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="is-takedown" class="control-label col-sm-1">Takedown:</label>
+                <div class="col-sm-6">
+                    <input id="is-takedown" name="is-takedown" type="checkbox"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="controls col-sm-offset-1 col-sm-11">
+                @if(R2PagePressServiceSwitch.isSwitchedOn) {
+                    <input class="btn btn-default" type="submit" value="Upload & Press" />
+                } else {
+                    <div class="col-sm-6">
+                        This feature is currently switched off (use the switchboard to re-enable it)
+                    </div>
+                }
+                </div>
+            </div>
+            @if(fileMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                        @fileMsgs.mkString
+                    </div>
+                </div>
+            }
+        </fieldset>
+    </form>
+
+}

@@ -3,8 +3,7 @@ package conf.switches
 import java.util.concurrent.TimeoutException
 
 import common._
-import conf.Configuration.environment
-import org.joda.time.{DateTime, Days, Interval, LocalDate}
+import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play
 
 import scala.concurrent.duration._
@@ -33,18 +32,18 @@ trait Initializable[T] extends ExecutionContexts with Logging {
   def onInitialized: Future[T] = initialized.future
 }
 
-
-trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
-  val group: String
-  val name: String
-  val description: String
-  val safeState: SwitchState
-  val sellByDate: LocalDate
-  val exposeClientSide: Boolean
+case class Switch(
+  group: String,
+  name: String,
+  description: String,
+  safeState: SwitchState,
+  sellByDate: LocalDate,
+  exposeClientSide: Boolean
+) extends Switchable with Initializable[Switch] {
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
+  def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
   /*
    * If the switchboard hasn't been read yet, the "safe state" is returned instead of the real switch value.
@@ -52,13 +51,13 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
    */
   def isGuaranteedSwitchedOn: Future[Boolean] = onInitialized map { _ => isSwitchedOn }
 
-  def switchOn() {
+  def switchOn(): Unit = {
     if (isSwitchedOff) {
       delegate.switchOn()
     }
     initialized(this)
   }
-  def switchOff() {
+  def switchOff(): Unit = {
     if (isSwitchedOn) {
       delegate.switchOff()
     }
@@ -69,39 +68,17 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def expiresSoon = daysToExpiry < 7
 
-  def hasExpired = daysToExpiry == 0
+  def hasExpired = daysToExpiry <= 0
 
   Switch.switches.send(this :: _)
 }
 
-case class Switch(
-  group: String,
-  name: String,
-  description: String,
-  safeState: SwitchState,
-  sellByDate: LocalDate,
-  exposeClientSide: Boolean
-) extends SwitchTrait
-
-case class TimerSwitch(
-  group: String,
-  name: String,
-  description: String,
-  safeState: SwitchState,
-  sellByDate: LocalDate,
-  activePeriods: Seq[Interval],
-  exposeClientSide: Boolean
-) extends SwitchTrait with Logging {
-
-  def isSwitchedOnAndActive: Boolean = {
-    val active = activePeriods.exists(_.containsNow())
-    isSwitchedOn && (environment.isNonProd || active)
-  }
-}
-
 object Switch {
-  val switches = AkkaAgent[List[SwitchTrait]](Nil)
-  def allSwitches: Seq[SwitchTrait] = switches.get()
+  val switches = AkkaAgent[List[Switch]](Nil)
+  def allSwitches: Seq[Switch] = switches.get()
+
+  // the agent won't immediately return its switches
+  def eventuallyAllSwitches: Future[List[Switch]] = switches.future()
 }
 
 object Expiry {
@@ -119,9 +96,11 @@ with CommercialSwitches
 with PerformanceSwitches
 with MonitoringSwitches {
 
-  def all: Seq[SwitchTrait] = Switch.allSwitches
+  def all: Seq[Switch] = Switch.allSwitches
 
-  def grouped: List[(String, Seq[SwitchTrait])] = {
+  def eventuallyAll: Future[List[Switch]] = Switch.eventuallyAllSwitches
+
+  def grouped: List[(String, Seq[Switch])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1)
   }

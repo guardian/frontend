@@ -2,10 +2,10 @@ package common.dfp
 
 import java.net.URLDecoder
 
-import model.pressed.CollectionConfig
 import common.Edition
 import model.Tag
 import model.`package`.frontKeywordIds
+import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
@@ -120,7 +120,7 @@ trait PaidForTagAgent {
     isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, FoundationFunded)
   }
 
-  private def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):
+  def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):
   Option[CapiTagIdAndDfpTag] = {
 
     def containerCapiTagIds(config: CollectionConfig): Seq[String] = {
@@ -143,34 +143,8 @@ trait PaidForTagAgent {
     None
   }
 
-  private def isPaidFor(config: CollectionConfig, paidForType: PaidForType): Boolean = {
-    findContainerCapiTagIdAndDfpTag(config) exists (_.dfpTag.paidForType == paidForType)
-  }
-
-  def sponsorshipType(config: CollectionConfig): Option[String] = {
-    findContainerCapiTagIdAndDfpTag(config) map (_.dfpTag.paidForType.name)
-  }
-
-  def isSponsored(config: CollectionConfig): Boolean = {
-    isPaidFor(config, Sponsored)
-  }
-
-  def isAdvertisementFeature(config: CollectionConfig): Boolean = {
-    isPaidFor(config, AdvertisementFeature)
-  }
-
-  def isFoundationSupported(config: CollectionConfig): Boolean = {
-    isPaidFor(config, FoundationFunded)
-  }
-
   def sponsorshipTag(capiTags: Seq[Tag], maybeSectionId: Option[String]): Option[Tag] = {
     findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, None) map (_.capiTag)
-  }
-
-  def sponsorshipTag(config: CollectionConfig): Option[SponsorshipTag] = {
-    findContainerCapiTagIdAndDfpTag(config) map { tagPair =>
-      SponsorshipTag(tagPair.dfpTag.tagType, tagPair.capiTagId)
-    }
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],
@@ -207,6 +181,14 @@ trait PaidForTagAgent {
 
   def getSponsor(capiTagId: String): Option[String] = {
     findWinningDfpTag(currentPaidForTags, capiTagId, None, None) flatMap (_.lineItems.head.sponsor)
+  }
+
+  def winningTagPair(
+    capiTags: Seq[Tag],
+    sectionId: Option[String],
+    edition: Option[Edition]
+  ): Option[CapiTagAndDfpTag] = {
+    findWinningTagPair(currentPaidForTags, capiTags, sectionId, edition)
   }
 }
 

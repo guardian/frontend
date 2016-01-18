@@ -1,6 +1,7 @@
 package views.support
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, TagType}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import common.Pagination
 import model._
 import org.joda.time.DateTime
@@ -33,7 +34,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val content = ApiContent(id = "lifeandstyle/foobar",
       sectionId = Some("lifeandstyle"),
       sectionName = Some("Life & Style"),
-      webPublicationDateOption = Some(new DateTime()),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "The title",
       webUrl = "http://www.guardian.co.uk/canonical",
       apiUrl = "http://foo.bar",
@@ -43,7 +44,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   it should "should create a title for a Tag" in {
-    val tag = new ApiTag("sport/foobar", "type", webTitle = "The title", webUrl = "http://foo.bar",
+    val tag = ApiTag("sport/foobar", TagType.Type, webTitle = "The title", webUrl = "http://foo.bar",
       apiUrl = "http://foo.bar", sectionName = Some("Sport"))
 
     Title(Tag.make(tag))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Sport | The Guardian")
@@ -52,7 +53,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   it should "should use the section name in the Tag title" in {
-    val tag = new ApiTag("lifeandstyle/foobar", "type", webTitle = "The title", webUrl = "http://foo.bar",
+    val tag = ApiTag("lifeandstyle/foobar", TagType.Type, webTitle = "The title", webUrl = "http://foo.bar",
       apiUrl = "http://foo.bar", sectionName = Some("Life and style"))
 
     Title(Tag.make(tag))(FakeRequest("GET", "/lifeandstyle/foobar")).body should be ("The title | Life and style | The Guardian")

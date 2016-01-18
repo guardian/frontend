@@ -25,7 +25,7 @@ OPTIONS        /accept-beacon                                                   
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
-GET            /crosswords/print/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id             controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|special|genius|speedy>/:id/print                  controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
 GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
@@ -34,7 +34,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -58,6 +58,7 @@ GET            /weatherapi/forecast/:id.json                                    
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
+GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
 GET            /analytics/commercial                                                                                             controllers.admin.CommercialController.renderCommercial()
 GET            /analytics/commercial/specialadunits                                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
 GET            /analytics/commercial/sponsorships                                                                                controllers.admin.CommercialController.renderPaidForTags()
@@ -68,6 +69,7 @@ GET            /analytics/commercial/templates                                  
 GET            /analytics/commercial/sponsored-containers                                                                        controllers.admin.CommercialController.sponsoredContainers()
 GET            /analytics/commercial/adtests                                                                                     controllers.admin.CommercialController.renderAdTests()
 GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
+GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
 # Discussion
 GET            /discussion/comment-counts                                                                                        controllers.CommentCountController.commentCount(shortUrls: String)
@@ -87,6 +89,9 @@ GET            /discussion/profile/:id/replies.json                             
 GET            /discussion/profile/:id/picks.json                                                                                controllers.ProfileActivityController.profilePicks(id: String)
 GET            /discussion/profile/:id/witness.json                                                                              controllers.WitnessActivityController.witnessActivity(id: String)
 GET            /open/cta/article/*discussionKey.json                                                                             controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+GET            /discussion/report-abuse/:commentId/thankyou                                                                      controllers.CommentsController.reportAbuseThankYou(commentId: Int)
+GET            /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseForm(commentId: Int)
+POST           /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseSubmission(commentId: Int)
 
 # Onward
 GET            /most-read-facebook.json                                                                                          controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
@@ -102,7 +107,6 @@ GET            /top-stories/trails.json                                         
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /related-alt/*path.json                                                                                           controllers.RelatedController.renderTags(path)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
@@ -401,6 +405,9 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                         
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Articles
-GET     /*path.json                 controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
-GET     /*path/amp                  controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
-GET     /*path                      controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean])
+GET     /*path.json                 controllers.ArticleController.renderJson(path)
+GET     /*path/amp                  controllers.ArticleController.renderArticle(path)
+# temp route for live blogs so we can paginate without getting the blocks for all articles
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[Int])
+GET     /*path                      controllers.ArticleController.renderArticle(path)

@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.Crossword
+import com.gu.contentapi.client.model.v1.Crossword
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import conf.{Static, LiveContentApi}
 import model._

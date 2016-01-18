@@ -31,6 +31,7 @@ define([
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
+    'common/modules/navigation/newSticky',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -86,6 +87,7 @@ define([
     CookieRefresh,
     navigation,
     sticky,
+    newSticky,
     Profile,
     Search,
     history,
@@ -136,8 +138,16 @@ define([
                 if (config.switches.viewability
                     && !(config.page.isProd && config.page.contentType === 'Interactive')
                     && config.page.contentType !== 'Crossword'
+                    && (!config.switches.newCommercialContent || !config.page.isAdvertisementFeature)
                     && config.page.pageId !== 'offline-page') {
-                    sticky.init();
+                    if (ab.isInVariant('RemoveStickyNav', 'new')) {
+                        newSticky();
+                    } else {
+                        sticky.init();
+                    }
+                    config.page.hasStickyHeader = true;
+                } else {
+                    config.page.hasStickyHeader = false;
                 }
             },
 
@@ -266,15 +276,6 @@ define([
                 }
             },
 
-            adTestCookie: function () {
-                var queryParams = url.getUrlVars();
-                if (queryParams.adtest === 'clear') {
-                    cookies.remove('adtest');
-                } else if (queryParams.adtest) {
-                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
-                }
-            },
-
             initOpenOverlayOnClick: function () {
                 var offset;
 
@@ -367,7 +368,6 @@ define([
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-test-cookie', modules.testCookie],
-                ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
                 ['c-breaking-news', modules.loadBreakingNews],
                 ['c-block-link', fauxBlockLink],

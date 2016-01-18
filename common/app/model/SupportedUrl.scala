@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
+import com.gu.contentapi.client.model.v1.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
 import model.pressed._
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.

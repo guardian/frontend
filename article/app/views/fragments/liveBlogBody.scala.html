@@ -1,11 +1,12 @@
-@(model: LiveBlogPage)(implicit request: RequestHeader)
+@import _root_.liveblog.BodyBlocks
+@import model.liveblog.{LiveBlogDate, BodyBlock}
+@(model: LiveBlogPage, blocks: BodyBlocks[BodyBlock])(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.TrailCssClasses.toneClass
-@import views.BodyCleaner
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import org.jsoup.Jsoup
 @import views.html.fragments.items.facia_cards.item
+@import views.support.TrailCssClasses.toneClass
 
 @defining(model.article) {  article =>
 <div class="l-side-margins">
@@ -84,8 +85,54 @@
                                         </a>
                                     </div>
                                 </div>
-                                @BodyCleaner(article, article.fields.body, amp = false)
+                                @blocks.blocks.map { block =>
+                                    <div id="block-@block.id" class="block@block.eventClass" data-block-contributor="@block.contributors.map { /*TODO separator?? needed?*/cont =>profile/@cont}.mkString(",")" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+                                        <p class="block-time published-time">
+                                            <a href="#block-@block.id" itemprop="url" class="block-time__link">
+                                                @block.publishedCreatedDate.map { case LiveBlogDate(createdDate, hhmm, ampm, gmt) =>
+                                                    <time datetime="@createdDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
+                                                    <span class="block-time__absolute">@hhmm</span>
+                                                }
+                                            </a>
+                                        </p>
+                                        @block.title.map { title =>
+                                            <h2 class="block-title" itemprop="headline">@title</h2>
+                                        }
+                                        @block.contributors.map { contributorId =>
+                                            @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
+                                                @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
+                                            }
+                                        }
+                                        <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
+                                            @BodyCleaner(article, block.bodyHtml, amp = false)
+                                        </div>
+                                        @block.republishedDate.map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
+                                            <p class="block-time updated-time">Updated
+                                                <time datetime="@republishedDate">at @ampm @gmt</time>
+                                            </p>
+                                        }
+                                        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(Some(s"block-${block.id}")), article.metadata.contentType)
+                                    </div>
+                                }
                             </div>
+
+                            <div class="live-navigation">
+                                @blocks.earlier.map { earlierBlock =>
+                                    <a href="/@{article.content.metadata.id}?page=@earlierBlock"
+                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
+                                        data-link-name="next page">
+                                        Go to older updates
+                                    </a>
+                                }
+                                @blocks.later.suffix.map { suffix =>
+                                    <a href="/@{article.content.metadata.id}@suffix"
+                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
+                                        data-link-name="previous page">
+                                        Go to newer updates
+                                    </a>
+                                }
+                            </div>
+
                         </div>
 
                         @fragments.submeta(article)
