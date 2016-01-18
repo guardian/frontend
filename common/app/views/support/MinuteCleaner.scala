@@ -24,16 +24,25 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "element--thumbnail" -> "bottom-image"
   )
 
+  /**
+    * Classes to strip from block children.
+    */
+  val strippable = Seq("element--thumbnail")
+
   override def clean(document: Document): Document = {
     if (article.isUSMinute) {
       document.getElementsByClass("block").foreach { block =>
-        block.addClass("block--minutearticle")
-        block.removeClass("block")
+        val allElements = block.getAllElements
+        block.addClass("block--minute-article")
+
+
 
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
-          if (block.getAllElements.exists(_.hasClass(childClass))) classes + parentClass
+          if (allElements.exists(_.hasClass(childClass))) classes + parentClass
           else classes
         } foreach(block.addClass)
+
+        allElements.foreach(el => strippable.foreach(el.removeClass))
       }
     }
 
