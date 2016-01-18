@@ -292,10 +292,11 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            if (prebidService.testEnabled) {
-                loadSlot(keys(slots).shift());
+            var firstSlot = keys(slots).shift();
+            if (prebidService.testEnabled && prebidService.slotIsInTest(firstSlot)) {
+                loadSlot(firstSlot);
             } else {
-                googletag.display(keys(slots).shift());
+                googletag.display(firstSlot);
                 displayed = true;
             }
         },
