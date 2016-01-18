@@ -89,6 +89,13 @@
     .ad-slot--paid-for-badge--front {
         float: right;
         margin-bottom: $gs-baseline;
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
     }
 
     &.commercial--paidfor-single .ad-slot--paid-for-badge--front {
@@ -118,15 +125,5 @@
 
     .rich-link__container:before {
         background: guss-colour(paidfor-background, $frontend-palette);
-    }
-}
-
-.ad-slot--paid-for-badge--front {
-    border-top-color: colour(neutral-2);
-
-    .ad-slot--paid-for-badge__link {
-        &:after {
-            border-bottom-color: colour(neutral-2);
-        }
     }
 }
