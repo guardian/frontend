@@ -318,8 +318,7 @@ object LinkSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
-      snapUri = content.snapUri
+      display = PressedDisplaySettings.make(content)
     )
   }
 }
@@ -328,8 +327,7 @@ final case class LinkSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  snapUri: Option[String]) extends Snap
+  override val display: PressedDisplaySettings) extends Snap
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
@@ -338,9 +336,7 @@ object LatestSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
-      cardStyle = CardStyle.make(content.cardStyle),
-      snapUri = content.snapUri
+      display = PressedDisplaySettings.make(content)
     )
   }
 }
@@ -349,9 +345,7 @@ final case class LatestSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  cardStyle: CardStyle,
-  snapUri: Option[String]) extends Snap
+  override val display: PressedDisplaySettings) extends Snap
 
 object KickerProperties {
   def make(kicker: fapiutils.ItemKicker): KickerProperties = KickerProperties(fapiutils.ItemKicker.kickerText(kicker))
