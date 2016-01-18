@@ -30,65 +30,77 @@ object Multi
 
       val omnitureId = request.getParameter("omnitureId")
 
-      val eventualContent:Future[Option[play.twirl.api.Html]] = componentsAndSpecificIds flatMap {
-        // case ("jobs", jobId) if jobId.nonEmpty =>
-        //   Future.successful {
-        //     JobsAgent.specificJobs(Seq(jobId)).headOption map {
-        //       views.html.jobs.jobFragment(_, clickMacro)
-        //     }
-        //   }
-        // case ("jobs", _) =>
-        //   Future.successful {JobsAgent.jobsTargetedAt(segment).headOption map {
-        //     views.html.jobs.jobFragment(_, clickMacro)
-        //   }}
-        case ("books", isbn) if isbn.nonEmpty => {
-            val x = BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
-              books.headOption map { book =>
-                views.html.books.bookFragment(book, clickMacro)
-              }
-            }
-            println(x)
-            Future.successful(None)
+    val eventualContent = componentsAndSpecificIds map {
+      case ("jobs", jobId) if jobId.nonEmpty =>
+        Future.successful {
+          JobsAgent.specificJobs(Seq(jobId)).headOption map {
+            views.html.jobs.jobFragment(_, clickMacro)
           }
-        case ("books", _) =>
-          Future.successful {BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
+        }
+      case ("jobs", _) =>
+        Future.successful {
+          JobsAgent.jobsTargetedAt(segment).headOption map {
+            views.html.jobs.jobFragment(_, clickMacro)
+          }
+        }
+      case ("books", isbn) if isbn.nonEmpty =>
+        BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
+          books.headOption map { book =>
+            views.html.books.bookFragment(book, clickMacro)
+          }
+        }
+      case ("books", _) =>
+        Future.successful {
+          BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
             views.html.books.bookFragment(_, clickMacro)
-          }}
-        case ("travel", travelId) if travelId.nonEmpty =>
-          Future.successful {TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption map {
+          }
+        }
+      case ("travel", travelId) if travelId.nonEmpty =>
+        Future.successful {
+          TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption map {
             views.html.travel.travelFragment(_, clickMacro)
-          }}
-        case ("travel", _) =>
-          Future.successful {TravelOffersAgent.offersTargetedAt(segment).headOption map {
+          }
+        }
+      case ("travel", _) =>
+        Future.successful {
+          TravelOffersAgent.offersTargetedAt(segment).headOption map {
             views.html.travel.travelFragment(_, clickMacro)
-          }}
-        case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
-          Future.successful {MasterClassAgent.specificClasses(Seq(eventBriteId)).headOption map {
+          }
+        }
+      case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
+        Future.successful {
+          MasterClassAgent.specificClasses(Seq(eventBriteId)).headOption map {
             views.html.masterClasses.masterClassFragment(_, clickMacro)
-          }}
-        case ("masterclasses", _) =>
-          Future.successful {MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
+          }
+        }
+      case ("masterclasses", _) =>
+        Future.successful {
+          MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
             views.html.masterClasses.masterClassFragment(_, clickMacro)
-          }}
-        case ("soulmates", _) =>
-          Future.successful {for {
+          }
+        }
+      case ("soulmates", _) =>
+        Future.successful {
+          for {
             woman <- SoulmatesAgent.womenAgent.sample().headOption
             man <- SoulmatesAgent.menAgent.sample().headOption
           } yield {
             views.html.soulmates.soulmateFragment(Random.shuffle(Seq(woman, man)), clickMacro)
-          }}
-        case _ => Future.successful(None)
-      }
-
-      eventualContent map { content =>
-        if (requestedContent.nonEmpty && content.size == requestedContent.size) {
-          Cached(componentMaxAge) {
-            jsonFormat.result(views.html.multi(content, omnitureId))
           }
-        } else {
-          NoCache(jsonFormat.nilResult)
         }
+      case _ => Future.successful(None)
+    }
+
+    Future.sequence(eventualContent) map { contents =>
+      val content = contents.flatten
+      if (requestedContent.nonEmpty && content.size == requestedContent.size) {
+        Cached(componentMaxAge) {
+          jsonFormat.result(views.html.multi(content, omnitureId))
+        }
+      } else {
+        NoCache(jsonFormat.nilResult)
       }
+    }
   }
 
 }
