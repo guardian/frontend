@@ -18,15 +18,15 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object MCTopBannerPosition extends TestDefinition(
+object CMTopBannerPosition extends TestDefinition(
   List(Variant1),
-  "mc-top-banner-position",
+  "cm-top-banner-position",
   "Test viewability and revenue changes when top banner is moved below first container on fronts and removed from articles",
   new LocalDate(2016, 2, 25)
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(MCTopBannerPosition)
+  val tests: Seq[TestDefinition] = List(CMTopBannerPosition)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
 

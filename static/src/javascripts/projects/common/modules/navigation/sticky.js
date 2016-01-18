@@ -50,7 +50,7 @@ define([
         this.isMobile = contains(this.breakpoint, 'mobile');
         this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.inTopBannerAbTest = config.tests && config.tests.mcTopBannerPosition;
+        this.inTopBannerAbTest = config.tests && config.tests.cmTopBannerPosition;
         this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || this.inTopBannerAbTest;
         this.isProfilePage = config.page.section === 'identity';
 

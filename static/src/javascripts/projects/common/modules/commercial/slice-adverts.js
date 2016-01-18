@@ -72,7 +72,7 @@ define([
 
             return Promise.all(chain(adSlices).slice(0, maxAdsToShow).and(map, function ($adSlice, index) {
                     // When we are inside the AB test we are adding inline1 manually so index needs to start from 2.
-                    var inlineIndexOffset = (config.tests.mcTopBannerPosition) ? 2 : 1;
+                    var inlineIndexOffset = (config.tests.cmTopBannerPosition) ? 2 : 1;
 
                     var adName        = 'inline' + (index + inlineIndexOffset),
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
