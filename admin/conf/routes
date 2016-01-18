@@ -56,7 +56,10 @@ GET         /ophan/ads/render-time                                              
 
 #Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
+GET         /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.renderSwitchboard()
+
 POST        /dev/switchboard                                                                        controllers.admin.SwitchboardController.save()
+POST        /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.save()
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()

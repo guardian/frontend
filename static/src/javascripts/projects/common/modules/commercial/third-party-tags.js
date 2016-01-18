@@ -11,19 +11,19 @@ define([
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain'
-], function (
-    Promise,
-    config,
-    mediator,
-    commercialFeatures,
-    audienceScienceGateway,
-    audienceSciencePql,
-    imrWorldwide,
-    remarketing,
-    krux,
-    outbrain
-) {
+    'common/modules/commercial/third-party-tags/outbrain',
+    'common/modules/commercial/third-party-tags/plista'
+], function (Promise,
+             config,
+             mediator,
+             commercialFeatures,
+             audienceScienceGateway,
+             audienceSciencePql,
+             imrWorldwide,
+             remarketing,
+             krux,
+             outbrain,
+             plista) {
 
     function init() {
 
@@ -38,8 +38,15 @@ define([
                 break;
         }
 
-        // Outbrain needs to be loaded before first ad as it is checking for presence of high relevance component on page
-        outbrain.init();
+        // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
+        if (config.switches.outbrain) {
+            if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() == 'au') {
+                plista.init();
+            } else {
+                outbrain.init();
+            }
+        }
+
 
         loadOther();
 

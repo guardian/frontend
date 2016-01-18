@@ -1,0 +1,32 @@
+@import conf.switches.Switch
+@(env: String, lastModified: Long)(implicit flash: Flash)
+
+@import controllers.admin.routes.UncachedAssets
+
+@admin_main("Switchboard - Plista", env, isAuthed = true) {
+<link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
+<link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
+@if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
+<div class="row-fluid">
+    <form id="switchboard" action="/dev/switchboard-plista" method="POST">
+        <input type="hidden" name="lastModified" value="@lastModified" />
+        @conf.switches.Switches.all.filter(_.name=="plista-for-outbrain-au").map{case switch: Switch =>
+            <h4>Plista Activation Switch</h4>
+            <p>When enabled, the following switch will swap in the Plista content recommendation widget
+                in the place of Outbrain (for AU edition only)</p>
+            <p>When the switch has been set - click the 'Save' button to confirm.</p>
+            <p><b>Note: this switch should only be enabled in the CODE environment, not PROD</b></p>
+            <div class="well">
+                <div class="checkbox">
+                    <label @if(Switch.expiry(switch).expiresSoon) { class="Expiring expiry-days-@Switch.expiry(switch).daysToExpiry"}>
+                    <strong>@switch.name</strong><span> - @switch.description<strong> @if(Switch.expiry(switch).expiresSoon) { There are @Switch.expiry(switch).daysToExpiry</strong> days left.} <br /></span>
+                    <input id="switch-@switch.name" name="@switch.name" type="radio" value = "on" @if(switch.isSwitchedOn) { checked="checked" } style="margin-right: 3px"/>on
+                    <input id="switch-@switch.name" name="@switch.name" type="radio" value = "off" @if(!switch.isSwitchedOn) { checked="checked" } style="margin-right: 3px"/>off
+                    </label>
+                </div>
+            </div>
+        }
+        <input class="btn btn-large btn-success" type="submit" value="Save">
+    </form>
+</div>
+}

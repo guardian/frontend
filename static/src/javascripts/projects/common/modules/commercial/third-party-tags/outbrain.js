@@ -96,7 +96,7 @@ define([
         },
 
         identityPolicy: function () {
-            return (!identity.isUserLoggedIn() || !(identity.isUserLoggedIn() && config.page.commentable));
+            return (!(identity.isUserLoggedIn() && config.page.commentable));
         },
 
         hasHighRelevanceComponent: function () {
