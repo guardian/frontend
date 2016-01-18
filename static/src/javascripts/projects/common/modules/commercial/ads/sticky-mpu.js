@@ -1,14 +1,12 @@
 define([
-    'qwery',
-    'common/utils/$',
     'common/utils/config',
     'common/modules/ui/sticky',
+    'common/utils/fastdom-promise',
     'lodash/objects/defaults'
 ], function (
-    qwery,
-    $,
     config,
     Sticky,
+    fastdom,
     defaults) {
 
     var mpuHeight = 275,
@@ -20,14 +18,29 @@ define([
         };
 
     StickyMpu.prototype.create = function () {
-        var articleBodyOffset;
+        var offset;
 
         if (this.$adSlot.data('name') !== 'right') {
             return;
         }
-        articleBodyOffset = config.page.hasShowcaseMainElement ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
-        this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-        new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+
+        offset = fastdom.read(config.page.hasShowcaseMainElement ? function () {
+            return document.querySelector('.media-primary').offsetHeight;
+        } : function () {
+            var body = document.querySelector('.content__article-body')
+            if (body) {
+                return body.offsetTop;
+            } else {
+                throw new Error("There is no element to stick the element to");
+            }
+        });
+
+        offset.then(function (articleBodyOffset) {
+            this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
+            new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+        }.bind(this)).catch(function () {
+            // Liveblogs don't need sticky MPUs and we fail silently
+        });
     };
 
     return StickyMpu;
