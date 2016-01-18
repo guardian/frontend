@@ -370,6 +370,10 @@ define([
 
         shouldRunTest: shouldRunTest,
 
+        /**
+         * return running tests and their variants as a simple key-value map
+         * e.g. {TestFoo : 'variant', TestBar : 'notintest'}
+         */
         getRunningTestVariants: function () {
             return mapValues(getParticipations(), function (test) {
                 return test.variant;
