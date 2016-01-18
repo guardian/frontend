@@ -4,7 +4,7 @@
 
 @(quiz: Quiz)
 
-<form action="@quiz.postUrl" method="POST">
+<form action="@quiz.postUrl" method="POST" class="quiz">
 
     @quiz.questions.zipWithIndex.map { case (data, questionIndex) =>
         @question(data, questionIndex, QuizForm.form(s"answers[$questionIndex]"))
@@ -13,17 +13,25 @@
 </form>
 
 @question(question: _root_.model.content.Question, order: Int, field: play.api.data.Field) = {
-    <fieldset>
-        <legend>@question.text</legend>
-            @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
-                <dl>
-                    <dt>
-                        <label for="question-@order-answer-@answerIndex">@{answer.text}</label>
-                    </dt>
-                    <dd>
-                        <input type="radio" name="answers[@order]" id="question-@order-answer-@answerIndex" value="Q@{order}##A@{answerIndex}##@{answer.text}">
-                    </dd>
-                </dl>
-            }
+    <fieldset class="quiz__question">
+        <legend class="quiz__question-legend">
+            <h4 class="quiz__question-legend__header">
+                <span class="quiz__question-number">@{order+1}</span>
+                <span class="quiz__question-text">@question.text</span>
+            </h4>
+        </legend>
+        @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
+            <div class="quiz__question__answer-row">
+                <label for="question-@order-answer-@answerIndex"
+                       class="quiz__answer">
+                       <input type="radio"
+                              name="answers[@order]"
+                              id="question-@order-answer-@answerIndex"
+                              value="Q@{order}##A@{answerIndex}##@{answer.text}"
+                              class="quiz__answer__input">
+                       @{answer.text}
+               </label>
+            </div>
+        }
     </fieldset>
 }
