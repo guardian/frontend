@@ -4,7 +4,7 @@
 define([
     'Promise',
     'bonzo',
-    'common/modules/commercial/prebid-test/placements',
+    'common/modules/commercial/prebid/placements',
     'common/modules/experiments/ab',
     'common/utils/config',
     'common/utils/detect',

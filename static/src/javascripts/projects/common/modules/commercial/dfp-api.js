@@ -22,7 +22,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
-    'common/modules/commercial/prebid-test/prebid-service',
+    'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
