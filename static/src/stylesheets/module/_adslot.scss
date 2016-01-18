@@ -66,12 +66,14 @@
     background-color: colour(neutral-8);
     display: none;
 
-    .js-on & {
+    .js-on .new-sticky-ad & {
         z-index: 1022;
         width: 100%;
         transform: translateZ(0);
         will-change: transform;
         position: relative;
+        overflow: hidden;
+        transition: max-height 1s cubic-bezier(0, 0, 0, 0.985);
     }
 
     &.top-banner-ad-container--below-nav {
@@ -189,7 +191,7 @@
         padding-top: $gs-row-height / 2;
 
         .ad-slot__label {
-            margin-top: -$gs-row-height / 2;
+            margin-top: (-1) * $gs-row-height / 2;
         }
 
         .ad-below-nav & {
