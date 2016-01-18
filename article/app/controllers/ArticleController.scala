@@ -38,22 +38,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-//      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
-//        new HtmlCleaner {
-//          def clean(d: Document): Document = {
-//            val blocksToKeep = d.getElementsByTag("div") takeWhile {
-//              _.attr("id") != lastUpdateBlockId
-//            }
-//            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
-//
-//            blocksToDrop foreach {
-//              _.remove()
-//            }
-//            d
-//          }
-//        }
-//      }
-    val latestBlocks = page.article.fields.blocks.takeWhile(_.id != lastUpdateBlockId)
+    val latestBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents(KeyEventData(latestBlocks, Edition(request).timezone))
     Cached(page)(JsonComponent(("html" -> blocksHtml), ("timeline" -> timelineHtml)))
