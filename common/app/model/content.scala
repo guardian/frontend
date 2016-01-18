@@ -454,18 +454,6 @@ final case class Article (
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
 
-  case class KeyEventData(id: String, time: Option[LiveBlogDate], title: Option[String])
-
-  def keyEvents(timezone: DateTimeZone): Seq[KeyEventData] = {
-    content.fields.blocks.foldLeft((false, Nil: List[BodyBlock])) {
-      case ((summaryFound, soFar), nextBlock) if !summaryFound && nextBlock.eventType == SummaryEvent => (true, nextBlock :: soFar)
-      case ((summaryFound, soFar), nextBlock) if nextBlock.eventType == KeyEvent => (summaryFound, nextBlock :: soFar)
-      case ((summaryFound, soFar), _) => (summaryFound, soFar)
-    }._2.reverse.take(7).map { bodyBlock =>
-      KeyEventData(bodyBlock.id, bodyBlock.publishedCreatedDate(timezone), bodyBlock.title)
-    }
-  }
-
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   //@deprecated("use content.fields.blocks", "")
   lazy val blocks = LiveBlogParser.parse(fields.body)

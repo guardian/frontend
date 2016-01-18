@@ -1,0 +1,10 @@
+@import model.KeyEventData
+@(keyEvents: Seq[KeyEventData])
+
+@keyEvents.map { keyEvent =>
+    <li class="timeline__item" data-event-id="@keyEvent.id">
+        <a class="timeline__link" href="#@keyEvent.id" data-event-id="@keyEvent.id">
+            <span class="timeline__date">@views.html.liveblog.dateBlock(keyEvent.time)</span><span class="timeline__title u-underline">@keyEvent.title</span>
+        </a>
+    </li>
+}

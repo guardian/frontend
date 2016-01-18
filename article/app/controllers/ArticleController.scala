@@ -38,23 +38,25 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
-        new HtmlCleaner {
-          def clean(d: Document): Document = {
-            val blocksToKeep = d.getElementsByTag("div") takeWhile {
-              _.attr("id") != lastUpdateBlockId
-            }
-            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
-
-            blocksToDrop foreach {
-              _.remove()
-            }
-            d
-          }
-        }
-      }
-    page.article.fields.blocks.takeWhile(_.id != lastUpdateBlockId).map
-      Cached(page)(JsonComponent(("html" -> html), ("timeline" -> ))
+//      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
+//        new HtmlCleaner {
+//          def clean(d: Document): Document = {
+//            val blocksToKeep = d.getElementsByTag("div") takeWhile {
+//              _.attr("id") != lastUpdateBlockId
+//            }
+//            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
+//
+//            blocksToDrop foreach {
+//              _.remove()
+//            }
+//            d
+//          }
+//        }
+//      }
+    val latestBlocks = page.article.fields.blocks.takeWhile(_.id != lastUpdateBlockId)
+    val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
+    val timelineHtml = views.html.liveblog.keyEvents(KeyEventData(latestBlocks, Edition(request).timezone))
+    Cached(page)(JsonComponent(("html" -> blocksHtml), ("timeline" -> timelineHtml)))
   }
 
   case class TextBlock(
@@ -94,7 +96,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)
-            val jsonResponse = () => views.html.fragments.liveBlogBody (blog, blocks)
+            val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
             renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
           case None => NotFound
         }
