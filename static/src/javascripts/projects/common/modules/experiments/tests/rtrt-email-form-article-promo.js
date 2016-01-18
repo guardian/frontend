@@ -8,8 +8,7 @@ define([
     'common/utils/detect',
     'lodash/collections/contains',
     'common/utils/config',
-    'lodash/collections/every',
-    'lodash/collections/some'
+    'lodash/collections/every'
 ], function (
     $,
     bean,
