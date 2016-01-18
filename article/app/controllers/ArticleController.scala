@@ -136,7 +136,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean]) = {
     LongCacheAction { implicit request =>
       mapModel(path, blocks = true) { model =>
-        (lastUpdate, rendered) match {
+        (lastUpdate, rendered, showBlocks) match {
           case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate, showBlocks)
           case (None, Some(false), _) => blockText(model, 6)
           case (_, _, _) => render(path, model, None)

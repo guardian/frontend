@@ -19,7 +19,8 @@ define([
     'lodash/collections/toArray',
     'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
-    'common/modules/ui/notification-counter'
+    'common/modules/ui/notification-counter',
+    'common/modules/article/twitter'
 ], function (
     bean,
     bonzo,
@@ -37,7 +38,8 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter) {
+    NotificationCounter,
+    twitter) {
 
     function AutoUpdate(opts) {
         var options = assign({
@@ -56,9 +58,10 @@ define([
             this.$liveblogBody.addClass('autoupdate--has-animation');
 
             //this.latestBlockId = this.$liveblogBody.data('most-recent-block');
-            this.penultimate = $($('.block')[0]).attr('id'); // TO REMOVE AFTER TESTING
+            this.penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
             this.latestBlockId = this.penultimate;
             this.requiredOffset = 12;
+            this.isLivePage = !(window.location.href.search("[?&]page=") !== -1);
 
             this.checkForUpdates();
             detect.initPageVisibility();
@@ -67,26 +70,36 @@ define([
             new Sticky(qwery('.blog__updates-box-tofix'), { top: this.requiredOffset, emit: true }).init();
 
             bean.on(document.body, 'click', '.js-updates-button', function () {
-                this.button.onClick();
+                if(this.isLivePage) {
+                    console.log('isLive');
+                    this.button.livePageOnClick();
+                } else {
+                    console.log('!isLive');
+                    this.button.notLivePageOnClick();
+                }
             }.bind(this));
 
             mediator.on('modules:liveblog-updates-button:unfixed', function () {
-                this.$updateBox.addClass('loading');
-                this.blocks.injectNew();
+                if(this.isLivePage) {
+                    this.$updateBox.addClass('loading');
+                    this.blocks.injectNew();
+                }
             }.bind(this));
 
             mediator.on('modules:detect:pagevisibility:visible', function () {
-                console.log('foo');
                 //this.on(); // reset backoff
                 this.blocks.revealNewElements();
             }.bind(this));
 
-            bindAll(this, 'checkForUpdates')
+            bindAll(this, 'checkForUpdates');
         };
 
         this.checkForUpdates = function () {
+            var shouldFetchBlocks = '&showBlocks=' + (this.isLivePage ? 'true' : 'false');
+            var latestBlockIdToUse = ((this.latestBlockId) ? this.latestBlockId : 'block-0');
+
             return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + ((this.latestBlockId) ? this.latestBlockId : 'block-0') + '&showBlocks=true',
+                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
@@ -123,7 +136,7 @@ define([
                     elementsToAdd = toArray(resultHtml.children);
 
                     //insert new blocks and animate
-                    $('#' + this.latestBlockId).before(elementsToAdd);
+                    $('.blog__updates-box-container').after(elementsToAdd);
 
                     if(detect.pageVisible()) {
                         this.blocks.revealNewElements();
@@ -134,6 +147,7 @@ define([
                     this.blocks.newBlocks = '';
 
                     RelativeDates.init();
+                    twitter.enhanceTweets();
 
                     setTimeout(function () {
                         this.button.reset();
@@ -142,6 +156,7 @@ define([
             }.bind(this),
             revealNewElements: function () {
                 $('.autoupdate--hidden', this.$liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
+                mediator.emit('modules:autoupdate:unread', 0);
             }.bind(this)
         };
 
@@ -156,11 +171,14 @@ define([
                 this.$updateBox.removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
                 this.$updateBoxContainer.removeClass('blog__updates-box-container--open');
             }.bind(this),
-            onClick: function () {
+            livePageOnClick: function () {
                 scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
                 this.$updateBox.addClass('loading');
                 this.blocks.injectNew();
-            }.bind(this)
+            }.bind(this),
+            notLivePageOnClick: function () {
+                location.assign(window.location.pathname);
+            }
         };
     }
 

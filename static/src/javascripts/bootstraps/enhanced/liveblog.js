@@ -15,7 +15,7 @@ define([
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
-    'common/modules/ui/autoupdate',
+    'common/modules/ui/newAutoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
     'common/modules/ui/relativedates',
@@ -197,15 +197,15 @@ define([
         },
 
         createAutoUpdate: function () {
-            if (config.page.isLive) {
-                var autoUpdate = new AutoUpdate({
+            //if (config.page.isive) {
+                AutoUpdate({
                     backoff: 2,
                     backoffMax: 1000 * 60 * 20,
                     attachTo: $('.js-liveblog-body')[0],
                     switches: config.switches
                 });
-                autoUpdate.init();
-            }
+                //autoUpdate.init();
+            //}
         },
 
         keepTimestampsCurrent: function () {
