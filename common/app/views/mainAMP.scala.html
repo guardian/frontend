@@ -54,14 +54,14 @@
 
             @Page.getContentPage(page).map { content =>
                 @if(!content.item.tags.series.isEmpty) {
-                    @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
-                } else {
-                    @if(content.item.content.hasStoryPackage) {
-                        @fragments.amp.storyPackageAmp(related)
-                    } else {
-                        @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
+                    @content.item.tags.series.map { tag =>
+                        @fragments.amp.onwardTemplateAmp("series/mf2/" + tag.id + ".json")
                     }
-                }
+                } else { @if(content.item.content.hasStoryPackage) {
+                        @fragments.amp.storyPackageAmp(related)
+                } else {
+                    @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
+                }}
             }
 
             @fragments.amp.onwardTemplateAmp("container-mf2/1/0/international.json")
