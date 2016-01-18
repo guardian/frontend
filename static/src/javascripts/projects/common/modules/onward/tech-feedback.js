@@ -9,7 +9,7 @@ define([
     'lodash/collections/map',
     'lodash/collections/reduce',
     'lodash/objects/assign',
-    'lodash/objects/pairs'
+    'lodash/objects/keys'
 ], function (
     bean,
     fastdom,
@@ -21,7 +21,7 @@ define([
     map,
     reduce,
     assign,
-    pairs) {
+    keys) {
 
     function objToString(obj) {
         return reduce(obj, function (str, value, key) {
@@ -61,7 +61,7 @@ define([
                     width: window.innerWidth,
                     adBlock: detect.adblockInUse(),
                     devicePixelRatio: window.devicePixelRatio,
-                    abTests : summariseAbTests(ab.getRunningTestVariants())
+                    abTests : summariseAbTests(ab.getParticipations())
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
                     + objToString(assign(props, storedValues))
@@ -93,13 +93,14 @@ define([
         }, {});
     }
 
-    function summariseAbTests(testsAndVariants) {
-        var testAndVariantPairs = pairs(testsAndVariants);
-        if (testAndVariantPairs.length === 0) {
+    function summariseAbTests(testParticipations) {
+        var tests = keys(testParticipations);
+        if (tests.length === 0) {
             return 'No tests running';
         } else {
-            return map(testAndVariantPairs, function (pair) {
-                return pair[0] + '=' + pair[1];
+            return map(tests, function (testKey) {
+                var test = testParticipations[testKey];
+                return testKey + '=' + test.variant;
             }).join(', ');
         }
     }

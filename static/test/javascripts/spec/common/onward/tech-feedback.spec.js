@@ -51,8 +51,8 @@ define(['common/modules/onward/tech-feedback'], function (TechFeedback) {
             it('summarizes a map of tests and variants', function () {
                 var t = new TechFeedback();
                 var tests = {
-                    Foo : 'foo',
-                    Bar : 'bar'
+                    Foo : {variant : 'foo'},
+                    Bar : {variant : 'bar'}
                 };
                 expect(t.summariseAbTests(tests)).toBe('Foo=foo, Bar=bar');
             });

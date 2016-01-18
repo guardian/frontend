@@ -13,7 +13,6 @@ define([
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
-    'lodash/objects/mapValues',
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
@@ -35,7 +34,6 @@ define([
     flatten,
     forEach,
     keys,
-    mapValues,
     some,
     filter,
     map,
@@ -369,16 +367,6 @@ define([
         },
 
         shouldRunTest: shouldRunTest,
-
-        /**
-         * return running tests and their variants as a simple key-value map
-         * e.g. {TestFoo : 'variant', TestBar : 'notintest'}
-         */
-        getRunningTestVariants: function () {
-            return mapValues(getParticipations(), function (test) {
-                return test.variant;
-            });
-        },
 
         // testing
         reset: function () {
