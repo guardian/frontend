@@ -75,7 +75,7 @@ define([
                     break;
             }
 
-            iframe = bonzo.create('<iframe src="/email/form/article/' + listId + '" height="218px" data-form-title="Want stories like this in your inbox?" data-form-description="Sign up to The Guardian Today daily email and get the biggest headlines each morning." data-form-campaign-code="frontReferredTest" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe js-email-sub__iframe--article"></iframe>')[0];
+            iframe = bonzo.create('<iframe src="/email/form/article/' + listId + '" height="218px" data-form-title="Want stories like this in your inbox?" data-form-description="Sign up to The Guardian Today daily email and get the biggest headlines each morning." data-form-campaign-code="frontReferredTest" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe js-email-sub__iframe--article" data-form-success-desc="We will send you our picks of the most important headlines tomorrow morning."></iframe>')[0];
 
             bean.on(iframe, 'load', function () {
                 email.init(iframe);
