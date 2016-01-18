@@ -39,23 +39,20 @@ define([
             return ['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'].indexOf(slot) === -1;
         };
 
-        var pendingAdverts = new Promise.resolve(true);
+        var pendingRequests = new Promise.resolve(true);
 
-        this.loadSlots = function (slotIds) {
-            slotIds = Array.isArray(slotIds) ? slotIds : [slotIds];
+        this.loadSlots = function (slotId) {
+            var pbjsAdUnits = [new PrebidAdUnit(slotId)];
 
-            var pbjsAdUnits = map(slotIds, function (id) {
-                return new PrebidAdUnit(id);
-            });
-
-            pendingAdverts = pendingAdverts.then(function loadNextSet() {
+            // Prebid.js can only run one action at a time
+            pendingRequests = pendingRequests.then(function loadNextSet() {
                 return new Promise(function (resolve) {
                     window.pbjs.que.push(function () {
                         pbjs.addAdUnits(pbjsAdUnits);
                         pbjs.requestBids({
                             bidsBackHandler : function () {
                                 // We are not actually going to use the bid responses; this test purely validates performance
-                                forEach(slotIds, googletag.display);
+                                googletag.display(slotId);
                                 resolve();
                             }
                         });
@@ -63,7 +60,7 @@ define([
                 });
             });
 
-            return pendingAdverts;
+            return pendingRequests;
         };
 
     }
