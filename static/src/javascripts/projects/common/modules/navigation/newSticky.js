@@ -3,16 +3,18 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/mediator',
+    'common/utils/config',
     'common/utils/detect'
 ], function (
     fastdom,
     Promise,
     $,
     mediator,
+    config,
     detect) {
 
     return function () {
-        if (detect.getBreakpoint() !== 'mobile') {
+        if (detect.getBreakpoint() !== 'mobile' && config.page.contentType !== 'Interactive') {
             fastdom.read(function () {
                 var adId = 'dfp-ad--top-above-nav',
                     $adBanner = $('.js-top-banner-above-nav'),
