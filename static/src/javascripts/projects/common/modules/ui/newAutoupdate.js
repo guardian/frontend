@@ -19,8 +19,7 @@ define([
     'lodash/collections/toArray',
     'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
-    'common/modules/ui/notification-counter',
-    'common/modules/article/twitter'
+    'common/modules/ui/notification-counter'
 ], function (
     bean,
     bonzo,
@@ -38,8 +37,7 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter,
-    twitter) {
+    NotificationCounter) {
 
     return function (opts) {
         var options = assign({
@@ -58,7 +56,7 @@ define([
         var scrolledPastTopBlock = function () {
             return $liveblogBody.offset().top < window.scrollY;
         };
-        var isLivePage = !(window.location.href.search("[?&]page=") !== -1);
+        var isLivePage = !(window.location.href.search('[?&]page=') !== -1);
 
         //var latestBlockId = this.$liveblogBody.data('most-recent-block');
         var penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
@@ -108,7 +106,6 @@ define([
 
                     if (isLivePage) {
                         newBlocks = resp.html;
-                        console.log(scrolledPastTopBlock());
                         if (scrolledPastTopBlock()) {
                             toastButtonRefresh(count);
                         } else {

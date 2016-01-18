@@ -48,9 +48,7 @@ define([
     robust) {
     'use strict';
 
-    var modules,
-        //autoUpdate = null,
-        latestBlockId;
+    var modules;
 
     function getTimelineEvents() {
         var keyEvents = qwery('.is-key-event').slice(0, 7),
@@ -155,10 +153,6 @@ define([
             } else if (config.switches.liveblogAdverts) {
                 liveblogAdverts.init();
             }
-        },
-
-        createFilter: function () {
-            new LiveFilter($('.js-blog-blocks')[0]).ready();
         },
 
         createTimeline: function () {

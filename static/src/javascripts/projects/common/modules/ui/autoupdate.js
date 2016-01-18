@@ -19,8 +19,7 @@ define([
     'lodash/collections/toArray',
     'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
-    'common/modules/ui/notification-counter',
-    'common/modules/article/twitter'
+    'common/modules/ui/notification-counter'
 ], function (
     bean,
     bonzo,
@@ -38,15 +37,9 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter,
-    twitter) {
+    NotificationCounter) {
 
-    function AutoUpdate(opts) {
-        var options = assign({
-            'backoff':          1, // 1 = no backoff
-            'backoffMax':       1000 * 60 * 20 // 20 mins
-        }, opts);
-
+    function AutoUpdate() {
         this.updateDelay = 10000;
 
         this.init = function () {
@@ -61,7 +54,7 @@ define([
             this.penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
             this.latestBlockId = this.penultimate;
             this.requiredOffset = 12;
-            this.isLivePage = !(window.location.href.search("[?&]page=") !== -1);
+            this.isLivePage = !(window.location.href.search('[?&]page=') !== -1);
 
             this.checkForUpdates();
             detect.initPageVisibility();
@@ -71,10 +64,8 @@ define([
 
             bean.on(document.body, 'click', '.js-updates-button', function () {
                 if (this.isLivePage) {
-                    console.log('isLive');
                     this.button.livePageOnClick();
                 } else {
-                    console.log('!isLive');
                     this.button.notLivePageOnClick();
                 }
             }.bind(this));
