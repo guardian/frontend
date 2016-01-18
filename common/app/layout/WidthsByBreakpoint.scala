@@ -198,6 +198,13 @@ object ContentWidths {
       wide =            Some(880.px))
   }
 
+  object MinuteMedia extends ContentRelation {
+    override val inline = BodyMedia.inline
+
+    override val thumbnail = WidthsByBreakpoint(
+      mobile = Some(95.vw))
+  }
+
   object LiveBlogMedia extends ContentRelation {
     override val inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
