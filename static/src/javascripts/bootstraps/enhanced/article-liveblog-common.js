@@ -5,7 +5,6 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
-    'common/modules/article/truncate-liveblog',
     'common/modules/article/twitter',
     'common/modules/open/cta',
     'common/modules/ui/last-modified',
@@ -17,7 +16,6 @@ define([
     config,
     mediator,
     robust,
-    truncate,
     twitter,
     OpenCta,
     lastModified,
@@ -43,9 +41,8 @@ define([
         });
     }
 
-    function initTruncateAndTwitter() {
+    function initTwitter() {
         // Ensure that truncation occurs before the tweet upgrading.
-        truncate();
         twitter.init();
         twitter.enhanceTweets();
     }
@@ -54,7 +51,7 @@ define([
         robust.catchErrorsAndLogAll([
             ['trail-article', initOpenCta],
             ['trail-fence', initFence],
-            ['trail-twitter', initTruncateAndTwitter],
+            ['trail-twitter', initTwitter],
             ['trail-sharing', selectionSharing.init],
             ['trail-last-modified', lastModified]
         ]);

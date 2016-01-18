@@ -72,6 +72,12 @@ define([
             textInput: 'js-email-sub__text-input',
             listIdHiddenInput: 'js-email-sub__listid-input'
         },
+        messages = {
+            defaultSuccessHeadline: 'Thank you for subscribing',
+            defaultSuccessDesc: '',
+            customSuccessHeadline: null,
+            customSuccessDesc: null
+        },
         setup = function (rootEl, thisRootEl, isIframed) {
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
                 formInlineLabels.init(el, {
@@ -170,8 +176,8 @@ define([
             replaceContent: function (isSuccess, $form) {
                 var submissionMessage = {
                         statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
-                        submissionHeadline: (isSuccess) ? 'Thank you for subscribing' : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.',
+                        submissionHeadline: (isSuccess) ? messages.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
+                        submissionMessage: (isSuccess) ? messages.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
                         submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
                     submissionHtml = template(successHtml, submissionMessage);
@@ -188,6 +194,8 @@ define([
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
+                    formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
+                    formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
                 fastdom.write(function () {
@@ -209,6 +217,15 @@ define([
                     campaignCode: formCampaignCode,
                     referrer: window.location.href
                 });
+
+                // Set Success headline and desc
+                if (formSuccessHeadline) {
+                    messages.customSuccessHeadline = formSuccessHeadline;
+                }
+
+                if (formSuccessDesc) {
+                    messages.customSuccessDesc = formSuccessDesc;
+                }
 
             },
             setTone: function ($el) {
