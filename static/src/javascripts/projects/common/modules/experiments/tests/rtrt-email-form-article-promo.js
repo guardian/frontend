@@ -24,7 +24,7 @@ define([
     return function () {
         this.id = 'RtrtEmailFormArticlePromoV2';
         this.start = '2015-12-17';
-        this.expiry = '2016-01-21';
+        this.expiry = '2016-02-03';
         this.author = 'Gareth Trufitt';
         this.description = 'Test promotion of email form at bottom vs three paragraphs from end of article pages (when clicked from front)';
         this.audience = 1;
@@ -47,10 +47,15 @@ define([
                 browser = detect.getUserAgent.browser,
                 version = detect.getUserAgent.version,
                 allArticleEls = $('> *', $articleBody),
-                lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph);
+                lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph),
+                pageIsBlacklisted = contains(config.page.keywords.split(','), 'NHS');
 
             // User referred from a front, is not logged in and not lte IE9
-            return lastFiveElsParas && urlRegex.test(document.referrer) && !Id.isUserLoggedIn() && !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+            return !pageIsBlacklisted &&
+                    lastFiveElsParas &&
+                    urlRegex.test(document.referrer) &&
+                    !Id.isUserLoggedIn() &&
+                    !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
         };
 
         function injectEmailForm($position, typeOfInsert) {
