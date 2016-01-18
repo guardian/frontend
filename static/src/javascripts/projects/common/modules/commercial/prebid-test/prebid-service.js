@@ -102,11 +102,11 @@ define([
     function getSlotAdSizes(slotElementId) {
         var $slot = bonzo(document.getElementById(slotElementId));
 
-        var validBreakpoints = detect.breakpoints.filter(function (breakpoint) {
+        var validBreakpoints = filter(detect.breakpoints, function (breakpoint) {
             return detect.isBreakpoint({min : breakpoint.name});
         });
 
-        var validBreakpointKeys = validBreakpoints.map(function (breakpoint) {
+        var validBreakpointKeys = map(validBreakpoints, function (breakpoint) {
             // Duplicated from dfp-api for the purpose of our test code
             return breakpoint.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         });
