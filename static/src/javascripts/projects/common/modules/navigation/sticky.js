@@ -29,7 +29,7 @@ define([
     function StickyHeader() {
         this.breakpoint = detect.getBreakpoint();
 
-        // temporarily disable on mobile and top banner test
+        // temporarily disable on mobile
         if (this.breakpoint === 'mobile'
             && config.switches.disableStickyNavOnMobile) {
             return;
