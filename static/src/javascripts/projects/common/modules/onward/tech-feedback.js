@@ -16,9 +16,9 @@ define([
     $,
     config,
     detect,
-    map,
     dfp,
     ab,
+    map,
     reduce,
     assign,
     pairs) {
@@ -61,7 +61,7 @@ define([
                     width: window.innerWidth,
                     adBlock: detect.adblockInUse(),
                     devicePixelRatio: window.devicePixelRatio,
-                    abTests : summariseAbTests()
+                    abTests : summariseAbTests(ab.getRunningTestVariants())
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
                     + objToString(assign(props, storedValues))
@@ -93,8 +93,8 @@ define([
         }, {});
     }
 
-    function summariseAbTests() {
-        var testAndVariantPairs = pairs(ab.getTestsAndVariants());
+    function summariseAbTests(testsAndVariants) {
+        var testAndVariantPairs = pairs(testsAndVariants);
         if (testAndVariantPairs.length === 0) {
             return 'No tests running';
         } else {
@@ -110,10 +110,13 @@ define([
      */
     return function () {
         var storedValues = getValuesFromHash(window.location.hash);
-        this.getValuesFromHash = getValuesFromHash;
         registerHandler('.js-tech-feedback-report', addEmailValuesToHash(storedValues));
         registerHandler('.js-tech-feedback-mailto', addEmailHeaders(storedValues));
         registerHandler('.js-userhelp-mailto', addEmailHeaders(storedValues));
         registerHandler('[href=mailto:crosswords.beta@theguardian.com]', addEmailHeaders(storedValues));// FIXME should have used a .js- selector
+
+        // Exposed for testing
+        this.getValuesFromHash = getValuesFromHash;
+        this.summariseAbTests = summariseAbTests;
     };
 });

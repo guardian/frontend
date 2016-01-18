@@ -270,7 +270,7 @@ define([
                     '{ "value": { "FooTest": { "variant": "foo" }, "BarTest": { "variant": "bar" } } }'
                 );
 
-                expect(ab.getTestsAndVariants()).toEqual({
+                expect(ab.getRunningTestVariants()).toEqual({
                     FooTest : 'foo',
                     BarTest : 'bar'
                 });

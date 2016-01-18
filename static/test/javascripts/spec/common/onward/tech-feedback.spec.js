@@ -46,5 +46,22 @@ define(['common/modules/onward/tech-feedback'], function (TechFeedback) {
             var values = t.getValuesFromHash('#ophanId=igdn1xckorpgh5z5ucdv');
             expect(values).toEqual({'ophanId': 'igdn1xckorpgh5z5ucdv'});
         });
+
+        describe('A/B test summary', function () {
+            it('summarizes a map of tests and variants', function () {
+                var t = new TechFeedback();
+                var tests = {
+                    Foo : 'foo',
+                    Bar : 'bar'
+                };
+                expect(t.summariseAbTests(tests)).toBe('Foo=foo, Bar=bar');
+            });
+
+            it('works when no tests are in place', function () {
+                var t = new TechFeedback();
+                var tests = {};
+                expect(t.summariseAbTests()).toBe('No tests running');
+            });
+        });
     });
 });

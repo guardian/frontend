@@ -13,10 +13,10 @@ define([
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
+    'lodash/objects/mapValues',
     'lodash/collections/some',
     'lodash/collections/filter',
     'lodash/collections/map',
-    'lodash/collections/mapValues',
     'lodash/collections/find',
     'lodash/objects/pick',
     'common/utils/chain'
@@ -35,10 +35,10 @@ define([
     flatten,
     forEach,
     keys,
+    mapValues,
     some,
     filter,
     map,
-    mapValues,
     find,
     pick,
     chain) {
@@ -370,7 +370,7 @@ define([
 
         shouldRunTest: shouldRunTest,
 
-        getTestsAndVariants: function () {
+        getRunningTestVariants: function () {
             return mapValues(getParticipations(), function (test) {
                 return test.variant;
             });
