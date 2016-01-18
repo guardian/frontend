@@ -77,6 +77,7 @@
                     <option value="shop">Shop</option>
                     <option value="money">Money</option>
                     <option value="gardening">Gardening</option>
+                    <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
             <dt>Component in the RH column</dt>
@@ -137,12 +138,12 @@
                     });
 
                     var $palette    = $('#dfp-palette'),
-                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening', 'soulmates']
                             .map(function (tone) {
                                 return 'commercial--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
-                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                        $('#multiple1, .commercial--dfp-single, .commercial--v-high')
                             .removeClass(toneClasses.join(' '))
                             .addClass('commercial--tone-' + $palette.val());
                     });
@@ -686,6 +687,7 @@
 
     @Seq(
         Map(
+            ("id", "manual1"),
             ("type", "single"),
             ("creativeId", "10025607"),
             ("args", Json.obj(
@@ -706,6 +708,7 @@
             ))
         ),
         Map(
+            ("id", "multiple1"),
             ("type", "multiple"),
             ("creativeId", "10025847"),
             ("args", Json.obj(
@@ -741,6 +744,42 @@
                 ("omnitureId", "[%OmnitureID%]"),
                 ("clickMacro", "%%CLICK_URL_ESC%%")
             ))
+        ),
+        Map(
+            ("id", "multiple2"),
+            ("type", "multiple"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "manual-multiple"),
+                ("base__url", "https://soulmates.theguardian.com"),
+                ("offerlinktext", "Offer link text"),
+                ("viewalltext", "View all text"),
+                ("offeramount", "offer-amount"),
+                ("relevance", "high"),
+                ("Toneclass", "commercial--tone-soulmates"),
+                ("offer1title", "Offer 1 Title"),
+                ("offer1linktext", "Offer 1 Link Text"),
+                ("offer1url", "http://www.theguardian.com/uk"),
+                ("offer1meta", "Offer 1 Meta"),
+                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer2title", "Offer 2 Title"),
+                ("offer2linktext", "Offer 2 Link Text"),
+                ("offer2url", "http://www.theguardian.com/uk"),
+                ("offer2meta", "Offer 1 Meta"),
+                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer3title", "Offer 3 Title"),
+                ("offer3linktext", "Offer 3 Link Text"),
+                ("offer3url", "http://www.theguardian.com/uk"),
+                ("offer3meta", "Offer 1 Meta"),
+                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer4title", "Offer 4 Title"),
+                ("offer4linktext", "Offer 4 Link Text"),
+                ("offer4url", "http://www.theguardian.com/uk"),
+                ("offer4meta", "Offer 1 Meta"),
+                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
         )
     ).map { component =>
         <div class="fc-container__inner">
@@ -750,14 +789,14 @@
                 </a>
             </h2>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
         <script>
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
                         require(['common/modules/commercial/creatives/template'])
                             .then(function (Template) {
-                                new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
+                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
                         });
                     });

@@ -7,7 +7,8 @@ define([
     'common/modules/email/email',
     'common/utils/detect',
     'lodash/collections/contains',
-    'common/utils/config'
+    'common/utils/config',
+    'lodash/collections/every'
 ], function (
     $,
     bean,
@@ -17,7 +18,8 @@ define([
     email,
     detect,
     contains,
-    config
+    config,
+    every
 ) {
     return function () {
         this.id = 'RtrtEmailFormArticlePromoV2';
@@ -32,16 +34,23 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'Email sign-up is increased';
 
+        var $articleBody = $('.js-article__body'),
+            isParagraph = function ($el) {
+                return $el.nodeName && $el.nodeName === 'P';
+            };
+
         this.canRun = function () {
             //Tests for fronts, editions optional.
             var host = window.location.host,
                 escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
                 urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi'),
                 browser = detect.getUserAgent.browser,
-                version = detect.getUserAgent.version;
+                version = detect.getUserAgent.version,
+                allArticleEls = $('> *', $articleBody),
+                lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph);
 
             // User referred from a front, is not logged in and not lte IE9
-            return urlRegex.test(document.referrer) && !Id.isUserLoggedIn() && !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+            return lastFiveElsParas && urlRegex.test(document.referrer) && !Id.isUserLoggedIn() && !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
         };
 
         function injectEmailForm($position, typeOfInsert) {
@@ -81,13 +90,13 @@ define([
             {
                 id: 'bottom-of-page',
                 test: function () {
-                    injectEmailForm($('.js-article__body'));
+                    injectEmailForm($articleBody);
                 }
             },
             {
                 id: 'three-paras-from-bottom',
                 test: function () {
-                    var articleParas = $('.js-article__body > p'),
+                    var articleParas = $('> p', $articleBody),
                         para = $(articleParas[articleParas.length - 3]); // This is a little bit heavy handed but should be ok for test.
 
                     injectEmailForm(para, 'insertBefore');

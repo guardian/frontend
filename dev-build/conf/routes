@@ -34,7 +34,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain>/:listId                                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -69,6 +69,7 @@ GET            /analytics/commercial/templates                                  
 GET            /analytics/commercial/sponsored-containers                                                                        controllers.admin.CommercialController.sponsoredContainers()
 GET            /analytics/commercial/adtests                                                                                     controllers.admin.CommercialController.renderAdTests()
 GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
+GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
 # Discussion
 GET            /discussion/comment-counts                                                                                        controllers.CommentCountController.commentCount(shortUrls: String)
@@ -106,7 +107,6 @@ GET            /top-stories/trails.json                                         
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
 GET            /related/*path                                                                                                    controllers.RelatedController.renderHtml(path)
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /related-alt/*path.json                                                                                           controllers.RelatedController.renderTags(path)
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
