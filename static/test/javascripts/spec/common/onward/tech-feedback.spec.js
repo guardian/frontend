@@ -60,7 +60,7 @@ define(['common/modules/onward/tech-feedback'], function (TechFeedback) {
             it('works when no tests are in place', function () {
                 var t = new TechFeedback();
                 var tests = {};
-                expect(t.summariseAbTests()).toBe('No tests running');
+                expect(t.summariseAbTests(tests)).toBe('No tests running');
             });
         });
     });
