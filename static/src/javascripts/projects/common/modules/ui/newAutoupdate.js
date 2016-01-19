@@ -3,6 +3,7 @@
     Description: Used to load update fragments of the DOM from specfied endpoint
 */
 define([
+    'common/utils/fastdom-promise',
     'bean',
     'bonzo',
     'qwery',
@@ -21,6 +22,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/ui/notification-counter'
 ], function (
+    fastdom,
     bean,
     bonzo,
     qwery,
@@ -40,37 +42,34 @@ define([
     NotificationCounter) {
 
     return function (opts) {
-        var options = assign({
-            'updateDelay': 10000
-        }, opts);
-
-        // Cache selectors
-        var $liveblogBody = $('.js-liveblog-body');
-        var $updateBox = $('.js-updates-button');
-        var $updateBoxContainer = $('.blog__updates-box-container');
-        var $updateBoxText = $('.blog__updates-box-text', this.$updateBox);
-
-        // Enables the animations for injected blocks
-        $liveblogBody.addClass('autoupdate--has-animation');
+        var updateDelay = function (delay) {
+            var newDelay;
+            if (detect.pageVisible()) {
+                newDelay = options.minUpdateDelay;
+            } else {
+                newDelay = Math.min(delay*1.5, options.maxUpdateDelay);
+            }
+            currentUpdateDelay = newDelay;
+        };
 
         var scrolledPastTopBlock = function () {
             return $liveblogBody.offset().top < window.scrollY;
         };
         var isLivePage = !(window.location.href.search('[?&]page=') !== -1);
 
-        //var latestBlockId = this.$liveblogBody.data('most-recent-block');
-        var penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
-        var latestBlockId = penultimate;
-        var toastOffsetTop = 12; // pixels from the top
-
-        var newBlocks;
 
         var setUpListeners = function () {
             bean.on(document.body, 'click', '.js-updates-button', function () {
                 if (isLivePage) {
-                    scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
-                    $updateBox.addClass('loading');
-                    injectNewBlocks();
+                    fastdom.read(function () {
+                        scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
+
+                        fastdom.write(function () {
+                            $updateBox.addClass('loading');
+                        }).then(function () {
+                            injectNewBlocks();
+                        });
+                    });
                 } else {
                     location.assign(window.location.pathname);
                 }
@@ -78,13 +77,17 @@ define([
 
             mediator.on('modules:liveblog-updates-button:unfixed', function () {
                 if (isLivePage) {
-                    $updateBox.addClass('loading');
-                    injectNewBlocks();
+                    fastdom.write(function() {
+                        $updateBox.addClass('loading');
+                    }).then(function() {
+                        injectNewBlocks();
+                    });
                 }
             });
 
             mediator.on('modules:detect:pagevisibility:visible', function () {
                 revealInjectedElements();
+                currentUpdateDelay = options.minUpdateDelay;
             });
         };
 
@@ -116,20 +119,23 @@ define([
                     }
                 }
             }).then(function () {
-                setTimeout(checkForUpdates, options.updateDelay);
+                updateDelay(currentUpdateDelay);
+                setTimeout(checkForUpdates, currentUpdateDelay);
             });
         };
 
         var toastButtonRefresh = function (count) {
-            if (count > 0) {
-                var updateText = (count > 1) ? ' new updates' : ' new update';
-                $updateBox.removeClass('blog__updates-box--closed').addClass('blog__updates-box--open');
-                $updateBoxText.html(count + updateText);
-                $updateBoxContainer.addClass('blog__updates-box-container--open');
-            } else {
-                $updateBox.removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
-                $updateBoxContainer.removeClass('blog__updates-box-container--open');
-            }
+            fastdom.write(function () {
+                if (count > 0) {
+                    var updateText = (count > 1) ? ' new updates' : ' new update';
+                    $updateBox.removeClass('blog__updates-box--closed').addClass('blog__updates-box--open');
+                    $updateBoxText.html(count + updateText);
+                    $updateBoxContainer.addClass('blog__updates-box-container--open');
+                } else {
+                    $updateBox.removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
+                    $updateBoxContainer.removeClass('blog__updates-box-container--open');
+                }
+            });
         };
 
         var injectNewBlocks = function () {
@@ -138,40 +144,74 @@ define([
                 var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
                 var elementsToAdd;
 
-                bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                elementsToAdd = toArray(resultHtml.children);
+                fastdom.write(function () {
+                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                    elementsToAdd = toArray(resultHtml.children);
 
-                // Insert new blocks and animate
-                $('.blog__updates-box-container').after(elementsToAdd);
+                    // Insert new blocks and animate
+                    $('.blog__updates-box-container').after(elementsToAdd);
 
-                if (detect.pageVisible()) {
-                    revealInjectedElements();
-                }
+                    if (detect.pageVisible()) {
+                        revealInjectedElements();
+                    }
 
-                latestBlockId = $('.block').first().attr('id');
+                    latestBlockId = $('.block').first().attr('id');
 
-                newBlocks = '';
+                    newBlocks = '';
 
-                RelativeDates.init();
-                twitter.enhanceTweets();
-
-                setTimeout(function () {
-                    toastButtonRefresh(0);
-                }, 600);
+                    RelativeDates.init();
+                    twitter.enhanceTweets();
+                }).then(function () {
+                    setTimeout(function () {
+                        toastButtonRefresh(0);
+                    }, 600);
+                });
             }
         };
 
         var revealInjectedElements = function () {
-            $('.autoupdate--hidden', $liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
-            mediator.emit('modules:autoupdate:unread', 0);
+            fastdom.write(function () {
+                $('.autoupdate--hidden', $liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
+                mediator.emit('modules:autoupdate:unread', 0);
+            });
         };
 
+        //
         // init
-        detect.initPageVisibility();
-        setUpListeners();
-        checkForUpdates();
+        //
+
+        var options = assign({
+            'toastOffsetTop': 12, // pixels from the top
+            'minUpdateDelay': 10 * 1000, // 10 seconds
+            'maxUpdateDelay': 20 * 60 * 1000, // 20 mins
+            'backoffMultiplier': 0.75 // increase or decrease the back off rate by modifying this
+        }, opts);
+
+        var newBlocks;
+        var currentUpdateDelay;
+        var latestBlockId;
+
+        // Cache selectors
+        var $liveblogBody = $('.js-liveblog-body');
+        var $updateBox = $('.js-updates-button');
+        var $updateBoxContainer = $('.blog__updates-box-container');
+        var $updateBoxText = $('.blog__updates-box-text', this.$updateBox);
+        var updateBox = qwery('.blog__updates-box-tofix');
+
+        var penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
+        latestBlockId = penultimate;
+        //latestBlockId = $liveblogBody.data('most-recent-block');
 
         new NotificationCounter().init();
-        new Sticky(qwery('.blog__updates-box-tofix'), { top: toastOffsetTop, emit: true }).init();
+        new Sticky(updateBox, { top: options.toastOffsetTop, emit: true }).init();
+
+        checkForUpdates();
+        detect.initPageVisibility();
+        setUpListeners();
+
+        fastdom.write(function () {
+            // Enables the animations for injected blocks
+            $liveblogBody.addClass('autoupdate--has-animation');
+        });
     };
 });
