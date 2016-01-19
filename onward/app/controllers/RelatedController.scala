@@ -54,7 +54,7 @@ object RelatedController extends Controller with Related with Containers with Lo
       "items" -> JsArray(Seq(
         Json.obj(
           "displayName" -> "related content",
-          "showContent" -> relatedTrails.nonEmpty,
+          "showContent" -> (relatedTrails.length == 4),
           "content" -> relatedTrails.map( collection => isCuratedContent(collection.faciaContent))
         )
       ))
