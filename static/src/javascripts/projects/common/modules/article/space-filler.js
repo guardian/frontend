@@ -1,21 +1,18 @@
-/* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/$',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'Promise',
     'raven',
     'common/modules/article/spacefinder'
 ], function (
-    $,
-    idleFastdom,
+    fastdom,
     Promise,
     raven,
     spacefinder
 ) {
-    return new SpaceFiller();
+    var lastIteration;
 
     function SpaceFiller() {
-        var lastInsertion = Promise.resolve(false);
+        lastIteration = Promise.resolve(false);
 
         /**
          * A safer way of using spacefinder.
@@ -25,42 +22,30 @@ define([
          *
          * @param rules - a spacefinder ruleset
          * @param writer - function, takes a para element and injects a container for the new content synchronously. It should NOT use Fastdom.
-         * @param debug - flag to enable debugging in spacefinder
          *
          * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
          */
-        this.insertAtFirstSpace = function insertAtFirstSpace(rules, writer, debug) {
-            lastInsertion = lastInsertion.then(insertNextContent).catch(onInsertionError);
-
-            function insertNextContent() {
-                return spacefinder.getParaWithSpace(rules, debug).then(function applyParaToWriter(para) {
-                    if (para) {
-                        return insertionPromise(para);
-                    } else {
-                        return false;
-                    }
-                });
-            }
-
-            function insertionPromise(para) {
-                return new Promise(function (resolve, reject) {
-                    idleFastdom.write(function () {
-                        try {
-                            writer(para);
-                            resolve(true);
-                        } catch (e) {
-                            reject(e);
-                        }
-                    });
-                });
-            }
-
-            function onInsertionError(e) {
-                raven.captureException(e);
-                return false;
-            }
-
-            return lastInsertion;
-        };
     }
+
+    SpaceFiller.prototype.fillSpace = function (rules, writer) {
+        return lastIteration = lastIteration.then(insertNextContent).catch(onInsertionError);
+
+        function insertNextContent() {
+            return spacefinder.findSpace(rules).then(insertionPromise);
+        }
+
+        function insertionPromise(slots) {
+            return fastdom.write(function () {
+                writer(slots);
+                return true;
+            });
+        }
+    };
+
+    function onInsertionError(e) {
+        raven.captureException(e);
+        return false;
+    }
+
+    return new SpaceFiller();
 });

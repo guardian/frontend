@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/related-variants',
     'common/modules/experiments/tests/identity-sign-in-v2',
     'common/modules/experiments/tests/rtrt-email-form-article-promo',
+    'common/modules/experiments/tests/prebid-performance',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -31,6 +32,7 @@ define([
     RelatedVariants,
     IdentitySignInV2,
     RtrtEmailFormArticlePromo,
+    PrebidPerformance,
     flatten,
     forEach,
     keys,
@@ -46,7 +48,8 @@ define([
         new RemoveStickyNav(),
         new RelatedVariants(),
         new IdentitySignInV2(),
-        new RtrtEmailFormArticlePromo()
+        new RtrtEmailFormArticlePromo(),
+        new PrebidPerformance()
     ]);
 
     var participationsKey = 'gu.ab.participations';
