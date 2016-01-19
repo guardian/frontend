@@ -89,6 +89,13 @@
     .ad-slot--paid-for-badge--front {
         float: right;
         margin-bottom: $gs-baseline;
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
     }
 
     &.commercial--paidfor-single .ad-slot--paid-for-badge--front {
@@ -99,13 +106,6 @@
     &.commercial--paidfor-multi .ad-slot--paid-for-badge--front {
         width: $left-column;
         margin-right: $gs-gutter;
-        border-top-color: colour(neutral-2);
-
-        .ad-slot--paid-for-badge__link {
-            &:after {
-                border-bottom-color: colour(neutral-2);
-            }
-        }
     }
 
     .fc-item__kicker {
