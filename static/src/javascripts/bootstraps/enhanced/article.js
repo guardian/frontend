@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'bootstraps/enhanced/article-liveblog-common',
-    'bootstraps/enhanced/trail'
+    'bootstraps/enhanced/trail',
+    'lodash/collections/forEach'
 ], function (
     qwery,
     bean,
@@ -30,7 +31,8 @@ define([
     ab,
     geoMostPopular,
     articleLiveblogCommon,
-    trail
+    trail,
+    forEach
 ) {
     var modules = {
             initCmpParam: function () {
@@ -79,29 +81,29 @@ define([
                     });
                 };
 
-                var renderQuiz = function () {
-                    var $quizzes = $('.quiz');
-                    var quizAnswerLabelClassName = 'quiz__answer';
-                    var quizAnswerLabelCheckedClassName = quizAnswerLabelClassName + '--checked';
-                    var quizAnswerLabelFocussedClassName = quizAnswerLabelClassName + '--focussed';
-                    var quizAnswerInputClassName = 'quiz__answer' + '__input';
-                    $quizzes.each(function (quizElement) {
-                        var $quizLabels = $('.quiz__answer', quizElement);
-                        var renderQuizLabels = function () {
-                            renderLabels({
-                                $labels: $quizLabels,
-                                inputClassName: quizAnswerInputClassName,
-                                labelCheckedClassName: quizAnswerLabelCheckedClassName,
-                                labelFocussedClassName: quizAnswerLabelFocussedClassName
-                            });
-                        };
-
-                        window.addEventListener('focus', renderQuizLabels, true);
-                        window.addEventListener('blur', renderQuizLabels, true);
-                        bean.on(quizElement, 'change', '.' + quizAnswerInputClassName, renderQuizLabels);
-                        renderQuizLabels();
+                var $quizzes = $('.quiz');
+                var quizAnswerLabelClassName = 'quiz__answer';
+                var quizAnswerLabelCheckedClassName = quizAnswerLabelClassName + '--checked';
+                var quizAnswerLabelFocussedClassName = quizAnswerLabelClassName + '--focussed';
+                var quizAnswerInputClassName = 'quiz__answer' + '__input';
+                var quizzesLabelGroups = $quizzes.map(function (quizElement) {
+                    return $('.quiz__answer', quizElement);
+                });
+                var renderQuizLabels = function ($quizLabels) {
+                    renderLabels({
+                        $labels: $quizLabels,
+                        inputClassName: quizAnswerInputClassName,
+                        labelCheckedClassName: quizAnswerLabelCheckedClassName,
+                        labelFocussedClassName: quizAnswerLabelFocussedClassName
                     });
                 };
+                var renderQuiz = function () {
+                    forEach(quizzesLabelGroups, renderQuizLabels);
+                };
+
+                window.addEventListener('focus', renderQuiz, true);
+                window.addEventListener('blur', renderQuiz, true);
+                bean.on(window.document.body, 'change', '.' + quizAnswerInputClassName, renderQuiz);
 
                 renderQuiz();
             }
