@@ -484,7 +484,7 @@ define([
 
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
-                $adSlotContent = $('#' + slotId + ' div');
+                $adSlotContent = $('div', $slot);
                 idleFastdom.write(function () {
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
