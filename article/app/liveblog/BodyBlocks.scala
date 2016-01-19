@@ -9,7 +9,7 @@ object BodyBlocks {
       case Some(pageNo) if pageNo > pages.length || pageNo <= 0 => None
 
       case Some(pageNo) =>
-        val higherLater = if (pageNo + 1 < pages.length) PageNumber(pageNo + 1) else FirstPage
+        val higherLater = if (pageNo < pages.length) PageNumber(pageNo + 1) else FirstPage
         val earlierLower = if (pageNo > 1) Some(pageNo - 1) else None
         Some(BodyBlocks(pages(pageNo - 1), later = higherLater, earlier = earlierLower))
 
