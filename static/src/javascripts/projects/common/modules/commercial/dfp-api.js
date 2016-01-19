@@ -352,7 +352,7 @@ define([
         },
         instantLoad = function () {
             chain(slots).and(keys).and(forEach, function (slot) {
-                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], slot)) {
                     loadSlot(slot);
                 }
             });
