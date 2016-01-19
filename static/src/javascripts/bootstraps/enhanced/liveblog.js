@@ -130,9 +130,25 @@ define([
             new NotificationCounter().init();
         },
 
+        createTimeline: function () {
+            var topMarker;
+            if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
+                topMarker = qwery('.js-top-marker')[0];
+                /*eslint-disable no-new*/
+                new Affix({
+                    element: qwery('.js-live-blog__timeline-container')[0],
+                    topMarker: topMarker,
+                    bottomMarker: qwery('.js-bottom-marker')[0],
+                    containerElement: qwery('.js-live-blog__key-events')[0]
+                });
+                /*eslint-enable no-new*/
+            }
+            createScrollTransitions();
+        },
+
         createAutoUpdate: function () {
 
-            if (config.page.isLive && window.location.search === '') {
+            if (config.page.isLive && window.location.search.indexOf('?page=') !== 0) {// TODO proper guardian.config val
 
                 var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                 autoUpdate = new AutoUpdate({
@@ -170,6 +186,7 @@ define([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
             ['lb-filter',     modules.createFilter],
+            ['lb-timeline',   modules.createTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
