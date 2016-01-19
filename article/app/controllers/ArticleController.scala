@@ -41,7 +41,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val latestBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(latestBlocks, Edition(request).timezone))
-    Cached(page)(JsonComponent(("html" -> blocksHtml), ("timeline" -> timelineHtml)))
+    Cached(page)(JsonComponent("html" -> blocksHtml, "timeline" -> timelineHtml))
   }
 
   case class TextBlock(
@@ -65,7 +65,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       val blocks = liveBlog.blocks.collect {
         case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
       }.take(number)
-      Cached(page)(JsonComponent(("blocks" -> Json.toJson(blocks))))
+      Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
 
   }
@@ -75,7 +75,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         NotFound
       } else {
-        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 2
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
         val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
