@@ -109,7 +109,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+      curatedCollection <- getCurated(collection)
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield
@@ -118,6 +118,10 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         curatedCollection.map(slimContent),
         backfill.map(slimContent),
         treats.map(slimContent))
+
+  private def getCurated(collection: Collection): Response[List[PressedContent]] = {
+    collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+  }
 
   private def getTreats(collection: Collection): Response[List[PressedContent]] = {
     FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery).map(_.map(PressedContent.make))
