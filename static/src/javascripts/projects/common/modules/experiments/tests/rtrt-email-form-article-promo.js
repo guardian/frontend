@@ -48,7 +48,8 @@ define([
                 version = detect.getUserAgent.version,
                 allArticleEls = $('> *', $articleBody),
                 lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph),
-                pageIsBlacklisted = contains(config.page.keywords.split(','), 'NHS');
+                keywords = config.page.keywords ? config.page.keywords.split(',') : '',
+                pageIsBlacklisted = contains(keywords, 'NHS');
 
             // User referred from a front, is not logged in and not lte IE9
             return !pageIsBlacklisted &&
