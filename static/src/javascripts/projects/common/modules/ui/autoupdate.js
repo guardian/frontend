@@ -132,7 +132,6 @@ define([
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
-            console.log('checking for updates');
             return ajax({
                 url: path,
                 type: 'json',

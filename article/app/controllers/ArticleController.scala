@@ -40,7 +40,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
     val latestBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
-    val timelineHtml = views.html.liveblog.keyEvents(KeyEventData(latestBlocks, Edition(request).timezone))
+    val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(latestBlocks, Edition(request).timezone))
     Cached(page)(JsonComponent(("html" -> blocksHtml), ("timeline" -> timelineHtml)))
   }
 
@@ -75,7 +75,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         NotFound
       } else {
-        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 2
         val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>

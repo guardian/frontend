@@ -214,7 +214,6 @@ define([
 
             if (config.page.isLive && window.location.search === '') {
 
-                console.log('setting checker');
                 var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
