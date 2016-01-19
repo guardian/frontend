@@ -74,9 +74,7 @@ define([
         },
         messages = {
             defaultSuccessHeadline: 'Thank you for subscribing',
-            defaultSuccessDesc: '',
-            customSuccessHeadline: null,
-            customSuccessDesc: null
+            defaultSuccessDesc: ''
         },
         setup = function (rootEl, thisRootEl, isIframed) {
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
@@ -174,10 +172,11 @@ define([
         },
         updateForm = {
             replaceContent: function (isSuccess, $form) {
-                var submissionMessage = {
+                var formData = $form.data('formData'),
+                    submissionMessage = {
                         statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
-                        submissionHeadline: (isSuccess) ? messages.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? messages.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
+                        submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
+                        submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
                         submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
                     submissionHtml = template(successHtml, submissionMessage);
@@ -215,17 +214,10 @@ define([
                 // Cache data on the form element
                 $('.js-email-sub__form', el).data('formData', {
                     campaignCode: formCampaignCode,
-                    referrer: window.location.href
+                    referrer: window.location.href,
+                    customSuccessHeadline: formSuccessHeadline,
+                    customSuccessDesc: formSuccessDesc
                 });
-
-                // Set Success headline and desc
-                if (formSuccessHeadline) {
-                    messages.customSuccessHeadline = formSuccessHeadline;
-                }
-
-                if (formSuccessDesc) {
-                    messages.customSuccessDesc = formSuccessDesc;
-                }
 
             },
             setTone: function ($el) {

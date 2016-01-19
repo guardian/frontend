@@ -87,9 +87,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         NotFound
       } else {
-        val PAGINATION_ENABLED_TAGS = Seq("business/series/guardian-business-live", "politics/series/politics-live-with-andrew-sparrow")
-        val pageSize = if (blog.article.content.tags.tags.exists(tag => PAGINATION_ENABLED_TAGS.contains(tag.id))) 10 else 300
-        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10/* = 29, also update in truncate-liveblog.js*/)(blog.article.content.fields.blocks, pageNo)
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)

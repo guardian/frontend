@@ -22,6 +22,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
+    'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -83,6 +84,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     dfpOphanTracking,
+    prebidService,
     geoMostPopular,
     ab,
     beacon,
@@ -290,8 +292,13 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(keys(slots).shift());
-            displayed = true;
+            var firstSlot = keys(slots).shift();
+            if (prebidService.testEnabled && prebidService.slotIsInTest(firstSlot)) {
+                loadSlot(firstSlot);
+            } else {
+                googletag.display(firstSlot);
+                displayed = true;
+            }
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
@@ -316,6 +323,10 @@ define([
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
                 require(['js!googletag.js']);
+            }
+
+            if (prebidService.testEnabled) {
+                prebidService.loadDependencies();
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -376,10 +387,21 @@ define([
                 });
             }
         },
-        loadSlot = function (slot) {
-            slots[slot].isLoading = true;
-            googletag.display(slot);
-            displayed = true;
+        loadSlot = function (slotKey) {
+            if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
+                prebidAndLoadSlot(slotKey);
+            } else {
+                // original implementation
+                slots[slotKey].isLoading = true;
+                googletag.display(slotKey);
+                displayed = true;
+            }
+        },
+        prebidAndLoadSlot = function (slotKey) {
+            slots[slotKey].isLoading = true;
+            prebidService.loadSlots(slotKey).then(function () {
+                displayed = true;
+            });
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),

@@ -36,7 +36,7 @@ trait ABTestSwitches {
     "ab-rtrt-email-form-article-promo-v2",
     "Testing the email sign up from the bottom of articles of user referred from fronts",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 21),
+    sellByDate = new LocalDate(2016, 2, 3),
     exposeClientSide = true
   )
 
@@ -46,6 +46,15 @@ trait ABTestSwitches {
     "Removes the sticky nav (0% test)",
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
+  )
+
+  val ABPrebidPerformance = Switch(
+    "A/B Tests",
+    "ab-prebid-performance",
+    "Measure performance impact of running prebid auctions before showing display advertising",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = true
   )
 }
