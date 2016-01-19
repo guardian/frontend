@@ -23,7 +23,8 @@ define([
     'common/utils/mediator',
     'common/modules/identity/api',
     'common/utils/url',
-    'common/utils/cookies'
+    'common/utils/cookies',
+    'common/utils/robust'
 ], function (
     raven,
     fastdom,
@@ -36,7 +37,8 @@ define([
     mediator,
     identity,
     url,
-    cookies
+    cookies,
+    robust
 ) {
     return function () {
         var guardian = window.guardian;
@@ -112,10 +114,12 @@ define([
         // A/B tests
         //
 
-        if (guardian.isModernBrowser) {
-            ab.segmentUser();
-            ab.run();
-        }
+        robust.catchErrorsAndLog('ab-tests', function () {
+            if (guardian.isModernBrowser) {
+                ab.segmentUser();
+                ab.run();
+            }
+        });
 
         //
         // Set adtest query if url param declares it.

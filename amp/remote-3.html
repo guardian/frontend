@@ -1,0 +1,67 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <script>
+        (function() {
+            var v = location.search.substr(1);
+            if (!(/^\d+$/.test(v))) return;
+            var u = 'https://3p.ampproject.net/'+encodeURIComponent(v)+'/f.js';
+            document.write('<script'+' src="'+encodeURI(u)+'"><'+'/script>');
+        })();
+    </script>
+</head>
+<body style="margin:0">
+<div id="c" style="position:absolute;top:0;left:0;bottom:0;right:0;">
+    <!-- BEGIN Krux Control Tag for "Guardian AMP" -->
+    <!-- Source: /snippet/controltag?confid=KS_cfybw&site=Guardian%20AMP&edit=1 -->
+    <script class="kxct" data-id="KS_cfybw" data-timing="async" data-version="1.9" type="text/javascript">
+        window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+        (function(){
+            var k=document.createElement('script');k.type='text/javascript';k.async=true;
+            var m,src=(m=location.href.match(/\bkxsrc=([^&]+)/))&&decodeURIComponent(m[1]);
+            k.src = /^https?:\/\/([a-z0-9_\-\.]+\.)?krxd\.net(:\d{1,5})?\//i.test(src) ? src : src === "disable" ? "" :
+            (location.protocol==="https:"?"https:":"http:")+"//cdn.krxd.net/controltag?confid=KS_cfybw"
+            ;
+            var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
+        }());
+
+    </script>
+    <!-- END Krux Controltag -->
+
+    <script>draw3p(function(config, done){
+        function attachAdTestParam(config) {
+            var url = (window.location != window.parent.location)
+                ? document.referrer
+                : document.location;
+
+            var fragments = url.split('adtest=');
+            if (fragments.length === 2) {
+                config.targeting.at = fragments[1]
+            }
+            return config;
+        }
+
+        function attachKruxSegments(config) {
+            if (localStorage.getItem('kxsegs') !== null) {
+                var kxSegList = localStorage.getItem('kxsegs').split(',');
+
+                if (kxSegList.length > 0) {
+                    config.targeting.x = kxSegList;
+                }
+            }
+
+            return config;
+        }
+
+
+        var configWithAdTestParam = attachAdTestParam(config);
+        var result = attachKruxSegments(configWithAdTestParam);
+
+
+        done(result);
+    })</script>
+</div>
+<script>if (window.docEndCallback) window.docEndCallback()</script>
+</body>
+</html>

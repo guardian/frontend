@@ -39,6 +39,8 @@
             @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
 
             @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
+
+            @tab(5, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
         </ol>
 
         <div class="tabs__content">
@@ -49,6 +51,8 @@
             @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm())
 
             @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm())
+
+            @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
         </div>
     </div>
 

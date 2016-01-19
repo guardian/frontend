@@ -53,6 +53,8 @@ define([
 
     function getSpacefinderRules() {
         return {
+            bodySelector: '.js-article__body',
+            slotSelector: ' > p',
             minAbove: 200,
             minBelow: 250,
             clearContentMeta: 50,
@@ -81,9 +83,10 @@ define([
             !isSensitive &&
             !isDuplicate
         ) {
-            return spaceFiller.insertAtFirstSpace(getSpacefinderRules(), function (para) {
+            return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                 $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
-                $insertedEl.insertBefore(para);
+                $insertedEl.insertBefore(paras[0]);
+                return $insertedEl[0];
             }).then(function (didInsert) {
                 if (didInsert) {
                     return Promise.resolve(upgradeRichLink($insertedEl[0]));

@@ -390,9 +390,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object r2Press {
     lazy val sqsQueueUrl = configuration.getStringProperty("admin.r2.page.press.sqs.queue.url")
     lazy val sqsTakedownQueueUrl = configuration.getStringProperty("admin.r2.page.press.takedown.sqs.queue.url")
-    lazy val pressRateInMinutes = configuration.getIntegerProperty("admin.r2.page.press.rate.minutes").getOrElse(15)
-    lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(20)
-    lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(50)
+    lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
+    lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
+    lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
   }
 
   object memcached {

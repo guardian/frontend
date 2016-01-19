@@ -36,26 +36,22 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     authAction.async { implicit request =>
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
-      val userFuture = api.user(userId, request.user.auth)
       val subscriberFuture = api.userEmails(userId, idRequest.trackingData)
 
       (for {
-        user <- userFuture
         subscriber <- subscriberFuture
       } yield {
-        (user, subscriber) match {
-          case (Right(user), Right(subscriber)) => {
+        subscriber match {
+          case Right(s) => {
             val form = emailPrefsForm.fill(EmailPrefsData(
-              user.statusFields.isReceiveGnmMarketing,
-              user.statusFields.isReceive3rdPartyMarketing,
-              subscriber.htmlPreference,
-              subscriber.subscriptions.map(_.listId)
+              s.htmlPreference,
+              s.subscriptions.map(_.listId)
             ))
             form
           }
 
-          case (user, subscriber) => {
-            val errors = user.left.getOrElse(Nil) ++ subscriber.left.getOrElse(Nil)
+          case s => {
+            val errors = s.left.getOrElse(Nil)
             val formWithErrors = errors.foldLeft(emailPrefsForm) {
               case (formWithErrors, Error(message, description, _, context)) =>
                 formWithErrors.withGlobalError(description)
@@ -111,22 +107,19 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                   (formWithErrors, getEmailSubscriptions(form, add = List(listId)))
               }
           }.getOrElse {
-            val newStatusFields = ("receiveGnmMarketing" -> emailPrefsData.receiveGnmMarketing) ~ ("receive3rdPartyMarketing" -> emailPrefsData.receive3rdPartyMarketing)
             val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
-            val userFuture = api.updateUser(userId, auth, trackingParameters, "statusFields", newStatusFields)
             val subscriberFuture = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
 
             for {
-              user <- userFuture
               subscriber <- subscriberFuture
             } yield {
-              (user, subscriber) match {
-                case (Right(user), Right(subscriber)) => {
+              subscriber match {
+                case Right(s) => {
                   (form, getEmailSubscriptions(form))
                 }
 
-                case (user, subscriber) => {
-                  val errors = user.left.getOrElse(Nil) ++ subscriber.left.getOrElse(Nil)
+                case s => {
+                  val errors = s.left.getOrElse(Nil)
                   val formWithErrors = errors.foldLeft(form) {
                     case (formWithErrors, Error(message, description, _, context)) =>
                       formWithErrors.withError(context.getOrElse(""), description)
@@ -146,15 +139,13 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     EmailSubscriptions(form.data.filter(_._1.startsWith("emailSubscription")).map(_._2).filterNot(remove.toSet) ++ add)
 }
 
-case class EmailPrefsData(receiveGnmMarketing: Boolean, receive3rdPartyMarketing: Boolean, htmlPreference: String, emailSubscriptions: List[String], emailSubscription: Option[String] = None)
+case class EmailPrefsData(htmlPreference: String, emailSubscriptions: List[String], emailSubscription: Option[String] = None)
 object EmailPrefsData {
   protected val validPrefs = Set("HTML", "Text")
   def isValidHtmlPreference(pref: String): Boolean =  validPrefs contains pref
 
   val emailPrefsForm = Form(
     Forms.mapping(
-      "statusFields.receiveGnmMarketing" -> Forms.boolean,
-      "statusFields.receive3rdPartyMarketing" -> Forms.boolean,
       "htmlPreference" -> Forms.text.verifying(isValidHtmlPreference _),
       "emailSubscription" -> Forms.list(Forms.text),
       "addEmailSubscription" -> Forms.optional(Forms.text)
