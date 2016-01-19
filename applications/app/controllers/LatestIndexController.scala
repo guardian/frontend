@@ -12,10 +12,14 @@ import services.{IndexPage, IndexPageItem}
 import scala.concurrent.Future
 
 object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
-  def latest(path: String) = Action.async { implicit request =>
+  def latest(path: String, email: Boolean = false) = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
-        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => Found(latest.metadata.url)).getOrElse(NotFound)
+        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {
+          if (email) Found(latest.metadata.url + "/email")
+          else       Found(latest.metadata.url)
+        }).getOrElse(NotFound)
+
         case tag: Tag => MovedPermanently(s"${tag.metadata.url}/all")
         case section: Section =>
           val url = if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url) else section.metadata.url
