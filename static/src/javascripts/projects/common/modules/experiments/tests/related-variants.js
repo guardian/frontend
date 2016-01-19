@@ -9,7 +9,7 @@ define([
         this.expiry = '2016-02-15';
         this.author = 'Maria Chiorean';
         this.description = 'Gets related content in using 3 new variants';
-        this.audience = 0.0;
+        this.audience = 0.08;
         this.audienceOffset = 0.2;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
