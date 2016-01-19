@@ -1,7 +1,7 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.LiveContentApi.getResponse
@@ -10,16 +10,14 @@ import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
 import liveblog.BodyBlocks
 import model._
+import model.liveblog.KeyEventData
 import org.joda.time.DateTime
-import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import views.BodyCleaner
 import views.support._
 
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 trait PageWithStoryPackage extends ContentPage {
