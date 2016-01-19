@@ -61,71 +61,79 @@ define([
                 };
 
                 var render = function (state) {
-                    return fastdom.read(function () {
-                        var scrollY = window.scrollY;
-                        var scrollX = window.scrollX;
-
-                        return fastdom.write(function () {
-                            // Reset so we have a clean slate
-                            $header.css({
-                                'transition': '',
-                                'margin-top': ''
-                            });
-                            $adBanner.css({
-                                'position': '',
-                                'top': '',
-                                'max-height': ''
-                            });
-
-                            // Set
-                            $header.css({ 'margin-top': state.adHeight });
-
-                            $adBanner.css({ 'max-height': state.adHeight });
-                            var userHasScrolledPastHeader = scrollY > state.headerHeight;
-                            if (userHasScrolledPastHeader) {
-                                $adBanner.css({
-                                    'position': 'absolute',
-                                    'top': state.headerHeight
-                                });
-                            } else {
-                                $adBanner.css({ 'position': 'fixed' });
-                            }
-
-                            var scrollIsAtTop = scrollY === 0;
-                            var diff = state.adHeight - state.previousAdHeight;
-                            var adHeightHasIncreased = diff > 0;
-                            if (!scrollIsAtTop && adHeightHasIncreased) {
-                                // If the user is not at the top and the ad height has increased,
-                                // we want to offset their scroll position
-                                window.scrollTo(scrollX, scrollY + diff);
-                            } else if (!state.firstRender) {
-                                // Otherwise we want to transition the change when it happens.
-                                // Avoid an initial transition when we apply the margin top for the first time
-                                $header.css('transition', 'margin-top 1s cubic-bezier(0, 0, 0, 0.985)');
-                            }
+                    return fastdom.write(function () {
+                        // Reset so we have a clean slate
+                        $header.css({
+                            'transition': '',
+                            'margin-top': ''
                         });
+                        $adBanner.css({
+                            'position': '',
+                            'top': '',
+                            'max-height': ''
+                        });
+
+                        // Set
+                        $header.css({ 'margin-top': state.adHeight });
+
+                        $adBanner.css({ 'max-height': state.adHeight });
+                        var userHasScrolledPastHeader = state.scrollY > state.headerHeight;
+                        if (userHasScrolledPastHeader) {
+                            $adBanner.css({
+                                'position': 'absolute',
+                                'top': state.headerHeight
+                            });
+                        } else {
+                            $adBanner.css({ 'position': 'fixed' });
+                        }
+
+                        var scrollIsAtTop = state.scrollY === 0;
+                        var diff = state.adHeight - state.previousAdHeight;
+                        var adHeightHasIncreased = diff > 0;
+                        if (!scrollIsAtTop && adHeightHasIncreased) {
+                            // If the user is not at the top and the ad height has increased,
+                            // we want to offset their scroll position
+                            window.scrollTo(state.scrollX, state.scrollY + diff);
+                        } else if (!state.firstRender) {
+                            // Otherwise we want to transition the change when it happens.
+                            // Avoid an initial transition when we apply the margin top for the first time
+                            $header.css('transition', 'margin-top 1s cubic-bezier(0, 0, 0, 0.985)');
+                        }
                     });
                 };
 
-                var update = (function () {
-                    var previousAdHeight;
-                    return function (options) {
-                        return getCachedAdHeight().then(function (adHeight) {
-                            return render({
-                                adHeight: adHeight,
-                                previousAdHeight: previousAdHeight || adHeight,
-                                firstRender: options.firstRender || false,
-                                headerHeight: headerHeight
-                            }).then(function () {
-                                previousAdHeight = adHeight;
-                            });
-                        });
-                    };
-                })();
+                var getScrollCoords = function () {
+                    return fastdom.read(function () {
+                        return [window.scrollX, window.scrollY];
+                    });
+                };
 
                 //
                 // Side effects
                 //
+
+                var update = (function () {
+                    var previousAdHeight;
+                    return function (options) {
+                        return Promise.all([
+                            getCachedAdHeight(),
+                            getScrollCoords()
+                        ]).then(function (args) {
+                            var adHeight = args[0];
+                            var scrollCoords = args[1];
+
+                            return render({
+                                adHeight: adHeight,
+                                previousAdHeight: previousAdHeight || adHeight,
+                                firstRender: options.firstRender || false,
+                                headerHeight: headerHeight,
+                                scrollX: scrollCoords[0],
+                                scrollY: scrollCoords[1]
+                            })
+                                .then(function () { previousAdHeight = adHeight; });
+                        });
+                    };
+                })();
 
                 fastdom.write(function () {
                     // will move into stylesheets when productionised
