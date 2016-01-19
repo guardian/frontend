@@ -470,15 +470,15 @@ define([
         parseAd = function (event) {
             var size,
                 slotId = event.slot.getSlotElementId(),
-                $slot = $('#' + slotId),
+                $slot,
                 $placeholder,
                 $adSlotContent;
 
-            allAdsRendered(slotId);
-
             if (event.isEmpty) {
-                removeLabel($slot);
+                removeSlot(slotId);
             } else {
+                $slot = $('#' + slotId),
+
                 // Store ads IDs for technical feedback
                 creativeIDs.push(event.creativeId);
 
@@ -520,6 +520,8 @@ define([
                     }
                 });
             }
+
+            allAdsRendered(slotId);
         },
         allAdsRendered = function (slotId) {
             if (slots[slotId] && !slots[slotId].isRendered) {
@@ -541,9 +543,10 @@ define([
                 }
             });
         },
-        removeLabel = function ($slot) {
+        removeSlot = function (slotId) {
+            delete slots[slotId];
             idleFastdom.write(function () {
-                $('.ad-slot__label', $slot).remove();
+                $('#' + slotId).remove();
             });
         },
         shouldRenderLabel = function ($slot) {
