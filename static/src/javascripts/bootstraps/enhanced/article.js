@@ -62,50 +62,61 @@ define([
             initAtomQuiz: function () {
                 // TODO: Only run for quizzes
                 var renderLabels = function (state) {
-                    state.$labels.each(function (labelEl) {
-                        var inputEl = $('.' + state.inputClassName, labelEl)[0];
-                        var isChecked = inputEl.checked;
-                        var $labelEl = $(labelEl);
-                        var isFocussed = document.activeElement === inputEl;
-                        if (isChecked) {
-                            $(labelEl).addClass(state.labelCheckedClassName);
+                    forEach(state.labels, function (label) {
+                        if (label.isChecked) {
+                            label.$el.addClass(state.labelCheckedClassName);
                         } else {
-                            $(labelEl).removeClass(state.labelCheckedClassName);
+                            label.$el.removeClass(state.labelCheckedClassName);
                         }
 
-                        if (isFocussed) {
-                            $labelEl.addClass(state.labelFocussedClassName);
+                        if (label.isFocussed) {
+                            label.$el.addClass(state.labelFocussedClassName);
                         } else {
-                            $labelEl.removeClass(state.labelFocussedClassName);
+                            label.$el.removeClass(state.labelFocussedClassName);
                         }
                     });
+                };
+
+                var renderQuiz = function (state) {
+                    renderLabels(state);
                 };
 
                 var $quizzes = $('.quiz');
                 var quizAnswerLabelClassName = 'quiz__answer';
                 var quizAnswerLabelCheckedClassName = quizAnswerLabelClassName + '--checked';
                 var quizAnswerLabelFocussedClassName = quizAnswerLabelClassName + '--focussed';
-                var quizAnswerInputClassName = 'quiz__answer' + '__input';
-                var quizzesLabelGroups = $quizzes.map(function (quizElement) {
-                    return $('.quiz__answer', quizElement);
-                });
-                var renderQuizLabels = function ($quizLabels) {
-                    renderLabels({
-                        $labels: $quizLabels,
-                        inputClassName: quizAnswerInputClassName,
-                        labelCheckedClassName: quizAnswerLabelCheckedClassName,
-                        labelFocussedClassName: quizAnswerLabelFocussedClassName
+                var quizAnswerInputClassName = quizAnswerLabelClassName + '__input';
+
+                var renderQuizzes = function () {
+                    $quizzes.each(function (quizElement) {
+                        var $quizLabels = $('.quiz__answer', quizElement);
+
+                        renderQuiz({
+                            labels: $quizLabels.map(function (labelEl) {
+                                var inputEl = $('.' + quizAnswerInputClassName, labelEl)[0];
+                                var isChecked = inputEl.checked;
+                                return {
+                                    $el: $(labelEl),
+                                    isChecked: isChecked,
+                                    isFocussed: document.activeElement === inputEl
+                                };
+                            }),
+                            inputClassName: quizAnswerInputClassName,
+                            labelCheckedClassName: quizAnswerLabelCheckedClassName,
+                            labelFocussedClassName: quizAnswerLabelFocussedClassName
+                        });
                     });
                 };
-                var renderQuiz = function () {
-                    forEach(quizzesLabelGroups, renderQuizLabels);
+
+                var update = function () {
+                    renderQuizzes();
                 };
 
-                window.addEventListener('focus', renderQuiz, true);
-                window.addEventListener('blur', renderQuiz, true);
-                bean.on(window.document.body, 'change', '.' + quizAnswerInputClassName, renderQuiz);
+                window.addEventListener('focus', update, true);
+                window.addEventListener('blur', update, true);
+                bean.on(window.document.body, 'change', '.' + quizAnswerInputClassName, update);
 
-                renderQuiz();
+                update();
             }
         },
 
