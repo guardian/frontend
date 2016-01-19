@@ -1,10 +1,8 @@
 package views.support.cleaner
 
-import java.net.URL
-
-import model.{Article, VideoAsset, VideoElement}
+import model.Article
 import org.jsoup.nodes.{Document, Element}
-import views.support.{HtmlCleaner, Item640}
+import views.support.{AmpVideoSrcCleaner, HtmlCleaner}
 
 import scala.collection.JavaConversions._
 
@@ -12,10 +10,15 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def cleanAmpVideos(document: Document): Unit = {
     document.getElementsByTag("video").foreach(video => {
+      val posterSrc = video.attr("poster")
+      val newPosterSrc = AmpVideoSrcCleaner(posterSrc).toString
+      val fallback = "<div fallback > Sorry, your browser is unable to play this video.<br/> Please <a href='http://whatbrowser.org/'>upgrade</a> to a modern browser and try again.</div>"
+
       video.tagName("amp-video")
       video.removeAttr("data-media-id")
-      video.removeAttr("poster")
 
+      video.append(fallback)
+      video.attr("poster", newPosterSrc)
       // Need to hard code aspect ratio 5:3 for Amp pages.
       video.attr("width", "5")
       video.attr("height", "3")
@@ -28,8 +31,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         // All videos need to start with https for AMP.
         // Temperary code until all videos returned from CAPI are https
         if (!videoSrc.startsWith("https")) {
-          val (first, last) = videoSrc.splitAt(4);
-          val newSrc = first + "s" + last
+          val newSrc = AmpVideoSrcCleaner(videoSrc).toString
           source.attr("src", newSrc)
         }
       })
