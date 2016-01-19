@@ -55,24 +55,6 @@ define([
     var modules,
         autoUpdate = null;
 
-    function getTimelineEvents() {
-        var keyEvents = qwery('.is-key-event').slice(0, 7),
-            newestSummary = qwery('.is-summary')[0];
-
-        $('.js-timeline-event').removeClass('js-timeline-event');
-
-        if (newestSummary) {
-            bonzo(newestSummary).addClass('js-timeline-event');
-            if (keyEvents.length === 7) {
-                keyEvents.pop();
-            }
-        }
-
-        bonzo(keyEvents).addClass('js-timeline-event');
-
-        return qwery('.js-timeline-event');
-    }
-
     function createScrollTransitions() {
 
         var curBinding,
@@ -123,34 +105,6 @@ define([
         }
     }
 
-    function createKeyEventHTML(el) {
-        var keyEventTemplate = '<li class="timeline__item" data-event-id="<%=id%>">' +
-                '<a class="timeline__link" href="#<%=id%>" data-event-id="<%=id%>">' +
-                '<span class="timeline__date"><%=time%></span><span class="timeline__title u-underline"><%=title%></span></a></li>',
-            data = {
-                id: el.getAttribute('id'),
-                title: $('.block-title', el).text(),
-                time: $('.block-time__link', el).html()
-            };
-
-        return template(keyEventTemplate, data);
-    }
-
-    function getTimelineHTML(events) {
-        var remaining;
-        function recursiveRender(events, html) {
-            if (events.length) { // key event at 0 index
-                html += createKeyEventHTML(events[0]);
-                remaining = events.slice(1);
-            } else { // no events left
-                return html;
-            }
-            return recursiveRender(remaining, html);
-        }
-
-        return recursiveRender(events, '');
-    }
-
     function getUpdatePath() {
         var id,
             blocks = qwery('.js-liveblog-body .block'),
@@ -174,40 +128,6 @@ define([
         createFilter: function () {
             new LiveFilter($('.js-blog-blocks')[0]).ready();
             new NotificationCounter().init();
-        },
-
-        createTimeline: function () {
-            var timelineHTML, dropdown, topMarker,
-                allEvents = getTimelineEvents();
-            if (allEvents.length > 0) {
-                timelineHTML = getTimelineHTML(allEvents);
-
-                $('.js-live-blog__timeline')
-                    .empty()
-                    .append(timelineHTML);
-                dropdown = $('.js-live-blog__timeline-container .dropdown');
-                dropdown.addClass('dropdown--active');
-                dropdowns.updateAria(dropdown);
-
-                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
-                    topMarker = qwery('.js-top-marker')[0];
-                    /*eslint-disable no-new*/
-                    new Affix({
-                        element: qwery('.js-live-blog__timeline-container')[0],
-                        topMarker: topMarker,
-                        bottomMarker: qwery('.js-bottom-marker')[0],
-                        containerElement: qwery('.js-live-blog__key-events')[0]
-                    });
-                    /*eslint-enable no-new*/
-                }
-                createScrollTransitions();
-            }
-        },
-
-        handleUpdates: function () {
-            mediator.on('modules:autoupdate:updates', function () {
-                modules.createTimeline();
-            });
         },
 
         createAutoUpdate: function () {
@@ -250,10 +170,8 @@ define([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
             ['lb-filter',     modules.createFilter],
-            //['lb-timeline',   modules.createTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
-            //['lb-updates',    modules.handleUpdates],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
 
