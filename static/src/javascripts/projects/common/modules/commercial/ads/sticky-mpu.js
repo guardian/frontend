@@ -18,29 +18,23 @@ define([
         };
 
     StickyMpu.prototype.create = function () {
-        var offset;
+        var element;
 
         if (this.$adSlot.data('name') !== 'right') {
             return;
         }
 
-        offset = fastdom.read(config.page.hasShowcaseMainElement ? function () {
-            return document.querySelector('.media-primary').offsetHeight;
-        } : function () {
-            var body = document.querySelector('.content__article-body')
-            if (body) {
-                return body.offsetTop;
-            } else {
-                throw new Error("There is no element to stick the element to");
-            }
-        });
+        element = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body');
+        if (!element) {
+            return;
+        }
 
-        offset.then(function (articleBodyOffset) {
+        return fastdom.read(function () {
+            return element[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop'];
+        }).then(function (articleBodyOffset) {
             this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-            new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
-        }.bind(this)).catch(function () {
-            // Liveblogs don't need sticky MPUs and we fail silently
-        });
+            return new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+        }.bind(this));
     };
 
     return StickyMpu;
