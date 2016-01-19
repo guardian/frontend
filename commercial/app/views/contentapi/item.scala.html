@@ -1,7 +1,14 @@
 @(item: model.ContentType, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
 
+@import conf.switches.Switches.NewCommercialContent
+
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for commercial commercial--dfp fc-container--merchandising commercial--dfp-single @optSponsorType" data-link-name="merchandising | capi | single @optOmnitureId">
+    <section class="@RenderClasses(
+            Map(
+                "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn
+            ),
+            "fc-container", "fc-container--paid-for", "commercial", "commercial--dfp", "fc-container--merchandising", "commercial--dfp-single", optSponsorType.getOrElse("")
+        )" data-link-name="merchandising | capi | single @optOmnitureId">
         <div class="fc-container__inner">
             <div class="fc-container__header">
                 <h3 class="fc-container__header__title">
