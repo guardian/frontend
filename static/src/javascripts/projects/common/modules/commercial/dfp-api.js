@@ -556,10 +556,8 @@ define([
         },
         addLabel = function ($slot) {
             idleFastdom.write(function () {
-                var adSlotClass = 'ad-slot__label';
-
                 if (shouldRenderLabel($slot)) {
-                    $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
+                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
                 }
             });
         },
