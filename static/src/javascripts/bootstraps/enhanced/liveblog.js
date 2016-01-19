@@ -130,7 +130,7 @@ define([
             new NotificationCounter().init();
         },
 
-        createTimeline: function () {
+        affixTimeline: function () {
             var topMarker;
             if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
                 topMarker = qwery('.js-top-marker')[0];
@@ -186,7 +186,7 @@ define([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
             ['lb-filter',     modules.createFilter],
-            ['lb-timeline',   modules.createTimeline],
+            ['lb-timeline',   modules.affixTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
