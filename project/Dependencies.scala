@@ -55,7 +55,8 @@ object Dependencies {
   val romeModules = "org.rometools" % "rome-modules" % "1.0"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.5" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
+  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0" % Test
   val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seeGuice = "com.tzavellas" % "sse-guice" % "0.7.1"
@@ -64,7 +65,6 @@ object Dependencies {
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
   val snappyJava = "org.xerial.snappy" % "snappy-java" % "1.0.5.1"
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
-  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
   val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % "1.19"
   val jerseyClient = "com.sun.jersey" % "jersey-client" % "1.19"
