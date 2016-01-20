@@ -1,11 +1,10 @@
 /*
-    Module: autoupdate.js
-    Description: Used to load update fragments of the DOM from specfied endpoint
-*/
+ Module: autoupdate.js
+ Description: Used to load update fragments of the DOM from specfied endpoint
+ */
 define([
     'bean',
     'bonzo',
-    'qwery',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -14,16 +13,10 @@ define([
     'common/modules/article/twitter',
     'common/modules/live/notification-bar',
     'lodash/objects/assign',
-    'common/modules/ui/simpleSticky',
-    'common/utils/scroller',
-    'lodash/collections/toArray',
-    'lodash/functions/bindAll',
-    'common/modules/ui/relativedates',
-    'common/modules/ui/notification-counter'
+    'lodash/collections/toArray'
 ], function (
     bean,
     bonzo,
-    qwery,
     $,
     ajax,
     config,
@@ -32,147 +25,198 @@ define([
     twitter,
     NotificationBar,
     assign,
-    Sticky,
-    scroller,
-    toArray,
-    bindAll,
-    RelativeDates,
-    NotificationCounter) {
+    toArray) {
+    /*
+     @param {Object} options hash of configuration options:
+     path             : {String}              Endpoint path to ajax request,
+     delay            : {Number}              Timeout in milliseconds to query endpoint,
+     attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
+     switches         : {Object}              Global switches object
+     manipulationType : {String}              Which manipulation method used to insert content into DOM
+     */
+    function Autoupdate(opts) {
 
-    function AutoUpdate() {
-        this.updateDelay = 10000;
+        var options = assign({
+            'activeClass':      'is-active',
+            'btnClass':         '.js-auto-update',
+            'manipulationType': 'html',
+            'backoff':          1, // 1 = no backoff
+            'backoffMax':       1000 * 60 * 20 // 20 mins
+        }, opts);
 
-        this.init = function () {
-            this.$liveblogBody = $('.js-liveblog-body');
-            this.$updateBox = $('.js-updates-button');
-            this.$updateBoxContainer = $('.blog__updates-box-container');
-            this.$updateBoxText = $('.blog__updates-box-text', this.$updateBox);
+        this.unreadBlocks = 0;
+        this.notification = '<';
+        this.updateDelay = options.delay;
 
-            this.$liveblogBody.addClass('autoupdate--has-animation');
+        this.template =
+            '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--on js-auto-update js-auto-update--on"' +
+            '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
+            '    <span class="live-toggler__label">Auto update:</span>' +
+            '    <span class="u-h">is</span>' +
+            '    <span class="rounded-icon live-toggle__value">On</span>' +
+            '    <span class="u-h">(turn off)</span>' +
+            '  </button>' +
+            '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--off js-auto-update js-auto-update--off"' +
+            '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
+            '    <span class="live-toggler__label">Auto update:</span>' +
+            '    <span class="u-h">is</span>' +
+            '    <span class="rounded-icon live-toggle__value">Off</span>' +
+            '    <span class="u-h">(turn on)</span>' +
+            '  </button>';
 
-            //this.latestBlockId = this.$liveblogBody.data('most-recent-block');
-            this.penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
-            this.latestBlockId = this.penultimate;
-            this.requiredOffset = 12;
-            this.isLivePage = !(window.location.href.search('[?&]page=') !== -1);
+        this.view = {
+            render: function (res) {
+                var attachTo = options.attachTo,
+                    manipulation = this.getManipulationType(),
+                    date = new Date().toString(),
+                    $attachTo = bonzo(attachTo),
+                    resultHtml = $.create('<div>' + res.html + '</div>')[0],
+                    elementsToAdd = resultHtml.innerHTML;
 
-            this.checkForUpdates();
-            detect.initPageVisibility();
+                this.unreadBlocks += resultHtml.children.length;
 
-            new NotificationCounter().init();
-            new Sticky(qwery('.blog__updates-box-tofix'), { top: this.requiredOffset, emit: true }).init();
-
-            bean.on(document.body, 'click', '.js-updates-button', function () {
-                if (this.isLivePage) {
-                    this.button.livePageOnClick();
-                } else {
-                    this.button.notLivePageOnClick();
-                }
-            }.bind(this));
-
-            mediator.on('modules:liveblog-updates-button:unfixed', function () {
-                if (this.isLivePage) {
-                    this.$updateBox.addClass('loading');
-                    this.blocks.injectNew();
-                }
-            }.bind(this));
-
-            mediator.on('modules:detect:pagevisibility:visible', function () {
-                //this.on(); // reset backoff
-                this.blocks.revealNewElements();
-            }.bind(this));
-
-            bindAll(this, 'checkForUpdates');
-        };
-
-        this.checkForUpdates = function () {
-            var shouldFetchBlocks = '&showBlocks=' + (this.isLivePage ? 'true' : 'false');
-            var latestBlockIdToUse = ((this.latestBlockId) ? this.latestBlockId : 'block-0');
-
-            return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
-            }).then(function (resp) {
-                if (resp.numNewBlocks > 0) {
-                    var lbOffset = this.$liveblogBody.offset().top,
-                        scrollPos = window.scrollY;
-
-                    this.blocks.newBlocks = resp.html;
-
-                    mediator.emit('modules:autoupdate:unread', resp.numNewBlocks);
-
-                    //if top of the liveblog is in or below the viewport, then inject the new posts in without Toast
-                    if (scrollPos < lbOffset) {
-                        this.blocks.injectNew();
-                    } else {
-                        this.button.refresh(resp.numNewBlocks);
-                    }
-                }
-            }.bind(this)).then(function () {
-                setTimeout(this.checkForUpdates, this.updateDelay);
-            }.bind(this));
-        };
-
-        this.blocks = {
-            newBlocks: '',
-            injectNew: function () {
-                if (this.blocks.newBlocks) {
-                    //clean up blocks before insertion
-                    var resultHtml = $.create('<div>' + this.blocks.newBlocks + '</div>')[0],
-                        elementsToAdd;
-
+                if (manipulation === 'prepend') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
                     elementsToAdd = toArray(resultHtml.children);
-
-                    //insert new blocks and animate
-                    $('.blog__updates-box-container').after(elementsToAdd);
-
-                    if (detect.pageVisible()) {
-                        this.blocks.revealNewElements();
-                    }
-
-                    this.latestBlockId = $('.block').first().attr('id');
-
-                    this.blocks.newBlocks = '';
-
-                    RelativeDates.init();
-                    twitter.enhanceTweets();
-
-                    setTimeout(function () {
-                        this.button.reset();
-                    }.bind(this), 600);
+                } else if (manipulation === 'append') {
+                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                    elementsToAdd = toArray(resultHtml.children).reverse();
                 }
-            }.bind(this),
+
+                $attachTo[manipulation](elementsToAdd);
+
+                if (elementsToAdd.length) {
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd);
+                }
+                // add a timestamp to the attacher
+                $attachTo.attr('data-last-updated', date);
+                twitter.enhanceTweets();
+
+                if (this.isUpdating && detect.pageVisible()) {
+                    this.notificationBar.setState('hidden');
+                    this.view.revealNewElements.call(this);
+                } else if (this.unreadBlocks > 0) {
+                    this.notificationBar.notify(this.unreadBlocks);
+                    mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
+                }
+            },
+
+            toggle: function (btn) {
+                var action = btn.getAttribute('data-action');
+
+                $(options.btnClass).removeClass(options.activeClass);
+                $('.js-auto-update--' + action, btn.parentNode).addClass(options.activeClass);
+
+                this[action]();
+            },
+
+            destroy: function () {
+                $('.update').remove();
+                mediator.emit('modules:autoupdate:destroyed');
+            },
+
             revealNewElements: function () {
-                $('.autoupdate--hidden', this.$liveblogBody).addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
-                mediator.emit('modules:autoupdate:unread', 0);
-            }.bind(this)
+                var $newElements = $('.autoupdate--hidden', options.attachTo);
+                $newElements.addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
+
+                // Do not reset the unread count when page isn't visible. The notification count will then show the
+                // number of blocks loaded since the last reader view.
+                if (detect.pageVisible()) {
+                    this.unreadBlocks = 0;
+                }
+                mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
+
+                setTimeout(function () {
+                    $newElements.removeClass('autoupdate--highlight');
+                }, 5000);
+            }
         };
 
-        this.button = {
-            refresh: function (count) {
-                var updateText = (count > 1) ? ' new updates' : ' new update';
-                this.$updateBox.removeClass('blog__updates-box--closed').addClass('blog__updates-box--open');
-                this.$updateBoxText.html(count + updateText);
-                this.$updateBoxContainer.addClass('blog__updates-box-container--open');
-            }.bind(this),
-            reset: function () {
-                this.$updateBox.removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
-                this.$updateBoxContainer.removeClass('blog__updates-box-container--open');
-            }.bind(this),
-            livePageOnClick: function () {
-                scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
-                this.$updateBox.addClass('loading');
-                this.blocks.injectNew();
-            }.bind(this),
-            notLivePageOnClick: function () {
-                location.assign(window.location.pathname);
+        this.load = function () {
+            var that = this,
+                path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
+
+            return ajax({
+                url: path,
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (response) {
+                    if (response.refreshStatus === false) {
+                        that.off();
+                        that.view.destroy();
+                    } else {
+                        that.view.render.call(that, response);
+                    }
+                }
+            );
+        };
+
+        this.on = function () {
+            this.isUpdating = true;
+
+            if (this.timeout) { window.clearTimeout(this.timeout); }
+
+            var updateLoop = function () {
+                this.load();
+                var newDelay = detect.pageVisible() ? options.delay : this.updateDelay * options.backoff;
+                this.updateDelay = Math.min(newDelay, options.backoffMax);
+                this.timeout = window.setTimeout(updateLoop, this.updateDelay);
+            }.bind(this);
+
+            updateLoop();
+        };
+
+        this.off = function () {
+            this.isUpdating = false;
+        };
+
+        this.init = function () {
+            if (config.switches && config.switches.autoRefresh !== true) {
+                return;
             }
+
+            var that = this;
+
+            this.notificationBar = new NotificationBar({attachTo: $('.js-update-notification')[0] });
+
+            $(options.attachTo).addClass('autoupdate--has-animation');
+
+            detect.initPageVisibility();
+
+            mediator.on('modules:detect:pagevisibility:visible', function () {
+                if (this.isUpdating) {
+                    this.on(); // reset backoff
+                    that.view.revealNewElements();
+                }
+            }.bind(this));
+
+            mediator.on('modules:notificationbar:show', this.view.revealNewElements.bind(this));
+
+            // add the component to the page, and show it
+            $('.update').html(this.template).removeClass('u-h');
+
+            this.btns = $(options.btnClass);
+
+            this.btns.each(function (btn) {
+                bean.add(btn, 'click', function (e) {
+                    e.preventDefault();
+                    that.view.toggle.call(that, this);
+                });
+            });
+
+            this.view.toggle.call(this, this.btns[1]);
+        };
+
+        this.setManipulationType = function (manipulation) {
+            options.manipulationType = manipulation;
+        };
+
+        this.getManipulationType = function () {
+            return options.manipulationType;
         };
     }
 
-    return AutoUpdate;
+    return Autoupdate;
 
 });
