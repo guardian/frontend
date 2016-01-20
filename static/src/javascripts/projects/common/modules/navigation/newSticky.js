@@ -19,16 +19,7 @@ define([
                 var adId = 'dfp-ad--top-above-nav',
                     $adBanner = $('.js-top-banner-above-nav'),
                     $adBannerInner = $('#' + adId, $adBanner),
-                    $header = $('.js-header'),
-                    headerHeight = $header.height();
-
-                var topAdRenderedPromise = new Promise(function (resolve) {
-                    mediator.on('modules:commercial:dfp:rendered', function (event) {
-                        if (event.slot.getSlotElementId() === adId) {
-                            resolve();
-                        }
-                    });
-                });
+                    $header = $('.js-header');
 
                 var getClientAdHeight = function () {
                     return fastdom.read(function () {
@@ -36,8 +27,10 @@ define([
                     });
                 };
 
+                var getAdIframe = function () { return $('iframe', $adBanner); };
+
                 var getLatestAdHeight = function () {
-                    var $iframe = $('iframe', $adBanner);
+                    var $iframe = getAdIframe();
                     var slotWidth = $iframe.attr('width');
                     var slotHeight = $iframe.attr('height');
                     // iframe may not have been injected at this point
@@ -53,11 +46,36 @@ define([
                         : getClientAdHeight();
                 };
 
+                var topAdRenderedPromise = new Promise(function (resolve) {
+                    mediator.on('modules:commercial:dfp:rendered', function (event) {
+                        if (event.slot.getSlotElementId() === adId) {
+                            resolve();
+                        }
+                    });
+                });
+
+                var newRubiconAdHeightPromise = new Promise(function (resolve) {
+                    window.addEventListener('message', function (event) {
+                        var data = JSON.parse(event.data);
+                        var $iframe = getAdIframe();
+                        var isRubiconAdEvent = data.type === 'set-ad-height';
+                        var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
+
+                        if (isRubiconAdEvent && isEventForTopAdBanner) {
+                            fastdom.read(function () {
+                                var padding = parseInt($adBannerInner.css('padding-top'))
+                                    + parseInt($adBannerInner.css('padding-bottom'));
+                                resolve(parseInt(data.value.height) + padding);
+                            });
+                        }
+                    });
+                });
+
                 var oldAdHeightPromise = getLatestAdHeight();
                 var newAdHeightPromise = topAdRenderedPromise.then(getLatestAdHeight);
 
                 var getCachedAdHeight = function () {
-                    return Promise.race([newAdHeightPromise, oldAdHeightPromise]);
+                    return Promise.race([newRubiconAdHeightPromise, newAdHeightPromise, oldAdHeightPromise]);
                 };
 
                 var render = function (state) {
@@ -112,6 +130,7 @@ define([
                 // Side effects
                 //
 
+                var headerHeight = $header.height();
                 var update = (function () {
                     var previousAdHeight;
                     return function (options) {
@@ -141,8 +160,8 @@ define([
 
                     update({ firstRender: true }).then(function () {
                         window.addEventListener('scroll', function () { update({}); });
-                        newAdHeightPromise
-                            .then(function () { update({}); });
+                        newAdHeightPromise.then(function () { update({}); });
+                        newRubiconAdHeightPromise.then(function () { update({}); });
                     });
                 });
             });
