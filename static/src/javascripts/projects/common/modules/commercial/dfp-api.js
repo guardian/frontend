@@ -514,7 +514,7 @@ define([
 
                 // Check if creative is a new gu style creative and place labels accordingly
                 checkForBreakout($slot).then(function (adType) {
-                    if (!adType || adType.type !== 'gu-style') {
+                    if (adType !== 'gu-style') {
                         addLabel($slot);
                     }
 
@@ -640,13 +640,16 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return new Promise(function(resolve) {
+            return new Promise(function(resolve, reject) {
                 // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
                 // The later one will never go to 'complete' state on IE so lets avoid it.
                 var iFrame = find($('iframe', $slot), function(iframe) { return iframe.id.match('__hidden__') === null; });
 
+                if (typeof iFrame === 'undefined') {
+                    reject();
+                }
                 // IE needs the iFrame to have loaded before we can interact with it
-                if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                else if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
 
@@ -665,9 +668,11 @@ define([
                     resolve(breakoutIFrame(iFrame, $slot));
                 }
             }).then(function (items) {
-                return find(items, function (item) {
+                return new Promise.resolve(find(items, function (item) {
                     return item.adType !== '';
-                });
+                }));
+            }).then(null, function() {
+                return new Promise.resolve({});
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
