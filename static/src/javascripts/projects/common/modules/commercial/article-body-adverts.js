@@ -5,8 +5,7 @@ define([
     'common/utils/detect',
     'common/modules/article/space-filler',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/commercial-features',
-    'lodash/objects/cloneDeep'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     $,
@@ -14,8 +13,8 @@ define([
     detect,
     spaceFiller,
     createAdSlot,
-    commercialFeatures,
-    cloneDeep) {
+    commercialFeatures
+) {
     function getRules() {
         return {
             bodySelector: '.js-article__body',
@@ -31,21 +30,25 @@ define([
     }
 
     function getInlineMerchRules() {
-        var newRules = cloneDeep(getRules());
-        newRules.minAbove = 300;
-        newRules.selectors[' > h2'].minAbove = 20;
-        return newRules;
+        if (!inlineMerchRules) {
+            inlineMerchRules = getRules();
+            inlineMerchRules.minAbove = 300;
+            inlineMerchRules.selectors[' > h2'].minAbove = 20;
+        }
+        return inlineMerchRules;
     }
 
     function getLongArticleRules() {
-        var newRules = cloneDeep(getRules());
-
-        newRules.selectors[' .ad-slot'] = {
-            minAbove: 1300,
-            minBelow: 1300
-        };
-
-        return newRules;
+        if (!longArticleAdsRules) {
+            longArticleAdsRules = getRules();
+            longArticleAdsRules.selectors[' .ad-slot--im'] = longArticleAdsRules.selectors[' .ad-slot'];
+            longArticleAdsRules.selectors[' .ad-slot--inline'] = {
+                minAbove: 1300,
+                minBelow: 1300
+            };
+            longArticleAdsRules.selectors[' .ad-slot'] = null;
+        }
+        return longArticleAdsRules;
     }
 
     // Add new ads while there is still space
@@ -81,6 +84,8 @@ define([
 
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
+        inlineMerchRules,
+        longArticleAdsRules,
         init = function () {
             if (!commercialFeatures.articleBodyAdverts) {
                 return false;
