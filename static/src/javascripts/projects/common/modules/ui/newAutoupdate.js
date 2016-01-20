@@ -47,7 +47,7 @@ define([
             if (detect.pageVisible()) {
                 newDelay = options.minUpdateDelay;
             } else {
-                newDelay = Math.min(delay*1.5, options.maxUpdateDelay);
+                newDelay = Math.min(delay * 1.5, options.maxUpdateDelay);
             }
             currentUpdateDelay = newDelay;
         };
@@ -77,9 +77,9 @@ define([
 
             mediator.on('modules:liveblog-updates-button:unfixed', function () {
                 if (isLivePage) {
-                    fastdom.write(function() {
+                    fastdom.write(function () {
                         $updateBox.addClass('loading');
-                    }).then(function() {
+                    }).then(function () {
                         injectNewBlocks();
                     });
                 }
