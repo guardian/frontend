@@ -5,7 +5,7 @@ import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
 import conf.switches.Switches._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
-import model.pressed.PressedContent
+import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag}
 
 object Commercial {
@@ -79,15 +79,24 @@ object Commercial {
     }
   }
 
+  object container {
+
+    def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
+      DfpAgent.findContainerCapiTagIdAndDfpTag(config) map { tagData =>
+        val capiTagId = tagData.capiTagId
+        val dfpTag = tagData.dfpTag
+        def tagId(tagType: TagType) = if (dfpTag.tagType == tagType) Some(capiTagId) else None
+        SponsorDataAttributes(
+          sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
+          sponsorshipType = dfpTag.paidForType.name,
+          seriesId = tagId(Series),
+          keywordId = tagId(Keyword)
+        )
+      }
+    }
+  }
+
   object containerCard {
-
-    case class SponsorDataAttributes(
-      sponsorshipType: String,
-      seriesId: Option[String],
-      keywordId: Option[String]
-    )
-
-    case class CardWithSponsorDataAttributes(card: ContentCard, sponsorData: Option[SponsorDataAttributes])
 
     def mkCardsWithSponsorDataAttributes(container: FaciaContainer): Seq[CardWithSponsorDataAttributes] = {
 
@@ -108,6 +117,7 @@ object Commercial {
           def tagId(p: Tag => Boolean): Option[String] = if (p(capiTag)) Some(capiTag.id) else None
 
           SponsorDataAttributes(
+            sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
             sponsorshipType = dfpTag.paidForType.name,
             seriesId = tagId(_.isSeries),
             keywordId = tagId(_.isKeyword)
@@ -137,3 +147,12 @@ object Commercial {
     }
   }
 }
+
+case class SponsorDataAttributes(
+  sponsor: Option[String],
+  sponsorshipType: String,
+  seriesId: Option[String],
+  keywordId: Option[String]
+)
+
+case class CardWithSponsorDataAttributes(card: ContentCard, sponsorData: Option[SponsorDataAttributes])

@@ -174,10 +174,10 @@ const renderPage: (
         commits
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
-        return h('div', { id: 'root' }, [
+        return h('.row#root', {}, [
             h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
             h('hr', {}, []),
-            exp(commits.length > 0) && h('div', [
+            exp(commits.length > 0) && h('.col', [
                 h('h1', [
                     'Difference (',
                     h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
@@ -222,10 +222,14 @@ const renderPage: (
                 ))
             ]),
 
-            h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys),
-            h('h1', 'PROD'),
-            renderGroupDeployListNode(prodDeploys)
+            h('.col', [
+                h('h1', 'CODE'),
+                renderGroupDeployListNode(codeDeploys)
+            ]),
+            h('.col', [
+                h('h1', 'PROD'),
+                renderGroupDeployListNode(prodDeploys)
+            ])
         ])
     }
 
@@ -275,20 +279,38 @@ const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>>
 );
 
 const run = (): Promise<void> => {
+    // We only care about servers which are deployed frequently and manually
+    // with goo
+    const serverWhitelist = List([
+        'admin',
+        'applications',
+        'archive',
+        'article',
+        'commercial',
+        'diagnostics',
+        'discussion',
+        'facia',
+        'identity',
+        'onward',
+        'sport'
+    ]);
+
+    const filterWhitelisted = (deploys: List<DeployRecord>) => deploys
+        .filter(deploy => serverWhitelist.contains(deploy.projectName))
+        .toList();
     const deploysPromise = Promise.all([
-        getDeploys('CODE'),
-        getDeploys('PROD')
+        getDeploys('CODE').then(filterWhitelisted),
+        getDeploys('PROD').then(filterWhitelisted)
     ]);
 
     const deployRefsPromise = deploysPromise.then(([ codeDeploys, prodDeploys ]) => {
         const currentCodeDeploys = getMostRecentDeploys(codeDeploys);
         const currentProdDeploys = getMostRecentDeploys(prodDeploys);
+
         const latestCodeDeploy = currentCodeDeploys
             .sortBy(deploy => deploy.build)
             .last();
-        const blacklistProdDeploys = List(['static', 'router', 'training-preview', 'facia-press']);
         const oldestProdDeploy = currentProdDeploys
-            .filter(deploy => !blacklistProdDeploys.contains(deploy.projectName))
             .sortBy(deploy => deploy.build)
             .first();
 

@@ -14,8 +14,8 @@ import org.joda.time.DateTime
 import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{Json, _}
 import play.api.mvc._
+import play.api.libs.json.{Json, _}
 import views.BodyCleaner
 import views.support._
 
@@ -36,7 +36,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _, None))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader): Result = {
       val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
@@ -83,7 +83,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   }
 
-  private def noAMP(renderPage: Result)(implicit  request: RequestHeader): Result = {
+  private def noAMP(renderPage: => Result)(implicit  request: RequestHeader): Result = {
     if (request.isAmp) NotFound
     else renderPage
   }
@@ -91,14 +91,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   private def render(path: String, page: PageWithStoryPackage, pageNo: Option[Int])(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       noAMP {
-        val blocks = BodyBlocks(blog.article.content.fields.blocks, pageNo)
-        blocks match {
-          case Some(blocks) =>
-            val htmlResponse = () => views.html.liveBlog (blog, blocks)
-            val jsonResponse = () => views.html.fragments.liveBlogBody (blog, blocks)
-            renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
-          case None => NotFound
-        }
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
+
+        blocks map { blocks =>
+          val htmlResponse = () => views.html.liveBlog(blog, blocks)
+          val jsonResponse = () => views.html.fragments.liveBlogBody(blog, blocks)
+          renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+        } getOrElse (NotFound)
       }
 
     case minute: MinutePage =>
@@ -124,14 +124,14 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   def renderLiveBlog(path: String, page: Option[Int] = None) =
     LongCacheAction { implicit request =>
-      mapModel(path, true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+      mapModel(path, blocks = true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
         render(path, _, page)
       }
     }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
     LongCacheAction { implicit request =>
-      mapModel(path, true) { model =>
+      mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
           case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
           case (None, Some(false)) => blockText(model, 6)

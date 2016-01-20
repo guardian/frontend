@@ -22,6 +22,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
+    'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -83,6 +84,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     dfpOphanTracking,
+    prebidService,
     geoMostPopular,
     ab,
     beacon,
@@ -271,6 +273,7 @@ define([
                 }).and(map, function ($adSlot) {
                     return [$adSlot.attr('id'), {
                         isRendered: false,
+                        isLoading: false,
                         slot: defineSlot($adSlot)
                     }];
                 }).and(zipObject).valueOf();
@@ -289,8 +292,13 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(keys(slots).shift());
-            displayed = true;
+            var firstSlot = keys(slots).shift();
+            if (prebidService.testEnabled && prebidService.slotIsInTest(firstSlot)) {
+                loadSlot(firstSlot);
+            } else {
+                googletag.display(firstSlot);
+                displayed = true;
+            }
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
@@ -315,6 +323,10 @@ define([
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
                 require(['js!googletag.js']);
+            }
+
+            if (prebidService.testEnabled) {
+                prebidService.loadDependencies();
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -365,27 +377,41 @@ define([
                     scrollBottom = scrollTop + viewportHeight,
                     depth = 0.5;
 
-                chain(slots).and(keys).and(forEach, function (slot) {
-                    // if the position of the ad is above the viewport - offset (half screen size)
-                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth) {
-                        loadSlot(slot);
-                    }
+                chain(slots).and(keys).and(filter, function (slot) {
+                    return !slots[slot].isLoading &&
+                        !slots[slot].isRendered &&
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth;
+                }).and(forEach, function (slot) {
+                    loadSlot(slot);
                 });
             }
         },
-        loadSlot = function (slot) {
-            googletag.display(slot);
-            slots = chain(slots).and(omit, slot).value();
-            displayed = true;
+        loadSlot = function (slotKey) {
+            if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
+                prebidAndLoadSlot(slotKey);
+            } else {
+                // original implementation
+                slots[slotKey].isLoading = true;
+                googletag.display(slotKey);
+                displayed = true;
+            }
+        },
+        prebidAndLoadSlot = function (slotKey) {
+            slots[slotKey].isLoading = true;
+            prebidService.loadSlots(slotKey).then(function () {
+                displayed = true;
+            });
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
                         isRendered: false,
+                        isLoading: false,
                         slot: defineSlot($adSlot)
                     };
-                    googletag.display(slotId);
+                    loadSlot(slotId);
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
@@ -519,6 +545,7 @@ define([
         },
         allAdsRendered = function (slotId) {
             if (slots[slotId] && !slots[slotId].isRendered) {
+                slots[slotId].isLoading = false;
                 slots[slotId].isRendered = true;
             }
 

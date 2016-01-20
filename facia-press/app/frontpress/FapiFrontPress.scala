@@ -124,15 +124,8 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   }
 
   private def getBackfill(collection: Collection): Response[List[PressedContent]] = {
-    collection
-      .collectionConfig
-      .apiQuery
-      .map { query =>
-        FAPI.backfill(query, collection, searchApiQuery, itemApiQuery)
-      }
-      .getOrElse {
-        Response.Right(Nil)
-      }.map(_.map(PressedContent.make))
+    FAPI.backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
+      .map(_.map(PressedContent.make))
   }
 
   private def getCollectionIdsForPath(path: String): Response[List[String]] =

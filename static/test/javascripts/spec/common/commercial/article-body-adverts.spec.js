@@ -36,7 +36,7 @@ define([
                 commercialFeatures.articleBodyAdverts = true;
 
                 spaceFiller = arguments[2];
-                spyOn(spaceFiller, 'insertAtFirstSpace').and.callFake(function () {
+                spyOn(spaceFiller, 'fillSpace').and.callFake(function () {
                     return new Promise.resolve(true);
                 });
 
@@ -58,12 +58,12 @@ define([
             commercialFeatures.articleBodyAdverts = false;
             var executionResult = articleBodyAdverts.init();
             expect(executionResult).toBe(false);
-            expect(spaceFiller.insertAtFirstSpace).not.toHaveBeenCalled();
+            expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
         });
 
         it('should call space-filler`s insertion method with the correct arguments', function (done) {
             articleBodyAdverts.init().then(function () {
-                var args = spaceFiller.insertAtFirstSpace.calls.first().args,
+                var args = spaceFiller.fillSpace.calls.first().args,
                     rulesArg = args[0],
                     writerArg = args[1];
 
@@ -84,7 +84,7 @@ define([
 
             it('its first call to space-filler uses the inline-merch rules', function (done) {
                 articleBodyAdverts.init().then(function () {
-                    var firstCall = spaceFiller.insertAtFirstSpace.calls.first(),
+                    var firstCall = spaceFiller.fillSpace.calls.first(),
                         rules = firstCall.args[0];
 
                     expect(rules.minAbove).toEqual(300);
@@ -100,9 +100,9 @@ define([
                 fixture.appendChild(paragraph);
 
                 articleBodyAdverts.init().then(function () {
-                    var firstCall = spaceFiller.insertAtFirstSpace.calls.first(),
+                    var firstCall = spaceFiller.fillSpace.calls.first(),
                         writer = firstCall.args[1];
-                    writer(paragraph);
+                    writer([paragraph]);
 
                     var expectedAd = fixture.querySelector('#dfp-ad--im');
                     expect(expectedAd).toBeTruthy();
@@ -129,7 +129,7 @@ define([
                     };
 
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(2);
+                        expect(spaceFiller.fillSpace.calls.count()).toBe(2);
                         done();
                     });
                 });
@@ -143,7 +143,7 @@ define([
 
                     it('inserts up to ten adverts', function (done) {
                         articleBodyAdverts.init().then(function () {
-                            expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(10);
+                            expect(spaceFiller.fillSpace.calls.count()).toBe(10);
                             done();
                         });
                     });
@@ -152,7 +152,7 @@ define([
                         // We do not want the same ad-density on long-read
                         // articles that we have on shorter pieces
                         articleBodyAdverts.init().then(function () {
-                            var insertionCalls = spaceFiller.insertAtFirstSpace.calls.all();
+                            var insertionCalls = spaceFiller.fillSpace.calls.all();
                             var longArticleInsertionCalls = insertionCalls.slice(2);
                             var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
                                 return call.args[0];
@@ -178,7 +178,7 @@ define([
                     };
 
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(2);
+                        expect(spaceFiller.fillSpace.calls.count()).toBe(2);
                         done();
                     });
                 });
@@ -189,7 +189,7 @@ define([
                     };
 
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(1);
+                        expect(spaceFiller.fillSpace.calls.count()).toBe(1);
                         done();
                     });
                 });
@@ -280,7 +280,7 @@ define([
 
                 function getFirstRulesUsed() {
                     return articleBodyAdverts.init().then(function () {
-                        var firstCall = spaceFiller.insertAtFirstSpace.calls.first();
+                        var firstCall = spaceFiller.fillSpace.calls.first();
                         return firstCall.args[0];
                     });
                 }

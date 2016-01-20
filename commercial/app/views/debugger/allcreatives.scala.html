@@ -77,6 +77,7 @@
                     <option value="shop">Shop</option>
                     <option value="money">Money</option>
                     <option value="gardening">Gardening</option>
+                    <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
             <dt>Component in the RH column</dt>
@@ -137,12 +138,12 @@
                     });
 
                     var $palette    = $('#dfp-palette'),
-                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening', 'soulmates']
                             .map(function (tone) {
                                 return 'commercial--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
-                        $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                        $('#multiple1, .commercial--dfp-single, .commercial--v-high')
                             .removeClass(toneClasses.join(' '))
                             .addClass('commercial--tone-' + $palette.val());
                     });
@@ -286,233 +287,7 @@
                 });
         </script>
     </article>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="#">
-                Paid for container
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial" data-node-uid="1">
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component">
-            <div class="commercial commercial--paidfor commercial--tone-paidfor">
-                <div class="commercial__inner">
-                    <div class="commercial__header">
-                        <div class="paidfor-meta">
-                            <span class="paidfor-meta__label">Paid Content</span>
-                            <div class="paidfor-label paidfor-meta__more has-popup">
-                                <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test2">
-                                    About
-                                    @fragments.inlineSvg("arrow-down", "icon")
-                                </button>
-                                <div class="popup is-off paidfor-popup paidfor-popup--test2">
-                                    <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
-                                    <a class="paidfor-popup__link" href="#">
-                                        Learn more about the Guardian’s funding from outside parties
-                                        @fragments.inlineSvg("arrow-right", "icon")
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="commercial__title">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                        </h3>
-                        <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">
-                            @fragments.inlineSvg("glabs-logo", "logo")
-                        </a>
-                    </div>
-                    <div class="commercial__body">
-                        <ul class="lineitems">
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <aside class="rich-link__meta">
-                                            Paid for by <img src="gourmet.png">
-                                        </aside>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <aside class="rich-link__meta">
-                                            Paid for by <img src="gourmet.png">
-                                        </aside>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <aside class="rich-link__meta">
-                                            Paid for by <img src="gourmet.png">
-                                        </aside>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <aside class="rich-link__meta">
-                                            Paid for by <img src="gourmet.png">
-                                        </aside>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="fc-container fc-container--commercial" data-node-uid="1">
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component">
-            <div class="commercial commercial--paidfor commercial--tone-paidfor">
-                <div class="commercial__inner">
-                    <div class="commercial__header">
-                        <div class="paidfor-meta">
-                            <span class="paidfor-meta__label">Paid Content</span>
-                            <div class="paidfor-label paidfor-meta__more has-popup">
-                                <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--test3">
-                                    About
-                                    @fragments.inlineSvg("arrow-down", "icon")
-                                </button>
-                                <div class="popup is-off paidfor-popup paidfor-popup--test3">
-                                    <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
-                                    <a class="paidfor-popup__link" href="#">
-                                        Learn more about the Guardian’s funding from outside parties
-                                        @fragments.inlineSvg("arrow-right", "icon")
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="commercial__title">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                        </h3>
-                        <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">
-                            @fragments.inlineSvg("glabs-logo", "logo")
-                        </a>
-                    </div>
-                    <div class="commercial__body">
-                        <ul class="lineitems">
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="lineitem">
-                                <div class="rich-link tone-paidfor--item">
-                                    <div class="rich-link__container">
-                                        <div class="fc-item__image-container u-responsive-ratio ">
-                                            <img alt="" srcset="https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=220&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=f1861b3d4221b595bf92908f9c2f5c93 220w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=160&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=24b4b1aef3e4b537c8f8fc73de08b90d 160w, https://i.guim.co.uk/img/media/a3290158f9d021d543e4c9c386c6354993c199fd/0_582_2758_1654/master/2758.jpg?w=127&amp;q=85&amp;auto=format&amp;sharp=10&amp;s=57660040b46f0f5a40f5b4046af51f4a 127w" sizes="(min-width: 980px) 220px, (min-width: 740px) 160px, 127px">
-                                        </div>
-                                        <div class="rich-link__header">
-                                            <h2 class="rich-link__title">
-                                                <a class="rich-link__link">How it feeds into age-old west v Islam narrative</a>
-                                            </h2>
-                                        </div>
-                                        <div class="rich-link__standfirst u-cf">Republican candidate’s call for shutdown of US borders to Muslims will be seen by extremists as confirmation that war of ideals takes on yet another guise</div>
-                                        <a class="rich-link__link u-faux-block-link__overlay" href="#"></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <aside class="commercial__meta">
-                            Paid for by <img src="ben-jerrys.png">
-                        </aside>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="fc-container__inner">
         <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
@@ -912,6 +687,7 @@
 
     @Seq(
         Map(
+            ("id", "manual1"),
             ("type", "single"),
             ("creativeId", "10025607"),
             ("args", Json.obj(
@@ -932,6 +708,7 @@
             ))
         ),
         Map(
+            ("id", "multiple1"),
             ("type", "multiple"),
             ("creativeId", "10025847"),
             ("args", Json.obj(
@@ -967,6 +744,42 @@
                 ("omnitureId", "[%OmnitureID%]"),
                 ("clickMacro", "%%CLICK_URL_ESC%%")
             ))
+        ),
+        Map(
+            ("id", "multiple2"),
+            ("type", "multiple"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "manual-multiple"),
+                ("base__url", "https://soulmates.theguardian.com"),
+                ("offerlinktext", "Offer link text"),
+                ("viewalltext", "View all text"),
+                ("offeramount", "offer-amount"),
+                ("relevance", "high"),
+                ("Toneclass", "commercial--tone-soulmates"),
+                ("offer1title", "Offer 1 Title"),
+                ("offer1linktext", "Offer 1 Link Text"),
+                ("offer1url", "http://www.theguardian.com/uk"),
+                ("offer1meta", "Offer 1 Meta"),
+                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer2title", "Offer 2 Title"),
+                ("offer2linktext", "Offer 2 Link Text"),
+                ("offer2url", "http://www.theguardian.com/uk"),
+                ("offer2meta", "Offer 1 Meta"),
+                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer3title", "Offer 3 Title"),
+                ("offer3linktext", "Offer 3 Link Text"),
+                ("offer3url", "http://www.theguardian.com/uk"),
+                ("offer3meta", "Offer 1 Meta"),
+                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer4title", "Offer 4 Title"),
+                ("offer4linktext", "Offer 4 Link Text"),
+                ("offer4url", "http://www.theguardian.com/uk"),
+                ("offer4meta", "Offer 1 Meta"),
+                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
         )
     ).map { component =>
         <div class="fc-container__inner">
@@ -976,14 +789,14 @@
                 </a>
             </h2>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <div id="@component("id")" class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
         <script>
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
                         require(['common/modules/commercial/creatives/template'])
                             .then(function (Template) {
-                                new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
+                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
                         });
                     });

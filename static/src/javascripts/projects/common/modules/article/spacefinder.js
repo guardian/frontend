@@ -1,7 +1,6 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/$',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'qwery',
     'bonzo',
     'bean',
@@ -10,12 +9,10 @@ define([
     'common/utils/mediator',
     'lodash/collections/filter',
     'lodash/collections/map',
-    'lodash/collections/pluck',
     'lodash/collections/every',
-    'common/utils/chain',
-    'lodash/objects/forOwn'
+    'lodash/objects/forOwn',
+    'lodash/functions/curry'
 ], function (
-    $,
     fastdom,
     qwery,
     bonzo,
@@ -25,37 +22,95 @@ define([
     mediator,
     filter,
     map,
-    pluck,
     every,
-    chain,
-    forOwn) {
+    forOwn,
+    curry
+) {
     // find spaces in articles for inserting ads and other inline content
-    var bodySelector = '.js-article__body',
-        // minAbove and minBelow are measured in px from the top of the paragraph element being tested
-        defaultRules = { // these are written for adverts
-            minAbove: 250, // minimum from para to top of article
-            minBelow: 300, // minimum from (top of) para to bottom of article
-            clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
-            selectors: { // custom rules using selectors. format:
-                //'.selector': {
-                //   minAbove: <min px above para to bottom of els matching selector>,
-                //   minBelow: <min px below (top of) para to top of els matching selector> }
-                ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
-                ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
-            }
+    // minAbove and minBelow are measured in px from the top of the paragraph element being tested
+    var defaultRules = { // these are written for adverts
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 250, // minimum from para to top of article
+        minBelow: 300, // minimum from (top of) para to bottom of article
+        clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
+        selectors: { // custom rules using selectors. format:
+            //'.selector': {
+            //   minAbove: <min px above para to bottom of els matching selector>,
+            //   minBelow: <min px below (top of) para to top of els matching selector> }
+            ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
+            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
         },
-        // test one element vs another for the given rules
-        _testElem = function (para, other, rules) {
-            var isMinAbove = para.top - other.bottom >= rules.minAbove,
-                isMinBelow = other.top - para.top >= rules.minBelow;
-            return isMinAbove || isMinBelow;
-        },
-        // test one element vs an array of other elements for the given rules
-        _testElems = function (para, others, rules) {
-            return chain(others).and(every, function (other) {
-                return _testElem(para, other, rules);
-            }).valueOf();
-        };
+
+        // filter:(slot:Element, index:Integer, slots:Collection<Element>) -> Boolean
+        // will run each slot through this fn to check if it must be counted in
+        filter: null,
+
+        // startAt:Element
+        // will remove slots before this one
+        startAt: null,
+
+        // stopAt:Element
+        // will remove slots from this one on
+        stopAt: null,
+
+        // fromBotton:Boolean
+        // will reverse the order of slots (this is useful for lazy loaded content)
+        fromBottom: false
+    },
+    imagesLoaded,
+    richLinksUpgraded;
+
+    function onImagesLoaded(body) {
+        var notLoaded = filter(qwery('img', body), function (img) {
+            return !img.complete;
+        });
+
+        return imagesLoaded || (imagesLoaded = Promise.race([
+            Promise.all(map(notLoaded, function (img) {
+                return new Promise(function (resolve) {
+                    bean.on(img, 'load', resolve);
+                });
+            })),
+            new Promise(function (resolve) {
+                window.setTimeout(resolve, 5000);
+            })
+        ]));
+    }
+
+    function onRichLinksUpgraded(body) {
+        return richLinksUpgraded || (richLinksUpgraded = Promise.race([
+            new Promise(function (resolve, reject) {
+                var unloaded = qwery('.element-rich-link--not-upgraded', body);
+
+                if (!unloaded.length) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            }).catch(function () {
+                return new Promise(function (resolve) {
+                    mediator.once('rich-link:loaded', resolve);
+                });
+            }),
+            new Promise(function (resolve) {
+                window.setTimeout(resolve, 5000);
+            })
+        ]));
+    }
+
+    // test one element vs another for the given rules
+    function _testElem(rules, elem, other) {
+        var isMinAbove = elem.top - other.bottom >= rules.minAbove,
+            isMinBelow = other.top - elem.top >= rules.minBelow;
+
+        return isMinAbove || isMinBelow;
+    }
+
+    // test one element vs an array of other elements for the given rules
+    function _testElems(rules, elem, others) {
+        return every(others, curry(_testElem)(rules, elem));
+    }
 
     function _mapElementToDimensions(el) {
         return {
@@ -65,133 +120,120 @@ define([
         };
     }
 
-    function _debugErrPara(p, message) {
-        fastdom.write(function () {
-            bonzo(p)
-                .addClass('spacefinder--error')
-                .attr('data-spacefinder-msg', message);
-        });
-    }
-
-    function _enforceRules(slots, rules, bodyHeight, debug) {
-
-        var filtered = chain(slots),
-            contentMeta;
+    function _enforceRules(slots, rules, bodyHeight) {
+        var filtered;
 
         // enforce minAbove and minBelow rules
-        filtered = filtered.and(filter, function (p) {
-            var farEnoughFromTopOfBody = p.top >= rules.minAbove,
-                farEnoughFromBottomOfBody = p.top + rules.minBelow <= bodyHeight,
-                valid = farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-
-            if (debug && !valid) {
-                if (!farEnoughFromTopOfBody) { _debugErrPara(p.element, 'too close to top of body'); }
-                if (!farEnoughFromBottomOfBody) { _debugErrPara(p.element, 'too close to bottom of body'); }
-            }
-
-            return valid;
-        });
+        filtered = Promise.resolve(filter(slots, function (slot) {
+            var farEnoughFromTopOfBody = slot.top >= rules.minAbove,
+                farEnoughFromBottomOfBody = slot.top + rules.minBelow <= bodyHeight;
+            return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
+        }));
 
         // enforce content meta rule
         if (rules.clearContentMeta) {
-            contentMeta = _mapElementToDimensions(qwery('.js-content-meta')[0]);
-            filtered = filtered.and(filter, function (p) {
-                var valid = p.top > (contentMeta.bottom + rules.clearContentMeta);
-                if (debug && !valid) { _debugErrPara(p.element, 'too close to content meta'); }
-                return valid;
+            filtered = filtered.then(function (slots) {
+                return fastdom.read(function () {
+                    return _mapElementToDimensions(qwery('.js-content-meta')[0]);
+                }).then(function (contentMeta) {
+                    return filter(slots, function (slot) {
+                        return slot.top > (contentMeta.bottom + rules.clearContentMeta);
+                    });
+                });
             });
         }
 
         // enforce selector rules
-        chain(rules.selectors).and(forOwn, function (params, selector) {
-            var relevantElems = chain(qwery(bodySelector + selector)).and(map, _mapElementToDimensions).value();
-
-            filtered = filtered.and(filter, function (p) {
-                var valid = _testElems(p, relevantElems, params);
-                if (debug && !valid) {
-                    _debugErrPara(p.element, 'too close to selector (' + selector + ')');
-                }
-                return valid;
+        if (rules.selectors) {
+            forOwn(rules.selectors, function (params, selector) {
+                filtered = filtered.then(function (slots) {
+                    return fastdom.read(function () {
+                        return map(qwery(rules.bodySelector + selector), _mapElementToDimensions);
+                    }).then(function (relevantElems) {
+                        return filter(slots, function (slot) {
+                            return _testElems(params, slot, relevantElems);
+                        });
+                    });
+                });
             });
-        });
-        return filtered.valueOf();
-    }
-
-    function onImagesLoaded() {
-        var notLoaded = filter($('.js-article__body img'), function (img) {
-            return !img.complete;
-        });
-
-        return Promise.all(map(notLoaded, function (img) {
-            return new Promise(function (resolve) {
-                window.setTimeout(resolve, 5000);
-                bean.on(img, 'load', resolve);
-            });
-        }));
-    }
-
-    function onRichLinksUpgraded() {
-        return new Promise(function (resolve) {
-            window.setTimeout(resolve, 5000);
-
-            (function check() {
-                var unloaded = qwery('.js-article__body .element-rich-link--not-upgraded');
-
-                if (!unloaded.length) {
-                    return resolve();
-                }
-
-                mediator.once('rich-link:loaded', check);
-            })();
-        });
-    }
-
-    function getReady() {
-        if (config.switches.viewability) {
-            return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 
-        return Promise.resolve();
+        return filtered;
+    }
+
+    function getReady(body) {
+        if (config.switches.viewability) {
+            return Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body)]);
+        }
+
+        return Promise.resolve(true);
     }
 
     // Rather than calling this directly, use spaceFiller to inject content into the page.
     // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
-    function getParaWithSpace(rules, debug) {
-        var bodyBottom, paraElems, slots;
+    function findSpace(rules) {
+        var body;
+
         rules = rules || defaultRules;
+        body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
 
         // get all immediate children
-        return getReady().then(function () {
-            return new Promise(function (resolve) {
-                fastdom.read(function () {
-                    bodyBottom = qwery(bodySelector)[0].offsetHeight;
-                    paraElems = chain(qwery(bodySelector + ' > p')).and(map, _mapElementToDimensions);
-
-                    if (debug) { // reset any previous debug messages
-                        fastdom.write(function () {
-                            bonzo(paraElems.and(pluck, 'element').valueOf())
-                                .attr('data-spacefinder-msg', '')
-                                .removeClass('spacefinder--valid')
-                                .removeClass('spacefinder--error');
-                        });
-                    }
-
-                    slots = _enforceRules(paraElems.value(), rules, bodyBottom, debug);
-
-                    if (debug) {
-                        fastdom.write(function () {
-                            bonzo(pluck(slots, 'element')).addClass('spacefinder--valid');
-                        });
-                    }
-
-                    resolve(slots.length ? slots[0].element : undefined);
-                });
-            });
+        return getReady(body).then(function () {
+            return fastdom.read(getSlots)
+            .then(enforceRules)
+            .then(filterSlots)
+            .then(returnSlots);
         });
+
+        function getSlots() {
+            var bodyBottom = body.offsetHeight;
+            var slots = qwery(rules.bodySelector + rules.slotSelector);
+            if (rules.fromBottom) {
+                slots.reverse();
+            }
+            if (rules.startAt) {
+                var drop = true;
+                slots = filter(slots, function (slot) {
+                    if (slot === rules.startAt) {
+                        drop = false;
+                    }
+                    return !drop;
+                });
+            }
+            if (rules.stopAt) {
+                var keep = true;
+                slots = filter(slots, function (slot) {
+                    if (slot === rules.stopAt) {
+                        keep = false;
+                    }
+                    return keep;
+                });
+            }
+            slots = map(slots, _mapElementToDimensions);
+            return [bodyBottom, slots];
+        }
+
+        function enforceRules(data) {
+            return _enforceRules(data[1], rules, data[0]);
+        }
+
+        function filterSlots(slots) {
+            return rules.filter ?
+                filter(slots, rules.filter) :
+                slots;
+        }
+
+        function returnSlots(slots) {
+            if (slots.length) {
+                return map(slots, function (slot) { return slot.element; });
+            } else {
+                throw new Error('There is no space left matching rules ' + JSON.stringify(rules));
+            }
+        }
     }
 
     return {
-        getParaWithSpace: getParaWithSpace,
+        findSpace: findSpace,
         _testElem: _testElem, // exposed for unit testing
         _testElems: _testElems // exposed for unit testing
     };

@@ -42,9 +42,9 @@ define([
                 config = arguments[1];
                 spaceFiller = arguments[2];
 
-                spaceFiller.insertAtFirstSpace = function (rules, writer) {
+                spaceFiller.fillSpace = function (rules, writer) {
                     var space = $('#article-body p').first();
-                    writer(space);
+                    writer([space]);
                     return Promise.resolve(true);
                 };
 
