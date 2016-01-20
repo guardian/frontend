@@ -3,7 +3,9 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/article/space-filler',
+    'common/modules/commercial/dfp-api',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -11,7 +13,9 @@ define([
     $,
     config,
     detect,
+    mediator,
     spaceFiller,
+    dfp,
     createAdSlot,
     commercialFeatures
 ) {
@@ -58,83 +62,100 @@ define([
         return longArticleRules;
     }
 
-        return newRules;
+    function addInlineMerchAd() {
+        spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
+            adNames.unshift(['im', 'im']);
+            insertAdAtPara(paras);
+        });
     }
 
     // Add new ads while there is still space
     function addLongArticleAds(count) {
-        if (count < 1) {
-            return Promise.resolve(null);
-        } else {
-            return tryAddingAdvert().then(function (trySuccessful) {
-                // If last attempt worked, recurse another
-                if (trySuccessful) {
-                    return addLongArticleAds(count - 1);
-                } else {
-                    return Promise.resolve(null);
-                }
-            });
-        }
+        return addLongArticleAdsRec(count, 0);
+    }
 
-        function tryAddingAdvert() {
-            return spaceFiller.fillSpace(getLongArticleRules(), function (paras) {
-                adNames.push(['inline' + (ads.length + 1), 'inline']);
-                insertAdAtPara(paras);
-            });
+    function addLongArticleAdsRec(count, countAdded) {
+        if (count === 0) {
+            return Promise.resolve(countAdded);
+        }
+        return tryAddingAdvert(getLongArticleRules()).then(onLongArticleAdAdded);
+
+        function onLongArticleAdAdded(trySuccessful) {
+            // If last attempt worked, recurse another
+            if (trySuccessful) {
+                return addLongArticleAdsRec(count - 1, countAdded + 1);
+            } else {
+                return countAdded;
+            }
+        }
+    }
+
+    function tryAddingAdvert(rules) {
+        return spaceFiller.fillSpace(rules, insertInlineAd);
+
+        function insertInlineAd(paras) {
+            adNames.push(['inline' + (bodyAds + 1), 'inline']);
+            insertAdAtPara(paras);
         }
     }
 
     function insertAdAtPara(paras) {
-        var adName = adNames[ads.length],
+        var adName = adNames[bodyAds],
             $ad    = $.create(createAdSlot(adName[0], adName[1]));
 
-        ads.push($ad);
+        bodyAds += 1;
         $ad.insertBefore(paras[0]);
     }
 
-    var ads = [],
-        adNames = [['inline1', 'inline'], ['inline2', 'inline']],
-        init = function () {
-            if (!commercialFeatures.articleBodyAdverts) {
-                return false;
-            }
+    // If a merchandizing component has been rendered but is empty,
+    // we allow a second pass for regular inline ads. This is because of
+    // the decoupling between the spacefinder algorightm and the targeting
+    // in DFP: we can only know if a slot can be removed after we have
+    // received a response from DFP
+    function onAdRendered(event) {
+        if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
+            mediator.off('modules:commercial:dfp:rendered', onAdRendered);
+            addLongArticleAds(10).then(function (countAdded) {
+                if (countAdded === 0) {
+                    return;
+                }
+                $('.ad-slot--inline').each(dfp.addSlot);
+            });
+        }
+    }
 
-            var rules = getRules();
+    function init() {
+        if (!commercialFeatures.articleBodyAdverts) {
+            return false;
+        }
 
-            if (config.page.hasInlineMerchandise) {
-                spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
-                    adNames.unshift(['im', 'im']);
-                    insertAdAtPara(paras);
-                });
-            }
+        var rules;
 
-            if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-                return tryAddingAdvert().then(tryAddingAdvert).then(function () {
-                    return addLongArticleAds(8);
-                });
-            } else {
-                return tryAddingAdvert().then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
-                        return tryAddingAdvert();
-                    } else {
-                        return Promise.resolve(null);
-                    }
-                });
-            }
+        boot();
 
-            function tryAddingAdvert() {
-                return spaceFiller.fillSpace(rules, insertAdAtPara);
-            }
-        };
+        if (config.page.hasInlineMerchandise) {
+            addInlineMerchAd();
+        }
+
+        if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
+            return addLongArticleAds(10).then(function (countAdded) {
+                if (countAdded === 0) {
+                    mediator.on('modules:commercial:dfp:rendered', onAdRendered);
+                }
+            });
+        } else {
+            rules = getRules();
+            return tryAddingAdvert(rules).then(function (trySuccessful) {
+                if (trySuccessful && detect.isBreakpoint({max: 'tablet'})) {
+                    return tryAddingAdvert(rules);
+                } else {
+                    return null;
+                }
+            });
+        }
+    }
 
     return {
-        init: init,
-        // rules exposed for spacefinder debugging
-        getRules: getRules,
-        getInlineMerchRules: getInlineMerchRules,
-
-        reset: function () {
-            ads = [];
-        }
+        init: init
     };
 });
