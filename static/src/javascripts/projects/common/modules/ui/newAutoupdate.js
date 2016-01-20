@@ -62,7 +62,7 @@ define([
             bean.on(document.body, 'click', '.js-updates-button', function () {
                 if (isLivePage) {
                     fastdom.read(function () {
-                        scroller.scrollToElement(qwery('.js-blog-blocks'), 300, 'easeOutQuad');
+                        scroller.scrollToElement(qwery('.block')[0], 300, 'easeOutQuad');
 
                         fastdom.write(function () {
                             $updateBox.addClass('loading');
@@ -139,7 +139,8 @@ define([
         };
 
         var injectNewBlocks = function () {
-            if (newBlocks) {
+            if (!updating && newBlocks) {
+                updating = true;
                 // Clean up blocks before insertion
                 var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
                 var elementsToAdd;
@@ -162,6 +163,7 @@ define([
                     RelativeDates.init();
                     twitter.enhanceTweets();
                 }).then(function () {
+                    updating = false;
                     setTimeout(function () {
                         toastButtonRefresh(0);
                     }, 600);
@@ -190,6 +192,7 @@ define([
         var newBlocks;
         var currentUpdateDelay;
         var latestBlockId;
+        var updating = false;
 
         // Cache selectors
         var $liveblogBody = $('.js-liveblog-body');
