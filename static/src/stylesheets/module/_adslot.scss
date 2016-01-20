@@ -114,9 +114,6 @@
 .top-banner-ad-container--small {
     min-height: ($gs-row-height * 3) + 18;
 }
-.top-banner-ad-container--large {
-    min-height: ($gs-row-height * 7) + 34;
-}
 .top-banner-ad-container--responsive {
     min-height: ($gs-row-height * 7) + 16;
 }
@@ -210,6 +207,9 @@
         @include mq(wide) {
             text-align: left;
         }
+    }
+    .top-banner-ad-container--large & {
+        min-height: 250px;
     }
     .has-page-skin & {
         @include mq(wide) {
