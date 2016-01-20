@@ -40,12 +40,13 @@
 .paidfor-popup__link {
     color: #676767;
     font-size: get-font-size(textSans, 2);
-    line-height: get-line-height(textSans, 2);
+    line-height: get-line-height(textSans, 1);
     display: block;
 
     svg {
         display: inline-block;
         vertical-align: middle;
         fill: #676767;
+        height: 20px;
     }
 }
