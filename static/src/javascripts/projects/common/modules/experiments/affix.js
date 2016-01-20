@@ -14,8 +14,6 @@ define([
     debounce) {
 
     var Affix = function (options) {
-        console.log('affix me');
-
         bindAll(this, 'checkPosition', 'calculateContainerPositioning');
 
         bean.on(window, 'click', this.checkPosition);

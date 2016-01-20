@@ -15,13 +15,16 @@ define([
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
+    'common/modules/ui/autoupdate',
     'common/modules/ui/newAutoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
+    'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
@@ -40,15 +43,19 @@ define([
     liveblogDynamicAdverts,
     Affix,
     AutoUpdate,
+    AutoUpdateNew,
     dropdowns,
     lastModified,
+    NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust) {
+    robust,
+    ab) {
     'use strict';
 
-    var modules;
+    var modules,
+        autoUpdate;
 
     function createScrollTransitions() {
 
@@ -121,15 +128,15 @@ define([
 
         createFilter: function () {
             new LiveFilter($('.js-blog-blocks')[0]).ready();
-            new NotificationCounter().init();
+            if (!ab.isInVariant('LiveblogToast', 'toast')) {
+                new NotificationCounter().init();
+            }
         },
 
         affixTimeline: function () {
             var topMarker;
-            console.log('affix 1');
             if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
                 topMarker = qwery('.js-top-marker')[0];
-                console.log('affixing');
                 /*eslint-disable no-new*/
                 new Affix({
                     element: qwery('.js-live-blog__timeline-container')[0],
@@ -144,13 +151,21 @@ define([
 
         createAutoUpdate: function () {
             if (config.page.isLive) {
-                AutoUpdate({
-                    backoff: 2,
-                    backoffMax: 1000 * 60 * 20,
-                    attachTo: $('.js-liveblog-body')[0],
-                    switches: config.switches
-                });
-                //autoUpdate.init();
+                if (ab.isInVariant('LiveblogToast', 'toast')) {
+                    AutoUpdateNew();
+                } else {
+                    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
+                    autoUpdate = new AutoUpdate({
+                        path: getUpdatePath,
+                        delay: timerDelay,
+                        backoff: 2,
+                        backoffMax: 1000 * 60 * 20,
+                        attachTo: $('.js-liveblog-body')[0],
+                        switches: config.switches,
+                        manipulationType: 'prepend'
+                    });
+                    autoUpdate.init();
+                }
             }
 
         },
