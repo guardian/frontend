@@ -40,13 +40,13 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
-        var browserId = cookies.get('bwid') || false;
+        var browserId = 'CaUZtuWqmnQhmtp0yUxtVJhQ' || false;
 
         this.canRun = function () {
 
             var inUKEdition = config.page.edition && config.page.edition === 'UK',
                 notPreviouslySeen = !userPrefs.get('survey-message-seen'),
-                onAnArticlePage = config.page.isContent,
+                onAnArticlePage = config && config.page && config.page.isContent,
                 isDesktop = detect.isBreakpoint({
                     min: 'desktop',
                     max: 'wide'
