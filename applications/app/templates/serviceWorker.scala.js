@@ -92,43 +92,41 @@ self.addEventListener('install', function (event) {
 
 this.addEventListener('fetch', function (event) {
     var request = event.request;
+
+    if (doesRequestAcceptHtml(request)) {
+        isCacheUpdated().then(function (isUpdated) {
+            if (!isUpdated) {
+                updateCache().then(deleteOldCaches);
+            }
+        });
+    }
+
     var url = new URL(request.url);
-
-    if (/^https/.match(url.protocol)) {
-        if (doesRequestAcceptHtml(request)) {
-            isCacheUpdated().then(function (isUpdated) {
-                if (!isUpdated) {
-                    updateCache().then(deleteOldCaches);
-                }
-            });
-        }
-
-        var isRootRequest = url.host === self.location.host;
-        // To workaround a bug in Chrome which results in broken HTTPS->HTTP
-        // redirects, we only handle root requests if they match the developer
-        // blog. The info section often hosts holding pages which will could
-        // eventually redirect to a HTTP page.
-        // https://github.com/guardian/frontend/issues/10936
-        var isRequestToDeveloperBlog = url.pathname.match(/^\/info\/developer-blog($|\/.*$)/);
-        if (isRootRequest && isRequestToDeveloperBlog && doesRequestAcceptHtml(request)) {
-            // HTML pages fallback to offline page
-            event.respondWith(
-                fetch(request)
-                    .catch(function () {
-                        return caches.match('/offline-page');
-                    })
-            );
-        @* In dev, all requests come from one server (by default) *@
-        } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
-            // Default fetch behaviour
-            // Cache first for all other requests
-            event.respondWith(
-                caches.match(request)
-                    .then(function (response) {
-                        return response || fetch(request);
-                    })
-            );
-        }
+    var isRootRequest = url.host === self.location.host;
+    // To workaround a bug in Chrome which results in broken HTTPS->HTTP
+    // redirects, we only handle root requests if they match the developer
+    // blog. The info section often hosts holding pages which will could
+    // eventually redirect to a HTTP page.
+    // https://github.com/guardian/frontend/issues/10936
+    var isRequestToDeveloperBlog = url.pathname.match(/^\/info\/developer-blog($|\/.*$)/);
+    if (isRootRequest && isRequestToDeveloperBlog && doesRequestAcceptHtml(request)) {
+        // HTML pages fallback to offline page
+        event.respondWith(
+            fetch(request)
+                .catch(function () {
+                    return caches.match('/offline-page');
+                })
+        );
+    @* In dev, all requests come from one server (by default) *@
+    } else if (@if(play.Play.isDev()) { true } else { !isRootRequest }) {
+        // Default fetch behaviour
+        // Cache first for all other requests
+        event.respondWith(
+            caches.match(request)
+                .then(function (response) {
+                    return response || fetch(request);
+                })
+        );
     }
 });
 
