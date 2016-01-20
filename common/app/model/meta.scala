@@ -6,7 +6,8 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.BodyBlock
+import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
+import model.liveblog.{LiveBlogDate, BodyBlock}
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
