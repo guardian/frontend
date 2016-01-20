@@ -16,6 +16,8 @@ import model.pressed._
 import model._
 import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.libs.json._
+import play.api.libs.ws.WS
+import play.api.Play.current
 import services.{ConfigAgent, S3FrontsApi}
 import views.support.{Item460, Item140, Naked}
 
@@ -80,6 +82,15 @@ object DraftFapiFrontPress extends FapiFrontPress {
     FAPI.draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
+// This is the json structure we expect for an embed (know as a snap at render-time).
+final case class EmbedJsonHtml(
+  html: String
+)
+
+object EmbedJsonHtml {
+  implicit val format = Json.format[EmbedJsonHtml]
+}
+
 trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
   implicit val capiClient: GuardianContentClient
@@ -120,7 +131,30 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         treats.map(slimContent))
 
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
-    collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+    // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
+    val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds)))
+  }
+
+  private def fetchEmbeds(pressed: PressedContent): Response[PressedContent] = pressed match {
+    case content: CuratedContent => {
+        val newContent = for {
+          embedType <- content.properties.embedType if embedType == "json.html"
+          embedUri <- content.properties.embedUri
+        } yield {
+            val updatedContent = WS.url(embedUri).get().map { response =>
+              Json.parse(response.body).validate[EmbedJsonHtml] match {
+                case JsSuccess(embed, _) => content.copy(enriched = Some(EnrichedContent(embedHtml = embed.html)))
+                case _ => content
+              }
+            } recover {
+              case _ => content
+            }
+            Response.Async.Right(updatedContent)
+          }
+        newContent.getOrElse(Response.Right(content))
+      }
+    case _ => Response.Right(pressed)
   }
 
   private def getTreats(collection: Collection): Response[List[PressedContent]] = {

@@ -251,6 +251,13 @@ final case class PressedCard(
   isLive: Boolean
 )
 
+// EnrichedContent is an optionally-present field of the PressedContent class.
+// It contains additional content that has been pre-fetched by facia-press, to
+// enable facia-server-side rendering of FAPI content, such as embeds.
+final case class EnrichedContent(
+  embedHtml: String
+)
+
 object PressedContent {
   def make(content: fapi.FaciaContent): PressedContent = content match {
     case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
@@ -278,7 +285,8 @@ object CuratedContent {
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
       supportingContent = content.supportingContent.map(PressedContent.make),
-      cardStyle = CardStyle.make(content.cardStyle)
+      cardStyle = CardStyle.make(content.cardStyle),
+      enriched = None
     )
   }
 }
@@ -288,6 +296,7 @@ final case class CuratedContent(
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
+  enriched: Option[EnrichedContent],
   supportingContent: List[PressedContent],
   cardStyle: CardStyle ) extends PressedContent
 
