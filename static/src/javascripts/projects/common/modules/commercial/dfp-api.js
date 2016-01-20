@@ -640,32 +640,34 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return Promise.all(map($('iframe', $slot), function (iFrame) {
-                return new Promise(function (resolve) {
-                    // IE needs the iFrame to have loaded before we can interact with it
-                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                        bean.on(iFrame, 'readystatechange', function (e) {
-                            var updatedIFrame = e.srcElement;
+            return new Promise(function(resolve) {
+                // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
+                // The later one will never go to 'complete' state on IE so lets avoid it.
+                var iFrame = find($('iframe', $slot), function(iframe) { return iframe.id.match('__hidden__') === null; });
 
-                            if (
-                                /*eslint-disable valid-typeof*/
-                                updatedIFrame &&
-                                    typeof updatedIFrame.readyState !== 'unknown' &&
-                                    updatedIFrame.readyState === 'complete'
-                                /*eslint-enable valid-typeof*/
-                            ) {
-                                bean.off(updatedIFrame, 'readystatechange');
-                                resolve(breakoutIFrame(updatedIFrame, $slot));
-                            }
-                        });
-                    } else {
-                        resolve(breakoutIFrame(iFrame, $slot));
-                    }
+                // IE needs the iFrame to have loaded before we can interact with it
+                if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                    bean.on(iFrame, 'readystatechange', function (e) {
+                        var updatedIFrame = e.srcElement;
+
+                        if (
+                            /*eslint-disable valid-typeof*/
+                            updatedIFrame &&
+                                typeof updatedIFrame.readyState !== 'unknown' &&
+                                updatedIFrame.readyState === 'complete'
+                            /*eslint-enable valid-typeof*/
+                        ) {
+                            bean.off(updatedIFrame, 'readystatechange');
+                            resolve(breakoutIFrame(updatedIFrame, $slot));
+                        }
+                    });
+                } else {
+                    resolve(breakoutIFrame(iFrame, $slot));
+                }
+            }).then(function (items) {
+                return find(items, function (item) {
+                    return item.adType !== '';
                 });
-            })).then(function (items) {
-                return chain(items).and(find, function (item) {
-                        return item.adType !== '';
-                    }).value();
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
