@@ -30,7 +30,8 @@ define([
         this.breakpoint = detect.getBreakpoint();
 
         // temporarily disable on mobile
-        if (this.breakpoint === 'mobile' && config.switches.disableStickyNavOnMobile) {
+        if (this.breakpoint === 'mobile'
+            && config.switches.disableStickyNavOnMobile) {
             return;
         }
 
@@ -49,7 +50,7 @@ define([
         this.isMobile = contains(this.breakpoint, 'mobile');
         this.isTablet = contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.inTopBannerAbTest = config.tests && config.tests.topBannerPosition;
+        this.inTopBannerAbTest = config.tests && config.tests.cmTopBannerPosition;
         this.noTopBanner = !commercialFeatures.topBannerAd || adblockMsg.noAdblockMsg() || this.inTopBannerAbTest;
         this.isProfilePage = config.page.section === 'identity';
 

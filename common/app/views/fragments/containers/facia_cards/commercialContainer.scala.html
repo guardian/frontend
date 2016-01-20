@@ -101,13 +101,10 @@
                                 @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container)) {
                                     <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-container"
                                         @for(sponsorData <- cardWithSponsorData.sponsorData) {
+                                            @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
                                             data-sponsorship="@sponsorData.sponsorshipType"
-                                            @for(seriesId <- sponsorData.seriesId) {
-                                                data-series="@seriesId"
-                                            }
-                                            @for( keywordId <- sponsorData.keywordId) {
-                                                data-keywords="@keywordId"
-                                            }
+                                            @for(seriesId <- sponsorData.seriesId) { data-series="@seriesId" }
+                                            @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
                                         }
                                     >
                                         <div class="rich-link tone-paidfor--item">

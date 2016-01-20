@@ -1,6 +1,6 @@
-@(expiringImminently: Seq[conf.switches.SwitchTrait], expiringSoon: Seq[conf.switches.SwitchTrait])
+@(expiringImminently: Seq[conf.switches.Switch], expiringSoon: Seq[conf.switches.Switch])
 
-@showSwitch(switch: conf.switches.SwitchTrait) = {
+@showSwitch(switch: conf.switches.Switch) = {
     <li>
         <div>@{switch.name}</div>
         <div>expires @{switch.sellByDate.toString("E dd MMM")} 00:01 UTC</div>
