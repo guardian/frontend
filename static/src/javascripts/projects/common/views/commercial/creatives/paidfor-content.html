@@ -1,7 +1,7 @@
 <div class="paidfor-content" data-link-name="creative | gu style commercial content">
     <div class="u-responsive-ratio inlined-image">
-        <a href="<%=clickMacro%><%=articleUrl%>"><img class="gu-image" src="<%=articleImage%>"></a>
-        <a href="http://www.theguardian.com/guardian-labs" class="paidfor-content__glabs-logo"><%=glabsLogoSmall%></a>
+        <a href="<%=clickMacro%><%=articleUrl%>" data-link-name="article image"><img class="gu-image" src="<%=articleImage%>"></a>
+        <a href="http://www.theguardian.com/guardian-labs" class="paidfor-content__glabs-logo" title="glabs" data-link-name="glabs logo"><%=glabsLogoSmall%></a>
     </div>
     <div class="paidfor-meta">
         <span class="paidfor-meta__label">Paid Content</span>
@@ -11,14 +11,14 @@
             </button>
             <div class="popup is-off paidfor-popup paidfor-popup--<%=dataAttr%>">
                 <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
-                <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content">
+                <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content" data-link-name="popup link">
                     Learn more about Guardian Labs content
                     <%=infoLinkIcon%>
                 </a>
             </div>
         </div>
     </div>
-    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box">
+    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box" data-link-name="advertisers logo">
         <h2 class="gu-title"><%=articleHeaderText%></h2>
         <p class="gu-text"><%=articleText%></p>
         <div class="paidfor-brand">
