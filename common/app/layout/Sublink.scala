@@ -111,18 +111,25 @@ case object FrontendOtherSnap extends SnapType
 
 object SnapStuff {
   def fromTrail(faciaContent: PressedContent): Option[SnapStuff] = {
-    lazy val snapData = SnapData(faciaContent)
+    val snapData = SnapData(faciaContent)
+
+    // This val may exist if the facia press has pre-fetched the embed html. Currently only for CuratedContent.
+    val embedHtml = faciaContent match {
+      case curated: CuratedContent => curated.enriched.map(_.embedHtml)
+      case _ => None
+    }
     faciaContent.properties.embedType match {
-      case Some("latest") => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap))
-      case Some("link") => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap))
-      case Some(s) => Option(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap))
+      case Some("latest") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml))
+      case Some("link") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml))
+      case Some(s) => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml))
       case None => None}}
 }
 
 case class SnapStuff(
   dataAttributes: String,
   snapCss: Option[String],
-  snapType: SnapType
+  snapType: SnapType,
+  embedHtml: Option[String]
 ) {
   def cssClasses = Seq(
     "js-snap",
@@ -284,6 +291,8 @@ case class ContentCard(
   def isSavedForLater = cardTypes.allTypes.exists(_.savedForLater)
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
+
+  val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
