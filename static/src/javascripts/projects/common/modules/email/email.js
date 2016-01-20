@@ -72,6 +72,10 @@ define([
             textInput: 'js-email-sub__text-input',
             listIdHiddenInput: 'js-email-sub__listid-input'
         },
+        messages = {
+            defaultSuccessHeadline: 'Thank you for subscribing',
+            defaultSuccessDesc: ''
+        },
         setup = function (rootEl, thisRootEl, isIframed) {
             $('.' + classes.inlineLabel, thisRootEl).each(function (el) {
                 formInlineLabels.init(el, {
@@ -97,6 +101,7 @@ define([
                 // from the data attributes on the iframe (eg: allowing us to set them from composer)
                 if (isIframed) {
                     ui.updateForm(rootEl, $el);
+                    ui.setTone($el);
                 }
 
                 // Ensure our form is the right height, both in iframe and outside
@@ -167,10 +172,11 @@ define([
         },
         updateForm = {
             replaceContent: function (isSuccess, $form) {
-                var submissionMessage = {
+                var formData = $form.data('formData'),
+                    submissionMessage = {
                         statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
-                        submissionHeadline: (isSuccess) ? 'Thank you for subscribing' : 'Something went wrong',
-                        submissionMessage: (isSuccess) ? 'We will send you our picks of the most important headlines tomorrow morning.' : 'Please try again.',
+                        submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
+                        submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
                         submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
                     },
                     submissionHtml = template(successHtml, submissionMessage);
@@ -187,6 +193,8 @@ define([
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
+                    formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
+                    formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false;
 
                 fastdom.write(function () {
@@ -206,9 +214,18 @@ define([
                 // Cache data on the form element
                 $('.js-email-sub__form', el).data('formData', {
                     campaignCode: formCampaignCode,
-                    referrer: window.location.href
+                    referrer: window.location.href,
+                    customSuccessHeadline: formSuccessHeadline,
+                    customSuccessDesc: formSuccessDesc
                 });
 
+            },
+            setTone: function ($el) {
+                if ($el.hasClass('js-email-sub--article')) {
+                    fastdom.write(function () {
+                        $el.addClass('email-sub--tone-' + config.page.cardStyle);
+                    });
+                }
             },
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,

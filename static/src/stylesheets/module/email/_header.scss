@@ -44,12 +44,33 @@
     }
 }
 
+// TONE SPECIFIC MODS
+@each $toneClass, $toneColour in $tones {
+    .email-sub--tone-#{$toneClass} {
+        .email-sub__heading {
+            color: $toneColour;
+        }
+    }
+}
+
 // FOOTER MODS
 .email-sub__header--footer {
     .email-sub__heading {
         color: #ffffff;
         @include fs-textSans(3);
         margin-bottom: $gs-baseline;
+    }
+}
+
+// PLAIN MODS
+.email-sub--plain {
+    .email-sub__message__headline {
+        color: guss-colour(guardian-brand, $pasteup-palette);
+        line-height: 2rem;
+    }
+
+    .email-sub__message__description {
+        display: none;
     }
 }
 

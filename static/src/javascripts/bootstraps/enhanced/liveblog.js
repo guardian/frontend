@@ -13,6 +13,7 @@ define([
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
+    'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
@@ -38,6 +39,7 @@ define([
     accessibility,
     richLinks,
     liveblogAdverts,
+    liveblogDynamicAdverts,
     Affix,
     LiveFilter,
     AutoUpdate,
@@ -168,7 +170,11 @@ define([
     modules = {
 
         initAdverts: function () {
-            liveblogAdverts.init();
+            if (config.switches.liveblogDynamicAdverts) {
+                liveblogDynamicAdverts.init();
+            } else if (config.switches.liveblogAdverts) {
+                liveblogAdverts.init();
+            }
         },
 
         createFilter: function () {
@@ -212,7 +218,7 @@ define([
 
         createAutoUpdate: function () {
 
-            if (config.page.isLive) {
+            if (config.page.isLive && window.location.search === '') {
 
                 var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                 autoUpdate = new AutoUpdate({
