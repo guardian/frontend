@@ -110,7 +110,7 @@ define([
                 return countAdded === 2 ?
                     addArticleAds(8, getLongArticleRules()) :
                     countAdded;
-            }).then(function() {
+            }).then(function () {
                 $('.ad-slot--inline').each(dfp.addSlot);
             });
         }
