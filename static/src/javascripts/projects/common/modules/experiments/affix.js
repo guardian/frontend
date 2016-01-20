@@ -14,6 +14,7 @@ define([
     debounce) {
 
     var Affix = function (options) {
+        console.log('affix me');
 
         bindAll(this, 'checkPosition', 'calculateContainerPositioning');
 
@@ -29,6 +30,8 @@ define([
         this.$container = bonzo(options.containerElement);
         this.$element = bonzo(options.element);
         this.$window = bonzo(document.body);
+
+        this.checkPosition();
 
         fastdom.write(this.calculateContainerPositioning);
     };

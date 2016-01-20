@@ -87,6 +87,15 @@
         }
     }
 
+    (function (window) {
+        try {
+            var bannerPref = JSON.parse(window.localStorage.getItem('gu.prefs.no-banner-transition')).value;
+            if (bannerPref) {
+                docClass += ' no-banner-transition';
+            }
+        } catch (e) {};
+    })(window);
+
     // MINIMISE DOM THRASHING…
 
     // READs

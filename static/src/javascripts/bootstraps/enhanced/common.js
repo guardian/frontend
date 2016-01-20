@@ -353,6 +353,13 @@ define([
                 forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
                     email.init(el);
                 });
+
+                // Listen for interactive load event and initalise forms
+                bean.on(window, 'interactive-loaded', function () {
+                    forEach(qwery('.guInteractive .js-email-sub__iframe'), function (el) {
+                        email.init(el);
+                    });
+                });
             }
         };
 

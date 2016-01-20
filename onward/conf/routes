@@ -62,6 +62,7 @@ GET        /gallery/most-viewed                       controllers.MostViewedGall
 # Experimental
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
+GET        /series/mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
 
 # Business data

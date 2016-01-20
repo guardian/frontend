@@ -320,6 +320,7 @@ GET            /commercial/magento/books                                        
 
 
 # Onward journeys
+GET            /series/mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # Applications (must come before wildcard)
