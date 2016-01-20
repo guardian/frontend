@@ -33,6 +33,7 @@ define([
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
+    'inlineSvg!svgs/logo/glabs-logo-small',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -65,6 +66,7 @@ define([
     shareGPlus,
     externalLink,
     tick,
+    glabsLogoSmall,
     isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -96,7 +98,8 @@ define([
         sharePinterest: sharePinterest,
         shareGPlus: shareGPlus,
         externalLink: externalLink,
-        tick: tick
+        tick: tick,
+        glabsLogoSmall: glabsLogoSmall
     };
 
     return function (name, classes, title) {
