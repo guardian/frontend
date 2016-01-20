@@ -640,10 +640,10 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
                 // The later one will never go to 'complete' state on IE so lets avoid it.
-                var iFrame = find($('iframe', $slot), function(iframe) { return iframe.id.match('__hidden__') === null; });
+                var iFrame = find($('iframe', $slot), function (iframe) { return iframe.id.match('__hidden__') === null; });
 
                 if (typeof iFrame === 'undefined') {
                     reject();
@@ -671,7 +671,7 @@ define([
                 return new Promise.resolve(find(items, function (item) {
                     return item.adType !== '';
                 }));
-            }).then(null, function() {
+            }).then(null, function () {
                 return new Promise.resolve({});
             });
         },
