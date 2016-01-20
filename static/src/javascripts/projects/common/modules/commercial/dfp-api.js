@@ -645,6 +645,7 @@ define([
                 // The later one will never go to 'complete' state on IE so lets avoid it.
                 var iFrame = find($('iframe', $slot), function (iframe) { return iframe.id.match('__hidden__') === null; });
 
+                // No iFrame, no work to do
                 if (typeof iFrame === 'undefined') {
                     reject();
                 }
@@ -671,8 +672,9 @@ define([
                 return new Promise.resolve(find(items, function (item) {
                     return item.adType !== '';
                 }));
+            // Just send empty string so we will add label
             }).then(null, function () {
-                return new Promise.resolve({});
+                return new Promise.resolve('');
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
