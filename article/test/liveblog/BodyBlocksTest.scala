@@ -11,7 +11,7 @@ class BodyBlocksTest extends FlatSpec with Matchers {
    "BodyBlocks" should "allow 1 block on one page" in {
      val result = BodyBlocks(2, 0)(Seq(()), None)
 
-     result should be(Some(BodyBlocks(Seq(()), Seq(), NoPage, None)))
+     result.map(_.copy(main = Seq())) should be(Some(BodyBlocks(Seq(()), Seq(), NoPage, None)))
 
    }
 
@@ -19,7 +19,7 @@ class BodyBlocksTest extends FlatSpec with Matchers {
     val blocks = Seq.fill(3)(())
     val result = BodyBlocks(2, 0)(blocks, None)
 
-    result should be(Some(BodyBlocks(blocks, Seq(), NoPage, None)))
+    result.map(_.copy(main = Seq())) should be(Some(BodyBlocks(blocks, Seq(), NoPage, None)))
 
   }
 
@@ -32,7 +32,7 @@ class BodyBlocksTest extends FlatSpec with Matchers {
 
     val expected = blocks.take(2)
 
-    result should be(Some(BodyBlocks(expected, Seq(), NoPage, Some(1))))
+    result.map(_.copy(main = Seq())) should be(Some(BodyBlocks(expected, Seq(), NoPage, Some(1))))
 
   }
 
@@ -45,7 +45,7 @@ class BodyBlocksTest extends FlatSpec with Matchers {
 
     val expected = blocks.takeRight(2)
 
-    result should be(Some(BodyBlocks(expected, Seq(), FirstPage, None)))
+    result.map(_.copy(main = Seq())) should be(Some(BodyBlocks(expected, Seq(), FirstPage, None)))
 
   }
 
@@ -55,7 +55,7 @@ class BodyBlocksTest extends FlatSpec with Matchers {
 
     val expected = blocks.take(3)
 
-    result should be(Some(BodyBlocks(expected, Seq(), NoPage, Some(1))))
+    result.map(_.copy(main = Seq())) should be(Some(BodyBlocks(expected, Seq(), NoPage, Some(1))))
 
   }
 
@@ -65,7 +65,7 @@ class BodyBlocksTest extends FlatSpec with Matchers {
 
     val expected = blocks.takeRight(2)
 
-    result should be(Some(BodyBlocks(expected, Seq(), FirstPage, None)))
+    result.map(_.copy(main = Seq())) should be(Some(BodyBlocks(expected, Seq(), FirstPage, None)))
 
   }
 
