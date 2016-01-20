@@ -120,6 +120,18 @@
 .top-banner-ad-container--responsive {
     min-height: ($gs-row-height * 7) + 16;
 }
+.top-banner-ad-container--reveal iframe {
+    transform: translateZ(0);
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
+    min-height: 90px;
+
+    // overwrite if in the new sticky ad AB test
+    .new-sticky-ad & {
+        transition: none;
+        transform: none;
+        min-height: auto;
+    }
+}
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
         .js-on:not(.is-adfree) & {
