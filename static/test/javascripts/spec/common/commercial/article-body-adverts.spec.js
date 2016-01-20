@@ -158,7 +158,7 @@ define([
                                 return call.args[0];
                             });
                             longArticleInsertionRules.forEach(function (ruleset) {
-                                var adSlotSpacing = ruleset.selectors[' .ad-slot'];
+                                var adSlotSpacing = ruleset.selectors[' .ad-slot--inline'];
                                 expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300});
                             });
                             done();
