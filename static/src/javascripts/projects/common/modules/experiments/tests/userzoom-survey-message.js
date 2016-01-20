@@ -8,7 +8,7 @@ define([
     'common/views/svgs',
     'common/utils/template',
     'common/modules/ui/message',
-    'text!common/views/general-message.html',
+    'text!common/views/survey-message.html',
     'common/utils/detect',
     'common/modules/user-prefs',
     'common/utils/cookies'
@@ -40,7 +40,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
-        var browserId = 'CaUZtuWqmnQhmtp0yUxtVJhQ' || false;
+        var browserId = cookies.get('bwid') || false;
 
         this.canRun = function () {
 
