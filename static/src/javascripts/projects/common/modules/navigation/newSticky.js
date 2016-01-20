@@ -95,7 +95,7 @@ define([
                         $header.css({ 'margin-top': state.adHeight });
 
                         $adBanner.css({ 'max-height': state.adHeight });
-                        var userHasScrolledPastHeader = state.scrollY > state.headerHeight;
+                        var userHasScrolledPastHeader = state.pageYOffset > state.headerHeight;
                         if (userHasScrolledPastHeader) {
                             $adBanner.css({
                                 'position': 'absolute',
@@ -105,13 +105,13 @@ define([
                             $adBanner.css({ 'position': 'fixed' });
                         }
 
-                        var scrollIsAtTop = state.scrollY === 0;
+                        var scrollIsAtTop = state.pageYOffset === 0;
                         var diff = state.adHeight - state.previousAdHeight;
                         var adHeightHasIncreased = diff > 0;
                         if (!scrollIsAtTop && adHeightHasIncreased) {
                             // If the user is not at the top and the ad height has increased,
                             // we want to offset their scroll position
-                            window.scrollTo(state.scrollX, state.scrollY + diff);
+                            window.scrollTo(state.pageXOffset, state.pageYOffset + diff);
                         } else if (!state.firstRender) {
                             // Otherwise we want to transition the change when it happens.
                             // Avoid an initial transition when we apply the margin top for the first time
@@ -122,7 +122,7 @@ define([
 
                 var getScrollCoords = function () {
                     return fastdom.read(function () {
-                        return [window.scrollX, window.scrollY];
+                        return [window.pageXOffset, window.pageYOffset];
                     });
                 };
 
@@ -146,8 +146,8 @@ define([
                                 previousAdHeight: previousAdHeight || adHeight,
                                 firstRender: options.firstRender || false,
                                 headerHeight: headerHeight,
-                                scrollX: scrollCoords[0],
-                                scrollY: scrollCoords[1]
+                                pageXOffset: scrollCoords[0],
+                                pageYOffset: scrollCoords[1]
                             })
                                 .then(function () { previousAdHeight = adHeight; });
                         });
