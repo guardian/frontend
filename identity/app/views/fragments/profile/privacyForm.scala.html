@@ -32,6 +32,13 @@
                         @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
                     </div>
                 </li>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset">
+        <div class="fieldset__heading"></div>
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
                 <li class="form-field">
                     <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
@@ -39,7 +46,13 @@
                         @checkboxField(Checkbox(privacyForm("allowThirdPartyProfiling"), '_label -> "Allow matching with third party data"))(nonInputFields, messages)
                     </div>
                 </li>
-
+            </ul>
+        </div>
+     </fieldset>
+    <fieldset class="fieldset">
+        <div class="fieldset__heading"></div>
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
                 <li>
                     <button type="submit" class="submit-input" data-link-name="Save privacy preferences">Save changes</button>
                 </li>
