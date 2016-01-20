@@ -127,7 +127,7 @@ define([
         },
 
         createFilter: function () {
-            new LiveFilter($('.js-blog-blocks')[0]).ready();
+            //new LiveFilter($('.js-blog-blocks')[0]).ready();
             if (!ab.isInVariant('LiveblogToast', 'toast')) {
                 new NotificationCounter().init();
             }
