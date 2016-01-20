@@ -136,6 +136,10 @@ can follow our standard [contributing guidelines](https://github.com/guardian/fr
 
 You can stop and start the test using our [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
 
+To see the test in action locally: `localhost:9000/[articleId]#ab-[testName]=[variantName]`
+
+To see the tests you are part of using Google Chrome: open the Dev Console -> Resources -> Local Storage -> choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row.
+
 ## Analysis of the test data
 
 ### Omniture
