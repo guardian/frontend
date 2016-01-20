@@ -10,6 +10,7 @@ import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common._
 import conf.{Configuration, LiveContentApi}
+import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
 import model.facia.PressedCollection
 import model.pressed._
@@ -137,7 +138,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   }
 
   private def fetchEmbeds(pressed: PressedContent): Response[PressedContent] = pressed match {
-    case content: CuratedContent => {
+    case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
         val newContent = for {
           embedType <- content.properties.embedType if embedType == "json.html"
           embedUri <- content.properties.embedUri

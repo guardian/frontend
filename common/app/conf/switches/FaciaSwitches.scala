@@ -42,4 +42,13 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
+  val FaciaInlineEmbeds = Switch(
+    "Facia",
+    "facia-inline-embeds",
+    "If this is switched on, facia will prefetch embeds and render them on the server",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }
