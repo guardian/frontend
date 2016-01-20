@@ -381,8 +381,9 @@ define([
             googletag.display(slot);
             displayed = true;
         },
-        addSlot = function ($adSlot) {
-            var slotId = $adSlot.attr('id'),
+        addSlot = function (adSlot) {
+            var $adSlot = bonzo(adSlot),
+                slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
                         isRendered: false,
@@ -407,6 +408,12 @@ define([
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
+        },
+        removeSlot = function (slotId) {
+            delete slots[slotId];
+            idleFastdom.write(function () {
+                $('#' + slotId).remove();
+            });
         },
         getSlots = function () {
             return slots;
@@ -541,12 +548,6 @@ define([
                 if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
                 }
-            });
-        },
-        removeSlot = function (slotId) {
-            delete slots[slotId];
-            idleFastdom.write(function () {
-                $('#' + slotId).remove();
             });
         },
         shouldRenderLabel = function ($slot) {
