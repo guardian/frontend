@@ -124,9 +124,10 @@
     transform: translateZ(0);
     transition: height 1s cubic-bezier(0, 0, 0, .985);
 
-    .new-sticky-ad & {
-        // overwrite if in the new sticky ad AB test
+    .new-sticky-ad &, // overwrite if in the new sticky ad AB test
+    .no-banner-transition & {
         transition: none;
+        transform: none;
     }
 }
 .top-banner-ad-container--above-nav {
