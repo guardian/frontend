@@ -1,3 +1,4 @@
+@import conf.switches.Switch
 @()
 @import mvt.ActiveTests.tests
 @import mvt.TestDefinition
@@ -29,10 +30,10 @@
 </div>
 
 @status(test: TestDefinition) = {
-    @if(test.switch.hasExpired) {
+    @if(Switch.expiry(test.switch).hasExpired) {
         <span class="abtest-server-label label label-danger">expired</span>
     } else {
-        @if(test.switch.expiresSoon) {
+        @if(Switch.expiry(test.switch).expiresSoon) {
             <span class="abtest-server-label label label-success">active</span>
         } else {
             <span class="abtest-server-label label label-warning">expires soon</span>

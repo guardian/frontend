@@ -11,7 +11,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
-import conf.switches.Switches
+import conf.switches.{Switch, Switches}
 import org.joda.time.LocalDate
 import play.api.Play.current
 
@@ -26,7 +26,7 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
 
   def switchesExpiringThisWeek = {
     Switches.all.filter { switch =>
-      switch.sellByDate.isBefore(new LocalDate().plusDays(7))
+      Switch.expiry(switch).expiresSoon
     }
   }
 
