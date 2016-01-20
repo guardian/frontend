@@ -2,7 +2,7 @@
 @import conf.Configuration
 
 @* must be served by localhost, not thegulocal *@
-<amp-list layout="fixed-height" height="188" src="@Configuration.ajax.url/@path">
+<amp-list layout="fixed-height" height="188" src="@Configuration.ajax.url/@path" class="onward-list">
     <template type="amp-mustache">
         {{#showContent}}
             <div class="fc-container__inner">
