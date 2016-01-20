@@ -62,28 +62,28 @@ define([
         return longArticleRules;
     }
 
-    function addInlineMerchAd() {
-        spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
+    function addInlineMerchAd(rules) {
+        spaceFiller.fillSpace(rules, function (paras) {
             adNames.unshift(['im', 'im']);
             insertAdAtPara(paras);
         });
     }
 
     // Add new ads while there is still space
-    function addLongArticleAds(count) {
-        return addLongArticleAdsRec(count, 0);
+    function addArticleAds(count, rules) {
+        return addArticleAdsRec(count, 0, rules);
     }
 
-    function addLongArticleAdsRec(count, countAdded) {
+    function addArticleAdsRec(count, countAdded, rules) {
         if (count === 0) {
             return Promise.resolve(countAdded);
         }
-        return tryAddingAdvert(getLongArticleRules()).then(onLongArticleAdAdded);
+        return tryAddingAdvert(rules).then(onArticleAdAdded);
 
-        function onLongArticleAdAdded(trySuccessful) {
+        function onArticleAdAdded(trySuccessful) {
             // If last attempt worked, recurse another
             if (trySuccessful) {
-                return addLongArticleAdsRec(count - 1, countAdded + 1);
+                return addArticleAdsRec(count - 1, countAdded + 1, rules);
             } else {
                 return countAdded;
             }
@@ -115,10 +115,11 @@ define([
     function onAdRendered(event) {
         if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
             mediator.off('modules:commercial:dfp:rendered', onAdRendered);
-            addLongArticleAds(10).then(function (countAdded) {
-                if (countAdded === 0) {
-                    return;
-                }
+            addArticleAds(2, getRules()).then(function (countAdded) {
+                return countAdded === 2 ?
+                    addArticleAds(8, getLongArticleRules()) :
+                    countAdded;
+            }).then(function() {
                 $('.ad-slot--inline').each(dfp.addSlot);
             });
         }
@@ -129,22 +130,23 @@ define([
             return false;
         }
 
-        var rules;
+        var rules = getRules();
 
         boot();
 
-        if (config.page.hasInlineMerchandise) {
-            addInlineMerchAd();
-        }
+        // if (config.page.hasInlineMerchandise) {
+            addInlineMerchAd(getInlineMerchRules());
+        // }
 
         if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
-            return addLongArticleAds(10).then(function (countAdded) {
+            return addArticleAds(2, rules).then(function (countAdded) {
                 if (countAdded === 0) {
                     mediator.on('modules:commercial:dfp:rendered', onAdRendered);
+                } else if (countAdded === 2) {
+                    addArticleAds(8, getLongArticleRules());
                 }
             });
         } else {
-            rules = getRules();
             return tryAddingAdvert(rules).then(function (trySuccessful) {
                 if (trySuccessful && detect.isBreakpoint({max: 'tablet'})) {
                     return tryAddingAdvert(rules);
