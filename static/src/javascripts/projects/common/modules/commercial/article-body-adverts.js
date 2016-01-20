@@ -21,13 +21,11 @@ define([
 ) {
 
     var bodyAds;
-    var adNames;
     var inlineMerchRules;
     var longArticleRules;
 
     function boot() {
         bodyAds = 0;
-        adNames = [];
     }
 
     function getRules() {
@@ -64,28 +62,24 @@ define([
 
     function addInlineMerchAd(rules) {
         spaceFiller.fillSpace(rules, function (paras) {
-            adNames.unshift(['im', 'im']);
-            insertAdAtPara(paras);
+            insertAdAtPara(paras[0], 'im', 'im');
         });
     }
 
     // Add new ads while there is still space
     function addArticleAds(count, rules) {
-        return addArticleAdsRec(count, 0, rules);
-    }
+        return addArticleAdsRec(count, 0);
 
-    function addArticleAdsRec(count, countAdded, rules) {
-        if (count === 0) {
-            return Promise.resolve(countAdded);
-        }
-        return tryAddingAdvert(rules).then(onArticleAdAdded);
+        function addArticleAdsRec(count, countAdded) {
+            return count === 0 ?
+                Promise.resolve(countAdded) :
+                tryAddingAdvert(rules).then(onArticleAdAdded);
 
-        function onArticleAdAdded(trySuccessful) {
-            // If last attempt worked, recurse another
-            if (trySuccessful) {
-                return addArticleAdsRec(count - 1, countAdded + 1, rules);
-            } else {
-                return countAdded;
+            function onArticleAdAdded(trySuccessful) {
+                // If last attempt worked, recurse another
+                return trySuccessful ?
+                    addArticleAdsRec(count - 1, countAdded + 1) :
+                    countAdded;
             }
         }
     }
@@ -94,17 +88,14 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAd);
 
         function insertInlineAd(paras) {
-            adNames.push(['inline' + (bodyAds + 1), 'inline']);
-            insertAdAtPara(paras);
+            bodyAds += 1;
+            insertAdAtPara(paras[0], 'inline' + bodyAds, 'inline');
         }
     }
 
-    function insertAdAtPara(paras) {
-        var adName = adNames[bodyAds],
-            $ad    = $.create(createAdSlot(adName[0], adName[1]));
-
-        bodyAds += 1;
-        $ad.insertBefore(paras[0]);
+    function insertAdAtPara(para, name, type) {
+        var $ad = $.create(createAdSlot(name, type));
+        $ad.insertBefore(para);
     }
 
     // If a merchandizing component has been rendered but is empty,
@@ -134,17 +125,19 @@ define([
 
         boot();
 
-        // if (config.page.hasInlineMerchandise) {
+        if (config.page.hasInlineMerchandise) {
             addInlineMerchAd(getInlineMerchRules());
-        // }
+        }
 
         if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
             return addArticleAds(2, rules).then(function (countAdded) {
                 if (countAdded === 0) {
                     mediator.on('modules:commercial:dfp:rendered', onAdRendered);
-                } else if (countAdded === 2) {
-                    addArticleAds(8, getLongArticleRules());
                 }
+
+                return countAdded === 2 ?
+                    addArticleAds(8, getLongArticleRules()) :
+                    countAdded;
             });
         } else {
             return tryAddingAdvert(rules).then(function (trySuccessful) {
