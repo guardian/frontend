@@ -66,30 +66,26 @@ define([
 
         this.view = {
             render: function (res) {
-                var attachTo = options.attachTo,
-                    manipulation = this.getManipulationType(),
+                var $attachTo = [bonzo(options.attachTo[0]), bonzo(options.attachTo[1])],
                     date = new Date().toString(),
-                    $attachTo = bonzo(attachTo),
-                    resultHtml = $.create('<div>' + res.html + '</div>')[0],
-                    elementsToAdd = resultHtml.innerHTML;
+                    resultHtml = [
+                        $.create('<div>' + res[options.responseField[0]] + '</div>')[0],
+                        $.create('<div>' + res[options.responseField[1]] + '</div>')[0]
+                    ],
+                    elementsToAdd = toArray(resultHtml[0].children);
 
-                this.unreadBlocks += resultHtml.children.length;
+                this.unreadBlocks += resultHtml[0].children.length;
 
-                if (manipulation === 'prepend') {
-                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children);
-                } else if (manipulation === 'append') {
-                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children).reverse();
-                }
+                bonzo(resultHtml[0].children).addClass('autoupdate--hidden');
 
-                $attachTo[manipulation](elementsToAdd);
+                $attachTo[0].prepend(elementsToAdd);
+                $attachTo[1].prepend(toArray(resultHtml[1].children));
 
                 if (elementsToAdd.length) {
                     mediator.emit('modules:autoupdate:updates', elementsToAdd);
                 }
                 // add a timestamp to the attacher
-                $attachTo.attr('data-last-updated', date);
+                $attachTo[0].attr('data-last-updated', date);
                 twitter.enhanceTweets();
 
                 if (this.isUpdating && detect.pageVisible()) {
@@ -208,13 +204,6 @@ define([
             this.view.toggle.call(this, this.btns[1]);
         };
 
-        this.setManipulationType = function (manipulation) {
-            options.manipulationType = manipulation;
-        };
-
-        this.getManipulationType = function () {
-            return options.manipulationType;
-        };
     }
 
     return Autoupdate;

@@ -37,7 +37,7 @@ case class Switch(
   name: String,
   description: String,
   safeState: SwitchState,
-  sellByDate: LocalDate,
+  sellByDate: Option[LocalDate],
   exposeClientSide: Boolean
 ) extends Switchable with Initializable[Switch] {
 
@@ -64,26 +64,52 @@ case class Switch(
     initialized(this)
   }
 
-  def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate.toDateTimeAtStartOfDay).getDays
-
-  def expiresSoon = daysToExpiry < 7
-
-  def hasExpired = daysToExpiry <= 0
-
   Switch.switches.send(this :: _)
 }
 
 object Switch {
+
+  def apply(
+    group: String,
+    name: String,
+    description: String,
+    safeState: SwitchState,
+    sellByDate: LocalDate,
+    exposeClientSide: Boolean
+  ): Switch = Switch(
+    group,
+    name,
+    description,
+    safeState,
+    Some(sellByDate),
+    exposeClientSide
+  )
+
   val switches = AkkaAgent[List[Switch]](Nil)
   def allSwitches: Seq[Switch] = switches.get()
 
   // the agent won't immediately return its switches
   def eventuallyAllSwitches: Future[List[Switch]] = switches.future()
+
+  case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)
+
+  def expiry(switch: Switch, today: LocalDate = new DateTime().toLocalDate) = {
+    val daysToExpiry = switch.sellByDate.map {
+      Days.daysBetween(today, _).getDays
+    }
+
+    val expiresSoon = daysToExpiry.exists(_ < 8)
+
+    val hasExpired = daysToExpiry.exists(_ < 0)
+
+    Expiry(daysToExpiry, expiresSoon, hasExpired)
+  }
+
 }
 
 object Expiry {
 
-  lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = None
 
 }
 

@@ -639,6 +639,7 @@
     margin-left: 0;
     padding-left: 0;
     padding-bottom: 0;
+    padding-top: 0;
 
     .ad-slot__label {
         display: none;
@@ -648,6 +649,7 @@
         width: 100%;
         display: block;
         text-align: left;
+        margin-top: 0;
 
         .fc-container__inner {
             padding-top: 0;
