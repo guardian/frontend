@@ -73,9 +73,11 @@ define([
             var abParams = [],
                 abParticipations = ab.getParticipations();
 
-            forIn(abParticipations, function (n, key) {
+            forIn(abParticipations, function (n, testKey) {
                 if (n.variant && n.variant !== 'notintest') {
-                    abParams.push(key + '-' + n.variant.substring(0, 1));
+                    var testData = testKey + '-' + n.variant;
+                    // DFP key-value pairs accept value strings up to 40 characters long
+                    abParams.push(testData.substring(0, 40));
                 }
             });
 
