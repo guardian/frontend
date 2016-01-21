@@ -8,6 +8,7 @@
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.{itemImage, title}
 @import views.support.{Commercial, RemoveOuterParaHtml}
+@import common.{Edition, LinkTo}
 
     @containerType match {
 
@@ -25,12 +26,18 @@
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
                                         <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
-                                        <a class="paidfor-popup__link" href="#">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+                                        <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
                                     </div>
                                 </div>
                             </div>
                             <h3 class="commercial__title">@container.displayName</h3>
-                            <a class="commercial__cta" href="http://www.theguardian.com/guardian-labs">@inlineSvg("glabs-logo", "logo")</a>
+                            <a class="commercial__cta"
+                                @if(Edition(request).id == "AU") {
+                                    href="http://www.theguardian.com/guardian-labs-australia"
+                                } else {
+                                    href="http://www.theguardian.com/guardian-labs"
+                                }
+                                >@inlineSvg("glabs-logo", "logo")</a>
                         </div>
                         <div class="commercial__body">
                             <ul class="lineitems l-row l-row--cols-4 js-container__header">
@@ -89,7 +96,7 @@
                                     <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
                                     <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
                                         <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
-                                        <a class="paidfor-popup__link" href="#">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+                                        <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
                                     </div>
                                 </div>
                             </div>
