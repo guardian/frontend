@@ -134,10 +134,10 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
-    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds)))
+    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds(collection, _))))
   }
 
-  private def fetchEmbeds(pressed: PressedContent): Response[PressedContent] = pressed match {
+  private def fetchEmbeds(collection: Collection, pressed: PressedContent): Response[PressedContent] = pressed match {
     case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
         val currentEnriched = content.enriched.getOrElse(EnrichedContent.empty)
 
@@ -151,10 +151,16 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
                   val newEnriched = currentEnriched.copy(embedHtml = Some(embed.html))
                   content.copy(enriched = Some(newEnriched))
                 }
-                case _ => content
+                case _ => {
+                  log.warn(s"An embed had invalid json format, and won't be pressed. ${pressed.properties.webTitle} for collection ${collection.id}")
+                  content
+                }
               }
             } recover {
-              case _ => content
+              case _ => {
+                log.warn(s"A request to an embed uri failed, embed won't be pressed. ${embedUri} for collection ${collection.id}")
+                content
+              }
             }
             Response.Async.Right(updatedContent)
           }
