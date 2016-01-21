@@ -33,8 +33,6 @@ define([
         });
         this.stickyCss = { position: 'fixed', top: this.opts.top };
         this.unstickyCss = { position: null, top: null };
-
-        console.log(this);
     };
 
     Sticky.prototype.init = function () {
@@ -91,7 +89,6 @@ define([
     };
 
     Sticky.prototype.emitMessage = function (message) {
-        console.log('modules:' + this.element.id + ':' + message);
         mediator.emit('modules:' + this.element.id + ':' + message);
     };
 
