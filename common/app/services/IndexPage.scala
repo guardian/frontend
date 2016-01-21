@@ -1,5 +1,6 @@
 package services
 
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.api.{models => fapi}
 import common.{Edition, LinkTo}
 import conf.switches.Switches
@@ -9,10 +10,9 @@ import layout._
 import model._
 import model.meta.{ItemList, ListItem}
 import model.pressed._
-import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 
 import scala.Function.const
 import scalaz.std.list._
@@ -177,9 +177,9 @@ case class IndexPageItem(
 case class IndexPage(
   page: Page,
   contents: Seq[IndexPageItem],
-  tags: Tags = Tags(Nil),
-  date: DateTime = DateTime.now,
-  tzOverride: Option[DateTimeZone] = None) {
+  tags: Tags,
+  date: DateTime,
+  tzOverride: Option[DateTimeZone]) {
 
   val trails: Seq[Content] = contents.map(_.item.content)
   val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)

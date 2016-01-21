@@ -1,13 +1,15 @@
 package controllers
 
-import contentapi.Paths
-import play.api.mvc.{RequestHeader, Action, Controller}
-import scala.concurrent.Future
-import conf.LiveContentApi
-import model.{Cached, Tag, Content, Section}
-import services.{IndexPageItem, IndexPage}
 import common._
-import LiveContentApi.getResponse
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import contentapi.Paths
+import model._
+import org.joda.time.DateTime
+import play.api.mvc.{Action, Controller, RequestHeader}
+import services.{IndexPage, IndexPageItem}
+
+import scala.concurrent.Future
 
 object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
   def latest(path: String) = Action.async { implicit request =>
@@ -31,9 +33,21 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
         .orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
-        IndexPage(Section.make(section), item.results.map(IndexPageItem(_)))
+        IndexPage(
+          page = Section.make(section),
+          contents = item.results.map(IndexPageItem(_)),
+          tags = Tags(Nil),
+          date = DateTime.now,
+          tzOverride = None
+        )
       ).orElse(item.tag.map( tag =>
-        IndexPage(Tag.make(tag), item.results.map(IndexPageItem(_)))
+        IndexPage(
+          page = Tag.make(tag),
+          contents = item.results.map(IndexPageItem(_)),
+          tags = Tags(Nil),
+          date = DateTime.now,
+          tzOverride = None
+        )
       ))
     }
 
