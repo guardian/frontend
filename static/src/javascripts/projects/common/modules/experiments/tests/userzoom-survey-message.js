@@ -65,6 +65,7 @@ define([
                 linkHref: 'https://s.userzoom.com/p/MSBDMTBTMjYy/' + browserId,
                 linkText: 'Open Survey',
                 linkName: 'survey sign-up button',
+                messageTextHeadline: 'Tell us about your experience using the Guardian site',
                 messageTextWide: 'Complete a quick survey (5 minutes max) and get involved in the development of the site',
                 messageTextNarrow: 'Complete a quick survey (5 minutes max) and get involved in the development of the site',
                 arrowWhiteRight: svgs('arrowWhiteRight')
