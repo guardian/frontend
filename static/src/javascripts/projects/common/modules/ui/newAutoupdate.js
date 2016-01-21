@@ -92,7 +92,7 @@ define([
         };
 
         var checkForUpdates = function () {
-            var shouldFetchBlocks = '&showBlocks=' + (isLivePage ? 'true' : 'false');
+            var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
             var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
 
             return ajax({

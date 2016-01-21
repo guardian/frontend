@@ -39,12 +39,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
-  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String, showBlocks: Option[Boolean])(implicit request: RequestHeader) = {
+  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String, isLivePage: Option[Boolean])(implicit request: RequestHeader) = {
     val newBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(newBlocks, Edition(request).timezone))
     val allPagesJson = Seq("timeline" -> timelineHtml, "numNewBlocks" -> newBlocks.size)
-    val livePageJson = showBlocks.filter(_ == true).map { _ =>
+    val livePageJson = isLivePage.filter(_ == true).map { _ =>
       "html" -> blocksHtml
     }
     Cached(page)(JsonComponent((allPagesJson ++ livePageJson): _*))
@@ -113,11 +113,11 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       }
     }
 
-  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], showBlocks: Option[Boolean]) = {
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     LongCacheAction { implicit request =>
       mapModel(path, blocks = true) { model =>
-        (lastUpdate, rendered, showBlocks) match {
-          case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate, showBlocks)
+        (lastUpdate, rendered, isLivePage) match {
+          case (Some(lastUpdate), _, _) => renderLatestFrom(model, lastUpdate, isLivePage)
           case (None, Some(false), _) => blockText(model, 6)
           case (_, _, _) => render(path, model, None)
         }
