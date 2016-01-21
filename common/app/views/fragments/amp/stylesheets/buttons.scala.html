@@ -1,0 +1,58 @@
+.cta {
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+}
+
+.cta--medium {
+    height: 1.875rem;
+    padding: 0 0.625rem;
+    margin-right: 0.625rem;
+    line-height: 1.75rem;
+}
+
+.cta--show-more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    color: #333;
+    background-color: #fff;
+    margin: 0 20px 0;
+}
+
+@@media (max-width: 480px) {
+    .cta--show-more {
+        margin: 0 10px 0;
+    }
+}
+
+.cta--show-more svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    margin: -2px auto auto;
+    fill: #767676;
+}
+
+.cta--show-more::after {
+    content: "";
+    background-color: #eaeaea;
+    border-radius: 1.125rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 130px;
+    z-index: -1;
+    color: #fff;
+}

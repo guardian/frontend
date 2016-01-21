@@ -37,7 +37,8 @@
         </div>
     </article>
 
-    @if(gallery.content.showInRelated) {
+    @if(gallery.content.showInRelated &&
+        !(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) ) {
         <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
             <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
                 <div class="fc-container">

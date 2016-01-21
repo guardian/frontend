@@ -1,7 +1,7 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.LiveContentApi.getResponse
@@ -10,16 +10,14 @@ import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
 import liveblog.BodyBlocks
 import model._
+import model.liveblog.KeyEventData
 import org.joda.time.DateTime
-import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import views.BodyCleaner
 import views.support._
 
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 trait PageWithStoryPackage extends ContentPage {
@@ -38,22 +36,10 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
-        new HtmlCleaner {
-          def clean(d: Document): Document = {
-            val blocksToKeep = d.getElementsByTag("div") takeWhile {
-              _.attr("id") != lastUpdateBlockId
-            }
-            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
-
-            blocksToDrop foreach {
-              _.remove()
-            }
-            d
-          }
-        }
-      }
-      Cached(page)(JsonComponent(html))
+    val latestBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
+    val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
+    val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(latestBlocks, Edition(request).timezone))
+    Cached(page)(JsonComponent("html" -> blocksHtml, "timeline" -> timelineHtml))
   }
 
   case class TextBlock(
@@ -77,7 +63,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       val blocks = liveBlog.blocks.collect {
         case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
       }.take(number)
-      Cached(page)(JsonComponent(("blocks" -> Json.toJson(blocks))))
+      Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
 
   }
@@ -87,13 +73,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       if (request.isAmp) {
         NotFound
       } else {
-        val PAGINATION_ENABLED_TAGS = Seq("business/series/guardian-business-live", "politics/series/politics-live-with-andrew-sparrow")
-        val pageSize = if (blog.article.content.tags.tags.exists(tag => PAGINATION_ENABLED_TAGS.contains(tag.id))) 10 else 300
-        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10/* = 29, also update in truncate-liveblog.js*/)(blog.article.content.fields.blocks, pageNo)
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
         blocks match {
           case Some(blocks) =>
             val htmlResponse = () => views.html.liveBlog (blog, blocks)
-            val jsonResponse = () => views.html.fragments.liveBlogBody (blog, blocks)
+            val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
             renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
           case None => NotFound
         }

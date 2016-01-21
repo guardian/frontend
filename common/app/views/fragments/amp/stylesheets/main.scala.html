@@ -182,8 +182,13 @@
     }
 
     .logo-wrapper {
-        float: right;
-        margin: 0.1875rem 0.625rem 0.34rem 0;
+        display: block;
+        padding: 0.5rem;
+    }
+
+    .logo-wrapper svg {
+        display: block;
+        margin: 0 auto;
     }
 
     .from-content-api h2, .from-content-api .block-elements h2, .from-content-api p strong {
@@ -248,8 +253,9 @@
     @fragments.amp.stylesheets.inlineSvgs()
     @fragments.amp.stylesheets.social()
     @fragments.amp.stylesheets.footer()
-    @fragments.amp.stylesheets.mostPopular()
+    @fragments.amp.stylesheets.onward()
     @fragments.amp.stylesheets.fonts()
+    @fragments.amp.stylesheets.buttons()
 
     @* temporarily hiding these for demo *@
     .inline-expand-image, .content__dateline-lm , .block-share, .witness-cta-wrapper {
