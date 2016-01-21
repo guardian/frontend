@@ -138,7 +138,7 @@ define([
 
         if (config.switches.viewability && detect.getBreakpoint() !== 'mobile') {
             return addArticleAds(2, rules).then(function (countAdded) {
-                if (countAdded === 0) {
+                if (config.page.hasInlineMerchandise && countAdded === 0) {
                     mediator.on('modules:commercial:dfp:rendered', onAdRendered);
                 }
 
