@@ -153,9 +153,6 @@ define([
             if (d - ni.time < 60 * 1000) { // One minute
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
-                // this allows 'live' Omniture tracking of Navigation Interactions
-                this.s.eVar7 = ni.pageName;
-                this.s.prop37 = ni.tag;
             }
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);
