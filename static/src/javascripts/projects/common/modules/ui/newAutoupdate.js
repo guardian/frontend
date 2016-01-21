@@ -202,7 +202,7 @@ define([
         var toastContainer = qwery('.toast__container')[0];
 
         latestBlockId = $liveblogBody.data('most-recent-block');
-        
+
         new NotificationCounter().init();
         new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
 
@@ -213,7 +213,7 @@ define([
         fastdom.write(function () {
             // Enables the animations for injected blocks
             $liveblogBody.addClass('autoupdate--has-animation toast-enabled');
-            $(".js-live-toolbar").remove(); // only necessary in the AB test
+            $('.js-live-toolbar').remove(); // only necessary in the AB test
         });
     };
 });
