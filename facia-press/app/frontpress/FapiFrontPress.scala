@@ -139,13 +139,18 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
   private def fetchEmbeds(pressed: PressedContent): Response[PressedContent] = pressed match {
     case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
+        val currentEnriched = content.enriched.getOrElse(EnrichedContent.empty)
+
         val newContent = for {
           embedType <- content.properties.embedType if embedType == "json.html"
           embedUri <- content.properties.embedUri
         } yield {
             val updatedContent = WS.url(embedUri).get().map { response =>
               Json.parse(response.body).validate[EmbedJsonHtml] match {
-                case JsSuccess(embed, _) => content.copy(enriched = Some(EnrichedContent(embedHtml = embed.html)))
+                case JsSuccess(embed, _) => {
+                  val newEnriched = currentEnriched.copy(embedHtml = Some(embed.html))
+                  content.copy(enriched = Some(newEnriched))
+                }
                 case _ => content
               }
             } recover {

@@ -115,7 +115,7 @@ object SnapStuff {
 
     // This val may exist if the facia press has pre-fetched the embed html. Currently only for CuratedContent.
     val embedHtml = faciaContent match {
-      case curated: CuratedContent => curated.enriched.map(_.embedHtml)
+      case curated: CuratedContent => curated.enriched.flatMap(_.embedHtml)
       case _ => None
     }
     faciaContent.properties.embedType match {

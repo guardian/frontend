@@ -255,8 +255,12 @@ final case class PressedCard(
 // It contains additional content that has been pre-fetched by facia-press, to
 // enable facia-server-side rendering of FAPI content, such as embeds.
 final case class EnrichedContent(
-  embedHtml: String
+  embedHtml: Option[String]
 )
+
+object EnrichedContent {
+  val empty = EnrichedContent(None)
+}
 
 object PressedContent {
   def make(content: fapi.FaciaContent): PressedContent = content match {
@@ -286,7 +290,7 @@ object CuratedContent {
       display = PressedDisplaySettings.make(content),
       supportingContent = content.supportingContent.map(PressedContent.make),
       cardStyle = CardStyle.make(content.cardStyle),
-      enriched = None
+      enriched = Some(EnrichedContent.empty)
     )
   }
 }
@@ -296,7 +300,7 @@ final case class CuratedContent(
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
-  enriched: Option[EnrichedContent],
+  enriched: Option[EnrichedContent], // This is currently an option, as we introduce the new field. It can then become a value type.
   supportingContent: List[PressedContent],
   cardStyle: CardStyle ) extends PressedContent
 
