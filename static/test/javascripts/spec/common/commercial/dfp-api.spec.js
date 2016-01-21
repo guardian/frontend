@@ -334,7 +334,7 @@ define([
 
             it('should not be added when ad is gu style type', function (done) {
                 var $slot = $('#dfp-ad-gu-style');
-                var checkForBreakout = sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('gu-style'));
+                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('gu-style'));
                 dfp.init();
 
                 fastdom.defer(function () {
