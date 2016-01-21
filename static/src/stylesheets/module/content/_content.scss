@@ -1100,13 +1100,18 @@
     color: colour(neutral-2);
     margin-bottom: $gs-baseline;
 
-    .old-article-message--status-alert svg {
-        width: 14px;
-        height: 14px;
-        margin-bottom: -3px;
+    .old-article-message--clock svg {
+        fill: colour(neutral-2);
+        margin-bottom: -1px;
+    }
+}
 
-        circle {
-            fill: colour(neutral-2);
+.tonal--tone-media {
+    .old-article-message {
+        color: colour(neutral-3);
+
+        .old-article-message--clock svg {
+            fill: colour(neutral-3);
         }
     }
 }
