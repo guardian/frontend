@@ -56,6 +56,8 @@ define([
                 fastdom.write(function () {
                     $(iframe).appendTo($articleBody);
                 });
+
+                emailInserted = true;
             }
         },
         canRunGlobal = {
