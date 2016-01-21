@@ -66,4 +66,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = true
   )
+
+  val UserzoomSurveyMessage = Switch(
+    "A/B Tests",
+    "ab-userzoom-survey-message",
+    "(Initial 0%) Segment the userzoom data-team survey",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 1, 28),
+    exposeClientSide = true
+  )
 }

@@ -2,8 +2,8 @@
 @(id: String, keyEvents: Seq[KeyEventData])
 
 @keyEvents.map { keyEvent =>
-    <li class="timeline__item" data-event-id="@keyEvent.id">
-        <a class="timeline__link" href="@id#block-@keyEvent.id" data-event-id="@keyEvent.id">
+    <li class="timeline__item">
+        <a class="timeline__link" href="@id#block-@keyEvent.id" data-event-id="block-@keyEvent.id">
             <span class="timeline__date">@views.html.liveblog.dateBlock(keyEvent.time)</span><span class="timeline__title u-underline">@keyEvent.title</span>
         </a>
     </li>
