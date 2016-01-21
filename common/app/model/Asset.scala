@@ -82,20 +82,23 @@ object VideoAsset {
     VideoAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.file )
+      url = asset.file,
+      secureUrl = asset.typeData.get.secureFile )
   }
 }
 
 case class VideoAsset(
   fields: Map[String,String],
   url: Option[String],
-  mimeType: Option[String]) {
+  mimeType: Option[String],
+  secureUrl: Option[String]) {
 
   val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
   val encoding: Option[Encoding] = {
-    (url, mimeType) match {
-      case (Some(url), Some(mimeType)) => Some(Encoding(url, mimeType))
+    val urlToUse = secureUrl.orElse(url)
+    (urlToUse, mimeType) match {
+      case (Some(urlToUse), Some(mimeType)) => Some(Encoding(urlToUse, mimeType))
       case _ => None
     }
   }
