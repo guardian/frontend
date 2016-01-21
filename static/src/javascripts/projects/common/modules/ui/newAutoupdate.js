@@ -201,9 +201,7 @@ define([
         var $toastText = $('.toast__text', this.$toastButton);
         var toastContainer = qwery('.toast__container');
 
-        var penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
-        latestBlockId = penultimate;
-        //latestBlockId = $liveblogBody.data('most-recent-block');
+        latestBlockId = $liveblogBody.data('most-recent-block');
 
         new NotificationCounter().init();
         new Sticky(toastContainer, { top: options.toastOffsetTop, emit: true }).init();
