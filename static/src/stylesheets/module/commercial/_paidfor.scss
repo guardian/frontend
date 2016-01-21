@@ -15,6 +15,10 @@
         @include f-headlineSans;
     }
 
+    .commercial__body {
+        padding-top: $gs-gutter / 2;
+    }
+
     .rich-link__standfirst {
         @include fs-textSans(4);
     }
