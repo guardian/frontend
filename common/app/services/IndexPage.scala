@@ -1,7 +1,6 @@
 package services
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.facia.api.{models => fapi}
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -32,6 +31,17 @@ object IndexPagePagination {
 case class MpuState(injected: Boolean)
 
 object IndexPage {
+
+  def apply(
+    page: Page,
+    contents: Seq[IndexPageItem],
+    tags: Tags,
+    date: DateTime,
+    tzOverride: Option[DateTimeZone]
+  ): IndexPage = {
+    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.make(page.metadata, tags))
+  }
+
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
     case 2 => Some(FixedContainers.fastIndexPageMpuII)
     case 4 => Some(FixedContainers.fastIndexPageMpuIV)
@@ -179,11 +189,12 @@ case class IndexPage(
   contents: Seq[IndexPageItem],
   tags: Tags,
   date: DateTime,
-  tzOverride: Option[DateTimeZone]) {
+  tzOverride: Option[DateTimeZone],
+  commercial: Commercial
+) {
 
   val trails: Seq[Content] = contents.map(_.item.content)
   val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)
-  val commercial: Commercial = Commercial.make(page.metadata, tags)
 
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),

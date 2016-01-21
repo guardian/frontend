@@ -145,8 +145,9 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
+    val commercial = Commercial.make(section)
 
-    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None)
+    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }
 
   private def tag(response: ItemResponse, page: Int) = {
