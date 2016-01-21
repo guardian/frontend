@@ -59,13 +59,13 @@ define([
 
 
         var setUpListeners = function () {
-            bean.on(document.body, 'click', '.js-updates-button', function () {
+            bean.on(document.body, 'click', '.toast__button', function () {
                 if (isLivePage) {
                     fastdom.read(function () {
                         scroller.scrollToElement(qwery('.block')[0], 300, 'easeOutQuad');
 
                         fastdom.write(function () {
-                            $updateBox.addClass('loading');
+                            $toastButton.addClass('loading');
                         }).then(function () {
                             injectNewBlocks();
                         });
@@ -75,10 +75,10 @@ define([
                 }
             });
 
-            mediator.on('modules:liveblog-updates-button:unfixed', function () {
+            mediator.on('modules:toast__tofix:unfixed', function () {
                 if (isLivePage) {
                     fastdom.write(function () {
-                        $updateBox.addClass('loading');
+                        $toastButton.addClass('loading');
                     }).then(function () {
                         injectNewBlocks();
                     });
@@ -128,12 +128,12 @@ define([
             fastdom.write(function () {
                 if (count > 0) {
                     var updateText = (count > 1) ? ' new updates' : ' new update';
-                    $updateBox.removeClass('blog__updates-box--closed').addClass('blog__updates-box--open');
-                    $updateBoxText.html(count + updateText);
-                    $updateBoxContainer.addClass('blog__updates-box-container--open');
+                    $toastButton.removeClass('toast__button--closed').addClass('toast__button--open');
+                    $toastText.html(count + updateText);
+                    $toastSpaceReserver.addClass('toast__space-reserver--open');
                 } else {
-                    $updateBox.removeClass('blog__updates-box--open').removeClass('loading').addClass('blog__updates-box--closed');
-                    $updateBoxContainer.removeClass('blog__updates-box-container--open');
+                    $toastButton.removeClass('toast__button--open').removeClass('loading').addClass('toast__button--closed');
+                    $toastSpaceReserver.removeClass('toast__space-reserver--open');
                 }
             });
         };
@@ -150,7 +150,7 @@ define([
                     elementsToAdd = toArray(resultHtml.children);
 
                     // Insert new blocks and animate
-                    $('.blog__updates-box-container').after(elementsToAdd);
+                    $toastSpaceReserver.after(elementsToAdd);
 
                     if (detect.pageVisible()) {
                         revealInjectedElements();
@@ -196,17 +196,17 @@ define([
 
         // Cache selectors
         var $liveblogBody = $('.js-liveblog-body');
-        var $updateBox = $('.js-updates-button');
-        var $updateBoxContainer = $('.blog__updates-box-container');
-        var $updateBoxText = $('.blog__updates-box-text', this.$updateBox);
-        var updateBox = qwery('.blog__updates-box-tofix');
+        var $toastButton = $('.toast__button');
+        var $toastSpaceReserver = $('.toast__space-reserver');
+        var $toastText = $('.toast__text', this.$toastButton);
+        var toastContainer = qwery('.toast__container');
 
         var penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
         latestBlockId = penultimate;
         //latestBlockId = $liveblogBody.data('most-recent-block');
 
         new NotificationCounter().init();
-        new Sticky(updateBox, { top: options.toastOffsetTop, emit: true }).init();
+        new Sticky(toastContainer, { top: options.toastOffsetTop, emit: true }).init();
 
         checkForUpdates();
         detect.initPageVisibility();

@@ -74,10 +74,10 @@
                             @fragments.liveFilter(article.fields.isLive)
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                <div class="blog__updates-box-container">
-                                    <div id="liveblog-updates-button" class="blog__updates-box-tofix">
-                                        <a class="blog__updates-box blog__updates-box--closed js-updates-button button button--large">
-                                            <span class="blog__updates-box-text"></span>
+                                <div class="toast__space-reserver">
+                                    <div id="toast__tofix" class="toast__container">
+                                        <a class="toast__button toast__button--closed button button--large">
+                                            <span class="toast__text"></span>
                                             @fragments.inlineSvg("refresh", "icon", List(""))
                                         </a>
                                     </div>
