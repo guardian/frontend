@@ -12,7 +12,6 @@ define([
     'common/utils/url',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
-    'common/modules/live/filter',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
@@ -40,7 +39,6 @@ define([
     url,
     accessibility,
     richLinks,
-    LiveFilter,
     liveblogAdverts,
     liveblogDynamicAdverts,
     Affix,
@@ -131,8 +129,6 @@ define([
         createFilter: function () {
             //new LiveFilter($('.js-blog-blocks')[0]).ready();
             if (!ab.isInVariant('LiveblogToast', 'toast')) {
-                console.log('foo');
-                new LiveFilter($('.js-blog-blocks')[0]).ready();
                 new NotificationCounter().init();
             }
         },
@@ -166,7 +162,8 @@ define([
                         backoffMax: 1000 * 60 * 20,
                         attachTo: $('.js-liveblog-body')[0],
                         switches: config.switches,
-                        manipulationType: 'prepend'
+                        manipulationType: 'prepend',
+                        responseField: ['html', 'timeline']
                     });
                     autoUpdate.init();
                 }
