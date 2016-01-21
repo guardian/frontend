@@ -1,6 +1,12 @@
 /* ==========================================================================
    Paid for component
    ========================================================================== */
+
+.fc-container .fc-container__inner--paidfor {
+    border: none;
+    padding: 0;
+}
+
 .commercial--paidfor {
 
     .commercial__header,
@@ -55,6 +61,7 @@
     .lineitems {
         display: flex;
         flex-flow: row nowrap;
+        width: auto;
     }
 
     .lineitem {
