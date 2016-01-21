@@ -35,6 +35,7 @@ define([
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
         this.prefs = 'messages';
         this.widthBasedMessage = opts.widthBasedMessage || false;
+        this.cssModifierClass = opts.cssModifierClass || false;
 
         this.$footerMessage = $('.js-footer-message');
     };
@@ -55,6 +56,11 @@ define([
             return false;
         }
         $('.js-site-message-copy').html(message);
+
+        // Add site modifier message
+        if (this.cssModifierClass) {
+            siteMessage.addClass('site-message--' + this.cssModifierClass);
+        }
 
         this.$siteMessage = $('.js-site-message__message');
 

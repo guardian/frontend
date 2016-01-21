@@ -16,6 +16,10 @@
     z-index: $zindex-popover;
 }
 
+.site-message--alt {
+    background-color: colour(status-neutral);
+}
+
 .site-message__inner {
     padding: 0 $gs-gutter/2;
 
@@ -111,6 +115,31 @@
 
 .site-message__message--tall {
     padding-bottom: ($gs-baseline/3)*11;
+}
+
+.site-message__message--has-headline {
+    padding-right: $gs-gutter/2;
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
+        padding-right: $gs-gutter;
+    }
+}
+
+.site-message__headline {
+    display: block;
+}
+
+.site-message__message--has-headline {
+
+    .site-message__desc {
+        @include fs-textSans(1);
+
+        @include mq(desktop) {
+            @include fs-textSans(2, true);
+        }
+    }
 }
 
 .site-message__actions {

@@ -74,7 +74,7 @@
                     <li class="form-field">
                         <label class="label" for="crossword_type">Type</label>
                         <select id="crossword_type" name="crossword_type">
-                        @page.crosswordTypes.map { crosswordType =>
+                        @page.crosswordTypes.filterNot( _ == "azed" ).map { crosswordType =>
                             <option value="@crosswordType">@crosswordType</option>
                         }
                         </select>
