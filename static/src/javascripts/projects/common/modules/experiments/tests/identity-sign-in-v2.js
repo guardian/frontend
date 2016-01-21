@@ -12,10 +12,10 @@ define([], function () {
 
         this.id = 'IdentitySignInV2';
         this.start = '2015-12-15';
-        this.expiry = '2016-01-15';
+        this.expiry = '2016-03-01';
         this.author = 'James Pamplin';
-        this.description = 'New sign in page variant for Identity';
-        this.audience = 0.1;
+        this.description = 'New sign in page variants for Identity';
+        this.audience = 0.2;
         this.audienceOffset = 0.5;
         this.successMeasure = 'More people sign in';
         this.audienceCriteria = 'everyone';
@@ -30,6 +30,10 @@ define([], function () {
         this.variants = [
             {
                 id: 'A',
+                test: function () {}
+            },
+            {
+                id: 'B',
                 test: function () {}
             }
         ];

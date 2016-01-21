@@ -248,3 +248,21 @@
     }
 }
 
+// TONE SPECIFIC MODS
+@each $toneClass, $toneColour in $tones {
+    .email-sub--tone-#{$toneClass} {
+        .email-sub__message__headline {
+            color: $toneColour;
+        }
+
+        .email-sub__submit-input {
+            background-color: $toneColour;
+            border-color: $toneColour;
+        }
+
+        .email-sub__small {
+            color: $toneColour;
+        }
+    }
+}
+
