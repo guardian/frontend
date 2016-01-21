@@ -62,9 +62,9 @@ define([
             cameFromFronts: function () {
                 var host = window.location.host,
                     escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
-                    urlRegex = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi');
+                    frontsUrl = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi');
 
-                return urlRegex.test(document.referrer);
+                return frontsUrl.test(document.referrer);
             },
             allowedUser: function () {
                 var browser = detect.getUserAgent.browser,
@@ -93,6 +93,7 @@ define([
     return {
         init: function () {
             if (!emailInserted && canRunGlobal.cameFromFronts() && canRunGlobal.allowedUser() && canRunGlobal.allowedArticleStructure()) {
+                // Get the first list that is allowed on this page
                 addListToPage(find(listConfigs, listCanRun));
             }
         }
