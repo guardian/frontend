@@ -184,7 +184,7 @@ define([
 
         var options = assign({
             'toastOffsetTop': 12, // pixels from the top
-            'minUpdateDelay': 10 * 1000, // 10 seconds
+            'minUpdateDelay': (detect.isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000, // 10 or 30 seconds minimum, depending on breakpoint
             'maxUpdateDelay': 20 * 60 * 1000, // 20 mins
             'backoffMultiplier': 0.75 // increase or decrease the back off rate by modifying this
         }, opts);
