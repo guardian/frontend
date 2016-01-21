@@ -30,7 +30,7 @@ define([
         this.params.infoLinkIcon = svgs('arrowRight');
         this.params.glabsLogoSmall = svgs('glabsLogoSmall');
         this.params.dataAttr = Math.floor(Math.random() * 1000);
-        this.params.glabsLink = config.page.edition === 'AU' ? 'http://www.theguardian.com/guardian-labs-australia' : 'http://www.theguardian.com/guardian-labs';
+        this.params.glabsLink = document.location.origin + (config.page.edition === 'AU' ? '/guardian-labs-australia' : '/guardian-labs');
 
         $component = $.create(paidforTpl(this.params));
 
