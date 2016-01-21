@@ -33,7 +33,7 @@ define([
         this.expiry = '2016-01-28';
         this.author = 'Gareth Trufitt';
         this.description = '(Initial 0%) Segment the userzoom data-team survey';
-        this.audience = 0;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Increase email sign-up numbers';
         this.audienceCriteria = '1% of UK visitors to article page, that haven\'t seen the message previously';
