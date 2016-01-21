@@ -32,8 +32,10 @@ define([
         return fastdom.read(function () {
             return element[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop'];
         }).then(function (articleBodyOffset) {
-            this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-            return new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+            return fastdom.write(function () {
+                this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
+                return new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+            }, this);
         }.bind(this));
     };
 
