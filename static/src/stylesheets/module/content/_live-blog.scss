@@ -581,7 +581,7 @@ $timeline-width: 15px;
     padding-bottom: $gs-baseline;
     text-align: center;
     transition: transform .3s ease-in-out;
-    transform: translateY(-60px);
+    transform: translateY((-1) * $gs-baseline * 5);
     width: 100%;
 
     .toast__space-reserver--open & {
@@ -616,7 +616,7 @@ $timeline-width: 15px;
     box-sizing: border-box;
     overflow: hidden;
     border: 0;
-    max-width: 300px;
+    max-width: 300px; // somewhat arbitrary, just need a max-width to animate from
     position: relative;
 
     &:hover,
@@ -648,7 +648,7 @@ $timeline-width: 15px;
     }
 
     &.loading {
-        max-width: 36px;
+        max-width: $gs-baseline*3; // same as the height, making it circular
         transition: max-width .3s ease-in-out;
 
         .toast__text {
@@ -656,7 +656,7 @@ $timeline-width: 15px;
         }
 
         svg {
-            animation: rotating 2s linear infinite;
+            animation: rotating 1.5s linear infinite;
         }
     }
 }
@@ -671,7 +671,7 @@ $timeline-width: 15px;
 }
 
 .toast__space-reserver {
-    padding-bottom: .75rem;
+    padding-bottom: $gs-baseline;
     height: $gs-baseline*3; // was 0, for testing
     display: none;
 
