@@ -1095,14 +1095,18 @@
 
 
 .old-article-message {
+    @include fs-textSans(1);
+    display: inline-block;
     color: colour(neutral-2);
-}
+    margin-bottom: $gs-baseline;
 
-.meta__extras {
-    .old-article-message {
-        .old-article-message--clock svg {
-            fill: #ffffff;
-            stroke: colour(neutral-2);
+    .old-article-message--status-alert svg {
+        width: 14px;
+        height: 14px;
+        margin-bottom: -3px;
+
+        circle {
+            fill: colour(neutral-2);
         }
     }
 }
