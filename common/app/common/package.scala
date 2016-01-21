@@ -57,6 +57,8 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader) = Cached(page) {
     if (request.isJson)
       JsonComponent(jsonResponse())
+    else if (request.isEmail)
+      Ok(InlineStyles(htmlResponse()))
     else
       Ok(htmlResponse())
   }
@@ -64,6 +66,8 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader) = Cached(page) {
     if (request.isJson)
       JsonComponent(page, jsonResponse())
+    else if (request.isEmail)
+      Ok(InlineStyles(htmlResponse()))
     else
       Ok(htmlResponse())
   }
@@ -71,6 +75,8 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
     if (request.isJson)
       JsonComponent(jsonResponse())
+    else if (request.isEmail)
+      Ok(InlineStyles(htmlResponse()))
     else
       Ok(htmlResponse())
   }
