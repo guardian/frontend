@@ -3,7 +3,6 @@
 @import conf.Static
 @import views.support.RenderClasses
 @import views.support.VideoEncodingUrlCleaner
-@import views.support.AmpVideoSrcCleaner
 
 <div class="gu-media-wrapper gu-media-wrapper--video">
     @if(amp) {
@@ -19,7 +18,7 @@
                 Please <a href="http://whatbrowser.org/">upgrade</a> to a modern browser and try again.
             </div>
             @player.video.videos.encodings.map { encoding =>
-                @defining(AmpVideoSrcCleaner(VideoEncodingUrlCleaner(encoding.url))) { url =>
+                @defining(VideoEncodingUrlCleaner(encoding.url)) { url =>
                     <source src='@url' type="@encoding.format" />
                 }
             }
