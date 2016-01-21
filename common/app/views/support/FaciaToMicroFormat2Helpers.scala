@@ -11,7 +11,7 @@ object FaciaToMicroFormat2Helpers {
       "href" -> pressedCollection.href,
       "id" -> pressedCollection.id,
       "showContent" -> pressedCollection.curatedPlusBackfillDeduplicated.nonEmpty,
-      "content" -> pressedCollection.curatedPlusBackfillDeduplicated.take(8).map(isCuratedContent))
+      "content" -> pressedCollection.curatedPlusBackfillDeduplicated.take(4).map(isCuratedContent))
 
   def isCuratedContent(content: PressedContent): JsValue = content match {
     case c: CuratedContent => getContent(c)

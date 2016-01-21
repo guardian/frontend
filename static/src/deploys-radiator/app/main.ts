@@ -279,20 +279,38 @@ const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>>
 );
 
 const run = (): Promise<void> => {
+    // We only care about servers which are deployed frequently and manually
+    // with goo
+    const serverWhitelist = List([
+        'admin',
+        'applications',
+        'archive',
+        'article',
+        'commercial',
+        'diagnostics',
+        'discussion',
+        'facia',
+        'identity',
+        'onward',
+        'sport'
+    ]);
+
+    const filterWhitelisted = (deploys: List<DeployRecord>) => deploys
+        .filter(deploy => serverWhitelist.contains(deploy.projectName))
+        .toList();
     const deploysPromise = Promise.all([
-        getDeploys('CODE'),
-        getDeploys('PROD')
+        getDeploys('CODE').then(filterWhitelisted),
+        getDeploys('PROD').then(filterWhitelisted)
     ]);
 
     const deployRefsPromise = deploysPromise.then(([ codeDeploys, prodDeploys ]) => {
         const currentCodeDeploys = getMostRecentDeploys(codeDeploys);
         const currentProdDeploys = getMostRecentDeploys(prodDeploys);
+
         const latestCodeDeploy = currentCodeDeploys
             .sortBy(deploy => deploy.build)
             .last();
-        const blacklistProdDeploys = List(['static', 'router', 'training-preview', 'facia-press']);
         const oldestProdDeploy = currentProdDeploys
-            .filter(deploy => !blacklistProdDeploys.contains(deploy.projectName))
             .sortBy(deploy => deploy.build)
             .first();
 

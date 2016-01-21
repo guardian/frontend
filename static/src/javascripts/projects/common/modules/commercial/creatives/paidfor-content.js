@@ -26,6 +26,7 @@ define([
 
         this.params.icon = svgs('arrowdownicon');
         this.params.infoLinkIcon = svgs('arrowRight');
+        this.params.glabsLogoSmall = svgs('glabsLogoSmall');
         this.params.dataAttr = Math.floor(Math.random() * 1000);
 
         $component = $.create(paidforTpl(this.params));
