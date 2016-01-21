@@ -18,13 +18,11 @@ define([
         };
 
     StickyMpu.prototype.create = function () {
-        var element;
-
         if (this.$adSlot.data('name') !== 'right') {
             return;
         }
 
-        element = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body');
+        var element = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body');
         if (!element) {
             return;
         }
