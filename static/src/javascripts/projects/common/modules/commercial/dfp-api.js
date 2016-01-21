@@ -513,7 +513,7 @@ define([
                 });
 
                 // Check if creative is a new gu style creative and place labels accordingly
-                checkForBreakout($slot).then(function (adType) {
+                dfp.checkForBreakout($slot).then(function (adType) {
                     if (adType !== 'gu-style') {
                         addLabel($slot);
                     }
@@ -765,6 +765,7 @@ define([
             // Used privately but exposed only for unit testing
             shouldLazyLoad: shouldLazyLoad,
             getCreativeIDs: getCreativeIDs,
+            checkForBreakout: checkForBreakout,
 
             // testing
             reset: function () {
