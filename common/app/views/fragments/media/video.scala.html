@@ -19,7 +19,9 @@
             </div>
             @player.video.videos.encodings.map { encoding =>
                 @defining(VideoEncodingUrlCleaner(encoding.url)) { url =>
-                    <source src='@url' type="@encoding.format" />
+                    @if(url.startsWith("https")) {
+                        <source src='@url' type="@encoding.format" />
+                    }
                 }
             }
         </amp-video>

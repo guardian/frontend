@@ -96,7 +96,7 @@ case class VideoAsset(
   val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
   val encoding: Option[Encoding] = {
-    val urlToUse = if (secureUrl.isEmpty) url else secureUrl
+    val urlToUse = secureUrl.orElse(url)
     (urlToUse, mimeType) match {
       case (Some(urlToUse), Some(mimeType)) => Some(Encoding(urlToUse, mimeType))
       case _ => None
