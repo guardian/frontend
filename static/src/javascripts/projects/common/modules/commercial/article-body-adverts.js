@@ -20,6 +20,8 @@ define([
     commercialFeatures
 ) {
 
+    /* bodyAds is a counter that keeps track of the number of inline MPUs
+     * inserted dynamically. It is used to give each MPU its own ID. */
     var bodyAds;
     var inlineMerchRules;
     var longArticleRules;
@@ -70,6 +72,11 @@ define([
     function addArticleAds(count, rules) {
         return addArticleAdsRec(count, 0);
 
+        /*
+         * count:Integer is the number of adverts that should optimally inserted
+         * countAdded:Integer is the number of adverts effectively added. It is
+         * an accumulator (although no JS engine optimizes tail calls so far).
+         */
         function addArticleAdsRec(count, countAdded) {
             return count === 0 ?
                 Promise.resolve(countAdded) :
