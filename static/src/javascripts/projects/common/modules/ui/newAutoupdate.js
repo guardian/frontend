@@ -15,7 +15,7 @@ define([
     'common/modules/article/twitter',
     'common/modules/live/notification-bar',
     'lodash/objects/assign',
-    'common/modules/ui/simpleSticky',
+    'common/modules/ui/sticky',
     'common/utils/scroller',
     'lodash/collections/toArray',
     'lodash/functions/bindAll',
@@ -199,12 +199,14 @@ define([
         var $toastButton = $('.toast__button');
         var $toastSpaceReserver = $('.toast__space-reserver');
         var $toastText = $('.toast__text', this.$toastButton);
-        var toastContainer = qwery('.toast__container');
+        var toastContainer = qwery('.toast__container')[0];
 
-        latestBlockId = $liveblogBody.data('most-recent-block');
+        //latestBlockId = $liveblogBody.data('most-recent-block');
 
+        var penultimate = $($('.block')[1]).attr('id'); // TO REMOVE AFTER TESTING
+        latestBlockId = penultimate;
         new NotificationCounter().init();
-        new Sticky(toastContainer, { top: options.toastOffsetTop, emit: true }).init();
+        new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
 
         checkForUpdates();
         detect.initPageVisibility();

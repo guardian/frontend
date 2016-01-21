@@ -12,14 +12,10 @@ import liveblog.BodyBlocks
 import model._
 import model.liveblog.KeyEventData
 import org.joda.time.DateTime
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import play.twirl.api.Html
-import views.BodyCleaner
 import views.support._
 
 import scala.concurrent.Future
