@@ -113,7 +113,7 @@ define([
     function onAdRendered(event) {
         if (event.slot.getSlotElementId() === 'dfp-ad--im' && event.isEmpty) {
             mediator.off('modules:commercial:dfp:rendered', onAdRendered);
-            addArticleAds(2, getRules()).then(function (countAdded) {
+            return addArticleAds(2, getRules()).then(function (countAdded) {
                 return countAdded === 2 ?
                     addArticleAds(8, getLongArticleRules()) :
                     countAdded;
