@@ -25,7 +25,7 @@ define([
                 var lifecycleId = message.getMessageId(), slotId, timingAttr;
 
                 if (lifecycleId && slot) {
-                    slotId = slot.getSlotId().getDomId();
+                    slotId = slot.getSlotElementId();
                     adTimings[slotId] = adTimings[slotId] || {};
                     timingAttr = lifecycleIdToTimingAttr[lifecycleId];
                     adTimings[slotId][timingAttr] = new Date().getTime();

@@ -113,7 +113,7 @@ define([
                     this.load();
                 } else {
                     mediator.on('modules:commercial:dfp:rendered', function (event) {
-                        if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+                        if (event.slot.getSlotElementId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
                             this.load();
                         }
                     }.bind(this));

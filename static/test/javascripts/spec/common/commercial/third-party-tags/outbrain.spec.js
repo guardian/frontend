@@ -71,12 +71,8 @@ define([
             beforeEach(function () {
                 eventStub = {
                     slot: {
-                        getSlotId: function () {
-                            return {
-                                getDomId: function () {
-                                    return 'dfp-ad--merchandising-high';
-                                }
-                            };
+                        getSlotElementId: function () {
+                            return 'dfp-ad--merchandising-high';
                         }
                     },
                     isEmpty: true
@@ -376,4 +372,3 @@ define([
         });
     });
 });
-
