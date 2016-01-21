@@ -672,9 +672,6 @@ define([
                 return new Promise.resolve(find(items, function (item) {
                     return item.adType !== '';
                 }));
-            // Just send empty string so we will add label
-            }).then(null, function () {
-                return new Promise.resolve('');
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
