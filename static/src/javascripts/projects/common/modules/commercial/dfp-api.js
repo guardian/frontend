@@ -47,7 +47,6 @@ define([
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
 
-    'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
     'common/modules/commercial/creatives/paidfor-content',
