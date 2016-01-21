@@ -19,6 +19,7 @@ define([
     function Filter(context) {
         this.context = context;
         this.order = 'newest';
+        console.log('foo2');
     }
 
     Filter.prototype.ready = function () {

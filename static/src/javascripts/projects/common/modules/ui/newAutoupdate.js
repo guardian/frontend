@@ -214,7 +214,8 @@ define([
 
         fastdom.write(function () {
             // Enables the animations for injected blocks
-            $liveblogBody.addClass('autoupdate--has-animation');
+            $liveblogBody.addClass('autoupdate--has-animation toast-enabled');
+            $(".js-live-toolbar").remove(); // only necessary in the AB test
         });
     };
 });

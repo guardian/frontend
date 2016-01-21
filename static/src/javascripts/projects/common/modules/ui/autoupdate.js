@@ -38,8 +38,8 @@ define([
 
         var options = assign({
             'activeClass':      'is-active',
-            'btnClass':         '.js-auto-update',
             'manipulationType': 'html',
+            'btnClass':         '.js-auto-update',
             'backoff':          1, // 1 = no backoff
             'backoffMax':       1000 * 60 * 20 // 20 mins
         }, opts);
@@ -190,6 +190,8 @@ define([
             mediator.on('modules:notificationbar:show', this.view.revealNewElements.bind(this));
 
             // add the component to the page, and show it
+            console.log($('.update'));
+            console.log(this.template);
             $('.update').html(this.template).removeClass('u-h');
 
             this.btns = $(options.btnClass);

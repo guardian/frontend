@@ -673,9 +673,10 @@ $timeline-width: 15px;
 .blog__updates-box-container {
     padding-bottom: .75rem;
     height: $gs-baseline*3; // was 0, for testing
+    display: none;
 
-    &.blog__updates-box-container--open {
-        height: $gs-baseline*3;
+    .toast-enabled & {
+        display: block;
     }
 }
 

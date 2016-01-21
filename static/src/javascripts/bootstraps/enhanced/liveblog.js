@@ -12,6 +12,7 @@ define([
     'common/utils/url',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
+    'common/modules/live/filter',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
@@ -39,6 +40,7 @@ define([
     url,
     accessibility,
     richLinks,
+    LiveFilter,
     liveblogAdverts,
     liveblogDynamicAdverts,
     Affix,
@@ -129,6 +131,8 @@ define([
         createFilter: function () {
             //new LiveFilter($('.js-blog-blocks')[0]).ready();
             if (!ab.isInVariant('LiveblogToast', 'toast')) {
+                console.log('foo');
+                new LiveFilter($('.js-blog-blocks')[0]).ready();
                 new NotificationCounter().init();
             }
         },
@@ -191,6 +195,7 @@ define([
             ['lb-adverts',    modules.initAdverts],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
+            ['lb-filter',     modules.createFilter],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
