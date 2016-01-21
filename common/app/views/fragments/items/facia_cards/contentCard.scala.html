@@ -6,12 +6,11 @@
 @import views.html.fragments.items.elements.starRating
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.media.video
-@import views.support.{CutOut, GetClasses, ImgSrc, RemoveOuterParaHtml, RenderClasses, Video640}
+@import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 
 @import Function.const
 
-
-<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList) {js-snappable}"
+<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList && !item.hasInlineSnapHtml) {js-snappable}"
     @if(item.discussionSettings.isCommentable) {
         @item.discussionSettings.discussionId.map { id =>
         data-discussion-id="@id"
@@ -19,21 +18,25 @@
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
     }
-
-data-link-name="@item.analyticsPrefix | card-@{
-    index + 1
-}"
-    @item.id.map { id =>
-    data-id="@id"
-    }
-data-item-visibility="@visibilityDataAttribute"
-data-test-id="facia-card"
+    data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
+    data-item-visibility="@visibilityDataAttribute"
+    data-test-id="facia-card"
+    @item.id.map { id => data-id="@id" }
     @item.snapStuff.map(_.dataAttributes)
-
     @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
 
+    @if(!item.hasInlineSnapHtml) {
+        @container()
+    }
+    @if(item.hasInlineSnapHtml) {
+        @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
+    }
+
+</div>
+
+@container() = {
     <div class="fc-item__container">
-        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
+        @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -169,4 +172,4 @@ data-test-id="facia-card"
 
         <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
-</div>
+}
