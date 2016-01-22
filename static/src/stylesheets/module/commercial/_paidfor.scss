@@ -130,6 +130,90 @@
     }
 }
 
+/* Badges
+   ========================================================================== */
+
+.commercial--paidfor {
+
+    /* Resets for the A/B test. When (and if) the new design is implemented, the old code
+       will be torn down and these resets should no longer be necessary
+    */
+
+    .ad-slot--paid-for-badge__help {
+        display: none;
+    }
+
+    .ad-slot--paid-for-badge--front {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
+        margin: 0;
+        float: none;
+    }
+
+    .ad-slot--paid-for-badge__link:after {
+        content: none;
+    }
+
+    .ad-slot.ad-slot--paid-for-badge--front {
+        margin: auto;
+        width: auto;
+        min-height: unset;
+    }
+
+    /* Badge layout & logo size constraint */
+
+    .ad-slot--paid-for-badge {
+        text-align: right; // shift inline-block children
+    }
+
+    .ad-slot--paid-for-badge__header {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .ad-slot--paid-for-badge__link {
+        display: inline-block;
+        vertical-align: middle;
+        max-width: $gs-baseline * 6;
+        height: $gs-baseline * 3;
+        font-size: 0; // remove inline-block whitespace
+    }
+
+    .ad-slot--paid-for-badge__logo {
+        max-width: 100%;
+        max-height: 100%;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .ad-slot--paid-for-badge__link:before {
+        content: '';
+        height: 100%;
+        vertical-align: middle;
+        display: inline-block;
+    }
+}
+
+/* Badge layout in multi-campaign components */
+
+.commercial--paidfor-multi {
+
+    .tone-paidfor--item {
+        position: relative;
+        padding-bottom: $gs-baseline * 4; // reserve space in-flow
+    }
+
+    .ad-slot--paid-for-badge {
+        position: absolute;
+        bottom: $gs-baseline / 2;
+        right: $gs-baseline / 2;
+    }
+}
+
 .tone-paidfor--item {
     background: colour(paid-article-subheader);
     flex: 0 1 auto;
