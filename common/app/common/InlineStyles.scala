@@ -11,7 +11,11 @@ import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import scala.util.Try
 
-case class CSSRule(selector: Option[String], styles: Option[String])
+case class CSSRule(selector: Option[String], styles: Option[String]) {
+  val jsoupCompatible: Boolean = selector.filter({ sel =>
+    sel.contains("@") || sel.contains(":")
+  }).isEmpty
+}
 
 object CSSRule {
   def apply(r: W3CSSRule): CSSRule = {
@@ -41,10 +45,9 @@ object InlineStyles {
         val rules = css.getCssRules()
         val parsedRules = for (i <- 0 until rules.getLength) yield CSSRule(rules.item(i))
 
-        parsedRules filter(_.selector.contains("@media")) // jsoup doesn't support media queries
-          foreach { case CSSRule(Some(selector), Some(styles)) =>
-            document.select(selector).attr("style", styles)
-          }
+        parsedRules filter(_.jsoupCompatible) foreach { case CSSRule(Some(selector), Some(styles)) =>
+          document.select(selector).attr("style", styles)
+        }
 
         Html(document.toString)
       }
