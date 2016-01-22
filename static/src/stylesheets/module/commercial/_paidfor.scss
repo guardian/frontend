@@ -1,12 +1,22 @@
 /* ==========================================================================
    Paid for component
    ========================================================================== */
+
+.fc-container .fc-container__inner--paidfor {
+    border: 0;
+    padding: 0;
+}
+
 .commercial--paidfor {
 
     .commercial__header,
     .commercial__title,
     .rich-link__header {
         @include f-headlineSans;
+    }
+
+    .commercial__body {
+        padding-top: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
@@ -55,6 +65,7 @@
     .lineitems {
         display: flex;
         flex-flow: row nowrap;
+        width: auto;
     }
 
     .lineitem {
@@ -89,6 +100,13 @@
     .ad-slot--paid-for-badge--front {
         float: right;
         margin-bottom: $gs-baseline;
+        border-top-color: colour(neutral-2);
+
+        .ad-slot--paid-for-badge__link {
+            &:after {
+                border-bottom-color: colour(neutral-2);
+            }
+        }
     }
 
     &.commercial--paidfor-single .ad-slot--paid-for-badge--front {
@@ -99,13 +117,6 @@
     &.commercial--paidfor-multi .ad-slot--paid-for-badge--front {
         width: $left-column;
         margin-right: $gs-gutter;
-        border-top-color: colour(neutral-2);
-
-        .ad-slot--paid-for-badge__link {
-            &:after {
-                border-bottom-color: colour(neutral-2);
-            }
-        }
     }
 
     .fc-item__kicker {

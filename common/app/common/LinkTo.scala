@@ -1,6 +1,6 @@
 package common
 
-import common.editions.{Au, Us, Uk}
+import common.editions.{Au, Us, International}
 import conf.Configuration
 import conf.switches.Switches
 import implicits.Requests
@@ -137,7 +137,8 @@ object AnalyticsHost extends implicits.Requests {
 object SubscribeLink {
   private val subscribeEditions = Map(
     Us -> "us",
-    Au -> "au"
+    Au -> "au",
+    International -> "int"
   )
 
   private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")

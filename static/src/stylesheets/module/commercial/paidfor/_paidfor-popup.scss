@@ -32,20 +32,22 @@
 }
 
 .paidfor-popup__title {
-    font-size: get-font-size(header, 4);
-    line-height: get-line-height(header, 4);
+    font-size: get-font-size(header, 2);
+    line-height: get-line-height(header, 2);
     margin: 0 0 1em;
 }
 
 .paidfor-popup__link {
     color: #676767;
-    font-size: get-font-size(textSans, 3);
-    line-height: get-line-height(textSans, 3);
+    font-size: get-font-size(textSans, 2);
+    line-height: get-line-height(textSans, 1);
     display: block;
 
     svg {
         display: inline-block;
         vertical-align: middle;
         fill: #676767;
+        height: 20px;
+        width: 20px;
     }
 }

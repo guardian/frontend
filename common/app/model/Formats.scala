@@ -500,11 +500,12 @@ object PressedContentFormat {
   implicit val contentTypeFormat = ContentTypeFormat.format
   implicit val itemKickerFormat = ItemKickerFormat.format
   implicit val tagKickerFormat = ItemKickerFormat.tagKickerFormat
-  implicit val pressedPressedCardHeader = Json.format[PressedCardHeader]
-  implicit val pressedPressedDisplaySettings = Json.format[PressedDisplaySettings]
-  implicit val pressedPressedDiscussionSettings = Json.format[PressedDiscussionSettings]
-  implicit val pressedPressedCard = Json.format[PressedCard]
+  implicit val pressedCardHeader = Json.format[PressedCardHeader]
+  implicit val pressedDisplaySettings = Json.format[PressedDisplaySettings]
+  implicit val pressedDiscussionSettings = Json.format[PressedDiscussionSettings]
+  implicit val pressedCard = Json.format[PressedCard]
   implicit val pressedPropertiesFormat = Json.format[PressedProperties]
+  implicit val enrichedContentFormat = Json.format[EnrichedContent]
 
   val latestSnapFormat = Json.format[LatestSnap]
   val linkSnapFormat = Json.format[LinkSnap]

@@ -9,9 +9,11 @@ import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model._
 import model.pressed.CollectionConfig
+import play.api.libs.json.{Json, JsArray}
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.Fixed
+import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
 
@@ -26,6 +28,12 @@ object SeriesController extends Controller with Logging with Paging with Executi
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       series.map(renderSeriesTrails).getOrElse(NotFound)
+    }
+  }
+
+  def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
+    lookup(Edition(request), seriesId) map { series =>
+      series.map(rendermf2Series).getOrElse(NotFound)
     }
   }
 
@@ -50,6 +58,21 @@ object SeriesController extends Controller with Logging with Paging with Executi
         log.info(s"Got a 404 calling content api: $message" )
         None
       }
+  }
+
+  private def rendermf2Series(series: Series)(implicit request: RequestHeader) = {
+    val displayName = Some(series.displayName)
+    val seriesStories = series.trails.items take 4
+
+    JsonComponent(
+      "items" -> JsArray(Seq(
+        Json.obj(
+          "displayName" -> displayName,
+          "showContent" -> seriesStories.nonEmpty,
+          "content" -> seriesStories.map( collection => isCuratedContent(collection.faciaContent))
+        )
+      ))
+    )
   }
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
