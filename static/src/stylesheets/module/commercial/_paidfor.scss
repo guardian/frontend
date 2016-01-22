@@ -180,7 +180,7 @@
         vertical-align: middle;
         max-width: $gs-baseline * 6;
         height: $gs-baseline * 3;
-        font-size: 0; // remove inline-block whitespace
+        font-size: 0; // remove whitespace on inline-block children
     }
 
     .ad-slot--paid-for-badge__logo {
@@ -204,7 +204,7 @@
 
     .tone-paidfor--item {
         position: relative;
-        padding-bottom: $gs-baseline * 4; // reserve space in-flow
+        padding-bottom: $gs-baseline * 4; // reserve space in-flow for absolutely positioned badge
     }
 
     .ad-slot--paid-for-badge {
