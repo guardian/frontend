@@ -35,7 +35,7 @@ define([
         this.description = 'Segment the userzoom data-team survey';
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Increase email sign-up numbers';
+        this.successMeasure = 'Gain qualitative feedback via a survey';
         this.audienceCriteria = '0.5% of UK visitors to article page, on desktop, that haven\'t seen the message previously';
         this.dataLinkNames = '';
         this.idealOutcome = '';
