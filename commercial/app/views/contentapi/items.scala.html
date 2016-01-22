@@ -1,37 +1,42 @@
 @(items: Seq[model.ContentType], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], optCapiAdFeature: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
 @import conf.switches.Switches.NewCommercialContent
+@import views.html.fragments.inlineSvg
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="@RenderClasses(
-            Map(
-                "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn
-            ),
-            "fc-container", "fc-container--paid-for", "fc-container--special", "fc-container--merchandising", "commercial-dfp-multi", optSponsorType.getOrElse("")
-        )" data-link-name="merchandising | capi | multiple @optOmnitureId">
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h2 class="fc-container__header__title">
-                    @optCapiLink.map { linkUrl =>
-                        <a href="@optClickMacro@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
-                    }.getOrElse {
-                        <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
-                    }
-                </h2>
-            </div>
-            <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
-                <div class="ad-slot--paid-for-badge__inner">
-                    <h3 class="ad-slot--paid-for-badge__header">@optSponsorLabel:</h3>
-                    <a href="@optClickMacro@for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link" data-link-name="logo link">
-                        @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
+    @if(NewCommercialContent.isSwitchedOn) {
+        <div class="commercial commercial--paidfor commercial-dfp-multi commercial--tone-paidfor fc-container--advertisement-feature paid-content--advertisement-feature">
+            <div class="commercial__inner">
+                <div class="commercial__header">
+                    <div class="paidfor-meta">
+                        <span class="paidfor-meta__label">Paid Content</span>
+                        <div class="paidfor-label paidfor-meta__more has-popup">
+                            <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--capi-component">About @inlineSvg("arrow-down", "icon")</button>
+                            <div class="popup is-off paidfor-popup paidfor-popup--capi-component">
+                                <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
+                                <a class="paidfor-popup__link" href="@LinkTo("/info/2014/sep/23/paid-for-content")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="commercial__title">
+                        @optCapiLink.map { linkUrl =>
+                            <a href="@optClickMacro@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                        }.getOrElse {
+                            <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                        }
+                    </h3>
+                    <a class="commercial__cta"
+                        @if(Edition(request).id == "AU") {
+                            href="@LinkTo("/guardian-labs-australia")"
+                        } else {
+                            href="@LinkTo("/guardian-labs")"
+                        }
+                        >
+                        @inlineSvg("glabs-logo", "logo")
+                        <span class='u-h'>Guardian Labs</span>
                     </a>
-                    @for(aboutLinkUrl <- optCapiAbout) {
-                        <a href="@optClickMacro@aboutLinkUrl" class="ad-slot--paid-for-badge__help" data-link-name="about link">About this content</a>
-                    }
                 </div>
-            </div>
-            <div class="fc-container__body">
-                <div class="fc-slice-wrapper">
+                <div class="commercial__body">
                     <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
@@ -79,7 +84,85 @@
                 </div>
             </div>
         </div>
-    </section>
+    } else {
+        <section class="@RenderClasses(
+                Map(
+                    "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn
+                ),
+                "fc-container", "fc-container--paid-for", "fc-container--special", "fc-container--merchandising", "commercial-dfp-multi", optSponsorType.getOrElse("")
+            )" data-link-name="merchandising | capi | multiple @optOmnitureId">
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <h2 class="fc-container__header__title">
+                        @optCapiLink.map { linkUrl =>
+                            <a href="@optClickMacro@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                        }.getOrElse {
+                            <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                        }
+                    </h2>
+                </div>
+                <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                    <div class="ad-slot--paid-for-badge__inner">
+                        <h3 class="ad-slot--paid-for-badge__header">@optSponsorLabel:</h3>
+                        <a href="@optClickMacro@for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link" data-link-name="logo link">
+                            @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
+                        </a>
+                        @for(aboutLinkUrl <- optCapiAbout) {
+                            <a href="@optClickMacro@aboutLinkUrl" class="ad-slot--paid-for-badge__help" data-link-name="about link">About this content</a>
+                        }
+                    </div>
+                </div>
+                <div class="fc-container__body">
+                    <div class="fc-slice-wrapper">
+                        <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
+                            @for(item <- items) {
+                                <li class="fc-slice__item l-row__item l-row__item--span-1">
+                                    <div class="fc-item fc-item--has-image fc-item--has-metadata @item match {
+                                            case _: Video => { fc-item--video }
+                                            case _: Audio => { fc-item--audio }
+                                            case _: Gallery => { fc-item--gallery }
+                                            case _ => { }
+                                        } @item match {
+                                            case _: Video | _: Audio | _: Gallery => { tone-media--item }
+                                            case _ => { tone-news--item }
+                                        }">
+                                        <div class="fc-item__container">
+                                            @item.trail.trailPicture.map { trailPictureContainer =>
+                                                @fragments.items.elements.facia_cards.itemImage(trailPictureContainer, true)
+                                            }
+                                            <div class="fc-item__content">
+                                                <div class="fc-item__header">
+                                                    <h2 class="fc-item__title">
+                                                        @insertItemMediaIcon(item)
+                                                        @item.metadata.webTitle
+                                                    </h2>
+                                                </div>
+                                                <div class="fc-item__meta">
+                                                    <time
+                                                        class="fc-item__timestamp js-item__timestamp"
+                                                        datetime="@item.trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                                        data-timestamp="@item.trail.webPublicationDate.getMillis"
+                                                        data-relativeformat="short">
+                                                        <span class="timestamp__text">
+                                                            <span class="u-h">Published: </span>
+                                                            @Format(item.trail.webPublicationDate, "d MMM y")
+                                                        </span>
+                                                    </time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="@optClickMacro@item.metadata.webUrl" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.metadata.webTitle" tabindex="-1">
+                                            @item.metadata.webTitle
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
 }
 
 @insertItemMediaIcon(item : model.ContentType) = @{
