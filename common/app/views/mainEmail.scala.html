@@ -1,0 +1,41 @@
+@(page: model.Page)(body: Html)(implicit request: RequestHeader)
+
+@import common.{LinkTo, CanonicalLink}
+
+<!doctype html>
+<html>
+    <head>
+        <meta name="robots" content="noindex">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="canonical" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" />
+        <title>@views.support.Title(page)</title>
+
+        @fragments.email.stylesheets.main()
+    </head>
+
+    <body>
+        <table class="outer" width="700px" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr class="header">
+                    <td class="main">
+                        <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">
+                            Having trouble viewing this email?
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="http://www.theguardian.com" class="logo-wrapper" name="top">@fragments.inlineSvg("guardian-logo-160", "logo")</a>
+                    </td>
+                </tr>
+
+                <tr class="banner"></tr>
+
+                <tr>
+                    <td class="main" width="460px">
+                        @body
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

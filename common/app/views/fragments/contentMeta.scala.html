@@ -1,4 +1,4 @@
-@(item: model.ContentType, showBadge: Boolean = true)(implicit request: RequestHeader)
+@(item: model.ContentType, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
 @import conf.switches.Switches.SaveForLaterSwitch
 @import conf.switches.Switches.NewCommercialContent
 @import model._
@@ -27,23 +27,27 @@
         @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
     }
 
-    <div class="meta__extras">
-        <div class="meta__social" data-component="share">
+    @if(showExtras) {
+        <div class="meta__extras">
+            <div class="meta__social" data-component="share">
             @fragments.social(item, "top")
-        </div>
-        @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-            @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
-        }
-        <div class="meta__numbers modern-visible">
-            <div class="u-h meta__number js-sharecount">
             </div>
-            <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!item.trail.isCommentable}">
+            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
+            }
+            <div class="meta__numbers modern-visible">
+                <div class="u-h meta__number js-sharecount">
+                </div>
+                <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                    !item.trail.isCommentable
+                }">
+                </div>
             </div>
+            @if(SaveForLaterSwitch.isSwitchedOn) {
+                <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+            }
         </div>
-        @if(SaveForLaterSwitch.isSwitchedOn) {
-            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
-        }
-    </div>
+    }
 }
 
 <div class="content__meta-container js-content-meta js-football-meta u-cf

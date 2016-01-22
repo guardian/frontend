@@ -1,0 +1,5 @@
+@(model: ArticlePage)(implicit request: RequestHeader)
+
+@mainEmail(model) {
+    @fragments.emailArticleBody(model)
+}
