@@ -19,7 +19,7 @@ object PressedPage {
     def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
-    val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId.toLowerCase == id)
+    val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
     val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section

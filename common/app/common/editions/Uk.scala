@@ -11,7 +11,6 @@ object Uk extends Edition(
   displayName = "UK edition",
   timezone = DateTimeZone.forID("Europe/London"),
   locale = Locale.forLanguageTag("en-gb"),
-  homePagePath = "/uk",
   networkFrontId = "uk"
 ){
 
