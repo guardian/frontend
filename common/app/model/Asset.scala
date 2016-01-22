@@ -82,7 +82,7 @@ object VideoAsset {
     VideoAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.file )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
   }
 }
 

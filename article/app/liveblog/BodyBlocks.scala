@@ -11,9 +11,9 @@ object BodyBlocks {
       case Some(pageNo) =>
         val higherLater = if (pageNo < pages.length) PageNumber(pageNo + 1) else FirstPage
         val earlierLower = if (pageNo > 1) Some(pageNo - 1) else None
-        Some(BodyBlocks(pages(pageNo - 1), later = higherLater, earlier = earlierLower))
+        Some(BodyBlocks(pages(pageNo - 1), main, later = higherLater, earlier = earlierLower))
 
-      case None => Some(BodyBlocks(main, later = NoPage, earlier = if(pages.nonEmpty) Some(pages.length) else None))
+      case None => Some(BodyBlocks(main, main, later = NoPage, earlier = if(pages.nonEmpty) Some(pages.length) else None))
     }
   }
 
@@ -27,7 +27,7 @@ object BodyBlocks {
 
 }
 
-case class BodyBlocks[B](blocks: Seq[B], later: LaterPage, earlier: Option[Int])
+case class BodyBlocks[B](blocks: Seq[B], main: Seq[B], later: LaterPage, earlier: Option[Int])
 
 sealed trait LaterPage {
   def suffix: Option[String]

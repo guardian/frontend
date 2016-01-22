@@ -1,6 +1,7 @@
 <div class="paidfor-content" data-link-name="creative | gu style commercial content">
     <div class="u-responsive-ratio inlined-image">
-        <a href="<%=clickMacro%><%=articleUrl%>"><img class="gu-image" src="<%=articleImage%>"></a>
+        <a href="<%=clickMacro%><%=articleUrl%>" data-link-name="article image"><img class="gu-image" src="<%=articleImage%>"></a>
+        <a href="<%=glabsLink%>" class="paidfor-content__glabs-logo" title="glabs" data-link-name="glabs logo"><%=glabsLogoSmall%></a>
     </div>
     <div class="paidfor-meta">
         <span class="paidfor-meta__label">Paid Content</span>
@@ -9,17 +10,17 @@
                 About <%=icon%>
             </button>
             <div class="popup is-off paidfor-popup paidfor-popup--<%=dataAttr%>">
-                <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser</h3>
-                <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content">
-                    Learn more about the Guardian’s funding from outside parties
+                <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
+                <a class="paidfor-popup__link" href="https://www.theguardian.com/info/2014/sep/23/paid-for-content" data-link-name="popup link">
+                    Learn more about Guardian Labs content
                     <%=infoLinkIcon%>
                 </a>
             </div>
         </div>
     </div>
-    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box">
-        <h2 class="paidfor-title"><%=articleHeaderText%></h2>
-        <p class="paidfor-text"><%=articleText%></p>
+    <a href="<%=clickMacro%><%=articleUrl%>" class="paidfor-box" data-link-name="advertisers logo">
+        <h2 class="gu-title"><%=articleHeaderText%></h2>
+        <p class="gu-text"><%=articleText%></p>
         <div class="paidfor-brand">
             <span class="paidfor-note">Paid for by:</span>
             <img class="paidfor-logo" src="<%=brandLogo%>" alt="<%=brand%>">

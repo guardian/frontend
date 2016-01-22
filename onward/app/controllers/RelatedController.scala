@@ -48,7 +48,7 @@ object RelatedController extends Controller with Related with Containers with Lo
   }
 
   private def renderRelatedMf2(trails: Seq[RelatedContentItem], title: String)(implicit request: RequestHeader) = Cached(30.minutes) {
-    val relatedTrails = trails take 8
+    val relatedTrails = trails take 4
 
     JsonComponent(
       "items" -> JsArray(Seq(
