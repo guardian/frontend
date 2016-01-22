@@ -28,15 +28,15 @@ define([
     cookies
 ) {
     return function () {
-        this.id = 'UserzoomSurveyMessage';
+        this.id = 'UserzoomSurveyMessageV2';
         this.start = '2016-01-20';
-        this.expiry = '2016-01-28';
+        this.expiry = '2016-02-04';
         this.author = 'Gareth Trufitt';
-        this.description = '(Initial 0%) Segment the userzoom data-team survey';
+        this.description = 'Segment the userzoom data-team survey';
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Increase email sign-up numbers';
-        this.audienceCriteria = '1% of UK visitors to article page, that haven\'t seen the message previously';
+        this.audienceCriteria = '0.5% of UK visitors to article page, on desktop, that haven\'t seen the message previously';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
