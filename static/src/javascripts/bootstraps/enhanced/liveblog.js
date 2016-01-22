@@ -126,8 +126,8 @@ define([
             }
         },
 
+        // once Toast is shipped this can be removed completely, the notification counter is initialised within Toast
         createFilter: function () {
-            //new LiveFilter($('.js-blog-blocks')[0]).ready();
             if (!ab.isInVariant('LiveblogToast', 'toast')) {
                 new NotificationCounter().init();
             }
