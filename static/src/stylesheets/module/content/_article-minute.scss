@@ -1,2 +1,20 @@
 .block--minute-article {
+    background-color: #104f75;
+    color: #ffffff;
+    .caption {
+        color: #ffffff;
+    }
+
+    .svg  & .caption--img:before {
+        display: none;
+    }
+
+    .from-content-api & blockquote.quoted {
+        color: #ffffff;
+
+        .inline-quote {
+            fill: #ffffff;
+        }
+    }
+
 }
