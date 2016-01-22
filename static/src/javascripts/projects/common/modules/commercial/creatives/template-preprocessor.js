@@ -3,7 +3,7 @@ define([
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/manual-single-button.html',
     'text!common/views/commercial/creatives/manual-multiple-button.html'
-], function(
+], function (
     template,
     manualInlineButtonStr,
     manualSingleButtonStr,
@@ -19,7 +19,7 @@ define([
         }
         // having a button is the default state, that is why we expressely
         // test for when *not* to display one
-        tpl.params.offerButton = tpl.params['show_button'] === 'no' ?
+        tpl.params.offerButton = tpl.params.show_button === 'no' ?
             '' :
             manualInlineButtonTpl(tpl.params);
     }
