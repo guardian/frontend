@@ -11,7 +11,8 @@ object Uk extends Edition(
   displayName = "UK edition",
   timezone = DateTimeZone.forID("Europe/London"),
   locale = Locale.forLanguageTag("en-gb"),
-  homePagePath = "/uk"
+  homePagePath = "/uk",
+  networkFrontId = "uk"
 ){
 
   implicit val UK = Uk

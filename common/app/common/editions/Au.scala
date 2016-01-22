@@ -17,7 +17,8 @@ object Au extends Edition(
   displayName = "Australia edition",
   DateTimeZone.forID("Australia/Sydney"),
   locale = Locale.forLanguageTag("en-au"),
-  homePagePath = "/au"
+  homePagePath = "/au",
+  networkFrontId = "au"
 ) with QueryDefaults {
 
   implicit val AU = Au

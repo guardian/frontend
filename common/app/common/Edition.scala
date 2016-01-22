@@ -13,6 +13,7 @@ abstract class Edition(
     val timezone: DateTimeZone,
     val locale: Locale,
     val homePagePath: String,
+    val networkFrontId: String,
     val editionalisedSections: Seq[String] = Seq(
       "", // network front
       "business",

@@ -14,7 +14,8 @@ object Us extends Edition(
   displayName = "US edition",
   timezone = DateTimeZone.forID("America/New_York"),
   locale = Locale.forLanguageTag("en-us"),
-  homePagePath = "/us"
+  homePagePath = "/us",
+  networkFrontId = "us"
 ) with QueryDefaults {
 
   implicit val US = Us

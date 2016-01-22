@@ -12,6 +12,7 @@ object International extends Edition(
   timezone = DateTimeZone.forID("Europe/London"),
   locale = Locale.forLanguageTag("en"),
   homePagePath = "/international",
+  networkFrontId = "international",
   editionalisedSections = Seq("") // only the home page
 ){
 
