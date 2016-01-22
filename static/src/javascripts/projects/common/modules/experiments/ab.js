@@ -12,7 +12,7 @@ define([
     'common/modules/experiments/tests/rtrt-email-form-article-promo',
     'common/modules/experiments/tests/prebid-performance',
     'common/modules/experiments/tests/liveblog-toast',
-    'common/modules/experiments/tests/userzoom-survey-message',
+    'common/modules/experiments/tests/userzoom-survey-message-v2',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -36,7 +36,7 @@ define([
     RtrtEmailFormArticlePromo,
     PrebidPerformance,
     LiveblogToast,
-    UserzoomSurveyMessage,
+    UserzoomSurveyMessageV2,
     flatten,
     forEach,
     keys,
@@ -54,8 +54,8 @@ define([
         new IdentitySignInV2(),
         new RtrtEmailFormArticlePromo(),
         new PrebidPerformance(),
-        new UserzoomSurveyMessage(),
-        new LiveblogToast()
+        new LiveblogToast(),
+        new UserzoomSurveyMessageV2()
     ]);
 
     var participationsKey = 'gu.ab.participations';

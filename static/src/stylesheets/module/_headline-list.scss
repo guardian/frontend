@@ -96,13 +96,7 @@
     }
 
     .old-article-message {
-        @include fs-textSans(1);
-        color: colour(neutral-2);
-
-        .old-article-message--clock svg {
-            fill: colour(neutral-3);
-            margin-bottom: -1px;
-        }
+        margin-bottom: 0;
     }
 
 }

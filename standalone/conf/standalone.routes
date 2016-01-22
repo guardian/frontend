@@ -6,12 +6,16 @@
 GET        /assets/internal/*file                                                              controllers.Assets.at(path="/public", file)
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 
+
 #Login
 # authentication endpoints
 GET           /login                                                                           controllers.OAuthLoginController.login
 POST          /login                                                                           controllers.OAuthLoginController.loginAction
 GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
 GET           /logout                                                                          controllers.OAuthLoginController.logout
+
+# Crossword
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 # Travel offers
 GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffers.renderTravel
