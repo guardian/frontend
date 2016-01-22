@@ -1,6 +1,9 @@
 .block--minute-article {
     background-color: #104f75;
     color: #ffffff;
+    padding: $gs-baseline/2 $gs-gutter/2;
+    margin-bottom: $gs-baseline/2;
+
     .caption {
         color: #ffffff;
     }
