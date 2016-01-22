@@ -6,8 +6,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
-import model.liveblog.{LiveBlogDate, BodyBlock}
+import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -55,6 +54,21 @@ object Commercial {
 
   def make(metadata: MetaData, tags: Tags): model.Commercial = {
     make(metadata, tags, None)
+  }
+
+  def make(section: Section): model.Commercial = {
+    val keywordSponsorship = section.keywordSponsorship
+    model.Commercial(
+      tags = Tags(Nil),
+      metadata = section.metadata,
+      isInappropriateForSponsorship = false,
+      sponsorshipTag = None,
+      isFoundationSupported = keywordSponsorship.isFoundationSupported,
+      isAdvertisementFeature = keywordSponsorship.isAdvertisementFeature,
+      hasMultipleSponsors = keywordSponsorship.hasMultipleSponsors,
+      hasMultipleFeatureAdvertisers = keywordSponsorship.hasMultipleFeatureAdvertisers,
+      hasInlineMerchandise = false
+    )
   }
 }
 
