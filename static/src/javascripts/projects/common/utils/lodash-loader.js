@@ -1,7 +1,6 @@
 define([
-    'module',
     'lodash/utilities/template'
-], function (module, template) {
+], function (template) {
     var exports = {};
     var buildMap = {};
 
