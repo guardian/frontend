@@ -43,7 +43,7 @@ define([
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function reportAdToOphan(event) {
                 require(['ophan/ng'], function (ophan) {
 
-                    var slotId = event.slot.getSlotId().getDomId(),
+                    var slotId = event.slot.getSlotElementId(),
                         slotTiming = adTimings[slotId] || {};
 
                     function lineItemIdOrEmpty(event) {
@@ -56,7 +56,7 @@ define([
 
                     ophan.record({
                         ads: [{
-                            slot: event.slot.getSlotId().getDomId(),
+                            slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
                             timeToRenderEnded: safeDiff(renderStartTime, new Date().getTime()),
