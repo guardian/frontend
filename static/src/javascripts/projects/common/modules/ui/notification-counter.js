@@ -13,6 +13,7 @@ define([
 
     NotificationCounter.prototype.init = function () {
         var self = this;
+
         mediator.on('modules:autoupdate:unread', function (count) {
             self.setCount(count);
         });

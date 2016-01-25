@@ -1,0 +1,87 @@
+.live-toolbar {
+    width: 100%;
+    height: $gs-row-height + $gs-baseline;
+
+    @include mq($until: tablet) {
+        font-size: .875em;
+    }
+}
+
+.live-toggler-wrapper {
+    float: left;
+    padding-top: 8px;
+    position: relative;
+
+    .popup__toggle.is-active:after {
+        border-top: 0;
+        border-bottom: $popup-toggle-arrow-size solid colour(neutral-2);
+    }
+    .popup__toggle:after {
+        border-top: $popup-toggle-arrow-size solid colour(neutral-2);
+        border-bottom: 0;
+        display: inline-block;
+    }
+    .popup {
+        top: 47px;  // Override the default top because wrapper's padding is larger than default.
+    }
+}
+.live-toggler {
+    display: none;
+    position: relative;
+    width: auto;
+    text-align: left;
+    padding: ($gs-baseline/3)*2 8px 0 0;
+    @include fs-textSans(2);
+
+    &.is-active {
+        display: block;
+    }
+
+    i {
+        position: absolute;
+        top: 14px;
+        right: ($gs-gutter*.75)*-1;
+    }
+}
+.live-toggler__label {
+    padding-left: 0;
+    color: colour(neutral-2);
+    display: inline-block;
+    @include font-size(get-font-size(textSans, 2));
+    @include f-textSans;
+    line-height: $gs-row-height; // this line height is compatible with the popup classes
+}
+.popup--live-blog {
+    @include fs-bodyHeading(1);
+    line-height: $gs-row-height;
+
+    .popup__action {
+        color: colour(neutral-1);
+        text-align: left;
+    }
+    .popup__action:hover {
+        text-decoration: underline;
+    }
+}
+
+/* Auto update toggle
+   ========================================================================== */
+
+.live-toggler--autoupdate {
+    float: right;
+    padding-right: 0;
+
+    .live-toggle__value {
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        line-height: 2.6;
+        background-color: colour(neutral-2);
+        color: #ffffff;
+        font-weight: bold;
+    }
+}
+
+.live-toggler--on .live-toggle__value {
+    background-color: colour(live-default);
+}
