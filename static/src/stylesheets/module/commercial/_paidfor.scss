@@ -21,7 +21,7 @@
 
     .rich-link__standfirst {
         @include fs-textSans(4);
-        padding: $gs-baseline/3  $gs-gutter/2 $gs-baseline/3 $gs-gutter/4;
+        padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-gutter/4;
     }
 
     .fc-item__image-container {
