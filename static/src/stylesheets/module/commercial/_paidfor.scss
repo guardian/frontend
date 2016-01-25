@@ -15,12 +15,19 @@
         @include f-headlineSans;
     }
 
+    .rich-link__header {
+        font-size: get-font-size(header, 2);
+        line-height: get-line-height(header, 1);
+    }
+
     .commercial__body {
         padding-top: $gs-gutter / 2;
     }
 
     .rich-link__standfirst {
-        @include fs-textSans(4);
+        @include f-textSans;
+        font-size: get-font-size(textSans, 2);
+        line-height: get-line-height(textSans, 1);
         padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-gutter/4;
     }
 
