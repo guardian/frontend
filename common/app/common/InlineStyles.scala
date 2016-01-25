@@ -47,8 +47,11 @@ object InlineStyles {
         val rules = css.getCssRules()
         val parsedRules = for (i <- 0 until rules.getLength) yield CSSRule.fromW3(rules.item(i))
 
-        parsedRules filter(_.jsoupCompatible) foreach { case CSSRule(Some(selector), Some(styles)) =>
-          document.select(selector).attr("style", styles)
+        parsedRules.flatten filter(_.jsoupCompatible) foreach { rule =>
+          document.select(rule.selector) foreach { el =>
+            val style = Seq(el.attr("style"), rule.styles) filter(_.nonEmpty) mkString("; ")
+            el.attr("style", style)
+          }
         }
 
         Html(document.toString)
