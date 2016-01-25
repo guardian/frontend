@@ -47,7 +47,7 @@ define([
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
-                var iframe = bonzo.create('<iframe src="/email/form/article/' + listConfig.listId + '" height="218px" data-form-title="' + listConfig.headline + '" data-form-description="' + listConfig.description + '" data-form-campaign-code="' + listConfig.campaignCode + '" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe js-email-sub__iframe--article" data-form-success-desc="' + listConfig.successDescription + '"></iframe>')[0];
+                var iframe = bonzo.create('<iframe src="/email/form/article/' + listConfig.listId + '" height="218px" data-form-title="' + listConfig.headline + '" data-form-description="' + listConfig.description + '" data-form-campaign-code="' + listConfig.campaignCode + '" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe js-email-sub__iframe--article"' + ' data-form-success-headline="' + listConfig.successHeadline + '" data-form-success-desc="' + listConfig.successDescription + '"></iframe>')[0];
 
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
