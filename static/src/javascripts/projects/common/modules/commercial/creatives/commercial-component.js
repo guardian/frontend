@@ -5,6 +5,7 @@
 define([
     'common/utils/config',
     'common/utils/mediator',
+    'common/utils/fastdom-promise',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
     'lodash/objects/isArray',
@@ -15,6 +16,7 @@ define([
 ], function (
     config,
     mediator,
+    fastdom,
     LazyLoad,
     Tabs,
     isArray,
@@ -37,7 +39,7 @@ define([
             return result + isArray(value) ?
                 map(value, buildParam).join('&') :
                 buildParam(value);
-        }, '');
+        }, '?');
     }
 
     function buildComponentUrl(url, params) {
@@ -48,7 +50,7 @@ define([
                 return isArray(v) ? v.length : v;
             });
             if (filteredParams.length) {
-                query = '?' + constructQuery(filteredParams);
+                query = constructQuery(filteredParams);
             }
         }
         return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
@@ -155,7 +157,7 @@ define([
             beforeInsert: function (html) {
                 // Currently we are replacing the OmnitureToken with nothing. This will change once
                 // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
+                return html ? html.replace('%OASToken%', this.params.clickMacro).replace('%OmnitureToken%', '') : html;
             }.bind(this),
             success: function () {
                 if (this.postLoadEvents[this.type]) {
@@ -165,7 +167,9 @@ define([
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this),
             error: function () {
-                this.adSlot.style.display = 'none';
+                fastdom.write(function {
+                    this.adSlot.style.display = 'none';
+                }, this);
             }.bind(this)
         }).load();
 
