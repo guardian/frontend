@@ -11,16 +11,18 @@ import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import scala.util.Try
 
-case class CSSRule(selector: Option[String], styles: Option[String]) {
-  val jsoupCompatible: Boolean = selector.filter({ sel =>
-    sel.contains("@") || sel.contains(":")
-  }).isEmpty
+case class CSSRule(selector: String, styles: String) {
+  val jsoupCompatible: Boolean = !(selector.contains("@") || selector.contains(":"))
 }
 
 object CSSRule {
-  def apply(r: W3CSSRule): CSSRule = {
+  def fromW3(r: W3CSSRule): Option[CSSRule] = {
     val rule = r.getCssText.split("\\{")
-    CSSRule(Try(rule(0).trim).toOption, Try(rule(1).stripSuffix("}").trim).toOption)
+
+    for {
+      selector <- Try(rule(0)).toOption
+      styles   <- Try(rule(1)).toOption
+    } yield CSSRule(selector.trim, styles.stripSuffix("}").trim)
   }
 }
 
@@ -43,7 +45,7 @@ object InlineStyles {
 
       Try(cssParser.parseStyleSheet(sheet, null, null)).toOption map { css =>
         val rules = css.getCssRules()
-        val parsedRules = for (i <- 0 until rules.getLength) yield CSSRule(rules.item(i))
+        val parsedRules = for (i <- 0 until rules.getLength) yield CSSRule.fromW3(rules.item(i))
 
         parsedRules filter(_.jsoupCompatible) foreach { case CSSRule(Some(selector), Some(styles)) =>
           document.select(selector).attr("style", styles)
