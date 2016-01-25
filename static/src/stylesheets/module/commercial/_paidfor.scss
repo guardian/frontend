@@ -38,6 +38,15 @@
         }
     }
 
+    .paidfor-meta__more > .popup {
+        @include mq(leftCol, wide) {
+            left: 0;
+            transform: translate(0, 0);
+
+            &:before { left: 10%; }
+        }
+    }
+
     .commercial__title {
         font-size: get-font-size(headline, 4);
     }
