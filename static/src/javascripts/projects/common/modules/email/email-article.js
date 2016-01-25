@@ -60,21 +60,7 @@ define([
                 emailInserted = true;
             }
         },
-        canRunGlobal = {
-            cameFromFronts: function () {
-                var host = window.location.host,
-                    escapedHost = host.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), // Escape anything that will mess up the regex
-                    frontsUrl = new RegExp('^https?:\/\/' + escapedHost + '\/(uk\/|us\/|au\/|international\/)?([a-z-])+$', 'gi');
-
-                return frontsUrl.test(document.referrer);
-            },
-            allowedUser: function () {
-                var browser = detect.getUserAgent.browser,
-                    version = detect.getUserAgent.version;
-
-                return !(browser === 'MSIE' && contains(['7','8','9'], version + ''))
-                        && !Id.isUserLoggedIn();
-            },
+        canRunHelpers = {
             allowedArticleStructure: function () {
                 $articleBody = $('.js-article__body');
 
@@ -94,7 +80,7 @@ define([
 
     return {
         init: function () {
-            if (!emailInserted && canRunGlobal.cameFromFronts() && canRunGlobal.allowedUser() && canRunGlobal.allowedArticleStructure()) {
+            if (!emailInserted && canRunHelpers.allowedArticleStructure()) {
                 // Get the first list that is allowed on this page
                 addListToPage(find(listConfigs, listCanRun));
             }
