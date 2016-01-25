@@ -353,7 +353,7 @@ define([
                 email.init();
 
                 // Initalise email insertion into articles
-                if (config.switches.emailInArticle){
+                if (config.switches.emailInArticle) {
                     emailArticle.init();
                 }
 
