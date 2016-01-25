@@ -31,13 +31,9 @@
         overflow: visible;
     }
 
-    .paidfor-meta__more .popup__toggle__label {
-        @include mq(leftCol) {
-            display: none;
-        }
-
-        @include mq(wide) {
-            display: inline;
+    .paidfor-meta__more > .popup__toggle {
+        @include mq(leftCol, wide) {
+            padding: 0 0 ($gs-baseline * 3 / 4);
         }
     }
 
