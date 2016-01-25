@@ -265,4 +265,13 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 2, 1),
     exposeClientSide = true
   )
+
+  val OutbrainOnAmp = Switch(
+    "Commercial",
+    "outbrain-on-amp",
+    "Show an Outbrain component on amp pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 2),
+    exposeClientSide = false
+  )
 }
