@@ -35,11 +35,15 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
-  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-    val latestBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
-    val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
-    val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(latestBlocks, Edition(request).timezone))
-    Cached(page)(JsonComponent("html" -> blocksHtml, "timeline" -> timelineHtml))
+  private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String, isLivePage: Option[Boolean])(implicit request: RequestHeader) = {
+    val newBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
+    val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+    val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(newBlocks, Edition(request).timezone))
+    val allPagesJson = Seq("timeline" -> timelineHtml, "numNewBlocks" -> newBlocks.size)
+    val livePageJson = isLivePage.filter(_ == true).map { _ =>
+      "html" -> blocksHtml
+    }
+    Cached(page)(JsonComponent((allPagesJson ++ livePageJson): _*))
   }
 
   case class TextBlock(
@@ -105,11 +109,11 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       }
     }
 
-  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     LongCacheAction { implicit request =>
       mapModel(path, blocks = true) { model =>
         (lastUpdate, rendered) match {
-          case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
+          case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate, isLivePage)
           case (None, Some(false)) => blockText(model, 6)
           case (_, _) => render(path, model, None)
         }

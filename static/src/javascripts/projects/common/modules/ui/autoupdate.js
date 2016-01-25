@@ -1,7 +1,7 @@
 /*
-    Module: autoupdate.js
-    Description: Used to load update fragments of the DOM from specfied endpoint
-*/
+ Module: autoupdate.js
+ Description: Used to load update fragments of the DOM from specfied endpoint
+ */
 define([
     'bean',
     'bonzo',
@@ -27,19 +27,19 @@ define([
     assign,
     toArray) {
     /*
-        @param {Object} options hash of configuration options:
-            path             : {String}              Endpoint path to ajax request,
-            delay            : {Number}              Timeout in milliseconds to query endpoint,
-            attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
-            switches         : {Object}              Global switches object
-            manipulationType : {String}              Which manipulation method used to insert content into DOM
-    */
+     @param {Object} options hash of configuration options:
+     path             : {String}              Endpoint path to ajax request,
+     delay            : {Number}              Timeout in milliseconds to query endpoint,
+     attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
+     switches         : {Object}              Global switches object
+     manipulationType : {String}              Which manipulation method used to insert content into DOM
+     */
     function Autoupdate(opts) {
 
         var options = assign({
             'activeClass':      'is-active',
-            'btnClass':         '.js-auto-update',
             'manipulationType': 'html',
+            'btnClass':         '.js-auto-update',
             'backoff':          1, // 1 = no backoff
             'backoffMax':       1000 * 60 * 20 // 20 mins
         }, opts);
