@@ -51,14 +51,15 @@ define([
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
-                var iframe = bonzo.create(template(iframeTemplate, listConfig))[0];
+                var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
+                    $iframeEl = $(iframe);
 
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
 
                 fastdom.write(function () {
-                    $(iframe).appendTo($articleBody);
+                    $iframeEl.appendTo($articleBody);
                 });
 
                 emailInserted = true;
