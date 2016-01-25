@@ -1,8 +1,83 @@
 @(item: model.ContentType, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
 
 @import conf.switches.Switches.NewCommercialContent
+@import views.html.fragments.inlineSvg
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
+    @if(NewCommercialContent.isSwitchedOn) {
+    <div class="commercial commercial--dfp-single paid-content--advertisement-feature commercial--tone-paidfor" data-link-name="merchandising | capi | single @optOmnitureId">
+        <div class="commercial__inner">
+            <div class="commercial__header commercial--paidfor">
+                <div class="paidfor-meta">
+                    <span class="paidfor-meta__label">Paid Content</span>
+                    <div class="paidfor-label paidfor-meta__more has-popup">
+                        <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--capi-component">About @inlineSvg("arrow-down", "icon")</button>
+                        <div class="popup is-off paidfor-popup paidfor-popup--capi-component">
+                            <h3 class="paidfor-popup__title">Paid stories are paid for and controlled by an advertiser and created by the Guardian Labs team</h3>
+                            <a class="paidfor-popup__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="commercial__title">
+                    @optCapiLink.map { linkUrl =>
+                        <a href="@optClickMacro@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                    }.getOrElse {
+                        <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    }
+                </h3>
+                <a class="commercial__cta"
+                    @if(Edition(request).id == "AU") {
+                        href="@LinkTo("/guardian-labs-australia")"
+                    } else {
+                        href="@LinkTo("/guardian-labs")"
+                    }
+                    >
+                    @inlineSvg("glabs-logo", "logo")
+                    <span class='u-h'>Guardian Labs</span>
+                </a>
+            </div>
+            <div class="commercial__body">
+                <div class="lineitems">
+                    <div class="lineitem lineitem--dfp-single">
+                        <div class="lineitem--dfp-single__offer">
+                            <a href="@optClickMacro@item.metadata.webUrl" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.metadata.webTitle">
+                                @item.trail.trailPicture.map { trailPictureContainer =>
+                                    @Item300.bestFor(trailPictureContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                }
+                                <h4 class="fc-item__title lineitem__title">@item.metadata.webTitle</h4>
+                                @item.fields.trailText.map { trailText =>
+                                    <p class="fc-item__standfirst lineitem__desc">@Html(trailText)</p>
+                                }
+                                @for(buttonText <- optCapiButtonText) {
+                                    <a href="@optClickMacro@item.metadata.webUrl" class="lineitem__cta button button--tertiary button--small">
+                                        @buttonText
+                                        @fragments.inlineSvg("arrow-right", "icon", List("i-right", "i-arrow-black"))
+                                    </a>
+                                }
+                            </a>
+                        </div>
+                        <div class="lineitem--dfp-single__cta hide-on-mobile">
+                            @for(moreButton <- optCapiReadMoreText) {
+                                <a href="@optClickMacro@for(moreUrl <- optCapiReadMoreUrl) {@moreUrl}" class="commercial__cta button button--primary button--large" data-link-name="merchandising-single-more">
+                                    @moreButton
+                                    @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="ad-slot--adbadge ad-slot--paid-for-badge">
+                    <div class="ad-slot--paid-for-badge__inner">
+                        <h3 class="ad-slot--paid-for-badge__header">@optSponsorLabel</h3>
+                        <a href="@optClickMacro@for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link" data-link-name="logo link">
+                            @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    } else {
     <section class="@RenderClasses(
             Map(
                 "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn
@@ -63,4 +138,5 @@
             </div>
         </div>
     </section>
+    }
 }
