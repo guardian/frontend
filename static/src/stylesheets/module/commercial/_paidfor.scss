@@ -31,6 +31,12 @@
         overflow: visible;
     }
 
+    .paidfor-meta__more > .popup__toggle {
+        @include mq(leftCol, wide) {
+            padding: 0 0 ($gs-baseline * 3 / 4);
+        }
+    }
+
     .commercial__title {
         font-size: get-font-size(headline, 4);
     }
