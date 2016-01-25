@@ -104,7 +104,16 @@
                                 </div>
                             </div>
                             <h3 class="commercial__title">@container.displayName</h3>
-                            <a class="commercial__cta" href="@LinkTo("/guardian-labs")">@inlineSvg("glabs-logo", "logo")</a>
+                            <a class="commercial__cta"
+                                @if(Edition(request).id == "AU") {
+                                    href="@LinkTo("/guardian-labs-australia")"
+                                } else {
+                                    href="@LinkTo("/guardian-labs")"
+                                    }
+                            >
+                                @inlineSvg("glabs-logo", "logo")
+                                <span class='u-h'>Guardian Labs</span>
+                            </a>
                         </div>
                         <div class="commercial__body">
                             <ul class="lineitems l-row l-row--cols-4">
