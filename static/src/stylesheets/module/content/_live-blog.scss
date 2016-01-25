@@ -942,6 +942,7 @@ $timeline-width: 15px;
     background-color: colour(live-accent);
     border: 0;
     margin-bottom: $gs-baseline;
+    padding-left: $gs-gutter * 4 / 5;
 
     @include mq(leftCol) {
         margin-top: $gs-baseline;
