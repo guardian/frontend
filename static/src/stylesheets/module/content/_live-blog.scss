@@ -13,10 +13,6 @@ $block-padding-right: $gs-gutter;
     @include mq(wide) {
         margin-right: gs-span(4) + $gs-gutter;
     }
-
-    .caption--main {
-        padding-bottom: 0;
-    }
 }
 
 /* Header
@@ -46,6 +42,12 @@ $block-padding-right: $gs-gutter;
             padding-top: $gs-baseline/6;
             border-top: 1px dotted colour(neutral-5);
         }
+    }
+}
+
+.blog__timeline {
+    @include mq(desktop) {
+        padding-top: $gs-baseline;
     }
 }
 
@@ -476,8 +478,6 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .dropdown--key-events,
 .dropdown--live-feed {
-    border-top: 0;
-
     @include mq($until: desktop) {
         margin-right: $gs-gutter*-1;
         margin-left: $gs-gutter*-1;
@@ -548,8 +548,7 @@ $timeline-width: 15px;
         }
 
         .dropdown {
-            border-top: 1px solid colour(live-main-1);
-            padding-top: $gs-baseline/2;
+            border-top: 0;
         }
     }
 }
@@ -572,112 +571,8 @@ $timeline-width: 15px;
         transform: translateZ(0); //To force on GPU
         width: $right-column;
         top: $gs-baseline;
-        padding-top: $gs-baseline/2;
-    }
-}
-
-.toast__container {
-    z-index: 900;
-    padding-bottom: $gs-baseline;
-    text-align: center;
-    transition: transform .3s ease-in-out;
-    transform: translateY((-1) * $gs-baseline * 5);
-    width: 100%;
-
-    .toast__space-reserver--open & {
-        transform: translateY(0);
-    }
-
-    @include mq(desktop) {
-        width: gs-span(8);
-    }
-
-    @include mq(tablet) {
-        width: gs-span(9);
-    }
-
-    @include mq(desktop) {
-        width: gs-span(8);
-    }
-
-    @include mq(leftCol) {
-        width: gs-span(10);
-    }
-
-    @include mq(wide) {
-        width: gs-span(8);
-    }
-}
-
-.toast__button {
-    @include fs-textSans(1);
-    background-color: colour(live-main-2);
-    color: #ffffff;
-    box-sizing: border-box;
-    overflow: hidden;
-    border: 0;
-    max-width: 300px; // somewhat arbitrary, just need a max-width to animate from
-    position: relative;
-
-    &:hover,
-    &:focus {
-        color: #ffffff;
-        background-color: colour(live-main-1);
-    }
-
-    &.toast__button--closed {
-        height: 0px;
-    }
-
-    .toast__text {
-        display: inline-block;
-        font-weight: 700;
-        float: right;
-        margin-top: 10px;
-        opacity: 1;
-        padding-left: $gs-gutter * 5/4;
-        transition: opacity .3s ease-in-out;
-    }
-
-    svg {
-        height: 20px;
-        width: 20px;
-        display: inline-block;
-        position: absolute;
-        top: 8px;
-        left: 8px;
-    }
-
-    &.loading {
-        max-width: $gs-baseline*3; // same as the height, making it circular
-        transition: max-width .3s ease-in-out;
-
-        .toast__text {
-            opacity: 0;
-        }
-
-        svg {
-            animation: rotating 1.5s linear infinite;
-        }
-    }
-}
-
-@keyframes rotating {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.toast__space-reserver {
-    padding-bottom: $gs-baseline;
-    height: $gs-baseline*3; // was 0, for testing
-    display: none;
-
-    .toast-enabled & {
-        display: block;
+        padding-top: $gs-baseline;
+        border-top: 1px solid colour(live-accent);
     }
 }
 
@@ -955,4 +850,3 @@ $timeline-width: 15px;
         background-color: darken(colour(live-accent), 7%);
     }
 }
-

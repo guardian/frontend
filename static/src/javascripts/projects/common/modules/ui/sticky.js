@@ -27,9 +27,7 @@ define([
         this.sticky   = false;
         this.bottom   = false;
         this.opts     = defaults(options || {}, {
-            top: 0,
-            containInParent: true,
-            emitMessage: false
+            top: 0
         });
         this.stickyCss = { position: 'fixed', top: this.opts.top };
         this.unstickyCss = { position: null, top: null };
@@ -47,7 +45,7 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, stickyHeaderHeight, parentRect, message;
+        var fixedTop, css, stickyHeaderHeight, parentRect;
 
         stickyHeaderHeight = header && header !== this.element ? header.offsetHeight : 0;
         parentRect = this.parent.getBoundingClientRect();
@@ -56,40 +54,27 @@ define([
         if (parentRect.top < this.opts.top + stickyHeaderHeight) {
             // make sure the element stays within its parent
             fixedTop = Math.min(this.opts.top, parentRect.bottom - this.elementHeight);
-            if (this.opts.containInParent && this.sticky && fixedTop < this.opts.top) {
+            if (this.sticky && fixedTop < this.opts.top) {
                 css = { top: fixedTop };
                 this.bottom = true;
-                message = 'fixed';
             } else if (!this.sticky || this.bottom) {
                 css = this.stickyCss;
                 this.sticky = true;
                 this.bottom = false;
-                message = 'fixed';
             }
         } else {
             if (this.sticky) {
                 css = this.unstickyCss;
                 this.sticky = false;
                 this.bottom = false;
-                message = 'unfixed';
             }
         }
-
-        if (this.opts.emitMessage && message && message !== this.lastMessage) {
-            this.emitMessage(message);
-        }
-
-        this.lastMessage = message;
 
         if (css) {
             fastdom.write(function () {
                 bonzo(this.element).css(css);
             }, this);
         }
-    };
-
-    Sticky.prototype.emitMessage = function (message) {
-        mediator.emit('modules:' + this.element.id + ':' + message);
     };
 
     return Sticky;
