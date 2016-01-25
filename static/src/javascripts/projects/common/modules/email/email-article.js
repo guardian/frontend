@@ -41,7 +41,7 @@ define([
             return $el.nodeName && $el.nodeName === 'P';
         },
         listCanRun = function (listConfig) {
-            if (canRunList[listConfig.canRun]()) {
+            if (listConfig.canRun && canRunList[listConfig.canRun]()) {
                 return listConfig;
             }
         },
@@ -64,11 +64,15 @@ define([
             allowedArticleStructure: function () {
                 $articleBody = $('.js-article__body');
 
-                var allArticleEls = $('> *', $articleBody),
-                emailAlreadyInArticle = $('js-email-sub__iframe', $articleBody).length > 0,
-                lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph);
+                if ($articleBody.length) {
+                    var allArticleEls = $('> *', $articleBody),
+                        emailAlreadyInArticle = $('js-email-sub__iframe', $articleBody).length > 0,
+                        lastFiveElsParas = every([].slice.call(allArticleEls, allArticleEls.length - 5), isParagraph);
 
-                return !emailAlreadyInArticle && lastFiveElsParas;
+                    return !emailAlreadyInArticle && lastFiveElsParas;
+                } else {
+                    return false;
+                }
             }
         },
         canRunList = {
