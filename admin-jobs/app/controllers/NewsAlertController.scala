@@ -1,21 +1,42 @@
 package controllers
 
+import common.ExecutionContexts
 import model.Cached
-import models.NewsAlertNotification
-import play.api.libs.json.Json
-import play.api.mvc._
+import models.{BreakingNews, NewsAlertNotification}
+import play.api.libs.json._
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
+import play.api.mvc._
 
-import scala.concurrent.Future
+trait NewsAlertController extends Controller with ExecutionContexts
+{
 
-object NewsAlertController extends Controller {
-  def alerts() = Action {
-    Cached(30)(Ok("No alert yet"))
+  case class NewsAlertError(error: String)
+  implicit private val ew = Json.writes[NewsAlertError]
+
+  val breakingNewsApi: BreakingNewsApi
+
+  def alerts() = Action.async {
+    breakingNewsApi.getBreakingNews map {
+      case Some(jsonValue) =>
+        Cached(30)(Ok(jsonValue))
+      case None =>
+        NoContent
+    }
   }
 
   def create() : Action[NewsAlertNotification] = Action.async(BodyJson[NewsAlertNotification]) { request =>
-    val n = request.body
-    //mirror request body for now
-    Future.successful(Created(Json.toJson(n)))
+    val receivedNotification : NewsAlertNotification = request.body
+    // Generating json output
+    val breakingNewsJson : JsValue = Json.toJson(BreakingNews(Set(receivedNotification)))
+    // Writing to S3
+    breakingNewsApi.putBreakingNews(breakingNewsJson) map {
+      case true => Created(Json.toJson(receivedNotification)) // mirroring back the received notification
+      case false => InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
+    }
+
   }
+}
+
+object NewsAlertController extends NewsAlertController {
+  lazy val breakingNewsApi: BreakingNewsApi = BreakingNewsApi
 }
