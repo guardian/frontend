@@ -29,6 +29,10 @@ object AdminIndexController extends Controller {
   def index() = Action { Redirect("/admin") }
 
   def admin() = AuthActions.AuthActionTest { request =>
-    NoCache(Ok(views.html.admin(Configuration.environment.stage)))
+    if (request.user.emailDomain.split("@").last == "guardian.co.uk") {
+      NoCache(Ok(views.html.admin(Configuration.environment.stage)))
+    } else {
+      NotFound
+    }
   }
 }
