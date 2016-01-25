@@ -32,7 +32,7 @@ import scala.collection.JavaConversions._
     import browser._
     $("meta[name='twitter:card']").getAttributes("content").head should be ("gallery")
     $("meta[name='twitter:title']").getAttributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
-    $("meta[name='twitter:image3:src']").getAttributes("content").head should startWith ("http://")
+    $("meta[name='twitter:image3:src']").getAttributes("content").head should startWith ("https://")
     $("meta[name='twitter:image3:src']").getAttributes("content").head should include ("/Bassoons-in-the-Symphony--003.jpg")
   }
 
