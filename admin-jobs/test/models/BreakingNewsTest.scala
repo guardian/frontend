@@ -34,7 +34,6 @@ class BreakingNewsTest extends FlatSpec with Matchers {
           |{
           |"displayName": "UK alerts",
           |"href": "uk",
-          |"id": "5dff149e-3cc8-4b23-ba7d-c7596d8e39e5",
           |"content": [
           |{
           |"headline": "$title",
@@ -50,19 +49,16 @@ class BreakingNewsTest extends FlatSpec with Matchers {
           |{
           |"displayName": "US alerts",
           |"href": "us",
-          |"id": "09b1cb74-9bba-4ed9-8430-dd45ca4e2c18",
           |"content": []
           |},
           |{
           |"displayName": "AU alerts",
           |"href": "au",
-          |"id": "4a7c44d3-146f-43c8-9b9b-d0e356aa50c7",
           |"content": []
           |},
           |{
           |"displayName": "Sport alerts",
           |"href": "sport",
-          |"id": "98f69f69-0e99-43ae-8c97-85e68be798a6",
           |"content": [
           |{
           |"headline": "$title",
@@ -78,7 +74,6 @@ class BreakingNewsTest extends FlatSpec with Matchers {
           |{
           |"displayName": "International alerts",
           |"href": "international",
-          |"id": "a0fbc431-6de7-4fca-a4d6-4439bb71399e",
           |"content": []
           |}
           |]

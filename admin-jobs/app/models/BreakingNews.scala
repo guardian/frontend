@@ -3,16 +3,16 @@ package models
 import java.util.UUID
 import play.api.libs.json._
 
-case class BreakingNewsCollection(name: String, href: String, id: UUID, alerts: Set[NewsAlertNotification])
+case class BreakingNewsCollection(name: String, href: String, alerts: Set[NewsAlertNotification])
 
 case class BreakingNews(alerts: Set[NewsAlertNotification]) {
 
   val collections = List(
-    BreakingNewsCollection("UK alerts", "uk", UUID.fromString("5dff149e-3cc8-4b23-ba7d-c7596d8e39e5"), alerts.filter(_.isOfType(NewsAlertTypes.Uk))),
-    BreakingNewsCollection("US alerts", "us", UUID.fromString("09b1cb74-9bba-4ed9-8430-dd45ca4e2c18"), alerts.filter(_.isOfType(NewsAlertTypes.Us))),
-    BreakingNewsCollection("AU alerts", "au", UUID.fromString("4a7c44d3-146f-43c8-9b9b-d0e356aa50c7"), alerts.filter(_.isOfType(NewsAlertTypes.Au))),
-    BreakingNewsCollection("Sport alerts", "sport", UUID.fromString("98f69f69-0e99-43ae-8c97-85e68be798a6"), alerts.filter(_.isOfType(NewsAlertTypes.Sport))),
-    BreakingNewsCollection("International alerts", "international", UUID.fromString("a0fbc431-6de7-4fca-a4d6-4439bb71399e"), alerts.filter(_.isOfType(NewsAlertTypes.International)))
+    BreakingNewsCollection("UK alerts", "uk", alerts.filter(_.isOfType(NewsAlertTypes.Uk))),
+    BreakingNewsCollection("US alerts", "us", alerts.filter(_.isOfType(NewsAlertTypes.Us))),
+    BreakingNewsCollection("AU alerts", "au", alerts.filter(_.isOfType(NewsAlertTypes.Au))),
+    BreakingNewsCollection("Sport alerts", "sport", alerts.filter(_.isOfType(NewsAlertTypes.Sport))),
+    BreakingNewsCollection("International alerts", "international", alerts.filter(_.isOfType(NewsAlertTypes.International)))
   )
 }
 
@@ -41,7 +41,6 @@ object BreakingNews {
       Json.obj(
         "displayName" -> collection.name,
         "href" -> collection.href,
-        "id" -> collection.id,
         "content" -> collection.alerts
       )
     }
