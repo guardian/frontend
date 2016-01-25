@@ -1,10 +1,11 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
 
 @import common.dfp.{Keyword, Series}
+@import conf.switches.Switches
 @import layout.MetaDataHeader
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
 @import views.html.fragments.containers.facia_cards.{commercialContainer, containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
-@import views.support.GetClasses
+@import views.support.{GetClasses, RenderClasses}
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -38,28 +39,39 @@
                 }
              }
 
-        <div class="fc-container__inner">
             @containerDefinition.container match {
                 case _: Dynamic | _: Fixed => {
-                    @standardContainer(containerDefinition, frontProperties)
+                    <div class="fc-container__inner">
+                        @standardContainer(containerDefinition, frontProperties)
+                    </div>
                 }
 
                 case NavList => {
-                    @navListContainer(containerDefinition, frontProperties)
+                    <div class="fc-container__inner">
+                        @navListContainer(containerDefinition, frontProperties)
+                    </div>
                 }
 
                 case NavMediaList => {
-                    @navMediaListContainer(containerDefinition, frontProperties)
+                    <div class="fc-container__inner">
+                        @navMediaListContainer(containerDefinition, frontProperties)
+                    </div>
                 }
 
                 case MostPopular => {
-                    @mostPopularContainer(containerDefinition, frontProperties)
+                    <div class="fc-container__inner">
+                        @mostPopularContainer(containerDefinition, frontProperties)
+                    </div>
                 }
 
                 case slices.Commercial(container) => {
-                    @commercialContainer(container, containerDefinition, frontProperties)
+                    <div class="@RenderClasses(
+                        Map("fc-container__inner--full-span fc-container__inner--paidfor" -> Switches.NewCommercialContent.isSwitchedOn),
+                        "fc-container__inner"
+                    )">
+                        @commercialContainer(container, containerDefinition, frontProperties)
+                    </div>
                 }
             }
-        </div>
     </section>
 }
