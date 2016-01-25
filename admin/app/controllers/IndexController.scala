@@ -20,7 +20,7 @@ object AuthActions extends Actions {
     None
 
   object AuthActionTest extends AuthenticatedBuilder(r =>
-    UserIdentity.fromRequest(r).orElse(testUser), r => sendForAuth(r)
+    UserIdentity.fromRequest(r).filter(p => p.emailDomain == "guardian.co.uk").orElse(testUser), r => sendForAuth(r)
   )
 }
 
