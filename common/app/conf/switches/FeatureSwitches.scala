@@ -348,4 +348,13 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  val EmailInArticleSwitch = Switch(
+    "Feature",
+    "email-in-article",
+    "When ON, the email sign-up form will show on articles matching the email lists utilising the email module",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }

@@ -353,7 +353,9 @@ define([
                 email.init();
 
                 // Initalise email insertion into articles
-                emailArticle.init();
+                if (config.switches.emailInArticle){
+                    emailArticle.init();
+                }
 
                 // Initalise email forms in iframes
                 forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
