@@ -407,7 +407,7 @@
     }
 
     @include mq(leftCol) {
-        min-height: gs-height(1) $gs-baseline;
+        min-height: gs-height(1) + $gs-baseline;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
