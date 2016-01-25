@@ -10,7 +10,7 @@ import {
     Deploy, DeployRecord, createDeployRecord,
     Build, BuildRecord, createBuildRecord,
     DeployGroup, DeployGroupRecord, createDeployGroupRecord,
-    DeployJson, BuildJson, Commit,
+    DeploysJson, BuildJson, Commit,
     GitHubCompareJson, GitHubCommitJson, GitHubCommit,
     GitHubErrorJson
 } from './model';
@@ -174,10 +174,10 @@ const renderPage: (
         commits
     ) => {
         const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
-        return h('div', { id: 'root' }, [
+        return h('.row#root', {}, [
             h('h1', `Status: ${isInSync ? 'in sync. Ship it!' : 'out of sync.'}`),
             h('hr', {}, []),
-            exp(commits.length > 0) && h('div', [
+            exp(commits.length > 0) && h('.col', [
                 h('h1', [
                     'Difference (',
                     h('span', { title: 'Oldest PROD deploy' }, `${oldestProdDeploy.build}`),
@@ -222,18 +222,22 @@ const renderPage: (
                 ))
             ]),
 
-            h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys),
-            h('h1', 'PROD'),
-            renderGroupDeployListNode(prodDeploys)
+            h('.col', [
+                h('h1', 'CODE'),
+                renderGroupDeployListNode(codeDeploys)
+            ]),
+            h('.col', [
+                h('h1', 'PROD'),
+                renderGroupDeployListNode(prodDeploys)
+            ])
         ])
     }
 
 const apiPath = '/deploys-radiator/api';
 const getDeploys = (stage: string): Promise<List<DeployRecord>> => (
     fetch(`${apiPath}/deploys?projectName=dotcom:&stage=${stage}&pageSize=200`, { credentials: 'same-origin' })
-        .then((response): Promise<Array<DeployJson>> => response.json())
-        .then(deploys => List(deploys.map(deploy => createDeployRecord({
+        .then((response): Promise<DeploysJson> => response.json())
+        .then(deploys => List(deploys.response.map(deploy => createDeployRecord({
             build: Number(deploy.build),
             uuid: deploy.uuid,
             projectName: deploy.projectName.replace(/^dotcom:/, ''),
@@ -244,9 +248,11 @@ const getDeploys = (stage: string): Promise<List<DeployRecord>> => (
 const getBuild = (build: number): Promise<BuildRecord> => (
     fetch(`${apiPath}/builds/${build}`, { credentials: 'same-origin' })
         .then((response): Promise<BuildJson> => response.json())
+        .then(build => build.response)
         .then(build => createBuildRecord({
             number: Number(build.number),
             projectName: build.projectName,
+            revision: build.revision,
             commits: build.commits
         }))
 );
@@ -273,20 +279,38 @@ const getDifference = (base: string, head: string): Promise<Array<GitHubCommit>>
 );
 
 const run = (): Promise<void> => {
+    // We only care about servers which are deployed frequently and manually
+    // with goo
+    const serverWhitelist = List([
+        'admin',
+        'applications',
+        'archive',
+        'article',
+        'commercial',
+        'diagnostics',
+        'discussion',
+        'facia',
+        'identity',
+        'onward',
+        'sport'
+    ]);
+
+    const filterWhitelisted = (deploys: List<DeployRecord>) => deploys
+        .filter(deploy => serverWhitelist.contains(deploy.projectName))
+        .toList();
     const deploysPromise = Promise.all([
-        getDeploys('CODE'),
-        getDeploys('PROD')
+        getDeploys('CODE').then(filterWhitelisted),
+        getDeploys('PROD').then(filterWhitelisted)
     ]);
 
     const deployRefsPromise = deploysPromise.then(([ codeDeploys, prodDeploys ]) => {
         const currentCodeDeploys = getMostRecentDeploys(codeDeploys);
         const currentProdDeploys = getMostRecentDeploys(prodDeploys);
+
         const latestCodeDeploy = currentCodeDeploys
             .sortBy(deploy => deploy.build)
             .last();
-        const blacklistProdDeploys = List(['static', 'router', 'training-preview', 'facia-press']);
         const oldestProdDeploy = currentProdDeploys
-            .filter(deploy => !blacklistProdDeploys.contains(deploy.projectName))
             .sortBy(deploy => deploy.build)
             .first();
 
@@ -300,16 +324,9 @@ const run = (): Promise<void> => {
         ])
     ));
 
-    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => {
-        const maybeProdCommit = headOption(prodBuild.commits);
-        const maybeCodeCommit = headOption(codeBuild.commits);
-        return maybeProdCommit
-            .flatMap(prodCommit => maybeCodeCommit.map(codeCommit => (
-                // This assumes prod comes before code
-                getDifference(prodCommit.sha, codeCommit.sha).then(gitHubCommits => gitHubCommits.reverse())
-            )))
-            .getOrElse(() => Promise.resolve([]))
-    });
+    const differencePromise = buildsPromise.then(([ codeBuild, prodBuild ]) => (
+        getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse())
+    ));
 
     return Promise.all([ deploysPromise, deployRefsPromise, differencePromise ])
         .then(([ deploysPair, deployPair, commits ]) => renderPage(deploysPair, deployPair, commits))
@@ -318,9 +335,10 @@ const run = (): Promise<void> => {
 
 
 const intervalSeconds = 10;
+const wait = (): Promise<{}> => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000));
 const update = (): Promise<void> => {
     return run()
-        .then(() => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000)))
+        .then(wait, wait)
         .then(update);
 };
 update();

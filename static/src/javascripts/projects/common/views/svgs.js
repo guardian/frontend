@@ -14,6 +14,7 @@ define([
     'inlineSvg!svgs/icon/cross',
     'inlineSvg!svgs/logo/logo-guardian',
     'inlineSvg!svgs/commercial/logo-soulmates',
+    'inlineSvg!svgs/commercial/soulmates-join',
     'inlineSvg!svgs/icon/close-central',
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
@@ -32,6 +33,7 @@ define([
     'inlineSvg!svgs/icon/share-gplus',
     'inlineSvg!svgs/icon/external-link',
     'inlineSvg!svgs/icon/tick',
+    'inlineSvg!svgs/logo/glabs-logo-small',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -45,6 +47,7 @@ define([
     crossIcon,
     logoguardian,
     logosoulmates,
+    logosoulmatesjoin,
     closeCentralIcon,
     arrowWhiteRight,
     arrowRight,
@@ -63,6 +66,7 @@ define([
     shareGPlus,
     externalLink,
     tick,
+    glabsLogoSmall,
     isArray) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -76,6 +80,7 @@ define([
         crossIcon: crossIcon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
+        logosoulmatesjoin: logosoulmatesjoin,
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
@@ -93,7 +98,8 @@ define([
         sharePinterest: sharePinterest,
         shareGPlus: shareGPlus,
         externalLink: externalLink,
-        tick: tick
+        tick: tick,
+        glabsLogoSmall: glabsLogoSmall
     };
 
     return function (name, classes, title) {

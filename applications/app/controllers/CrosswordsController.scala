@@ -1,15 +1,16 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Crossword, Section => ApiSection}
+import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Static}
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
 import model._
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
-import services.{IndexPageItem, IndexPage}
+import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -17,16 +18,20 @@ import scala.concurrent.duration._
 trait CrosswordController extends Controller with Logging with ExecutionContexts {
   def noResults()(implicit request: RequestHeader): Result
 
-  protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all")).map { response =>
+  def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
+    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
+  }
+
+  def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
+    getCrossword(crosswordType, id).map { response =>
        val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
        yield f(crossword, content)
        maybeCrossword getOrElse noResults
     } recover { case t: Throwable =>
-              log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
-              noResults
+      log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
+      noResults
     }
   }
 
@@ -121,7 +126,13 @@ object CrosswordSearchController extends CrosswordController {
 
             case results =>
               val section = Section.make(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
-              val page = IndexPage(section, results.map(IndexPageItem(_)))
+              val page = IndexPage(
+                page = section,
+                contents = results.map(IndexPageItem(_)),
+                tags = Tags(Nil),
+                date = DateTime.now,
+                tzOverride = None
+              )
 
               Cached(15.minutes)(Ok(views.html.index(page)))
           }

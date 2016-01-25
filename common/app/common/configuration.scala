@@ -242,6 +242,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+    lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
 
@@ -250,7 +251,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object commercial {
+
+    lazy val testDomain =
+      if (environment.isProd) "http://m.code.dev-theguardian.com"
+      else configuration.getStringProperty("guardian.page.host") getOrElse ""
+
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
+    lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
+    lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url =
@@ -274,14 +282,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
+    lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
+    lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
     lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers-v1.json"
     lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
-
-    lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
@@ -331,6 +339,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader,
+      "discussionD2Uid" -> discussion.d2Uid,
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
@@ -378,6 +387,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   }
 
+  object r2Press {
+    lazy val sqsQueueUrl = configuration.getStringProperty("admin.r2.page.press.sqs.queue.url")
+    lazy val sqsTakedownQueueUrl = configuration.getStringProperty("admin.r2.page.press.takedown.sqs.queue.url")
+    lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
+    lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
+    lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
+  }
+
   object memcached {
     lazy val host = configuration.getStringProperty("memcached.host")
   }
@@ -389,13 +406,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val videoEncodingsSns: String = configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
-
+    lazy val r2PressSns: Option[String] = configuration.getStringProperty("r2press.sns.topic")
+    lazy val r2PressTakedownSns: Option[String] = configuration.getStringProperty("r2press.takedown.sns.topic")
 
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
         new EnvironmentVariableCredentialsProvider(),
         new SystemPropertiesCredentialsProvider(),
+        new ProfileCredentialsProvider("frontend"),
         new ProfileCredentialsProvider("nextgen"),
         new InstanceProfileCredentialsProvider
       )

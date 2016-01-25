@@ -5,6 +5,15 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
 
+  val AWSCredentialsProfileSwitchOver = Switch(
+    "Feature",
+    "aws-credentials-switchover",
+    "Switch to remind us to remove the 'nextgen' profile from the default AWS credentials provider chain",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 2), //Tuesday
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -210,7 +219,7 @@ trait FeatureSwitches {
     "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 1, 10),
+    sellByDate = new LocalDate(2016, 4, 11),
     exposeClientSide = false
   )
 
@@ -335,6 +344,15 @@ trait FeatureSwitches {
     "Server-side A/B Tests",
     "amp-switch",
     "If this switch is on, link to amp pages will be in the metadata for articles",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val R2PagePressServiceSwitch = Switch(
+    "Feature",
+    "r2-page-press-service",
+    "When ON, the R2 page press service will monitor the queue and press pages to S3",
     safeState = On,
     sellByDate = never,
     exposeClientSide = false

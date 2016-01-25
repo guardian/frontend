@@ -32,10 +32,11 @@ object Frontend extends Build with Prototypes {
       guardianConfiguration,
       jacksonCore,
       jacksonMapper,
+      jodaConvert,
+      jodaTime,
       jSoup,
       liftJson,
       playGoogleAuth,
-      panDomainAuth,
       quartzScheduler,
       rome,
       romeModules,
@@ -92,6 +93,9 @@ object Frontend extends Build with Prototypes {
   val image = application("image")
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      scalaUri
+    ),
     TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 
@@ -115,7 +119,8 @@ object Frontend extends Build with Prototypes {
       lodash,
       react,
       awsElasticloadbalancing,
-      awsSes
+      awsSes,
+      scalaUri
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
@@ -163,13 +168,6 @@ object Frontend extends Build with Prototypes {
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
-  val faciaEndToEnd = application("facia-end-to-end")
-    .dependsOn(facia, faciaPress)
-    .aggregate(facia, faciaPress)
-    .settings(
-      javaOptions in Runtime += "-Dconfig.file=facia-end-to-end/conf/facia-end-to-end.application.conf"
-    )
-
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD
   val standalone = application("standalone").dependsOn(
@@ -197,6 +195,10 @@ object Frontend extends Build with Prototypes {
     .dependsOn(commonWithTests)
     .aggregate(common)
 
+  val adminJobs = application("admin-jobs")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val main = root().aggregate(
     common,
     facia,
@@ -215,6 +217,7 @@ object Frontend extends Build with Prototypes {
     archive,
     preview,
     trainingPreview,
-    rss
+    rss,
+    adminJobs
   )
 }

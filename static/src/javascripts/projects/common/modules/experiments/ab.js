@@ -6,10 +6,12 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/large-top-slot',
-    'common/modules/experiments/tests/alternative-related',
+    'common/modules/experiments/tests/remove-sticky-nav',
+    'common/modules/experiments/tests/related-variants',
     'common/modules/experiments/tests/identity-sign-in-v2',
     'common/modules/experiments/tests/rtrt-email-form-article-promo',
+    'common/modules/experiments/tests/prebid-performance',
+    'common/modules/experiments/tests/userzoom-survey-message-v2',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
     'lodash/objects/keys',
@@ -27,10 +29,12 @@ define([
     store,
     mvtCookie,
     FrontsOnArticles2,
-    LargeTopAd,
-    AlternativeRelated,
+    RemoveStickyNav,
+    RelatedVariants,
     IdentitySignInV2,
     RtrtEmailFormArticlePromo,
+    PrebidPerformance,
+    UserzoomSurveyMessageV2,
     flatten,
     forEach,
     keys,
@@ -43,10 +47,12 @@ define([
 
     var TESTS = flatten([
         new FrontsOnArticles2(),
-        new LargeTopAd(),
-        new AlternativeRelated(),
+        new RemoveStickyNav(),
+        new RelatedVariants(),
         new IdentitySignInV2(),
-        new RtrtEmailFormArticlePromo()
+        new RtrtEmailFormArticlePromo(),
+        new PrebidPerformance(),
+        new UserzoomSurveyMessageV2()
     ]);
 
     var participationsKey = 'gu.ab.participations';

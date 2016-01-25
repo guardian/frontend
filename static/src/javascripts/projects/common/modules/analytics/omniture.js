@@ -87,9 +87,12 @@ define([
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {/**/}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
-            // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            delay = spec.samePage ? true : spec.target;
-            this.trackLink(delay, spec.tag, { customEventProperties: spec.customEventProperties });
+            // Do not perform a same-page track link when there isn't a tag.
+            if (spec.tag) {
+                // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
+                delay = spec.samePage ? true : spec.target;
+                this.trackLink(delay, spec.tag, {customEventProperties: spec.customEventProperties});
+            }
         }
     };
 
@@ -132,69 +135,28 @@ define([
         var d,
             /* Retrieve navigation interaction data */
             ni       = storage.session.get(NG_STORAGE_KEY),
-            mvt      = ab.makeOmnitureTag(document),
-            // Tag the identity of this user, which is composed of
-            // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
-            mvtId    = mvtCookie.getMvtFullId();
+            mvt      = ab.makeOmnitureTag(document);
 
         if (id.getUserFromCookie()) {
             this.s.prop2 = 'GUID:' + id.getUserFromCookie().id;
             this.s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
         }
 
-        // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
-        this.s.eVar18    = detect.getBreakpoint();
-
-
-        this.s.eVar32    = detect.getOrientation();
-
-        this.s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
-
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
-
         this.s.prop40    = detect.adblockInUse() || detect.getFirefoxAdblockPlusInstalled();
-
-        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
-
-        this.s.eVar51  = mvt;
-
-        this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
-
-        // List of components on the page
-        this.s.list2 = uniq($('[data-component]')
-            .map(function (x) { return $(x).attr('data-component'); }))
-            .toString();
-        this.s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
-
-        if (this.s.eVar51) {
-            this.s.events = this.s.apl(this.s.events, 'event58', ',');
-        }
-
-        if (mvtId) {
-            this.s.eVar60 = mvtId;
-        }
-
-
-        this.s.prop63    = detect.getPageSpeed();
-
+        this.s.eVar51    = mvt;
+        this.s.list1     = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         if (ni) {
             d = new Date().getTime();
             if (d - ni.time < 60 * 1000) { // One minute
                 this.s.eVar24 = ni.pageName;
                 this.s.eVar37 = ni.tag;
-                this.s.events = 'event37';
-
-                // this allows 'live' Omniture tracking of Navigation Interactions
-                this.s.eVar7 = ni.pageName;
-                this.s.prop37 = ni.tag;
             }
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);
         }
-
-        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
 
         // Sponsored content
         this.s.prop38 = uniq($('[data-sponsorship]')).map(function (n) {
@@ -203,7 +165,6 @@ define([
             var sponsor = maybeSponsor ? maybeSponsor : 'unknown';
             return sponsorshipType + ':' + sponsor;
         }).toString();
-
 
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';

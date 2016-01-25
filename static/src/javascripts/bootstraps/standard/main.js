@@ -21,7 +21,10 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/utils/url',
+    'common/utils/cookies',
+    'common/utils/robust'
 ], function (
     raven,
     fastdom,
@@ -32,7 +35,10 @@ define([
     $,
     ajax,
     mediator,
-    identity
+    identity,
+    url,
+    cookies,
+    robust
 ) {
     return function () {
         var guardian = window.guardian;
@@ -108,10 +114,26 @@ define([
         // A/B tests
         //
 
-        if (guardian.isModernBrowser) {
-            ab.segmentUser();
-            ab.run();
-        }
+        robust.catchErrorsAndLog('ab-tests', function () {
+            if (guardian.isModernBrowser) {
+                ab.segmentUser();
+                ab.run();
+            }
+        });
+
+        //
+        // Set adtest query if url param declares it.
+        //
+        var setAdTestCookie = function () {
+            var queryParams = url.getUrlVars();
+            if (queryParams.adtest === 'clear') {
+                cookies.remove('adtest');
+            } else if (queryParams.adtest) {
+                cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+            }
+        };
+        setAdTestCookie();
+
 
         //
         // Images

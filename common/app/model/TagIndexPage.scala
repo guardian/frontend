@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.{Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Tag => ApiTag}
 import common.{Maps, HTML}
 import common.Strings./
 import play.api.libs.json._

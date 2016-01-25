@@ -36,8 +36,8 @@ trait Store extends Logging with Dates {
   def putDfpLineItemsReport(everything: String) {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
-  def putDfpActiveAdUnitList(adUnits: String) {
-    S3.putPublic(dfpActiveAdUnitListKey, adUnits, "text/plain")
+  def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
+    S3.putPublic(filename, adUnits, "text/plain")
   }
   def putTopAboveNavSlotTakeovers(takeovers: String) {
     S3.putPublic(topAboveNavSlotTakeoversKey, takeovers, defaultJsonEncoding)
@@ -47,9 +47,6 @@ trait Store extends Logging with Dates {
   }
   def putTopSlotTakeovers(takeovers: String) {
     S3.putPublic(topSlotTakeoversKey, takeovers, defaultJsonEncoding)
-  }
-  def putCachedTravelOffersFeed(everything: String) {
-    S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
   def putDfpTemplateCreatives(creatives: String) {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)

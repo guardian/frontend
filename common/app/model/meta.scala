@@ -1,46 +1,74 @@
 package model
 
-import com.gu.contentapi.client.{model => contentapi}
-import common.dfp.{AdSize, AdSlot, DfpAgent}
+import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
+import model.liveblog.BodyBlock
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
-import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
 import org.scala_tools.time.Imports._
-import implicits.Dates._
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 object Commercial {
-  def make(metadata: MetaData, tags: Tags, apiContent: contentapi.Content) = {
+
+  private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
+
     val section = Some(metadata.section)
 
-    model.Commercial(
-      tags = tags,
-      metadata = metadata,
-      isInappropriateForSponsorship = apiContent.safeFields.get("isInappropriateForSponsorship").exists(_.toBoolean),
-      sponsorshipTag = DfpAgent.sponsorshipTag(tags.tags, section),
-      isFoundationSupported = DfpAgent.isFoundationSupported(tags.tags, section),
-      isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags.tags, section),
-      hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags.tags),
-      hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
-      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags))
+    val isInappropriateForSponsorship =
+      maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
+
+    DfpAgent.winningTagPair(capiTags = tags.tags, sectionId = section, edition = None) map { tagPair =>
+      val dfpTag = tagPair.dfpTag
+      model.Commercial(
+        tags,
+        metadata,
+        isInappropriateForSponsorship,
+        sponsorshipTag = Some(tagPair.capiTag),
+        isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
+        hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags.tags),
+        hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
+        hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
+      )
+    } getOrElse model.Commercial(
+      tags,
+      metadata,
+      isInappropriateForSponsorship,
+      sponsorshipTag = None,
+      isFoundationSupported = false,
+      isAdvertisementFeature = false,
+      hasMultipleSponsors = false,
+      hasMultipleFeatureAdvertisers = false,
+      hasInlineMerchandise = false
+    )
   }
 
-  def make(metadata: MetaData, tags: Tags) = {
-    val section = Some(metadata.section)
+  def make(metadata: MetaData, tags: Tags, apiContent: contentapi.Content): model.Commercial = {
+    make(metadata, tags, Some(apiContent))
+  }
 
+  def make(metadata: MetaData, tags: Tags): model.Commercial = {
+    make(metadata, tags, None)
+  }
+
+  def make(section: Section): model.Commercial = {
+    val keywordSponsorship = section.keywordSponsorship
     model.Commercial(
-      tags = tags,
-      metadata = metadata,
+      tags = Tags(Nil),
+      metadata = section.metadata,
       isInappropriateForSponsorship = false,
-      sponsorshipTag = DfpAgent.sponsorshipTag(tags.tags, section),
-      isFoundationSupported = DfpAgent.isFoundationSupported(tags.tags, section),
-      isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags.tags, section),
-      hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags.tags),
-      hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
-      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags))
+      sponsorshipTag = None,
+      isFoundationSupported = keywordSponsorship.isFoundationSupported,
+      isAdvertisementFeature = keywordSponsorship.isAdvertisementFeature,
+      hasMultipleSponsors = keywordSponsorship.hasMultipleSponsors,
+      hasMultipleFeatureAdvertisers = keywordSponsorship.hasMultipleFeatureAdvertisers,
+      hasInlineMerchandise = false
+    )
   }
 }
 
@@ -68,7 +96,8 @@ final case class Commercial(
     }
   }
 
-  def isSponsored(maybeEdition: Option[Edition]): Boolean = DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
+  def isSponsored(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
@@ -80,15 +109,16 @@ final case class Commercial(
 object Fields {
   def make(apiContent: contentapi.Content) = {
     Fields (
-      trailText = apiContent.safeFields.get("trailText"),
+      trailText = apiContent.fields.flatMap(_.trailText),
       linkText = apiContent.webTitle,
-      shortUrl = apiContent.safeFields.getOrElse("shortUrl", ""),
-      standfirst = apiContent.safeFields.get("standfirst"),
-      main = apiContent.safeFields.getOrElse("main",""),
-      body = apiContent.safeFields.getOrElse("body",""),
-      lastModified = apiContent.safeFields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now),
-      displayHint = apiContent.safeFields.getOrElse("displayHint", ""),
-      isLive = apiContent.safeFields.get("liveBloggingNow").exists(_.toBoolean)
+      shortUrl = apiContent.fields.flatMap(_.shortUrl).getOrElse(""),
+      standfirst = apiContent.fields.flatMap(_.standfirst),
+      main = apiContent.fields.flatMap(_.main).getOrElse(""),
+      body = apiContent.fields.flatMap(_.body).getOrElse(""),
+      blocks = BodyBlock.make(apiContent.blocks),
+      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
+      displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
+      isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false)
     )
   }
 }
@@ -100,6 +130,7 @@ final case class Fields(
   standfirst: Option[String],
   main: String,
   body: String,
+  blocks: Seq[BodyBlock],
   lastModified: DateTime,
   displayHint: String,
   isLive: Boolean
@@ -166,10 +197,10 @@ object MetaData {
       webUrl = apiContent.webUrl,
       section = section,
       webTitle = apiContent.webTitle,
-      membershipAccess = apiContent.safeFields.get("membershipAccess"),
+      membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
       analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section,
-      description = apiContent.safeFields.get("trailText"),
+      description = apiContent.fields.flatMap(_.trailText),
       cacheSeconds = {
         if (fields.isLive) 5
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) 10
@@ -512,19 +543,19 @@ final case class Tags(
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.properties.tagType == tagType)
 
-  lazy val keywords: Seq[Tag] = tagsOfType("keyword")
-  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.properties.tagType == "keyword")
-  lazy val contributors: Seq[Tag] = tagsOfType("contributor")
+  lazy val keywords: Seq[Tag] = tagsOfType("Keyword")
+  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.properties.tagType == "Keyword")
+  lazy val contributors: Seq[Tag] = tagsOfType("Contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
-  lazy val series: Seq[Tag] = tagsOfType("series")
-  lazy val blogs: Seq[Tag] = tagsOfType("blog")
-  lazy val tones: Seq[Tag] = tagsOfType("tone")
-  lazy val types: Seq[Tag] = tagsOfType("type")
+  lazy val series: Seq[Tag] = tagsOfType("Series")
+  lazy val blogs: Seq[Tag] = tagsOfType("Blog")
+  lazy val tones: Seq[Tag] = tagsOfType("Tone")
+  lazy val types: Seq[Tag] = tagsOfType("Type")
 
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
-  def sponsor: Option[String] = DfpAgent.getSponsor(tags)
+  lazy val sponsor: Option[String] = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def isNews = !(isLiveBlog || isComment || isFeature)
@@ -551,7 +582,7 @@ final case class Tags(
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&

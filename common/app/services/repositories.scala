@@ -1,7 +1,8 @@
 package services
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{Section => ApiSection}
+import com.gu.contentapi.client.model.{ItemResponse, SearchResponse}
 import common._
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
@@ -76,7 +77,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
           val page = new TagCombiner(s"$leftSide+$rightSide", tag1, tag2, pagination(response))
 
-          Left(IndexPage(page, trails))
+          Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
       }
     }
 
@@ -144,8 +145,9 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
+    val commercial = Commercial.make(section)
 
-    IndexPage(section, trails)
+    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }
 
   private def tag(response: ItemResponse, page: Int) = {
@@ -160,7 +162,9 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     val latest: Seq[IndexPageItem] = response.results.map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
-    tag map { tag => IndexPage(tag, allTrails, Tags(Seq(tag))) }
+    tag map { tag =>
+      IndexPage(page = tag, contents = allTrails, tags = Tags(Seq(tag)), date = DateTime.now, tzOverride = None)
+    }
   }
 
   // for some reason and for the life of me I cannot figure it out, this does not compile if these

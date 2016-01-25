@@ -1,8 +1,8 @@
 package model
 
 import com.gu.facia.api.models._
-import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.Edition
+import common.dfp.DfpAgent
 import conf.Configuration
 import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
@@ -24,10 +24,17 @@ object PressedPage {
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
+    val isAdvertisementFeature: Boolean = {
+      val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, id)
+      val keywordSponsorship = KeywordSponsorshipHandling(id, adUnitSuffix, keywordIds)
+      keywordSponsorship.isAdvertisementFeature
+    }
+
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "contentType" -> JsString(contentType)
+      "contentType" -> JsString(contentType),
+      "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
     ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
 
     val openGraph: Map[String, String] = Map(
@@ -114,12 +121,12 @@ case class PressedPage (
   def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
     keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.section), maybeEdition))
   def hasMultipleSponsors = false // Todo: need to think about this
-  val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
+  lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
       Some(metadata.section)))
   def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
-  val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
+  lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
       Some(metadata.section)))
-  def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
+  lazy val sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 }

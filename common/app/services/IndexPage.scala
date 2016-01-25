@@ -1,6 +1,6 @@
 package services
 
-import com.gu.facia.api.{models => fapi}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -9,10 +9,9 @@ import layout._
 import model._
 import model.meta.{ItemList, ListItem}
 import model.pressed._
-import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
 import slices.{ContainerDefinition, Fixed, FixedContainers}
-import com.gu.contentapi.client.model.{Content => ApiContent}
 
 import scala.Function.const
 import scalaz.std.list._
@@ -32,6 +31,17 @@ object IndexPagePagination {
 case class MpuState(injected: Boolean)
 
 object IndexPage {
+
+  def apply(
+    page: Page,
+    contents: Seq[IndexPageItem],
+    tags: Tags,
+    date: DateTime,
+    tzOverride: Option[DateTimeZone]
+  ): IndexPage = {
+    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.make(page.metadata, tags))
+  }
+
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
     case 2 => Some(FixedContainers.fastIndexPageMpuII)
     case 4 => Some(FixedContainers.fastIndexPageMpuIV)
@@ -177,13 +187,14 @@ case class IndexPageItem(
 case class IndexPage(
   page: Page,
   contents: Seq[IndexPageItem],
-  tags: Tags = Tags(Nil),
-  date: DateTime = DateTime.now,
-  tzOverride: Option[DateTimeZone] = None) {
+  tags: Tags,
+  date: DateTime,
+  tzOverride: Option[DateTimeZone],
+  commercial: Commercial
+) {
 
   val trails: Seq[Content] = contents.map(_.item.content)
   val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)
-  val commercial: Commercial = Commercial.make(page.metadata, tags)
 
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),
@@ -209,7 +220,7 @@ case class IndexPage(
 
   def forcesDayView = page match {
     case tag: Tag if tag.metadata.section == "crosswords" => false
-    case tag: Tag => Set("series", "blog").contains(tag.properties.tagType)
+    case tag: Tag => Set("Series", "Blog").contains(tag.properties.tagType)
     case _ => false
   }
 

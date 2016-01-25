@@ -1,7 +1,7 @@
 package crosswords
 
-import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordDimensions, Crossword, CrosswordPosition}
-import model.Entry
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordDimensions, Crossword, CrosswordPosition => ApiCrosswordPosition}
+import model.{Entry, CrosswordPosition}
 
 import scalaz.State
 import scalaz.syntax.traverse._
@@ -28,7 +28,8 @@ object Grid {
     (grid.copy(cells = grid.cells + (position -> Cell(Some(number)))), Unit)
   }
 
-  def setEditable(position: CrosswordPosition) = State.modify[Grid] { grid =>
+  def setEditable(apiPosition: ApiCrosswordPosition) = State.modify[Grid] { grid =>
+    val position = CrosswordPosition(apiPosition.x, apiPosition.y)
     grid.cells.get(position).map(const(grid)) getOrElse {
       grid.copy(cells = grid.cells + (position -> Cell(None)))
     }

@@ -222,7 +222,8 @@
     }
 }
 
-.email-sub__form--article {
+.email-sub__form--article,
+.email-sub__form--plain {
     .email-sub__label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
@@ -245,6 +246,33 @@
 
     .email-sub__label {
         line-height: 3;
+    }
+}
+
+// PLAIN MODS
+.email-sub__form--plain {
+    padding: 0;
+
+    .email-sub__text-input {
+        border-color: guss-colour(guardian-brand, $pasteup-palette);
+    }
+}
+
+// TONE SPECIFIC MODS
+@each $toneClass, $toneColour in $tones {
+    .email-sub--tone-#{$toneClass} {
+        .email-sub__message__headline {
+            color: $toneColour;
+        }
+
+        .email-sub__submit-input {
+            background-color: $toneColour;
+            border-color: $toneColour;
+        }
+
+        .email-sub__small {
+            color: $toneColour;
+        }
     }
 }
 

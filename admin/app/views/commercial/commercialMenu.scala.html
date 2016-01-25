@@ -1,4 +1,6 @@
 @(env: String)
+@import conf.Configuration.commercial.testDomain
+
 @admin_main("Commercial Tools", env, isAuthed = true) {
 
     <p><a href="@controllers.admin.routes.AdminIndexController.admin()">Admin</a></p>
@@ -37,7 +39,6 @@
                         <li><a href="@controllers.admin.routes.CommercialController.renderPageskins()">Pageskins</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderSurgingContent()">Surging Content</a></li>
                         <li><a href="@controllers.admin.routes.CommercialAdUnitController.renderToApprove()">Ad Units for approval</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.sponsoredContainers()">Sponsored Containers Debug</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderAdTests()">Ad Tests</a></li>
                         <li><a href="@controllers.admin.commercial.routes.DfpDataController.renderCacheFlushPage()">Refresh all cached DFP data</a></li>
                     </ul>
@@ -66,11 +67,13 @@
         <div class="col-md-4">
             <h3>Display</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Preview ad formats and merchandising components.</div>
+                <div class="panel-heading">Preview ad formats, merchandising components and paid-for content.</div>
                 <div class="panel-body">
                     <ul>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderCreativeTemplates()">Creative Templates</a></li>
-                        <li><a href="http://m.code.dev-theguardian.com/commercial/test-page">Components test page</a> (on dev)</li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCreativeTemplates()">Creative templates</a></li>
+                        <li><a href="@testDomain/commercial/test-page">Merchandising components</a></li>
+                        <li><a href="@testDomain/commercial-containers">Commercial containers</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.sponsoredContainers()">Sponsored containers</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderFluidAds()">Responsive ads</a></li>
                     </ul>
                 </div>

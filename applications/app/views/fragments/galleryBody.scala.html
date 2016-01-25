@@ -2,16 +2,23 @@
 @import views.support.TrailCssClasses.toneClass
 @import layout.ContentWidths.GalleryMedia
 @import views.support.ImgSrc
+@import conf.switches.Switches._
 
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
-            Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature),
+    <article id="article" class="@RenderClasses(
+            Map("content--advertisement-feature" -> gallery.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && gallery.commercial.isAdvertisementFeature)
+            ),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(gallery)}"
         )"
         itemscope itemtype="@gallery.metadata.schemaType" role="main">
 
-        @fragments.headTonal(gallery)
+        @if(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
+
+        @fragments.headTonal(gallery, gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)
 
         <div class="content__main tonal__main tonal__main--@toneClass(gallery)">
             <div class="gs-container">
@@ -30,7 +37,8 @@
         </div>
     </article>
 
-    @if(gallery.content.showInRelated) {
+    @if(gallery.content.showInRelated &&
+        !(gallery.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn) ) {
         <div class="gallery__most-popular facia-container fc-container--media hide-on-childrens-books-site">
             <div class="js-gallery-most-popular tonal--@toneClass(gallery)">
                 <div class="fc-container">

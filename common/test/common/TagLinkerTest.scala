@@ -1,6 +1,7 @@
 package common
 
-import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, ContentFields, TagType}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import common.editions.Uk
 import model.{Content, Article}
 import org.joda.time.DateTime
@@ -83,11 +84,11 @@ class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
     cleaned.firstPara should be ("such as Harlem rapper A$AP Rocky")
   }
 
-  private def tag(id: String, name: String) = new ApiTag(id, "keyword", webTitle = name, webUrl = "does not matter",
+  private def tag(id: String, name: String) = ApiTag(id, TagType.Keyword, webTitle = name, webUrl = "does not matter",
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
   private def sensitiveArticle(tags: ApiTag*) = {
-    val contentApiItem = contentApi(tags.toList).copy(fields = Some(Map("showInRelatedContent" -> "false")))
+    val contentApiItem = contentApi(tags.toList).copy(fields = Some(ContentFields(showInRelatedContent = Some(false))))
 
     val content = Content.make(contentApiItem)
     Article.make(content)
@@ -97,13 +98,13 @@ class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
       id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDateOption = Some(new DateTime),
+      webPublicationDate = Some(new DateTime().toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
       tags = tags,
-      fields = Some(Map("showInRelatedContent" -> "true"))
+      fields = Some(ContentFields(showInRelatedContent = Some(true)))
   )
 
   private def article(tags: ApiTag*) = {

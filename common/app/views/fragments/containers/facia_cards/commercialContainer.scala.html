@@ -1,14 +1,147 @@
-@(container: slices.CommercialContainerType, containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+@(containerType: slices.CommercialContainerType, container: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
-@import slices.{SingleCampaign, MultiCampaign}
+@import conf.switches.Switches
+@import layout.{ColumnAndCards, ContentCard}
+@import model.InlineImage
+@import slices.{MultiCampaign, SingleCampaign}
+@import views.html.fragments.containers.facia_cards.standardContainer
+@import views.html.fragments.inlineSvg
+@import views.html.fragments.items.elements.facia_cards.{itemImage, title}
+@import views.support.{Commercial, RemoveOuterParaHtml}
+@import common.{Edition, LinkTo}
 
-@container match {
+    @containerType match {
+
     case SingleCampaign(_) => {
-        <!-- TODO implement a single campaign -->
-        @standardContainer(containerDefinition, frontProperties)
+        @if(Switches.NewCommercialContent.isSwitchedOn) {
+
+        <div class="fc-container fc-container--commercial">
+            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component">
+                <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-single">
+                    <div class="commercial__inner">
+                        <div class="commercial__header">
+                            <div class="paidfor-meta">
+                                <span class="paidfor-meta__label">Paid Content</span>
+                                <div class="paidfor-label paidfor-meta__more has-popup">
+                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
+                                    <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
+                                        <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
+                                        <a class="paidfor-popup__link" href="@LinkTo("/info/2014/sep/23/paid-for-content")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="commercial__title">@container.displayName</h3>
+                            <a class="commercial__cta"
+                                @if(Edition(request).id == "AU") {
+                                    href="@LinkTo("/guardian-labs-australia")"
+                                } else {
+                                    href="@LinkTo("/guardian-labs")"
+                                }
+                                >
+                                @inlineSvg("glabs-logo", "logo")
+                                <span class='u-h'>Guardian Labs</span>
+                            </a>
+                        </div>
+                        <div class="commercial__body">
+                            <ul class="lineitems l-row l-row--cols-4 js-container__header">
+                                @for(layout <- container.containerLayout) {
+                                    @for( slice <- layout.slices) {
+                                        @for(ColumnAndCards(_, cards) <- slice.columns) {
+                                            @for(card <- cards) {
+                                                @card.item match {
+                                                    case content: ContentCard => {
+                                                        <li class="lineitem l-row__item l-row__item--span-1">
+                                                            <div class="rich-link tone-paidfor--item">
+                                                                 <div class="rich-link__container">
+                                                                     @for(InlineImage(imageContainer) <- content.displayElement) {
+                                                                         @itemImage(imageContainer.images)
+                                                                     }
+                                                                     <div class="rich-link__header">
+                                                                         @title(content.header, card.index, container.index)
+                                                                     </div>
+                                                                     <div class="rich-link__standfirst u-cf">@for(text <- content.trailText) {@Html(text)}</div>
+                                                                     <a class="rich-link__link u-faux-block-link__overlay" @Html(content.header.url.hrefWithRel)>@RemoveOuterParaHtml(content.header.headline)</a>
+                                                                 </div>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                    case _ => {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        } else {
+
+            @standardContainer(container, frontProperties)
+
+        }
     }
+
     case MultiCampaign(_) => {
-        <!-- TODO implement a multi campaign -->
-        @standardContainer(containerDefinition, frontProperties)
+        @if(Switches.NewCommercialContent.isSwitchedOn) {
+
+        <div class="fc-container fc-container--commercial">
+            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component">
+                <div class="commercial commercial--paidfor commercial--tone-paidfor commercial--paidfor-multi">
+                    <div class="commercial__inner">
+                        <div class="commercial__header">
+                            <div class="paidfor-meta">
+                                <span class="paidfor-meta__label">Paid Content</span>
+                                <div class="paidfor-label paidfor-meta__more has-popup">
+                                    <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="paidfor-popup--@container.dataId">About @inlineSvg("arrow-down", "icon")</button>
+                                    <div class="popup is-off paidfor-popup paidfor-popup--@container.dataId">
+                                        <h3 class="paidfor-popup__title">Paid stories are paid for and approved by an advertiser and created by the Guardian Labs commercial editorial team</h3>
+                                        <a class="paidfor-popup__link" href="@LinkTo("/info/2014/sep/23/paid-for-content")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="commercial__title">@container.displayName</h3>
+                            <a class="commercial__cta" href="@LinkTo("/guardian-labs")">@inlineSvg("glabs-logo", "logo")</a>
+                        </div>
+                        <div class="commercial__body">
+                            <ul class="lineitems l-row l-row--cols-4">
+                                @for(cardWithSponsorData <- Commercial.containerCard.mkCardsWithSponsorDataAttributes(container)) {
+                                    <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-container"
+                                        @for(sponsorData <- cardWithSponsorData.sponsorData) {
+                                            @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
+                                            data-sponsorship="@sponsorData.sponsorshipType"
+                                            @for(seriesId <- sponsorData.seriesId) { data-series="@seriesId" }
+                                            @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
+                                        }
+                                    >
+                                        <div class="rich-link tone-paidfor--item">
+                                            <div class="rich-link__container js-container__header">
+                                                @for( InlineImage(imageContainer) <- cardWithSponsorData.card.displayElement) {
+                                                    @itemImage(imageContainer.images)
+                                                }
+                                                <div class="rich-link__header">
+                                                    @title(cardWithSponsorData.card.header, 0, container.index)
+                                                </div>
+                                                <div class="rich-link__standfirst u-cf">@for( text <- cardWithSponsorData.card.trailText) {@Html(text)}</div>
+                                                <a class="rich-link__link u-faux-block-link__overlay" @Html(cardWithSponsorData.card.header.url.hrefWithRel)>@RemoveOuterParaHtml(cardWithSponsorData.card.header.headline)</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        } else {
+
+            @standardContainer(container, frontProperties)
+
+        }
     }
 }

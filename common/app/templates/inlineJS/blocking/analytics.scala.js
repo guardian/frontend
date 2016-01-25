@@ -1,7 +1,6 @@
 @()
 @import conf.Static
 @import org.joda.time.DateTime
-@import conf.switches.Switches.NoBounceIndicator
 
 try {
 
@@ -169,14 +168,6 @@ try {
 
                 var pageView = new Image();
                 pageView.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
-
-                if (guardian.isModernBrowser && @NoBounceIndicator.isSwitchedOn) {
-                    try {
-                        window.sessionStorage.removeItem('gu-bounce-test');
-                    } catch (e) { }
-                }
-
-
             }
         }, 100);
 

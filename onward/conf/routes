@@ -56,13 +56,13 @@ GET        /embed/card/*path                          controllers.RichLinkContro
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)
 GET        /related/*path                             controllers.RelatedController.renderHtml(path)
 GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
-GET        /related-alt/*path.json                    controllers.RelatedController.renderTags(path)
 GET        /top-stories                               controllers.TopStoriesController.renderTopStoriesHtml()
 GET        /gallery/most-viewed                       controllers.MostViewedGalleryController.renderMostViewedHtml()
 
 # Experimental
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
+GET        /series/mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
 
 # Business data

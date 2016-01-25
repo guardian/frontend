@@ -1,0 +1,139 @@
+@import _root_.liveblog.BodyBlocks
+@import model.liveblog.BodyBlock
+@import model.liveblog.KeyEventData
+@(model: LiveBlogPage, blocks: BodyBlocks[BodyBlock])(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import layout.{FaciaCardAndIndex, ItemClasses}
+@import views.html.fragments.items.facia_cards.item
+@import views.support.TrailCssClasses.toneClass
+@import common.Edition
+
+@defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
+<div class="l-side-margins">
+    <article id="live-blog" data-test-id="live-blog"
+        class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
+        itemscope itemtype="@article.metadata.schemaType" role="main">
+
+        <meta itemprop="url" content="@LinkTo(article.metadata.url)">
+
+        <header class="content__head tonal__head tonal__head--@toneClass(article)">
+            @* UPPER HEADER *@
+            <div class="content__header tonal__header u-cf">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--liveblog">
+                        @fragments.meta.metaInline(article)
+                        <h1 itemprop="headline" class="content__headline js-score">@Html(article.trail.headline)</h1>
+                    </div>
+                </div>
+            </div>
+            @* LOWER HEADER *@
+            <div class="tonal__standfirst u-cf">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--liveblog">
+                        @fragments.standfirst(article)
+
+                        <div class="content__updated-container content__updated-container--liveblog">
+                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content__main tonal__main tonal__main--@toneClass(article)">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--liveblog">
+                    <div class="js-sport-tabs js-football-meta football-tabs content__mobile-full-width"></div>
+                    <div class="js-cricket-score"></div>
+
+                    @fragments.mainMedia(article)
+
+                    @fragments.witnessCallToAction(article.content)
+
+                    <div class="blog__left-col">
+
+                        @fragments.contentMeta(article)
+
+                        <div class="js-top-marker"></div>
+                        @if(article.hasKeyEvents) {
+                            <div class="blog__timeline blog__dropdown js-live-blog__key-events modern-visible">
+                                <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
+                                    @fragments.dropdown("Key events", Some("key-events"), true) {
+                                        <ul class="timeline js-live-blog__timeline u-unstyled">
+                                            @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(blocks.main, timezone))
+                                        </ul>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <div class="js-components-container"></div>
+                    </div>
+
+                    @fragments.dropdown("Live feed", Some("live-feed"), true) {
+                        <div class="js-article__container" data-component="body">
+                            @fragments.liveFilter(article.fields.isLive)
+
+                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.fields.isLive) {live-blog}" data-test-id="live-blog-blocks"
+                                itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
+                                @views.html.liveblog.liveBlogBlocks(blocks.blocks, article, timezone)
+                            </div>
+
+                            <div class="live-navigation">
+                                @blocks.earlier.map { earlierBlock =>
+                                    <a href="/@{article.content.metadata.id}?page=@earlierBlock"
+                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
+                                        data-link-name="next page">
+                                        Go to older updates
+                                    </a>
+                                }
+                                @blocks.later.suffix.map { suffix =>
+                                    <a href="/@{article.content.metadata.id}@suffix"
+                                        class="u-button-reset button button--large button--show-more liveblog__show-more"
+                                        data-link-name="previous page">
+                                        Go to newer updates
+                                    </a>
+                                }
+                            </div>
+
+                        </div>
+
+                        @fragments.submeta(article)
+
+                        <div class="after-article js-after-article"></div>
+
+                        <div class="js-bottom-marker"></div>
+                    }
+                </div>
+
+                <div class="content__secondary-column" aria-hidden="true">
+                    <div class="ad-slot-container js-ad-slot-container"></div>
+                    @if(model.related.hasStoryPackage) {
+                        <aside role="complementary" class="blog__related">
+                            <h3 class="blog__related__head">More on this story</h3>
+                            <ul class="u-unstyled fc-slice fc-slice--single-col">
+                                @model.related.faciaItems.take(3).zipWithIndex.map { case (trail, index) =>
+                                    @item(
+                                        FaciaCardAndIndex.fromTrail(
+                                            trail,
+                                            ItemClasses.liveBlogMore,
+                                            index
+                                        ).transformCard(_.withTimeStamp),
+                                        0,
+                                        isRow = false,
+                                        isList = false
+                                    )(request)
+                                }
+                            </ul>
+                        </aside>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </article>
+
+    @fragments.contentFooter(article, model.related)
+
+    }
+</div>

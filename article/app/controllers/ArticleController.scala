@@ -1,23 +1,23 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.util.liveblogs.{Block, BlockToText}
 import common._
 import conf.LiveContentApi.getResponse
 import conf._
 import conf.switches.Switches
 import conf.switches.Switches.LongCacheSwitch
+import liveblog.BodyBlocks
 import model._
+import model.liveblog.KeyEventData
 import org.joda.time.DateTime
-import org.jsoup.nodes.Document
 import performance.MemcachedAction
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import views.BodyCleaner
 import views.support._
 
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 trait PageWithStoryPackage extends ContentPage {
@@ -33,25 +33,13 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _, None))
 
   private def renderLatestFrom(page: PageWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
-      val html = withJsoup(BodyCleaner(page.article, page.article.fields.body, amp = false)) {
-        new HtmlCleaner {
-          def clean(d: Document): Document = {
-            val blocksToKeep = d.getElementsByTag("div") takeWhile {
-              _.attr("id") != lastUpdateBlockId
-            }
-            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
-
-            blocksToDrop foreach {
-              _.remove()
-            }
-            d
-          }
-        }
-      }
-      Cached(page)(JsonComponent(html))
+    val latestBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
+    val blocksHtml = views.html.liveblog.liveBlogBlocks(latestBlocks, page.article, Edition(request).timezone)
+    val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(latestBlocks, Edition(request).timezone))
+    Cached(page)(JsonComponent("html" -> blocksHtml, "timeline" -> timelineHtml))
   }
 
   case class TextBlock(
@@ -75,19 +63,25 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       val blocks = liveBlog.blocks.collect {
         case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
       }.take(number)
-      Cached(page)(JsonComponent(("blocks" -> Json.toJson(blocks))))
+      Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
 
   }
 
-  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
+  private def render(path: String, page: PageWithStoryPackage, pageNo: Option[Int])(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       if (request.isAmp) {
         NotFound
       } else {
-        val htmlResponse = () => views.html.liveBlog(blog)
-        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+        val pageSize = if (blog.article.content.tags.tags.map(_.id).contains("sport/sport")) 50 else 10
+        val blocks = BodyBlocks(pageSize = pageSize, extrasOnFirstPage = 10)(blog.article.content.fields.blocks, pageNo)
+        blocks match {
+          case Some(blocks) =>
+            val htmlResponse = () => views.html.liveBlog (blog, blocks)
+            val jsonResponse = () => views.html.liveblog.liveBlogBody (blog, blocks)
+            renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+          case None => NotFound
+        }
       }
 
     case article: ArticlePage =>
@@ -104,42 +98,58 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
-    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
-      // we cannot sensibly decache memcached (does not support surogate keys)
-      // so if we are doing the 'soft purge' don't memcache
-      loadArticle(path, lastUpdate, rendered)
-    } else MemcachedAction { implicit request =>
-      loadArticle(path, lastUpdate, rendered)
+  def renderLiveBlog(path: String, page: Option[Int] = None) =
+    LongCacheAction { implicit request =>
+      mapModel(path, blocks = true) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+        render(path, _, page)
+      }
     }
-  }
 
-  private def loadArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
-    mapModel(path) { model =>
-      (lastUpdate, rendered) match {
-        case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
-        case (None, Some(false)) => blockText(model, 6)
-        case (_, _) => render(path, model)
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = {
+    LongCacheAction { implicit request =>
+      mapModel(path, blocks = true) { model =>
+        (lastUpdate, rendered) match {
+          case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
+          case (None, Some(false)) => blockText(model, 6)
+          case (_, _) => render(path, model, None)
+        }
       }
     }
   }
 
-  def mapModel(path: String)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path) map redirect recover convertApiExceptions map {
+  def renderJson(path: String) = {
+    LongCacheAction { implicit request =>
+      mapModel(path) {
+        render(path, _, None)
+      }
+    }
+  }
+
+  def renderArticle(path: String) = {
+    LongCacheAction { implicit request =>
+      mapModel(path) {
+        render(path, _, None)
+      }
+    }
+  }
+
+  def mapModel(path: String, blocks: Boolean = false)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, blocks) map redirect recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
+  private def lookup(path: String, blocks: Boolean)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    getResponse(LiveContentApi.item(path, edition)
+    val capiItem = LiveContentApi.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
-    )
+    val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
+    getResponse(capiItemWithBlocks)
 
   }
 
@@ -159,4 +169,16 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     ModelOrResult(content, response)
   }
 
+}
+
+object LongCacheAction {
+  def apply(block: RequestHeader => Future[Result]) = {
+    if (LongCacheSwitch.isSwitchedOn) Action.async { implicit request =>
+      // we cannot sensibly decache memcached (does not support surogate keys)
+      // so if we are doing the 'soft purge' don't memcache
+      block(request)
+    } else MemcachedAction { implicit request =>
+      block(request)
+    }
+  }
 }

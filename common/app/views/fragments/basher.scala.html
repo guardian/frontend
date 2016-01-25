@@ -1,0 +1,26 @@
+@(id: String)(implicit request: RequestHeader)
+
+@import views.support.Basher
+
+@Basher.fromId(id).map { fromId =>
+    <div class="facia-basher" data-link-name="basher">
+            @if(play.Play.isDev()) {
+                <link rel="stylesheet" type="text/css" href="@Static("stylesheets/inline/basher." + fromId.toString + ".css")" />
+            } else {
+                <style class="js-loggable">
+                    @conf.Static.css.inline(fromId.toString).map { css =>
+                        @Html(css)
+                    }
+                </style>
+            }
+
+        @fromId match {
+            case KeepItInTheGround => {
+                @fragments.bashers.KeepItInTheGround()
+            }
+            case ThisIsTheNHS => {
+                @fragments.bashers.ThisIsTheNHS()
+            }
+        }
+    </div>
+}

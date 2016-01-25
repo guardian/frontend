@@ -1,6 +1,7 @@
 package views.support
 
-import com.gu.contentapi.client.model.{Asset, Content, Element, Tag}
+import com.gu.contentapi.client.model.v1.{Asset, Content, Element, Tag, AssetType, ElementType, TagType}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import conf.Configuration
 import conf.switches.Switches.ImageServerSwitch
 import model.{ImageMedia, ImageAsset}
@@ -13,21 +14,21 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
   lazy val imageHost = Configuration.images.path
 
   val asset = Asset(
-    "image",
+    AssetType.Image,
     Some("image/jpeg"),
     Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"),
-    Map.empty[String, String]
+    None
   )
 
-  val element = Element("elementId", "main", "image", Some(1), List(asset))
+  val element = Element("elementId", "main", ElementType.Image, Some(1), List(asset))
 
-  val tag = List(Tag(id = "type/article", `type` = "keyword", webTitle = "",
+  val tag = List(Tag(id = "type/article", `type` = TagType.Keyword, webTitle = "",
       sectionId = None, sectionName = None, webUrl = "", apiUrl = "apiurl", references = Nil))
 
   val content = Content(id = "foo/2012/jan/07/bar",
     sectionId = None,
     sectionName = None,
-    webPublicationDateOption = Some(new DateTime),
+    webPublicationDate = Some(new DateTime().toCapiDateTime),
     webTitle = "Some article",
     webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
     apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -40,10 +41,10 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
   val image = ImageMedia.apply(Seq(imageAsset))
 
   val mediaImageAsset = ImageAsset.make(Asset(
-    "image",
+    AssetType.Image,
     Some("image/jpeg"),
     Some("http://media.guim.co.uk/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"),
-    Map.empty[String, String]
+    None
   ), 1)
 
   val mediaImage = ImageMedia.apply(Seq(mediaImageAsset))

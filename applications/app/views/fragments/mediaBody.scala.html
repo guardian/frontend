@@ -4,18 +4,24 @@
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches._
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="@RenderClasses(
+    <article id="article" class="@RenderClasses(
             Map(
                 "content--has-body" -> media.fields.body.nonEmpty,
-                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature
+                "content--advertisement-feature" -> page.media.commercial.isAdvertisementFeature,
+                "paid-content--advertisement-feature" -> (NewCommercialContent.isSwitchedOn && page.media.commercial.isAdvertisementFeature)
             ),
             "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
         )"
         itemscope itemtype="@media.metadata.schemaType" role="main">
+
+        @if(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn){
+            @fragments.guBand()
+        }
 
         @fragments.headTonal(media)
 
@@ -113,10 +119,12 @@
 
                 @media match {
                     case v: Video => {
-                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
+                        @if(!(page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)) {
+                            <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
                             aria-hidden="true">
-                            <div class="js-video-components-container"></div>
-                        </div>
+                                <div class="js-video-components-container"></div>
+                            </div>
+                        }
                     }
                     case a: Audio if a.fields.body.nonEmpty => {
                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
@@ -130,7 +138,7 @@
         </div>
     </article>
 
-    @if(mediaType != "video") {
+    @if(mediaType != "video" && (mediaType != "audio" && page.media.commercial.isAdvertisementFeature && NewCommercialContent.isSwitchedOn)) {
         <div class="fc-container fc-container--media">
             <div class="js-media-popular tonal--@toneClass(media)">
                 <div class="fc-container fc-container--popular">

@@ -30,7 +30,7 @@
     position: relative;
     width: auto;
     text-align: left;
-    padding: ($gs-baseline/3)*2 8px $gs-baseline*2 0;
+    padding: ($gs-baseline/3)*2 8px 0 0;
     @include fs-textSans(2);
 
     &.is-active {

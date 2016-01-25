@@ -36,10 +36,6 @@ module.exports = function () {
             command: 'node dev/eslint-rules/tests/*'
         },
 
-        stubAppJs: {
-            command: 'touch static/target/javascripts/app.js'
-        },
-
         makeDeploysRadiator: {
             command: [
                 'npm install',

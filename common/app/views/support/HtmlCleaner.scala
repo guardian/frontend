@@ -1,17 +1,15 @@
 package views.support
 
-import java.net.URL
 import java.text.Normalizer
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
 import conf.switches.Switches._
-import layout.{WidthsByBreakpoint, ContentWidths}
+import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{TextNode, Element, Document}
+import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 
 import scala.collection.JavaConversions._
@@ -78,7 +76,7 @@ object PullquoteCleaner extends HtmlCleaner {
   }
 }
 
-case class R2VideoCleaner(article: Article) extends HtmlCleaner {
+case object R2VideoCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
@@ -179,87 +177,6 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
   }
 }
 
-case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val id = el.id()
-        el.select(".block-time.published-time time").foreach { time =>
-          val datetime = DateTime.parse(time.attr("datetime"))
-          val hhmm = Format(datetime, "HH:mm")
-          time.wrap(s"""<a href="#$id" itemprop="url" class="block-time__link"></a>""")
-          time.attr("data-relativeformat", "med")
-          time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
-          if (datetime.isAfter(DateTime.now().minusDays(5))) {
-            time.addClass("js-timestamp")
-          }
-        }
-      }
-    }
-    body
-  }
-}
-
-case class LiveBlogLinkedData(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val id = el.id()
-        val blockElements = el.select(".block-elements")
-        val noByline = el.attributes().get("data-block-contributor").isEmpty
-        el.attr("itemprop", "liveBlogUpdate")
-        el.attr("itemscope", "")
-        el.attr("itemtype", "http://schema.org/BlogPosting")
-        el.select(".block-time.published-time time").foreach { time =>
-          time.attr("itemprop", "datePublished")
-        }
-        el.select(".block-title").foreach { title =>
-          title.attr("itemprop", "headline")
-
-        }
-        if (noByline) blockElements.addClass("block-elements--no-byline")
-        blockElements.foreach { body =>
-          body.attr("itemprop", "articleBody")
-        }
-      }
-    }
-    body
-  }
-}
-
-case class BloggerBylineImage(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (article.isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val contributorId = el.attributes().get("data-block-contributor")
-        if (contributorId.nonEmpty) {
-          article.tags.tags.find(_.id == contributorId).map{ contributorTag =>
-            val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-            el.getElementsByClass("block-elements").headOption.foreach(_.before(html.toString()))
-          }
-        }
-      }
-    }
-    body
-  }
-}
-
-case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (article.isLiveBlog) {
-      body.select(".block").foreach { el =>
-        val blockId = el.id()
-        val shares = article.sharelinks.elementShares(Some(blockId))
-
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.metadata.contentType)
-
-        el.append(html.toString())
-      }
-    }
-    body
-  }
-}
-
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -268,10 +185,10 @@ object VideoEncodingUrlCleaner {
   def apply(url: String): String = url.filter(_ != '\n')
 }
 
-object AmpVideoSrcCleaner {
+object AmpSrcCleaner {
   def apply(videoSrc: String) = {
-    // All videos need to start with https for AMP.
-    // Temperary code until all videos returned from CAPI are https
+    // All media sources need to start with https for AMP.
+    // Temperary code until all media urls returned from CAPI are https
     if (videoSrc.startsWith("http:")) {
       val (first, last) = videoSrc.splitAt(4);
       first + "s" + last
