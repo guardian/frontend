@@ -11,6 +11,10 @@ $us-minute-main-colour: #104f75;
         color: #ffffff;
     }
 
+    .caption--img {
+        padding-bottom: 0;
+    }
+
     .svg  & .caption--img:before {
         display: none;
     }
