@@ -51,9 +51,9 @@
                     .map { inputAnswer => {
                         val isChosen = inputAnswer.equals(answer)
                         Seq(
-                            "quiz__answer--answered",
+                            "quiz__answer--has-answer",
                             if(isChosen) {
-                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}-chosen"
+                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}--is-chosen"
                             } else ""
                         )
                     } }
