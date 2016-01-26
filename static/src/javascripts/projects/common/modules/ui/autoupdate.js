@@ -90,7 +90,6 @@ define([
                 if (this.isUpdating && detect.pageVisible()) {
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
-                    console.log('inject');
                 } else if (this.unreadBlocks > 0) {
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);

@@ -84,7 +84,6 @@ define([
             reset();
             mediator.on('modules:autoupdate:updates', function (numberOfUpdates) {
                 postsCount += Number(numberOfUpdates);
-                console.log(postsCount, numberOfUpdates);
                 if (
                     postsCount >= adCriteria[state].posts &&
                     timedOut &&
