@@ -674,11 +674,7 @@ $timeline-width: 15px;
 .toast__space-reserver {
     padding-bottom: $gs-baseline;
     height: $gs-baseline*3; // was 0, for testing
-    display: none;
-
-    .toast-enabled & {
-        display: block;
-    }
+    display: block;
 }
 
 .timeline {
