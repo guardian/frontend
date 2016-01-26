@@ -40,14 +40,6 @@
         }
     }
 
-    &.paid-content--advertisement-feature {
-        .content__main-column--video {
-            @include mq(desktop) {
-                min-height: 0;
-            }
-        }
-    }
-
     .content__secondary-column--media {
         @include mq($until: desktop) {
             display: block;
