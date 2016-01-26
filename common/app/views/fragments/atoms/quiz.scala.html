@@ -46,18 +46,19 @@
                 (
                     Seq("quiz__answer") ++
                     maybeResults
-                        .map(x => Seq(s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"))
-                        .getOrElse(Nil) ++
-                    maybeInputAnswer
-                        .map { inputAnswer => {
-                            val isChosen = inputAnswer.equals(answer)
+                        .map(x => {
                             Seq(
-                                "quiz__answer--has-answer",
-                                if(isChosen) {
-                                    s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}--is-chosen"
-                                } else ""
-                            )
-                        } }
+                                "quiz__answer--submission",
+                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}",
+                                maybeInputAnswer
+                                    .map { inputAnswer => {
+                                        val isChosen = inputAnswer.equals(answer)
+                                        if(isChosen) {
+                                            s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}--is-chosen"
+                                        } else ""
+                                    } }
+                                    .getOrElse(if (isAnswerCorrect) { "quiz__answer--correct--not-answered" } else Nil))
+                        })
                         .getOrElse(Nil)
                 ).mkString(" ")
             }">

@@ -243,7 +243,7 @@
     width: 100%;
 }
 
-.quiz__answer--has-answer {
+.quiz__answer--submission {
     cursor: default;
     opacity: .5;
 }
@@ -258,7 +258,8 @@
 }
 
 .quiz__answer--is-chosen,
-.quiz__answer--correct--is-chosen {
+.quiz__answer--correct--is-chosen,
+.quiz__answer--correct--not-answered {
     background-color: #43b347; /* ??? */
     color: #ffffff;
     opacity: 1;
