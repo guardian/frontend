@@ -1,8 +1,11 @@
 define([
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/utils/fastdom-promise',
     'common/views/svgs',
+    'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
@@ -14,12 +17,14 @@ define([
     'text!common/views/commercial/creatives/manual-multiple.html',
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
+    Promise,
     $,
     config,
     template,
-    svgs
+    fastdom,
+    svgs,
+    templatePreprocessor
 ) {
-
     /**
      * Create simple templated creatives
      *
@@ -46,11 +51,19 @@ define([
     };
 
     Template.prototype.create = function () {
-        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
-            var creativeHtml = template(creativeTpl, this.params);
+        return new Promise(function (resolve) {
+            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+                if (templatePreprocessor[this.params.creative]) {
+                    templatePreprocessor[this.params.creative](this);
+                }
 
-            $.create(creativeHtml)
-                .appendTo(this.$adSlot);
+                var creativeHtml = template(creativeTpl, this.params);
+                var $ad = $.create(creativeHtml);
+
+                resolve(fastdom.write(function () {
+                    return $ad.appendTo(this.$adSlot);
+                }, this));
+            }.bind(this));
         }.bind(this));
     };
 
