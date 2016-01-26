@@ -4,7 +4,7 @@
 @import views.html.fragments.inlineSvg
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    @if(NewCommercialContent.isSwitchedOn && optSponsorType.getOrElse("") != "fc-container--sponsored") {
+    @if(NewCommercialContent.isSwitchedOn && optSponsorType.contains("advertisement-feature")) {
         <div class="commercial commercial--paidfor commercial-dfp-multi commercial--tone-paidfor fc-container--advertisement-feature paid-content--advertisement-feature" data-link-name="merchandising | capi | multiple @optOmnitureId">
             <div class="commercial__inner">
                 <div class="commercial__header">
