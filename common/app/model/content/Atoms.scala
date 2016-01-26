@@ -26,6 +26,7 @@ object Quiz {
     Quiz(
       id = quiz.id,
       path = path,
+      title = quiz.data.title,
       quizType = quiz.data.quizType,
       questions = questions
       )
@@ -42,6 +43,7 @@ final case class Answer(
 )
 final case class Quiz(
   override val id: String,
+  title: String,
   path: String,
   quizType: String,
   questions: Seq[Question]

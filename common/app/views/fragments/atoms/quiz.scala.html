@@ -4,6 +4,7 @@
 
 @(quiz: Quiz, maybeResults: Option[QuizSubmissionResult])
 
+<h2>@quiz.title</h2>
 <form action="@quiz.postUrl" method="POST" class="quiz">
 
     @quiz.questions.zipWithIndex.map { case (data, questionIndex) =>
