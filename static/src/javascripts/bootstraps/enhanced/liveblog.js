@@ -153,7 +153,7 @@ define([
             if (config.page.isLive) {
                 if (ab.isInVariant('LiveblogToast', 'toast')) {
                     AutoUpdateNew();
-                } else {
+                } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
                     var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                     autoUpdate = new AutoUpdate({
                         path: getUpdatePath,

@@ -1,7 +1,7 @@
-@import _root_.liveblog.BodyBlocks
+@import _root_.liveblog.LiveBlogPageModel
 @import model.liveblog.BodyBlock
 @import model.liveblog.KeyEventData
-@(model: LiveBlogPage, blocks: BodyBlocks[BodyBlock])(implicit request: RequestHeader)
+@(model: LiveBlogPage, blocks: LiveBlogPageModel[BodyBlock])(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import layout.{FaciaCardAndIndex, ItemClasses}
@@ -87,8 +87,8 @@
                             </div>
 
                             <div class="live-navigation">
-                                @blocks.earlier.map { earlierBlock =>
-                                    <a href="/@{article.content.metadata.id}?page=@earlierBlock"
+                                @blocks.earlier.suffix.map { suffix =>
+                                    <a href="/@{article.content.metadata.id}@suffix"
                                         class="u-button-reset button button--large button--show-more liveblog__show-more"
                                         data-link-name="next page">
                                         Go to older updates
