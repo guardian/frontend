@@ -79,7 +79,7 @@
 
     // increase height if we have sponsorship logos
     &.paid-content--advertisement-feature .content__main-column--audio {
-        min-height: 325px;
+        min-height: $gs-row-height * 9;
     }
 }
 .content__headline:before {
