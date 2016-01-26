@@ -120,7 +120,6 @@ define([
                 }
             }).then(function () {
                 updateDelay(currentUpdateDelay);
-                console.log(currentUpdateDelay);
                 setTimeout(checkForUpdates, currentUpdateDelay);
             });
         };
@@ -158,8 +157,6 @@ define([
                     }
 
                     toastButtonRefresh(0);
-
-                    console.log(elementsToAdd.length);
 
                     mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 

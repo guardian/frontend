@@ -66,7 +66,6 @@ define([
 
         this.view = {
             render: function (res) {
-                console.log('rendering');
                 var $attachTo = [bonzo(options.attachTo[0]), bonzo(options.attachTo[1])],
                     date = new Date().toString(),
                     resultHtml = [
@@ -78,9 +77,6 @@ define([
                 this.unreadBlocks += resultHtml[0].children.length;
 
                 bonzo(resultHtml[0].children).addClass('autoupdate--hidden');
-                console.log('before');
-                console.log(elementsToAdd);
-                console.log($attachTo);
                 $attachTo[0].prepend(elementsToAdd);
                 $attachTo[1].prepend(toArray(resultHtml[1].children));
 
@@ -135,8 +131,6 @@ define([
         this.load = function () {
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
-
-            console.log(path);
 
             return ajax({
                 url: path,
