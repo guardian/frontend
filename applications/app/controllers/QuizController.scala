@@ -13,7 +13,7 @@ import scala.concurrent.Future
 case class QuizAnswersPage(
   answers: QuizForm.UserAnswers,
   quiz: Quiz) extends model.StandalonePage {
-  override val metadata = MetaData.make("quiz atom", "quizzes", "Quiz atom", "GFE: Quizzes")
+  override val metadata = MetaData.make("quiz atom", "quizzes", quiz.title, "GFE: Quizzes")
 
   val results: QuizSubmissionResult = quiz.submitAnswers(answers)
 }
