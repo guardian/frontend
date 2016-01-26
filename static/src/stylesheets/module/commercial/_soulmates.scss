@@ -11,19 +11,19 @@ $c-soulmates-high: colour(neutral-1);
     .commercial__inner {
         background-repeat: no-repeat;
         background-position: bottom 68px right 0px;
-        min-height: 10px;
+        min-height: 0;
 
         @include mq(desktop) {
-            min-height: 200px;
+            min-height: $gs-row-height * 5.5;
             background-position: bottom 52px right 0px;
         }
 
         @include mq(wide) {
-            min-height: 230px;
+            min-height: $gs-row-height * 6.5;
             background-position: bottom 69px right 0px;
 
             .has-page-skin & {
-                min-height: 248px;
+                min-height: $gs-row-height * 7;
                 background-position: bottom 52px left 0px;
             }
         }
