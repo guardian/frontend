@@ -42,41 +42,41 @@
 @renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
     <div class="quiz__question__answer-row">
         <label for="question-@questionIndex-answer-@answerIndex"
-        class="@{
-            (
-                Seq("quiz__answer") ++
-                maybeResults
-                    .map(x => Seq(s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"))
-                    .getOrElse(Nil) ++
-                maybeInputAnswer
-                    .map { inputAnswer => {
-                        val isChosen = inputAnswer.equals(answer)
-                        Seq(
-                            "quiz__answer--has-answer",
-                            if(isChosen) {
-                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}--is-chosen"
-                            } else ""
-                        )
-                    } }
-                    .getOrElse(Nil)
-            ).mkString(" ")
-        }">
-        @maybeResults.map { x =>
-            <span class="quiz__answer-icon">
-                @if(isAnswerCorrect) {
-                    @inlineSvg("tick", "icon", List("quiz__answer-icon-svg"))
-                } else {
-                    @inlineSvg("cross", "icon", List("quiz__answer-icon-svg"))
-                }
-            </span>
-        }.getOrElse {
-            <input type="radio"
-                name="answers[@questionIndex]"
-                id="question-@questionIndex-answer-@answerIndex"
-                value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
-                class="quiz__answer__input">
-        }
-        @{answer.text}
+            class="@{
+                (
+                    Seq("quiz__answer") ++
+                    maybeResults
+                        .map(x => Seq(s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"))
+                        .getOrElse(Nil) ++
+                    maybeInputAnswer
+                        .map { inputAnswer => {
+                            val isChosen = inputAnswer.equals(answer)
+                            Seq(
+                                "quiz__answer--has-answer",
+                                if(isChosen) {
+                                    s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}--is-chosen"
+                                } else ""
+                            )
+                        } }
+                        .getOrElse(Nil)
+                ).mkString(" ")
+            }">
+            @maybeResults.map { x =>
+                <span class="quiz__answer-icon">
+                    @if(isAnswerCorrect) {
+                        @inlineSvg("tick", "icon", List("quiz__answer-icon-svg"))
+                    } else {
+                        @inlineSvg("cross", "icon", List("quiz__answer-icon-svg"))
+                    }
+                </span>
+            }.getOrElse {
+                <input type="radio"
+                    name="answers[@questionIndex]"
+                    id="question-@questionIndex-answer-@answerIndex"
+                    value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
+                    class="quiz__answer__input">
+            }
+            @{answer.text}
         </label>
     </div>
 }
