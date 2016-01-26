@@ -276,7 +276,7 @@
 
 .quiz__answer-icon {
     position: absolute;
-    left: 6px;
+    left: 10px;
     top: 5px;
     font-size: 26px;
     color: #ffffff;
@@ -331,10 +331,10 @@
     margin-bottom: 10px;
 }
 
-.quiz__answer-icon-svg {
-    width: 14px;
-    height: 14px;
-    margin-left: 3px;
+.quiz__answer-icon-svg svg {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
 }
 
 .quiz__share__outline {
