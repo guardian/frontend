@@ -11,6 +11,7 @@ define([
     'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/collections/map',
     'lodash/objects/pick',
@@ -27,6 +28,7 @@ define([
     mediator,
     LazyLoad,
     Tabs,
+    Toggles,
     isArray,
     map,
     pick,
@@ -96,31 +98,39 @@ define([
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
+        },
+        capi: function (el) {
+            new Toggles(el).init();
+        },
+        capiSingle: function (el) {
+            new Toggles(el).init();
         }
     };
 
     CommercialComponent.prototype.create = function () {
-        new LazyLoad({
-            url: this.components[this.type],
-            container: this.adSlot,
-            beforeInsert: function (html) {
-                // Currently we are replacing the OmnitureToken with nothing. This will change once
-                // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
-            }.bind(this),
-            success: function () {
-                if (this.postLoadEvents[this.type]) {
-                    this.postLoadEvents[this.type](this.adSlot);
-                }
+        return new Promise(function (resolve) {
+            new LazyLoad({
+                url: this.components[this.type],
+                container: this.adSlot,
+                beforeInsert: function (html) {
+                    // Currently we are replacing the OmnitureToken with nothing. This will change once
+                    // commercial components have properly been setup in the lovely mess that is Omniture!
+                    return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
+                }.bind(this),
+                success: function () {
+                    if (this.postLoadEvents[this.type]) {
+                        this.postLoadEvents[this.type](this.adSlot);
+                    }
 
-                mediator.emit('modules:commercial:creatives:commercial-component:loaded');
-            }.bind(this),
-            error: function () {
-                bonzo(this.adSlot).hide();
-            }.bind(this)
-        }).load();
+                    mediator.emit('modules:commercial:creatives:commercial-component:loaded');
+                }.bind(this),
+                error: function () {
+                    bonzo(this.adSlot).hide();
+                }.bind(this)
+            }).load();
 
-        return this;
+            resolve(this);
+        }.bind(this));
     };
 
     return CommercialComponent;

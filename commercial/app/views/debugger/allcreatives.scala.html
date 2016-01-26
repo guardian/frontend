@@ -645,7 +645,9 @@
                                 omnitureId: '[%OmnitureID%]'
                             });
 
-                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
+                            var oldFn = commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'];
+                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function (el) {
+                                oldFn.call(commercialComponent, el);
                                 $capiType.removeClass('lazyloaded');
                             };
                             commercialComponent.create();
