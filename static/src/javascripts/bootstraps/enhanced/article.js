@@ -112,15 +112,20 @@ define([
                     renderQuizzes();
                 };
 
+                var matches = function (element, selector) {
+                    return (element.matchesSelector || element.matches)(selector);
+                };
+
                 // Bean doesn't support capturing so we have to delegate
                 // ourselves
                 var delegateEvent = function (parentEl, event, childElSelector, fn, useCapture) {
                     parentEl.addEventListener(event, function (event) {
-                        if (event.target.matches(childElSelector)) {
+                        if (matches(event.target, childElSelector)) {
                             fn(event);
                         }
                     }, useCapture);
                 };
+
 
                 $quizzes.each(function (quizElement) {
                     delegateEvent(quizElement, 'focus', '.' + quizAnswerInputClassName, update, true);
