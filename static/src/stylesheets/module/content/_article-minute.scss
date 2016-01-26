@@ -1,0 +1,57 @@
+$us-minute-highlight-colour: #eb1e25;
+$us-minute-main-colour: #104f75;
+$us-minute-contrast-color: #ffffff;
+
+.content__main-column--minutearticle {
+    margin: 0 auto;
+}
+
+.block--minute-article {
+    background-color: $us-minute-main-colour;
+    border-top: 4px solid $us-minute-highlight-colour;
+    color: $us-minute-contrast-color;
+    padding: $gs-baseline/2 $gs-gutter/2;
+    margin-bottom: $gs-baseline/2;
+
+    /* ==========================================================================
+       Content Overrides
+       ========================================================================== */
+
+    // Standard elements
+
+    a,
+    .u-fauxlink {
+        color: $us-minute-contrast-color;
+    }
+
+    // Captions
+
+    .caption {
+        color: $us-minute-contrast-color;
+    }
+
+    .caption--img {
+        padding-bottom: 0;
+    }
+
+    .svg  & .caption--img:before {
+        display: none;
+    }
+
+    // Embeds
+
+    .tweet-main-image {
+        display: none;
+    }
+
+    // From content API
+
+    .from-content-api & blockquote.quoted {
+        color: $us-minute-contrast-color;
+
+        .inline-quote {
+            fill: $us-minute-contrast-color;
+        }
+    }
+
+}

@@ -87,14 +87,15 @@ define([
 
     policies.nonArticlePages = function () {
         var isArticle = config.page.contentType === 'Article',
-            isLiveBlog = config.page.isLiveBlog;
+            isLiveBlog = config.page.isLiveBlog,
+            isMinuteArticle = config.page.isUSMinuteSeries;
 
-        if (!isArticle && !isLiveBlog) {
+        if (!isArticle && !isLiveBlog && !isMinuteArticle) {
             return {
                 articleBodyAdverts : false,
                 articleAsideAdverts : false
             };
-        } else if (isLiveBlog) {
+        } else if (isLiveBlog || isMinuteArticle) {
             return {
                 articleBodyAdverts : false
             };

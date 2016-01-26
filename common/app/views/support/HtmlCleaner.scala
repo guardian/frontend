@@ -101,12 +101,12 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       image <- container.images.largestImage
     }{
       val hinting = findBreakpointWidths(figure)
-      val relation = if (article.isLiveBlog) {
-        LiveBlogMedia
-      } else if (article.isImmersive) {
-        ImmersiveMedia
-      } else {
-        BodyMedia
+
+      val relation = {
+        if (article.isLiveBlog) LiveBlogMedia
+        else if (article.isImmersive) ImmersiveMedia
+        else if (article.isUSMinute) MinuteMedia
+        else BodyMedia
       }
 
       val widths = ContentWidths.getWidthsFromContentElement(hinting, relation)
@@ -122,7 +122,9 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
+      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+
+      val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
@@ -467,14 +469,6 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
             h2.remove()
         }
     }
-    document
-  }
-}
-
-case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
-    // US Minute articles use liveblog blocks but we don't want to show timestamps
-    if (article.isUSMinute) document.getElementsByClass("published-time").foreach(_.remove)
     document
   }
 }

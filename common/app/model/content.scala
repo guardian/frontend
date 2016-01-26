@@ -10,7 +10,7 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
 import cricketPa.CricketTeams
-import layout.ContentWidths.GalleryMedia
+import layout.ContentWidths.{ImmersiveMedia, BodyMedia, LiveBlogMedia, GalleryMedia}
 import model.liveblog.{LiveBlogDate, BodyBlock}
 import model.liveblog.BodyBlock.{SummaryEvent, KeyEvent}
 import ophan.SurgingContentAgent
@@ -334,6 +334,7 @@ object Article {
     val javascriptConfig: Map[String, JsValue] = Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
+      ("isMinuteArticle", JsBoolean(content.tags.isUSMinuteSeries)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
