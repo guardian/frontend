@@ -18,8 +18,8 @@ case class NewsAlertNotification(id: UUID,
                                  thumbnailUrl: Option[URI] = None,
                                  link: URI,
                                  imageUrl: Option[URI] = None,
-                                 publicationDate : DateTime,
-                                 topics: Set[NewsAlertType]) {
+                                 publicationDate: DateTime,
+                                 topics: Set[NewsAlertType] = Set.empty[NewsAlertType]) {
 
 
   def isOfType(alertType: NewsAlertType) : Boolean = topics.contains(alertType)
@@ -28,21 +28,7 @@ case class NewsAlertNotification(id: UUID,
 
 object NewsAlertNotification {
 
-  // URI serializer/deserializer
-  implicit val uf = new Format[URI] {
-    override def writes(uri: URI): JsValue = JsString(uri.toString)
-    override def reads(json: JsValue): JsResult[URI] = {
-      val error = JsError("Value is expected to convert to URI")
-      json match {
-        case JsString(s) =>
-          Try(URI.create(s)) match {
-            case Success(uri) => JsSuccess(uri)
-            case Failure(_) => error
-          }
-        case _ => error
-      }
-    }
-  }
+  import URIFormats._
 
   // publicationDate (DateTime)
   implicit val dtf = new Format[DateTime] {

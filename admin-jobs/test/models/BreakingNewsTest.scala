@@ -1,5 +1,7 @@
 package models
 
+import models.BreakingNewsFormats._
+
 import java.net.URI
 import java.util.UUID
 
@@ -9,7 +11,6 @@ import play.api.libs.json.Json
 
 class BreakingNewsTest extends FlatSpec with Matchers {
 
-  "BreakingNews" should "transform into a correct json representation" in {
     val randomUuid = UUID.randomUUID()
     val title = "This is a breaking news title"
     val message = "This is a breaking news message"
@@ -25,11 +26,10 @@ class BreakingNewsTest extends FlatSpec with Matchers {
       None,
       publicationDate,
       Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport))
+    val expectedBreakingNews = BreakingNews(Set(n))
 
-    val expectedJson = Json.parse(
+    val json = Json.parse(
       s"""{
-          |"WebTitle": "BreakingNews",
-          |"refreshStatus": true,
           |"collections": [
           |{
           |"displayName": "UK alerts",
@@ -37,12 +37,11 @@ class BreakingNewsTest extends FlatSpec with Matchers {
           |"content": [
           |{
           |"headline": "$title",
-          |"trailText": "",
+          |"message": "$message",
           |"thumbnail": "$thumbnailUrl",
           |"shortUrl": "$link",
           |"id": "$randomUuid",
-          |"group": "1",
-          |"frontPublicationDate": ${publicationDate.getMillis}
+          |"frontPublicationDate": ${Json.toJson(publicationDate)}
           |}
           |]
           |},
@@ -62,12 +61,11 @@ class BreakingNewsTest extends FlatSpec with Matchers {
           |"content": [
           |{
           |"headline": "$title",
-          |"trailText": "",
+          |"message": "$message",
           |"thumbnail": "$thumbnailUrl",
           |"shortUrl": "$link",
           |"id": "$randomUuid",
-          |"group": "1",
-          |"frontPublicationDate": ${publicationDate.getMillis}
+          |"frontPublicationDate": ${Json.toJson(publicationDate)}
           |}
           |]
           |},
@@ -79,8 +77,15 @@ class BreakingNewsTest extends FlatSpec with Matchers {
           |]
           |}
       """.stripMargin)
-    val actualJson = Json.toJson(BreakingNews(Set(n)))
-    actualJson should equal(expectedJson)
+
+  "BreakingNews serialization" should "produce expected json" in {
+    val actualJson = Json.toJson(expectedBreakingNews)
+    actualJson should equal(json)
+  }
+
+  "BreakingNews deserialization" should "produce expected object" in {
+    val breakingNews = json.as[BreakingNews]
+    breakingNews should equal(expectedBreakingNews)
   }
 
 }

@@ -27,6 +27,7 @@ trait NewsAlertController extends Controller with ExecutionContexts
   def create() : Action[NewsAlertNotification] = Action.async(BodyJson[NewsAlertNotification]) { request =>
     val receivedNotification : NewsAlertNotification = request.body
     // Generating json output
+    import models.BreakingNewsFormats._
     val breakingNewsJson : JsValue = Json.toJson(BreakingNews(Set(receivedNotification)))
     // Writing to S3
     breakingNewsApi.putBreakingNews(breakingNewsJson) map {
