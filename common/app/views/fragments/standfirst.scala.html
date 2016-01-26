@@ -1,6 +1,5 @@
 @(item: model.ContentType)(implicit request: RequestHeader)
 
-@* live with empty standfirst as it is used to hook things into the page with javascript *@
 <div class="content__standfirst" data-link-name="standfirst" data-component="standfirst">
     @item.fields.trailText.map{ t =>
 

@@ -94,9 +94,19 @@ http://developers.theguardian.com/join-the-team.html
 
         @fragments.footer(page)
 
-        @fragments.analytics(page)
+        @if(NonBlockingOmniture.isSwitchedOn) {
 
-        @fragments.inlineJSNonBlocking()
+            @fragments.inlineJSNonBlocking()
+
+            @fragments.analytics(page)
+
+        } else {
+
+            @fragments.analytics(page)
+
+            @fragments.inlineJSNonBlocking()
+
+        }
 
         @fragments.commercial.pageSkin()
 

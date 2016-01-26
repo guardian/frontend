@@ -1,8 +1,12 @@
 define([
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/utils/fastdom-promise',
     'common/views/svgs',
+    'common/modules/ui/toggles',
+    'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
@@ -14,11 +18,20 @@ define([
     'text!common/views/commercial/creatives/manual-multiple.html',
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
+    Promise,
     $,
     config,
     template,
-    svgs
+    fastdom,
+    svgs,
+    Toggles,
+    templatePreprocessor
 ) {
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
 
     /**
      * Create simple templated creatives
@@ -42,15 +55,32 @@ define([
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
-        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by:' : 'Brought to you by:';
+        this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by' : 'Brought to you by:';
+    };
+
+    Template.prototype.postLoadEvents = {
+        'manual-single': createToggle,
+        'manual-multiple': createToggle
     };
 
     Template.prototype.create = function () {
-        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
-            var creativeHtml = template(creativeTpl, this.params);
+        return new Promise(function (resolve) {
+            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+                if (templatePreprocessor[this.params.creative]) {
+                    templatePreprocessor[this.params.creative](this);
+                }
 
-            $.create(creativeHtml)
-                .appendTo(this.$adSlot);
+                var creativeHtml = template(creativeTpl, this.params);
+                var $ad = $.create(creativeHtml);
+
+                resolve(fastdom.write(function () {
+                    $ad.appendTo(this.$adSlot);
+                    if (this.postLoadEvents[this.params.creative]) {
+                        this.postLoadEvents[this.params.creative]($ad[0]);
+                    }
+                    return $ad;
+                }, this));
+            }.bind(this));
         }.bind(this));
     };
 

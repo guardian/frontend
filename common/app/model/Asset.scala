@@ -37,7 +37,7 @@ object ImageAsset {
       fields = Helpers.assetFieldsToMap(asset),
       mediaType = asset.`type`.name,
       mimeType = asset.mimeType,
-      url = asset.file )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
   }
 }
 
@@ -115,7 +115,7 @@ object AudioAsset {
     AudioAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.file )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
   }
 }
 
@@ -133,7 +133,7 @@ object EmbedAsset {
   def make(asset: Asset): EmbedAsset = {
     EmbedAsset(
       fields = Helpers.assetFieldsToMap(asset),
-      url = asset.file )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
   }
 }
 

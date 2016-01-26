@@ -15,15 +15,16 @@ define([
     'common/modules/commercial/liveblog-adverts',
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
-    'common/modules/live/filter',
     'common/modules/ui/autoupdate',
+    'common/modules/ui/newAutoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust'
+    'common/utils/robust',
+    'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
@@ -41,19 +42,20 @@ define([
     liveblogAdverts,
     liveblogDynamicAdverts,
     Affix,
-    LiveFilter,
     AutoUpdate,
+    AutoUpdateNew,
     dropdowns,
     lastModified,
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust) {
+    robust,
+    ab) {
     'use strict';
 
     var modules,
-        autoUpdate = null;
+        autoUpdate;
 
     function createScrollTransitions() {
 
@@ -112,11 +114,10 @@ define([
 
         // There may be no blocks at all. 'block-0' will return any new blocks found.
         id = newestBlock ? newestBlock.id : 'block-0';
-        return window.location.pathname + '.json?lastUpdate=' + id;
+        return window.location.pathname + '.json?isLivePage=true&lastUpdate=' + id;
     }
 
     modules = {
-
         initAdverts: function () {
             if (config.switches.liveblogDynamicAdverts) {
                 liveblogDynamicAdverts.init();
@@ -125,9 +126,11 @@ define([
             }
         },
 
+        // once Toast is shipped this can be removed completely, the notification counter is initialised within Toast
         createFilter: function () {
-            new LiveFilter($('.js-blog-blocks')[0]).ready();
-            new NotificationCounter().init();
+            if (!ab.isInVariant('LiveblogToast', 'toast')) {
+                new NotificationCounter().init();
+            }
         },
 
         affixTimeline: function () {
@@ -147,20 +150,23 @@ define([
         },
 
         createAutoUpdate: function () {
-
-            if (config.page.isLive && window.location.search.indexOf('?page=') !== 0) {// TODO proper guardian.config val
-
-                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
-                autoUpdate = new AutoUpdate({
-                    path: getUpdatePath,
-                    delay: timerDelay,
-                    backoff: 2,
-                    backoffMax: 1000 * 60 * 20,
-                    attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
-                    responseField: ['html', 'timeline'],
-                    switches: config.switches
-                });
-                autoUpdate.init();
+            if (config.page.isLive) {
+                if (ab.isInVariant('LiveblogToast', 'toast')) {
+                    AutoUpdateNew();
+                } else if (window.location.search.indexOf('?page=') !== 0/*TODO proper guardian.config val*/) {
+                    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
+                    autoUpdate = new AutoUpdate({
+                        path: getUpdatePath,
+                        delay: timerDelay,
+                        backoff: 2,
+                        backoffMax: 1000 * 60 * 20,
+                        attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
+                        switches: config.switches,
+                        manipulationType: 'prepend',
+                        responseField: ['html', 'timeline']
+                    });
+                    autoUpdate.init();
+                }
             }
 
         },
@@ -173,7 +179,6 @@ define([
                 },
                 60000
             );
-
         },
 
         accessibility: function () {
@@ -185,9 +190,9 @@ define([
         robust.catchErrorsAndLogAll([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
-            ['lb-filter',     modules.createFilter],
-            ['lb-timeline',   modules.affixTimeline],
             ['lb-autoupdate', modules.createAutoUpdate],
+            ['lb-timeline',   modules.affixTimeline],
+            ['lb-filter',     modules.createFilter],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);

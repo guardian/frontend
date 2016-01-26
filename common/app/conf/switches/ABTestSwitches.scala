@@ -18,7 +18,7 @@ trait ABTestSwitches {
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 4, 1),
     exposeClientSide = true
   )
 
@@ -44,6 +44,15 @@ trait ABTestSwitches {
     "A/B Tests",
     "ab-remove-sticky-nav",
     "Removes the sticky nav (0% test)",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 3, 1),
+    exposeClientSide = true
+  )
+
+  val ABLiveblogToast = Switch(
+    "A/B Tests",
+    "ab-liveblog-toast",
+    "Enables Liveblog toast (0% test)",
     safeState = Off,
     sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
