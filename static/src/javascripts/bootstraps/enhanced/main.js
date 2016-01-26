@@ -34,6 +34,7 @@ define([
             );
         };
 
+        console.log("++ Yowza dowsa - where's ya swarkin trousers");
 
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
@@ -64,11 +65,22 @@ define([
             });
         }
 
+        var isDev = window.location.hostname === 'localhost';
         if (config.page.contentType === 'LiveBlog') {
+            console.log('++ Live blog enhanced');
             require(['bootstraps/enhanced/liveblog', 'bootstraps/enhanced/image-content'], function (liveBlog, imageContent) {
+                console.log('++ Live blog bootstraps required');
                 bootstrapContext('liveBlog', liveBlog);
                 bootstrapContext('liveBlog : image-content', imageContent);
             });
+            if ((window.location.protocol === 'https:' || isDev)) {
+                console.log('++ Bootstrap blog notifications');
+                require(['bootstraps/enhanced/notifications'], function (notifications) {
+                    console.log('++ Notification bootstrap required');
+                    bootstrapContext('notifications', notifications);
+                });
+            }
+
         }
 
         if (config.isMedia || config.page.contentType === 'Interactive') {
@@ -124,7 +136,6 @@ define([
             });
         }
 
-        var isDev = window.location.hostname === 'localhost';
         if ((window.location.protocol === 'https:' || isDev)
             && config.page.section !== 'identity') {
             var navigator = window.navigator;
@@ -132,6 +143,7 @@ define([
                 navigator.serviceWorker.register('/service-worker.js');
             }
         }
+
 
         if (config.page.pageId === 'offline-page') {
             var $button = $('.js-open-crossword-btn');

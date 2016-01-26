@@ -21,7 +21,13 @@ case class OfflinePage(crossword: CrosswordData) extends StandalonePage {
 object WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
+    println("Service worker")
     Cached(3600) { Ok(templates.js.serviceWorker()) }
+  }
+
+  def notificationsServiceWorker() = Action { implicit request =>
+    println("Notifications Service worker")
+    Cached(3600) { Ok(templates.js.notificationsServiceWorker()) }
   }
 
   def manifest() = Action {

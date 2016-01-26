@@ -187,6 +187,8 @@ define([
     };
 
     function ready() {
+
+        console.log('++ Live blog bootstrap init');
         robust.catchErrorsAndLogAll([
             ['lb-a11y',       modules.accessibility],
             ['lb-adverts',    modules.initAdverts],
