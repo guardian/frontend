@@ -11,6 +11,7 @@ define([
     'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/collections/map',
     'lodash/objects/pick',
@@ -27,6 +28,7 @@ define([
     mediator,
     LazyLoad,
     Tabs,
+    Toggles,
     isArray,
     map,
     pick,
@@ -93,10 +95,18 @@ define([
             };
         };
 
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
+
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
-        }
+        },
+        capi: createToggle,
+        capiSingle: createToggle
     };
 
     CommercialComponent.prototype.create = function () {

@@ -5,6 +5,7 @@ define([
     'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
+    'common/modules/ui/toggles',
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
@@ -23,8 +24,15 @@ define([
     template,
     fastdom,
     svgs,
+    Toggles,
     templatePreprocessor
 ) {
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
+
     /**
      * Create simple templated creatives
      *
@@ -50,6 +58,11 @@ define([
         this.params.logoFeatureLabel = config.switches.newCommercialContent ? 'Paid for by' : 'Brought to you by:';
     };
 
+    Template.prototype.postLoadEvents = {
+        'manual-single': createToggle,
+        'manual-multiple': createToggle
+    };
+
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
             require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
@@ -61,7 +74,11 @@ define([
                 var $ad = $.create(creativeHtml);
 
                 resolve(fastdom.write(function () {
-                    return $ad.appendTo(this.$adSlot);
+                    $ad.appendTo(this.$adSlot);
+                    if (this.postLoadEvents[this.params.creative]) {
+                        this.postLoadEvents[this.params.creative]($ad[0]);
+                    }
+                    return $ad;
                 }, this));
             }.bind(this));
         }.bind(this));
