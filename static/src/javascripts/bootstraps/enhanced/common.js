@@ -53,6 +53,7 @@ define([
     'common/modules/save-for-later',
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
+    'common/modules/email/email-article',
     'text!common/views/international-message.html',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
@@ -109,6 +110,7 @@ define([
     SaveForLater,
     membershipMessages,
     email,
+    emailArticle,
     internationalMessage,
     identity,
     forEach) {
@@ -347,11 +349,24 @@ define([
             },
 
             initEmail: function () {
+                // Initalise email embedded in page
                 email.init();
+
+                // Initalise email insertion into articles
+                if (config.switches.emailInArticle) {
+                    emailArticle.init();
+                }
 
                 // Initalise email forms in iframes
                 forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
                     email.init(el);
+                });
+
+                // Listen for interactive load event and initalise forms
+                bean.on(window, 'interactive-loaded', function () {
+                    forEach(qwery('.guInteractive .js-email-sub__iframe'), function (el) {
+                        email.init(el);
+                    });
                 });
             }
         };

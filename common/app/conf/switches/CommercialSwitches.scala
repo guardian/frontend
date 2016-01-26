@@ -262,7 +262,7 @@ trait CommercialSwitches {
     "new-commercial-content",
     "New commercial content designs",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 }

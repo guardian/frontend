@@ -1,10 +1,8 @@
 package views.support.cleaner
 
-import java.net.URL
-
-import model.{Article, VideoAsset, VideoElement}
+import model.{Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
-import views.support.{HtmlCleaner, Item640}
+import views.support.{AmpSrcCleaner, HtmlCleaner}
 
 import scala.collection.JavaConversions._
 
@@ -12,10 +10,16 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def cleanAmpVideos(document: Document): Unit = {
     document.getElementsByTag("video").foreach(video => {
+      val posterSrc = video.attr("poster")
+      val newPosterSrc = AmpSrcCleaner(posterSrc).toString
+      val mediaId = video.attr("data-media-id")
+      val fallback = "<div fallback > Sorry, your browser is unable to play this video.<br/> Please <a href='http://whatbrowser.org/'>upgrade</a> to a modern browser and try again.</div>"
+
       video.tagName("amp-video")
       video.removeAttr("data-media-id")
-      video.removeAttr("poster")
-
+      video.getElementsByTag("source").remove()
+      video.append(fallback)
+      video.attr("poster", newPosterSrc)
       // Need to hard code aspect ratio 5:3 for Amp pages.
       video.attr("width", "5")
       video.attr("height", "3")
@@ -23,16 +27,15 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       video.attr("layout", "responsive")
       video.attr("controls", "")
 
-      video.getElementsByTag("source").foreach(source => {
-        val videoSrc = source.attr("src")
-        // All videos need to start with https for AMP.
-        // Temperary code until all videos returned from CAPI are https
-        if (!videoSrc.startsWith("https")) {
-          val (first, last) = videoSrc.splitAt(4);
-          val newSrc = first + "s" + last
-          source.attr("src", newSrc)
-        }
-      })
+      val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
+        videoAsset.encoding.map { encoding =>
+          if (encoding.url.startsWith("https")) {
+            s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
+          }
+        }.getOrElse("")
+      }.mkString("")
+
+      video.append(sourceHTML)
     })
   }
 
@@ -78,6 +81,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
   }
+
+  private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
   override def clean(document: Document): Document = {
 

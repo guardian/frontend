@@ -1,6 +1,12 @@
 /* ==========================================================================
    Paid for component
    ========================================================================== */
+
+.fc-container .fc-container__inner--paidfor {
+    border: 0;
+    padding: 0;
+}
+
 .commercial--paidfor {
 
     .commercial__header,
@@ -9,8 +15,20 @@
         @include f-headlineSans;
     }
 
+    .rich-link__header {
+        font-size: get-font-size(header, 2);
+        line-height: get-line-height(header, 1);
+    }
+
+    .commercial__body {
+        padding-top: $gs-gutter / 2;
+    }
+
     .rich-link__standfirst {
-        @include fs-textSans(4);
+        @include f-textSans;
+        font-size: get-font-size(textSans, 2);
+        line-height: get-line-height(textSans, 1);
+        padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-gutter/4;
     }
 
     .fc-item__image-container {
@@ -19,6 +37,21 @@
 
     .commercial__header {
         overflow: visible;
+    }
+
+    .paidfor-meta__more > .popup__toggle {
+        @include mq(leftCol, wide) {
+            padding: 0 0 ($gs-baseline * 3 / 4);
+        }
+    }
+
+    .paidfor-meta__more > .popup {
+        @include mq(leftCol, wide) {
+            left: 0;
+            transform: translate(0, 0);
+
+            &:before { left: 10%; }
+        }
     }
 
     .commercial__title {
@@ -55,6 +88,7 @@
     .lineitems {
         display: flex;
         flex-flow: row nowrap;
+        width: auto;
     }
 
     .lineitem {
@@ -116,6 +150,93 @@
 
     .inline-icon {
         fill: colour(neutral-2);
+    }
+}
+
+/* Badges
+   ========================================================================== */
+
+.commercial--paidfor,
+.commercial--dfp-single {
+
+    /* Resets for new design. When (and if) the new design is committed to, the old code
+       will be torn down and these resets should no longer be necessary
+    */
+
+    .ad-slot--paid-for-badge__help {
+        display: none;
+    }
+
+    .ad-slot--paid-for-badge--front {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
+        margin: 0;
+        float: none;
+    }
+
+    .ad-slot--paid-for-badge__link:after {
+        content: none;
+    }
+
+    .ad-slot.ad-slot--paid-for-badge--front {
+        margin: auto;
+        width: auto;
+        min-height: 0;
+    }
+
+    /* Badge layout & logo size constraint */
+
+    .ad-slot--paid-for-badge {
+        text-align: right; // shift inline-block children
+    }
+
+    .ad-slot--paid-for-badge__header {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .ad-slot--paid-for-badge__link {
+        display: inline-block;
+        vertical-align: middle;
+        max-width: $gs-baseline * 6;
+        height: $gs-baseline * 3;
+        font-size: 0; // remove whitespace on inline-block children
+    }
+
+    .ad-slot--paid-for-badge__logo {
+        max-width: 100%;
+        max-height: 100%;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .ad-slot--paid-for-badge__link:before {
+        content: '';
+        height: 100%;
+        vertical-align: middle;
+        display: inline-block;
+    }
+}
+
+/* Badge layout in multi-campaign components */
+
+.commercial--paidfor-multi {
+
+    .tone-paidfor--item {
+        position: relative;
+        // reserve space in-flow for absolutely positioned badge
+        // baseline * 3 from the height of the element, plus baseline / 2 for its bottom margin
+        padding-bottom: $gs-baseline * 3.5;
+    }
+
+    .ad-slot--paid-for-badge {
+        position: absolute;
+        bottom: $gs-baseline / 2;
+        right: $gs-baseline / 2;
     }
 }
 

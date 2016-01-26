@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.46"
+  val identityLibVersion = "3.49"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.10.37"
@@ -49,7 +49,7 @@ object Dependencies {
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
-  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.0"
+  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"
   val romeModules = "org.rometools" % "rome-modules" % "1.0"

@@ -62,3 +62,15 @@
     }
 }
 
+// PLAIN MODS
+.email-sub--plain {
+    .email-sub__message__headline {
+        color: guss-colour(guardian-brand, $pasteup-palette);
+        line-height: 2rem;
+    }
+
+    .email-sub__message__description {
+        display: none;
+    }
+}
+

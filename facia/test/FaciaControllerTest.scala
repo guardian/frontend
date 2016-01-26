@@ -5,24 +5,26 @@ import common.editions.{Us, Uk}
 import implicits.FakeRequests
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest._
 import common.ExecutionContexts
 import services.ConfigAgent
+import org.scalatest._
 
 @DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite
-                                                      with BeforeAndAfterAll with FakeRequests with BeforeAndAfterEach {
+  with BeforeAndAfterAll with FakeRequests with BeforeAndAfterEach {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
+  val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
   override def beforeAll() {
     ConfigAgent.refreshWith(
       ConfigJson(
-        fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)),
+        fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson),
         collections = Map.empty)
     )
+    conf.switches.Switches.FaciaInlineEmbeds.switchOn()
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
@@ -125,5 +127,11 @@ import services.ConfigAgent
     test.faciaController.alternativeEndpoints("uk/lifeandstyle") should be (List("lifeandstyle", "uk"))
     test.faciaController.alternativeEndpoints("uk") should be (List("uk"))
     test.faciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
+  }
+
+  it should "render fronts with content that has been pre-fetched from facia-press" in {
+    val request = FakeRequest("GET", "/inline-embeds").from(Uk)
+    val future = test.faciaController.renderFront("inline-embeds")(request)
+    contentAsString(future) should include ("""<div class="keep-it-in-the-ground__wrapper""")
   }
 }

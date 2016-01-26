@@ -3,7 +3,7 @@
 @showSwitch(switch: conf.switches.Switch) = {
     <li>
         <div>@{switch.name}</div>
-        <div>expires @{switch.sellByDate.toString("E dd MMM")} 00:01 UTC</div>
+        <div>expires @{switch.sellByDate.get.toString("E dd MMM")} 00:01 UTC</div>
         <div>@{switch.description}</div>
     </li>
 }

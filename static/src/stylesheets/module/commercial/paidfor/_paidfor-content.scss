@@ -41,6 +41,20 @@
         height: 1px;
         z-index: 5;
     }
+
+    .inline-glabs-logo-small {
+        svg {
+            right: 0;
+            left: unset;
+            top: 4px;
+            width: 75px;
+            height: 23px;
+
+            path {
+                fill: #ffffff;
+            }
+        }
+    }
 }
 
 .paidfor-box {
@@ -90,6 +104,10 @@
     .paidfor-meta__label,
     .paidfor-meta__more > .popup__toggle {
         padding: $gs-baseline / 3 $gs-gutter / 2;
+    }
+
+    .paidfor-meta__label {
+        padding-left: 0;
     }
 
     .paidfor-branding {

@@ -18,7 +18,7 @@ trait ABTestSwitches {
     "ab-fronts-on-articles2",
     "Injects fronts on articles for the test",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 4, 1),
     exposeClientSide = true
   )
 
@@ -55,6 +55,15 @@ trait ABTestSwitches {
     "Measure performance impact of running prebid auctions before showing display advertising",
     safeState = Off,
     sellByDate = new LocalDate(2016, 2, 1),
+    exposeClientSide = true
+  )
+
+  val UserzoomSurveyMessageV2 = Switch(
+    "A/B Tests",
+    "ab-userzoom-survey-message-v2",
+    "Segment the userzoom data-team survey",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 4),
     exposeClientSide = true
   )
 }
