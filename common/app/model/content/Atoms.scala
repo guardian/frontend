@@ -26,6 +26,7 @@ object Quiz {
     Quiz(
       id = quiz.id,
       path = path,
+      quizType = quiz.data.quizType,
       questions = questions
       )
   }
@@ -42,6 +43,7 @@ final case class Answer(
 final case class Quiz(
   override val id: String,
   path: String,
+  quizType: String,
   questions: Seq[Question]
 ) extends Atom {
 
@@ -68,6 +70,18 @@ final case class Quiz(
   def submitAnswers(userAnswers: QuizForm.UserAnswers): QuizSubmissionResult = {
     val validAnswers = userAnswers.parsed.flatMap(findQuizDataFor)
     QuizSubmissionResult(validAnswers)
+  }
+
+  private def getCorrectAnswer(question: Question): Option[Answer] = {
+    if (quizType == "knowledge") {
+      question.answers.sortBy(_.weight).reverse.headOption
+    } else {
+      None
+    }
+  }
+
+  def isCorrectAnswer(inputQuestion: Question, inputAnswer: Answer): Boolean = {
+    getCorrectAnswer(inputQuestion).map(inputAnswer.equals(_)).getOrElse(false)
   }
 }
 

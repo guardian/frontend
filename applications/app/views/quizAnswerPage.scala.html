@@ -6,6 +6,7 @@
     @page.results.entries.map { case (question, answer) =>
         <div>
             @question.text you answered: @answer.text
+            correct?: @{page.quiz.isCorrectAnswer(question, answer)}
         </div>
     }
 }
