@@ -334,6 +334,7 @@ object Article {
     val javascriptConfig: Map[String, JsValue] = Map(
       ("contentType", JsString(contentType)),
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
+      ("isMinuteArticle", JsBoolean(content.tags.isUSMinuteSeries)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),

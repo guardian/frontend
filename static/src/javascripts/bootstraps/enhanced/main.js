@@ -51,7 +51,7 @@ define([
             });
         }
 
-        if (config.page.contentType === 'Article') {
+        if (config.page.contentType === 'Article' && !config.page.isMinuteArticle) {
             require(['bootstraps/enhanced/article', 'bootstraps/enhanced/image-content'], function (article, imageContent) {
                 bootstrapContext('article', article);
                 bootstrapContext('article : image-content', imageContent);
@@ -68,6 +68,12 @@ define([
             require(['bootstraps/enhanced/liveblog', 'bootstraps/enhanced/image-content'], function (liveBlog, imageContent) {
                 bootstrapContext('liveBlog', liveBlog);
                 bootstrapContext('liveBlog : image-content', imageContent);
+            });
+        }
+
+        if (config.page.isMinuteArticle) {
+            require(['bootstraps/enhanced/image-content'], function (imageContent) {
+                bootstrapContext('article : image-content', imageContent);
             });
         }
 
