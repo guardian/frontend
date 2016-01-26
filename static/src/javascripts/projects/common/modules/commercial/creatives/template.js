@@ -1,7 +1,9 @@
 define([
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/utils/fastdom-promise',
     'common/views/svgs',
     'common/modules/commercial/creatives/template-preprocessor',
 
@@ -15,9 +17,11 @@ define([
     'text!common/views/commercial/creatives/manual-multiple.html',
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
+    Promise,
     $,
     config,
     template,
+    fastdom,
     svgs,
     templatePreprocessor
 ) {
@@ -47,15 +51,19 @@ define([
     };
 
     Template.prototype.create = function () {
-        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
-            if (templatePreprocessor[this.params.creative]) {
-                templatePreprocessor[this.params.creative](this);
-            }
+        return new Promise(function (resolve) {
+            require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+                if (templatePreprocessor[this.params.creative]) {
+                    templatePreprocessor[this.params.creative](this);
+                }
 
-            var creativeHtml = template(creativeTpl, this.params);
+                var creativeHtml = template(creativeTpl, this.params);
+                var $ad = $.create(creativeHtml);
 
-            $.create(creativeHtml)
-                .appendTo(this.$adSlot);
+                resolve(fastdom.write(function () {
+                    return $ad.appendTo(this.$adSlot);
+                }, this));
+            }.bind(this));
         }.bind(this));
     };
 
