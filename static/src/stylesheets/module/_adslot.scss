@@ -66,11 +66,14 @@
     background-color: colour(neutral-8);
     display: none;
 
-    .js-on & {
+    .js-on .new-sticky-ad & {
         z-index: 1022;
         width: 100%;
         transform: translateZ(0);
         will-change: transform;
+        position: relative;
+        overflow: hidden;
+        transition: max-height 1s cubic-bezier(0, 0, 0, .985);
     }
 
     &.top-banner-ad-container--below-nav {
@@ -111,15 +114,20 @@
 .top-banner-ad-container--small {
     min-height: ($gs-row-height * 3) + 18;
 }
-.top-banner-ad-container--large {
-    min-height: ($gs-row-height * 7) + 34;
-}
 .top-banner-ad-container--responsive {
     min-height: ($gs-row-height * 7) + 16;
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
     transition: height 1s cubic-bezier(0, 0, 0, .985);
+    min-height: 90px;
+
+    // overwrite if in the new sticky ad AB test
+    .new-sticky-ad & {
+        transition: none;
+        transform: none;
+        min-height: auto;
+    }
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
@@ -178,8 +186,13 @@
     .top-banner-ad-container--desktop & {
         margin: 0 auto;
         display: none;
-        min-height: 90 + ($gs-row-height / 2);
+        min-height: 90px;
         padding-bottom: $gs-row-height / 2;
+        padding-top: $gs-row-height / 2;
+
+        .ad-slot__label {
+            margin-top: (-1) * $gs-row-height / 2;
+        }
 
         .ad-below-nav & {
             min-height: 0;
@@ -197,6 +210,9 @@
         @include mq(wide) {
             text-align: left;
         }
+    }
+    .top-banner-ad-container--large & {
+        min-height: 250px;
     }
     .has-page-skin & {
         @include mq(wide) {
@@ -427,6 +443,9 @@
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__logo {
         display: block;
+    }
+    .ad-slot--paid-for-badge__logo {
+        max-height: $gs-baseline * 6;
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {

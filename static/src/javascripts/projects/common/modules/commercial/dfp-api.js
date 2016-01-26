@@ -22,6 +22,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp-ophan-tracking',
+    'common/modules/commercial/prebid/prebid-service',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
     'common/modules/analytics/beacon',
@@ -46,7 +47,6 @@ define([
     'lodash/arrays/intersection',
     'lodash/arrays/initial',
 
-    'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/gu-style-comcontent',
     'common/modules/commercial/creatives/paidfor-content',
@@ -83,6 +83,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     dfpOphanTracking,
+    prebidService,
     geoMostPopular,
     ab,
     beacon,
@@ -290,8 +291,13 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(keys(slots).shift());
-            displayed = true;
+            var firstSlot = keys(slots).shift();
+            if (prebidService.testEnabled && prebidService.slotIsInTest(firstSlot)) {
+                loadSlot(firstSlot);
+            } else {
+                googletag.display(firstSlot);
+                displayed = true;
+            }
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
@@ -316,6 +322,10 @@ define([
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
                 require(['js!googletag.js']);
+            }
+
+            if (prebidService.testEnabled) {
+                prebidService.loadDependencies();
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -352,7 +362,7 @@ define([
         },
         instantLoad = function () {
             chain(slots).and(keys).and(forEach, function (slot) {
-                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high'], slot)) {
+                if (contains(['dfp-ad--pageskin-inread', 'dfp-ad--merchandising-high', 'dfp-ad--im'], slot)) {
                     loadSlot(slot);
                 }
             });
@@ -376,13 +386,25 @@ define([
                 });
             }
         },
-        loadSlot = function (slot) {
-            slots[slot].isLoading = true;
-            googletag.display(slot);
-            displayed = true;
+        loadSlot = function (slotKey) {
+            if (prebidService.testEnabled && prebidService.slotIsInTest(slotKey)) {
+                prebidAndLoadSlot(slotKey);
+            } else {
+                // original implementation
+                slots[slotKey].isLoading = true;
+                googletag.display(slotKey);
+                displayed = true;
+            }
         },
-        addSlot = function ($adSlot) {
-            var slotId = $adSlot.attr('id'),
+        prebidAndLoadSlot = function (slotKey) {
+            slots[slotKey].isLoading = true;
+            prebidService.loadSlots(slotKey).then(function () {
+                displayed = true;
+            });
+        },
+        addSlot = function (adSlot) {
+            var $adSlot = bonzo(adSlot),
+                slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
                     slots[slotId] = {
                         isRendered: false,
@@ -407,6 +429,12 @@ define([
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
+        },
+        removeSlot = function (slotId) {
+            delete slots[slotId];
+            idleFastdom.write(function () {
+                $('#' + slotId).remove();
+            });
         },
         getSlots = function () {
             return slots;
@@ -470,21 +498,21 @@ define([
         parseAd = function (event) {
             var size,
                 slotId = event.slot.getSlotElementId(),
-                $slot = $('#' + slotId),
+                $slot,
                 $placeholder,
                 $adSlotContent;
 
-            allAdsRendered(slotId);
-
             if (event.isEmpty) {
-                removeLabel($slot);
+                removeSlot(slotId);
             } else {
+                $slot = $('#' + slotId),
+
                 // Store ads IDs for technical feedback
                 creativeIDs.push(event.creativeId);
 
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
-                $adSlotContent = $('#' + slotId + ' div');
+                $adSlotContent = $('div', $slot);
                 idleFastdom.write(function () {
                     $placeholder.remove();
                     $adSlotContent.addClass('ad-slot__content');
@@ -520,6 +548,8 @@ define([
                     }
                 });
             }
+
+            allAdsRendered(slotId);
         },
         allAdsRendered = function (slotId) {
             if (slots[slotId] && !slots[slotId].isRendered) {
@@ -539,11 +569,6 @@ define([
                 if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="' + adSlotClass + '" data-test-id="ad-slot-label">Advertisement</div>');
                 }
-            });
-        },
-        removeLabel = function ($slot) {
-            idleFastdom.write(function () {
-                $('.ad-slot__label', $slot).remove();
             });
         },
         shouldRenderLabel = function ($slot) {

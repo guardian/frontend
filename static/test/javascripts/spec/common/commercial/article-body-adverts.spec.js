@@ -17,16 +17,21 @@ define([
         var injector = new Injector(),
             articleBodyAdverts,
             spaceFiller,
+            spaceFillerStub,
             commercialFeatures,
+            mediator,
             config,
-            detect;
+            detect,
+            dfp;
 
         beforeEach(function (done) {
 
             injector.require([
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
+                'common/modules/commercial/dfp-api',
                 'common/modules/article/space-filler',
+                'common/utils/mediator',
                 'common/utils/config',
                 'common/utils/detect'
             ], function () {
@@ -35,19 +40,29 @@ define([
                 commercialFeatures = arguments[1];
                 commercialFeatures.articleBodyAdverts = true;
 
-                spaceFiller = arguments[2];
-                spyOn(spaceFiller, 'insertAtFirstSpace').and.callFake(function () {
-                    return new Promise.resolve(true);
+                dfp = arguments[2];
+                spyOn(dfp, 'addSlot').and.callFake(function () {
+                    // nothing to see here, move along bro.
                 });
 
-                config = arguments[3];
+                spaceFiller = arguments[3];
+                spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
+                spaceFillerStub.returns(Promise.resolve(true));
+
+                mediator = arguments[4];
+
+                config = arguments[5];
                 config.page = {};
                 config.switches = {};
 
-                detect = arguments[4];
+                detect = arguments[6];
 
                 done();
             });
+        });
+
+        afterEach(function () {
+            spaceFillerStub.restore();
         });
 
         it('should exist', function () {
@@ -58,12 +73,12 @@ define([
             commercialFeatures.articleBodyAdverts = false;
             var executionResult = articleBodyAdverts.init();
             expect(executionResult).toBe(false);
-            expect(spaceFiller.insertAtFirstSpace).not.toHaveBeenCalled();
+            expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
         });
 
         it('should call space-filler`s insertion method with the correct arguments', function (done) {
             articleBodyAdverts.init().then(function () {
-                var args = spaceFiller.insertAtFirstSpace.calls.first().args,
+                var args = spaceFillerStub.firstCall.args,
                     rulesArg = args[0],
                     writerArg = args[1];
 
@@ -84,7 +99,7 @@ define([
 
             it('its first call to space-filler uses the inline-merch rules', function (done) {
                 articleBodyAdverts.init().then(function () {
-                    var firstCall = spaceFiller.insertAtFirstSpace.calls.first(),
+                    var firstCall = spaceFillerStub.firstCall,
                         rules = firstCall.args[0];
 
                     expect(rules.minAbove).toEqual(300);
@@ -100,14 +115,51 @@ define([
                 fixture.appendChild(paragraph);
 
                 articleBodyAdverts.init().then(function () {
-                    var firstCall = spaceFiller.insertAtFirstSpace.calls.first(),
+                    var firstCall = spaceFillerStub.firstCall,
                         writer = firstCall.args[1];
-                    writer(paragraph);
+                    writer([paragraph]);
 
                     var expectedAd = fixture.querySelector('#dfp-ad--im');
                     expect(expectedAd).toBeTruthy();
 
                     done();
+                });
+            });
+
+            it('inserts up to ten adverts when DFP returns empty merchandising components', function (done) {
+                spaceFillerStub.onCall(0).returns(Promise.resolve(false));
+                spaceFillerStub.onCall(1).returns(Promise.resolve(false));
+                spaceFillerStub.returns(Promise.resolve(true));
+
+                var oldOn = mediator.on;
+                var fn;
+                mediator.on = function (eventName, fn2) {
+                    fn = fn2;
+                };
+                var oldEmit = mediator.emit;
+                mediator.emit = function (eventName, arg) {
+                    return fn(arg);
+                };
+
+                config.switches.viewability = true;
+                detect.getBreakpoint = function () {return 'tablet';};
+
+                articleBodyAdverts.init().then(function () {
+                    var fakeEvent = {
+                        slot: {
+                            getSlotElementId: function () {
+                                return 'dfp-ad--im';
+                            }
+                        },
+                        isEmpty: true
+                    };
+
+                    mediator.emit('modules:commercial:dfp:rendered', fakeEvent).then(function () {
+                        mediator.on = oldOn;
+                        mediator.emit = oldEmit;
+                        expect(spaceFillerStub.callCount).toBe(12);
+                        done();
+                    });
                 });
             });
         });
@@ -129,7 +181,7 @@ define([
                     };
 
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(2);
+                        expect(spaceFillerStub.callCount).toBe(2);
                         done();
                     });
                 });
@@ -143,7 +195,7 @@ define([
 
                     it('inserts up to ten adverts', function (done) {
                         articleBodyAdverts.init().then(function () {
-                            expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(10);
+                            expect(spaceFillerStub.callCount).toBe(10);
                             done();
                         });
                     });
@@ -152,10 +204,9 @@ define([
                         // We do not want the same ad-density on long-read
                         // articles that we have on shorter pieces
                         articleBodyAdverts.init().then(function () {
-                            var insertionCalls = spaceFiller.insertAtFirstSpace.calls.all();
-                            var longArticleInsertionCalls = insertionCalls.slice(2);
+                            var longArticleInsertionCalls = spaceFillerStub.args.slice(2);
                             var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
-                                return call.args[0];
+                                return call[0];
                             });
                             longArticleInsertionRules.forEach(function (ruleset) {
                                 var adSlotSpacing = ruleset.selectors[' .ad-slot'];
@@ -178,7 +229,7 @@ define([
                     };
 
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(2);
+                        expect(spaceFillerStub.callCount).toBe(2);
                         done();
                     });
                 });
@@ -189,7 +240,7 @@ define([
                     };
 
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFiller.insertAtFirstSpace.calls.count()).toBe(1);
+                        expect(spaceFillerStub.callCount).toBe(1);
                         done();
                     });
                 });
@@ -280,7 +331,7 @@ define([
 
                 function getFirstRulesUsed() {
                     return articleBodyAdverts.init().then(function () {
-                        var firstCall = spaceFiller.insertAtFirstSpace.calls.first();
+                        var firstCall = spaceFillerStub.firstCall;
                         return firstCall.args[0];
                     });
                 }

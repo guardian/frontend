@@ -1,7 +1,7 @@
 <div class="commercial commercial--dfp commercial--dfp-multiple <%=Toneclass%> commercial--items-dfp-<%=offeramount%>" role="complementary" data-link-name="creative | ad multiple manual | <%=omnitureId%>">
     <div class="commercial__inner">
         <div class="commercial__header <%=HeaderToneclass%>">
-            <% if (base__url.indexOf('soulmates') === -1) { %>
+            <% if (!soulmates) { %>
             <h3 class="commercial__title">
                 <a href="<%=clickMacro%><%=base__url%>" data-link-name="title">
                     <%=marque54icon%><%=logoguardian%>
@@ -46,9 +46,7 @@
                         </div>
                         <h4 class="lineitem__title"><%=offer1title%></h4>
                         <p class="lineitem__meta"><%=offer1meta%></p>
-                        <p class="lineitem__cta button button--primary button--small">
-                            <%=offer1linktext || offerlinktext%><%=arrowRight%>
-                        </p>
+                        <%=offer1Button%>
                     </a>
                 </li>
                 <li class="lineitem">
@@ -60,9 +58,7 @@
                         </div>
                         <h4 class="lineitem__title"><%=offer2title%></h4>
                         <p class="lineitem__meta"><%=offer2meta%></p>
-                        <p class="lineitem__cta button button--primary button--small">
-                            <%=offer2linktext || offerlinktext%><%=arrowRight%>
-                        </p>
+                        <%=offer2Button%>
                     </a>
                 </li>
                 <li class="lineitem">
@@ -74,9 +70,7 @@
                         </div>
                         <h4 class="lineitem__title"><%=offer3title%></h4>
                         <p class="lineitem__meta"><%=offer3meta%></p>
-                        <p class="ineitem__cta button button--primary button--small">
-                            <%=offer3linktext || offerlinktext%><%=arrowRight%>
-                        </p>
+                        <%=offer3Button%>
                     </a>
                 </li>
                 <li class="lineitem">
@@ -88,9 +82,7 @@
                         </div>
                         <h4 class="lineitem__title"><%=offer4title%></h4>
                         <p class="lineitem__meta"><%=offer4meta%></p>
-                        <p class="ineitem__cta button button--primary button--small">
-                            <%=offer4linktext || offerlinktext%><%=arrowRight%>
-                        </p>
+                        <%=offer4Button%>
                     </a>
                 </li>
             </ul>

@@ -10,12 +10,15 @@ import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common._
 import conf.{Configuration, LiveContentApi}
+import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
 import model.facia.PressedCollection
 import model.pressed._
 import model._
 import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.libs.json._
+import play.api.libs.ws.WS
+import play.api.Play.current
 import services.{ConfigAgent, S3FrontsApi}
 import views.support.{Item460, Item140, Naked}
 
@@ -80,6 +83,15 @@ object DraftFapiFrontPress extends FapiFrontPress {
     FAPI.draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
+// This is the json structure we expect for an embed (know as a snap at render-time).
+final case class EmbedJsonHtml(
+  html: String
+)
+
+object EmbedJsonHtml {
+  implicit val format = Json.format[EmbedJsonHtml]
+}
+
 trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
   implicit val capiClient: GuardianContentClient
@@ -109,7 +121,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+      curatedCollection <- getCurated(collection)
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield
@@ -119,20 +131,51 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
         backfill.map(slimContent),
         treats.map(slimContent))
 
+  private def getCurated(collection: Collection): Response[List[PressedContent]] = {
+    // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
+    val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+    initialContent.flatMap(content => Response.traverse(content.map(fetchEmbeds(collection, _))))
+  }
+
+  private def fetchEmbeds(collection: Collection, pressed: PressedContent): Response[PressedContent] = pressed match {
+    case content: CuratedContent if FaciaInlineEmbeds.isSwitchedOn => {
+        val currentEnriched = content.enriched.getOrElse(EnrichedContent.empty)
+
+        val newContent = for {
+          embedType <- content.properties.embedType if embedType == "json.html"
+          embedUri <- content.properties.embedUri
+        } yield {
+            val updatedContent = WS.url(embedUri).get().map { response =>
+              Json.parse(response.body).validate[EmbedJsonHtml] match {
+                case JsSuccess(embed, _) => {
+                  val newEnriched = currentEnriched.copy(embedHtml = Some(embed.html))
+                  content.copy(enriched = Some(newEnriched))
+                }
+                case _ => {
+                  log.warn(s"An embed had invalid json format, and won't be pressed. ${pressed.properties.webTitle} for collection ${collection.id}")
+                  content
+                }
+              }
+            } recover {
+              case _ => {
+                log.warn(s"A request to an embed uri failed, embed won't be pressed. ${embedUri} for collection ${collection.id}")
+                content
+              }
+            }
+            Response.Async.Right(updatedContent)
+          }
+        newContent.getOrElse(Response.Right(content))
+      }
+    case _ => Response.Right(pressed)
+  }
+
   private def getTreats(collection: Collection): Response[List[PressedContent]] = {
     FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery).map(_.map(PressedContent.make))
   }
 
   private def getBackfill(collection: Collection): Response[List[PressedContent]] = {
-    collection
-      .collectionConfig
-      .apiQuery
-      .map { query =>
-        FAPI.backfill(query, collection, searchApiQuery, itemApiQuery)
-      }
-      .getOrElse {
-        Response.Right(Nil)
-      }.map(_.map(PressedContent.make))
+    FAPI.backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
+      .map(_.map(PressedContent.make))
   }
 
   private def getCollectionIdsForPath(path: String): Response[List[String]] =

@@ -86,6 +86,15 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val LiveblogDynamicAdvertsSwitch = Switch(
+    "Commercial",
+    "liveblog-dynamic-adverts",
+    "Dynamically insert inline adverts on liveblogs",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 2, 15),
+    exposeClientSide = true
+  )
+
   val AudienceScienceSwitch = Switch(
     "Commercial",
     "audience-science",
@@ -253,7 +262,7 @@ trait CommercialSwitches {
     "new-commercial-content",
     "New commercial content designs",
     safeState = Off,
-    sellByDate = new LocalDate(2016, 2, 1),
+    sellByDate = new LocalDate(2016, 3, 1),
     exposeClientSide = true
   )
 }
