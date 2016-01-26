@@ -72,7 +72,8 @@ define([
         }
 
         if (config.page.isMinuteArticle) {
-            require(['bootstraps/enhanced/image-content'], function (imageContent) {
+            require(['bootstraps/enhanced/article-minute', 'bootstraps/enhanced/image-content'], function (articleMinute, imageContent) {
+                bootstrapContext('articleMinute', articleMinute);
                 bootstrapContext('article : image-content', imageContent);
             });
         }
