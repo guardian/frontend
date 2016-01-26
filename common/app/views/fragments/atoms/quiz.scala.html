@@ -9,7 +9,10 @@
     @quiz.questions.zipWithIndex.map { case (data, questionIndex) =>
         @question(data, questionIndex, QuizForm.form(s"answers[$questionIndex]"))
     }
-    <button class="button" type="submit">Submit answers</button>
+    @maybeResults match {
+        case None => { <button class="button" type="submit">Submit answers</button> }
+        case _ => {}
+    }
 </form>
 
 @question(question: _root_.model.content.Question, order: Int, field: play.api.data.Field) = {
