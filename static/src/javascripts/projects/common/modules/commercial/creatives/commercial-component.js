@@ -95,16 +95,18 @@ define([
             };
         };
 
+    function createToggle(el) {
+        if (el.querySelector('.popup__toggle')) {
+            new Toggles(el).init();
+        }
+    }
+
     CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
         },
-        capi: function (el) {
-            new Toggles(el).init();
-        },
-        capiSingle: function (el) {
-            new Toggles(el).init();
-        }
+        capi: createToggle,
+        capiSingle: createToggle
     };
 
     CommercialComponent.prototype.create = function () {
