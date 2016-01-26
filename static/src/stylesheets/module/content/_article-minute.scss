@@ -1,5 +1,8 @@
+$us-minute-highlight-colour: #EB1E25;
+$us-minute-main-colour: #104f75;
 .block--minute-article {
-    background-color: #104f75;
+    background-color: $us-minute-main-colour;
+    border-top: 4px solid $us-minute-highlight-colour;
     color: #ffffff;
     padding: $gs-baseline/2 $gs-gutter/2;
     margin-bottom: $gs-baseline/2;
