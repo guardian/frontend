@@ -66,6 +66,7 @@ define([
 
         this.view = {
             render: function (res) {
+                console.log('rendering');
                 var $attachTo = [bonzo(options.attachTo[0]), bonzo(options.attachTo[1])],
                     date = new Date().toString(),
                     resultHtml = [
@@ -77,12 +78,14 @@ define([
                 this.unreadBlocks += resultHtml[0].children.length;
 
                 bonzo(resultHtml[0].children).addClass('autoupdate--hidden');
-
+                console.log('before');
+                console.log(elementsToAdd);
+                console.log($attachTo);
                 $attachTo[0].prepend(elementsToAdd);
                 $attachTo[1].prepend(toArray(resultHtml[1].children));
 
                 if (elementsToAdd.length) {
-                    mediator.emit('modules:autoupdate:updates', elementsToAdd);
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
                 }
                 // add a timestamp to the attacher
                 $attachTo[0].attr('data-last-updated', date);
@@ -91,6 +94,7 @@ define([
                 if (this.isUpdating && detect.pageVisible()) {
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
+                    console.log('inject');
                 } else if (this.unreadBlocks > 0) {
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
@@ -131,6 +135,8 @@ define([
         this.load = function () {
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
+
+            console.log(path);
 
             return ajax({
                 url: path,

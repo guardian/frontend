@@ -120,6 +120,7 @@ define([
                 }
             }).then(function () {
                 updateDelay(currentUpdateDelay);
+                console.log(currentUpdateDelay);
                 setTimeout(checkForUpdates, currentUpdateDelay);
             });
         };
@@ -156,6 +157,12 @@ define([
                         revealInjectedElements();
                     }
 
+                    toastButtonRefresh(0);
+
+                    console.log(elementsToAdd.length);
+
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
+
                     latestBlockId = $('.block').first().attr('id');
 
                     newBlocks = '';
@@ -164,9 +171,6 @@ define([
                     twitter.enhanceTweets();
                 }).then(function () {
                     updating = false;
-                    setTimeout(function () {
-                        toastButtonRefresh(0);
-                    }, 600);
                 });
             }
         };
@@ -190,7 +194,7 @@ define([
         }, opts);
 
         var newBlocks;
-        var currentUpdateDelay;
+        var currentUpdateDelay = options.minUpdateDelay;
         var latestBlockId;
         var updating = false;
 
@@ -201,7 +205,9 @@ define([
         var $toastText = $('.toast__text', this.$toastButton);
         var toastContainer = qwery('.toast__container')[0];
 
-        latestBlockId = $liveblogBody.data('most-recent-block');
+        //latestBlockId = $liveblogBody.data('most-recent-block');
+
+        latestBlockId = $(".block")[1].id;
 
         new NotificationCounter().init();
         new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
