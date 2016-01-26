@@ -16,49 +16,56 @@
     }
 </form>
 
-@question(question: _root_.model.content.Question, order: Int, field: play.api.data.Field) = {
+@question(question: _root_.model.content.Question, questionIndex: Int, field: play.api.data.Field) = {
     <fieldset class="quiz__question">
         <legend class="quiz__question-legend">
             <h4 class="quiz__question-legend__header">
-                <span class="quiz__question-number">@{order+1}</span>
+                <span class="quiz__question-number">@{questionIndex+1}</span>
                 <span class="quiz__question-text">@question.text</span>
             </h4>
         </legend>
-        @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
-            <div class="quiz__question__answer-row">
-                <label for="question-@order-answer-@answerIndex"
-                       class="quiz__answer
-                            @{maybeResults.map { results => {
-                                val isAnswerCorrect = quiz.isCorrectAnswer(question, answer)
-                                val maybeInputAnswer = results.entries
-                                    .find { case (inputQuestion, _) => inputQuestion.equals(question) }
-                                    .map(_._2)
-
-                                (Seq(
-                                    s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"
-                                ) ++ maybeInputAnswer
-                                    .map { inputAnswer => {
-                                        val isChosen = inputAnswer.equals(answer)
-                                        Seq(
-                                            "quiz__answer--answered",
-                                            if(isChosen) {
-                                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}-chosen"
-                                            } else ""
-                                        )
-                                    } }
-                                    .getOrElse(Nil)
-                                ).mkString(" ")
-                            } } }
-                       ">
-                       <input type="radio"
-                              name="answers[@order]"
-                              id="question-@order-answer-@answerIndex"
-                              value="Q@{order}##A@{answerIndex}##@{answer.text}"
-                              class="quiz__answer__input"
-                              @maybeResults.map(x => "disabled")>
-                       @{answer.text}
-               </label>
-            </div>
+        @question.answers.zipWithIndex.map { case (data, answerIndex) =>
+            @answer(question, data, questionIndex, answerIndex)
         }
     </fieldset>
+}
+
+@answer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int) = {
+    <div class="quiz__question__answer-row">
+        <label for="question-@questionIndex-answer-@answerIndex"
+        class="@{
+            (
+                Seq("quiz__answer") ++
+                maybeResults.map { results => {
+                    val isAnswerCorrect = quiz.isCorrectAnswer(question, answer)
+                    val maybeInputAnswer = results.entries
+                        .find { case (inputQuestion, _) => inputQuestion.equals(question) }
+                        .map(_._2)
+
+                    (Seq(
+                        s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"
+                    ) ++ maybeInputAnswer
+                        .map { inputAnswer => {
+                            val isChosen = inputAnswer.equals(answer)
+                            Seq(
+                                "quiz__answer--answered",
+                                if(isChosen) {
+                                    s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}-chosen"
+                                } else ""
+                            )
+                        } }
+                        .getOrElse(Nil)
+                    )
+                } }.getOrElse(Nil)
+            ).mkString(" ")
+        }">
+            <input type="radio"
+            name="answers[@questionIndex]"
+            id="question-@questionIndex-answer-@answerIndex"
+            value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
+            class="quiz__answer__input"
+                @maybeResults.map(x => "disabled")>
+            @{answer.text}
+        </label>
+    </div>
 }
