@@ -3,6 +3,16 @@
 @(page: QuizAnswersPage)(implicit request: RequestHeader)
 
 @main(page) { } {
-    @{views.html.fragments.atoms.quiz(page.quiz, maybeResults = Some(page.results))}
+    <div class="l-side-margins">
+        <div class="content">
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        @{views.html.fragments.atoms.quiz(page.quiz, maybeResults = Some(page.results))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
