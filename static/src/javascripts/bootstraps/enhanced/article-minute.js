@@ -5,10 +5,10 @@ define([
     mediator,
     articleLiveblogCommon
 ) {
-        var ready = function () {
-            articleLiveblogCommon();
-            mediator.emit('page:minuteArticle:ready');
-        };
+    var ready = function () {
+        articleLiveblogCommon();
+        mediator.emit('page:minuteArticle:ready');
+    };
 
     return {
         init: ready
