@@ -25,38 +25,39 @@
             </h4>
         </legend>
         @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
-            @renderAnswer(question, answer, questionIndex, answerIndex)
+            @{
+                val maybeInputAnswer = maybeResults.flatMap { results => {
+                    results.entries
+                        .find { case (inputQuestion, _) => inputQuestion.equals(question) }
+                        .map(_._2)
+                } }
+                val isAnswerCorrect = quiz.isCorrectAnswer(question, answer)
+                renderAnswer(question, answer, questionIndex, answerIndex, isAnswerCorrect, maybeInputAnswer)
+            }
         }
     </fieldset>
 }
 
-@renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int) = {
+@renderAnswer(question: Question, answer: Answer, questionIndex: Int, answerIndex: Int, isAnswerCorrect: Boolean, maybeInputAnswer: Option[Answer]) = {
     <div class="quiz__question__answer-row">
         <label for="question-@questionIndex-answer-@answerIndex"
         class="@{
             (
                 Seq("quiz__answer") ++
-                maybeResults.map { results => {
-                    val isAnswerCorrect = quiz.isCorrectAnswer(question, answer)
-                    val maybeInputAnswer = results.entries
-                        .find { case (inputQuestion, _) => inputQuestion.equals(question) }
-                        .map(_._2)
-
-                    (Seq(
-                        s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"
-                    ) ++ maybeInputAnswer
-                        .map { inputAnswer => {
-                            val isChosen = inputAnswer.equals(answer)
-                            Seq(
-                                "quiz__answer--answered",
-                                if(isChosen) {
-                                    s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}-chosen"
-                                } else ""
-                            )
-                        } }
-                        .getOrElse(Nil)
-                    )
-                } }.getOrElse(Nil)
+                maybeResults
+                    .map(x => Seq(s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"))
+                    .getOrElse(Nil) ++
+                maybeInputAnswer
+                    .map { inputAnswer => {
+                        val isChosen = inputAnswer.equals(answer)
+                        Seq(
+                            "quiz__answer--answered",
+                            if(isChosen) {
+                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}-chosen"
+                            } else ""
+                        )
+                    } }
+                    .getOrElse(Nil)
             ).mkString(" ")
         }">
             <input type="radio"
