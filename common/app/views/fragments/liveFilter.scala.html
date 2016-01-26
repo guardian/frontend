@@ -1,9 +1,0 @@
-@(isLive: Boolean)
-<div class="live-toolbar js-live-toolbar modern-visible">
-    @if(isLive) {
-        <div class="update u-h" data-link-name="autoupdate"></div>
-    }
-</div>
-@if(isLive) {
-    <div class="js-update-notification notify-wrapper" data-component="live-notification"></div>
-}

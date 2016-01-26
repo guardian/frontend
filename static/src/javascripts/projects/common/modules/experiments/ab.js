@@ -54,7 +54,6 @@ define([
         new IdentitySignInV2(),
         new RtrtEmailFormArticlePromo(),
         new PrebidPerformance(),
-        new LiveblogToast(),
         new UserzoomSurveyMessageV2()
     ]);
 

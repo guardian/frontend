@@ -8,7 +8,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
-    'common/utils/template',
     'common/utils/url',
     'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
@@ -16,15 +15,13 @@ define([
     'common/modules/commercial/liveblog-dynamic-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
-    'common/modules/ui/newAutoupdate',
     'common/modules/ui/dropdowns',
     'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'common/utils/robust',
-    'common/modules/experiments/ab'
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
@@ -35,7 +32,6 @@ define([
     detect,
     mediator,
     scroller,
-    template,
     url,
     accessibility,
     richLinks,
@@ -43,19 +39,16 @@ define([
     liveblogDynamicAdverts,
     Affix,
     AutoUpdate,
-    AutoUpdateNew,
     dropdowns,
     lastModified,
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
     trail,
-    robust,
-    ab) {
+    robust) {
     'use strict';
 
-    var modules,
-        autoUpdate;
+    var modules;
 
     function createScrollTransitions() {
 
@@ -107,29 +100,12 @@ define([
         }
     }
 
-    function getUpdatePath() {
-        var id,
-            blocks = qwery('.js-liveblog-body .block'),
-            newestBlock = blocks.shift();
-
-        // There may be no blocks at all. 'block-0' will return any new blocks found.
-        id = newestBlock ? newestBlock.id : 'block-0';
-        return window.location.pathname + '.json?isLivePage=true&lastUpdate=' + id;
-    }
-
     modules = {
         initAdverts: function () {
             if (config.switches.liveblogDynamicAdverts) {
                 liveblogDynamicAdverts.init();
             } else if (config.switches.liveblogAdverts) {
                 liveblogAdverts.init();
-            }
-        },
-
-        // once Toast is shipped this can be removed completely, the notification counter is initialised within Toast
-        createFilter: function () {
-            if (!ab.isInVariant('LiveblogToast', 'toast')) {
-                new NotificationCounter().init();
             }
         },
 
@@ -151,24 +127,8 @@ define([
 
         createAutoUpdate: function () {
             if (config.page.isLive) {
-                if (ab.isInVariant('LiveblogToast', 'toast')) {
-                    AutoUpdateNew();
-                } else {
-                    var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
-                    autoUpdate = new AutoUpdate({
-                        path: getUpdatePath,
-                        delay: timerDelay,
-                        backoff: 2,
-                        backoffMax: 1000 * 60 * 20,
-                        attachTo: [$('.js-liveblog-body')[0], $('.js-live-blog__timeline')[0]],
-                        switches: config.switches,
-                        manipulationType: 'prepend',
-                        responseField: ['html', 'timeline']
-                    });
-                    autoUpdate.init();
-                }
+                AutoUpdate();
             }
-
         },
 
         keepTimestampsCurrent: function () {
@@ -192,7 +152,6 @@ define([
             ['lb-adverts',    modules.initAdverts],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
-            ['lb-filter',     modules.createFilter],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
             ['lb-richlinks',  richLinks.upgradeRichLinks]
         ]);
