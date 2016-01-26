@@ -4,7 +4,7 @@
 @import views.html.fragments.inlineSvg
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    @if(NewCommercialContent.isSwitchedOn) {
+    @if(NewCommercialContent.isSwitchedOn && optSponsorType.getOrElse("") != "fc-container--sponsored") {
         <div class="commercial commercial--paidfor commercial-dfp-multi commercial--tone-paidfor fc-container--advertisement-feature paid-content--advertisement-feature" data-link-name="merchandising | capi | multiple @optOmnitureId">
             <div class="commercial__inner">
                 <div class="commercial__header">
@@ -94,9 +94,6 @@
         </div>
     } else {
         <section class="@RenderClasses(
-                Map(
-                    "paid-content--advertisement-feature" -> NewCommercialContent.isSwitchedOn
-                ),
                 "fc-container", "fc-container--paid-for", "fc-container--special", "fc-container--merchandising", "commercial-dfp-multi", optSponsorType.getOrElse("")
             )" data-link-name="merchandising | capi | multiple @optOmnitureId">
             <div class="fc-container__inner">
