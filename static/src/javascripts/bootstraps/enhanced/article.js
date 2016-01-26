@@ -112,9 +112,21 @@ define([
                     renderQuizzes();
                 };
 
-                window.addEventListener('focus', update, true);
-                window.addEventListener('blur', update, true);
-                bean.on(window.document.body, 'change', '.' + quizAnswerInputClassName, update);
+                // Bean doesn't support capturing so we have to delegate
+                // ourselves
+                var delegateEvent = function (parentEl, event, childElSelector, fn, useCapture) {
+                    parentEl.addEventListener(event, function (event) {
+                        if (event.target.matches(childElSelector)) {
+                            fn(event);
+                        }
+                    }, useCapture);
+                };
+
+                $quizzes.each(function (quizElement) {
+                    delegateEvent(quizElement, 'focus', '.' + quizAnswerInputClassName, update, true);
+                    delegateEvent(quizElement, 'blur', '.' + quizAnswerInputClassName, update, true);
+                    bean.on(quizElement, 'change', '.' + quizAnswerInputClassName, update);
+                });
 
                 update();
             }
