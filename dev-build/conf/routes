@@ -410,5 +410,5 @@ GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.ArticleController.render
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/amp                  controllers.ArticleController.renderArticle(path)
 # temp route for live blogs so we can paginate without getting the blocks for all articles
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[Int])
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[String])
 GET     /*path                      controllers.ArticleController.renderArticle(path)
