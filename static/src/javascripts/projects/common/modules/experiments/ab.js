@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/identity-sign-in-v2',
     'common/modules/experiments/tests/rtrt-email-form-article-promo',
     'common/modules/experiments/tests/prebid-performance',
+    'common/modules/experiments/tests/liveblog-toast',
     'common/modules/experiments/tests/userzoom-survey-message-v2',
     'lodash/arrays/flatten',
     'lodash/collections/forEach',
@@ -34,6 +35,7 @@ define([
     IdentitySignInV2,
     RtrtEmailFormArticlePromo,
     PrebidPerformance,
+    LiveblogToast,
     UserzoomSurveyMessageV2,
     flatten,
     forEach,
@@ -52,6 +54,7 @@ define([
         new IdentitySignInV2(),
         new RtrtEmailFormArticlePromo(),
         new PrebidPerformance(),
+        new LiveblogToast(),
         new UserzoomSurveyMessageV2()
     ]);
 
