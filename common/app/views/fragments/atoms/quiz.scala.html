@@ -2,7 +2,7 @@
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._
 
-@(quiz: Quiz)
+@(quiz: Quiz, maybeResults: Option[QuizSubmissionResult])
 
 <form action="@quiz.postUrl" method="POST" class="quiz">
 
@@ -23,7 +23,29 @@
         @question.answers.zipWithIndex.map { case (answer, answerIndex) =>
             <div class="quiz__question__answer-row">
                 <label for="question-@order-answer-@answerIndex"
-                       class="quiz__answer">
+                       class="quiz__answer
+                            @{maybeResults.map { results => {
+                                val isAnswerCorrect = quiz.isCorrectAnswer(question, answer)
+                                val maybeInputAnswer = results.entries
+                                    .find { case (inputQuestion, _) => inputQuestion.equals(question) }
+                                    .map(_._2)
+
+                                (Seq(
+                                    s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}"
+                                ) ++ maybeInputAnswer
+                                    .map { inputAnswer => {
+                                        val isChosen = inputAnswer.equals(answer)
+                                        Seq(
+                                            "quiz__answer--answered",
+                                            if(isChosen) {
+                                                s"quiz__answer--${if(isAnswerCorrect) { "correct" } else { "incorrect" }}-chosen"
+                                            } else ""
+                                        )
+                                    } }
+                                    .getOrElse(Nil)
+                                ).mkString(" ")
+                            } } }
+                       ">
                        <input type="radio"
                               name="answers[@order]"
                               id="question-@order-answer-@answerIndex"

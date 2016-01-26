@@ -3,7 +3,7 @@
 
 @{
     model match {
-        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz)
+        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None)
         case _ =>
     }
 }

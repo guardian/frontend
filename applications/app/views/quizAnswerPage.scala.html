@@ -3,11 +3,6 @@
 @(page: QuizAnswersPage)(implicit request: RequestHeader)
 
 @main(page) { } {
-    @page.results.entries.map { case (question, answer) =>
-        <div>
-            @question.text you answered: @answer.text
-            correct?: @{page.quiz.isCorrectAnswer(question, answer)}
-        </div>
-    }
+    @{views.html.fragments.atoms.quiz(page.quiz, maybeResults = Some(page.results))}
 }
 
