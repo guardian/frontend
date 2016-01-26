@@ -1,6 +1,7 @@
 @import _root_.model.content._
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._
+@import views.html.fragments.inlineSvg
 
 @(quiz: Quiz, maybeResults: Option[QuizSubmissionResult])
 
@@ -60,13 +61,22 @@
                     .getOrElse(Nil)
             ).mkString(" ")
         }">
+        @maybeResults.map { x =>
+            <span class="quiz__answer-icon">
+                @if(isAnswerCorrect) {
+                    @inlineSvg("tick", "icon", List("quiz__answer-icon-svg"))
+                } else {
+                    @inlineSvg("cross", "icon", List("quiz__answer-icon-svg"))
+                }
+            </span>
+        }.getOrElse {
             <input type="radio"
-            name="answers[@questionIndex]"
-            id="question-@questionIndex-answer-@answerIndex"
-            value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
-            class="quiz__answer__input"
-            @maybeResults.map(x => "disabled")>
-            @{answer.text}
+                name="answers[@questionIndex]"
+                id="question-@questionIndex-answer-@answerIndex"
+                value="Q@{questionIndex}##A@{answerIndex}##@{answer.text}"
+                class="quiz__answer__input">
+        }
+        @{answer.text}
         </label>
     </div>
 }
