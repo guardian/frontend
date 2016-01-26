@@ -50,7 +50,8 @@
                               name="answers[@order]"
                               id="question-@order-answer-@answerIndex"
                               value="Q@{order}##A@{answerIndex}##@{answer.text}"
-                              class="quiz__answer__input">
+                              class="quiz__answer__input"
+                              @maybeResults.map(x => "disabled")>
                        @{answer.text}
                </label>
             </div>
