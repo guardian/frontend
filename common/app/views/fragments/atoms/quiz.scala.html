@@ -66,7 +66,11 @@
                     @if(isAnswerCorrect) {
                         @inlineSvg("tick", "icon", List("quiz__answer-icon-svg"))
                     } else {
-                        @inlineSvg("cross", "icon", List("quiz__answer-icon-svg"))
+                        @maybeInputAnswer.map { inputAnswer =>
+                            @if(inputAnswer.equals(answer)) {
+                                @inlineSvg("cross", "icon", List("quiz__answer-icon-svg"))
+                            }
+                        }
                     }
                 </span>
             }.getOrElse {
