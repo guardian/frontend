@@ -19,7 +19,7 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         @include mq(wide) {
-            min-height: 260px;
+            min-height: 230px;
             background-position: bottom 69px right 0px;
 
             .has-page-skin & {
@@ -457,7 +457,7 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__search__box .inline-soulmates-border-topleft, .commercial__search__box .inline-soulmates-border-topright {
         opacity: 0;
-        
+
         @include mq(tablet) {
             opacity: 1;
         }
@@ -561,13 +561,13 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         @include mq(wide) {
-            font-size: 16px; 
+            font-size: 16px;
             margin: 0 auto $gs-gutter;
 
             .has-page-skin & {
                 font-size: 15px;
                 margin: 0 auto $gs-baseline;
-            }  
+            }
         }
     }
 
@@ -596,7 +596,7 @@ $c-soulmates-high: colour(neutral-1);
 
             .has-page-skin & {
                 padding: $gs-baseline 18px;
-            }  
+            }
         }
 
     }
@@ -792,7 +792,7 @@ $c-soulmates-high: colour(neutral-1);
 
             .has-page-skin & {
                 padding: $gs-baseline 18px;
-            }  
+            }
         }
 
         @include mq($from: desktop) {
@@ -890,7 +890,7 @@ $c-soulmates-high: colour(neutral-1);
                 @include fs-data(3, $size-only: true);
                 background-size: 16px 16px;
                 height: 30px;
-            }  
+            }
         }
 
     }
@@ -930,4 +930,3 @@ $c-soulmates-high: colour(neutral-1);
     }
 
 }
-
