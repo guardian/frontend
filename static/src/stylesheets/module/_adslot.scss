@@ -445,6 +445,7 @@
         display: block;
     }
     .ad-slot--paid-for-badge__logo {
+        max-width: 100%;
         max-height: $gs-baseline * 6;
     }
     .ad-slot--paid-for-badge__link,
