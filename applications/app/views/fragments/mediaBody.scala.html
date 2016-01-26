@@ -24,7 +24,6 @@
         }
 
         @fragments.headTonal(media)
-
         <div class="content__main tonal__main tonal__main--@toneClass(media)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
@@ -92,14 +91,14 @@
                         </div>
 
                         <div class="content__main-column__body" data-component="body">
-                            <div class="tonal__standfirst">
                                 @media match {
                                     case v: Video => {
-                                        @fragments.standfirst(v)
+                                        <div class="tonal__standfirst">
+                                            @fragments.standfirst(v)
+                                        </div>
                                     }
                                     case _ => { }
                                 }
-                            </div>
 
                             @fragments.contentMeta(media)
 
